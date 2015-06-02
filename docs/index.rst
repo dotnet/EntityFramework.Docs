@@ -1,22 +1,16 @@
-.. Entity Framework documentation master file, created by
-   sphinx-quickstart on Thu May 28 14:14:28 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Entity Framework Documentation
+==============================
 
-Welcome to Entity Framework's documentation!
-============================================
-
-Contents:
+.. include:: stub-overview.txt
 
 .. toctree::
-   :maxdepth: 2
+    :titlesonly:
 
+    getting-started/index
+    providers/index
 
+Contribute
+----------
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+**We accept pull requests!** But you're more likely to have yours accepted if you follow the `guidelines for contributing <https://github.com/aspnet/EntityFramework.Docs/blob/master/CONTRIBUTING.md>`_.
 
