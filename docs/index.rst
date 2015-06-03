@@ -8,6 +8,7 @@ Entity Framework Documentation
 
     getting-started/index
     providers/index
+    modeling/index
 
 Contribute
 ----------
