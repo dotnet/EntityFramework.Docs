@@ -4,7 +4,7 @@ Getting Started
 .. toctree::
     :titlesonly:
 
-    traditional-dotnet
+    full-dotnet
     aspnet5
     uwp
     osx
