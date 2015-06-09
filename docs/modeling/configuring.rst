@@ -129,7 +129,7 @@ Maximum Length
 
 Configuring a maximum length provides a hint to the data store about the appropriate data type to use for a given property.
 
-The following code allows the store to choose an appropraite data type for ``Blog.Url`` based on the fact it should only ever contain 500 characters. When tagetting SQL Server this would result in the ``nvarchar(500)`` data type being used.
+The following code allows the store to choose an appropraite data type for ``Blog.Url`` based on the fact it should only ever contain 500 characters. When targetting SQL Server this would result in the ``nvarchar(500)`` data type being used.
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/MaxLength.cs
         :language: c#
@@ -145,7 +145,7 @@ The following code allows the store to choose an appropraite data type for ``Blo
 Concurrency Tokens
 ------------------
 
-If a property is configured as a concurrency token then EF will check that no other user has modified that value in the database when saving changes to that record. EF uses an optomistic concurrency pattern, meaning it will assume the value has not changed and try to save the data, but throw if it finds the value has been changed.
+If a property is configured as a concurrency token then EF will check that no other user has modified that value in the database when saving changes to that record. EF uses an optimistic concurrency pattern, meaning it will assume the value has not changed and try to save the data, but throw if it finds the value has been changed.
 
 For example we may want to configure ``SocialSecurityNumber`` on ``Person`` to be a concurrency token. This means that if one user tries to save some changes to a Person, but another user has changed the ``SocialSecurityNumber`` then an exception will be thrown. This may be desirable so that our application can prompt the user to ensure this record still represents the same actual person before saving their changes.
 
@@ -213,7 +213,7 @@ The following code maps the ``Blog`` class to a ``blogs`` table in the database.
         :emphasize-lines: 7-9
         :linenos:
 
-You can also specify a scema that the table belongs to.
+You can also specify a schema that the table belongs to.
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/TableAndSchema.cs
         :language: c#

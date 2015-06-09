@@ -23,7 +23,7 @@ In this article:
 Ensure NuGet 2.8.5 or later
 ---------------------------
 
-Installing EF7requires NuGet 2.8.5 (or higher). Make sure you restart Visual Studio after installing the update.
+Installing EF7 requires NuGet 2.8.5 (or higher). Make sure you restart Visual Studio after installing the update.
 
 - **Visual Studio 2015** - No updates needed, a compatible version of NuGet is included.
 - **Visual Studio 2013** - `Install the latest NuGet for VS2013 <https://visualstudiogallery.msdn.microsoft.com/4ec1526c-4a8c-4a84-b702-b21a8f5293ca>`_.
