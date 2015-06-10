@@ -75,7 +75,7 @@ language = None
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+exclude_patterns = ['_build','**/sample']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -105,7 +105,7 @@ pygments_style = 'sphinx'
 todo_include_todos = False
 
 rst_prolog = """
-  
+
 .. include:: /global-header.txt
 """
 
@@ -121,9 +121,9 @@ if not on_rtd:
 	import sphinx_rtd_theme
 	html_theme = 'sphinx_rtd_theme'
 	html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-	
+
 def setup(app):
-	app.add_stylesheet('custom.css')	
+	app.add_stylesheet('custom.css')
 	app.add_javascript('wedc.js')
 
 #html_theme = 'default'
