@@ -10,7 +10,6 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.Column
         {
             modelBuilder.Entity<Blog>()
                 .Property(b => b.BlogId)
-                .ForRelational()
                 .Column("blog_id");
         }
     }

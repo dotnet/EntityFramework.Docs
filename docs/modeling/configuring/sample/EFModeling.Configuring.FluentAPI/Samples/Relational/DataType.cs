@@ -10,7 +10,6 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.DataType
         {
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Url)
-                .ForRelational()
                 .ColumnType("varchar(200)");
         }
     }

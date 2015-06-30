@@ -2,9 +2,9 @@ Configuring Your Model
 ======================
 
 Entity Framework uses a set of :doc:`default-conventions` to build a model based on the shape of your entity classes. You can specify additional configuration to supplement and/or override what was discovered by convention.
- 
+
 .. note::
-    This article covers configuration that can be applied to a model targetting any data store and that which can be applied when targetting any relational database. 
+    This article covers configuration that can be applied to a model targetting any data store and that which can be applied when targetting any relational database.
     Providers may also enable configuration that is specific to a particular data store. For documentation on provider specific configuration see the the :doc:`/providers/index` section.
 
 In this article:
@@ -27,7 +27,7 @@ In this article:
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/modeling/configuring/sample>`_.
 
 .. note::
-    This article uses EF 7.0.0-beta4 which is the latest pre-release available on NuGet.org.
+    This article uses EF 7.0.0-beta5 which is the latest pre-release available on NuGet.org.
 
     You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
@@ -158,7 +158,7 @@ For example we may want to configure ``SocialSecurityNumber`` on ``Person`` to b
 How concurrency tokens work in EF
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Data stores can enforce concurrency tokens by checking that any record being updated or deleted still has the same value for the concurrency token that was assigned when the context originally loaded the data from the database. 
+Data stores can enforce concurrency tokens by checking that any record being updated or deleted still has the same value for the concurrency token that was assigned when the context originally loaded the data from the database.
 
 For example, relational database achieve this by including the concurrency token in the ``WHERE`` clause of any ``UPDATE`` or ``DELETE`` commands and checking the number of rows that were affected. If the concurrency token still matches then one row will be updated. If the value in the database has changed, then no rows are updated.
 
@@ -209,16 +209,16 @@ The following code maps the ``Blog`` class to a ``blogs`` table in the database.
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/Table.cs
         :language: c#
-        :lines: 5-21
-        :emphasize-lines: 7-9
+        :lines: 5-20
+        :emphasize-lines: 7-8
         :linenos:
 
 You can also specify a schema that the table belongs to.
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/TableAndSchema.cs
         :language: c#
-        :lines: 11-13
-        :emphasize-lines: 3
+        :lines: 11-12
+        :emphasize-lines: 2
         :linenos:
 
 Relational column
@@ -228,8 +228,8 @@ The following code maps the ``Blog.BlogId`` property to a ``blog_id`` column in 
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/Column.cs
         :language: c#
-        :lines: 5-22
-        :emphasize-lines: 7-10
+        :lines: 5-21
+        :emphasize-lines: 7-9
         :linenos:
 
 Relational data type
@@ -239,8 +239,8 @@ The following code specifies that the column for ``Blog.Url`` should use the ``v
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/DataType.cs
         :language: c#
-        :lines: 5-22
-        :emphasize-lines: 7-10
+        :lines: 5-21
+        :emphasize-lines: 7-9
         :linenos:
 
 If you are targetting more than one relational provider with the same model then you probably want to specify a data type for each provider rather than a global one to be used for all relational providers.
@@ -268,6 +268,6 @@ The following code turns off database value generation for a column that was set
 .. caution::
     **SQL Server and sequence vs. identity**
 
-    By default, when targetting SQL Server, EF will use a global sequence to generate values for numeric primary keys. The values will be retrieved in blocks from the database and assigned to entities when they are added to the context. If you want to swap to using values that are generated using the ``IDENTITY`` pattern during  ``SaveChanges`` then add a call to ``modelBuilder.ForSqlServer().UseIdentity()`` at the top of ``OnModelCreating``. 
+    By default, when targetting SQL Server, EF will use a global sequence to generate values for numeric primary keys. The values will be retrieved in blocks from the database and assigned to entities when they are added to the context. If you want to swap to using values that are generated using the ``IDENTITY`` pattern during  ``SaveChanges`` then add a call to ``modelBuilder.ForSqlServer().UseIdentity()`` at the top of ``OnModelCreating``.
 
     In future pre-releases this behavior will change to use the ``IDENTITY`` pattern by default.

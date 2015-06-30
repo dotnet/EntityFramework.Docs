@@ -1,7 +1,7 @@
 .. include:: /stub-topic.txt
 
 Getting Started on Full .NET (Console, WinForms, WPF, etc.)
-==========================================
+===========================================================
 
 In this walkthough, you will build a console application that performs basic data access using Entity Framework.
 
@@ -12,11 +12,11 @@ In this article:
 	- `Create your model`_
 	- `Create your database`_
 	- `Use your model`_
-	
+
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/full-dotnet/sample>`_.
 
 .. note::
-    This walkthough uses EF 7.0.0-beta4 which is the latest pre-release available on NuGet.org.
+    This walkthough uses EF 7.0.0-beta5 which is the latest pre-release available on NuGet.org.
 
     You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
@@ -59,7 +59,7 @@ Later in this walkthrough we will also be using some Entity Framework commands t
 Create your model
 -----------------
 
-Now it's time to define a context and entity classes that make up your model. 
+Now it's time to define a context and entity classes that make up your model.
 
 * :menuselection:`Project --> Add Class...`
 * Enter *Model.cs* as the name and click **OK**

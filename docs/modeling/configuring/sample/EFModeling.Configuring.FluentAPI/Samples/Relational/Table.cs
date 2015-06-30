@@ -9,7 +9,6 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.Table
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .ForRelational()
                 .Table("blogs");
         }
     }

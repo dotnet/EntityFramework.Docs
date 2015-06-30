@@ -29,9 +29,9 @@ namespace EFGetStarted.ConsoleApp.Migrations
                 name: "Post",
                 columns: table => new
                 {
+                    PostId = table.Column(type: "int", nullable: false),
                     BlogId = table.Column(type: "int", nullable: false),
                     Content = table.Column(type: "nvarchar(max)", nullable: true),
-                    PostId = table.Column(type: "int", nullable: false),
                     Title = table.Column(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

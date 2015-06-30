@@ -7,9 +7,19 @@ using EFGetStarted.ConsoleApp;
 namespace EFGetStarted.ConsoleApp.Migrations
 {
     [ContextType(typeof(BloggingContext))]
-    partial class BloggingContextModelSnapshot : ModelSnapshot
+    partial class MyFirstMigration
     {
-        public override void BuildModel(ModelBuilder builder)
+        public override string Id
+        {
+            get { return "20150630215833_MyFirstMigration"; }
+        }
+        
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta5-13549"; }
+        }
+        
+        public override void BuildTargetModel(ModelBuilder builder)
         {
             builder
                 .Annotation("SqlServer:DefaultSequenceName", "DefaultSequence")
