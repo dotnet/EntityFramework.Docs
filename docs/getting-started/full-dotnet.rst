@@ -27,7 +27,7 @@ Installing EF7 requires NuGet 2.8.5 (or higher). Make sure you restart Visual St
 
 - **Visual Studio 2015** - No updates needed, a compatible version of NuGet is included.
 - **Visual Studio 2013** - `Install the latest NuGet for VS2013 <https://visualstudiogallery.msdn.microsoft.com/4ec1526c-4a8c-4a84-b702-b21a8f5293ca>`_.
-- **Visual Studio 2010 and 2012** - `Install the latest NuGet for VS2012 and 2010 <https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c>`_.
+- **Visual Studio 2012** - `Install the latest NuGet for VS2012 <https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c>`_.
 
 .. note::
     NuGet version numbers can be confusing, while the required release is branded 2.8.5 the product version of the extension is 2.8.60318.xxx.
@@ -35,11 +35,11 @@ Installing EF7 requires NuGet 2.8.5 (or higher). Make sure you restart Visual St
 Create a new project
 --------------------
 
-* Open Visual Studio (this walkthrough uses 2015 but you can use any version from 2010 onwards)
+* Open Visual Studio (this walkthrough uses 2015 but you can use any version from 2012 onwards)
 * :menuselection:`File --> New --> Project...`
 * From the left menu select :menuselection:`Templates --> Visual C# --> Windows`
 * Select the **Console Application** project template
-* Ensure you are targeting .NET 4.5.1 or later
+* Ensure you are targeting .NET 4.5 or later
 * Give the project a name and click **OK**
 
 Install Entity Framework
