@@ -7,23 +7,25 @@ using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Routing;
-using Microsoft.Framework.ConfigurationModel;
+using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.Logging.Console;
-using EFGetStarted.AspNet5.Models;
+using Microsoft.Framework.Runtime;
 using Microsoft.Data.Entity;
+using EFGetStarted.AspNet5.Models;
 
 namespace EFGetStarted.AspNet5
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
             // Setup configuration sources.
-            Configuration = new Configuration()
+            var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
                 .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; set; }
@@ -37,8 +39,6 @@ namespace EFGetStarted.AspNet5
                 .AddSqlServer()
                 .AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
 
-            services.Configure<AppSettings>(Configuration.GetSubKey("AppSettings"));
-
             // Add MVC services to the services container.
             services.AddMvc();
 
@@ -48,18 +48,18 @@ namespace EFGetStarted.AspNet5
         }
 
         // Configure is called after ConfigureServices is called.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerfactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.MinimumLevel = LogLevel.Information;
+            loggerFactory.AddConsole();
+
             // Configure the HTTP request pipeline.
 
-            // Add the console logger.
-            loggerfactory.AddConsole();
-
             // Add the following to the request pipeline only in development environment.
-            if (env.IsEnvironment("Development"))
+            if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
-                app.UseErrorPage(ErrorPageOptions.ShowAll);
+                app.UseErrorPage();
             }
             else
             {
