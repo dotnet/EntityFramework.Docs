@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Microsoft.Data.Entity.Relational.Migrations;
-using Microsoft.Data.Entity.Relational.Migrations.Builders;
-using Microsoft.Data.Entity.Relational.Migrations.Operations;
+using Microsoft.Data.Entity.Migrations;
+using Microsoft.Data.Entity.Migrations.Builders;
+using Microsoft.Data.Entity.Migrations.Operations;
 
 namespace EFGetStarted.ConsoleApp.Migrations
 {
@@ -9,16 +9,12 @@ namespace EFGetStarted.ConsoleApp.Migrations
     {
         public override void Up(MigrationBuilder migration)
         {
-            migration.CreateSequence(
-                name: "DefaultSequence",
-                type: "bigint",
-                startWith: 1L,
-                incrementBy: 10);
             migration.CreateTable(
                 name: "Blog",
                 columns: table => new
                 {
-                    BlogId = table.Column(type: "int", nullable: false),
+                    BlogId = table.Column(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", "IdentityColumn"),
                     Url = table.Column(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -29,7 +25,8 @@ namespace EFGetStarted.ConsoleApp.Migrations
                 name: "Post",
                 columns: table => new
                 {
-                    PostId = table.Column(type: "int", nullable: false),
+                    PostId = table.Column(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", "IdentityColumn"),
                     BlogId = table.Column(type: "int", nullable: false),
                     Content = table.Column(type: "nvarchar(max)", nullable: true),
                     Title = table.Column(type: "nvarchar(max)", nullable: true)
@@ -44,12 +41,11 @@ namespace EFGetStarted.ConsoleApp.Migrations
                         referencedColumn: "BlogId");
                 });
         }
-        
+
         public override void Down(MigrationBuilder migration)
         {
-            migration.DropSequence("DefaultSequence");
-            migration.DropTable("Blog");
             migration.DropTable("Post");
+            migration.DropTable("Blog");
         }
     }
 }

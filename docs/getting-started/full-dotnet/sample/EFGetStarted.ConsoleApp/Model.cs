@@ -8,7 +8,7 @@ namespace EFGetStarted.ConsoleApp
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
-        protected override void OnConfiguring(EntityOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Visual Studio 2015 | Use the LocalDb 12 instance created by Visual Studio
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.ConsoleApp;Trusted_Connection=True;");
