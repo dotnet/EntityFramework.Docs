@@ -18,17 +18,15 @@ In this article:
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/aspnet5/sample>`_.
 
 .. note::
-	This walkthrough uses Beta 4 of ASP.NET 5 and EF7.
+    This walkthrough uses EF 7.0.0-beta6 which is the latest pre-release available on NuGet.org.
 
-	The Beta 5 runtime of ASP.NET 5 and EF7 is available on NuGet.org but the project template in Visual Studio 2015 RC is not compatible with Beta 5. If you want to look at upgrading from Beta 4 to Beta 5, see the `ASP.NET 5 Beta5 Now Available <http://blogs.msdn.com/b/webdev/archive/2015/06/30/asp-net-5-beta5-now-available.aspx>`_ blog post.
-
-	You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
+    You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
 Prerequisites
 -------------
 
 The following items are required to complete this walkthrough:
-    - Visual Studio 2015 RC
+    - Visual Studio 2015
 
 Create a new project
 --------------------
@@ -69,8 +67,8 @@ Later in this walkthrough we will also be using some Entity Framework commands t
 .. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5/project.json
         :language: json
         :linenos:
-        :lines: 21-27
-        :emphasize-lines: 4
+        :lines: 21-24
+        :emphasize-lines: 3
 
 Create your model
 -----------------
@@ -98,15 +96,22 @@ The concept of dependency injection is central to ASP.NET 5. Services (such as o
 
 In order for our MVC controllers to make use of ``BloggingContext`` we are going to register it as a service.
     - Open **Startup.cs**
+    - Add the following ``using`` statements at the start of the file
+
+.. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5/Startup.cs
+        :language: c#
+        :linenos:
+        :lines: 15-16
+
+Now we can use the ``AddDbContext`` method to register it as a service.
     - Locate the ``ConfigureServices`` method
     - Add the lines that are highlighted in the following code
 
 .. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5/Startup.cs
         :language: c#
         :linenos:
-        :lines: 31-38
+        :lines: 33-42
         :emphasize-lines: 4-8
-
 
 Create your database
 --------------------
@@ -118,7 +123,7 @@ Create your database
 Now that you have a model, you can use migrations to create a database for you.
     - Open a command prompt (**Windows Key + R**, type **cmd**, click **OK**)
     - Use the ``cd`` command to navigate to the project directory
-    - Run ``dnvm use 1.0.0-beta4``
+    - Run ``dnvm use 1.0.0-beta6``
     - Run ``dnx . ef migration add MyFirstMigration`` to scaffold a migration to create the initial set of tables for your model.
     - Run ``dnx . ef migration apply`` to apply the new migration to the database. Because your database doesn't exist yet, it will be created for you before the migration is applied.
 
@@ -130,7 +135,7 @@ Create a controller
 
 Next, we'll add an MVC controller that will use EF to query and save data.
 	- Right-click on the **Controllers** folder in **Solution Explorer** and select :menuselection:`Add --> New Item...`
-	- From the left menu select :menuselection:`Installed --> ASP.NET 5`
+	- From the left menu select :menuselection:`Installed --> Server-side`
 	- Select the **Class** item template
 	- Enter **BlogsController.cs** as the name and click **OK**
 	- Replace the contents of the file with the following code
@@ -152,7 +157,7 @@ We'll start with the view for our ``Index`` action, that displays all blogs.
 	- Right-click on the **Views** folder in **Solution Explorer** and select :menuselection:`Add --> New Folder`
 	- Enter **Blogs** as the name of the folder
 	- Right-click on the **Blogs** folder and select :menuselection:`Add --> New Item...`
-	- From the left menu select :menuselection:`Installed --> ASP.NET 5`
+	- From the left menu select :menuselection:`Installed --> Server-side`
 	- Select the **MVC View Page** item template
 	- Enter **Index.cshtml** as the name and click **OK**
 	- Replace the contents of the file with the following code
