@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.Entity;
 
-namespace EFModeling.Configuring.FluentAPI.Samples.Relational.DataType
+namespace EFModeling.Configuring.FluentAPI.Samples.NoIdentity
 {
     class MyContext : DbContext
     {
@@ -9,8 +9,8 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.DataType
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .Property(b => b.Url)
-                .HasColumnType("varchar(200)");
+                .Property(b => b.BlogId)
+                .ValueGeneratedNever();
         }
     }
 

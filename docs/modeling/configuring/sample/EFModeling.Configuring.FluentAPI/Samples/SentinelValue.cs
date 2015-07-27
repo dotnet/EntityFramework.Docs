@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.Entity;
 
-namespace EFModeling.Configuring.FluentAPI.Samples.Relational.NoIdentity
+namespace EFModeling.Configuring.FluentAPI.Samples.SentinelValue
 {
     class MyContext : DbContext
     {
@@ -8,10 +8,11 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.NoIdentity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Note there is no Fluent API for sentinel value in Beta6
+            //      so we must drop down to metadata
             modelBuilder.Entity<Blog>()
                 .Property(b => b.BlogId)
-                .ForSqlServer()
-                .UseNoValueGeneration();
+                .Metadata.SentinelValue = -1;
         }
     }
 

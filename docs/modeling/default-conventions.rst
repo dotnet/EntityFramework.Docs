@@ -1,7 +1,7 @@
 .. include:: /stub-topic.txt
 
-Default Conventions
-===================
+|stub-icon| Default Conventions
+===============================
 
 .. include:: /stub-notice.txt
 
