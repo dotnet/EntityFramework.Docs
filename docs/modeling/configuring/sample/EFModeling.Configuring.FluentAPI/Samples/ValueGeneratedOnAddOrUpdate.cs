@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Entity;
+using System;
 
-namespace EFModeling.Configuring.FluentAPI.Samples.Relational.DataType
+namespace EFModeling.Configuring.FluentAPI.Samples.ValueGeneratedOnAddOrUpdate
 {
     class MyContext : DbContext
     {
@@ -9,8 +10,8 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.DataType
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .Property(b => b.Url)
-                .HasColumnType("varchar(200)");
+                .Property(b => b.LastUpdated)
+                .ValueGeneratedOnAddOrUpdate();
         }
     }
 
@@ -18,5 +19,6 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.DataType
     {
         public int BlogId { get; set; }
         public string Url { get; set; }
+        public DateTime LastUpdated { get; set; }
     }
 }

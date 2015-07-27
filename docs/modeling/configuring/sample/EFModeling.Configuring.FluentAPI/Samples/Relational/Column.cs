@@ -10,7 +10,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.Column
         {
             modelBuilder.Entity<Blog>()
                 .Property(b => b.BlogId)
-                .Column("blog_id");
+                .HasColumnName("blog_id");
         }
     }
 

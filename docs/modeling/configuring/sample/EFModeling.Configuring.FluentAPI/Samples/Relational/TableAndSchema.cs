@@ -9,7 +9,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.TableAndSchema
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .Table("blogs", schemaName: "blogging");
+                .ToTable("blogs", schemaName: "blogging");
         }
     }
 

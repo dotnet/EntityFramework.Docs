@@ -4,7 +4,7 @@ Configuring Your Model
 Entity Framework uses a set of :doc:`default-conventions` to build a model based on the shape of your entity classes. You can specify additional configuration to supplement and/or override what was discovered by convention.
 
 .. note::
-    This article covers configuration that can be applied to a model targetting any data store and that which can be applied when targetting any relational database.
+    This article covers configuration that can be applied to a model targeting any data store and that which can be applied when targeting any relational database.
     Providers may also enable configuration that is specific to a particular data store. For documentation on provider specific configuration see the the :doc:`/providers/index` section.
 
 In this article:
@@ -22,12 +22,11 @@ In this article:
         - `Relational table`_
         - `Relational column`_
         - `Relational data type`_
-        - `Relational generated properties`_
 
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/modeling/configuring/sample>`_.
 
 .. note::
-    This article uses EF 7.0.0-beta5 which is the latest pre-release available on NuGet.org.
+    This article uses EF 7.0.0-beta6 which is the latest pre-release available on NuGet.org.
 
     You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
@@ -49,7 +48,7 @@ Data Annotations
 ^^^^^^^^^^^^^^^^
 
 .. caution::
-    Data Annotations are not yet implemented in Entity Framework 7. You can still add annotations to your entity classes so that they are used by other frameworks (such as ASP.NET MVC), but Entity Framework will not process these annotations. You can track `support for Data Annotations on GitHub <https://github.com/aspnet/EntityFramework/issues/107>`_.
+    Data Annotations are not yet fully implemented in Entity Framework 7. You can still add annotations to your entity classes so that they are used by other frameworks (such as ASP.NET MVC), but Entity Framework will not process these annotations. You can track `support for Data Annotations on GitHub <https://github.com/aspnet/EntityFramework/issues/107>`_.
 
 Keys
 ----
@@ -118,11 +117,55 @@ By default, a property whose type can contain null will be configured as optiona
 Generated Properties (Identity, Computed, Store Defaults, etc.)
 ---------------------------------------------------------------
 
-.. caution::
-    In Beta 4 there is no general purpose API for configuring how the database generates values for a column. For configuring generated values for a realtional database see `Relational generated properties`_.
+.. note::
+    **Sentinel Values**
 
-.. danger::
-    Do not use the `GenerateValueOnAdd` or `StoreComputed` APIs. These affect some lower level building blocks that may cause EF to stop functioning. In future pre-releases these will be removed from the model builder API.
+    EF uses a "sentinel value" to detect whether a value has been specified or not. By default the sentinel value is the CLR default for the property type (``null`` for ``string``, ``0`` for ``int``, etc.).
+
+    If the property is assigned something other than the sentinel value, then EF will attempt to save the specified value to the database **regardless of the value generation strategy that is configured**.
+
+    You can change the sentinel value for a given property. The most common case for doing this is a property that does not use value generation where you want to be able to save a record with the default sentinel value. For example, if you want to be able to save the value `0` for an integer primary key, you would need to change the sentinel value to something other than `0`.
+
+    .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/SentinelValue.cs
+            :language: c#
+            :lines: 9-16
+            :emphasize-lines: 7
+            :linenos:
+
+There are three value generation patterns that can be used for properties.
+
+No value generation
+^^^^^^^^^^^^^^^^^^^
+
+No value generation means that you will always supply a valid value to be saved to the database.
+
+.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/ValueGeneratedNever.cs
+        :language: c#
+        :lines: 5-22
+        :emphasize-lines: 7-9
+        :linenos:
+
+Value generated on add
+^^^^^^^^^^^^^^^^^^^^^^
+
+Value generated on add means that if you don't specify a value one will be generated for you. This value may be generated client side by EF, or in the database.
+
+.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/ValueGeneratedOnAdd.cs
+        :language: c#
+        :lines: 5-22
+        :emphasize-lines: 7-9
+        :linenos:
+
+Value generated on add or update
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Value generated on add or update means that a new value is generated every time the record is saved (insert or update).
+
+.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/ValueGeneratedOnAddOrUpdate.cs
+        :language: c#
+        :lines: 6-24
+        :emphasize-lines: 7-9
+        :linenos:
 
 Maximum Length
 --------------
@@ -247,27 +290,6 @@ If you are targetting more than one relational provider with the same model then
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/DataTypeForProvider.cs
         :language: c#
-        :lines: 11-14
+        :lines: 11-13
         :emphasize-lines: 3
         :linenos:
-
-Relational generated properties
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. caution::
-    In Beta 4 there are a number of issues with the APIs for configuring generated properties. The examples here show how to configure for SQL Server.
-
-The following code turns off database value generation for a column that was setup to have values generated in the database by convention.
-
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/NoValueGeneration.cs
-        :language: c#
-        :lines: 5-22
-        :emphasize-lines: 7-10
-        :linenos:
-
-.. caution::
-    **SQL Server and sequence vs. identity**
-
-    By default, when targetting SQL Server, EF will use a global sequence to generate values for numeric primary keys. The values will be retrieved in blocks from the database and assigned to entities when they are added to the context. If you want to swap to using values that are generated using the ``IDENTITY`` pattern during  ``SaveChanges`` then add a call to ``modelBuilder.ForSqlServer().UseIdentity()`` at the top of ``OnModelCreating``.
-
-    In future pre-releases this behavior will change to use the ``IDENTITY`` pattern by default.
