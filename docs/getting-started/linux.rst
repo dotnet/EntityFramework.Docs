@@ -32,10 +32,7 @@ Minimum system requirements
 .. caution::
     **Known Issues**
 
-     - Bugs in Mono 4.0.2 may cause Entity Framework to crash when using async methods. This is resolved with Mono >4.2.0, which has not yet been publicly released. `See this issue on GitHub <https://github.com/aspnet/EntityFramework/issues/2708>`_
-     - Migrations on SQLite do not support more complex schema changes due to limitations in SQLite itself.
-
-     .. TODO add workaround demo for SQLite rebuilds
+    .. include:: x-plat/issues.rst
 
 
 Install ASP.NET 5
@@ -81,4 +78,4 @@ The following steps will install `dnvm <https://github.com/aspnet/home#running-a
 If you have trouble installing dnvm, consult this `Getting Started guide <http://dotnet.github.io/core/getting-started/>`_.
 
 
-.. include:: xplat.rst
+.. include:: x-plat/guide.rst

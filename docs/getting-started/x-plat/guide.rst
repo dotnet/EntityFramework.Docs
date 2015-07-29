@@ -169,3 +169,43 @@ Run the application from the command line.
 
 After adding the new post, you can verify the data has been added by inspecting the SQLite database file, ``blog.db``.
 
+
+Workarounds
+-----------
+
+This demo was written for beta 6, which has bugs in it. The following workarounds will make this sample project work for beta 6.
+
+Add a Startup class to your project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When generating migrations, you may see this error message:
+
+.. code-block:: console
+
+    System.InvalidOperationException: A type named 'StartupProduction' or 'Startup' could not be found in assembly 'ConsoleApp'.
+
+To get around this, add the following into your project.
+    
+.. literalinclude:: x-plat/sample/src/ConsoleApp/Program.cs
+    :linenos:
+    :language: c#
+    :lines: 25-30
+
+
+Migrations generates invalid annotation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this sample, the first step of `Create your database`_ will generate invalid
+C#. You may encounter this error when building your project.
+
+.. code-block:: console
+
+    Microsoft.Framework.Runtime.Roslyn.RoslynCompilationException: ./src/ConsoleApp/Migrations/20150729221913_MyFirstMigration.cs(17,61): DNX,Version=v4.5.1 error CS1503: Argument 2: cannot convert from 'bool' to 'string' 
+
+To get around this, remove the offending lines of the code in ``Migrations/xxxxx_MyFirstMigration.cs```.
+
+.. literalinclude:: x-plat/sample/src/ConsoleApp/Migrations/20150729221913_MyFirstMigration.cs
+    :linenos:
+    :language: c#
+    :lines: 8-32
+    :emphasize-lines: 10, 23

@@ -1,0 +1,4 @@
+.DS_Store
+Thumbs.db
+project.lock.json
+*.db

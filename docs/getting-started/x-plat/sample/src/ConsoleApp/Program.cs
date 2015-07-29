@@ -6,7 +6,7 @@ namespace ConsoleApp
     {
         public void Main(string[] args)
         {
-            using (var context = new BloggingContext())
+            using (var db = new BloggingContext())
             {
                 db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/adonet" });
                 var count = db.SaveChanges();
@@ -20,5 +20,12 @@ namespace ConsoleApp
                 }
             }
         }
+    }
+
+    // TODO: Remove. Will be unnecessary when bug #2357 fixed
+    // See https://github.com/aspnet/EntityFramework/issues/2357
+    public class Startup
+    {
+        public void Configure() { }
     }
 }
