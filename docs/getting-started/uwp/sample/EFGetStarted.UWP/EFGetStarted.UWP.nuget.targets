@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(NuGetPackageRoot)' == ''">
+    <NuGetPackageRoot>C:\Users\rowmil\.nuget\packages\</NuGetPackageRoot>
+  </PropertyGroup>
+  <ImportGroup>
+    <Import Project="$(NuGetPackageRoot)\EntityFramework.Commands\7.0.0-beta6\build\netcore50\EntityFramework.Commands.targets" Condition="Exists('$(NuGetPackageRoot)\EntityFramework.Commands\7.0.0-beta6\build\netcore50\EntityFramework.Commands.targets')" />
+  </ImportGroup>
+</Project>
