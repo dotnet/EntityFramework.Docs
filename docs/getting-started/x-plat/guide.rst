@@ -136,7 +136,7 @@ We can now use Entity Framework commands to create and manage the schema of our 
         ~/ConsoleApp/ $ dnx . ef migration add MyFirstMigration
 
  - Apply the migrations.
-    You can now using the existing migration to create the database file and creates the tables.
+    You can now begin using the existing migration to create the database file and creates the tables.
 
     .. code-block:: console
 
@@ -147,7 +147,7 @@ We can now use Entity Framework commands to create and manage the schema of our 
 Use your model
 --------------
 
-Now that we have configured our model and creating the database schema, we can use BloggingContext to create, update, and delete objects. 
+Now that we have configured our model and created the database schema, we can use BloggingContext to create, update, and delete objects. 
 
 .. literalinclude:: x-plat/sample/src/ConsoleApp/Program.cs
     :language: c#
