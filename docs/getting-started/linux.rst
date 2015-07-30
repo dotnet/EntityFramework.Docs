@@ -1,5 +1,5 @@
 Getting Started on Linux
-====================================
+========================
 
 This walkthrough will create a simple console application using ASP.NET 5 and
 the SQLite provider.
@@ -10,14 +10,9 @@ the SQLite provider.
     You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
 
-In this article
-    - `Prerequisites`_
-    - `Install ASP.NET 5`_
-    - `Create a new project`_
-    - `Create your model`_
-    - `Create your database`_
-    - `Use your model`_
-    - `Start your app`_
+.. contents:: `In this article:`
+    :depth: 1
+    :local:
 
 .. note:: `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/x-plat/sample>`_.
 

@@ -1,3 +1,5 @@
+:orphan:
+
 - Bugs in Mono 4.0.2 may cause Entity Framework to crash when using async methods. This is resolved with Mono >4.2.0, which has not yet been publicly released. `See aspnet/EntityFramework#2708 <https://github.com/aspnet/EntityFramework/issues/2708>`_ on GitHub
 - Migrations on SQLite do not support more complex schema changes due to limitations in SQLite itself.
 

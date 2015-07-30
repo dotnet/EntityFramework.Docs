@@ -1,3 +1,5 @@
+:orphan:
+
 Create a new project
 --------------------
  - Create a new folder ``ConsoleApp/`` for your project. All files for the project should be contained in this folder. 
