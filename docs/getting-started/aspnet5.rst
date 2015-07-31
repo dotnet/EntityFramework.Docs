@@ -5,15 +5,9 @@ Getting Started on ASP.NET 5
 
 In this walkthrough, you will build an ASP.NET 5 MVC application that performs basic data access using Entity Framework.
 
-In this article:
-	- `Create a new project`_
-	- `Install Entity Framework`_
-	- `Create your model`_
-	- `Register your context with dependency injection`_
-	- `Create your database`_
-	- `Create a controller`_
-	- `Create views`_
-	- `Run the application`_
+.. contents:: `In this article:`
+    :depth: 1
+    :local:
 
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/aspnet5/sample>`_.
 

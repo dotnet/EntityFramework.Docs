@@ -5,13 +5,9 @@ Getting Started on Full .NET (Console, WinForms, WPF, etc.)
 
 In this walkthrough, you will build a console application that performs basic data access using Entity Framework.
 
-In this article:
-	- `Ensure NuGet 2.8.6 or later`_
-	- `Create a new project`_
-	- `Install Entity Framework`_
-	- `Create your model`_
-	- `Create your database`_
-	- `Use your model`_
+.. contents:: `In this article:`
+    :depth: 1
+    :local:
 
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/full-dotnet/sample>`_.
 
