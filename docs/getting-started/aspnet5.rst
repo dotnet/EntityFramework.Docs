@@ -43,6 +43,15 @@ When the **New ASP.NET Project** dialog appears:
     - Ensure that **Authentication** is set to **None**
     - Click **OK**
 
+.. note::
+    If you are attempting to create a standalone class library as data layer shared across multiple applications, ensure that the ``frameworks`` section of the ``project.json`` is updated to replace ``dotnet`` with ``dnx451`` and ``dnxcore50``.  This will ensure that the library has a reference to the ``Microsoft.Data.Entity`` namespace.
+
+.. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5/project.json
+        :language: json
+        :linenos:
+        :lines: 25-28
+        :emphasize-lines: 2-3
+
 .. caution::
     If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework model will be added to your project in `Models\\IdentityModel.cs`.
 
