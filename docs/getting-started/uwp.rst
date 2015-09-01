@@ -4,7 +4,7 @@ Getting Started on Universal Windows Platform
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
 .. caution::
-    **Beta 6 can be used on UWP but there are a number of known issues that you need to workaround. Look out for caution boxes (such as this one) that provide details of required workarounds.**
+    **Pre-releases of EF7 can be used on UWP but there are a number of known issues that you need to workaround. Look out for caution boxes (such as this one) that provide details of required workarounds.**
 
     We'll be working to address these issues in upcoming releases. In fact, some of them are already fixed in our working code base.
 
@@ -18,8 +18,8 @@ In this article:
 
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/uwp/sample>`_.
 
-.. note::
-    This walkthrough uses EF 7.0.0-beta6 which is the latest pre-release available on NuGet.org.
+.. caution::
+    **This walkthrough uses EF 7.0.0-beta6. Version 7.0.0-beta7 is available on NuGet.org, but some issues prevent it from being installed in a UWP application.**
 
     You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
@@ -48,14 +48,16 @@ Install Entity Framework
 To use EF7 you install the package for the database provider(s) you want to target. This walkthrough uses SQLite. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
-* Run ``Install-Package EntityFramework.SQLite –Pre``
+* Run ``Install-Package EntityFramework.SQLite –Version 7.0.0-beta6``
 
 Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.
 
-* Run ``Install-Package EntityFramework.Commands –Pre``
-* Run ``Install-Package Microsoft.CodeAnalysis.CSharp``
+* Run ``Install-Package EntityFramework.Commands –Version 7.0.0-beta6``
+* Run ``Install-Package Microsoft.CodeAnalysis.CSharp –Version 1.0.0``
 
 .. caution::
+    **Note that the commands explicitly install EF 7.0.0-beta6.** Version 7.0.0-beta7 is available on NuGet.org, but some issues prevent it from being installed in a UWP application.
+
     Needing to install the **Microsoft.CodeAnalysis.CSharp** package is a workaround for an issue in Beta 6. This will not be required in later releases.
 
 Create your model

@@ -1,51 +1,51 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.Migrations.Builders;
-using Microsoft.Data.Entity.Migrations.Operations;
+using Microsoft.Data.Entity.SqlServer.Metadata;
 
 namespace EFGetStarted.ConsoleApp.Migrations
 {
     public partial class MyFirstMigration : Migration
     {
-        public override void Up(MigrationBuilder migration)
+        protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migration.CreateTable(
+            migrationBuilder.CreateTable(
                 name: "Blog",
                 columns: table => new
                 {
-                    BlogId = table.Column(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", "IdentityColumn"),
-                    Url = table.Column(type: "nvarchar(max)", nullable: false)
+                    BlogId = table.Column<int>(isNullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerIdentityStrategy.IdentityColumn),
+                    Url = table.Column<string>(isNullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Blog", x => x.BlogId);
                 });
-            migration.CreateTable(
+            migrationBuilder.CreateTable(
                 name: "Post",
                 columns: table => new
                 {
-                    PostId = table.Column(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", "IdentityColumn"),
-                    BlogId = table.Column(type: "int", nullable: false),
-                    Content = table.Column(type: "nvarchar(max)", nullable: true),
-                    Title = table.Column(type: "nvarchar(max)", nullable: true)
+                    PostId = table.Column<int>(isNullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerIdentityStrategy.IdentityColumn),
+                    BlogId = table.Column<int>(isNullable: false),
+                    Content = table.Column<string>(isNullable: true),
+                    Title = table.Column<string>(isNullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Post", x => x.PostId);
                     table.ForeignKey(
                         name: "FK_Post_Blog_BlogId",
-                        columns: x => x.BlogId,
-                        referencedTable: "Blog",
-                        referencedColumn: "BlogId");
+                        column: x => x.BlogId,
+                        principalTable: "Blog",
+                        principalColumn: "BlogId");
                 });
         }
 
-        public override void Down(MigrationBuilder migration)
+        protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migration.DropTable("Post");
-            migration.DropTable("Blog");
+            migrationBuilder.DropTable("Post");
+            migrationBuilder.DropTable("Blog");
         }
     }
 }
