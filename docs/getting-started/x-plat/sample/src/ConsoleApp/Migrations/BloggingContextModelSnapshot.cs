@@ -1,20 +1,21 @@
 using System;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Migrations;
 using ConsoleApp;
 
-namespace ConsoleAppMigrations
+namespace ConsoleApp.Migrations
 {
-    [ContextType(typeof(BloggingContext))]
+    [DbContext(typeof(BloggingContext))]
     partial class BloggingContextModelSnapshot : ModelSnapshot
     {
-        public override void BuildModel(ModelBuilder builder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
-            builder
-                .Annotation("ProductVersion", "7.0.0-beta6-13815");
+            modelBuilder
+                .Annotation("ProductVersion", "7.0.0-beta7-15540");
 
-            builder.Entity("ConsoleApp.Blog", b =>
+            modelBuilder.Entity("ConsoleApp.Blog", b =>
                 {
                     b.Property<int>("BlogId")
                         .ValueGeneratedOnAdd();
@@ -26,7 +27,7 @@ namespace ConsoleAppMigrations
                     b.Key("BlogId");
                 });
 
-            builder.Entity("ConsoleApp.Post", b =>
+            modelBuilder.Entity("ConsoleApp.Post", b =>
                 {
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd();
@@ -40,7 +41,7 @@ namespace ConsoleAppMigrations
                     b.Key("PostId");
                 });
 
-            builder.Entity("ConsoleApp.Post", b =>
+            modelBuilder.Entity("ConsoleApp.Post", b =>
                 {
                     b.Reference("ConsoleApp.Blog")
                         .InverseCollection()

@@ -1,7 +1,8 @@
 {
     "dependencies": {
-        "EntityFramework.Sqlite": "7.0.0-beta6",
-        "EntityFramework.Commands": "7.0.0-beta6"
+        "EntityFramework.Sqlite": "7.0.0-beta7",
+        "EntityFramework.Commands": "7.0.0-beta7",
+        "Microsoft.Dnx.Runtime.Abstractions": "1.0.0-beta7"
     },
     "commands": {
         "run": "ConsoleApp",
