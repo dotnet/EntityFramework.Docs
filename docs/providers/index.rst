@@ -14,7 +14,7 @@ EntityFramework.SqlServer
 
 **Database Engine:** Microsoft SQL Server (2008 onwards)
 
-**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (3.12.1 onwards)
+**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (4.2.0 onwards)
 
 .. caution::
     Using this provider on Mono will make use of the Mono SQL Client implementation, which has a number of known issues. For example, it does not support secure connections (SSL).
@@ -31,7 +31,7 @@ EntityFramework.SQLite
 
 **Database Engine:** SQLite (3.7 onwards)
 
-**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (3.12.1 onwards), UWP coming soon
+**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (4.2.0 onwards), UWP coming soon
 
 **Status:** `Pre-release EntityFramework.SQLite package on NuGet.org <https://www.nuget.org/packages/EntityFramework.SQLite>`_ that supports the latest EF7 pre-release
 
@@ -45,7 +45,7 @@ EntityFramework.InMemory
 
 **Database Engine:** Built-in in-memory database (designed for testing purposes only)
 
-**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (3.12.1 onwards), UWP coming soon
+**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (4.2.0 onwards), UWP coming soon
 
 **Status:** `Pre-release EntityFramework.InMemory package on NuGet.org <https://www.nuget.org/packages/EntityFramework.InMemory>`_ that supports the latest EF7 pre-release
 
@@ -86,7 +86,7 @@ EntityFramework.Npgsql
 
 **Database Engine:** PostgreSql
 
-**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 only), Mono (3.12.1 onwards)
+**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 only), Mono (4.2.0 onwards)
 
 **Status:** Under active development. No official pre-release on NuGet.org yet.
 

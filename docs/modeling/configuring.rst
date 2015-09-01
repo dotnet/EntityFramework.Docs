@@ -26,7 +26,7 @@ In this article:
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/modeling/configuring/sample>`_.
 
 .. note::
-    This article uses EF 7.0.0-beta6 which is the latest pre-release available on NuGet.org.
+    This article uses EF 7.0.0-beta7 which is the latest pre-release available on NuGet.org.
 
     You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
