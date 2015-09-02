@@ -65,7 +65,7 @@ EntityFramework.SqlServerCompact40
 
 **Project Site:** `ErikEJ/EntityFramework7.SqlServerCompact GitHub Project <https://github.com/ErikEJ/EntityFramework7.SqlServerCompact>`_
 
-**Getting Started:** See the `documentation for this project <https://github.com/ErikEJ/EntityFramework7.SqlServerCompact/wiki/Using-EF7-with-SQL-Server-Compact-in-Traditional-.NET-Applications-(beta-6)>`_
+**Getting Started:** See the `documentation for this project <https://github.com/ErikEJ/EntityFramework7.SqlServerCompact/wiki/Using-EF7-with-SQL-Server-Compact-in-Traditional-.NET-Applications>`_
 
 EntityFramework.SqlServerCompact35
 ----------------------------------
@@ -78,7 +78,7 @@ EntityFramework.SqlServerCompact35
 
 **Project Site:** `ErikEJ/EntityFramework7.SqlServerCompact GitHub Project <https://github.com/ErikEJ/EntityFramework7.SqlServerCompact>`_
 
-**Getting Started:** See the `documentation for this project <https://github.com/ErikEJ/EntityFramework7.SqlServerCompact/wiki/Using-EF7-with-SQL-Server-Compact-in-Traditional-.NET-Applications-(beta-6)>`_
+**Getting Started:** See the `documentation for this project <https://github.com/ErikEJ/EntityFramework7.SqlServerCompact/wiki/Using-EF7-with-SQL-Server-Compact-in-Traditional-.NET-Applications>`_
 
 
 EntityFramework.Npgsql
