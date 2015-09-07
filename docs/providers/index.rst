@@ -84,12 +84,12 @@ EntityFramework.SqlServerCompact35
 EntityFramework.Npgsql
 ----------------------
 
-**Database Engine:** PostgreSql
+**Database Engine:** PostgreSQL
 
-**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 only), Mono (4.2.0 onwards)
+**Platforms:** Full .NET (4.5 onwards), Mono (4.2.0 onwards). DNX/ASP.NET 5 (dnx451 and dnxcore50) coming soon
 
-**Status:** Under active development. No official pre-release on NuGet.org yet.
+**Status:** `Pre-release EntityFramework7.Npgsql package on NuGet.org <https://www.nuget.org/packages/EntityFramework7.Npgsql/>`_ that supports the latest EF7 pre-release
 
 **Project Site:** `Npgsql.org <http://www.npgsql.org>`_
 
-**Getting Started:** Some `early documentation on using nightly builds <http://www.npgsql.org/doc/ef7.html>`_ is available.
+**Getting Started:** See the `getting started documentation at the Npgsql site <http://www.npgsql.org/doc/ef7.html>`_
