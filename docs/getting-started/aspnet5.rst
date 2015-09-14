@@ -128,7 +128,7 @@ Now that you have a model, you can use migrations to create a database for you.
     - Run ``dnx ef database update`` to apply the new migration to the database. Because your database doesn't exist yet, it will be created for you before the migration is applied.
 
 .. tip::
-    If you make future changes to your model, you can use the ``dnx ef migrations add`` command to scaffold a new migration to apply the corresponding changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the ``dnx database update`` command to apply the changes to the database.
+    If you make future changes to your model, you can use the ``dnx ef migrations add`` command to scaffold a new migration to apply the corresponding changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the ``dnx ef database update`` command to apply the changes to the database.
 
 Create a controller
 -------------------
