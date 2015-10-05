@@ -54,7 +54,7 @@ Install Entity Framework
 To use EF7 you install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
 
     - :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
-    - Run ``Install-Package EntityFramework.SqlServer –Pre``
+    - Run ``Install-Package EntityFramework.MicrosoftSqlServer –Pre``
 
 .. note::
     In ASP.NET 5 projects the ``Install-Package`` will complete quickly and the package installation will occur in the background. You will see **(Restoring...)** appear next to **References** in **Solution Explorer** while the install occurs.
