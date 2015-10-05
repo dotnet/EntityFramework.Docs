@@ -2,14 +2,14 @@ Database Providers
 ==================
 
 The following providers are either available or being developed:
- - `EntityFramework.SqlServer`_
+ - `EntityFramework.MicrosoftSqlServer`_
  - `EntityFramework.SQLite`_
  - `EntityFramework.InMemory`_
  - `EntityFramework.SqlServerCompact40`_
  - `EntityFramework.SqlServerCompact35`_
  - `EntityFramework.Npgsql`_
 
-EntityFramework.SqlServer
+EntityFramework.MicrosoftSqlServer
 -------------------------
 
 **Database Engine:** Microsoft SQL Server (2008 onwards)
@@ -19,7 +19,7 @@ EntityFramework.SqlServer
 .. caution::
     Using this provider on Mono will make use of the Mono SQL Client implementation, which has a number of known issues. For example, it does not support secure connections (SSL).
 
-**Status:** `Pre-release EntityFramework.SqlServer package on NuGet.org <https://www.nuget.org/packages/EntityFramework.SqlServer>`_ that supports the latest EF7 pre-release
+**Status:** `Pre-release EntityFramework.MicrosoftSqlServer package on NuGet.org <https://www.nuget.org/packages/EntityFramework.MicrosoftSqlServer>`_ that supports the latest EF7 pre-release
 
 **Project Site:** `EntityFramework GitHub project <https://github.com/aspnet/EntityFramework>`_
 

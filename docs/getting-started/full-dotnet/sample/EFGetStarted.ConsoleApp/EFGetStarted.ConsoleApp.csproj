@@ -49,8 +49,8 @@
       <HintPath>..\packages\EntityFramework.Relational.Design.7.0.0-beta7\lib\net45\EntityFramework.Relational.Design.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.SqlServer.7.0.0-beta7\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.MicrosoftSqlServer, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.MicrosoftSqlServer.7.0.0-beta7\lib\net45\EntityFramework.MicrosoftSqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Razor, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
