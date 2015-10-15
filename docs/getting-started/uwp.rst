@@ -3,10 +3,10 @@ Getting Started on Universal Windows Platform
 
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
-.. caution::
-    **Pre-releases of EF7 can be used on UWP but there are a number of known issues that you need to workaround. Look out for caution boxes (such as this one) that provide details of required workarounds.**
+.. danger::
+    **The current pre-release of Entity Framework 7 can be used for local development of Universal Windows Applications but it can not be used in an application that is deployed to the app store.**
 
-    We'll be working to address these issues in upcoming releases. In fact, some of them are already fixed in our working code base.
+    This is because EF7 is not yet compatible with .NET Native, which is a hard requirement for applications deployed to the app store. You can `track our work to support .NET Native on our GitHub project <https://github.com/aspnet/EntityFramework/issues/623>`_.
 
 In this article:
 	- `Prerequisites`_
@@ -18,8 +18,8 @@ In this article:
 
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/uwp/sample>`_.
 
-.. caution::
-    **This walkthrough uses EF 7.0.0-beta6. Version 7.0.0-beta7 is available on NuGet.org, but some issues prevent it from being installed in a UWP application.**
+.. note::
+    This walkthrough uses EF 7.0.0-beta8 which is the latest pre-release available on NuGet.org.
 
     You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
@@ -27,12 +27,9 @@ Prerequisites
 -------------
 
 The following items are required to complete this walkthrough:
-    - Windows 10 RTM
-    - Visual Studio 2015 RTM with Window 10 Developer Tools
-
-.. tip::
-    If you already have Visual Studio 2015 RTM installed without the Windows 10 Developer Tools, you can add these tools to your existing Visual Studio installation. You can `run the installer <http://go.microsoft.com/fwlink/?LinkID=619615>`_, or open **Programs and Features** from **Control Panel**, select **Visual Studio** and click **Change**. Then in setup, click **Modify** and select the **Tools for Universal Windows Apps**.
-
+    - Windows 10
+    - Visual Studio 2015
+    - The latest version of `Windows 10 Developer Tools <https://dev.windows.com/en-us/downloads>`_
 
 Create a new project
 --------------------
@@ -48,17 +45,11 @@ Install Entity Framework
 To use EF7 you install the package for the database provider(s) you want to target. This walkthrough uses SQLite. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
-* Run ``Install-Package EntityFramework.SQLite –Version 7.0.0-beta6``
+* Run ``Install-Package EntityFramework.SQLite –Pre``
 
 Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.
 
-* Run ``Install-Package EntityFramework.Commands –Version 7.0.0-beta6``
-* Run ``Install-Package Microsoft.CodeAnalysis.CSharp –Version 1.0.0``
-
-.. caution::
-    **Note that the commands explicitly install EF 7.0.0-beta6.** Version 7.0.0-beta7 is available on NuGet.org, but some issues prevent it from being installed in a UWP application.
-
-    Needing to install the **Microsoft.CodeAnalysis.CSharp** package is a workaround for an issue in Beta 6. This will not be required in later releases.
+* Run ``Install-Package EntityFramework.Commands –Pre``
 
 Create your model
 -----------------
@@ -75,6 +66,9 @@ Now it's time to define a context and entity classes that make up your model.
 .. note::
     Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
 
+.. note::
+    In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
+
 .. literalinclude:: uwp/sample/EFGetStarted.UWP/Model.cs
     :language: c#
     :linenos:
@@ -90,17 +84,6 @@ Now that you have a model, you can use migrations to create a database for you.
 
 .. caution::
     Notice that you need to manually build the solution before running the ``Add-Migration`` command. The command does invoke the build operation on the project, but we are currently investigating why this does not result in the correct assemblies being outputted.
-
-.. caution::
-    Due to a bug in the migration scaffolder in Beta6 you will need to manually edit the generated migration.
-
-    Remove (or comment out) the two calls to ``.Annotation("Sqlite:Autoincrement", true)`` as highlighted in the following code listing
-
-    .. literalinclude:: uwp/sample/EFGetStarted.UWP/Migrations/20150729201928_MyFirstMigration.cs
-        :language: c#
-        :linenos:
-        :lines: 10-31
-        :emphasize-lines: 7-8,19-20
 
 Since we want the database to be created on the device that the app runs on, we will add some code to apply any pending migrations to the local database on application startup. The first time that the app runs, this will take care of creating the local database for us.
 

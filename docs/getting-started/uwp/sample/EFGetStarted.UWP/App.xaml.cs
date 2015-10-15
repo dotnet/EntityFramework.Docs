@@ -20,7 +20,7 @@ namespace EFGetStarted.UWP
 
             using (var db = new BloggingContext())
             {
-                db.Database.ApplyMigrations();
+                db.Database.Migrate();
             }
         }
 

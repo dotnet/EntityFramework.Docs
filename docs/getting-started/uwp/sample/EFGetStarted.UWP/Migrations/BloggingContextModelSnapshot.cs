@@ -1,31 +1,32 @@
 using System;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Migrations;
 using EFGetStarted.UWP;
 
-namespace EFGetStartedUWPMigrations
+namespace EFGetStarted.UWP.Migrations
 {
-    [ContextType(typeof(BloggingContext))]
+    [DbContext(typeof(BloggingContext))]
     partial class BloggingContextModelSnapshot : ModelSnapshot
     {
-        public override void BuildModel(ModelBuilder builder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
-            builder
-                .Annotation("ProductVersion", "7.0.0-beta6-13815");
+            modelBuilder
+                .Annotation("ProductVersion", "7.0.0-beta8-15964");
 
-            builder.Entity("EFGetStarted.UWP.Blog", b =>
+            modelBuilder.Entity("EFGetStarted.UWP.Blog", b =>
                 {
                     b.Property<int>("BlogId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Url")
-                        .Required();
+                        .IsRequired();
 
-                    b.Key("BlogId");
+                    b.HasKey("BlogId");
                 });
 
-            builder.Entity("EFGetStarted.UWP.Post", b =>
+            modelBuilder.Entity("EFGetStarted.UWP.Post", b =>
                 {
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd();
@@ -36,13 +37,13 @@ namespace EFGetStartedUWPMigrations
 
                     b.Property<string>("Title");
 
-                    b.Key("PostId");
+                    b.HasKey("PostId");
                 });
 
-            builder.Entity("EFGetStarted.UWP.Post", b =>
+            modelBuilder.Entity("EFGetStarted.UWP.Post", b =>
                 {
-                    b.Reference("EFGetStarted.UWP.Blog")
-                        .InverseCollection()
+                    b.HasOne("EFGetStarted.UWP.Blog")
+                        .WithMany()
                         .ForeignKey("BlogId");
                 });
         }

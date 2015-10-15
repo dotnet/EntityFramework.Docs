@@ -29,7 +29,7 @@ namespace EFGetStarted.UWP
             // Make Blog.Url required
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Url)
-                .Required();
+                .IsRequired();
         }
     }
 
