@@ -18,7 +18,7 @@ In this article:
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/aspnet5/sample>`_.
 
 .. note::
-    This walkthrough uses EF 7.0.0-beta7 which is the latest pre-release available on NuGet.org.
+    This walkthrough uses EF 7.0.0-beta8 which is the latest pre-release available on NuGet.org.
 
     You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
@@ -27,6 +27,7 @@ Prerequisites
 
 The following items are required to complete this walkthrough:
     - Visual Studio 2015
+    - ASP.NET 5 Beta 8 Tools for Visual Studio
 
 Create a new project
 --------------------
@@ -67,7 +68,7 @@ Later in this walkthrough we will also be using some Entity Framework commands t
 .. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5/project.json
         :language: json
         :linenos:
-        :lines: 21-24
+        :lines: 21-25
         :emphasize-lines: 3
 
 Create your model
@@ -81,6 +82,9 @@ Now it's time to define a context and entity classes that make up your model.
     - Select the **Class** item template
     - Enter **BloggingModel.cs** as the name and click **OK**
     - Replace the contents of the file with the following code
+
+.. note::
+    In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
 
 .. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5/Models/BloggingModel.cs
         :language: c#
@@ -110,20 +114,19 @@ Now we can use the ``AddDbContext`` method to register it as a service.
 .. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5/Startup.cs
         :language: c#
         :linenos:
-        :lines: 29-38
+        :lines: 30-37
         :emphasize-lines: 4-8
 
 Create your database
 --------------------
 
 .. caution::
-
     The migrations experience in ASP.NET 5 is still a work-in-progress. The following steps are overly complex and will be simplified by the time we reach a stable release.
 
 Now that you have a model, you can use migrations to create a database for you.
     - Open a command prompt (**Windows Key + R**, type **cmd**, click **OK**)
     - Use the ``cd`` command to navigate to the project directory
-    - Run ``dnvm use 1.0.0-beta7``
+    - Run ``dnvm use 1.0.0-beta8``
     - Run ``dnx ef migrations add MyFirstMigration`` to scaffold a migration to create the initial set of tables for your model.
     - Run ``dnx ef database update`` to apply the new migration to the database. Because your database doesn't exist yet, it will be created for you before the migration is applied.
 
