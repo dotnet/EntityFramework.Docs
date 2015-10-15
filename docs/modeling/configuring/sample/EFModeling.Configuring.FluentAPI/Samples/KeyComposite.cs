@@ -9,7 +9,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.KeyComposite
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Car>()
-                .Key(c => new { c.State, c.LicensePlate });
+                .HasKey(c => new { c.State, c.LicensePlate });
         }
     }
 

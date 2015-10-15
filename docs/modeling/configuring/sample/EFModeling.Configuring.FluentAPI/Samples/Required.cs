@@ -10,7 +10,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Required
         {
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Url)
-                .Required();
+                .IsRequired();
         }
     }
 

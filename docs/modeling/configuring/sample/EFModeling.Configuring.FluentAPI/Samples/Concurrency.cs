@@ -10,7 +10,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Concurrency
         {
             modelBuilder.Entity<Person>()
                 .Property(p => p.SocialSecurityNumber)
-                .ConcurrencyToken();
+                .IsConcurrencyToken();
         }
     }
 

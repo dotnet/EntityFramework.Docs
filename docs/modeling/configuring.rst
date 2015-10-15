@@ -26,7 +26,7 @@ In this article:
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/modeling/configuring/sample>`_.
 
 .. note::
-    This article uses EF 7.0.0-beta7 which is the latest pre-release available on NuGet.org.
+    This article uses EF 7.0.0-beta8 which is the latest pre-release available on NuGet.org.
 
     You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
@@ -48,7 +48,7 @@ Data Annotations
 ^^^^^^^^^^^^^^^^
 
 .. caution::
-    Data Annotations are not yet fully implemented in Entity Framework 7. You can still add annotations to your entity classes so that they are used by other frameworks (such as ASP.NET MVC), but Entity Framework will not process these annotations. You can track `support for Data Annotations on GitHub <https://github.com/aspnet/EntityFramework/issues/107>`_.
+    Data Annotations have been recently implemented in EF7 and are not yet included in this article. They will be added in the near future.
 
 Keys
 ----
@@ -84,7 +84,7 @@ The following code shows how to specify an index on a single property. By defaul
         :emphasize-lines: 7-8
         :linenos:
 
-You can also specify that an idex should be unique, meaning that no two entities can have the same value(s) for the given property(s).
+You can also specify that an index should be unique, meaning that no two entities can have the same value(s) for the given property(s).
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/IndexUnique.cs
         :language: c#
@@ -183,7 +183,7 @@ The following code allows the store to choose an appropraite data type for ``Blo
 .. note::
     Entity Framework does not do any validation of maximum length before passing data to the provider. It is up to the provider or data store to validate if appropriate.
 
-    For example, when targetting SQL Server, exceding the maximum length will result in an exception as the data type of the underlying column will not allow excess data to be stored.
+    For example, when targeting SQL Server, exceeding the maximum length will result in an exception as the data type of the underlying column will not allow excess data to be stored.
 
 Concurrency Tokens
 ------------------
@@ -286,7 +286,7 @@ The following code specifies that the column for ``Blog.Url`` should use the ``v
         :emphasize-lines: 7-9
         :linenos:
 
-If you are targetting more than one relational provider with the same model then you probably want to specify a data type for each provider rather than a global one to be used for all relational providers.
+If you are targeting more than one relational provider with the same model then you probably want to specify a data type for each provider rather than a global one to be used for all relational providers.
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/DataTypeForProvider.cs
         :language: c#

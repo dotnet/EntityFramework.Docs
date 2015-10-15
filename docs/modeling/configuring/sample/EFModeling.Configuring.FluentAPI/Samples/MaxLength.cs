@@ -10,7 +10,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.MaxLength
         {
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Url)
-                .MaxLength(500);
+                .HasMaxLength(500);
         }
     }
 
