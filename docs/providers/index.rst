@@ -31,13 +31,13 @@ EntityFramework.SQLite
 
 **Database Engine:** SQLite (3.7 onwards)
 
-**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (4.2.0 onwards), UWP coming soon
+**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (4.2.0 onwards), Universal Windows Platform (local development only)
 
 **Status:** `Pre-release EntityFramework.SQLite package on NuGet.org <https://www.nuget.org/packages/EntityFramework.SQLite>`_ that supports the latest EF7 pre-release
 
 **Project Site:** `EntityFramework GitHub project <https://github.com/aspnet/EntityFramework>`_
 
-**Getting Started:** See :doc:`/getting-started/linux` or :doc:`/getting-started/osx` for a walkthrough that uses this provider
+**Getting Started:** See :doc:`/getting-started/uwp`, :doc:`/getting-started/linux` or :doc:`/getting-started/osx` for walkthroughs that use this provider
 
 
 EntityFramework.InMemory
@@ -45,7 +45,7 @@ EntityFramework.InMemory
 
 **Database Engine:** Built-in in-memory database (designed for testing purposes only)
 
-**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (4.2.0 onwards), UWP coming soon
+**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (4.2.0 onwards), Universal Windows Platform (local development only)
 
 **Status:** `Pre-release EntityFramework.InMemory package on NuGet.org <https://www.nuget.org/packages/EntityFramework.InMemory>`_ that supports the latest EF7 pre-release
 
@@ -86,7 +86,7 @@ EntityFramework.Npgsql
 
 **Database Engine:** PostgreSQL
 
-**Platforms:** Full .NET (4.5 onwards), Mono (4.2.0 onwards). DNX/ASP.NET 5 (dnx451 and dnxcore50) coming soon
+**Platforms:** Full .NET (4.5 onwards), Mono (4.2.0 onwards). DNX/ASP.NET 5 (dnx451 supported, dnxcore50 coming soon)
 
 **Status:** `Pre-release EntityFramework7.Npgsql package on NuGet.org <https://www.nuget.org/packages/EntityFramework7.Npgsql/>`_ that supports the latest EF7 pre-release
 
