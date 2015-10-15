@@ -16,7 +16,7 @@ In this article:
 `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/full-dotnet/sample>`_.
 
 .. note::
-    This walkthrough uses EF 7.0.0-beta7 which is the latest pre-release available on NuGet.org.
+    This walkthrough uses EF 7.0.0-beta8 which is the latest pre-release available on NuGet.org.
 
     You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
@@ -62,7 +62,11 @@ Now it's time to define a context and entity classes that make up your model.
 * Enter *Model.cs* as the name and click **OK**
 * Replace the contents of the file with the following code
 
-.. note:: Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
+.. note::
+    Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
+
+.. note::
+    In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
 
 .. literalinclude:: full-dotnet/sample/EFGetStarted.ConsoleApp/Model.cs
         :language: c#

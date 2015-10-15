@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.SqlServer.Metadata;
+using Microsoft.Data.Entity.Metadata;
 
 namespace EFGetStarted.ConsoleApp.Migrations
 {
@@ -13,9 +13,9 @@ namespace EFGetStarted.ConsoleApp.Migrations
                 name: "Blog",
                 columns: table => new
                 {
-                    BlogId = table.Column<int>(isNullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerIdentityStrategy.IdentityColumn),
-                    Url = table.Column<string>(isNullable: false)
+                    BlogId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Url = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,11 +25,11 @@ namespace EFGetStarted.ConsoleApp.Migrations
                 name: "Post",
                 columns: table => new
                 {
-                    PostId = table.Column<int>(isNullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerIdentityStrategy.IdentityColumn),
-                    BlogId = table.Column<int>(isNullable: false),
-                    Content = table.Column<string>(isNullable: true),
-                    Title = table.Column<string>(isNullable: true)
+                    PostId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BlogId = table.Column<int>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

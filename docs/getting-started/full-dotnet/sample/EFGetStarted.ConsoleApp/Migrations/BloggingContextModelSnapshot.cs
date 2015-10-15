@@ -4,7 +4,6 @@ using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
 using EFGetStarted.ConsoleApp;
-using Microsoft.Data.Entity.SqlServer.Metadata;
 
 namespace EFGetStarted.ConsoleApp.Migrations
 {
@@ -14,8 +13,8 @@ namespace EFGetStarted.ConsoleApp.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Annotation("ProductVersion", "7.0.0-beta7-15540")
-                .Annotation("SqlServer:ValueGenerationStrategy", SqlServerIdentityStrategy.IdentityColumn);
+                .Annotation("ProductVersion", "7.0.0-beta8-15964")
+                .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("EFGetStarted.ConsoleApp.Blog", b =>
                 {
@@ -23,9 +22,9 @@ namespace EFGetStarted.ConsoleApp.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Url")
-                        .Required();
+                        .IsRequired();
 
-                    b.Key("BlogId");
+                    b.HasKey("BlogId");
                 });
 
             modelBuilder.Entity("EFGetStarted.ConsoleApp.Post", b =>
@@ -39,13 +38,13 @@ namespace EFGetStarted.ConsoleApp.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Key("PostId");
+                    b.HasKey("PostId");
                 });
 
             modelBuilder.Entity("EFGetStarted.ConsoleApp.Post", b =>
                 {
-                    b.Reference("EFGetStarted.ConsoleApp.Blog")
-                        .InverseCollection()
+                    b.HasOne("EFGetStarted.ConsoleApp.Blog")
+                        .WithMany()
                         .ForeignKey("BlogId");
                 });
         }

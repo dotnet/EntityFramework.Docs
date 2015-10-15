@@ -25,7 +25,7 @@ namespace EFGetStarted.ConsoleApp
             // Make Blog.Url required
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Url)
-                .Required();
+                .IsRequired();
         }
     }
 
