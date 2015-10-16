@@ -1,5 +1,4 @@
-- Bugs in Mono 4.0.2 may cause Entity Framework to crash when using async methods. This is resolved with `Mono 4.2.0 <http://www.mono-project.com/docs/about-mono/releases/4.2.0/>`_, which is available as an alpha release (at time of writing).
+- DNX-coreclr will die silentily if you are missing the ICU library. Make sure to install all dependencies listed in the install guide. (See `Issue dnx#2875 <https://github.com/aspnet/dnx/issues/2875>`_)
 - Migrations on SQLite do not support more complex schema changes due to limitations in SQLite itself.
 
-- Bugs in beta 7. See `Workarounds`_.
-    - Migrations requires that you have a "Startup" class in your project. `Issue #2357 <https://github.com/aspnet/EntityFramework/issues/2357>`_.
+- Bugs in beta 8. See `Workarounds`_.

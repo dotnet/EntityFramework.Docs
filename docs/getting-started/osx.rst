@@ -5,9 +5,9 @@ This walkthrough will create a simple console application using ASP.NET 5 and
 the SQLite provider.
 
 .. note::
-    This article was written for OS X Mavericks or newer. It uses beta 7 of ASP.NET and EF7.
+    This article was written for OS X Mavericks or newer. It uses beta 8 of ASP.NET and EF7.
 
-    You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
+    You can find nightly builds of the EF7 code base hosted on https://www.myget.org/gallery/aspnetvnext/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
 
 
 .. contents:: `In this article:`
@@ -41,7 +41,7 @@ The following steps will install `dnvm <https://github.com/aspnet/home#running-a
 
     .. code-block:: console
 
-        ~ $ brew install mono
+        ~ $ brew install mono icu4c
 
  - Run the dnvm
 
@@ -55,7 +55,7 @@ The following steps will install `dnvm <https://github.com/aspnet/home#running-a
 
         ~ $ dnvm upgrade
 
-If you have trouble installing dnvm, consult this `Getting Started guide <http://dotnet.github.io/core/getting-started/>`_.
+If you have trouble installing dnvm, consult `Installing ASP.NET 5 on Mac OS X <http://docs.asp.net/en/latest/getting-started/installing-on-mac.html>`_.
 
 
 .. include:: x-plat/guide.rst

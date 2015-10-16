@@ -12,10 +12,10 @@ namespace ConsoleApp.Migrations
                 name: "Blog",
                 columns: table => new
                 {
-                    BlogId = table.Column<int>(isNullable: false)
+                    BlogId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(isNullable: true),
-                    Url = table.Column<string>(isNullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Url = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -25,11 +25,11 @@ namespace ConsoleApp.Migrations
                 name: "Post",
                 columns: table => new
                 {
-                    PostId = table.Column<int>(isNullable: false)
+                    PostId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    BlogId = table.Column<int>(isNullable: false),
-                    Content = table.Column<string>(isNullable: true),
-                    Title = table.Column<string>(isNullable: true)
+                    BlogId = table.Column<int>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

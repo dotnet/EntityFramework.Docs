@@ -8,17 +8,13 @@ using ConsoleApp;
 namespace ConsoleApp.Migrations
 {
     [DbContext(typeof(BloggingContext))]
+    [Migration("20151016182300_MyFirstMigration")]
     partial class MyFirstMigration
     {
-        public override string Id
-        {
-            get { return "20150901220808_MyFirstMigration"; }
-        }
-
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Annotation("ProductVersion", "7.0.0-beta7-15540");
+                .Annotation("ProductVersion", "7.0.0-beta8-15964");
 
             modelBuilder.Entity("ConsoleApp.Blog", b =>
                 {
@@ -29,7 +25,7 @@ namespace ConsoleApp.Migrations
 
                     b.Property<string>("Url");
 
-                    b.Key("BlogId");
+                    b.HasKey("BlogId");
                 });
 
             modelBuilder.Entity("ConsoleApp.Post", b =>
@@ -43,13 +39,13 @@ namespace ConsoleApp.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Key("PostId");
+                    b.HasKey("PostId");
                 });
 
             modelBuilder.Entity("ConsoleApp.Post", b =>
                 {
-                    b.Reference("ConsoleApp.Blog")
-                        .InverseCollection()
+                    b.HasOne("ConsoleApp.Blog")
+                        .WithMany()
                         .ForeignKey("BlogId");
                 });
         }

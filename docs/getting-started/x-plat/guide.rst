@@ -60,9 +60,9 @@ To verify that this project has all dependencies and packages installed, perform
                 | _| | _|   \_/ |  //|\\
                 |___||_|       /   \\\/\\
 
-        Entity Framework Commands 7.0.0-beta7-15540
+        Entity Framework Commands 7.0.0-beta8-15964
 
-        Usage: ef [options] [command]
+        Usage: dnx ef [options] [command]
 
         Options:
           --version     Show version information
@@ -73,7 +73,7 @@ To verify that this project has all dependencies and packages installed, perform
           dbcontext   Commands to manage your DbContext types
           migrations  Commands to manage your migrations
 
-        Use "ef [command] --help" for more information about a command.
+        Use "dnx ef [command] --help" for more information about a command.
 
 
 Create your model
@@ -112,16 +112,22 @@ blog post from the command line.
  - To make sure the files are correct, you can compile the project on the command line by running ``dnu build --quiet``
 
     .. code-block:: console
-        :emphasize-lines: 4-6
+        :emphasize-lines: 9-11
 
         ~/ConsoleApp/ $ dnu build --quiet
-        Microsoft .NET Development Utility Mono-x86-1.0.0-beta6
+        Microsoft .NET Development Utility Mono-x64-1.0.0-beta8-15858
+
+
+        Building ConsoleApp for DNX,Version=v4.5.1
+
+        Building ConsoleApp for DNXCore,Version=v5.0
 
         Build succeeded.
             0 Warning(s)
             0 Error(s)
 
-        Total build time elapsed: 00:00:01.9609581
+        Time elapsed 00:00:01.7288901
+        Total build time elapsed: 00:00:01.7470325
         Total projects built: 1
 
 Create your database
@@ -174,7 +180,7 @@ After adding the new post, you can verify the data has been added by inspecting 
 Workarounds
 -----------
 
-This demo was written for beta 7, which has bugs in it. The following workarounds will make this sample project work for beta 7.
+This demo was written for beta 8, which has bugs in it. The following workarounds will make this sample project work for beta 8.
 
 Add a Startup class to your project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,11 +189,11 @@ When generating migrations, you may see this error message:
 
 .. code-block:: console
 
-    System.InvalidOperationException: A type named 'StartupProduction' or 'Startup' could not be found in assembly 'ConsoleApp'.
+    System.InvalidOperationException: A type named 'StartupDevelopment' or 'Startup' could not be found in assembly 'ConsoleApp'.
 
 To get around this, add the following into your project.
 
 .. literalinclude:: x-plat/sample/src/ConsoleApp/Program.cs
     :linenos:
     :language: c#
-    :lines: 25-30
+    :lines: 25-29

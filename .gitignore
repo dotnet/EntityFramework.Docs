@@ -202,3 +202,4 @@ samples/AngularSample/src/AngularSample/wwwroot/lib
 project.lock.json
 samples/WebApplication1/src/WebApplication1/wwwroot/lib/
 **/sample/**/wwwroot/lib/
+venv

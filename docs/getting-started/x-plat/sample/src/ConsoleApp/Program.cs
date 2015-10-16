@@ -22,8 +22,7 @@ namespace ConsoleApp
         }
     }
 
-    // TODO: Remove. Will be unnecessary when bug #2357 fixed
-    // See https://github.com/aspnet/EntityFramework/issues/2357
+    // TODO: Remove. Will be fixed in the next release of EF.
     public class Startup
     {
         public void Configure() { }
