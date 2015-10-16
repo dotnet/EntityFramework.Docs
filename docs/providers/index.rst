@@ -86,7 +86,7 @@ EntityFramework.Npgsql
 
 **Database Engine:** PostgreSQL
 
-**Platforms:** Full .NET (4.5 onwards), Mono (4.2.0 onwards). DNX/ASP.NET 5 (dnx451 supported, dnxcore50 coming soon)
+**Platforms:** Full .NET (4.5 onwards), DNX/ASP.NET 5 (dnx451 and dnxcore50), Mono (4.2.0 onwards)
 
 **Status:** `Pre-release EntityFramework7.Npgsql package on NuGet.org <https://www.nuget.org/packages/EntityFramework7.Npgsql/>`_ that supports the latest EF7 pre-release
 
