@@ -47,6 +47,13 @@ Install Entity Framework
 To use EF7 you install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
+* Prior to installation:
+* Either, ensure Package source is set to nuget.org:
+* :menuselection:`Tools --> NuGet Package Manager --> Package Manager Settings --> Package Sources`
+* Check the box for nuget.org
+* :menuselection:`Package Manager Console --> Package source: --> nuget.org`
+* Or, Append to the end of the command ``-Source nuget.org``
+
 * Run ``Install-Package EntityFramework.SqlServer –Pre``
 
 Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.
