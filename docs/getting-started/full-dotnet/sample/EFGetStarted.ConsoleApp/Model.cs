@@ -15,9 +15,6 @@ namespace EFGetStarted.ConsoleApp
 
             // Visual Studio 2013 | Use the LocalDb 11 instance created by Visual Studio
             // optionsBuilder.UseSqlServer(@"Server=(localdb)\v11.0;Database=EFGetStarted.ConsoleApp;Trusted_Connection=True;");
-
-            // Visual Studio 2012 | Use the SQL Express instance created by Visual Studio
-            // optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=EFGetStarted.ConsoleApp;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

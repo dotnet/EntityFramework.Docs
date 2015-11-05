@@ -13,8 +13,8 @@ namespace EFGetStarted.ConsoleApp.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Annotation("ProductVersion", "7.0.0-beta8-15964")
-                .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "7.0.0-rc1-16259")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("EFGetStarted.ConsoleApp.Blog", b =>
                 {
@@ -45,7 +45,7 @@ namespace EFGetStarted.ConsoleApp.Migrations
                 {
                     b.HasOne("EFGetStarted.ConsoleApp.Blog")
                         .WithMany()
-                        .ForeignKey("BlogId");
+                        .HasForeignKey("BlogId");
                 });
         }
     }

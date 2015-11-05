@@ -1,9 +1,7 @@
-.. include:: /stub-topic.txt
-
 Getting Started on Full .NET (Console, WinForms, WPF, etc.)
 ===========================================================
 
-In this walkthrough, you will build a console application that performs basic data access using Entity Framework.
+In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework.
 
 In this article:
 	- `Ensure NuGet 2.8.6 or later`_
@@ -13,12 +11,10 @@ In this article:
 	- `Create your database`_
 	- `Use your model`_
 
-`View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/full-dotnet/sample>`_.
+.. include:: /sample.txt
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/full-dotnet/sample
 
-.. note::
-    This walkthrough uses EF 7.0.0-beta8 which is the latest pre-release available on NuGet.org.
-
-    You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
+.. include:: /rc1-notice.txt
 
 Ensure NuGet 2.8.6 or later
 ---------------------------
@@ -27,7 +23,6 @@ Installing EF7 requires NuGet 2.8.6 (or higher). Make sure you restart Visual St
 
 - **Visual Studio 2015** - No updates needed, a compatible version of NuGet is included.
 - **Visual Studio 2013** - `Install the latest NuGet for VS2013 <https://visualstudiogallery.msdn.microsoft.com/4ec1526c-4a8c-4a84-b702-b21a8f5293ca>`_.
-- **Visual Studio 2012** - `Install the latest NuGet for VS2012 <https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c>`_.
 
 .. note::
     NuGet version numbers can be confusing, while the required release is branded 2.8.6 the product version of the extension is 2.8.60610.xxx.
@@ -35,11 +30,11 @@ Installing EF7 requires NuGet 2.8.6 (or higher). Make sure you restart Visual St
 Create a new project
 --------------------
 
-* Open Visual Studio (this walkthrough uses 2015 but you can use any version from 2012 onwards)
+* Open Visual Studio (this walkthrough uses 2015 but you can use any version from 2013 onwards)
 * :menuselection:`File --> New --> Project...`
 * From the left menu select :menuselection:`Templates --> Visual C# --> Windows`
 * Select the **Console Application** project template
-* Ensure you are targeting .NET 4.5 or later
+* Ensure you are targeting **.NET Framework 4.5.1** or later
 * Give the project a name and click **OK**
 
 Install Entity Framework
@@ -65,12 +60,12 @@ Now it's time to define a context and entity classes that make up your model.
 .. note::
     Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
 
-.. note::
-    In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
-
 .. literalinclude:: full-dotnet/sample/EFGetStarted.ConsoleApp/Model.cs
         :language: c#
         :linenos:
+
+.. tip::
+    In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
 
 Create your database
 --------------------
@@ -82,7 +77,9 @@ Now that you have a model, you can use migrations to create a database for you.
 * Run ``Update-Database`` to apply the new migration to the database. Because your database doesn't exist yet, it will be created for you before the migration is applied.
 
 .. tip::
-    If you make future changes to your model, you can use the ``Add-Migration`` command to scaffold a new migration to apply the corresponding changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the ``Update-Database`` command to apply the changes to the database.
+    If you make future changes to your model, you can use the ``Add-Migration`` command to scaffold a new migration to make the corresponding schema changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the ``Update-Database`` command to apply the changes to the database.
+
+    EF uses a ``__EFMigrationsHistory`` table in the database to keep track of which migrations have already been applied to the database.
 
 Use your model
 --------------
