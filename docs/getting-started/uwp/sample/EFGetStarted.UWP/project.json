@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
-    "EntityFramework.Commands": "7.0.0-beta8",
-    "EntityFramework.SQLite": "7.0.0-beta8",
+    "EntityFramework.Commands": "7.0.0-rc1-final",
+    "EntityFramework.Sqlite": "7.0.0-rc1-final",
     "Microsoft.ApplicationInsights": "1.0.0",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.0.0",
     "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
