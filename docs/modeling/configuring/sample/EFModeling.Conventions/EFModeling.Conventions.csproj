@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{20E1786B-FA14-4470-8B90-62A0C197E54D}</ProjectGuid>
+    <ProjectGuid>{73E054DC-BF55-4717-A729-7FA53382E0EA}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EFModeling.Configuring.FluentAPI</RootNamespace>
-    <AssemblyName>EFModeling.Configuring.FluentAPI</AssemblyName>
+    <RootNamespace>EFModeling.Conventions</RootNamespace>
+    <AssemblyName>EFModeling.Conventions</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -102,7 +102,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.0.0-beta-23504\lib\dotnet5.2\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.0.0-beta-23509\lib\dotnet5.2\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Interactive.Async, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -118,32 +118,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Samples\IgnoreProperty.cs" />
-    <Compile Include="Samples\IndexComposite.cs" />
-    <Compile Include="Samples\IndexUnique.cs" />
-    <Compile Include="Samples\AlternateKeyComposite.cs" />
-    <Compile Include="Samples\KeyComposite.cs" />
-    <Compile Include="Samples\Index.cs" />
-    <Compile Include="Samples\Concurrency.cs" />
-    <Compile Include="Samples\AlternateKeySingle.cs" />
-    <Compile Include="Samples\MaxLength.cs" />
-    <Compile Include="Samples\IgnoreType.cs" />
-    <Compile Include="Samples\Relational\DataTypeForProvider.cs" />
-    <Compile Include="Samples\Relational\AlternateKeyName.cs" />
-    <Compile Include="Samples\Relational\KeyName.cs" />
-    <Compile Include="Samples\Relational\IndexName.cs" />
-    <Compile Include="Samples\ShadowProperty.cs" />
-    <Compile Include="Samples\ValueGeneratedOnAddOrUpdate.cs" />
-    <Compile Include="Samples\ValueGeneratedOnAdd.cs" />
-    <Compile Include="Samples\ValueGeneratedNever.cs" />
-    <Compile Include="Samples\Relational\DataType.cs" />
-    <Compile Include="Samples\Relational\Column.cs" />
-    <Compile Include="Samples\Relational\TableAndSchema.cs" />
-    <Compile Include="Samples\Relational\Table.cs" />
-    <Compile Include="Samples\Required.cs" />
-    <Compile Include="Samples\KeySingle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Samples\AlternateKey.cs" />
+    <Compile Include="Samples\ShadowForeignKey.cs" />
+    <Compile Include="Samples\IncludedTypes.cs" />
+    <Compile Include="Samples\KeyTypeNameId.cs" />
+    <Compile Include="Samples\KeyId.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
