@@ -4,7 +4,7 @@ namespace ConsoleApp
 {
     public class Program
     {
-        public void Main(string[] args)
+        public static void Main()
         {
             using (var db = new BloggingContext())
             {
@@ -20,11 +20,5 @@ namespace ConsoleApp
                 }
             }
         }
-    }
-
-    // TODO: Remove. Will be fixed in the next release of EF.
-    public class Startup
-    {
-        public void Configure() { }
     }
 }

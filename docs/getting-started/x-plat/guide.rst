@@ -24,16 +24,15 @@ Create a new project
     .. code-block:: c#
         :linenos:
 
-        // Program.cs
         using System;
 
         namespace ConsoleApp
         {
             public class Program
             {
-                public void Main(string[] args)
+                public static void Main()
                 {
-                    Console.WriteLine("Hello dnx!");
+                    Console.WriteLine("Hello EF!");
                 }
             }
         }
@@ -45,7 +44,7 @@ To verify that this project has all dependencies and packages installed, perform
     .. code-block:: console
 
         ~/ConsoleApp/ $ dnx run
-        Hello dnx!
+        Hello EF!
 
  - Verify that Entity Framework is installed by running ``dnx ef``.
 
@@ -60,7 +59,7 @@ To verify that this project has all dependencies and packages installed, perform
                 | _| | _|   \_/ |  //|\\
                 |___||_|       /   \\\/\\
 
-        Entity Framework Commands 7.0.0-beta8-15964
+        Entity Framework Commands 7.0.0-rc1-16297
 
         Usage: dnx ef [options] [command]
 
@@ -89,17 +88,16 @@ blog post from the command line.
         .. literalinclude:: x-plat/sample/src/ConsoleApp/Model.cs
             :language: c#
             :linenos:
-            :lines: 1-8
+            :lines: 1-7
 
  - Add a new class to represent the SQLite database.
-    We will call this ``BloggingContext``. Note that to configure this for SQLite, we must call ``UseSqlite()`` with a connection string pointing to the \*.db file.
-    Note that we are making the path relative to the application path, rather than the current working directory of the invoking process.
+    We will call this ``BloggingContext``. The call to ``UseSqlite()`` configures EF to point to a \*.db file in the same folder as the ``project.json`` file for our project.
 
         .. literalinclude:: x-plat/sample/src/ConsoleApp/Model.cs
             :language: c#
             :linenos:
-            :lines: 9-21
-            :emphasize-lines: 1, 10
+            :lines: 8-19
+            :emphasize-lines: 1, 9
 
  - Add classes to represent tables.
     Note that we will be using foreign keys to associate many posts to one blog.
@@ -107,18 +105,15 @@ blog post from the command line.
         .. literalinclude:: x-plat/sample/src/ConsoleApp/Model.cs
             :language: c#
             :linenos:
-            :lines: 22-39
+            :lines: 20-37
 
  - To make sure the files are correct, you can compile the project on the command line by running ``dnu build --quiet``
 
     .. code-block:: console
-        :emphasize-lines: 9-11
+        :emphasize-lines: 6-8
 
         ~/ConsoleApp/ $ dnu build --quiet
-        Microsoft .NET Development Utility Mono-x64-1.0.0-beta8-15858
-
-
-        Building ConsoleApp for DNX,Version=v4.5.1
+        Microsoft .NET Development Utility CoreClr-x64-1.0.0-rc1-16137
 
         Building ConsoleApp for DNXCore,Version=v5.0
 
@@ -126,8 +121,8 @@ blog post from the command line.
             0 Warning(s)
             0 Error(s)
 
-        Time elapsed 00:00:01.7288901
-        Total build time elapsed: 00:00:01.7470325
+        Time elapsed 00:00:03.7102187
+        Total build time elapsed: 00:00:03.8096587
         Total projects built: 1
 
 Create your database
@@ -175,25 +170,3 @@ Run the application from the command line.
           - http://blogs.msdn.com/adonet
 
 After adding the new post, you can verify the data has been added by inspecting the SQLite database file, ``blog.db``.
-
-
-Workarounds
------------
-
-This demo was written for beta 8, which has bugs in it. The following workarounds will make this sample project work for beta 8.
-
-Add a Startup class to your project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When generating migrations, you may see this error message:
-
-.. code-block:: console
-
-    System.InvalidOperationException: A type named 'StartupDevelopment' or 'Startup' could not be found in assembly 'ConsoleApp'.
-
-To get around this, add the following into your project.
-
-.. literalinclude:: x-plat/sample/src/ConsoleApp/Program.cs
-    :linenos:
-    :language: c#
-    :lines: 25-29
