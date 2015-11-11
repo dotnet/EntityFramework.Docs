@@ -118,6 +118,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Samples\Relational\RelationshipConstraintName.cs" />
+    <Compile Include="Samples\Relationships\CascadeDelete.cs" />
+    <Compile Include="Samples\Relationships\CompositePrincipalKey.cs" />
+    <Compile Include="Samples\Relationships\ManyToMany.cs" />
+    <Compile Include="Samples\Relationships\OneToOne.cs" />
+    <Compile Include="Samples\Relationships\Required.cs" />
+    <Compile Include="Samples\Relationships\PrincipalKey.cs" />
+    <Compile Include="Samples\Relationships\CompositeForeignKey.cs" />
+    <Compile Include="Samples\Relationships\ForeignKey.cs" />
+    <Compile Include="Samples\Relationships\NoForeignKey.cs" />
     <Compile Include="Samples\IgnoreProperty.cs" />
     <Compile Include="Samples\IndexComposite.cs" />
     <Compile Include="Samples\IndexUnique.cs" />
@@ -132,6 +142,8 @@
     <Compile Include="Samples\Relational\AlternateKeyName.cs" />
     <Compile Include="Samples\Relational\KeyName.cs" />
     <Compile Include="Samples\Relational\IndexName.cs" />
+    <Compile Include="Samples\Relationships\Full.cs" />
+    <Compile Include="Samples\Relationships\OneNavigation.cs" />
     <Compile Include="Samples\ShadowProperty.cs" />
     <Compile Include="Samples\ValueGeneratedOnAddOrUpdate.cs" />
     <Compile Include="Samples\ValueGeneratedOnAdd.cs" />

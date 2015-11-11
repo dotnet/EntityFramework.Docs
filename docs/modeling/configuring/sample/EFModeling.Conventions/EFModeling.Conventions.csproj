@@ -120,7 +120,11 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Samples\Relationships\NoForeignKey.cs" />
+    <Compile Include="Samples\Relationships\OneNavigation.cs" />
+    <Compile Include="Samples\Relationships\Full.cs" />
     <Compile Include="Samples\AlternateKey.cs" />
+    <Compile Include="Samples\Relationships\OneToOne.cs" />
     <Compile Include="Samples\ShadowForeignKey.cs" />
     <Compile Include="Samples\IncludedTypes.cs" />
     <Compile Include="Samples\KeyTypeNameId.cs" />
@@ -130,6 +134,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

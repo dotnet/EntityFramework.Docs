@@ -129,6 +129,8 @@
     <Compile Include="Samples\Relational\DataType.cs" />
     <Compile Include="Samples\Relational\Table.cs" />
     <Compile Include="Samples\Relational\TableAndSchema.cs" />
+    <Compile Include="Samples\Relationships\InverseProperty.cs" />
+    <Compile Include="Samples\Relationships\ForeignKey.cs" />
     <Compile Include="Samples\Required.cs" />
     <Compile Include="Samples\ValueGeneratedNever.cs" />
     <Compile Include="Samples\ValueGeneratedOnAdd.cs" />

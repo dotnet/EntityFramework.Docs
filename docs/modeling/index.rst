@@ -12,15 +12,16 @@ In this section you can find information about conventions and configuration for
 .. toctree::
    :titlesonly:
 
-   keys
-   included-properties
    included-types
-   indexes
+   included-properties
+   keys
+   generated-properties
    required-optional
    max-length
-   generated-properties
    concurrency
    shadow-properties
+   relationships
+   indexes
    alternate-keys
    relational-table
    relational-column
