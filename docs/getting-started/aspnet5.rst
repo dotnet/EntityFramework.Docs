@@ -27,10 +27,10 @@ Prerequisites
 
 The following items are required to complete this walkthrough:
     - Visual Studio 2015
-    - ASP.NET 5 Beta 8 Tools for Visual Studio 
+    - ASP.NET 5 Beta 8 Tools for Visual Studio
 
 .. note::
-ASP.NET 5 Beta 8 is not included with Visual Studio 2015. To install, please follow instructions at https://docs.asp.net/en/latest/getting-started/installing-on-windows.html.
+    ASP.NET 5 Beta 8 is not included with Visual Studio 2015. To install, please follow instructions at https://docs.asp.net/en/latest/getting-started/installing-on-windows.html.
 
 Create a new project
 --------------------
