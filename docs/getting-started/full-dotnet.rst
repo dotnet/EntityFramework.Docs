@@ -11,10 +11,10 @@ In this article:
 	- `Create your database`_
 	- `Use your model`_
 
-.. include:: /sample.txt
+.. include:: /_shared/sample.txt
 .. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/full-dotnet/sample
 
-.. include:: /rc1-notice.txt
+.. include:: /_shared/rc1-notice.txt
 
 Ensure NuGet 2.8.6 or later
 ---------------------------

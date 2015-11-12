@@ -1,4 +1,4 @@
-.. include:: /rc1-notice.txt
+.. include:: /_shared/rc1-notice.txt
 
 Modeling
 ========
@@ -27,7 +27,7 @@ In this section you can find information about conventions and configuration for
    relational-column
    relational-data-type
 
-.. include:: /sample.txt
+.. include:: /_shared/sample.txt
 .. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/modeling/configuring/sample
 
 Methods of configuration

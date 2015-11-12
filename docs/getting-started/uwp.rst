@@ -29,10 +29,10 @@ In this article:
 	- `Create your database`_
 	- `Use your model`_
 
-.. include:: /sample.txt
+.. include:: /_shared/sample.txt
 .. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/uwp/sample
 
-.. include:: /rc1-notice.txt
+.. include:: /_shared/rc1-notice.txt
 
 Prerequisites
 -------------

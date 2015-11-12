@@ -1,5 +1,3 @@
-.. include:: /stub-topic.txt
-
 Getting Started on ASP.NET 5
 ============================
 

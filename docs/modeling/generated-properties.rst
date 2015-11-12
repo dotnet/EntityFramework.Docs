@@ -1,4 +1,4 @@
-.. include:: /rc1-notice.txt
+.. include:: /_shared/rc1-notice.txt
 
 Generated Properties (Identity, Computed, Store Defaults, etc.)
 ===============================================================

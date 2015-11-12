@@ -8,10 +8,10 @@ the SQLite provider.
     :depth: 1
     :local:
 
-.. include:: /sample.txt
+.. include:: /_shared/sample.txt
 .. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/x-plat/sample
 
-.. include:: /rc1-notice.txt
+.. include:: /_shared/rc1-notice.txt
 
 Prerequisites
 -------------

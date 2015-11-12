@@ -108,7 +108,7 @@ todo_include_todos = False
 
 rst_prolog = """
 
-.. include:: /global-header.txt
+.. include:: /_shared/global-header.txt
 """
 
 # -- Options for HTML output ----------------------------------------------
