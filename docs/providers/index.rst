@@ -10,7 +10,7 @@ The following providers are either available or being developed:
  - `EntityFramework.Npgsql`_
 
 EntityFramework.MicrosoftSqlServer
--------------------------
+----------------------------------
 
 **Database Engine:** Microsoft SQL Server (2008 onwards)
 

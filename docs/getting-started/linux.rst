@@ -22,7 +22,7 @@ Minimum system requirements
 .. caution::
     **Known Issues**
 
-    .. include:: x-plat/issues.rst
+    .. include:: x-plat/issues.txt
 
 
 Install ASP.NET 5
@@ -53,4 +53,4 @@ The following steps will install `dnvm <https://github.com/aspnet/home#running-a
 If you have trouble installing dnvm, consult `Installing ASP.NET 5 on Linux <http://docs.asp.net/en/latest/getting-started/installing-on-linux.html>`_.
 
 
-.. include:: x-plat/guide.rst
+.. include:: x-plat/guide.txt
