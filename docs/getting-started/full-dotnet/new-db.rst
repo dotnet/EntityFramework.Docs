@@ -1,31 +1,29 @@
-Getting Started on Full .NET (Console, WinForms, WPF, etc.)
-===========================================================
-
-In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework.
-
-In this article:
-	- `Ensure NuGet 2.8.6 or later`_
-	- `Create a new project`_
-	- `Install Entity Framework`_
-	- `Create your model`_
-	- `Create your database`_
-	- `Use your model`_
-
-.. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/full-dotnet/sample
-
 .. include:: /_shared/rc1-notice.txt
 
-Ensure NuGet 2.8.6 or later
----------------------------
+Console Application to New Database
+===================================
 
-Installing EF7 requires NuGet 2.8.6 (or higher). Make sure you restart Visual Studio after installing the update.
+In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use migrations to create the database from your model.
 
-- **Visual Studio 2015** - No updates needed, a compatible version of NuGet is included.
-- **Visual Studio 2013** - `Install the latest NuGet for VS2013 <https://visualstudiogallery.msdn.microsoft.com/4ec1526c-4a8c-4a84-b702-b21a8f5293ca>`_.
+.. contents:: `In this article:`
+    :depth: 2
+    :local:
 
-.. note::
-    NuGet version numbers can be confusing, while the required release is branded 2.8.6 the product version of the extension is 2.8.60610.xxx.
+.. include:: /_shared/sample.txt
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/full-dotnet/sample/EFGetStarted.ConsoleApp.NewDb
+
+Prerequisites
+-------------
+
+The following prerequisites are needed to complete this walkthrough:
+
+* Visual Studio 2013 or Visual Studio 2015
+* `Latest version of NuGet Package Manager`_
+
+Latest version of NuGet Package Manager
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. include:: /_shared/ensure-vs-nuget-version.txt
 
 Create a new project
 --------------------
@@ -38,7 +36,8 @@ Create a new project
 * Give the project a name and click **OK**
 
 Install Entity Framework
-----------------------------------------
+------------------------
+
 To use EF7 you install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
@@ -60,7 +59,7 @@ Now it's time to define a context and entity classes that make up your model.
 .. note::
     Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
 
-.. literalinclude:: full-dotnet/sample/EFGetStarted.ConsoleApp/Model.cs
+.. literalinclude:: sample/EFGetStarted.ConsoleApp.NewDb/Model.cs
         :language: c#
         :linenos:
 
@@ -89,7 +88,7 @@ You can now use your model to perform data access.
 * Open *Program.cs*
 * Replace the contents of the file with the following code
 
-.. literalinclude:: full-dotnet/sample/EFGetStarted.ConsoleApp/Program.cs
+.. literalinclude:: sample/EFGetStarted.ConsoleApp.NewDb/Program.cs
         :language: c#
         :linenos:
 
@@ -97,4 +96,4 @@ You can now use your model to perform data access.
 
 You will see that one blog is saved to the database and then the details of all blogs are printed to the console.
 
-.. image:: full-dotnet/_static/console.png
+.. image:: _static/output-new-db.png
