@@ -1,7 +1,7 @@
 .. include:: /_shared/rc1-notice.txt
 
-Console Application to Existing Database
-========================================
+Console Application to Existing Database (Database First)
+=========================================================
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.
 
@@ -26,24 +26,12 @@ Latest version of NuGet Package Manager
 
 .. include:: /_shared/ensure-vs-nuget-version.txt
 
-
 Blogging database
 ^^^^^^^^^^^^^^^^^
 
-This tutorial uses a Blogging database on your LocalDb instance as the existing database.
+This tutorial uses a **Blogging** database on your LocalDb instance as the existing database.
 
-* :menuselection:`Tools --> Connect to Database...`
-* Select **Microsoft SQL Server** and click **Continue**
-* Enter **(localdb)\mssqllocaldb** as the **Server Name**
-* Enter **master** as the **Database Name**
-* The master database is now displayed under **Data Connections** in **Server Explorer**
-* Right-click on the database in **Server Explorer** and select **New Query**
-* Copy the script, listed below, into the query editor
-* Right-click on the query editor and select **Execute**
-
-.. literalinclude:: sample/EFGetStarted.ConsoleApp.ExistingDb/CreateDatabaseScript.sql
-        :language: sql
-        :linenos:
+.. include:: /getting-started/_shared/create-blogging-database-vs.txt
 
 Create a new project
 --------------------

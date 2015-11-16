@@ -12,7 +12,7 @@ Available Tutorials
     :titlesonly:
 
     full-dotnet/index
-    aspnet5
+    aspnet5/index
     uwp
     osx
     linux

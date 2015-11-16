@@ -23,7 +23,7 @@ EntityFramework.MicrosoftSqlServer
 
 **Project Site:** `EntityFramework GitHub project <https://github.com/aspnet/EntityFramework>`_
 
-**Getting Started:** See :doc:`/getting-started/full-dotnet/index` or :doc:`/getting-started/aspnet5` for a walkthrough that uses this provider. The `UnicornStore <https://github.com/rowanmiller/UnicornStore/tree/master/UnicornStore>`_ sample application also uses this provider.
+**Getting Started:** See :doc:`/getting-started/full-dotnet/index` or :doc:`/getting-started/aspnet5/index` for a walkthrough that uses this provider. The `UnicornStore <https://github.com/rowanmiller/UnicornStore/tree/master/UnicornStore>`_ sample application also uses this provider.
 
 
 EntityFramework.SQLite

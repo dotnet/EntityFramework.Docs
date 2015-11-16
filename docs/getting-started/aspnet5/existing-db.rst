@@ -1,9 +1,9 @@
 .. include:: /_shared/rc1-notice.txt
 
-Getting Started on ASP.NET 5
-============================
+ASP.NET 5 Application to Existing Database (Database First)
+===========================================================
 
-In this walkthrough, you will build an ASP.NET 5 MVC application that performs basic data access using Entity Framework.
+In this walkthrough, you will build an ASP.NET 5 MVC application that performs basic data access using Entity Framework.  You will use reverse engineering to create an Entity Framework model based on an existing database.
 
 .. contents:: `In this article:`
     :depth: 2
@@ -17,8 +17,16 @@ Prerequisites
 
 The following prerequisites are needed to complete this walkthrough:
 
-	* Visual Studio 2013 or Visual Studio 2015
-	* `ASP.NET 5 RC1 Tools for Visual Studio <https://docs.asp.net/en/latest/getting-started/installing-on-windows.html>`_
+  * Visual Studio 2015
+  * `ASP.NET 5 RC1 Tools for Visual Studio <https://docs.asp.net/en/latest/getting-started/installing-on-windows.html>`_
+  * `Blogging database`_
+
+Blogging database
+^^^^^^^^^^^^^^^^^
+
+This tutorial uses a **Blogging** database on your LocalDb instance as the existing database.
+
+.. include:: /getting-started/_shared/create-blogging-database-vs.txt
 
 Create a new project
 --------------------
@@ -28,14 +36,11 @@ Create a new project
 	* From the left menu select :menuselection:`Templates --> Visual C# --> Web`
 	* Select the **ASP.NET Web Application** project template
 	* Ensure you are targeting .NET 4.5.1 or later
-	* Enter **EFGetStarted.AspNet5.NewDb** as the name and click **OK**
+	* Enter **EFGetStarted.AspNet5.ExistingDb** as the name and click **OK**
 	* Wait for the **New ASP.NET Project** dialog to appear
 	* Under **ASP.NET 5 Preview Templates** select **Web Application**
 	* Ensure that **Authentication** is set to **No Authentication**
 	* Click **OK**
-
-.. caution::
-    If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework model will be added to your project in `Models\\IdentityModel.cs`. Using the techniques you will learn in this walkthrough, you can chose to add a second model, or extend this existing model to contain your entity classes.
 
 Install Entity Framework
 ----------------------------------------
@@ -47,49 +52,82 @@ To use EF7 you install the package for the database provider(s) you want to targ
 .. note::
     In ASP.NET 5 projects the ``Install-Package`` will complete quickly and the package installation will occur in the background. You will see **(Restoring...)** appear next to **References** in **Solution Explorer** while the install occurs.
 
-Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.
+To enable reverse engineering from an existing database we need to install a couple of other packages too.
 
-	* Run ``Install-Package EntityFramework.Commands –Pre``
-	* Open **project.json**
-	* Locate the ``commands`` section and add the ``ef`` command as shown below
+  * Run ``Install-Package EntityFramework.Commands –Pre``
+  * Run ``Install-Package EntityFramework.MicrosoftSqlServer.Design –Pre``
+  * Open **project.json**
+  * Locate the ``commands`` section and add the ``ef`` command as shown below
 
-.. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5.NewDb/project.json
+.. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/project.json
         :language: json
         :linenos:
-        :lines: 25-29
+        :lines: 26-29
         :emphasize-lines: 3
 
-Create your model
------------------
+Reverse engineer your model
+---------------------------
 
-Now it's time to define a context and entity classes that make up your model.
+.. caution::
+    The reverse engineer experience in ASP.NET 5 is still a work-in-progress. The following steps are overly complex and will be simplified by the time we reach a stable release.
 
-	* Right-click on the project in **Solution Explorer** and select :menuselection:`Add --> New Folder`
-	* Enter **Models** as the name of the folder
-	* Right-click on the **Models** folder and select :menuselection:`Add --> New Item...`
-	* From the left menu select :menuselection:`Installed --> Server-side`
-	* Select the **Class** item template
-	* Enter **Model.cs** as the name and click **OK**
-	* Replace the contents of the file with the following code
+Now it's time to create the EF model based on your existing database.
 
-.. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5.NewDb/Models/Model.cs
+  * Open a command prompt (**Windows Key + R**, type **cmd**, click **OK**)
+  * Use the ``cd`` command to navigate to the project directory
+  * Run ``dnvm use 1.0.0-rc1-final``
+  * Run the following command to create a model from the existing database
+
+.. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/ScaffoldCommand.txt
+
+The reverse engineer process created entity classes and a derived context based on the schema of the existing database. These classes were created in a **Models** folder in your project.
+
+Entity Classes
+^^^^^^^^^^^^^^
+
+The entity classes are simple C# objects that represent the data you will be querying and saving.
+
+.. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/Models/Blog.cs
         :language: c#
         :linenos:
 
-.. note::
-    In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
+Derived Context
+^^^^^^^^^^^^^^^
+
+The context represents a session with the database and allows you to query and save instances of the entity classes.
+
+.. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/Models/BloggingContextUnmodified.txt
+        :language: c#
+        :linenos:
 
 Register your context with dependency injection
 -----------------------------------------------
 
 The concept of dependency injection is central to ASP.NET 5. Services (such as ``BloggingContext``) are registered with dependency injection during application startup. Components that require these services (such as your MVC controllers) are then provided these services via constructor parameters or properties. For more information on dependency injection see the `Dependency Injection <http://docs.asp.net/en/latest/fundamentals/dependency-injection.html>`_ article on the ASP.NET site.
 
+Remove inline context configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In ASP.NET 5, configuration is generally performed in **Startup.cs**. To conform to this pattern, we will move configuration of the database provider to **Startup.cs**.
+
+  * Open **Models\BlogginContext.cs**
+  * Delete the lines of code highligted below
+
+.. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/Models/BloggingContextUnmodified.txt
+        :language: c#
+        :lines: 6-13
+        :emphasize-lines: 3-6
+        :linenos:
+
+Register and configure your context in Startup.cs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 In order for our MVC controllers to make use of ``BloggingContext`` we are going to register it as a service.
 
 	* Open **Startup.cs**
 	* Add the following ``using`` statements at the start of the file
 
-.. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5.NewDb/Startup.cs
+.. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/Startup.cs
         :language: c#
         :linenos:
         :lines: 1-2
@@ -99,28 +137,11 @@ Now we can use the ``AddDbContext`` method to register it as a service.
 	* Locate the ``ConfigureServices`` method
 	* Add the lines that are highlighted in the following code
 
-.. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5.NewDb/Startup.cs
+.. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/Startup.cs
         :language: c#
         :linenos:
         :lines: 28-35
         :emphasize-lines: 4-8
-
-Create your database
---------------------
-
-.. caution::
-    The migrations experience in ASP.NET 5 is still a work-in-progress. The following steps are overly complex and will be simplified by the time we reach a stable release.
-
-Now that you have a model, you can use migrations to create a database for you.
-
- 	* Open a command prompt (**Windows Key + R**, type **cmd**, click **OK**)
- 	* Use the ``cd`` command to navigate to the project directory
- 	* Run ``dnvm use 1.0.0-rc1-final``
- 	* Run ``dnx ef migrations add MyFirstMigration`` to scaffold a migration to create the initial set of tables for your model.
- 	* Run ``dnx ef database update`` to apply the new migration to the database. Because your database doesn't exist yet, it will be created for you before the migration is applied.
-
-.. tip::
-    If you make future changes to your model, you can use the ``dnx ef migrations add`` command to scaffold a new migration to apply the corresponding changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the ``dnx ef database update`` command to apply the changes to the database.
 
 Create a controller
 -------------------
@@ -133,7 +154,7 @@ Next, we'll add an MVC controller that will use EF to query and save data.
 	* Enter **BlogsController.cs** as the name and click **OK**
 	* Replace the contents of the file with the following code
 
-.. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5.NewDb/Controllers/BlogsController.cs
+.. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/Controllers/BlogsController.cs
         :language: c#
         :linenos:
 
@@ -156,7 +177,7 @@ We'll start with the view for our ``Index`` action, that displays all blogs.
 	* Enter **Index.cshtml** as the name and click **OK**
 	* Replace the contents of the file with the following code
 
-.. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5.NewDb/Views/Blogs/Index.cshtml
+.. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/Views/Blogs/Index.cshtml
         :linenos:
 
 We'll also add a view for the ``Create`` action, which allows the user to enter details for a new blog.
@@ -167,7 +188,7 @@ We'll also add a view for the ``Create`` action, which allows the user to enter 
 	* Enter **Create.cshtml** as the name and click **OK**
 	* Replace the contents of the file with the following code
 
-.. literalinclude:: aspnet5/sample/src/EFGetStarted.AspNet5.NewDb/Views/Blogs/Create.cshtml
+.. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/Views/Blogs/Create.cshtml
         :linenos:
 
 Run the application
@@ -181,6 +202,6 @@ You can now run the application to see it in action.
 	* Click **Create New**
 	* Enter a **Url** for the new blog and click **Create**
 
-.. image:: aspnet5/_static/create.png
+.. image:: _static/create.png
 
-.. image:: aspnet5/_static/index.png
+.. image:: _static/index-existing-db.png
