@@ -44,14 +44,3 @@ You can also use the Fluent API to configure multiple properties to be an altern
         :lines: 5-23
         :emphasize-lines: 7-8
         :linenos:
-
-Relational Databases
---------------------
-
-By convention, the index and constraint in the database will be named ``AK_<type name>_<property name>``. For composite alternate keys ``<property name>`` becomes an underscore separated list of property names. You can change this using the Fluent API.
-
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/AlternateKeyName.cs
-        :language: c#
-        :lines: 5-22
-        :emphasize-lines: 9
-        :linenos:

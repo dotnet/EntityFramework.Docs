@@ -23,9 +23,7 @@ In this section you can find information about conventions and configuration for
    relationships
    indexes
    alternate-keys
-   relational-table
-   relational-column
-   relational-data-type
+   relational/index
 
 .. include:: /_shared/sample.txt
 .. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/modeling/configuring/sample

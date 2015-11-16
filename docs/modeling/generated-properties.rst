@@ -1,7 +1,7 @@
 .. include:: /_shared/rc1-notice.txt
 
-Generated Properties (Identity, Computed, Store Defaults, etc.)
-===============================================================
+Generated Properties
+====================
 
 .. contents:: In this article:
     :depth: 3

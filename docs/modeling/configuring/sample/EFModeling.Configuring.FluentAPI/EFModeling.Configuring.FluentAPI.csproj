@@ -118,7 +118,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Samples\Relational\ComputedColumn.cs" />
+    <Compile Include="Samples\Relational\DefaultValueSql.cs" />
+    <Compile Include="Samples\Relational\DefaultValue.cs" />
     <Compile Include="Samples\Relational\RelationshipConstraintName.cs" />
+    <Compile Include="Samples\Relational\DefaultSchema.cs" />
+    <Compile Include="Samples\Relational\SequenceUsed.cs" />
+    <Compile Include="Samples\Relational\SequenceConfigured.cs" />
+    <Compile Include="Samples\Relational\Sequence.cs" />
     <Compile Include="Samples\Relationships\CascadeDelete.cs" />
     <Compile Include="Samples\Relationships\CompositePrincipalKey.cs" />
     <Compile Include="Samples\Relationships\ManyToMany.cs" />

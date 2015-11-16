@@ -54,14 +54,3 @@ You can also use the Fluent API to configure multiple properties to be the key o
         :lines: 5-23
         :emphasize-lines: 7-8
         :linenos:
-
-Relational Databases
---------------------
-
-By convention, the primary key in the database will be named ``PK_<type name>``. You can change this using the Fluent API.
-
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/KeyName.cs
-        :language: c#
-        :lines: 5-21
-        :emphasize-lines: 9
-        :linenos:

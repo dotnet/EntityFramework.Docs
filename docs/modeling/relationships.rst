@@ -253,14 +253,3 @@ Many-to-many relationships without an entity class to represent the join table a
         :lines: 6-51
         :emphasize-lines: 11-14,16-19,39-46
         :linenos:
-
-Relational Databases
---------------------
-
-By convention, foreign key constraints are named ``FK_<dependent type name>_<principal type name>_<foreign key property name>``. For composite foreign keys ``<foreign key property name>`` becomes an underscore separated list of foreign key property names. You can change this using the Fluent API.
-
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/RelationshipConstraintName.cs
-        :language: c#
-        :lines: 6-36
-        :emphasize-lines: 12
-        :linenos:
