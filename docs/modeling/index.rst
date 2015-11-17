@@ -23,6 +23,7 @@ In this section you can find information about conventions and configuration for
    relationships
    indexes
    alternate-keys
+   inheritance
    relational/index
 
 .. include:: /_shared/sample.txt

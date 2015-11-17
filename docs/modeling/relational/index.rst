@@ -15,7 +15,8 @@ This section covers aspects of modeling that are specific to relational database
    default-schema
    computed-columns
    sequences
-   default-values 
+   default-values
    indexes
    fk-constraints
    unique-constraints
+   inheritance
