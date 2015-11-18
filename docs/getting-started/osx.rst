@@ -1,3 +1,5 @@
+.. include:: /_shared/rc1-notice.txt
+
 Getting Started on OSX
 ======================
 
@@ -10,8 +12,6 @@ the SQLite provider.
 
 .. include:: /_shared/sample.txt
 .. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/x-plat/sample
-
-.. include:: /_shared/rc1-notice.txt
 
 Prerequisites
 -------------

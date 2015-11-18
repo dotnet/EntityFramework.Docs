@@ -1,5 +1,7 @@
 .. include:: /_shared/rc1-notice.txt
 
+.. include:: _shared/relational-specific-note.txt
+
 Inheritance (Relational Database)
 =================================
 

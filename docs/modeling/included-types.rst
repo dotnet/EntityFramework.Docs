@@ -1,3 +1,5 @@
+.. include:: /_shared/rc1-notice.txt
+
 Including & Excluding Types
 ===========================
 

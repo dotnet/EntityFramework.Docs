@@ -1,3 +1,5 @@
+.. include:: /_shared/rc1-notice.txt
+
 Getting Started on Universal Windows Platform
 =============================================
 
@@ -31,8 +33,6 @@ In this article:
 
 .. include:: /_shared/sample.txt
 .. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/uwp/sample
-
-.. include:: /_shared/rc1-notice.txt
 
 Prerequisites
 -------------
