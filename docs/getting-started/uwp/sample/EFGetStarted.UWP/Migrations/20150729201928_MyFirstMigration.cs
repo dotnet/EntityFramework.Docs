@@ -37,7 +37,8 @@ namespace EFGetStarted.UWP.Migrations
                         name: "FK_Post_Blog_BlogId",
                         column: x => x.BlogId,
                         principalTable: "Blog",
-                        principalColumn: "BlogId");
+                        principalColumn: "BlogId",
+                        onDelete: ReferentialAction.Cascade);
                 });
         }
 

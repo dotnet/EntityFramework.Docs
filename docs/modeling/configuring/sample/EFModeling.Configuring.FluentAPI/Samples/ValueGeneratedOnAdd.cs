@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Entity;
+using System;
 
 namespace EFModeling.Configuring.FluentAPI.Samples.ValueGeneratedOnAdd
 {
@@ -9,7 +10,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.ValueGeneratedOnAdd
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .Property(b => b.BlogId)
+                .Property(b => b.Inserted)
                 .ValueGeneratedOnAdd();
         }
     }
@@ -18,5 +19,6 @@ namespace EFModeling.Configuring.FluentAPI.Samples.ValueGeneratedOnAdd
     {
         public int BlogId { get; set; }
         public string Url { get; set; }
+        public DateTime Inserted { get; set; }
     }
 }

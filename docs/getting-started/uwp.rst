@@ -3,10 +3,23 @@ Getting Started on Universal Windows Platform
 
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
-.. danger::
-    **The current pre-release of Entity Framework 7 can be used for local development of Universal Windows Applications but it can not be used in an application that is deployed to the app store.**
+.. caution::
+    Deploying a UWP application to the app store requires your application to be compiled with .NET Native. When using Entity Framework there are some query APIs you should avoid to ensure your application is compatible with .NET Native.
 
-    This is because EF7 is not yet compatible with .NET Native, which is a hard requirement for applications deployed to the app store. You can `track our work to support .NET Native on our GitHub project <https://github.com/aspnet/EntityFramework/issues/623>`_.
+    You can query using simple LINQ operators that do not change the type of results returned by the query
+     - Where
+     - OrderBy
+     - Distinct
+     - Skip/Take
+     - ToList/ToArray
+     - etc.
+
+    You cannot use operators that would change the type of results returned by the query. We are working to support these operators and you can `track our progress on GitHub <https://github.com/aspnet/EntityFramework/issues/3603>`_.
+     - Select (you can select a single property, but not an anonymous type)
+     - GroupBy
+     - Include/ThenInclude
+     - Join
+     - etc.
 
 In this article:
 	- `Prerequisites`_
@@ -16,12 +29,10 @@ In this article:
 	- `Create your database`_
 	- `Use your model`_
 
-`View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/uwp/sample>`_.
+.. include:: /_shared/sample.txt
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/uwp/sample
 
-.. note::
-    This walkthrough uses EF 7.0.0-beta8 which is the latest pre-release available on NuGet.org.
-
-    You can find nightly builds of the EF7 code base hosted on https://www.myget.org/F/aspnetvnext/api/v2/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
+.. include:: /_shared/rc1-notice.txt
 
 Prerequisites
 -------------
@@ -39,6 +50,17 @@ Create a new project
 * From the left menu select :menuselection:`Templates --> Visual C# --> Windows --> Universal`
 * Select the **Blank App (Universal Windows)** project template
 * Give the project a name and click **OK**
+
+.. caution::
+    To work around `an issue with EF7 and .NET Native <https://github.com/aspnet/EntityFramework/issues/3768>`_, you need to add a runtime directive to your application. This issue will be fixed for future releases.
+
+    * Open **Properties/Default.rd.xml**
+    * Add the highlighted line shown below
+
+    .. literalinclude:: uwp/sample/EFGetStarted.UWP/Properties/Default.rd.xml
+            :language: c#
+            :lines: 27-28
+            :emphasize-lines: 2
 
 Install Entity Framework
 ----------------------------------------
@@ -66,12 +88,13 @@ Now it's time to define a context and entity classes that make up your model.
 .. note::
     Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
 
-.. note::
-    In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
-
 .. literalinclude:: uwp/sample/EFGetStarted.UWP/Model.cs
     :language: c#
     :linenos:
+
+.. tip::
+    In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
+
 
 Create your database
 --------------------
@@ -88,16 +111,27 @@ Now that you have a model, you can use migrations to create a database for you.
 Since we want the database to be created on the device that the app runs on, we will add some code to apply any pending migrations to the local database on application startup. The first time that the app runs, this will take care of creating the local database for us.
 
 * Right-click on **App.xaml** in **Solution Explorer** and select **View Code**
-* Add the highlighted lines of code from the following listing
+* Add the highlighted using to the start of the file
 
 .. literalinclude:: uwp/sample/EFGetStarted.UWP/App.xaml.cs
         :language: c#
         :linenos:
-        :lines: 1-25
-        :emphasize-lines: 2,21-24
+        :lines: 1-6
+        :emphasize-lines: 2
+
+* Add the highlighted code to apply any pending migrations
+
+.. literalinclude:: uwp/sample/EFGetStarted.UWP/App.xaml.cs
+        :language: c#
+        :linenos:
+        :lines: 30-42
+        :emphasize-lines: 9-12
 
 .. tip::
     If you make future changes to your model, you can use the ``Add-Migration`` command to scaffold a new migration to apply the corresponding changes to the database. Any pending migrations will be applied to the local database on each device when the application starts.
+
+    EF uses a ``__EFMigrationsHistory`` table in the database to keep track of which migrations have already been applied to the database.
+
 
 Use your model
 --------------

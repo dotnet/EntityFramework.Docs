@@ -9,7 +9,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Index
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .Index(b => b.Url);
+                .HasIndex(b => b.Url);
         }
     }
 

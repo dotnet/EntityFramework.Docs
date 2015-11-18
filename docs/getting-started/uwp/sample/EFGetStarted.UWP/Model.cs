@@ -1,8 +1,5 @@
 ﻿using Microsoft.Data.Entity;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using Windows.Storage;
 
 namespace EFGetStarted.UWP
 {
@@ -13,15 +10,7 @@ namespace EFGetStarted.UWP
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string databaseFilePath = "Blogging2.db";
-            try
-            {
-                databaseFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, databaseFilePath);
-            }
-            catch (InvalidOperationException)
-            { }
-
-            optionsBuilder.UseSqlite($"Data source={databaseFilePath}");
+            optionsBuilder.UseSqlite($"Filename=Blogging.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

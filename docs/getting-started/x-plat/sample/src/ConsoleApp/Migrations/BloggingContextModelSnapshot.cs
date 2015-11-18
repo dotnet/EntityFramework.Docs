@@ -13,7 +13,7 @@ namespace ConsoleApp.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Annotation("ProductVersion", "7.0.0-beta8-15964");
+                .HasAnnotation("ProductVersion", "7.0.0-rc1-16297");
 
             modelBuilder.Entity("ConsoleApp.Blog", b =>
                 {
@@ -45,7 +45,7 @@ namespace ConsoleApp.Migrations
                 {
                     b.HasOne("ConsoleApp.Blog")
                         .WithMany()
-                        .ForeignKey("BlogId");
+                        .HasForeignKey("BlogId");
                 });
         }
     }

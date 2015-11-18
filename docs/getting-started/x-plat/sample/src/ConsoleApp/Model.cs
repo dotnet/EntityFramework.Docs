@@ -1,8 +1,7 @@
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Data.Entity;
-using Microsoft.Dnx.Runtime;
-using Microsoft.Dnx.Runtime.Infrastructure;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace ConsoleApp
 {
@@ -13,9 +12,8 @@ namespace ConsoleApp
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var appEnv = CallContextServiceLocator.Locator.ServiceProvider
-                            .GetRequiredService<IApplicationEnvironment>();
-            optionsBuilder.UseSqlite($"Data Source={ appEnv.ApplicationBasePath }/blog.db");
+            var path = PlatformServices.Default.Application.ApplicationBasePath;
+            optionsBuilder.UseSqlite("Filename=" + Path.Combine(path, "blog.db"));
         }
     }
 

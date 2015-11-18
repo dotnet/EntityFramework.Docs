@@ -9,8 +9,8 @@ namespace EFModeling.Configuring.FluentAPI.Samples.IndexUnique
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .Index(b => b.Url)
-                .Unique();
+                .HasIndex(b => b.Url)
+                .IsUnique();
         }
     }
 

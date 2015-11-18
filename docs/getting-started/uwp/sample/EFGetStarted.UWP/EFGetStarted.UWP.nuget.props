@@ -4,6 +4,6 @@
     <NuGetPackageRoot>C:\Users\rowmil\.nuget\packages\</NuGetPackageRoot>
   </PropertyGroup>
   <ImportGroup>
-    <Import Project="$(NuGetPackageRoot)\EntityFramework.Commands\7.0.0-beta8\build\uap10.0\EntityFramework.Commands.props" Condition="Exists('$(NuGetPackageRoot)\EntityFramework.Commands\7.0.0-beta8\build\uap10.0\EntityFramework.Commands.props')" />
+    <Import Project="$(NuGetPackageRoot)\EntityFramework.Commands\7.0.0-rc1-final\build\uap10.0\EntityFramework.Commands.props" Condition="Exists('$(NuGetPackageRoot)\EntityFramework.Commands\7.0.0-rc1-final\build\uap10.0\EntityFramework.Commands.props')" />
   </ImportGroup>
 </Project>

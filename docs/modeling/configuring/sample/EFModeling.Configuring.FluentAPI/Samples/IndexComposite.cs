@@ -9,7 +9,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.IndexComposite
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>()
-                .Index(p => new { p.FirstName, p.LastName });
+                .HasIndex(p => new { p.FirstName, p.LastName });
         }
     }
 

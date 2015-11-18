@@ -4,30 +4,25 @@ Getting Started on OSX
 This walkthrough will create a simple console application using ASP.NET 5 and
 the SQLite provider.
 
-.. note::
-    This article was written for OS X Mavericks or newer. It uses beta 8 of ASP.NET and EF7.
-
-    You can find nightly builds of the EF7 code base hosted on https://www.myget.org/gallery/aspnetvnext/ but the code base is rapidly changing and we do not maintain up-to-date documentation for getting started.
-
-
 .. contents:: `In this article:`
     :depth: 1
     :local:
 
-.. note:: `View this article's samples on GitHub <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/x-plat/sample>`_.
+.. include:: /_shared/sample.txt
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/x-plat/sample
 
+.. include:: /_shared/rc1-notice.txt
 
 Prerequisites
 -------------
 
 Minimum system requirements
- - Mono 4.0.2
  - OS X Mavericks
 
 .. caution::
     **Known Issues**
 
-    .. include:: x-plat/issues.rst
+    .. include:: x-plat/issues.txt
 
 Install ASP.NET 5
 -----------------
@@ -37,11 +32,11 @@ A summary of steps to install ASP.NET 5 are included below. For a more up-to-dat
 The following steps will install `dnvm <https://github.com/aspnet/home#running-an-application>`_, a command-line tool for installing the .NET Execution environment.
 
  - Install `Homebrew <http://brew.sh>`_
- - Use brew to install Mono
+ - Use brew to install ICU
 
     .. code-block:: console
 
-        ~ $ brew install mono icu4c
+        ~ $ brew install icu4c
 
  - Run the dnvm
 
@@ -49,13 +44,13 @@ The following steps will install `dnvm <https://github.com/aspnet/home#running-a
 
         ~ $ curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
 
- - Verify dnvm has the latest version
+ - Install the latest version of DNX. The ``-r`` selects the CoreCLR runtime. OSX also supports the Mono runtime, but it is not used in this tutorial.
 
     .. code-block:: console
 
-        ~ $ dnvm upgrade
+        ~ $ dnvm upgrade -r coreclr
 
 If you have trouble installing dnvm, consult `Installing ASP.NET 5 on Mac OS X <http://docs.asp.net/en/latest/getting-started/installing-on-mac.html>`_.
 
 
-.. include:: x-plat/guide.rst
+.. include:: x-plat/guide.txt
