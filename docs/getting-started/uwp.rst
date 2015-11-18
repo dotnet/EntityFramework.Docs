@@ -51,6 +51,17 @@ Create a new project
 * Select the **Blank App (Universal Windows)** project template
 * Give the project a name and click **OK**
 
+.. caution::
+    To work around `an issue with EF7 and .NET Native <https://github.com/aspnet/EntityFramework/issues/3768>`_, you need to add a runtime directive to your application. This issue will be fixed for future releases.
+
+    * Open **Properties/Default.rd.xml**
+    * Add the highlighted line shown below
+
+    .. literalinclude:: uwp/sample/EFGetStarted.UWP/Properties/Default.rd.xml
+            :language: c#
+            :lines: 27-28
+            :emphasize-lines: 2
+
 Install Entity Framework
 ----------------------------------------
 To use EF7 you install the package for the database provider(s) you want to target. This walkthrough uses SQLite. For a list of available providers see :doc:`/providers/index`.
