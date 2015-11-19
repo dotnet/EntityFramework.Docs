@@ -36,7 +36,7 @@ Fluent API
 
 You can use the Fluent API to configure the name and type of the discriminator column and the values that are used to identify each type in the hierarchy.
 
-.. literalinclude:: /modeling/configuring/sample/EFModeling.Configuring.FluentAPI/Samples/InheritanceTphDiscriminator.cs
+.. literalinclude:: /modeling/configuring/sample/EFModeling.Configuring.FluentAPI/Samples/InheritanceTPHDiscriminator.cs
         :language: c#
         :lines: 5-27
         :emphasize-lines: 7-10
