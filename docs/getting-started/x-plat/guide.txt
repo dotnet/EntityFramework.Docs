@@ -83,7 +83,7 @@ We will create a simple console application that allows us to write a
 blog post from the command line.
 
  - Create a new file called ``Model.cs``
-    All classes in follow steps will be added to this file.
+    All classes in the following steps will be added to this file.
 
         .. literalinclude:: x-plat/sample/src/ConsoleApp/Model.cs
             :language: c#
