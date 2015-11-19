@@ -52,5 +52,15 @@ The following steps will install `dnvm <https://github.com/aspnet/home#running-a
 
 If you have trouble installing dnvm, consult `Installing ASP.NET 5 on Linux <http://docs.asp.net/en/latest/getting-started/installing-on-linux.html>`_.
 
+Install SQLite
+--------------
+
+EntityFramework.SQLite requires ``libsqlite3``. This may not be installed by default.
+
+On Ubuntu 14, install the SQLite library.
+
+    .. code-block:: console
+
+        ~ $ sudo apt-get install libsqlite3-dev
 
 .. include:: x-plat/guide.txt
