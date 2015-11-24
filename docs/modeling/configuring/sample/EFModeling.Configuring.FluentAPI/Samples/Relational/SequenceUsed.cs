@@ -8,13 +8,13 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.SequenceUsed
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasSequence<int>("OrderNumbers", schema: "sales")
+            modelBuilder.HasSequence<int>("OrderNumbers", schema: "shared")
                 .StartsAt(1000)
                 .IncrementsBy(5);
 
             modelBuilder.Entity<Order>()
                 .Property(o => o.OrderNo)
-                .HasDefaultValueSql("NEXT VALUE FOR shared.MySequence");
+                .HasDefaultValueSql("NEXT VALUE FOR shared.OrderNumbers");
         }
     }
 
