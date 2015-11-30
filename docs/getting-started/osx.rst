@@ -17,7 +17,7 @@ Prerequisites
 -------------
 
 Minimum system requirements
- - OS X Mavericks
+ - OS X Yosemite or newer
 
 .. caution::
     **Known Issues**
