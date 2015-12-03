@@ -75,7 +75,7 @@ No value generation
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/ValueGeneratedNever.cs
         :language: c#
-        :lines: 5-22
+        :lines: 5-21
         :emphasize-lines: 7-9
         :linenos:
 
@@ -84,7 +84,7 @@ Value generated on add
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/ValueGeneratedOnAdd.cs
         :language: c#
-        :lines: 5-23
+        :lines: 6-23
         :emphasize-lines: 7-9
         :linenos:
 
@@ -93,6 +93,6 @@ Value generated on add or update
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/ValueGeneratedOnAddOrUpdate.cs
         :language: c#
-        :lines: 6-24
+        :lines: 6-23
         :emphasize-lines: 7-9
         :linenos:
