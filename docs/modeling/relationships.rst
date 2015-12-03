@@ -235,7 +235,7 @@ One to one relationships have a reference navigation property on both sides. The
 
 When configuring the relationship with the Fluent API, you use the ``HasOne`` and ``WithOne`` methods.
 
-When configuring the foreign key you need to specify the dependent entity type - notice the generic parameter provided to ``HasForeignKey`` in the listing below. In a one-to-many relationship is is clear that the entity with the reference navigation is the dependent and the one with with collection is the principal. But this is not so in a on-to-one relationship - hence the need to explicitly define it.
+When configuring the foreign key you need to specify the dependent entity type - notice the generic parameter provided to ``HasForeignKey`` in the listing below. In a one-to-many relationship it is clear that the entity with the reference navigation is the dependent and the one with the collection is the principal. But this is not so in a on-to-one relationship - hence the need to explicitly define it.
 
 .. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/OneToOne.cs
         :language: c#
