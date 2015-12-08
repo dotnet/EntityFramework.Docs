@@ -75,7 +75,7 @@ Now it's time to create the EF model based on your existing database.
 
   * Open a command prompt (**Windows Key + R**, type **cmd**, click **OK**)
   * Use the ``cd`` command to navigate to the project directory
-  * Run ``dnvm use 1.0.0-rc1-final``
+  * Run ``dnvm use 1.0.0-rc1-update1``
   * Run the following command to create a model from the existing database
 
 .. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/ScaffoldCommand.txt
@@ -158,7 +158,7 @@ Next, we'll add an MVC controller that will use EF to query and save data.
         :language: c#
         :linenos:
 
-You'll notice that the controller takes a ``BlogContext`` as a constructor parameter. ASP.NET dependency injection will take care of passing an instance of ``BlogContext`` into your controller.
+You'll notice that the controller takes a ``BloggingContext`` as a constructor parameter. ASP.NET dependency injection will take care of passing an instance of ``BloggingContext`` into your controller.
 
 The controller contains an ``Index`` action, which displays all blogs in the database, and a ``Create`` action, which inserts a new blogs into the database.
 
