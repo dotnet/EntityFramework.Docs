@@ -1,9 +1,9 @@
 .. include:: /_shared/rc1-notice.txt
 
-ASP.NET 5 Application to New Database
+ASP.NET 5 Application to New Database using Entity Framework 7
 =====================================
 
-In this walkthrough, you will build an ASP.NET 5 MVC application that performs basic data access using Entity Framework. You will use migrations to create the database from your model.
+In this walkthrough, you will build an ASP.NET 5 MVC application that performs basic data access using Entity Framework 7. You will use migrations to create the database from your model.
 
 .. contents:: `In this article:`
     :depth: 2
