@@ -19,6 +19,7 @@ The following prerequisites are needed to complete this walkthrough:
 
 * Visual Studio 2013 or Visual Studio 2015
 * `Latest version of NuGet Package Manager`_
+* `Latest version of Windows PowerShell <https://www.microsoft.com/en-us/download/details.aspx?id=40855>`_
 
 Latest version of NuGet Package Manager
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
