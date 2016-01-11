@@ -23,13 +23,9 @@ In this walkthrough, you will build a Universal Windows Platform (UWP) applicati
      - Join
      - etc.
 
-In this article:
-	- `Prerequisites`_
-	- `Create a new project`_
-	- `Install Entity Framework`_
-	- `Create your model`_
-	- `Create your database`_
-	- `Use your model`_
+.. contents:: `In this article:`
+    :depth: 1
+    :local:
 
 .. include:: /_shared/sample.txt
 .. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/uwp/sample
@@ -166,3 +162,33 @@ You can now run the application to see it in action.
 .. image:: uwp/_static/create.png
 
 .. image:: uwp/_static/list.png
+
+Generate runtime directives
+---------------------------
+
+Now that you have the application running in "Debug" mode, we need to add runtime directives to make
+the application work in "Release" mode. In "Release" mode, the application will be compiled with the .NET Native tool chain.
+This tool chain performs optimizations that will cause your application to fail when it is launched.
+
+To prevent these failures, we will automatically generate runtime directives.
+
+* :menuselection:`Tools –> NuGet Package Manager –> Package Manager Console`
+* Run ``Scaffold-Directives`` to scaffold the runtime directives using your model.
+
+.. tip::
+    This command will only run when the project is in "Debug" mode.
+
+This created a file in *Properties\\EntityFramework.g.rd.xml*. For more information on using this command, see :ref:`scaffold_directives`.
+
+You can now run the application in "Release" mode.
+
+.. image:: uwp/_static/release.png
+    :height: 121px
+    :width: 284px
+
+* Change project configuration to "Release"
+* :menuselection:`Debug --> Start Without Debugging`
+* The application will build and launch
+
+.. tip::
+    If you change the model, you must re-run ``Scaffold-Directives``. Each times this command runs, it will overwrite *EntityFramework.g.rd.xml*

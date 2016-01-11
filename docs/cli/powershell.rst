@@ -90,7 +90,7 @@ Scaffolds a DbContext and entity type classes for a specified database.
 ::
 
   SYNTAX
-      Scaffold-DbContext [-Connection] <String> [-Provider] <String> [-OutputDirectory <String>] [-ContextClassName <String>] [-Schemas <String[]>] [-Tables <String[]>] [-DataAnnotations] [-Project
+      Scaffold-DbContext [-Connection] <String> [-Provider] <String> [-OutputDirectory <String>] [-ContextClassName <String>] [-Schemas <String[]>] [-Tables <String[]>] [-DataAnnotations] [-Force] [-Project
       <String>] [-StartupProject <String>] [-Environment <String>] [<CommonParameters>]
 
   PARAMETERS
@@ -114,6 +114,8 @@ Scaffolds a DbContext and entity type classes for a specified database.
       -DataAnnotations [<SwitchParameter>]
           Use DataAnnotation attributes to configure the model where possible. If omitted, the output code will use only the fluent API.
 
+      -Force [<SwitchParameter>]
+          Force scaffolding to overwrite existing files. Otherwise, the code will only proceed if no output files would be overwritten.
 
       -Project <String>
           Specifies the project to use. If omitted, the default project is used.
@@ -123,6 +125,40 @@ Scaffolds a DbContext and entity type classes for a specified database.
 
       -Environment <String>
           Specifies the environment to use. If omitted, "Development" is used.
+
+.. _scaffold_directives:
+
+Scaffold-Directives
+~~~~~~~~~~~~~~~~~
+Scaffolds a runtime directive file for .NET Native.
+These directives instruct the compiler to include metadata for types needed at runtime.
+
+.. note::
+
+    This command currently only applies to Universal Windows Platform applications.
+
+Applications build for Universal Windows Platform are compiled using
+the .NET Native toolchain. This default settings for the toolchain are
+currently incompatible with Entity Framework.
+This provides generates the toolchain settings *Runtime Directives* to improve compatibility.
+
+Runtime Directives are documented at http://go.microsoft.com/fwlink/?LinkID=391919
+
+::
+
+  SYNTAX
+      Scaffold-Directives [-Project <String>] [-StartupProject <String>] [-Environment <String>] [<CommonParameters>]
+
+  PARAMETERS
+      -Project <String>
+          Specifies the project to use. If omitted, the default project is used.
+
+      -StartupProject <String>
+          Specifies the startup project to use. If omitted, the solution's startup project is used.
+
+      -Environment <String>
+          Specifies the environment to use. If omitted, "Development" is used.
+
 
 Script-Migration
 ~~~~~~~~~~~~~~~~~

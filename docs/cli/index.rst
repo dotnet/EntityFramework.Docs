@@ -8,3 +8,4 @@ such as code generation and database migrations.
    :titlesonly:
 
    powershell
+   dotnet
