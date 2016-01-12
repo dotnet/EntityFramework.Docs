@@ -137,10 +137,10 @@ These directives instruct the compiler to include metadata for types needed at r
 
     This command currently only applies to Universal Windows Platform applications.
 
-Applications build for Universal Windows Platform are compiled using
-the .NET Native toolchain. This default settings for the toolchain are
+Applications built for Universal Windows Platform are compiled using
+the .NET Native tool chain. The default settings for the tool chain are
 currently incompatible with Entity Framework.
-This provides generates the toolchain settings *Runtime Directives* to improve compatibility.
+This provides generates the tool chain settings *Runtime Directives* to improve compatibility.
 
 Runtime Directives are documented at http://go.microsoft.com/fwlink/?LinkID=391919
 

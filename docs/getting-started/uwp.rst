@@ -24,7 +24,7 @@ In this walkthrough, you will build a Universal Windows Platform (UWP) applicati
      - etc.
 
 .. contents:: `In this article:`
-    :depth: 1
+    :depth: 2
     :local:
 
 .. include:: /_shared/sample.txt
@@ -163,32 +163,33 @@ You can now run the application to see it in action.
 
 .. image:: uwp/_static/list.png
 
-Generate runtime directives
----------------------------
+Next steps
+----------
 
-Now that you have the application running in "Debug" mode, we need to add runtime directives to make
-the application work in "Release" mode. In "Release" mode, the application will be compiled with the .NET Native tool chain.
+Tada! You now have a simple UWP app running Entity Framework. 
+
+Check out the numerous articles in this documentation to learn more about Entity Framework's features.
+
+Prepare your app for deployment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+    This section only applies to preparing your app for deployment. 
+    This information is specific to Entity Framework, and does not represent all steps needed to deploy an app.
+
+When deploying, your application will be compiled with the .NET Native tool chain.
 This tool chain performs optimizations that will cause your application to fail when it is launched.
 
-To prevent these failures, we will automatically generate runtime directives.
+To prevent these failures, generate runtime directives.
 
 * :menuselection:`Tools –> NuGet Package Manager –> Package Manager Console`
-* Run ``Scaffold-Directives`` to scaffold the runtime directives using your model.
-
-.. tip::
-    This command will only run when the project is in "Debug" mode.
+* Execute ``Scaffold-Directives``
 
 This created a file in *Properties\\EntityFramework.g.rd.xml*. For more information on using this command, see :ref:`scaffold_directives`.
 
-You can now run the application in "Release" mode.
-
-.. image:: uwp/_static/release.png
-    :height: 121px
-    :width: 284px
-
-* Change project configuration to "Release"
-* :menuselection:`Debug --> Start Without Debugging`
-* The application will build and launch
-
 .. tip::
-    If you change the model, you must re-run ``Scaffold-Directives``. Each times this command runs, it will overwrite *EntityFramework.g.rd.xml*
+    This command will only run when the setting *"Use .NET Native tool chain"* is disabled on your project. This setting is disabled by default in the "Debug" configuration and enabled "Release".
+
+
+.. caution::
+    This command will overwrite *EntityFramework.g.rd.xml* each time it runs. Execute ``Scaffold-Directives`` each time you prepare to deploy your application.
