@@ -1,12 +1,14 @@
 Package Manager Console (Visual Studio)
 =======================================
 
-Commands for Powershell in Visual Studio's Package Manager Console window.
+Commands for PowerShell in Visual Studio's Package Manager Console window.
 
 .. contents:: `In this article:`
     :depth: 2
     :local:
 
+.. caution::
+  The commands require the `latest version of Windows PowerShell <https://www.microsoft.com/en-us/download/details.aspx?id=40855>`_
 
 Installation
 --------------
