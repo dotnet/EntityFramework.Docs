@@ -63,9 +63,9 @@ EntityFramework.SqlServerCompact40
 
 **Status:** `Pre-release EntityFramework.SqlServerCompact40 package on NuGet.org <https://www.nuget.org/packages/EntityFramework.SqlServerCompact40>`_ that supports the latest EF7 pre-release
 
-**Project Site:** `ErikEJ/EntityFramework7.SqlServerCompact GitHub Project <https://github.com/ErikEJ/EntityFramework7.SqlServerCompact>`_
+**Project Site:** `ErikEJ/EntityFramework.SqlServerCompact GitHub Project <https://github.com/ErikEJ/EntityFramework.SqlServerCompact>`_
 
-**Getting Started:** See the `documentation for this project <https://github.com/ErikEJ/EntityFramework7.SqlServerCompact/wiki/Using-EF7-with-SQL-Server-Compact-in-Traditional-.NET-Applications>`_
+**Getting Started:** See the `documentation for this project <https://github.com/ErikEJ/EntityFramework.SqlServerCompact/wiki/Using-EF7-with-SQL-Server-Compact-in-Traditional-.NET-Applications>`_
 
 EntityFramework.SqlServerCompact35
 ----------------------------------
@@ -76,9 +76,9 @@ EntityFramework.SqlServerCompact35
 
 **Status:** `Pre-release EntityFramework.SqlServerCompact35 package on NuGet.org <https://www.nuget.org/packages/EntityFramework.SqlServerCompact35>`_ that supports the latest EF7 pre-release
 
-**Project Site:** `ErikEJ/EntityFramework7.SqlServerCompact GitHub Project <https://github.com/ErikEJ/EntityFramework7.SqlServerCompact>`_
+**Project Site:** `ErikEJ/EntityFramework.SqlServerCompact GitHub Project <https://github.com/ErikEJ/EntityFramework.SqlServerCompact>`_
 
-**Getting Started:** See the `documentation for this project <https://github.com/ErikEJ/EntityFramework7.SqlServerCompact/wiki/Using-EF7-with-SQL-Server-Compact-in-Traditional-.NET-Applications>`_
+**Getting Started:** See the `documentation for this project <https://github.com/ErikEJ/EntityFramework.SqlServerCompact/wiki/Using-EF7-with-SQL-Server-Compact-in-Traditional-.NET-Applications>`_
 
 
 EntityFramework.Npgsql
