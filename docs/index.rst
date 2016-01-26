@@ -10,6 +10,7 @@ Entity Framework Documentation
     providers/index
     modeling/index
     cli/index
+    miscellaneous/index
 
 Contribute
 ----------
