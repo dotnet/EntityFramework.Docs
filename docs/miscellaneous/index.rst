@@ -6,3 +6,4 @@ Miscellaneous
     :caption: The following articles are available
 
     logging
+    testing
