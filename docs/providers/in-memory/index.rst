@@ -1,6 +1,12 @@
 InMemory (for testing)
 ======================
 
+.. toctree::
+    :titlesonly:
+    :hidden:
+
+    testing
+
 .. contents:: `In this article:`
     :depth: 2
     :local:
@@ -8,7 +14,9 @@ InMemory (for testing)
 Getting Started
 ---------------
 
-See the `tests for the UnicornStore sample application <https://github.com/rowanmiller/UnicornStore/blob/master/UnicornStore/src/UnicornStore.Tests/Controllers/ShippingControllerTests.cs>`_ for an example of using this provider.
+See :doc:`testing`
+
+The `tests for the UnicornStore sample application <https://github.com/rowanmiller/UnicornStore/blob/master/UnicornStore/src/UnicornStore.Tests/Controllers/ShippingControllerTests.cs>`_ also provide an example of using this provider.
 
 Supported Database Engines
 --------------------------
