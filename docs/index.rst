@@ -14,6 +14,7 @@ Entity Framework Documentation
     saving/index
     cli/index
     miscellaneous/index
+    internals/index
 
 Contribute
 ----------
