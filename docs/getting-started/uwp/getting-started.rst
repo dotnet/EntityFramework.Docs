@@ -57,7 +57,7 @@ Create a new project
     * Open **Properties/Default.rd.xml**
     * Add the highlighted line shown below
 
-    .. literalinclude:: uwp/sample/EFGetStarted.UWP/Properties/Default.rd.xml
+    .. literalinclude:: sample/EFGetStarted.UWP/Properties/Default.rd.xml
             :language: c#
             :lines: 27-28
             :emphasize-lines: 2
@@ -88,7 +88,7 @@ Now it's time to define a context and entity classes that make up your model.
 .. note::
     Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
 
-.. literalinclude:: uwp/sample/EFGetStarted.UWP/Model.cs
+.. literalinclude:: sample/EFGetStarted.UWP/Model.cs
     :language: c#
     :linenos:
 
@@ -113,7 +113,7 @@ Since we want the database to be created on the device that the app runs on, we 
 * Right-click on **App.xaml** in **Solution Explorer** and select **View Code**
 * Add the highlighted using to the start of the file
 
-.. literalinclude:: uwp/sample/EFGetStarted.UWP/App.xaml.cs
+.. literalinclude:: sample/EFGetStarted.UWP/App.xaml.cs
         :language: c#
         :linenos:
         :lines: 1-6
@@ -121,7 +121,7 @@ Since we want the database to be created on the device that the app runs on, we 
 
 * Add the highlighted code to apply any pending migrations
 
-.. literalinclude:: uwp/sample/EFGetStarted.UWP/App.xaml.cs
+.. literalinclude:: sample/EFGetStarted.UWP/App.xaml.cs
         :language: c#
         :linenos:
         :lines: 30-42
@@ -141,7 +141,7 @@ You can now use your model to perform data access.
 * Open *MainPage.xaml*
 * Add the page load handler and UI content highlighted below
 
-.. literalinclude:: uwp/sample/EFGetStarted.UWP/MainPage.xaml
+.. literalinclude:: sample/EFGetStarted.UWP/MainPage.xaml
         :language: c#
         :linenos:
         :emphasize-lines: 9,12-22
@@ -151,7 +151,7 @@ Now we'll add code to wire up the UI with the database
 * Right-click **MainPage.xaml** in **Solution Explorer** and select **View Code**
 * Add the highlighted code from the following listing
 
-.. literalinclude:: uwp/sample/EFGetStarted.UWP/MainPage.xaml.cs
+.. literalinclude:: sample/EFGetStarted.UWP/MainPage.xaml.cs
         :language: c#
         :linenos:
         :lines: 23-49
@@ -163,6 +163,6 @@ You can now run the application to see it in action.
 * The application will build and launch
 * Enter a URL and click the **Add** button
 
-.. image:: uwp/_static/create.png
+.. image:: _static/create.png
 
-.. image:: uwp/_static/list.png
+.. image:: _static/list.png

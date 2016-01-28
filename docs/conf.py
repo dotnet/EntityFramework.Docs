@@ -16,6 +16,7 @@
 import sys
 import os
 import shlex
+from datetime import date
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -50,7 +51,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Entity Framework'
-copyright = '2015 Microsoft'
+copyright = '%d Microsoft' % (date.today().year)
 author = 'Microsoft'
 
 # The version info for the project you're documenting, acts as replacement for
