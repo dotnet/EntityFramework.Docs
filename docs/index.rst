@@ -13,6 +13,7 @@ Entity Framework Documentation
     modeling/index
     cli/index
     miscellaneous/index
+    internals/index
 
 Contribute
 ----------
