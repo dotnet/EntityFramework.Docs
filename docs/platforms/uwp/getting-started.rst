@@ -32,7 +32,7 @@ In this article:
 	- `Use your model`_
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/uwp/sample
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/uwp/sample
 
 Prerequisites
 -------------

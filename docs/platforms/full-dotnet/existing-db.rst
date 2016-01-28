@@ -10,7 +10,7 @@ In this walkthrough, you will build a console application that performs basic da
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/full-dotnet/sample/EFGetStarted.ConsoleApp.ExistingDb
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/full-dotnet/sample/EFGetStarted.ConsoleApp.ExistingDb
 
 Prerequisites
 -------------
@@ -32,7 +32,7 @@ Blogging database
 
 This tutorial uses a **Blogging** database on your LocalDb instance as the existing database.
 
-.. include:: /getting-started/_shared/create-blogging-database-vs.txt
+.. include:: /platforms/_shared/create-blogging-database-vs.txt
 
 Create a new project
 --------------------

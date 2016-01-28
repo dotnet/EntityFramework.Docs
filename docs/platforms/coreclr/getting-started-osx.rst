@@ -1,7 +1,7 @@
 .. include:: /_shared/rc1-notice.txt
 
-Getting Started on OSX
-======================
+Getting Started on OS X
+=======================
 
 This walkthrough will create a simple console application using ASP.NET 5 and
 the SQLite provider.
@@ -11,7 +11,7 @@ the SQLite provider.
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/x-plat/sample
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/coreclr/sample
 
 Prerequisites
 -------------
@@ -22,7 +22,7 @@ Minimum system requirements
 .. caution::
     **Known Issues**
 
-    .. include:: x-plat/issues.txt
+    .. include:: issues.txt
 
 Install ASP.NET 5
 -----------------
@@ -53,4 +53,4 @@ The following steps will install `dnvm <https://github.com/aspnet/home#running-a
 If you have trouble installing dnvm, consult `Installing ASP.NET 5 on Mac OS X <http://docs.asp.net/en/latest/getting-started/installing-on-mac.html>`_.
 
 
-.. include:: x-plat/guide.txt
+.. include:: guide.txt

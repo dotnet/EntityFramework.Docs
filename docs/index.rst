@@ -5,8 +5,10 @@ Entity Framework Documentation
 
 .. toctree::
     :titlesonly:
+    :maxdepth: 2
 
-    getting-started/index
+    getting-started
+    platforms/index
     providers/index
     modeling/index
     cli/index

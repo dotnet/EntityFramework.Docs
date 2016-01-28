@@ -9,7 +9,7 @@ Create a new project
 
  - Create a new file ``project.json`` with the following contents
 
-    .. literalinclude:: x-plat/sample/src/ConsoleApp/project.json
+    .. literalinclude:: sample/src/ConsoleApp/project.json
             :language: json
             :linenos:
 
@@ -85,7 +85,7 @@ blog post from the command line.
  - Create a new file called ``Model.cs``
     All classes in the following steps will be added to this file.
 
-        .. literalinclude:: x-plat/sample/src/ConsoleApp/Model.cs
+        .. literalinclude:: sample/src/ConsoleApp/Model.cs
             :language: c#
             :linenos:
             :lines: 1-7
@@ -93,7 +93,7 @@ blog post from the command line.
  - Add a new class to represent the SQLite database.
     We will call this ``BloggingContext``. The call to ``UseSqlite()`` configures EF to point to a \*.db file in the same folder as the ``project.json`` file for our project.
 
-        .. literalinclude:: x-plat/sample/src/ConsoleApp/Model.cs
+        .. literalinclude:: sample/src/ConsoleApp/Model.cs
             :language: c#
             :linenos:
             :lines: 8-19
@@ -102,7 +102,7 @@ blog post from the command line.
  - Add classes to represent tables.
     Note that we will be using foreign keys to associate many posts to one blog.
 
-        .. literalinclude:: x-plat/sample/src/ConsoleApp/Model.cs
+        .. literalinclude:: sample/src/ConsoleApp/Model.cs
             :language: c#
             :linenos:
             :lines: 20-37
@@ -152,7 +152,7 @@ Use your model
 
 Now that we have configured our model and created the database schema, we can use BloggingContext to create, update, and delete objects.
 
-.. literalinclude:: x-plat/sample/src/ConsoleApp/Program.cs
+.. literalinclude:: sample/src/ConsoleApp/Program.cs
     :language: c#
     :linenos:
 

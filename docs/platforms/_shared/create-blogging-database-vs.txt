@@ -10,6 +10,6 @@
 * Copy the script, listed below, into the query editor
 * Right-click on the query editor and select **Execute**
 
-.. literalinclude:: /getting-started/_shared/create-blogging-database-script.sql
+.. literalinclude:: /platforms/_shared/create-blogging-database-script.sql
         :language: sql
         :linenos:

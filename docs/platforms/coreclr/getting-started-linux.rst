@@ -11,7 +11,7 @@ the SQLite provider.
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/x-plat/sample
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/coreclr/sample
 
 Prerequisites
 -------------
@@ -22,7 +22,7 @@ Minimum system requirements
 .. caution::
     **Known Issues**
 
-    .. include:: x-plat/issues.txt
+    .. include:: issues.txt
 
 
 Install ASP.NET 5
@@ -63,4 +63,4 @@ On Ubuntu 14, install the SQLite library.
 
         ~ $ sudo apt-get install libsqlite3-dev
 
-.. include:: x-plat/guide.txt
+.. include:: guide.txt

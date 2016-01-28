@@ -8,11 +8,8 @@ Entity Framework can be used in a variety of different .NET applications. The fo
 Available Tutorials
 -------------------
 
-.. toctree::
-    :titlesonly:
-
-    full-dotnet/index
-    aspnet5/index
-    uwp/index
-    osx
-    linux
+ - :doc:`platforms/full-dotnet/getting-started`
+ - :doc:`platforms/aspnetcore/getting-started`
+ - :doc:`platforms/uwp/getting-started`
+ - :doc:`platforms/coreclr/getting-started-osx`
+ - :doc:`platforms/coreclr/getting-started-linux`

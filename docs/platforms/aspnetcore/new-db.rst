@@ -10,7 +10,7 @@ In this walkthrough, you will build an ASP.NET 5 MVC application that performs b
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/getting-started/aspnet5/sample
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/aspnetcore/sample
 
 Prerequisites
 -------------
