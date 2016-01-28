@@ -35,7 +35,7 @@ Create a new project
 	* Click **OK**
 
 .. caution::
-    If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework model will be added to your project in `Models\\IdentityModel.cs`. Using the techniques you will learn in this walkthrough, you can chose to add a second model, or extend this existing model to contain your entity classes.
+    If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework model will be added to your project in `Models\\IdentityModel.cs`. Using the techniques you will learn in this walkthrough, you can choose to add a second model, or extend this existing model to contain your entity classes.
 
 Install Entity Framework
 ----------------------------------------
