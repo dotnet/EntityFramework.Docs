@@ -4,6 +4,9 @@ Logging
 .. contents:: `In this article:`
     :local:
 
+.. include:: /_shared/sample.txt
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/miscellaneous/logging/sample
+
 Create a logger
 ---------------
 

@@ -11,6 +11,7 @@ Entity Framework Documentation
     platforms/index
     providers/index
     modeling/index
+    saving/index
     cli/index
     miscellaneous/index
 
