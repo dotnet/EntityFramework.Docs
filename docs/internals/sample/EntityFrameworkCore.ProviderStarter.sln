@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.ProviderStarter", "EntityFrameworkCore.ProviderStarter\EntityFrameworkCore.ProviderStarter.csproj", "{11E455EE-8BA8-466C-B8D6-5E5EDB0767FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{10A9A1BD-9C37-4DE0-A3D4-72786085DA41}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet.Config = NuGet.Config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.RelationalProviderStarter", "EntityFrameworkCore.RelationalProviderStarter\EntityFrameworkCore.RelationalProviderStarter.csproj", "{B0985182-AFE8-47A9-990D-43B7021D1E38}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11E455EE-8BA8-466C-B8D6-5E5EDB0767FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E455EE-8BA8-466C-B8D6-5E5EDB0767FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E455EE-8BA8-466C-B8D6-5E5EDB0767FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E455EE-8BA8-466C-B8D6-5E5EDB0767FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0985182-AFE8-47A9-990D-43B7021D1E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0985182-AFE8-47A9-990D-43B7021D1E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0985182-AFE8-47A9-990D-43B7021D1E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0985182-AFE8-47A9-990D-43B7021D1E38}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
