@@ -14,9 +14,9 @@ Getting Started
 ---------------
 
 The following tutorials use this provider:
-  * :doc:`/getting-started/uwp`
-  * :doc:`/getting-started/linux`
-  * :doc:`/getting-started/osx`
+  * :doc:`/platforms/uwp/getting-started`
+  * :doc:`/platforms/coreclr/getting-started-linux`
+  * :doc:`/platforms/coreclr/getting-started-osx`
 
 The following sample applications use this provider:
   * `Unicorn Clicker <https://github.com/rowanmiller/UnicornStore/tree/master/UnicornClicker/UWP>`_

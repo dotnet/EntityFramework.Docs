@@ -89,7 +89,7 @@ Now it's time to define a context and entity classes that make up your model.
     Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
 
 .. literalinclude:: sample/EFGetStarted.UWP/Model.cs
-    :language: c#
+    :language: csharp
     :linenos:
 
 .. tip::

@@ -9,8 +9,8 @@ Getting Started
 ---------------
 
 The following tutorials use this provider:
-  * :doc:`/getting-started/full-dotnet/index`
-  * :doc:`/getting-started/aspnet5/index`
+  * :doc:`/platforms/full-dotnet/getting-started`
+  * :doc:`/platforms/aspnetcore/getting-started`
 
 The following sample applications use this provider:
   * `UnicornStore <https://github.com/rowanmiller/UnicornStore/tree/master/UnicornStore>`_
