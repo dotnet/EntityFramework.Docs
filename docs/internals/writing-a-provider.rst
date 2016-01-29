@@ -71,7 +71,8 @@ by using extension methods.
 The `Use` Method
 ^^^^^^^^^^^^^^^^
 
-By convention, providers define a ``UseX()`` extension on ``DbContextOptionsBuilder``. This configures **options** which it typically takes as arguments to method.
+By convention, providers define a ``UseX()`` extension on ``DbContextOptionsBuilder``.
+This configures **options** which it typically takes as arguments to method.
 
 ::
 
@@ -79,7 +80,7 @@ By convention, providers define a ``UseX()`` extension on ``DbContextOptionsBuil
 
 The ``UseX()`` extension method creates a provider-specific implementation of
 ``IDbContextOptionsExtension`` which is added to the collection of extensions
-stored within ``DbContextOptions``. This is done by calling a hidden API call to
+stored within ``DbContextOptions``. This is done by a call to the a hidden API
 ``IDbContextOptionsBuilderInfrastructure.AddOrUpdateExtension``.
 
 .. literalinclude:: sample/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderDbContextOptionsExtensions.cs
@@ -91,7 +92,7 @@ stored within ``DbContextOptions``. This is done by calling a hidden API call to
 .. tip::
   The ``UseX()`` method can also be used to return a special wrapper around
   ``DbContextOptionsBuilder`` that allows users to configure multiple options
-  with change calls. See ``SqlServerDbContextOptionsBuilder`` as an example.
+  with chained calls. See ``SqlServerDbContextOptionsBuilder`` as an example.
 
 The `Add` Method
 ^^^^^^^^^^^^^^^^
@@ -106,8 +107,8 @@ should register services in this collection to be available for dependency
 injection.
 
 In some cases, users may call the `Add` method directly. This is
-done when users are configuring an service provider manually and using this service
-provider to resolve an instance of DbContext. In other cases, the `Add` method
+done when users are configuring a service provider manually and use this service
+provider to resolve an instance of ``DbContext``. In other cases, the `Add` method
 is called by EF upon service initialization. For more details on service
 initialization, see :ref:`services-initialization`.
 
