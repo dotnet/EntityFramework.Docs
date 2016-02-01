@@ -7,3 +7,4 @@ Miscellaneous
 
     logging
     testing
+    configuring-dbcontext
