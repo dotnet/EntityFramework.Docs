@@ -110,7 +110,7 @@ Remove inline context configuration
 
 In ASP.NET 5, configuration is generally performed in **Startup.cs**. To conform to this pattern, we will move configuration of the database provider to **Startup.cs**.
 
-  * Open **Models\BlogginContext.cs**
+  * Open **Models\\BloggingContext.cs**
   * Delete the lines of code highligted below
 
 .. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/Models/BloggingContextUnmodified.txt
