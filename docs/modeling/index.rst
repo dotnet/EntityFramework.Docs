@@ -22,6 +22,7 @@ In this section you can find information about conventions and configuration for
    indexes
    alternate-keys
    inheritance
+   backing-field
    relational/index
 
 .. include:: /_shared/sample.txt

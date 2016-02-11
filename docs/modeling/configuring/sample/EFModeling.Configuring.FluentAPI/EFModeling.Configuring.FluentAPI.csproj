@@ -118,6 +118,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Samples\BackingField.cs" />
     <Compile Include="Samples\Timestamp.cs" />
     <Compile Include="Samples\InheritanceTphDiscriminator.cs" />
     <Compile Include="Samples\Relational\ComputedColumn.cs" />

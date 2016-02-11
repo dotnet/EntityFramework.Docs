@@ -120,6 +120,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Samples\BackingField.cs" />
     <Compile Include="Samples\InheritanceModelBuilder.cs" />
     <Compile Include="Samples\InheritanceDbSets.cs" />
     <Compile Include="Samples\Relationships\NoForeignKey.cs" />
