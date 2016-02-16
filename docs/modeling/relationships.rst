@@ -199,7 +199,7 @@ You can use the Fluent API to configure whether the relationship is required or 
 Cascade Delete
 ^^^^^^^^^^^^^^
 
-You an use the Fluent API to configure the cascade delete behavior for a given relationship.
+You can use the Fluent API to configure the cascade delete behavior for a given relationship.
 
 There are three behaviors that control how a delete operation is applied to dependent entities in a relationship when the principal is deleted or the relationship is severed.
  - **Cascade:** Dependent entities are also deleted.
