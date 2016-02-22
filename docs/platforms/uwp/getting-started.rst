@@ -6,22 +6,9 @@ Getting Started on Universal Windows Platform
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
 .. caution::
-    Deploying a UWP application to the app store requires your application to be compiled with .NET Native. When using Entity Framework there are some query APIs you should avoid to ensure your application is compatible with .NET Native.
-
-    You can query using simple LINQ operators that do not change the type of results returned by the query
-     - Where
-     - OrderBy
-     - Distinct
-     - Skip/Take
-     - ToList/ToArray
-     - etc.
-
-    You cannot use operators that would change the type of results returned by the query. We are working to support these operators and you can `track our progress on GitHub <https://github.com/aspnet/EntityFramework/issues/3603>`_.
-     - Select (you can select a single property, but not an anonymous type)
-     - GroupBy
-     - Include/ThenInclude
-     - Join
-     - etc.
+    **Avoid using anonymous types in LINQ queries on UWP**.
+    Deploying a UWP application to the app store requires your application to be compiled with .NET Native.
+    Queries with anonymous types have poor performance on .NET Native or may crash the application.
 
 .. contents:: `In this article:`
     :depth: 2
