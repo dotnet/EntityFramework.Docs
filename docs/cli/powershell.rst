@@ -128,39 +128,6 @@ Scaffolds a DbContext and entity type classes for a specified database.
       -Environment <String>
           Specifies the environment to use. If omitted, "Development" is used.
 
-.. _scaffold_directives:
-
-Scaffold-Directives
-~~~~~~~~~~~~~~~~~
-Scaffolds a runtime directive file for .NET Native.
-These directives instruct the compiler to include metadata for types needed at runtime.
-
-.. note::
-
-    This command currently only applies to Universal Windows Platform applications.
-
-Applications built for Universal Windows Platform are compiled using
-the .NET Native tool chain. The default settings for the tool chain are
-currently incompatible with Entity Framework.
-This provides generates the tool chain settings *Runtime Directives* to improve compatibility.
-
-Runtime Directives are documented at http://go.microsoft.com/fwlink/?LinkID=391919
-
-::
-
-  SYNTAX
-      Scaffold-Directives [-Project <String>] [-StartupProject <String>] [-Environment <String>] [<CommonParameters>]
-
-  PARAMETERS
-      -Project <String>
-          Specifies the project to use. If omitted, the default project is used.
-
-      -StartupProject <String>
-          Specifies the startup project to use. If omitted, the solution's startup project is used.
-
-      -Environment <String>
-          Specifies the environment to use. If omitted, "Development" is used.
-
 
 Script-Migration
 ~~~~~~~~~~~~~~~~~
@@ -172,7 +139,7 @@ Generates a SQL script from migrations.
       Script-Migration -From <String> -To <String> [-Idempotent] [-Context <String>] [-Project <String>] [-StartupProject <String>] [-Environment <String>] [<CommonParameters>]
 
       Script-Migration [-From <String>] [-Idempotent] [-Context <String>] [-Project <String>] [-StartupProject <String>] [-Environment <String>] [<CommonParameters>]
-  
+
   PARAMETERS
       -From <String>
           Specifies the starting migration. If omitted, '0' (the initial database) is used.

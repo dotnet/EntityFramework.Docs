@@ -166,30 +166,6 @@ You can now run the application to see it in action.
 Next steps
 ----------
 
-Tada! You now have a simple UWP app running Entity Framework. 
+Tada! You now have a simple UWP app running Entity Framework.
 
 Check out the numerous articles in this documentation to learn more about Entity Framework's features.
-
-Prepare your app for deployment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. note::
-    This section only applies to preparing your app for deployment. 
-    This information is specific to Entity Framework, and does not represent all steps needed to deploy an app.
-
-When deploying, your application will be compiled with the .NET Native tool chain.
-This tool chain performs optimizations that will cause your application to fail when it is launched.
-
-To prevent these failures, generate runtime directives.
-
-* :menuselection:`Tools –> NuGet Package Manager –> Package Manager Console`
-* Execute ``Scaffold-Directives``
-
-This created a file in *Properties\\EntityFramework.g.rd.xml*. For more information on using this command, see :ref:`scaffold_directives`.
-
-.. tip::
-    This command will only run when the setting *"Use .NET Native tool chain"* is disabled on your project. This setting is disabled by default in the "Debug" configuration and enabled "Release".
-
-
-.. caution::
-    This command will overwrite *EntityFramework.g.rd.xml* each time it runs. Execute ``Scaffold-Directives`` each time you prepare to deploy your application.
