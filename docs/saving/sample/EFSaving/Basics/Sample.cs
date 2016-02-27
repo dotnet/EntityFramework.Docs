@@ -20,7 +20,7 @@ namespace EFSaving.Basics
                 db.Blogs.Add(blog);
                 db.SaveChanges();
 
-                Console.WriteLine($"{blog.BlogId}: {blog.Url}");
+                Console.WriteLine(blog.BlogId + ": " +  blog.Url);
             }
 
             using (var db = new BloggingContext())

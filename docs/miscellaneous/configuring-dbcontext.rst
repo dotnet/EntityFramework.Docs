@@ -51,7 +51,7 @@ Constructor argument
 This approach can be used with or without dependency injection.
 
 .. code-block:: csharp
-  :caption: Context code
+  :caption: Context code with constructor
 
   public class BloggingContext : DbContext
   {
@@ -102,7 +102,7 @@ OnConfiguring
   target the full database). See `Combinations`_.
 
 .. code-block:: csharp
-  :caption: Context code
+  :caption: Context code with OnConfiguring
 
   public class BloggingContext : DbContext
   {

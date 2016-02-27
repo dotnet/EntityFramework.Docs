@@ -3,7 +3,7 @@ Miscellaneous
 
 .. toctree::
     :titlesonly:
-    :caption: The following articles are available
+    :caption: The following articles cover miscellaneous topics
 
     logging
     testing

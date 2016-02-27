@@ -60,7 +60,6 @@ To enable reverse engineering from an existing database we need to install a cou
   * Locate the ``commands`` section and add the ``ef`` command as shown below
 
 .. literalinclude:: sample/src/EFGetStarted.AspNet5.ExistingDb/project.json
-        :language: json
         :linenos:
         :lines: 26-29
         :emphasize-lines: 3

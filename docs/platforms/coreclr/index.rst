@@ -5,7 +5,7 @@ EF can be used on all platforms (Windows, OSX, Linux, etc.) that support .NET Co
 
 .. toctree::
   :titlesonly:
-  :caption: The following articles are available
+  :caption: The following .NET Core articles are available
 
   getting-started-linux
   getting-started-osx

@@ -5,6 +5,6 @@ These articles provide documentation for using EF on the full .NET Framework (Co
 
 .. toctree::
     :titlesonly:
-    :caption: The following articles are available
+    :caption: The following Full .NET Framework articles are available
 
     getting-started

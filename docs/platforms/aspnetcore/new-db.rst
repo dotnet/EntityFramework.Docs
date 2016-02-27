@@ -54,7 +54,6 @@ Later in this walkthrough we will also be using some Entity Framework commands t
 	* Locate the ``commands`` section and add the ``ef`` command as shown below
 
 .. literalinclude:: sample/src/EFGetStarted.AspNet5.NewDb/project.json
-        :language: json
         :linenos:
         :lines: 25-29
         :emphasize-lines: 3

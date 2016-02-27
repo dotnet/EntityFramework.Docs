@@ -10,7 +10,7 @@ namespace EFGetStarted.UWP
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Filename=Blogging.db");
+            optionsBuilder.UseSqlite("Filename=Blogging.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -21,7 +21,7 @@ namespace EFSaving.ExplicitValuesGenerateProperties
 
                 foreach (var employee in db.Employees)
                 {
-                    Console.WriteLine($"{employee.EmployeeId}: {employee.Name}, {employee.EmploymentStarted}");
+                    Console.WriteLine(employee.EmployeeId + ": " + employee.Name + ", " + employee.EmploymentStarted);
                 }
             }
 
@@ -51,7 +51,7 @@ namespace EFSaving.ExplicitValuesGenerateProperties
 
                 foreach (var employee in db.Employees)
                 {
-                    Console.WriteLine($"{employee.EmployeeId}: {employee.Name}");
+                    Console.WriteLine(employee.EmployeeId + ": " + employee.Name);
                 }
             }
         }
