@@ -136,7 +136,7 @@ Next, we'll add an MVC controller that will use EF to query and save data.
         :language: c#
         :linenos:
 
-You'll notice that the controller takes a ``BlogContext`` as a constructor parameter. ASP.NET dependency injection will take care of passing an instance of ``BlogContext`` into your controller.
+You'll notice that the controller takes a ``BloggingContext`` as a constructor parameter. ASP.NET dependency injection will take care of passing an instance of ``BloggingContext`` into your controller.
 
 The controller contains an ``Index`` action, which displays all blogs in the database, and a ``Create`` action, which inserts a new blogs into the database.
 
