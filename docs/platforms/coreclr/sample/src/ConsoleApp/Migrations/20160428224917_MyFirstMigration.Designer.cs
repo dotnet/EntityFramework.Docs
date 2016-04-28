@@ -1,20 +1,20 @@
-using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using ConsoleApp;
 
 namespace ConsoleApp.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20151110200733_MyFirstMigration")]
+    [Migration("20160428224917_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-rc1-16297");
+                .HasAnnotation("ProductVersion", "1.0.0-rc2-20708");
 
             modelBuilder.Entity("ConsoleApp.Blog", b =>
                 {
@@ -26,6 +26,8 @@ namespace ConsoleApp.Migrations
                     b.Property<string>("Url");
 
                     b.HasKey("BlogId");
+
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("ConsoleApp.Post", b =>
@@ -40,13 +42,18 @@ namespace ConsoleApp.Migrations
                     b.Property<string>("Title");
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("ConsoleApp.Post", b =>
                 {
                     b.HasOne("ConsoleApp.Blog")
                         .WithMany()
-                        .HasForeignKey("BlogId");
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

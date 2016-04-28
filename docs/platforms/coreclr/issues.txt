@@ -1,3 +1,2 @@
-- DNX-coreclr will die silentily if you are missing the ICU library. Make sure to install all dependencies listed in the install guide. (See `Issue dnx#2875 <https://github.com/aspnet/dnx/issues/2875>`_)
-- Migrations on SQLite do not support more complex schema changes due to limitations in SQLite itself.
-- Package names are case-sensitive on Linux and OS X due to the case-sensitive filesystem. Make sure to use ``EntityFramework.Sqlite`` not ``EntityFramework.SQLite`` in your ``project.json`` file. (See `Issue dotnet/cli#236 <https://github.com/dotnet/cli/issues/236>`_)
+- Migrations on SQLite do not support more complex schema changes due to
+  limitations in SQLite itself. See :doc:`/providers/sqlite/limitations`
