@@ -1,9 +1,9 @@
 .. include:: /_shared/rc1-notice.txt
 
 Getting Started on Linux
-====================================
+========================
 
-This walkthrough will create a simple console application using ASP.NET 5 and
+This walkthrough will create a simple console application using .NET Core and
 the SQLite provider.
 
 .. contents:: `In this article:`
@@ -24,43 +24,42 @@ Minimum system requirements
 
     .. include:: issues.txt
 
+    - On Linux, Microsoft.EntityFrameworkCore.Sqlite uses the operating
+      system's shared SQLite library, ``libsqlite3``. This may
+      not be installed by default.
 
-Install ASP.NET 5
+      On Ubuntu 14, install the SQLite library with apt-get.
+
+          .. code-block:: bash
+
+              sudo apt-get install libsqlite3-dev
+
+      On RedHat, install the SQLite library with yum.
+
+          .. code-block:: bash
+
+              sudo yum install sqlite-devel
+
+
+Install .NET Core
 -----------------
 
-A summary of steps to install ASP.NET 5 are included below. For a more up-to-date guide, follow the steps for `Installing ASP.NET 5 on Linux <http://docs.asp.net/en/latest/getting-started/installing-on-linux.html>`_. This will ensure you meet the following requirements.
+A summary of steps to install .NET Core are included below. For a more up-to-date guide, follow the steps for `Getting Started <http://dotnet.github.io/getting-started/>`_ on .NET Core's website.
 
-The following steps will install `dnvm <https://github.com/aspnet/home#running-an-application>`_, a command-line tool for installing the .NET Execution environment.
+ - Add the new apt-get feed
 
- - Install the required libraries
+    .. code-block:: bash
 
-    .. code-block:: console
+        sudo sh -c 'echo "deb [arch=amd64] http://apt-mo.trafficmanager.net/repos/dotnet/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
+        sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+        sudo apt-get update
 
-        ~ $ sudo apt-get install unzip curl libunwind8 gettext libssl-dev libcurl3-dev zlib1g libicu-dev
 
- - Install dnvm
+ - Install .NET Core
 
-    .. code-block:: console
+    .. code-block:: bash
 
-        ~ $ curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
-
-  - Install the latest version of DNX. The ``-r`` selects the CoreCLR runtime. Linux also supports the Mono runtime, but it is not used in this tutorial.
-
-    .. code-block:: console
-
-        ~ $ dnvm upgrade -r coreclr
-
-If you have trouble installing dnvm, consult `Installing ASP.NET 5 on Linux <http://docs.asp.net/en/latest/getting-started/installing-on-linux.html>`_.
-
-Install SQLite
---------------
-
-EntityFramework.SQLite requires ``libsqlite3``. This may not be installed by default.
-
-On Ubuntu 14, install the SQLite library.
-
-    .. code-block:: console
-
-        ~ $ sudo apt-get install libsqlite3-dev
+        sudo apt-get install dotnet
+        
 
 .. include:: guide.txt

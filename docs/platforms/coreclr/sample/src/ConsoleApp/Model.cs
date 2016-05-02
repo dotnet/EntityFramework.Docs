@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Data.Entity;
-using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConsoleApp
 {
@@ -12,8 +11,7 @@ namespace ConsoleApp
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var path = PlatformServices.Default.Application.ApplicationBasePath;
-            optionsBuilder.UseSqlite("Filename=" + Path.Combine(path, "blog.db"));
+            optionsBuilder.UseSqlite("Filename=./blog.db");
         }
     }
 
