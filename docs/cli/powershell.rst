@@ -1,7 +1,7 @@
 Package Manager Console (Visual Studio)
 =======================================
 
-Commands for PowerShell in Visual Studio's Package Manager Console window.
+EF command line tools for Visual Studio's Package Manager Console window.
 
 .. contents:: `In this article:`
     :depth: 2
@@ -13,13 +13,13 @@ Commands for PowerShell in Visual Studio's Package Manager Console window.
 Installation
 --------------
 
-Package Manager Console commands are installed with the *EntityFramework.Commands* package.
+Package Manager Console commands are installed with the *Microsoft.EntityFrameworkCore.Tools* package.
 
 To open the console, follow these steps.
 
 * Open Visual Studio 2015
 * :menuselection:`Tools --> Nuget Package Manager --> Package Manager Console`
-* Execute ``Install-Package EntityFramework.Commands -Pre``
+* Execute ``Install-Package Microsoft.EntityFrameworkCore.Tools -Pre``
 
 Commands
 --------
