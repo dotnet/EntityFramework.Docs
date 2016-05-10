@@ -3,16 +3,31 @@
 
 EF command-line tools for .NET Core Command Line Interface (CLI).
 
+.. contents:: `In this article:`
+    :depth: 2
+    :local:
+
 .. note::
     Command-line tools for .NET Core CLI has known issues. See `Preview 1 Known Issues`_ for more details.
 
+Installation
+------------
+
 Prerequisites
--------------
+~~~~~~~~~~~~~
 
 EF command-line tools requires .NET Core CLI Preview 1 or newer. See `.NET Core's Website <http://dotnet.github.io/>`_ for installation instructions.
 
-Installing
-----------
+Supported Frameworks
+~~~~~~~~~~~~~~~~~~~~
+
+EF supports .NET Core CLI commands on these frameworks:
+
+ - .NET Framework 4.5.1 and newer. ("net451", "net452", "net46", etc.)
+ - .NET Core App 1.0. ("netcoreapp1.0")
+
+Install by editing project.json
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 EF command-line tools for .NET Core CLI are installed by manually editing ``project.json``. 
 
@@ -48,14 +63,6 @@ The resulting project.json should include these items (in addition to your other
 .. tip::
     A build-only dependency (``"type": "build"``) means this dependency is local to the current project. For example, if Project A has a build only dependency and Project B depends on A, ``dotnet restore`` will not add A's build-only dependencies into Project B.
 
-Supported Frameworks
---------------------
-
-EF supports .NET Core CLI commands on these frameworks:
-
- - "net451" and newer
- - "netcoreapp1.0"
-
 Usage
 -----
 Commands can be run from the command line by navigating to the project directory and executing ``dotnet ef [subcommand]``. To see usage, add ``--help`` to any command to see more information about parameters and subcommands.
@@ -65,10 +72,14 @@ Commands can be run from the command line by navigating to the project directory
 Preview 1 Known Issues
 ----------------------
 
-"dotnet ef" cannot be used on class library project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Targeting class library projects is not supported
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.NET Core CLI does not support running commands on class libraries as of Preview 1.
+.NET Core CLI does not support running commands on class libraries as of Preview 1. Despite being able to install EF tools, executing commands may throw this error message.
+
+.. code-block:: text
+
+    This preview of Entity Framework tools does not support targeting class library projects in ASP.NET Core and .NET Core applications.
 
 See issue https://github.com/dotnet/cli/issues/2645. 
 
@@ -117,7 +128,7 @@ NuGet error: ``One or more packages are incompatible with .NETCoreApp,Version=v1
 
 When attempting to add Entity Framework Core with in to a .NET Core app, ``dotnet restore`` may issue the following NuGet error:
 
-.. code-block:: plain
+.. code-block:: text
 
     Package Ix-Async 1.2.5 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). Package Ix-Async 1.2.5 supports:
       - net40 (.NETFramework,Version=v4.0)
