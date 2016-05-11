@@ -67,7 +67,176 @@ Usage
 -----
 Commands can be run from the command line by navigating to the project directory and executing ``dotnet ef [subcommand]``. To see usage, add ``--help`` to any command to see more information about parameters and subcommands.
 
-.. TODO add usage here
+dotnet-ef
+~~~~~~~~~
+.. code-block:: test
+
+    Usage: dotnet ef [options] [command]
+    Options:
+      -h|--help                        Show help information
+      -v|--verbose                     Enable verbose output
+      --version                        Show version information
+      --framework <FRAMEWORK>          Target framework to load
+      --configuration <CONFIGURATION>  Configuration under which to load
+      --build-base-path <OUTPUT_DIR>   Directory in which to find temporary outputs
+      --no-build                       Do not build before executing
+    Commands:
+      database    Commands to manage your database
+      dbcontext   Commands to manage your DbContext types
+      migrations  Commands to manage your migrations
+
+dotnet-ef-database
+^^^^^^^^^^^^^^^^^^
+.. code-block:: text
+
+    Usage: dotnet ef database [options] [command]
+    Options:
+      -h|--help     Show help information
+      -v|--verbose  Enable verbose output
+    Commands:
+      drop    Drop the database for specific environment
+      update  Updates the database to a specified migration
+
+dotnet-ef-database-drop
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: text
+
+    Usage: dotnet ef database drop [options]
+    Options:
+      -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
+      -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
+      -f|--force                      Drop without confirmation
+      -h|--help                       Show help information
+      -v|--verbose                    Enable verbose output
+
+dotnet-ef-database-update
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: text
+
+    Usage: dotnet ef database update [arguments] [options]
+    Arguments:
+      [migration]  The target migration. If '0', all migrations will be reverted. If omitted, all pending migrations will be applied
+    Options:
+      -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
+      -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
+      -h|--help                       Show help information
+      -v|--verbose                    Enable verbose output
+
+dotnet-ef-dbcontext
+^^^^^^^^^^^^^^^^^^^
+.. code-block:: text
+
+    Usage: dotnet ef dbcontext [options] [command]
+    Options:
+      -h|--help     Show help information
+      -v|--verbose  Enable verbose output
+    Commands:
+      list      List your DbContext types
+      scaffold  Scaffolds a DbContext and entity type classes for a specified database
+
+dotnet-ef-dbcontext-list
+^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: text
+
+    Usage: dotnet ef dbcontext list [options]
+    Options:
+      -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
+      --json                          Use json output
+      -h|--help                       Show help information
+      -v|--verbose                    Enable verbose output
+
+dotnet-ef-dbcontext-scaffold
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: text
+
+    Usage: dotnet ef dbcontext scaffold [arguments] [options]
+    Arguments:
+      [connection]  The connection string of the database
+      [provider]    The provider to use. For example, EntityFramework.MicrosoftSqlServer
+    Options:
+      -a|--data-annotations           Use DataAnnotation attributes to configure the model where possible. If omitted, the output code will use only the fluent API.
+      -c|--context <name>             Name of the generated DbContext class.
+      -f|--force                      Force scaffolding to overwrite existing files. Otherwise, the code will only proceed if no output files would be overwritten.
+      -o|--output-dir <path>          Directory of the project where the classes should be output. If omitted, the top-level project directory is used.
+      --schema <schema>               Selects a schema for which to generate classes.
+      -t|--table <schema.table>       Selects a table for which to generate classes.
+      -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
+      -h|--help                       Show help information
+      -v|--verbose                    Enable verbose output
+
+dotnet-ef-migrations
+^^^^^^^^^^^^^^^^^^^^
+.. code-block:: text
+
+    Usage: dotnet ef migrations [options] [command]
+    Options:
+      -h|--help     Show help information
+      -v|--verbose  Enable verbose output
+    Commands:
+      add     Add a new migration
+      list    List the migrations
+      remove  Remove the last migration
+      script  Generate a SQL script from migrations
+
+dotnet-ef-migrations-add
+^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: text
+
+    Usage: dotnet ef migrations add [arguments] [options]
+    Arguments:
+      [name]  The name of the migration
+    Options:
+      -o|--output-dir <path>          The directory (and sub-namespace) to use. If omitted, "Migrations" is used.
+      -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
+      -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
+      --json                          Use json output
+      -h|--help                       Show help information
+      -v|--verbose                    Enable verbose output
+
+
+dotnet-ef-migrations-list
+^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: text
+
+    Usage: dotnet ef migrations list [options]
+    Options:
+      -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
+      -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
+      --json                          Use json output
+      -h|--help                       Show help information
+      -v|--verbose                    Enable verbose output
+
+dotnet-ef-migrations-remove
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: text
+
+    Usage: dotnet ef migrations remove [options]
+    Options:
+      -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
+      -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
+      -f|--force                      Removes the last migration without checking the database. If the last migration has been applied to the database, you will need to manually reverse the changes it made.
+      -h|--help                       Show help information
+      -v|--verbose                    Enable verbose output
+
+
+dotnet-ef-migrations-script
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: text
+
+    Usage: dotnet ef migrations script [arguments] [options]
+    Arguments:
+      [from]  The starting migration. If omitted, '0' (the initial database) is used
+      [to]    The ending migration. If omitted, the last migration is used
+    Options:
+      -o|--output <file>              The file to write the script to instead of stdout
+      -i|--idempotent                 Generates an idempotent script that can used on a database at any migration
+      -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
+      -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
+      -h|--help                       Show help information
+      -v|--verbose                    Enable verbose output
+
 
 Common Errors
 -------------
