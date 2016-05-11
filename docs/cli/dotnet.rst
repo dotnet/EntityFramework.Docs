@@ -300,8 +300,8 @@ To make a desktop .NET app, ensure you project targets "net451" or newer (exampl
     }
 
 
-NuGet error: ``One or more packages are incompatible with .NETCoreApp,Version=v1.0.``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+NuGet error: "One or more packages are incompatible with .NETCoreApp,Version=v1.0."
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When attempting to add Entity Framework Core with in to a .NET Core app, ``dotnet restore`` may issue the following NuGet error:
 
