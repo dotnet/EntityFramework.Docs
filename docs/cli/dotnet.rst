@@ -69,6 +69,13 @@ Commands can be run from the command line by navigating to the project directory
 
 .. TODO add usage here
 
+Common Errors
+-------------
+
+.. include:: _common_errors.txt
+
+.. _dotnet_cli_issues:
+
 Preview 1 Known Issues
 ----------------------
 
@@ -79,7 +86,8 @@ Targeting class library projects is not supported
 
 .. code-block:: text
 
-    This preview of Entity Framework tools does not support targeting class library projects in ASP.NET Core and .NET Core applications.
+    This preview of Entity Framework tools does not support targeting class library projects in ASP.NET Core
+    and .NET Core applications.
 
 See issue https://github.com/dotnet/cli/issues/2645. 
 
@@ -130,11 +138,13 @@ When attempting to add Entity Framework Core with in to a .NET Core app, ``dotne
 
 .. code-block:: text
 
-    Package Ix-Async 1.2.5 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). Package Ix-Async 1.2.5 supports:
+    Package Ix-Async 1.2.5 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). 
+    Package Ix-Async 1.2.5 supports:
       - net40 (.NETFramework,Version=v4.0)
       - net45 (.NETFramework,Version=v4.5)
       - portable-net45+win8+wp8 (.NETPortable,Version=v0.0,Profile=Profile78)
-    Package Remotion.Linq 2.0.2 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). Package Remotion.Linq 2.0.2 supports:
+    Package Remotion.Linq 2.0.2 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). 
+    Package Remotion.Linq 2.0.2 supports:
       - net35 (.NETFramework,Version=v3.5)
       - net40 (.NETFramework,Version=v4.0)
       - net45 (.NETFramework,Version=v4.5)
