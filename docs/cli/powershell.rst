@@ -1,7 +1,7 @@
 Package Manager Console (Visual Studio)
 =======================================
 
-Commands for PowerShell in Visual Studio's Package Manager Console window.
+EF command line tools for Visual Studio's Package Manager Console (PMC) window.
 
 .. contents:: `In this article:`
     :depth: 2
@@ -13,23 +13,36 @@ Commands for PowerShell in Visual Studio's Package Manager Console window.
 Installation
 --------------
 
-Package Manager Console commands are installed with the *EntityFramework.Commands* package.
+Package Manager Console commands are installed with the *Microsoft.EntityFrameworkCore.Tools* package.
 
 To open the console, follow these steps.
 
 * Open Visual Studio 2015
 * :menuselection:`Tools --> Nuget Package Manager --> Package Manager Console`
-* Execute ``Install-Package EntityFramework.Commands -Pre``
+* Execute ``Install-Package Microsoft.EntityFrameworkCore.Tools -Pre``
 
-Commands
---------
+.NET Core and ASP.NET Core Projects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.NET Core and ASP.NET Core projects also require installing .NET Core CLI. See :doc:`dotnet` for more information about this installation.
 
 .. note::
 
-  All commands support the common parameters: ``Verbose``, ``Debug``,
-  ``ErrorAction``, ``ErrorVariable``, ``WarningAction``, ``WarningVariable``,
-  ``OutBuffer``, ``PipelineVariable``, and ``OutVariable``. For more information, see
-  `about_CommonParameters <http://go.microsoft.com/fwlink/?LinkID=113216)>`_.
+  .NET Core CLI has known issues in Preview 1. Because PMC commands call .NET Core CLI commands, these known issues also apply to PMC commands. See :ref:`dotnet_cli_issues`.
+
+.. tip::
+
+  On .NET Core and ASP.NET Core projects, add ``-Verbose`` to any Package Manager Console command to see the equivalent .NET Core CLI command that was invoked.
+
+Usage
+-----
+
+.. note::
+
+  All commands support the common parameters: ``-Verbose``, ``-Debug``,
+  ``-ErrorAction``, ``-ErrorVariable``, ``-WarningAction``, ``-WarningVariable``,
+  ``-OutBuffer``, ``-PipelineVariable``, and ``-OutVariable``. For more information, see
+  `about_CommonParameters <http://go.microsoft.com/fwlink/?LinkID=113216>`_.
 
 
 Add-Migration
@@ -210,3 +223,9 @@ Sets the default DbContext to use.
 
       -Environment <String>
           Specifies the environment to use. If omitted, "Development" is used.
+
+
+Common Errors
+-------------
+
+.. include:: _common_errors.txt

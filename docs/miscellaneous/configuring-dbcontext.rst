@@ -127,6 +127,38 @@ provided, DbContext uses the following priorities to select options:
 Options or services selected in higher priorities will overwrite options from
 lower priorities.
 
+.. _use_idbcontextfactory:
+
+Using ``IDbContextFactory<TContext>``
+-------------------------------------
+
+As an alternative to the options above, you may also provide an implementation of ``IDbContextFactory<TContext>``.
+EF command line tools and dependency injection can use this factory to create an instance of your DbContext. This may be required in order to enable specific design-time experiences such as migrations.
+
+Implement this interface to enable design-time services for context types that do not have a public default constructor. Design-time services will automatically discover implementations of
+this interface that are in the same assembly as the derived context.
+
+Example:
+
+.. code-block:: csharp
+
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
+
+    namespace MyProject
+    {
+        public class BloggingContextFactory : IDbContextFactory<BloggingContext>
+        {
+            public BloggingContext Create()
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
+                optionsBuilder.UseSqlite("Filename=./blog.db");
+
+                return new BloggingContext(optionsBuilder.Options);
+            }
+        }
+    }
+
 More reading
 ------------
 
