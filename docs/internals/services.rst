@@ -3,7 +3,7 @@ Understanding EF Services
 
 .. contents:: `In this article`
   :local:
-  :depth: 1
+  :depth: 2
 
 Entity Framework executes as a collection of services working together. A
 service is a reusable component. A service is typically an
@@ -14,6 +14,22 @@ which is implemented in EF using `Microsoft.Extensions.DependencyInjection
 
 This article covers some fundamentals principles for understanding how EF uses
 services and DI.
+
+Terms
+-----
+
+Service
+  A reusable component. In EF, a service identified by a .NET type (a class or interface).
+
+Service lifetime
+  A description of the way in which a service is persisted and disposed across multiple uses
+  of the same service type.
+
+Service provider
+  The mechanism for storing a collection of services. Also known as a service container.
+
+Service collection
+  The mechanism for constructing a service provider.
 
 Categories of Services
 ----------------------
@@ -39,66 +55,8 @@ User services
   application code, not provider code. For example, users can provide an
   implementation of ``IModelCustomizer`` for controlling how a model is created.
 
-
-Services Initialization
------------------------
-
-In order to be used by EF, all services must be registered in a service
-collection before or during ``DbContext`` initialization. Registration is done
-by adding components to into the ``ServiceCollection`` that EF will eventually
-use to create the final ``ServiceProvider``. By the time initialization is
-complete, ``DbContext`` has an instance of ``ServiceProvider`` that includes the
-collection of provider services, context services, and user services necessary
-for operation.
-
 .. note::
-  ``ServiceProvider`` is not to be confused with a "provider's services".
-
-.. _services-initialization:
-
-Initialization Steps
-^^^^^^^^^^^^^^^^^^^^
-
-EF will initialize services in the following order. Services registered later
-can override or remove previously registered services.
-
-1. ``DbContext`` obtains an initial set of services. This initial set can be
-   internal or external. An external set must be found in order to use *user*
-   and *design-time services*. The initial set is discovered using these steps:
-  a. An **external** ``ServiceProvider`` can be passed in as a constructor
-     parameter.
-  b. If no constructor parameter is defined *and* ``DbContext`` is resolved from
-     a service provider (i.e. the context was registered with
-     ``AddDbContext<T>()``), then ``DbContextActivator`` will use the
-     **external** service provider from which the context was resolved.
-  c. If no external services can be found, ``DbContext`` creates an empty
-     **internal** ``ServiceProvider`` and calls ``.AddEntityFramework()`` to
-     add essential services.
-2. ``DbContext`` obtains an initial set of options. See also :doc:`/miscellaneous/configuring-dbcontext`.
-  a. Options can be provided as a constructor parameter..
-  b. If no constructor parameter is specified, DbContext will extract any 
-     ``DbContextOptions`` relevant to the current DbContext type from
-     the initial service provider. These options are normally added to the
-     initial service provider with a call to ``.AddDbContext<T>()``.
-  c. If no options are in the service provider or given as a constructor parameter, 
-     EF creates an empty set of options.
-3. Finalize options by calling ``DbContext.OnConfiguring()``, passing in the initial
-   options found in step 2. This can overwrite the initial set of options.
-4. Add all *provider services* given in the provider-specific implementation of
-   ``IDatabaseProvider.GetProviderServices()``. This is typically found from the
-   provider specific options extension (``IDbContextOptionsExtension``) which is
-   added to options when the user calls the "UseProvider()" extension method.
-   See :doc:`writing-a-provider` for more details.
-5. Create a service scope. Any services with scoped `service lifetime`_ will
-   only operate within this scope.
-6. Initialize *context services* from this service scope.
-7. As configured in options, select one and only one set of *provider services*
-   from ``IDatabaseServices``.
-
-Together, the scoped service provider from step 5, the context services from
-step 6, and the selected provider services from step 7 are the final set of
-services used by EF.
-
+  Service provider is not to be confused with a "provider's services".
 
 Service Lifetime
 ----------------
@@ -123,10 +81,75 @@ Singleton
   example, ``IModelCustomizer`` is a singleton because it is idempotent, meaning
   each call to ``IModelCustomizer.Customize()`` does not change the customizer.
 
+How AddDbContext works
+----------------------
+
+EF provides an extension method ``AddDbContext<TContext>()`` for
+adding using EF into a service collection. This method adds the following
+into a service collection:
+
+ - ``TContext`` as "scoped"
+ - ``DbContextOptions`` as a "singleton"
+ - ``DbContextOptionsFactory<T>`` as a "singleton"
+
+``AddDbContext`` does not add any context services, provider services, or design-time services
+to the service collection (except for `special cases`_). DbContext constructs its own internal service provider for this.
+
+Special cases
+~~~~~~~~~~~~~
+
+``AddDbContext`` adds ``DbContextOptionsFactory<T>`` to the service collection AddDbContext was called on (which is used to create the "external" service provider). ``DbContextOptionsFactory<T>`` acts as a bridge between the external service provider and DbContext's internal service provider. If the external provider has services for ``ILoggerFactory`` or ``IMemoryCache``, these will be added to the internal service provider.
+
+The bridging is done for these common scenarios so users can easily configure logging and memory caching without
+needing to provide a custom internal service provider.
+
+DbContext's internal service provider
+-------------------------------------
+
+By default, ``DbContext`` uses an internal service provider that is **separate** from 
+all other service providers in the application. This internal provider is constructed
+from an instance of ``DbContextOptions``. Methods such as ``UseSqlServer()`` extend
+the construction step add specialized services for their database system.
+
+Providing a custom internal service provider
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``DbContextOptionsBuilder`` provides a API for giving a custom service provider
+to DbContext for EF to use internally. This API is ``DbContextOptions.UseInternalServiceProvider(IServiceProvider provider)``.
+
+If an custom service provider is provided, DbContext will not use ``DbContextOptions`` to create its own
+internal service provider. The custom service provider must already have provider-specific services added.
+
+Database provider writers should provided methods such as AddEntityFrameworkSqlServer" or "AddEntityFrameworkSqlite" to simplify the process of creating a custom service container.
+
+.. code-block:: csharp
+
+  var services = new ServiceCollection()
+      .AddEntityFrameworkSqlServer()
+      .AddSingleton<MyCustomService>()
+      .BuildServiceProvider();
+
+  var options = new DbContextOptionsBuilder();
+
+  options
+      .UseInternalServiceProvider(services)
+      .UseSqlServer(connectionString);
+
+  using (var context = new DbContext(options))
+  { }
+
+Service provider caching
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+EF caches this internal service provider with ``IDbContextOptions`` as the key. 
+This means the service provider is only created once per unique set of options. 
+It is reused when a DbContext is instantiated using a set of
+options that have already been used during the application lifetime.
+
 Required Provider Services
 --------------------------
 
-EF providers must register a basic set of services. These required services are
+EF database providers must register a basic set of services. These required services are
 defined as properties on ``IDatabaseProviderServices``. Provider writers may
 need to implement some services from scratch. Others have partial or complete
 implementations in EF's library that can be reused.
