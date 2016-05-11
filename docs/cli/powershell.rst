@@ -28,7 +28,7 @@ To open the console, follow these steps.
 
 .. note::
 
-  .NET Core CLI has limitations in Preview 1. See :ref:`dotnet_cli_issues`.
+  .NET Core CLI has known issues in Preview 1. Because PMC commands call .NET Core CLI commands, these known issues also apply to PMC commands. See :ref:`dotnet_cli_issues`.
 
 .. tip::
 
