@@ -86,7 +86,7 @@ dotnet-ef
       migrations  Commands to manage your migrations
 
 dotnet-ef-database
-^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~
 .. code-block:: text
 
     Usage: dotnet ef database [options] [command]
@@ -98,7 +98,7 @@ dotnet-ef-database
       update  Updates the database to a specified migration
 
 dotnet-ef-database-drop
-^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: text
 
@@ -111,7 +111,7 @@ dotnet-ef-database-drop
       -v|--verbose                    Enable verbose output
 
 dotnet-ef-database-update
-^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: text
 
@@ -125,7 +125,7 @@ dotnet-ef-database-update
       -v|--verbose                    Enable verbose output
 
 dotnet-ef-dbcontext
-^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~
 .. code-block:: text
 
     Usage: dotnet ef dbcontext [options] [command]
@@ -137,7 +137,7 @@ dotnet-ef-dbcontext
       scaffold  Scaffolds a DbContext and entity type classes for a specified database
 
 dotnet-ef-dbcontext-list
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 .. code-block:: text
 
     Usage: dotnet ef dbcontext list [options]
@@ -148,7 +148,7 @@ dotnet-ef-dbcontext-list
       -v|--verbose                    Enable verbose output
 
 dotnet-ef-dbcontext-scaffold
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. code-block:: text
 
     Usage: dotnet ef dbcontext scaffold [arguments] [options]
@@ -167,7 +167,7 @@ dotnet-ef-dbcontext-scaffold
       -v|--verbose                    Enable verbose output
 
 dotnet-ef-migrations
-^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~
 .. code-block:: text
 
     Usage: dotnet ef migrations [options] [command]
@@ -181,7 +181,7 @@ dotnet-ef-migrations
       script  Generate a SQL script from migrations
 
 dotnet-ef-migrations-add
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 .. code-block:: text
 
     Usage: dotnet ef migrations add [arguments] [options]
@@ -197,7 +197,7 @@ dotnet-ef-migrations-add
 
 
 dotnet-ef-migrations-list
-^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~
 .. code-block:: text
 
     Usage: dotnet ef migrations list [options]
@@ -209,7 +209,7 @@ dotnet-ef-migrations-list
       -v|--verbose                    Enable verbose output
 
 dotnet-ef-migrations-remove
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. code-block:: text
 
     Usage: dotnet ef migrations remove [options]
@@ -222,7 +222,7 @@ dotnet-ef-migrations-remove
 
 
 dotnet-ef-migrations-script
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. code-block:: text
 
     Usage: dotnet ef migrations script [arguments] [options]
