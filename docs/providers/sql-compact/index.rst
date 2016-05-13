@@ -8,7 +8,7 @@ Microsoft SQL Server Compact Edition
 Getting Started
 ---------------
 
-See the `getting started documentation on the project site <https://github.com/ErikEJ/EntityFramework.SqlServerCompact/wiki/Using-EF7-with-SQL-Server-Compact-in-Traditional-.NET-Applications>`_
+See the `getting started documentation on the project site <https://github.com/ErikEJ/EntityFramework.SqlServerCompact/wiki/Using-EF-Core-with-SQL-Server-Compact-in-Traditional-.NET-Applications>`_
 
 Supported Database Engines
 --------------------------
@@ -26,8 +26,8 @@ Status
 ------
 
 Pre-release packages vailable on NuGet.org
- * `EntityFramework.SqlServerCompact35 <https://www.nuget.org/packages/EntityFramework.SqlServerCompact35>`_
- * `EntityFramework.SqlServerCompact40 <https://www.nuget.org/packages/EntityFramework.SqlServerCompact40>`_
+ * `EntityFrameworkCore.SqlServerCompact35 <https://www.nuget.org/packages/EntityFrameworkCore.SqlServerCompact35>`_
+ * `EntityFrameworkCore.SqlServerCompact40 <https://www.nuget.org/packages/EntityFrameworkCore.SqlServerCompact40>`_
 
 Project Site
 ------------
