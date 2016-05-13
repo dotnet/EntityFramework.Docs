@@ -19,7 +19,8 @@ Terms
 -----
 
 Service
-  A reusable component. In EF, a service identified by a .NET type (a class or interface).
+  A reusable component. In .NET, a service can be identified by a class or interface.
+  By convention, Entity Framework only uses interfaces to identify services.
 
 Service lifetime
   A description of the way in which a service is persisted and disposed across multiple uses
