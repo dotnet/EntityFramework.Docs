@@ -44,7 +44,7 @@ Create a new project
 Install Entity Framework
 -------------------------
 
-To use EF7, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
+To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
 * Run ``Install-Package Microsoft.EntityFrameworkCore.SqlServer –Pre``
