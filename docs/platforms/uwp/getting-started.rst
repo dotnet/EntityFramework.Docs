@@ -1,14 +1,13 @@
-.. include:: /_shared/rc1-notice.txt
+.. include:: /_shared/rc2-notice.txt
 
-Getting Started on Universal Windows Platform
-=============================================
+Local SQLite on UWP
+===================
 
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
 .. caution::
     **Avoid using anonymous types in LINQ queries on UWP**.
-    Deploying a UWP application to the app store requires your application to be compiled with .NET Native.
-    Queries with anonymous types have poor performance on .NET Native or may crash the application.
+    Deploying a UWP application to the app store requires your application to be compiled with .NET Native. Queries with anonymous types have poor performance on .NET Native or may crash the application.
 
 .. contents:: `In this article:`
     :depth: 2
@@ -22,7 +21,7 @@ Prerequisites
 
 The following items are required to complete this walkthrough:
     - Windows 10
-    - Visual Studio 2015
+    - Visual Studio 2015 Update 2
     - The latest version of `Windows 10 Developer Tools <https://dev.windows.com/en-us/downloads>`_
 
 Create a new project
@@ -34,27 +33,17 @@ Create a new project
 * Select the **Blank App (Universal Windows)** project template
 * Give the project a name and click **OK**
 
-.. caution::
-    To work around `an issue with EF7 and .NET Native <https://github.com/aspnet/EntityFramework/issues/3768>`_, you need to add a runtime directive to your application. This issue will be fixed for future releases.
-
-    * Open **Properties/Default.rd.xml**
-    * Add the highlighted line shown below
-
-    .. literalinclude:: sample/EFGetStarted.UWP/Properties/Default.rd.xml
-            :language: c#
-            :lines: 27-28
-            :emphasize-lines: 2
-
 Install Entity Framework
 ----------------------------------------
-To use EF7 you install the package for the database provider(s) you want to target. This walkthrough uses SQLite. For a list of available providers see :doc:`/providers/index`.
+
+To use EF7, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
-* Run ``Install-Package EntityFramework.SQLite –Pre``
+* Run ``Install-Package Microsoft.EntityFrameworkCore.SQLite –Pre``
 
 Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.
 
-* Run ``Install-Package EntityFramework.Commands –Pre``
+* Run ``Install-Package Microsoft.EntityFrameworkCore.Tools –Pre``
 
 Create your model
 -----------------
@@ -65,31 +54,20 @@ Now it's time to define a context and entity classes that make up your model.
 * Enter *Model.cs* as the name and click **OK**
 * Replace the contents of the file with the following code
 
-.. caution::
-    The ``try``/``catch`` code to set ``databaseFilePath`` is a temporary workaround to enable migrations to be added at design time. When the application runs, ``databaseFilePath`` will always be under ``ApplicationData.Current.LocalFolder.Path``. However, that API can not be called when migrations creates the context at design time in Visual Studio. The database is never accessed when adding migrations, so we just return a relative file path that will never be used.
-
-.. note::
-    Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
-
 .. literalinclude:: sample/EFGetStarted.UWP/Model.cs
     :language: csharp
     :linenos:
 
 .. tip::
-    In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
-
+    In a real application you would put each class in a separate file and put the connection string in the ``App.Config`` file and read it out using ``ConfigurationManager``. For the sake of simplicity, we are putting everything in a single code file for this tutorial.
 
 Create your database
 --------------------
 
 Now that you have a model, you can use migrations to create a database for you.
 
-* :menuselection:`Build -> Build Solution`
 * :menuselection:`Tools –> NuGet Package Manager –> Package Manager Console`
 * Run ``Add-Migration MyFirstMigration`` to scaffold a migration to create the initial set of tables for your model.
-
-.. caution::
-    Notice that you need to manually build the solution before running the ``Add-Migration`` command. The command does invoke the build operation on the project, but we are currently investigating why this does not result in the correct assemblies being outputted.
 
 Since we want the database to be created on the device that the app runs on, we will add some code to apply any pending migrations to the local database on application startup. The first time that the app runs, this will take care of creating the local database for us.
 
@@ -100,15 +78,15 @@ Since we want the database to be created on the device that the app runs on, we 
         :language: c#
         :linenos:
         :lines: 1-6
-        :emphasize-lines: 2
+        :emphasize-lines: 1
 
 * Add the highlighted code to apply any pending migrations
 
 .. literalinclude:: sample/EFGetStarted.UWP/App.xaml.cs
         :language: c#
         :linenos:
-        :lines: 30-42
-        :emphasize-lines: 9-12
+        :lines: 30-39
+        :emphasize-lines: 6-9
 
 .. tip::
     If you make future changes to your model, you can use the ``Add-Migration`` command to scaffold a new migration to apply the corresponding changes to the database. Any pending migrations will be applied to the local database on each device when the application starts.
