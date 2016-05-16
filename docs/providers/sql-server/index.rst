@@ -24,7 +24,7 @@ Supported Platforms
 -------------------
 
  * Full .NET (4.5.1 onwards)
- * DNX/ASP.NET 5 (dnx451 and dnxcore50)
+ * .NET Core
  * Mono (4.2.0 onwards)
 
 .. caution::
@@ -33,7 +33,7 @@ Supported Platforms
 Status
 ------
 
-`Pre-release EntityFramework.MicrosoftSqlServer package on NuGet.org <https://www.nuget.org/packages/EntityFramework.MicrosoftSqlServer>`_
+`Pre-release Microsoft.EntityFrameworkCore.SqlServer package on NuGet.org <https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer>`_
 
 Project Site
 ------------

@@ -21,12 +21,11 @@ Supported Platforms
 -------------------
 
  * Full .NET (4.5.1 onwards)
- * DNX/ASP.NET 5 (dnx451 only)
 
 Status
 ------
 
-`Pre-release EntityFramework.IBMDataServer package on NuGet.org <https://www.nuget.org/packages/EntityFramework.IBMDataServer/>`_
+`Pre-release EntityFramework.IBMDataServerpackage on NuGet.org (supports RC1) <https://www.nuget.org/packages/EntityFramework.IBMDataServer/>`_
 
 Project Site
 ------------

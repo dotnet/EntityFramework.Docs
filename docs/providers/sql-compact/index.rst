@@ -20,7 +20,6 @@ Supported Platforms
 -------------------
 
  * Full .NET (4.5.1 onwards)
- * DNX/ASP.NET 5 (dnx451 only)
 
 Status
 ------
