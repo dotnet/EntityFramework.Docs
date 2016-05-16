@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace EFGetStarted.UWP
@@ -11,14 +11,6 @@ namespace EFGetStarted.UWP
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Filename=Blogging.db");
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Make Blog.Url required
-            modelBuilder.Entity<Blog>()
-                .Property(b => b.Url)
-                .IsRequired();
         }
     }
 

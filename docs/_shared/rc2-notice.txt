@@ -1,0 +1,2 @@
+.. note::
+    This article uses EF 7.0.0-rc2 which is the latest pre-release available on NuGet.org. You can find nightly builds of the EF Core code base hosted on https://www.myget.org/F/aspnetvnext/ but we do not maintain up-to-date documentation for nightly builds.

@@ -1,4 +1,4 @@
-.. include:: /_shared/rc1-notice.txt
+.. include:: /_shared/rc2-notice.txt
 
 Console Application to Existing Database (Database First)
 =========================================================
@@ -10,22 +10,17 @@ In this walkthrough, you will build a console application that performs basic da
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/full-dotnet/sample/EFGetStarted.ConsoleApp.ExistingDb
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/full-dotnet/sample
 
 Prerequisites
 -------------
 
 The following prerequisites are needed to complete this walkthrough:
 
-* Visual Studio 2013 or Visual Studio 2015
-* `Latest version of NuGet Package Manager`_
+* Visual Studio 2015 Update 2
+* `Latest version of NuGet Package Manager <https://visualstudiogallery.msdn.microsoft.com/5d345edc-2e2d-4a9c-b73b-d53956dc458d>`_
 * `Latest version of Windows PowerShell <https://www.microsoft.com/en-us/download/details.aspx?id=40855>`_
 * `Blogging database`_
-
-Latest version of NuGet Package Manager
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. include:: /_shared/ensure-vs-nuget-version.txt
 
 Blogging database
 ^^^^^^^^^^^^^^^^^
@@ -37,7 +32,7 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 Create a new project
 --------------------
 
-* Open Visual Studio (this walkthrough uses 2015 but you can use any version from 2013 onwards)
+* Open Visual Studio 2015
 * :menuselection:`File --> New --> Project...`
 * From the left menu select :menuselection:`Templates --> Visual C# --> Windows`
 * Select the **Console Application** project template
@@ -47,15 +42,15 @@ Create a new project
 Install Entity Framework
 ------------------------
 
-To use EF7 you install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
+To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
-* Run ``Install-Package EntityFramework.MicrosoftSqlServer –Pre``
+* Run ``Install-Package Microsoft.EntityFrameworkCore.SqlServer –Pre``
 
 To enable reverse engineering from an existing database we need to install a couple of other packages too.
 
-* Run ``Install-Package EntityFramework.Commands –Pre``
-* Run ``Install-Package EntityFramework.MicrosoftSqlServer.Design –Pre``
+* Run ``Install-Package Microsoft.EntityFrameworkCore.Tools –Pre``
+* Run ``Install-Package Microsoft.EntityFrameworkCore.SqlServer.Design –Pre``
 
 Reverse engineer your model
 ---------------------------
@@ -65,26 +60,15 @@ Now it's time to create the EF model based on your existing database.
 * :menuselection:`Tools –> NuGet Package Manager –> Package Manager Console`
 * Run the following command to create a model from the existing database
 
-.. literalinclude:: sample/EFGetStarted.ConsoleApp.ExistingDb/ScaffoldCommand.txt
+.. literalinclude:: _static/reverse-engineer-command.txt
 
-The reverse engineer process created entity classes and a derived context based on the schema of the existing database.
-
-Entity Classes
-^^^^^^^^^^^^^^
-
-The entity classes are simple C# objects that represent the data you will be querying and saving.
+The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
 
 .. literalinclude:: sample/EFGetStarted.ConsoleApp.ExistingDb/Blog.cs
         :language: c#
         :linenos:
 
-Derived Context
-^^^^^^^^^^^^^^^
-
 The context represents a session with the database and allows you to query and save instances of the entity classes.
-
-.. note::
-    Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
 
 .. literalinclude:: sample/EFGetStarted.ConsoleApp.ExistingDb/BloggingContext.cs
         :language: c#

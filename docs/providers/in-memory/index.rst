@@ -21,14 +21,14 @@ Supported Platforms
 -------------------
 
   * Full .NET (4.5.1 onwards)
-  * DNX/ASP.NET 5 (dnx451 and dnxcore50)
+  * .NET Core
   * Mono (4.2.0 onwards)
   * Universal Windows Platform
 
 Status
 ------
 
-`Pre-release EntityFramework.InMemory package on NuGet.org <https://www.nuget.org/packages/EntityFramework.InMemory>`_
+`Pre-release Microsoft.EntityFrameworkCore.InMemory package on NuGet.org <https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory>`_
 
 Project Site
 ------------

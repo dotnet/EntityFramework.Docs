@@ -8,7 +8,8 @@ Database Providers
 
     sql-server/index
     sqlite/index
-    sql-compact/index
     npgsql/index
+    mysql/index
+    sql-compact/index
     ibm/index
     in-memory/index

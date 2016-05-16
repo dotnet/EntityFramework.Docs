@@ -1,6 +1,6 @@
 ﻿using BusinessLogic;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
@@ -10,38 +10,38 @@ namespace TestProject
     [TestClass]
     public class BlogServiceTests
     {
-        private ServiceCollection _serviceCollection;
-        private DbContextOptions<BloggingContext> _contextOptions;
-
-        public BlogServiceTests()
+        private static DbContextOptions<BloggingContext> CreateNewContextOptions()
         {
-            // Create a service collection that we can create service providers from
-            // A service collection defines the services that will be available in service 
-            // provider instances (think of it as ServiceProviderBuilder)
-            _serviceCollection = new ServiceCollection();
-            _serviceCollection.AddEntityFramework().AddInMemoryDatabase();
+            // Create a fresh service provider, and therefore a fresh 
+            // InMemory database instance.
+            var serviceProvider = new ServiceCollection()
+                .AddEntityFrameworkInMemoryDatabase()
+                .BuildServiceProvider();
 
-            // Create options to tell the context to use the InMemory database
-            var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
-            optionsBuilder.UseInMemoryDatabase();
-            _contextOptions = optionsBuilder.Options;
+            // Create a new options instance telling the context to use an
+            // InMemory database and the new service provider.
+            var builder = new DbContextOptionsBuilder<BloggingContext>();
+            builder.UseInMemoryDatabase()
+                   .UseInternalServiceProvider(serviceProvider);
+
+            return builder.Options;
         }
 
         [TestMethod]
         public void Add_writes_to_database()
         {
             // All contexts that share the same service provider will share the same InMemory database
-            var serviceProvider = _serviceCollection.BuildServiceProvider();
+            var options = CreateNewContextOptions();
 
             // Run the test against one instance of the context
-            using (var context = new BloggingContext(serviceProvider, _contextOptions))
+            using (var context = new BloggingContext(options))
             {
                 var service = new BlogService(context);
                 service.Add("http://sample.com");
             }
 
             // User a seperate instance of the context to verify correct data was saved to database
-            using (var context = new BloggingContext(serviceProvider, _contextOptions))
+            using (var context = new BloggingContext(options))
             {
                 Assert.AreEqual(1, context.Blogs.Count());
                 Assert.AreEqual("http://sample.com", context.Blogs.Single().Url);
@@ -52,10 +52,10 @@ namespace TestProject
         public void Find_searches_url()
         {
             // All contexts that share the same service provider will share the same InMemory database
-            var serviceProvider = _serviceCollection.BuildServiceProvider();
+            var options = CreateNewContextOptions();
 
             // Insert seed data into the database using one instance of the context
-            using (var context = new BloggingContext(serviceProvider, _contextOptions))
+            using (var context = new BloggingContext(options))
             {
                 context.Blogs.Add(new Blog { Url = "http://sample.com/cats" });
                 context.Blogs.Add(new Blog { Url = "http://sample.com/catfish" });
@@ -64,7 +64,7 @@ namespace TestProject
             }
 
             // Use a clean instance of the context to run the test
-            using (var context = new BloggingContext(serviceProvider, _contextOptions))
+            using (var context = new BloggingContext(options))
             {
                 var service = new BlogService(context);
                 var result = service.Find("cat");

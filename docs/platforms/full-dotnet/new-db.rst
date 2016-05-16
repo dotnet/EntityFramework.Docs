@@ -1,4 +1,4 @@
-.. include:: /_shared/rc1-notice.txt
+.. include:: /_shared/rc2-notice.txt
 
 Console Application to New Database
 ===================================
@@ -10,26 +10,21 @@ In this walkthrough, you will build a console application that performs basic da
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/full-dotnet/sample/EFGetStarted.ConsoleApp.NewDb
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/full-dotnet/sample
 
 Prerequisites
 -------------
 
 The following prerequisites are needed to complete this walkthrough:
 
-* Visual Studio 2013 or Visual Studio 2015
-* `Latest version of NuGet Package Manager`_
+* Visual Studio 2015 Update 2
+* `Latest version of NuGet Package Manager <https://visualstudiogallery.msdn.microsoft.com/5d345edc-2e2d-4a9c-b73b-d53956dc458d>`_
 * `Latest version of Windows PowerShell <https://www.microsoft.com/en-us/download/details.aspx?id=40855>`_
-
-Latest version of NuGet Package Manager
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. include:: /_shared/ensure-vs-nuget-version.txt
 
 Create a new project
 --------------------
 
-* Open Visual Studio (this walkthrough uses 2015 but you can use any version from 2013 onwards)
+* Open Visual Studio 2015
 * :menuselection:`File --> New --> Project...`
 * From the left menu select :menuselection:`Templates --> Visual C# --> Windows`
 * Select the **Console Application** project template
@@ -39,14 +34,14 @@ Create a new project
 Install Entity Framework
 ------------------------
 
-To use EF7 you install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
+To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
-* Run ``Install-Package EntityFramework.MicrosoftSqlServer –Pre``
+* Run ``Install-Package Microsoft.EntityFrameworkCore.SqlServer –Pre``
 
 Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.
 
-* Run ``Install-Package EntityFramework.Commands –Pre``
+* Run ``Install-Package Microsoft.EntityFrameworkCore.Tools –Pre``
 
 Create your model
 -----------------
@@ -57,15 +52,12 @@ Now it's time to define a context and entity classes that make up your model.
 * Enter *Model.cs* as the name and click **OK**
 * Replace the contents of the file with the following code
 
-.. note::
-    Notice the ``OnConfiguring`` method (new in EF7) that is used to specify the provider to use and, optionally, other configuration too.
-
 .. literalinclude:: sample/EFGetStarted.ConsoleApp.NewDb/Model.cs
         :language: c#
         :linenos:
 
 .. tip::
-    In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
+    In a real application you would put each class in a separate file and put the connection string in the ``App.Config`` file and read it out using ``ConfigurationManager``. For the sake of simplicity, we are putting everything in a single code file for this tutorial.
 
 Create your database
 --------------------

@@ -1,4 +1,0 @@
-Installing EF7 requires an up-to-date version of NuGet Package Manager. You can install the latest version from Visual Studio Gallery. Make sure you restart Visual Studio after installing the update.
-
-- `NuGet Package Manager for Visual Studio 2015 <https://visualstudiogallery.msdn.microsoft.com/5d345edc-2e2d-4a9c-b73b-d53956dc458d>`_
-- `NuGet Package Manager for Visual Studio 2013 <https://visualstudiogallery.msdn.microsoft.com/4ec1526c-4a8c-4a84-b702-b21a8f5293ca>`_

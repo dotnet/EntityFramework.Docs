@@ -1,4 +1,4 @@
-.. include:: /_shared/rc1-notice.txt
+.. include:: /_shared/rc2-notice.txt
 
 Including & Excluding Properties
 ================================
@@ -11,7 +11,7 @@ Including a property in the model means that EF has metadata about that property
 Conventions
 -----------
 
-By convention, every property on each entity type will be included in the model. This includes private properties and those without a getter or setter.
+By convention, public properties with a getter and a setter will be included in the model.
 
 Data Annotations
 ----------------

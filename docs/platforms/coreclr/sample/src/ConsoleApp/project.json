@@ -1,18 +1,34 @@
 {
-    "dependencies": {
-        "EntityFramework.Sqlite": "7.0.0-rc1-final",
-        "EntityFramework.Commands": "7.0.0-rc1-final",
-        "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final"
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0-rc2-*"
     },
-    "commands": {
-        "run": "ConsoleApp",
-        "ef": "EntityFramework.Commands"
-    },
-    "frameworks": {
-        "dnxcore50": {
-            "dependencies": {
-                "System.Console": "4.0.0-beta-*"
-            }
-        }
+    "Microsoft.EntityFrameworkCore.Sqlite": "1.0.0-rc2-*",
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "version": "1.0.0-rc2-*",
+      "type": "build"
     }
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  },
+  "tools": {
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "version": "1.0.0-rc2-*",
+      "imports": [
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  }
 }
