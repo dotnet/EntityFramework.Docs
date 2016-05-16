@@ -8,8 +8,8 @@ namespace EFLogging
     {
         private static string[] _categories =
         {
-            typeof(Microsoft.Data.Entity.Storage.Internal.RelationalCommandBuilderFactory).FullName,
-            typeof(Microsoft.Data.Entity.Storage.Internal.SqlServerConnection).FullName
+            typeof(Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommandBuilderFactory).FullName,
+            typeof(Microsoft.EntityFrameworkCore.Storage.Internal.SqlServerConnection).FullName
         };
 
         public ILogger CreateLogger(string categoryName)
@@ -32,12 +32,12 @@ namespace EFLogging
                 return true;
             }
 
-            public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
+            public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
             {
                 Console.WriteLine(formatter(state, exception));
             }
 
-            public IDisposable BeginScopeImpl(object state)
+            public IDisposable BeginScope<TState>(TState state)
             {
                 return null;
             }
@@ -50,10 +50,10 @@ namespace EFLogging
                 return false;
             }
 
-            public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
+            public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
             { }
 
-            public IDisposable BeginScopeImpl(object state)
+            public IDisposable BeginScope<TState>(TState state)
             {
                 return null;
             }
