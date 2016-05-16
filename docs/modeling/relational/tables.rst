@@ -13,7 +13,7 @@ Table mapping identifies which table data should be queried from and saved to in
 Conventions
 -----------
 
-By convention, each entity will be setup to map to a table with the same name as the entity.
+By convention, each entity will be setup to map to a table with the same name as the ``DbSet<TEntity>`` property that exposes the entity on the derived context. If no ``DbSet<TEntity>`` is included for the given entity, the class name is used.
 
 Data Annotations
 ----------------

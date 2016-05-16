@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace EFModeling.Configuring.FluentAPI.Samples.Relationships.Full

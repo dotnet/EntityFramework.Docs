@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Configuring.FluentAPI.Samples.IndexUnique
 {

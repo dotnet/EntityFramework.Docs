@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace EFModeling.Configuring.FluentAPI.Samples.IgnoreType
