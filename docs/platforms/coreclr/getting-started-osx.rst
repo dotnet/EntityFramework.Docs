@@ -1,10 +1,9 @@
-.. include:: /_shared/rc1-notice.txt
+.. include:: /_shared/rc2-notice.txt
 
 Getting Started on OS X
 =======================
 
-This walkthrough will create a simple console application using .NET Core and
-the SQLite provider.
+This walkthrough will create a simple console application using .NET Core and the SQLite provider.
 
 .. contents:: `In this article:`
     :depth: 1

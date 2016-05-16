@@ -1,4 +1,4 @@
-.. include:: /_shared/rc1-notice.txt
+.. include:: /_shared/rc2-notice.txt
 
 Getting Started on Linux
 ========================
@@ -60,6 +60,6 @@ A summary of steps to install .NET Core are included below. For a more up-to-dat
     .. code-block:: bash
 
         sudo apt-get install dotnet
-        
+
 
 .. include:: guide.txt
