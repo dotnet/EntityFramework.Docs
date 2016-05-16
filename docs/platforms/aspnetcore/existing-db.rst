@@ -67,16 +67,15 @@ To enable reverse engineering from an existing database we need to install a cou
 Reverse engineer your model
 ---------------------------
 
-.. caution::
-    The reverse engineer experience in ASP.NET Core is still a work-in-progress. The following steps are overly complex and will be simplified by the time we reach a stable release.
-
 Now it's time to create the EF model based on your existing database.
 
-  * Open a command prompt (**Windows Key + R**, type **cmd**, click **OK**)
-  * Use the ``cd`` command to navigate to the project directory
-  * Run the following command to create a model from the existing database
+* :menuselection:`Tools –> NuGet Package Manager –> Package Manager Console`
+* Run the following command to create a model from the existing database
 
 .. literalinclude:: _static/reverse-engineer-command.txt
+
+.. caution::
+  Note that the connection string is double quoted (with single quotes inside the double quotes). This is a workaround for a `known issue in RC2 <https://github.com/aspnet/Release/issues/130>`_ for more details.
 
 The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
 
