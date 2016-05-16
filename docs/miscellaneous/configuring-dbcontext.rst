@@ -103,7 +103,7 @@ This requires adding a `constructor argument`_ to you DbContext type that accept
 
   public class BloggingContext : DbContext
   {
-      public BloggingContext(DbContextOptions<BloggingContext> options) 
+      public BloggingContext(DbContextOptions<BloggingContext> options)
         :base(options)
       { }
 
@@ -161,9 +161,9 @@ Example:
 More reading
 ------------
 
-- Read :doc:`/platforms/aspnetcore/getting-started` for more information on
+- Read :doc:`/platforms/aspnetcore/index` for more information on
   using EF with ASP.NET Core.
 - Read `Dependency Injection <https://docs.asp.net/en/latest/fundamentals/dependency-injection.html>`_ to
   learn more about using DI.
 - Read :doc:`testing` for more information.
-- Read :doc:`/internals/services` for more details on how EF uses dependency injection internally. 
+- Read :doc:`/internals/services` for more details on how EF uses dependency injection internally.

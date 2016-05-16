@@ -1,1 +1,0 @@
-dnx ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" EntityFramework.MicrosoftSqlServer --outputDir Models
