@@ -8,3 +8,4 @@ Miscellaneous
     logging
     testing
     configuring-dbcontext
+    rc1-rc2-upgrade
