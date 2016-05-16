@@ -4,7 +4,7 @@ Testing with InMemory
 This article covers how to use the InMemory provider to write efficient tests with minimal impact to the code being tested.
 
 .. caution::
-  Currently you need to use ``ServiceCollection`` and ``IServiceProvider`` to control the scope of the InMemory database, which adds complexity to your tests. We have a `feature on our backlog <https://github.com/aspnet/EntityFramework/issues/3253>`_ to provide an easier mechanism for controlling the scope of InMemory databases.
+  Currently you need to use ``ServiceCollection`` and ``IServiceProvider`` to control the scope of the InMemory database, which adds complexity to your tests. In the next release after RC2, there will be improvements to make this easier, `see issue #3253 <https://github.com/aspnet/EntityFramework/issues/3253>`_ for more details.
 
 .. contents:: `In this article:`
     :depth: 2
@@ -57,7 +57,7 @@ In your tests you are going to externally configure the context to use the InMem
 Add a constructor for testing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The simplest way to enable testing with the InMemory provider is to modify your context to expose a constructor that accepts an ``IServiceProvider`` and ``DbContextOptions<TContext>``.
+The simplest way to enable testing with the InMemory provider is to modify your context to expose a constructor that accepts a ``DbContextOptions<TContext>``.
 
 .. literalinclude:: testing/sample/BusinessLogic/BloggingContext.cs
         :language: csharp
@@ -66,8 +66,6 @@ The simplest way to enable testing with the InMemory provider is to modify your 
         :emphasize-lines: 6-8
 
 .. note::
-  ``IServiceProvider`` is the container that EF will resolve all its services from (including the InMemory database instance). Typically, EF creates a single ``IServiceProvider`` for all contexts of a given type in an AppDomain. By allowing one to be passed in, you can control the scope of the InMemory database.
-
   ``DbContextOptions<TContext>`` tells the context all of it's settings, such as which database to connect to. This is the same object that is built by running the OnConfiguring method in your context.
 
 Writing tests
@@ -75,7 +73,9 @@ Writing tests
 
 The key to testing with this provider is the ability to tell the context to use the InMemory provider, and control the scope of the in-memory database. Typically you want a clean database for each test method.
 
-Here is an example of a test class that uses the InMemory database. Each test method creates a new ``IServiceProvider``, meaning each method has its own InMemory database.
+``DbContextOptions<TContext>`` exposes a ``UseInternalServiceProvider`` method that allows us to control the ``IServiceProvider`` the context will use. ``IServiceProvider`` is the container that EF will resolve all its services from (including the InMemory database instance). Typically, EF creates a single ``IServiceProvider`` for all contexts of a given type in an AppDomain - meaning all context instances share the same InMemory database instance. By allowing one to be passed in, you can control the scope of the InMemory database.
+
+Here is an example of a test class that uses the InMemory database. Each test method creates a new ``DbContextOptions<TContext>`` with a new ``IServiceProvider``, meaning each method has its own InMemory database.
 
 .. literalinclude:: testing/sample/TestProject/BlogServiceTests.cs
         :language: csharp
@@ -84,22 +84,8 @@ Here is an example of a test class that uses the InMemory database. Each test me
 Sharing a database instance for read-only tests
 -----------------------------------------------
 
-If a test class has read-only tests that share the same seed data, then you can share the InMemory database instance for the whole class (rather than a new one for each method). This means you have a single ``IServiceProvider`` for test class, rather than one for each test method.
+If a test class has read-only tests that share the same seed data, then you can share the InMemory database instance for the whole class (rather than a new one for each method). This means you have a single  ``DbContextOptions<TContext>`` and ``IServiceProvider`` for the test class, rather than one for each test method.
 
 .. literalinclude:: testing/sample/TestProject/BlogServiceTestsReadOnly.cs
-        :language: csharp
-        :linenos:
-
-Advanced: How to avoid modifying the context
---------------------------------------------
-
-It is much more complicated, but you can avoid adding a constructor to your context. This approach leverages more advanced functionality of ``IServiceProvider``.
-
-Here is an example that uses this approach. The important points are:
-  * Create a global ``ServiceCollection``, register the context as a service, and configure it to use the InMemory database.
-  * Create an ``IServiceProvider`` for each InMemory database instance you want (in this case, one per test method).
-  * Create an ``IServiceScope`` for each context instance you want, and resolve the context from it.
-
-.. literalinclude:: testing/sample/TestProject/BlogServiceTestsAdvanced.cs
         :language: csharp
         :linenos:

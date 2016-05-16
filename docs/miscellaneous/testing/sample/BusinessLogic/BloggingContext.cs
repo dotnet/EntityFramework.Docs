@@ -1,5 +1,5 @@
-﻿using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 
 namespace BusinessLogic
@@ -9,8 +9,8 @@ namespace BusinessLogic
         public BloggingContext()
         { }
 
-        public BloggingContext(IServiceProvider serviceProvider, DbContextOptions<BloggingContext> options)
-            : base(serviceProvider, options)
+        public BloggingContext(DbContextOptions<BloggingContext> options)
+            : base(options)
         { }
 
         public DbSet<Blog> Blogs { get; set; }
