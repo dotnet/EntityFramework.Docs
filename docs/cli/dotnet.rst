@@ -29,7 +29,7 @@ EF supports .NET Core CLI commands on these frameworks:
 Install by editing project.json
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-EF command-line tools for .NET Core CLI are installed by manually editing ``project.json``. 
+EF command-line tools for .NET Core CLI are installed by manually editing ``project.json``.
 
 1. Add ``Microsoft.EntityFrameworkCore.Tools`` as a build-only dependency under "dependencies" and as a "tool". Also add "imports" if you are using "netcoreapp1.0" as a framework. See sample project.json below.
 2. Execute ``dotnet restore``. If restore does not succeed, the command-line tools may not have installed correctly.
@@ -69,7 +69,7 @@ Commands can be run from the command line by navigating to the project directory
 
 dotnet-ef
 ~~~~~~~~~
-.. code-block:: test
+.. code-block:: none
 
     Usage: dotnet ef [options] [command]
     Options:
@@ -258,7 +258,7 @@ Targeting class library projects is not supported
     This preview of Entity Framework tools does not support targeting class library projects in ASP.NET Core
     and .NET Core applications.
 
-See issue https://github.com/dotnet/cli/issues/2645. 
+See issue https://github.com/dotnet/cli/issues/2645.
 
 Workaround
 ^^^^^^^^^^
@@ -307,12 +307,12 @@ When attempting to add Entity Framework Core with in to a .NET Core app, ``dotne
 
 .. code-block:: text
 
-    Package Ix-Async 1.2.5 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). 
+    Package Ix-Async 1.2.5 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0).
     Package Ix-Async 1.2.5 supports:
       - net40 (.NETFramework,Version=v4.0)
       - net45 (.NETFramework,Version=v4.5)
       - portable-net45+win8+wp8 (.NETPortable,Version=v0.0,Profile=Profile78)
-    Package Remotion.Linq 2.0.2 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). 
+    Package Remotion.Linq 2.0.2 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0).
     Package Remotion.Linq 2.0.2 supports:
       - net35 (.NETFramework,Version=v3.5)
       - net40 (.NETFramework,Version=v4.0)
@@ -328,7 +328,7 @@ Workaround
 As a tempoarary workaround, projects can manually import other frameworks. To import Ix-Async and Remotion.Linq, add the following to your "imports" section in project.json.
 
 .. code-block:: json
-    
+
     {
         "frameworks": {
             "netcoreapp1.0": {

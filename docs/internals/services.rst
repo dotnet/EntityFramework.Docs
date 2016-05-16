@@ -107,7 +107,7 @@ needing to provide a custom internal service provider.
 DbContext's internal service provider
 -------------------------------------
 
-By default, ``DbContext`` uses an internal service provider that is **separate** from 
+By default, ``DbContext`` uses an internal service provider that is **separate** from
 all other service providers in the application. This internal provider is constructed
 from an instance of ``DbContextOptions``. Methods such as ``UseSqlServer()`` extend
 the construction step add specialized services for their database system.
@@ -142,8 +142,8 @@ Database provider writers should provided methods such as AddEntityFrameworkSqlS
 Service provider caching
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-EF caches this internal service provider with ``IDbContextOptions`` as the key. 
-This means the service provider is only created once per unique set of options. 
+EF caches this internal service provider with ``IDbContextOptions`` as the key.
+This means the service provider is only created once per unique set of options.
 It is reused when a DbContext is instantiated using a set of
 options that have already been used during the application lifetime.
 
@@ -160,7 +160,7 @@ For more information on required provider services, see :doc:`writing-a-provider
 Additional Information
 ----------------------
 
-EF uses `Microsoft.Extensions.DependencyInjection
+EF uses ` the Microsoft.Extensions.DependencyInjection library
 <https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/>`_ to
 implement DI. Documentation for this library `is available on docs.asp.net
 <https://docs.asp.net/en/latest/fundamentals/dependency-injection.html>`_.

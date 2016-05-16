@@ -110,7 +110,7 @@ In some cases, users may call the `Add` method directly. This is
 done when users are configuring a service provider manually and use this service
 provider to resolve an instance of ``DbContext``. In other cases, the `Add` method
 is called by EF upon service initialization. For more details on service
-initialization, see :ref:`services-initialization`.
+initialization, see :doc:`services`.
 
 A provider *must register* an implementation of ``IDatabaseProvider``.
 Implementing this in-turn requires configuring several more required services.
