@@ -16,7 +16,7 @@ Installation
 Prerequisites
 ~~~~~~~~~~~~~
 
-EF command-line tools requires .NET Core CLI Preview 1 or newer. See `.NET Core's Website <http://dotnet.github.io/>`_ for installation instructions.
+EF command-line tools requires .NET Core CLI Preview 1 or newer. See the `.NET Core <https://www.microsoft.com/net/core>`_ website for installation instructions.
 
 Supported Frameworks
 ~~~~~~~~~~~~~~~~~~~~

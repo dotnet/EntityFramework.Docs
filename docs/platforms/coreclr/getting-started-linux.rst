@@ -44,7 +44,7 @@ Minimum system requirements
 Install .NET Core
 -----------------
 
-A summary of steps to install .NET Core are included below. For a more up-to-date guide, follow the steps for `Getting Started <http://dotnet.github.io/getting-started/>`_ on .NET Core's website.
+A summary of steps to install .NET Core are included below. For a more up-to-date guide, follow the steps from the `.NET Core <https://www.microsoft.com/net/core>`_ website.
 
  - Add the new apt-get feed
 

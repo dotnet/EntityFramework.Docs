@@ -26,9 +26,9 @@ Minimum system requirements
 Install .NET Core
 -----------------
 
-Install .NET Core by running the PKG installer from the link below.
+Install .NET Core by running the ".NET Core SDK Installer" for OSX found on the .NET downloads page.
 
-    `Download the latest .NET Core OSX installer <https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-osx-x64.latest.pkg>`_
+    `.NET Core Downloads <http://www.microsoft.com/net/download>`_
 
 After the installer has run, open */Applications/Utilities/Terminal.app*.
 
@@ -36,6 +36,6 @@ After the installer has run, open */Applications/Utilities/Terminal.app*.
   :width: 123px
   :height: 123px
 
-For a more details, see `Getting Started <http://dotnet.github.io/getting-started/>`_ on the .NET Core website.
+For a more details, see the `.NET Core <https://www.microsoft.com/net/core#macosx>`_ website.
 
 .. include:: guide.txt
