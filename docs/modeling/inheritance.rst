@@ -1,4 +1,4 @@
-.. include:: /_shared/rc1-notice.txt
+.. include:: /_shared/rc2-notice.txt
 
 Inheritance
 ===========
