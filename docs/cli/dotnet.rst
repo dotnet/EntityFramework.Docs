@@ -42,14 +42,14 @@ The resulting project.json should include these items (in addition to your other
         "dependencies": {
             "Microsoft.EntityFrameworkCore.Tools": {
                 "type": "build",
-                "version": "1.0.0-preview1"
+                "version": "1.0.0-preview1-final"
             }
         },
 
         "tools": {
             "Microsoft.EntityFrameworkCore.Tools": {
                 "imports": ["portable-net451+win8"],
-                "version": "1.0.0-preview1"
+                "version": "1.0.0-preview1-final"
             }
         },
 
