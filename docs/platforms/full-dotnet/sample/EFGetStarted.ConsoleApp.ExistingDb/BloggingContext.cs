@@ -1,13 +1,14 @@
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace EFGetStarted.ConsoleApp.ExistingDb
 {
     public partial class BloggingContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;");
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,7 +20,9 @@ namespace EFGetStarted.ConsoleApp.ExistingDb
 
             modelBuilder.Entity<Post>(entity =>
             {
-                entity.HasOne(d => d.Blog).WithMany(p => p.Post).HasForeignKey(d => d.BlogId);
+                entity.HasOne(d => d.Blog)
+                    .WithMany(p => p.Post)
+                    .HasForeignKey(d => d.BlogId);
             });
         }
 

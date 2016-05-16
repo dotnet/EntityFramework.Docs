@@ -1,1 +1,0 @@
-﻿Scaffold-DbContext -provider EntityFramework.MicrosoftSqlServer -connection "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;"

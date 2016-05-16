@@ -9,7 +9,7 @@ Getting Started
 ---------------
 
 The following tutorials use this provider:
-  * :doc:`/platforms/full-dotnet/getting-started`
+  * :doc:`/platforms/full-dotnet/index`
   * :doc:`/platforms/aspnetcore/getting-started`
 
 The following sample applications use this provider:

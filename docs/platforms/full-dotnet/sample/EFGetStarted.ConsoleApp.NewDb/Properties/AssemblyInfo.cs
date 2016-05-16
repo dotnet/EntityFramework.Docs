@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("EFGetStarted.ConsoleApp")]
+[assembly: AssemblyTitle("EFGetStarted.ConsoleApp.NewDb")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("EFGetStarted.ConsoleApp")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyProduct("EFGetStarted.ConsoleApp.NewDb")]
+[assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6c164835-c07d-46d1-ab0b-62e108449484")]
+[assembly: Guid("20019c8a-4100-47d0-88f3-ac2ebb38e27b")]
 
 // Version information for an assembly consists of the following four values:
 //

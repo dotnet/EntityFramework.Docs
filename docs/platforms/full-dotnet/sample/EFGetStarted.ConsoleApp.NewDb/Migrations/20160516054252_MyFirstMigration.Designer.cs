@@ -1,20 +1,20 @@
-using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using EFGetStarted.ConsoleApp;
 
-namespace EFGetStarted.ConsoleApp.Migrations
+namespace EFGetStarted.ConsoleApp.NewDb.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20150630215833_MyFirstMigration")]
+    [Migration("20160516054252_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-rc1-16259")
+                .HasAnnotation("ProductVersion", "1.0.0-rc2-20896")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("EFGetStarted.ConsoleApp.Blog", b =>
@@ -22,10 +22,11 @@ namespace EFGetStarted.ConsoleApp.Migrations
                     b.Property<int>("BlogId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Url")
-                        .IsRequired();
+                    b.Property<string>("Url");
 
                     b.HasKey("BlogId");
+
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("EFGetStarted.ConsoleApp.Post", b =>
@@ -40,13 +41,18 @@ namespace EFGetStarted.ConsoleApp.Migrations
                     b.Property<string>("Title");
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("EFGetStarted.ConsoleApp.Post", b =>
                 {
                     b.HasOne("EFGetStarted.ConsoleApp.Blog")
                         .WithMany()
-                        .HasForeignKey("BlogId");
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

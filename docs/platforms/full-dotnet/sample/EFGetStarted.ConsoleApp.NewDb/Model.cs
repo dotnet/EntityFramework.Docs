@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace EFGetStarted.ConsoleApp
@@ -10,19 +10,7 @@ namespace EFGetStarted.ConsoleApp
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Visual Studio 2015 | Use the LocalDb 12 instance created by Visual Studio
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.ConsoleApp.NewDb;Trusted_Connection=True;");
-
-            // Visual Studio 2013 | Use the LocalDb 11 instance created by Visual Studio
-            // optionsBuilder.UseSqlServer(@"Server=(localdb)\v11.0;Database=EFGetStarted.ConsoleApp.NewDb;Trusted_Connection=True;");
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Make Blog.Url required
-            modelBuilder.Entity<Blog>()
-                .Property(b => b.Url)
-                .IsRequired();
         }
     }
 

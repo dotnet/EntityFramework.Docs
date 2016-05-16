@@ -7,7 +7,6 @@ Entity Framework Documentation
     :titlesonly:
     :maxdepth: 2
 
-    getting-started
     platforms/index
     providers/index
     modeling/index
