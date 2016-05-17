@@ -38,7 +38,7 @@ Between RC1 and RC2, we changed from "Entity Framework 7" to "Entity Framework C
 Namespaces
 ----------
 
-Along with package names, namespaces changed from ``Microsoft.Data.Entity.*`` to ``Microsoft.EntityFrameworkCore.*``. You can handle this change with a find/replace of ``using Microsoft.Data.Entity``with ``using Microsoft.EntityFrameworkCore``.
+Along with package names, namespaces changed from ``Microsoft.Data.Entity.*`` to ``Microsoft.EntityFrameworkCore.*``. You can handle this change with a find/replace of ``using Microsoft.Data.Entity`` with ``using Microsoft.EntityFrameworkCore``.
 
 Table Naming Convention Changes
 -------------------------------
