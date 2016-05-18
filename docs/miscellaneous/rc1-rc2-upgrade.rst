@@ -43,7 +43,7 @@ Along with package names, namespaces changed from ``Microsoft.Data.Entity.*`` to
 Table Naming Convention Changes
 -------------------------------
 
-A significant functional change we took in RC2 was to use the name of the ``DbSet<TEntity`` property for a given entity as the table name it maps to, rather than just the class name. You can read more about this change in `the related announcement issue <https://github.com/aspnet/Announcements/issues/167>`_.
+A significant functional change we took in RC2 was to use the name of the ``DbSet<TEntity>`` property for a given entity as the table name it maps to, rather than just the class name. You can read more about this change in `the related announcement issue <https://github.com/aspnet/Announcements/issues/167>`_.
 
 For existing RC1 applications, we recommend adding the following code to the start of your ``OnModelCreating`` method to keep the RC1 naming strategy::
 
