@@ -124,3 +124,43 @@ Package Manager Commands Require PowerShell 5
 ---------------------------------------------
 
 If you use the Entity Framework commands in Package Manager Console in Visual Studio, then you will need to ensure you have PowerShell 5 installed. This is a temporary requirement that will be removed in the next release (see `issue #5327 <https://github.com/aspnet/EntityFramework/issues/5327>`_ for more details).
+
+Using "imports" in project.json
+-------------------------------
+
+Some of EF Core's dependencies do not support .NET Standard yet. EF Core in .NET Standard and .NET Core projects may require adding "imports" to project.json as a temporary workaround.
+
+When adding EF, NuGet restore will display this error message:
+
+.. code-block:: text
+
+    Package Ix-Async 1.2.5 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). Package Ix-Async 1.2.5 supports:
+      - net40 (.NETFramework,Version=v4.0)
+      - net45 (.NETFramework,Version=v4.5)
+      - portable-net45+win8+wp8 (.NETPortable,Version=v0.0,Profile=Profile78)
+    Package Remotion.Linq 2.0.2 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). Package Remotion.Linq 2.0.2 supports:
+      - net35 (.NETFramework,Version=v3.5)
+      - net40 (.NETFramework,Version=v4.0)
+      - net45 (.NETFramework,Version=v4.5)
+      - portable-net45+win8+wp8+wpa81 (.NETPortable,Version=v0.0,Profile=Profile259)
+      
+The workaround is to manually import the portable profile "portable-net45+win8".
+This forces NuGet to treat this binaries that match this provide as a compatible framework with .NET Standard, 
+even though they are not. Although "portable-net45+win8" is not 100% compatible
+with .NET Standard, it is compatible enough for the transition from PCL to .NET Standard.
+Imports can be removed when EF's dependencies eventually upgrade to .NET Standard.
+
+Multiple frameworks can be added to "imports" in array syntax. Other imports may be necessary if you add
+additional libraries to your project.
+
+.. code-block:: json
+
+    {
+      "frameworks": {
+        "netcoreapp1.0": {
+          "imports": ["dnxcore50", "portable-net45+win8"]
+        }
+    }
+
+
+See `Issue #5176 <https://github.com/aspnet/EntityFramework/issues/5176>`_.
