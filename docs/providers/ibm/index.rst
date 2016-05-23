@@ -25,7 +25,7 @@ Supported Platforms
 Status
 ------
 
-`Pre-release EntityFramework.IBMDataServerpackage on NuGet.org (supports RC1) <https://www.nuget.org/packages/EntityFramework.IBMDataServer/>`_
+`Pre-release EntityFramework.IBMDataServer package on NuGet.org (supports RC1) <https://www.nuget.org/packages/EntityFramework.IBMDataServer/>`_
 
 Project Site
 ------------
