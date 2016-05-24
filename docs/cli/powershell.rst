@@ -211,7 +211,7 @@ Updates the database to a specified migration.
           Specifies the environment to use. If omitted, "Development" is used.
 
 Use-DbContext
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
 Sets the default DbContext to use.
 
 .. code-block:: text
@@ -232,6 +232,24 @@ Sets the default DbContext to use.
 
       -Environment <String>
           Specifies the environment to use. If omitted, "Development" is used.
+
+
+Using EF Core commands and EF 6 commands side-by-side
+-----------------------------------------------------
+
+EF Core commands do not work on EF 6 or earlier version of EF. However, EF Core re-uses some of the same
+command names from these earlier versions. These commands can be installed side-by-side, however, EF does 
+not automatically know which version of the command to use. This is solved by prefixing the command
+with the module name. The EF 6 commands PowerShell module is named "EntityFramework", and the EF Core module
+is named "EntityFrameworkCore". Without the prefix, PowerShell may call the wrong version of the command.
+
+.. code-block:: PowerShell
+
+  # Invokes the EF Core command
+  PS> EntityFrameworkCore\Add-Migration
+
+  # Invokes the EF 6 command
+  PS> EntityFramework\Add-Migration
 
 
 Common Errors
