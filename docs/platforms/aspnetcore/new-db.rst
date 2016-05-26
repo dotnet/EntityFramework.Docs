@@ -18,7 +18,7 @@ Prerequisites
 The following prerequisites are needed to complete this walkthrough:
 
 	* Visual Studio 2015 Update 2
-	* `ASP.NET Core RC2 Tools for Visual Studio <https://docs.asp.net/en/latest/getting-started/installing-on-windows.html>`_
+	* `ASP.NET Core RC2 Tools for Visual Studio <https://go.microsoft.com/fwlink/?LinkId=798481>`_
 
 Create a new project
 --------------------
