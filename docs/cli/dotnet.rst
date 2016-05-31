@@ -269,12 +269,12 @@ To make the project a .NET Core App, add the "netcoreapp1.0" framework to projec
 .. code-block:: json
 
     {
+        "buildOptions": {
+            "emitEntryPoint": true
+        },
         "frameworks": {
             "netcoreapp1.0": {
                 "imports": ["portable-net451+win8"],
-                "buildOptions": {
-                    "emitEntryPoint": true
-                },
                 "dependencies": {
                     "Microsoft.NETCore.App": {
                         "type": "platform",
@@ -290,14 +290,15 @@ To make a desktop .NET app, ensure you project targets "net451" or newer (exampl
 .. code-block:: json
 
     {
+        "buildOptions": {
+            "emitEntryPoint": true
+        },
         "frameworks": {
-            "net451": {
-                "buildOptions": {
-                    "emitEntryPoint": true
-                }
-            }
+            "net451": { }
         }
     }
+
+Due to another bug in .NET Core CLI (see `Issue #3164 <https://github.com/dotnet/cli/issues/3164>`_), you will need to set the top-level build option, not the framework-level option.
 
 
 NuGet error: "One or more packages are incompatible with .NETCoreApp,Version=v1.0."
