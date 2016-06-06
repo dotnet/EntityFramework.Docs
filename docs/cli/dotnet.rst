@@ -8,7 +8,7 @@ EF command-line tools for .NET Core Command Line Interface (CLI).
     :local:
 
 .. note::
-    Command-line tools for .NET Core CLI has known issues. See `Preview 1 Known Issues`_ for more details.
+    Command-line tools for .NET Core CLI has known issues. See `Preview 2 Known Issues`_ for more details.
 
 Installation
 ------------
@@ -16,7 +16,7 @@ Installation
 Prerequisites
 ~~~~~~~~~~~~~
 
-EF command-line tools requires .NET Core CLI Preview 1 or newer. See the `.NET Core <https://www.microsoft.com/net/core>`_ website for installation instructions.
+EF command-line tools requires .NET Core CLI Preview 2 or newer. See the `.NET Core <https://www.microsoft.com/net/core>`_ website for installation instructions.
 
 Supported Frameworks
 ~~~~~~~~~~~~~~~~~~~~
@@ -31,7 +31,7 @@ Install by editing project.json
 
 EF command-line tools for .NET Core CLI are installed by manually editing ``project.json``.
 
-1. Add ``Microsoft.EntityFrameworkCore.Tools`` as a build-only dependency under "dependencies" and as a "tool". Also add "imports" if you are using "netcoreapp1.0" as a framework. See sample project.json below.
+1. Add ``Microsoft.EntityFrameworkCore.Tools`` as a "tool" and ``Microsoft.EntityFrameworkCore.Design`` as a build-only dependency under "dependencies". Also add "imports" if you are using "netcoreapp1.0" as a framework. See sample project.json below.
 2. Execute ``dotnet restore``. If restore does not succeed, the command-line tools may not have installed correctly.
 
 The resulting project.json should include these items (in addition to your other project dependencies).
@@ -40,16 +40,16 @@ The resulting project.json should include these items (in addition to your other
 
     {
         "dependencies": {
-            "Microsoft.EntityFrameworkCore.Tools": {
+            "Microsoft.EntityFrameworkCore.Design": {
                 "type": "build",
-                "version": "1.0.0-preview1-final"
+                "version": "1.0.0-preview2-final"
             }
         },
 
         "tools": {
             "Microsoft.EntityFrameworkCore.Tools": {
-                "imports": ["portable-net451+win8"],
-                "version": "1.0.0-preview1-final"
+                "imports": "portable-net451+win8",
+                "version": "1.0.0-preview2-final"
             }
         },
 
@@ -143,7 +143,7 @@ dotnet-ef-dbcontext-list
     Usage: dotnet ef dbcontext list [options]
     Options:
       -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-      --json                          Use json output
+      --json                          Use json output. JSON is wrapped by '//BEGIN' and '//END'
       -h|--help                       Show help information
       -v|--verbose                    Enable verbose output
 
@@ -191,7 +191,7 @@ dotnet-ef-migrations-add
       -o|--output-dir <path>          The directory (and sub-namespace) to use. If omitted, "Migrations" is used.
       -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
       -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-      --json                          Use json output
+      --json                          Use json output. JSON is wrapped by '//BEGIN' and '//END'
       -h|--help                       Show help information
       -v|--verbose                    Enable verbose output
 
@@ -204,7 +204,7 @@ dotnet-ef-migrations-list
     Options:
       -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
       -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-      --json                          Use json output
+      --json                          Use json output. JSON is wrapped by '//BEGIN' and '//END'
       -h|--help                       Show help information
       -v|--verbose                    Enable verbose output
 
@@ -245,13 +245,13 @@ Common Errors
 
 .. _dotnet_cli_issues:
 
-Preview 1 Known Issues
+Preview 2 Known Issues
 ----------------------
 
 Targeting class library projects is not supported
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.NET Core CLI does not support running commands on class libraries as of Preview 1. Despite being able to install EF tools, executing commands may throw this error message.
+.NET Core CLI does not support running commands on class libraries as of Preview 2. Despite being able to install EF tools, executing commands may throw this error message.
 
 .. code-block:: text
 
