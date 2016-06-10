@@ -9,16 +9,16 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class EntityFrameworkServicesBuilderExtensions
+    public static class MyProviderServiceCollectionExtensions
     {
-        public static EntityFrameworkServicesBuilder AddMyProvider(this EntityFrameworkServicesBuilder builder)
+        public static IServiceCollection AddEntityFrameworkMyProvider(this IServiceCollection services)
         {
-            var serviceCollection = builder.GetInfrastructure();
+            services.AddEntityFramework();
 
-            serviceCollection.TryAddEnumerable(ServiceDescriptor
+            services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IDatabaseProvider, DatabaseProvider<MyDatabaseProviderServices, MyProviderOptionsExtension>>());
 
-            serviceCollection.TryAdd(new ServiceCollection()
+            services.TryAdd(new ServiceCollection()
                 // singleton services
                 .AddSingleton<MyModelSource>()
                 .AddSingleton<MyValueGeneratorCache>()
@@ -31,7 +31,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<MyQueryContextFactory>()
                 .AddScoped<MyTransactionManager>());
 
-            return builder;
+            return services;
         }
     }
 }

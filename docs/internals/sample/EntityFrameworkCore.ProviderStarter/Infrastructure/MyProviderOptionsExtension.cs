@@ -7,9 +7,9 @@ namespace EntityFrameworkCore.ProviderStarter.Infrastructure
     {
         public string ConnectionString { get; set; }
 
-        public void ApplyServices(EntityFrameworkServicesBuilder builder)
+        public void ApplyServices(IServiceCollection builder)
         {
-            builder.AddMyProvider();
+            builder.AddEntityFrameworkMyProvider();
         }
     }
 }

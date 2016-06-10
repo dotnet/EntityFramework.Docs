@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors;
+using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace EntityFrameworkCore.ProviderStarter.Query
@@ -22,8 +22,7 @@ namespace EntityFrameworkCore.ProviderStarter.Query
             IQueryAnnotationExtractor queryAnnotationExtractor,
             IResultOperatorHandler resultOperatorHandler,
             IEntityMaterializerSource entityMaterializerSource,
-            IExpressionPrinter expressionPrinter,
-            IDbContextOptions contextOptions)
+            IExpressionPrinter expressionPrinter)
             : base(
                 queryOptimizer,
                 navigationRewritingExpressionVisitorFactory,

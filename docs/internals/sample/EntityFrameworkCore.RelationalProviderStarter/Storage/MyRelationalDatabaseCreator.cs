@@ -7,9 +7,13 @@ namespace EntityFrameworkCore.RelationalProviderStarter.Storage
 {
     public class MyRelationalDatabaseCreator : RelationalDatabaseCreator
     {
-        public MyRelationalDatabaseCreator(IModel model, IRelationalConnection connection,
-            IMigrationsModelDiffer modelDiffer, IMigrationsSqlGenerator migrationsSqlGenerator)
-            : base(model, connection, modelDiffer, migrationsSqlGenerator)
+        public MyRelationalDatabaseCreator(
+            IModel model,
+            IRelationalConnection connection,
+            IMigrationsModelDiffer modelDiffer,
+            IMigrationsSqlGenerator migrationsSqlGenerator,
+            IMigrationCommandExecutor migrationCommandExecutor)
+            : base(model, connection, modelDiffer, migrationsSqlGenerator, migrationCommandExecutor)
         {
         }
 

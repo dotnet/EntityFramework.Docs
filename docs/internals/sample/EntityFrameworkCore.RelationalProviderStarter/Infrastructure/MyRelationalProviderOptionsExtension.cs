@@ -7,9 +7,9 @@ namespace EntityFrameworkCore.RelationalProviderStarter.Infrastructure
     {
         public string ConnectionString { get; set; }
 
-        public void ApplyServices(EntityFrameworkServicesBuilder builder)
+        public void ApplyServices(IServiceCollection services)
         {
-            builder.AddMyRelationalProvider();
+            services.AddMyRelationalProvider();
         }
     }
 }

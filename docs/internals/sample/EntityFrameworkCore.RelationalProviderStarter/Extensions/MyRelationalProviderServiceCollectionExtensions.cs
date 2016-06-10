@@ -12,18 +12,18 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class EntityFrameworkServicesBuilderExtensions
+    public static class MyRelationalProviderServiceCollectionExtensions
     {
-        public static EntityFrameworkServicesBuilder AddMyRelationalProvider(this EntityFrameworkServicesBuilder builder)
+        public static IServiceCollection AddMyRelationalProvider(this IServiceCollection services)
         {
-            var serviceCollection = builder.AddRelational().GetInfrastructure();
+            services.AddRelational();
 
-            serviceCollection.TryAddEnumerable(ServiceDescriptor
+            services.TryAddEnumerable(ServiceDescriptor
                 .Singleton
                 <IDatabaseProvider,
                     DatabaseProvider<MyRelationalDatabaseProviderServices, MyRelationalProviderOptionsExtension>>());
 
-            serviceCollection.TryAdd(new ServiceCollection()
+            services.TryAdd(new ServiceCollection()
                 // all singleton services
                 .AddSingleton<MyValueGeneratorCache>()
                 .AddSingleton<MyRelationalAnnotationProvider>()
@@ -41,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<MyRelationalDatabaseCreator>()
                 .AddScoped<MyUpdateSqlGenerator>());
 
-            return builder;
+            return services;
         }
     }
 }

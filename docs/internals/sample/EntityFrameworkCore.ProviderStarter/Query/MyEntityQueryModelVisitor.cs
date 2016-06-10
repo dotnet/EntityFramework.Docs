@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors;
+using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace EntityFrameworkCore.ProviderStarter.Query
@@ -41,15 +42,6 @@ namespace EntityFrameworkCore.ProviderStarter.Query
                 expressionPrinter,
                 queryCompilationContext)
         {
-        }
-
-        protected override void IncludeNavigations(
-            IncludeSpecification includeSpecification,
-            Type resultType,
-            LambdaExpression accessorLambda,
-            bool querySourceRequiresTracking)
-        {
-            throw new NotImplementedException("MyProvider does not support .Include()");
         }
     }
 }
