@@ -11,5 +11,4 @@ Available Tutorials
 .. toctree::
   :titlesonly:
 
-  getting-started-linux
-  getting-started-osx
+  new-db-sqlite

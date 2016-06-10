@@ -1,3 +1,41 @@
+.. include:: /_shared/rc2-notice.txt
+
+.NET Core Application to New SQLite Database
+============================================
+
+In this walkthrough, you will build a .NET Core console application that performs basic data access using Entity Framework.
+You will use migrations to create the database from your model.
+
+.. contents:: `In this article:`
+    :depth: 1
+    :local:
+
+.. include:: /_shared/sample.txt
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/coreclr/sample
+
+Prerequisites
+-------------
+
+Minimum system requirements
+ - An operating system that supports .NET Core
+ - `.NET Core SDK Preview 2 <https://www.microsoft.com/net/core>`_
+ - A text editor
+
+.. caution::
+    **Known Issues**
+
+    - Migrations on SQLite do not support more complex schema changes due to
+      limitations in SQLite itself. See :doc:`/providers/sqlite/limitations`
+
+Install the .NET Core SDK
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The .NET Core SDK provides the command-line tool ``dotnet`` which will be used to
+build and run our sample application.
+
+See the `.NET Core website <https://www.microsoft.com/net/core>`_ for instructions on installing the SDK
+on your operating system.
+
 Create a new project
 --------------------
 
@@ -8,13 +46,16 @@ Create a new project
         mkdir ConsoleApp
         cd ConsoleApp/
 
- - Execute the following command to create a new bash application, download dependencies, and run the app.
+ - Execute the following .NET Core CLI commands to create a new console application, download dependencies, and run the .NET Core app.
 
    .. code-block:: bash
 
        dotnet new
        dotnet restore
        dotnet run
+
+Install Entity Framework
+------------------------
 
  - To add EF to your project, modify ``project.json`` so it matches the following sample.
 
