@@ -1,2 +1,0 @@
-- Migrations on SQLite do not support more complex schema changes due to
-  limitations in SQLite itself. See :doc:`/providers/sqlite/limitations`
