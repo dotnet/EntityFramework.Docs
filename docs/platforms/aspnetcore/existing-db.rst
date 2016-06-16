@@ -57,7 +57,7 @@ To enable reverse engineering from an existing database we need to install a cou
   * Run ``Install-Package Microsoft.EntityFrameworkCore.Tools –Pre``
   * Run ``Install-Package Microsoft.EntityFrameworkCore.SqlServer.Design –Pre``
   * Open **project.json**
-  * Locate the ``commands`` section and add the ``ef`` command as shown below
+  * Locate the ``tools`` section and add the highlighted lines as shown below
 
   .. literalinclude:: sample/src/EFGetStarted.AspNetCore.NewDb/project.json
         :linenos:
