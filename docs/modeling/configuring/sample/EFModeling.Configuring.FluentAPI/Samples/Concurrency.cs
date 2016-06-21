@@ -9,7 +9,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Concurrency
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>()
-                .Property(p => p.SocialSecurityNumber)
+                .Property(p => p.LastName)
                 .IsConcurrencyToken();
         }
     }
@@ -17,7 +17,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Concurrency
     public class Person
     {
         public int PersonId { get; set; }
-        public string SocialSecurityNumber { get; set; }
-        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
     }
 }

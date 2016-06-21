@@ -112,11 +112,16 @@
     <Compile Include="CascadeDelete\BloggingContext.cs" />
     <Compile Include="CascadeDelete\Post.cs" />
     <Compile Include="CascadeDelete\Sample.cs" />
+    <Compile Include="Concurrency\Sample.cs" />
     <Compile Include="ExplicitValuesGenerateProperties\Employee.cs" />
     <Compile Include="ExplicitValuesGenerateProperties\EmployeeContext.cs" />
     <Compile Include="ExplicitValuesGenerateProperties\Sample.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelatedData\Sample.cs" />
+    <Compile Include="Transactions\ControllingTransaction\Sample.cs" />
+    <Compile Include="Transactions\SharingTransaction\Sample.cs" />
+    <Compile Include="Transactions\ExternalDbTransaction\Sample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

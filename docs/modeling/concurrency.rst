@@ -5,7 +5,7 @@ Concurrency Tokens
 
 If a property is configured as a concurrency token then EF will check that no other user has modified that value in the database when saving changes to that record. EF uses an optimistic concurrency pattern, meaning it will assume the value has not changed and try to save the data, but throw if it finds the value has been changed.
 
-For example we may want to configure ``SocialSecurityNumber`` on ``Person`` to be a concurrency token. This means that if one user tries to save some changes to a Person, but another user has changed the ``SocialSecurityNumber`` then an exception will be thrown. This may be desirable so that your application can prompt the user to ensure this record still represents the same actual person before saving their changes.
+For example we may want to configure ``LastName`` on ``Person`` to be a concurrency token. This means that if one user tries to save some changes to a ``Person``, but another user has changed the ``LastName`` then an exception will be thrown. This may be desirable so that your application can prompt the user to ensure this record still represents the same actual person before saving their changes.
 
 .. contents:: In this article:
     :depth: 3
@@ -19,8 +19,8 @@ For example, relational database achieve this by including the concurrency token
 
 .. code-block:: sql
 
-    UPDATE [Person] SET [Name] = @p1
-    WHERE [PersonId] = @p0 AND [SocialSecurityNumber] = @p2;
+    UPDATE [Person] SET [FirstName] = @p1
+    WHERE [PersonId] = @p0 AND [LastName] = @p2;
 
 Conventions
 -----------

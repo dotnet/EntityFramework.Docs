@@ -10,5 +10,7 @@ The following articles are available
   basic
   related-data
   cascade-delete
+  concurrency
+  transactions
   disconnected-entities
   explicit-values-generated-properties

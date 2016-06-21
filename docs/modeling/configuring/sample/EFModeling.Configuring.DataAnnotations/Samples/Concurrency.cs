@@ -12,7 +12,7 @@ namespace EFModeling.Configuring.DataAnnotations.Samples.Concurrency
     {
         public int PersonId { get; set; }
         [ConcurrencyCheck]
-        public string SocialSecurityNumber { get; set; }
-        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
     }
 }
