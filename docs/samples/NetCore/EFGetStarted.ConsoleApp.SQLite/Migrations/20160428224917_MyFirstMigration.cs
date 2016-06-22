@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ConsoleApp.Migrations
+namespace EFGetStarted.ConsoleApp.SQLite.Migrations
 {
     public partial class MyFirstMigration : Migration
     {

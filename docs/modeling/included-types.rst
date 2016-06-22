@@ -18,7 +18,7 @@ For example, in the following code listing all three types are discovered:
  - ``Post`` because it is discovered via the ``Blog.Posts`` navigation property
  - ``AuditEntry`` because it is mentioned in ``OnModelCreating``
 
-.. literalinclude:: configuring/sample/EFModeling.Conventions/Samples/IncludedTypes.cs
+.. literalinclude:: /samples/EFModeling.Conventions/Samples/IncludedTypes.cs
         :language: c#
         :lines: 6-40
         :emphasize-lines: 3,7,18
@@ -29,7 +29,7 @@ Data Annotations
 
 You can use Data Annotations to exclude a type from the model.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.DataAnnotations/Samples/IgnoreType.cs
+.. literalinclude:: /samples/EFModeling.Configuring.DataAnnotations/Samples/IgnoreType.cs
         :language: c#
         :lines: 12-24
         :emphasize-lines: 9
@@ -40,7 +40,7 @@ Fluent API
 
 You can use the Fluent API to exclude a type from the model.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/IgnoreType.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/IgnoreType.cs
         :language: c#
         :lines: 6-27
         :emphasize-lines: 7

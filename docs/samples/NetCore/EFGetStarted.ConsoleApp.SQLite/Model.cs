@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 
-namespace ConsoleApp
+namespace EFGetStarted.ConsoleApp.SQLite
 {
     public class BloggingContext : DbContext
     {

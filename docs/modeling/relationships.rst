@@ -33,7 +33,7 @@ The following code listing shows a one-to-many relationship between ``Blog`` and
   - ``Blog.Posts`` is a collection navigation property
   - ``Post.Blog`` is the inverse navigation property of ``Blog.Posts`` (and vice versa)
 
-.. literalinclude:: configuring/sample/EFModeling.Conventions/Samples/Relationships/Full.cs
+.. literalinclude:: /samples/EFModeling.Conventions/Samples/Relationships/Full.cs
         :language: c#
         :lines: 12-28
         :linenos:
@@ -53,7 +53,7 @@ The most common pattern for relationships is to have navigation properties defin
  - If a pair of navigation properties is found between two types, then they will be configured as inverse navigation properties of the same relationship.
  - If the dependent entity contains a property named ``<primary key property name>``, ``<navigation property name><primary key property name>``, or ``<principal entity name><primary key property name>`` then it will be configured as the foreign key.
 
-.. literalinclude:: configuring/sample/EFModeling.Conventions/Samples/Relationships/Full.cs
+.. literalinclude:: /samples/EFModeling.Conventions/Samples/Relationships/Full.cs
        :language: c#
        :lines: 12-28
        :emphasize-lines: 6, 15-16
@@ -67,7 +67,7 @@ No Foreign Key Property
 
 While it is recommended to have a foreign key property defined in the dependent entity class, it is not required. If no foreign key property is found, a shadow foreign key property will be introduced with the name ``<navigation property name><principal key property name>`` (see :doc:`shadow-properties` for more information).
 
-.. literalinclude:: configuring/sample/EFModeling.Conventions/Samples/Relationships/NoForeignKey.cs
+.. literalinclude:: /samples/EFModeling.Conventions/Samples/Relationships/NoForeignKey.cs
         :language: c#
         :lines: 12-27
         :emphasize-lines: 6, 15
@@ -78,7 +78,7 @@ Single Navigation Property
 
 Including just one navigation property (no inverse navigation, and no foreign key property) is enough to have a relationship defined by convention. You can also have a single navigation property and a foreign key property.
 
-.. literalinclude:: configuring/sample/EFModeling.Conventions/Samples/Relationships/OneNavigation.cs
+.. literalinclude:: /samples/EFModeling.Conventions/Samples/Relationships/OneNavigation.cs
         :language: c#
         :lines: 12-25
         :emphasize-lines: 6
@@ -102,7 +102,7 @@ There are two data annotations that can be used to configure relationships, ``[F
 
 You can use the Data Annotations to configure which property should be used as the foreign key property for a given relationship. This is typically done when the foreign key property is not discovered by convention.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.DataAnnotations/Samples/Relationships/ForeignKey.cs
+.. literalinclude:: /samples/EFModeling.Configuring.DataAnnotations/Samples/Relationships/ForeignKey.cs
         :language: c#
         :lines: 13-31
         :emphasize-lines: 17
@@ -116,7 +116,7 @@ You can use the Data Annotations to configure which property should be used as t
 
 You can use the Data Annotations to configure how navigation properties on the dependent and principal entities pair up. This is typically done when there is more than one pair of navigation properties between two entity types.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.DataAnnotations/Samples/Relationships/InverseProperty.cs
+.. literalinclude:: /samples/EFModeling.Configuring.DataAnnotations/Samples/Relationships/InverseProperty.cs
         :language: c#
         :lines: 13-37
         :emphasize-lines: 20,23
@@ -127,7 +127,7 @@ Fluent API
 
 To configure a relationship in the Fluent API, you start by identifying the navigation properties that make up the relationship. ``HasOne`` or ``HasMany`` identifies the navigation property on the entity type you are beginning the configuration on. You then chain a call to ``WithOne`` or ``WithMany`` to identify the inverse navigation. ``HasOne``/``WithOne`` are used for reference navigation properties and ``HasMany``/``WithMany`` are used for collection navigation properties.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/NoForeignKey.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relationships/NoForeignKey.cs
         :language: c#
         :lines: 6-34
         :emphasize-lines: 8-10
@@ -138,7 +138,7 @@ Single Navigation Property
 
 If you only have one navigation property then there are parameterless overloads of ``WithOne`` and ``WithMany``. This indicates that there is conceptually a reference or collection on the other end of the relationship, but there is no navigation property included in the entity class.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/OneNavigation.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relationships/OneNavigation.cs
         :language: c#
         :lines: 6-32
         :emphasize-lines: 10
@@ -149,7 +149,7 @@ Foreign Key
 
 You can use the Fluent API to configure which property should be used as the foreign key property for a given relationship.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/ForeignKey.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relationships/ForeignKey.cs
         :language: c#
         :lines: 6-36
         :emphasize-lines: 11
@@ -157,7 +157,7 @@ You can use the Fluent API to configure which property should be used as the for
 
 The following code listing shows how to configure a composite foreign key.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/CompositeForeignKey.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relationships/CompositeForeignKey.cs
         :language: c#
         :lines: 7-42
         :emphasize-lines: 13
@@ -168,7 +168,7 @@ Principal Key
 
 If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be setup as an alternate key (see :doc:`alternate-keys` for more information).
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/PrincipalKey.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relationships/PrincipalKey.cs
         :language: c#
         :lines: 7-39
         :emphasize-lines: 11
@@ -176,7 +176,7 @@ If you want the foreign key to reference a property other than the primary key, 
 
 The following code listing shows how to configure a composite principal key.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/CompositePrincipalKey.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relationships/CompositePrincipalKey.cs
         :language: c#
         :lines: 7-41
         :emphasize-lines: 11
@@ -190,7 +190,7 @@ Required
 
 You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see :doc:`required-optional` for more information).
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/Required.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relationships/Required.cs
         :language: c#
         :lines: 6-35
         :emphasize-lines: 11
@@ -209,7 +209,7 @@ There are three behaviors that control how a delete operation is applied to depe
 .. note::
     This cascading behavior is only applied to entities that are being tracked by the context. A corresponding cascade behavior should be setup in the database to ensure data that is not being tracked by the context has the same action applied. If you use EF to create the database, this cascade behavior will be setup for you.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/CascadeDelete.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relationships/CascadeDelete.cs
         :language: c#
         :lines: 7-37
         :emphasize-lines: 11
@@ -224,7 +224,7 @@ One-to-one
 One to one relationships have a reference navigation property on both sides. They follow the same conventions as one-to-many relationships, but a unique index is introduced on the foreign key property to ensure only one dependent is related to each principal.
 
 
-.. literalinclude:: configuring/sample/EFModeling.Conventions/Samples/Relationships/OneToOne.cs
+.. literalinclude:: /samples/EFModeling.Conventions/Samples/Relationships/OneToOne.cs
         :language: c#
         :lines: 12-28
         :emphasize-lines: 6,15-16
@@ -237,7 +237,7 @@ When configuring the relationship with the Fluent API, you use the ``HasOne`` an
 
 When configuring the foreign key you need to specify the dependent entity type - notice the generic parameter provided to ``HasForeignKey`` in the listing below. In a one-to-many relationship it is clear that the entity with the reference navigation is the dependent and the one with the collection is the principal. But this is not so in a one-to-one relationship - hence the need to explicitly define it.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/OneToOne.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relationships/OneToOne.cs
         :language: c#
         :lines: 6-36
         :emphasize-lines: 11
@@ -248,7 +248,7 @@ Many-to-many
 
 Many-to-many relationships without an entity class to represent the join table are not yet supported. However, you can represent a many-to-many relationship by including an entity class for the join table and mapping two separate one-to-many relationships.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relationships/ManyToMany.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relationships/ManyToMany.cs
         :language: c#
         :lines: 6-51
         :emphasize-lines: 11-14,16-19,39-46

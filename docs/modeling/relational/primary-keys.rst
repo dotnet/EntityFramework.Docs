@@ -22,7 +22,7 @@ Fluent API
 
 You can use the Fluent API to configure the name of the primary key constraint in the database.
 
-.. literalinclude:: /modeling/configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/KeyName.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/KeyName.cs
         :language: c#
         :lines: 5-21
         :emphasize-lines: 9

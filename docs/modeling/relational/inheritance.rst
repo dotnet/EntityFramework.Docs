@@ -19,7 +19,7 @@ EF will only setup inheritance if two or more inherited types are explicitly inc
 
 Below is an example showing a simple inheritance scenario and the data stored in a relational database table using the TPH pattern. The `Discriminator` column identifies which type of `Blog` is stored in each row.
 
-.. literalinclude:: /modeling/configuring/sample/EFModeling.Conventions/Samples/InheritanceDbSets.cs
+.. literalinclude:: /samples/EFModeling.Conventions/Samples/InheritanceDbSets.cs
         :language: c#
         :lines: 5-20
         :linenos:
@@ -36,7 +36,7 @@ Fluent API
 
 You can use the Fluent API to configure the name and type of the discriminator column and the values that are used to identify each type in the hierarchy.
 
-.. literalinclude:: /modeling/configuring/sample/EFModeling.Configuring.FluentAPI/Samples/InheritanceTPHDiscriminator.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/InheritanceTPHDiscriminator.cs
         :language: c#
         :lines: 5-27
         :emphasize-lines: 7-10

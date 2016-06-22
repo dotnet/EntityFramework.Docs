@@ -15,8 +15,7 @@ Getting Started
 
 The following tutorials use this provider:
   * :doc:`/platforms/uwp/getting-started`
-  * :doc:`/platforms/coreclr/getting-started-linux`
-  * :doc:`/platforms/coreclr/getting-started-osx`
+  * :doc:`/platforms/coreclr/new-db-sqlite`
 
 The following sample applications use this provider:
   * `Unicorn Clicker <https://github.com/rowanmiller/UnicornStore/tree/master/UnicornClicker/UWP>`_

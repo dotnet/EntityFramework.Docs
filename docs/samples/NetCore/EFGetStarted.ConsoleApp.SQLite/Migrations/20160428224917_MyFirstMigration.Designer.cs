@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using ConsoleApp;
+using EFGetStarted.ConsoleApp.SQLite;
 
-namespace ConsoleApp.Migrations
+namespace EFGetStarted.ConsoleApp.SQLite.Migrations
 {
     [DbContext(typeof(BloggingContext))]
     [Migration("20160428224917_MyFirstMigration")]
@@ -16,7 +16,7 @@ namespace ConsoleApp.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20708");
 
-            modelBuilder.Entity("ConsoleApp.Blog", b =>
+            modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Blog", b =>
                 {
                     b.Property<int>("BlogId")
                         .ValueGeneratedOnAdd();
@@ -30,7 +30,7 @@ namespace ConsoleApp.Migrations
                     b.ToTable("Blogs");
                 });
 
-            modelBuilder.Entity("ConsoleApp.Post", b =>
+            modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Post", b =>
                 {
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd();
@@ -48,9 +48,9 @@ namespace ConsoleApp.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("ConsoleApp.Post", b =>
+            modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Post", b =>
                 {
-                    b.HasOne("ConsoleApp.Blog")
+                    b.HasOne("EFGetStarted.ConsoleApp.SQLite.Blog")
                         .WithMany()
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade);

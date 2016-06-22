@@ -21,7 +21,7 @@ Data Annotations
 
 You can use Data Annotations to indicate that a property is required.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.DataAnnotations/Samples/Required.cs
+.. literalinclude:: /samples/EFModeling.Configuring.DataAnnotations/Samples/Required.cs
         :language: c#
         :lines: 11-16
         :emphasize-lines: 4
@@ -32,7 +32,7 @@ Fluent API
 
 You can use the Fluent API to indicate that a property is required.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Required.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Required.cs
         :language: c#
         :lines: 5-21
         :emphasize-lines: 7-9

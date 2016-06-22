@@ -22,7 +22,7 @@ By convention, the following fields will be discovered as backing fields for a g
   * _<propertyName>
   * m_<propertyName>
 
-.. literalinclude:: configuring/sample/EFModeling.Conventions/Samples/BackingField.cs
+.. literalinclude:: /samples/EFModeling.Conventions/Samples/BackingField.cs
         :language: c#
         :lines: 18-29
         :emphasize-lines: 3,7-11
@@ -38,7 +38,7 @@ Fluent API
 
 There is no top level API for configuring backing fields, but you can use the Fluent API to set annotations that are used to store backing field information.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/BackingField.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/BackingField.cs
         :language: c#
         :lines: 5-23
         :emphasize-lines: 7-9,15,18

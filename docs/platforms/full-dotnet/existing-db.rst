@@ -10,7 +10,7 @@ In this walkthrough, you will build a console application that performs basic da
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/full-dotnet/sample
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/FullNetFramework/EFGetStarted.ConsoleApp.ExistingDb
 
 Prerequisites
 -------------
@@ -64,13 +64,13 @@ Now it's time to create the EF model based on your existing database.
 
 The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
 
-.. literalinclude:: sample/EFGetStarted.ConsoleApp.ExistingDb/Blog.cs
+.. literalinclude:: /samples/FullNetFramework/EFGetStarted.ConsoleApp.ExistingDb/Blog.cs
         :language: c#
         :linenos:
 
 The context represents a session with the database and allows you to query and save instances of the entity classes.
 
-.. literalinclude:: sample/EFGetStarted.ConsoleApp.ExistingDb/BloggingContext.cs
+.. literalinclude:: /samples/FullNetFramework/EFGetStarted.ConsoleApp.ExistingDb/BloggingContext.cs
         :language: c#
         :linenos:
 
@@ -82,7 +82,7 @@ You can now use your model to perform data access.
 * Open *Program.cs*
 * Replace the contents of the file with the following code
 
-.. literalinclude:: sample/EFGetStarted.ConsoleApp.ExistingDb/Program.cs
+.. literalinclude:: /samples/FullNetFramework/EFGetStarted.ConsoleApp.ExistingDb/Program.cs
         :language: c#
         :linenos:
 

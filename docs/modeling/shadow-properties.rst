@@ -28,7 +28,7 @@ By convention, shadow properties are only created when a relationship is discove
 
 For example, the following code listing will result in a ``BlogBlogId`` shadow property being introduced to the ``Post`` entity.
 
-.. literalinclude:: configuring/sample/EFModeling.Conventions/Samples/ShadowForeignKey.cs
+.. literalinclude:: /samples/EFModeling.Conventions/Samples/ShadowForeignKey.cs
         :language: c#
         :lines: 6-27
         :linenos:
@@ -45,7 +45,7 @@ You can use the Fluent API to configure shadow properties. Once you have called 
 
 If the name supplied to the ``Property`` method matches the name of an existing property (a shadow property or one defined on the entity class), then the code will configure that existing property rather than introducing a new shadow property.
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/ShadowProperty.cs
+.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/ShadowProperty.cs
         :language: c#
         :lines: 6-21
         :emphasize-lines: 7-8
