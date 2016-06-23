@@ -11,7 +11,7 @@ You will use migrations to create the database from your model.
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/coreclr/sample
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/sample/NetCore/EFGetStarted.ConsoleApp.SQLite
 
 Prerequisites
 -------------
@@ -59,7 +59,7 @@ Install Entity Framework
 
  - To add EF to your project, modify ``project.json`` so it matches the following sample.
 
-    .. literalinclude:: sample/src/ConsoleApp/project.json
+    .. literalinclude:: /samples/Platforms/NetCore/ConsoleApp.SQLite/project.json
             :language: json
             :linenos:
 
@@ -85,7 +85,7 @@ The next steps will add code to configure and access a SQLite database file.
  - Create a new file called ``Model.cs``
     All classes in the following steps will be added to this file.
 
-        .. literalinclude:: sample/src/ConsoleApp/Model.cs
+        .. literalinclude:: /samples/Platforms/NetCore/ConsoleApp.SQLite/Model.cs
             :language: c#
             :linenos:
             :lines: 1-6
@@ -93,7 +93,7 @@ The next steps will add code to configure and access a SQLite database file.
  - Add a new class to represent the SQLite database.
     We will call this ``BloggingContext``. The call to ``UseSqlite()`` configures EF to point to a \*.db file.
 
-        .. literalinclude:: sample/src/ConsoleApp/Model.cs
+        .. literalinclude:: /samples/Platforms/NetCore/ConsoleApp.SQLite/Model.cs
             :language: c#
             :linenos:
             :lines: 7-17
@@ -102,7 +102,7 @@ The next steps will add code to configure and access a SQLite database file.
  - Add classes to represent tables.
     Note that we will be using foreign keys to associate many posts to one blog.
 
-        .. literalinclude:: sample/src/ConsoleApp/Model.cs
+        .. literalinclude:: /samples/Platforms/NetCore/ConsoleApp.SQLite/Model.cs
             :language: c#
             :linenos:
             :lines: 18-35
@@ -146,7 +146,7 @@ Use your model
 
 Now that we have configured our model and created the database schema, we can use BloggingContext to create, update, and delete objects.
 
-.. literalinclude:: sample/src/ConsoleApp/Program.cs
+.. literalinclude:: /samples/Platforms/NetCore/ConsoleApp.SQLite/Program.cs
     :language: c#
     :linenos:
 

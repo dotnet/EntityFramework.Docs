@@ -15,7 +15,7 @@ By convention, it is up to the database provider to determine how inheritance wi
 
 EF will only setup inheritance if two or more inherited types are explicitly included in the model. EF will not scan for base or derived types that were not otherwise included in the model. You can include types in the model by exposing a `DbSet<TEntity>` for each type in the inheritance hierarchy.
 
-.. literalinclude:: configuring/sample/EFModeling.Conventions/Samples/InheritanceDbSets.cs
+.. literalinclude:: /samples/Modeling/Conventions/Samples/InheritanceDbSets.cs
         :language: c#
         :lines: 5-20
         :emphasize-lines: 3-4
@@ -23,7 +23,7 @@ EF will only setup inheritance if two or more inherited types are explicitly inc
 
 If you don't want to expose a `DbSet<TEntity>` for one or more entities in the hierarchy, you can use the Fluent API to ensure they are included in the model.
 
-.. literalinclude:: configuring/sample/EFModeling.Conventions/Samples/InheritanceModelBuilder.cs
+.. literalinclude:: /samples/Modeling/Conventions/Samples/InheritanceModelBuilder.cs
         :language: c#
         :lines: 5-13
         :emphasize-lines: 7

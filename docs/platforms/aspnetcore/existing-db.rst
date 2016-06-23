@@ -10,7 +10,7 @@ In this walkthrough, you will build an ASP.NET Core MVC application that perform
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/aspnetcore/sample
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Platforms/AspNetCore/AspNetCore.ExistingDb
 
 Prerequisites
 -------------
@@ -59,7 +59,7 @@ To enable reverse engineering from an existing database we need to install a cou
   * Open **project.json**
   * Locate the ``commands`` section and add the ``ef`` command as shown below
 
-  .. literalinclude:: sample/src/EFGetStarted.AspNetCore.NewDb/project.json
+  .. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.NewDb/project.json
         :linenos:
         :lines: 26-33
         :emphasize-lines: 2-8
@@ -80,13 +80,13 @@ Now it's time to create the EF model based on your existing database.
 The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
 
 
-.. literalinclude:: sample/src/EFGetStarted.AspNetCore.ExistingDb/Models/Blog.cs
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.ExistingDb/Models/Blog.cs
         :language: c#
         :linenos:
 
 The context represents a session with the database and allows you to query and save instances of the entity classes.
 
-.. literalinclude:: sample/src/EFGetStarted.AspNetCore.ExistingDb/Models/BloggingContextUnmodified.txt
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContextUnmodified.txt
         :language: c#
         :linenos:
 
@@ -103,7 +103,7 @@ In ASP.NET Core, configuration is generally performed in **Startup.cs**. To conf
   * Open **Models\\BloggingContext.cs**
   * Delete the lines of code highligted below
 
-.. literalinclude:: sample/src/EFGetStarted.AspNetCore.ExistingDb/Models/BloggingContextUnmodified.txt
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContextUnmodified.txt
         :language: c#
         :lines: 6-13
         :emphasize-lines: 3-7
@@ -111,7 +111,7 @@ In ASP.NET Core, configuration is generally performed in **Startup.cs**. To conf
 
 * Add the lines of code highligted below
 
-.. literalinclude:: sample/src/EFGetStarted.AspNetCore.ExistingDb/Models/BloggingContext.cs
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContext.cs
         :language: c#
         :lines: 6-10
         :emphasize-lines: 3-5
@@ -125,7 +125,7 @@ In order for our MVC controllers to make use of ``BloggingContext`` we are going
 	* Open **Startup.cs**
 	* Add the following ``using`` statements at the start of the file
 
-.. literalinclude:: sample/src/EFGetStarted.AspNetCore.ExistingDb/Startup.cs
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.ExistingDb/Startup.cs
         :language: c#
         :linenos:
         :lines: 1-2
@@ -135,7 +135,7 @@ Now we can use the ``AddDbContext`` method to register it as a service.
 	* Locate the ``ConfigureServices`` method
 	* Add the lines that are highlighted in the following code
 
-.. literalinclude:: sample/src/EFGetStarted.AspNetCore.ExistingDb/Startup.cs
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.ExistingDb/Startup.cs
         :language: c#
         :linenos:
         :lines: 30-34
@@ -152,7 +152,7 @@ Next, we'll add an MVC controller that will use EF to query and save data.
 	* Enter **BlogsController.cs** as the name and click **OK**
 	* Replace the contents of the file with the following code
 
-.. literalinclude:: sample/src/EFGetStarted.AspNetCore.ExistingDb/Controllers/BlogsController.cs
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.ExistingDb/Controllers/BlogsController.cs
         :language: c#
         :linenos:
 
@@ -175,7 +175,7 @@ We'll start with the view for our ``Index`` action, that displays all blogs.
 	* Enter **Index.cshtml** as the name and click **Add**
 	* Replace the contents of the file with the following code
 
-.. literalinclude:: sample/src/EFGetStarted.AspNetCore.ExistingDb/Views/Blogs/Index.cshtml
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.ExistingDb/Views/Blogs/Index.cshtml
         :linenos:
 
 We'll also add a view for the ``Create`` action, which allows the user to enter details for a new blog.
@@ -186,7 +186,7 @@ We'll also add a view for the ``Create`` action, which allows the user to enter 
 	* Enter **Create.cshtml** as the name and click **Add**
 	* Replace the contents of the file with the following code
 
-.. literalinclude:: sample/src/EFGetStarted.AspNetCore.ExistingDb/Views/Blogs/Create.cshtml
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.ExistingDb/Views/Blogs/Create.cshtml
         :linenos:
 
 Run the application

@@ -51,7 +51,7 @@ Data Annotations
 No value generation (Data Annotations)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.DataAnnotations/Samples/ValueGeneratedNever.cs
+.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/ValueGeneratedNever.cs
         :language: c#
         :lines: 11-16
         :emphasize-lines: 3
@@ -60,7 +60,7 @@ No value generation (Data Annotations)
 Value generated on add (Data Annotations)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.DataAnnotations/Samples/ValueGeneratedOnAdd.cs
+.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/ValueGeneratedOnAdd.cs
         :language: c#
         :lines: 12-18
         :emphasize-lines: 5
@@ -72,7 +72,7 @@ Value generated on add (Data Annotations)
 Value generated on add or update (Data Annotations)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.DataAnnotations/Samples/ValueGeneratedOnAddOrUpdate.cs
+.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/ValueGeneratedOnAddOrUpdate.cs
         :language: c#
         :lines: 12-18
         :emphasize-lines: 5
@@ -89,7 +89,7 @@ You can use the Fluent API to change the value generation pattern for a given pr
 No value generation (Fluent API)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/ValueGeneratedNever.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/ValueGeneratedNever.cs
         :language: c#
         :lines: 5-21
         :emphasize-lines: 7-9
@@ -98,7 +98,7 @@ No value generation (Fluent API)
 Value generated on add (Fluent API)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/ValueGeneratedOnAdd.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/ValueGeneratedOnAdd.cs
         :language: c#
         :lines: 6-23
         :emphasize-lines: 7-9
@@ -110,7 +110,7 @@ Value generated on add (Fluent API)
 Value generated on add or update (Fluent API)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: configuring/sample/EFModeling.Configuring.FluentAPI/Samples/ValueGeneratedOnAddOrUpdate.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/ValueGeneratedOnAddOrUpdate.cs
         :language: c#
         :lines: 6-23
         :emphasize-lines: 7-9

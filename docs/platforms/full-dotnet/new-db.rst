@@ -10,7 +10,7 @@ In this walkthrough, you will build a console application that performs basic da
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/platforms/full-dotnet/sample
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Platforms/FullNet/ConsoleApp.NewDb
 
 Prerequisites
 -------------
@@ -52,7 +52,7 @@ Now it's time to define a context and entity classes that make up your model.
 * Enter *Model.cs* as the name and click **OK**
 * Replace the contents of the file with the following code
 
-.. literalinclude:: sample/EFGetStarted.ConsoleApp.NewDb/Model.cs
+.. literalinclude:: /samples/Platforms/FullNet/ConsoleApp.NewDb/Model.cs
         :language: c#
         :linenos:
 
@@ -81,7 +81,7 @@ You can now use your model to perform data access.
 * Open *Program.cs*
 * Replace the contents of the file with the following code
 
-.. literalinclude:: sample/EFGetStarted.ConsoleApp.NewDb/Program.cs
+.. literalinclude:: /samples/Platforms/FullNet/ConsoleApp.NewDb/Program.cs
         :language: c#
         :linenos:
 

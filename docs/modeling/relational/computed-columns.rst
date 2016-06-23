@@ -22,7 +22,7 @@ Fluent API
 
 You can use the Fluent API to specify that a property should map to a computed column.
 
-.. literalinclude:: /modeling/configuring/sample/EFModeling.Configuring.FluentAPI/Samples/Relational/ComputedColumn.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/ComputedColumn.cs
         :language: c#
         :lines: 5-23
         :emphasize-lines: 9
