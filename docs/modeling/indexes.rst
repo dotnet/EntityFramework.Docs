@@ -23,7 +23,7 @@ Fluent API
 
 You can use the Fluent API specify an index on a single property. By default, indexes are non-unique.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Index.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Index.cs
         :language: c#
         :lines: 5-20
         :emphasize-lines: 7-8
@@ -31,7 +31,7 @@ You can use the Fluent API specify an index on a single property. By default, in
 
 You can also specify that an index should be unique, meaning that no two entities can have the same value(s) for the given property(s).
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/IndexUnique.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/IndexUnique.cs
         :language: c#
         :lines: 11-13
         :emphasize-lines: 3
@@ -39,7 +39,7 @@ You can also specify that an index should be unique, meaning that no two entitie
 
 You can also specify an index over more than one column.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/IndexComposite.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/IndexComposite.cs
         :language: c#
         :lines: 5-21
         :emphasize-lines: 7-8

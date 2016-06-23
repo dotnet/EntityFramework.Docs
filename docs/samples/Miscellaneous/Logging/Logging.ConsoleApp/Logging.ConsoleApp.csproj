@@ -97,9 +97,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EFLogging\EFLogging.csproj">
+    <ProjectReference Include="..\Logging\Logging.csproj">
       <Project>{d3a5391d-9351-44d6-8122-2821c6e4bd62}</Project>
-      <Name>EFLogging</Name>
+      <Name>Logging</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

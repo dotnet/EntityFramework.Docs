@@ -14,7 +14,7 @@ See :doc:`/modeling/relationships` for more information about conventions and co
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/EFSaving/CascadeDelete/
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Saving/Saving/CascadeDelete/
 
 Cascading to tracked entities
 -----------------------------
@@ -25,7 +25,7 @@ Consider a simple `Blog` and `Post` model where the relationship between the two
 
 The following code loads a Blog and all its related Posts from the database (using the `Include` method). The code then deletes the Blog.
 
-.. literalinclude:: /samples/EFSaving/CascadeDelete/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/CascadeDelete/Sample.cs
         :language: c#
         :lines: 30-35
         :linenos:
@@ -46,7 +46,7 @@ Cascading to untracked entities
 
 The following code is almost the same as our previous example, except it does not load the related Posts from the database.
 
-.. literalinclude:: /samples/EFSaving/CascadeDelete/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/CascadeDelete/Sample.cs
   :language: c#
   :lines: 52-57
   :linenos:

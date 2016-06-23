@@ -22,7 +22,7 @@ Fluent API
 
 You can use the Fluent API to create a sequence in the model.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/Sequence.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/Sequence.cs
         :language: c#
         :lines: 5-15
         :emphasize-lines: 7
@@ -30,7 +30,7 @@ You can use the Fluent API to create a sequence in the model.
 
 You can also configure additional aspect of the sequence, such as its schema, start value, and increment.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/SequenceConfigured.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/SequenceConfigured.cs
         :language: c#
         :lines: 5-15
         :emphasize-lines: 7-9
@@ -38,7 +38,7 @@ You can also configure additional aspect of the sequence, such as its schema, st
 
 Once a sequence is introduced, you can use it to generate values for properties in your model. For example, you can use :doc:`default-values` to insert the next value from the sequence.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/SequenceUsed.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/SequenceUsed.cs
         :language: c#
         :lines: 5-26
         :emphasize-lines: 11-13

@@ -20,7 +20,7 @@ Data Annotations
 
 You can use Data Annotations to configure the table that a type maps to.
 
-.. literalinclude:: /samples/EFModeling.Configuring.DataAnnotations/Samples/Relational/Table.cs
+.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/Relational/Table.cs
         :language: c#
         :lines: 11-16
         :emphasize-lines: 1
@@ -28,7 +28,7 @@ You can use Data Annotations to configure the table that a type maps to.
 
 You can also specify a schema that the table belongs to.
 
-.. literalinclude:: /samples/EFModeling.Configuring.DataAnnotations/Samples/Relational/TableAndSchema.cs
+.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/Relational/TableAndSchema.cs
         :language: c#
         :lines: 11-16
         :emphasize-lines: 1
@@ -39,7 +39,7 @@ Fluent API
 
 You can use the Fluent API to configure the table that a type maps to.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/Table.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/Table.cs
         :language: c#
         :lines: 5-20
         :emphasize-lines: 7-8
@@ -47,7 +47,7 @@ You can use the Fluent API to configure the table that a type maps to.
 
 You can also specify a schema that the table belongs to.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/TableAndSchema.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/TableAndSchema.cs
         :language: c#
         :lines: 11-12
         :emphasize-lines: 2

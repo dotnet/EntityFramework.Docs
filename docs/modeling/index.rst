@@ -36,7 +36,7 @@ Fluent API
 
 You can override the ``OnModelCreating`` method in your derived context and use the ``ModelBuilder`` API to configure your model. This is the most powerful method of configuration and allows configuration to be specified without modifying your entity classes. Fluent API configuration has the highest precedence and will override conventions and data annotations.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Required.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Required.cs
         :language: c#
         :lines: 5-15
         :emphasize-lines: 5-10
@@ -47,7 +47,7 @@ Data Annotations
 
 You can also apply attributes (known as Data Annotations) to your classes and properties. Data annotations will override conventions, but will be overwritten by Fluent API configuration.
 
-.. literalinclude:: /samples/EFModeling.Configuring.DataAnnotations/Samples/Required.cs
+.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/Required.cs
         :language: c#
         :lines: 11-16
         :emphasize-lines: 4

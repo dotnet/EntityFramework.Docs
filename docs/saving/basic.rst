@@ -8,7 +8,7 @@ Learn how to add, modify, and remove data using your context and entity classes.
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/EFSaving/Basics/
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Saving/Saving/Basics/
 
 ChangeTracker & SaveChanges
 ---------------------------
@@ -20,7 +20,7 @@ Adding Data
 
 Use the `DbSet.Add` method to add new instances of your entity classes. The data will be inserted in the database when you call `SaveChanges`.
 
-.. literalinclude:: /samples/EFSaving/Basics/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/Basics/Sample.cs
         :language: c#
         :lines: 17-24
         :linenos:
@@ -32,7 +32,7 @@ EF will automatically detect changes made to an existing entity that is tracked 
 
 Simply modify the values assigned to properties and then call `SaveChanges`.
 
-.. literalinclude:: /samples/EFSaving/Basics/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/Basics/Sample.cs
         :language: c#
         :lines: 26-31
         :linenos:
@@ -44,7 +44,7 @@ Use the `DbSet.Remove` method to delete instances of you entity classes.
 
 If the entity already exists in the database, it will be deleted during `SaveChanges`. If the entity has not yet been saved to the database (i.e. it is tracked as added) then it will be removed from the context and will no longer be inserted when `SaveChanges` is called.
 
-.. literalinclude:: /samples/EFSaving/Basics/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/Basics/Sample.cs
         :language: c#
         :lines: 33-38
         :linenos:
@@ -57,7 +57,7 @@ You can combine multiple Add/Update/Remove operations into a single call to `Sav
 .. note::
   For most database providers, `SaveChanges` is transactional. This means  all the operations will either succeed or fail and the operations will never be left partially applied.
 
-.. literalinclude:: /samples/EFSaving/Basics/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/Basics/Sample.cs
         :language: c#
         :lines: 48-60
         :linenos:

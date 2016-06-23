@@ -8,7 +8,7 @@ Transactions allow several database operations to be processed in an atomic mann
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/saving/sample/EFSaving/Transactions/
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Saving/Saving/Transactions/
 
 Default transaction behavior
 ----------------------------
@@ -24,7 +24,7 @@ You can use the ``DbContext.Database`` API to begin, commit, and rollback transa
 
 Not all database providers support transactions. Some providers may throw or no-op when transaction APIs are called.
 
-.. literalinclude:: sample/EFSaving/Transactions/ControllingTransaction/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/Transactions/ControllingTransaction/Sample.cs
         :language: c#
         :lines: 17-42
         :emphasize-lines: 3, 17-19
@@ -47,7 +47,7 @@ The easiest way to allow ``DbConnection`` to be externally provided, is to stop 
 .. tip::
   ``DbContextOptionsBuilder`` is the API you used in ``DbContext.OnConfiguring`` to configure the context, you are now going to use it externally to create ``DbContextOptions``.
 
-.. literalinclude:: sample/EFSaving/Transactions/SharingTransaction/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/Transactions/SharingTransaction/Sample.cs
         :language: c#
         :lines: 58-65
         :emphasize-lines: 3-5
@@ -79,7 +79,7 @@ Share connection and transaction
 
 You can now create multiple context instances that share the same connection. Then use the ``DbContext.Database.UseTransaction(DbTransaction)`` API to enlist both contexts in the same transaction.
 
-.. literalinclude:: sample/EFSaving/Transactions/SharingTransaction/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/Transactions/SharingTransaction/Sample.cs
         :language: c#
         :lines: 24-55
         :emphasize-lines: 1-3, 7, 16, 23-25
@@ -92,7 +92,7 @@ If you are using multiple data access technologies to access a relational databa
 
 The following example, shows how to perform an ADO.NET SqlClient operation and an Entity Framework Core operation in the same transaction.
 
-.. literalinclude:: sample/EFSaving/Transactions/ExternalDbTransaction/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/Transactions/ExternalDbTransaction/Sample.cs
         :language: c#
         :lines: 21-53
         :emphasize-lines: 4, 10, 21, 26-28

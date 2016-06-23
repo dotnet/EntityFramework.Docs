@@ -22,7 +22,7 @@ Fluent API
 
 You can use the Fluent API to specify a default schema.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/DefaultSchema.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/DefaultSchema.cs
         :language: c#
         :lines: 5-13
         :emphasize-lines: 7

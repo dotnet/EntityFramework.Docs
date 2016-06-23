@@ -10,7 +10,7 @@ In this walkthrough, you will build an ASP.NET Core MVC application that perform
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/AspNetCore/EFGetStarted.AspNetCore.NewDb
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Platforms/AspNetCore/AspNetCore.NewDb
 
 Prerequisites
 -------------
@@ -52,7 +52,7 @@ Later in this walkthrough we will also be using some Entity Framework commands t
 * Open **project.json**
 * Locate the ``tools`` section and add the ``ef`` command as shown below
 
-.. literalinclude:: /samples/AspNetCore/EFGetStarted.AspNetCore.NewDb/project.json
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.NewDb/project.json
       :linenos:
       :lines: 26-33
       :emphasize-lines: 2-8
@@ -70,7 +70,7 @@ Now it's time to define a context and entity classes that make up your model.
 	* Enter **Model.cs** as the name and click **OK**
 	* Replace the contents of the file with the following code
 
-.. literalinclude:: /samples/AspNetCore/EFGetStarted.AspNetCore.NewDb/Models/Model.cs
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.NewDb/Models/Model.cs
         :language: c#
         :linenos:
 
@@ -87,7 +87,7 @@ In order for our MVC controllers to make use of ``BloggingContext`` we are going
 	* Open **Startup.cs**
 	* Add the following ``using`` statements at the start of the file
 
-.. literalinclude:: /samples/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.NewDb/Startup.cs
         :language: c#
         :linenos:
         :lines: 1-2
@@ -97,7 +97,7 @@ Now we can use the ``AddDbContext`` method to register it as a service.
 	* Locate the ``ConfigureServices`` method
 	* Add the lines that are highlighted in the following code
 
-.. literalinclude:: /samples/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.NewDb/Startup.cs
         :language: c#
         :linenos:
         :lines: 30-33
@@ -128,7 +128,7 @@ Next, we'll add an MVC controller that will use EF to query and save data.
 	* Enter **BlogsController.cs** as the name and click **OK**
 	* Replace the contents of the file with the following code
 
-.. literalinclude:: /samples/AspNetCore/EFGetStarted.AspNetCore.NewDb/Controllers/BlogsController.cs
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.NewDb/Controllers/BlogsController.cs
         :language: c#
         :linenos:
 
@@ -151,7 +151,7 @@ We'll start with the view for our ``Index`` action, that displays all blogs.
 	* Enter **Index.cshtml** as the name and click **Add**
 	* Replace the contents of the file with the following code
 
-.. literalinclude:: /samples/AspNetCore/EFGetStarted.AspNetCore.NewDb/Views/Blogs/Index.cshtml
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.NewDb/Views/Blogs/Index.cshtml
         :linenos:
 
 We'll also add a view for the ``Create`` action, which allows the user to enter details for a new blog.
@@ -162,7 +162,7 @@ We'll also add a view for the ``Create`` action, which allows the user to enter 
 	* Enter **Create.cshtml** as the name and click **Add**
 	* Replace the contents of the file with the following code
 
-.. literalinclude:: /samples/AspNetCore/EFGetStarted.AspNetCore.NewDb/Views/Blogs/Create.cshtml
+.. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.NewDb/Views/Blogs/Create.cshtml
         :linenos:
 
 Run the application

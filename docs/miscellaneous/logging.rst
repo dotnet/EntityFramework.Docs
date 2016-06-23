@@ -5,7 +5,7 @@ Logging
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Logging
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Miscellaneous/Logging
 
 Create a logger
 ---------------
@@ -16,7 +16,7 @@ The first step is to create an implementation of ``ILoggerProvider`` and ``ILogg
 
 Here is a simple implementation that logs a human readable representation of every event to a text file and the Console.
 
-.. literalinclude:: /samples/Logging/EFLogging/MyLoggerProvider.cs
+.. literalinclude:: /samples/Miscellaneous/Logging/Logging/MyLoggerProvider.cs
         :language: csharp
         :linenos:
 
@@ -51,7 +51,7 @@ In your application startup code, create and instance of you context and registe
 .. note::
   You only need to register the logger with a single context instance. Once you have registered it, it will be used for all other instances of the context in the same AppDomain.
 
-.. literalinclude:: /samples/Logging/EFLogging.ConsoleApp/Program.cs
+.. literalinclude:: /samples/Miscellaneous/Logging/Logging.ConsoleApp/Program.cs
         :language: csharp
         :linenos:
         :lines: 12-17
@@ -63,7 +63,7 @@ The easiest way to filter what is logged, is to adjust your logger provider to o
 
 For example, here is a logger provider that returns the logger only for events related to executing SQL against a relational database. For all other categories of events, a null logger (which does nothing) is returned.
 
-.. literalinclude:: /samples/Logging/EFLogging/MyFilteredLoggerProvider.cs
+.. literalinclude:: /samples/Miscellaneous/Logging/Logging/MyFilteredLoggerProvider.cs
         :language: csharp
         :linenos:
         :emphasize-lines: 9-13, 17-22

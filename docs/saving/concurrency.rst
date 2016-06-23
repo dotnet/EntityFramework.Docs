@@ -8,7 +8,7 @@ If a property is configured as a concurrency token then EF will check that no ot
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/saving/sample/EFSaving/Concurrency/
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Saving/Saving/Concurrency/
 
 How concurrency works in EF
 ---------------------------
@@ -29,7 +29,7 @@ To handle a concurrency conflict, catch a ``DbUpdateConcurrencyException`` durin
 
 In the following example, ``Person.FirstName`` and ``Person.LastName`` are setup as concurrency token. There is a ``// TODO:`` comment in the location where you would include application specific logic to chose the value to be saved to the database.
 
-.. literalinclude:: sample/EFSaving/Concurrency/Sample.cs
+.. literalinclude:: /samples/Saving/Saving/Concurrency/Sample.cs
         :language: c#
         :emphasize-lines: 53-54
         :linenos:

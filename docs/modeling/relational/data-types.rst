@@ -22,7 +22,7 @@ Data Annotations
 
 You can use Data Annotations to specify an exact data type for the column.
 
-.. literalinclude:: /samples/EFModeling.Configuring.DataAnnotations/Samples/Relational/DataType.cs
+.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/Relational/DataType.cs
         :language: c#
         :lines: 11-16
         :emphasize-lines: 4
@@ -33,7 +33,7 @@ Fluent API
 
 You can use the Fluent API to specify an exact data type for the column.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/DataType.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/DataType.cs
         :language: c#
         :lines: 5-21
         :emphasize-lines: 7-9
@@ -41,7 +41,7 @@ You can use the Fluent API to specify an exact data type for the column.
 
 If you are targeting more than one relational provider with the same model then you probably want to specify a data type for each provider rather than a global one to be used for all relational providers.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/DataTypeForProvider.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/DataTypeForProvider.cs
         :language: c#
         :lines: 11-13
         :emphasize-lines: 3

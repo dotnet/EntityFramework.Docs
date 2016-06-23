@@ -22,7 +22,7 @@ Fluent API
 
 You can use the Fluent API to specify the default value for a property.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/DefaultValue.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/DefaultValue.cs
         :language: c#
         :lines: 5-22
         :emphasize-lines: 9
@@ -30,7 +30,7 @@ You can use the Fluent API to specify the default value for a property.
 
 You can also specify a SQL fragment that is used to calculate the default value.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/DefaultValueSql.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/DefaultValueSql.cs
         :language: c#
         :lines: 6-23
         :emphasize-lines: 9

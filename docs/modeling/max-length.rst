@@ -21,7 +21,7 @@ Data Annotations
 
 You can use the Data Annotations to configure a maximum length for a property. In this example, targeting SQL Server this would result in the ``nvarchar(500)`` data type being used.
 
-.. literalinclude:: /samples/EFModeling.Configuring.DataAnnotations/Samples/MaxLength.cs
+.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/MaxLength.cs
         :language: c#
         :lines: 11-16
         :emphasize-lines: 4
@@ -32,7 +32,7 @@ Fluent API
 
 You can use the Fluent API to configure a maximum length for a property. In this example, targeting SQL Server this would result in the ``nvarchar(500)`` data type being used.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/MaxLength.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/MaxLength.cs
         :language: c#
         :lines: 5-21
         :emphasize-lines: 7-9

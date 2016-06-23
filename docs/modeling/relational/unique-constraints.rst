@@ -22,7 +22,7 @@ Fluent API
 
 You can use the Fluent API to configure the index and constraint name for an alternate key.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/AlternateKeyName.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/AlternateKeyName.cs
         :language: c#
         :lines: 5-22
         :emphasize-lines: 9

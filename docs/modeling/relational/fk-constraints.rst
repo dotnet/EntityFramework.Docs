@@ -22,7 +22,7 @@ Fluent API
 
 You can use the Fluent API to configure the foreign key constraint name for a relationship.
 
-.. literalinclude:: /samples/EFModeling.Configuring.FluentAPI/Samples/Relational/RelationshipConstraintName.cs
+.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/RelationshipConstraintName.cs
         :language: c#
         :lines: 6-36
         :emphasize-lines: 12

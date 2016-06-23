@@ -17,7 +17,7 @@ compatible with EF Core.
 .. tip::
   This article shows snippets from an empty EF provider. You can view the `full
   stubbed-out provider
-  <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Provider>`_
+  <https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Internals/WritingAProvider>`_
   on GitHub.
 
 .. _entry-point:
@@ -83,7 +83,7 @@ The ``UseX()`` extension method creates a provider-specific implementation of
 stored within ``DbContextOptions``. This is done by a call to the a hidden API
 ``IDbContextOptionsBuilderInfrastructure.AddOrUpdateExtension``.
 
-.. literalinclude:: /samples/Provider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderDbContextOptionsExtensions.cs
+.. literalinclude:: /samples/Internals/WritingAProvider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderDbContextOptionsExtensions.cs
   :language: csharp
   :caption: An example implementation of the "Use" method
   :linenos:
@@ -121,7 +121,7 @@ make it easier for provider-writers. For example, EF includes a class
 ``DatabaseProvider<TProviderServices, TOptionsExtension>`` which can be used in
 service registration to hook up a provider.
 
-.. literalinclude:: /samples/Provider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderServiceCollectionExtensions.cs
+.. literalinclude:: /samples/Internals/WritingAProvider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderServiceCollectionExtensions.cs
   :language: csharp
   :linenos:
   :caption: An example implementation of the "Add" method
