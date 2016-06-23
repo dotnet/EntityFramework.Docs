@@ -1,6 +1,6 @@
 using System;
 
-namespace EFGetStarted.ConsoleApp.SQLite
+namespace ConsoleApp.SQLite
 {
     public class Program
     {

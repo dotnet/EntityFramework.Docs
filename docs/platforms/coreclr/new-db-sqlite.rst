@@ -61,6 +61,8 @@ Install Entity Framework
 
     .. includesamplefile:: Platforms/NetCore/ConsoleApp.SQLite/project.json
             :language: json
+            :linenos:
+            :emphasize-lines: 8-12,25-27
 
  - Run ``dotnet restore`` again to install the new packages.
 
@@ -97,6 +99,7 @@ The next steps will add code to configure and access a SQLite database file.
             :linenos:
             :lines: 7-17
             :emphasize-lines: 1, 8
+            :dedent: 4
 
  - Add classes to represent tables.
     Note that we will be using foreign keys to associate many posts to one blog.
@@ -105,6 +108,7 @@ The next steps will add code to configure and access a SQLite database file.
             :language: c#
             :linenos:
             :lines: 18-35
+            :dedent: 4
 
  - To make sure the files are correct, you can compile the project on the command line by running ``dotnet build``
 

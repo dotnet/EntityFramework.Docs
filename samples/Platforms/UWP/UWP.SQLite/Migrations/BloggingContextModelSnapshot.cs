@@ -13,7 +13,7 @@ namespace EFGetStarted.UWP.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rc2-20896");
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
 
             modelBuilder.Entity("EFGetStarted.UWP.Blog", b =>
                 {
@@ -47,8 +47,8 @@ namespace EFGetStarted.UWP.Migrations
 
             modelBuilder.Entity("EFGetStarted.UWP.Post", b =>
                 {
-                    b.HasOne("EFGetStarted.UWP.Blog")
-                        .WithMany()
+                    b.HasOne("EFGetStarted.UWP.Blog", "Blog")
+                        .WithMany("Posts")
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

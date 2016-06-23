@@ -89,6 +89,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="App.config" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -98,9 +99,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20160516074807_MyFirstMigration.cs" />
-    <Compile Include="Migrations\20160516074807_MyFirstMigration.designer.cs">
-      <DependentUpon>20160516074807_MyFirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20160623234325_MyFirstMigration.cs" />
+    <Compile Include="Migrations\20160623234325_MyFirstMigration.designer.cs">
+      <DependentUpon>20160623234325_MyFirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\BloggingContextModelSnapshot.cs" />
     <Compile Include="Model.cs" />

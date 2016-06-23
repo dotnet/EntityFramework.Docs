@@ -3,23 +3,25 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using EFGetStarted.UWP;
+using ConsoleApp.SQLite;
 
-namespace EFGetStarted.UWP.Migrations
+namespace ConsoleApp.SQLite.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20160516074807_MyFirstMigration")]
+    [Migration("20160623230334_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rc2-20896");
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
 
-            modelBuilder.Entity("EFGetStarted.UWP.Blog", b =>
+            modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Blog", b =>
                 {
                     b.Property<int>("BlogId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
 
                     b.Property<string>("Url");
 
@@ -28,7 +30,7 @@ namespace EFGetStarted.UWP.Migrations
                     b.ToTable("Blogs");
                 });
 
-            modelBuilder.Entity("EFGetStarted.UWP.Post", b =>
+            modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Post", b =>
                 {
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd();
@@ -46,10 +48,10 @@ namespace EFGetStarted.UWP.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("EFGetStarted.UWP.Post", b =>
+            modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Post", b =>
                 {
-                    b.HasOne("EFGetStarted.UWP.Blog")
-                        .WithMany()
+                    b.HasOne("EFGetStarted.ConsoleApp.SQLite.Blog", "Blog")
+                        .WithMany("Posts")
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

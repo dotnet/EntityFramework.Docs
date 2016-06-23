@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using EFGetStarted.ConsoleApp.SQLite;
+using ConsoleApp.SQLite;
 
-namespace EFGetStarted.ConsoleApp.SQLite.Migrations
+namespace ConsoleApp.SQLite.Migrations
 {
     [DbContext(typeof(BloggingContext))]
     partial class BloggingContextModelSnapshot : ModelSnapshot
@@ -13,7 +13,7 @@ namespace EFGetStarted.ConsoleApp.SQLite.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rc2-20708");
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
 
             modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Blog", b =>
                 {
@@ -49,8 +49,8 @@ namespace EFGetStarted.ConsoleApp.SQLite.Migrations
 
             modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Post", b =>
                 {
-                    b.HasOne("EFGetStarted.ConsoleApp.SQLite.Blog")
-                        .WithMany()
+                    b.HasOne("EFGetStarted.ConsoleApp.SQLite.Blog", "Blog")
+                        .WithMany("Posts")
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

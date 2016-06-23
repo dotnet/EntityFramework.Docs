@@ -33,8 +33,17 @@ Create a new project
 * Select the **Blank App (Universal Windows)** project template
 * Give the project a name and click **OK**
 
+Upgrade Microsoft.NETCore.UniversalWindowsPlatform
+--------------------------------------------------
+
+Depending on your version of Visual Studio, the template may have generated your project with an old version of .NET Core for UWP. EF Core requires ``Microsoft.NETCore.UniversalWindowsPlatform`` version **>=5.2.0**
+
+* :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
+* Run ``Update-Package Microsoft.NETCore.UniversalWindowsPlatform``
+
+
 Install Entity Framework
-----------------------------------------
+------------------------
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
 
@@ -63,6 +72,21 @@ Now it's time to define a context and entity classes that make up your model.
 
 Create your database
 --------------------
+
+.. warning::
+    **Known Issue in Preview 2**
+
+    Using EF Tools on UWP projects does not work without manually adding binding redirects.
+
+    * :menuselection:`File –> New –> File...`
+    * From the left menu select :menuselection:`Visual C# -> General -> Text File`
+    * Give the file the name "App.config"
+    * Add the following contents to the file
+
+    .. includesamplefile:: Platforms/UWP/UWP.SQLite/App.config
+        :language: xml
+
+    See `Issue #5471 <https://github.com/aspnet/EntityFramework/issues/5471>`_ for more details.
 
 Now that you have a model, you can use migrations to create a database for you.
 
