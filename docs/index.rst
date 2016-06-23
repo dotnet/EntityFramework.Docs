@@ -9,6 +9,7 @@ Entity Framework Documentation
 
     platforms/index
     modeling/index
+    querying/index
     saving/index
     providers/index
     miscellaneous/index
