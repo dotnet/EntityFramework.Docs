@@ -1,0 +1,3 @@
+Sphinx==1.4.1
+sphinx-rtd-theme
+git+git://github.com/rtfd/sphinxcontrib-dotnetdomain

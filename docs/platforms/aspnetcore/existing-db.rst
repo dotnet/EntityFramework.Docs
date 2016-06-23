@@ -57,7 +57,7 @@ To enable reverse engineering from an existing database we need to install a cou
   * Run ``Install-Package Microsoft.EntityFrameworkCore.Tools –Pre``
   * Run ``Install-Package Microsoft.EntityFrameworkCore.SqlServer.Design –Pre``
   * Open **project.json**
-  * Locate the ``commands`` section and add the ``ef`` command as shown below
+  * Locate the ``tools`` section and add the highlighted lines as shown below
 
   .. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.NewDb/project.json
         :linenos:
@@ -75,7 +75,7 @@ Now it's time to create the EF model based on your existing database.
 .. literalinclude:: _static/reverse-engineer-command.txt
 
 .. caution::
-  Note that the connection string is double quoted (with single quotes inside the double quotes). This is a workaround for a `known issue in RC2 <https://github.com/aspnet/Release/issues/130>`_ for more details.
+  Note that the connection string is double quoted (with single quotes inside the double quotes). This is a workaround for a `known issue in RC2 <https://github.com/aspnet/EntityFramework/issues/5376>`_ for more details.
 
 The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
 

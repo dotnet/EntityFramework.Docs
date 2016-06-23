@@ -144,9 +144,9 @@ When adding EF, NuGet restore will display this error message:
       - net45 (.NETFramework,Version=v4.5)
       - portable-net45+win8+wp8+wpa81 (.NETPortable,Version=v0.0,Profile=Profile259)
       
-The workaround is to manually import the portable profile "portable-net45+win8".
+The workaround is to manually import the portable profile "portable-net451+win8".
 This forces NuGet to treat this binaries that match this provide as a compatible framework with .NET Standard, 
-even though they are not. Although "portable-net45+win8" is not 100% compatible
+even though they are not. Although "portable-net451+win8" is not 100% compatible
 with .NET Standard, it is compatible enough for the transition from PCL to .NET Standard.
 Imports can be removed when EF's dependencies eventually upgrade to .NET Standard.
 
@@ -158,7 +158,7 @@ additional libraries to your project.
     {
       "frameworks": {
         "netcoreapp1.0": {
-          "imports": ["dnxcore50", "portable-net45+win8"]
+          "imports": ["dnxcore50", "portable-net451+win8"]
         }
     }
 
