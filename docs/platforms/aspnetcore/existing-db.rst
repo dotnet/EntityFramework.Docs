@@ -47,7 +47,7 @@ Install Entity Framework
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
-* Run ``Install-Package Microsoft.EntityFrameworkCore.SqlServer –Pre``
+* Run ``Install-Package Microsoft.EntityFrameworkCore.SqlServer``
 
 .. note::
     In ASP.NET Core projects the ``Install-Package`` will complete quickly and the package installation will occur in the background. You will see **(Restoring...)** appear next to **References** in **Solution Explorer** while the install occurs.
@@ -55,14 +55,14 @@ To use EF Core, install the package for the database provider(s) you want to tar
 To enable reverse engineering from an existing database we need to install a couple of other packages too.
 
   * Run ``Install-Package Microsoft.EntityFrameworkCore.Tools –Pre``
-  * Run ``Install-Package Microsoft.EntityFrameworkCore.SqlServer.Design –Pre``
+  * Run ``Install-Package Microsoft.EntityFrameworkCore.SqlServer.Design``
   * Open **project.json**
   * Locate the ``tools`` section and add the highlighted lines as shown below
 
   .. literalinclude:: /samples/Platforms/AspNetCore/AspNetCore.NewDb/project.json
         :linenos:
-        :lines: 26-33
-        :emphasize-lines: 2-8
+        :lines: 29-33
+        :emphasize-lines: 2
 
 Reverse engineer your model
 ---------------------------

@@ -63,6 +63,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Saving", "Saving", "{1C11AB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internals", "Internals", "{0060CE4E-6956-46EF-9506-212BEE5FF4AD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70096DE4-F6A8-4444-95A0-0DC01AC27A19}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

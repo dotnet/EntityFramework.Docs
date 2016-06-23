@@ -1,12 +1,10 @@
 ﻿{
   "projects": [
-    "AspNetCore",
-    "FullNetFramework",
-    "Logging",
-    "Provider",
-    "Testing"
+    "Platforms/AspNetCore",
+    "Platforms/NetCore",
+    "Internals/WritingAProvider"
   ],
   "sdk": {
-    "version": "1.0.0-preview1-002702"
+    "version": "1.0.0-preview2-003121"
   }
 }

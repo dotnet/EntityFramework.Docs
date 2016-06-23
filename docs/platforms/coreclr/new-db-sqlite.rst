@@ -61,7 +61,6 @@ Install Entity Framework
 
     .. literalinclude:: /samples/Platforms/NetCore/ConsoleApp.SQLite/project.json
             :language: json
-            :linenos:
 
  - Run ``dotnet restore`` again to install the new packages.
 

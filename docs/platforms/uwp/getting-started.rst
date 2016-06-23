@@ -39,7 +39,7 @@ Install Entity Framework
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
-* Run ``Install-Package Microsoft.EntityFrameworkCore.SQLite –Pre``
+* Run ``Install-Package Microsoft.EntityFrameworkCore.Sqlite``
 
 Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.
 
