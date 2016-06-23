@@ -18,7 +18,7 @@ Data Annotations
 
 You can use Data Annotations to exclude a property from the model.
 
-.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/IgnoreProperty.cs
+.. includesamplefile:: Modeling/DataAnnotations/Samples/IgnoreProperty.cs
         :language: c#
         :lines: 12-19
         :emphasize-lines: 6
@@ -29,7 +29,7 @@ Fluent API
 
 You can use the Fluent API to exclude a property from the model.
 
-.. literalinclude:: /samples/Modeling/FluentAPI/Samples/IgnoreProperty.cs
+.. includesamplefile:: Modeling/FluentAPI/Samples/IgnoreProperty.cs
         :language: c#
         :lines: 6-23
         :emphasize-lines: 7-8

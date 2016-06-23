@@ -13,13 +13,13 @@ Conventions
 
 By convention, a property named ``Id`` or ``<type name>Id`` will be configured as the key of an entity.
 
-.. literalinclude:: /samples/Modeling/Conventions/Samples/KeyId.cs
+.. includesamplefile:: Modeling/Conventions/Samples/KeyId.cs
         :language: c#
         :lines: 11-17
         :emphasize-lines: 3
         :linenos:
 
-.. literalinclude:: /samples/Modeling/Conventions/Samples/KeyTypeNameId.cs
+.. includesamplefile:: Modeling/Conventions/Samples/KeyTypeNameId.cs
         :language: c#
         :lines: 11-17
         :emphasize-lines: 3
@@ -30,7 +30,7 @@ Data Annotations
 
 You can use Data Annotations to configure a single property to be the key of an entity.
 
-.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/KeySingle.cs
+.. includesamplefile:: Modeling/DataAnnotations/Samples/KeySingle.cs
         :language: c#
         :lines: 11-18
         :emphasize-lines: 3-4
@@ -41,7 +41,7 @@ Fluent API
 
 You can use the Fluent API to configure a single property to be the key of an entity.
 
-.. literalinclude:: /samples/Modeling/FluentAPI/Samples/KeySingle.cs
+.. includesamplefile:: Modeling/FluentAPI/Samples/KeySingle.cs
         :language: c#
         :lines: 5-22
         :emphasize-lines: 7-8
@@ -49,7 +49,7 @@ You can use the Fluent API to configure a single property to be the key of an en
 
 You can also use the Fluent API to configure multiple properties to be the key of an entity (known as a composite key). Composite keys can only be configured using the Fluent API - conventions will never setup a composite key and you can not use Data Annotations to configure one.
 
-.. literalinclude:: /samples/Modeling/FluentAPI/Samples/KeyComposite.cs
+.. includesamplefile:: Modeling/FluentAPI/Samples/KeyComposite.cs
         :language: c#
         :lines: 5-23
         :emphasize-lines: 7-8

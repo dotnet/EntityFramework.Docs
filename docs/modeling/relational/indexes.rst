@@ -22,7 +22,7 @@ Fluent API
 
 You can use the Fluent API to configure the name of an index.
 
-.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/IndexName.cs
+.. includesamplefile:: Modeling/FluentAPI/Samples/Relational/IndexName.cs
         :language: c#
         :lines: 5-21
         :emphasize-lines: 9

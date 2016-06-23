@@ -17,6 +17,8 @@ import sys
 import os
 import shlex
 from datetime import date
+from docutils.parsers.rst import directives
+from sphinx.directives.code import LiteralInclude
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -78,7 +80,7 @@ language = None
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build','**/sample']
+exclude_patterns = ['_build']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -303,3 +305,18 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+class SampleLiteralInclude(LiteralInclude):
+  """
+  Like ``.. literalinclude``, but instead uses the samples folder to find files
+  """
+  def read_with_encoding(self, filename, document, codec_info, encoding):
+    """
+    Override to replace compute filepath relative to samples directory.
+    See https://github.com/sphinx-doc/sphinx/blob/master/sphinx/directives/code.py#L175
+    """
+    samples_dir=os.path.normpath(os.path.join(os.path.dirname(__file__), '../samples'))
+    filename=os.path.join(samples_dir, self.arguments[0])
+    return super(SampleLiteralInclude, self).read_with_encoding(filename, document, codec_info, encoding)
+
+directives.register_directive('includesamplefile', SampleLiteralInclude)

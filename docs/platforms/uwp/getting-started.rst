@@ -14,7 +14,7 @@ In this walkthrough, you will build a Universal Windows Platform (UWP) applicati
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Platforms/UWP/UWP.SQLite
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Platforms/UWP/UWP.SQLite
 
 Prerequisites
 -------------
@@ -54,7 +54,7 @@ Now it's time to define a context and entity classes that make up your model.
 * Enter *Model.cs* as the name and click **OK**
 * Replace the contents of the file with the following code
 
-.. literalinclude:: /samples/Platforms/UWP/UWP.SQLite/Model.cs
+.. includesamplefile:: Platforms/UWP/UWP.SQLite/Model.cs
     :language: csharp
     :linenos:
 
@@ -74,7 +74,7 @@ Since we want the database to be created on the device that the app runs on, we 
 * Right-click on **App.xaml** in **Solution Explorer** and select **View Code**
 * Add the highlighted using to the start of the file
 
-.. literalinclude:: /samples/Platforms/UWP/UWP.SQLite/App.xaml.cs
+.. includesamplefile:: Platforms/UWP/UWP.SQLite/App.xaml.cs
         :language: c#
         :linenos:
         :lines: 1-6
@@ -82,7 +82,7 @@ Since we want the database to be created on the device that the app runs on, we 
 
 * Add the highlighted code to apply any pending migrations
 
-.. literalinclude:: /samples/Platforms/UWP/UWP.SQLite/App.xaml.cs
+.. includesamplefile:: Platforms/UWP/UWP.SQLite/App.xaml.cs
         :language: c#
         :linenos:
         :lines: 30-39
@@ -102,7 +102,7 @@ You can now use your model to perform data access.
 * Open *MainPage.xaml*
 * Add the page load handler and UI content highlighted below
 
-.. literalinclude:: /samples/Platforms/UWP/UWP.SQLite/MainPage.xaml
+.. includesamplefile:: Platforms/UWP/UWP.SQLite/MainPage.xaml
         :language: c#
         :linenos:
         :emphasize-lines: 9,12-22
@@ -112,7 +112,7 @@ Now we'll add code to wire up the UI with the database
 * Right-click **MainPage.xaml** in **Solution Explorer** and select **View Code**
 * Add the highlighted code from the following listing
 
-.. literalinclude:: /samples/Platforms/UWP/UWP.SQLite/MainPage.xaml.cs
+.. includesamplefile:: Platforms/UWP/UWP.SQLite/MainPage.xaml.cs
         :language: c#
         :linenos:
         :lines: 23-49

@@ -198,5 +198,5 @@ FakesAssemblies/
 *.opt
 
 project.lock.json
-**/samples/**/wwwroot/lib/
+samples/**/wwwroot/lib/
 venv

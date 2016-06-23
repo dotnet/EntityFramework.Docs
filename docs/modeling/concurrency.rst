@@ -32,7 +32,7 @@ Data Annotations
 
 You can use the Data Annotations to configure a property as a concurrency token.
 
-.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/Concurrency.cs
+.. includesamplefile:: Modeling/DataAnnotations/Samples/Concurrency.cs
         :language: c#
         :lines: 11-17
         :emphasize-lines: 4
@@ -43,7 +43,7 @@ Fluent API
 
 You can use the Fluent API to configure a property as a concurrency token.
 
-.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Concurrency.cs
+.. includesamplefile:: Modeling/FluentAPI/Samples/Concurrency.cs
         :language: c#
         :lines: 5-22
         :emphasize-lines: 7-9
@@ -66,7 +66,7 @@ Data Annotations
 
 You can use Data Annotations to configure a property as a timestamp.
 
-.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/Timestamp.cs
+.. includesamplefile:: Modeling/DataAnnotations/Samples/Timestamp.cs
         :language: c#
         :lines: 11-18
         :emphasize-lines: 6
@@ -77,7 +77,7 @@ Fluent API
 
 You can use the Fluent API to configure a property as a timestamp.
 
-.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Timestamp.cs
+.. includesamplefile:: Modeling/FluentAPI/Samples/Timestamp.cs
         :language: c#
         :lines: 5-23
         :emphasize-lines: 7-10

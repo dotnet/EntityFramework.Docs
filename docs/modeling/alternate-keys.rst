@@ -15,7 +15,7 @@ Conventions
 
 By convention, an alternate key is introduced for you when you identify a property, that is not the primary key, as the target of a relationship.
 
-.. literalinclude:: /samples/Modeling/Conventions/Samples/AlternateKey.cs
+.. includesamplefile:: Modeling/Conventions/Samples/AlternateKey.cs
         :language: c#
         :lines: 6-37
         :emphasize-lines: 12
@@ -31,7 +31,7 @@ Fluent API
 
 You can use the Fluent API to configure a single property to be an alternate key.
 
-.. literalinclude:: /samples/Modeling/FluentAPI/Samples/AlternateKeySingle.cs
+.. includesamplefile:: Modeling/FluentAPI/Samples/AlternateKeySingle.cs
         :language: c#
         :lines: 5-22
         :emphasize-lines: 7-8
@@ -39,7 +39,7 @@ You can use the Fluent API to configure a single property to be an alternate key
 
 You can also use the Fluent API to configure multiple properties to be an alternate key (known as a composite alternate key).
 
-.. literalinclude:: /samples/Modeling/FluentAPI/Samples/AlternateKeyComposite.cs
+.. includesamplefile:: Modeling/FluentAPI/Samples/AlternateKeyComposite.cs
         :language: c#
         :lines: 5-23
         :emphasize-lines: 7-8

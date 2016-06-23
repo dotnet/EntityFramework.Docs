@@ -20,7 +20,7 @@ Data Annotations
 
 You can use Data Annotations to configure the column to which a property is mapped.
 
-.. literalinclude:: /samples/Modeling/DataAnnotations/Samples/Relational/Column.cs
+.. includesamplefile:: Modeling/DataAnnotations/Samples/Relational/Column.cs
         :language: c#
         :lines: 11-16
         :emphasize-lines: 3
@@ -31,7 +31,7 @@ Fluent API
 
 You can use the Fluent API to configure the column to which a property is mapped.
 
-.. literalinclude:: /samples/Modeling/FluentAPI/Samples/Relational/Column.cs
+.. includesamplefile:: Modeling/FluentAPI/Samples/Relational/Column.cs
         :language: c#
         :lines: 5-21
         :emphasize-lines: 7-9

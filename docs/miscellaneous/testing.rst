@@ -11,7 +11,7 @@ This article covers how to use the InMemory provider to write efficient tests wi
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples/Miscellaneous/Testing
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Miscellaneous/Testing
 
 When to use InMemory for testing
 --------------------------------
@@ -20,7 +20,7 @@ The InMemory provider is useful when you want to test components using something
 
 For example, consider the following service that allows application code to perform some operations related to blogs. Internally it uses a ``DbContext`` that connects to a SQL Server database. It would be useful to swap this context to connect to an InMemory database so that we can write efficient tests for this service without having to modify the code, or do a lot of work to create a test double of the context.
 
-.. literalinclude:: /samples/Miscellaneous/Testing/BusinessLogic/BlogService.cs
+.. includesamplefile:: Miscellaneous/Testing/BusinessLogic/BlogService.cs
         :language: csharp
         :linenos:
         :lines: 6-29
@@ -48,7 +48,7 @@ In your tests you are going to externally configure the context to use the InMem
 .. note::
   If you are using ASP.NET Core, then you should not need this code since your database provider is configured outside of the context (in Startup.cs).
 
-.. literalinclude:: /samples/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs
+.. includesamplefile:: Miscellaneous/Testing/BusinessLogic/BloggingContext.cs
         :language: csharp
         :linenos:
         :lines: 17-23
@@ -59,7 +59,7 @@ Add a constructor for testing
 
 The simplest way to enable testing with the InMemory provider is to modify your context to expose a constructor that accepts a ``DbContextOptions<TContext>``.
 
-.. literalinclude:: /samples/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs
+.. includesamplefile:: Miscellaneous/Testing/BusinessLogic/BloggingContext.cs
         :language: csharp
         :linenos:
         :lines: 7-14
@@ -77,7 +77,7 @@ The key to testing with this provider is the ability to tell the context to use 
 
 Here is an example of a test class that uses the InMemory database. Each test method creates a new ``DbContextOptions<TContext>`` with a new ``IServiceProvider``, meaning each method has its own InMemory database.
 
-.. literalinclude:: /samples/Miscellaneous/Testing/TestProject/BlogServiceTests.cs
+.. includesamplefile:: Miscellaneous/Testing/TestProject/BlogServiceTests.cs
         :language: csharp
         :linenos:
 
@@ -86,6 +86,6 @@ Sharing a database instance for read-only tests
 
 If a test class has read-only tests that share the same seed data, then you can share the InMemory database instance for the whole class (rather than a new one for each method). This means you have a single  ``DbContextOptions<TContext>`` and ``IServiceProvider`` for the test class, rather than one for each test method.
 
-.. literalinclude:: /samples/Miscellaneous/Testing/TestProject/BlogServiceTestsReadOnly.cs
+.. includesamplefile:: Miscellaneous/Testing/TestProject/BlogServiceTestsReadOnly.cs
         :language: csharp
         :linenos:
