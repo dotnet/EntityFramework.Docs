@@ -8,12 +8,10 @@ Entity Framework Documentation
     :maxdepth: 2
 
     platforms/index
-    providers/index
     modeling/index
     saving/index
-    cli/index
+    providers/index
     miscellaneous/index
-    internals/index
 
 Contribute
 ----------

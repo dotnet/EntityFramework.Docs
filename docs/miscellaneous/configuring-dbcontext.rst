@@ -166,4 +166,4 @@ More reading
 - Read `Dependency Injection <https://docs.asp.net/en/latest/fundamentals/dependency-injection.html>`_ to
   learn more about using DI.
 - Read :doc:`testing` for more information.
-- Read :doc:`/internals/services` for more details on how EF uses dependency injection internally.
+- Read :doc:`internals/services` for more details on how EF uses dependency injection internally.

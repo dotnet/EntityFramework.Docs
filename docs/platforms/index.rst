@@ -1,5 +1,5 @@
-Platforms
-=========
+Getting Started
+===============
 
 The following articles provide documentation for using EF on different platforms.
 

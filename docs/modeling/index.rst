@@ -1,5 +1,5 @@
-Modeling
-========
+Creating a Model
+================
 
 Entity Framework uses a set of conventions to build a model based on the shape of your entity classes. You can specify additional configuration to supplement and/or override what was discovered by convention.
 

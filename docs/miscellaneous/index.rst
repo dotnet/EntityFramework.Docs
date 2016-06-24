@@ -9,3 +9,5 @@ Miscellaneous
     testing
     configuring-dbcontext
     rc1-rc2-upgrade
+    cli/index
+    internals/index
