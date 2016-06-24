@@ -1,12 +1,12 @@
-Entity Framework Documentation
-==============================
-
-.. include:: /_shared/stub-overview.txt
+Entity Framework Core
+=====================
 
 .. toctree::
     :titlesonly:
+    :hidden:
     :maxdepth: 2
 
+    intro
     platforms/index
     modeling/index
     querying/index
@@ -14,7 +14,4 @@ Entity Framework Documentation
     providers/index
     miscellaneous/index
 
-Contribute
-----------
-
-**We accept pull requests!** But you're more likely to have yours accepted if you follow the `guidelines for contributing <https://github.com/aspnet/EntityFramework.Docs/blob/master/CONTRIBUTING.md>`_.
+.. include:: /_shared/intro.txt
