@@ -5,6 +5,7 @@ Miscellaneous
     :titlesonly:
     :caption: The following articles cover miscellaneous topics
 
+    connection-strings
     logging
     testing
     configuring-dbcontext
