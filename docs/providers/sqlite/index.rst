@@ -15,7 +15,7 @@ Getting Started
 
 The following tutorials use this provider:
   * :doc:`/platforms/uwp/getting-started`
-  * :doc:`/platforms/coreclr/new-db-sqlite`
+  * :doc:`/platforms/netcore/new-db-sqlite`
 
 The following sample applications use this provider:
   * `Unicorn Clicker <https://github.com/rowanmiller/UnicornStore/tree/master/UnicornClicker/UWP>`_
