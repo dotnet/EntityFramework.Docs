@@ -1,5 +1,3 @@
-.. include:: /_shared/rc2-notice.txt
-
 .NET Core Application to New SQLite Database
 ============================================
 

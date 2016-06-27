@@ -1,5 +1,3 @@
-.. include:: /_shared/rc2-notice.txt
-
 ASP.NET Core Application to New Database
 ========================================
 

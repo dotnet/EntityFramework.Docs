@@ -1,5 +1,3 @@
-.. include:: /_shared/rc2-notice.txt
-
 .. include:: _shared/relational-specific-note.txt
 
 Table Mapping

@@ -1,5 +1,3 @@
-.. include:: /_shared/rc2-notice.txt
-
 Backing Fields
 ==============
 
