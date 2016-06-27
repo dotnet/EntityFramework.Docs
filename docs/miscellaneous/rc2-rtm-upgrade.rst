@@ -18,7 +18,7 @@ You need to upgrade the installed packages to the RTM versions:
 Existing migrations may need maxLength added
 --------------------------------------------
 
-In RC2, the column definition in a migration looked like ``table.Column<string>(nullable: true)``` and the length of the column was looked up in some metadata we store in the code behind the migration. In RTM, the length is now included in the scaffolded code ``table.Column<string>(maxLength: 450, nullable: true)``.
+In RC2, the column definition in a migration looked like ``table.Column<string>(nullable: true)`` and the length of the column was looked up in some metadata we store in the code behind the migration. In RTM, the length is now included in the scaffolded code ``table.Column<string>(maxLength: 450, nullable: true)``.
 
 Any existing migrations that were scaffolded prior to using RTM will not have the ``maxLength`` argument specified. This means the maximum length supported by the database will be used (``nvarchar(max)`` on SQL Server). This may be fine for some columns, but columns that are part of a key, foreign key, or index need to be updated to include a maximum length. By convention, 450 is the maximum length used for keys, foreign keys, and indexed columns. If you have explicitly configured a length in the model, then you should use that length instead.
 
@@ -37,7 +37,7 @@ This change impacts projects that use ASP.NET Identity and were created from a p
 
 Failure to make this change will result in the following exception when the initial migration is applied to a database.
 
-    System.Data.SqlClient.SqlException (0x80131904): Column 'NormalizedName' in table 'AspNetRoles' is of a type that is invalid for use as a key column in an index. .
+    System.Data.SqlClient.SqlException (0x80131904): Column 'NormalizedName' in table 'AspNetRoles' is of a type that is invalid for use as a key column in an index.
 
 
 .NET Core: Remove "imports" in project.json
