@@ -9,7 +9,9 @@ Database Providers
     sql-server/index
     sqlite/index
     npgsql/index
-    mysql/index
     sql-compact/index
     ibm/index
     in-memory/index
+    devart/index
+    mysql/index
+    oracle/index

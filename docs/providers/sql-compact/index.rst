@@ -24,7 +24,7 @@ Supported Platforms
 Status
 ------
 
-Release packages on NuGet.org
+Packages are available on NuGet.org
  * `EntityFrameworkCore.SqlServerCompact35 <https://www.nuget.org/packages/EntityFrameworkCore.SqlServerCompact35>`_
  * `EntityFrameworkCore.SqlServerCompact40 <https://www.nuget.org/packages/EntityFrameworkCore.SqlServerCompact40>`_
 

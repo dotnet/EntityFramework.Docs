@@ -25,7 +25,7 @@ Supported Platforms
 Status
 ------
 
-`Pre-release Npgsql.EntityFrameworkCore.PostgreSQL package on NuGet.org <https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/>`_
+`Pre-release Npgsql.EntityFrameworkCore.PostgreSQL package on NuGet.org (supports RC2) <https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/>`_
 
 Project Site
 ------------

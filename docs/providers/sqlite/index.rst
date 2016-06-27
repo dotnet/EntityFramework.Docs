@@ -37,7 +37,7 @@ Supported Platforms
 Status
 ------
 
-`Pre-release Microsoft.EntityFrameworkCore.SQLite package on NuGet.org <https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SQLite>`_
+`Microsoft.EntityFrameworkCore.SQLite package is available on NuGet.org <https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SQLite>`_
 
 Project Site
 ------------

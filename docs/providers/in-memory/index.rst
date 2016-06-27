@@ -28,7 +28,7 @@ Supported Platforms
 Status
 ------
 
-`Pre-release Microsoft.EntityFrameworkCore.InMemory package on NuGet.org <https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory>`_
+`Microsoft.EntityFrameworkCore.InMemory package is available on NuGet.org <https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory>`_
 
 Project Site
 ------------

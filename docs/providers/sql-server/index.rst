@@ -33,7 +33,7 @@ Supported Platforms
 Status
 ------
 
-`Pre-release Microsoft.EntityFrameworkCore.SqlServer package on NuGet.org <https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer>`_
+`Microsoft.EntityFrameworkCore.SqlServer package available on NuGet.org <https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer>`_
 
 Project Site
 ------------
