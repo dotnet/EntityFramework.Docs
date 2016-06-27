@@ -11,6 +11,7 @@ Entity Framework Core
     modeling/index
     querying/index
     saving/index
+    efcore-vs-ef6/index
     providers/index
     miscellaneous/index
 
