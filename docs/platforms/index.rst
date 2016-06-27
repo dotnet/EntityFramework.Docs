@@ -9,6 +9,6 @@ The following articles provide documentation for using EF on different platforms
   :maxdepth: 1
 
   full-dotnet/index
-  coreclr/index
+  netcore/index
   aspnetcore/index
   uwp/index
