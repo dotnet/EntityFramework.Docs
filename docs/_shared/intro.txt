@@ -68,7 +68,7 @@ Instances of your entity classes are retrieved from the database using Language 
 
     using (var db = new BloggingContext())
     {
-        var blogs = context.Blogs
+        var blogs = db.Blogs
             .Where(b => b.Rating > 3)
             .OrderBy(b => b.Url)
             .ToList();
