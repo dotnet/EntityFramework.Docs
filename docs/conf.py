@@ -123,13 +123,13 @@ rst_prolog = """
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 if not on_rtd:
-	import sphinx_rtd_theme
-	html_theme = 'sphinx_rtd_theme'
-	html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+  import sphinx_rtd_theme
+  html_theme = 'sphinx_rtd_theme'
+  html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 def setup(app):
-	app.add_stylesheet('custom.css')
-	app.add_javascript('wedc.js')
+  app.add_stylesheet('custom.css')
+  app.add_javascript('wedc.js')
 
 #html_theme = 'default'
 
@@ -307,6 +307,8 @@ texinfo_documents = [
 #texinfo_no_detailmenu = False
 
 class SampleLiteralInclude(LiteralInclude):
+  filepath=""
+
   """
   Like ``.. literalinclude``, but instead uses the samples folder to find files
   """
@@ -316,7 +318,19 @@ class SampleLiteralInclude(LiteralInclude):
     See https://github.com/sphinx-doc/sphinx/blob/master/sphinx/directives/code.py#L175
     """
     samples_dir=os.path.normpath(os.path.join(os.path.dirname(__file__), '../samples'))
-    filename=os.path.join(samples_dir, self.arguments[0])
-    return super(SampleLiteralInclude, self).read_with_encoding(filename, document, codec_info, encoding)
+    self.filepath=os.path.join(samples_dir, self.arguments[0])
+    return super(SampleLiteralInclude, self).read_with_encoding(self.filepath, document, codec_info, encoding)
+
+  def run(self):
+    env=self.state.document.settings.env
+    nodes=super(SampleLiteralInclude, self).run()
+    env.note_dependency(self.filepath)
+
+    # base function adds incorrect filepath as dependency
+    rel_filename, filename = env.relfn2path(self.arguments[0])
+    env.dependencies.setdefault(env.docname, set()).remove(rel_filename)
+
+    return nodes
+
 
 directives.register_directive('includesamplefile', SampleLiteralInclude)
