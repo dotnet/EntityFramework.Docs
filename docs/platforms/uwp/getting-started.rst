@@ -34,11 +34,10 @@ Create a new project
 Upgrade Microsoft.NETCore.UniversalWindowsPlatform
 --------------------------------------------------
 
-Depending on your version of Visual Studio, the template may have generated your project with an old version of .NET Core for UWP. EF Core requires ``Microsoft.NETCore.UniversalWindowsPlatform`` version **>=5.2.0**
+Depending on your version of Visual Studio, the template may have generated your project with an old version of .NET Core for UWP. EF Core requires ``Microsoft.NETCore.UniversalWindowsPlatform`` version **5.2.0** or greater.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
-* Run ``Update-Package Microsoft.NETCore.UniversalWindowsPlatform``
-
+* Run ``Install-Package Microsoft.NETCore.UniversalWindowsPlatform -Version 5.2.0``
 
 Install Entity Framework
 ------------------------
