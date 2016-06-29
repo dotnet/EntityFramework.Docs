@@ -257,22 +257,4 @@ Common Errors
 
 .. include:: _common_errors.txt
 
-Preview 1 Known Issues
-----------------------
-
 See also :ref:`dotnet_cli_issues` for .NET Core CLI commands.
-
-Error: "The expression after '&' in a pipeline element produced an object that was not valid."
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When using commands on a .NET Core or ASP.NET Core project, this error may occur. This error occurs
-when the machine has version of PowerShell less than version 5.0.
-
-.. code-block:: text
-
-  The expression after '&' in a pipeline element produced an object that was not valid. It must result in a
-  command name, a script block, or a CommandInfo object.
-
-To workaround, upgrade PowerShell to 5.0. https://www.microsoft.com/en-us/download/details.aspx?id=50395
-
-See https://github.com/aspnet/EntityFramework/issues/5327.
