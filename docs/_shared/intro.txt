@@ -4,6 +4,15 @@ EF Core is an object-relational mapper (O/RM) that enables .NET developers to wo
 
 If you like to learn by writing code, we'd recommend one of our :doc:`platforms/index` guides to get you started with EF Core.
 
+Get Entity Framework Core
+-------------------------
+
+`Install the NuGet package <https://docs.nuget.org/consume>`_ for the database provider you want to use. See :doc:`/providers/index` for information.
+
+.. code-block:: text
+
+    PM>  Install-Package Microsoft.EntityFrameworkCore.SqlServer
+
 The Model
 ---------
 

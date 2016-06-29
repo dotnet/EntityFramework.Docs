@@ -1,6 +1,8 @@
 SQLite
 ======
 
+This database provider allows Entity Framework Core to be used with SQLite. The provider is maintained as part of the `EntityFramework GitHub project <https://github.com/aspnet/EntityFramework>`_.
+
 .. toctree::
     :hidden:
 
@@ -10,39 +12,36 @@ SQLite
     :depth: 2
     :local:
 
-Getting Started
----------------
+Install
+-------
 
-The following tutorials use this provider:
+Install the `Microsoft.EntityFrameworkCore.SQLite NuGet package <hhttps://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SQLite/>`_.
+
+.. code-block:: text
+
+    PM>  Install-Package Microsoft.EntityFrameworkCore.SQLite
+
+Get Started
+-----------
+
+The following resources will help you get started with this provider.
   * :doc:`/platforms/uwp/getting-started`
   * :doc:`/platforms/netcore/new-db-sqlite`
-
-The following sample applications use this provider:
-  * `Unicorn Clicker <https://github.com/rowanmiller/UnicornStore/tree/master/UnicornClicker/UWP>`_
-  * `Unicorn Packer <https://github.com/rowanmiller/UnicornStore/tree/master/UnicornPacker>`_
+  * `Unicorn Clicker Sample Application <https://github.com/rowanmiller/UnicornStore/tree/master/UnicornClicker/UWP>`_
+  * `Unicorn Packer Sample Application <https://github.com/rowanmiller/UnicornStore/tree/master/UnicornPacker>`_
 
 Supported Database Engines
 --------------------------
 
-SQLite (3.7 onwards)
+  * SQLite (3.7 onwards)
 
 Supported Platforms
 -------------------
 
- * Full .NET (4.5.1 onwards)
- * .NET Core
- * Mono (4.2.0 onwards)
- * Universal Windows Platform
-
-Status
-------
-
-`Microsoft.EntityFrameworkCore.SQLite package is available on NuGet.org <https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SQLite>`_
-
-Project Site
-------------
-
-`EntityFramework GitHub project <https://github.com/aspnet/EntityFramework>`_
+  * Full .NET (4.5.1 onwards)
+  * .NET Core
+  * Mono (4.2.0 onwards)
+  * Universal Windows Platform
 
 Limitations
 -----------

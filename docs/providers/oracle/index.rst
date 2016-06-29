@@ -1,6 +1,6 @@
 Oracle (Coming Soon)
 ====================
 
-We are working with the Oracle team to make an Oracle provider available. Please direct any questions about this provider, including the release timeline, to the `Oracle Community Site <https://community.oracle.com/>`_.
+The Oracle .NET team is evaluating EF Core support, but have not announced any timing. You can vote on the `Oracle EF Core Provider feature request <https://apex.oracle.com/pls/apex/f?p=18357:39:105422858407495::NO::P39_ID:28241>`_.
 
-DevArt dotConnect does offer a paid provider for Oracle, see :doc:`/providers/devart/index` for details.
+Please direct any questions about this provider, including the release timeline, to the `Oracle Community Site <https://community.oracle.com/>`_.
