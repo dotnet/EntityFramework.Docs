@@ -68,7 +68,7 @@ Reverse engineer your model
 Now it's time to create the EF model based on your existing database.
 
 * :menuselection:`Tools –> NuGet Package Manager –> Package Manager Console`
-* Run the following command to create a model from the existing database
+* Run the following command to create a model from the existing database, if the command is not recognized you may need to restart visual studio
 
 .. literalinclude:: _static/reverse-engineer-command.txt
 
