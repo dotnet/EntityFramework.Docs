@@ -45,7 +45,7 @@ EF Core does not perform any of this magic.
   * The database connection must be explicitly configured in code.
   * No initialization is performed. You must use ``DbContext.Database.Migrate()`` to apply migrations (or ``DbContext.Database.EnsureCreated()`` and ``EnsureDeleted()`` to create/delete the database without using migrations).
 
-Code Frist table naming convention
+Code First table naming convention
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 EF6.x runs the entity class name through a pluralization service to calculate the default table name that the entity is mapped to.
