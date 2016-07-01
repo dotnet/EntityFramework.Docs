@@ -34,6 +34,28 @@ Create a new project
 Upgrade Microsoft.NETCore.UniversalWindowsPlatform
 --------------------------------------------------
 
+.. warning::
+
+    **Known Issues with UWP 5.2.0**
+
+    Using ``Microsoft.NETCore.UniversalWindowsPlatform`` 5.2.0 will cause UWP app store submissions to fail.
+    Until this is resolved, add the following to "dependencies" in project.json.
+
+    .. code-block:: json
+
+        "dependencies": {
+
+            "runtime.native.System.IO.Compression": "4.1.0",
+            "runtime.win7.System.Private.Uri": {
+              "version": "4.0.1",
+              "exclude": "runtime"
+            },
+            "System.Private.Uri": "4.0.0"
+
+        }
+
+    See .NET Core Issues `#9711 <https://github.com/dotnet/corefx/issues/9711>`_ and `#9743 <https://github.com/dotnet/corefx/issues/9743>`_ for more information.
+
 Depending on your version of Visual Studio, the template may have generated your project with an old version of .NET Core for UWP. EF Core requires ``Microsoft.NETCore.UniversalWindowsPlatform`` version **5.2.0** or greater.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
