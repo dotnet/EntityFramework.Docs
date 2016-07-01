@@ -3,9 +3,6 @@ Npgsql (PostgreSQL)
 
 This database provider allows Entity Framework Core to be used with PostgreSQL. The provider is maintained as part of the `Npgsql project <http://www.npgsql.org>`_.
 
-.. caution::
-    Npgsql currently only supports the Entity Framework Core RC2 pre-release.
-
 .. contents:: `In this article:`
     :depth: 2
     :local:
@@ -17,12 +14,12 @@ Install the `Npgsql.EntityFrameworkCore.PostgreSQL NuGet package <https://www.nu
 
 .. code-block:: text
 
-    PM>  Install-Package Npgsql.EntityFrameworkCore.PostgreSQL -Pre
+    PM>  Install-Package Npgsql.EntityFrameworkCore.PostgreSQL
 
 Get Started
 -----------
 
-See the `Npgsql documentation <http://www.npgsql.org/doc/ef7.html>`_ to get started.
+See the `Npgsql documentation <http://www.npgsql.org/doc/efcore.html>`_ to get started.
 
 Supported Database Engines
 --------------------------
