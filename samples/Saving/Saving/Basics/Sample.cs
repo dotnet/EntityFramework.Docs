@@ -53,7 +53,7 @@ namespace EFSaving.Basics
                 var firstBlog = db.Blogs.First();
                 firstBlog.Url = "";
 
-                var lastBlog = db.Blogs.First();
+                var lastBlog = db.Blogs.Last();
                 db.Blogs.Remove(lastBlog);
 
                 db.SaveChanges();
