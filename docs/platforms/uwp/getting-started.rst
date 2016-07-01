@@ -41,7 +41,7 @@ Upgrade Microsoft.NETCore.UniversalWindowsPlatform
     Using ``Microsoft.NETCore.UniversalWindowsPlatform`` 5.2.0 will cause UWP app store submissions to fail.
     Until this is resolved, add the following to "dependencies" in project.json.
 
-    .. code-block:: json
+    .. code-block:: javascript
 
         "dependencies": {
 
