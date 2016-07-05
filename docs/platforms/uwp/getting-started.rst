@@ -19,7 +19,7 @@ Prerequisites
 
 The following items are required to complete this walkthrough:
     - Windows 10
-    - Visual Studio 2015 Update 3
+    - `Visual Studio 2015 Update 3 <https://go.microsoft.com/fwlink/?LinkId=691129>`_
     - The latest version of `Windows 10 Developer Tools <https://dev.windows.com/en-us/downloads>`_
 
 Create a new project

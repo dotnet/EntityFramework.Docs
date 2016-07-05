@@ -15,7 +15,7 @@ Prerequisites
 
 The following prerequisites are needed to complete this walkthrough:
 
-* Visual Studio 2015 Update 3
+* `Visual Studio 2015 Update 3 <https://go.microsoft.com/fwlink/?LinkId=691129>`_
 * `Latest version of NuGet Package Manager <https://visualstudiogallery.msdn.microsoft.com/5d345edc-2e2d-4a9c-b73b-d53956dc458d>`_
 * `Latest version of Windows PowerShell <https://www.microsoft.com/en-us/download/details.aspx?id=40855>`_
 

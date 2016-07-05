@@ -15,20 +15,20 @@ Prerequisites
 
 The following prerequisites are needed to complete this walkthrough:
 
-	* Visual Studio 2015 Update 3
+	* `Visual Studio 2015 Update 3 <https://go.microsoft.com/fwlink/?LinkId=691129>`_
 	* `.NET Core for Visual Studio <https://go.microsoft.com/fwlink/?LinkId=817245>`_
 
 Create a new project
 --------------------
 
-	* Open Visual Studio 2015
-	* :menuselection:`File --> New --> Project...`
-	* From the left menu select :menuselection:`Templates --> Visual C# --> Web`
-	* Select the **ASP.NET Core Web Application (.NET Core)** project template
-	* Enter **EFGetStarted.AspNetCore.NewDb** as the name and click **OK**
-	* Wait for the **New ASP.NET Core Web Application** dialog to appear
-	* Ensure that **Authentication** is set to **No Authentication**
-	* Click **OK**
+  * Open Visual Studio 2015
+  * :menuselection:`File --> New --> Project...`
+  * From the left menu select :menuselection:`Templates --> Visual C# --> Web`
+  * Select the **ASP.NET Core Web Application (.NET Core)** project template
+  * Enter **EFGetStarted.AspNetCore.NewDb** as the name and click **OK**
+  * Wait for the **New ASP.NET Core Web Application** dialog to appear
+  * Select the **Web Application** template and ensure that **Authentication** is set to **No Authentication**
+  * Click **OK**
 
 .. caution::
     If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework model will be added to your project in `Models\\IdentityModel.cs`. Using the techniques you will learn in this walkthrough, you can choose to add a second model, or extend this existing model to contain your entity classes.
