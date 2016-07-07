@@ -58,7 +58,10 @@ Now it's time to create the EF model based on your existing database.
 * :menuselection:`Tools –> NuGet Package Manager –> Package Manager Console`
 * Run the following command to create a model from the existing database
 
-.. literalinclude:: _static/reverse-engineer-command.txt
+.. code-block:: text
+
+    Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
+
 
 The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
 
