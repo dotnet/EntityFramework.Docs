@@ -13,5 +13,6 @@ Database Providers
     ibm/index
     in-memory/index
     devart/index
+    pomelo-mysql/index
     mysql/index
     oracle/index
