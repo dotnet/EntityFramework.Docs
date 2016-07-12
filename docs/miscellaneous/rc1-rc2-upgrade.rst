@@ -103,7 +103,7 @@ If you have an ASP.NET Core application and you want EF to resolve internal serv
 DNX Commands => .NET CLI (ASP.NET Core Projects Only)
 -----------------------------------------------------
 
-If you previously used the ``dnx ef`` commands for ASP.NET 5 projects, these have now moved to ``dotnet ef`` commands. The same command syntax still applies. You can use ``dotnet ef --help`` for syntax information.
+If you previously used the ``dnx ef`` commands for ASP.NET 5 projects, these have now moved to ``dotnet ef`` commands. The same command syntax still applies. You can use ``dotnet -ef --help`` for syntax information.
 
 The way commands are registered has changed in RC2, due to DNX being replaced by .NET CLI. Commands are now registered in a ``tools`` section in ``project.json``::
 
