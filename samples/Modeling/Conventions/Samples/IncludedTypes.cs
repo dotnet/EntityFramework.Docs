@@ -9,9 +9,7 @@ namespace EFModeling.Conventions.Samples.IncludedTypes
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AuditEntry>()
-                .Property(a => a.Username)
-                .IsRequired();
+            modelBuilder.Entity<AuditEntry>();
         }
     }
 

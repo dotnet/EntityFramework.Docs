@@ -18,8 +18,8 @@ For example, in the following code listing all three types are discovered:
 
 .. includesamplefile:: Modeling/Conventions/Samples/IncludedTypes.cs
         :language: c#
-        :lines: 6-40
-        :emphasize-lines: 3,7,18
+        :lines: 6-38
+        :emphasize-lines: 3,7,16
         :linenos:
 
 Data Annotations
