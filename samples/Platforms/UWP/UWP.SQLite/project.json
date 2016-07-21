@@ -5,7 +5,7 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.1"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2"
   },
   "frameworks": {
     "uap10.0": {}

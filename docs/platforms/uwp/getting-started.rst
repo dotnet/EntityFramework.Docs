@@ -35,7 +35,7 @@ Upgrade Microsoft.NETCore.UniversalWindowsPlatform
 --------------------------------------------------
 
 Depending on your version of Visual Studio, the template may have generated your project with an old version of .NET Core for UWP.
-EF Core requires ``Microsoft.NETCore.UniversalWindowsPlatform`` version **5.2.1** or greater.
+EF Core requires ``Microsoft.NETCore.UniversalWindowsPlatform`` version **5.2.2** or greater.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
 * Run ``Update-Package Microsoft.NETCore.UniversalWindowsPlatform``
