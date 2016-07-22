@@ -32,3 +32,24 @@ You can use the Fluent API to exclude a property from the model.
         :lines: 6-23
         :emphasize-lines: 7-8
         :linenos:
+
+
+
+
+Using Data Annotations with navigation property the related object type is automatically removed from model.
+ 
+public class UserProfile : IdentityUser<long>
+{
+        [NotMapped]  
+        public virtual List<UserTool> Tools { get; set; }
+}
+
+Using Fleunt API you have to explicitly remove the property and the related object type:
+protected override void OnModelCreating(ModelBuilder builder)
+{
+    base.OnModelCreating(builder);
+    builder.Entity<UserProfile>().Ignore(p => p.Tools);
+    builder.Ignore<UserTool>();
+}
+
+
