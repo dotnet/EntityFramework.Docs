@@ -5,7 +5,7 @@
     "emitEntryPoint": true
   },
   "dependencies": {
-    "Pomelo.EntityFrameworkCore.MySql": "1.0.0",
+    "Pomelo.EntityFrameworkCore.MySql": "1.0.0-prerelease-20160726",
     "Microsoft.EntityFrameworkCore.Design": {
       "version": "1.0.0-preview2-final",
       "type": "build" 
