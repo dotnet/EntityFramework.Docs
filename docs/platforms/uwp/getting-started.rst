@@ -43,7 +43,7 @@ EF Core requires ``Microsoft.NETCore.UniversalWindowsPlatform`` version **5.2.2*
 Install Entity Framework
 ------------------------
 
-To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see :doc:`/providers/index`.
+To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQLite. For a list of available providers see :doc:`/providers/index`.
 
 * :menuselection:`Tools --> NuGet Package Manager --> Package Manager Console`
 * Run ``Install-Package Microsoft.EntityFrameworkCore.Sqlite``
