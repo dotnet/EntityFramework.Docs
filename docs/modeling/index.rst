@@ -26,7 +26,7 @@ In this section you can find information about conventions and configuration for
    relational/index
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/samples
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/samples
 
 Methods of configuration
 ------------------------
