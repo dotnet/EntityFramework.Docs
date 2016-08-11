@@ -22,7 +22,7 @@ You can use the Fluent API to create a sequence in the model.
 
 .. includesamplefile:: Modeling/FluentAPI/Samples/Relational/Sequence.cs
         :language: c#
-        :lines: 5-13
+        :lines: 5-20
         :emphasize-lines: 7
         :linenos:
 
