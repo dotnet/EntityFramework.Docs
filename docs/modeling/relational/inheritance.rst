@@ -40,7 +40,7 @@ You can use the Fluent API to configure the name and type of the discriminator c
         :emphasize-lines: 7-10
         :linenos:
 
-You can also use the Fluent API to configure a discriminator on a special value. This is useful when you're mapping to an existing database and there are hardcoded ``id``s for handling specific types. You can instead use a discriminator and a base abstract class and strong-type your code.
+You can also use the Fluent API to configure a discriminator on a special value. This is useful when you're mapping to an existing database and there are hardcoded ``ids`` for handling specific types. You can instead use a discriminator and a base abstract class and strong-type your code.
 
 .. includesamplefile:: Modeling/FluentAPI/Samples/InheritanceTPHAbstractDiscriminator.cs
         :language: c#
