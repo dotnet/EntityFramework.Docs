@@ -98,7 +98,7 @@ Remove inline context configuration
 In ASP.NET Core, configuration is generally performed in **Startup.cs**. To conform to this pattern, we will move configuration of the database provider to **Startup.cs**.
 
   * Open **Models\\BloggingContext.cs**
-  * Delete the lines of code highligted below
+  * Delete the lines of code highlighted below
 
 .. includesamplefile:: Platforms/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContextUnmodified.txt
         :language: c#
@@ -106,7 +106,7 @@ In ASP.NET Core, configuration is generally performed in **Startup.cs**. To conf
         :emphasize-lines: 3-7
         :linenos:
 
-* Add the lines of code highligted below
+* Add the lines of code highlighted below
 
 .. includesamplefile:: Platforms/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContext.cs
         :language: c#
