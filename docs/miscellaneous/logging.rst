@@ -11,7 +11,7 @@ Create a logger
 ---------------
 
 The first step is to create an implementation of ``ILoggerProvider`` and ``ILogger``.
- * ``ILoggerProvider`` is the component that decides when to create instances of your logger(s). The provider may chose to create different loggers in different situations.
+ * ``ILoggerProvider`` is the component that decides when to create instances of your logger(s). The provider may choose to create different loggers in different situations.
  * ``ILogger`` is the component that does the actual logging. It will be passed information from the framework when certain events occur.
 
 Here is a simple implementation that logs a human readable representation of every event to a text file and the Console.
