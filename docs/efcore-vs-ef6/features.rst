@@ -1,7 +1,7 @@
 Feature Comparison
 ==================
 
-The following information will help you chose between Entity Framework Core and Entity Framework 6.x.
+The following information will help you choose between Entity Framework Core and Entity Framework 6.x.
 
 .. contents:: `In this article:`
     :depth: 2
