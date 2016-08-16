@@ -40,7 +40,7 @@ namespace TestProject
                 service.Add("http://sample.com");
             }
 
-            // User a seperate instance of the context to verify correct data was saved to database
+            // Use a separate instance of the context to verify correct data was saved to database
             using (var context = new BloggingContext(options))
             {
                 Assert.AreEqual(1, context.Blogs.Count());
