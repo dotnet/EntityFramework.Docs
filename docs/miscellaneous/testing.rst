@@ -66,7 +66,7 @@ The simplest way to enable testing with the InMemory provider is to modify your 
         :emphasize-lines: 6-8
 
 .. note::
-  ``DbContextOptions<TContext>`` tells the context all of it's settings, such as which database to connect to. This is the same object that is built by running the OnConfiguring method in your context.
+  ``DbContextOptions<TContext>`` tells the context all of its settings, such as which database to connect to. This is the same object that is built by running the OnConfiguring method in your context.
 
 Writing tests
 -------------
