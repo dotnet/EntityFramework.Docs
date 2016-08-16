@@ -80,7 +80,7 @@ This configures **options** which it typically takes as arguments to method.
 
 The ``UseX()`` extension method creates a provider-specific implementation of
 ``IDbContextOptionsExtension`` which is added to the collection of extensions
-stored within ``DbContextOptions``. This is done by a call to the a hidden API
+stored within ``DbContextOptions``. This is done by a call to the API
 ``IDbContextOptionsBuilderInfrastructure.AddOrUpdateExtension``.
 
 .. includesamplefile:: Miscellaneous/Internals/WritingAProvider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderDbContextOptionsExtensions.cs

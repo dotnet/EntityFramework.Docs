@@ -3,7 +3,7 @@ Creating a Model
 
 Entity Framework uses a set of conventions to build a model based on the shape of your entity classes. You can specify additional configuration to supplement and/or override what was discovered by convention.
 
-This article covers configuration that can be applied to a model targeting any data store and that which can be applied when targeting any relational database. Providers may also enable configuration that is specific to a particular data store. For documentation on provider specific configuration see the the :doc:`/providers/index` section.
+This article covers configuration that can be applied to a model targeting any data store and that which can be applied when targeting any relational database. Providers may also enable configuration that is specific to a particular data store. For documentation on provider specific configuration see the :doc:`/providers/index` section.
 
 In this section you can find information about conventions and configuration for the following:
 

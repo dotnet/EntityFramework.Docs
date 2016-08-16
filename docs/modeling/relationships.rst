@@ -229,7 +229,7 @@ One to one relationships have a reference navigation property on both sides. The
         :linenos:
 
 .. note::
-    EF will chose one of the entities to be the dependent based on its ability to detect a foreign key property. If the wrong entity is chosen as the dependent you can use the Fluent API to correct this.
+    EF will choose one of the entities to be the dependent based on its ability to detect a foreign key property. If the wrong entity is chosen as the dependent you can use the Fluent API to correct this.
 
 When configuring the relationship with the Fluent API, you use the ``HasOne`` and ``WithOne`` methods.
 

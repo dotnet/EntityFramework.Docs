@@ -12,7 +12,7 @@ Configuring a maximum length provides a hint to the data store about the appropr
 Conventions
 -----------
 
-By convention, it is left up to the database provider to chose an appropriate data type for properties. For properties that have a length, the database provider will generally chose a data type that allows for the longest length of data. For example, Microsoft SQL Server will use ``nvarchar(max)`` for ``string`` properties (or ``nvarchar(450)`` if the column is used as a key).
+By convention, it is left up to the database provider to choose an appropriate data type for properties. For properties that have a length, the database provider will generally choose a data type that allows for the longest length of data. For example, Microsoft SQL Server will use ``nvarchar(max)`` for ``string`` properties (or ``nvarchar(450)`` if the column is used as a key).
 
 Data Annotations
 ----------------

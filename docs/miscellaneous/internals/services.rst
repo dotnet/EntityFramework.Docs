@@ -115,10 +115,10 @@ the construction step add specialized services for their database system.
 Providing a custom internal service provider
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``DbContextOptionsBuilder`` provides a API for giving a custom service provider
+``DbContextOptionsBuilder`` provides an API for giving a custom service provider
 to DbContext for EF to use internally. This API is ``DbContextOptions.UseInternalServiceProvider(IServiceProvider provider)``.
 
-If an custom service provider is provided, DbContext will not use ``DbContextOptions`` to create its own
+If a custom service provider is provided, DbContext will not use ``DbContextOptions`` to create its own
 internal service provider. The custom service provider must already have provider-specific services added.
 
 Database provider writers should provided methods such as AddEntityFrameworkSqlServer" or "AddEntityFrameworkSqlite" to simplify the process of creating a custom service container.

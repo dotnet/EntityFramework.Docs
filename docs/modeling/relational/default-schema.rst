@@ -8,7 +8,7 @@ The default schema is the database schema that objects will be created in if a s
 Conventions
 -----------
 
-By convention, the database provider will chose the most appropriate default schema. For example, Microsoft SQL Server will use the ``dbo`` schema and SQLite will not use a schema (since schemas are not supported in SQLite).
+By convention, the database provider will choose the most appropriate default schema. For example, Microsoft SQL Server will use the ``dbo`` schema and SQLite will not use a schema (since schemas are not supported in SQLite).
 
 Data Annotations
 ----------------

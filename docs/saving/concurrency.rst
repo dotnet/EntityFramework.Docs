@@ -27,7 +27,7 @@ There are three sets of values available to help resolve a concurrency conflict.
 
 To handle a concurrency conflict, catch a ``DbUpdateConcurrencyException`` during ``SaveChanges()``, use ``DbUpdateConcurrencyException.Entries`` to prepare a new set of changes for the affected entities, and then retry the ``SaveChanges()`` operation.
 
-In the following example, ``Person.FirstName`` and ``Person.LastName`` are setup as concurrency token. There is a ``// TODO:`` comment in the location where you would include application specific logic to chose the value to be saved to the database.
+In the following example, ``Person.FirstName`` and ``Person.LastName`` are setup as concurrency token. There is a ``// TODO:`` comment in the location where you would include application specific logic to choose the value to be saved to the database.
 
 .. includesamplefile:: Saving/Saving/Concurrency/Sample.cs
         :language: c#
