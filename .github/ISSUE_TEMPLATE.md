@@ -1,3 +1,3 @@
-This repo is a documentation project.
+This issue tracker is for ***documentation***
 
-Please report bugs on Entity Framework Core to https://github.com/aspnet/EntityFramework
+For ***product*** issues, use https://github.com/aspnet/EntityFramework/issues
