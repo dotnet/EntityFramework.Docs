@@ -3,9 +3,6 @@ Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, SQL Server, and more)
 
 Devart is a third party provider writer that offers database providers for a wide range of databases. Find out more at `devart.com/dotconnect <https://www.devart.com/dotconnect/>`_.
 
-.. caution::
-    Devart dotConnect currently only supports the Entity Framework Core RC2 pre-release.
-
 .. contents:: `In this article:`
     :depth: 2
     :local:
@@ -23,7 +20,7 @@ See the `Devart dotConnect documentation <https://www.devart.com/dotconnect/>`_ 
 Get Started
 -----------
 
-See the `Devart dotConnect Entity Framework documentation <https://www.devart.com/dotconnect/entityframework.html>`_ to get started.
+See the `Devart dotConnect Entity Framework documentation <https://www.devart.com/dotconnect/entityframework.html>`_ and `blog article about Entity Framework Core 1 Support <http://blog.devart.com/entity-framework-core-1-entity-framework-7-support.html>`_ to get started.
 
 Supported Database Engines
 --------------------------
@@ -34,7 +31,7 @@ Supported Database Engines
   * SQLite
   * DB2
   * SQL Server
-  * and more...
+  * `Cloud apps <https://www.devart.com/dotconnect/#cloud>`_
 
 Supported Platforms
 -------------------
