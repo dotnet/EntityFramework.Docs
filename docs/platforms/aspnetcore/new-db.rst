@@ -107,7 +107,7 @@ Create your database
 Now that you have a model, you can use migrations to create a database for you.
 
 * :menuselection:`Tools –> NuGet Package Manager –> Package Manager Console`
-* Run ``Add-Migration MyFirstMigration`` to scaffold a migration to create the initial set of tables for your model.
+* Run ``Add-Migration MyFirstMigration`` to scaffold a migration to create the initial set of tables for your model. If you receive an error stating the term 'add-migration' is not recognized as the name of a cmdlet, then close and reopen Visual Studio
 * Run ``Update-Database`` to apply the new migration to the database. Because your database doesn't exist yet, it will be created for you before the migration is applied.
 
 .. tip::
