@@ -1,6 +1,33 @@
-MySQL (Coming Soon)
-===================
+MySQL
+=====
 
-We are working with the MySQL team to make a MySQL provider available. Please direct any questions about this provider, including the release timeline, to the `MySQL Project <http://forums.mysql.com/list.php?38>`_.
+This database provider allows Entity Framework Core to be used with MySQL. The provider is maintained as part of the `MySQL project <http://dev.mysql.com>`_.
 
-DevArt dotConnect does offer a paid provider for MySQL, see :doc:`/providers/devart/index` for details.
+.. contents:: `In this article:`
+    :depth: 2
+    :local:
+
+Install
+-------
+
+Install the `MySql.Data.EntityFrameworkCore NuGet package <https://www.nuget.org/packages/MySql.Data.EntityFrameworkCore>`_.
+
+.. code-block:: text
+
+    PM>  Install-Package MySql.Data.EntityFrameworkCore
+
+Get Started
+-----------
+
+See `Starting with MySQL EF Core provider and Connector/Net 7.0.4 <http://insidemysql.com/howto-starting-with-mysql-ef-core-provider-and-connectornet-7-0-4/>`_.
+
+Supported Database Engines
+--------------------------
+
+  * MySQL
+
+Supported Platforms
+-------------------
+
+  * Full .NET (4.5.1 onwards)
+  * .NET Core
