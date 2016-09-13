@@ -41,7 +41,7 @@ Raw SQL queries can be used to execute a stored procedure.
 Passing parameters
 ------------------
 
-As with any API that accepts SQL, it is important to parameterize any user input to protect against a SQL injection attack. You can include parameter place holders in the SQL query string and then supply parameter values as additional arguments. Any parameter values you supply will automatically be converted to a ``DbParameter``.
+As with any API that accepts SQL, it is important to parameterize any user input to protect against a SQL injection attack. You can include parameter placeholders in the SQL query string and then supply parameter values as additional arguments. Any parameter values you supply will automatically be converted to a ``DbParameter``.
 
 The following example passes a single parameter to a stored procedure. While this may look like ``String.Format`` syntax, the supplied value is wrapped in a parameter and the generated parameter name inserted where the ``{0}`` placeholder was specified.
 
