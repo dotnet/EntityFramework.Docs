@@ -10,7 +10,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.AlternateKeyName
         {
             modelBuilder.Entity<Car>()
                 .HasAlternateKey(c => c.LicensePlate)
-                .HasName("AlteranteKey_LicensePlate");
+                .HasName("AlternateKey_LicensePlate");
         }
     }
 
