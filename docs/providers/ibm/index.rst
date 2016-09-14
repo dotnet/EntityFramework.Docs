@@ -3,6 +3,8 @@ IBM Data Servers
 
 This database provider allows Entity Framework Core to be used with IBM Data Servers. Issues, questions, etc. can be posted in the `.Net Development with DB2 and IDS forum <https://www.ibm.com/developerworks/community/forums/html/forum?id=11111111-0000-0000-0000-000000000467>`_
 
+.. include:: /providers/_shared/third-party-provider-disclaimer.txt
+
 .. caution::
     This provider currently only supports the Entity Framework Core RC1 pre-release.
 

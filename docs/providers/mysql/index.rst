@@ -3,6 +3,8 @@ MySQL
 
 This database provider allows Entity Framework Core to be used with MySQL. The provider is maintained as part of the `MySQL project <http://dev.mysql.com>`_.
 
+.. include:: /providers/_shared/third-party-provider-disclaimer.txt
+
 .. contents:: `In this article:`
     :depth: 2
     :local:

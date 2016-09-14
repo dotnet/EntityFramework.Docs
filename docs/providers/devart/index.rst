@@ -3,6 +3,8 @@ Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, SQL Server, and more)
 
 Devart is a third party provider writer that offers database providers for a wide range of databases. Find out more at `devart.com/dotconnect <https://www.devart.com/dotconnect/>`_.
 
+.. include:: /providers/_shared/third-party-provider-disclaimer.txt
+
 .. contents:: `In this article:`
     :depth: 2
     :local:

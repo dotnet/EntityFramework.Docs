@@ -3,6 +3,8 @@ Npgsql (PostgreSQL)
 
 This database provider allows Entity Framework Core to be used with PostgreSQL. The provider is maintained as part of the `Npgsql project <http://www.npgsql.org>`_.
 
+.. include:: /providers/_shared/third-party-provider-disclaimer.txt
+
 .. contents:: `In this article:`
     :depth: 2
     :local:

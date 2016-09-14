@@ -3,6 +3,7 @@ Microsoft SQL Server Compact Edition
 
 This database provider allows Entity Framework Core to be used with SQL Server Compact Edition. The provider is maintained as part of the `ErikEJ/EntityFramework.SqlServerCompact GitHub Project <https://github.com/ErikEJ/EntityFramework.SqlServerCompact>`_.
 
+.. include:: /providers/_shared/third-party-provider-disclaimer.txt
 
 .. contents:: `In this article:`
     :depth: 2
