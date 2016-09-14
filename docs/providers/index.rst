@@ -14,4 +14,5 @@ Database Providers
     ibm/index
     in-memory/index
     devart/index
+    mycat/index
     oracle/index
