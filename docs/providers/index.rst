@@ -10,6 +10,7 @@ Database Providers
     sqlite/index
     npgsql/index
     mysql/index
+    pomelo/index
     sql-compact/index
     ibm/index
     in-memory/index

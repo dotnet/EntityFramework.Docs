@@ -1,5 +1,5 @@
-MySQL
-=====
+MySQL (Official)
+================
 
 This database provider allows Entity Framework Core to be used with MySQL. The provider is maintained as part of the `MySQL project <http://dev.mysql.com>`_.
 
