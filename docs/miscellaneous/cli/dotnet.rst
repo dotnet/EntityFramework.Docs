@@ -294,7 +294,7 @@ The "startup" project defaults to the current project, unless specified differen
 parameter ``--startup-project``.
 
 Workaround 1 - Utilize a separate startup project
-^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Convert the class library project into an "app" project. This can either be a .NET Core app or a desktop .NET app.
 
@@ -343,7 +343,7 @@ Example:
     dotnet ef --startup-project ../MyConsoleApplication/ migrations list
 
 Workaround 2 - Modify your class library to be a startup application
-^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Convert the class library project into an "app" project. This can either be a .NET Core app or a desktop .NET app.
 
 To make the project a .NET Core App, add the "netcoreapp1.0" framework to project.json along with the other settings in the sample below:
