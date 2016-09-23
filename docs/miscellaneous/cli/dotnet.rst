@@ -293,10 +293,48 @@ as an application with the "dotnet ef" alternate entry point.
 The "startup" project defaults to the current project, unless specified differently with the
 parameter ``--startup-project``.
 
-Workaround 1
+Workaround 1 - Utilize a separate startup project
 ^^^^^^^^^^^^
 
-Specify a startup project that is a "runnable app".
+Convert the class library project into an "app" project. This can either be a .NET Core app or a desktop .NET app.
+
+Example:
+
+.. code-block:: json
+
+    {
+        "frameworks": {
+            "netcoreapp1.0": {
+                "dependencies": {
+                    "Microsoft.NETCore.App": {
+                        "type": "platform",
+                        "version": "1.0.0-*"
+                    }
+                }
+            }
+        }
+    }
+
+
+Be sure to register the EntityFramework Tools as a project dependency and in the tools section of your project.json.
+
+Example:
+
+.. code-block:: json
+
+    {
+        "dependencies": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+                "version": "1.0.0-preview2-final",
+                "type": "build"
+            }
+        },
+        "tools": {
+            "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final"
+        }
+    }
+
+Finally, specify a startup project that is a "runnable app."
 
 Example:
 
@@ -304,7 +342,7 @@ Example:
 
     dotnet ef --startup-project ../MyConsoleApplication/ migrations list
 
-Workaround 2
+Workaround 2 - Modify your class library to be a startup application
 ^^^^^^^^^^^^
 Convert the class library project into an "app" project. This can either be a .NET Core app or a desktop .NET app.
 
