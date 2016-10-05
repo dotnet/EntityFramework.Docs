@@ -9,7 +9,7 @@ You will use migrations to create the database from your model.
     :local:
 
 .. include:: /_shared/sample.txt
-.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/docs/sample/NetCore/EFGetStarted.ConsoleApp.SQLite
+.. _sample: https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Platforms/NetCore/ConsoleApp.SQLite
 
 Prerequisites
 -------------
