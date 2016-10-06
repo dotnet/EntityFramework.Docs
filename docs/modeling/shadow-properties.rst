@@ -22,9 +22,9 @@ Shadow properties can be referenced in LINQ queries via the ``EF.Property`` stat
 Conventions
 -----------
 
-By convention, shadow properties are only created when a relationship is discovered but no foreign key property is found in the dependent entity class. In this case, a shadow foreign key property will be introduced with the name ``<principal type name><principal key property name>``.
+By convention, shadow properties are only created when a relationship is discovered but no foreign key property is found in the dependent entity class. In this case, a shadow foreign key property will be introduced. The shadow foreign key property will be named ``<navigation property name><principal key property name>`` (the navigation on the dependent entity, which points to the principal entity, is used for the naming). If the principal key property name includes the name of the navigation property, then the name will just be ``<principal key property name>``. If there is no navigation property on the dependent entity, then the principal type name is used in its place.
 
-For example, the following code listing will result in a ``BlogBlogId`` shadow property being introduced to the ``Post`` entity.
+For example, the following code listing will result in a ``BlogId`` shadow property being introduced to the ``Post`` entity.
 
 .. includesamplefile:: Modeling/Conventions/Samples/ShadowForeignKey.cs
         :language: c#
