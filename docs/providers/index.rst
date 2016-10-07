@@ -11,6 +11,7 @@ Database Providers
     npgsql/index
     mysql/index
     pomelo/index
+    sapient-guardian/index
     sql-compact/index
     ibm/index
     in-memory/index
