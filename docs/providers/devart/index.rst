@@ -1,4 +1,4 @@
-Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, SQL Server, and more)
+Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2 and more)
 =====================================================================
 
 Devart is a third party provider writer that offers database providers for a wide range of databases. Find out more at `devart.com/dotconnect <https://www.devart.com/dotconnect/>`_.
@@ -32,7 +32,6 @@ Supported Database Engines
   * PostgreSQL
   * SQLite
   * DB2
-  * SQL Server
   * `Cloud apps <https://www.devart.com/dotconnect/#cloud>`_
 
 Supported Platforms
