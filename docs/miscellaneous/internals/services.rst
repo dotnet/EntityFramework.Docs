@@ -160,7 +160,7 @@ For more information on required provider services, see :doc:`writing-a-provider
 Additional Information
 ----------------------
 
-EF uses ` the Microsoft.Extensions.DependencyInjection library
+EF uses `the Microsoft.Extensions.DependencyInjection library
 <https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/>`_ to
 implement DI. Documentation for this library `is available on docs.asp.net
 <https://docs.asp.net/en/latest/fundamentals/dependency-injection.html>`_.
