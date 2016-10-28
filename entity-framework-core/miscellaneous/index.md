@@ -16,16 +16,16 @@ uid: miscellaneous/index
 
 The following articles cover miscellaneous topics
 
-- [Connection Strings](https://docs.efproject.net/en/latest/miscellaneous/connection-strings.html)
-- [Logging](https://docs.efproject.net/en/latest/miscellaneous/logging.html)
-- [Testing with InMemory](https://docs.efproject.net/en/latest/miscellaneous/testing.html)
-- [Configuring a DbContext](https://docs.efproject.net/en/latest/miscellaneous/configuring-dbcontext.html)
-- [Upgrading from RC1 to RC2](https://docs.efproject.net/en/latest/miscellaneous/rc1-rc2-upgrade.html)
-- [Upgrading from RC2 to RTM](https://docs.efproject.net/en/latest/miscellaneous/rc2-rtm-upgrade.html)
-- [Command Line Reference](https://docs.efproject.net/en/latest/miscellaneous/cli/index.html)
-    - [Package Manager Console (Visual Studio)](https://docs.efproject.net/en/latest/miscellaneous/cli/powershell.html)
-    - [.NET Core CLI](https://docs.efproject.net/en/latest/miscellaneous/cli/dotnet.html)
+- [Connection Strings](miscellaneous/connection-strings.md)
+- [Logging](miscellaneous/logging.md)
+- [Testing with InMemory](miscellaneous/testing.md)
+- [Configuring a DbContext](miscellaneous/configuring-dbcontext.md)
+- [Upgrading from RC1 to RC2](miscellaneous/rc1-rc2-upgrade.md)
+- [Upgrading from RC2 to RTM](miscellaneous/rc2-rtm-upgrade.md)
+- [Command Line Reference](miscellaneous/cli/index.md)
+    - [Package Manager Console (Visual Studio)](miscellaneous/cli/powershell.md)
+    - [.NET Core CLI](miscellaneous/cli/dotnet.md)
 
-- [Internals](https://docs.efproject.net/en/latest/miscellaneous/internals/index.html)
-    - [Writing a Database Provider](https://docs.efproject.net/en/latest/miscellaneous/internals/writing-a-provider.html)
-    - [Understanding EF Services](https://docs.efproject.net/en/latest/miscellaneous/internals/services.html)
+- [Internals](miscellaneous/internals/index.md)
+    - [Writing a Database Provider](miscellaneous/internals/writing-a-provider.md)
+    - [Understanding EF Services](miscellaneous/internals/services.md)
