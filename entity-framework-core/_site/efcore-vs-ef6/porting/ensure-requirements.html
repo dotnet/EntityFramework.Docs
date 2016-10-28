@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Ensure EF Core Will Work for Your Application </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Ensure EF Core Will Work for Your Application ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="efcore-vs-ef6/porting/ensure-requirements">
+              <h1 id="ensure-ef-core-will-work-for-your-application" sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="4" sourceendlinenumber="4">Ensure EF Core Will Work for Your Application</h1>
+              
+<div class="WARNING sourceFile=" efcore-vs-ef6/porting/ensure-requirements.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="9" sourceendlinenumber="9">Before you start the porting process it is important to validate that EF Core meets the data access requirements for your application.</p>
+<h2 id="missing-features" sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="11" sourceendlinenumber="11">Missing features</h2>
+<p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="13" sourceendlinenumber="13">Make sure that EF Core has all the features you need to use in your application. See <a href="../features.html" sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="13" sourceendlinenumber="13">Feature Comparison</a> for a detailed comparison of how the feature set in EF Core compares to EF6.x. If any required features are missing, ensure that you can compensate for the lack of these features before porting to EF Core.</p>
+<h2 id="behavior-changes" sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="15" sourceendlinenumber="15">Behavior changes</h2>
+<p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="17" sourceendlinenumber="17">This is a non-exhaustive list of some changes in behavior between EF6.x and EF Core. It is important to keep these in mind as your port your application as they may change the way your application behaves, but will not show up as compilation errors after swapping to EF Core.</p>
+<h3 id="dbsetaddattach-and-graph-behavior" sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="19" sourceendlinenumber="19">DbSet.Add/Attach and graph behavior</h3>
+<p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="21" sourceendlinenumber="21">In EF6.x, calling <code>DbSet.Add()</code> on an entity results in a recursive search for all entities referenced in its navigation properties. Any entities that are found, and are not already tracked by the context, are also be marked as added. <code>DbSet.Attach()</code> behaves the same, except all entities are marked as unchanged.</p>
+<p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="23" sourceendlinenumber="23"><strong>EF Core performs a similar recursive search, but with some slightly different rules.</strong></p>
+<ul sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="25" sourceendlinenumber="35">
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="25" sourceendlinenumber="25"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="25" sourceendlinenumber="25">The root entity is always in the requested state (added for <code>DbSet.Add</code> and unchanged for <code>DbSet.Attach</code>).</p>
+</li>
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="27" sourceendlinenumber="35"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="27" sourceendlinenumber="27"><strong>For entities that are found during the recursive search of navigation properties:</strong></p>
+<ul sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="29" sourceendlinenumber="35">
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="29" sourceendlinenumber="33"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="29" sourceendlinenumber="29"><strong>If the primary key of the entity is store generated</strong></p>
+<ul sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="31" sourceendlinenumber="33">
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="31" sourceendlinenumber="31"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="31" sourceendlinenumber="31">If the primary key is not set to a value, the state is set to added. The primary key value is considered &quot;not set&quot; if it is assigned the CLR default value for the property type (i.e. <code>0</code> for <code>int</code>, <code>null</code> for <code>string</code>, etc.).</p>
+</li>
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="33" sourceendlinenumber="33"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="33" sourceendlinenumber="33">If the primary key is set to a value, the state is set to unchanged.</p>
+</li>
+</ul>
+</li>
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="35" sourceendlinenumber="35"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="35" sourceendlinenumber="35">If the primary key is not database generated, the entity is put in the same state as the root.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="code-first-database-initialization" sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="37" sourceendlinenumber="37">Code First database initialization</h3>
+<p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="39" sourceendlinenumber="39"><strong>EF6.x has a significant amount of magic it performs around selecting the database connection and initializing the database. Some of these rules include:</strong></p>
+<ul sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="41" sourceendlinenumber="49">
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="41" sourceendlinenumber="41"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="41" sourceendlinenumber="41">If no configuration is performed, EF6.x will select a database on SQL Express or LocalDb.</p>
+</li>
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="43" sourceendlinenumber="43"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="43" sourceendlinenumber="43">If a connection string with the same name as the context is in the applications <code>App/Web.config</code> file, this connection will be used.</p>
+</li>
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="45" sourceendlinenumber="45"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="45" sourceendlinenumber="45">If the database does not exist, it is created.</p>
+</li>
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="47" sourceendlinenumber="47"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="47" sourceendlinenumber="47">If none of the tables from the model exist in the database, the schema for the current model is added to the database. If migrations are enabled, then they are used to create the database.</p>
+</li>
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="49" sourceendlinenumber="49"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="49" sourceendlinenumber="49">If the database exists and EF6.x had previously created the schema, then the schema is checked for compatibility with the current model. An exception is thrown if the model has changed since the schema was created.</p>
+</li>
+</ul>
+<p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="51" sourceendlinenumber="51"><strong>EF Core does not perform any of this magic.</strong></p>
+<ul sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="53" sourceendlinenumber="55">
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="53" sourceendlinenumber="53"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="53" sourceendlinenumber="53">The database connection must be explicitly configured in code.</p>
+</li>
+<li sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="55" sourceendlinenumber="55"><p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="55" sourceendlinenumber="55">No initialization is performed. You must use <code>DbContext.Database.Migrate()</code> to apply migrations (or <code>DbContext.Database.EnsureCreated()</code> and <code>EnsureDeleted()</code> to create/delete the database without using migrations).</p>
+</li>
+</ul>
+<h3 id="code-first-table-naming-convention" sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="57" sourceendlinenumber="57">Code First table naming convention</h3>
+<p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="59" sourceendlinenumber="59">EF6.x runs the entity class name through a pluralization service to calculate the default table name that the entity is mapped to.</p>
+<p sourcefile="efcore-vs-ef6/porting/ensure-requirements.md" sourcestartlinenumber="61" sourceendlinenumber="61">EF Core uses the name of the <code>DbSet</code> property that the entity is exposed in on the derived context. If the entity does not have a <code>DbSet</code> property, then the class name is used.</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/efcore-vs-ef6/porting/ensure-requirements.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

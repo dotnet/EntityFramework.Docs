@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Transactions </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Transactions ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="saving/transactions">
+              <h1 id="transactions" sourcefile="saving/transactions.md" sourcestartlinenumber="4" sourceendlinenumber="4">Transactions</h1>
+              
+<div class="WARNING sourceFile=" saving/transactions.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="saving/transactions.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="saving/transactions.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="saving/transactions.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="9" sourceendlinenumber="9">Transactions allow several database operations to be processed in an atomic manner. If the transaction is committed, all of the operations are successfully applied to the database. If the transaction is rolled back, none of the operations are applied to the database.</p>
+<div class="TIP sourceFile=" saving/transactions.md"="" sourcestartlinenumber="11" sourceendlinenumber="11" "=""><h5>Tip</h5><p sourcefile="saving/transactions.md" sourcestartlinenumber="12" sourceendlinenumber="12">You can view this article&#39;s <a href="https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Saving/Saving/Transactions/" sourcefile="saving/transactions.md" sourcestartlinenumber="12" sourceendlinenumber="12">sample</a> on GitHub.</p>
+</div>
+<h2 id="default-transaction-behavior" sourcefile="saving/transactions.md" sourcestartlinenumber="14" sourceendlinenumber="14">Default transaction behavior</h2>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="16" sourceendlinenumber="16">By default, if the database provider supports transactions, all changes in a single call to <code>SaveChanges()</code> are applied in a transaction. If any of the changes fail, then the transaction is rolled back and none of the changes are applied to the database. This means that <code>SaveChanges()</code> is guaranteed to either completely succeed, or leave the database unmodified if an error occurs.</p>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="18" sourceendlinenumber="18">For most applications, this default behavior is sufficient. You should only manually control transactions if your application requirements deem it necessary.</p>
+<h2 id="controlling-transactions" sourcefile="saving/transactions.md" sourcestartlinenumber="20" sourceendlinenumber="20">Controlling transactions</h2>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="22" sourceendlinenumber="22">You can use the <code>DbContext.Database</code> API to begin, commit, and rollback transactions. The following example shows two <code>SaveChanges()</code> operations and a LINQ query being executed in a single transaction.</p>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="24" sourceendlinenumber="24">Not all database providers support transactions. Some providers may throw or no-op when transaction APIs are called.</p>
+<!-- [!code-csharp[Main](samples/Saving/Saving/Transactions/ControllingTransaction/Sample.cs?highlight=3,17,18,19)] -->
+<pre sourcefile="saving/transactions.md" sourcestartlinenumber="27" sourceendlinenumber="54"><code class="lang-csharp">        using (var context = new BloggingContext())
+        {
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    context.Blogs.Add(new Blog { Url = &quot;http://blogs.msdn.com/dotnet&quot; });
+                    context.SaveChanges();
+
+                    context.Blogs.Add(new Blog { Url = &quot;http://blogs.msdn.com/visualstudio&quot; });
+                    context.SaveChanges();
+
+                    var blogs = context.Blogs
+                        .OrderBy(b =&gt; b.Url)
+                        .ToList();
+
+                    // Commit transaction if all commands succeed, transaction will auto-rollback
+                    // when disposed if either commands fails
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    // TODO: Handle failure
+                }
+            }
+        }
+</code></pre><h2 id="cross-context-transaction-relational-databases-only" sourcefile="saving/transactions.md" sourcestartlinenumber="56" sourceendlinenumber="56">Cross-context transaction (relational databases only)</h2>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="58" sourceendlinenumber="58">You can also share a transaction across multiple context instances. This functionality is only available when using a relational database provider because it requires the use of <code>DbTransaction</code> and <code>DbConnection</code>, which are specific to relational databases.</p>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="60" sourceendlinenumber="60">To share a transaction, the contexts must share both a <code>DbConnection</code> and a <code>DbTransaction</code>.</p>
+<h3 id="allow-connection-to-be-externally-provided" sourcefile="saving/transactions.md" sourcestartlinenumber="62" sourceendlinenumber="62">Allow connection to be externally provided</h3>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="64" sourceendlinenumber="64">Sharing a <code>DbConnection</code> requires the ability to pass a connection into a context when constructing it.</p>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="66" sourceendlinenumber="66">The easiest way to allow <code>DbConnection</code> to be externally provided, is to stop using the <code>DbContext.OnConfiguring</code> method to configure the context and externally create <code>DbContextOptions</code> and pass them to the context constructor.</p>
+<div class="TIP sourceFile=" saving/transactions.md"="" sourcestartlinenumber="68" sourceendlinenumber="68" "=""><h5>Tip</h5><p sourcefile="saving/transactions.md" sourcestartlinenumber="69" sourceendlinenumber="69"><code>DbContextOptionsBuilder</code> is the API you used in <code>DbContext.OnConfiguring</code> to configure the context, you are now going to use it externally to create <code>DbContextOptions</code>.</p>
+</div>
+<!-- [!code-csharp[Main](samples/Saving/Saving/Transactions/SharingTransaction/Sample.cs?highlight=3,4,5)] -->
+<pre sourcefile="saving/transactions.md" sourcestartlinenumber="72" sourceendlinenumber="81"><code class="lang-csharp">    public class BloggingContext : DbContext
+    {
+        public BloggingContext(DbContextOptions&lt;BloggingContext&gt; options)
+            : base(options)
+        { }
+
+        public DbSet&lt;Blog&gt; Blogs { get; set; }
+    }
+</code></pre><p sourcefile="saving/transactions.md" sourcestartlinenumber="83" sourceendlinenumber="83">An alternative is to keep using <code>DbContext.OnConfiguring</code>, but accept a <code>DbConnection</code> that is saved and then used in <code>DbContext.OnConfiguring</code>.</p>
+<!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": false, "dupnames  : "csharp", highlight_args}, "names": [] -->
+<pre sourcefile="saving/transactions.md" sourcestartlinenumber="86" sourceendlinenumber="103"><code class="lang-csharp">public class BloggingContext : DbContext
+{
+    private DbConnection _connection;
+
+    public BloggingContext(DbConnection connection)
+    {
+      _connection = connection;
+    }
+
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer(_connection);
+    }
+}
+</code></pre><h3 id="share-connection-and-transaction" sourcefile="saving/transactions.md" sourcestartlinenumber="105" sourceendlinenumber="105">Share connection and transaction</h3>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="107" sourceendlinenumber="107">You can now create multiple context instances that share the same connection. Then use the <code>DbContext.Database.UseTransaction(DbTransaction)</code> API to enlist both contexts in the same transaction.</p>
+<!-- [!code-csharp[Main](samples/Saving/Saving/Transactions/SharingTransaction/Sample.cs?highlight=1,2,3,7,16,23,24,25)] -->
+<pre sourcefile="saving/transactions.md" sourcestartlinenumber="110" sourceendlinenumber="143"><code class="lang-csharp">        var options = new DbContextOptionsBuilder&lt;BloggingContext&gt;()
+            .UseSqlServer(new SqlConnection(connectionString))
+            .Options;
+
+        using (var context1 = new BloggingContext(options))
+        {
+            using (var transaction = context1.Database.BeginTransaction())
+            {
+                try
+                {
+                    context1.Blogs.Add(new Blog { Url = &quot;http://blogs.msdn.com/dotnet&quot; });
+                    context1.SaveChanges();
+
+                    using (var context2 = new BloggingContext(options))
+                    {
+                        context2.Database.UseTransaction(transaction.GetDbTransaction());
+
+                        var blogs = context2.Blogs
+                            .OrderBy(b =&gt; b.Url)
+                            .ToList();
+                    }
+
+                    // Commit transaction if all commands succeed, transaction will auto-rollback
+                    // when disposed if either commands fails
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    // TODO: Handle failure
+                }
+            }
+        }
+</code></pre><h2 id="using-external-dbtransactions-relational-databases-only" sourcefile="saving/transactions.md" sourcestartlinenumber="145" sourceendlinenumber="145">Using external DbTransactions (relational databases only)</h2>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="147" sourceendlinenumber="147">If you are using multiple data access technologies to access a relational database, you may want to share a transaction between operations performed by these different technologies.</p>
+<p sourcefile="saving/transactions.md" sourcestartlinenumber="149" sourceendlinenumber="149">The following example, shows how to perform an ADO.NET SqlClient operation and an Entity Framework Core operation in the same transaction.</p>
+<!-- [!code-csharp[Main](samples/Saving/Saving/Transactions/ExternalDbTransaction/Sample.cs?highlight=4,10,21,26,27,28)] -->
+<pre sourcefile="saving/transactions.md" sourcestartlinenumber="152" sourceendlinenumber="186"><code class="lang-csharp">        var connection = new SqlConnection(connectionString);
+        connection.Open();
+
+        using (var transaction = connection.BeginTransaction())
+        {
+            try
+            {
+                // Run raw ADO.NET command in the transaction
+                var command = connection.CreateCommand();
+                command.Transaction = transaction;
+                command.CommandText = &quot;DELETE FROM dbo.Blogs&quot;;
+                command.ExecuteNonQuery();
+
+                // Run an EF Core command in the transaction
+                var options = new DbContextOptionsBuilder&lt;BloggingContext&gt;()
+                    .UseSqlServer(connection)
+                    .Options;
+
+                using (var context = new BloggingContext(options))
+                {
+                    context.Database.UseTransaction(transaction);
+                    context.Blogs.Add(new Blog { Url = &quot;http://blogs.msdn.com/dotnet&quot; });
+                    context.SaveChanges();
+                }
+
+                // Commit transaction if all commands succeed, transaction will auto-rollback
+                // when disposed if either commands fails
+                transaction.Commit();
+            }
+            catch (System.Exception)
+            {
+                // TODO: Handle failure
+            }
+</code></pre>
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/saving/transactions.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Concurrency Conflicts </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Concurrency Conflicts ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="saving/concurrency">
+              <h1 id="concurrency-conflicts" sourcefile="saving/concurrency.md" sourcestartlinenumber="4" sourceendlinenumber="4">Concurrency Conflicts</h1>
+              
+<div class="WARNING sourceFile=" saving/concurrency.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="saving/concurrency.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="saving/concurrency.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="saving/concurrency.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="saving/concurrency.md" sourcestartlinenumber="9" sourceendlinenumber="9">If a property is configured as a concurrency token then EF will check that no other user has modified that value in the database when saving changes to that record.</p>
+<div class="TIP sourceFile=" saving/concurrency.md"="" sourcestartlinenumber="11" sourceendlinenumber="11" "=""><h5>Tip</h5><p sourcefile="saving/concurrency.md" sourcestartlinenumber="12" sourceendlinenumber="12">You can view this article&#39;s <a href="https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Saving/Saving/Concurrency/" sourcefile="saving/concurrency.md" sourcestartlinenumber="12" sourceendlinenumber="12">sample</a> on GitHub.</p>
+</div>
+<h2 id="how-concurrency-works-in-ef" sourcefile="saving/concurrency.md" sourcestartlinenumber="14" sourceendlinenumber="14">How concurrency works in EF</h2>
+<p sourcefile="saving/concurrency.md" sourcestartlinenumber="16" sourceendlinenumber="16">For a detailed description of how concurrency works in Entity Framework Core, see <a href="../modeling/concurrency.html" sourcefile="saving/concurrency.md" sourcestartlinenumber="16" sourceendlinenumber="16">Concurrency Tokens</a>.</p>
+<h2 id="resolving-concurrency-conflicts" sourcefile="saving/concurrency.md" sourcestartlinenumber="18" sourceendlinenumber="18">Resolving concurrency conflicts</h2>
+<p sourcefile="saving/concurrency.md" sourcestartlinenumber="20" sourceendlinenumber="20">Resolving a concurrency conflict involves using an algorithm to merge the pending changes from the current user with the changes made in the database. The exact approach will vary based on your application, but a common approach is to display the values to the user and have them decide the correct values to be stored in the database.</p>
+<p sourcefile="saving/concurrency.md" sourcestartlinenumber="22" sourceendlinenumber="22"><strong>There are three sets of values available to help resolve a concurrency conflict.</strong></p>
+<ul sourcefile="saving/concurrency.md" sourcestartlinenumber="24" sourceendlinenumber="28">
+<li sourcefile="saving/concurrency.md" sourcestartlinenumber="24" sourceendlinenumber="24"><p sourcefile="saving/concurrency.md" sourcestartlinenumber="24" sourceendlinenumber="24"><strong>Current values</strong> are the values that the application was attempting to write to the database.</p>
+</li>
+<li sourcefile="saving/concurrency.md" sourcestartlinenumber="26" sourceendlinenumber="26"><p sourcefile="saving/concurrency.md" sourcestartlinenumber="26" sourceendlinenumber="26"><strong>Original values</strong> are the values that were originally retrieved from the database, before any edits were made.</p>
+</li>
+<li sourcefile="saving/concurrency.md" sourcestartlinenumber="28" sourceendlinenumber="28"><p sourcefile="saving/concurrency.md" sourcestartlinenumber="28" sourceendlinenumber="28"><strong>Database values</strong> are the values currently stored in the database.</p>
+</li>
+</ul>
+<p sourcefile="saving/concurrency.md" sourcestartlinenumber="30" sourceendlinenumber="30">To handle a concurrency conflict, catch a <code>DbUpdateConcurrencyException</code> during <code>SaveChanges()</code>, use <code>DbUpdateConcurrencyException.Entries</code> to prepare a new set of changes for the affected entities, and then retry the <code>SaveChanges()</code> operation.</p>
+<p sourcefile="saving/concurrency.md" sourcestartlinenumber="32" sourceendlinenumber="32">In the following example, <code>Person.FirstName</code> and <code>Person.LastName</code> are setup as concurrency token. There is a <code>// TODO:</code> comment in the location where you would include application specific logic to choose the value to be saved to the database.</p>
+<!-- [!code-csharp[Main](samples/Saving/Saving/Concurrency/Sample.cs?highlight=53,54)] -->
+<pre sourcefile="saving/concurrency.md" sourcestartlinenumber="35" sourceendlinenumber="132"><code class="lang-csharp">using Microsoft.EntityFrameworkCore;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
+namespace EFSaving.Concurrency
+{
+    public class Sample
+    {
+        public static void Run()
+        {
+            // Ensure database is created and has a person in it
+            using (var context = new PersonContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                context.People.Add(new Person { FirstName = &quot;John&quot;, LastName = &quot;Doe&quot; });
+                context.SaveChanges();
+            }
+
+            using (var context = new PersonContext())
+            {
+                // Fetch a person from database and change phone number
+                var person = context.People.Single(p =&gt; p.PersonId == 1);
+                person.PhoneNumber = &quot;555-555-5555&quot;;
+
+                // Change the persons name in the database (will cause a concurrency conflict)
+                context.Database.ExecuteSqlCommand(&quot;UPDATE dbo.People SET FirstName = &#39;Jane&#39; WHERE PersonId = 1&quot;);
+
+                try
+                {
+                    // Attempt to save changes to the database
+                    context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    foreach (var entry in ex.Entries)
+                    {
+                        if (entry.Entity is Person)
+                        {
+                            // Using a NoTracking query means we get the entity but it is not tracked by the context
+                            // and will not be merged with existing entities in the context.
+                            var databaseEntity = context.People.AsNoTracking().Single(p =&gt; p.PersonId == ((Person)entry.Entity).PersonId);
+                            var databaseEntry = context.Entry(databaseEntity);
+
+                            foreach (var property in entry.Metadata.GetProperties())
+                            {
+                                var proposedValue = entry.Property(property.Name).CurrentValue;
+                                var originalValue = entry.Property(property.Name).OriginalValue;
+                                var databaseValue = databaseEntry.Property(property.Name).CurrentValue;
+
+                                // TODO: Logic to decide which value should be written to database
+                                // entry.Property(property.Name).CurrentValue = &lt;value to be saved&gt;;
+
+                                // Update original values to 
+                                entry.Property(property.Name).OriginalValue = databaseEntry.Property(property.Name).CurrentValue;
+                            }
+                        }
+                        else
+                        {
+                            throw new NotSupportedException(&quot;Don&#39;t know how to handle concurrency conflicts for &quot; + entry.Metadata.Name);
+                        }
+                    }
+
+                    // Retry the save operation
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public class PersonContext : DbContext
+        {
+            public DbSet&lt;Person&gt; People { get; set; }
+
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            {
+                optionsBuilder.UseSqlServer(@&quot;Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True;&quot;);
+            }
+        }
+
+        public class Person
+        {
+            public int PersonId { get; set; }
+
+            [ConcurrencyCheck]
+            public string FirstName { get; set; }
+
+            [ConcurrencyCheck]
+            public string LastName { get; set; }
+
+            public string PhoneNumber { get; set; }
+        }
+
+    }
+}
+</code></pre>
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/saving/concurrency.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

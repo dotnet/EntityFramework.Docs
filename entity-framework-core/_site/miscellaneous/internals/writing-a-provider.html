@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Writing a Database Provider </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Writing a Database Provider ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="miscellaneous/internals/writing-a-provider">
+              <h1 id="writing-a-database-provider" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="4" sourceendlinenumber="4">Writing a Database Provider</h1>
+              
+<div class="WARNING sourceFile=" miscellaneous/internals/writing-a-provider.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="9" sourceendlinenumber="9">EF Core is designed to be extensible. It provides general purpose building blocks that are intended for use in multiple providers. The purpose of this article is to provide basic guidance on creating a new provider that is compatible with EF Core.</p>
+<div class="TIP sourceFile=" miscellaneous/internals/writing-a-provider.md"="" sourcestartlinenumber="11" sourceendlinenumber="11" "=""><h5>Tip</h5><p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="12" sourceendlinenumber="12"><a href="https://github.com/aspnet/EntityFramework" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="12" sourceendlinenumber="12">EF Core source code is open-source</a>. The best source of information is the code itself.</p>
+</div>
+<div class="TIP sourceFile=" miscellaneous/internals/writing-a-provider.md"="" sourcestartlinenumber="14" sourceendlinenumber="14" "=""><h5>Tip</h5><p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="15" sourceendlinenumber="15">This article shows snippets from an empty EF provider. You can view the <a href="https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Miscellaneous/Internals/WritingAProvider" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="15" sourceendlinenumber="15">full stubbed-out provider</a> on GitHub.</p>
+</div>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="17" sourceendlinenumber="17"><a name="entry-point"></a></p>
+<h2 id="dbcontext-initialization" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="19" sourceendlinenumber="19">DbContext Initialization</h2>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="21" sourceendlinenumber="21">A user&#39;s interaction with EF begins with the <code>DbContext</code> constructor. Before the context is available for use, it initializes <strong>options</strong> and <strong>services</strong>. We will example both of these to understand what they represent and how EF configures itself to use different providers.</p>
+<h3 id="options" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="23" sourceendlinenumber="23">Options</h3>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="25" sourceendlinenumber="25"><code>Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptions</code> is the API surface for <strong>users</strong> to configure <code>DbContext</code>. Provider writers are responsible for creating API to configure options and to make services responsive to these options. For example, most providers require a connection string. These options are typically created using <code>DbContextOptionsBuilder</code>.</p>
+<h3 id="services" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="27" sourceendlinenumber="27">Services</h3>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="29" sourceendlinenumber="29"><code>System.IServiceProvider</code> is the main interface used for interaction with services. EF makes heavy use of <a href="https://wikipedia.org/wiki/Dependency_injection" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="29" sourceendlinenumber="29">dependency injection (DI)</a>. The <code>ServiceProvider</code> contains a collection of services available for injection. Initialization uses <code>DbContextOptions</code> to add additional services if needed and select a scoped set of services that all EF operations will use during execution.</p>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="31" sourceendlinenumber="31">See also <a href="services.html" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="31" sourceendlinenumber="31">Understanding EF Services</a>.</p>
+<div class="NOTE sourceFile=" miscellaneous/internals/writing-a-provider.md"="" sourcestartlinenumber="33" sourceendlinenumber="33" "=""><h5>Note</h5><p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="34" sourceendlinenumber="34">EF uses <a href="https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="34" sourceendlinenumber="34">Microsoft.Extensions.DependencyInjection</a> to implement dependency injection. Documentation for this project <a href="https://docs.asp.net/en/latest/fundamentals/dependency-injection.html" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="34" sourceendlinenumber="34">is available on docs.asp.net</a>.</p>
+</div>
+<h2 id="plugging-in-a-provider" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="36" sourceendlinenumber="36">Plugging in a Provider</h2>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="38" sourceendlinenumber="38">As explained above, EF uses options and services. Each provider must create API so users to add provider-specific options and services. This API is best created by using extension methods.</p>
+<div class="TIP sourceFile=" miscellaneous/internals/writing-a-provider.md"="" sourcestartlinenumber="40" sourceendlinenumber="40" "=""><h5>Tip</h5><p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="41" sourceendlinenumber="41">When defining an extension method, define it in the namespace of the object being extended so Visual Studio auto-complete will include the extension method as a possible completion.</p>
+</div>
+<h3 id="the-use-method" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="43" sourceendlinenumber="43">The <em>Use</em> Method</h3>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="45" sourceendlinenumber="45">By convention, providers define a <code>UseX()</code> extension on <code>DbContextOptionsBuilder</code>. This configures <strong>options</strong> which it typically takes as arguments to method.</p>
+<!-- literal_block"xml:space": "preserve", "classes  "backrefs  "names  "dupnames   -->
+<pre sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="48" sourceendlinenumber="50"><code>optionsBuilder.UseMyProvider(&quot;Server=contoso.com&quot;)
+</code></pre><p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="52" sourceendlinenumber="52">The <code>UseX()</code> extension method creates a provider-specific implementation of <code>IDbContextOptionsExtension</code> which is added to the collection of extensions stored within <code>DbContextOptions</code>. This is done by a call to the API <code>IDbContextOptionsBuilderInfrastructure.AddOrUpdateExtension</code>.</p>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="54" sourceendlinenumber="54">An example implementation of the &quot;Use&quot; method</p>
+<!-- [!code-csharp[Main](samples/internals/Miscellaneous/Internals/WritingAProvider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderDbContextOptionsExtensions.cs)] -->
+<pre sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="57" sourceendlinenumber="72"><code class="lang-csharp">public static class MyProviderDbContextOptionsExtensions
+{
+    public static DbContextOptionsBuilder UseMyProvider(this DbContextOptionsBuilder optionsBuilder,
+        string connectionString)
+    {
+        ((IDbContextOptionsBuilderInfrastructure) optionsBuilder).AddOrUpdateExtension(
+            new MyProviderOptionsExtension
+            {
+                ConnectionString = connectionString
+            });
+
+        return optionsBuilder;
+    }
+}
+</code></pre><div class="TIP sourceFile=" miscellaneous/internals/writing-a-provider.md"="" sourcestartlinenumber="74" sourceendlinenumber="74" "=""><h5>Tip</h5><p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="75" sourceendlinenumber="75">The <code>UseX()</code> method can also be used to return a special wrapper around <code>DbContextOptionsBuilder</code> that allows users to configure multiple options with chained calls. See <code>SqlServerDbContextOptionsBuilder</code> as an example.</p>
+</div>
+<h3 id="the-add-method" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="77" sourceendlinenumber="77">The <em>Add</em> Method</h3>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="79" sourceendlinenumber="79">By convention, providers define a <code>AddX()</code> extension on <code>EntityFrameworkServicesBuilder</code>. This configures <strong>services</strong> and does not take arguments.</p>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="81" sourceendlinenumber="81"><code>EntityFrameworkServicesBuilder</code> is a wrapper around <code>ServiceCollection</code> which is accessible by calling <code>GetInfrastructure()</code>. The <code>AddX()</code> method should register services in this collection to be available for dependency injection.</p>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="83" sourceendlinenumber="83">In some cases, users may call the <em>Add</em> method directly. This is done when users are configuring a service provider manually and use this service provider to resolve an instance of <code>DbContext</code>. In other cases, the <em>Add</em> method is called by EF upon service initialization. For more details on service initialization, see <a href="services.html" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="83" sourceendlinenumber="83">Understanding EF Services</a>.</p>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="85" sourceendlinenumber="85">A provider <em>must register</em> an implementation of <code>IDatabaseProvider</code>. Implementing this in-turn requires configuring several more required services. Read more about working with services in <a href="services.html" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="85" sourceendlinenumber="85">Understanding EF Services</a>.</p>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="87" sourceendlinenumber="87">EF provides many complete or partial implementations of the required services to make it easier for provider-writers. For example, EF includes a class <code>DatabaseProvider&lt;TProviderServices, TOptionsExtension&gt;</code> which can be used in service registration to hook up a provider.</p>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="89" sourceendlinenumber="89">An example implementation of the &quot;Add&quot; method</p>
+<!-- [!code-csharp[Main](samples/internals/Miscellaneous/Internals/WritingAProvider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderServiceCollectionExtensions.cs)] -->
+<pre sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="92" sourceendlinenumber="118"><code class="lang-csharp">public static class MyProviderServiceCollectionExtensions
+{
+    public static IServiceCollection AddEntityFrameworkMyProvider(this IServiceCollection services)
+    {
+        services.AddEntityFramework();
+
+        services.TryAddEnumerable(ServiceDescriptor
+            .Singleton&lt;IDatabaseProvider, DatabaseProvider&lt;MyDatabaseProviderServices, MyProviderOptionsExtension&gt;&gt;());
+
+        services.TryAdd(new ServiceCollection()
+            // singleton services
+            .AddSingleton&lt;MyModelSource&gt;()
+            .AddSingleton&lt;MyValueGeneratorCache&gt;()
+            // scoped services
+            .AddScoped&lt;MyDatabaseProviderServices&gt;()
+            .AddScoped&lt;MyDatabaseCreator&gt;()
+            .AddScoped&lt;MyDatabase&gt;()
+            .AddScoped&lt;MyEntityQueryableExpressionVisitorFactory&gt;()
+            .AddScoped&lt;MyEntityQueryModelVisitorFactory&gt;()
+            .AddScoped&lt;MyQueryContextFactory&gt;()
+            .AddScoped&lt;MyTransactionManager&gt;());
+
+        return services;
+    }
+}
+</code></pre><h2 id="next-steps" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="120" sourceendlinenumber="120">Next Steps</h2>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="122" sourceendlinenumber="122">With these two extensibility APIs now defined, users can now configure their &quot;DbContext&quot; to use your provider. To make your provider functional, you will need to implement other services.</p>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="124" sourceendlinenumber="124">Reading the source code of other providers is an excellent way to learn how to create a new EF provider. See <a href="../../providers/index.html" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="124" sourceendlinenumber="124">Database Providers</a> for a list of current EF providers and to find links to their source code (if applicable).</p>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="126" sourceendlinenumber="126"><code>Microsoft.EntityFrameworkCore.Relational</code> includes an extensive library of services designed for relational providers. In many cases, these services need little or no modification to work for multiple relational databases.</p>
+<p sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="128" sourceendlinenumber="128">For more information on other internal parts of EF, see <a href="index.html" sourcefile="miscellaneous/internals/writing-a-provider.md" sourcestartlinenumber="128" sourceendlinenumber="128">Internals</a>.</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/miscellaneous/internals/writing-a-provider.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

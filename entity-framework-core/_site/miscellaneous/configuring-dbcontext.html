@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Configuring a DbContext </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Configuring a DbContext ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="miscellaneous/configuring-dbcontext">
+              <h1 id="configuring-a-dbcontext" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="4" sourceendlinenumber="4">Configuring a DbContext</h1>
+              
+<div class="WARNING sourceFile=" miscellaneous/configuring-dbcontext.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="9" sourceendlinenumber="9">This article shows patterns for configuring a <code>DbContext</code> with <code>DbContextOptions</code>. Options are primarily used to select and configure the data store.</p>
+<h2 id="configuring-dbcontextoptions" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="11" sourceendlinenumber="11">Configuring DbContextOptions</h2>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="13" sourceendlinenumber="13"><code>DbContext</code> must have an instance of <code>DbContextOptions</code> in order to execute. This can be supplied to <code>DbContext</code> in one of two ways.</p>
+<ol sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="15" sourceendlinenumber="17">
+<li sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="15" sourceendlinenumber="15"><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="15" sourceendlinenumber="15"><a href="#constructor-argument" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="15" sourceendlinenumber="15">Constructor argument</a></p>
+</li>
+<li sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="17" sourceendlinenumber="17"><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="17" sourceendlinenumber="17"><a href="#onconfiguring" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="17" sourceendlinenumber="17">OnConfiguring</a></p>
+</li>
+</ol>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="19" sourceendlinenumber="19">If both are used, &quot;OnConfiguring&quot; takes higher priority, which means it can overwrite or change options supplied by the constructor argument.</p>
+<h3 id="constructor-argumentcontext-code-with-constructor" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="21" sourceendlinenumber="21">Constructor argumentContext code with constructor</h3>
+<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="24" sourceendlinenumber="33"><code class="lang-csharp">public class BloggingContext : DbContext
+{
+    public BloggingContext(DbContextOptions&lt;BloggingContext&gt; options)
+        : base(options)
+    { }
+
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+}
+</code></pre><div class="TIP sourceFile=" miscellaneous/configuring-dbcontext.md"="" sourcestartlinenumber="35" sourceendlinenumber="35" "=""><h5>Tip</h5><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="36" sourceendlinenumber="36">The base constructor of DbContext also accepts the non-generic version of <code>DbContextOptions</code>. Using the non-generic version is not recommended for applications with multiple context types.</p>
+</div>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="38" sourceendlinenumber="38">Application code to initialize from constructor argument</p>
+<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="41" sourceendlinenumber="49"><code class="lang-csharp">var optionsBuilder = new DbContextOptionsBuilder&lt;BloggingContext&gt;();
+optionsBuilder.UseSqlite(&quot;Filename=./blog.db&quot;);
+
+using (var context = new BloggingContext(optionsBuilder.Options))
+{
+    // do stuff
+}
+</code></pre><h3 id="onconfiguring" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="51" sourceendlinenumber="51">OnConfiguring</h3>
+<div class="WARNING sourceFile=" miscellaneous/configuring-dbcontext.md"="" sourcestartlinenumber="53" sourceendlinenumber="53" "=""><h5>Warning</h5><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="54" sourceendlinenumber="54"><code>OnConfiguring</code> occurs last and can overwrite options obtained from DI or the constructor. This approach does not lend itself to testing (unless you target the full database).</p>
+</div>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="56" sourceendlinenumber="56">Context code with OnConfiguring</p>
+<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="59" sourceendlinenumber="69"><code class="lang-csharp">public class BloggingContext : DbContext
+{
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite(&quot;Filename=./blog.db&quot;);
+    }
+}
+</code></pre><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="71" sourceendlinenumber="71">Application code to initialize with &quot;OnConfiguring&quot;</p>
+<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="74" sourceendlinenumber="79"><code class="lang-csharp">using (var context = new BloggingContext())
+{
+    // do stuff
+}
+</code></pre><h2 id="using-dbcontext-with-dependency-injection" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="81" sourceendlinenumber="81">Using DbContext with dependency injection</h2>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="83" sourceendlinenumber="83">EF supports using <code>DbContext</code> with a dependency injection container. Your DbContext type can be added to the service container by using <code>AddDbContext&lt;TContext&gt;</code>.</p>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="85" sourceendlinenumber="85"><code>AddDbContext</code> will add make both your DbContext type, <code>TContext</code>, and <code>DbContextOptions&lt;TContext&gt;</code> to the available for injection from the service container.</p>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="87" sourceendlinenumber="87">See <a href="#more-reading" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="87" sourceendlinenumber="87">more reading</a> below for information on dependency injection.</p>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="89" sourceendlinenumber="89">Adding dbcontext to dependency injection</p>
+<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="92" sourceendlinenumber="97"><code class="lang-csharp">public void ConfigureServices(IServiceCollection services)
+{
+    services.AddDbContext&lt;BloggingContext&gt;(options =&gt; options.UseSqlite(&quot;Filename=./blog.db&quot;));
+}
+</code></pre><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="99" sourceendlinenumber="99">This requires adding a <a href="#constructor-argument" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="99" sourceendlinenumber="99">constructor argument</a> to you DbContext type that accepts <code>DbContextOptions</code>.</p>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="101" sourceendlinenumber="101">Context code</p>
+<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="104" sourceendlinenumber="113"><code class="lang-csharp">public class BloggingContext : DbContext
+{
+    public BloggingContext(DbContextOptions&lt;BloggingContext&gt; options)
+      :base(options)
+    { }
+
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+}
+</code></pre><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="115" sourceendlinenumber="115">Application code (in ASP.NET Core)</p>
+<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="118" sourceendlinenumber="120"><code class="lang-csharp">public MyController(BloggingContext context)
+</code></pre><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="122" sourceendlinenumber="122">Application code (using ServiceProvider directly, less common)</p>
+<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="125" sourceendlinenumber="132"><code class="lang-csharp">using (var context = serviceProvider.GetService&lt;BloggingContext&gt;())
+{
+  // do stuff
+}
+
+var options = serviceProvider.GetService&lt;DbContextOptions&lt;BloggingContext&gt;&gt;();
+</code></pre><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="134" sourceendlinenumber="134"><a name="use-idbcontextfactory"></a></p>
+<h2 id="using-idbcontextfactorytcontext" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="136" sourceendlinenumber="136">Using <code>IDbContextFactory&lt;TContext&gt;</code></h2>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="138" sourceendlinenumber="138">As an alternative to the options above, you may also provide an implementation of <code>IDbContextFactory&lt;TContext&gt;</code>. EF command line tools and dependency injection can use this factory to create an instance of your DbContext. This may be required in order to enable specific design-time experiences such as migrations.</p>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="140" sourceendlinenumber="140">Implement this interface to enable design-time services for context types that do not have a public default constructor. Design-time services will automatically discover implementations of this interface that are in the same assembly as the derived context.</p>
+<p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="142" sourceendlinenumber="142">Example:</p>
+<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="145" sourceendlinenumber="162"><code class="lang-csharp">using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+
+namespace MyProject
+{
+    public class BloggingContextFactory : IDbContextFactory&lt;BloggingContext&gt;
+    {
+        public BloggingContext Create()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder&lt;BloggingContext&gt;();
+            optionsBuilder.UseSqlite(&quot;Filename=./blog.db&quot;);
+
+            return new BloggingContext(optionsBuilder.Options);
+        }
+    }
+}
+</code></pre><h2 id="more-reading" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="164" sourceendlinenumber="164">More reading</h2>
+<ul sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="166" sourceendlinenumber="172">
+<li sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="166" sourceendlinenumber="166"><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="166" sourceendlinenumber="166">Read <a href="../platforms/aspnetcore/index.html" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="166" sourceendlinenumber="166">Getting Started on ASP.NET Core</a> for more information on using EF with ASP.NET Core.</p>
+</li>
+<li sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="168" sourceendlinenumber="168"><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="168" sourceendlinenumber="168">Read <a href="https://docs.asp.net/en/latest/fundamentals/dependency-injection.html" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="168" sourceendlinenumber="168">Dependency Injection</a> to learn more about using DI.</p>
+</li>
+<li sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="170" sourceendlinenumber="170"><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="170" sourceendlinenumber="170">Read <a href="testing.html" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="170" sourceendlinenumber="170">Testing with InMemory</a> for more information.</p>
+</li>
+<li sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="172" sourceendlinenumber="172"><p sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="172" sourceendlinenumber="172">Read <a href="internals/services.html" sourcefile="miscellaneous/configuring-dbcontext.md" sourcestartlinenumber="172" sourceendlinenumber="172">Understanding EF Services</a> for more details on how EF uses dependency injection internally.</p>
+</li>
+</ul>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/miscellaneous/configuring-dbcontext.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
