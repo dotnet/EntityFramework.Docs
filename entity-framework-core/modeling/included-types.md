@@ -1,4 +1,12 @@
 ---
+title: Including & Excluding Types
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: cbe6935e-2679-4b77-8914-a8d772240cf1
+ms.prod: entity-framework-core
 uid: modeling/included-types
 ---
 # Including & Excluding Types

@@ -1,4 +1,12 @@
 ---
+title: Transactions
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
+ms.prod: entity-framework-core
 uid: saving/transactions
 ---
 # Transactions

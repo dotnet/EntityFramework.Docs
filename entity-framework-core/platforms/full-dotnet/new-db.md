@@ -1,4 +1,12 @@
 ﻿---
+title: Console Application to New Database
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 52b69727-ded9-4a7b-b8d5-73f3acfbbad3
+ms.prod: entity-framework-core-
 uid: platforms/full-dotnet/new-db
 ---
 # Console Application to New Database

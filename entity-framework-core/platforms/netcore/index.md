@@ -1,4 +1,12 @@
 ---
+title: Getting Started on .NET Core (Windows, OSX, Linux, etc.)
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 35fc7f49-fda8-4d8d-822f-78dd2d484d79
+ms.prod: entity-framework-core
 uid: platforms/netcore/index
 ---
 # Getting Started on .NET Core (Windows, OSX, Linux, etc.)

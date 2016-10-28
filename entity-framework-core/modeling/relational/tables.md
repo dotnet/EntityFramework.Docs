@@ -1,4 +1,12 @@
 ---
+title: Table Mapping
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: c807aa4c-7845-443d-b8d0-bfc9b42691a3
+ms.prod: entity-framework-core
 uid: modeling/relational/tables
 ---
 # Table Mapping

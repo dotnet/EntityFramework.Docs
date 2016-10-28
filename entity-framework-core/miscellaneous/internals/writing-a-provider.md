@@ -1,4 +1,12 @@
 ---
+title: Writing a Database Provider
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 1165e2ec-e421-43fc-92ab-d92f9ab3c494
+ms.prod: entity-framework-core
 uid: miscellaneous/internals/writing-a-provider
 ---
 # Writing a Database Provider

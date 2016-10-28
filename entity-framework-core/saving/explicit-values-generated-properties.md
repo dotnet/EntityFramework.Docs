@@ -1,4 +1,12 @@
 ---
+title: Setting explicit values for generated properties
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 3f1993c2-cdf5-425b-bac2-a2665a20322b
+ms.prod: entity-framework-core
 uid: saving/explicit-values-generated-properties
 ---
 # Setting explicit values for generated properties

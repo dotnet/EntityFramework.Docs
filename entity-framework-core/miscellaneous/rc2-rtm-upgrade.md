@@ -1,4 +1,12 @@
 ---
+title: Upgrading from RC2 to RTM
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: c3c1940b-136d-45d8-aa4f-cb5040f8980a
+ms.prod: entity-framework-core
 uid: miscellaneous/rc2-rtm-upgrade
 ---
 # Upgrading from RC2 to RTM

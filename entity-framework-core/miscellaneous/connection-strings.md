@@ -1,4 +1,12 @@
 ---
+title: Connection Strings
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
+ms.prod: entity-framework-core
 uid: miscellaneous/connection-strings
 ---
 # Connection Strings

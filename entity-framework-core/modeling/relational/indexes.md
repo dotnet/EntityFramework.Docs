@@ -1,4 +1,12 @@
 ---
+title: Indexes
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 4581e7ba-5e7f-452c-9937-0aaf790ba10a
+ms.prod: entity-framework-core
 uid: modeling/relational/indexes
 ---
 # Indexes
