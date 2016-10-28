@@ -1,4 +1,12 @@
 ---
+title: Understanding EF Services
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: a871e3ca-3650-459d-b084-8fde5d7b2e3a
+ms.prod: entity-framework-core
 uid: miscellaneous/internals/services
 ---
 # Understanding EF Services

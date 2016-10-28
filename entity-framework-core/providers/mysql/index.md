@@ -1,4 +1,12 @@
 ---
+title: MySQL (Official)
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 4900b882-79c5-40d2-a44a-ccb0292f6ed9
+ms.prod: entity-framework-core
 uid: providers/mysql/index
 ---
 # MySQL (Official)

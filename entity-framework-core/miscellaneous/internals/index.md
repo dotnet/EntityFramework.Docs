@@ -1,4 +1,12 @@
 ---
+title: Internals
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 6c732dd4-cfe1-40ad-b39c-74e33f540962
+ms.prod: entity-framework-core
 uid: miscellaneous/internals/index
 ---
 # Internals

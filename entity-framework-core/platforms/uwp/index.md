@@ -1,4 +1,12 @@
 ---
+title: Getting Started on Universal Windows Platform (UWP)
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 422c45b6-2726-4c3a-9833-9c9618756e5f
+ms.prod: entity-framework-core
 uid: platforms/uwp/index
 ---
 # Getting Started on Universal Windows Platform (UWP)

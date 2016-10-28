@@ -1,4 +1,12 @@
 ---
+title: Getting Started on ASP.NET Core
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: bcf6d28a-5a2a-40b9-87ea-19ed9ef2e555
+ms.prod: entity-framework-core
 uid: platforms/aspnetcore/index
 ---
 # Getting Started on ASP.NET Core

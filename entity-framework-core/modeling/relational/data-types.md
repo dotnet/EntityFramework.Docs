@@ -1,4 +1,12 @@
 ---
+title: Data Types
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 9d2e647f-29e4-483b-af00-74269eb06e8f
+ms.prod: entity-framework-core
 uid: modeling/relational/data-types
 ---
 # Data Types

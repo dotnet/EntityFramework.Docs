@@ -1,4 +1,12 @@
 ---
+title: Required/optional properties
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: ddaa0a54-9f43-4c34-aae3-f95c96c69842
+ms.prod: entity-framework-core
 uid: modeling/required-optional
 ---
 # Required/optional properties

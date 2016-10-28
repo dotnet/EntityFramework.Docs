@@ -1,4 +1,12 @@
 ---
+title: Default Values
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: e541366a-130f-47dd-9997-1b110a11febe
+ms.prod: entity-framework-core
 uid: modeling/relational/default-values
 ---
 # Default Values

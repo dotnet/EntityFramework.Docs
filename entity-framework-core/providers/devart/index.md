@@ -1,4 +1,12 @@
 ---
+title: Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, SQL Server, and more)
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: aad70a75-d04d-4d63-a489-7f9062a3c73d
+ms.prod: entity-framework-core
 uid: providers/devart/index
 ---
 # Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, SQL Server, and more)

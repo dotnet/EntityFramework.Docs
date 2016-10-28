@@ -1,4 +1,12 @@
 ﻿---
+title: ASP.NET Core Application to Existing Database (Database First)
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
+ms.prod: entity-framework-core-
 uid: platforms/aspnetcore/existing-db
 ---
 # ASP.NET Core Application to Existing Database (Database First)

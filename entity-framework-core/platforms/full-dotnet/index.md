@@ -1,4 +1,12 @@
 ---
+title: Getting Started on Full .NET (Console, WinForms, WPF, etc.)
+author: rowanmiller
+ms.author: rowmil
+manager: rowanmiller
+ms.date: 10/27/2016
+ms.topic: article
+ms.assetid: 06f1f18b-3267-4f79-b94e-173f9db0a7cb
+ms.prod: entity-framework-core
 uid: platforms/full-dotnet/index
 ---
 # Getting Started on Full .NET (Console, WinForms, WPF, etc.)
