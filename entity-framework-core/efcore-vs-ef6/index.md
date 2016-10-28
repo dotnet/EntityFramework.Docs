@@ -16,11 +16,11 @@ uid: efcore-vs-ef6/index
 
 The following articles are available
 
-- [Which One Is Right for You](https://docs.efproject.net/en/latest/efcore-vs-ef6/choosing.html)
-- [Feature Comparison](https://docs.efproject.net/en/latest/efcore-vs-ef6/features.html)
-- [Porting from EF6.x to EF Core](https://docs.efproject.net/en/latest/efcore-vs-ef6/porting/index.html)
-    - [Ensure EF Core Will Work for Your Application](https://docs.efproject.net/en/latest/efcore-vs-ef6/porting/ensure-requirements.html)
-    - [Porting an EDMX-Based Model (Model First & Database First)](https://docs.efproject.net/en/latest/efcore-vs-ef6/porting/port-edmx.html)
-    - [Porting a Code-Based Model (Code First & Code First to Existing Database)](https://docs.efproject.net/en/latest/efcore-vs-ef6/porting/port-code.html)
+- [Which One Is Right for You](efcore-vs-ef6/choosing.md)
+- [Feature Comparison](efcore-vs-ef6/features.md)
+- [Porting from EF6.x to EF Core](efcore-vs-ef6/porting/index.md)
+    - [Ensure EF Core Will Work for Your Application](efcore-vs-ef6/porting/ensure-requirements.md)
+    - [Porting an EDMX-Based Model (Model First & Database First)](efcore-vs-ef6/porting/port-edmx.md)
+    - [Porting a Code-Based Model (Code First & Code First to Existing Database)](efcore-vs-ef6/porting/port-code.md)
 
-- [EF6.x and EF Core in the Same Application](https://docs.efproject.net/en/latest/efcore-vs-ef6/side-by-side.html)
+- [EF6.x and EF Core in the Same Application](efcore-vs-ef6/side-by-side.md)
