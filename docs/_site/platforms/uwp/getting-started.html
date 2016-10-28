@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Local SQLite on UWP </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Local SQLite on UWP ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="platforms/uwp/getting-started">
+              <h1 id="local-sqlite-on-uwp" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="4" sourceendlinenumber="4">Local SQLite on UWP</h1>
+              
+<div class="WARNING sourceFile=" platforms/uwp/getting-started.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="9" sourceendlinenumber="9">In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.</p>
+<div class="WARNING sourceFile=" platforms/uwp/getting-started.md"="" sourcestartlinenumber="11" sourceendlinenumber="11" "=""><h5>Warning</h5><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="12" sourceendlinenumber="12"><strong>Avoid using anonymous types in LINQ queries on UWP</strong>. Deploying a UWP application to the app store requires your application to be compiled with .NET Native. Queries with anonymous types have poor performance on .NET Native or may crash the application.</p>
+</div>
+<div class="TIP sourceFile=" platforms/uwp/getting-started.md"="" sourcestartlinenumber="14" sourceendlinenumber="14" "=""><h5>Tip</h5><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="15" sourceendlinenumber="15">You can view this article&#39;s <a href="https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Platforms/UWP/UWP.SQLite" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="15" sourceendlinenumber="15">sample</a> on GitHub.</p>
+</div>
+<h2 id="prerequisites" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="17" sourceendlinenumber="17">Prerequisites</h2>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="19" sourceendlinenumber="19">The following items are required to complete this walkthrough:</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="20" sourceendlinenumber="24">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="20" sourceendlinenumber="20"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="20" sourceendlinenumber="20">Windows 10</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="22" sourceendlinenumber="22"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="22" sourceendlinenumber="22"><a href="https://go.microsoft.com/fwlink/?LinkId=691129" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="22" sourceendlinenumber="22">Visual Studio 2015 Update 3</a></p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="24" sourceendlinenumber="24"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="24" sourceendlinenumber="24">The latest version of <a href="https://dev.windows.com/en-us/downloads" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="24" sourceendlinenumber="24">Windows 10 Developer Tools</a></p>
+</li>
+</ul>
+<h2 id="create-a-new-project" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="26" sourceendlinenumber="26">Create a new project</h2>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="28" sourceendlinenumber="36">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="28" sourceendlinenumber="28"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="28" sourceendlinenumber="28">Open Visual Studio 2015</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="30" sourceendlinenumber="30"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="30" sourceendlinenumber="30">File ‣ New ‣ Project...</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="32" sourceendlinenumber="32"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="32" sourceendlinenumber="32">From the left menu select Templates ‣ Visual C# ‣ Windows ‣ Universal</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="34" sourceendlinenumber="34"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="34" sourceendlinenumber="34">Select the <strong>Blank App (Universal Windows)</strong> project template</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="36" sourceendlinenumber="36"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="36" sourceendlinenumber="36">Give the project a name and click <strong>OK</strong></p>
+</li>
+</ul>
+<h2 id="upgrade-microsoftnetcoreuniversalwindowsplatform" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="38" sourceendlinenumber="38">Upgrade Microsoft.NETCore.UniversalWindowsPlatform</h2>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="40" sourceendlinenumber="40">Depending on your version of Visual Studio, the template may have generated your project with an old version of .NET Core for UWP. EF Core requires <code>Microsoft.NETCore.UniversalWindowsPlatform</code> version <strong>5.2.2</strong> or greater.</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="42" sourceendlinenumber="44">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="42" sourceendlinenumber="42"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="42" sourceendlinenumber="42">Tools ‣ NuGet Package Manager ‣ Package Manager Console</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="44" sourceendlinenumber="44"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="44" sourceendlinenumber="44">Run <code>Update-Package Microsoft.NETCore.UniversalWindowsPlatform</code></p>
+</li>
+</ul>
+<h2 id="install-entity-framework" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="46" sourceendlinenumber="46">Install Entity Framework</h2>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="48" sourceendlinenumber="48">To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQLite. For a list of available providers see <a href="../../providers/index.html" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="48" sourceendlinenumber="48">Database Providers</a>.</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="50" sourceendlinenumber="52">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="50" sourceendlinenumber="50"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="50" sourceendlinenumber="50">Tools ‣ NuGet Package Manager ‣ Package Manager Console</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="52" sourceendlinenumber="52"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="52" sourceendlinenumber="52">Run <code>Install-Package Microsoft.EntityFrameworkCore.Sqlite</code></p>
+</li>
+</ul>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="54" sourceendlinenumber="54">Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="56" sourceendlinenumber="56">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="56" sourceendlinenumber="56">Run <code>Install-Package Microsoft.EntityFrameworkCore.Tools –Pre</code></li>
+</ul>
+<h2 id="create-your-model" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="58" sourceendlinenumber="58">Create your model</h2>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="60" sourceendlinenumber="60">Now it&#39;s time to define a context and entity classes that make up your model.</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="62" sourceendlinenumber="66">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="62" sourceendlinenumber="62"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="62" sourceendlinenumber="62">Project ‣ Add Class...</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="64" sourceendlinenumber="64"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="64" sourceendlinenumber="64">Enter <em>Model.cs</em> as the name and click <strong>OK</strong></p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="66" sourceendlinenumber="66"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="66" sourceendlinenumber="66">Replace the contents of the file with the following code</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Platforms/UWP/UWP.SQLite/Model.cs)] -->
+<pre sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="69" sourceendlinenumber="104"><code class="lang-csharp">using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+
+namespace EFGetStarted.UWP
+{
+    public class BloggingContext : DbContext
+    {
+        public DbSet&lt;Blog&gt; Blogs { get; set; }
+        public DbSet&lt;Post&gt; Posts { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite(&quot;Filename=Blogging.db&quot;);
+        }
+    }
+
+    public class Blog
+    {
+        public int BlogId { get; set; }
+        public string Url { get; set; }
+
+        public List&lt;Post&gt; Posts { get; set; }
+    }
+
+    public class Post
+    {
+        public int PostId { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+
+        public int BlogId { get; set; }
+        public Blog Blog { get; set; }
+    }
+}
+</code></pre><div class="TIP sourceFile=" platforms/uwp/getting-started.md"="" sourcestartlinenumber="106" sourceendlinenumber="106" "=""><h5>Tip</h5><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="107" sourceendlinenumber="107">In a real application you would put each class in a separate file and put the connection string in the <code>App.Config</code> file and read it out using <code>ConfigurationManager</code>. For the sake of simplicity, we are putting everything in a single code file for this tutorial.</p>
+</div>
+<h2 id="create-your-database" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="109" sourceendlinenumber="109">Create your database</h2>
+<div class="WARNING sourceFile=" platforms/uwp/getting-started.md"="" sourcestartlinenumber="111" sourceendlinenumber="111" "=""><h5>Warning</h5><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="112" sourceendlinenumber="112"><strong>Known Issue in Preview 2</strong>Using EF Tools on UWP projects does not work without manually adding binding redirects.</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="114" sourceendlinenumber="120">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="114" sourceendlinenumber="114"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="114" sourceendlinenumber="114">File –&gt; New –&gt; File...</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="116" sourceendlinenumber="116"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="116" sourceendlinenumber="116">From the left menu select Visual C# -&gt; General -&gt; Text File</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="118" sourceendlinenumber="118"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="118" sourceendlinenumber="118">Give the file the name &quot;App.config&quot;</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="120" sourceendlinenumber="120"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="120" sourceendlinenumber="120">Add the following contents to the file</p>
+</li>
+</ul>
+<!-- [!code-xml[Main](samples/Platforms/UWP/UWP.SQLite/App.config)] -->
+<pre sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="123" sourceendlinenumber="142"><code class="lang-xml">&lt;configuration&gt;
+  &lt;runtime&gt;
+    &lt;assemblyBinding xmlns=&quot;urn:schemas-microsoft-com:asm.v1&quot;&gt;
+      &lt;dependentAssembly&gt;
+        &lt;assemblyIdentity name=&quot;System.IO.FileSystem.Primitives&quot; publicKeyToken=&quot;b03f5f7f11d50a3a&quot; culture=&quot;neutral&quot; /&gt;
+        &lt;bindingRedirect oldVersion=&quot;4.0.0.0&quot; newVersion=&quot;4.0.1.0&quot;/&gt;
+      &lt;/dependentAssembly&gt;
+      &lt;dependentAssembly&gt;
+        &lt;assemblyIdentity name=&quot;System.Threading.Overlapped&quot; publicKeyToken=&quot;b03f5f7f11d50a3a&quot; culture=&quot;neutral&quot; /&gt;
+        &lt;bindingRedirect oldVersion=&quot;4.0.0.0&quot; newVersion=&quot;4.0.1.0&quot;/&gt;
+      &lt;/dependentAssembly&gt;
+      &lt;dependentAssembly&gt;
+        &lt;assemblyIdentity name=&quot;System.ComponentModel.Annotations&quot; publicKeyToken=&quot;b03f5f7f11d50a3a&quot; culture=&quot;neutral&quot; /&gt;
+        &lt;bindingRedirect oldVersion=&quot;4.1.0.0&quot; newVersion=&quot;4.0.0.0&quot;/&gt;
+      &lt;/dependentAssembly&gt;
+    &lt;/assemblyBinding&gt;
+  &lt;/runtime&gt;
+&lt;/configuration&gt;
+</code></pre><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="144" sourceendlinenumber="144">  See <a href="https://github.com/aspnet/EntityFramework/issues/5471" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="144" sourceendlinenumber="144">Issue #5471</a> for more details.</p>
+</div>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="146" sourceendlinenumber="146">Now that you have a model, you can use migrations to create a database for you.</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="148" sourceendlinenumber="150">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="148" sourceendlinenumber="148"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="148" sourceendlinenumber="148">Tools –&gt; NuGet Package Manager –&gt; Package Manager Console</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="150" sourceendlinenumber="150"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="150" sourceendlinenumber="150">Run <code>Add-Migration MyFirstMigration</code> to scaffold a migration to create the initial set of tables for your model.</p>
+</li>
+</ul>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="152" sourceendlinenumber="152">Since we want the database to be created on the device that the app runs on, we will add some code to apply any pending migrations to the local database on application startup. The first time that the app runs, this will take care of creating the local database for us.</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="154" sourceendlinenumber="156">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="154" sourceendlinenumber="154"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="154" sourceendlinenumber="154">Right-click on <strong>App.xaml</strong> in <strong>Solution Explorer</strong> and select <strong>View Code</strong></p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="156" sourceendlinenumber="156"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="156" sourceendlinenumber="156">Add the highlighted using to the start of the file</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Platforms/UWP/UWP.SQLite/App.xaml.cs?highlight=1)] -->
+<pre sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="159" sourceendlinenumber="166"><code class="lang-csharp">using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+</code></pre><ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="168" sourceendlinenumber="168">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="168" sourceendlinenumber="168">Add the highlighted code to apply any pending migrations</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Platforms/UWP/UWP.SQLite/App.xaml.cs?highlight=6,7,8,9)] -->
+<pre sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="171" sourceendlinenumber="182"><code class="lang-csharp">public App()
+{
+    this.InitializeComponent();
+    this.Suspending += OnSuspending;
+
+    using (var db = new BloggingContext())
+    {
+        db.Database.Migrate();
+    }
+}
+</code></pre><div class="TIP sourceFile=" platforms/uwp/getting-started.md"="" sourcestartlinenumber="184" sourceendlinenumber="184" "=""><h5>Tip</h5><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="185" sourceendlinenumber="185">If you make future changes to your model, you can use the <code>Add-Migration</code> command to scaffold a new migration to apply the corresponding changes to the database. Any pending migrations will be applied to the local database on each device when the application starts.</p>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="187" sourceendlinenumber="187">EF uses a <code>__EFMigrationsHistory</code> table in the database to keep track of which migrations have already been applied to the database.</p>
+</div>
+<h2 id="use-your-model" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="189" sourceendlinenumber="189">Use your model</h2>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="191" sourceendlinenumber="191">You can now use your model to perform data access.</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="193" sourceendlinenumber="195">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="193" sourceendlinenumber="193"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="193" sourceendlinenumber="193">Open <em>MainPage.xaml</em></p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="195" sourceendlinenumber="195"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="195" sourceendlinenumber="195">Add the page load handler and UI content highlighted below</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Platforms/UWP/UWP.SQLite/MainPage.xaml?highlight=9,12,13,14,15,16,17,18,19,20,21,22)] -->
+<pre sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="198" sourceendlinenumber="223"><code class="lang-csharp">&lt;Page
+    x:Class=&quot;EFGetStarted.UWP.MainPage&quot;
+    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+    xmlns:local=&quot;using:EFGetStarted.UWP&quot;
+    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+    xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+    mc:Ignorable=&quot;d&quot;
+    Loaded=&quot;Page_Loaded&quot;&gt;
+
+    &lt;Grid Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;StackPanel&gt;
+            &lt;TextBox Name=&quot;NewBlogUrl&quot;&gt;&lt;/TextBox&gt;
+            &lt;Button Click=&quot;Add_Click&quot;&gt;Add&lt;/Button&gt;
+            &lt;ListView Name=&quot;Blogs&quot;&gt;
+                &lt;ListView.ItemTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;TextBlock Text=&quot;{Binding Url}&quot; /&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/ListView.ItemTemplate&gt;
+            &lt;/ListView&gt;
+        &lt;/StackPanel&gt;
+    &lt;/Grid&gt;
+&lt;/Page&gt;
+</code></pre><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="225" sourceendlinenumber="225">Now we&#39;ll add code to wire up the UI with the database</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="227" sourceendlinenumber="229">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="227" sourceendlinenumber="227"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="227" sourceendlinenumber="227">Right-click <strong>MainPage.xaml</strong> in <strong>Solution Explorer</strong> and select <strong>View Code</strong></p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="229" sourceendlinenumber="229"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="229" sourceendlinenumber="229">Add the highlighted code from the following listing</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Platforms/UWP/UWP.SQLite/MainPage.xaml.cs?highlight=8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)] -->
+<pre sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="232" sourceendlinenumber="260"><code class="lang-csharp">public sealed partial class MainPage : Page
+{
+    public MainPage()
+    {
+        this.InitializeComponent();
+    }
+
+    private void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        using (var db = new BloggingContext())
+        {
+            Blogs.ItemsSource = db.Blogs.ToList();
+        }
+    }
+
+    private void Add_Click(object sender, RoutedEventArgs e)
+    {
+        using (var db = new BloggingContext())
+        {
+            var blog = new Blog { Url = NewBlogUrl.Text };
+            db.Blogs.Add(blog);
+            db.SaveChanges();
+
+            Blogs.ItemsSource = db.Blogs.ToList();
+        }
+    }
+}
+</code></pre><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="262" sourceendlinenumber="262">You can now run the application to see it in action.</p>
+<ul sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="264" sourceendlinenumber="268">
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="264" sourceendlinenumber="264"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="264" sourceendlinenumber="264">Debug ‣ Start Without Debugging</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="266" sourceendlinenumber="266"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="266" sourceendlinenumber="266">The application will build and launch</p>
+</li>
+<li sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="268" sourceendlinenumber="268"><p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="268" sourceendlinenumber="268">Enter a URL and click the <strong>Add</strong> button</p>
+</li>
+</ul>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="270" sourceendlinenumber="270"><img src="_static/create.png" alt="image" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="270" sourceendlinenumber="270"></p>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="272" sourceendlinenumber="272"><img src="_static/list.png" alt="image" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="272" sourceendlinenumber="272"></p>
+<h2 id="next-steps" sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="274" sourceendlinenumber="274">Next steps</h2>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="276" sourceendlinenumber="276">Tada! You now have a simple UWP app running Entity Framework.</p>
+<p sourcefile="platforms/uwp/getting-started.md" sourcestartlinenumber="278" sourceendlinenumber="278">Check out the numerous articles in this documentation to learn more about Entity Framework&#39;s features.</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/platforms/uwp/getting-started.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

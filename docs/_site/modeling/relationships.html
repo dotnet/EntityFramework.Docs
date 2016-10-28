@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Relationships </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Relationships ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="modeling/relationships">
+              <h1 id="relationships" sourcefile="modeling/relationships.md" sourcestartlinenumber="4" sourceendlinenumber="4">Relationships</h1>
+              
+<div class="WARNING sourceFile=" modeling/relationships.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="modeling/relationships.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="modeling/relationships.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="modeling/relationships.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="9" sourceendlinenumber="9">A relationship defines how two entities relate to each other. In a relational database, this is represented by a foreign key constraint.</p>
+<div class="NOTE sourceFile=" modeling/relationships.md"="" sourcestartlinenumber="11" sourceendlinenumber="11" "=""><h5>Note</h5><p sourcefile="modeling/relationships.md" sourcestartlinenumber="12" sourceendlinenumber="12">Most of the samples in this article use a one-to-many relationship to demonstrate concepts. For examples of one-to-one and many-to-many relationships see the <a href="#other-relationship-patterns" sourcefile="modeling/relationships.md" sourcestartlinenumber="12" sourceendlinenumber="12">Other Relationship Patterns</a> section at the end of the article.</p>
+</div>
+<h2 id="definition-of-terms" sourcefile="modeling/relationships.md" sourcestartlinenumber="14" sourceendlinenumber="14">Definition of Terms</h2>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="16" sourceendlinenumber="16">There are a number of terms used to describe relationships</p>
+<ul sourcefile="modeling/relationships.md" sourcestartlinenumber="18" sourceendlinenumber="32">
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="18" sourceendlinenumber="18"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="18" sourceendlinenumber="18"><strong>Dependent entity:</strong> This is the entity that contains the foreign key property(s). Sometimes referred to as the &#39;child&#39; of the relationship.</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="20" sourceendlinenumber="20"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="20" sourceendlinenumber="20"><strong>Principal entity:</strong> This is the entity that contains the primary/alternate key property(s). Sometimes referred to as the &#39;parent&#39; of the relationship.</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="22" sourceendlinenumber="22"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="22" sourceendlinenumber="22"><strong>Foreign key:</strong> The property(s) in the dependent entity that is used to store the values of the principal key property that the entity is related to.</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="24" sourceendlinenumber="24"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="24" sourceendlinenumber="24"><strong>Principal key:</strong> The property(s) that uniquely identifies the principal entity. This may be the primary key or an alternate key.</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="26" sourceendlinenumber="26"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="26" sourceendlinenumber="26"><strong>Navigation property:</strong> A property defined on the principal and/or dependent entity that contains a reference(s) to the related entity(s).</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="28" sourceendlinenumber="28"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="28" sourceendlinenumber="28"><strong>Collection navigation property:</strong> A navigation property that contains references to many related entities.</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="30" sourceendlinenumber="30"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="30" sourceendlinenumber="30"><strong>Reference navigation property:</strong> A navigation property that holds a reference to a single related entity.</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="32" sourceendlinenumber="32"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="32" sourceendlinenumber="32"><strong>Inverse navigation property:</strong> When discussing a particular navigation property, this term refers to the navigation property on the other end of the relationship.</p>
+</li>
+</ul>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="34" sourceendlinenumber="34">The following code listing shows a one-to-many relationship between <code>Blog</code> and <code>Post</code></p>
+<ul sourcefile="modeling/relationships.md" sourcestartlinenumber="36" sourceendlinenumber="48">
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="36" sourceendlinenumber="36"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="36" sourceendlinenumber="36"><code>Post</code> is the dependent entity</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="38" sourceendlinenumber="38"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="38" sourceendlinenumber="38"><code>Blog</code> is the principal entity</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="40" sourceendlinenumber="40"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="40" sourceendlinenumber="40"><code>Post.BlogId</code> is the foreign key</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="42" sourceendlinenumber="42"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="42" sourceendlinenumber="42"><code>Blog.BlogId</code> is the principal key (in this case it is a primary key rather than an alternate key)</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="44" sourceendlinenumber="44"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="44" sourceendlinenumber="44"><code>Post.Blog</code> is a reference navigation property</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="46" sourceendlinenumber="46"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="46" sourceendlinenumber="46"><code>Blog.Posts</code> is a collection navigation property</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="48" sourceendlinenumber="48"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="48" sourceendlinenumber="48"><code>Post.Blog</code> is the inverse navigation property of <code>Blog.Posts</code> (and vice versa)</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/Relationships/Full.cs)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="51" sourceendlinenumber="69"><code class="lang-csharp">public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&lt;Post&gt; Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public int BlogId { get; set; }
+    public Blog Blog { get; set; }
+}
+</code></pre><h2 id="conventions" sourcefile="modeling/relationships.md" sourcestartlinenumber="71" sourceendlinenumber="71">Conventions</h2>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="73" sourceendlinenumber="73">By convention, a relationship will be created when there is a navigation property discovered on a type. A property is considered a navigation property if the type it points to can not be mapped as a scalar type by the current database provider.</p>
+<div class="NOTE sourceFile=" modeling/relationships.md"="" sourcestartlinenumber="75" sourceendlinenumber="75" "=""><h5>Note</h5><p sourcefile="modeling/relationships.md" sourcestartlinenumber="76" sourceendlinenumber="76">Relationships that are discovered by convention will always target the primary key of the principal entity. To target an alternate key, additional configuration must be performed using the Fluent API.</p>
+</div>
+<h3 id="fully-defined-relationships" sourcefile="modeling/relationships.md" sourcestartlinenumber="78" sourceendlinenumber="78">Fully Defined Relationships</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="80" sourceendlinenumber="80">The most common pattern for relationships is to have navigation properties defined on both ends of the relationship and a foreign key property defined in dependent entity class.</p>
+<ul sourcefile="modeling/relationships.md" sourcestartlinenumber="82" sourceendlinenumber="84">
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="82" sourceendlinenumber="82"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="82" sourceendlinenumber="82">If a pair of navigation properties is found between two types, then they will be configured as inverse navigation properties of the same relationship.</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="84" sourceendlinenumber="84"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="84" sourceendlinenumber="84">If the dependent entity contains a property named <code>&lt;primary key property name&gt;</code>, <code>&lt;navigation property name&gt;&lt;primary key property name&gt;</code>, or <code>&lt;principal entity name&gt;&lt;primary key property name&gt;</code> then it will be configured as the foreign key.</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/Relationships/Full.cs?highlight=6,15,16)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="87" sourceendlinenumber="105"><code class="lang-csharp">public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&lt;Post&gt; Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public int BlogId { get; set; }
+    public Blog Blog { get; set; }
+}
+</code></pre><div class="WARNING sourceFile=" modeling/relationships.md"="" sourcestartlinenumber="107" sourceendlinenumber="107" "=""><h5>Warning</h5><p sourcefile="modeling/relationships.md" sourcestartlinenumber="108" sourceendlinenumber="108">If there are multiple navigation properties defined between two types (i.e. more than one distinct pair of navigations that point to each other), then no relationships will be created by convention and you will need to manually configure them to identify how the navigation properties pair up.</p>
+</div>
+<h3 id="no-foreign-key-property" sourcefile="modeling/relationships.md" sourcestartlinenumber="110" sourceendlinenumber="110">No Foreign Key Property</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="112" sourceendlinenumber="112">While it is recommended to have a foreign key property defined in the dependent entity class, it is not required. If no foreign key property is found, a shadow foreign key property will be introduced with the name <code>&lt;navigation property name&gt;&lt;principal key property name&gt;</code> (see <a href="shadow-properties.html" sourcefile="modeling/relationships.md" sourcestartlinenumber="112" sourceendlinenumber="112">Shadow Properties</a> for more information).</p>
+<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/Relationships/NoForeignKey.cs?highlight=6,15)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="115" sourceendlinenumber="132"><code class="lang-csharp">public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&lt;Post&gt; Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public Blog Blog { get; set; }
+}
+</code></pre><h3 id="single-navigation-property" sourcefile="modeling/relationships.md" sourcestartlinenumber="134" sourceendlinenumber="134">Single Navigation Property</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="136" sourceendlinenumber="136">Including just one navigation property (no inverse navigation, and no foreign key property) is enough to have a relationship defined by convention. You can also have a single navigation property and a foreign key property.</p>
+<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/Relationships/OneNavigation.cs?highlight=6)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="139" sourceendlinenumber="154"><code class="lang-csharp">public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&lt;Post&gt; Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+}
+</code></pre><h3 id="cascade-delete" sourcefile="modeling/relationships.md" sourcestartlinenumber="156" sourceendlinenumber="156">Cascade Delete</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="158" sourceendlinenumber="158">By convention, cascade delete will be set to <em>Cascade</em> for required relationships and <em>SetNull</em> for optional relationships. <em>Cascade</em> means dependent entities are also deleted. <em>SetNull</em> means that foreign key properties in dependent entities are set to null.</p>
+<div class="NOTE sourceFile=" modeling/relationships.md"="" sourcestartlinenumber="160" sourceendlinenumber="160" "=""><h5>Note</h5><p sourcefile="modeling/relationships.md" sourcestartlinenumber="161" sourceendlinenumber="161">This cascading behavior is only applied to entities that are being tracked by the context. A corresponding cascade behavior should be setup in the database to ensure data that is not being tracked by the context has the same action applied. If you use EF to create the database, this cascade behavior will be setup for you.</p>
+</div>
+<h2 id="data-annotations" sourcefile="modeling/relationships.md" sourcestartlinenumber="163" sourceendlinenumber="163">Data Annotations</h2>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="165" sourceendlinenumber="165">There are two data annotations that can be used to configure relationships, <code>[ForeignKey]</code> and <code>[InverseProperty]</code>.</p>
+<h3 id="foreignkey" sourcefile="modeling/relationships.md" sourcestartlinenumber="167" sourceendlinenumber="167">[ForeignKey]</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="169" sourceendlinenumber="169">You can use the Data Annotations to configure which property should be used as the foreign key property for a given relationship. This is typically done when the foreign key property is not discovered by convention.</p>
+<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/Relationships/ForeignKey.cs?highlight=17)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="172" sourceendlinenumber="192"><code class="lang-csharp">public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&lt;Post&gt; Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public int BlogForeignKey { get; set; }
+
+    [ForeignKey(&quot;BlogForeignKey&quot;)]
+    public Blog Blog { get; set; }
+}
+</code></pre><div class="NOTE sourceFile=" modeling/relationships.md"="" sourcestartlinenumber="194" sourceendlinenumber="194" "=""><h5>Note</h5><p sourcefile="modeling/relationships.md" sourcestartlinenumber="195" sourceendlinenumber="195">The <code>[ForeignKey]</code> annotation can be placed on either navigation property in the relationship. It does not need to go on the navigation property in the dependent entity class.</p>
+</div>
+<h3 id="inverseproperty" sourcefile="modeling/relationships.md" sourcestartlinenumber="197" sourceendlinenumber="197">[InverseProperty]</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="199" sourceendlinenumber="199">You can use the Data Annotations to configure how navigation properties on the dependent and principal entities pair up. This is typically done when there is more than one pair of navigation properties between two entity types.</p>
+<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/Relationships/InverseProperty.cs?highlight=20,23)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="202" sourceendlinenumber="228"><code class="lang-csharp">public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public int AuthorUserId { get; set; }
+    public User Author { get; set; }
+
+    public int ContributorUserId { get; set; }
+    public User Contributor { get; set; }
+}
+
+public class User
+{
+    public string UserId { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+
+    [InverseProperty(&quot;Author&quot;)]
+    public List&lt;Post&gt; AuthoredPosts { get; set; }
+
+    [InverseProperty(&quot;Contributor&quot;)]
+    public List&lt;Post&gt; ContributedToPosts { get; set; }
+}
+</code></pre><h2 id="fluent-api" sourcefile="modeling/relationships.md" sourcestartlinenumber="230" sourceendlinenumber="230">Fluent API</h2>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="232" sourceendlinenumber="232">To configure a relationship in the Fluent API, you start by identifying the navigation properties that make up the relationship. <code>HasOne</code> or <code>HasMany</code> identifies the navigation property on the entity type you are beginning the configuration on. You then chain a call to <code>WithOne</code> or <code>WithMany</code> to identify the inverse navigation. <code>HasOne</code>/<code>WithOne</code> are used for reference navigation properties and <code>HasMany</code>/<code>WithMany</code> are used for collection navigation properties.</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Relationships/NoForeignKey.cs?highlight=8,9,10)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="235" sourceendlinenumber="265"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+    public DbSet&lt;Post&gt; Posts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;Post&gt;()
+            .HasOne(p =&gt; p.Blog)
+            .WithMany(b =&gt; b.Posts);
+    }
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&lt;Post&gt; Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public Blog Blog { get; set; }
+}
+</code></pre><h3 id="single-navigation-property-1" sourcefile="modeling/relationships.md" sourcestartlinenumber="267" sourceendlinenumber="267">Single Navigation Property</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="269" sourceendlinenumber="269">If you only have one navigation property then there are parameterless overloads of <code>WithOne</code> and <code>WithMany</code>. This indicates that there is conceptually a reference or collection on the other end of the relationship, but there is no navigation property included in the entity class.</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Relationships/OneNavigation.cs?highlight=10)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="272" sourceendlinenumber="300"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+    public DbSet&lt;Post&gt; Posts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;Blog&gt;()
+            .HasMany(b =&gt; b.Posts)
+            .WithOne();
+    }
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&lt;Post&gt; Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+}
+</code></pre><h3 id="foreign-key" sourcefile="modeling/relationships.md" sourcestartlinenumber="302" sourceendlinenumber="302">Foreign Key</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="304" sourceendlinenumber="304">You can use the Fluent API to configure which property should be used as the foreign key property for a given relationship.</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Relationships/ForeignKey.cs?highlight=11)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="307" sourceendlinenumber="339"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+    public DbSet&lt;Post&gt; Posts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;Post&gt;()
+            .HasOne(p =&gt; p.Blog)
+            .WithMany(b =&gt; b.Posts)
+            .HasForeignKey(p =&gt; p.BlogForeignKey);
+    }
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&lt;Post&gt; Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public int BlogForeignKey { get; set; }
+    public Blog Blog { get; set; }
+}
+</code></pre><p sourcefile="modeling/relationships.md" sourcestartlinenumber="341" sourceendlinenumber="341">The following code listing shows how to configure a composite foreign key.</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Relationships/CompositeForeignKey.cs?highlight=13)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="344" sourceendlinenumber="381"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Car&gt; Cars { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;Car&gt;()
+            .HasKey(c =&gt; new { c.State, c.LicensePlate });
+
+        modelBuilder.Entity&lt;RecordOfSale&gt;()
+            .HasOne(s =&gt; s.Car)
+            .WithMany(c =&gt; c.SaleHistory)
+            .HasForeignKey(s =&gt; new { s.CarState, s.CarLicensePlate });
+    }
+}
+
+public class Car
+{
+    public string State { get; set; }
+    public string LicensePlate { get; set; }
+    public string Make { get; set; }
+    public string Model { get; set; }
+
+    public List&lt;RecordOfSale&gt; SaleHistory { get; set; }
+}
+
+public class RecordOfSale
+{
+    public int RecordOfSaleId { get; set; }
+    public DateTime DateSold { get; set; }
+    public decimal Price { get; set; }
+
+    public string CarState { get; set; }
+    public string CarLicensePlate { get; set; }
+    public Car Car { get; set; }
+}
+</code></pre><h3 id="principal-key" sourcefile="modeling/relationships.md" sourcestartlinenumber="383" sourceendlinenumber="383">Principal Key</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="385" sourceendlinenumber="385">If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be setup as an alternate key (see <a href="alternate-keys.html" sourcefile="modeling/relationships.md" sourcestartlinenumber="385" sourceendlinenumber="385">Alternate Keys</a> for more information).</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Relationships/PrincipalKey.cs?highlight=11)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="388" sourceendlinenumber="422"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Car&gt; Cars { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;RecordOfSale&gt;()
+            .HasOne(s =&gt; s.Car)
+            .WithMany(c =&gt; c.SaleHistory)
+            .HasForeignKey(s =&gt; s.CarLicensePlate)
+            .HasPrincipalKey(c =&gt; c.LicensePlate);
+    }
+}
+
+public class Car
+{
+    public int CarId { get; set; }
+    public string LicensePlate { get; set; }
+    public string Make { get; set; }
+    public string Model { get; set; }
+
+    public List&lt;RecordOfSale&gt; SaleHistory { get; set; }
+}
+
+public class RecordOfSale
+{
+    public int RecordOfSaleId { get; set; }
+    public DateTime DateSold { get; set; }
+    public decimal Price { get; set; }
+
+    public string CarLicensePlate { get; set; }
+    public Car Car { get; set; }
+}
+</code></pre><p sourcefile="modeling/relationships.md" sourcestartlinenumber="424" sourceendlinenumber="424">The following code listing shows how to configure a composite principal key.</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Relationships/CompositePrincipalKey.cs?highlight=11)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="427" sourceendlinenumber="463"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Car&gt; Cars { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;RecordOfSale&gt;()
+            .HasOne(s =&gt; s.Car)
+            .WithMany(c =&gt; c.SaleHistory)
+            .HasForeignKey(s =&gt; new { s.CarState, s.CarLicensePlate })
+            .HasPrincipalKey(c =&gt; new { c.State, c.LicensePlate });
+    }
+}
+
+public class Car
+{
+    public int CarId { get; set; }
+    public string State { get; set; }
+    public string LicensePlate { get; set; }
+    public string Make { get; set; }
+    public string Model { get; set; }
+
+    public List&lt;RecordOfSale&gt; SaleHistory { get; set; }
+}
+
+public class RecordOfSale
+{
+    public int RecordOfSaleId { get; set; }
+    public DateTime DateSold { get; set; }
+    public decimal Price { get; set; }
+
+    public string CarState { get; set; }
+    public string CarLicensePlate { get; set; }
+    public Car Car { get; set; }
+}
+</code></pre><div class="WARNING sourceFile=" modeling/relationships.md"="" sourcestartlinenumber="465" sourceendlinenumber="465" "=""><h5>Warning</h5><p sourcefile="modeling/relationships.md" sourcestartlinenumber="466" sourceendlinenumber="466">The order that you specify principal key properties must match the order they are specified for the foreign key.</p>
+</div>
+<h3 id="required" sourcefile="modeling/relationships.md" sourcestartlinenumber="468" sourceendlinenumber="468">Required</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="470" sourceendlinenumber="470">You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see <a href="required-optional.html" sourcefile="modeling/relationships.md" sourcestartlinenumber="470" sourceendlinenumber="470">Required/optional properties</a> for more information).</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Relationships/Required.cs?highlight=11)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="473" sourceendlinenumber="504"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+    public DbSet&lt;Post&gt; Posts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;Post&gt;()
+            .HasOne(p =&gt; p.Blog)
+            .WithMany(b =&gt; b.Posts)
+            .IsRequired();
+    }
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&lt;Post&gt; Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public Blog Blog { get; set; }
+}
+</code></pre><h3 id="cascade-delete-1" sourcefile="modeling/relationships.md" sourcestartlinenumber="506" sourceendlinenumber="506">Cascade Delete</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="508" sourceendlinenumber="508">You can use the Fluent API to configure the cascade delete behavior for a given relationship.</p>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="510" sourceendlinenumber="510">There are three behaviors that control how a delete operation is applied to dependent entities in a relationship when the principal is deleted or the relationship is severed.</p>
+<ul sourcefile="modeling/relationships.md" sourcestartlinenumber="512" sourceendlinenumber="516">
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="512" sourceendlinenumber="512"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="512" sourceendlinenumber="512"><strong>Cascade:</strong> Dependent entities are also deleted.</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="514" sourceendlinenumber="514"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="514" sourceendlinenumber="514"><strong>SetNull:</strong> The foreign key properties in dependent entities are set to null.</p>
+</li>
+<li sourcefile="modeling/relationships.md" sourcestartlinenumber="516" sourceendlinenumber="516"><p sourcefile="modeling/relationships.md" sourcestartlinenumber="516" sourceendlinenumber="516"><strong>Restrict:</strong> The delete operation is not applied to dependent entities. The dependent entities remain unchanged.</p>
+</li>
+</ul>
+<div class="NOTE sourceFile=" modeling/relationships.md"="" sourcestartlinenumber="518" sourceendlinenumber="518" "=""><h5>Note</h5><p sourcefile="modeling/relationships.md" sourcestartlinenumber="519" sourceendlinenumber="519">This cascading behavior is only applied to entities that are being tracked by the context. A corresponding cascade behavior should be setup in the database to ensure data that is not being tracked by the context has the same action applied. If you use EF to create the database, this cascade behavior will be setup for you.</p>
+</div>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Relationships/CascadeDelete.cs?highlight=11)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="522" sourceendlinenumber="554"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+    public DbSet&lt;Post&gt; Posts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;Post&gt;()
+            .HasOne(p =&gt; p.Blog)
+            .WithMany(b =&gt; b.Posts)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&lt;Post&gt; Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public int? BlogId { get; set; }
+    public Blog Blog { get; set; }
+}
+</code></pre><h2 id="other-relationship-patterns" sourcefile="modeling/relationships.md" sourcestartlinenumber="556" sourceendlinenumber="556">Other Relationship Patterns</h2>
+<h3 id="one-to-one" sourcefile="modeling/relationships.md" sourcestartlinenumber="558" sourceendlinenumber="558">One-to-one</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="560" sourceendlinenumber="560">One to one relationships have a reference navigation property on both sides. They follow the same conventions as one-to-many relationships, but a unique index is introduced on the foreign key property to ensure only one dependent is related to each principal.</p>
+<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/Relationships/OneToOne.cs?highlight=6,15,16)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="563" sourceendlinenumber="581"><code class="lang-csharp">public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public BlogImage BlogImage { get; set; }
+}
+
+public class BlogImage
+{
+    public int BlogImageId { get; set; }
+    public byte[] Image { get; set; }
+    public string Caption { get; set; }
+
+    public int BlogId { get; set; }
+    public Blog Blog { get; set; }
+}
+</code></pre><div class="NOTE sourceFile=" modeling/relationships.md"="" sourcestartlinenumber="583" sourceendlinenumber="583" "=""><h5>Note</h5><p sourcefile="modeling/relationships.md" sourcestartlinenumber="584" sourceendlinenumber="584">EF will choose one of the entities to be the dependent based on its ability to detect a foreign key property. If the wrong entity is chosen as the dependent you can use the Fluent API to correct this.</p>
+</div>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="586" sourceendlinenumber="586">When configuring the relationship with the Fluent API, you use the <code>HasOne</code> and <code>WithOne</code> methods.</p>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="588" sourceendlinenumber="588">When configuring the foreign key you need to specify the dependent entity type - notice the generic parameter provided to <code>HasForeignKey</code> in the listing below. In a one-to-many relationship it is clear that the entity with the reference navigation is the dependent and the one with the collection is the principal. But this is not so in a one-to-one relationship - hence the need to explicitly define it.</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Relationships/OneToOne.cs?highlight=11)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="591" sourceendlinenumber="623"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+    public DbSet&lt;BlogImage&gt; BlogImages { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;Blog&gt;()
+            .HasOne(p =&gt; p.BlogImage)
+            .WithOne(i =&gt; i.Blog)
+            .HasForeignKey&lt;BlogImage&gt;(b =&gt; b.BlogForeignKey);
+    }
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public BlogImage BlogImage { get; set; }
+}
+
+public class BlogImage
+{
+    public int BlogImageId { get; set; }
+    public byte[] Image { get; set; }
+    public string Caption { get; set; }
+
+    public int BlogForeignKey { get; set; }
+    public Blog Blog { get; set; }
+}
+</code></pre><h3 id="many-to-many" sourcefile="modeling/relationships.md" sourcestartlinenumber="625" sourceendlinenumber="625">Many-to-many</h3>
+<p sourcefile="modeling/relationships.md" sourcestartlinenumber="627" sourceendlinenumber="627">Many-to-many relationships without an entity class to represent the join table are not yet supported. However, you can represent a many-to-many relationship by including an entity class for the join table and mapping two separate one-to-many relationships.</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Relationships/ManyToMany.cs?highlight=11,12,13,14,16,17,18,19,39,40,41,42,43,44,45,46)] -->
+<pre sourcefile="modeling/relationships.md" sourcestartlinenumber="630" sourceendlinenumber="677"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Post&gt; Posts { get; set; }
+    public DbSet&lt;Tag&gt; Tags { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;PostTag&gt;()
+            .HasKey(t =&gt; new { t.PostId, t.TagId });
+
+        modelBuilder.Entity&lt;PostTag&gt;()
+            .HasOne(pt =&gt; pt.Post)
+            .WithMany(p =&gt; p.PostTags)
+            .HasForeignKey(pt =&gt; pt.PostId);
+
+        modelBuilder.Entity&lt;PostTag&gt;()
+            .HasOne(pt =&gt; pt.Tag)
+            .WithMany(t =&gt; t.PostTags)
+            .HasForeignKey(pt =&gt; pt.TagId);
+    }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public List&lt;PostTag&gt; PostTags { get; set; }
+}
+
+public class Tag
+{
+    public string TagId { get; set; }
+
+    public List&lt;PostTag&gt; PostTags { get; set; }
+}
+
+public class PostTag
+{
+    public int PostId { get; set; }
+    public Post Post { get; set; }
+
+    public string TagId { get; set; }
+    public Tag Tag { get; set; }
+}
+</code></pre>
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/modeling/relationships.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

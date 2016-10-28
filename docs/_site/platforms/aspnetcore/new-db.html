@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ASP.NET Core Application to New Database </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="ASP.NET Core Application to New Database ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="platforms/aspnetcore/new-db">
+              <h1 id="aspnet-core-application-to-new-database" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="4" sourceendlinenumber="4">ASP.NET Core Application to New Database</h1>
+              
+<div class="WARNING sourceFile=" platforms/aspnetcore/new-db.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="9" sourceendlinenumber="9">In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework. You will use migrations to create the database from your model.</p>
+<div class="TIP sourceFile=" platforms/aspnetcore/new-db.md"="" sourcestartlinenumber="11" sourceendlinenumber="11" "=""><h5>Tip</h5><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="12" sourceendlinenumber="12">You can view this article&#39;s <a href="https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Platforms/AspNetCore/AspNetCore.NewDb" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="12" sourceendlinenumber="12">sample</a> on GitHub.</p>
+</div>
+<h2 id="prerequisites" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="14" sourceendlinenumber="14">Prerequisites</h2>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="16" sourceendlinenumber="16">The following prerequisites are needed to complete this walkthrough:</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="18" sourceendlinenumber="20">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="18" sourceendlinenumber="18"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="18" sourceendlinenumber="18"><a href="https://go.microsoft.com/fwlink/?LinkId=691129" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="18" sourceendlinenumber="18">Visual Studio 2015 Update 3</a></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="20" sourceendlinenumber="20"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="20" sourceendlinenumber="20"><a href="https://go.microsoft.com/fwlink/?LinkId=817245" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="20" sourceendlinenumber="20">.NET Core for Visual Studio</a></p>
+</li>
+</ul>
+<h2 id="create-a-new-project" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="22" sourceendlinenumber="22">Create a new project</h2>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="24" sourceendlinenumber="38">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="24" sourceendlinenumber="24"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="24" sourceendlinenumber="24">Open Visual Studio 2015</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="26" sourceendlinenumber="26"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="26" sourceendlinenumber="26">File ‣ New ‣ Project...</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="28" sourceendlinenumber="28"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="28" sourceendlinenumber="28">From the left menu select Templates ‣ Visual C# ‣ Web</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="30" sourceendlinenumber="30"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="30" sourceendlinenumber="30">Select the <strong>ASP.NET Core Web Application (.NET Core)</strong> project template</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="32" sourceendlinenumber="32"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="32" sourceendlinenumber="32">Enter <strong>EFGetStarted.AspNetCore.NewDb</strong> as the name and click <strong>OK</strong></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="34" sourceendlinenumber="34"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="34" sourceendlinenumber="34">Wait for the <strong>New ASP.NET Core Web Application</strong> dialog to appear</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="36" sourceendlinenumber="36"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="36" sourceendlinenumber="36">Select the <strong>Web Application</strong> template and ensure that <strong>Authentication</strong> is set to <strong>No Authentication</strong></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="38" sourceendlinenumber="38"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="38" sourceendlinenumber="38">Click <strong>OK</strong></p>
+</li>
+</ul>
+<div class="WARNING sourceFile=" platforms/aspnetcore/new-db.md"="" sourcestartlinenumber="40" sourceendlinenumber="40" "=""><h5>Warning</h5><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="41" sourceendlinenumber="41">If you use <strong>Individual User Accounts</strong> instead of <strong>None</strong> for <strong>Authentication</strong> then an Entity Framework model will be added to your project in <em>Models\IdentityModel.cs</em>. Using the techniques you will learn in this walkthrough, you can choose to add a second model, or extend this existing model to contain your entity classes.</p>
+</div>
+<h2 id="install-entity-framework" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="43" sourceendlinenumber="43">Install Entity Framework</h2>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="45" sourceendlinenumber="45">To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see <a href="../../providers/index.html" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="45" sourceendlinenumber="45">Database Providers</a>.</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="47" sourceendlinenumber="49">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="47" sourceendlinenumber="47"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="47" sourceendlinenumber="47">Tools ‣ NuGet Package Manager ‣ Package Manager Console</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="49" sourceendlinenumber="49"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="49" sourceendlinenumber="49">Run <code>Install-Package Microsoft.EntityFrameworkCore.SqlServer</code></p>
+</li>
+</ul>
+<div class="NOTE sourceFile=" platforms/aspnetcore/new-db.md"="" sourcestartlinenumber="51" sourceendlinenumber="51" "=""><h5>Note</h5><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="52" sourceendlinenumber="52">In ASP.NET Core projects the <code>Install-Package</code> command will complete quickly and the package installation will occur in the background. You will see <strong>(Restoring...)</strong> appear next to <strong>References</strong> in <strong>Solution Explorer</strong> while the install occurs.</p>
+</div>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="54" sourceendlinenumber="54">Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="56" sourceendlinenumber="60">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="56" sourceendlinenumber="56"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="56" sourceendlinenumber="56">Run <code>Install-Package Microsoft.EntityFrameworkCore.Tools –Pre</code></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="58" sourceendlinenumber="58"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="58" sourceendlinenumber="58">Open <strong>project.json</strong></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="60" sourceendlinenumber="60"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="60" sourceendlinenumber="60">Locate the <code>tools</code> section and add the <code>ef</code> command as shown below</p>
+</li>
+</ul>
+<!-- [!code-json[Main](samples/Platforms/AspNetCore/AspNetCore.NewDb/project.json?highlight=2)] -->
+<pre sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="63" sourceendlinenumber="69"><code class="lang-json">  &quot;tools&quot;: {
+    &quot;Microsoft.EntityFrameworkCore.Tools&quot;: &quot;1.0.0-preview2-final&quot;,
+    &quot;Microsoft.AspNetCore.Razor.Tools&quot;: &quot;1.0.0-preview2-final&quot;,
+    &quot;Microsoft.AspNetCore.Server.IISIntegration.Tools&quot;: &quot;1.0.0-preview2-final&quot;
+  },
+</code></pre><h2 id="create-your-model" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="71" sourceendlinenumber="71">Create your model</h2>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="73" sourceendlinenumber="73">Now it&#39;s time to define a context and entity classes that make up your model.</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="75" sourceendlinenumber="87">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="75" sourceendlinenumber="75"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="75" sourceendlinenumber="75">Right-click on the project in <strong>Solution Explorer</strong> and select Add ‣ New Folder</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="77" sourceendlinenumber="77"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="77" sourceendlinenumber="77">Enter <strong>Models</strong> as the name of the folder</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="79" sourceendlinenumber="79"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="79" sourceendlinenumber="79">Right-click on the <strong>Models</strong> folder and select Add ‣ New Item...</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="81" sourceendlinenumber="81"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="81" sourceendlinenumber="81">From the left menu select Installed ‣ Code</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="83" sourceendlinenumber="83"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="83" sourceendlinenumber="83">Select the <strong>Class</strong> item template</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="85" sourceendlinenumber="85"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="85" sourceendlinenumber="85">Enter <strong>Model.cs</strong> as the name and click <strong>OK</strong></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="87" sourceendlinenumber="87"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="87" sourceendlinenumber="87">Replace the contents of the file with the following code</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Platforms/AspNetCore/AspNetCore.NewDb/Models/Model.cs)] -->
+<pre sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="90" sourceendlinenumber="124"><code class="lang-csharp">using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+
+namespace EFGetStarted.AspNetCore.NewDb.Models
+{
+    public class BloggingContext : DbContext
+    {
+        public BloggingContext(DbContextOptions&lt;BloggingContext&gt; options)
+            : base(options)
+        { }
+
+        public DbSet&lt;Blog&gt; Blogs { get; set; }
+        public DbSet&lt;Post&gt; Posts { get; set; }
+    }
+
+    public class Blog
+    {
+        public int BlogId { get; set; }
+        public string Url { get; set; }
+
+        public List&lt;Post&gt; Posts { get; set; }
+    }
+
+    public class Post
+    {
+        public int PostId { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+
+        public int BlogId { get; set; }
+        public Blog Blog { get; set; }
+    }
+}
+</code></pre><div class="NOTE sourceFile=" platforms/aspnetcore/new-db.md"="" sourcestartlinenumber="126" sourceendlinenumber="126" "=""><h5>Note</h5><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="127" sourceendlinenumber="127">In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.</p>
+</div>
+<h2 id="register-your-context-with-dependency-injection" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="129" sourceendlinenumber="129">Register your context with dependency injection</h2>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="131" sourceendlinenumber="131">The concept of dependency injection is central to ASP.NET Core. Services (such as <code>BloggingContext</code>) are registered with dependency injection during application startup. Components that require these services (such as your MVC controllers) are then provided these services via constructor parameters or properties. For more information on dependency injection see the <a href="http://docs.asp.net/en/latest/fundamentals/dependency-injection.html" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="131" sourceendlinenumber="131">Dependency Injection</a> article on the ASP.NET site.</p>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="133" sourceendlinenumber="133">In order for our MVC controllers to make use of <code>BloggingContext</code> we are going to register it as a service.</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="135" sourceendlinenumber="137">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="135" sourceendlinenumber="135"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="135" sourceendlinenumber="135">Open <strong>Startup.cs</strong></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="137" sourceendlinenumber="137"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="137" sourceendlinenumber="137">Add the following <code>using</code> statements at the start of the file</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Platforms/AspNetCore/AspNetCore.NewDb/Startup.cs)] -->
+<pre sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="140" sourceendlinenumber="143"><code class="lang-csharp">using EFGetStarted.AspNetCore.NewDb.Models;
+using Microsoft.EntityFrameworkCore;
+</code></pre><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="145" sourceendlinenumber="145">Now we can use the <code>AddDbContext</code> method to register it as a service.</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="147" sourceendlinenumber="149">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="147" sourceendlinenumber="147"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="147" sourceendlinenumber="147">Locate the <code>ConfigureServices</code> method</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="149" sourceendlinenumber="149"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="149" sourceendlinenumber="149">Add the lines that are highlighted in the following code</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Platforms/AspNetCore/AspNetCore.NewDb/Startup.cs?highlight=3,4)] -->
+<pre sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="152" sourceendlinenumber="157"><code class="lang-csharp">public void ConfigureServices(IServiceCollection services)
+{
+    var connection = @&quot;Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;&quot;;
+    services.AddDbContext&lt;BloggingContext&gt;(options =&gt; options.UseSqlServer(connection));
+</code></pre><h2 id="create-your-database" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="159" sourceendlinenumber="159">Create your database</h2>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="161" sourceendlinenumber="161">Now that you have a model, you can use migrations to create a database for you.</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="163" sourceendlinenumber="167">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="163" sourceendlinenumber="163"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="163" sourceendlinenumber="163">Tools –&gt; NuGet Package Manager –&gt; Package Manager Console</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="165" sourceendlinenumber="165"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="165" sourceendlinenumber="165">Run <code>Add-Migration MyFirstMigration</code> to scaffold a migration to create the initial set of tables for your model. If you receive an error stating the term &#39;add-migration&#39; is not recognized as the name of a cmdlet, then close and reopen Visual Studio</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="167" sourceendlinenumber="167"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="167" sourceendlinenumber="167">Run <code>Update-Database</code> to apply the new migration to the database. Because your database doesn&#39;t exist yet, it will be created for you before the migration is applied.</p>
+</li>
+</ul>
+<div class="TIP sourceFile=" platforms/aspnetcore/new-db.md"="" sourcestartlinenumber="169" sourceendlinenumber="169" "=""><h5>Tip</h5><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="170" sourceendlinenumber="170">If you make future changes to your model, you can use the <code>Add-Migration</code> command to scaffold a new migration to make the corresponding schema changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the <code>Update-Database</code> command to apply the changes to the database.</p>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="172" sourceendlinenumber="172">EF uses a <code>__EFMigrationsHistory</code> table in the database to keep track of which migrations have already been applied to the database.</p>
+</div>
+<h2 id="create-a-controller" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="174" sourceendlinenumber="174">Create a controller</h2>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="176" sourceendlinenumber="176">Next, we&#39;ll add an MVC controller that will use EF to query and save data.</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="178" sourceendlinenumber="186">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="178" sourceendlinenumber="178"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="178" sourceendlinenumber="178">Right-click on the <strong>Controllers</strong> folder in <strong>Solution Explorer</strong> and select Add ‣ New Item...</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="180" sourceendlinenumber="180"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="180" sourceendlinenumber="180">From the left menu select Installed ‣ Server-side</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="182" sourceendlinenumber="182"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="182" sourceendlinenumber="182">Select the <strong>Class</strong> item template</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="184" sourceendlinenumber="184"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="184" sourceendlinenumber="184">Enter <strong>BlogsController.cs</strong> as the name and click <strong>OK</strong></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="186" sourceendlinenumber="186"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="186" sourceendlinenumber="186">Replace the contents of the file with the following code</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Platforms/AspNetCore/AspNetCore.NewDb/Controllers/BlogsController.cs)] -->
+<pre sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="189" sourceendlinenumber="231"><code class="lang-csharp">using EFGetStarted.AspNetCore.NewDb.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+
+namespace EFGetStarted.AspNetCore.NewDb.Controllers
+{
+    public class BlogsController : Controller
+    {
+        private BloggingContext _context;
+
+        public BlogsController(BloggingContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult Index()
+        {
+            return View(_context.Blogs.ToList());
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Blog blog)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Blogs.Add(blog);
+                _context.SaveChanges();
+                return RedirectToAction(&quot;Index&quot;);
+            }
+
+            return View(blog);
+        }
+
+    }
+}
+</code></pre><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="233" sourceendlinenumber="233">You&#39;ll notice that the controller takes a <code>BloggingContext</code> as a constructor parameter. ASP.NET dependency injection will take care of passing an instance of <code>BloggingContext</code> into your controller.</p>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="235" sourceendlinenumber="235">The controller contains an <code>Index</code> action, which displays all blogs in the database, and a <code>Create</code> action, which inserts a new blogs into the database.</p>
+<h2 id="create-views" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="237" sourceendlinenumber="237">Create views</h2>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="239" sourceendlinenumber="239">Now that we have a controller it&#39;s time to add the views that will make up the user interface.</p>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="241" sourceendlinenumber="241">We&#39;ll start with the view for our <code>Index</code> action, that displays all blogs.</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="243" sourceendlinenumber="255">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="243" sourceendlinenumber="243"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="243" sourceendlinenumber="243">Right-click on the <strong>Views</strong> folder in <strong>Solution Explorer</strong> and select Add ‣ New Folder</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="245" sourceendlinenumber="245"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="245" sourceendlinenumber="245">Enter <strong>Blogs</strong> as the name of the folder</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="247" sourceendlinenumber="247"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="247" sourceendlinenumber="247">Right-click on the <strong>Blogs</strong> folder and select Add ‣ New Item...</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="249" sourceendlinenumber="249"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="249" sourceendlinenumber="249">From the left menu select Installed ‣ ASP.NET</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="251" sourceendlinenumber="251"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="251" sourceendlinenumber="251">Select the <strong>MVC View Page</strong> item template</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="253" sourceendlinenumber="253"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="253" sourceendlinenumber="253">Enter <strong>Index.cshtml</strong> as the name and click <strong>Add</strong></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="255" sourceendlinenumber="255"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="255" sourceendlinenumber="255">Replace the contents of the file with the following code</p>
+</li>
+</ul>
+<!-- [!code-html[Main](samples/Platforms/AspNetCore/AspNetCore.NewDb/Views/Blogs/Index.cshtml)] -->
+<pre sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="258" sourceendlinenumber="289"><code class="lang-html">@model IEnumerable&lt;EFGetStarted.AspNetCore.NewDb.Models.Blog&gt;
+
+@{
+    ViewBag.Title = &quot;Blogs&quot;;
+}
+
+&lt;h2&gt;Blogs&lt;/h2&gt;
+
+&lt;p&gt;
+    &lt;a asp-controller=&quot;Blogs&quot; asp-action=&quot;Create&quot;&gt;Create New&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Id&lt;/th&gt;
+        &lt;th&gt;Url&lt;/th&gt;
+    &lt;/tr&gt;
+
+    @foreach (var item in Model)
+    {
+        &lt;tr&gt;
+            &lt;td&gt;
+                @Html.DisplayFor(modelItem =&gt; item.BlogId)
+            &lt;/td&gt;
+            &lt;td&gt;
+                @Html.DisplayFor(modelItem =&gt; item.Url)
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    }
+&lt;/table&gt;
+</code></pre><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="291" sourceendlinenumber="291">We&#39;ll also add a view for the <code>Create</code> action, which allows the user to enter details for a new blog.</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="293" sourceendlinenumber="301">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="293" sourceendlinenumber="293"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="293" sourceendlinenumber="293">Right-click on the <strong>Blogs</strong> folder and select Add ‣ New Item...</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="295" sourceendlinenumber="295"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="295" sourceendlinenumber="295">From the left menu select Installed ‣ ASP.NET Core</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="297" sourceendlinenumber="297"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="297" sourceendlinenumber="297">Select the <strong>MVC View Page</strong> item template</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="299" sourceendlinenumber="299"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="299" sourceendlinenumber="299">Enter <strong>Create.cshtml</strong> as the name and click <strong>Add</strong></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="301" sourceendlinenumber="301"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="301" sourceendlinenumber="301">Replace the contents of the file with the following code</p>
+</li>
+</ul>
+<!-- [!code-html[Main](samples/Platforms/AspNetCore/AspNetCore.NewDb/Views/Blogs/Create.cshtml)] -->
+<pre sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="304" sourceendlinenumber="330"><code class="lang-html">@model EFGetStarted.AspNetCore.NewDb.Models.Blog
+
+@{
+    ViewBag.Title = &quot;New Blog&quot;;
+}
+
+&lt;h2&gt;@ViewData[&quot;Title&quot;]&lt;/h2&gt;
+
+&lt;form asp-controller=&quot;Blogs&quot; asp-action=&quot;Create&quot; method=&quot;post&quot; class=&quot;form-horizontal&quot; role=&quot;form&quot;&gt;
+    &lt;div class=&quot;form-horizontal&quot;&gt;
+        &lt;div asp-validation-summary=&quot;All&quot; class=&quot;text-danger&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label asp-for=&quot;Url&quot; class=&quot;col-md-2 control-label&quot;&gt;&lt;/label&gt;
+            &lt;div class=&quot;col-md-10&quot;&gt;
+                &lt;input asp-for=&quot;Url&quot; class=&quot;form-control&quot; /&gt;
+                &lt;span asp-validation-for=&quot;Url&quot; class=&quot;text-danger&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;div class=&quot;col-md-offset-2 col-md-10&quot;&gt;
+                &lt;input type=&quot;submit&quot; value=&quot;Create&quot; class=&quot;btn btn-default&quot; /&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+</code></pre><h2 id="run-the-application" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="332" sourceendlinenumber="332">Run the application</h2>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="334" sourceendlinenumber="334">You can now run the application to see it in action.</p>
+<ul sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="336" sourceendlinenumber="344">
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="336" sourceendlinenumber="336"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="336" sourceendlinenumber="336">Debug ‣ Start Without Debugging</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="338" sourceendlinenumber="338"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="338" sourceendlinenumber="338">The application will build and open in a web browser</p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="340" sourceendlinenumber="340"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="340" sourceendlinenumber="340">Navigate to <strong>/Blogs</strong></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="342" sourceendlinenumber="342"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="342" sourceendlinenumber="342">Click <strong>Create New</strong></p>
+</li>
+<li sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="344" sourceendlinenumber="344"><p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="344" sourceendlinenumber="344">Enter a <strong>Url</strong> for the new blog and click <strong>Create</strong></p>
+</li>
+</ul>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="346" sourceendlinenumber="346"><img src="_static/create.png" alt="image" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="346" sourceendlinenumber="346"></p>
+<p sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="348" sourceendlinenumber="348"><img src="_static/index-new-db.png" alt="image" sourcefile="platforms/aspnetcore/new-db.md" sourcestartlinenumber="348" sourceendlinenumber="348"></p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/platforms/aspnetcore/new-db.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

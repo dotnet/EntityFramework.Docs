@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Inheritance </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Inheritance ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="modeling/inheritance">
+              <h1 id="inheritance" sourcefile="modeling/inheritance.md" sourcestartlinenumber="4" sourceendlinenumber="4">Inheritance</h1>
+              
+<div class="WARNING sourceFile=" modeling/inheritance.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="modeling/inheritance.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="modeling/inheritance.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="modeling/inheritance.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="modeling/inheritance.md" sourcestartlinenumber="9" sourceendlinenumber="9">Inheritance in the EF model is used to control how inheritance in the entity classes is represented in the database.</p>
+<h2 id="conventions" sourcefile="modeling/inheritance.md" sourcestartlinenumber="11" sourceendlinenumber="11">Conventions</h2>
+<p sourcefile="modeling/inheritance.md" sourcestartlinenumber="13" sourceendlinenumber="13">By convention, it is up to the database provider to determine how inheritance will be represented in the database. See <a href="relational/inheritance.html" sourcefile="modeling/inheritance.md" sourcestartlinenumber="13" sourceendlinenumber="13">Inheritance (Relational Database)</a> for how this is handled with a relational database provider.</p>
+<p sourcefile="modeling/inheritance.md" sourcestartlinenumber="15" sourceendlinenumber="15">EF will only setup inheritance if two or more inherited types are explicitly included in the model. EF will not scan for base or derived types that were not otherwise included in the model. You can include types in the model by exposing a <em>DbSet<tentity></tentity></em> for each type in the inheritance hierarchy.</p>
+<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/InheritanceDbSets.cs?highlight=3,4)] -->
+<pre sourcefile="modeling/inheritance.md" sourcestartlinenumber="18" sourceendlinenumber="35"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+    public DbSet&lt;RssBlog&gt; RssBlogs { get; set; }
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+}
+
+public class RssBlog : Blog
+{
+    public string RssUrl { get; set; }
+}
+</code></pre><p sourcefile="modeling/inheritance.md" sourcestartlinenumber="37" sourceendlinenumber="37">If you don&#39;t want to expose a <em>DbSet<tentity></tentity></em> for one or more entities in the hierarchy, you can use the Fluent API to ensure they are included in the model.</p>
+<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/InheritanceModelBuilder.cs?highlight=7)] -->
+<pre sourcefile="modeling/inheritance.md" sourcestartlinenumber="40" sourceendlinenumber="50"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;RssBlog&gt;();
+    }
+}
+</code></pre><h2 id="data-annotations" sourcefile="modeling/inheritance.md" sourcestartlinenumber="52" sourceendlinenumber="52">Data Annotations</h2>
+<p sourcefile="modeling/inheritance.md" sourcestartlinenumber="54" sourceendlinenumber="54">You cannot use Data Annotations to configure inheritance.</p>
+<h2 id="fluent-api" sourcefile="modeling/inheritance.md" sourcestartlinenumber="56" sourceendlinenumber="56">Fluent API</h2>
+<p sourcefile="modeling/inheritance.md" sourcestartlinenumber="58" sourceendlinenumber="58">The Fluent API for inheritance depends on the database provider you are using. See <a href="relational/inheritance.html" sourcefile="modeling/inheritance.md" sourcestartlinenumber="58" sourceendlinenumber="58">Inheritance (Relational Database)</a> for the configuration you can perform for a relational database provider.</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/modeling/inheritance.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,2 +1,0 @@
-.. caution::
-    This documentation is for EF Core. For EF6.x and earlier release see http://msdn.com/data/ef.

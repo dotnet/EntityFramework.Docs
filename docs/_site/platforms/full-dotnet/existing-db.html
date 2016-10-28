@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Console Application to Existing Database (Database First) </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Console Application to Existing Database (Database First) ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="platforms/full-dotnet/existing-db">
+              <h1 id="console-application-to-existing-database-database-first" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="4" sourceendlinenumber="4">Console Application to Existing Database (Database First)</h1>
+              
+<div class="WARNING sourceFile=" platforms/full-dotnet/existing-db.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="9" sourceendlinenumber="9">In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.</p>
+<div class="TIP sourceFile=" platforms/full-dotnet/existing-db.md"="" sourcestartlinenumber="11" sourceendlinenumber="11" "=""><h5>Tip</h5><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="12" sourceendlinenumber="12">You can view this article&#39;s <a href="https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Platforms/FullNet/ConsoleApp.ExistingDb" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="12" sourceendlinenumber="12">sample</a> on GitHub.</p>
+</div>
+<h2 id="prerequisites" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="14" sourceendlinenumber="14">Prerequisites</h2>
+<p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="16" sourceendlinenumber="16">The following prerequisites are needed to complete this walkthrough:</p>
+<ul sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="18" sourceendlinenumber="24">
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="18" sourceendlinenumber="18"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="18" sourceendlinenumber="18"><a href="https://go.microsoft.com/fwlink/?LinkId=691129" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="18" sourceendlinenumber="18">Visual Studio 2015 Update 3</a></p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="20" sourceendlinenumber="20"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="20" sourceendlinenumber="20"><a href="https://visualstudiogallery.msdn.microsoft.com/5d345edc-2e2d-4a9c-b73b-d53956dc458d" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="20" sourceendlinenumber="20">Latest version of NuGet Package Manager</a></p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="22" sourceendlinenumber="22"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="22" sourceendlinenumber="22"><a href="https://www.microsoft.com/en-us/download/details.aspx?id=40855" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="22" sourceendlinenumber="22">Latest version of Windows PowerShell</a></p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="24" sourceendlinenumber="24"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="24" sourceendlinenumber="24"><a href="#blogging-database" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="24" sourceendlinenumber="24">Blogging database</a></p>
+</li>
+</ul>
+<h3 id="blogging-database" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="26" sourceendlinenumber="26">Blogging database</h3>
+<p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="28" sourceendlinenumber="28">This tutorial uses a <strong>Blogging</strong> database on your LocalDb instance as the existing database.</p>
+<div class="NOTE sourceFile=" platforms/full-dotnet/existing-db.md"="" sourcestartlinenumber="30" sourceendlinenumber="30" "=""><h5>Note</h5><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="31" sourceendlinenumber="31">If you have already created the <strong>Blogging</strong> database as part of another tutorial, you can skip these steps.</p>
+</div>
+<ul sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="33" sourceendlinenumber="49">
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="33" sourceendlinenumber="33"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="33" sourceendlinenumber="33">Open Visual Studio</p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="35" sourceendlinenumber="35"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="35" sourceendlinenumber="35">Tools ‣ Connect to Database...</p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="37" sourceendlinenumber="37"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="37" sourceendlinenumber="37">Select <strong>Microsoft SQL Server</strong> and click <strong>Continue</strong></p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="39" sourceendlinenumber="39"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="39" sourceendlinenumber="39">Enter <strong>(localdb)\mssqllocaldb</strong> as the <strong>Server Name</strong></p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="41" sourceendlinenumber="41"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="41" sourceendlinenumber="41">Enter <strong>master</strong> as the <strong>Database Name</strong> and click <strong>OK</strong></p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="43" sourceendlinenumber="43"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="43" sourceendlinenumber="43">The master database is now displayed under <strong>Data Connections</strong> in <strong>Server Explorer</strong></p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="45" sourceendlinenumber="45"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="45" sourceendlinenumber="45">Right-click on the database in <strong>Server Explorer</strong> and select <strong>New Query</strong></p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="47" sourceendlinenumber="47"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="47" sourceendlinenumber="47">Copy the script, listed below, into the query editor</p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="49" sourceendlinenumber="49"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="49" sourceendlinenumber="49">Right-click on the query editor and select <strong>Execute</strong></p>
+</li>
+</ul>
+<!-- [!code-sql[Main](platforms/_shared/create-blogging-database-script.sql)] -->
+<pre sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="52" sourceendlinenumber="81"><code class="lang-sql">CREATE DATABASE [Blogging]
+GO
+
+USE [Blogging]
+GO
+
+CREATE TABLE [Blog] (
+    [BlogId] int NOT NULL IDENTITY,
+    [Url] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Blog] PRIMARY KEY ([BlogId])
+);
+GO
+
+CREATE TABLE [Post] (
+    [PostId] int NOT NULL IDENTITY,
+    [BlogId] int NOT NULL,
+    [Content] nvarchar(max),
+    [Title] nvarchar(max),
+    CONSTRAINT [PK_Post] PRIMARY KEY ([PostId]),
+    CONSTRAINT [FK_Post_Blog_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [Blog] ([BlogId]) ON DELETE CASCADE
+);
+GO
+
+INSERT INTO [Blog] (Url) VALUES 
+(&#39;http://blogs.msdn.com/dotnet&#39;), 
+(&#39;http://blogs.msdn.com/webdev&#39;), 
+(&#39;http://blogs.msdn.com/visualstudio&#39;)
+GO
+</code></pre><h2 id="create-a-new-project" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="83" sourceendlinenumber="83">Create a new project</h2>
+<ul sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="85" sourceendlinenumber="95">
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="85" sourceendlinenumber="85"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="85" sourceendlinenumber="85">Open Visual Studio 2015</p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="87" sourceendlinenumber="87"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="87" sourceendlinenumber="87">File ‣ New ‣ Project...</p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="89" sourceendlinenumber="89"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="89" sourceendlinenumber="89">From the left menu select Templates ‣ Visual C# ‣ Windows</p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="91" sourceendlinenumber="91"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="91" sourceendlinenumber="91">Select the <strong>Console Application</strong> project template</p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="93" sourceendlinenumber="93"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="93" sourceendlinenumber="93">Ensure you are targeting <strong>.NET Framework 4.5.1</strong> or later</p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="95" sourceendlinenumber="95"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="95" sourceendlinenumber="95">Give the project a name and click <strong>OK</strong></p>
+</li>
+</ul>
+<h2 id="install-entity-framework" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="97" sourceendlinenumber="97">Install Entity Framework</h2>
+<p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="99" sourceendlinenumber="99">To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see <a href="../../providers/index.html" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="99" sourceendlinenumber="99">Database Providers</a>.</p>
+<ul sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="101" sourceendlinenumber="103">
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="101" sourceendlinenumber="101"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="101" sourceendlinenumber="101">Tools ‣ NuGet Package Manager ‣ Package Manager Console</p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="103" sourceendlinenumber="103"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="103" sourceendlinenumber="103">Run <code>Install-Package Microsoft.EntityFrameworkCore.SqlServer</code></p>
+</li>
+</ul>
+<p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="105" sourceendlinenumber="105">To enable reverse engineering from an existing database we need to install a couple of other packages too.</p>
+<ul sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="107" sourceendlinenumber="109">
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="107" sourceendlinenumber="107"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="107" sourceendlinenumber="107">Run <code>Install-Package Microsoft.EntityFrameworkCore.Tools –Pre</code></p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="109" sourceendlinenumber="109"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="109" sourceendlinenumber="109">Run <code>Install-Package Microsoft.EntityFrameworkCore.SqlServer.Design</code></p>
+</li>
+</ul>
+<h2 id="reverse-engineer-your-model" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="111" sourceendlinenumber="111">Reverse engineer your model</h2>
+<p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="113" sourceendlinenumber="113">Now it&#39;s time to create the EF model based on your existing database.</p>
+<ul sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="115" sourceendlinenumber="117">
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="115" sourceendlinenumber="115"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="115" sourceendlinenumber="115">Tools –&gt; NuGet Package Manager –&gt; Package Manager Console</p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="117" sourceendlinenumber="117"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="117" sourceendlinenumber="117">Run the following command to create a model from the existing database</p>
+</li>
+</ul>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="120" sourceendlinenumber="122"><code class="lang-text">Scaffold-DbContext &quot;Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;&quot; Microsoft.EntityFrameworkCore.SqlServer
+</code></pre><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="124" sourceendlinenumber="124">The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.</p>
+<!-- [!code-csharp[Main](samples/Platforms/FullNet/ConsoleApp.ExistingDb/Blog.cs)] -->
+<pre sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="127" sourceendlinenumber="146"><code class="lang-csharp">using System;
+using System.Collections.Generic;
+
+namespace EFGetStarted.ConsoleApp.ExistingDb
+{
+    public partial class Blog
+    {
+        public Blog()
+        {
+            Post = new HashSet&lt;Post&gt;();
+        }
+
+        public int BlogId { get; set; }
+        public string Url { get; set; }
+
+        public virtual ICollection&lt;Post&gt; Post { get; set; }
+    }
+}
+</code></pre><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="148" sourceendlinenumber="148">The context represents a session with the database and allows you to query and save instances of the entity classes.</p>
+<!-- [!code-csharp[Main](samples/Platforms/FullNet/ConsoleApp.ExistingDb/BloggingContext.cs)] -->
+<pre sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="151" sourceendlinenumber="184"><code class="lang-csharp">using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+
+namespace EFGetStarted.ConsoleApp.ExistingDb
+{
+    public partial class BloggingContext : DbContext
+    {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            optionsBuilder.UseSqlServer(@&quot;Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;&quot;);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity&lt;Blog&gt;(entity =&gt;
+            {
+                entity.Property(e =&gt; e.Url).IsRequired();
+            });
+
+            modelBuilder.Entity&lt;Post&gt;(entity =&gt;
+            {
+                entity.HasOne(d =&gt; d.Blog)
+                    .WithMany(p =&gt; p.Post)
+                    .HasForeignKey(d =&gt; d.BlogId);
+            });
+        }
+
+        public virtual DbSet&lt;Blog&gt; Blog { get; set; }
+        public virtual DbSet&lt;Post&gt; Post { get; set; }
+    }
+}
+</code></pre><h2 id="use-your-model" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="186" sourceendlinenumber="186">Use your model</h2>
+<p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="188" sourceendlinenumber="188">You can now use your model to perform data access.</p>
+<ul sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="190" sourceendlinenumber="192">
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="190" sourceendlinenumber="190"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="190" sourceendlinenumber="190">Open <em>Program.cs</em></p>
+</li>
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="192" sourceendlinenumber="192"><p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="192" sourceendlinenumber="192">Replace the contents of the file with the following code</p>
+</li>
+</ul>
+<!-- [!code-csharp[Main](samples/Platforms/FullNet/ConsoleApp.ExistingDb/Program.cs)] -->
+<pre sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="195" sourceendlinenumber="220"><code class="lang-csharp">using System;
+
+namespace EFGetStarted.ConsoleApp.ExistingDb
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (var db = new BloggingContext())
+            {
+                db.Blog.Add(new Blog { Url = &quot;http://blogs.msdn.com/adonet&quot; });
+                var count = db.SaveChanges();
+                Console.WriteLine(&quot;{0} records saved to database&quot;, count);
+
+                Console.WriteLine();
+                Console.WriteLine(&quot;All blogs in database:&quot;);
+                foreach (var blog in db.Blog)
+                {
+                    Console.WriteLine(&quot; - {0}&quot;, blog.Url);
+                }
+            }
+        }
+    }
+}
+</code></pre><ul sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="222" sourceendlinenumber="222">
+<li sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="222" sourceendlinenumber="222">Debug ‣ Start Without Debugging</li>
+</ul>
+<p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="224" sourceendlinenumber="224">You will see that one blog is saved to the database and then the details of all blogs are printed to the console.</p>
+<p sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="226" sourceendlinenumber="226"><img src="_static/output-existing-db.png" alt="image" sourcefile="platforms/full-dotnet/existing-db.md" sourcestartlinenumber="226" sourceendlinenumber="226"></p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/platforms/full-dotnet/existing-db.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

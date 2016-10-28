@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Porting a Code-Based Model (Code First &amp; Code First to Existing Database) </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Porting a Code-Based Model (Code First &amp; Code First to Existing Database) ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="efcore-vs-ef6/porting/port-code">
+              <h1 id="porting-a-code-based-model-code-first--code-first-to-existing-database" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="4" sourceendlinenumber="4">Porting a Code-Based Model (Code First &amp; Code First to Existing Database)</h1>
+              
+<div class="WARNING sourceFile=" efcore-vs-ef6/porting/port-code.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="9" sourceendlinenumber="9">If you&#39;ve read all the caveats and you are ready to port, then here are some guidelines to help you get started.</p>
+<h2 id="install-ef-core-nuget-packages" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="11" sourceendlinenumber="11">Install EF Core NuGet packages</h2>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="13" sourceendlinenumber="13">To use EF Core, you install the NuGet package for the database provider you want to use. For example, when targeting SQL Server, you would install <code>Microsoft.EntityFrameworkCore.SqlServer</code>. See <a href="../../providers/index.html" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="13" sourceendlinenumber="13">Database Providers</a> for details.</p>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="15" sourceendlinenumber="15">If you are planning to use migrations, then you should also install the <code>Microsoft.EntityFrameworkCore.Tools</code> package.</p>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="17" sourceendlinenumber="17">It is fine to leave the EF6.x NuGet package (EntityFramework) installed, as EF Core and EF6.x can be used side-by-side in the same application. However, if you aren&#39;t intending to use EF6.x in any areas of your application, then uninstalling the package will help give compile errors on pieces of code that need attention.</p>
+<h2 id="swap-namespaces" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="19" sourceendlinenumber="19">Swap namespaces</h2>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="21" sourceendlinenumber="21">Most APIs that you use in EF6.x are in the <code>System.Data.Entity</code> namespace (and related sub-namespaces). The first code change is to swap to the <code>Microsoft.EntityFrameworkCore</code> namespace. You would typically start with your derived context code file and then work out from there, addressing compilation errors as they occur.</p>
+<h2 id="context-configuration-connection-etc" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="23" sourceendlinenumber="23">Context configuration (connection etc.)</h2>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="25" sourceendlinenumber="25">As described in <a href="ensure-requirements.html" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="25" sourceendlinenumber="25">Ensure EF Core Will Work for Your Application</a>, EF Core has less magic around detecting the database to connect to. You will need to override the <code>OnConfiguring</code> method on your derived context, and use the database provider specific API to setup the connection to the database.</p>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="27" sourceendlinenumber="27">Most EF6.x applications store the connection string in the applications <code>App/Web.config</code> file. In EF Core, you read this connection string using the <code>ConfigurationManager</code> API. You may need to add a reference to the <code>System.Configuration</code> framework assembly to be able to use this API.</p>
+<!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": true, "dupnames  : "csharp", highlight_args}, "names": [] -->
+<pre sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="30" sourceendlinenumber="41"><code class="lang-csharp">public class BloggingContext : DbContext
+{
+    public DbSet&lt;Blog&gt; Blogs { get; set; }
+    public DbSet&lt;Post&gt; Posts { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+      optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings[&quot;BloggingDatabase&quot;].ConnectionString);
+    }
+}
+</code></pre><h2 id="update-your-code" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="43" sourceendlinenumber="43">Update your code</h2>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="45" sourceendlinenumber="45">At this point, it&#39;s a matter of addressing compilation errors and reviewing code to see if the behavior changes will impact you.</p>
+<h2 id="existing-migrations" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="47" sourceendlinenumber="47">Existing migrations</h2>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="49" sourceendlinenumber="49">There isn&#39;t really a feasible way to port existing EF6.x migrations to EF Core.</p>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="51" sourceendlinenumber="51">If possible, it is best to assume that all previous migrations from EF6.x have been applied to the database and then start migrating the schema from that point using EF Core. To do this, you would use the <code>Add-Migration</code> command to add a migration once the model is ported to EF Core. You would then remove all code from the <code>Up</code> and <code>Down</code> methods of the scaffolded migration. Subsequent migrations will compare to the model when that initial migration was scaffolded.</p>
+<h2 id="test-the-port" sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="53" sourceendlinenumber="53">Test the port</h2>
+<p sourcefile="efcore-vs-ef6/porting/port-code.md" sourcestartlinenumber="55" sourceendlinenumber="55">Just because your application compiles, does not mean it is successfully ported to EF Core. You will need to test all areas of your application to ensure that none of the behavior changes have adversely impacted your application.</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/efcore-vs-ef6/porting/port-code.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

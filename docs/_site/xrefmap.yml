@@ -1,0 +1,261 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: efcore-vs-ef6/choosing
+  name: Which One Is Right for You
+  href: efcore-vs-ef6/choosing.html#efcore_vs_ef6_choosing
+- uid: efcore-vs-ef6/features
+  name: Feature Comparison
+  href: efcore-vs-ef6/features.html#efcore_vs_ef6_features
+- uid: efcore-vs-ef6/porting/ensure-requirements
+  name: Ensure EF Core Will Work for Y...
+  href: efcore-vs-ef6/porting/ensure-requirements.html#efcore_vs_ef6_porting_ensure_requirements
+- uid: efcore-vs-ef6/porting/index
+  name: Porting from EF6.x to EF Core
+  href: efcore-vs-ef6/porting/index.html#efcore_vs_ef6_porting_index
+- uid: efcore-vs-ef6/porting/port-code
+  name: Porting a Code-Based Model (Co...
+  href: efcore-vs-ef6/porting/port-code.html#efcore_vs_ef6_porting_port_code
+- uid: efcore-vs-ef6/porting/port-edmx
+  name: Porting an EDMX-Based Model (M...
+  href: efcore-vs-ef6/porting/port-edmx.html#efcore_vs_ef6_porting_port_edmx
+- uid: efcore-vs-ef6/side-by-side
+  name: EF6.x and EF Core in the Same ...
+  href: efcore-vs-ef6/side-by-side.html#efcore_vs_ef6_side_by_side
+- uid: index
+  name: Entity Framework Core
+  href: index.html#index
+- uid: intro
+  name: Entity Framework Core
+  href: intro.html#intro
+- uid: miscellaneous/cli/dotnet
+  name: .NET Core CLI
+  href: miscellaneous/cli/dotnet.html#miscellaneous_cli_dotnet
+- uid: miscellaneous/cli/index
+  name: Command Line Reference
+  href: miscellaneous/cli/index.html#miscellaneous_cli_index
+- uid: miscellaneous/cli/powershell
+  name: Package Manager Console (Visua...
+  href: miscellaneous/cli/powershell.html#miscellaneous_cli_powershell
+- uid: miscellaneous/configuring-dbcontext
+  name: Configuring a DbContext
+  href: miscellaneous/configuring-dbcontext.html#miscellaneous_configuring_dbcontext
+- uid: miscellaneous/connection-strings
+  name: Connection Strings
+  href: miscellaneous/connection-strings.html#miscellaneous_connection_strings
+- uid: miscellaneous/internals/index
+  name: Internals
+  href: miscellaneous/internals/index.html#miscellaneous_internals_index
+- uid: miscellaneous/internals/services
+  name: Understanding EF Services
+  href: miscellaneous/internals/services.html#miscellaneous_internals_services
+- uid: miscellaneous/internals/writing-a-provider
+  name: Writing a Database Provider
+  href: miscellaneous/internals/writing-a-provider.html#miscellaneous_internals_writing_a_provider
+- uid: miscellaneous/logging
+  name: Logging
+  href: miscellaneous/logging.html#miscellaneous_logging
+- uid: miscellaneous/rc1-rc2-upgrade
+  name: Upgrading from RC1 to RC2
+  href: miscellaneous/rc1-rc2-upgrade.html#miscellaneous_rc1_rc2_upgrade
+- uid: miscellaneous/rc2-rtm-upgrade
+  name: Upgrading from RC2 to RTM
+  href: miscellaneous/rc2-rtm-upgrade.html#miscellaneous_rc2_rtm_upgrade
+- uid: miscellaneous/testing
+  name: Testing with InMemory
+  href: miscellaneous/testing.html#miscellaneous_testing
+- uid: modeling/alternate-keys
+  name: Alternate Keys
+  href: modeling/alternate-keys.html#modeling_alternate_keys
+- uid: modeling/backing-field
+  name: Backing Fields
+  href: modeling/backing-field.html#modeling_backing_field
+- uid: modeling/concurrency
+  name: Concurrency Tokens
+  href: modeling/concurrency.html#modeling_concurrency
+- uid: modeling/generated-properties
+  name: Generated Properties
+  href: modeling/generated-properties.html#modeling_generated_properties
+- uid: modeling/included-properties
+  name: Including & Excluding Properti...
+  href: modeling/included-properties.html#modeling_included_properties
+- uid: modeling/included-types
+  name: Including & Excluding Types
+  href: modeling/included-types.html#modeling_included_types
+- uid: modeling/index
+  name: Creating a Model
+  href: modeling/index.html#modeling_index
+- uid: modeling/indexes
+  name: Indexes
+  href: modeling/indexes.html#modeling_indexes
+- uid: modeling/inheritance
+  name: Inheritance
+  href: modeling/inheritance.html#modeling_inheritance
+- uid: modeling/keys
+  name: Keys (primary)
+  href: modeling/keys.html#modeling_keys
+- uid: modeling/max-length
+  name: Maximum Length
+  href: modeling/max-length.html#modeling_max_length
+- uid: modeling/relational/columns
+  name: Column Mapping
+  href: modeling/relational/columns.html#modeling_relational_columns
+- uid: modeling/relational/computed-columns
+  name: Computed Columns
+  href: modeling/relational/computed-columns.html#modeling_relational_computed_columns
+- uid: modeling/relational/data-types
+  name: Data Types
+  href: modeling/relational/data-types.html#modeling_relational_data_types
+- uid: modeling/relational/default-schema
+  name: Default Schema
+  href: modeling/relational/default-schema.html#modeling_relational_default_schema
+- uid: modeling/relational/default-values
+  name: Default Values
+  href: modeling/relational/default-values.html#modeling_relational_default_values
+- uid: modeling/relational/fk-constraints
+  name: Foreign Key Constraints
+  href: modeling/relational/fk-constraints.html#modeling_relational_fk_constraints
+- uid: modeling/relational/index
+  name: Relational Database Modeling
+  href: modeling/relational/index.html#modeling_relational_index
+- uid: modeling/relational/indexes
+  name: Indexes
+  href: modeling/relational/indexes.html#modeling_relational_indexes
+- uid: modeling/relational/inheritance
+  name: Inheritance (Relational Databa...
+  href: modeling/relational/inheritance.html#modeling_relational_inheritance
+- uid: modeling/relational/primary-keys
+  name: Primary Keys
+  href: modeling/relational/primary-keys.html#modeling_relational_primary_keys
+- uid: modeling/relational/sequences
+  name: Sequences
+  href: modeling/relational/sequences.html#modeling_relational_sequences
+- uid: modeling/relational/tables
+  name: Table Mapping
+  href: modeling/relational/tables.html#modeling_relational_tables
+- uid: modeling/relational/unique-constraints
+  name: Alternate Keys (Unique Constra...
+  href: modeling/relational/unique-constraints.html#modeling_relational_unique_constraints
+- uid: modeling/relationships
+  name: Relationships
+  href: modeling/relationships.html#modeling_relationships
+- uid: modeling/required-optional
+  name: Required/optional properties
+  href: modeling/required-optional.html#modeling_required_optional
+- uid: modeling/shadow-properties
+  name: Shadow Properties
+  href: modeling/shadow-properties.html#modeling_shadow_properties
+- uid: platforms/aspnetcore/existing-db
+  name: ASP.NET Core Application to Ex...
+  href: platforms/aspnetcore/existing-db.html#platforms_aspnetcore_existing_db
+- uid: platforms/aspnetcore/index
+  name: Getting Started on ASP.NET Cor...
+  href: platforms/aspnetcore/index.html#platforms_aspnetcore_index
+- uid: platforms/aspnetcore/new-db
+  name: ASP.NET Core Application to Ne...
+  href: platforms/aspnetcore/new-db.html#platforms_aspnetcore_new_db
+- uid: platforms/full-dotnet/existing-db
+  name: Console Application to Existin...
+  href: platforms/full-dotnet/existing-db.html#platforms_full_dotnet_existing_db
+- uid: platforms/full-dotnet/index
+  name: Getting Started on Full .NET (...
+  href: platforms/full-dotnet/index.html#platforms_full_dotnet_index
+- uid: platforms/full-dotnet/new-db
+  name: Console Application to New Dat...
+  href: platforms/full-dotnet/new-db.html#platforms_full_dotnet_new_db
+- uid: platforms/index
+  name: Getting Started
+  href: platforms/index.html#platforms_index
+- uid: platforms/netcore/index
+  name: Getting Started on .NET Core (...
+  href: platforms/netcore/index.html#platforms_netcore_index
+- uid: platforms/netcore/new-db-sqlite
+  name: .NET Core Application to New S...
+  href: platforms/netcore/new-db-sqlite.html#platforms_netcore_new_db_sqlite
+- uid: platforms/uwp/getting-started
+  name: Local SQLite on UWP
+  href: platforms/uwp/getting-started.html#platforms_uwp_getting_started
+- uid: platforms/uwp/index
+  name: Getting Started on Universal W...
+  href: platforms/uwp/index.html#platforms_uwp_index
+- uid: providers/devart/index
+  name: Devart (MySQL, Oracle, Postgre...
+  href: providers/devart/index.html#providers_devart_index
+- uid: providers/ibm/index
+  name: IBM Data Servers
+  href: providers/ibm/index.html#providers_ibm_index
+- uid: providers/index
+  name: Database Providers
+  href: providers/index.html#providers_index
+- uid: providers/in-memory/index
+  name: InMemory (for Testing)
+  href: providers/in-memory/index.html#providers_in_memory_index
+- uid: providers/mysql/index
+  name: MySQL (Official)
+  href: providers/mysql/index.html#providers_mysql_index
+- uid: providers/npgsql/index
+  name: Npgsql (PostgreSQL)
+  href: providers/npgsql/index.html#providers_npgsql_index
+- uid: providers/oracle/index
+  name: Oracle (Coming Soon)
+  href: providers/oracle/index.html#providers_oracle_index
+- uid: providers/pomelo/index
+  name: Pomelo (MySQL)
+  href: providers/pomelo/index.html#providers_pomelo_index
+- uid: providers/sql-compact/index
+  name: Microsoft SQL Server Compact E...
+  href: providers/sql-compact/index.html#providers_sql_compact_index
+- uid: providers/sqlite/index
+  name: SQLite
+  href: providers/sqlite/index.html#providers_sqlite_index
+- uid: providers/sqlite/limitations
+  name: SQLite Limitations
+  href: providers/sqlite/limitations.html#providers_sqlite_limitations
+- uid: providers/sql-server/index
+  name: Microsoft SQL Server
+  href: providers/sql-server/index.html#providers_sql_server_index
+- uid: querying/basic
+  name: Basic Query
+  href: querying/basic.html#querying_basic
+- uid: querying/client-eval
+  name: Client vs. Server Evaluation
+  href: querying/client-eval.html#querying_client_eval
+- uid: querying/index
+  name: Querying Data
+  href: querying/index.html#querying_index
+- uid: querying/overview
+  name: How Query Works
+  href: querying/overview.html#querying_overview
+- uid: querying/raw-sql
+  name: Raw SQL Queries
+  href: querying/raw-sql.html#querying_raw_sql
+- uid: querying/related-data
+  name: Loading Related Data
+  href: querying/related-data.html#querying_related_data
+- uid: querying/tracking
+  name: Tracking vs. No-Tracking
+  href: querying/tracking.html#querying_tracking
+- uid: saving/basic
+  name: Basic Save
+  href: saving/basic.html#saving_basic
+- uid: saving/cascade-delete
+  name: Cascade Delete
+  href: saving/cascade-delete.html#saving_cascade_delete
+- uid: saving/concurrency
+  name: Concurrency Conflicts
+  href: saving/concurrency.html#saving_concurrency
+- uid: saving/disconnected-entities
+  name: "\xD83D\xDD27 Disconnected Entities"
+  href: saving/disconnected-entities.html#saving_disconnected_entities
+- uid: saving/explicit-values-generated-properties
+  name: Setting explicit values for ge...
+  href: saving/explicit-values-generated-properties.html#saving_explicit_values_generated_properties
+- uid: saving/index
+  name: Saving Data
+  href: saving/index.html#saving_index
+- uid: saving/related-data
+  name: Related Data
+  href: saving/related-data.html#saving_related_data
+- uid: saving/transactions
+  name: Transactions
+  href: saving/transactions.html#saving_transactions
