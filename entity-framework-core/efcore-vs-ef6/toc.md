@@ -1,0 +1,4 @@
+#[Which One Is Right for You](choosing.md)
+#[Feature Comparison](features.md)
+#[Porting from EF6.x to EF Core](porting/toc.md)
+#[EF6.x and EF Core in the Same Application](side-by-side.md)

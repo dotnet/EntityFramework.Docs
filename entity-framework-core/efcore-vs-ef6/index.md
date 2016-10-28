@@ -16,11 +16,11 @@ uid: efcore-vs-ef6/index
 
 The following articles are available
 
-- [Which One Is Right for You](efcore-vs-ef6/choosing.md)
-- [Feature Comparison](efcore-vs-ef6/features.md)
-- [Porting from EF6.x to EF Core](efcore-vs-ef6/porting/index.md)
-    - [Ensure EF Core Will Work for Your Application](efcore-vs-ef6/porting/ensure-requirements.md)
-    - [Porting an EDMX-Based Model (Model First & Database First)](efcore-vs-ef6/porting/port-edmx.md)
-    - [Porting a Code-Based Model (Code First & Code First to Existing Database)](efcore-vs-ef6/porting/port-code.md)
+- [Which One Is Right for You](choosing.md)
+- [Feature Comparison](features.md)
+- [Porting from EF6.x to EF Core](porting/index.md)
+    - [Ensure EF Core Will Work for Your Application](porting/ensure-requirements.md)
+    - [Porting an EDMX-Based Model (Model First & Database First)](porting/port-edmx.md)
+    - [Porting a Code-Based Model (Code First & Code First to Existing Database)](porting/port-code.md)
 
-- [EF6.x and EF Core in the Same Application](efcore-vs-ef6/side-by-side.md)
+- [EF6.x and EF Core in the Same Application](side-by-side.md)
