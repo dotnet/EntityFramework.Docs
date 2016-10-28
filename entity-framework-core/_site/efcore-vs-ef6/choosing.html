@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Which One Is Right for You </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Which One Is Right for You ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="efcore-vs-ef6/choosing">
+              <h1 id="which-one-is-right-for-you" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="4" sourceendlinenumber="4">Which One Is Right for You</h1>
+              
+<div class="WARNING sourceFile=" efcore-vs-ef6/choosing.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="9" sourceendlinenumber="9">The following information will help you choose between Entity Framework Core and Entity Framework 6.x.</p>
+<h2 id="what-is-ef6x" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="11" sourceendlinenumber="11">What is EF6.x</h2>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="13" sourceendlinenumber="13">Entity Framework 6.x (EF6.x) is a tried and tested data access technology with many years of features and stabilization. It first released in 2008, as part of .NET Framework 3.5 SP1 and Visual Studio 2008 SP1. Starting with the EF4.1 release it has shipped as the <a href="https://www.nuget.org/packages/EntityFramework/" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="13" sourceendlinenumber="13">EntityFramework NuGet package</a> - currently the most popular package on NuGet.org.</p>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="15" sourceendlinenumber="15">EF6.x continues to be a supported product, and will continue to see bug fixes and minor improvements for some time to come.</p>
+<h2 id="what-is-ef-core" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="17" sourceendlinenumber="17">What is EF Core</h2>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="19" sourceendlinenumber="19">Entity Framework Core (EF Core) is a lightweight, extensible, and cross-platform version of Entity Framework. EF Core introduces many improvements and new features when compared with EF6.x. At the same time, EF Core is a new code base and very much a v1 product.</p>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="21" sourceendlinenumber="21">EF Core keeps the developer experience from EF6.x, and most of the top-level APIs remain the same too, so EF Core will feel very familiar to folks who have used EF6.x. At the same time, EF Core is built over a completely new set of core components. This means EF Core doesn&#39;t automatically inherit all the features from EF6.x. Some of these features will show up in future releases (such as lazy loading and connection resiliency), other less commonly used features will not be implemented in EF Core.</p>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="23" sourceendlinenumber="23">The new, extensible, and lightweight core has also allowed us to add some features to EF Core that will not be implemented in EF6.x (such as alternate keys and mixed client/database evaluation in LINQ queries).</p>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="25" sourceendlinenumber="25">See <a href="features.html" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="25" sourceendlinenumber="25">Feature Comparison</a> for a detailed comparison of how the feature set in EF Core compares to EF6.x.</p>
+<h2 id="guidance-for-new-applications" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="27" sourceendlinenumber="27">Guidance for new applications</h2>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="29" sourceendlinenumber="29">Because EF Core is a new product, and still lacks some critical O/RM features, EF6.x will still be the most suitable choice for many applications.</p>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="31" sourceendlinenumber="31"><strong>These are the types of applications we would recommend using EF Core for.</strong></p>
+<ul sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="33" sourceendlinenumber="35">
+<li sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="33" sourceendlinenumber="33"><p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="33" sourceendlinenumber="33">New applications that do not require features that are not yet implemented in EF Core. Review <a href="features.html" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="33" sourceendlinenumber="33">Feature Comparison</a> to see if EF Core may be a suitable choice for your application.</p>
+</li>
+<li sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="35" sourceendlinenumber="35"><p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="35" sourceendlinenumber="35">Applications that target .NET Core, such as Universal Windows Platform (UWP) and ASP.NET Core applications. These applications can not use EF6.x as it requires the Full .NET Framework (i.e. .NET Framework 4.5).</p>
+</li>
+</ul>
+<h2 id="guidance-for-existing-ef6x-applications" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="37" sourceendlinenumber="37">Guidance for existing EF6.x applications</h2>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="39" sourceendlinenumber="39">Because of the fundamental changes in EF Core we do not recommend attempting to move an EF6.x application to EF Core unless you have a compelling reason to make the change. If you want to move to EF Core to make use of new features, then make sure you are aware of its limitations before you start. Review <a href="features.html" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="39" sourceendlinenumber="39">Feature Comparison</a> to see if EF Core may be a suitable choice for your application.</p>
+<p sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="41" sourceendlinenumber="41"><strong>You should view the move from EF6.x to EF Core as a port rather than an upgrade.</strong> See <a href="porting/index.html" sourcefile="efcore-vs-ef6/choosing.md" sourcestartlinenumber="41" sourceendlinenumber="41">Porting from EF6.x to EF Core</a> for more information.</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/efcore-vs-ef6/choosing.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

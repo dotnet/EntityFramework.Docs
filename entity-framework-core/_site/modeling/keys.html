@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Keys (primary) </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Keys (primary) ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="modeling/keys">
+              <h1 id="keys-primary" sourcefile="modeling/keys.md" sourcestartlinenumber="4" sourceendlinenumber="4">Keys (primary)</h1>
+              
+<div class="WARNING sourceFile=" modeling/keys.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="modeling/keys.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="modeling/keys.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="modeling/keys.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="modeling/keys.md" sourcestartlinenumber="9" sourceendlinenumber="9">A key serves as the primary unique identifier for each entity instance. When using a relational database this maps to the concept of a <em>primary key</em>. You can also configure a unique identifier that is not the primary key (see <a href="alternate-keys.html" sourcefile="modeling/keys.md" sourcestartlinenumber="9" sourceendlinenumber="9">Alternate Keys</a> for more information).</p>
+<h2 id="conventions" sourcefile="modeling/keys.md" sourcestartlinenumber="11" sourceendlinenumber="11">Conventions</h2>
+<p sourcefile="modeling/keys.md" sourcestartlinenumber="13" sourceendlinenumber="13">By convention, a property named <code>Id</code> or <code>&lt;type name&gt;Id</code> will be configured as the key of an entity.</p>
+<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/KeyId.cs?highlight=3)] -->
+<pre sourcefile="modeling/keys.md" sourcestartlinenumber="16" sourceendlinenumber="24"><code class="lang-csharp">class Car
+{
+    public string Id { get; set; }
+
+    public string Make { get; set; }
+    public string Model { get; set; }
+}
+</code></pre><!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/KeyTypeNameId.cs?highlight=3)] -->
+<pre sourcefile="modeling/keys.md" sourcestartlinenumber="27" sourceendlinenumber="35"><code class="lang-csharp">class Car
+{
+    public string CarId { get; set; }
+
+    public string Make { get; set; }
+    public string Model { get; set; }
+}
+</code></pre><h2 id="data-annotations" sourcefile="modeling/keys.md" sourcestartlinenumber="37" sourceendlinenumber="37">Data Annotations</h2>
+<p sourcefile="modeling/keys.md" sourcestartlinenumber="39" sourceendlinenumber="39">You can use Data Annotations to configure a single property to be the key of an entity.</p>
+<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/KeySingle.cs?highlight=3,4)] -->
+<pre sourcefile="modeling/keys.md" sourcestartlinenumber="42" sourceendlinenumber="51"><code class="lang-csharp">class Car
+{
+    [Key]
+    public string LicensePlate { get; set; }
+
+    public string Make { get; set; }
+    public string Model { get; set; }
+}
+</code></pre><h2 id="fluent-api" sourcefile="modeling/keys.md" sourcestartlinenumber="53" sourceendlinenumber="53">Fluent API</h2>
+<p sourcefile="modeling/keys.md" sourcestartlinenumber="55" sourceendlinenumber="55">You can use the Fluent API to configure a single property to be the key of an entity.</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/KeySingle.cs?highlight=7,8)] -->
+<pre sourcefile="modeling/keys.md" sourcestartlinenumber="58" sourceendlinenumber="77"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Car&gt; Cars { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;Car&gt;()
+            .HasKey(c =&gt; c.LicensePlate);
+    }
+}
+
+class Car
+{
+    public string LicensePlate { get; set; }
+
+    public string Make { get; set; }
+    public string Model { get; set; }
+}
+</code></pre><p sourcefile="modeling/keys.md" sourcestartlinenumber="79" sourceendlinenumber="79">You can also use the Fluent API to configure multiple properties to be the key of an entity (known as a composite key). Composite keys can only be configured using the Fluent API - conventions will never setup a composite key and you can not use Data Annotations to configure one.</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/KeyComposite.cs?highlight=7,8)] -->
+<pre sourcefile="modeling/keys.md" sourcestartlinenumber="82" sourceendlinenumber="102"><code class="lang-csharp">class MyContext : DbContext
+{
+    public DbSet&lt;Car&gt; Cars { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity&lt;Car&gt;()
+            .HasKey(c =&gt; new { c.State, c.LicensePlate });
+    }
+}
+
+class Car
+{
+    public string State { get; set; }
+    public string LicensePlate { get; set; }
+
+    public string Make { get; set; }
+    public string Model { get; set; }
+}
+</code></pre>
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/modeling/keys.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

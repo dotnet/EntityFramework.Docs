@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Tracking vs. No-Tracking </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Tracking vs. No-Tracking ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="querying/tracking">
+              <h1 id="tracking-vs-no-tracking" sourcefile="querying/tracking.md" sourcestartlinenumber="4" sourceendlinenumber="4">Tracking vs. No-Tracking</h1>
+              
+<div class="WARNING sourceFile=" querying/tracking.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="querying/tracking.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="querying/tracking.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="querying/tracking.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="querying/tracking.md" sourcestartlinenumber="9" sourceendlinenumber="9">Tracking behavior controls whether or not Entity Framework Core will keep information about an entity instance in its change tracker. If an entity is tracked, any changes detected in the entity will be persisted to the database during <code>SaveChanges()</code>. Entity Framework Core will also fix-up navigation properties between entities that are obtained from a tracking query and entities that were previously loaded into the DbContext instance.</p>
+<div class="TIP sourceFile=" querying/tracking.md"="" sourcestartlinenumber="11" sourceendlinenumber="11" "=""><h5>Tip</h5><p sourcefile="querying/tracking.md" sourcestartlinenumber="12" sourceendlinenumber="12">You can view this article&#39;s <a href="https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Querying" sourcefile="querying/tracking.md" sourcestartlinenumber="12" sourceendlinenumber="12">sample</a> on GitHub.</p>
+</div>
+<h2 id="tracking-queries" sourcefile="querying/tracking.md" sourcestartlinenumber="14" sourceendlinenumber="14">Tracking queries</h2>
+<p sourcefile="querying/tracking.md" sourcestartlinenumber="16" sourceendlinenumber="16">By default, queries that return entity types are tracking. This means you can make changes to those entity instances and have those changes persisted by <code>SaveChanges()</code>.</p>
+<p sourcefile="querying/tracking.md" sourcestartlinenumber="18" sourceendlinenumber="18">In the following example, the change to the blogs rating will be detected and persisted to the database during <code>SaveChanges()</code>.</p>
+<!-- [!code-csharp[Main](samples/Querying/Querying/Tracking/Sample.cs)] -->
+<pre sourcefile="querying/tracking.md" sourcestartlinenumber="21" sourceendlinenumber="28"><code class="lang-csharp">using (var context = new BloggingContext())
+{
+    var blog = context.Blogs.SingleOrDefault(b =&gt; b.BlogId == 1);
+    blog.Rating = 5;
+    context.SaveChanges();
+}
+</code></pre><h2 id="no-tracking-queries" sourcefile="querying/tracking.md" sourcestartlinenumber="30" sourceendlinenumber="30">No-tracking queries</h2>
+<p sourcefile="querying/tracking.md" sourcestartlinenumber="32" sourceendlinenumber="32">No tracking queries are useful when the results are used in a read-only scenario. They are quicker to execute because there is no need to setup change tracking information.</p>
+<p sourcefile="querying/tracking.md" sourcestartlinenumber="34" sourceendlinenumber="34">You can swap an individual query to be no-tracking:</p>
+<!-- [!code-csharp[Main](samples/Querying/Querying/Tracking/Sample.cs?highlight=4)] -->
+<pre sourcefile="querying/tracking.md" sourcestartlinenumber="37" sourceendlinenumber="44"><code class="lang-csharp">using (var context = new BloggingContext())
+{
+    var blogs = context.Blogs
+        .AsNoTracking()
+        .ToList();
+}
+</code></pre><p sourcefile="querying/tracking.md" sourcestartlinenumber="46" sourceendlinenumber="46">You can also change the default tracking behavior at the context instance level:</p>
+<!-- [!code-csharp[Main](samples/Querying/Querying/Tracking/Sample.cs?highlight=3)] -->
+<pre sourcefile="querying/tracking.md" sourcestartlinenumber="49" sourceendlinenumber="56"><code class="lang-csharp">using (var context = new BloggingContext())
+{
+    context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
+    var blogs = context.Blogs.ToList();
+}
+</code></pre><h2 id="tracking-and-projections" sourcefile="querying/tracking.md" sourcestartlinenumber="58" sourceendlinenumber="58">Tracking and projections</h2>
+<p sourcefile="querying/tracking.md" sourcestartlinenumber="60" sourceendlinenumber="60">Even if the result type of the query isn&#39;t an entity type, if the result contains entity types they will still be tracked by default. In the following query, which returns an anonymous type, the instances of <code>Blog</code> in the result set will be tracked.</p>
+<!-- [!code-csharp[Main](samples/Querying/Querying/Tracking/Sample.cs?highlight=7)] -->
+<pre sourcefile="querying/tracking.md" sourcestartlinenumber="63" sourceendlinenumber="74"><code class="lang-csharp">using (var context = new BloggingContext())
+{
+    var blog = context.Blogs
+        .Select(b =&gt;
+            new
+            {
+                Blog = b,
+                Posts = b.Posts.Count()
+            });
+}
+</code></pre><p sourcefile="querying/tracking.md" sourcestartlinenumber="76" sourceendlinenumber="76">If the result set does not contain any entity types, then no tracking is performed. In the following query, which returns an anonymous type with some of the values from the entity (but no instances of the actual entity type), there is no tracking performed.</p>
+<!-- [!code-csharp[Main](samples/Querying/Querying/Tracking/Sample.cs)] -->
+<pre sourcefile="querying/tracking.md" sourcestartlinenumber="79" sourceendlinenumber="90"><code class="lang-csharp">using (var context = new BloggingContext())
+{
+    var blog = context.Blogs
+        .Select(b =&gt;
+            new
+            {
+                Id = b.BlogId,
+                Url = b.Url
+            });
+}
+</code></pre>
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/querying/tracking.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

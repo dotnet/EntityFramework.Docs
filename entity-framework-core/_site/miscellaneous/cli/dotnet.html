@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>.NET Core CLI </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content=".NET Core CLI ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="miscellaneous/cli/dotnet">
+              <h1 id="net-core-cli" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="4" sourceendlinenumber="4">.NET Core CLI</h1>
+              
+<div class="WARNING sourceFile=" miscellaneous/cli/dotnet.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="9" sourceendlinenumber="9">EF command-line tools for .NET Core Command Line Interface (CLI).</p>
+<div class="NOTE sourceFile=" miscellaneous/cli/dotnet.md"="" sourcestartlinenumber="11" sourceendlinenumber="11" "=""><h5>Note</h5><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="12" sourceendlinenumber="12">Command-line tools for .NET Core CLI has known issues. See <a href="#preview-2-known-issues" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="12" sourceendlinenumber="12">Preview 2 Known Issues</a> for more details.</p>
+</div>
+<h2 id="installation" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="14" sourceendlinenumber="14">Installation</h2>
+<h3 id="prerequisites" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="16" sourceendlinenumber="16">Prerequisites</h3>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="18" sourceendlinenumber="18">EF command-line tools requires .NET Core CLI Preview 2 or newer. See the <a href="https://www.microsoft.com/net/core" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="18" sourceendlinenumber="18">.NET Core</a> website for installation instructions.</p>
+<h3 id="supported-frameworks" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="20" sourceendlinenumber="20">Supported Frameworks</h3>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="22" sourceendlinenumber="22">EF supports .NET Core CLI commands on these frameworks:</p>
+<ul sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="24" sourceendlinenumber="26">
+<li sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="24" sourceendlinenumber="24"><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="24" sourceendlinenumber="24">.NET Framework 4.5.1 and newer. (&quot;net451&quot;, &quot;net452&quot;, &quot;net46&quot;, etc.)</p>
+</li>
+<li sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="26" sourceendlinenumber="26"><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="26" sourceendlinenumber="26">.NET Core App 1.0. (&quot;netcoreapp1.0&quot;)</p>
+</li>
+</ul>
+<h3 id="install-by-editing-projectjson" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="28" sourceendlinenumber="28">Install by editing project.json</h3>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="30" sourceendlinenumber="30">EF command-line tools for .NET Core CLI are installed by manually editing <code>project.json</code>.</p>
+<ol sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="32" sourceendlinenumber="34">
+<li sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="32" sourceendlinenumber="32"><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="32" sourceendlinenumber="32">Add <code>Microsoft.EntityFrameworkCore.Tools</code> as a &quot;tool&quot; and <code>Microsoft.EntityFrameworkCore.Design</code> as a build-only dependency under &quot;dependencies&quot;. See sample project.json below.</p>
+</li>
+<li sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="34" sourceendlinenumber="34"><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="34" sourceendlinenumber="34">Execute <code>dotnet restore</code>. If restore does not succeed, the command-line tools may not have installed correctly.</p>
+</li>
+</ol>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="36" sourceendlinenumber="36">The resulting project.json should include these items (in addition to your other project dependencies).</p>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="39" sourceendlinenumber="56"><code class="lang-json">{
+    &quot;dependencies&quot;: {
+        &quot;Microsoft.EntityFrameworkCore.Design&quot;: {
+            &quot;type&quot;: &quot;build&quot;,
+            &quot;version&quot;: &quot;1.0.0-preview2-final&quot;
+        }
+    },
+
+    &quot;tools&quot;: {
+        &quot;Microsoft.EntityFrameworkCore.Tools&quot;: &quot;1.0.0-preview2-final&quot;
+    },
+
+    &quot;frameworks&quot;: {
+        &quot;netcoreapp1.0&quot;: { }
+    }
+}
+</code></pre><div class="TIP sourceFile=" miscellaneous/cli/dotnet.md"="" sourcestartlinenumber="58" sourceendlinenumber="58" "=""><h5>Tip</h5><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="59" sourceendlinenumber="59">A build-only dependency (<code>&quot;type&quot;: &quot;build&quot;</code>) means this dependency is local to the current project. For example, if Project A has a build only dependency and Project B depends on A, <code>dotnet restore</code> will not add A&#39;s build-only dependencies into Project B.</p>
+</div>
+<h2 id="usage" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="61" sourceendlinenumber="61">Usage</h2>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="63" sourceendlinenumber="63">Commands can be run from the command line by navigating to the project directory and executing <code>dotnet ef [subcommand]</code>. To see usage, add <code>--help</code> to any command to see more information about parameters and subcommands.</p>
+<h3 id="dotnet-ef" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="65" sourceendlinenumber="65">dotnet-ef</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="68" sourceendlinenumber="84"><code>Usage: dotnet ef [options] [command]
+
+Options:
+  -h|--help                           Show help information
+  -p|--project &lt;PROJECT&gt;              The project to target (defaults to the project in the current directory). Can be a path to a project.json or a project directory.
+  -s|--startup-project &lt;PROJECT&gt;      The path to the project containing Startup (defaults to the target project). Can be a path to a project.json or a project directory.
+  -c|--configuration &lt;CONFIGURATION&gt;  Configuration under which to load (defaults to Debug)
+  -f|--framework &lt;FRAMEWORK&gt;          Target framework to load from the startup project (defaults to the framework most compatible with .NETCoreApp,Version=v1.0).
+  -b|--build-base-path &lt;OUTPUT_DIR&gt;   Directory in which to find temporary outputs.
+  -o|--output &lt;OUTPUT_DIR&gt;            Directory in which to find outputs
+
+Commands:
+  database    Commands to manage your database
+  dbcontext   Commands to manage your DbContext types
+  migrations  Commands to manage your migrations
+</code></pre><h3 id="dotnet-ef-database" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="86" sourceendlinenumber="86">dotnet-ef-database</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="89" sourceendlinenumber="99"><code>Usage: dotnet ef database [options] [command]
+
+Options:
+  -h|--help     Show help information
+  -v|--verbose  Enable verbose output
+
+Commands:
+  drop    Drop the database for specific environment
+  update  Updates the database to a specified migration
+</code></pre><h3 id="dotnet-ef-database-drop" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="101" sourceendlinenumber="101">dotnet-ef-database-drop</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="104" sourceendlinenumber="113"><code>Usage: dotnet ef database drop [options]
+
+Options:
+  -e|--environment &lt;environment&gt;  The environment to use. If omitted, &quot;Development&quot; is used.
+  -c|--context &lt;context&gt;          The DbContext to use. If omitted, the default DbContext is used
+  -f|--force                      Drop without confirmation
+  -h|--help                       Show help information
+  -v|--verbose                    Enable verbose output
+</code></pre><h3 id="dotnet-ef-database-update" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="115" sourceendlinenumber="115">dotnet-ef-database-update</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="118" sourceendlinenumber="129"><code>Usage: dotnet ef database update [arguments] [options]
+
+Arguments:
+  [migration]  The target migration. If &#39;0&#39;, all migrations will be reverted. If omitted, all pending migrations will be applied
+
+Options:
+  -c|--context &lt;context&gt;          The DbContext to use. If omitted, the default DbContext is used
+  -e|--environment &lt;environment&gt;  The environment to use. If omitted, &quot;Development&quot; is used.
+  -h|--help                       Show help information
+  -v|--verbose                    Enable verbose output
+</code></pre><h3 id="dotnet-ef-dbcontext" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="131" sourceendlinenumber="131">dotnet-ef-dbcontext</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="134" sourceendlinenumber="144"><code>Usage: dotnet ef dbcontext [options] [command]
+
+Options:
+  -h|--help     Show help information
+  -v|--verbose  Enable verbose output
+
+Commands:
+  list      List your DbContext types
+  scaffold  Scaffolds a DbContext and entity type classes for a specified database
+</code></pre><h3 id="dotnet-ef-dbcontext-list" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="146" sourceendlinenumber="146">dotnet-ef-dbcontext-list</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="149" sourceendlinenumber="157"><code>Usage: dotnet ef dbcontext list [options]
+
+Options:
+  -e|--environment &lt;environment&gt;  The environment to use. If omitted, &quot;Development&quot; is used.
+  --json                          Use json output. JSON is wrapped by &#39;//BEGIN&#39; and &#39;//END&#39;
+  -h|--help                       Show help information
+  -v|--verbose                    Enable verbose output
+</code></pre><h3 id="dotnet-ef-dbcontext-scaffold" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="159" sourceendlinenumber="159">dotnet-ef-dbcontext-scaffold</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="162" sourceendlinenumber="179"><code>Usage: dotnet ef dbcontext scaffold [arguments] [options]
+
+Arguments:
+  [connection]  The connection string of the database
+  [provider]    The provider to use. For example, Microsoft.EntityFrameworkCore.SqlServer
+
+Options:
+  -a|--data-annotations           Use DataAnnotation attributes to configure the model where possible. If omitted, the output code will use only the fluent API.
+  -c|--context &lt;name&gt;             Name of the generated DbContext class.
+  -f|--force                      Force scaffolding to overwrite existing files. Otherwise, the code will only proceed if no output files would be overwritten.
+  -o|--output-dir &lt;path&gt;          Directory of the project where the classes should be output. If omitted, the top-level project directory is used.
+  --schema &lt;schema&gt;               Selects a schema for which to generate classes.
+  -t|--table &lt;schema.table&gt;       Selects a table for which to generate classes.
+  -e|--environment &lt;environment&gt;  The environment to use. If omitted, &quot;Development&quot; is used.
+  -h|--help                       Show help information
+  -v|--verbose                    Enable verbose output
+</code></pre><h3 id="dotnet-ef-migrations" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="181" sourceendlinenumber="181">dotnet-ef-migrations</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="184" sourceendlinenumber="196"><code>Usage: dotnet ef migrations [options] [command]
+
+Options:
+  -h|--help     Show help information
+  -v|--verbose  Enable verbose output
+
+Commands:
+  add     Add a new migration
+  list    List the migrations
+  remove  Remove the last migration
+  script  Generate a SQL script from migrations
+</code></pre><h3 id="dotnet-ef-migrations-add" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="198" sourceendlinenumber="198">dotnet-ef-migrations-add</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="201" sourceendlinenumber="214"><code>Usage: dotnet ef migrations add [arguments] [options]
+
+Arguments:
+  [name]  The name of the migration
+
+Options:
+  -o|--output-dir &lt;path&gt;          The directory (and sub-namespace) to use. If omitted, &quot;Migrations&quot; is used. Relative paths are relative the directory in which the command is executed.
+  -c|--context &lt;context&gt;          The DbContext to use. If omitted, the default DbContext is used
+  -e|--environment &lt;environment&gt;  The environment to use. If omitted, &quot;Development&quot; is used.
+  --json                          Use json output. JSON is wrapped by &#39;//BEGIN&#39; and &#39;//END&#39;
+  -h|--help                       Show help information
+  -v|--verbose                    Enable verbose output
+</code></pre><h3 id="dotnet-ef-migrations-list" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="216" sourceendlinenumber="216">dotnet-ef-migrations-list</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="219" sourceendlinenumber="228"><code>Usage: dotnet ef migrations list [options]
+
+Options:
+  -c|--context &lt;context&gt;          The DbContext to use. If omitted, the default DbContext is used
+  -e|--environment &lt;environment&gt;  The environment to use. If omitted, &quot;Development&quot; is used.
+  --json                          Use json output. JSON is wrapped by &#39;//BEGIN&#39; and &#39;//END&#39;
+  -h|--help                       Show help information
+  -v|--verbose                    Enable verbose output
+</code></pre><h3 id="dotnet-ef-migrations-remove" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="230" sourceendlinenumber="230">dotnet-ef-migrations-remove</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="233" sourceendlinenumber="242"><code>Usage: dotnet ef migrations remove [options]
+
+Options:
+  -c|--context &lt;context&gt;          The DbContext to use. If omitted, the default DbContext is used
+  -e|--environment &lt;environment&gt;  The environment to use. If omitted, &quot;Development&quot; is used.
+  -f|--force                      Removes the last migration without checking the database. If the last migration has been applied to the database, you will need to manually reverse the changes it made.
+  -h|--help                       Show help information
+  -v|--verbose                    Enable verbose output
+</code></pre><h3 id="dotnet-ef-migrations-script" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="244" sourceendlinenumber="244">dotnet-ef-migrations-script</h3>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="247" sourceendlinenumber="261"><code>Usage: dotnet ef migrations script [arguments] [options]
+
+Arguments:
+  [from]  The starting migration. If omitted, &#39;0&#39; (the initial database) is used
+  [to]    The ending migration. If omitted, the last migration is used
+
+Options:
+  -o|--output &lt;file&gt;              The file to write the script to instead of stdout
+  -i|--idempotent                 Generates an idempotent script that can used on a database at any migration
+  -c|--context &lt;context&gt;          The DbContext to use. If omitted, the default DbContext is used
+  -e|--environment &lt;environment&gt;  The environment to use. If omitted, &quot;Development&quot; is used.
+  -h|--help                       Show help information
+  -v|--verbose                    Enable verbose output
+</code></pre><h2 id="common-errors" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="263" sourceendlinenumber="263">Common Errors</h2>
+<h3 id="error-no-parameterless-constructor-was-found" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="265" sourceendlinenumber="265">Error: &quot;No parameterless constructor was found&quot;</h3>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="267" sourceendlinenumber="267">Design-time tools attempt to automatically find how your application creates instances of your DbContext type. If EF cannot find a suitable way to initialize your DbContext, you may encounter this error.</p>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="270" sourceendlinenumber="274"><code>No parameterless constructor was found on &#39;TContext&#39;. Either add a parameterless constructor to
+&#39;TContext&#39; or add an implementation of &#39;IDbContextFactory&lt;TContext&gt;&#39; in the same assembly as
+&#39;TContext&#39;.
+</code></pre><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="276" sourceendlinenumber="276">As the error message suggests, one solution is to add an implementation of <code>IDbContextFactory&lt;TContext&gt;</code> to the current project. See <a href="../configuring-dbcontext.html#use-idbcontextfactory.md" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="276" sourceendlinenumber="276">Using IDbContextFactory<tcontext></tcontext></a> for an example of how to create this factory.</p>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="278" sourceendlinenumber="278"><a name="dotnet-cli-issues"></a></p>
+<h2 id="preview-2-known-issues" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="280" sourceendlinenumber="280">Preview 2 Known Issues</h2>
+<h3 id="targeting-class-library-projects-is-not-supported" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="282" sourceendlinenumber="282">Targeting class library projects is not supported</h3>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="284" sourceendlinenumber="284">.NET Core CLI does not support running commands on class libraries as of Preview 2. Despite being able to install EF tools, executing commands may throw this error message.</p>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="287" sourceendlinenumber="289"><code>Could not invoke this command on the startup project &#39;(your project name)&#39;. This preview of Entity Framework tools does not support commands on class library projects in ASP.NET Core and .NET Core applications.
+</code></pre><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="291" sourceendlinenumber="291">See issue <a href="https://github.com/dotnet/cli/issues/2645" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="291" sourceendlinenumber="291"><a href="https://github.com/dotnet/cli/issues/2645" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="291" sourceendlinenumber="291">https://github.com/dotnet/cli/issues/2645</a></a>.</p>
+<h4 id="explanation" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="293" sourceendlinenumber="293">Explanation</h4>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="295" sourceendlinenumber="295">If <code>dotnet run</code> does not work in the startup project, then <code>dotnet ef</code> cannot run either.</p>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="297" sourceendlinenumber="297">&quot;dotnet ef&quot; is invoked as an alternate entry point into an application. If the &quot;startup&quot; project is not an application, then it is not currently possible to run the project as an application with the &quot;dotnet ef&quot; alternate entry point.</p>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="299" sourceendlinenumber="299">The &quot;startup&quot; project defaults to the current project, unless specified differently with the parameter <code>--startup-project</code>.</p>
+<h4 id="workaround-1---utilize-a-separate-startup-project" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="301" sourceendlinenumber="301">Workaround 1 - Utilize a separate startup project</h4>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="303" sourceendlinenumber="303">Convert the class library project into an &quot;app&quot; project. This can either be a .NET Core app or a desktop .NET app.</p>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="305" sourceendlinenumber="305">Example:</p>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="308" sourceendlinenumber="321"><code class="lang-json">{
+    &quot;frameworks&quot;: {
+        &quot;netcoreapp1.0&quot;: {
+            &quot;dependencies&quot;: {
+                &quot;Microsoft.NETCore.App&quot;: {
+                    &quot;type&quot;: &quot;platform&quot;,
+                    &quot;version&quot;: &quot;1.0.0-*&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="323" sourceendlinenumber="323">Be sure to register the EntityFramework Tools as a project dependency and in the tools section of your project.json.</p>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="325" sourceendlinenumber="325">Example:</p>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="328" sourceendlinenumber="340"><code class="lang-json">{
+    &quot;dependencies&quot;: {
+        &quot;Microsoft.EntityFrameworkCore.Tools&quot;: {
+            &quot;version&quot;: &quot;1.0.0-preview2-final&quot;,
+            &quot;type&quot;: &quot;build&quot;
+        }
+    },
+    &quot;tools&quot;: {
+        &quot;Microsoft.EntityFrameworkCore.Tools&quot;: &quot;1.0.0-preview2-final&quot;
+    }
+}
+</code></pre><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="342" sourceendlinenumber="342">Finally, specify a startup project that is a &quot;runnable app.&quot;</p>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="344" sourceendlinenumber="344">Example:</p>
+<!-- literal_block"language": "csharp",ole", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="347" sourceendlinenumber="349"><code class="lang-console">dotnet ef --startup-project ../MyConsoleApplication/ migrations list
+</code></pre><h4 id="workaround-2---modify-your-class-library-to-be-a-startup-application" sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="351" sourceendlinenumber="351">Workaround 2 - Modify your class library to be a startup application</h4>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="353" sourceendlinenumber="353">Convert the class library project into an &quot;app&quot; project. This can either be a .NET Core app or a desktop .NET app.</p>
+<p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="355" sourceendlinenumber="355">To make the project a .NET Core App, add the &quot;netcoreapp1.0&quot; framework to project.json along with the other settings in the sample below:</p>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="358" sourceendlinenumber="374"><code class="lang-json">{
+    &quot;buildOptions&quot;: {
+        &quot;emitEntryPoint&quot;: true
+    },
+    &quot;frameworks&quot;: {
+        &quot;netcoreapp1.0&quot;: {
+            &quot;dependencies&quot;: {
+                &quot;Microsoft.NETCore.App&quot;: {
+                    &quot;type&quot;: &quot;platform&quot;,
+                    &quot;version&quot;: &quot;1.0.0-*&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre><p sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="376" sourceendlinenumber="376">To make a desktop .NET app, ensure you project targets &quot;net451&quot; or newer (example &quot;net461&quot; also works) and ensure the build option <code>&quot;emitEntryPoint&quot;</code> is set to true.</p>
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+<pre sourcefile="miscellaneous/cli/dotnet.md" sourcestartlinenumber="379" sourceendlinenumber="388"><code class="lang-json">{
+    &quot;buildOptions&quot;: {
+        &quot;emitEntryPoint&quot;: true
+    },
+    &quot;frameworks&quot;: {
+        &quot;net451&quot;: { }
+    }
+}
+</code></pre>
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/miscellaneous/cli/dotnet.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

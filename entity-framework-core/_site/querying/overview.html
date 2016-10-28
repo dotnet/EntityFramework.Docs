@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>How Query Works </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="How Query Works ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="querying/overview">
+              <h1 id="how-query-works" sourcefile="querying/overview.md" sourcestartlinenumber="4" sourceendlinenumber="4">How Query Works</h1>
+              
+<div class="WARNING sourceFile=" querying/overview.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="querying/overview.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="querying/overview.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="querying/overview.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="querying/overview.md" sourcestartlinenumber="9" sourceendlinenumber="9">Entity Framework Core uses Language Integrate Query (LINQ) to query data from the database. LINQ allows you to use C# (or your .NET language of choice) to write strongly typed queries based on your derived context and entity classes.</p>
+<h2 id="the-life-of-a-query" sourcefile="querying/overview.md" sourcestartlinenumber="11" sourceendlinenumber="11">The life of a query</h2>
+<p sourcefile="querying/overview.md" sourcestartlinenumber="13" sourceendlinenumber="13">The following is a high level overview of the process each query goes through.</p>
+<ol sourcefile="querying/overview.md" sourcestartlinenumber="15" sourceendlinenumber="39">
+<li sourcefile="querying/overview.md" sourcestartlinenumber="15" sourceendlinenumber="17"><p sourcefile="querying/overview.md" sourcestartlinenumber="15" sourceendlinenumber="15">The LINQ query is processed by Entity Framework Core to build a representation that is ready to be processed by the database provider</p>
+<ol sourcefile="querying/overview.md" sourcestartlinenumber="17" sourceendlinenumber="17">
+<li sourcefile="querying/overview.md" sourcestartlinenumber="17" sourceendlinenumber="17">The result is cached so that this processing does not need to be done every time the query is executed</li>
+</ol>
+</li>
+<li sourcefile="querying/overview.md" sourcestartlinenumber="19" sourceendlinenumber="25"><p sourcefile="querying/overview.md" sourcestartlinenumber="19" sourceendlinenumber="19">The result is passed to the database provider</p>
+<ol sourcefile="querying/overview.md" sourcestartlinenumber="21" sourceendlinenumber="25">
+<li sourcefile="querying/overview.md" sourcestartlinenumber="21" sourceendlinenumber="21"><p sourcefile="querying/overview.md" sourcestartlinenumber="21" sourceendlinenumber="21">The database provider identifies which parts of the query can be evaluated in the database</p>
+</li>
+<li sourcefile="querying/overview.md" sourcestartlinenumber="23" sourceendlinenumber="23"><p sourcefile="querying/overview.md" sourcestartlinenumber="23" sourceendlinenumber="23">These parts of the query are translated to database specific query language (e.g. SQL for a relational database)</p>
+</li>
+<li sourcefile="querying/overview.md" sourcestartlinenumber="25" sourceendlinenumber="25"><p sourcefile="querying/overview.md" sourcestartlinenumber="25" sourceendlinenumber="25">One or more queries are sent to the database and the result set returned (results are values from the database, not entity instances)</p>
+</li>
+</ol>
+</li>
+<li sourcefile="querying/overview.md" sourcestartlinenumber="27" sourceendlinenumber="39"><p sourcefile="querying/overview.md" sourcestartlinenumber="27" sourceendlinenumber="27">For each item in the result set</p>
+<ol sourcefile="querying/overview.md" sourcestartlinenumber="29" sourceendlinenumber="39">
+<li sourcefile="querying/overview.md" sourcestartlinenumber="29" sourceendlinenumber="33"><p sourcefile="querying/overview.md" sourcestartlinenumber="29" sourceendlinenumber="29">If this is a tracking query, EF checks if the data represents an entity already in the change tracker for the context instance</p>
+<ul sourcefile="querying/overview.md" sourcestartlinenumber="31" sourceendlinenumber="33">
+<li sourcefile="querying/overview.md" sourcestartlinenumber="31" sourceendlinenumber="31"><p sourcefile="querying/overview.md" sourcestartlinenumber="31" sourceendlinenumber="31">If so, the existing entity is returned</p>
+</li>
+<li sourcefile="querying/overview.md" sourcestartlinenumber="33" sourceendlinenumber="33"><p sourcefile="querying/overview.md" sourcestartlinenumber="33" sourceendlinenumber="33">If not, a new entity is created, change tracking is setup, and the new entity is returned</p>
+</li>
+</ul>
+</li>
+<li sourcefile="querying/overview.md" sourcestartlinenumber="35" sourceendlinenumber="39"><p sourcefile="querying/overview.md" sourcestartlinenumber="35" sourceendlinenumber="35">If this is a no-tracking query, EF checks if the data represents an entity already in the result set for this query</p>
+<ul sourcefile="querying/overview.md" sourcestartlinenumber="37" sourceendlinenumber="39">
+<li sourcefile="querying/overview.md" sourcestartlinenumber="37" sourceendlinenumber="37"><p sourcefile="querying/overview.md" sourcestartlinenumber="37" sourceendlinenumber="37">If so, the existing entity is returned</p>
+</li>
+<li sourcefile="querying/overview.md" sourcestartlinenumber="39" sourceendlinenumber="39"><p sourcefile="querying/overview.md" sourcestartlinenumber="39" sourceendlinenumber="39">If not, a new entity is created and returned</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="when-queries-are-executed" sourcefile="querying/overview.md" sourcestartlinenumber="41" sourceendlinenumber="41">When queries are executed</h2>
+<p sourcefile="querying/overview.md" sourcestartlinenumber="43" sourceendlinenumber="43">When you call LINQ operators, you are simply building up an in-memory representation of the query. The query is only sent to the database when the results are consumed.</p>
+<p sourcefile="querying/overview.md" sourcestartlinenumber="45" sourceendlinenumber="45">The most common operations that result in the query being sent to the database are:</p>
+<ul sourcefile="querying/overview.md" sourcestartlinenumber="46" sourceendlinenumber="50">
+<li sourcefile="querying/overview.md" sourcestartlinenumber="46" sourceendlinenumber="46"><p sourcefile="querying/overview.md" sourcestartlinenumber="46" sourceendlinenumber="46">Iterating the results in a <code>for</code> loop</p>
+</li>
+<li sourcefile="querying/overview.md" sourcestartlinenumber="48" sourceendlinenumber="48"><p sourcefile="querying/overview.md" sourcestartlinenumber="48" sourceendlinenumber="48">Using an operator such as <code>ToList</code>, <code>ToArray</code>, <code>Single</code>, <code>Count</code></p>
+</li>
+<li sourcefile="querying/overview.md" sourcestartlinenumber="50" sourceendlinenumber="50"><p sourcefile="querying/overview.md" sourcestartlinenumber="50" sourceendlinenumber="50">Databinding the results of a query to a UI</p>
+</li>
+</ul>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/querying/overview.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

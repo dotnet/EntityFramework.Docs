@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Creating a Model </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Creating a Model ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="modeling/index">
+              <h1 id="creating-a-model" sourcefile="modeling/index.md" sourcestartlinenumber="4" sourceendlinenumber="4">Creating a Model</h1>
+              
+<div class="WARNING sourceFile=" modeling/index.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="modeling/index.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="modeling/index.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="modeling/index.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="modeling/index.md" sourcestartlinenumber="9" sourceendlinenumber="9">Entity Framework uses a set of conventions to build a model based on the shape of your entity classes. You can specify additional configuration to supplement and/or override what was discovered by convention.</p>
+<p sourcefile="modeling/index.md" sourcestartlinenumber="11" sourceendlinenumber="11">This article covers configuration that can be applied to a model targeting any data store and that which can be applied when targeting any relational database. Providers may also enable configuration that is specific to a particular data store. For documentation on provider specific configuration see the <a href="../providers/index.html" sourcefile="modeling/index.md" sourcestartlinenumber="11" sourceendlinenumber="11">Database Providers</a> section.</p>
+<p sourcefile="modeling/index.md" sourcestartlinenumber="13" sourceendlinenumber="13">In this section you can find information about conventions and configuration for the following:</p>
+<ul sourcefile="modeling/index.md" sourcestartlinenumber="15" sourceendlinenumber="40">
+<li sourcefile="modeling/index.md" sourcestartlinenumber="15" sourceendlinenumber="15"><a href="included-types.html" sourcefile="modeling/index.md" sourcestartlinenumber="15" sourceendlinenumber="15">Including &amp; Excluding Types</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="16" sourceendlinenumber="16"><a href="included-properties.html" sourcefile="modeling/index.md" sourcestartlinenumber="16" sourceendlinenumber="16">Including &amp; Excluding Properties</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="17" sourceendlinenumber="17"><a href="keys.html" sourcefile="modeling/index.md" sourcestartlinenumber="17" sourceendlinenumber="17">Keys (primary)</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="18" sourceendlinenumber="18"><a href="generated-properties.html" sourcefile="modeling/index.md" sourcestartlinenumber="18" sourceendlinenumber="18">Generated Properties</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="19" sourceendlinenumber="19"><a href="required-optional.html" sourcefile="modeling/index.md" sourcestartlinenumber="19" sourceendlinenumber="19">Required/optional properties</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="20" sourceendlinenumber="20"><a href="max-length.html" sourcefile="modeling/index.md" sourcestartlinenumber="20" sourceendlinenumber="20">Maximum Length</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="21" sourceendlinenumber="21"><a href="concurrency.html" sourcefile="modeling/index.md" sourcestartlinenumber="21" sourceendlinenumber="21">Concurrency Tokens</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="22" sourceendlinenumber="22"><a href="shadow-properties.html" sourcefile="modeling/index.md" sourcestartlinenumber="22" sourceendlinenumber="22">Shadow Properties</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="23" sourceendlinenumber="23"><a href="relationships.html" sourcefile="modeling/index.md" sourcestartlinenumber="23" sourceendlinenumber="23">Relationships</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="24" sourceendlinenumber="24"><a href="indexes.html" sourcefile="modeling/index.md" sourcestartlinenumber="24" sourceendlinenumber="24">Indexes</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="25" sourceendlinenumber="25"><a href="alternate-keys.html" sourcefile="modeling/index.md" sourcestartlinenumber="25" sourceendlinenumber="25">Alternate Keys</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="26" sourceendlinenumber="26"><a href="inheritance.html" sourcefile="modeling/index.md" sourcestartlinenumber="26" sourceendlinenumber="26">Inheritance</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="27" sourceendlinenumber="27"><a href="backing-field.html" sourcefile="modeling/index.md" sourcestartlinenumber="27" sourceendlinenumber="27">Backing Fields</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="28" sourceendlinenumber="40"><a href="relational/index.html" sourcefile="modeling/index.md" sourcestartlinenumber="28" sourceendlinenumber="28">Relational Database Modeling</a><ul sourcefile="modeling/index.md" sourcestartlinenumber="29" sourceendlinenumber="40">
+<li sourcefile="modeling/index.md" sourcestartlinenumber="29" sourceendlinenumber="29"><a href="relational/tables.html" sourcefile="modeling/index.md" sourcestartlinenumber="29" sourceendlinenumber="29">Table Mapping</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="30" sourceendlinenumber="30"><a href="relational/columns.html" sourcefile="modeling/index.md" sourcestartlinenumber="30" sourceendlinenumber="30">Column Mapping</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="31" sourceendlinenumber="31"><a href="relational/data-types.html" sourcefile="modeling/index.md" sourcestartlinenumber="31" sourceendlinenumber="31">Data Types</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="32" sourceendlinenumber="32"><a href="relational/primary-keys.html" sourcefile="modeling/index.md" sourcestartlinenumber="32" sourceendlinenumber="32">Primary Keys</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="33" sourceendlinenumber="33"><a href="relational/default-schema.html" sourcefile="modeling/index.md" sourcestartlinenumber="33" sourceendlinenumber="33">Default Schema</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="34" sourceendlinenumber="34"><a href="relational/computed-columns.html" sourcefile="modeling/index.md" sourcestartlinenumber="34" sourceendlinenumber="34">Computed Columns</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="35" sourceendlinenumber="35"><a href="relational/sequences.html" sourcefile="modeling/index.md" sourcestartlinenumber="35" sourceendlinenumber="35">Sequences</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="36" sourceendlinenumber="36"><a href="relational/default-values.html" sourcefile="modeling/index.md" sourcestartlinenumber="36" sourceendlinenumber="36">Default Values</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="37" sourceendlinenumber="37"><a href="relational/indexes.html" sourcefile="modeling/index.md" sourcestartlinenumber="37" sourceendlinenumber="37">Indexes</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="38" sourceendlinenumber="38"><a href="relational/fk-constraints.html" sourcefile="modeling/index.md" sourcestartlinenumber="38" sourceendlinenumber="38">Foreign Key Constraints</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="39" sourceendlinenumber="39"><a href="relational/unique-constraints.html" sourcefile="modeling/index.md" sourcestartlinenumber="39" sourceendlinenumber="39">Alternate Keys (Unique Constraints)</a></li>
+<li sourcefile="modeling/index.md" sourcestartlinenumber="40" sourceendlinenumber="40"><a href="relational/inheritance.html" sourcefile="modeling/index.md" sourcestartlinenumber="40" sourceendlinenumber="40">Inheritance (Relational Database)</a></li>
+</ul>
+</li>
+</ul>
+<div class="TIP sourceFile=" modeling/index.md"="" sourcestartlinenumber="42" sourceendlinenumber="42" "=""><h5>Tip</h5><p sourcefile="modeling/index.md" sourcestartlinenumber="43" sourceendlinenumber="43">You can view this article’s <a href="https://github.com/aspnet/EntityFramework.Docs/tree/master/samples" sourcefile="modeling/index.md" sourcestartlinenumber="43" sourceendlinenumber="43">sample</a> on GitHub.</p>
+</div>
+<h2 id="methods-of-configuration" sourcefile="modeling/index.md" sourcestartlinenumber="45" sourceendlinenumber="45">Methods of configuration</h2>
+<h3 id="fluent-api" sourcefile="modeling/index.md" sourcestartlinenumber="47" sourceendlinenumber="47">Fluent API</h3>
+<p sourcefile="modeling/index.md" sourcestartlinenumber="49" sourceendlinenumber="49">You can override the <code>OnModelCreating</code> method in your derived context and use the <code>ModelBuilder API</code> to configure your model. This is the most powerful method of configuration and allows configuration to be specified without modifying your entity classes. Fluent API configuration has the highest precedence and will override conventions and data annotations.</p>
+<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Required.cs?range=5-15&highlight=5-10)] -->
+<pre sourcefile="modeling/index.md" sourcestartlinenumber="53" sourceendlinenumber="65"><code class="lang-csharp">    class MyContext : DbContext
+    {
+        public DbSet&lt;Blog&gt; Blogs { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity&lt;Blog&gt;()
+                .Property(b =&gt; b.Url)
+                .IsRequired();
+        }
+    }
+</code></pre><h3 id="data-annotations" sourcefile="modeling/index.md" sourcestartlinenumber="67" sourceendlinenumber="67">Data Annotations</h3>
+<p sourcefile="modeling/index.md" sourcestartlinenumber="69" sourceendlinenumber="69">You can also apply attributes (known as Data Annotations) to your classes and properties. Data annotations will override conventions, but will be overwritten by Fluent API configuration.</p>
+<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/Required.cs?range=11-16&highlight=4)] -->
+<pre sourcefile="modeling/index.md" sourcestartlinenumber="73" sourceendlinenumber="80"><code class="lang-csharp">    public class Blog
+    {
+        public int BlogId { get; set; }
+        [Required]
+        public string Url { get; set; }
+    }
+</code></pre>
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/modeling/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

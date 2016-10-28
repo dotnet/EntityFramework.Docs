@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>SQLite Limitations </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="SQLite Limitations ">
+    <meta name="generator" content="docfx 2.5.4.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="providers/sqlite/limitations">
+              <h1 id="sqlite-limitations" sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="4" sourceendlinenumber="4">SQLite Limitations</h1>
+              
+<div class="WARNING sourceFile=" providers/sqlite/limitations.md"="" sourcestartlinenumber="6" sourceendlinenumber="6" "=""><h5>Warning</h5><p sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="7" sourceendlinenumber="7">This documentation is for EF Core. For EF6.x and earlier release see <a href="http://msdn.com/data/ef" sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="7" sourceendlinenumber="7"><a href="http://msdn.com/data/ef" sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="7" sourceendlinenumber="7">http://msdn.com/data/ef</a></a>.</p>
+</div>
+<p sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="9" sourceendlinenumber="9">When using the SQLite provider, there are a number of limitations you should be aware of. Most of these are a result of limitations in the underlying SQLite database engine and are not specific to EF.</p>
+<h2 id="modeling-limitations" sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="11" sourceendlinenumber="11">Modeling Limitations</h2>
+<p sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="13" sourceendlinenumber="13">The common relational library (shared by Entity Framework relational database providers) defines APIs for modelling concepts that are common to most relational database engines. A number of these concepts are not supported by the SQLite provider.</p>
+<ul sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="15" sourceendlinenumber="17">
+<li sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="15" sourceendlinenumber="15"><p sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="15" sourceendlinenumber="15">Schemas</p>
+</li>
+<li sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="17" sourceendlinenumber="17"><p sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="17" sourceendlinenumber="17">Sequences</p>
+</li>
+</ul>
+<h2 id="migrations-limitations" sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="19" sourceendlinenumber="19">Migrations Limitations</h2>
+<p sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="21" sourceendlinenumber="21">The SQLite database engine does not support a number of schema operations that are supported by the majority of other relational databases. If you attempt to apply one of the unsupported operations to a SQLite database then a <code>NotSupportedException</code> will be thrown.</p>
+<table sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="23" sourceendlinenumber="47">
+<thead>
+<tr>
+<th>Operation</th>
+<th>Supported?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AddColumn</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>AddForeignKey</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>AddPrimaryKey</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>AddUniqueConstraint</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>AlterColumn</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>AlterSequence</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>CreateIndex</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>CreateSchema</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>CreateSequence</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>CreateTable</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>DropColumn</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DropForiegnKey</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DropIndex</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>DropPrimaryKey</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DropSchema</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DropSequence</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>DropTable</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>DropUniqueConstraint</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>RenameColumn</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>RenameIndex</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>RenameSequence</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>RenameTable</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>RestartSequence</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<div class="TIP sourceFile=" providers/sqlite/limitations.md"="" sourcestartlinenumber="49" sourceendlinenumber="49" "=""><h5>Tip</h5><p sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="50" sourceendlinenumber="50">You can workaround some of these limitations by manually writing code in your migrations to perform a table rebuild. A table rebuild involves renaming the existing table, creating a new table, copying data to the new table, and dropping the old table. You will need to use the <code>Sql(string)</code> method to perform some of these steps.</p>
+<p sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="52" sourceendlinenumber="52">See <a href="http://sqlite.org/lang_altertable.html#otheralter" sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="52" sourceendlinenumber="52">Making Other Kinds Of Table Schema Changes</a> in the SQLite documentation for more details.</p>
+<p sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="54" sourceendlinenumber="54">In the future, EF may support some of these operations by using the table rebuild approach under the covers. You can <a href="https://github.com/aspnet/EntityFramework/issues/329" sourcefile="providers/sqlite/limitations.md" sourcestartlinenumber="54" sourceendlinenumber="54">track this feature on our GitHub project</a>.</p>
+</div>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/shirhatti/EntityFramework.Docs/blob/export-qa-fixes/ef/providers/sqlite/limitations.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2016 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
