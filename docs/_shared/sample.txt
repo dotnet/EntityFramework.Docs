@@ -1,2 +1,0 @@
-.. tip::
-    You can view this article's sample_ on GitHub.
