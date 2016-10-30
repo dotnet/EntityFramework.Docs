@@ -31,7 +31,7 @@ Indexes can not be configured using Data Annotations.
 
 You can use the Fluent API to configure the name of an index.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/FluentAPI/Samples/Relational/IndexName.cs?highlight=9)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/IndexName.cs?highlight=9)] -->
 ````csharp
 class MyContext : DbContext
 {

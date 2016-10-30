@@ -17,7 +17,7 @@ uid: core/platforms/full-dotnet/new-db
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use migrations to create the database from your model.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Platforms/FullNet/ConsoleApp.NewDb) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Platforms/FullNet/ConsoleApp.NewDb) on GitHub.
 
 ## Prerequisites
 
@@ -65,7 +65,7 @@ Now it's time to define a context and entity classes that make up your model.
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-csharp[Main](samples/Platforms/FullNet/ConsoleApp.NewDb/Model.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Platforms/FullNet/ConsoleApp.NewDb/Model.cs)] -->
 ````csharp
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -129,7 +129,7 @@ You can now use your model to perform data access.
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-csharp[Main](samples/Platforms/FullNet/ConsoleApp.NewDb/Program.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Platforms/FullNet/ConsoleApp.NewDb/Program.cs)] -->
 ````csharp
 using System;
 

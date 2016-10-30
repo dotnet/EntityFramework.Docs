@@ -17,7 +17,7 @@ uid: core/platforms/netcore/new-db-sqlite
 In this walkthrough, you will build a .NET Core console application that performs basic data access using Entity Framework. You will use migrations to create the database from your model.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Platforms/NetCore/ConsoleApp.SQLite) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Platforms/NetCore/ConsoleApp.SQLite) on GitHub.
 
 ## Prerequisites
 
@@ -66,7 +66,7 @@ dotnet run
 
 *  To add EF to your project, modify `project.json` so it matches the following sample.
     
-    <!-- [!code-json[Main](samples/Platforms/NetCore/ConsoleApp.SQLite/project.json?highlight=8,9,10,11,12,25,26,27)] -->
+    <!-- [!code-json[Main](samples/core/Platforms/NetCore/ConsoleApp.SQLite/project.json?highlight=8,9,10,11,12,25,26,27)] -->
     
          
     ````json
@@ -126,7 +126,7 @@ dotnet run
     
      All classes in the following steps will be added to this file.
     
-    <!-- [!code-csharp[Main](samples/Platforms/NetCore/ConsoleApp.SQLite/Model.cs)] -->
+    <!-- [!code-csharp[Main](samples/core/Platforms/NetCore/ConsoleApp.SQLite/Model.cs)] -->
     
      
     ````csharp
@@ -142,7 +142,7 @@ dotnet run
     
     We will call this `BloggingContext`. The call to `UseSqlite()` configures EF to point to a *.db file.
     
-    <!-- [!code-csharp[Main](samples/Platforms/NetCore/ConsoleApp.SQLite/Model.cs?highlight=1,8)] -->
+    <!-- [!code-csharp[Main](samples/core/Platforms/NetCore/ConsoleApp.SQLite/Model.cs?highlight=1,8)] -->
     
      
     ````csharp
@@ -162,7 +162,7 @@ dotnet run
     
     Note that we will be using foreign keys to associate many posts to one blog.
     
-    <!-- [!code-csharp[Main](samples/Platforms/NetCore/ConsoleApp.SQLite/Model.cs)] -->
+    <!-- [!code-csharp[Main](samples/core/Platforms/NetCore/ConsoleApp.SQLite/Model.cs)] -->
     
      
     ````csharp
@@ -230,7 +230,7 @@ We can now use Entity Framework command line tools to create and manage the sche
 
 Now that we have configured our model and created the database schema, we can use BloggingContext to create, update, and delete objects.
 
-<!-- [!code-csharp[Main](samples/Platforms/NetCore/ConsoleApp.SQLite/Program.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Platforms/NetCore/ConsoleApp.SQLite/Program.cs)] -->
 ````csharp
 using System;
 

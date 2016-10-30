@@ -17,7 +17,7 @@ uid: core/platforms/full-dotnet/existing-db
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Platforms/FullNet/ConsoleApp.ExistingDb) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Platforms/FullNet/ConsoleApp.ExistingDb) on GitHub.
 
 ## Prerequisites
 
@@ -101,7 +101,7 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 
 The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
 
-<!-- [!code-csharp[Main](samples/Platforms/FullNet/ConsoleApp.ExistingDb/Blog.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Platforms/FullNet/ConsoleApp.ExistingDb/Blog.cs)] -->
 ````csharp
 using System;
 using System.Collections.Generic;
@@ -125,7 +125,7 @@ namespace EFGetStarted.ConsoleApp.ExistingDb
 
 The context represents a session with the database and allows you to query and save instances of the entity classes.
 
-<!-- [!code-csharp[Main](samples/Platforms/FullNet/ConsoleApp.ExistingDb/BloggingContext.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Platforms/FullNet/ConsoleApp.ExistingDb/BloggingContext.cs)] -->
 ````csharp
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -169,7 +169,7 @@ You can now use your model to perform data access.
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-csharp[Main](samples/Platforms/FullNet/ConsoleApp.ExistingDb/Program.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Platforms/FullNet/ConsoleApp.ExistingDb/Program.cs)] -->
 ````csharp
 using System;
 

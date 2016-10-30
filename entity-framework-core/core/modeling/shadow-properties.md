@@ -37,7 +37,7 @@ By convention, shadow properties are only created when a relationship is discove
 
 For example, the following code listing will result in a `BlogId` shadow property being introduced to the `Post` entity.
 
-<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/ShadowForeignKey.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/ShadowForeignKey.cs)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -73,7 +73,7 @@ You can use the Fluent API to configure shadow properties. Once you have called 
 
 If the name supplied to the `Property` method matches the name of an existing property (a shadow property or one defined on the entity class), then the code will configure that existing property rather than introducing a new shadow property.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/ShadowProperty.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/ShadowProperty.cs?highlight=7,8)] -->
 ````csharp
 class MyContext : DbContext
 {

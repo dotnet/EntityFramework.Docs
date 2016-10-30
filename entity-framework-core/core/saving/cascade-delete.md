@@ -27,7 +27,7 @@ Cascade delete allows deletion of a principal/parent entity to have a side effec
 See [Relationships](../modeling/relationships.md) for more information about conventions and configuration for cascade delete.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Saving/Saving/CascadeDelete/) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/CascadeDelete/) on GitHub.
 
 ## Cascading to tracked entities
 
@@ -37,7 +37,7 @@ Consider a simple *Blog* and *Post* model where the relationship between the two
 
 The following code loads a Blog and all its related Posts from the database (using the *Include* method). The code then deletes the Blog.
 
-<!-- [!code-csharp[Main](samples/Saving/Saving/CascadeDelete/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Saving/Saving/CascadeDelete/Sample.cs)] -->
 ````csharp
         using (var db = new BloggingContext())
         {
@@ -63,7 +63,7 @@ Because all the Posts are tracked by the context, the cascade behavior is applie
 
 The following code is almost the same as our previous example, except it does not load the related Posts from the database.
 
-<!-- [!code-csharp[Main](samples/Saving/Saving/CascadeDelete/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Saving/Saving/CascadeDelete/Sample.cs)] -->
 ````csharp
         using (var db = new BloggingContext())
         {

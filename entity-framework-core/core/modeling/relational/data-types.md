@@ -29,7 +29,7 @@ For example, SQL Server uses `datetime2(7)` for `DateTime` properties, and `nvar
 
 You can use Data Annotations to specify an exact data type for the column.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/DataAnnotations/Samples/Relational/DataType.cs?highlight=4)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/DataAnnotations/Samples/Relational/DataType.cs?highlight=4)] -->
 ````csharp
 public class Blog
 {
@@ -43,7 +43,7 @@ public class Blog
 
 You can use the Fluent API to specify an exact data type for the column.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/FluentAPI/Samples/Relational/DataType.cs?highlight=7,8,9)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DataType.cs?highlight=7,8,9)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -66,7 +66,7 @@ public class Blog
 
 If you are targeting more than one relational provider with the same model then you probably want to specify a data type for each provider rather than a global one to be used for all relational providers.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/FluentAPI/Samples/Relational/DataTypeForProvider.cs?highlight=3)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DataTypeForProvider.cs?highlight=3)] -->
 ````csharp
         modelBuilder.Entity<Blog>()
             .Property(b => b.Url)

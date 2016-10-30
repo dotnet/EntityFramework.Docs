@@ -27,7 +27,7 @@ EF will only setup inheritance if two or more inherited types are explicitly inc
 
 Below is an example showing a simple inheritance scenario and the data stored in a relational database table using the TPH pattern. The *Discriminator* column identifies which type of *Blog* is stored in each row.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/Conventions/Samples/InheritanceDbSets.cs)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/Conventions/Samples/InheritanceDbSets.cs)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -57,7 +57,7 @@ You cannot use Data Annotations to configure inheritance.
 
 You can use the Fluent API to configure the name and type of the discriminator column and the values that are used to identify each type in the hierarchy.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/FluentAPI/Samples/InheritanceTPHDiscriminator.cs?highlight=7,8,9,10)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/InheritanceTPHDiscriminator.cs?highlight=7,8,9,10)] -->
 ````csharp
 class MyContext : DbContext
 {

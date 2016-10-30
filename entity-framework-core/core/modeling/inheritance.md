@@ -22,7 +22,7 @@ By convention, it is up to the database provider to determine how inheritance wi
 
 EF will only setup inheritance if two or more inherited types are explicitly included in the model. EF will not scan for base or derived types that were not otherwise included in the model. You can include types in the model by exposing a *DbSet<TEntity>* for each type in the inheritance hierarchy.
 
-<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/InheritanceDbSets.cs?highlight=3,4)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/InheritanceDbSets.cs?highlight=3,4)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -44,7 +44,7 @@ public class RssBlog : Blog
 
 If you don't want to expose a *DbSet<TEntity>* for one or more entities in the hierarchy, you can use the Fluent API to ensure they are included in the model.
 
-<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/InheritanceModelBuilder.cs?highlight=7)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/InheritanceModelBuilder.cs?highlight=7)] -->
 ````csharp
 class MyContext : DbContext
 {

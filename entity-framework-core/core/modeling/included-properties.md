@@ -24,7 +24,7 @@ By convention, public properties with a getter and a setter will be included in 
 
 You can use Data Annotations to exclude a property from the model.
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/IgnoreProperty.cs?highlight=6)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/IgnoreProperty.cs?highlight=6)] -->
 ````csharp
 public class Blog
 {
@@ -40,7 +40,7 @@ public class Blog
 
 You can use the Fluent API to exclude a property from the model.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/IgnoreProperty.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/IgnoreProperty.cs?highlight=7,8)] -->
 ````csharp
 class MyContext : DbContext
 {

@@ -27,7 +27,7 @@ By convention, a property whose CLR type can contain null will be configured as 
 
 You can use Data Annotations to indicate that a property is required.
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/Required.cs?highlight=4)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Required.cs?highlight=4)] -->
 ````csharp
 public class Blog
 {
@@ -41,7 +41,7 @@ public class Blog
 
 You can use the Fluent API to indicate that a property is required.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Required.cs?highlight=7,8,9)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Required.cs?highlight=7,8,9)] -->
 ````csharp
 class MyContext : DbContext
 {

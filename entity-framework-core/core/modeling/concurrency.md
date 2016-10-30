@@ -38,7 +38,7 @@ By convention, properties are never configured as concurrency tokens.
 
 You can use the Data Annotations to configure a property as a concurrency token.
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/Concurrency.cs?highlight=4)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Concurrency.cs?highlight=4)] -->
 ````csharp
 public class Person
 {
@@ -53,7 +53,7 @@ public class Person
 
 You can use the Fluent API to configure a property as a concurrency token.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Concurrency.cs?highlight=7,8,9)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Concurrency.cs?highlight=7,8,9)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -89,7 +89,7 @@ By convention, properties are never configured as timestamps.
 
 You can use Data Annotations to configure a property as a timestamp.
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/Timestamp.cs?highlight=6)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Timestamp.cs?highlight=6)] -->
 ````csharp
 public class Blog
 {
@@ -105,7 +105,7 @@ public class Blog
 
 You can use the Fluent API to configure a property as a timestamp.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Timestamp.cs?highlight=7,8,9,10)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Timestamp.cs?highlight=7,8,9,10)] -->
 ````csharp
 class MyContext : DbContext
 {

@@ -20,7 +20,7 @@ A key serves as the primary unique identifier for each entity instance. When usi
 
 By convention, a property named `Id` or `<type name>Id` will be configured as the key of an entity.
 
-<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/KeyId.cs?highlight=3)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/KeyId.cs?highlight=3)] -->
 ````csharp
 class Car
 {
@@ -31,7 +31,7 @@ class Car
 }
 ````
 
-<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/KeyTypeNameId.cs?highlight=3)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/KeyTypeNameId.cs?highlight=3)] -->
 ````csharp
 class Car
 {
@@ -46,7 +46,7 @@ class Car
 
 You can use Data Annotations to configure a single property to be the key of an entity.
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/KeySingle.cs?highlight=3,4)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/KeySingle.cs?highlight=3,4)] -->
 ````csharp
 class Car
 {
@@ -62,7 +62,7 @@ class Car
 
 You can use the Fluent API to configure a single property to be the key of an entity.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/KeySingle.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/KeySingle.cs?highlight=7,8)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -86,7 +86,7 @@ class Car
 
 You can also use the Fluent API to configure multiple properties to be the key of an entity (known as a composite key). Composite keys can only be configured using the Fluent API - conventions will never setup a composite key and you can not use Data Annotations to configure one.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/KeyComposite.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/KeyComposite.cs?highlight=7,8)] -->
 ````csharp
 class MyContext : DbContext
 {

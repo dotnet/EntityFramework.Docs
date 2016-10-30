@@ -28,7 +28,7 @@ Indexes can not be created using data annotations.
 
 You can use the Fluent API specify an index on a single property. By default, indexes are non-unique.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Index.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Index.cs?highlight=7,8)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -50,7 +50,7 @@ public class Blog
 
 You can also specify that an index should be unique, meaning that no two entities can have the same value(s) for the given property(s).
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/IndexUnique.cs?highlight=3)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/IndexUnique.cs?highlight=3)] -->
 ````csharp
         modelBuilder.Entity<Blog>()
             .HasIndex(b => b.Url)
@@ -59,7 +59,7 @@ You can also specify that an index should be unique, meaning that no two entitie
 
 You can also specify an index over more than one column.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/IndexComposite.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/IndexComposite.cs?highlight=7,8)] -->
 ````csharp
 class MyContext : DbContext
 {

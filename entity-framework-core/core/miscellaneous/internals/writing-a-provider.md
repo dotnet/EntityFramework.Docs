@@ -20,7 +20,7 @@ EF Core is designed to be extensible. It provides general purpose building block
 > [EF Core source code is open-source](https://github.com/aspnet/EntityFramework). The best source of information is the code itself.
 
 > [!TIP]
-> This article shows snippets from an empty EF provider. You can view the [full stubbed-out provider](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Miscellaneous/Internals/WritingAProvider) on GitHub.
+> This article shows snippets from an empty EF provider. You can view the [full stubbed-out provider](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Internals/WritingAProvider) on GitHub.
 
 <a name=entry-point></a>
 
@@ -61,7 +61,7 @@ The `UseX()` extension method creates a provider-specific implementation of `IDb
 
 An example implementation of the "Use" method
 
-<!-- [!code-csharp[Main](samples/internals/Miscellaneous/Internals/WritingAProvider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderDbContextOptionsExtensions.cs)] -->
+<!-- [!code-csharp[Main](samples/core/internals/Miscellaneous/Internals/WritingAProvider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderDbContextOptionsExtensions.cs)] -->
 ````csharp
 public static class MyProviderDbContextOptionsExtensions
 {
@@ -96,7 +96,7 @@ EF provides many complete or partial implementations of the required services to
 
 An example implementation of the "Add" method
 
-<!-- [!code-csharp[Main](samples/internals/Miscellaneous/Internals/WritingAProvider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderServiceCollectionExtensions.cs)] -->
+<!-- [!code-csharp[Main](samples/core/internals/Miscellaneous/Internals/WritingAProvider/EntityFrameworkCore.ProviderStarter/Extensions/MyProviderServiceCollectionExtensions.cs)] -->
 ````csharp
 public static class MyProviderServiceCollectionExtensions
 {

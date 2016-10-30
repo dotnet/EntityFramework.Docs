@@ -15,7 +15,7 @@ uid: core/miscellaneous/logging
 > This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Miscellaneous/Logging) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging) on GitHub.
 
 ## Create a logger
 
@@ -26,7 +26,7 @@ The first step is to create an implementation of `ILoggerProvider` and `ILogger`
 
 Here is a simple implementation that logs a human readable representation of every event to a text file and the Console.
 
-<!-- [!code-csharp[Main](samples/Miscellaneous/Logging/Logging/MyLoggerProvider.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Miscellaneous/Logging/Logging/MyLoggerProvider.cs)] -->
 ````csharp
 using Microsoft.Extensions.Logging;
 using System;
@@ -103,7 +103,7 @@ In your application startup code, create and instance of you context and registe
 > [!NOTE]
 > You only need to register the logger with a single context instance. Once you have registered it, it will be used for all other instances of the context in the same AppDomain.
 
-<!-- [!code-csharp[Main](samples/Miscellaneous/Logging/Logging.ConsoleApp/Program.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Miscellaneous/Logging/Logging.ConsoleApp/Program.cs)] -->
 ````csharp
         using (var db = new BloggingContext())
         {
@@ -119,7 +119,7 @@ The easiest way to filter what is logged, is to adjust your logger provider to o
 
 For example, here is a logger provider that returns the logger only for events related to executing SQL against a relational database. For all other categories of events, a null logger (which does nothing) is returned.
 
-<!-- [!code-csharp[Main](samples/Miscellaneous/Logging/Logging/MyFilteredLoggerProvider.cs?highlight=9,10,11,12,13,17,18,19,20,21,22)] -->
+<!-- [!code-csharp[Main](samples/core/Miscellaneous/Logging/Logging/MyFilteredLoggerProvider.cs?highlight=9,10,11,12,13,17,18,19,20,21,22)] -->
 ````csharp
 using Microsoft.Extensions.Logging;
 using System;

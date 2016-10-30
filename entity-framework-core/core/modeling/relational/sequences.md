@@ -31,7 +31,7 @@ You can not configure a sequence using Data Annotations.
 
 You can use the Fluent API to create a sequence in the model.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/FluentAPI/Samples/Relational/Sequence.cs?highlight=7)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/Sequence.cs?highlight=7)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -53,7 +53,7 @@ public class Order
 
 You can also configure additional aspect of the sequence, such as its schema, start value, and increment.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/FluentAPI/Samples/Relational/SequenceConfigured.cs?highlight=7,8,9)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/SequenceConfigured.cs?highlight=7,8,9)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -70,7 +70,7 @@ class MyContext : DbContext
 
 Once a sequence is introduced, you can use it to generate values for properties in your model. For example, you can use [Default Values](default-values.md) to insert the next value from the sequence.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/FluentAPI/Samples/Relational/SequenceUsed.cs?highlight=11,12,13)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/SequenceUsed.cs?highlight=11,12,13)] -->
 ````csharp
 class MyContext : DbContext
 {

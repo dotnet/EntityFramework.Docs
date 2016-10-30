@@ -29,7 +29,7 @@ When a backing field is configured, EF will write directly to that field when ma
 
 * m_<propertyName>
 
-<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/BackingField.cs?highlight=3,7,8,9,10,11)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/BackingField.cs?highlight=3,7,8,9,10,11)] -->
 ````csharp
 public class Blog
 {
@@ -53,7 +53,7 @@ Backing fields cannot be configured with data annotations.
 
 There is no top level API for configuring backing fields, but you can use the Fluent API to set annotations that are used to store backing field information.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/BackingField.cs?highlight=7,8,9,15,18)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/BackingField.cs?highlight=7,8,9,15,18)] -->
 ````csharp
 class MyContext : DbContext
 {

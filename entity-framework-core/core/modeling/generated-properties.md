@@ -54,7 +54,7 @@ By convention, primary keys that are of an integer or GUID data type will be set
 
 ### No value generation (Data Annotations)
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/ValueGeneratedNever.cs?highlight=3)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/ValueGeneratedNever.cs?highlight=3)] -->
 ````csharp
 public class Blog
 {
@@ -66,7 +66,7 @@ public class Blog
 
 ### Value generated on add (Data Annotations)
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/ValueGeneratedOnAdd.cs?highlight=5)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/ValueGeneratedOnAdd.cs?highlight=5)] -->
 ````csharp
 public class Blog
 {
@@ -82,7 +82,7 @@ public class Blog
 
 ### Value generated on add or update (Data Annotations)
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/ValueGeneratedOnAddOrUpdate.cs?highlight=5)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/ValueGeneratedOnAddOrUpdate.cs?highlight=5)] -->
 ````csharp
 public class Blog
 {
@@ -102,7 +102,7 @@ You can use the Fluent API to change the value generation pattern for a given pr
 
 ### No value generation (Fluent API)
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/ValueGeneratedNever.cs?highlight=7,8,9)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/ValueGeneratedNever.cs?highlight=7,8,9)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -125,7 +125,7 @@ public class Blog
 
 ### Value generated on add (Fluent API)
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/ValueGeneratedOnAdd.cs?highlight=7,8,9)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/ValueGeneratedOnAdd.cs?highlight=7,8,9)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -152,7 +152,7 @@ public class Blog
 
 ### Value generated on add or update (Fluent API)
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/ValueGeneratedOnAddOrUpdate.cs?highlight=7,8,9)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/ValueGeneratedOnAddOrUpdate.cs?highlight=7,8,9)] -->
 ````csharp
 class MyContext : DbContext
 {

@@ -31,7 +31,7 @@ Computed columns can not be configured with Data Annotations.
 
 You can use the Fluent API to specify that a property should map to a computed column.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/FluentAPI/Samples/Relational/ComputedColumn.cs?highlight=9)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/ComputedColumn.cs?highlight=9)] -->
 ````csharp
 class MyContext : DbContext
 {

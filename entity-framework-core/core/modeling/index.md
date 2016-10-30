@@ -56,7 +56,7 @@ In this section you can find information about conventions and configuration for
 
 You can override the `OnModelCreating` method in your derived context and use the `ModelBuilder API` to configure your model. This is the most powerful method of configuration and allows configuration to be specified without modifying your entity classes. Fluent API configuration has the highest precedence and will override conventions and data annotations.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/Required.cs?range=5-15&highlight=5-10)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Required.cs?range=5-15&highlight=5-10)] -->
 
 ````csharp
     class MyContext : DbContext
@@ -76,7 +76,7 @@ You can override the `OnModelCreating` method in your derived context and use 
 
 You can also apply attributes (known as Data Annotations) to your classes and properties. Data annotations will override conventions, but will be overwritten by Fluent API configuration.
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/Required.cs?range=11-16&highlight=4)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Required.cs?range=11-16&highlight=4)] -->
 
 ````csharp
     public class Blog

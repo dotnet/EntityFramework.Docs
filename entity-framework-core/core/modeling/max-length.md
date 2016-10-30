@@ -27,7 +27,7 @@ By convention, it is left up to the database provider to choose an appropriate d
 
 You can use the Data Annotations to configure a maximum length for a property. In this example, targeting SQL Server this would result in the `nvarchar(500)` data type being used.
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/MaxLength.cs?highlight=4)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/MaxLength.cs?highlight=4)] -->
 ````csharp
 public class Blog
 {
@@ -41,7 +41,7 @@ public class Blog
 
 You can use the Fluent API to configure a maximum length for a property. In this example, targeting SQL Server this would result in the `nvarchar(500)` data type being used.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/MaxLength.cs?highlight=7,8,9)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/MaxLength.cs?highlight=7,8,9)] -->
 ````csharp
 class MyContext : DbContext
 {

@@ -28,7 +28,7 @@ By convention, types that are exposed in `DbSet` properties on your context are 
 
 * `AuditEntry` because it is mentioned in `OnModelCreating`
 
-<!-- [!code-csharp[Main](samples/Modeling/Conventions/Samples/IncludedTypes.cs?highlight=3,7,16)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/IncludedTypes.cs?highlight=3,7,16)] -->
 ````csharp
 class MyContext : DbContext
 {
@@ -69,7 +69,7 @@ public class AuditEntry
 
 You can use Data Annotations to exclude a type from the model.
 
-<!-- [!code-csharp[Main](samples/Modeling/DataAnnotations/Samples/IgnoreType.cs?highlight=9)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/IgnoreType.cs?highlight=9)] -->
 ````csharp
 public class Blog
 {
@@ -90,7 +90,7 @@ public class BlogMetadata
 
 You can use the Fluent API to exclude a type from the model.
 
-<!-- [!code-csharp[Main](samples/Modeling/FluentAPI/Samples/IgnoreType.cs?highlight=7)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/IgnoreType.cs?highlight=7)] -->
 ````csharp
 class MyContext : DbContext
 {

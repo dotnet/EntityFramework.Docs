@@ -31,7 +31,7 @@ You can not set the default schema using Data Annotations.
 
 You can use the Fluent API to specify a default schema.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/FluentAPI/Samples/Relational/DefaultSchema.cs?highlight=7)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DefaultSchema.cs?highlight=7)] -->
 ````csharp
 class MyContext : DbContext
 {

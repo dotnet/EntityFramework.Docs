@@ -17,7 +17,7 @@ uid: core/querying/basic
 Entity Framework Core uses Language Integrate Query (LINQ) to query data from the database. LINQ allows you to use C# (or your .NET language of choice) to write strongly typed queries based on your derived context and entity classes.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/Querying) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
 
 ## 101 LINQ samples
 
@@ -25,7 +25,7 @@ This page shows a few examples to achieve common tasks with Entity Framework Cor
 
 ## Loading all data
 
-<!-- [!code-csharp[Main](samples/Querying/Querying/Basics/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/Basics/Sample.cs)] -->
 ````csharp
 using (var context = new BloggingContext())
 {
@@ -35,7 +35,7 @@ using (var context = new BloggingContext())
 
 ## Loading a single entity
 
-<!-- [!code-csharp[Main](samples/Querying/Querying/Basics/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/Basics/Sample.cs)] -->
 ````csharp
 using (var context = new BloggingContext())
 {
@@ -46,7 +46,7 @@ using (var context = new BloggingContext())
 
 ## Filtering
 
-<!-- [!code-csharp[Main](samples/Querying/Querying/Basics/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/Basics/Sample.cs)] -->
 ````csharp
 using (var context = new BloggingContext())
 {

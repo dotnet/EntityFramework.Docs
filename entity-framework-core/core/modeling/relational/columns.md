@@ -27,7 +27,7 @@ By convention, each property will be setup to map to a column with the same name
 
 You can use Data Annotations to configure the column to which a property is mapped.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/DataAnnotations/Samples/Relational/Column.cs?highlight=3)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/DataAnnotations/Samples/Relational/Column.cs?highlight=3)] -->
 ````csharp
 public class Blog
 {
@@ -41,7 +41,7 @@ public class Blog
 
 You can use the Fluent API to configure the column to which a property is mapped.
 
-<!-- [!code-csharp[Main](samples/relational/Modeling/FluentAPI/Samples/Relational/Column.cs?highlight=7,8,9)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/Column.cs?highlight=7,8,9)] -->
 ````csharp
 class MyContext : DbContext
 {
