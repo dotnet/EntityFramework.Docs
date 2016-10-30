@@ -1,5 +1,5 @@
 #[Entity Framework Core](intro.md)
-#[Getting Started](platforms/toc.md)
+#[Getting Started](get-started/toc.md)
 #[Creating a Model](modeling/toc.md)
 #[Querying Data](querying/toc.md)
 #[Saving Data](saving/toc.md)

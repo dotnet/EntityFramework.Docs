@@ -171,7 +171,7 @@ namespace MyProject
 
 ## More reading
 
-* Read [Getting Started on ASP.NET Core](../platforms/aspnetcore/index.md) for more information on using EF with ASP.NET Core.
+* Read [Getting Started on ASP.NET Core](../get-started/aspnetcore/index.md) for more information on using EF with ASP.NET Core.
 
 * Read [Dependency Injection](https://docs.asp.net/en/latest/fundamentals/dependency-injection.html) to learn more about using DI.
 

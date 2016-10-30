@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: e153627f-f132-4c11-b13c-6c9a607addce
 ms.prod: entity-framework-core-
-uid: core/platforms/aspnetcore/new-db
+uid: core/get-started/aspnetcore/new-db
 ---
 # ASP.NET Core Application to New Database
 
@@ -17,7 +17,7 @@ uid: core/platforms/aspnetcore/new-db
 In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework. You will use migrations to create the database from your model.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Platforms/AspNetCore/AspNetCore.NewDb) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/AspNetCore.NewDb) on GitHub.
 
 ## Prerequisites
 
@@ -67,7 +67,7 @@ Later in this walkthrough we will also be using some Entity Framework commands t
 
 * Locate the `tools` section and add the `ef` command as shown below
 
-<!-- [!code-json[Main](samples/core/Platforms/AspNetCore/AspNetCore.NewDb/project.json?highlight=2)] -->
+<!-- [!code-json[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/project.json?highlight=2)] -->
 ````json
   "tools": {
     "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final",
@@ -94,7 +94,7 @@ Now it's time to define a context and entity classes that make up your model.
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-csharp[Main](samples/core/Platforms/AspNetCore/AspNetCore.NewDb/Models/Model.cs)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Models/Model.cs)] -->
 ````csharp
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -144,7 +144,7 @@ In order for our MVC controllers to make use of `BloggingContext` we are going t
 
 * Add the following `using` statements at the start of the file
 
-<!-- [!code-csharp[Main](samples/core/Platforms/AspNetCore/AspNetCore.NewDb/Startup.cs)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Startup.cs)] -->
 ````csharp
 using EFGetStarted.AspNetCore.NewDb.Models;
 using Microsoft.EntityFrameworkCore;
@@ -156,7 +156,7 @@ Now we can use the `AddDbContext` method to register it as a service.
 
 * Add the lines that are highlighted in the following code
 
-<!-- [!code-csharp[Main](samples/core/Platforms/AspNetCore/AspNetCore.NewDb/Startup.cs?highlight=3,4)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Startup.cs?highlight=3,4)] -->
 ````csharp
 public void ConfigureServices(IServiceCollection services)
 {
@@ -193,7 +193,7 @@ Next, we'll add an MVC controller that will use EF to query and save data.
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-csharp[Main](samples/core/Platforms/AspNetCore/AspNetCore.NewDb/Controllers/BlogsController.cs)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Controllers/BlogsController.cs)] -->
 ````csharp
 using EFGetStarted.AspNetCore.NewDb.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -262,7 +262,7 @@ We'll start with the view for our `Index` action, that displays all blogs.
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-html[Main](samples/core/Platforms/AspNetCore/AspNetCore.NewDb/Views/Blogs/Index.cshtml)] -->
+<!-- [!code-html[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Views/Blogs/Index.cshtml)] -->
 ````html
 @model IEnumerable<EFGetStarted.AspNetCore.NewDb.Models.Blog>
 
@@ -308,7 +308,7 @@ We'll also add a view for the `Create` action, which allows the user to enter de
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-html[Main](samples/core/Platforms/AspNetCore/AspNetCore.NewDb/Views/Blogs/Create.cshtml)] -->
+<!-- [!code-html[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Views/Blogs/Create.cshtml)] -->
 ````html
 @model EFGetStarted.AspNetCore.NewDb.Models.Blog
 

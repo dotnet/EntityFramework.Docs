@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Saving", "Saving\Saving\Sav
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetCore", "AspNetCore", "{A732D593-D211-4AB5-AB08-3774E41EB3E5}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNetCore.NewDb", "Platforms\AspNetCore\AspNetCore.NewDb\AspNetCore.NewDb.xproj", "{A5767B3A-38B7-411D-A374-6C31AEFBB3FC}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNetCore.NewDb", "GetStarted\AspNetCore\AspNetCore.NewDb\AspNetCore.NewDb.xproj", "{A5767B3A-38B7-411D-A374-6C31AEFBB3FC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNetCore.ExistingDb", "Platforms\AspNetCore\AspNetCore.ExistingDb\AspNetCore.ExistingDb.xproj", "{31E86A37-5EB3-45ED-9F81-C4AAD52765F7}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNetCore.ExistingDb", "GetStarted\AspNetCore\AspNetCore.ExistingDb\AspNetCore.ExistingDb.xproj", "{31E86A37-5EB3-45ED-9F81-C4AAD52765F7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnnotations", "Modeling\DataAnnotations\DataAnnotations.csproj", "{F583DA77-954C-4C4E-9F46-846CB39208DE}"
 EndProject
@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conventions", "Modeling\Con
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UWP", "UWP", "{2D7D0958-8722-40E5-9BCB-A96B096E7534}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWP.SQLite", "Platforms\UWP\UWP.SQLite\UWP.SQLite.csproj", "{1B8324AB-133F-4610-9C8C-ABAF080F8818}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWP.SQLite", "GetStarted\UWP\UWP.SQLite\UWP.SQLite.csproj", "{1B8324AB-133F-4610-9C8C-ABAF080F8818}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{851986F2-F49D-423A-8E60-1106EB6916F0}"
 EndProject
@@ -35,15 +35,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging.ConsoleApp", "Misce
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetCore", "NetCore", "{E1A10B1E-CD16-47BB-86C1-FE256F1AD0FB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ConsoleApp.SQLite", "Platforms\NetCore\ConsoleApp.SQLite\ConsoleApp.SQLite.xproj", "{D7ED15AD-50F5-4A11-B7A0-323DD77904C7}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ConsoleApp.SQLite", "GetStarted\NetCore\ConsoleApp.SQLite\ConsoleApp.SQLite.xproj", "{D7ED15AD-50F5-4A11-B7A0-323DD77904C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FullNet", "FullNet", "{8C67ADF8-D850-4D2E-9A73-E381D31B8C14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.NewDb", "Platforms\FullNet\ConsoleApp.NewDb\ConsoleApp.NewDb.csproj", "{20019C8A-4100-47D0-88F3-AC2EBB38E27B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.NewDb", "GetStarted\FullNet\ConsoleApp.NewDb\ConsoleApp.NewDb.csproj", "{20019C8A-4100-47D0-88F3-AC2EBB38E27B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.ExistingDb", "Platforms\FullNet\ConsoleApp.ExistingDb\ConsoleApp.ExistingDb.csproj", "{2088F834-0305-4C03-89DD-3AB20D3FB753}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.ExistingDb", "GetStarted\FullNet\ConsoleApp.ExistingDb\ConsoleApp.ExistingDb.csproj", "{2088F834-0305-4C03-89DD-3AB20D3FB753}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{9AE81D20-3DB5-4C4A-AFBB-3F6A460B0313}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GetStarted", "GetStarted", "{9AE81D20-3DB5-4C4A-AFBB-3F6A460B0313}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Miscellanous", "Miscellanous", "{85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}"
 EndProject

@@ -1,7 +1,7 @@
 ﻿{
   "projects": [
-    "Platforms/AspNetCore",
-    "Platforms/NetCore",
+    "GetStarted/AspNetCore",
+    "GetStarted/NetCore",
     "Internals/WritingAProvider"
   ],
   "sdk": {

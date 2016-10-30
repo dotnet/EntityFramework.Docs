@@ -29,9 +29,9 @@ Install the [Microsoft.EntityFrameworkCore.SQLite NuGet package](https://www.nug
 ## Get Started
 
 The following resources will help you get started with this provider.
-* [Local SQLite on UWP](../../platforms/uwp/getting-started.md)
+* [Local SQLite on UWP](../../get-started/uwp/getting-started.md)
 
-* [.NET Core Application to New SQLite Database](../../platforms/netcore/new-db-sqlite.md)
+* [.NET Core Application to New SQLite Database](../../get-started/netcore/new-db-sqlite.md)
 
 * [Unicorn Clicker Sample Application](https://github.com/rowanmiller/UnicornStore/tree/master/UnicornClicker/UWP)
 

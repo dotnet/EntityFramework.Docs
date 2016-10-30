@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 ms.prod: entity-framework-core-
-uid: core/platforms/aspnetcore/existing-db
+uid: core/get-started/aspnetcore/existing-db
 ---
 # ASP.NET Core Application to Existing Database (Database First)
 
@@ -17,7 +17,7 @@ uid: core/platforms/aspnetcore/existing-db
 In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework.  You will use reverse engineering to create an Entity Framework model based on an existing database.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Platforms/AspNetCore/AspNetCore.ExistingDb) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/AspNetCore.ExistingDb) on GitHub.
 
 ## Prerequisites
 
@@ -95,7 +95,7 @@ To enable reverse engineering from an existing database we need to install a cou
 
 * Locate the `tools` section and add the highlighted lines as shown below
 
-<!-- [!code-json[Main](samples/core/aspnetcore/Platforms/AspNetCore/AspNetCore.NewDb/project.json?highlight=2)] -->
+<!-- [!code-json[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/project.json?highlight=2)] -->
 ````json
  "tools": {
    "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final",
@@ -119,7 +119,7 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 
 The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
 
-<!-- [!code-csharp[Main](samples/core/Platforms/AspNetCore/AspNetCore.ExistingDb/Models/Blog.cs)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.ExistingDb/Models/Blog.cs)] -->
 ````csharp
 using System;
 using System.Collections.Generic;
@@ -143,7 +143,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 
 The context represents a session with the database and allows you to query and save instances of the entity classes.
 
-<!-- [!code[Main](samples/core/Platforms/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContextUnmodified.txt)] -->
+<!-- [!code[Main](samples/core/GetStarted/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContextUnmodified.txt)] -->
 ````csharp
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -191,7 +191,7 @@ In ASP.NET Core, configuration is generally performed in **Startup.cs**. To conf
 
 * Delete the lines of code highlighted below
 
-<!-- [!code[Main](samples/core/Platforms/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContextUnmodified.txt?highlight=3,4,5,6,7)] -->
+<!-- [!code[Main](samples/core/GetStarted/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContextUnmodified.txt?highlight=3,4,5,6,7)] -->
 ````csharp
 public partial class BloggingContext : DbContext
 {
@@ -204,7 +204,7 @@ public partial class BloggingContext : DbContext
 
 * Add the lines of code highlighted below
 
-<!-- [!code-csharp[Main](samples/core/Platforms/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContext.cs?highlight=3,4,5)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.ExistingDb/Models/BloggingContext.cs?highlight=3,4,5)] -->
 ````csharp
 public partial class BloggingContext : DbContext
 {
@@ -221,7 +221,7 @@ In order for our MVC controllers to make use of `BloggingContext` we are going t
 
 * Add the following `using` statements at the start of the file
 
-<!-- [!code-csharp[Main](samples/core/Platforms/AspNetCore/AspNetCore.ExistingDb/Startup.cs)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.ExistingDb/Startup.cs)] -->
 ````csharp
 using EFGetStarted.AspNetCore.ExistingDb.Models;
 using Microsoft.EntityFrameworkCore;
@@ -233,7 +233,7 @@ Now we can use the `AddDbContext` method to register it as a service.
 
 * Add the lines that are highlighted in the following code
 
-<!-- [!code-csharp[Main](samples/core/Platforms/AspNetCore/AspNetCore.ExistingDb/Startup.cs?highlight=3,4)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.ExistingDb/Startup.cs?highlight=3,4)] -->
 ````csharp
 public void ConfigureServices(IServiceCollection services)
 {
@@ -255,7 +255,7 @@ Next, we'll add an MVC controller that will use EF to query and save data.
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-csharp[Main](samples/core/Platforms/AspNetCore/AspNetCore.ExistingDb/Controllers/BlogsController.cs)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.ExistingDb/Controllers/BlogsController.cs)] -->
 ````csharp
 using EFGetStarted.AspNetCore.ExistingDb.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -324,7 +324,7 @@ We'll start with the view for our `Index` action, that displays all blogs.
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-html[Main](samples/core/Platforms/AspNetCore/AspNetCore.ExistingDb/Views/Blogs/Index.cshtml)] -->
+<!-- [!code-html[Main](samples/core/GetStarted/AspNetCore/AspNetCore.ExistingDb/Views/Blogs/Index.cshtml)] -->
 ````html
 @model IEnumerable<EFGetStarted.AspNetCore.ExistingDb.Models.Blog>
 
@@ -370,7 +370,7 @@ We'll also add a view for the `Create` action, which allows the user to enter de
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-html[Main](samples/core/Platforms/AspNetCore/AspNetCore.ExistingDb/Views/Blogs/Create.cshtml)] -->
+<!-- [!code-html[Main](samples/core/GetStarted/AspNetCore/AspNetCore.ExistingDb/Views/Blogs/Create.cshtml)] -->
 ````html
 @model EFGetStarted.AspNetCore.ExistingDb.Models.Blog
 

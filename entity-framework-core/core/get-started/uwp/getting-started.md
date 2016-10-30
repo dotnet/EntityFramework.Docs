@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: a0ae2f21-1eef-43c6-83ad-92275f9c0727
 ms.prod: entity-framework-core-
-uid: core/platforms/uwp/getting-started
+uid: core/get-started/uwp/getting-started
 ---
 # Local SQLite on UWP
 
@@ -20,7 +20,7 @@ In this walkthrough, you will build a Universal Windows Platform (UWP) applicati
 > **Avoid using anonymous types in LINQ queries on UWP**. Deploying a UWP application to the app store requires your application to be compiled with .NET Native. Queries with anonymous types have poor performance on .NET Native or may crash the application.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Platforms/UWP/UWP.SQLite) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/UWP/UWP.SQLite) on GitHub.
 
 ## Prerequisites
 
@@ -73,7 +73,7 @@ Now it's time to define a context and entity classes that make up your model.
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-csharp[Main](samples/core/Platforms/UWP/UWP.SQLite/Model.cs)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/Model.cs)] -->
 ````csharp
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -127,7 +127,7 @@ namespace EFGetStarted.UWP
 > 
 >   * Add the following contents to the file
 > 
-> <!-- [!code-xml[Main](samples/core/Platforms/UWP/UWP.SQLite/App.config)] -->
+> <!-- [!code-xml[Main](samples/core/GetStarted/UWP/UWP.SQLite/App.config)] -->
 > ````xml
 > <configuration>
 >   <runtime>
@@ -163,7 +163,7 @@ Since we want the database to be created on the device that the app runs on, we 
 
 * Add the highlighted using to the start of the file
 
-<!-- [!code-csharp[Main](samples/core/Platforms/UWP/UWP.SQLite/App.xaml.cs?highlight=1)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/App.xaml.cs?highlight=1)] -->
 ````csharp
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -175,7 +175,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 
 * Add the highlighted code to apply any pending migrations
 
-<!-- [!code-csharp[Main](samples/core/Platforms/UWP/UWP.SQLite/App.xaml.cs?highlight=6,7,8,9)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/App.xaml.cs?highlight=6,7,8,9)] -->
 ````csharp
 public App()
 {
@@ -202,7 +202,7 @@ You can now use your model to perform data access.
 
 * Add the page load handler and UI content highlighted below
 
-<!-- [!code-csharp[Main](samples/core/Platforms/UWP/UWP.SQLite/MainPage.xaml?highlight=9,12,13,14,15,16,17,18,19,20,21,22)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/MainPage.xaml?highlight=9,12,13,14,15,16,17,18,19,20,21,22)] -->
 ````csharp
 <Page
     x:Class="EFGetStarted.UWP.MainPage"
@@ -236,7 +236,7 @@ Now we'll add code to wire up the UI with the database
 
 * Add the highlighted code from the following listing
 
-<!-- [!code-csharp[Main](samples/core/Platforms/UWP/UWP.SQLite/MainPage.xaml.cs?highlight=8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)] -->
+<!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/MainPage.xaml.cs?highlight=8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)] -->
 ````csharp
 public sealed partial class MainPage : Page
 {
