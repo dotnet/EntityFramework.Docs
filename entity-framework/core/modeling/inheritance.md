@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 754be334-dd21-450e-9d22-2591e80012a2
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/inheritance
 ---
 # Inheritance

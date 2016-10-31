@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 0ff736a3-f1b0-4b58-a49c-4a7094bd6935
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/relationships
 ---
 # Relationships

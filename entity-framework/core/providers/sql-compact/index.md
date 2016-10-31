@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 073f0004-3eb5-4618-ab93-0674910e1819
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/providers/sql-compact/index
 ---
 # Microsoft SQL Server Compact Edition

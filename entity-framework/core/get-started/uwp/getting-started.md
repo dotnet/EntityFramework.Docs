@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: a0ae2f21-1eef-43c6-83ad-92275f9c0727
-ms.prod: entity-framework-core-
+ms.prod: entity-framework-
 uid: core/get-started/uwp/getting-started
 ---
 # Local SQLite on UWP

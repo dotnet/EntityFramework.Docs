@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: cbe6935e-2679-4b77-8914-a8d772240cf1
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/included-types
 ---
 # Including & Excluding Types

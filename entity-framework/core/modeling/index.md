@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 88253ff3-174e-485c-b3f8-768243d01ee1
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/index
 ---
 # Creating a Model

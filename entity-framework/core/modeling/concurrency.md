@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: bc8b1cb0-befe-4b67-8004-26e6c5f69385
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/concurrency
 ---
 # Concurrency Tokens

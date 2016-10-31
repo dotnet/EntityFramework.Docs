@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 07b6680f-ffcf-412c-9857-f997486b386c
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/saving/related-data
 ---
 # Related Data

@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: e9d81f06-805d-45c9-97c2-3546df654829
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/relational/computed-columns
 ---
 # Computed Columns

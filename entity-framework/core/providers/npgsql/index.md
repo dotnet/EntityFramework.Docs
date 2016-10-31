@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 5ecd1b22-c68e-4d87-ba39-b0761f4d5b90
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/providers/npgsql/index
 ---
 # Npgsql (PostgreSQL)

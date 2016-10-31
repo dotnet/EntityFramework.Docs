@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 099d179e-dd7b-4755-8f3c-fcde914bf50b
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/get-started/netcore/new-db-sqlite
 ---
 # .NET Core Application to New SQLite Database

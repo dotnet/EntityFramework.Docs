@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: f6e35c6d-45b7-4258-be1d-87c1bb67438d
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/miscellaneous/logging
 ---
 # Logging

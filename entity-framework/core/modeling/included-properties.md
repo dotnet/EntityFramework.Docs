@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: e9dff604-3469-4a05-8f9e-18ac281d82a9
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/included-properties
 ---
 # Including & Excluding Properties

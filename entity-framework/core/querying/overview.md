@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: de2e34cd-659b-4cab-b5ed-7a979c6bf120
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/querying/overview
 ---
 # How Query Works

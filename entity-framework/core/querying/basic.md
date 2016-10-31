@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: ab6e35f1-397f-41c0-9ef4-85aec5466377
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/querying/basic
 ---
 # Basic Query

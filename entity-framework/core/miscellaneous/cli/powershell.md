@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: c02a68d0-187a-47fb-af80-031f4187ad8a
-ms.prod: entity-framework-core-
+ms.prod: entity-framework-
 uid: core/miscellaneous/cli/powershell
 ---
 # Package Manager Console (Visual Studio)

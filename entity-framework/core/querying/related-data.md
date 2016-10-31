@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/querying/related-data
 ---
 # Loading Related Data

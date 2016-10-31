@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 8a715e14-dff3-47ea-b48f-b8280977ddfb
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/efcore-vs-ef6/side-by-side
 ---
 # EF6.x and EF Core in the Same Application
