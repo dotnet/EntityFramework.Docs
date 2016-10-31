@@ -3,7 +3,7 @@
 ##[SQLite Limitations](sqlite/limitations.md)
 #[Npgsql (PostgreSQL)](npgsql/index.md)
 #[MySQL (Official)](mysql/index.md)
-#[Pomelo (MySQL)](pomelo/index.md)
+#[MySQL (Pomelo)](pomelo/index.md)
 #[Microsoft SQL Server Compact Edition](sql-compact/index.md)
 #[IBM Data Servers](ibm/index.md)
 #[InMemory (for Testing)](in-memory/index.md)
