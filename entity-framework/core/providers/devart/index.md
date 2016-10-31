@@ -49,4 +49,4 @@ See the [Devart dotConnect Entity Framework documentation](https://www.devart.co
 
 ## Supported Platforms
 
-* Full .NET (4.5.1 onwards)
+* .NET Framework (4.5.1 onwards)

@@ -45,4 +45,4 @@ The following resources will help you get started with this provider.
 
 ## Supported Platforms
 
-* Full .NET (4.5.1 onwards)
+* .NET Framework (4.5.1 onwards)

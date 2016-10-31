@@ -39,7 +39,7 @@ See the [Npgsql documentation](http://www.npgsql.org/doc/efcore.html) to get sta
 
 ## Supported Platforms
 
-* Full .NET (4.5.1 onwards)
+* .NET Framework (4.5.1 onwards)
 
 * .NET Core
 
