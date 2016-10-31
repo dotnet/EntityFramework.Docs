@@ -24,6 +24,10 @@ bld/
 [Bb]in/
 [Oo]bj/
 _site/
+_themes/
+.optemp/
+log/
+.openpublishing.buildcore.ps1
 
 # Visual Studo 2015 cache/options directory
 .vs/
