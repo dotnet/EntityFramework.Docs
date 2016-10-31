@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 05a47de9-1078-488e-a823-b516a4208f33
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/relational/columns
 ---
 # Column Mapping

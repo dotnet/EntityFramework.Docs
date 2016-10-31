@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: c78f8f42-564a-45a4-aca7-3ede9f7ed2bc
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/relational/primary-keys
 ---
 # Primary Keys

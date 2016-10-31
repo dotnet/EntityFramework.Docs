@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 2c1fc33a-baac-477e-bd35-7360badb8303
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/relational/index
 ---
 # Relational Database Modeling

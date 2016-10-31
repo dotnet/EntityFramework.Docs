@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 6d75b229-cc79-4d08-88cd-3a1c1b24d88f
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/miscellaneous/rc1-rc2-upgrade
 ---
 # Upgrading from RC1 to RC2

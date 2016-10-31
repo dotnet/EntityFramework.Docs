@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: e6e58473-9f5e-4a1f-ac0f-b87d2cbb667e
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/relational/default-schema
 ---
 # Default Schema

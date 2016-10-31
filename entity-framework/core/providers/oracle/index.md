@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: bb242065-234a-4a12-800f-3d086f4f134f
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/providers/oracle/index
 ---
 # Oracle (Coming Soon)

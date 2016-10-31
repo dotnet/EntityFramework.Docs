@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 349a7ba9-d6fb-402e-b517-c0cc4c11cbe7
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/miscellaneous/testing
 ---
 # Testing with InMemory

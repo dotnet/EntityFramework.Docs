@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: a3d91281-233c-418f-9e81-806f9e807a86
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/providers/ibm/index
 ---
 # IBM Data Servers

@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: ef044629-feca-4fd1-a48f-d208daedaf92
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/saving/index
 ---
 # Saving Data

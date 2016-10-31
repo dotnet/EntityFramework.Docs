@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: e17e060c-929f-4180-8883-40c438fbcc01
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/querying/tracking
 ---
 # Tracking vs. No-Tracking

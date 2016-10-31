@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: a628795e-64df-4f24-a5e8-76bc261e7ed8
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/backing-field
 ---
 # Backing Fields

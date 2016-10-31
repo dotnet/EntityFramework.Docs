@@ -6,7 +6,7 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 94f81a92-3c72-4e14-912a-f99310374e42
-ms.prod: entity-framework-core
+ms.prod: entity-framework
 uid: core/modeling/relational/sequences
 ---
 # Sequences
