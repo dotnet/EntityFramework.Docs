@@ -42,6 +42,6 @@ See [Starting with MySQL EF Core provider and Connector/Net 7.0.4](http://inside
 
 ## Supported Platforms
 
-* Full .NET (4.5.1 onwards)
+* .NET Framework (4.5.1 onwards)
 
 * .NET Core
