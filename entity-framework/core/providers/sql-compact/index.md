@@ -49,4 +49,4 @@ See the [getting started documentation on the project site](https://github.com/E
 
 ## Supported Platforms
 
-* Full .NET (4.5.1 onwards)
+* .NET Framework (4.5.1 onwards)
