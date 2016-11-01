@@ -11,8 +11,8 @@ uid: core/intro
 ---
 # Entity Framework Core
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../ef6/index.md).
 
 Entity Framework (EF) Core is a lightweight and extensible version of the popular Entity Framework data access technology.
 

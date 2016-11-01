@@ -11,8 +11,8 @@ uid: core/modeling/relational/inheritance
 ---
 # Inheritance (Relational Database)
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 > [!NOTE]
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).

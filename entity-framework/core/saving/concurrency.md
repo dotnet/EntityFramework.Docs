@@ -11,8 +11,8 @@ uid: core/saving/concurrency
 ---
 # Concurrency Conflicts
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 If a property is configured as a concurrency token then EF will check that no other user has modified that value in the database when saving changes to that record.
 
@@ -96,7 +96,7 @@ namespace EFSaving.Concurrency
                                 // TODO: Logic to decide which value should be written to database
                                 // entry.Property(property.Name).CurrentValue = <value to be saved>;
 
-                                // Update original values to 
+                                // Update original values to
                                 entry.Property(property.Name).OriginalValue = databaseEntry.Property(property.Name).CurrentValue;
                             }
                         }

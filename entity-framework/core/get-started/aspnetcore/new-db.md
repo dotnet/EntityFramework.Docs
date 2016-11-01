@@ -11,8 +11,8 @@ uid: core/get-started/aspnetcore/new-db
 ---
 # ASP.NET Core Application to New Database
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework. You will use migrations to create the database from your model.
 

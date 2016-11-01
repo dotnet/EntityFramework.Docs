@@ -11,8 +11,8 @@ uid: core/providers/sqlite/limitations
 ---
 # SQLite Limitations
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 When using the SQLite provider, there are a number of limitations you should be aware of. Most of these are a result of limitations in the underlying SQLite database engine and are not specific to EF.
 

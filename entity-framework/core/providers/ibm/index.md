@@ -11,8 +11,8 @@ uid: core/providers/ibm/index
 ---
 # IBM Data Servers
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 This database provider allows Entity Framework Core to be used with IBM Data Servers. Issues, questions, etc. can be posted in the [.Net Development with DB2 and IDS forum](https://www.ibm.com/developerworks/community/forums/html/forum?id=11111111-0000-0000-0000-000000000467)
 

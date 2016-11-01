@@ -11,8 +11,8 @@ uid: core/get-started/uwp/getting-started
 ---
 # Local SQLite on UWP
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
@@ -118,15 +118,15 @@ namespace EFGetStarted.UWP
 
 > [!WARNING]
 > **Known Issue in Preview 2**Using EF Tools on UWP projects does not work without manually adding binding redirects.
-> 
+>
 >   * File –> New –> File...
-> 
+>
 >   * From the left menu select Visual C# -> General -> Text File
-> 
+>
 >   * Give the file the name "App.config"
-> 
+>
 >   * Add the following contents to the file
-> 
+>
 > <!-- [!code-xml[Main](samples/core/GetStarted/UWP/UWP.SQLite/App.config)] -->
 > ````xml
 > <configuration>
@@ -148,7 +148,7 @@ namespace EFGetStarted.UWP
 >   </runtime>
 > </configuration>
 > ````
-> 
+>
 >   See [Issue #5471](https://github.com/aspnet/EntityFramework/issues/5471) for more details.
 
 Now that you have a model, you can use migrations to create a database for you.

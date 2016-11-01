@@ -11,9 +11,6 @@ uid: core/efcore-vs-ef6/porting/port-code
 ---
 # Porting a Code-Based Model (Code First & Code First to Existing Database)
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
-
 If you've read all the caveats and you are ready to port, then here are some guidelines to help you get started.
 
 ## Install EF Core NuGet packages

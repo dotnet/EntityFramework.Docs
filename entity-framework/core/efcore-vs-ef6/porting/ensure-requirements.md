@@ -11,9 +11,6 @@ uid: core/efcore-vs-ef6/porting/ensure-requirements
 ---
 # Ensure EF Core Will Work for Your Application
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
-
 Before you start the porting process it is important to validate that EF Core meets the data access requirements for your application.
 
 ## Missing features

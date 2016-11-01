@@ -11,9 +11,6 @@ uid: core/efcore-vs-ef6/porting/port-edmx
 ---
 # Porting an EDMX-Based Model (Model First & Database First)
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
-
 EF Core does not support the EDMX file format for models. The best option to port these models, is to generate a new code-based model from the database for your application.
 
 ## Install EF Core NuGet packages

@@ -11,8 +11,8 @@ uid: core/modeling/index
 ---
 # Creating a Model
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Entity Framework uses a set of conventions to build a model based on the shape of your entity classes. You can specify additional configuration to supplement and/or override what was discovered by convention.
 
@@ -86,4 +86,3 @@ You can also apply attributes (known as Data Annotations) to your classes and pr
         public string Url { get; set; }
     }
 ````
-

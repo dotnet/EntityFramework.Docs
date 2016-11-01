@@ -11,8 +11,8 @@ uid: core/get-started/full-dotnet/index
 ---
 # Getting Started on Full .NET (Console, WinForms, WPF, etc.)
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 These 101 tutorials require no previous knowledge of Entity Framework (EF) or Visual Studio. They will take you step-by-step through creating a simple application that queries and saves data from a database.
 

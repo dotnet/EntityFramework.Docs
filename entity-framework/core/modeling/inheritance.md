@@ -11,8 +11,8 @@ uid: core/modeling/inheritance
 ---
 # Inheritance
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Inheritance in the EF model is used to control how inheritance in the entity classes is represented in the database.
 

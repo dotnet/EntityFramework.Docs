@@ -11,9 +11,6 @@ uid: core/efcore-vs-ef6/index
 ---
 # EF Core vs. EF6.x
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
-
 The following articles are available
 
 - [Which One Is Right for You](choosing.md)

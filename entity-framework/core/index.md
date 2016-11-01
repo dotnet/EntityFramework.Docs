@@ -9,12 +9,13 @@ ms.assetid: bc2a2676-bc46-493f-bf49-e3cc97994d57
 ms.prod: entity-framework
 uid: core/index
 ---
+
 # Entity Framework Core
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../ef6/index.md).
 
-Entity Framework (EF) Core is a lightweight and extensible version of the popular Entity Framework data access technology.
+Entity Framework (EF) Core is a lightweight, extensible, and cross-platform version of the popular Entity Framework data access technology.
 
 EF Core is an object-relational mapper (O/RM) that enables .NET developers to work with a database using .NET objects. It eliminates the need for most of the data-access code that developers usually need to write. EF Core supports many database engines, see [Database Providers](providers/index.md) for details.
 

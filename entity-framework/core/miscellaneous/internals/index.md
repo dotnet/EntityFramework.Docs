@@ -11,8 +11,8 @@ uid: core/miscellaneous/internals/index
 ---
 # Internals
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 > [!WARNING]
 > These articles are advanced topics. The target audience is provider writers and EF contributors.

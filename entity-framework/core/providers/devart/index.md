@@ -11,8 +11,8 @@ uid: core/providers/devart/index
 ---
 # Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, SQL Server, and more)
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 Devart is a third party provider writer that offers database providers for a wide range of databases. Find out more at [devart.com/dotconnect](https://www.devart.com/dotconnect/).
 

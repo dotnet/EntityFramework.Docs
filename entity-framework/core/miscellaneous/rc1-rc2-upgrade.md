@@ -11,8 +11,8 @@ uid: core/miscellaneous/rc1-rc2-upgrade
 ---
 # Upgrading from RC1 to RC2
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 This article provides guidance for moving an application built with the RC1 packages to RC2.
 

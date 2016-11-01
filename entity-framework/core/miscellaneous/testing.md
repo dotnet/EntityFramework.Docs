@@ -11,8 +11,8 @@ uid: core/miscellaneous/testing
 ---
 # Testing with InMemory
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 This article covers how to use the InMemory provider to write efficient tests with minimal impact to the code being tested.
 
@@ -130,7 +130,7 @@ namespace TestProject
     {
         private static DbContextOptions<BloggingContext> CreateNewContextOptions()
         {
-            // Create a fresh service provider, and therefore a fresh 
+            // Create a fresh service provider, and therefore a fresh
             // InMemory database instance.
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
