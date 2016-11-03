@@ -17,6 +17,14 @@ uid: index
         <h2>Entity Framework is an object-relational mapper (O/RM) that enables .NET developers to work with a database using .NET objects. It eliminates the need for most of the data-access code that developers usually need to write.</h2>
     </section>
 
+    <aside class="alert section-border">
+        <p>Entity Framework Core or Entity Framework 6.x?</p>
+        <ol class="action-list">
+            <li><a href="efcore-and-ef6/index.md" class="button-bordered button-translucent">Compare</a></li>
+            <li><a href="efcore-and-ef6/porting/index.md" class="button-bordered button-translucent">Port to EF Core</a></li>
+        </ol>
+    </aside>
+
     <div id="journeys">
         <section class="container">
             <ul class="journeys-list">
@@ -66,7 +74,7 @@ uid: index
                     <section class="journey-step-elements content">
                         <ul class="row">
                             <li class="column column-third">
-                                <a href="http://msdn.com/data/ef">
+                                <a href="ef6/index.md">
                                     <h3>Getting Started</h3>
                                     <p>Learn how to access data with Entity Framework 6.x.</p>
                                 </a>
