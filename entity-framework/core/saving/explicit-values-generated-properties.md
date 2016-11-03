@@ -11,8 +11,8 @@ uid: core/saving/explicit-values-generated-properties
 ---
 # Setting explicit values for generated properties
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 A generated property is a property whose value is generated (either by EF or the database) when the entity is added and/or updated. See [Generated Properties](../modeling/generated-properties.md) for more information.
 

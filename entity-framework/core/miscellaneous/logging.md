@@ -11,8 +11,8 @@ uid: core/miscellaneous/logging
 ---
 # Logging
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 > [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging) on GitHub.
@@ -61,7 +61,7 @@ namespace EFLogging
             {
                 return null;
             }
-        } 
+        }
     }
 }
 ````

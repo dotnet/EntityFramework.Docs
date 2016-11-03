@@ -11,8 +11,8 @@ uid: core/miscellaneous/rc2-rtm-upgrade
 ---
 # Upgrading from RC2 to RTM
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 This article provides guidance for moving an application built with the RC2 packages to 1.0.0 RTM.
 
@@ -45,11 +45,11 @@ This change impacts projects that use ASP.NET Identity and were created from a p
 *  **AspNetUsers**
 
    * Email
-   
+
    * NormalizedEmail
-   
+
    * NormalizedUserName
-   
+
    * UserName
 
 Failure to make this change will result in the following exception when the initial migration is applied to a database.

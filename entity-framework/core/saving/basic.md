@@ -11,17 +11,13 @@ uid: core/saving/basic
 ---
 # Basic Save
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Learn how to add, modify, and remove data using your context and entity classes.
 
 > [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Basics/) on GitHub.
-
-## ChangeTracker & SaveChanges
-
-Each context instance has a *ChangeTracker* that is responsible for keeping track of changes that need to be written to the database. As you make changes to instances of your entity classes, these changes are recorded in the *ChangeTracker* and then written to the database when you call *SaveChanges*.
 
 ## Adding Data
 

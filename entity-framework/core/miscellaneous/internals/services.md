@@ -11,8 +11,8 @@ uid: core/miscellaneous/internals/services
 ---
 # Understanding EF Services
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 Entity Framework executes as a collection of services working together. A service is a reusable component. A service is typically an implementation of an interface. Services are available to other services via [dependency injection (DI)](https://wikipedia.org/wiki/Dependency_injection), which is implemented in EF using [Microsoft.Extensions.DependencyInjection](https://docs.asp.net/en/latest/fundamentals/dependency-injection.html).
 
@@ -33,7 +33,7 @@ This article covers some fundamentals principles for understanding how EF uses s
    The mechanism for storing a collection of services. Also known as a service container.
 
 **Service collection**
-   
+
    The mechanism for constructing a service provider.
 
 ## Categories of Services

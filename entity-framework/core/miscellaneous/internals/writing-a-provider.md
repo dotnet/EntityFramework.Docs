@@ -11,8 +11,8 @@ uid: core/miscellaneous/internals/writing-a-provider
 ---
 # Writing a Database Provider
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 EF Core is designed to be extensible. It provides general purpose building blocks that are intended for use in multiple providers. The purpose of this article is to provide basic guidance on creating a new provider that is compatible with EF Core.
 
@@ -132,5 +132,3 @@ With these two extensibility APIs now defined, users can now configure their "Db
 Reading the source code of other providers is an excellent way to learn how to create a new EF provider. See [Database Providers](../../providers/index.md) for a list of current EF providers and to find links to their source code (if applicable).
 
 `Microsoft.EntityFrameworkCore.Relational` includes an extensive library of services designed for relational providers. In many cases, these services need little or no modification to work for multiple relational databases.
-
-For more information on other internal parts of EF, see [Internals](index.md).

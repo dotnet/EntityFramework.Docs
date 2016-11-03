@@ -11,8 +11,8 @@ uid: core/miscellaneous/cli/dotnet
 ---
 # .NET Core CLI
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
+> [!NOTE]
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 EF command-line tools for .NET Core Command Line Interface (CLI).
 
@@ -281,7 +281,7 @@ No parameterless constructor was found on 'TContext'. Either add a parameterless
 'TContext'.
 ````
 
-As the error message suggests, one solution is to add an implementation of `IDbContextFactory<TContext>` to the current project. See [Using IDbContextFactory<TContext>](../configuring-dbcontext.md#use-idbcontextfactory.md) for an example of how to create this factory.
+As the error message suggests, one solution is to add an implementation of `IDbContextFactory<TContext>` to the current project. See [Using IDbContextFactory<TContext>](../configuring-dbcontext.md) for an example of how to create this factory.
 
 <a name=dotnet-cli-issues></a>
 

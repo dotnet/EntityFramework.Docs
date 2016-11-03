@@ -11,9 +11,6 @@ uid: core/efcore-vs-ef6/features
 ---
 # Feature Comparison
 
-> [!WARNING]
-> This documentation is for EF Core. For EF6.x and earlier release see [http://msdn.com/data/ef](http://msdn.com/data/ef).
-
 The following information will help you choose between Entity Framework Core and Entity Framework 6.x.
 
 ## Features not in EF Core
