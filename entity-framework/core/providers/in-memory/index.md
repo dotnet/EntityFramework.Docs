@@ -1,5 +1,5 @@
 ---
-title: InMemory (for Testing)
+title: InMemory
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
@@ -9,7 +9,7 @@ ms.assetid: 9af0cba7-7605-4f8f-9cfa-dd616fcb880c
 ms.prod: entity-framework
 uid: core/providers/in-memory/index
 ---
-# InMemory (for Testing)
+# InMemory
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

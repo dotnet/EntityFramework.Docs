@@ -1,5 +1,5 @@
 ---
-title: Oracle (Coming Soon)
+title: Oracle
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
@@ -9,7 +9,7 @@ ms.assetid: bb242065-234a-4a12-800f-3d086f4f134f
 ms.prod: entity-framework
 uid: core/providers/oracle/index
 ---
-# Oracle (Coming Soon)
+# Oracle
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

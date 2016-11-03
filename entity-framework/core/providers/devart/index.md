@@ -1,5 +1,5 @@
 ---
-title: Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, SQL Server, and more)
+title: Devart
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
@@ -9,7 +9,7 @@ ms.assetid: aad70a75-d04d-4d63-a489-7f9062a3c73d
 ms.prod: entity-framework
 uid: core/providers/devart/index
 ---
-# Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, SQL Server, and more)
+# Devart
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
@@ -42,8 +42,6 @@ See the [Devart dotConnect Entity Framework documentation](https://www.devart.co
 * SQLite
 
 * DB2
-
-* SQL Server
 
 * [Cloud apps](https://www.devart.com/dotconnect/#cloud)
 

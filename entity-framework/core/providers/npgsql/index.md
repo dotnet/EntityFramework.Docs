@@ -1,5 +1,5 @@
 ---
-title: Npgsql (PostgreSQL)
+title: Npgsql
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
@@ -9,7 +9,7 @@ ms.assetid: 5ecd1b22-c68e-4d87-ba39-b0761f4d5b90
 ms.prod: entity-framework
 uid: core/providers/npgsql/index
 ---
-# Npgsql (PostgreSQL)
+# Npgsql
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

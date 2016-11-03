@@ -1,5 +1,5 @@
 ---
-title: MySQL (Official)
+title: MySQL
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
@@ -9,7 +9,7 @@ ms.assetid: 4900b882-79c5-40d2-a44a-ccb0292f6ed9
 ms.prod: entity-framework
 uid: core/providers/mysql/index
 ---
-# MySQL (Official)
+# MySQL
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

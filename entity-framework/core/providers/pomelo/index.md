@@ -1,5 +1,5 @@
 ---
-title: Pomelo (MySQL)
+title: Pomelo
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
@@ -9,7 +9,7 @@ ms.assetid: d0198c04-d30d-4419-98f8-a54690cea3c8
 ms.prod: entity-framework
 uid: core/providers/pomelo/index
 ---
-# Pomelo (MySQL)
+# Pomelo
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

@@ -134,6 +134,6 @@ For more information on required provider services, see [Writing a Database Prov
 
 ## Additional Information
 
-EF uses ` the Microsoft.Extensions.DependencyInjection library <[https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/)>`_ to implement DI. Documentation for this library [is available on docs.asp.net](https://docs.asp.net/en/latest/fundamentals/dependency-injection.html).
+EF uses `the Microsoft.Extensions.DependencyInjection library <[https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/)>`_ to implement DI. Documentation for this library [is available on docs.asp.net](https://docs.asp.net/en/latest/fundamentals/dependency-injection.html).
 
 ["System.IServiceProvider"](http://dotnet.github.io/api/System.IServiceProvider.html) is defined in the .NET base class library.
