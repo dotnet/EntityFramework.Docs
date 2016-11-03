@@ -14,10 +14,6 @@ uid: core/get-started/netcore/index
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
-These 101 tutorials require no previous knowledge of Entity Framework (EF) or Visual Studio. They will take you step-by-step through creating a simple application that queries and saves data from a database.
+These 101 tutorials require no previous knowledge of Entity Framework (EF) or Visual Studio. They will take you step-by-step through creating a simple .NET Core Console Application that queries and saves data from a database. The tutorials can be completed on any platform supported by .NET Core (Windows, OSX, Linux, etc.).
 
-EF can be used on all platforms (Windows, OSX, Linux, etc.) that support .NET Core.
-
-## Available Tutorials
-
-* [.NET Core Application to New SQLite Database](new-db-sqlite.md)
+You can find the .NET Core documentation at [docs.microsoft.com/dotnet/articles/core](https://docs.microsoft.com/dotnet/articles/core/).

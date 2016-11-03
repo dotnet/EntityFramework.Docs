@@ -18,35 +18,6 @@ Entity Framework uses a set of conventions to build a model based on the shape o
 
 This article covers configuration that can be applied to a model targeting any data store and that which can be applied when targeting any relational database. Providers may also enable configuration that is specific to a particular data store. For documentation on provider specific configuration see the [Database Providers](../providers/index.md) section.
 
-In this section you can find information about conventions and configuration for the following:
-
-- [Including & Excluding Types](included-types.md)
-- [Including & Excluding Properties](included-properties.md)
-- [Keys (primary)](keys.md)
-- [Generated Properties](generated-properties.md)
-- [Required/optional properties](required-optional.md)
-- [Maximum Length](max-length.md)
-- [Concurrency Tokens](concurrency.md)
-- [Shadow Properties](shadow-properties.md)
-- [Relationships](relationships.md)
-- [Indexes](indexes.md)
-- [Alternate Keys](alternate-keys.md)
-- [Inheritance](inheritance.md)
-- [Backing Fields](backing-field.md)
-- [Relational Database Modeling](relational/index.md)
-    - [Table Mapping](relational/tables.md)
-    - [Column Mapping](relational/columns.md)
-    - [Data Types](relational/data-types.md)
-    - [Primary Keys](relational/primary-keys.md)
-    - [Default Schema](relational/default-schema.md)
-    - [Computed Columns](relational/computed-columns.md)
-    - [Sequences](relational/sequences.md)
-    - [Default Values](relational/default-values.md)
-    - [Indexes](relational/indexes.md)
-    - [Foreign Key Constraints](relational/fk-constraints.md)
-    - [Alternate Keys (Unique Constraints)](relational/unique-constraints.md)
-    - [Inheritance (Relational Database)](relational/inheritance.md)
-
 > [!TIP]
 > You can view this article’s [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples) on GitHub.
 

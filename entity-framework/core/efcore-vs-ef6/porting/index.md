@@ -11,10 +11,4 @@ uid: core/efcore-vs-ef6/porting/index
 ---
 # Porting from EF6.x to EF Core
 
-The following articles cover porting from EF6.x to EF Core
-
-* [Ensure EF Core Will Work for Your Application](ensure-requirements.md)
-
-* [Porting an EDMX-Based Model (Model First & Database First)](port-edmx.md)
-
-* [Porting a Code-Based Model (Code First & Code First to Existing Database)](port-code.md)
+Because of the fundamental changes in EF Core we do not recommend attempting to move an EF6.x application to EF Core unless you have a compelling reason to make the change. You should view the move from EF6.x to EF Core as a port rather than an upgrade.

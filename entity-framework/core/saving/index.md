@@ -14,12 +14,4 @@ uid: core/saving/index
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
-The following articles are available
-
-- [Basic Save](basic.md)
-- [Related Data](related-data.md)
-- [Cascade Delete](cascade-delete.md)
-- [Concurrency Conflicts](concurrency.md)
-- [Transactions](transactions.md)
-- [🔧 Disconnected Entities](disconnected-entities.md)
-- [Setting explicit values for generated properties](explicit-values-generated-properties.md)
+Each context instance has a `ChangeTracker` that is responsible for keeping track of changes that need to be written to the database. As you make changes to instances of your entity classes, these changes are recorded in the `ChangeTracker` and then written to the database when you call `SaveChanges`. The database provider is responsible for translating the changes into database-specific operations (e.g. `INSERT`, `UPDATE`, and `DELETE` commands for a relational database).

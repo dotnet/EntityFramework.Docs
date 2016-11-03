@@ -14,8 +14,6 @@ uid: core/miscellaneous/cli/index
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
-Entity Framework provides command line tooling to automate common tasks such as code generation and database migrations.
-
-* [Package Manager Console (Visual Studio)](powershell.md)
-
-* [.NET Core CLI](dotnet.md)
+Entity Framework provides command line tooling to automate common tasks such as code generation and database migrations. There are two primary command line experiences that EF Core provides.
+* [Package Manager Console](powershell.md) commands provides command line tools integrated into Visual Studio.
+* [.NET Core CLI](dotnet.md) commands provide IDE-independent and cross-platform tools for applications being developed with .NET Core.

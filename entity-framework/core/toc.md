@@ -1,4 +1,4 @@
-#[Entity Framework Core](intro.md)
+#[Overview](index.md)
 #[Getting Started](get-started/toc.md)
 #[Creating a Model](modeling/toc.md)
 #[Querying Data](querying/toc.md)
