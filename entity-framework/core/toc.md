@@ -5,4 +5,5 @@
 #[Saving Data](saving/toc.md)
 #[EF Core vs. EF6.x](efcore-vs-ef6/toc.md)
 #[Database Providers](providers/toc.md)
+#[API Reference](https://docs.microsoft.com/ef/core/api)
 #[Miscellaneous](miscellaneous/toc.md)
