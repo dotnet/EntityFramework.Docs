@@ -6,7 +6,6 @@
 #[MySQL (Official)](mysql/index.md)
 #[MySQL (Pomelo)](pomelo/index.md)
 #[Microsoft SQL Server Compact Edition](sql-compact/index.md)
-#[IBM Data Servers](ibm/index.md)
 #[InMemory (for Testing)](in-memory/index.md)
 #[Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, and more)](devart/index.md)
 #[Oracle (not yet available)](oracle/index.md)
