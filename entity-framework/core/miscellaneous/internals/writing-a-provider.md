@@ -132,5 +132,3 @@ With these two extensibility APIs now defined, users can now configure their "Db
 Reading the source code of other providers is an excellent way to learn how to create a new EF provider. See [Database Providers](../../providers/index.md) for a list of current EF providers and to find links to their source code (if applicable).
 
 `Microsoft.EntityFrameworkCore.Relational` includes an extensive library of services designed for relational providers. In many cases, these services need little or no modification to work for multiple relational databases.
-
-For more information on other internal parts of EF, see [Internals](index.md).

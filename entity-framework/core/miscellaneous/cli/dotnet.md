@@ -281,7 +281,7 @@ No parameterless constructor was found on 'TContext'. Either add a parameterless
 'TContext'.
 ````
 
-As the error message suggests, one solution is to add an implementation of `IDbContextFactory<TContext>` to the current project. See [Using IDbContextFactory<TContext>](../configuring-dbcontext.md#use-idbcontextfactory.md) for an example of how to create this factory.
+As the error message suggests, one solution is to add an implementation of `IDbContextFactory<TContext>` to the current project. See [Using IDbContextFactory<TContext>](../configuring-dbcontext.md) for an example of how to create this factory.
 
 <a name=dotnet-cli-issues></a>
 

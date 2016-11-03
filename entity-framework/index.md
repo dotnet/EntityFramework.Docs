@@ -39,7 +39,7 @@ uid: index
                                 </a>
                             </li>
                             <li class="column column-third">
-                                <a href="core/api">
+                                <a href="https://docs.microsoft.com/ef/core/api">
                                     <h3>API Reference</h3>
                                     <p>Browse the Entity Framework Core API, organized by namespace.</p>
                                 </a>

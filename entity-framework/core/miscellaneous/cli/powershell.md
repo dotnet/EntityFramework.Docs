@@ -36,7 +36,7 @@ To open the console, follow these steps.
 .NET Core and ASP.NET Core projects also require installing .NET Core CLI. See [.NET Core CLI](dotnet.md) for more information about this installation.
 
 > [!NOTE]
-> .NET Core CLI has known issues in Preview 1. Because PMC commands call .NET Core CLI commands, these known issues also apply to PMC commands. See [Preview 2 Known Issues](dotnet.md#dotnet-cli-issues.md).
+> .NET Core CLI has known issues in Preview 1. Because PMC commands call .NET Core CLI commands, these known issues also apply to PMC commands. See [Preview 2 Known Issues](dotnet.md).
 
 > [!TIP]
 > On .NET Core and ASP.NET Core projects, add `-Verbose` to any Package Manager Console command to see the equivalent .NET Core CLI command that was invoked.
@@ -262,6 +262,6 @@ No parameterless constructor was found on 'TContext'. Either add a parameterless
 'TContext'.
 ````
 
-As the error message suggests, one solution is to add an implementation of `IDbContextFactory<TContext>` to the current project. See [Using IDbContextFactory<TContext>](../configuring-dbcontext.md#use-idbcontextfactory.md) for an example of how to create this factory.
+As the error message suggests, one solution is to add an implementation of `IDbContextFactory<TContext>` to the current project. See [Using IDbContextFactory<TContext>](../configuring-dbcontext.md) for an example of how to create this factory.
 
-See also [Preview 2 Known Issues](dotnet.md#dotnet-cli-issues.md) for .NET Core CLI commands.
+See also [Preview 2 Known Issues](dotnet.md) for .NET Core CLI commands.
