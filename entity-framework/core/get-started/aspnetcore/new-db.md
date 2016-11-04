@@ -24,25 +24,17 @@ In this walkthrough, you will build an ASP.NET Core MVC application that perform
 The following prerequisites are needed to complete this walkthrough:
 
 * [Visual Studio 2015 Update 3](https://go.microsoft.com/fwlink/?LinkId=691129)
-
 * [.NET Core for Visual Studio](https://go.microsoft.com/fwlink/?LinkId=817245)
 
 ## Create a new project
 
 * Open Visual Studio 2015
-
 * File ‣ New ‣ Project...
-
 * From the left menu select Templates ‣ Visual C# ‣ Web
-
 * Select the **ASP.NET Core Web Application (.NET Core)** project template
-
 * Enter **EFGetStarted.AspNetCore.NewDb** as the name and click **OK**
-
 * Wait for the **New ASP.NET Core Web Application** dialog to appear
-
 * Select the **Web Application** template and ensure that **Authentication** is set to **No Authentication**
-
 * Click **OK**
 
 > [!WARNING]
@@ -53,7 +45,6 @@ The following prerequisites are needed to complete this walkthrough:
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
 * Tools ‣ NuGet Package Manager ‣ Package Manager Console
-
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
 > [!NOTE]
@@ -62,15 +53,14 @@ To use EF Core, install the package for the database provider(s) you want to tar
 Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Tools –Pre`
-
+* Run `Install-Package Microsoft.EntityFrameworkCore.Design`
 * Open **project.json**
-
-* Locate the `tools` section and add the `ef` command as shown below
+* Locate the `tools` section and add the `Microsoft.EntityFrameworkCore.Tools.DotNet` package as shown below
 
 <!-- [!code-json[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/project.json?highlight=2)] -->
 ````json
   "tools": {
-    "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final",
+    "Microsoft.EntityFrameworkCore.Tools.DotNet": "1.0.0-preview3-final",
     "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
   },
@@ -81,17 +71,11 @@ Later in this walkthrough we will also be using some Entity Framework commands t
 Now it's time to define a context and entity classes that make up your model.
 
 * Right-click on the project in **Solution Explorer** and select Add ‣ New Folder
-
 * Enter **Models** as the name of the folder
-
 * Right-click on the **Models** folder and select Add ‣ New Item...
-
 * From the left menu select Installed ‣ Code
-
 * Select the **Class** item template
-
 * Enter **Model.cs** as the name and click **OK**
-
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Models/Model.cs)] -->
@@ -141,7 +125,6 @@ The concept of dependency injection is central to ASP.NET Core. Services (such a
 In order for our MVC controllers to make use of `BloggingContext` we are going to register it as a service.
 
 * Open **Startup.cs**
-
 * Add the following `using` statements at the start of the file
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Startup.cs)] -->
@@ -153,7 +136,6 @@ using Microsoft.EntityFrameworkCore;
 Now we can use the `AddDbContext` method to register it as a service.
 
 * Locate the `ConfigureServices` method
-
 * Add the lines that are highlighted in the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Startup.cs?highlight=3,4)] -->
@@ -184,13 +166,9 @@ Now that you have a model, you can use migrations to create a database for you.
 Next, we'll add an MVC controller that will use EF to query and save data.
 
 * Right-click on the **Controllers** folder in **Solution Explorer** and select Add ‣ New Item...
-
 * From the left menu select Installed ‣ Server-side
-
 * Select the **Class** item template
-
 * Enter **BlogsController.cs** as the name and click **OK**
-
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Controllers/BlogsController.cs)] -->
@@ -249,17 +227,11 @@ Now that we have a controller it's time to add the views that will make up the u
 We'll start with the view for our `Index` action, that displays all blogs.
 
 * Right-click on the **Views** folder in **Solution Explorer** and select Add ‣ New Folder
-
 * Enter **Blogs** as the name of the folder
-
 * Right-click on the **Blogs** folder and select Add ‣ New Item...
-
 * From the left menu select Installed ‣ ASP.NET
-
 * Select the **MVC View Page** item template
-
 * Enter **Index.cshtml** as the name and click **Add**
-
 * Replace the contents of the file with the following code
 
 <!-- [!code-html[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Views/Blogs/Index.cshtml)] -->
@@ -299,13 +271,9 @@ We'll start with the view for our `Index` action, that displays all blogs.
 We'll also add a view for the `Create` action, which allows the user to enter details for a new blog.
 
 * Right-click on the **Blogs** folder and select Add ‣ New Item...
-
 * From the left menu select Installed ‣ ASP.NET Core
-
 * Select the **MVC View Page** item template
-
 * Enter **Create.cshtml** as the name and click **Add**
-
 * Replace the contents of the file with the following code
 
 <!-- [!code-html[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/Views/Blogs/Create.cshtml)] -->
@@ -342,13 +310,9 @@ We'll also add a view for the `Create` action, which allows the user to enter de
 You can now run the application to see it in action.
 
 * Debug ‣ Start Without Debugging
-
 * The application will build and open in a web browser
-
 * Navigate to **/Blogs**
-
 * Click **Create New**
-
 * Enter a **Url** for the new blog and click **Create**
 
 ![image](_static/create.png)
