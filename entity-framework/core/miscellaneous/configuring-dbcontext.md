@@ -18,15 +18,13 @@ This article shows patterns for configuring a `DbContext` with `DbContextOptions
 
 ## Configuring DbContextOptions
 
-`DbContext` must have an instance of `DbContextOptions` in order to execute. This can be supplied to `DbContext` in one of two ways.
+`DbContext` must have an instance of `DbContextOptions` in order to execute. This can be configured by overriding `OnConfiguring`, or supplied externally via a constructor argument.
 
-1. [Constructor argument](#constructor-argument)
+If both are used, `OnConfiguring` is executed on the supplied options, meaning it is additive and can overwrite  options supplied to the constructor argument.
 
-2. [OnConfiguring](#onconfiguring)
+### Constructor argument
 
-If both are used, "OnConfiguring" takes higher priority, which means it can overwrite or change options supplied by the constructor argument.
-
-### Constructor argumentContext code with constructor
+Context code with constructor
 
 <!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 ````csharp
