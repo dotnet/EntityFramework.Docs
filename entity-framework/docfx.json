@@ -63,6 +63,7 @@
         ]
       }
     ],
+    "globalMetadata": {"breadcrumb_path": "/breadcrumb/toc.json"},
     "dest": "_site",
     "template": [
       "default"
