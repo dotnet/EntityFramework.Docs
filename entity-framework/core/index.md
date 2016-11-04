@@ -80,13 +80,13 @@ Instances of your entity classes are retrieved from the database using Language 
 
 <!-- literal_block"ids  "dupnames  "names  "xml:space": "preserve", : "csharp", "classes  "linenos": true, "backrefs  highlight_args} -->
 ````csharp
-   using (var db = new BloggingContext())
-   {
-var blogs = db.Blogs
-    .Where(b => b.Rating > 3)
-    .OrderBy(b => b.Url)
-    .ToList();
-   }
+using (var db = new BloggingContext())
+{
+    var blogs = db.Blogs
+        .Where(b => b.Rating > 3)
+        .OrderBy(b => b.Url)
+        .ToList();
+}
 ````
 
 ## Saving Data
@@ -97,9 +97,8 @@ Data is created, deleted, and modified in the database using instances of your e
 ````csharp
 using (var db = new BloggingContext())
 {
-    var blogs = db.Blogs
-        .Where(b => b.Rating > 3)
-        .OrderBy(b => b.Url)
-        .ToList();
+    var blog = new Blog { Url = "http://sample.com" };
+    db.Blogs.Add(blog);
+    db.SaveChanges();
 }
 ````
