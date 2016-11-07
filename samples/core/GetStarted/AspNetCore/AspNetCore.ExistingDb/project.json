@@ -27,7 +27,7 @@
     "Microsoft.EntityFrameworkCore.Tools": {
       "version": "1.0.0-preview3-final",
       "type": "build"
-    },,
+    },
     "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.1"
   },
 
