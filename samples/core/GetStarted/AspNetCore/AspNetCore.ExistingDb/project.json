@@ -27,8 +27,11 @@
     "Microsoft.EntityFrameworkCore.Tools": {
       "version": "1.0.0-preview3-final",
       "type": "build"
-    },,
-    "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.1"
+    },
+    "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.1",
+    "MySql.Data.Core": "7.0.4-IR-191",
+    "MySql.Data.EntityFrameworkCore": "7.0.4-IR-191",
+"SapientGuardian.EntityFrameworkCore.MySql": "7.1.4"
   },
 
   "tools": {

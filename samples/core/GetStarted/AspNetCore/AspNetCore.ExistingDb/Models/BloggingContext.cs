@@ -7,7 +7,9 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
     {
         public BloggingContext(DbContextOptions<BloggingContext> options)
             : base(options)
-        { }
+        {
+		
+	}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

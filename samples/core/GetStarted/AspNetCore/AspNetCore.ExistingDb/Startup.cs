@@ -1,5 +1,5 @@
-﻿using EFGetStarted.AspNetCore.ExistingDb.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using EFGetStarted.AspNetCore.ExistingDb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MySQL.Data.Entity.Extensions;
+using System.IO;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Newtonsoft.Json.Serialization;
 
 namespace EFGetStarted.AspNetCore.ExistingDb
 {
@@ -29,8 +33,14 @@ namespace EFGetStarted.AspNetCore.ExistingDb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;";
-            services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
+	    //Sql Server
+            //var connection = Configuration.GetConnectionString("SqlServer");
+	    //services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
+
+	    //MySQL
+	    var connection = Configuration.GetConnectionString("MySQL");
+	    services.AddDbContext<BloggingContext>(options => options.UseMySQL(connection));
+
 
             // Add framework services.
             services.AddMvc();
