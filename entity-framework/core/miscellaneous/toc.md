@@ -1,8 +1,0 @@
-#[Connection Strings](connection-strings.md)
-#[Logging](logging.md)
-#[Testing with InMemory](testing.md)
-#[Configuring a DbContext](configuring-dbcontext.md)
-#[Upgrading from RC1 to RC2](rc1-rc2-upgrade.md)
-#[Upgrading from RC2 to RTM](rc2-rtm-upgrade.md)
-#[Command Line Reference](cli/toc.md)
-#[Internals](internals/toc.md)
