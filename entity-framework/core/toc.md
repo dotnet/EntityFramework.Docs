@@ -1,8 +1,0 @@
-#[Overview](index.md)
-#[Getting Started](get-started/toc.md)
-#[Creating a Model](modeling/toc.md)
-#[Querying Data](querying/toc.md)
-#[Saving Data](saving/toc.md)
-#[Database Providers](providers/toc.md)
-#[API Reference](https://docs.microsoft.com/ef/core/api)
-#[Miscellaneous](miscellaneous/toc.md)

@@ -1,8 +1,0 @@
-#[Overview](index.md)
-#[Basic Save](basic.md)
-#[Related Data](related-data.md)
-#[Cascade Delete](cascade-delete.md)
-#[Concurrency Conflicts](concurrency.md)
-#[Transactions](transactions.md)
-#[🔧 Disconnected Entities](disconnected-entities.md)
-#[Setting explicit values for generated properties](explicit-values-generated-properties.md)
