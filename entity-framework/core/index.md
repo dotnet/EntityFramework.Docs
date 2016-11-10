@@ -23,7 +23,7 @@ If you like to learn by writing code, we'd recommend one of our [Getting Started
 
 ## Get Entity Framework Core
 
-[Install the NuGet package](https://docs.nuget.org/consume) for the database provider you want to use. See [Database Providers](providers/index.md) for information.
+[Install the NuGet package](https://docs.nuget.org/ndocs/quickstart/use-a-package) for the database provider you want to use. See [Database Providers](providers/index.md) for information.
 
 <!-- literal_block"ids  "dupnames  "names  "xml:space": "preserve", : "csharp",", "classes  "linenos": false, "backrefs  highlight_args} -->
 ````text
