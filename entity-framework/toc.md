@@ -87,7 +87,9 @@
 ###Miscellaneous
 ####[Connection Strings](core/miscellaneous/connection-strings.md)
 ####[Logging](core/miscellaneous/logging.md)
-####[Testing with InMemory](core/miscellaneous/testing.md)
+####[Testing](core/miscellaneous/testing/index.md)
+#####[Testing with SQLite](core/miscellaneous/testing/sqlite.md)
+#####[Testing with InMemory](core/miscellaneous/testing/in-memory.md)
 ####[Configuring a DbContext](core/miscellaneous/configuring-dbcontext.md)
 ####[Upgrading from RC1 to RC2](core/miscellaneous/rc1-rc2-upgrade.md)
 ####[Upgrading from RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
