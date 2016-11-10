@@ -17,4 +17,4 @@ uid: core/get-started/uwp/index
 
 These 101 tutorials require no previous knowledge of Entity Framework (EF) or Visual Studio. They will take you step-by-step through creating a simple Universal Window Platform (UWP) application that queries and saves data from a database.
 
-You can find the UWP documentation at [developer.microsoft.com/windows/uwp](https://developer.microsoft.com/windows/uwp).
+You can find the UWP documentation at [developer.microsoft.com/windows/apps/develop](https://developer.microsoft.com/windows/apps/develop).
