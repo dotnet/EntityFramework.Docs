@@ -127,9 +127,9 @@ The following table compares the features available in EF Core and EF6.x. It is 
 |                                                     |        |                                 |
 | **Database Providers**                                 | **EF6.x** | **EF Core 1.0.0**                 |
 | SQL Server                                          | Yes    | Yes                             |
-| MySQL                                               | Yes    | Paid only, unpaid coming soon 1 |
+| MySQL                                               | Yes    | Yes                             |
 | PostgreSQL                                          | Yes    | Yes                             |
-| Oracle                                              | Yes    | Paid only, unpaid coming soon 1 |
+| Oracle                                              | Yes    | Paid only (1)                   |
 | SQLite                                              | Yes    | Yes                             |
 | SQL Compact                                         | Yes    | Yes                             |
 | DB2                                                 | Yes    | Yes                             |
@@ -143,7 +143,7 @@ The following table compares the features available in EF Core and EF6.x. It is 
 | Console                                             | Yes    | Yes                             |
 | ASP.NET                                             | Yes    | Yes                             |
 | ASP.NET Core                                        |        | Yes                             |
-| Xamarin                                             |        | Coming soon 2                   |
+| Xamarin                                             |        | Coming soon (2)                 |
 | UWP                                                 |        | Yes                             |
 
 Footnotes:

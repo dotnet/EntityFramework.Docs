@@ -11,4 +11,4 @@ uid: core/intro
 ---
 
 > [!WARNING]
-> This content has moved to [Overview](index.md)
+> This content has moved to [core/index](index.md)
