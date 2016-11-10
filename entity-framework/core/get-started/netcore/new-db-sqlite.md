@@ -69,54 +69,54 @@ dotnet run
     <!-- [!code-json[Main](samples/core/GetStarted/NetCore/ConsoleApp.SQLite/project.json?highlight=8,9,10,11,12,25,26,27)] -->
 
 
-    ````json
-    {
-      "version": "1.0.0-*",
-      "buildOptions": {
-        "debugType": "portable",
-        "emitEntryPoint": true
-      },
-      "dependencies": {
-        "Microsoft.EntityFrameworkCore.Sqlite": "1.0.0",
-        "Microsoft.EntityFrameworkCore.Design": {
-          "version": "1.0.0-preview2-final",
-          "type": "build"
-        }
-      },
-      "frameworks": {
-        "netcoreapp1.0": {
-          "dependencies": {
-            "Microsoft.NETCore.App": {
-              "type": "platform",
-              "version": "1.0.0"
-            }
-          },
-          "imports": "dnxcore50"
-        }
-      },
-      "tools": {
-        "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final"
-      }
+````json
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable",
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "Microsoft.EntityFrameworkCore.Sqlite": "1.0.0",
+    "Microsoft.EntityFrameworkCore.Design": {
+      "version": "1.0.0-preview2-final",
+      "type": "build"
     }
-    ````
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
+      },
+      "imports": "dnxcore50"
+    }
+  },
+  "tools": {
+    "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final"
+  }
+}
+````
 
 *  Run `dotnet restore` again to install the new packages.
 
      <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 
 
-    ````bash
-    dotnet restore
-    ````
+````bash
+dotnet restore
+````
 
     * Verify that Entity Framework is installed by running `dotnet ef --help`.
 
      <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 
 
-    ````bash
-    dotnet ef --help
-    ````
+````bash
+dotnet ef --help
+````
 
     ## Create your model
 
@@ -129,14 +129,14 @@ dotnet run
     <!-- [!code-csharp[Main](samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Model.cs)] -->
 
 
-    ````csharp
-    using System.Collections.Generic;
-    using System.IO;
-    using Microsoft.EntityFrameworkCore;
+````csharp
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
 
-    namespace ConsoleApp.SQLite
-    {
-    ````
+namespace ConsoleApp.SQLite
+{
+````
 
 *  Add a new class to represent the SQLite database.
 
@@ -145,18 +145,18 @@ dotnet run
     <!-- [!code-csharp[Main](samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Model.cs?highlight=1,8)] -->
 
 
-    ````csharp
-    public class BloggingContext : DbContext
-    {
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
+````csharp
+public class BloggingContext : DbContext
+{
+    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Post> Posts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Filename=./blog.db");
-        }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Filename=./blog.db");
     }
-    ````
+}
+````
 
 * Add classes to represent tables.
 
@@ -165,35 +165,35 @@ dotnet run
     <!-- [!code-csharp[Main](samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Model.cs)] -->
 
 
-    ````csharp
-    public class Blog
-    {
-        public int BlogId { get; set; }
-        public string Url { get; set; }
-        public string Name { get; set; }
+````csharp
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+    public string Name { get; set; }
 
-        public List<Post> Posts { get; set; }
-    }
+    public List<Post> Posts { get; set; }
+}
 
-    public class Post
-    {
-        public int PostId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
 
-        public int BlogId { get; set; }
-        public Blog Blog { get; set; }
-    }
-    ````
+    public int BlogId { get; set; }
+    public Blog Blog { get; set; }
+}
+````
 
 * To make sure the files are correct, you can compile the project on the command line by running `dotnet build`
 
      <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 
 
-    ````bash
-    dotnet build
-    ````
+````bash
+dotnet build
+````
 
 ## Create your database
 
@@ -206,9 +206,9 @@ We can now use Entity Framework command line tools to create and manage the sche
      <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 
 
-    ````bash
-    dotnet ef migrations add MyFirstMigration
-    ````
+````bash
+dotnet ef migrations add MyFirstMigration
+````
 
 * Apply the migrations.
 
@@ -217,9 +217,9 @@ We can now use Entity Framework command line tools to create and manage the sche
      <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 
 
-    ````bash
-    dotnet ef database update
-    ````
+````bash
+dotnet ef database update
+````
 
     This should create a new file `blog.db` in the output path. This SQLite file should now contain two empty tables.
 
