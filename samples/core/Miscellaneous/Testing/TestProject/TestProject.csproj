@@ -127,8 +127,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BlogServiceTests.cs" />
-    <Compile Include="BlogServiceTestsReadOnly.cs" />
+    <Compile Include="InMemory\BlogServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLite\BlogServiceTests.cs" />
   </ItemGroup>
