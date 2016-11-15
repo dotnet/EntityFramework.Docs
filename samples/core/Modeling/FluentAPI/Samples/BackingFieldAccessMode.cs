@@ -1,18 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System.Net.Http;
 
-namespace EFModeling.Configuring.FluentAPI.Samples.BackingField
+namespace EFModeling.Configuring.FluentAPI.Samples.BackingFieldAccessMode
 {
-    #region Sample
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Sample
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Url)
-                .HasField("_validatedUrl");
+                .HasField("_validatedUrl")
+                .UsePropertyAccessMode(PropertyAccessMode.Field);
+            #endregion
         }
     }
 
@@ -38,5 +41,4 @@ namespace EFModeling.Configuring.FluentAPI.Samples.BackingField
             _validatedUrl = url;
         }
     }
-    #endregion
 }

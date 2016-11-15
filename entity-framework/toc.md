@@ -71,6 +71,7 @@
 <!-- Providers -->
 ###[Database Providers](core/providers/index.md)
 ####[Microsoft SQL Server](core/providers/sql-server/index.md)
+#####[Memory-Optimized Tables](core/providers/sql-server/memory-optimized-tables.md)
 ####[SQLite](core/providers/sqlite/index.md)
 #####[SQLite Limitations](core/providers/sqlite/limitations.md)
 ####[PostgreSQL (Npgsql))](core/providers/npgsql/index.md)
@@ -87,6 +88,7 @@
 ###Miscellaneous
 ####[Connection Strings](core/miscellaneous/connection-strings.md)
 ####[Logging](core/miscellaneous/logging.md)
+####[Connection Resiliency](core/miscellaneous/connection-resiliency.md)
 ####[Testing](core/miscellaneous/testing/index.md)
 #####[Testing with SQLite](core/miscellaneous/testing/sqlite.md)
 #####[Testing with InMemory](core/miscellaneous/testing/in-memory.md)
