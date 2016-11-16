@@ -7,10 +7,11 @@ ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 3f1993c2-cdf5-425b-bac2-a2665a20322b
 ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.prod: entity-framework-core
 uid: core/saving/explicit-values-generated-properties
 ---
-# Setting explicit values for generated properties
+
+# Explicit values for generated properties
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).

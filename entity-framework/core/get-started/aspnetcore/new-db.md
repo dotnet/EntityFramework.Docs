@@ -10,7 +10,8 @@ ms.technology: entity-framework
 ms.prod: entity-framework-core
 uid: core/get-started/aspnetcore/new-db
 ---
-# ASP.NET Core Application to New Database
+
+# ASP.NET Core - New Database
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

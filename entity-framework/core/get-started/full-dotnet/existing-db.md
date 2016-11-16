@@ -10,7 +10,8 @@ ms.technology: entity-framework
 ms.prod: entity-framework-core
 uid: core/get-started/full-dotnet/existing-db
 ---
-# Console Application to Existing Database (Database First)
+
+# .NET Framework - Existing Database
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

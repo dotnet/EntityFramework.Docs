@@ -10,7 +10,8 @@ ms.technology: entity-framework
 ms.prod: entity-framework-core
 uid: core/get-started/full-dotnet/new-db
 ---
-# Console Application to New Database
+
+# .NET Framework - New Database
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

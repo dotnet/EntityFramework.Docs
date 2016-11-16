@@ -7,10 +7,11 @@ ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: d3b66f3c-9d10-4974-a090-8ad093c9a53d
 ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.prod: entity-framework-core
 uid: efcore-and-ef6/porting/ensure-requirements
 ---
-# Ensure EF Core Will Work for Your Application
+
+# Validate Requirements
 
 Before you start the porting process it is important to validate that EF Core meets the data access requirements for your application.
 

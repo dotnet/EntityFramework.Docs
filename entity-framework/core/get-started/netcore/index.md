@@ -7,10 +7,10 @@ ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 35fc7f49-fda8-4d8d-822f-78dd2d484d79
 ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.prod: entity-framework-core
 uid: core/get-started/netcore/index
 ---
-# Getting Started on .NET Core (Windows, OSX, Linux, etc.)
+# Getting Started on .NET Core 
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

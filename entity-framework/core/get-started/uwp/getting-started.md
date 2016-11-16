@@ -10,7 +10,8 @@ ms.technology: entity-framework
 ms.prod: entity-framework-core
 uid: core/get-started/uwp/getting-started
 ---
-# Local SQLite on UWP
+
+# UWP - New Database
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

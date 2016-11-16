@@ -7,10 +7,10 @@ ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 06f1f18b-3267-4f79-b94e-173f9db0a7cb
 ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.prod: entity-framework-core
 uid: core/get-started/full-dotnet/index
 ---
-# Getting Started on Full .NET (Console, WinForms, WPF, etc.)
+# Getting Started on Full .NET
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
