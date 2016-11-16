@@ -1,5 +1,5 @@
 ﻿---
-title: Local SQLite on UWP | Microsoft Docs
+title: UWP - New Database | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,5 +1,5 @@
 ---
-title: Porting a Code-Based Model (Code First & Code First to Existing Database) | Microsoft Docs
+title: Porting a Code-Based Model | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

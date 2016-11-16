@@ -1,5 +1,5 @@
 ﻿---
-title: Porting an EDMX-Based Model (Model First & Database First) | Microsoft Docs
+title: Porting an EDMX-Based Model | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,5 +1,5 @@
 ---
-title: Setting explicit values for generated properties | Microsoft Docs
+title: Explicit values for generated properties | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

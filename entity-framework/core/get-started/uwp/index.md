@@ -1,5 +1,5 @@
 ---
-title: Getting Started on Universal Windows Platform | Microsoft Docs
+title: Getting Started on UWP | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

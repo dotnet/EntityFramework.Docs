@@ -1,5 +1,5 @@
 ﻿---
-title: ASP.NET Core Application to Existing Database (Database First) | Microsoft Docs
+title: ASP.NET Core - Existing Database | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

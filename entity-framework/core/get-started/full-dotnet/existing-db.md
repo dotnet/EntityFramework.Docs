@@ -1,5 +1,5 @@
 ﻿---
-title: Console Application to Existing Database (Database First) | Microsoft Docs
+title: .NET Framework - Existing Database | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

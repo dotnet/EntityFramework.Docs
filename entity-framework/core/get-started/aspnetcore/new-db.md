@@ -1,5 +1,5 @@
 ﻿---
-title: ASP.NET Core Application to New Database | Microsoft Docs
+title: ASP.NET Core - New Database | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

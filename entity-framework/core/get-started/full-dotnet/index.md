@@ -1,5 +1,5 @@
 ---
-title: Getting Started on Full .NET (Console, WinForms, WPF, etc.) | Microsoft Docs
+title: Getting Started on .NET Framework | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
