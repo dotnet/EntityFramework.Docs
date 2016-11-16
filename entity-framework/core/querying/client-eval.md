@@ -1,5 +1,5 @@
 ---
-title: Client vs. Server Evaluation
+title: Client vs. Server Evaluation | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

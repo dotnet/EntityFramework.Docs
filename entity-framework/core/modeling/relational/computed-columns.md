@@ -1,5 +1,5 @@
 ---
-title: Computed Columns
+title: Computed Columns | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

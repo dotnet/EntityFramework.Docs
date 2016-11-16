@@ -1,5 +1,5 @@
 ---
-title: Npgsql
+title: Npgsql | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

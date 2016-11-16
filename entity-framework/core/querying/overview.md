@@ -1,5 +1,5 @@
 ---
-title: How Query Works
+title: How Query Works | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

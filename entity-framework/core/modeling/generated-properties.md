@@ -1,5 +1,5 @@
 ---
-title: Generated Properties
+title: Generated Properties | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,5 +1,5 @@
 ---
-title: Connection Strings
+title: Connection Strings | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

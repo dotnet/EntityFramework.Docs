@@ -1,5 +1,5 @@
 ---
-title: Including & Excluding Types
+title: Including & Excluding Types | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,5 +1,5 @@
 ---
-title: Default Schema
+title: Default Schema | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,5 +1,5 @@
 ---
-title: Including & Excluding Properties
+title: Including & Excluding Properties | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

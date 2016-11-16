@@ -1,5 +1,5 @@
 ---
-title: Connection Resiliency
+title: Connection Resiliency | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

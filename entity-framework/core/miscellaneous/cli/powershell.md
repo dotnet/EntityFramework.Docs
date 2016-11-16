@@ -1,5 +1,5 @@
 ﻿---
-title: Package Manager Console (Visual Studio)
+title: Package Manager Console (Visual Studio) | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

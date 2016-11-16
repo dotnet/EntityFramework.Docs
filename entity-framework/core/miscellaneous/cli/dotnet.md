@@ -1,5 +1,5 @@
 ---
-title: .NET Core CLI
+title: .NET Core CLI | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

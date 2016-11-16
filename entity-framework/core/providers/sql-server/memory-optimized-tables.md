@@ -1,5 +1,5 @@
 ---
-title: Memory-Optimized Tables
+title: Memory-Optimized Tables | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

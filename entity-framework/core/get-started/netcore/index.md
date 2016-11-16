@@ -1,5 +1,5 @@
 ---
-title: Getting Started on .NET Core (Windows, OSX, Linux, etc.)
+title: Getting Started on .NET Core (Windows, OSX, Linux, etc.) | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

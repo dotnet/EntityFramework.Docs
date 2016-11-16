@@ -1,5 +1,5 @@
 ---
-title: Upgrading from RC1 to RC2
+title: Upgrading from RC1 to RC2 | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

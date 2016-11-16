@@ -1,5 +1,5 @@
 ---
-title: Required/optional properties
+title: Required/optional properties | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

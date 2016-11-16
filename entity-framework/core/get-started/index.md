@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Getting Started | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,6 +1,6 @@
 ---
 layout: HubPage
-title: Entity Framework
+title: Entity Framework | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

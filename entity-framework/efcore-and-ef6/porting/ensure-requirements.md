@@ -1,5 +1,5 @@
 ---
-title: Ensure EF Core Will Work for Your Application
+title: Ensure EF Core Will Work for Your Application | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

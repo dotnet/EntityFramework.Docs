@@ -1,5 +1,5 @@
 ---
-title: Entity Framework 6.x
+title: Entity Framework 6.x | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

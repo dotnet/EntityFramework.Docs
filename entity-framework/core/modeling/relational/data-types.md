@@ -1,5 +1,5 @@
 ---
-title: Data Types
+title: Data Types | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

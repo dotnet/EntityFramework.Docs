@@ -1,5 +1,5 @@
 ---
-title: Upgrading from RC2 to RTM
+title: Upgrading from RC2 to RTM | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,5 +1,5 @@
 ---
-title: Shadow Properties
+title: Shadow Properties | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

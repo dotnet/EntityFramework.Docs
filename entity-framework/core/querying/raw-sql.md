@@ -1,5 +1,5 @@
 ---
-title: Raw SQL Queries
+title: Raw SQL Queries | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

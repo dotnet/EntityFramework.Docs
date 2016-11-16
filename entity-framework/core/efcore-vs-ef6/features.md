@@ -1,5 +1,5 @@
 ﻿---
-title: Feature Comparison
+title: Feature Comparison | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,5 +1,5 @@
 ﻿---
-title: SQLite Limitations
+title: SQLite Limitations | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

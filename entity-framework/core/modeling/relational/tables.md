@@ -1,5 +1,5 @@
 ---
-title: Table Mapping
+title: Table Mapping | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,5 +1,5 @@
 ---
-title: MySQL
+title: MySQL | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

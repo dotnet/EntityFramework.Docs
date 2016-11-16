@@ -1,5 +1,5 @@
 ---
-title: Basic Query
+title: Basic Query | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

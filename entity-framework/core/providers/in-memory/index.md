@@ -1,5 +1,5 @@
 ---
-title: InMemory
+title: InMemory | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

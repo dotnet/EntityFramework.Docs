@@ -1,5 +1,5 @@
 ---
-title: Sequences
+title: Sequences | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

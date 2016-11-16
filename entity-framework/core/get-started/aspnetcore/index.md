@@ -1,5 +1,5 @@
 ---
-title: Getting Started on ASP.NET Core
+title: Getting Started on ASP.NET Core | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

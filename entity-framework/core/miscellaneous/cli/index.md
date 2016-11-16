@@ -1,5 +1,5 @@
 ---
-title: Command Line Reference
+title: Command Line Reference | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

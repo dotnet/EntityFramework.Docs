@@ -1,5 +1,5 @@
 ---
-title: Inheritance (Relational Database)
+title: Inheritance (Relational Database) | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

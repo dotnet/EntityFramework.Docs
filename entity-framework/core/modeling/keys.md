@@ -1,5 +1,5 @@
 ---
-title: Keys (primary)
+title: Keys (primary) | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

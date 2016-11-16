@@ -1,5 +1,5 @@
 ---
-title: Writing a Database Provider
+title: Writing a Database Provider | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

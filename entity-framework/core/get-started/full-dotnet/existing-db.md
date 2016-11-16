@@ -1,5 +1,5 @@
 ﻿---
-title: Console Application to Existing Database (Database First)
+title: Console Application to Existing Database (Database First) | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,5 +1,5 @@
 ---
-title: Concurrency Conflicts
+title: Concurrency Conflicts | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

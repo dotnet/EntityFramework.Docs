@@ -1,5 +1,5 @@
 ---
-title: Relationships
+title: Relationships | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

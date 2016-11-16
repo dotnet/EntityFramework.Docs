@@ -1,5 +1,5 @@
 ---
-title: EF Core vs. EF6.x
+title: EF Core vs. EF6.x | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

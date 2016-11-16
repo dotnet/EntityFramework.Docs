@@ -1,5 +1,5 @@
 ---
-title: EF6.x and EF Core in the Same Application
+title: EF6.x and EF Core in the Same Application | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

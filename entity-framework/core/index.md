@@ -1,5 +1,5 @@
 ---
-title: Entity Framework Core
+title: Entity Framework Core | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

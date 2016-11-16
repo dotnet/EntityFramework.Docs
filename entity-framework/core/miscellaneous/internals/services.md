@@ -1,5 +1,5 @@
 ---
-title: Understanding EF Services
+title: Understanding EF Services | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

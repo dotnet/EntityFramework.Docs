@@ -1,5 +1,5 @@
 ---
-title: Logging
+title: Logging | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

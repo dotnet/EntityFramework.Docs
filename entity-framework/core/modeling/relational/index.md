@@ -1,5 +1,5 @@
 ---
-title: Relational Database Modeling
+title: Relational Database Modeling | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

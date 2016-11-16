@@ -1,5 +1,5 @@
 ---
-title: Which One Is Right for You
+title: Which One Is Right for You | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

@@ -1,5 +1,5 @@
 ---
-title: Compare EF Core & EF6.x
+title: Compare EF Core & EF6.x | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

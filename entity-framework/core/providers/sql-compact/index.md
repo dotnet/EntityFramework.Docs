@@ -1,5 +1,5 @@
 ---
-title: Microsoft SQL Server Compact Edition
+title: Microsoft SQL Server Compact Edition | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller

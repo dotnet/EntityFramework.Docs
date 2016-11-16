@@ -1,5 +1,5 @@
 ---
-title: .NET Core Application to New SQLite Database
+title: .NET Core Application to New SQLite Database | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
