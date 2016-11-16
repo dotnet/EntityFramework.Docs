@@ -6,15 +6,9 @@ namespace EFModeling.Conventions.Samples.BackingField
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Blog>()
-                .Property(b => b.Url)
-                .HasAnnotation("BackingField", "_blogUrl");
-        }
     }
 
+    #region Sample
     public class Blog
     {
         private string _url;
@@ -27,4 +21,5 @@ namespace EFModeling.Conventions.Samples.BackingField
             set { _url = value; }
         }
     }
+    #endregion
 }

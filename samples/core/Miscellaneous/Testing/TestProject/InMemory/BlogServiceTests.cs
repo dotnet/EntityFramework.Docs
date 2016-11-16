@@ -1,37 +1,19 @@
 ﻿using BusinessLogic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace TestProject
+namespace TestProject.InMemory
 {
     [TestClass]
     public class BlogServiceTests
     {
-        private static DbContextOptions<BloggingContext> CreateNewContextOptions()
-        {
-            // Create a fresh service provider, and therefore a fresh 
-            // InMemory database instance.
-            var serviceProvider = new ServiceCollection()
-                .AddEntityFrameworkInMemoryDatabase()
-                .BuildServiceProvider();
-
-            // Create a new options instance telling the context to use an
-            // InMemory database and the new service provider.
-            var builder = new DbContextOptionsBuilder<BloggingContext>();
-            builder.UseInMemoryDatabase()
-                   .UseInternalServiceProvider(serviceProvider);
-
-            return builder.Options;
-        }
-
         [TestMethod]
         public void Add_writes_to_database()
         {
-            // All contexts that share the same service provider will share the same InMemory database
-            var options = CreateNewContextOptions();
+            var options = new DbContextOptionsBuilder<BloggingContext>()
+                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .Options;
 
             // Run the test against one instance of the context
             using (var context = new BloggingContext(options))
@@ -51,8 +33,9 @@ namespace TestProject
         [TestMethod]
         public void Find_searches_url()
         {
-            // All contexts that share the same service provider will share the same InMemory database
-            var options = CreateNewContextOptions();
+            var options = new DbContextOptionsBuilder<BloggingContext>()
+                .UseInMemoryDatabase(databaseName: "Find_searches_url")
+                .Options;
 
             // Insert seed data into the database using one instance of the context
             using (var context = new BloggingContext(options))

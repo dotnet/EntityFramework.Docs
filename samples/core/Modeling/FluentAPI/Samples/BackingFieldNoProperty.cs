@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 
-namespace EFModeling.Configuring.FluentAPI.Samples.BackingField
+namespace EFModeling.Configuring.FluentAPI.Samples.BackingFieldNoProperty
 {
     #region Sample
     class MyContext : DbContext
@@ -11,8 +11,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.BackingField
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .Property(b => b.Url)
-                .HasField("_validatedUrl");
+                .Property("_validatedUrl");
         }
     }
 
@@ -22,9 +21,9 @@ namespace EFModeling.Configuring.FluentAPI.Samples.BackingField
 
         public int BlogId { get; set; }
 
-        public string Url
+        public string GetUrl()
         {
-            get { return _validatedUrl; }
+            return _validatedUrl; 
         }
 
         public void SetUrl(string url)

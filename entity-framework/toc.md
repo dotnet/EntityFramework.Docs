@@ -71,6 +71,7 @@
 <!-- Providers -->
 ###[Database Providers](core/providers/index.md)
 ####[Microsoft SQL Server](core/providers/sql-server/index.md)
+#####[Memory-Optimized Tables](core/providers/sql-server/memory-optimized-tables.md)
 ####[SQLite](core/providers/sqlite/index.md)
 #####[SQLite Limitations](core/providers/sqlite/limitations.md)
 ####[PostgreSQL (Npgsql))](core/providers/npgsql/index.md)
@@ -87,7 +88,10 @@
 ###Miscellaneous
 ####[Connection Strings](core/miscellaneous/connection-strings.md)
 ####[Logging](core/miscellaneous/logging.md)
-####[Testing with InMemory](core/miscellaneous/testing.md)
+####[Connection Resiliency](core/miscellaneous/connection-resiliency.md)
+####[Testing](core/miscellaneous/testing/index.md)
+#####[Testing with SQLite](core/miscellaneous/testing/sqlite.md)
+#####[Testing with InMemory](core/miscellaneous/testing/in-memory.md)
 ####[Configuring a DbContext](core/miscellaneous/configuring-dbcontext.md)
 ####[Upgrading from RC1 to RC2](core/miscellaneous/rc1-rc2-upgrade.md)
 ####[Upgrading from RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
