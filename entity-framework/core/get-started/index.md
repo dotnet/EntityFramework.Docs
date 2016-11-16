@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 3c88427c-20c6-42ec-a736-22d3eccd5071
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/get-started/index
 ---
 # Getting Started

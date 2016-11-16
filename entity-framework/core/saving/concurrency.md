@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: bce0539d-b0cd-457d-be71-f7ca16f3baea
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/saving/concurrency
 ---
 # Concurrency Conflicts

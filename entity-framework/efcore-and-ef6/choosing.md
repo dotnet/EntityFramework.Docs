@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 288f825b-b3e6-4096-971b-d0a1cb96770e
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: efcore-and-ef6/choosing
 ---
 # Which One Is Right for You

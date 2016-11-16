@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 6c56e0ec-3486-493f-8980-1b9c32631beb
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/efcore-vs-ef6/porting/port-code
 ---
 

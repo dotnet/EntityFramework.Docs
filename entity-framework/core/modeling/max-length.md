@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: c39c5d43-018d-48b8-94f2-b8bc7c686c69
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/modeling/max-length
 ---
 # Maximum Length

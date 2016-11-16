@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 2dce1a50-7d84-4856-abf6-2763dd9be99d
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: efcore-and-ef6/porting/port-code
 ---
 # Porting a Code-Based Model (Code First & Code First to Existing Database)

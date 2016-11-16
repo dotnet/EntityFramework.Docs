@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: e4483aff-fdaf-4e6b-bc21-0a8ab32f0cd8
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/efcore-vs-ef6/features
 ---
 

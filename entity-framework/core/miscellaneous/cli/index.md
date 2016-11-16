@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 8b8d923f-d994-43c6-9c5b-97b19187d23c
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/miscellaneous/cli/index
 ---
 # Command Line Reference

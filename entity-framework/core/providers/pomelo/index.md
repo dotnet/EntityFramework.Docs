@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: d0198c04-d30d-4419-98f8-a54690cea3c8
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/providers/pomelo/index
 ---
 # Pomelo

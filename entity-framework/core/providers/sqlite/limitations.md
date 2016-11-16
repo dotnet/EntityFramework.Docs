@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
-ms.prod: entity-framework-
+ms.technology: entity-framework
+ms.prod: entity-framework-core
 uid: core/providers/sqlite/limitations
 ---
 # SQLite Limitations

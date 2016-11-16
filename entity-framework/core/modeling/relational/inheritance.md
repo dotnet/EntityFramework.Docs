@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 9a7c5488-aaf4-4b40-b1ff-f435ff30f6ec
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/modeling/relational/inheritance
 ---
 # Inheritance (Relational Database)

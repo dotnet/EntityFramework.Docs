@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 3d419dcf-2b5d-467c-b408-ea03d830721a
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/modeling/relational/unique-constraints
 ---
 # Alternate Keys (Unique Constraints)

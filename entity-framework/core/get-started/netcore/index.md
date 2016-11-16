@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 35fc7f49-fda8-4d8d-822f-78dd2d484d79
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/get-started/netcore/index
 ---
 # Getting Started on .NET Core (Windows, OSX, Linux, etc.)

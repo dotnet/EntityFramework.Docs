@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/saving/cascade-delete
 ---
 # Cascade Delete

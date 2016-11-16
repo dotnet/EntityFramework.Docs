@@ -6,7 +6,8 @@ manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 8b6697cc-7067-4dc2-8007-85d80503d123
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/querying/client-eval
 ---
 # Client vs. Server Evaluation
