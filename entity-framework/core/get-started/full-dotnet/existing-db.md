@@ -1,15 +1,17 @@
 ﻿---
-title: Console Application to Existing Database (Database First)
+title: .NET Framework - Existing Database | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: a29a3d97-b2d8-4d33-9475-40ac67b3b2c6
-ms.prod: entity-framework-
+ms.technology: entity-framework
+ms.prod: entity-framework-core
 uid: core/get-started/full-dotnet/existing-db
 ---
-# Console Application to Existing Database (Database First)
+
+# .NET Framework - Existing Database
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

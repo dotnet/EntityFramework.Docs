@@ -1,12 +1,13 @@
 ---
-title: Entity Framework 6.x
+title: Entity Framework 6.x | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: d16eb5be-7e94-477a-84cd-e6dce25df12a
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-6
 uid: ef6/index
 ---
 # Entity Framework 6.x

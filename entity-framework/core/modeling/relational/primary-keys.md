@@ -1,12 +1,13 @@
 ---
-title: Primary Keys
+title: Primary Keys | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: c78f8f42-564a-45a4-aca7-3ede9f7ed2bc
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/modeling/relational/primary-keys
 ---
 # Primary Keys

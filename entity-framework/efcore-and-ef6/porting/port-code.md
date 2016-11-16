@@ -1,15 +1,16 @@
 ---
-title: Porting a Code-Based Model (Code First & Code First to Existing Database)
+title: Porting a Code-Based Model | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 2dce1a50-7d84-4856-abf6-2763dd9be99d
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core
 uid: efcore-and-ef6/porting/port-code
 ---
-# Porting a Code-Based Model (Code First & Code First to Existing Database)
+# Porting a Code-Based Model
 
 If you've read all the caveats and you are ready to port, then here are some guidelines to help you get started.
 

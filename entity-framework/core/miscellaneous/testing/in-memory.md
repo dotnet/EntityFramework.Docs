@@ -1,12 +1,13 @@
 ---
-title: Testing with InMemory
+title: Testing with InMemory | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 0d0590f1-1ea3-4d5c-8f44-db17395cd3f3
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/miscellaneous/testing/in-memory
 ---
 

@@ -1,12 +1,13 @@
 ---
-title: Concurrency Tokens
+title: Concurrency Tokens | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: bc8b1cb0-befe-4b67-8004-26e6c5f69385
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/modeling/concurrency
 ---
 # Concurrency Tokens

@@ -1,12 +1,13 @@
 ﻿---
-title: Package Manager Console (Visual Studio)
+title: Package Manager Console (Visual Studio) | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: c02a68d0-187a-47fb-af80-031f4187ad8a
-ms.prod: entity-framework-
+ms.technology: entity-framework
+ms.prod: entity-framework-core
 uid: core/miscellaneous/cli/powershell
 ---
 # Package Manager Console (Visual Studio)

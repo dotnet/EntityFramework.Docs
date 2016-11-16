@@ -1,15 +1,17 @@
 ﻿---
-title: ASP.NET Core Application to Existing Database (Database First)
+title: ASP.NET Core - Existing Database | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
-ms.prod: entity-framework-
+ms.technology: entity-framework
+ms.prod: entity-framework-core
 uid: core/get-started/aspnetcore/existing-db
 ---
-# ASP.NET Core Application to Existing Database (Database First)
+
+# ASP.NET Core - Existing Database
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).

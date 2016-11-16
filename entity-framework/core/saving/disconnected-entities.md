@@ -1,12 +1,13 @@
 ---
-title: 🔧 Disconnected Entities
+title: 🔧 Disconnected Entities | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/saving/disconnected-entities
 ---
 # 🔧 Disconnected Entities

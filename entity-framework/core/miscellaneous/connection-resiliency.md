@@ -1,12 +1,13 @@
 ---
-title: Connection Resiliency
+title: Connection Resiliency | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 11/15/2016
 ms.topic: article
 ms.assetid: e079d4af-c455-4a14-8e15-a8471516d748
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/miscellaneous/connection-resiliency
 ---
 

@@ -1,12 +1,13 @@
 ---
-title: Relational Database Modeling
+title: Relational Database Modeling | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 2c1fc33a-baac-477e-bd35-7360badb8303
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/modeling/relational/index
 ---
 # Relational Database Modeling

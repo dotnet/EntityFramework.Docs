@@ -1,12 +1,13 @@
 ---
-title: Npgsql
+title: Npgsql | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 5ecd1b22-c68e-4d87-ba39-b0761f4d5b90
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/providers/npgsql/index
 ---
 # Npgsql

@@ -1,12 +1,13 @@
 ---
-title: Sapient Guardian
+title: Sapient Guardian | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 8a1ee790-0015-4392-b9cd-8ae313b287c5
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/providers/sapient-guardian/index
 ---
 # Sapient Guardian

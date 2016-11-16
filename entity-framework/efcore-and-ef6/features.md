@@ -1,12 +1,13 @@
 ---
-title: Feature Comparison
+title: Feature Comparison | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: f22f29ef-efc0-475d-b0b2-12a054f80f95
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: efcore-and-ef6/features
 ---
 

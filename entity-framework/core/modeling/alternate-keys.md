@@ -1,12 +1,13 @@
 ---
-title: Alternate Keys
+title: Alternate Keys | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 8a5931d4-b480-4298-af36-0e29d74a37c0
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/modeling/alternate-keys
 ---
 # Alternate Keys

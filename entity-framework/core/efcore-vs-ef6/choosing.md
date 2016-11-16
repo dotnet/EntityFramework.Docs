@@ -1,12 +1,13 @@
 ---
-title: Which One Is Right for You
+title: Which One Is Right for You | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: ms.assetid
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/efcore-vs-ef6/choosing
 ---
 

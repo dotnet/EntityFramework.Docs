@@ -1,12 +1,13 @@
 ---
-title: Inheritance
+title: Inheritance | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 manager: rowanmiller
 ms.date: 10/27/2016
 ms.topic: article
 ms.assetid: 754be334-dd21-450e-9d22-2591e80012a2
-ms.prod: entity-framework
+ms.technology: entity-framework
+ms.prod: entity-framework-core 
 uid: core/modeling/inheritance
 ---
 # Inheritance
