@@ -2,12 +2,12 @@
 title: Microsoft SQL Server Compact Edition | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: 073f0004-3eb5-4618-ab93-0674910e1819
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/providers/sql-compact/index
 ---
 # Microsoft SQL Server Compact Edition

@@ -2,12 +2,12 @@
 title: Column Mapping | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: 05a47de9-1078-488e-a823-b516a4208f33
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/modeling/relational/columns
 ---
 # Column Mapping

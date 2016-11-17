@@ -2,12 +2,9 @@
 title: Validate Requirements | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: d3b66f3c-9d10-4974-a090-8ad093c9a53d
-ms.technology: entity-framework
-ms.prod: entity-framework-core
 uid: efcore-and-ef6/porting/ensure-requirements
 ---
 

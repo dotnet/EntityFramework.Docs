@@ -2,12 +2,12 @@
 title: Client vs. Server Evaluation | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: 8b6697cc-7067-4dc2-8007-85d80503d123
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/querying/client-eval
 ---
 # Client vs. Server Evaluation

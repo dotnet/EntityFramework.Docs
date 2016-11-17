@@ -2,12 +2,12 @@
 title: Microsoft SQL Server | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: 2e007c82-c6e4-45bb-8129-851b79ec1a0a
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/providers/sql-server/index
 ---
 # Microsoft SQL Server

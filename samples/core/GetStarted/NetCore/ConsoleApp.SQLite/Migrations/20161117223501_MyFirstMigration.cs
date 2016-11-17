@@ -13,8 +13,7 @@ namespace ConsoleApp.SQLite.Migrations
                 columns: table => new
                 {
                     BlogId = table.Column<int>(nullable: false)
-                        .Annotation("Autoincrement", true),
-                    Name = table.Column<string>(nullable: true),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Url = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -27,7 +26,7 @@ namespace ConsoleApp.SQLite.Migrations
                 columns: table => new
                 {
                     PostId = table.Column<int>(nullable: false)
-                        .Annotation("Autoincrement", true),
+                        .Annotation("Sqlite:Autoincrement", true),
                     BlogId = table.Column<int>(nullable: false),
                     Content = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true)

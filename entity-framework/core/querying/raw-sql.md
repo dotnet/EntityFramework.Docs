@@ -2,12 +2,12 @@
 title: Raw SQL Queries | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/querying/raw-sql
 ---
 # Raw SQL Queries

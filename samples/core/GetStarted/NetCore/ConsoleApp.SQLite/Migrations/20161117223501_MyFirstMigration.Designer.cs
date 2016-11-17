@@ -8,20 +8,18 @@ using ConsoleApp.SQLite;
 namespace ConsoleApp.SQLite.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20160623230334_MyFirstMigration")]
+    [Migration("20161117223501_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
+                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");
 
-            modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Blog", b =>
+            modelBuilder.Entity("ConsoleApp.SQLite.Blog", b =>
                 {
                     b.Property<int>("BlogId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
 
                     b.Property<string>("Url");
 
@@ -30,7 +28,7 @@ namespace ConsoleApp.SQLite.Migrations
                     b.ToTable("Blogs");
                 });
 
-            modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Post", b =>
+            modelBuilder.Entity("ConsoleApp.SQLite.Post", b =>
                 {
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd();
@@ -48,9 +46,9 @@ namespace ConsoleApp.SQLite.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("EFGetStarted.ConsoleApp.SQLite.Post", b =>
+            modelBuilder.Entity("ConsoleApp.SQLite.Post", b =>
                 {
-                    b.HasOne("EFGetStarted.ConsoleApp.SQLite.Blog", "Blog")
+                    b.HasOne("ConsoleApp.SQLite.Blog", "Blog")
                         .WithMany("Posts")
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade);

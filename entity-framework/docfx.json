@@ -63,7 +63,17 @@
         ]
       }
     ],
-    "globalMetadata": {"breadcrumb_path": "/breadcrumb/toc.json"},
+    "globalMetadata":
+    {
+      "breadcrumb_path": "/breadcrumb/toc.json",
+      "manager": "rowanmiller",
+      "ms.topic": "article",
+      "audience": "developer",
+      "ms.reviewer": "rowmil",
+      "ms.prod": "entity-framework",
+      "ms.tgt_pltfrm": "dotnet",
+      "ms.devlang": "dotnet"
+    },
     "dest": "_site",
     "template": [
       "default"

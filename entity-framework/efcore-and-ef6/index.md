@@ -2,12 +2,9 @@
 title: Compare EF Core & EF6.x | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: a6b9cd22-6803-4c6c-a4d4-21147c0a81cb
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
 uid: efcore-and-ef6/index
 ---
 
