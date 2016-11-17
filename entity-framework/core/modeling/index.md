@@ -2,12 +2,12 @@
 title: Creating a Model | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: 88253ff3-174e-485c-b3f8-768243d01ee1
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/modeling/index
 ---
 # Creating a Model

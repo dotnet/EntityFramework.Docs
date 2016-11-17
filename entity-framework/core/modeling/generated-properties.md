@@ -2,12 +2,12 @@
 title: Generated Properties | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: eb082011-11a1-41b4-a108-15daafa03e80
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/modeling/generated-properties
 ---
 # Generated Properties

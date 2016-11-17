@@ -2,12 +2,12 @@
 title: Testing | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: 1603be0c-69bc-4dd9-9a08-3d0129cdc6c1
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/miscellaneous/testing/index
 ---
 

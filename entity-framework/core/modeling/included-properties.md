@@ -2,12 +2,12 @@
 title: Including & Excluding Properties | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: e9dff604-3469-4a05-8f9e-18ac281d82a9
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/modeling/included-properties
 ---
 # Including & Excluding Properties

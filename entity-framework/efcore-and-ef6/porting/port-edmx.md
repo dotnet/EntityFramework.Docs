@@ -2,12 +2,9 @@
 title: Porting an EDMX-Based Model | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: 63003709-f1ec-4bdc-8083-65a60c4826d2
-ms.technology: entity-framework
-ms.prod: entity-framework-core
 uid: efcore-and-ef6/porting/port-edmx
 ---
 # Porting an EDMX-Based Model

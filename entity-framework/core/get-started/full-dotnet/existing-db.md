@@ -2,12 +2,12 @@
 title: .NET Framework - Existing Database | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: a29a3d97-b2d8-4d33-9475-40ac67b3b2c6
-ms.technology: entity-framework
-ms.prod: entity-framework-core
+ms.technology: entity-framework-core
+
 uid: core/get-started/full-dotnet/existing-db
 ---
 

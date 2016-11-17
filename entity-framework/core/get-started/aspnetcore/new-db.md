@@ -2,12 +2,12 @@
 title: ASP.NET Core - New Database | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: e153627f-f132-4c11-b13c-6c9a607addce
-ms.technology: entity-framework
-ms.prod: entity-framework-core
+ms.technology: entity-framework-core
+
 uid: core/get-started/aspnetcore/new-db
 ---
 

@@ -2,12 +2,12 @@
 title: Foreign Key Constraints | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: dbaf4bac-1fd5-46c0-ac57-64d7153bc574
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/modeling/relational/fk-constraints
 ---
 # Foreign Key Constraints

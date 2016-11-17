@@ -2,12 +2,12 @@
 title: Shadow Properties | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: 75369266-d2b9-4416-b118-ed238f81f599
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/modeling/shadow-properties
 ---
 # Shadow Properties

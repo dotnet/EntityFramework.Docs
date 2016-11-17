@@ -2,12 +2,12 @@
 title: Devart | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: aad70a75-d04d-4d63-a489-7f9062a3c73d
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/providers/devart/index
 ---
 # Devart

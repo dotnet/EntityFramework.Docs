@@ -2,12 +2,12 @@
 title: Database Providers | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
-ms.technology: entity-framework
-ms.prod: entity-framework-core 
+ms.technology: entity-framework-core
+ 
 uid: core/providers/index
 ---
 # Database Providers

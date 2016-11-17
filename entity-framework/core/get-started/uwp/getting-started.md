@@ -2,12 +2,12 @@
 title: UWP - New Database | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-manager: rowanmiller
+
 ms.date: 10/27/2016
-ms.topic: article
+
 ms.assetid: a0ae2f21-1eef-43c6-83ad-92275f9c0727
-ms.technology: entity-framework
-ms.prod: entity-framework-core
+ms.technology: entity-framework-core
+
 uid: core/get-started/uwp/getting-started
 ---
 
