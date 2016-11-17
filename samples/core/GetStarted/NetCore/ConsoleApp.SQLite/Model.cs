@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace ConsoleApp.SQLite
 {
@@ -11,7 +10,7 @@ namespace ConsoleApp.SQLite
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=./blog.db");
+            optionsBuilder.UseSqlite("Filename=./Blogging.db");
         }
     }
 
@@ -19,7 +18,6 @@ namespace ConsoleApp.SQLite
     {
         public int BlogId { get; set; }
         public string Url { get; set; }
-        public string Name { get; set; }
 
         public List<Post> Posts { get; set; }
     }
