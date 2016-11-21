@@ -74,7 +74,7 @@
 #####[Memory-Optimized Tables](core/providers/sql-server/memory-optimized-tables.md)
 ####[SQLite](core/providers/sqlite/index.md)
 #####[SQLite Limitations](core/providers/sqlite/limitations.md)
-####[PostgreSQL (Npgsql))](core/providers/npgsql/index.md)
+####[PostgreSQL (Npgsql)](core/providers/npgsql/index.md)
 ####[MySQL (Official)](core/providers/mysql/index.md)
 ####[MySQL (Pomelo)](core/providers/pomelo/index.md)
 ####[MySQL (Sapient Guardian)](core/providers/sapient-guardian/index.md)
