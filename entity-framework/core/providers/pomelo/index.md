@@ -27,7 +27,7 @@ Install the [Pomelo.EntityFrameworkCore.MySQL NuGet package](https://www.nuget.o
 <!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": false, "dupnames  : "csharp",", highlight_args}, "names": [] -->
 ````text
 
-   PM>  Install-Package Pomelo.EntityFrameworkCore.MySQL
+   PM>  Install-Package Pomelo.EntityFrameworkCore.MySql
 ````
 
 ## Get Started
