@@ -32,7 +32,7 @@ Install the [Npgsql.EntityFrameworkCore.PostgreSQL NuGet package](https://www.nu
 
 ## Get Started
 
-See the [Npgsql documentation](http://www.npgsql.org/doc/efcore.html) to get started.
+See the [Npgsql documentation](http://www.npgsql.org/efcore/index.html) to get started.
 
 ## Supported Database Engines
 
