@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
@@ -6,15 +7,13 @@ namespace EFLogging
 {
     public class MyFilteredLoggerProvider : ILoggerProvider
     {
-        private static string[] _categories =
-        {
-            typeof(Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommandBuilderFactory).FullName,
-            typeof(Microsoft.EntityFrameworkCore.Storage.Internal.SqlServerConnection).FullName
-        };
-
         public ILogger CreateLogger(string categoryName)
         {
-            if( _categories.Contains(categoryName))
+            // NOTE: This sample uses EF Core 1.1. If using EF Core 1.0, then use 
+            //       Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommandBuilderFactory
+            //       rather than IRelationalCommandBuilderFactory
+
+            if (categoryName == typeof(IRelationalCommandBuilderFactory).FullName)
             {
                 return new MyLogger();
             }

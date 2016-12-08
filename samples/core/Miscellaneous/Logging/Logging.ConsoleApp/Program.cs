@@ -9,12 +9,14 @@ namespace EFLogging.ConsoleApp
     {
         static void Main(string[] args)
         {
+            #region Sample
             using (var db = new BloggingContext())
             {
                 var serviceProvider = db.GetInfrastructure<IServiceProvider>();
                 var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
                 loggerFactory.AddProvider(new MyLoggerProvider());
             }
+            #endregion
 
             using (var db = new BloggingContext())
             {
