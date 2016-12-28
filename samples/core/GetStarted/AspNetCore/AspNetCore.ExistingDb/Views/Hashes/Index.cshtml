@@ -59,15 +59,15 @@
 				divResult.text('');
 
 				$.post('/Hashes/Search', { "search": search, "shaKind": sha_kind },
-					function (data) {
+					function (found) {
 						button.prop('disabled', false);
 						button.html("<span class='disabled-animation'></span> Search");
 
-						if (data == null || data == '' || data.found == null || data.found == '') {
+						if (found == null || found == '') {
 							divResult.text('nothing found');
 							return;
 						}
-						divResult.text(data.found.key + ' ' + data.found.hashMD5 + ' ' + data.found.hashSHA256);
+						divResult.text(found.key + ' ' + found.hashMD5 + ' ' + found.hashSHA256);
 					});
 
 			});
