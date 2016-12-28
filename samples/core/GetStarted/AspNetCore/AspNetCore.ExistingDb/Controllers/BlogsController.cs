@@ -27,6 +27,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 		{
 			return View();
 		}
+
 		[HttpPost]
 		public JsonResult Edit(int id, string url)
 		{

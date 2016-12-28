@@ -23,10 +23,12 @@
                 @Html.DisplayFor(modelItem => item.BlogId)
             </td>
             <td>
-                <span class='displaying'>@Html.DisplayFor(modelItem => item.Url)</span>
-				@Html.TextBox("Url_" + item.BlogId , (string)item.Url, new { @class = "edit" })
-				<button class="update-case edit" data-id="@item.BlogId">Update</button>
-            </td>
+				<div class="form-inline">
+					<span class='displaying'>@Html.DisplayFor(modelItem => item.Url)</span>
+					@Html.TextBox("Url_" + item.BlogId, (string)item.Url, new { @class = "edit form-control" })
+					<button class="update-case btn btn-default" data-id="@item.BlogId">Update</button>
+				</div>
+			</td>
         </tr>
     }
 </table>
@@ -44,9 +46,9 @@
 			$.post('/Blogs/Edit', { "id": id, "url": url },
 			function (data) {
 				var edit = tr.find('.edit');
-						edit.val(data.person.url);
+				edit.val(data.person.url);
 				var span = tr.find('span.displaying');
-						span.text(data.person.url);
+				span.text(data.person.url);
 				//span.text('predefined');
 			});
 

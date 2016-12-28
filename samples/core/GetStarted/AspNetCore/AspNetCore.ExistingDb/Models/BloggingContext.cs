@@ -22,9 +22,17 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 					.WithMany(p => p.Post)
 					.HasForeignKey(d => d.BlogId);
 			});
+
+			modelBuilder.Entity<Hashes>(entity =>
+			{
+				entity.Property(e => e.Key).IsRequired();
+				entity.Property(e => e.HashMD5).IsRequired();
+				entity.Property(e => e.HashSHA256).IsRequired();
+			});
 		}
 
 		public virtual DbSet<Blog> Blog { get; set; }
 		public virtual DbSet<Post> Post { get; set; }
+		public virtual DbSet<Hashes> Hashes { get; set; }
 	}
 }

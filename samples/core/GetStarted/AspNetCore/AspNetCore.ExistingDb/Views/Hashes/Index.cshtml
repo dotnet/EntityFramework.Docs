@@ -1,0 +1,76 @@
+﻿@model EFGetStarted.AspNetCore.ExistingDb.Models.Hashes
+
+@{
+	ViewBag.Title = "MyRainbow rainbow table";
+}
+
+<h2>Rainbow table trivial example</h2>
+
+<p>
+	@*<a asp-controller="Hashes" asp-action="Search">Search for 5 character MD5 or SHA256 hash source string. Alphabet is 'abcxeewqretetyggfdh'</a>*@
+	Search for 5 character MD5 or SHA256 hash source string. Alphabet is 'abcdefghijklmopqrstuvwxyz'
+</p>
+
+<div class="form-horizontal">
+	<div asp-validation-summary="All" class="text-danger"></div>
+	<div class="form-group">
+		@*<label class="col-md-2 control-label">MD5/SHA256</label>*@
+		<div class="col-md-10">
+			<label class="radio-inline"><input type="radio" name="optradio" value="MD5">MD5</label>
+			<label class="radio-inline"><input type="radio" name="optradio" value="SHA256">SHA256</label>
+			<input id="txtSearch" asp-for="HashMD5" class="form-control" placeholder="hash to decode" required maxlength="64" data-validation-required-message="Hash is required" />
+			<span asp-validation-for="HashMD5" class="text-danger"></span>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-10">
+			@*<input id="btnSearch" type="submit" value="Search" class="btn btn-default" />*@
+			<button type="button" id="btnSearch" class="btn btn-lg btn-warning"><span class='disabled-animation'></span>Search</button>
+		</div>
+	</div>
+	<div class="form-group">
+		<div id="divResult" class="col-md-10" />
+	</div>
+</div>
+
+
+@section scripts
+{
+	<script>
+		$(function () {
+			$('.btn-default, .btn-warning').on('click', function (e) {
+				e.preventDefault();
+				var search = $('#txtSearch').val();
+				if (search == null || search == '') return;
+
+				var sha_kind = $('.radio-inline input:radio:checked').val();
+				switch (sha_kind) {
+					case 'MD5':
+					case 'SHA256':
+						break;
+					default:
+						return;
+				}
+
+				var button = $(this);
+				button.prop('disabled', true);
+				button.html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Loading...");
+				var divResult = $('#divResult');
+				divResult.text('');
+
+				$.post('/Hashes/Search', { "search": search, "shaKind": sha_kind },
+					function (data) {
+						button.prop('disabled', false);
+						button.html("<span class='disabled-animation'></span> Search");
+
+						if (data == null || data == '' || data.found == null || data.found == '') {
+							divResult.text('nothing found');
+							return;
+						}
+						divResult.text(data.found.key + ' ' + data.found.hashMD5 + ' ' + data.found.hashSHA256);
+					});
+
+			});
+		});
+	</script>
+}
