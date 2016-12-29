@@ -14,7 +14,7 @@
 <div class="form-horizontal">
 	<div asp-validation-summary="All" class="text-danger"></div>
 	<div class="form-group">
-		@*<label class="col-md-2 control-label">MD5/SHA256</label>*@
+		@*<label class="col-md-2 control-label">Hash kind to decode</label>*@
 		<div class="col-md-10">
 			<label class="radio-inline"><input type="radio" name="optradio" value="MD5">MD5</label>
 			<label class="radio-inline"><input type="radio" name="optradio" value="SHA256">SHA256</label>
@@ -40,22 +40,38 @@
 		$(function () {
 			$('.btn-default, .btn-warning').on('click', function (e) {
 				e.preventDefault();
+				var divResult = $('#divResult');
 				var search = $('#txtSearch').val();
-				if (search == null || search == '') return;
+				if (search == null || search == '')
+				{
+					divResult.text('no hash to decode');
+					return;
+				}
 
 				var sha_kind = $('.radio-inline input:radio:checked').val();
 				switch (sha_kind) {
 					case 'MD5':
+						if (search.length < 32)
+						{
+							divResult.text('search.length < 32 characters, too short');
+							return;
+						}
+						break;
 					case 'SHA256':
+						if (search.length < 64)
+						{
+							divResult.text('search.length < 64 characters, too short');
+							return;
+						}
 						break;
 					default:
+						divResult.text('no hash method selected');
 						return;
 				}
 
 				var button = $(this);
 				button.prop('disabled', true);
-				button.html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Loading...");
-				var divResult = $('#divResult');
+				button.html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Loading...");				
 				divResult.text('');
 
 				$.post('/Hashes/Search', { "search": search, "shaKind": sha_kind },
