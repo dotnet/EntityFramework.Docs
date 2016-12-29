@@ -1,58 +1,79 @@
 ﻿@model IEnumerable<EFGetStarted.AspNetCore.ExistingDb.Models.Blog>
 
 @{
-    ViewBag.Title = "Blogs";
+	ViewBag.Title = "Blogs";
 }
 
 <h2>Blogs</h2>
 
 <p>
-    <a asp-controller="Blogs" asp-action="Create">Create New</a>
+	<a asp-controller="Blogs" asp-action="Create">Create New</a>
 </p>
 
 <table class="table">
-    <tr>
-        <th>Id</th>
-        <th>Url</th>
-    </tr>
+	<tr>
+		<th>Id</th>
+		<th>Url</th>
+	</tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BlogId)
-            </td>
-            <td>
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.BlogId)
+			</td>
+			<td>
 				<div class="form-inline">
 					<span class='displaying'>@Html.DisplayFor(modelItem => item.Url)</span>
 					@Html.TextBox("Url_" + item.BlogId, (string)item.Url, new { @class = "edit form-control" })
 					<button class="update-case btn btn-default" data-id="@item.BlogId">Update</button>
+					<button class="delete-case btn btn-danger" data-id="@item.BlogId">Delete</button>
 				</div>
 			</td>
-        </tr>
-    }
+		</tr>
+	}
 </table>
 @section scripts
 {
-<script>
-	$(function() {
-        $('.update-case').on('click', function (e)
-		{
-            e.preventDefault();
-            tr = $(this).parents('tr:first');
-            var id = $(this).data('id');
-            var url = tr.find('.edit').val();
+	<script>
+		$(function () {
+			$('.update-case').on('click', function (e) {
+				e.preventDefault();
+				tr = $(this).parents('tr:first');
+				var id = $(this).data('id');
+				var url = tr.find('.edit').val();
 
-			$.post('/Blogs/Edit', { "id": id, "url": url },
-			function (data) {
-				var edit = tr.find('.edit');
-				edit.val(data.person.url);
-				var span = tr.find('span.displaying');
-				span.text(data.person.url);
-				//span.text('predefined');
+				$.post('/Blogs/Edit', { "id": id, "url": url },
+				function (blog) {
+					if (blog == "error") {
+						alert("error");
+						return;
+					}
+
+					var edit = tr.find('.edit');
+					edit.val(blog.url);
+					var span = tr.find('span.displaying');
+					span.text(blog.url);
+				});
+
 			});
 
-        });
-	});
-</script>
+			$('.delete-case').on('click', function (e) {
+				e.preventDefault();
+				tr = $(this).parents('tr:first');
+				var id = $(this).data('id');
+
+				$.ajax({
+					method: "DELETE",
+					url: "/Blogs/Delete",
+					data: { "id": id }
+				}).done(function (result) {
+					//alert("Data deleted: " + result);
+					if (result == 'ok')
+						$(tr).remove();
+				});
+
+			});
+		});
+	</script>
 }

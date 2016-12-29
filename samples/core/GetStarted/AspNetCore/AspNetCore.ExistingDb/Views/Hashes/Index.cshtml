@@ -33,6 +33,14 @@
 	</div>
 </div>
 
+<table id="result_tab" class="table table-striped table-bordered" style='display:none' cellspacing="0">
+	<thead><tr><th>Key</th><th>MD5</th><th>SHA256</th></tr></thead>
+	<tbody><tr>
+		<td id="res_cel_key"></td>
+		<td id="res_cel_md5"></td>
+		<td id="res_cel_sha256"></td>
+	</tr></tbody>
+</table>
 
 @section scripts
 {
@@ -71,8 +79,9 @@
 
 				var button = $(this);
 				button.prop('disabled', true);
-				button.html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Loading...");				
+				button.html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Loading...");
 				divResult.text('');
+				$('#result_tab').hide();
 
 				$.post('/Hashes/Search', { "search": search, "shaKind": sha_kind },
 					function (found) {
@@ -83,7 +92,11 @@
 							divResult.text('nothing found');
 							return;
 						}
-						divResult.text(found.key + ' ' + found.hashMD5 + ' ' + found.hashSHA256);
+						//divResult.text(found.key + ' ' + found.hashMD5 + ' ' + found.hashSHA256);
+						$('#result_tab').show();
+						$('#res_cel_key').text(found.key);
+						$('#res_cel_md5').text(found.hashMD5);
+						$('#res_cel_sha256').text(found.hashSHA256);
 					});
 
 			});

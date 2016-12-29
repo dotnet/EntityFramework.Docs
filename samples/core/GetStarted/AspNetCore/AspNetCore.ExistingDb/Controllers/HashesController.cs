@@ -13,9 +13,9 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 	public class HashesController : Controller
 	{
 		private BloggingContext _dbaseContext;
-		private ILogger<BlogsController> _logger;
+		private ILogger<HashesController> _logger;
 
-		public HashesController(BloggingContext context, ILogger<BlogsController> logger)
+		public HashesController(BloggingContext context, ILogger<HashesController> logger)
 		{
 			_dbaseContext = context;
 			_logger = logger;
@@ -28,32 +28,36 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Search(string search, string shaKind)
+		public async Task<JsonResult> Search(string search, string shaKind)
 		{
-			Hashes found = null;
 			if (string.IsNullOrEmpty(search) || string.IsNullOrEmpty(shaKind))
-				return Json(found);
+				return null;
 
-			_logger.LogInformation(0, $"{nameof(search)} = {search}, {nameof(shaKind)} = {shaKind}");
+			var logger_tsk = Task.Run(() =>
+			{
+				_logger.LogInformation(0, $"{nameof(search)} = {search}, {nameof(shaKind)} = {shaKind}");
+			});
 
 			search = search.Trim().ToLower();
+			Task<Hashes> found = null;
 			switch (shaKind)
 			{
 				case "MD5":
 				case "md5":
-					found = _dbaseContext.Hashes.FirstOrDefault(x => x.HashMD5 == search);
+					found = _dbaseContext.Hashes.Where(x => x.HashMD5 == search).ToAsyncEnumerable().FirstOrDefault();
 					break;
 
 				case "SHA256":
 				case "sha256":
-					found = _dbaseContext.Hashes.FirstOrDefault(x => x.HashSHA256 == search);
+					found = _dbaseContext.Hashes.Where(x => x.HashSHA256 == search).ToAsyncEnumerable().FirstOrDefault();
 					break;
 
 				default:
 					throw new NotSupportedException("bad kind");
 			}
 
-			return Json(found);
+			//await logger_tsk;
+			return new JsonResult(await found);
 		}
 	}
 }

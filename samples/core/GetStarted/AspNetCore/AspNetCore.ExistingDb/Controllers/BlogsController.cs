@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 {
@@ -18,9 +19,11 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 			_logger = logger;
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
-			return View(_context.Blog.ToList());
+			var lst = _context.Blog.ToAsyncEnumerable();
+
+			return View(await lst.ToList());
 		}
 
 		public IActionResult Create()
@@ -29,26 +32,59 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 		}
 
 		[HttpPost]
-		public JsonResult Edit(int id, string url)
+		public async Task<JsonResult> Edit(int id, string url)
 		{
-			_logger.LogInformation(0, $"id = {id} url = {(url ?? "<null>")}");
+			var logger_tsk = Task.Run(() =>
+			{
+				_logger.LogInformation(0, $"id = {id} url = {(url ?? "<null>")}");
+			});
+
 			if (id <= 0) return Json("error");
 
-			Blog person = _context.Blog.First(p => p.BlogId == id);
-			person.Url = url;
-			_context.SaveChanges();
+			Task<Blog> tsk = _context.Blog.Where(p => p.BlogId == id).ToAsyncEnumerable().FirstOrDefault();
+			Blog blog = await tsk;
+			blog.Url = url;
 
-			return Json(new { person });
+			await _context.SaveChangesAsync();
+			//await logger_tsk;
+
+			return Json(blog);
+		}
+
+		[HttpDelete]
+		//[ValidateAntiForgeryToken]
+		public async Task<JsonResult> Delete(int id)
+		{
+			var logger_tsk = Task.Run(() =>
+			{
+				_logger.LogInformation(2, $"id = {id}");
+			});
+
+			if (id <= 0) return Json("error");
+
+			Task<Blog> tsk = _context.Blog.Where(p => p.BlogId == id).ToAsyncEnumerable().FirstOrDefault();
+			Blog blog = await tsk;
+			_context.Remove(blog);
+
+			await _context.SaveChangesAsync();
+			//await logger_tsk;
+
+			return Json("ok");
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Create(Blog blog)
+		public async Task<ActionResult> Create(Blog blog)
 		{
+			var logger_tsk = Task.Run(() =>
+			{
+				_logger.LogInformation(1, $"id = {blog.BlogId} url = {(blog.Url ?? "<null>")}");
+			});
+
 			if (ModelState.IsValid)
 			{
-				_context.Blog.Add(blog);
-				_context.SaveChanges();
+				await _context.Blog.AddAsync(blog);
+				await _context.SaveChangesAsync();
 				return RedirectToAction("Index");
 			}
 
