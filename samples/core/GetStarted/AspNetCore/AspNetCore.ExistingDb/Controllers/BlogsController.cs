@@ -32,6 +32,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<JsonResult> Edit(int id, string url)
 		{
 			var logger_tsk = Task.Run(() =>
@@ -39,20 +40,23 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 				_logger.LogInformation(0, $"id = {id} url = {(url ?? "<null>")}");
 			});
 
-			if (id <= 0) return Json("error");
+			if (id <= 0) return Json("error0");
 
-			Task<Blog> tsk = _context.Blog.Where(p => p.BlogId == id).ToAsyncEnumerable().FirstOrDefault();
+			Task<Blog> tsk = _context.Blog.FindAsync(id);
 			Blog blog = await tsk;
-			blog.Url = url;
+			if (blog != null && url != blog.Url)
+			{
+				blog.Url = url;
+				await _context.SaveChangesAsync();
 
-			await _context.SaveChangesAsync();
-			//await logger_tsk;
+				return Json(blog);
+			}
 
-			return Json(blog);
+			return Json("error1");
 		}
 
 		[HttpDelete]
-		//[ValidateAntiForgeryToken]
+		[ValidateAntiForgeryToken]
 		public async Task<JsonResult> Delete(int id)
 		{
 			var logger_tsk = Task.Run(() =>
@@ -60,16 +64,19 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 				_logger.LogInformation(2, $"id = {id}");
 			});
 
-			if (id <= 0) return Json("error");
+			if (id <= 0) return Json("error0");
 
-			Task<Blog> tsk = _context.Blog.Where(p => p.BlogId == id).ToAsyncEnumerable().FirstOrDefault();
+			Task<Blog> tsk = _context.Blog.FindAsync(id);
 			Blog blog = await tsk;
-			_context.Remove(blog);
+			if (blog != null)
+			{
+				_context.Remove(blog);
+				await _context.SaveChangesAsync();
 
-			await _context.SaveChangesAsync();
-			//await logger_tsk;
-
-			return Json("ok");
+				return Json("ok");
+			}
+			else
+				return Json("error1");
 		}
 
 		[HttpPost]

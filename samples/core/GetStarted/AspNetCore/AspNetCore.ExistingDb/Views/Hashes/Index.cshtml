@@ -5,7 +5,7 @@
 <h2>Rainbow table trivial example</h2>
 <p>
 	@*<a asp-controller="Hashes" asp-action="Search">Search for 5 character MD5 or SHA256 hash source string. Alphabet is 'abcxeewqretetyggfdh'</a>*@
-	Search for <strong>@Model.KeyLength</strong> character MD5 or SHA256 hash source string. Alphabet is 'abcdefghijklmopqrstuvwxyz'
+	Search for <strong>@Model.KeyLength</strong> character MD5 or SHA256 hash source string. Alphabet is '@Model.Alphabet'
 </p>
 <p>
 	Hashes count: <strong>@Model.Count</strong>
@@ -14,7 +14,7 @@
 <div class="form-horizontal">
 	<div asp-validation-summary="All" class="text-danger"></div>
 	<div class="form-group">
-		@*<label class="col-md-2 control-label">Hash kind to decode</label>*@
+		@Html.AntiForgeryToken()
 		<div class="col-md-10">
 			<label class="radio-inline"><input type="radio" name="optradio" value="MD5">MD5</label>
 			<label class="radio-inline"><input type="radio" name="optradio" value="SHA256">SHA256</label>
@@ -23,7 +23,6 @@
 	</div>
 	<div class="form-group">
 		<div class="col-md-10">
-			@*<input id="btnSearch" type="submit" value="Search" class="btn btn-default" />*@
 			<button type="button" id="btnSearch" class="btn btn-lg btn-warning"><span class='disabled-animation'></span>Search</button>
 		</div>
 	</div>
@@ -34,11 +33,13 @@
 
 <table id="result_tab" class="table table-striped table-bordered" style='display:none' cellspacing="0">
 	<thead><tr><th>Key</th><th>MD5</th><th>SHA256</th></tr></thead>
-	<tbody><tr>
-		<td id="res_cel_key"></td>
-		<td id="res_cel_md5"></td>
-		<td id="res_cel_sha256"></td>
-	</tr></tbody>
+	<tbody>
+		<tr>
+			<td id="res_cel_key"></td>
+			<td id="res_cel_md5"></td>
+			<td id="res_cel_sha256"></td>
+		</tr>
+	</tbody>
 </table>
 
 @section scripts
@@ -49,8 +50,7 @@
 				e.preventDefault();
 				var divResult = $('#divResult');
 				var search = $('#txtSearch').val();
-				if (search == null || search == '')
-				{
+				if (search == null || search == '') {
 					divResult.text('no hash to decode');
 					return;
 				}
@@ -58,15 +58,13 @@
 				var sha_kind = $('.radio-inline input:radio:checked').val();
 				switch (sha_kind) {
 					case 'MD5':
-						if (search.length < 32)
-						{
+						if (search.length < 32) {
 							divResult.text('search.length < 32 characters, too short');
 							return;
 						}
 						break;
 					case 'SHA256':
-						if (search.length < 64)
-						{
+						if (search.length < 64) {
 							divResult.text('search.length < 64 characters, too short');
 							return;
 						}
@@ -82,21 +80,27 @@
 				divResult.text('');
 				$('#result_tab').hide();
 
-				$.post('/Hashes/Search', { "search": search, "shaKind": sha_kind },
-					function (found) {
-						button.prop('disabled', false);
-						button.html("<span class='disabled-animation'></span> Search");
+				var token = $('input[name="__RequestVerificationToken"]').val();
+				var hedrs = { 'RequestVerificationToken': token }
 
-						if (found == null || found == '') {
-							divResult.text('nothing found');
-							return;
-						}
-						//divResult.text(found.key + ' ' + found.hashMD5 + ' ' + found.hashSHA256);
-						$('#result_tab').show();
-						$('#res_cel_key').text(found.key);
-						$('#res_cel_md5').text(found.hashMD5);
-						$('#res_cel_sha256').text(found.hashSHA256);
-					});
+				$.ajax({
+					method: "POST", url: '/Hashes/Search',
+					headers: hedrs,
+					data: { "search": search, "shaKind": sha_kind },
+				}).done(function (found) {
+					button.prop('disabled', false);
+					button.html("<span class='disabled-animation'></span> Search");
+
+					if (found == null || found == '') {
+						divResult.text('nothing found');
+						return;
+					}
+					//divResult.text(found.key + ' ' + found.hashMD5 + ' ' + found.hashSHA256);
+					$('#result_tab').show();
+					$('#res_cel_key').text(found.key);
+					$('#res_cel_md5').text(found.hashMD5);
+					$('#res_cel_sha256').text(found.hashSHA256);
+				});
 
 			});
 		});

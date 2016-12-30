@@ -21,7 +21,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 			_dbaseContext = context;
 			_logger = logger;
 		}
-		
+
 		public async Task<IActionResult> Index()
 		{
 			var tsk = Task.Run(() =>
@@ -32,11 +32,14 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 					{
 						HashesInfo hi = new HashesInfo();
 
+						var alphabet = (from h in _dbaseContext.Hashes
+										select h.Key.Substring(0, 1)).Distinct().OrderBy(o => o).SelectMany(m => m);
 						var count = _dbaseContext.Hashes.Count();
 						var key_length = _dbaseContext.Hashes.Max(x => x.Key.Length);
 
 						hi.Count = count;
 						hi.KeyLength = key_length;
+						hi.Alphabet = string.Concat(alphabet);
 
 						_hashesInfo = hi;
 					}
@@ -48,6 +51,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<JsonResult> Search(string search, string shaKind)
 		{
 			if (string.IsNullOrEmpty(search) || string.IsNullOrEmpty(shaKind))
