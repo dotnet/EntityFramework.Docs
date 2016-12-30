@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration.UserSecrets;
+
+[assembly: UserSecretsId("aspnet-AspNetCore.ExistingDb-20161230022416")]
 
 namespace EFGetStarted.AspNetCore.ExistingDb
 {
