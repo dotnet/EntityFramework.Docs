@@ -13,11 +13,26 @@ using MySQL.Data.Entity.Extensions;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Configuration.UserSecrets;
+
+[assembly: UserSecretsId("aspnet-AspNetCore.ExistingDb-20161230022416")]
 
 namespace EFGetStarted.AspNetCore.ExistingDb
 {
 	public class Startup
 	{
+		public static void Main(string[] args)
+		{
+			var host = new WebHostBuilder()
+				.UseKestrel()
+				.UseContentRoot(Directory.GetCurrentDirectory())
+				.UseIISIntegration()
+				.UseStartup<Startup>()
+				.Build();
+
+			host.Run();
+		}
+
 		public Startup(IHostingEnvironment env)
 		{
 			var builder = new ConfigurationBuilder()
