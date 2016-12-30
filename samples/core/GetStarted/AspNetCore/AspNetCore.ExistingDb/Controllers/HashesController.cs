@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EFGetStarted.AspNetCore.ExistingDb.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using EFGetStarted.AspNetCore.ExistingDb.Models;
-using Microsoft.Extensions.Logging;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +11,8 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 {
 	public class HashesController : Controller
 	{
+		private static HashesInfo _hashesInfo = null;
+		private static object _locker = new object();
 		private BloggingContext _dbaseContext;
 		private ILogger<HashesController> _logger;
 
@@ -20,11 +21,30 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 			_dbaseContext = context;
 			_logger = logger;
 		}
-
-		// GET: /<controller>/
-		public IActionResult Index()
+		
+		public async Task<IActionResult> Index()
 		{
-			return View();
+			var tsk = Task.Run(() =>
+			{
+				if (_hashesInfo == null)
+				{
+					lock (_locker)
+					{
+						HashesInfo hi = new HashesInfo();
+
+						var count = _dbaseContext.Hashes.Count();
+						var key_length = _dbaseContext.Hashes.Max(x => x.Key.Length);
+
+						hi.Count = count;
+						hi.KeyLength = key_length;
+
+						_hashesInfo = hi;
+					}
+				}
+				return _hashesInfo;
+			});
+
+			return View(await tsk);
 		}
 
 		[HttpPost]

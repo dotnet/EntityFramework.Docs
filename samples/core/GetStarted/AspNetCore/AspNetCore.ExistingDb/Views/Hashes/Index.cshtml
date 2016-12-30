@@ -1,14 +1,14 @@
-﻿@model EFGetStarted.AspNetCore.ExistingDb.Models.Hashes
-
+﻿@model EFGetStarted.AspNetCore.ExistingDb.Models.HashesInfo
 @{
 	ViewBag.Title = "MyRainbow rainbow table";
 }
-
 <h2>Rainbow table trivial example</h2>
-
 <p>
 	@*<a asp-controller="Hashes" asp-action="Search">Search for 5 character MD5 or SHA256 hash source string. Alphabet is 'abcxeewqretetyggfdh'</a>*@
-	Search for 5 character MD5 or SHA256 hash source string. Alphabet is 'abcdefghijklmopqrstuvwxyz'
+	Search for <strong>@Model.KeyLength</strong> character MD5 or SHA256 hash source string. Alphabet is 'abcdefghijklmopqrstuvwxyz'
+</p>
+<p>
+	Hashes count: <strong>@Model.Count</strong>
 </p>
 
 <div class="form-horizontal">
@@ -18,8 +18,7 @@
 		<div class="col-md-10">
 			<label class="radio-inline"><input type="radio" name="optradio" value="MD5">MD5</label>
 			<label class="radio-inline"><input type="radio" name="optradio" value="SHA256">SHA256</label>
-			<input id="txtSearch" asp-for="HashMD5" class="form-control" placeholder="hash to decode" required maxlength="64" data-validation-required-message="Hash is required" />
-			<span asp-validation-for="HashMD5" class="text-danger"></span>
+			<input id="txtSearch" class="form-control" placeholder="hash to decode" required maxlength="64" data-validation-required-message="Hash is required" />
 		</div>
 	</div>
 	<div class="form-group">
