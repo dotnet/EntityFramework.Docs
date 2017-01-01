@@ -1,12 +1,12 @@
 ﻿@model EFGetStarted.AspNetCore.ExistingDb.Models.Blog
-
+@inject  Microsoft.Extensions.Configuration.IConfiguration Conf
 @{
     ViewBag.Title = "New Blog";
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<form action="@ViewBag.AppRootPath.ToString()Blogs/Create" method="post" class="form-horizontal" role="form">
+<form action="@Conf["AppRootPath"]Blogs/Create" method="post" class="form-horizontal" role="form">
 
 	@Html.AntiForgeryToken()
     <div class="form-horizontal">

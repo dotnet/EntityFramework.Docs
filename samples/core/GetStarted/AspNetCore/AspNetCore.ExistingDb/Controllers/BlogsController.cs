@@ -1,9 +1,8 @@
 ﻿using EFGetStarted.AspNetCore.ExistingDb.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
@@ -12,11 +11,13 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 	{
 		private BloggingContext _context;
 		private ILogger<BlogsController> _logger;
+		private IConfiguration _conf;
 
-		public BlogsController(BloggingContext context, ILogger<BlogsController> logger)
+		public BlogsController(BloggingContext context, ILogger<BlogsController> logger, IConfiguration conf)
 		{
 			_context = context;
 			_logger = logger;
+			_conf = conf;
 		}
 
 		public async Task<IActionResult> Index()
@@ -40,7 +41,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 				_logger.LogInformation(0, $"id = {id} url = {(url ?? "<null>")}");
 			});
 
-			if (id <= 0) return Json("error0");
+			if (id <= 0 || string.IsNullOrEmpty(url)) return Json("error0");
 
 			Task<Blog> tsk = _context.Blog.FindAsync(id);
 			Blog blog = await tsk;
@@ -90,13 +91,17 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 			if (ModelState.IsValid)
 			{
+				var appRootPath = _conf["AppRootPath"];
+
 				await _context.Blog.AddAsync(blog);
 				await _context.SaveChangesAsync();
-				return RedirectToAction("Index");
+
+
+				var route = appRootPath + "Blogs";
+				return Redirect(route);
 			}
 
 			return View(blog);
 		}
-
 	}
 }

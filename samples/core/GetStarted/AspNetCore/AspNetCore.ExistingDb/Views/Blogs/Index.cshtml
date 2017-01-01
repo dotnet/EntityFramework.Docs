@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<EFGetStarted.AspNetCore.ExistingDb.Models.Blog>
+@inject  Microsoft.Extensions.Configuration.IConfiguration Conf
 
 @{
 	ViewBag.Title = "Blogs";
@@ -7,7 +8,7 @@
 <h2>Blogs</h2>
 
 <p>
-	<a href="@ViewBag.AppRootPath.ToString()Blogs/Create">Create New</a>
+	<a href="@Conf["AppRootPath"]Blogs/Create">Create New</a>
 </p>
 
 @Html.AntiForgeryToken()
@@ -50,7 +51,7 @@
 				var hedrs = { 'RequestVerificationToken': token }
 
 				$.ajax({
-					method: "POST", url: '@ViewBag.AppRootPath.ToString()Blogs/Edit',
+					method: "POST", url: '@Conf["AppRootPath"]Blogs/Edit',
 					data: { "id": id, "url": url },
 					headers: hedrs
 				}).done(function (blog) {
@@ -73,10 +74,10 @@
 				var id = $(this).data('id');
 
 				var token = $('input[name="__RequestVerificationToken"]').val();
-				var hedrs = { 'RequestVerificationToken' : token }
+				var hedrs = { 'RequestVerificationToken': token }
 
 				$.ajax({
-					method: "DELETE", url: "@ViewBag.AppRootPath.ToString()Blogs/Delete",
+					method: "DELETE", url: "@Conf["AppRootPath"]Blogs/Delete",
 					data: { "id": id },
 					headers: hedrs
 				}).done(function (result) {

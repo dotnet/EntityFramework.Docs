@@ -4,18 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EFGetStarted.AspNetCore.ExistingDb</title>
-	@{
-		var appRootPath = ViewBag.AppRootPath;
-	}
+	@inject  Microsoft.Extensions.Configuration.IConfiguration Conf
     <environment names="Development">
-        <link rel="stylesheet" href="@appRootPath.ToString()lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="@appRootPath.ToString()css/site.css" />
+        <link rel="stylesheet" href="@Conf["AppRootPath"]lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="@Conf["AppRootPath"]css/site.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
-              asp-fallback-href="@appRootPath.ToString()lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-href="@Conf["AppRootPath"]lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="@appRootPath.ToString()css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="@Conf["AppRootPath"]css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
 <body>
@@ -28,15 +26,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="@appRootPath.ToString()Home" class="navbar-brand">EFGetStarted.AspNetCore.ExistingDb</a>
+                <a href="@Conf["AppRootPath"]Home" class="navbar-brand">EFGetStarted.AspNetCore.ExistingDb</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="@appRootPath.ToString()Home">Home</a></li>
-					<li><a href="@appRootPath.ToString()Blogs">Blogs</a></li>
-					<li><a href="@appRootPath.ToString()Hashes">MyRainbow</a></li>
-					<li><a href="@appRootPath.ToString()Home/About">About</a></li>
-					<li><a href="@appRootPath.ToString()Home/Contact">Contact</a></li>
+                    <li><a href="@Conf["AppRootPath"]Home">Home</a></li>
+					<li><a href="@Conf["AppRootPath"]Blogs">Blogs</a></li>
+					<li><a href="@Conf["AppRootPath"]Hashes">MyRainbow</a></li>
+					<li><a href="@Conf["AppRootPath"]Home/About">About</a></li>
+					<li><a href="@Conf["AppRootPath"]Home/Contact">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -50,20 +48,20 @@
     </div>
 
     <environment names="Development">
-        <script src="@appRootPath.ToString()lib/jquery/dist/jquery.js"></script>
-        <script src="@appRootPath.ToString()lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="@appRootPath.ToString()js/site.js" asp-append-version="true"></script>
+        <script src="@Conf["AppRootPath"]lib/jquery/dist/jquery.js"></script>
+        <script src="@Conf["AppRootPath"]lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="@Conf["AppRootPath"]js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.3.min.js"
-                asp-fallback-src="@appRootPath.ToString()lib/jquery/dist/jquery.min.js"
+                asp-fallback-src="@Conf["AppRootPath"]lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
         </script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
-                asp-fallback-src="@appRootPath.ToString()lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-src="@Conf["AppRootPath"]lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
         </script>
-        <script src="@appRootPath.ToString()js/site.min.js" asp-append-version="true"></script>
+        <script src="@Conf["AppRootPath"]js/site.min.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("scripts", required: false)

@@ -1,4 +1,5 @@
 ﻿@model EFGetStarted.AspNetCore.ExistingDb.Models.HashesInfo
+@inject  Microsoft.Extensions.Configuration.IConfiguration Conf
 @{
 	ViewBag.Title = "MyRainbow rainbow table";
 }
@@ -85,7 +86,7 @@
 				var hedrs = { 'RequestVerificationToken': token }
 
 				$.ajax({
-					method: "POST", url: '@ViewBag.AppRootPath.ToString()Hashes/Search',
+					method: "POST", url: '@Conf["AppRootPath"]Hashes/Search',
 					headers: hedrs,
 					data: { "search": search, "shaKind": sha_kind },
 				}).done(function (found) {

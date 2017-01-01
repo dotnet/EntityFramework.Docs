@@ -21,6 +21,8 @@ namespace EFGetStarted.AspNetCore.ExistingDb
 {
 	public class Startup
 	{
+		public IConfiguration Configuration { get; }
+
 		public static void Main(string[] args)
 		{
 			var host = new WebHostBuilder()
@@ -45,11 +47,11 @@ namespace EFGetStarted.AspNetCore.ExistingDb
 			Configuration = builder.Build();
 		}
 
-		public IConfigurationRoot Configuration { get; }
-
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddSingleton(Configuration);
+
 			//Sql Server
 			var connection = Configuration.GetConnectionString("SqlServer");
 			services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
@@ -57,7 +59,6 @@ namespace EFGetStarted.AspNetCore.ExistingDb
 			//MySQL
 			//var connection = Configuration.GetConnectionString("MySQL");
 			//services.AddDbContext<BloggingContext>(options => options.UseMySQL(connection));
-
 
 			// Add framework services.
 			services.AddMvc();

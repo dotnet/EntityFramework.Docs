@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EFGetStarted.AspNetCore.ExistingDb.Models
 {
     public partial class Post
     {
+		[Required]
         public int PostId { get; set; }
-        public int BlogId { get; set; }
+		[Required]
+		public int BlogId { get; set; }
         public string Content { get; set; }
         public string Title { get; set; }
 
