@@ -1,3 +1,13 @@
 ﻿@{
     Layout = "_Layout";
 }
+<environment names="Development">
+	@{
+		ViewBag.AppRootPath = "/";
+	}
+</environment>
+<environment names="Staging,Production">
+	@{
+		ViewBag.AppRootPath = "/dotnet/";
+	}
+</environment>

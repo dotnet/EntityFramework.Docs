@@ -5,8 +5,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 {
 	public class HashesController : Controller
@@ -33,7 +31,10 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 						HashesInfo hi = new HashesInfo();
 
 						var alphabet = (from h in _dbaseContext.Hashes
-										select h.Key.Substring(0, 1)).Distinct().OrderBy(o => o).SelectMany(m => m);
+										select h.Key.Substring(0, 1)
+										).Distinct()
+										.OrderBy(o => o)
+										.SelectMany(m => m);
 						var count = _dbaseContext.Hashes.Count();
 						var key_length = _dbaseContext.Hashes.Max(x => x.Key.Length);
 
