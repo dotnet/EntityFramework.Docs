@@ -61,7 +61,7 @@
 		"include": [
 			"wwwroot",
 			"Views",
-			"appsettings.json",
+			"appsettings.json", "appsettings.Production.json",
 			"web.config"
 		]
 	},

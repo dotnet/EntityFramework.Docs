@@ -96,7 +96,6 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 				await _context.Blog.AddAsync(blog);
 				await _context.SaveChangesAsync();
 
-
 				var route = appRootPath + "Blogs";
 				return Redirect(route);
 			}
