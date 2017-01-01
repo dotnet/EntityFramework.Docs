@@ -6,7 +6,9 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-controller="Blogs" asp-action="Create" method="post" class="form-horizontal" role="form">
+<form action="@ViewBag.AppRootPath.ToString()Blogs/Create" method="post" class="form-horizontal" role="form">
+
+	@Html.AntiForgeryToken()
     <div class="form-horizontal">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
