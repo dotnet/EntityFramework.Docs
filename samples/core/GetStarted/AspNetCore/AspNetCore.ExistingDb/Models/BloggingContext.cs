@@ -25,7 +25,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 
 			modelBuilder.Entity<Hashes>(entity =>
 			{
-				entity.Property(e => e.Key).IsRequired();
+				entity.Property(e => e.SourceKey).IsRequired();
 				entity.Property(e => e.HashMD5).IsRequired();
 				entity.Property(e => e.HashSHA256).IsRequired();
 			});

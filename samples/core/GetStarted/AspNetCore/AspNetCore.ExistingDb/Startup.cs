@@ -53,12 +53,12 @@ namespace EFGetStarted.AspNetCore.ExistingDb
 			services.AddSingleton(Configuration);
 
 			//Sql Server
-			var connection = Configuration.GetConnectionString("SqlServer");
-			services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
+			//var connection = Configuration.GetConnectionString("SqlServer");
+			//services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
 
 			//MySQL
-			//var connection = Configuration.GetConnectionString("MySQL");
-			//services.AddDbContext<BloggingContext>(options => options.UseMySQL(connection));
+			var connection = Configuration.GetConnectionString("MySQL");
+			services.AddDbContext<BloggingContext>(options => options.UseMySQL(connection));
 
 			// Add framework services.
 			services.AddMvc();

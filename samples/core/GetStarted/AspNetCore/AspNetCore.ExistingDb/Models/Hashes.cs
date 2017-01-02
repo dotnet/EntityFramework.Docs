@@ -12,7 +12,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 	{
 		[Key]
 		[Column("key", TypeName = "varchar(20)")]
-		public string Key { get; set; }
+		public string SourceKey { get; set; }
 
 		[Column("hashMD5", TypeName = "char(32)")]
 		public string HashMD5 { get; set; }
