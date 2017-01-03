@@ -35,7 +35,7 @@ namespace EFSaving.RelatedData
             // Adding a related entity
             using (var context = new BloggingContext())
             {
-                var blog = context.Blogs.First();
+                var blog = context.Blogs.Include(b => b.Posts).First();
                 var post = new Post { Title = "Intro to EF Core" };
 
                 blog.Posts.Add(post);
