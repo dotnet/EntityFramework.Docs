@@ -47,8 +47,7 @@ namespace EFSaving.RelatedData
             {
                 var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio" };
                 var post = context.Posts.First();
-
-                blog.Posts.Add(post);
+                post.Blog = blog;
                 context.SaveChanges();
             }
 
