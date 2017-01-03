@@ -31,10 +31,10 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 						HashesInfo hi = new HashesInfo();
 
 						var alphabet = (from h in _dbaseContext.Hashes
-										select h.SourceKey.Substring(0, 1)
+										select h.SourceKey.First()
 										).Distinct()
-										.OrderBy(o => o)
-										.SelectMany(m => m);
+										.OrderBy(o => o)/*
+										.SelectMany(m => m)*/;
 						var count = _dbaseContext.Hashes.Count();
 						var key_length = _dbaseContext.Hashes.Max(x => x.SourceKey.Length);
 
