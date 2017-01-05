@@ -1,5 +1,6 @@
 ﻿using EFGetStarted.AspNetCore.ExistingDb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -9,47 +10,56 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 {
 	public class HashesController : Controller
 	{
-		private static HashesInfo _hashesInfo = null;
-		private static object _locker = new object();
-		private BloggingContext _dbaseContext;
-		private ILogger<HashesController> _logger;
+		//TODO: test knockout.js, test ApplicationInsights, test angular.js(2)
 
-		public HashesController(BloggingContext context, ILogger<HashesController> logger)
+		private static HashesInfo _hashesInfo = new HashesInfo { IsReady = false };
+		private static readonly object _locker = new object();
+		private readonly IConfiguration _configuration;
+		private readonly BloggingContext _dbaseContext;
+		private readonly ILogger<HashesController> _logger;
+
+		public HashesController(BloggingContext context, ILogger<HashesController> logger, IConfiguration configuration)
 		{
 			_dbaseContext = context;
 			_logger = logger;
+			_configuration = configuration;
 		}
 
-		public async Task<IActionResult> Index()
+		public /*async Task<*/IActionResult/*>*/ Index()
 		{
-			var tsk = Task.Run(() =>
+			if (!_hashesInfo.IsReady)
 			{
-				if (_hashesInfo == null)
+				Task.Factory.StartNew((conn_str) =>
 				{
 					lock (_locker)
 					{
-						HashesInfo hi = new HashesInfo();
-						//TODO: implement smart loading, immediate results and delayed loading in the background
-						//TODO: test knockout.js, test ApplicationInsights, test angular.js(2)
-						var alphabet = (from h in _dbaseContext.Hashes
-										select h.Key.First()
-										).Distinct()
-										.OrderBy(o => o)/*
+						if (_hashesInfo.IsReady) return _hashesInfo;
+
+						using (var db = new BloggingContext((string)conn_str))
+						{
+							var alphabet = (from h in db.Hashes
+											select h.Key.First()
+											).Distinct()
+											.OrderBy(o => o)/*
 										.SelectMany(m => m)*/;
-						var count = _dbaseContext.Hashes.Count();
-						var key_length = _dbaseContext.Hashes.Max(x => x.Key.Length);
+							var count = db.Hashes.Count();
+							var key_length = db.Hashes.Max(x => x.Key.Length);
 
-						hi.Count = count;
-						hi.KeyLength = key_length;
-						hi.Alphabet = string.Concat(alphabet);
-
-						_hashesInfo = hi;
+							HashesInfo hi = new HashesInfo
+							{
+								Count = count,
+								KeyLength = key_length,
+								Alphabet = string.Concat(alphabet),
+								IsReady = true,
+							};
+							_hashesInfo = hi;
+						}
 					}
-				}
-				return _hashesInfo;
-			});
+					return _hashesInfo;
+				}, _configuration.GetConnectionString("MySQL"));
+			}
 
-			return View(await tsk);
+			return View(_hashesInfo);
 		}
 
 		[HttpPost]

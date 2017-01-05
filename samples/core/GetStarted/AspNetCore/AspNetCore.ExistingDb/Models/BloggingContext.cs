@@ -1,12 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace EFGetStarted.AspNetCore.ExistingDb.Models
 {
 	public partial class BloggingContext : DbContext
 	{
+		private readonly string _connectionString;
+
+		public BloggingContext(string connectionString)
+		{
+			_connectionString = connectionString;
+		}
+
 		public BloggingContext(DbContextOptions<BloggingContext> options)
 			: base(options)
 		{
+		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			//optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+			if (!string.IsNullOrEmpty(_connectionString))
+				optionsBuilder.UseMySQL(_connectionString);
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

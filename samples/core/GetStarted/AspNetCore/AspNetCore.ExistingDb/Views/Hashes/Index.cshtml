@@ -4,15 +4,22 @@
 	ViewBag.Title = "MyRainbow rainbow table";
 }
 <h2>Rainbow table trivial example</h2>
-<cache expires-after="@TimeSpan.FromMinutes(1)">
-	<p>
-		Search for <strong>@Model.KeyLength</strong> character MD5 or SHA256 hash source string. Alphabet is '@Model.Alphabet'
-	</p>
-	<p>
-		Hashes count: <strong>@Model.Count</strong>
-	</p>
-	*last updated  @DateTime.Now.ToString()
-</cache>
+@{
+	if (Model.IsReady)
+	{
+		<p>
+			Search for <strong>@Model.KeyLength</strong> character MD5 or SHA256 hash source string. Alphabet is '@Model.Alphabet'
+		</p>
+		<p>
+			Hashes count: <strong>@Model.Count</strong>
+		</p>
+		@("last updated " + DateTime.Now.ToString());
+	}
+	else
+	{
+		<p>Calculating...wait about 10 secs or so...and refresh the page</p>
+	}
+}
 <div class="form-horizontal">
 	<div asp-validation-summary="All" class="text-danger"></div>
 	<div class="form-group">

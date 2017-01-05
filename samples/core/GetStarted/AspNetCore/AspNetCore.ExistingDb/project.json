@@ -1,18 +1,12 @@
 {
     "version": "1.0.0-custom",
 	"dependencies": {
+		"Microsoft.AspNetCore.Diagnostics": "1.1.0",
+		"Microsoft.AspNetCore.Mvc": "1.1.0",
 		"Microsoft.AspNetCore.Razor.Tools": {
 			"version": "1.0.0-preview2-final",
 			"type": "build"
 		},
-		"Microsoft.EntityFrameworkCore.Tools": {
-			"version": "1.0.0-preview3-final",
-			"type": "build"
-		},
-		"MySql.Data.Core": "7.0.4-IR-191",
-		"MySql.Data.EntityFrameworkCore": "7.0.4-IR-191",
-		"Microsoft.AspNetCore.Diagnostics": "1.1.0",
-		"Microsoft.AspNetCore.Mvc": "1.1.0",
 		"Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
 		"Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
 		"Microsoft.AspNetCore.StaticFiles": "1.1.0",
@@ -22,8 +16,13 @@
 		},
 		"Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
 		"Microsoft.EntityFrameworkCore.SqlServer.Design": "1.1.0",
+		"Microsoft.EntityFrameworkCore.Tools": {
+			"version": "1.0.0-preview3-final",
+			"type": "build"
+		},
 		"Microsoft.Extensions.Configuration.EnvironmentVariables": "1.1.0",
 		"Microsoft.Extensions.Configuration.Json": "1.1.0",
+		"Microsoft.Extensions.Configuration.UserSecrets": "1.1.0",
 		"Microsoft.Extensions.Logging": "1.1.0",
 		"Microsoft.Extensions.Logging.Console": "1.1.0",
 		"Microsoft.Extensions.Logging.Debug": "1.1.0",
@@ -32,8 +31,8 @@
 			"type": "platform"
 		},
 		"Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
-		"SapientGuardian.EntityFrameworkCore.MySql": "7.1.15",
-		"Microsoft.Extensions.Configuration.UserSecrets": "1.1.0"
+		"MySql.Data.Core": "7.0.4-IR-191",
+		"MySql.Data.EntityFrameworkCore": "7.0.4-IR-191"
 	},
 
 	"tools": {

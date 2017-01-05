@@ -1,19 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using EFGetStarted.AspNetCore.ExistingDb.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EFGetStarted.AspNetCore.ExistingDb.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MySQL.Data.Entity.Extensions;
+using MySQL.Data.EntityFrameworkCore.Extensions;
 using System.IO;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Newtonsoft.Json.Serialization;
-using Microsoft.Extensions.Configuration.UserSecrets;
 
 [assembly: UserSecretsId("aspnet-AspNetCore.ExistingDb-20161230022416")]
 
@@ -57,6 +50,8 @@ namespace EFGetStarted.AspNetCore.ExistingDb
 
 			//MySQL
 			services.AddDbContext<BloggingContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySQL")));
+
+			//services.AddDbContext<BloggingContext>();
 
 			//
 			//TODO: SqlLite ??
