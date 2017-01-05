@@ -11,10 +11,13 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			var is_mysql = Database.GetDbConnection().GetType().Name == "MySqlConnection";
+
 			modelBuilder.Entity<Blog>(entity =>
 			{
 				entity.Property(e => e.Url).IsRequired();
 			});
+			modelBuilder.Entity<Blog>().ToTable("Blog");
 
 			modelBuilder.Entity<Post>(entity =>
 			{
@@ -25,9 +28,18 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 
 			modelBuilder.Entity<Hashes>(entity =>
 			{
-				entity.Property(e => e.SourceKey).IsRequired();
+				entity.Property(e => e.Key).IsRequired();
 				entity.Property(e => e.HashMD5).IsRequired();
 				entity.Property(e => e.HashSHA256).IsRequired();
+
+				if (is_mysql)//fixes column mapping for MySql
+				{
+					entity.Property(e => e.Key).HasColumnName("SourceKey");
+					entity.Property(e => e.HashMD5).HasColumnName("hashMD5");
+					entity.Property(e => e.HashSHA256).HasColumnName("hashSHA256");
+
+					modelBuilder.Entity<Hashes>().ToTable("Hashes");
+				}
 			});
 		}
 

@@ -53,12 +53,14 @@ namespace EFGetStarted.AspNetCore.ExistingDb
 			services.AddSingleton(Configuration);
 
 			//Sql Server
-			//var connection = Configuration.GetConnectionString("SqlServer");
-			//services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
+			//services.AddDbContext<BloggingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
 
 			//MySQL
-			var connection = Configuration.GetConnectionString("MySQL");
-			services.AddDbContext<BloggingContext>(options => options.UseMySQL(connection));
+			services.AddDbContext<BloggingContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySQL")));
+
+			//
+			//TODO: SqlLite ??
+			//
 
 			// Add framework services.
 			services.AddMvc();

@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace EFGetStarted.AspNetCore.ExistingDb.Models
 {
-	[Table("hashes")]
+	[Table("hashes")]//does not work for MySQL, works for SqlServer
 	public partial class Hashes
 	{
 		[Key]
-		[Column("key", TypeName = "varchar(20)")]
-		public string SourceKey { get; set; }
+		[Column("key", TypeName = "varchar(20)")]//does not work for MySQL, works for SqlServer
+		public string Key { get; set; }
 
-		[Column("hashMD5", TypeName = "char(32)")]
+		[Column("hashMD5", TypeName = "char(32)")]//does not work for MySQL, works for SqlServer
 		public string HashMD5 { get; set; }
-		
-		[Column("hashSHA256", TypeName = "char(64)")]
+
+		[Column("hashSHA256", TypeName = "char(64)")]//does not work for MySQL, works for SqlServer
 		public string HashSHA256 { get; set; }
 	}
 }

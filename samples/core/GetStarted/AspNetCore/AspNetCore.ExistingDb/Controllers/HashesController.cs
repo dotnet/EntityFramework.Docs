@@ -29,14 +29,15 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 					lock (_locker)
 					{
 						HashesInfo hi = new HashesInfo();
-
+						//TODO: implement smart loading, immediate results and delayed loading in the background
+						//TODO: test knockout.js, test ApplicationInsights, test angular.js(2)
 						var alphabet = (from h in _dbaseContext.Hashes
-										select h.SourceKey.First()
+										select h.Key.First()
 										).Distinct()
 										.OrderBy(o => o)/*
 										.SelectMany(m => m)*/;
 						var count = _dbaseContext.Hashes.Count();
-						var key_length = _dbaseContext.Hashes.Max(x => x.SourceKey.Length);
+						var key_length = _dbaseContext.Hashes.Max(x => x.Key.Length);
 
 						hi.Count = count;
 						hi.KeyLength = key_length;
