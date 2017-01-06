@@ -1,7 +1,10 @@
 ﻿using EFGetStarted.AspNetCore.ExistingDb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MySQL.Data.EntityFrameworkCore.Extensions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +15,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 	{
 		//TODO: test knockout.js, test ApplicationInsights, test angular.js(2)
 
-		private static HashesInfo _hashesInfo = new HashesInfo { IsReady = false };
+		private static HashesInfo _hashesInfo;
 		private static readonly object _locker = new object();
 		private readonly IConfiguration _configuration;
 		private readonly BloggingContext _dbaseContext;
@@ -27,37 +30,48 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 		public /*async Task<*/IActionResult/*>*/ Index()
 		{
-			if (!_hashesInfo.IsReady)
+			if (_hashesInfo == null || !_hashesInfo.IsCalculating)
 			{
-				Task.Factory.StartNew((conn_str) =>
+				Task.Factory.StartNew((conf) =>
 				{
+					_logger.LogInformation(0, $"###Starting calculation thread");
+
 					lock (_locker)
 					{
-						if (_hashesInfo.IsReady) return _hashesInfo;
+						_logger.LogInformation(0, $"###Starting calculation of initial Hash parameters");
 
-						using (var db = new BloggingContext((string)conn_str))
+						if (_hashesInfo != null)
+						{
+							_logger.LogInformation(0, $"###Leaving calculation of initial Hash parameters; already present");
+							return _hashesInfo;
+						}
+
+						_hashesInfo = new HashesInfo { IsCalculating = true };
+						var bc = new DbContextOptionsBuilder<BloggingContext>();
+						Startup.ConfigureDBKind(bc, (IConfiguration)conf);
+
+						using (var db = new BloggingContext(bc.Options))
 						{
 							var alphabet = (from h in db.Hashes
 											select h.Key.First()
 											).Distinct()
-											.OrderBy(o => o)/*
-										.SelectMany(m => m)*/;
+											.OrderBy(o => o);
 							var count = db.Hashes.Count();
 							var key_length = db.Hashes.Max(x => x.Key.Length);
 
-							HashesInfo hi = new HashesInfo
-							{
-								Count = count,
-								KeyLength = key_length,
-								Alphabet = string.Concat(alphabet),
-								IsReady = true,
-							};
-							_hashesInfo = hi;
+							_hashesInfo.Count = count;
+							_hashesInfo.KeyLength = key_length;
+							_hashesInfo.Alphabet = string.Concat(alphabet);
+							_hashesInfo.IsCalculating = false;
+
+							_logger.LogInformation(0, $"###Calculation of initial Hash parameters ended");
 						}
 					}
 					return _hashesInfo;
-				}, _configuration.GetConnectionString("MySQL"));
+				}, _configuration);
 			}
+
+			_logger.LogInformation(0, $"###Returning {nameof(_hashesInfo)}.{nameof(_hashesInfo.IsCalculating)} = {(_hashesInfo != null ? _hashesInfo.IsCalculating.ToString() : "null")}");
 
 			return View(_hashesInfo);
 		}

@@ -5,15 +5,15 @@
 }
 <h2>Rainbow table trivial example</h2>
 @{
-	if (Model.IsReady)
+	if (Model != null && !Model.IsCalculating)
 	{
 		<p>
 			Search for <strong>@Model.KeyLength</strong> character MD5 or SHA256 hash source string. Alphabet is '@Model.Alphabet'
 		</p>
 		<p>
 			Hashes count: <strong>@Model.Count</strong>
+			last updated @DateTime.Now.ToString()
 		</p>
-		@("last updated " + DateTime.Now.ToString());
 	}
 	else
 	{

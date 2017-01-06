@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MySQL.Data.EntityFrameworkCore.Extensions;
 using System.IO;
+using System;
+using Microsoft.EntityFrameworkCore;
 
 [assembly: UserSecretsId("aspnet-AspNetCore.ExistingDb-20161230022416")]
 
@@ -40,22 +42,30 @@ namespace EFGetStarted.AspNetCore.ExistingDb
 			Configuration = builder.Build();
 		}
 
+		/// <summary>
+		/// Sets up DB kind and connection
+		/// </summary>
+		/// <param name="options"></param>
+		/// <param name="configuration"></param>
+		internal static void ConfigureDBKind(DbContextOptionsBuilder options, IConfiguration configuration)
+		{
+			//Sql Server
+			//options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+
+			//MySQL
+			options.UseMySQL(configuration.GetConnectionString("MySQL"));
+
+			//
+			//TODO: SqlLite ??
+			//
+		}
+
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddSingleton(Configuration);
 
-			//Sql Server
-			//services.AddDbContext<BloggingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
-
-			//MySQL
-			services.AddDbContext<BloggingContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySQL")));
-
-			//services.AddDbContext<BloggingContext>();
-
-			//
-			//TODO: SqlLite ??
-			//
+			services.AddDbContext<BloggingContext>(options => ConfigureDBKind(options, Configuration));
 
 			// Add framework services.
 			services.AddMvc();
