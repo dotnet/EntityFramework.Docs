@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace EFGetStarted.AspNetCore.ExistingDb.Models
@@ -27,7 +28,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			var is_mysql = Database.GetDbConnection().GetType().Name == "MySqlConnection";
+			var is_mysql = Database.GetDbConnection().GetType().Name == typeof(MySqlConnection).Name;
 
 			modelBuilder.Entity<Blog>(entity =>
 			{
