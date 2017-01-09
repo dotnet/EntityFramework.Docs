@@ -11,12 +11,14 @@ using System.Threading.Tasks;
 
 namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 {
+	/// <summary>
+	/// TODO: test knockout.js, test ApplicationInsights
+	/// </summary>
 	public class HashesController : Controller
 	{
-		//TODO: test knockout.js, test ApplicationInsights, test angular.js(2)
-
 		private static HashesInfo _hashesInfo;
 		private static readonly object _locker = new object();
+
 		private readonly IConfiguration _configuration;
 		private readonly BloggingContext _dbaseContext;
 		private readonly ILogger<HashesController> _logger;
@@ -47,21 +49,21 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 						}
 
 						_hashesInfo = new HashesInfo { IsCalculating = true };
-						var bc = new DbContextOptionsBuilder<BloggingContext>();
-						Startup.ConfigureDBKind(bc, (IConfiguration)conf);
+						//var bc = new DbContextOptionsBuilder<BloggingContext>();
+						//Startup.ConfigureDBKind(bc, (IConfiguration)conf);
 
-						using (var db = new BloggingContext(bc.Options))
+						//using (var db = new BloggingContext(bc.Options))
 						{
-							var alphabet = (from h in db.Hashes
-											select h.Key.First()
-											).Distinct()
-											.OrderBy(o => o);
-							var count = db.Hashes.Count();
-							var key_length = db.Hashes.Max(x => x.Key.Length);
+						//	var alphabet = (from h in db.Hashes
+						//					select h.Key.First()
+						//					).Distinct()
+						//					.OrderBy(o => o);
+						//	var count = db.Hashes.Count();
+						//	var key_length = db.Hashes.Max(x => x.Key.Length);
 
-							_hashesInfo.Count = count;
-							_hashesInfo.KeyLength = key_length;
-							_hashesInfo.Alphabet = string.Concat(alphabet);
+							_hashesInfo.Count = /*count*/123456789;
+							_hashesInfo.KeyLength = /*key_length*/5;
+							_hashesInfo.Alphabet = /*string.Concat(alphabet)*/"qwertyuiop";
 							_hashesInfo.IsCalculating = false;
 
 							_logger.LogInformation(0, $"###Calculation of initial Hash parameters ended");
@@ -78,8 +80,11 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<JsonResult> Search(string search, string shaKind)
+		public async Task<JsonResult> Search(HashesInfo hi)
 		{
+			string search = hi.Search;
+			string shaKind = hi.Kind.ToString();
+
 			if (string.IsNullOrEmpty(search) || string.IsNullOrEmpty(shaKind))
 				return null;
 
