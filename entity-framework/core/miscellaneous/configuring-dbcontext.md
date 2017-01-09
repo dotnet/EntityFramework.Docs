@@ -103,7 +103,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ````
 
-This requires adding a [constructor argument](#constructor-argument) to you DbContext type that accepts `DbContextOptions`.
+This requires adding a [constructor argument](#constructor-argument) to your DbContext type that accepts `DbContextOptions`.
 
 Context code
 
