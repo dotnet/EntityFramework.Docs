@@ -81,7 +81,7 @@ To enable reverse engineering from an existing database we need to install a cou
 <!-- [!code-json[Main](samples/core/GetStarted/AspNetCore/AspNetCore.NewDb/project.json?highlight=2)] -->
 ````json
  "tools": {
-   "Microsoft.EntityFrameworkCore.Tools.DotNet": "1.0.0-preview3-final",
+   "Microsoft.EntityFrameworkCore.Tools.DotNet": "1.1.0-preview4-final",
    "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
  },
@@ -91,12 +91,12 @@ To enable reverse engineering from an existing database we need to install a cou
 
 Now it's time to create the EF model based on your existing database.
 
-* Tools –> NuGet Package Manager –> Package Manager Console
-* Run the following command to create a model from the existing database. If you receive an error stating the term 'Scaffold-DbContext' is not recognized as the name of a cmdlet, then close and reopen Visual Studio.
+* Open a Command Prompt or Powershell at the project's location (the folder containing project.json)
+* Run the following command to create a model from the existing database.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 ````text
-Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer --output-dir Models
 ````
 
 The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
