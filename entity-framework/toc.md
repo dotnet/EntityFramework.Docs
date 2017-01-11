@@ -84,6 +84,9 @@
 ####[Oracle (not yet available)](core/providers/oracle/index.md)
 <!-- API Reference -->
 ###[API Reference](https://docs.microsoft.com/ef/core/api)
+<!-- Extensions -->
+###[Tools & Extensions](core/extensions/index.md)
+####[LLBLGen Pro](core/extensions/llbl-gen-pro.md)
 <!-- Miscellaneous -->
 ###Miscellaneous
 ####[Connection Strings](core/miscellaneous/connection-strings.md)
