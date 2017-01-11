@@ -20,21 +20,20 @@
 		<p>Calculating...wait about 10 secs or so...and refresh the page</p>
 	}
 }
-<form action="@Conf["AppRootPath"]Hashes/Search" method="post" class="form-horizontal" role="form" onsubmit="AjaxifySearch(this);return false;">
+<form action="@Conf["AppRootPath"]Hashes/Search" method="post" class="form-horizontal" role="form"><!-- onsubmit="AjaxifySearch(this);return false;">-->
 	<div class="form-horizontal">
 		<div asp-validation-summary="All" class="text-danger"></div>
 		<div class="form-group">
 			@Html.AntiForgeryToken()
 			<div class="col-md-10">
-				<label class="radio-inline"><input asp-for="Kind" type="radio" name="optradio" value="MD5" />MD5</label><span asp-validation-for="Kind" class="text-danger"></span>
-				<label class="radio-inline"><input asp-for="Kind" type="radio" name="optradio" value="SHA256" />SHA256</label><span asp-validation-for="Kind" class="text-danger"></span>
-
-				@*@foreach (EFGetStarted.AspNetCore.ExistingDb.Models.KindEnum knd in Enum.GetValues(typeof(EFGetStarted.AspNetCore.ExistingDb.Models.KindEnum)))
+				@foreach (EFGetStarted.AspNetCore.ExistingDb.Models.KindEnum knd in Enum.GetValues(typeof(EFGetStarted.AspNetCore.ExistingDb.Models.KindEnum)))
 				{
-					<input asp-for="Kind" id="@("iknd" + (int)knd)" type="radio" value="@knd" checked="" />@knd
-				}*@
+					<label class="radio-inline"><input asp-for="Kind" type="radio" id="@("knd" + (int)knd)" name="Kind" value="@knd" />@knd</label>
+					<span asp-validation-for="Kind" class="text-danger"></span>
+				}
 
-				<input asp-for="Search" id="txtSearch" placeholder="hash to decode" class="form-control" /><span asp-validation-for="Search" class="text-danger"></span>
+				<input asp-for="Search" id="txtSearch" placeholder="hash to decode" class="form-control" />
+				<span asp-validation-for="Search" class="text-danger"></span>
 			</div>
 		</div>
 		<div class="form-group">
@@ -60,6 +59,26 @@
 @section scripts
 {
 	<script type="text/javascript">
+		$(function () {
+			jQuery.validator.addMethod('hashlength',
+				function (value, element, params) {
+					// Get element value. Classic genre has value '0'.
+					var kind = $(params[0].selector).val();
+
+					if ((kind == "MD5" && value.length != 32) || (kind == "SHA256" && value.length != 64))
+						return false;
+
+					return true;
+				});
+
+			jQuery.validator.unobtrusive.adapters.add('hashlength',
+				['element', 'hashlength'],
+				function (options) {
+					var kind_selector = $(options.form).find('.radio-inline input:radio:checked');
+					options.rules['hashlength'] = [kind_selector];
+					options.messages['hashlength'] = options.message;
+				});
+		});
 		/*$(*/function AjaxifySearch(e) {
 			//$('aaa.btn-default, aaa.btn-warning').on('click', function (e) {
 			//e.preventDefault();

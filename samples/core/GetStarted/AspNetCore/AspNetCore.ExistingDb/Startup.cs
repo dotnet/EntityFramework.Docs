@@ -75,10 +75,10 @@ namespace EFGetStarted.AspNetCore.ExistingDb
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 		{
 			loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-			loggerFactory.AddDebug();
 
 			if (env.IsDevelopment())
 			{
+				loggerFactory.AddDebug();
 				app.UseDeveloperExceptionPage();
 				app.UseBrowserLink();
 			}
