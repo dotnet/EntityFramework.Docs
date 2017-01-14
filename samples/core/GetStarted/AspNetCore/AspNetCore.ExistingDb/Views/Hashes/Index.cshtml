@@ -1,17 +1,17 @@
-﻿@model EFGetStarted.AspNetCore.ExistingDb.Models.HashesInfo
+﻿@model EFGetStarted.AspNetCore.ExistingDb.Models.Hashes
 @inject  Microsoft.Extensions.Configuration.IConfiguration Conf
 @{
 	ViewBag.Title = "MyRainbow rainbow table";
 }
 <h2>Rainbow table trivial example</h2>
 @{
-	if (Model != null && !Model.IsCalculating)
+	if (ViewBag.Info != null && !ViewBag.Info.IsCalculating)
 	{
 		<p>
-			Search for <strong>@Model.KeyLength</strong> character MD5 or SHA256 hash source string. Alphabet is '@Model.Alphabet'
+			Search for <strong>@ViewBag.Info.KeyLength</strong> character MD5 or SHA256 hash source string. Alphabet is '@ViewBag.Info.Alphabet'
 		</p>
 		<p>
-			Hashes count: <strong>@Model.Count</strong>
+			Hashes count: <strong>@ViewBag.Info.Count</strong>
 			last updated @DateTime.Now.ToString()
 		</p>
 	}
@@ -25,6 +25,7 @@
 		<div asp-validation-summary="All" class="text-danger"></div>
 		<div class="form-group">
 			@Html.AntiForgeryToken()
+			@Html.Hidden("ajax", false)
 			<div class="col-md-10">
 				@foreach (EFGetStarted.AspNetCore.ExistingDb.Models.KindEnum knd in Enum.GetValues(typeof(EFGetStarted.AspNetCore.ExistingDb.Models.KindEnum)))
 				{
@@ -46,13 +47,13 @@
 		</div>
 	</div>
 </form>
-<table id="result_tab" class="table table-striped table-bordered" style='display:none'>
+<table id="result_tab" class="table table-striped table-bordered" style='@(Model != null?"":"display:none")'>
 	<thead><tr><th>Key</th><th>MD5</th><th>SHA256</th></tr></thead>
 	<tbody>
 		<tr>
-			<td id="res_cel_key"></td>
-			<td id="res_cel_md5"></td>
-			<td id="res_cel_sha256"></td>
+			<td id="res_cel_key">@(Model != null?Model.Key:"")</td>
+			<td id="res_cel_md5">@(Model != null ? Model.HashMD5 : "")</td>
+			<td id="res_cel_sha256">@(Model != null ? Model.HashSHA256 : "")</td>
 		</tr>
 	</tbody>
 </table>
@@ -129,7 +130,7 @@
 			$.ajax({
 				method: "POST", url: '@Conf["AppRootPath"]Hashes/Search',
 				headers: hedrs,
-				data: { "Search": search, "Kind": sha_kind },
+				data: { "Search": search, "Kind": sha_kind, "ajax": true },
 			}).done(function (found) {
 				button.prop('disabled', false);
 				button.html("<span class='disabled-animation'></span> Search");

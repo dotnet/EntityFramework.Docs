@@ -28,6 +28,8 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 			_dbaseContext = context;
 			_logger = logger;
 			_configuration = configuration;
+
+			ViewBag.Info = _hashesInfo;
 		}
 
 		public /*async Task<*/IActionResult/*>*/ Index()
@@ -68,6 +70,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 							_logger.LogInformation(0, $"###Calculation of initial Hash parameters ended");
 						}
+						ViewBag.Info = _hashesInfo;
 					}
 					return _hashesInfo;
 				}, _configuration);
@@ -75,20 +78,20 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 			_logger.LogInformation(0, $"###Returning {nameof(_hashesInfo)}.{nameof(_hashesInfo.IsCalculating)} = {(_hashesInfo != null ? _hashesInfo.IsCalculating.ToString() : "null")}");
 
-			return View(_hashesInfo);
+			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<JsonResult> Search(HashesInfo hi)
+		public async Task<JsonResult> Search(Hashes h, bool ajax)
 		{
 			if (!ModelState.IsValid)
 			{
 				return new JsonResult(null);
 			}
 
-			string search = hi.Search;
-			string shaKind = hi.Kind.ToString();
+			string search = h.Search;
+			string shaKind = h.Kind.ToString();
 
 			if (string.IsNullOrEmpty(search) || string.IsNullOrEmpty(shaKind))
 				return null;

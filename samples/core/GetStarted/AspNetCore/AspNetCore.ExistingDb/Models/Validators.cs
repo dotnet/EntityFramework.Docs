@@ -20,9 +20,10 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 		{
-			HashesInfo hi = (HashesInfo)validationContext.ObjectInstance;
+			var hi = (Hashes)validationContext.ObjectInstance;
 
-			if (hi.Kind == KindEnum.MD5 && hi.Search.Length != 32 ||
+			if (string.IsNullOrEmpty(hi.Search) ||
+				hi.Kind == KindEnum.MD5 && hi.Search.Length != 32 ||
 				hi.Kind == KindEnum.SHA256 && hi.Search.Length != 64)
 			{
 				return new ValidationResult(GetErrorMessage());
