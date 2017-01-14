@@ -20,7 +20,7 @@
 		<p>Calculating...wait about 10 secs or so...and refresh the page</p>
 	}
 }
-<form action="@Conf["AppRootPath"]Hashes/Search" method="post" id="theForm" class="form-horizontal" role="form"><!-- onsubmit="AjaxifySearch(this);return false;">-->
+<form action="@Conf["AppRootPath"]Hashes/Search" method="post" id="theForm" class="form-horizontal" role="form">
 	<div class="form-horizontal">
 		<div asp-validation-summary="All" class="text-danger"></div>
 		<div class="form-group">
@@ -60,22 +60,14 @@
 {
 	<script type="text/javascript">
 		$(function () {
-			jQuery.validator.addMethod('hashlength',
+			$.validator.addMethod('hashlength',
 				function (value, element, params) {
-					var kind = $(params[0].selector).val();
+					var kind = $(params).val();
 
 					if ((kind == "MD5" && value.length != 32) || (kind == "SHA256" && value.length != 64))
 						return false;
 
 					return true;
-				});
-
-			jQuery.validator.unobtrusive.adapters.add('hashlength',
-				['element', 'hashlength'],
-				function (options) {
-					var kind_selector = $(options.form).find('.radio-inline input:radio:checked');
-					options.rules['hashlength'] = [kind_selector];
-					options.messages['hashlength'] = options.message;
 				});
 
 			//$('#theForm').validate({
@@ -84,12 +76,21 @@
 				submitHandler: function (form) {
 					AjaxifySearch(form); return false;
 					//alert('submitted'); return false;
+				},
+				rules: {
+					Search: {
+						hashlength: '.radio-inline input:radio:checked'
+					},
+				},
+				messages: {
+					Search: {
+						hashlength: $('#txtSearch').data("val-hashlength")
+					}
 				}
 			});
 		});
-		/*$(*/function AjaxifySearch(e) {
-			//$('aaa.btn-default, aaa.btn-warning').on('click', function (e) {
-			//e.preventDefault();
+
+		function AjaxifySearch(e) {
 			var divResult = $('#divResult');
 			var search = $('#txtSearch').val();
 			if (search == null || search == '') {
@@ -143,22 +144,7 @@
 				$('#res_cel_md5').text(found.hashMD5);
 				$('#res_cel_sha256').text(found.hashSHA256);
 			});
-
-			//});
-		}/*)*/;
+		}
 	</script>
-<environment names="Development">
-	<script src="@Conf["AppRootPath"]lib/jquery-validation/dist/jquery.validate.js"></script>
-	<script src="@Conf["AppRootPath"]lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-</environment>
-<environment names="Staging,Production">
-	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"
-			asp-fallback-src="@Conf["AppRootPath"]lib/jquery-validation/dist/jquery.validate.min.js"
-			asp-fallback-test="window.jQuery && window.jQuery.validator">
-	</script>
-	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
-			asp-fallback-src="@Conf["AppRootPath"]lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
-			asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive">
-	</script>
-</environment>
+	@await Html.PartialAsync("_ValidationScriptsPartial")
 }

@@ -16,12 +16,8 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 		public string Alphabet { get; set; }
 		public bool IsCalculating { get; set; }
 
-		//public Hashes Fake { get; set; }
 		[Required]
-		//[MinLength(32)]
-		//[MaxLength(64)]
 		[HashLength]
-		//[StringLength(maximumLength: 64, MinimumLength = 32)]
 		public string Search { get; set; }
 		[Required]
 		public KindEnum Kind { get; set; }

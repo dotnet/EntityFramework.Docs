@@ -10,11 +10,12 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 {
 	public class HashLengthAttribute : ValidationAttribute, IClientModelValidator
 	{
-		//private int _year;
-
-		public HashLengthAttribute(/*int Year*/)
+		public HashLengthAttribute(string errorMessage = null) : base(errorMessage)
 		{
-			//_year = Year;
+			if (string.IsNullOrEmpty(errorMessage))
+				ErrorMessage = $"Hash lenght must be 32 for {nameof(KindEnum.MD5)} and 64 for {nameof(KindEnum.SHA256)}";
+			else
+				ErrorMessage = errorMessage;
 		}
 
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -33,15 +34,10 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 		public void AddValidation(ClientModelValidationContext context)
 		{
 			if (context == null)
-			{
 				throw new ArgumentNullException(nameof(context));
-			}
 
 			MergeAttribute(context.Attributes, "data-val", "true");
 			MergeAttribute(context.Attributes, "data-val-hashlength", GetErrorMessage());
-
-			//var year = _year.ToString(CultureInfo.InvariantCulture);
-			//MergeAttribute(context.Attributes, "data-val-classicmovie-year", year);
 		}
 
 		private bool MergeAttribute(IDictionary<string, string> attributes, string key, string value)
@@ -57,7 +53,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 
 		private string GetErrorMessage()
 		{
-			return "Hash lenght must be 32 for MD5 and 64 for SHA256";
+			return ErrorMessageString;
 		}
 	}
 }
