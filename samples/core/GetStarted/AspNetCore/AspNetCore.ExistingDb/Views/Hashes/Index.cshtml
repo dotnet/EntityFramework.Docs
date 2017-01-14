@@ -20,7 +20,7 @@
 		<p>Calculating...wait about 10 secs or so...and refresh the page</p>
 	}
 }
-<form action="@Conf["AppRootPath"]Hashes/Search" method="post" class="form-horizontal" role="form"><!-- onsubmit="AjaxifySearch(this);return false;">-->
+<form action="@Conf["AppRootPath"]Hashes/Search" method="post" id="theForm" class="form-horizontal" role="form"><!-- onsubmit="AjaxifySearch(this);return false;">-->
 	<div class="form-horizontal">
 		<div asp-validation-summary="All" class="text-danger"></div>
 		<div class="form-group">
@@ -62,7 +62,6 @@
 		$(function () {
 			jQuery.validator.addMethod('hashlength',
 				function (value, element, params) {
-					// Get element value. Classic genre has value '0'.
 					var kind = $(params[0].selector).val();
 
 					if ((kind == "MD5" && value.length != 32) || (kind == "SHA256" && value.length != 64))
@@ -78,6 +77,15 @@
 					options.rules['hashlength'] = [kind_selector];
 					options.messages['hashlength'] = options.message;
 				});
+
+			//$('#theForm').validate({
+			$.validator.setDefaults({
+				debug: true,
+				submitHandler: function (form) {
+					AjaxifySearch(form); return false;
+					//alert('submitted'); return false;
+				}
+			});
 		});
 		/*$(*/function AjaxifySearch(e) {
 			//$('aaa.btn-default, aaa.btn-warning').on('click', function (e) {
@@ -139,18 +147,18 @@
 			//});
 		}/*)*/;
 	</script>
-	<environment names="Development">
-		<script src="@Conf["AppRootPath"]lib/jquery-validation/dist/jquery.validate.js"></script>
-		<script src="@Conf["AppRootPath"]lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-	</environment>
-	<environment names="Staging,Production">
-		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"
-				asp-fallback-src="@Conf["AppRootPath"]lib/jquery-validation/dist/jquery.validate.min.js"
-				asp-fallback-test="window.jQuery && window.jQuery.validator">
-		</script>
-		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
-				asp-fallback-src="@Conf["AppRootPath"]lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
-				asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive">
-		</script>
-	</environment>
+<environment names="Development">
+	<script src="@Conf["AppRootPath"]lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script src="@Conf["AppRootPath"]lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</environment>
+<environment names="Staging,Production">
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"
+			asp-fallback-src="@Conf["AppRootPath"]lib/jquery-validation/dist/jquery.validate.min.js"
+			asp-fallback-test="window.jQuery && window.jQuery.validator">
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
+			asp-fallback-src="@Conf["AppRootPath"]lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+			asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive">
+	</script>
+</environment>
 }

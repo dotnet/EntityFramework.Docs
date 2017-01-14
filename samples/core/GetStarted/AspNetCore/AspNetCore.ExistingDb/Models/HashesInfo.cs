@@ -18,8 +18,8 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 
 		//public Hashes Fake { get; set; }
 		[Required]
-		[MinLength(32)]
-		[MaxLength(64)]
+		//[MinLength(32)]
+		//[MaxLength(64)]
 		[HashLength]
 		//[StringLength(maximumLength: 64, MinimumLength = 32)]
 		public string Search { get; set; }

@@ -82,6 +82,11 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<JsonResult> Search(HashesInfo hi)
 		{
+			if (!ModelState.IsValid)
+			{
+				return new JsonResult(null);
+			}
+
 			string search = hi.Search;
 			string shaKind = hi.Kind.ToString();
 
