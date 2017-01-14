@@ -30,7 +30,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 		public /*async Task<*/IActionResult/*>*/ Index()
 		{
-			if (_hashesInfo == null || !_hashesInfo.IsCalculating)
+			if (_hashesInfo == null || (!_hashesInfo.IsCalculating && _hashesInfo.Count <= 0))
 			{
 				Task.Factory.StartNew((conf) =>
 				{
