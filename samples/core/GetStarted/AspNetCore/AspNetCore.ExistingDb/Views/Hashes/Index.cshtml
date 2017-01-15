@@ -51,9 +51,9 @@
 	<thead><tr><th>Key</th><th>MD5</th><th>SHA256</th></tr></thead>
 	<tbody>
 		<tr>
-			<td id="res_cel_key">@(Model != null ? Model.Key : "")</td>
-			<td id="res_cel_md5">@(Model != null ? Model.HashMD5 : "")</td>
-			<td id="res_cel_sha256">@(Model != null ? Model.HashSHA256 : "")</td>
+			<td id="res_cel_key">@Model?.Key</td>
+			<td id="res_cel_md5">@Model?.HashMD5</td>
+			<td id="res_cel_sha256">@Model?.HashSHA256</td>
 		</tr>
 	</tbody>
 </table>

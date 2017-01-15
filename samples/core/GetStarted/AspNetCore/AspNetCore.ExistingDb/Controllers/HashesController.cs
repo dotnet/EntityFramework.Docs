@@ -30,7 +30,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 			_configuration = configuration;
 		}
 
-		public /*async Task<*/IActionResult/*>*/ Index()
+		public IActionResult Index()
 		{
 			if (_hashesInfo == null || (!_hashesInfo.IsCalculating && _hashesInfo.Count <= 0))
 			{
@@ -49,21 +49,21 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 						}
 
 						_hashesInfo = new HashesInfo { IsCalculating = true };
-						//var bc = new DbContextOptionsBuilder<BloggingContext>();
-						//Startup.ConfigureDBKind(bc, (IConfiguration)conf);
+						var bc = new DbContextOptionsBuilder<BloggingContext>();
+						Startup.ConfigureDBKind(bc, (IConfiguration)conf);
 
-						//using (var db = new BloggingContext(bc.Options))
+						using (var db = new BloggingContext(bc.Options))
 						{
-							//	var alphabet = (from h in db.Hashes
-							//					select h.Key.First()
-							//					).Distinct()
-							//					.OrderBy(o => o);
-							//	var count = db.Hashes.Count();
-							//	var key_length = db.Hashes.Max(x => x.Key.Length);
+							var alphabet = (from h in db.Hashes
+											select h.Key.First()
+											).Distinct()
+											.OrderBy(o => o);
+							var count = db.Hashes.Count();
+							var key_length = db.Hashes.Max(x => x.Key.Length);
 
-							_hashesInfo.Count = /*count*/123456789;
-							_hashesInfo.KeyLength = /*key_length*/5;
-							_hashesInfo.Alphabet = /*string.Concat(alphabet)*/"qwertyuiop";
+							_hashesInfo.Count = count;
+							_hashesInfo.KeyLength = key_length;
+							_hashesInfo.Alphabet = string.Concat(alphabet);
 							_hashesInfo.IsCalculating = false;
 
 							_logger.LogInformation(0, $"###Calculation of initial Hash parameters ended");
