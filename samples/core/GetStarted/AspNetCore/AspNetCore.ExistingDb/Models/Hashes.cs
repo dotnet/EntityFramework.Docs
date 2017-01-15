@@ -40,6 +40,16 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
 		public KindEnum Kind { get; set; }
 	}
 
+	public class HashInput
+	{
+		[Required]
+		[HashLength]
+		public string Search { get; set; }
+
+		[Required]
+		public KindEnum Kind { get; set; }
+	}
+
 	public class HashesInfo
 	{
 		//TODO: implement smart loading, immediate results and delayed loading in the background

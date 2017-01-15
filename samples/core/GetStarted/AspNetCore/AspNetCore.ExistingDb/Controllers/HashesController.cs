@@ -54,12 +54,12 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 						//using (var db = new BloggingContext(bc.Options))
 						{
-						//	var alphabet = (from h in db.Hashes
-						//					select h.Key.First()
-						//					).Distinct()
-						//					.OrderBy(o => o);
-						//	var count = db.Hashes.Count();
-						//	var key_length = db.Hashes.Max(x => x.Key.Length);
+							//	var alphabet = (from h in db.Hashes
+							//					select h.Key.First()
+							//					).Distinct()
+							//					.OrderBy(o => o);
+							//	var count = db.Hashes.Count();
+							//	var key_length = db.Hashes.Max(x => x.Key.Length);
 
 							_hashesInfo.Count = /*count*/123456789;
 							_hashesInfo.KeyLength = /*key_length*/5;
@@ -83,7 +83,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Search(Hashes h, bool ajax)
+		public async Task<ActionResult> Search(HashInput hi, bool ajax)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -97,29 +97,27 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 				}
 			}
 
-			string search = h.Search;
-			string shaKind = h.Kind.ToString();
+			//string search = hi.Search;
+			//string shaKind = hi.Kind.ToString();
 
-			if (string.IsNullOrEmpty(search) || string.IsNullOrEmpty(shaKind))
-				return null;
+			//if (string.IsNullOrEmpty(search) || string.IsNullOrEmpty(shaKind))
+			//	return null;
 
 			var logger_tsk = Task.Run(() =>
 			{
-				_logger.LogInformation(0, $"{nameof(search)} = {search}, {nameof(shaKind)} = {shaKind}");
+				_logger.LogInformation(0, $"{nameof(hi.Search)} = {hi.Search}, {nameof(hi.Kind)} = {hi.Kind.ToString()}");
 			});
 
-			search = search.Trim().ToLower();
+			hi.Search = hi.Search.Trim().ToLower();
 			Task<Hashes> found = null;
-			switch (shaKind)
+			switch (hi.Kind)
 			{
-				case "MD5":
-				case "md5":
-					found = _dbaseContext.Hashes.Where(x => x.HashMD5 == search).ToAsyncEnumerable().FirstOrDefault();
+				case KindEnum.MD5:
+					found = _dbaseContext.Hashes.Where(x => x.HashMD5 == hi.Search).ToAsyncEnumerable().FirstOrDefault();
 					break;
 
-				case "SHA256":
-				case "sha256":
-					found = _dbaseContext.Hashes.Where(x => x.HashSHA256 == search).ToAsyncEnumerable().FirstOrDefault();
+				case KindEnum.SHA256:
+					found = _dbaseContext.Hashes.Where(x => x.HashSHA256 == hi.Search).ToAsyncEnumerable().FirstOrDefault();
 					break;
 
 				default:

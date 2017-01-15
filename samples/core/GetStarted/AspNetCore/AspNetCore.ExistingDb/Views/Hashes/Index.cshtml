@@ -26,9 +26,6 @@
 		<div class="form-group">
 			@Html.AntiForgeryToken()
 			@Html.Hidden("ajax", false)
-			@Html.Hidden("Key", "dummy")
-			@Html.Hidden("HashMD5", "dummy")
-			@Html.Hidden("HashSHA256", "dummy")
 			<div class="col-md-10">
 				@foreach (EFGetStarted.AspNetCore.ExistingDb.Models.KindEnum knd in Enum.GetValues(typeof(EFGetStarted.AspNetCore.ExistingDb.Models.KindEnum)))
 				{
@@ -134,9 +131,7 @@
 				method: "POST", url: '@Conf["AppRootPath"]Hashes/Search',
 				headers: hedrs,
 				data: {
-					"Search": search, "Kind": sha_kind,
-					"Key": "dummy", "HashMD5": "dummy", "HashSHA256": "dummy",
-					"ajax": true
+					"Search": search, "Kind": sha_kind, "ajax": true
 				},
 			}).done(function (found) {
 				button.prop('disabled', false);
