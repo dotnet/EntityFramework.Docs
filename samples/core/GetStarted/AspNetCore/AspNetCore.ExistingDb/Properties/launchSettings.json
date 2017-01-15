@@ -10,17 +10,17 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": false,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "EFGetStarted.AspNetCore.ExistingDb": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "http://localhost:5000",
+      "launchBrowser": false,
+      "launchUrl": "http://localhost:4553",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+			"ASPNETCORE_ENVIRONMENT": "Development",
+			"ASPNETCORE_URLS": "http://+:4553"
       }
     }
   }

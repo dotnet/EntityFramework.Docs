@@ -11,12 +11,14 @@ using System.Threading.Tasks;
 
 namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 {
+	/// <summary>
+	/// TODO: test knockout.js, test ApplicationInsights
+	/// </summary>
 	public class HashesController : Controller
 	{
-		//TODO: test knockout.js, test ApplicationInsights, test angular.js(2)
-
 		private static HashesInfo _hashesInfo;
 		private static readonly object _locker = new object();
+
 		private readonly IConfiguration _configuration;
 		private readonly BloggingContext _dbaseContext;
 		private readonly ILogger<HashesController> _logger;
@@ -28,7 +30,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 			_configuration = configuration;
 		}
 
-		public /*async Task<*/IActionResult/*>*/ Index()
+		public IActionResult Index()
 		{
 			if (_hashesInfo == null || (!_hashesInfo.IsCalculating && _hashesInfo.Count <= 0))
 			{
@@ -66,6 +68,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 							_logger.LogInformation(0, $"###Calculation of initial Hash parameters ended");
 						}
+						ViewBag.Info = _hashesInfo;
 					}
 					return _hashesInfo;
 				}, _configuration);
@@ -73,41 +76,56 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 			_logger.LogInformation(0, $"###Returning {nameof(_hashesInfo)}.{nameof(_hashesInfo.IsCalculating)} = {(_hashesInfo != null ? _hashesInfo.IsCalculating.ToString() : "null")}");
 
-			return View(_hashesInfo);
+			ViewBag.Info = _hashesInfo;
+
+			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<JsonResult> Search(string search, string shaKind)
+		public async Task<ActionResult> Search(HashInput hi, bool ajax)
 		{
-			if (string.IsNullOrEmpty(search) || string.IsNullOrEmpty(shaKind))
-				return null;
+			if (!ModelState.IsValid)
+			{
+				if (ajax)
+					return new JsonResult("error");
+				else
+				{
+					ViewBag.Info = _hashesInfo;
 
+					return View("Index", null);
+				}
+			}
+			
 			var logger_tsk = Task.Run(() =>
 			{
-				_logger.LogInformation(0, $"{nameof(search)} = {search}, {nameof(shaKind)} = {shaKind}");
+				_logger.LogInformation(0, $"{nameof(hi.Search)} = {hi.Search}, {nameof(hi.Kind)} = {hi.Kind.ToString()}");
 			});
 
-			search = search.Trim().ToLower();
+			hi.Search = hi.Search.Trim().ToLower();
 			Task<Hashes> found = null;
-			switch (shaKind)
+			switch (hi.Kind)
 			{
-				case "MD5":
-				case "md5":
-					found = _dbaseContext.Hashes.Where(x => x.HashMD5 == search).ToAsyncEnumerable().FirstOrDefault();
+				case KindEnum.MD5:
+					found = _dbaseContext.Hashes.Where(x => x.HashMD5 == hi.Search).ToAsyncEnumerable().DefaultIfEmpty(new Hashes { Key = "nothing found" }).FirstOrDefault();
 					break;
 
-				case "SHA256":
-				case "sha256":
-					found = _dbaseContext.Hashes.Where(x => x.HashSHA256 == search).ToAsyncEnumerable().FirstOrDefault();
+				case KindEnum.SHA256:
+					found = _dbaseContext.Hashes.Where(x => x.HashSHA256 == hi.Search).ToAsyncEnumerable().DefaultIfEmpty(new Hashes { Key = "nothing found" }).FirstOrDefault();
 					break;
 
 				default:
 					throw new NotSupportedException("bad kind");
 			}
 
-			//await logger_tsk;
-			return new JsonResult(await found);
+			if (ajax)
+				return new JsonResult(await found);
+			else
+			{
+				ViewBag.Info = _hashesInfo;
+
+				return View("Index", await found);
+			}
 		}
 	}
 }

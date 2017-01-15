@@ -1,17 +1,17 @@
-﻿@model EFGetStarted.AspNetCore.ExistingDb.Models.HashesInfo
+﻿@model EFGetStarted.AspNetCore.ExistingDb.Models.Hashes
 @inject  Microsoft.Extensions.Configuration.IConfiguration Conf
 @{
 	ViewBag.Title = "MyRainbow rainbow table";
 }
 <h2>Rainbow table trivial example</h2>
 @{
-	if (Model != null && !Model.IsCalculating)
+	if (((EFGetStarted.AspNetCore.ExistingDb.Models.HashesInfo)ViewBag.Info) != null && ((EFGetStarted.AspNetCore.ExistingDb.Models.HashesInfo)ViewBag.Info).IsCalculating == false)
 	{
 		<p>
-			Search for <strong>@Model.KeyLength</strong> character MD5 or SHA256 hash source string. Alphabet is '@Model.Alphabet'
+			Search for <strong>@(((EFGetStarted.AspNetCore.ExistingDb.Models.HashesInfo)ViewBag.Info).KeyLength)</strong> character MD5 or SHA256 hash source string. Alphabet is '@(((EFGetStarted.AspNetCore.ExistingDb.Models.HashesInfo)ViewBag.Info).Alphabet)'
 		</p>
 		<p>
-			Hashes count: <strong>@Model.Count</strong>
+			Hashes count: <strong>@(((EFGetStarted.AspNetCore.ExistingDb.Models.HashesInfo)ViewBag.Info).Count)</strong>
 			last updated @DateTime.Now.ToString()
 		</p>
 	}
@@ -20,98 +20,133 @@
 		<p>Calculating...wait about 10 secs or so...and refresh the page</p>
 	}
 }
-<div class="form-horizontal">
-	<div asp-validation-summary="All" class="text-danger"></div>
-	<div class="form-group">
-		@Html.AntiForgeryToken()
-		<div class="col-md-10">
-			<label class="radio-inline"><input type="radio" name="optradio" value="MD5">MD5</label>
-			<label class="radio-inline"><input type="radio" name="optradio" value="SHA256">SHA256</label>
-			<input id="txtSearch" class="form-control" placeholder="hash to decode" required maxlength="64" data-validation-required-message="Hash is required" />
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-md-10">
-			<button type="button" id="btnSearch" class="btn btn-lg btn-warning"><span class='disabled-animation'></span>Search</button>
-		</div>
-	</div>
-	<div class="form-group">
-		<div id="divResult" class="col-md-10"></div>
-	</div>
-</div>
+<form action="@Conf["AppRootPath"]Hashes/Search" method="post" id="theForm" class="form-horizontal" role="form">
+	<div class="form-horizontal">
+		<div asp-validation-summary="All" class="text-danger"></div>
+		<div class="form-group">
+			@Html.AntiForgeryToken()
+			@Html.Hidden("ajax", false)
+			<div class="col-md-10">
+				@foreach (EFGetStarted.AspNetCore.ExistingDb.Models.KindEnum knd in Enum.GetValues(typeof(EFGetStarted.AspNetCore.ExistingDb.Models.KindEnum)))
+				{
+					<label class="radio-inline"><input asp-for="Kind" type="radio" id="@("knd" + (int)knd)" name="Kind" value="@knd" />@knd</label>
+					<span asp-validation-for="Kind" class="text-danger"></span>
+				}
 
-<table id="result_tab" class="table table-striped table-bordered" style='display:none'>
+				<input asp-for="Search" id="txtSearch" placeholder="hash to decode" class="form-control" />
+				<span asp-validation-for="Search" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-10">
+				<button type="submit" id="btnSearch" class="btn btn-lg btn-warning"><span class='disabled-animation'></span>Search</button>
+			</div>
+		</div>
+		<div class="form-group">
+			<div id="divResult" class="col-md-10">@(Model != null && Model.Key.StartsWith("error") ? Model.Key : "")</div>
+		</div>
+	</div>
+</form>
+<table id="result_tab" class="table table-striped table-bordered" style='@(Model != null && !Model.Key.StartsWith("error") ? "" : "display:none")'>
 	<thead><tr><th>Key</th><th>MD5</th><th>SHA256</th></tr></thead>
 	<tbody>
 		<tr>
-			<td id="res_cel_key"></td>
-			<td id="res_cel_md5"></td>
-			<td id="res_cel_sha256"></td>
+			<td id="res_cel_key">@Model?.Key</td>
+			<td id="res_cel_md5">@Model?.HashMD5</td>
+			<td id="res_cel_sha256">@Model?.HashSHA256</td>
 		</tr>
 	</tbody>
 </table>
-
 @section scripts
 {
 	<script type="text/javascript">
 		$(function () {
-			$('.btn-default, .btn-warning').on('click', function (e) {
-				e.preventDefault();
-				var divResult = $('#divResult');
-				var search = $('#txtSearch').val();
-				if (search == null || search == '') {
-					divResult.text('no hash to decode');
-					return;
-				}
+			$.validator.addMethod('hashlength',
+				function (value, element, params) {
+					var kind = $(params).val();
 
-				var sha_kind = $('.radio-inline input:radio:checked').val();
-				switch (sha_kind) {
-					case 'MD5':
-						if (search.length < 32) {
-							divResult.text('search.length < 32 characters, too short');
-							return;
-						}
-						break;
-					case 'SHA256':
-						if (search.length < 64) {
-							divResult.text('search.length < 64 characters, too short');
-							return;
-						}
-						break;
-					default:
-						divResult.text('no hash method selected');
-						return;
-				}
+					if ((kind == "MD5" && value.length != 32) || (kind == "SHA256" && value.length != 64))
+						return false;
 
-				var button = $(this);
-				button.prop('disabled', true);
-				button.html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Loading...");
-				divResult.text('');
-				$('#result_tab').hide();
-
-				var token = $('input[name="__RequestVerificationToken"]').val();
-				var hedrs = { 'RequestVerificationToken': token }
-
-				$.ajax({
-					method: "POST", url: '@Conf["AppRootPath"]Hashes/Search',
-					headers: hedrs,
-					data: { "search": search, "shaKind": sha_kind },
-				}).done(function (found) {
-					button.prop('disabled', false);
-					button.html("<span class='disabled-animation'></span> Search");
-
-					if (found == null || found == '') {
-						divResult.text('nothing found');
-						return;
-					}
-					//divResult.text(found.key + ' ' + found.hashMD5 + ' ' + found.hashSHA256);
-					$('#result_tab').show();
-					$('#res_cel_key').text(found.key);
-					$('#res_cel_md5').text(found.hashMD5);
-					$('#res_cel_sha256').text(found.hashSHA256);
+					return true;
 				});
 
+			//$('#theForm').validate({
+			$.validator.setDefaults({
+				debug: true,
+				submitHandler: function (form) {
+					AjaxifySearch(form); return false;
+					//alert('submitted'); return false;
+				},
+				rules: {
+					Search: {
+						hashlength: '.radio-inline input:radio:checked'
+					},
+				},
+				messages: {
+					Search: {
+						hashlength: $('#txtSearch').data("val-hashlength")
+					}
+				}
 			});
 		});
+
+		function AjaxifySearch(e) {
+			var divResult = $('#divResult');
+			var search = $('#txtSearch').val();
+			if (search == null || search == '') {
+				divResult.text('no hash to decode');
+				return;
+			}
+
+			var sha_kind = $('.radio-inline input:radio:checked').val();
+			switch (sha_kind) {
+				case 'MD5':
+					if (search.length < 32) {
+						divResult.text('search.length < 32 characters, too short');
+						return;
+					}
+					break;
+				case 'SHA256':
+					if (search.length < 64) {
+						divResult.text('search.length < 64 characters, too short');
+						return;
+					}
+					break;
+				default:
+					divResult.text('no hash method selected');
+					return;
+			}
+
+			var button = $('#btnSearch');
+			button.prop('disabled', true);
+			button.html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Loading...");
+			divResult.text('');
+			$('#result_tab').hide();
+
+			var token = $('input[name="__RequestVerificationToken"]').val();
+			var hedrs = { 'RequestVerificationToken': token }
+
+			$.ajax({
+				method: "POST", url: '@Conf["AppRootPath"]Hashes/Search',
+				headers: hedrs,
+				data: {
+					"Search": search, "Kind": sha_kind, "ajax": true
+				},
+			}).done(function (found) {
+				button.prop('disabled', false);
+				button.html("<span class='disabled-animation'></span> Search");
+
+				if (/^error.*/.test(found)) {
+					divResult.text(found);
+					return;
+				}
+				$('#result_tab').show();
+				$('#res_cel_key').text(found.key);
+				$('#res_cel_md5').text(found.hashMD5);
+				$('#res_cel_sha256').text(found.hashSHA256);
+			});
+		}
 	</script>
+	@await Html.PartialAsync("_ValidationScriptsPartial")
 }
