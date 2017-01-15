@@ -43,11 +43,11 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<div id="divResult" class="col-md-10">@(Model != null && string.IsNullOrEmpty(Model.Key) ? "nothing found" : "")</div>
+			<div id="divResult" class="col-md-10">@(Model != null && Model.Key.StartsWith("error") ? Model.Key : "")</div>
 		</div>
 	</div>
 </form>
-<table id="result_tab" class="table table-striped table-bordered" style='@(Model != null ? "" : "display:none")'>
+<table id="result_tab" class="table table-striped table-bordered" style='@(Model != null && !Model.Key.StartsWith("error") ? "" : "display:none")'>
 	<thead><tr><th>Key</th><th>MD5</th><th>SHA256</th></tr></thead>
 	<tbody>
 		<tr>
@@ -137,11 +137,10 @@
 				button.prop('disabled', false);
 				button.html("<span class='disabled-animation'></span> Search");
 
-				if (found == null || found == '') {
-					divResult.text('nothing found');
+				if (/^error.*/.test(found)) {
+					divResult.text(found);
 					return;
 				}
-				//divResult.text(found.key + ' ' + found.hashMD5 + ' ' + found.hashSHA256);
 				$('#result_tab').show();
 				$('#res_cel_key').text(found.key);
 				$('#res_cel_md5').text(found.hashMD5);

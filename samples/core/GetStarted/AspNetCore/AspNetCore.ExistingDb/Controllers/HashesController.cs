@@ -88,7 +88,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 			if (!ModelState.IsValid)
 			{
 				if (ajax)
-					return new JsonResult(null);
+					return new JsonResult("error");
 				else
 				{
 					ViewBag.Info = _hashesInfo;
@@ -96,13 +96,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 					return View("Index", null);
 				}
 			}
-
-			//string search = hi.Search;
-			//string shaKind = hi.Kind.ToString();
-
-			//if (string.IsNullOrEmpty(search) || string.IsNullOrEmpty(shaKind))
-			//	return null;
-
+			
 			var logger_tsk = Task.Run(() =>
 			{
 				_logger.LogInformation(0, $"{nameof(hi.Search)} = {hi.Search}, {nameof(hi.Kind)} = {hi.Kind.ToString()}");
@@ -113,11 +107,11 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 			switch (hi.Kind)
 			{
 				case KindEnum.MD5:
-					found = _dbaseContext.Hashes.Where(x => x.HashMD5 == hi.Search).ToAsyncEnumerable().FirstOrDefault();
+					found = _dbaseContext.Hashes.Where(x => x.HashMD5 == hi.Search).ToAsyncEnumerable().DefaultIfEmpty(new Hashes { Key = "nothing found" }).FirstOrDefault();
 					break;
 
 				case KindEnum.SHA256:
-					found = _dbaseContext.Hashes.Where(x => x.HashSHA256 == hi.Search).ToAsyncEnumerable().FirstOrDefault();
+					found = _dbaseContext.Hashes.Where(x => x.HashSHA256 == hi.Search).ToAsyncEnumerable().DefaultIfEmpty(new Hashes { Key = "nothing found" }).FirstOrDefault();
 					break;
 
 				default:
