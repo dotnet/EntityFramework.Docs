@@ -28,13 +28,11 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 			_dbaseContext = context;
 			_logger = logger;
 			_configuration = configuration;
-
-			ViewBag.Info = _hashesInfo;
 		}
 
 		public /*async Task<*/IActionResult/*>*/ Index()
 		{
-			if (_hashesInfo == null || !_hashesInfo.IsCalculating)
+			if (_hashesInfo == null || (!_hashesInfo.IsCalculating && _hashesInfo.Count <= 0))
 			{
 				Task.Factory.StartNew((conf) =>
 				{
@@ -78,16 +76,25 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
 			_logger.LogInformation(0, $"###Returning {nameof(_hashesInfo)}.{nameof(_hashesInfo.IsCalculating)} = {(_hashesInfo != null ? _hashesInfo.IsCalculating.ToString() : "null")}");
 
+			ViewBag.Info = _hashesInfo;
+
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<JsonResult> Search(Hashes h, bool ajax)
+		public async Task<ActionResult> Search(Hashes h, bool ajax)
 		{
 			if (!ModelState.IsValid)
 			{
-				return new JsonResult(null);
+				if (ajax)
+					return new JsonResult(null);
+				else
+				{
+					ViewBag.Info = _hashesInfo;
+
+					return View("Index", null);
+				}
 			}
 
 			string search = h.Search;
@@ -119,8 +126,14 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 					throw new NotSupportedException("bad kind");
 			}
 
-			//await logger_tsk;
-			return new JsonResult(await found);
+			if (ajax)
+				return new JsonResult(await found);
+			else
+			{
+				ViewBag.Info = _hashesInfo;
+
+				return View("Index", await found);
+			}
 		}
 	}
 }
