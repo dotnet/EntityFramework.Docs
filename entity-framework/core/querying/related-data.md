@@ -2,14 +2,12 @@
 title: Loading Related Data | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
-
 ms.date: 10/27/2016
-
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 ms.technology: entity-framework-core
- 
 uid: core/querying/related-data
 ---
+
 # Loading Related Data
 
 > [!NOTE]
@@ -86,3 +84,27 @@ You can also filter which related entities are loaded into memory.
 ## Lazy loading
 
 Lazy loading is not yet supported by EF Core. You can view the [lazy loading item on our backlog](https://github.com/aspnet/EntityFramework/issues/3797) to track this feature.
+
+## Related data and serialization
+
+Because EF Core will automatically fix-up navigation properties, you can end up with cycles in your object graph. For example, Loading a blog and it's related posts will result in a blog object that references a collection of posts. Each of those posts will have a reference back to the blog.
+
+Some serialization frameworks do not allow such cycles. For example, Json.NET will throw the following exception if a cycle is encoutered.
+
+> Newtonsoft.Json.JsonSerializationException: Self referencing loop detected for property 'Blog' with type 'MyApplication.Models.Blog'.
+
+If you are using ASP.NET Core, you can configure Json.NET to ignore cycles that it finds in the object graph. This is done in the `ConfigureServices(...)` method in `Startup.cs`.
+
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    ...
+
+    services.AddMvc()
+        .AddJsonOptions(
+            options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        );
+
+    ...
+}
+```
