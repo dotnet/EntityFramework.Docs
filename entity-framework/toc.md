@@ -87,6 +87,13 @@
 <!-- Extensions -->
 ###[Tools & Extensions](core/extensions/index.md)
 ####[LLBLGen Pro](core/extensions/llbl-gen-pro.md)
+####[EFSecondLevelCache.Core](core/extensions/efsecondlevelcache-core.md)
+####[EntityFrameworkCore.Detached](core/extensions/entityframeworkcore-detached.md)
+####[EntityFrameworkCore.Triggers](core/extensions/entityframeworkcore-triggers.md)
+####[EntityFrameworkCore.Rx](core/extensions/entityframeworkcore-rx.md)
+####[EntityFrameworkCore.PrimaryKey](core/extensions/entityframeworkcore-primarykey.md)
+####[EntityFrameworkCore.TypedOriginalValues](core/extensions/entityframeworkcore-typedoriginalvalues.md)
+####[EFCore.Practices](core/extensions/efcore-practices.md)
 <!-- Miscellaneous -->
 ###Miscellaneous
 ####[Connection Strings](core/miscellaneous/connection-strings.md)
