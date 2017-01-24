@@ -45,10 +45,10 @@ namespace EFSaving.RelatedData
             // Changing relationships
             using (var context = new BloggingContext())
             {
-                var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio" };
                 var post = context.Posts.First();
+                var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio", Posts = new List<Post> { post } };
 
-                blog.Posts.Add(post);
+                context.Add(blog);
                 context.SaveChanges();
             }
 
