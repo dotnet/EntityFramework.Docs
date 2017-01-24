@@ -42,7 +42,7 @@ The SQLite database engine does not support a number of schema operations that a
 | CreateSequence       | ✗          |
 | CreateTable          | ✔          |
 | DropColumn           | ✗          |
-| DropForiegnKey       | ✗          |
+| DropForeignKey       | ✗          |
 | DropIndex            | ✔          |
 | DropPrimaryKey       | ✗          |
 | DropSchema           | ✗          |
