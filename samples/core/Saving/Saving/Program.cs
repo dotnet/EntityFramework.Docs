@@ -12,6 +12,7 @@
             Transactions.SharingTransaction.Sample.Run();
             Transactions.ExternalDbTransaction.Sample.Run();
             ExplicitValuesGenerateProperties.Sample.Run();
+            Async.Sample.RunAsync().Wait();
         }
     }
 }

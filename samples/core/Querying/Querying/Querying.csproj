@@ -175,6 +175,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Async\Sample.cs" />
     <Compile Include="Basics\Sample.cs" />
     <Compile Include="Blog.cs" />
     <Compile Include="BloggingContext.cs" />

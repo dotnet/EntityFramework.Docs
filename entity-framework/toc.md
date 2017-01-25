@@ -58,6 +58,7 @@
 ####[Client vs. Server Evaluation](core/querying/client-eval.md)
 ####[Tracking vs. No-Tracking](core/querying/tracking.md)
 ####[Raw SQL Queries](core/querying/raw-sql.md)
+####[Asynchronous Queries](core/querying/async.md)
 ####[How Query Works](core/querying/overview.md)
 <!-- Saving -->
 ###[Saving Data](core/saving/index.md)
@@ -66,6 +67,7 @@
 ####[Cascade Delete](core/saving/cascade-delete.md)
 ####[Concurrency Conflicts](core/saving/concurrency.md)
 ####[Transactions](core/saving/transactions.md)
+####[Asynchronous Saving](core/saving/async.md)
 ####[🔧 Disconnected Entities](core/saving/disconnected-entities.md)
 ####[Explicit values for generated properties](core/saving/explicit-values-generated-properties.md)
 <!-- Providers -->

@@ -109,6 +109,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Async\Blog.cs" />
+    <Compile Include="Async\BloggingContext.cs" />
+    <Compile Include="Async\Post.cs" />
+    <Compile Include="Async\Sample.cs" />
     <Compile Include="Basics\Blog.cs" />
     <Compile Include="Basics\BloggingContext.cs" />
     <Compile Include="Basics\Post.cs" />
