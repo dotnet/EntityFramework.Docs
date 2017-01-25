@@ -84,6 +84,7 @@
 ####[InMemory (for Testing)](core/providers/in-memory/index.md)
 ####[Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, and more)](core/providers/devart/index.md)
 ####[Oracle (not yet available)](core/providers/oracle/index.md)
+####[Writing a Database Provider](core/providers/writing-a-provider.md)
 <!-- API Reference -->
 ###[API Reference](https://docs.microsoft.com/ef/core/api)
 <!-- Extensions -->
@@ -110,9 +111,6 @@
 ####[Command Line Reference](core/miscellaneous/cli/index.md)
 #####[Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
 #####[.NET Core CLI](core/miscellaneous/cli/dotnet.md)
-####Internals
-#####[Writing a Database Provider](core/miscellaneous/internals/writing-a-provider.md)
-#####[Understanding EF Services](core/miscellaneous/internals/services.md)
 
 ##[Entity Framework 6.x](ef6/index.md)
 ###[Documentation](http://msdn.com/data/ef)
