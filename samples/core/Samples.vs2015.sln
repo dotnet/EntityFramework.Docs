@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Saving", "Saving\Saving\Saving.csproj", "{353F06F1-F0E0-4A8F-83AA-7115CD05832D}"
 EndProject
@@ -51,22 +51,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modeling", "Modeling", "{CA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Saving", "Saving", "{1C11ABFE-D497-4CF5-B2F9-BC6C539B108A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internals", "Internals", "{0060CE4E-6956-46EF-9506-212BEE5FF4AD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70096DE4-F6A8-4444-95A0-0DC01AC27A19}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WritingAProvider", "WritingAProvider", "{6B5377CA-EBB7-47E7-84D4-69438609D171}"
-	ProjectSection(SolutionItems) = preProject
-		Miscellaneous\Internals\WritingAProvider\NuGet.Config = Miscellaneous\Internals\WritingAProvider\NuGet.Config
-		Miscellaneous\Internals\WritingAProvider\README.md = Miscellaneous\Internals\WritingAProvider\README.md
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "EntityFrameworkCore.ProviderStarter", "Miscellaneous\Internals\WritingAProvider\EntityFrameworkCore.ProviderStarter\EntityFrameworkCore.ProviderStarter.xproj", "{2DD8FB8A-DA71-418D-84D0-7007B24124AA}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "EntityFrameworkCore.RelationalProviderStarter", "Miscellaneous\Internals\WritingAProvider\EntityFrameworkCore.RelationalProviderStarter\EntityFrameworkCore.RelationalProviderStarter.xproj", "{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Querying", "Querying", "{9883287D-A497-400C-ACB8-6F6138591DEC}"
 EndProject
@@ -312,38 +300,6 @@ Global
 		{2088F834-0305-4C03-89DD-3AB20D3FB753}.Release|x64.Build.0 = Release|Any CPU
 		{2088F834-0305-4C03-89DD-3AB20D3FB753}.Release|x86.ActiveCfg = Release|Any CPU
 		{2088F834-0305-4C03-89DD-3AB20D3FB753}.Release|x86.Build.0 = Release|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Debug|ARM.Build.0 = Debug|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Debug|x64.Build.0 = Debug|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Debug|x86.Build.0 = Debug|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Release|ARM.ActiveCfg = Release|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Release|ARM.Build.0 = Release|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Release|x64.ActiveCfg = Release|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Release|x64.Build.0 = Release|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Release|x86.ActiveCfg = Release|Any CPU
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA}.Release|x86.Build.0 = Release|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Debug|ARM.Build.0 = Debug|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Debug|x64.Build.0 = Debug|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Debug|x86.Build.0 = Debug|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Release|ARM.ActiveCfg = Release|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Release|ARM.Build.0 = Release|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Release|x64.ActiveCfg = Release|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Release|x64.Build.0 = Release|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Release|x86.ActiveCfg = Release|Any CPU
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363}.Release|x86.Build.0 = Release|Any CPU
 		{7DEB577A-52B8-4475-A109-689FD515AEEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7DEB577A-52B8-4475-A109-689FD515AEEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DEB577A-52B8-4475-A109-689FD515AEEA}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -385,10 +341,6 @@ Global
 		{8C67ADF8-D850-4D2E-9A73-E381D31B8C14} = {9AE81D20-3DB5-4C4A-AFBB-3F6A460B0313}
 		{20019C8A-4100-47D0-88F3-AC2EBB38E27B} = {8C67ADF8-D850-4D2E-9A73-E381D31B8C14}
 		{2088F834-0305-4C03-89DD-3AB20D3FB753} = {8C67ADF8-D850-4D2E-9A73-E381D31B8C14}
-		{0060CE4E-6956-46EF-9506-212BEE5FF4AD} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
-		{6B5377CA-EBB7-47E7-84D4-69438609D171} = {0060CE4E-6956-46EF-9506-212BEE5FF4AD}
-		{2DD8FB8A-DA71-418D-84D0-7007B24124AA} = {6B5377CA-EBB7-47E7-84D4-69438609D171}
-		{B2F7BFEB-B69D-46CD-8936-FA2FEBABC363} = {6B5377CA-EBB7-47E7-84D4-69438609D171}
 		{7DEB577A-52B8-4475-A109-689FD515AEEA} = {9883287D-A497-400C-ACB8-6F6138591DEC}
 	EndGlobalSection
 EndGlobal

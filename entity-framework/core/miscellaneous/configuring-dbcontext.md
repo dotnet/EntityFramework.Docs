@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 ms.technology: entity-framework-core
- 
+
 uid: core/miscellaneous/configuring-dbcontext
 ---
 # Configuring a DbContext
@@ -171,9 +171,5 @@ namespace MyProject
 ## More reading
 
 * Read [Getting Started on ASP.NET Core](../get-started/aspnetcore/index.md) for more information on using EF with ASP.NET Core.
-
 * Read [Dependency Injection](https://docs.asp.net/en/latest/fundamentals/dependency-injection.html) to learn more about using DI.
-
-* Read [Testing with InMemory](testing.md) for more information.
-
-* Read [Understanding EF Services](internals/services.md) for more details on how EF uses dependency injection internally.
+* Read [Testing](testing/index.md) for more information.

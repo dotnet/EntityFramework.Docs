@@ -106,7 +106,6 @@
 #####[Testing with SQLite](core/miscellaneous/testing/sqlite.md)
 #####[Testing with InMemory](core/miscellaneous/testing/in-memory.md)
 ####[Configuring a DbContext](core/miscellaneous/configuring-dbcontext.md)
-####[Upgrading from RC1 to RC2](core/miscellaneous/rc1-rc2-upgrade.md)
 ####[Upgrading from RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
 ####[Command Line Reference](core/miscellaneous/cli/index.md)
 #####[Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)

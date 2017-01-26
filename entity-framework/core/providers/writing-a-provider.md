@@ -1,6 +1,6 @@
 ---
 title: Writing a Database Provider | Microsoft Docs
-author: rowanmiller, ajcvickers
+author: rowanmiller
 ms.author: rowmil
 ms.date: 10/27/2016
 ms.assetid: 1165e2ec-e421-43fc-92ab-d92f9ab3c494
@@ -11,7 +11,7 @@ uid: core/providers/writing-a-provider
 # Writing a Database Provider
 
 > [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 For information about writing an Entity Framework Core database provider, see [So you want to write an EF Core provider](https://blog.oneunicorn.com/2016/11/11/so-you-want-to-write-an-ef-core-provider/) by [Arthur Vickers](https://github.com/ajcvickers).
 

@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 
 ms.assetid: 6d75b229-cc79-4d08-88cd-3a1c1b24d88f
 ms.technology: entity-framework-core
- 
+
 uid: core/miscellaneous/rc1-rc2-upgrade
 ---
 # Upgrading from RC1 to RC2
@@ -91,7 +91,7 @@ If you have RC1 code that passes an `IServiceProvider` to the context, this has 
 
 ### Testing
 
-The most common scenario for doing this was to control the scope of an InMemory database when testing. See the updated [Testing with InMemory](testing.md) article for an example of doing this with RC2.
+The most common scenario for doing this was to control the scope of an InMemory database when testing. See the updated [Testing](testing/index.md) article for an example of doing this with RC2.
 
 ### Resolving Internal Services from Application Service Provider (ASP.NET Core Projects Only)
 

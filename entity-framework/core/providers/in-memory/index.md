@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 
 ms.assetid: 9af0cba7-7605-4f8f-9cfa-dd616fcb880c
 ms.technology: entity-framework-core
- 
+
 uid: core/providers/in-memory/index
 ---
 # InMemory
@@ -30,7 +30,7 @@ Install the [Microsoft.EntityFrameworkCore.InMemory NuGet package](https://www.n
 ## Get Started
 
 The following resources will help you get started with this provider.
-* [Testing with InMemory](../../miscellaneous/testing.md)
+* [Testing with InMemory](../../miscellaneous/testing/in-memory.md)
 
 * [UnicornStore Sample Application Tests](https://github.com/rowanmiller/UnicornStore/blob/master/UnicornStore/src/UnicornStore.Tests/Controllers/ShippingControllerTests.cs)
 
