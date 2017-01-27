@@ -1,5 +1,5 @@
 ﻿---
-title: ASP.NET Core - New Database | Microsoft Docs
+title: Build an ASP.NET Core MVC app: Basic data access using Entity Framework | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 
