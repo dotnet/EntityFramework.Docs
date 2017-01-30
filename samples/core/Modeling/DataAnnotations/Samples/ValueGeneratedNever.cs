@@ -8,10 +8,12 @@ namespace EFModeling.Configuring.DataAnnotations.Samples.NoIdentity
         public DbSet<Blog> Blogs { get; set; }
     }
 
+    #region Sample
     public class Blog
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int BlogId { get; set; }
         public string Url { get; set; }
     }
+    #endregion
 }

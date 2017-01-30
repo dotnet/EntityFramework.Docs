@@ -9,9 +9,11 @@ namespace EFModeling.Configuring.FluentAPI.Samples.ValueGeneratedOnAdd
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Sample
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Inserted)
                 .ValueGeneratedOnAdd();
+            #endregion
         }
     }
 

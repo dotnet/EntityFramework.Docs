@@ -9,6 +9,7 @@ namespace EFModeling.Configuring.DataAnnotations.Samples.ValueGeneratedOnAdd
         public DbSet<Blog> Blogs { get; set; }
     }
 
+    #region Sample
     public class Blog
     {
         public int BlogId { get; set; }
@@ -16,4 +17,5 @@ namespace EFModeling.Configuring.DataAnnotations.Samples.ValueGeneratedOnAdd
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime Inserted { get; set; }
     }
+    #endregion
 }

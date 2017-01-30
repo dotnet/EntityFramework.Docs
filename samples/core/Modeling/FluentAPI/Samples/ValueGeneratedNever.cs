@@ -8,9 +8,11 @@ namespace EFModeling.Configuring.FluentAPI.Samples.NoIdentity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Sample
             modelBuilder.Entity<Blog>()
                 .Property(b => b.BlogId)
                 .ValueGeneratedNever();
+            #endregion
         }
     }
 

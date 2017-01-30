@@ -13,9 +13,21 @@ namespace EFSaving.ExplicitValuesGenerateProperties
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region EmploymentStarted
             modelBuilder.Entity<Employee>()
                 .Property(b => b.EmploymentStarted)
                 .HasDefaultValueSql("CONVERT(date, GETDATE())");
+            #endregion
+
+            #region LastPayRaise
+            modelBuilder.Entity<Employee>()
+                .Property(b => b.LastPayRaise)
+                .ValueGeneratedOnAddOrUpdate();
+
+            modelBuilder.Entity<Employee>()
+                .Property(b => b.LastPayRaise)
+                .Metadata.IsReadOnlyAfterSave = false;
+            #endregion
         }
     }
 }
