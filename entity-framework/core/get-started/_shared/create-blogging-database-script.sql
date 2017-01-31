@@ -1,7 +1,7 @@
-﻿CREATE DATABASE [Blogging]
+﻿CREATE DATABASE [Blogging];
 GO
 
-USE [Blogging]
+USE [Blogging];
 GO
 
 CREATE TABLE [Blog] (
@@ -21,8 +21,8 @@ CREATE TABLE [Post] (
 );
 GO
 
-INSERT INTO [Blog] (Url) VALUES 
-('http://blogs.msdn.com/dotnet'), 
-('http://blogs.msdn.com/webdev'), 
+INSERT INTO [Blog] (Url) VALUES
+('http://blogs.msdn.com/dotnet'),
+('http://blogs.msdn.com/webdev'),
 ('http://blogs.msdn.com/visualstudio')
 GO
