@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 
 ms.assetid: e17e060c-929f-4180-8883-40c438fbcc01
 ms.technology: entity-framework-core
- 
+
 uid: core/querying/tracking
 ---
 # Tracking vs. No-Tracking
@@ -63,6 +63,9 @@ using (var context = new BloggingContext())
     var blogs = context.Blogs.ToList();
 }
 ````
+
+> [!NOTE]
+> No tracking queries still perform identity resolution. If the result set contains the same entity multiple times, the same instance of the entity class will be returned for each occurrence in the result set. However, weak references are used to keep track of entities that have already been returned. If a previous result with the same identity goes out of scope, and garbage collection runs, you may get a new entity instance. For more information, see [How Query Works](overview.md).
 
 ## Tracking and projections
 
