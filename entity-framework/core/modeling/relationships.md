@@ -161,7 +161,7 @@ public class Post
 
 ### Cascade Delete
 
-By convention, cascade delete will be set to *Cascade* for required relationships and *Restrict* for optional relationships. *Cascade* means dependent entities are also deleted. *Restrict* means that dependent entities that are not loaded into memory will remain unchanged and must be manually deleted, or updated to point to a valid principal entity. For entities that are loaded into memory, EF will attempt to set the foreign key properties to null.
+By convention, cascade delete will be set to *Cascade* for required relationships and *Restrict* for optional relationships (see the [Required](#Required) section for the difference between required and optional relationships). *Cascade* means dependent entities are also deleted. *Restrict* means that dependent entities that are not loaded into memory will remain unchanged and must be manually deleted, or updated to point to a valid principal entity. For entities that are loaded into memory, EF will attempt to set the foreign key properties to null.
 
 > [!NOTE]
 > This cascading behavior is only applied to entities that are being tracked by the context. A corresponding cascade behavior should be setup in the database to ensure data that is not being tracked by the context has the same action applied. If you use EF to create the database, this cascade behavior will be setup for you.
