@@ -1,5 +1,5 @@
 ---
-title: EntityFrameworkCore.Detached | Microsoft Docs
+title: Detached.EntityFramework | Microsoft Docs
 author: ErikEJ
 ms.author: rowmil
 ms.date: 01/19/2017
@@ -8,7 +8,7 @@ ms.technology: entity-framework-core
 uid: core/extensions/entityframeworkcore-detached
 ---
 
-# EntityFrameworkCore.Detached
+# Detached.EntityFramework
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
@@ -18,5 +18,5 @@ uid: core/extensions/entityframeworkcore-detached
 
 Loads and saves entire detached entity graphs (the entity with their child entities and lists). Inspired by [GraphDiff](https://github.com/refactorthis/GraphDiff/). The idea is also add some plugins to simplificate some repetitive tasks, like auditing and pagination.
 
-The following resource will help you get started with EntityFrameworkCore.Detached.
-* [EntityFrameworkCore.Detached GitHub repository](https://github.com/leonardoporro/Detached/)
+The following resource will help you get started with Detached.EntityFramework
+* [Detached.EntityFramework GitHub repository](https://github.com/leonardoporro/Detached/)
