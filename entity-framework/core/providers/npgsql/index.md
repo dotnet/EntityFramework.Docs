@@ -26,7 +26,6 @@ Install the [Npgsql.EntityFrameworkCore.PostgreSQL NuGet package](https://www.nu
 
 <!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": false, "dupnames  : "csharp",", highlight_args}, "names": [] -->
 ````text
-
    PM>  Install-Package Npgsql.EntityFrameworkCore.PostgreSQL
 ````
 
