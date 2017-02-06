@@ -26,7 +26,6 @@ Install the [SapientGuardian.EntityFrameworkCore.MySql NuGet package](https://ww
 
 <!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": false, "dupnames  : "csharp",", highlight_args}, "names": [] -->
 ````text
-
    PM>  Install-Package SapientGuardian.EntityFrameworkCore.MySql
 ````
 
