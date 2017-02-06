@@ -29,7 +29,6 @@ Install the [MySql.Data.EntityFrameworkCore NuGet package](https://www.nuget.org
 
 <!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": false, "dupnames  : "csharp",", highlight_args}, "names": [] -->
 ````text
-
    PM>  Install-Package MySql.Data.EntityFrameworkCore -Pre
 ````
 
