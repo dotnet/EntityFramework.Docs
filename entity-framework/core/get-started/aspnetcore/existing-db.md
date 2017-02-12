@@ -22,7 +22,7 @@ In this walkthrough, you will build an ASP.NET Core MVC application that perform
 
 The following prerequisites are needed to complete this walkthrough:
 
-* [Visual Studio 2017 RC3](https://www.visualstudio.com/downloads/)
+* [Visual Studio 2017 RC4](https://www.visualstudio.com/downloads/)
 * [Blogging database](#blogging-database)
 
 ### Blogging database
