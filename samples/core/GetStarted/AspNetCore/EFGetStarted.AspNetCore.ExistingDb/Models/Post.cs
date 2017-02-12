@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace EFGetStarted.AspNetCore.ExistingDb.Models
+﻿namespace EFGetStarted.AspNetCore.ExistingDb.Models
 {
     public partial class Post
     {
