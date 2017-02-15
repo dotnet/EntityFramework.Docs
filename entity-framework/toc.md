@@ -77,6 +77,7 @@
 ####[SQLite](core/providers/sqlite/index.md)
 #####[SQLite Limitations](core/providers/sqlite/limitations.md)
 ####[PostgreSQL (Npgsql)](core/providers/npgsql/index.md)
+####[IBM Data Server (DB2)](core/providers/ibm/index.md)
 ####[MySQL (Official)](core/providers/mysql/index.md)
 ####[MySQL (Pomelo)](core/providers/pomelo/index.md)
 ####[MySQL (Sapient Guardian)](core/providers/sapient-guardian/index.md)
