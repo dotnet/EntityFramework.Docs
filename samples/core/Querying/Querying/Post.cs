@@ -1,4 +1,6 @@
-﻿namespace EFQuerying
+﻿using System.Collections.Generic;
+
+namespace EFQuerying
 {
     public class Post
     {
@@ -12,5 +14,7 @@
 
         public int AuthorId { get; set; }
         public Person Author { get; set; }
+
+        public List<PostTag> Tags { get; set; }
     }
 }

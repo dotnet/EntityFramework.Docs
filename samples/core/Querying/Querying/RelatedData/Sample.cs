@@ -61,6 +61,18 @@ namespace EFQuerying.RelatedData
             }
             #endregion
 
+            #region MultipleLeafIncludes
+            using (var context = new BloggingContext())
+            {
+                var blogs = context.Blogs
+                    .Include(blog => blog.Posts)
+                        .ThenInclude(post => post.Author)
+                    .Include(blog => blog.Posts)
+                        .ThenInclude(post => post.Tags)
+                    .ToList();
+            }
+            #endregion
+
             #region IncludeTree
             using (var context = new BloggingContext())
             {

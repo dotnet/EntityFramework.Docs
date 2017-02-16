@@ -48,6 +48,10 @@ You can combine all of this to include related data from multiple levels and mul
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#IncludeTree)]
 
+You may want to include multiple related entities for one of the entities that is being included. For example, when querying `Blog`s, you include `Posts` and then want to include both the `Author` and `Tags` of the `Posts`. To do this, you need to specify each include path starting at the root. For example, `Blog -> Posts -> Author` and `Blog -> Posts -> Tags`. This does not mean you will get redundant joins, in most cases EF will consolidate the joins when generating SQL.
+
+[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
+
 ### Ignored includes
 
 If you change the query so that it no longer returns instances of the entity type that the query began with, then the include operators are ignored.

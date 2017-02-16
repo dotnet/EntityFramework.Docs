@@ -184,11 +184,13 @@
     <Compile Include="PersonPhoto.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Post.cs" />
+    <Compile Include="PostTag.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RawSQL\Sample.cs" />
     <Compile Include="RelatedData\ThrowOnIgnoredInclude\BloggingContext.cs" />
     <Compile Include="RelatedData\Sample.cs" />
+    <Compile Include="Tag.cs" />
     <Compile Include="Tracking\Sample.cs" />
   </ItemGroup>
   <ItemGroup>
