@@ -51,7 +51,10 @@ Depending on your version of Visual Studio, the template may have generated your
 
 * Tools ‣ NuGet Package Manager ‣ Package Manager Console
 
-* Run `Update-Package Microsoft.NETCore.UniversalWindowsPlatform`
+* Run `Update-Package Microsoft.NETCore.UniversalWindowsPlatform –Version 5.2.2`
+
+> [!NOTE]
+> If you are using Visual Studio 2017, you can upgrade to the latest version of `Microsoft.NETCore.UniversalWindowsPlatform` and do not need to explicitly target `5.2.2`.
 
 ## Install Entity Framework
 
