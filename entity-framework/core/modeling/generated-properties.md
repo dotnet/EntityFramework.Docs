@@ -1,5 +1,5 @@
 ---
-title: Generated Properties | Microsoft Docs
+title: Generated Values | Microsoft Docs
 author: rowanmiller
 ms.author: rowmil
 ms.date: 10/27/2016
@@ -8,7 +8,7 @@ ms.technology: entity-framework-core
 uid: core/modeling/generated-properties
 ---
 
-# Generated Properties
+# Generated Values
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).

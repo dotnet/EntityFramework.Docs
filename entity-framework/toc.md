@@ -28,7 +28,7 @@
 ####[Including & Excluding Types](core/modeling/included-types.md)
 ####[Including & Excluding Properties](core/modeling/included-properties.md)
 ####[Keys (primary)](core/modeling/keys.md)
-####[Generated Properties](core/modeling/generated-properties.md)
+####[Generated Values](core/modeling/generated-properties.md)
 ####[Required/optional properties](core/modeling/required-optional.md)
 ####[Maximum Length](core/modeling/max-length.md)
 ####[Concurrency Tokens](core/modeling/concurrency.md)
