@@ -386,6 +386,10 @@ public class RecordOfSale
 }
 ````
 
+You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](shadow-properties.md) for more information). We recommend explicitly adding the shadow property to the model before using it as a foreign key (as shown below). 
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/ShadowForeignKey.cs#Sample)]
+
 ### Principal Key
 
 If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be setup as an alternate key (see [Alternate Keys](alternate-keys.md) for more information).
