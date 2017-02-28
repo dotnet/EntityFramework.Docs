@@ -92,6 +92,7 @@
 <!-- Extensions -->
 ###[Tools & Extensions](core/extensions/index.md)
 ####[LLBLGen Pro](core/extensions/llbl-gen-pro.md)
+####[Devart Entity Developer](core/extensions/devart-entity-developer.md)
 ####[EFSecondLevelCache.Core](core/extensions/efsecondlevelcache-core.md)
 ####[EntityFrameworkCore.Detached](core/extensions/entityframeworkcore-detached.md)
 ####[EntityFrameworkCore.Triggers](core/extensions/entityframeworkcore-triggers.md)
@@ -99,6 +100,10 @@
 ####[EntityFrameworkCore.PrimaryKey](core/extensions/entityframeworkcore-primarykey.md)
 ####[EntityFrameworkCore.TypedOriginalValues](core/extensions/entityframeworkcore-typedoriginalvalues.md)
 ####[EFCore.Practices](core/extensions/efcore-practices.md)
+####[LinqKit.Microsoft.EntityFrameworkCore](core/extensions/linqkit.md)
+####[Microsoft.EntityFrameworkCore.AutoHistory](core/extensions/autohistory.md)
+####[Microsoft.EntityFrameworkCore.DynamicLinq](core/extensions/dynamiclinq.md)
+####[Microsoft.EntityFrameworkCore.UnitOfWork](core/extensions/unitofwork.md)
 <!-- Miscellaneous -->
 ###Miscellaneous
 ####[Connection Strings](core/miscellaneous/connection-strings.md)
