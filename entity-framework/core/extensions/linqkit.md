@@ -3,7 +3,7 @@ title: LinqKit.Microsoft.EntityFrameworkCore | Microsoft Docs
 author: ErikEJ
 ms.author: rowmil
 ms.date: 02/28/2017
-ms.assetid: C9B8DEC7-5FE3-4DEE-8797-9DA94D2C56F4
+ms.assetid: 4F065F66-EB10-4D7B-944D-E58BF95459C7
 ms.technology: entity-framework-core
 uid: core/extensions/linqkit
 ---
