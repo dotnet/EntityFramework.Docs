@@ -101,6 +101,9 @@
 ####[EntityFrameworkCore.TypedOriginalValues](core/extensions/entityframeworkcore-typedoriginalvalues.md)
 ####[EFCore.Practices](core/extensions/efcore-practices.md)
 ####[LinqKit.Microsoft.EntityFrameworkCore](core/extensions/linqkit.md)
+####[Microsoft.EntityFrameworkCore.AutoHistory](core/extensions/autohistory.md)
+####[Microsoft.EntityFrameworkCore.DynamicLinq](core/extensions/dynamiclinq.md)
+####[Microsoft.EntityFrameworkCore.UnitOfWork](core/extensions/unitofwork.md)
 <!-- Miscellaneous -->
 ###Miscellaneous
 ####[Connection Strings](core/miscellaneous/connection-strings.md)
