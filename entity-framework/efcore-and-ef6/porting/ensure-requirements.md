@@ -1,7 +1,7 @@
 ---
 title: Validate Requirements | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 ms.date: 10/27/2016
 
 ms.assetid: d3b66f3c-9d10-4974-a090-8ad093c9a53d

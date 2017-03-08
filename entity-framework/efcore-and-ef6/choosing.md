@@ -1,7 +1,7 @@
 ---
 title: Which One Is Right for You | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 ms.date: 10/27/2016
 
 ms.assetid: 288f825b-b3e6-4096-971b-d0a1cb96770e

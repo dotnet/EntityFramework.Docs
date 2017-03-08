@@ -1,7 +1,7 @@
 ---
 title: Compare EF Core & EF6.x | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 ms.date: 10/27/2016
 
 ms.assetid: a6b9cd22-6803-4c6c-a4d4-21147c0a81cb

@@ -1,7 +1,7 @@
 ---
 title: Microsoft.EntityFrameworkCore.UnitOfWork | Microsoft Docs
 author: ErikEJ
-ms.author: rowmil
+ms.author: divega
 ms.date: 02/28/2017
 ms.assetid: FAD22688-3A07-441F-83FA-ECC86CE2BFB8 
 ms.technology: entity-framework-core

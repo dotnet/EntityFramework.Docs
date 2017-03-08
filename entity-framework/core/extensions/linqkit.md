@@ -1,7 +1,7 @@
 ---
 title: LinqKit.Microsoft.EntityFrameworkCore | Microsoft Docs
 author: ErikEJ
-ms.author: rowmil
+ms.author: divega
 ms.date: 02/28/2017
 ms.assetid: 4F065F66-EB10-4D7B-944D-E58BF95459C7
 ms.technology: entity-framework-core

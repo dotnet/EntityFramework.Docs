@@ -1,7 +1,7 @@
 ---
 title: Test components using Entity Framework | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 
 ms.date: 10/27/2016
 

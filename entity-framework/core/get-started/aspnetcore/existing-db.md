@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core - Existing Database | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 ms.technology: entity-framework-core

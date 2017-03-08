@@ -1,7 +1,7 @@
 ---
 title: LLBLGen Pro | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: d66b9e4d-1ed9-4ac5-a473-957a7d82ea92
 ms.technology: entity-framework-core

@@ -1,7 +1,7 @@
 ---
 title: Tools & Extensions | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 97c1ba7d-29a5-46de-a87d-912b52ac242e
 ms.technology: entity-framework-core

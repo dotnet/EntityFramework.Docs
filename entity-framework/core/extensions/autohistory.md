@@ -1,7 +1,7 @@
 ---
 title: Microsoft.EntityFrameworkCore.AutoHistory | Microsoft Docs
 author: ErikEJ
-ms.author: rowmil
+ms.author: divega
 ms.date: 02/28/2017
 ms.assetid: C1607621-41BD-4089-B396-31342C519AC6
 ms.technology: entity-framework-core

@@ -1,7 +1,7 @@
 ---
 title: EFSecondLevelCache.Core | Microsoft Docs
 author: ErikEJ
-ms.author: rowmil
+ms.author: divega
 ms.date: 01/19/2017
 ms.assetid: 6021D246-151D-4634-B0CB-413BAAA82D17
 ms.technology: entity-framework-core

@@ -1,7 +1,7 @@
 ---
 title: Devart Entity Developer | Microsoft Docs
 author: ErikEJ
-ms.author: rowmil
+ms.author: divega
 ms.date: 02/28/2017
 ms.assetid: 03DE6911-175C-4BEC-AC5F-333F4EBE352C
 ms.technology: entity-framework-core

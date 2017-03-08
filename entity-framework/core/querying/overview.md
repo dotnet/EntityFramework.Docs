@@ -1,7 +1,7 @@
 ---
 title: How Query Works | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: de2e34cd-659b-4cab-b5ed-7a979c6bf120
 ms.technology: entity-framework-core

@@ -1,7 +1,7 @@
 ---
 title: Asynchronous Saving | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 ms.date: 01/24/2017
 ms.assetid: b64a606e-ecd9-4807-829a-b6ec05ade33f
 ms.technology: entity-framework-core

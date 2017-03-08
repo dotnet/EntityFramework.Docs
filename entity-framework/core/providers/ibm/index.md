@@ -1,7 +1,7 @@
 ---
 title: IBM Data Server (DB2) | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 ms.date: 02/15/2017
 ms.assetid: 825e5332-5aa3-4600-9efb-ab71aaff59ec
 ms.technology: entity-framework-core

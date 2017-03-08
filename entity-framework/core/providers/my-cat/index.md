@@ -1,7 +1,7 @@
 ---
 title: MyCat | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 ms.date: 02/27/2017
 ms.assetid: ad798f02-a7a4-45c1-b0a9-8e92f5dc6ff0
 ms.technology: entity-framework-core

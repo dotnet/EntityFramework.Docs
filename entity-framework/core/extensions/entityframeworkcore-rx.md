@@ -1,7 +1,7 @@
 ---
 title: EntityFrameworkCore.Rx | Microsoft Docs
 author: ErikEJ
-ms.author: rowmil
+ms.author: divega
 ms.date: 01/19/2017
 ms.assetid: BE0B8302-49B9-48ED-A216-2DF6A4AD0096
 ms.technology: entity-framework-core

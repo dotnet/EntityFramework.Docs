@@ -1,7 +1,7 @@
 ---
 title: Including & Excluding Properties | Microsoft Docs
 author: rowanmiller
-ms.author: rowmil
+ms.author: divega
 
 ms.date: 10/27/2016
 

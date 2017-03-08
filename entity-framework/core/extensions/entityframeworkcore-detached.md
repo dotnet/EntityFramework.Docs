@@ -1,7 +1,7 @@
 ---
 title: Detached.EntityFramework | Microsoft Docs
 author: ErikEJ
-ms.author: rowmil
+ms.author: divega
 ms.date: 01/19/2017
 ms.assetid: DE1C3FEA-F618-4C11-932F-7C392A1B2C94
 ms.technology: entity-framework-core
