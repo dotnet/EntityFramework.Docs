@@ -29,17 +29,17 @@ In this walkthrough, you will build a Universal Windows Platform (UWP) applicati
 The following items are required to complete this walkthrough:
 * Windows 10
 
-* [Visual Studio 2015 Update 3](https://go.microsoft.com/fwlink/?LinkId=691129)
+* [Visual Studio 2017](https://www.visualstudio.com/downloads/)
 
 * The latest version of [Windows 10 Developer Tools](https://dev.windows.com/en-us/downloads)
 
 ## Create a new project
 
-* Open Visual Studio 2015
+* Open Visual Studio
 
 * File ‣ New ‣ Project...
 
-* From the left menu select Templates ‣ Visual C# ‣ Windows ‣ Universal
+* From the left menu select Templates ‣ Visual C# ‣ Windows Universal
 
 * Select the **Blank App (Universal Windows)** project template
 
@@ -64,9 +64,9 @@ To use EF Core, install the package for the database provider(s) you want to tar
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Sqlite`
 
-Later in this walkthrough we will also be using some Entity Framework commands to maintain the database. So we will install the commands package as well.
+Later in this walkthrough we will also be using some Entity Framework Tools to maintain the database. So we will install the tools package as well.
 
-* Run `Install-Package Microsoft.EntityFrameworkCore.Tools –Pre`
+* Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
 
 ## Create your model
 
@@ -92,7 +92,7 @@ namespace EFGetStarted.UWP
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=Blogging.db");
+            optionsBuilder.UseSqlite("Data Source=blogging.db");
         }
     }
 
@@ -116,45 +116,7 @@ namespace EFGetStarted.UWP
 }
 ````
 
-> [!TIP]
-> In a real application you would put each class in a separate file and put the connection string in the `App.Config` file and read it out using `ConfigurationManager`. For the sake of simplicity, we are putting everything in a single code file for this tutorial.
-
 ## Create your database
-
-> [!WARNING]
-> **Known Issue in Preview 2**Using EF Tools on UWP projects does not work without manually adding binding redirects.
->
->   * File –> New –> File...
->
->   * From the left menu select Visual C# -> General -> Text File
->
->   * Give the file the name "App.config"
->
->   * Add the following contents to the file
->
-> <!-- [!code-xml[Main](samples/core/GetStarted/UWP/UWP.SQLite/App.config)] -->
-> ````xml
-> <configuration>
->   <runtime>
->     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
->       <dependentAssembly>
->         <assemblyIdentity name="System.IO.FileSystem.Primitives" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
->         <bindingRedirect oldVersion="4.0.0.0" newVersion="4.0.1.0"/>
->       </dependentAssembly>
->       <dependentAssembly>
->         <assemblyIdentity name="System.Threading.Overlapped" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
->         <bindingRedirect oldVersion="4.0.0.0" newVersion="4.0.1.0"/>
->       </dependentAssembly>
->       <dependentAssembly>
->         <assemblyIdentity name="System.ComponentModel.Annotations" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
->         <bindingRedirect oldVersion="4.1.0.0" newVersion="4.0.0.0"/>
->       </dependentAssembly>
->     </assemblyBinding>
->   </runtime>
-> </configuration>
-> ````
->
->   See [Issue #5471](https://github.com/aspnet/EntityFramework/issues/5471) for more details.
 
 Now that you have a model, you can use migrations to create a database for you.
 

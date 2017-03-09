@@ -19,7 +19,7 @@ When using the SQLite provider, there are a number of limitations you should be 
 
 ## Modeling Limitations
 
-The common relational library (shared by Entity Framework relational database providers) defines APIs for modelling concepts that are common to most relational database engines. A number of these concepts are not supported by the SQLite provider.
+The common relational library (shared by Entity Framework relational database providers) defines APIs for modelling concepts that are common to most relational database engines. A couple of these concepts are not supported by the SQLite provider.
 
 * Schemas
 
@@ -36,24 +36,17 @@ The SQLite database engine does not support a number of schema operations that a
 | AddPrimaryKey        | ✗          |
 | AddUniqueConstraint  | ✗          |
 | AlterColumn          | ✗          |
-| AlterSequence        | ✗          |
 | CreateIndex          | ✔          |
-| CreateSchema         | ✗          |
-| CreateSequence       | ✗          |
 | CreateTable          | ✔          |
 | DropColumn           | ✗          |
 | DropForeignKey       | ✗          |
 | DropIndex            | ✔          |
 | DropPrimaryKey       | ✗          |
-| DropSchema           | ✗          |
-| DropSequence         | ✗          |
 | DropTable            | ✔          |
 | DropUniqueConstraint | ✗          |
 | RenameColumn         | ✗          |
 | RenameIndex          | ✗          |
-| RenameSequence       | ✗          |
 | RenameTable          | ✔          |
-| RestartSequence      | ✗          |
 
 > [!TIP]
 > You can workaround some of these limitations by manually writing code in your migrations to perform a table rebuild. A table rebuild involves renaming the existing table, creating a new table, copying data to the new table, and dropping the old table. You will need to use the `Sql(string)` method to perform some of these steps.

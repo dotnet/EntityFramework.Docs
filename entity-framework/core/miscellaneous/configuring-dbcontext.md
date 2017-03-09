@@ -47,7 +47,7 @@ Application code to initialize from constructor argument
 <!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 ````csharp
 var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
-optionsBuilder.UseSqlite("Filename=./blog.db");
+optionsBuilder.UseSqlite("Data Source=blog.db");
 
 using (var context = new BloggingContext(optionsBuilder.Options))
 {
@@ -70,7 +70,7 @@ public class BloggingContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Filename=./blog.db");
+        optionsBuilder.UseSqlite("Data Source=blog.db");
     }
 }
 ````
@@ -99,7 +99,7 @@ Adding dbcontext to dependency injection
 ````csharp
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddDbContext<BloggingContext>(options => options.UseSqlite("Filename=./blog.db"));
+    services.AddDbContext<BloggingContext>(options => options.UseSqlite("Data Source=blog.db"));
 }
 ````
 
@@ -142,7 +142,7 @@ var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
 
 ## Using `IDbContextFactory<TContext>`
 
-As an alternative to the options above, you may also provide an implementation of `IDbContextFactory<TContext>`. EF command line tools and dependency injection can use this factory to create an instance of your DbContext. This may be required in order to enable specific design-time experiences such as migrations.
+As an alternative to the options above, you may also provide an implementation of `IDbContextFactory<TContext>`. EF tools can use this factory to create an instance of your DbContext. This may be required in order to enable specific design-time experiences such as migrations.
 
 Implement this interface to enable design-time services for context types that do not have a public default constructor. Design-time services will automatically discover implementations of this interface that are in the same assembly as the derived context.
 
@@ -160,7 +160,7 @@ namespace MyProject
         public BloggingContext Create()
         {
             var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
-            optionsBuilder.UseSqlite("Filename=./blog.db");
+            optionsBuilder.UseSqlite("Data Source=blog.db");
 
             return new BloggingContext(optionsBuilder.Options);
         }

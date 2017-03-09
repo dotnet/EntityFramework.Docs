@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 
 ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
 ms.technology: entity-framework-core
- 
+
 uid: core/miscellaneous/connection-strings
 ---
 # Connection Strings
@@ -65,7 +65,7 @@ public class BloggingContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-            optionsBuilder.UseSqlite("Filename=Blogging.db");
+            optionsBuilder.UseSqlite("Data Source=blogging.db");
     }
 }
 ````

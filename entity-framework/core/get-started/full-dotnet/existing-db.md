@@ -25,9 +25,9 @@ In this walkthrough, you will build a console application that performs basic da
 
 The following prerequisites are needed to complete this walkthrough:
 
-* [Visual Studio 2015 Update 3](https://go.microsoft.com/fwlink/?LinkId=691129)
+* [Visual Studio 2017](https://www.visualstudio.com/downloads/)
 
-* [Latest version of NuGet Package Manager](https://visualstudiogallery.msdn.microsoft.com/5d345edc-2e2d-4a9c-b73b-d53956dc458d)
+* [Latest version of NuGet Package Manager](https://dist.nuget.org/index.html)
 
 * [Latest version of Windows PowerShell](https://www.microsoft.com/en-us/download/details.aspx?id=40855)
 
@@ -62,7 +62,7 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 
 ## Create a new project
 
-* Open Visual Studio 2015
+* Open Visual Studio
 
 * File ‣ New ‣ Project...
 
@@ -84,7 +84,7 @@ To use EF Core, install the package for the database provider(s) you want to tar
 
 To enable reverse engineering from an existing database we need to install a couple of other packages too.
 
-* Run `Install-Package Microsoft.EntityFrameworkCore.Tools –Pre`
+* Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer.Design`
 

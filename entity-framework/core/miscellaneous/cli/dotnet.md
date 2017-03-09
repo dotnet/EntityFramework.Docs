@@ -7,65 +7,63 @@ ms.date: 10/27/2016
 
 ms.assetid: c7c6824c-72be-4058-bdac-9b5b995b2f56
 ms.technology: entity-framework-core
- 
+
 uid: core/miscellaneous/cli/dotnet
 ---
-# .NET Core CLI
+# .NET Command Line Tools
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
-EF command-line tools for .NET Core Command Line Interface (CLI).
+> [!IMPORTANT]
+> The [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.0.0 no longer supports `project.json` or Visual Studio 2015. Everyone doing .NET Core development is encouraged to [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/) and [Visual Studio 2017](https://www.visualstudio.com/downloads/).
 
-> [!NOTE]
-> Command-line tools for .NET Core CLI has known issues. See [Preview 2 Known Issues](#preview-2-known-issues) for more details.
+Entity Framework Core .NET Command Line Tools
 
 ## Installation
 
 ### Prerequisites
 
-EF command-line tools requires .NET Core CLI Preview 2 or newer. See the [.NET Core](https://www.microsoft.com/net/core) website for installation instructions.
+.NET Command Line Tools require the .NET Core SDK. See the [.NET Core](https://www.microsoft.com/net/core) website for installation instructions.
 
 ### Supported Frameworks
 
-EF supports .NET Core CLI commands on these frameworks:
+The .NET Command Line Tools will work on projects targeting these frameworks:
 
 * .NET Framework 4.5.1 and newer. ("net451", "net452", "net46", etc.)
 
-* .NET Core App 1.0. ("netcoreapp1.0")
+* .NET Core App 1.0 and newer. ("netcoreapp1.0", "netcoreapp1.1", etc.)
 
-### Install by editing project.json
+### Install by editing project
 
-EF command-line tools for .NET Core CLI are installed by manually editing `project.json`.
+The EF Core .NET Command Line Tools are installed by manually editing the `*.csproj` file.
 
-1. Add `Microsoft.EntityFrameworkCore.Tools` as a "tool" and `Microsoft.EntityFrameworkCore.Design` as a build-only dependency under "dependencies". See sample project.json below.
+1. Add `Microsoft.EntityFrameworkCore.Tools.DotNet` as a DotNetCliToolReference. See sample project below.
 
-2. Execute `dotnet restore`. If restore does not succeed, the command-line tools may not have installed correctly.
+2. Execute `dotnet add package Microsoft.EntityFrameworkCore.Design`
 
-The resulting project.json should include these items (in addition to your other project dependencies).
+3. Execute `dotnet restore`. If restore does not succeed, the tools may not have installed correctly.
+
+The resulting project should include these items (in addition to your other project dependencies).
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````json
-{
-    "dependencies": {
-        "Microsoft.EntityFrameworkCore.Design": {
-            "type": "build",
-            "version": "1.0.0-preview2-final"
-        }
-    },
-
-    "tools": {
-        "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final"
-    },
-
-    "frameworks": {
-        "netcoreapp1.0": { }
-    }
-}
+````xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
+  </ItemGroup>
+</Project>
 ````
 
 > [!TIP]
-> A build-only dependency (`"type": "build"`) means this dependency is local to the current project. For example, if Project A has a build only dependency and Project B depends on A, `dotnet restore` will not add A's build-only dependencies into Project B.
+> A private package reference (`PrivateAssets="All"`) means this dependency is local to the current project. For example, if Project A has a build only dependency and Project B depends on A, `dotnet restore` will not add A's build-only dependencies into Project B.
 
 ## Usage
 
@@ -78,18 +76,16 @@ Commands can be run from the command line by navigating to the project directory
 Usage: dotnet ef [options] [command]
 
 Options:
-  -h|--help                           Show help information
-  -p|--project <PROJECT>              The project to target (defaults to the project in the current directory). Can be a path to a project.json or a project directory.
-  -s|--startup-project <PROJECT>      The path to the project containing Startup (defaults to the target project). Can be a path to a project.json or a project directory.
-  -c|--configuration <CONFIGURATION>  Configuration under which to load (defaults to Debug)
-  -f|--framework <FRAMEWORK>          Target framework to load from the startup project (defaults to the framework most compatible with .NETCoreApp,Version=v1.0).
-  -b|--build-base-path <OUTPUT_DIR>   Directory in which to find temporary outputs.
-  -o|--output <OUTPUT_DIR>            Directory in which to find outputs
+  --version        Show version information
+  -h|--help        Show help information
+  -v|--verbose     Show verbose output.
+  --no-color       Don't colorize output.
+  --prefix-output  Prefix output with level.
 
 Commands:
-  database    Commands to manage your database
-  dbcontext   Commands to manage your DbContext types
-  migrations  Commands to manage your migrations
+  database    Commands to manage the database.
+  dbcontext   Commands to manage DbContext types.
+  migrations  Commands to manage migrations.
 ````
 
 ### dotnet-ef-database
@@ -99,12 +95,14 @@ Commands:
 Usage: dotnet ef database [options] [command]
 
 Options:
-  -h|--help     Show help information
-  -v|--verbose  Enable verbose output
+  -h|--help        Show help information
+  -v|--verbose     Show verbose output.
+  --no-color       Don't colorize output.
+  --prefix-output  Prefix output with level.
 
 Commands:
-  drop    Drop the database for specific environment
-  update  Updates the database to a specified migration
+  drop    Drops the database.
+  update  Updates the database to a specified migration.
 ````
 
 ### dotnet-ef-database-drop
@@ -114,11 +112,19 @@ Commands:
 Usage: dotnet ef database drop [options]
 
 Options:
-  -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-  -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
-  -f|--force                      Drop without confirmation
-  -h|--help                       Show help information
-  -v|--verbose                    Enable verbose output
+  -f|--force                             Don't confirm.
+  --dry-run                              Show which database would be dropped, but don't drop it.
+  -c|--context <DBCONTEXT>               The DbContext to use.
+  -p|--project <PROJECT>                 The project to use.
+  -s|--startup-project <PROJECT>         The startup project to use.
+  --framework <FRAMEWORK>                The target framework.
+  --configuration <CONFIGURATION>        The configuration to use.
+  --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
+  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  -h|--help                              Show help information
+  -v|--verbose                           Show verbose output.
+  --no-color                             Don't colorize output.
+  --prefix-output                        Prefix output with level.
 ````
 
 ### dotnet-ef-database-update
@@ -128,13 +134,20 @@ Options:
 Usage: dotnet ef database update [arguments] [options]
 
 Arguments:
-  [migration]  The target migration. If '0', all migrations will be reverted. If omitted, all pending migrations will be applied
+  <MIGRATION>  The target migration. If '0', all migrations will be reverted. Defaults to the last migration.
 
 Options:
-  -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
-  -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-  -h|--help                       Show help information
-  -v|--verbose                    Enable verbose output
+  -c|--context <DBCONTEXT>               The DbContext to use.
+  -p|--project <PROJECT>                 The project to use.
+  -s|--startup-project <PROJECT>         The startup project to use.
+  --framework <FRAMEWORK>                The target framework.
+  --configuration <CONFIGURATION>        The configuration to use.
+  --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
+  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  -h|--help                              Show help information
+  -v|--verbose                           Show verbose output.
+  --no-color                             Don't colorize output.
+  --prefix-output                        Prefix output with level.
 ````
 
 ### dotnet-ef-dbcontext
@@ -144,12 +157,36 @@ Options:
 Usage: dotnet ef dbcontext [options] [command]
 
 Options:
-  -h|--help     Show help information
-  -v|--verbose  Enable verbose output
+  -h|--help        Show help information
+  -v|--verbose     Show verbose output.
+  --no-color       Don't colorize output.
+  --prefix-output  Prefix output with level.
 
 Commands:
-  list      List your DbContext types
-  scaffold  Scaffolds a DbContext and entity type classes for a specified database
+  info      Gets information about a DbContext type.
+  list      Lists available DbContext types.
+  scaffold  Scaffolds a DbContext and entity types for a database.
+````
+
+### dotnet-ef-dbcontext-info
+
+<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
+````
+Usage: dotnet ef dbcontext info [options]
+
+Options:
+  --json                                 Show JSON output.
+  -c|--context <DBCONTEXT>               The DbContext to use.
+  -p|--project <PROJECT>                 The project to use.
+  -s|--startup-project <PROJECT>         The startup project to use.
+  --framework <FRAMEWORK>                The target framework.
+  --configuration <CONFIGURATION>        The configuration to use.
+  --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
+  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  -h|--help                              Show help information
+  -v|--verbose                           Show verbose output.
+  --no-color                             Don't colorize output.
+  --prefix-output                        Prefix output with level.
 ````
 
 ### dotnet-ef-dbcontext-list
@@ -159,10 +196,17 @@ Commands:
 Usage: dotnet ef dbcontext list [options]
 
 Options:
-  -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-  --json                          Use json output. JSON is wrapped by '//BEGIN' and '//END'
-  -h|--help                       Show help information
-  -v|--verbose                    Enable verbose output
+  --json                                 Show JSON output.
+  -p|--project <PROJECT>                 The project to use.
+  -s|--startup-project <PROJECT>         The startup project to use.
+  --framework <FRAMEWORK>                The target framework.
+  --configuration <CONFIGURATION>        The configuration to use.
+  --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
+  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  -h|--help                              Show help information
+  -v|--verbose                           Show verbose output.
+  --no-color                             Don't colorize output.
+  --prefix-output                        Prefix output with level.
 ````
 
 ### dotnet-ef-dbcontext-scaffold
@@ -172,19 +216,27 @@ Options:
 Usage: dotnet ef dbcontext scaffold [arguments] [options]
 
 Arguments:
-  [connection]  The connection string of the database
-  [provider]    The provider to use. For example, Microsoft.EntityFrameworkCore.SqlServer
+  <CONNECTION>  The connection string to the database.
+  <PROVIDER>    The provider to use. (E.g. Microsoft.EntityFrameworkCore.SqlServer)
 
 Options:
-  -a|--data-annotations           Use DataAnnotation attributes to configure the model where possible. If omitted, the output code will use only the fluent API.
-  -c|--context <name>             Name of the generated DbContext class.
-  -f|--force                      Force scaffolding to overwrite existing files. Otherwise, the code will only proceed if no output files would be overwritten.
-  -o|--output-dir <path>          Directory of the project where the classes should be output. If omitted, the top-level project directory is used.
-  --schema <schema>               Selects a schema for which to generate classes.
-  -t|--table <schema.table>       Selects a table for which to generate classes.
-  -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-  -h|--help                       Show help information
-  -v|--verbose                    Enable verbose output
+  -d|--data-annotations                  Use attributes to configure the model (where possible). If omitted, only the fluent API is used.
+  -c|--context <NAME>                    The name of the DbContext.
+  -f|--force                             Overwrite existing files.
+  -o|--output-dir <PATH>                 The directory to put files in. Paths are relative to the project directory.
+  --schema <SCHEMA_NAME>...              The schemas of tables to generate entity types for.
+  -t|--table <TABLE_NAME>...             The tables to generate entity types for.
+  --json                                 Show JSON output.
+  -p|--project <PROJECT>                 The project to use.
+  -s|--startup-project <PROJECT>         The startup project to use.
+  --framework <FRAMEWORK>                The target framework.
+  --configuration <CONFIGURATION>        The configuration to use.
+  --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
+  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  -h|--help                              Show help information
+  -v|--verbose                           Show verbose output.
+  --no-color                             Don't colorize output.
+  --prefix-output                        Prefix output with level.
 ````
 
 ### dotnet-ef-migrations
@@ -194,14 +246,16 @@ Options:
 Usage: dotnet ef migrations [options] [command]
 
 Options:
-  -h|--help     Show help information
-  -v|--verbose  Enable verbose output
+  -h|--help        Show help information
+  -v|--verbose     Show verbose output.
+  --no-color       Don't colorize output.
+  --prefix-output  Prefix output with level.
 
 Commands:
-  add     Add a new migration
-  list    List the migrations
-  remove  Remove the last migration
-  script  Generate a SQL script from migrations
+  add     Adds a new migration.
+  list    Lists available migrations.
+  remove  Removes the last migration.
+  script  Generates a SQL script from migrations.
 ````
 
 ### dotnet-ef-migrations-add
@@ -211,15 +265,22 @@ Commands:
 Usage: dotnet ef migrations add [arguments] [options]
 
 Arguments:
-  [name]  The name of the migration
+  <NAME>  The name of the migration.
 
 Options:
-  -o|--output-dir <path>          The directory (and sub-namespace) to use. If omitted, "Migrations" is used. Relative paths are relative the directory in which the command is executed.
-  -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
-  -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-  --json                          Use json output. JSON is wrapped by '//BEGIN' and '//END'
-  -h|--help                       Show help information
-  -v|--verbose                    Enable verbose output
+  -o|--output-dir <PATH>                 The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to "Migrations".
+  --json                                 Show JSON output.
+  -c|--context <DBCONTEXT>               The DbContext to use.
+  -p|--project <PROJECT>                 The project to use.
+  -s|--startup-project <PROJECT>         The startup project to use.
+  --framework <FRAMEWORK>                The target framework.
+  --configuration <CONFIGURATION>        The configuration to use.
+  --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
+  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  -h|--help                              Show help information
+  -v|--verbose                           Show verbose output.
+  --no-color                             Don't colorize output.
+  --prefix-output                        Prefix output with level.
 ````
 
 ### dotnet-ef-migrations-list
@@ -229,11 +290,18 @@ Options:
 Usage: dotnet ef migrations list [options]
 
 Options:
-  -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
-  -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-  --json                          Use json output. JSON is wrapped by '//BEGIN' and '//END'
-  -h|--help                       Show help information
-  -v|--verbose                    Enable verbose output
+  --json                                 Show JSON output.
+  -c|--context <DBCONTEXT>               The DbContext to use.
+  -p|--project <PROJECT>                 The project to use.
+  -s|--startup-project <PROJECT>         The startup project to use.
+  --framework <FRAMEWORK>                The target framework.
+  --configuration <CONFIGURATION>        The configuration to use.
+  --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
+  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  -h|--help                              Show help information
+  -v|--verbose                           Show verbose output.
+  --no-color                             Don't colorize output.
+  --prefix-output                        Prefix output with level.
 ````
 
 ### dotnet-ef-migrations-remove
@@ -243,11 +311,19 @@ Options:
 Usage: dotnet ef migrations remove [options]
 
 Options:
-  -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
-  -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-  -f|--force                      Removes the last migration without checking the database. If the last migration has been applied to the database, you will need to manually reverse the changes it made.
-  -h|--help                       Show help information
-  -v|--verbose                    Enable verbose output
+  -f|--force                             Don't check to see if the migration has been applied to the database.
+  --json                                 Show JSON output.
+  -c|--context <DBCONTEXT>               The DbContext to use.
+  -p|--project <PROJECT>                 The project to use.
+  -s|--startup-project <PROJECT>         The startup project to use.
+  --framework <FRAMEWORK>                The target framework.
+  --configuration <CONFIGURATION>        The configuration to use.
+  --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
+  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  -h|--help                              Show help information
+  -v|--verbose                           Show verbose output.
+  --no-color                             Don't colorize output.
+  --prefix-output                        Prefix output with level.
 ````
 
 ### dotnet-ef-migrations-script
@@ -257,16 +333,23 @@ Options:
 Usage: dotnet ef migrations script [arguments] [options]
 
 Arguments:
-  [from]  The starting migration. If omitted, '0' (the initial database) is used
-  [to]    The ending migration. If omitted, the last migration is used
+  <FROM>  The starting migration. Defaults to '0' (the initial database).
+  <TO>    The ending migration. Defaults to the last migration.
 
 Options:
-  -o|--output <file>              The file to write the script to instead of stdout
-  -i|--idempotent                 Generates an idempotent script that can used on a database at any migration
-  -c|--context <context>          The DbContext to use. If omitted, the default DbContext is used
-  -e|--environment <environment>  The environment to use. If omitted, "Development" is used.
-  -h|--help                       Show help information
-  -v|--verbose                    Enable verbose output
+  -o|--output <FILE>                     The file to write the result to.
+  -i|--idempotent                        Generate a script that can be used on a database at any migration.
+  -c|--context <DBCONTEXT>               The DbContext to use.
+  -p|--project <PROJECT>                 The project to use.
+  -s|--startup-project <PROJECT>         The startup project to use.
+  --framework <FRAMEWORK>                The target framework.
+  --configuration <CONFIGURATION>        The configuration to use.
+  --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
+  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  -h|--help                              Show help information
+  -v|--verbose                           Show verbose output.
+  --no-color                             Don't colorize output.
+  --prefix-output                        Prefix output with level.
 ````
 
 ## Common Errors
@@ -286,112 +369,58 @@ As the error message suggests, one solution is to add an implementation of `IDbC
 
 <a name=dotnet-cli-issues></a>
 
-## Preview 2 Known Issues
+## .NET Standard Limitation
 
-### Targeting class library projects is not supported
-
-.NET Core CLI does not support running commands on class libraries as of Preview 2. Despite being able to install EF tools, executing commands may throw this error message.
+.NET Core CLI does not fully support projects targeting .NET Standard class libraries. Despite being able to install EF tools, executing commands will show this warning message and may ultimately terminate in error.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 ````
-Could not invoke this command on the startup project '(your project name)'. This preview of Entity Framework tools does not support commands on class library projects in ASP.NET Core and .NET Core applications.
+Startup project '(your project name)' targets framework '.NETStandard'. This framework is not intended for execution and may fail to resolve runtime dependencies. If so, specify a different project using the --startup-project option and try again.
 ````
 
 See issue [https://github.com/dotnet/cli/issues/2645](https://github.com/dotnet/cli/issues/2645).
 
 #### Explanation
 
-If `dotnet run` does not work in the startup project, then `dotnet ef` cannot run either.
+.NET Standard is an abstract contract for frameworks and isn't intended for execution. As such, all the assets required to execute may not be present.
 
-"dotnet ef" is invoked as an alternate entry point into an application. If the "startup" project is not an application, then it is not currently possible to run the project as an application with the "dotnet ef" alternate entry point.
+The startup project defaults to the current project, unless specified differently with the parameter `--startup-project`.
 
-The "startup" project defaults to the current project, unless specified differently with the parameter `--startup-project`.
+#### Workaround 1 - Use an app as the startup project
 
-#### Workaround 1 - Utilize a separate startup project
+If you have an existing .NET Core App or .NET Framework App (including an ASP.NET Core Web Application), you can use it as the startup project. If not, you can create a new one just for use with the .NET Command Line Tools.
 
-Convert the class library project into an "app" project. This can either be a .NET Core app or a desktop .NET app.
-
-Example:
-
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````json
-{
-    "frameworks": {
-        "netcoreapp1.0": {
-            "dependencies": {
-                "Microsoft.NETCore.App": {
-                    "type": "platform",
-                    "version": "1.0.0-*"
-                }
-            }
-        }
-    }
-}
-````
-
-Be sure to register the EntityFramework Tools as a project dependency and in the tools section of your project.json.
-
-Example:
-
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````json
-{
-    "dependencies": {
-        "Microsoft.EntityFrameworkCore.Tools": {
-            "version": "1.0.0-preview2-final",
-            "type": "build"
-        }
-    },
-    "tools": {
-        "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final"
-    }
-}
-````
-
-Finally, specify a startup project that is a "runnable app."
+Specify a startup project that is a "runnable app."
 
 Example:
 
 <!-- literal_block"language": "csharp",ole", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 ````console
-dotnet ef --startup-project ../MyConsoleApplication/ migrations list
+dotnet ef migrations list --startup-project ../MyConsoleApp/
 ````
 
-#### Workaround 2 - Modify your class library to be a startup application
+#### Workaround 2 - Cross-target a runnable framework
 
-Convert the class library project into an "app" project. This can either be a .NET Core app or a desktop .NET app.
+Add an additional target framework to the class library project. This can a version of either .NET Core App or .NET Framework.
 
-To make the project a .NET Core App, add the "netcoreapp1.0" framework to project.json along with the other settings in the sample below:
+To make the project a .NET Core App, add the "netcoreapp1.0" framework to project like in the sample below:
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````json
-{
-    "buildOptions": {
-        "emitEntryPoint": true
-    },
-    "frameworks": {
-        "netcoreapp1.0": {
-            "dependencies": {
-                "Microsoft.NETCore.App": {
-                    "type": "platform",
-                    "version": "1.0.0-*"
-                }
-            }
-        }
-    }
-}
+````xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.0;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>
 ````
 
-To make a desktop .NET app, ensure you project targets "net451" or newer (example "net461" also works) and ensure the build option `"emitEntryPoint"` is set to true.
+When targeting .NET Framework, ensure you project targets version 4.5.1 or newer.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````json
-{
-    "buildOptions": {
-        "emitEntryPoint": true
-    },
-    "frameworks": {
-        "net451": { }
-    }
-}
+````xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net46;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>
 ````

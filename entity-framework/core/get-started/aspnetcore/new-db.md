@@ -13,6 +13,9 @@ uid: core/get-started/aspnetcore/new-db
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
+> [!IMPORTANT]
+> The [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.0.0 no longer supports `project.json` or Visual Studio 2015. Everyone doing .NET Core development is encouraged to [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/) and [Visual Studio 2017](https://www.visualstudio.com/downloads/).
+
 In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework. You will use migrations to create the database from your model.
 
 > [!TIP]
@@ -21,7 +24,7 @@ In this walkthrough, you will build an ASP.NET Core MVC application that perform
 ## Prerequisites
 
 The following prerequisites are needed to complete this walkthrough:
-* [Visual Studio 2017 RC3](https://www.visualstudio.com/downloads/)
+* [Visual Studio 2017](https://www.visualstudio.com/downloads/)
 
 ## Create a new project
 
@@ -45,9 +48,9 @@ To use EF Core, install the package for the database provider(s) you want to tar
 * **Tools -> NuGet Package Manager -> Package Manager Console**
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
-We will be using some Entity Framework commands to maintain the database. So we will install the tools package as well.
+We will be using some Entity Framework Tools to maintain the database. So we will install the tools package as well.
 
-* Run `Install-Package Microsoft.EntityFrameworkCore.Tools -Version 1.1.0-msbuild3-final`
+* Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
 
 ## Create your model
 

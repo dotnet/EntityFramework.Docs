@@ -10,7 +10,7 @@ namespace ConsoleApp.SQLite
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=./Blogging.db");
+            optionsBuilder.UseSqlite("Data Source=blogging.db");
         }
     }
 
