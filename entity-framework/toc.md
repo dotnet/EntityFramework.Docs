@@ -70,6 +70,8 @@
 ####[Asynchronous Saving](core/saving/async.md)
 ####[🔧 Disconnected Entities](core/saving/disconnected-entities.md)
 ####[Explicit values for generated properties](core/saving/explicit-values-generated-properties.md)
+<!-- Platforms -->
+###[Platforms](core/platforms/index.md)
 <!-- Providers -->
 ###[Database Providers](core/providers/index.md)
 ####[Microsoft SQL Server](core/providers/sql-server/index.md)
