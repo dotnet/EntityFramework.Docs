@@ -81,3 +81,6 @@ You can also specify a schema that the table belongs to.
         modelBuilder.Entity<Blog>()
             .ToTable("blogs", schema: "blogging");
 ````
+
+## Using Statement
+using System.ComponentModel.DataAnnotations.Schema;
