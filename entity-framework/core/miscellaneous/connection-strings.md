@@ -93,3 +93,4 @@ public void ConfigureServices(IServiceCollection services)
         options.UseSqlServer(Configuration.GetConnectionString("BloggingDatabase")));
 }
 ````
+Note: the following using statement is required: using Microsoft.EntityFrameworkCore;
