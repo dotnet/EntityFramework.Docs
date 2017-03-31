@@ -83,7 +83,7 @@ By convention, a relationship will be created when there is a navigation propert
 
 ### Fully Defined Relationships
 
-The most common pattern for relationships is to have navigation properties defined on both ends of the relationship and a foreign key property defined in dependent entity class.
+The most common pattern for relationships is to have navigation properties defined on both ends of the relationship and a foreign key property defined in the dependent entity class.
 
 * If a pair of navigation properties is found between two types, then they will be configured as inverse navigation properties of the same relationship.
 
