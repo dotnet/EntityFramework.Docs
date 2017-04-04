@@ -89,6 +89,8 @@
 ####[Writing a Database Provider](core/providers/writing-a-provider.md)
 <!-- API Reference -->
 ###[API Reference](https://docs.microsoft.com/ef/core/api)
+<!-- Command line Reference -->
+###[Command Line Reference](core/miscellaneous/cli/index.md)
 <!-- Extensions -->
 ###[Tools & Extensions](core/extensions/index.md)
 ####[LLBLGen Pro](core/extensions/llbl-gen-pro.md)
