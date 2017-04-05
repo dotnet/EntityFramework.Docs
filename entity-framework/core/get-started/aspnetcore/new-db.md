@@ -1,5 +1,5 @@
 ---
-title: ASP.NET Core - New Database | Microsoft Docs
+title: ASP.NET Core - New database with Visual Studio 2017 | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -8,7 +8,9 @@ ms.technology: entity-framework-core
 uid: core/get-started/aspnetcore/new-db
 ---
 
-# ASP.NET Core - New Database
+# ASP.NET Core - New database with Visual Studio 2017
+
+This tutorial uses Visual Studio. See [.NET Core - New Database with SQLite](xref:core/get-started/netcore/new-db-sqlite) for the cross-platform version.
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
