@@ -60,7 +60,7 @@ Tip: In a real application you would put each class in a separate file and put t
 Once you have a model, you can use migrations to create a database.
 
 * Run `dotnet ef migrations add MyFirstMigration` to scaffold a migration and create the initial set of tables for the model.
-* Run `dotnet ef database update` to apply the new migration to the database. Because the database doesn't exist, it will be created before the migration is applied.
+* Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations. 
 
 Note: When using relative paths with SQLite, the path will be relative to the application's main assembly. In this sample, the main binary is `bin/Debug/netcoreapp1.1/ConsoleApp.SQLite.dll`, so the SQLite database will be in `bin/Debug/netcoreapp1.1/blogging.db`.
 
