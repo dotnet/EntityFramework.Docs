@@ -39,9 +39,11 @@ dotnet new console
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQLite. For a list of available providers see [Database Providers](../../providers/index.md).
 
-*  Modify the `ConsoleApp.SQLite.csproj` file so that it matches the following.
+*  Replace the `ConsoleApp.SQLite.csproj` contents with the following:
 
 [!code[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/ConsoleApp.SQLite.csproj)]
+
+ Note: The version numbers used above were correct at the time of publishing.
 
 *  Run `dotnet restore` to install the new packages.
 
