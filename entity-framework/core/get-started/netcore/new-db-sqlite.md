@@ -23,7 +23,7 @@ Notes:
 
 The following prerequisites are needed to complete this walkthrough:
 * An operating system that supports .NET Core.
-* [The .NET Core SDK](https://www.microsoft.com/net/core).
+* [The .NET Core SDK](https://www.microsoft.com/net/core) 1.1 and later.
 
 ## Create a new project
 
@@ -59,18 +59,14 @@ Tip: In a real application you would put each class in a separate file and put t
 
 ## Create the database
 
-Once you have a model, you can use migrations to create a database.
+Once you have a model, you can use [migrations](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations) to create a database.
 
 * Run `dotnet ef migrations add MyFirstMigration` to scaffold a migration and create the initial set of tables for the model.
 * Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations. 
 
-Note: When using relative paths with SQLite, the path will be relative to the application's main assembly. In this sample, the main binary is `bin/Debug/netcoreapp1.1/ConsoleApp.SQLite.dll`, so the SQLite database will be in `bin/Debug/netcoreapp1.1/blogging.db`.
+Notes: 
 
-Tip: If you make changes to your model, you can use the `dotnet ef migrations add` command to scaffold a new migration to make the corresponding schema changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the `dotnet ef database update` command to apply the changes to the database.
->
->EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
-
-Note: SQLite does not support all migrations (schema changes) due to limitations in SQLite. See [SQLite Limitations](../../providers/sqlite/limitations.md). For new development, consider dropping the database and creating a new one rather than using migrations when your model changes.
+- When using relative paths with SQLite, the path will be relative to the application's main assembly. In this sample, the main binary is `bin/Debug/netcoreapp1.1/ConsoleApp.SQLite.dll`, so the SQLite database will be in `bin/Debug/netcoreapp1.1/blogging.db`.
 
 ## Use your model
 
@@ -99,3 +95,11 @@ Time elapsed 00:00:00.8735339
 All blogs in database:
  - http://blogs.msdn.com/adonet
 ```
+
+### Changing the model: 
+
+- If you make changes to your model, you can use the `dotnet ef migrations add` command to scaffold a new [migration](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations)  to make the corresponding schema changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the `dotnet ef database update` command to apply the changes to the database.
+
+-EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
+
+- SQLite does not support all migrations (schema changes) due to limitations in SQLite. See [SQLite Limitations](../../providers/sqlite/limitations.md). For new development, consider dropping the database and creating a new one rather than using migrations when your model changes.
