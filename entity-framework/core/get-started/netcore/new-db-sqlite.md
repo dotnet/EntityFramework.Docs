@@ -29,7 +29,7 @@ The following prerequisites are needed to complete this walkthrough:
 
 * Create a new `ConsoleApp.SQLite` folder for your project and use the `dotnet` command to populate it with a .NET Core app.
 
-```bash
+```
 mkdir ConsoleApp.SQLite
 cd ConsoleApp.SQLite/
 dotnet new console
@@ -72,29 +72,29 @@ Notes:
 
 * Open *Program.cs* and replace the contents with the following code:
 
-[!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Program.cs)]
+ [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Program.cs)]
 
 * Run `dotnet run` to run the app.
 
-You will see that one blog is saved to the database and the details of all blogs are displayed in the console.
+ You will see that one blog is saved to the database and the details of all blogs are displayed in the console.
 
-```bash
-ConsoleApp.SQLite>dotnet run
-Project ConsoleApp.SQLite (.NETCoreApp,Version=v1.1) will be compiled because 
-inputs were modified
-Compiling ConsoleApp.SQLite for .NETCoreApp,Version=v1.1
+  ```
+  ConsoleApp.SQLite>dotnet run
+  Project ConsoleApp.SQLite (.NETCoreApp,Version=v1.1) will be compiled because 
+  inputs were modified
+  Compiling ConsoleApp.SQLite for .NETCoreApp,Version=v1.1
 
-Compilation succeeded.
-    0 Warning(s)
-    0 Error(s)
+  Compilation succeeded.
+      0 Warning(s)
+      0 Error(s)
 
-Time elapsed 00:00:00.8735339
+  Time elapsed 00:00:00.8735339
 
-1 records saved to database
+  1 records saved to database
 
-All blogs in database:
- - http://blogs.msdn.com/adonet
-```
+  All blogs in database:
+   - http://blogs.msdn.com/adonet
+  ```
 
 ### Changing the model: 
 
