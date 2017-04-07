@@ -91,6 +91,8 @@
 ###[API Reference](https://docs.microsoft.com/ef/core/api)
 <!-- Command line Reference -->
 ###[Command Line Reference](core/miscellaneous/cli/index.md)
+####[Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
+####[.NET Core CLI](core/miscellaneous/cli/dotnet.md)
 <!-- Extensions -->
 ###[Tools & Extensions](core/extensions/index.md)
 ####[LLBLGen Pro](core/extensions/llbl-gen-pro.md)
@@ -116,8 +118,6 @@
 #####[Testing with InMemory](core/miscellaneous/testing/in-memory.md)
 ####[Configuring a DbContext](core/miscellaneous/configuring-dbcontext.md)
 ####[Upgrading from RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
-#####[Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
-#####[.NET Core CLI](core/miscellaneous/cli/dotnet.md)
 
 ##[Entity Framework 6.x](ef6/index.md)
 ###[Documentation](http://msdn.com/data/ef)
