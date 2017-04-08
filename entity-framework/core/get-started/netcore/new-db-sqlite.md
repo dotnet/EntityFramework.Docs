@@ -1,7 +1,8 @@
 ---
 title: .NET Core - New database | Microsoft Docs
-author: rowanmiller
-ms.author: divega
+author: rick-anderson
+ms.author: riande
+ms.author2: tdykstra
 description: Getting started with .NET Core using Entity Framework 
 keywords: .NET Core, Entity Framework, VS Code, Visual Studio Code, Mac, Linux
 ms.date: 04/05/2017
@@ -61,7 +62,7 @@ Tip: In a real application you would put each class in a separate file and put t
 
 Once you have a model, you can use [migrations](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations) to create a database.
 
-* Run `dotnet ef migrations add MyFirstMigration` to scaffold a migration and create the initial set of tables for the model.
+* Run `dotnet ef migrations add InitialCreate` to scaffold a migration and create the initial set of tables for the model.
 * Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations. 
 
 Notes: 
@@ -74,9 +75,11 @@ Notes:
 
  [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Program.cs)]
 
-* Run `dotnet run` to run the app.
+* Test the app:
 
- You will see that one blog is saved to the database and the details of all blogs are displayed in the console.
+ `dotnet run`
+
+ One blog is saved to the database and the details of all blogs are displayed in the console.
 
   ```
   ConsoleApp.SQLite>dotnet run
