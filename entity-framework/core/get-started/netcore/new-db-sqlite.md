@@ -106,3 +106,10 @@ Notes:
 -EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
 
 - SQLite does not support all migrations (schema changes) due to limitations in SQLite. See [SQLite Limitations](../../providers/sqlite/limitations.md). For new development, consider dropping the database and creating a new one rather than using migrations when your model changes.
+
+## Additional Resources
+
+* [.NET Core - New database with SQLite](xref:core/get-started/netcore/new-db-sqlite) -  a cross-platform console EF tutorial.
+* [Introduction to ASP.NET Core MVC on Mac or Linux ](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app-xplat/index)
+* [Introduction to ASP.NET Core MVC with Visual Studio](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/index)
+* [Getting started with ASP.NET Core and Entity Framework Core using Visual Studio](https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/index)
