@@ -11,9 +11,9 @@ uid: core/get-started/aspnetcore/new-db
 
 # ASP.NET Core - New database with Visual Studio 2017
 
-In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You will use migrations to create the database from your model.
+In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You will use migrations to create the database from your model. See [Additional Resources](#additional-resources)for more Entity Framework Core tutorials.
 
-This tutorial requires [Visual Studio 2017](https://www.visualstudio.com/downloads/). See [.NET Core - New database with SQLite](xref:core/get-started/netcore/new-db-sqlite) for a cross-platform  console version.
+This tutorial requires [Visual Studio 2017](https://www.visualstudio.com/downloads/) and the [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.1 or later.
 
 Notes: 
 
@@ -33,9 +33,9 @@ Notes:
   * Ensure that **Authentication** is set to **No Authentication**
   * Click **OK**
 
-Warning: If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework model will be added to your project in `Models\IdentityModel.cs`. Using the techniques you will learn in this walkthrough, you can choose to add a second model, or extend this existing model to contain your entity classes.
+Warning: If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework Core model will be added to your project in `Models\IdentityModel.cs`. Using the techniques you will learn in this walkthrough, you can choose to add a second model, or extend this existing model to contain your entity classes.
 
-## Install Entity Framework
+## Install Entity Framework Core
 
 Install the package for the EF Core database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
@@ -43,7 +43,7 @@ Install the package for the EF Core database provider(s) you want to target. Thi
   **Tools > NuGet Package Manager > Package Manager Console**
 * Enter `Install-Package Microsoft.EntityFrameworkCore.SqlServer` in the PMC.
 
-Install the Entity Framework Tools to maintain the database:
+Install the Entity Framework Core Tools to maintain the database:
 
 * Enter `Install-Package Microsoft.EntityFrameworkCore.Tools` in the PMC.
 
@@ -58,26 +58,25 @@ Define a context and entity classes that make up the model:
 * Replace the contents of the file with the following code:
  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Models/Model.cs)]
 
-Note: In a real application you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
+Note: In a real app you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
 
 ## Register your context with dependency injection
 
-Services (such as `BloggingContext`) are registered with dependency injection during application startup. Components that require these services (such as your MVC controllers) are then provided these services via constructor parameters or properties. For more information on dependency injection see the [Dependency Injection](http://docs.asp.net/en/latest/fundamentals/dependency-injection.html) article on the ASP.NET site.
+Services (such as `BloggingContext`) are registered with [dependency injection](http://docs.asp.net/en/latest/fundamentals/dependency-injection.html) during application startup. Components that require these services (such as your MVC controllers) are then provided these services via constructor parameters or properties.
 
 In order for our MVC controllers to make use of `BloggingContext` we will register it as a service.
 
 * Open **Startup.cs**
 * Add the following `using` statements:
 
-[!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs#AddedUsings)]
+ [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs#AddedUsings)]
 
 Add the `AddDbContext` method to register it as a service:
 
 * Add the following code to the `ConfigureServices` method:
+ [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=7-8)]
 
-[!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=7-8)]
-
-Note: A real app would gennerally put the connection string in a configuration file. For the sake of simplicity, we are defining it in code. For more information, see [Connection Strings](../../miscellaneous/connection-strings.md).
+Note: A real app would gennerally put the connection string in a configuration file. For the sake of simplicity, we are defining it in code. See [Connection Strings](../../miscellaneous/connection-strings.md) for more information.
 
 ## Create your database
 
@@ -89,9 +88,10 @@ Once you have a model, you can use [migrations](https://docs.microsoft.com/aspne
 * Run `Add-Migration InitialCreate` to scaffold a migration to create the initial set of tables for your model. If you receive an error stating `The term 'add-migration' is not recognized as the name of a cmdlet`, close and reopen Visual Studio.
 * Run `Update-Database` to apply the new migration to the database. This command creates the database before applying migrations. 
 
-Tip: If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to make the corresponding schema changes to the database. See [Migrations](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations) for more information.
+Notes: 
 
-EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
+* If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to make the corresponding schema changes to the database. See [Migrations](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations) for more information.
+* EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
 
 ## Create a controller
 
@@ -119,3 +119,10 @@ Press F5 to run and test the app.
 ![image](_static/create.png)
 
 ![image](_static/index-new-db.png)
+
+## Additional Resources
+
+* [.NET Core - New database with SQLite](xref:core/get-started/netcore/new-db-sqlite) -  a cross-platform console EF tutorial.
+* [Introduction to ASP.NET Core MVC on Mac or Linux ](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app-xplat/index)
+* [Introduction to ASP.NET Core MVC with Visual Studio](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/index)
+* [Getting started with ASP.NET Core and Entity Framework Core using Visual Studio](https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/index)
