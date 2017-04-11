@@ -11,15 +11,20 @@ uid: core/get-started/aspnetcore/new-db
 
 # ASP.NET Core - New database with Visual Studio 2017
 
-In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You will use migrations to create the database from your model. See [Additional Resources](#additional-resources)for more Entity Framework Core tutorials.
+In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You will use migrations to create the database from your model. See [Additional Resources](#additional-resources) for more Entity Framework Core tutorials.
 
-This tutorial requires [Visual Studio 2017](https://www.visualstudio.com/downloads/) and the [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.1 or later.
+This tutorial requires:
+- [Visual Studio 2017](https://www.visualstudio.com/downloads/) with these workloads:
+
+  - **ASP.NET and web development** (under **Web & Cloud**)
+  - **.NET Core cross-platform development** (under **Other Toolsets**)
+
+-  [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.1 or later.
 
 Notes: 
 
 - You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb) on GitHub.
 - This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
-- The [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.1.x no longer supports `project.json` or Visual Studio 2015. We recommend you [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/). If you are using Visual Studio, we recommend you migrate to [Visual Studio 2017](https://www.visualstudio.com/downloads/).
 
 ## Create a new project in Visual Studio 2017
 
@@ -87,11 +92,6 @@ Once you have a model, you can use [migrations](https://docs.microsoft.com/aspne
   **Tools –> NuGet Package Manager –> Package Manager Console**
 * Run `Add-Migration InitialCreate` to scaffold a migration to create the initial set of tables for your model. If you receive an error stating `The term 'add-migration' is not recognized as the name of a cmdlet`, close and reopen Visual Studio.
 * Run `Update-Database` to apply the new migration to the database. This command creates the database before applying migrations. 
-
-Notes: 
-
-* If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to make the corresponding schema changes to the database. See [Migrations](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations) for more information.
-* EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
 
 ## Create a controller
 
