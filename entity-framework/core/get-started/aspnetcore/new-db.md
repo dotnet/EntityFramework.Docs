@@ -18,9 +18,9 @@ This tutorial requires:
 
   - **ASP.NET and web development** (under **Web & Cloud**)
   - **.NET Core cross-platform development** (under **Other Toolsets**)
-<!--
--  [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.1 or later.
--->
+
+-  .NET 1.1 (installed by Visual Studio).
+
 Notes: 
 
 - You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb) on GitHub.
