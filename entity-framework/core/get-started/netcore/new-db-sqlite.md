@@ -3,8 +3,8 @@ title: .NET Core - New database | Microsoft Docs
 author: rick-anderson
 ms.author: riande
 ms.author2: tdykstra
-description: Getting started with .NET Core using Entity Framework 
-keywords: .NET Core, Entity Framework, VS Code, Visual Studio Code, Mac, Linux
+description: Getting started with .NET Core using Entity Framework Core 
+keywords: .NET Core, Entity Framework Core, VS Code, Visual Studio Code, Mac, Linux
 ms.date: 04/05/2017
 ms.assetid: 099d179e-dd7b-4755-8f3c-fcde914bf50b
 ms.technology: entity-framework-core
@@ -13,7 +13,7 @@ uid: core/get-started/netcore/new-db-sqlite
 
 # .NET Core - New database
 
-In this walkthrough, you will create a .NET Core console app that performs basic data access against a SQLite database using Entity Framework. You will use migrations to create the database from your model. See [ASP.NET Core - New database](xref:core/get-started/aspnetcore/new-db) for a Visual Studio version using ASP.NET Core MVC.
+In this walkthrough, you will create a .NET Core console app that performs basic data access against a SQLite database using Entity Framework Core. You will use migrations to create the database from your model. See [ASP.NET Core - New database](xref:core/get-started/aspnetcore/new-db) for a Visual Studio version using ASP.NET Core MVC.
 
 Notes: 
 - This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
@@ -36,7 +36,7 @@ cd ConsoleApp.SQLite/
 dotnet new console
 ```
 
-## Install Entity Framework
+## Install Entity Framework Core
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQLite. For a list of available providers see [Database Providers](../../providers/index.md).
 
