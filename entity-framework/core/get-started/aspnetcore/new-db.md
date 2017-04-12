@@ -18,9 +18,9 @@ This tutorial requires:
 
   - **ASP.NET and web development** (under **Web & Cloud**)
   - **.NET Core cross-platform development** (under **Other Toolsets**)
-
+<!--
 -  [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.1 or later.
-
+-->
 Notes: 
 
 - You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb) on GitHub.
@@ -95,7 +95,7 @@ Once you have a model, you can use [migrations](https://docs.microsoft.com/aspne
 
 ## Create a controller
 
-Enable scaffolding in our project:
+Enable scaffolding in the project:
 
 * Right-click on the **Controllers** folder in **Solution Explorer** and select **Add > Controller**.
 * Select **Minimal Dependencies** and click **Add**.
