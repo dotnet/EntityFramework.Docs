@@ -7,7 +7,7 @@ function compile {
 	#  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
 	#  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
 
-	sphinx-build -nW -b html -d docs/_build/doctrees docs docs/_build/html
+	sphinx-build -nW -b html -d entity-framework/_build/doctrees entity-framework entity-framework/_build/html
 }
 
 function install {
