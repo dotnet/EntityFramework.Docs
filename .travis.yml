@@ -1,7 +1,0 @@
-sudo: false
-language: python
-python:
-  - "3.4"
-install: "./build.sh --target install"
-script:
-  - ./build.sh --target compile
