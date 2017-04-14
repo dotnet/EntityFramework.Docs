@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/get-started/full-dotnet/index
 ---
-# Getting Started on Full .NET
+# Getting Started on .NET Framework
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
