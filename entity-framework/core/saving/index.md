@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
  
 uid: core/saving/index
 ---
-# Saving Data
+# Saving and Deleting Data
 
 > [!NOTE]
 > This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
