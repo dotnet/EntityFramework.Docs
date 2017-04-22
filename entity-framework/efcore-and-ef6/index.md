@@ -14,7 +14,7 @@ There are two versions of Entity Framework, Entity Framework Core and Entity Fra
 
 ## Entity Framework 6.x
 
-Entity Framework 6.x (EF6.x) is a tried and tested data access technology with many years of features and stabilization. It first released in 2008, as part of .NET Framework 3.5 SP1 and Visual Studio 2008 SP1. Starting with the EF4.1 release it has shipped as the [EntityFramework NuGet package](https://www.nuget.org/packages/EntityFramework/) - currently the most popular package on NuGet.org.
+Entity Framework 6.x (EF6.x) is a tried and tested data access technology with many years of features and stabilization. Its first released in 2008, as part of .NET Framework 3.5 SP1 and Visual Studio 2008 SP1. Starting with the EF4.1 release it has shipped as the [EntityFramework NuGet package](https://www.nuget.org/packages/EntityFramework/) - currently the most popular package on NuGet.org.
 
 EF6.x continues to be a supported product, and will continue to see bug fixes and minor improvements for some time to come.
 
