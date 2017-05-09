@@ -1,0 +1,145 @@
+Entity Framework Core RC2 Available
+
+
+Entity Framework (EF) Core is a lightweight, extensible, and cross-platform version of Entity Framework. Today we are making Entity Framework Core RC2 available. This coincides with the release of [.NET Core RC2](https://blogs.msdn.microsoft.com/dotnet/2016/05/16/announcing-net-core-rc2/) and [ASP.NET Core RC2](https://blogs.msdn.microsoft.com/webdev/2016/05/16/announcing-asp-net-core-rc2/).
+
+EF Core, formerly known as EF7
+==============================
+
+Between RC1 and RC2, we changed from Entity Framework 7 to Entity Framework Core 1.0. This naming helps convey that EF Core is a new code base that does not inherit all the features and API surface of EF6.x.  You can read more about the reasons for the change in [this post by Scott Hanselman](http://www.hanselman.com/blog/ASPNET5IsDeadIntroducingASPNETCore10AndNETCore10.aspx).
+
+Upgrading from RC1 to RC2
+=========================
+
+There are a number of changes in RC2 that you need to be aware of as you move an existing RC1 application to RC2. We strongly encourage you to read our [Upgrading from RC1 to RC2](https://docs.efproject.net/en/latest/miscellaneous/rc1-rc2-upgrade.html) article to minimize frustration during the upgrade.
+
+
+When to use EF Core
+===================
+
+EF Core introduces many improvements and new features compared with EF6.x. At the same time, EF Core is a new code base and very much a v1 product. **For this reason, EF6.x will still be the most suitable choice for many applications**.
+
+The situations where we would recommend using EF Core are:
+ * New applications that do not require features that are not yet implemented in EF Core
+ * Applications that target .NET Core, such as Universal Windows Platform (UWP) and ASP.NET Core applications
+
+For all other applications, you should consider using EF6.x. EF6.x will continue to be a supported release for some time – see the end of this post for more details on upcoming releases.
+
+Because of the fundamental changes in EF Core we do not recommend attempting to move an EF6.x application to EF Core unless you have a compelling reason to make the change.  If you want to move to EF Core to make use of new features, then make sure you are aware of its limitations before you start. **You should view the move from EF6.x to EF Core as a port rather than an upgrade.**
+
+
+Getting started with EF7
+========================
+
+You can find the documentation for EF Core at [docs.efproject.net](http://docs.efproject.net). In particular, you probably want to start with a tutorial for the type of application you want to build.
+ * [Full .NET (Console, WPF, WinForms, and ASP.NET 4)](https://docs.efproject.net/en/latest/platforms/full-dotnet/index.html)
+ * [Universal Windows Platform (UWP)](https://docs.efproject.net/en/latest/platforms/uwp/index.html)
+ * [ASP.NET Core](https://docs.efproject.net/en/latest/platforms/aspnetcore/index.html)
+ * [OSX](https://docs.efproject.net/en/latest/platforms/coreclr/getting-started-osx.html)
+ * [Linux](https://docs.efproject.net/en/latest/platforms/coreclr/getting-started-linux.html)
+
+Supported databases
+===================
+
+The following database providers are available on NuGet.org and support RC2. See our [providers page](https://docs.efproject.net/en/latest/providers/index.html) for more information and links to getting started.
+ * Microsoft SQL Server
+ * SQLite
+ * Postgres (Npgsql)
+ * SQL Server Compact Edition
+ * InMemory (for testing purposes)
+
+The following providers will be available for RC2 soon:
+
+ * MySQL
+ * IBM DB2
+
+We’d like to thank Shay Rojansky and Erik Ejlskov Jensen for their collaboration to provide the Npgsql and SQL Compact providers and drive improvements in the core EF Core code base.
+
+Quality
+=======
+
+As you can see from our issue tracker there are still a number of issues we are working to resolve prior to the RTM release. Please continue to report any new issues that you hit so that we can address them.
+
+One area that has a number of outstanding issues is our query pipeline. The majority of issues result in an exception when you attempt to execute a LINQ query that contains a particular pattern. There are often ways to workaround these issues by expressing the same query using different patterns, or evaluating parts of the query client-side. We try to include these workarounds in the issue, when they are available.
+
+Known issues
+------------
+
+Here are some specific known issues you should be aware of when using RC2.
+ * [Package Manager Console Commands Requires PowerShell 5](https://github.com/aspnet/Release/issues/125)
+ * [Model Building Performance Regression](https://github.com/aspnet/Release/issues/128)
+ * [Scaffold-DbContext does not work on .NET Core/ASP.NET Core projects](https://github.com/aspnet/Release/issues/130)
+
+What’s implemented in RC2
+=========================
+
+To help you evaluate whether EF Core meets the requirements of your application, here is a list of features available in the initial release of EF Core. They are all present in RC2 and we will be working to fix remaining bugs, and improve performance, as we work towards RTM.
+
+ * Basic modelling based on POCO entities with get/set properties. The common property types from the BCL are supported ( int ,  string , etc.).
+  * **Conventions** to build an initial model, then **Data Annotations** and the **fluent API** to further configure the model
+  * **TPH inheritance mapping pattern**
+  * **New feature: Alternate keys** and the ability to define a relationship that targets an alternate key.
+  * **New feature: Shadow state properties** that are part of the model but do not have a corresponding property in the CLR class
+ * **LINQ queries** to retrieve data from the database – basic operators are translated to database queries, some others are client evaluated or not supported.
+  * **Eager loading** provides the `Include` and `ThenInclude` methods to identify related data that should also be fetched when querying.
+  * **Raw SQL queries** provides the `DbSet.FromSql` method to use raw SQL queries to fetch data. These queries can also be composed on using LINQ.
+  * **New feature: Mixed client/server evaluation** enables queries to contain logic that cannot be evaluated in the database, and must therefore be evaluated after the data is retrieved into memory.
+ * Change tracking allows EF to detect changes to entities and save them to the database.
+  * **Snaphot and notification change detection**
+  * **New feature: TrackGraph API** helps re-attach disconnected entities to a context in order to save new/modified entities.
+ * **Basic save functionality** allows changes to entity instances to be persisted to the database.
+  * **Transactions** ensure that  SaveChanges  is always atomic
+  * **Optimistic Concurrency** protects against overwriting changes made by another user since data was fetched from the database.
+  * **New feature: Batching** of statements provides better performance by batching up multiple INSERT/UPDATE/DELETE commands into a single roundtrip to the database.
+ * Database schema management
+  * **Database creation/deletion APIs** are mostly designed for testing where you want to quickly create/delete the database without using migrations.
+  * **Migrations** allow a relational database schema to evolve overtime as your model changes.
+  * **Reverse engineer from database** scaffolds an EF model based on an existing relational database schema.
+ * Platforms
+  * **Full .NET** includes Console, WPF, WinForms, ASP.NET 4, etc.
+  * **.NET Core (including ASP.NET Core)** targeting both Full.NET and .NET Core on Windows, OSX, and Linux.
+  * **Universal Windows Platform (UWP)** applications can make use of the SQLite provider to access local data
+
+Critical O/RM Features not in v1.0.0
+------------------------------------
+
+Until we implement these features EF Core will not be a viable replacement for EF6.x (or other data access technology) for many applications. These features will be our top priority once v1.0.0 is shipped.
+ * **Improved LINQ translation** will enable more queries to successfully execute, with more logic being evaluated in the database (rather than in-memory).
+  * **GroupBy translation**, in particular, needs to be evaluated in the database, rather than in-memory.
+ * **Lazy loading** enables navigation properties to be automatically populated from the database when they are accessed.
+ * **Explicit Loading** allows you to trigger population of a navigation property on an entity that was previously loaded from the database.
+ * **Update model from database** allows a model that was previously reverse engineered from the database to be refreshed with changes made to the schema.
+ * **Complex/value types** are types that do not have a primary key and are used to represent a set of properties on an entity type.
+ * **Missing ChangeTracker APIs** from EF6.x such as  Reload, GetModifiedProperties , GetDatabaseValues etc.
+ * **Stored procedure mapping** allows EF to use stored procedures to persist changes to the database ( FromSql  already provides good support for using a stored procedure to query).
+ * **Connection resiliency** automatically retries failed database commands. This is especially useful when connection to SQL Azure, where transient failures are common.
+
+High Priority Features not in v1.0.0
+------------------------------------
+
+These features are high priority but we think EF Core would be a compelling release for the vast majority of applications without them. Of course, for some applications, they will continue to block adoption of EF Core.
+ * **More flexible mapping**, such as constructor parameters, get/set methods, property bags, etc.
+ * **Visualizing a model** to see a graphical representation of the code-based model.
+ * **Simple type conversions** such as string => xml.
+ * **Many-to-many relationships without join entity**. You can already model a many-to-many relationship with a join entity.
+ * **Alternate inheritance mapping patterns** for relational databases, such as table per type (TPT) and table per concrete type TPC.
+ * **Seed data** allows a set of data to be easily upserted.
+ * **ETag-style concurrency** token support
+ * **Eager loading rules** allow a default set of related data to always be retrieved when an entity is queried.
+ * **Filtered loading** allows a subset of related entities to be loaded.
+ * **Simple command interception** provides an easy way to read/write commands before/after they are sent to the database.
+
+What’s coming in RTM
+--------------------
+
+As we head towards our initial RTM of EF Core we will be focusing on cross-cutting quality concerns. There are no additional features planned for the RTM release.
+ * Bug fixing
+ * Performance tuning
+ * Documentation
+
+An update on EF6.x
+==================
+
+Given that we have said EF6.x will continue to be a supported release, and that we will continue with bug fixes and small improvements to the code base, you may be asking why there hasn’t been much activity on the EF6.x CodePlex project for the last year. That's because we've had to focus almost exclusively on EF Core to get the initial release ready to go.
+
+As we make it to our initial 1.0.0 release we will transition to focusing on the EF6.2 release in parallel with the first update to EF Core. We're also planning a short period of time where our team focuses almost exclusively on EF6.x, in order to catch up on some of our backlog. We anticipate having the first preview of EF6.2 available shortly after EF7 reaches RTM.
