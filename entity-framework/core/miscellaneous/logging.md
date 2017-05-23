@@ -53,7 +53,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerF
 
 ### Other applications
 
-In your application startup code, create and instance of you context and register your logger.
+In your application startup code, create an instance of your context and register your logger.
 
 > [!NOTE]
 > You only need to register the logger with a single context instance. Once you have registered it, it will be used for all other instances of the context in the same AppDomain.
