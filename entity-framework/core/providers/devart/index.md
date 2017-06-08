@@ -49,3 +49,4 @@ See the [Devart dotConnect Entity Framework documentation](https://www.devart.co
 ## Supported Platforms
 
 * .NET Framework (4.5.1 onwards)
+* .NET Core Framework 1.0 and higher (providers for Oracle, MySQL, PostgreSQL, SQLite)
