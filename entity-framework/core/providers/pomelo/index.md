@@ -39,6 +39,7 @@ The following resources will help you get started with this provider.
 ## Supported Database Engines
 
 * MySQL
+* MariaDB
 
 ## Supported Platforms
 
