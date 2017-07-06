@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 ms.technology: entity-framework-core
- 
+
 uid: core/querying/raw-sql
 ---
 # Raw SQL Queries
@@ -101,9 +101,12 @@ Composing with LINQ operators can be used to include related data in the query.
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ````csharp
 var searchTerm = ".NET";
-    
+
 var blogs = context.Blogs
     .FromSql("SELECT * FROM dbo.SearchBlogs {0}", searchTerm)
     .Include(b => b.Posts)
     .ToList();
 ````
+
+> [!WARNING]
+> Always use parameterization for raw SQL queries: APIs that accept a raw SQL string such as `FromSql` and `ExecuteSqlCommand` allow values to be easily passed as parameters. In addition to validating user input, always use parameterization for any values used in a raw SQL query/command. If you are using string concatenation to dynamically build any part of the query string then you are responsible for validating any input to protect against SQL injection attacks.
