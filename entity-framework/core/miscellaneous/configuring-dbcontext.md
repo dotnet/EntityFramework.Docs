@@ -157,7 +157,7 @@ namespace MyProject
 {
     public class BloggingContextFactory : IDbContextFactory<BloggingContext>
     {
-        public BloggingContext Create()
+        public BloggingContext Create(DbContextFactoryOptions options)
         {
             var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
             optionsBuilder.UseSqlite("Data Source=blog.db");
