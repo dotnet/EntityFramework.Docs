@@ -138,9 +138,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.Data.Sqlite.Internal;
 ````
 
-* Add the highlighted code to apply any pending migrations
+* Add the highlighted code to apply any pending migrations and use the Windows SDK version of Sqlite
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/App.xaml.cs?highlight=6,7,8,9)] -->
 ````csharp
@@ -149,6 +150,7 @@ public App()
     this.InitializeComponent();
     this.Suspending += OnSuspending;
 
+    SqliteEngine.UseWinSqlite3(); //Configuring library to use SDK version of SQLite
     using (var db = new BloggingContext())
     {
         db.Database.Migrate();
