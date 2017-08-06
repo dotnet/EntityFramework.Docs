@@ -82,7 +82,6 @@
 ####[IBM Data Server (DB2)](core/providers/ibm/index.md)
 ####[MySQL (Official)](core/providers/mysql/index.md)
 ####[MySQL (Pomelo)](core/providers/pomelo/index.md)
-####[MySQL (Sapient Guardian)](core/providers/sapient-guardian/index.md)
 ####[Microsoft SQL Server Compact Edition](core/providers/sql-compact/index.md)
 ####[InMemory (for Testing)](core/providers/in-memory/index.md)
 ####[Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, and more)](core/providers/devart/index.md)
@@ -91,6 +90,10 @@
 ####[Writing a Database Provider](core/providers/writing-a-provider.md)
 <!-- API Reference -->
 ###[API Reference](https://docs.microsoft.com/ef/core/api)
+<!-- Command line Reference -->
+###[Command Line Reference](core/miscellaneous/cli/index.md)
+####[Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
+####[.NET Core CLI](core/miscellaneous/cli/dotnet.md)
 <!-- Extensions -->
 ###[Tools & Extensions](core/extensions/index.md)
 ####[LLBLGen Pro](core/extensions/llbl-gen-pro.md)
@@ -116,9 +119,6 @@
 #####[Testing with InMemory](core/miscellaneous/testing/in-memory.md)
 ####[Configuring a DbContext](core/miscellaneous/configuring-dbcontext.md)
 ####[Upgrading from RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
-####[Command Line Reference](core/miscellaneous/cli/index.md)
-#####[Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
-#####[.NET Core CLI](core/miscellaneous/cli/dotnet.md)
 
 ##[Entity Framework 6.x](ef6/index.md)
 ###[Documentation](http://msdn.com/data/ef)

@@ -30,7 +30,7 @@ Install the [Microsoft.EntityFrameworkCore.SqlServer NuGet package](https://www.
 ## Get Started
 
 The following resources will help you get started with this provider.
-* [Getting Started on Full .NET (Console, WinForms, WPF, etc.)](../../get-started/full-dotnet/index.md)
+* [Getting Started on .NET Framework (Console, WinForms, WPF, etc.)](../../get-started/full-dotnet/index.md)
 
 * [Getting Started on ASP.NET Core](../../get-started/aspnetcore/index.md)
 
