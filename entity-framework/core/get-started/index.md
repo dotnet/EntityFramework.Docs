@@ -1,5 +1,5 @@
 ---
-title: Getting Started | Microsoft Docs
+title: EF Core | Getting Started | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,14 @@ ms.date: 10/27/2016
 
 ms.assetid: 3c88427c-20c6-42ec-a736-22d3eccd5071
 ms.technology: entity-framework-core
- 
+
 uid: core/get-started/index
 ---
 # Getting Started
 
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
+For a summary of the steps necessary to add EF Core to your application in different platforms and IDEs, see [General Installation Instructions](general/index.md).
+
+## Step-by-step Turorials
 
 These 101 tutorials require no previous knowledge of Entity Framework (EF) or a particular IDE. They will take you step-by-step through creating a simple application that queries and saves data from a database. We have provided tutorials to get you started on various operating systems and application types.
 
