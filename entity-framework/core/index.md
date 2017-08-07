@@ -23,13 +23,13 @@ If you like to learn by writing code, we'd recommend one of our [Getting Started
 
 [Install the NuGet package](https://docs.nuget.org/ndocs/quickstart/use-a-package) for the database provider you want to use. E.g. to install the SQL Server provider in cross-platform development using `dotnet` tool in the command line:
 
-``` terminal
+``` console
 $ dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
 Or in Visual Studio, using the Package Manager Console:
 
-``` terminal
+``` console
 PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer
 ```
 See [Database Providers](providers/index.md) for information on available providers and [General Installation Instructions](get-started/general/index.md) for more detailed instructions.

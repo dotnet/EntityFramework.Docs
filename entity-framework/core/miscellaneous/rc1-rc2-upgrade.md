@@ -129,7 +129,7 @@ Some of EF Core's dependencies do not support .NET Standard yet. EF Core in .NET
 
 When adding EF, NuGet restore will display this error message:
 
-``` terminal
+``` console
 Package Ix-Async 1.2.5 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). Package Ix-Async 1.2.5 supports:
   - net40 (.NETFramework,Version=v4.0)
   - net45 (.NETFramework,Version=v4.5)

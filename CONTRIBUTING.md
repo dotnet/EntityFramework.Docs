@@ -69,7 +69,7 @@ DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS.
 * Add DocFX to your PATH.
 * In a command line window, navigate to the cloned repository (which contains the *docfx.json* file) and run the following command:
 
-   ``` terminal
+   ``` console
    docfx -t default --serve
    ```
 
@@ -82,7 +82,7 @@ DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS.
 * Extract to `\bin\docfx`.
 * Create an alias for **docfx**:
 
-  ``` terminal
+  ``` console
   function docfx {
     mono $HOME/bin/docfx/docfx.exe
   }

@@ -19,7 +19,7 @@ This database provider allows Entity Framework Core to be used with Microsoft SQ
 Install the [Microsoft.EntityFrameworkCore.SqlServer NuGet package](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/).
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-``` terminal
+``` console
 
    PM>  Install-Package Microsoft.EntityFrameworkCore.SqlServer
 ```

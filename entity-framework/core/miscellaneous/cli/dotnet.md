@@ -66,7 +66,7 @@ Commands can be run from the command line by navigating to the project directory
 
 ### dotnet-ef
 
-``` terminal
+``` console
 Usage: dotnet ef [options] [command]
 
 Options:
@@ -84,7 +84,7 @@ Commands:
 
 ### dotnet-ef-database
 
-``` terminal
+``` console
 Usage: dotnet ef database [options] [command]
 
 Options:
@@ -100,7 +100,7 @@ Commands:
 
 ### dotnet-ef-database-drop
 
-``` terminal
+``` console
 Usage: dotnet ef database drop [options]
 
 Options:
@@ -121,7 +121,7 @@ Options:
 
 ### dotnet-ef-database-update
 
-``` terminal
+``` console
 Usage: dotnet ef database update [arguments] [options]
 
 Arguments:
@@ -143,7 +143,7 @@ Options:
 
 ### dotnet-ef-dbcontext
 
-``` terminal
+``` console
 Usage: dotnet ef dbcontext [options] [command]
 
 Options:
@@ -160,7 +160,7 @@ Commands:
 
 ### dotnet-ef-dbcontext-info
 
-``` terminal
+``` console
 Usage: dotnet ef dbcontext info [options]
 
 Options:
@@ -180,7 +180,7 @@ Options:
 
 ### dotnet-ef-dbcontext-list
 
-``` terminal
+``` console
 Usage: dotnet ef dbcontext list [options]
 
 Options:
@@ -199,7 +199,7 @@ Options:
 
 ### dotnet-ef-dbcontext-scaffold
 
-``` terminal
+``` console
 Usage: dotnet ef dbcontext scaffold [arguments] [options]
 
 Arguments:
@@ -228,7 +228,7 @@ Options:
 
 ### dotnet-ef-migrations
 
-``` terminal
+``` console
 Usage: dotnet ef migrations [options] [command]
 
 Options:
@@ -246,7 +246,7 @@ Commands:
 
 ### dotnet-ef-migrations-add
 
-``` terminal
+``` console
 Usage: dotnet ef migrations add [arguments] [options]
 
 Arguments:
@@ -270,7 +270,7 @@ Options:
 
 ### dotnet-ef-migrations-list
 
-``` terminal
+``` console
 Usage: dotnet ef migrations list [options]
 
 Options:
@@ -290,7 +290,7 @@ Options:
 
 ### dotnet-ef-migrations-remove
 
-``` terminal
+``` console
 Usage: dotnet ef migrations remove [options]
 
 Options:
@@ -311,7 +311,7 @@ Options:
 
 ### dotnet-ef-migrations-script
 
-``` terminal
+``` console
 Usage: dotnet ef migrations script [arguments] [options]
 
 Arguments:
@@ -340,7 +340,7 @@ Options:
 
 Design-time tools attempt to automatically find how your application creates instances of your DbContext type. If EF cannot find a suitable way to initialize your DbContext, you may encounter this error.
 
-``` terminal
+``` console
 No parameterless constructor was found on 'TContext'. Either add a parameterless constructor to
 'TContext' or add an implementation of 'IDbContextFactory<TContext>' in the same assembly as
 'TContext'.
@@ -354,7 +354,7 @@ As the error message suggests, one solution is to add an implementation of `IDbC
 
 .NET Core CLI does not fully support projects targeting .NET Standard class libraries. Despite being able to install EF tools, executing commands will show this warning message and may ultimately terminate in error.
 
-``` terminal
+``` console
 Startup project '(your project name)' targets framework '.NETStandard'. This framework is not intended for execution and may fail to resolve runtime dependencies. If so, specify a different project using the --startup-project option and try again.
 ```
 
@@ -374,7 +374,7 @@ Specify a startup project that is a "runnable app."
 
 Example:
 
-``` terminal
+``` console
 dotnet ef migrations list --startup-project ../MyConsoleApp/
 ```
 

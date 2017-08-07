@@ -18,13 +18,13 @@ This database provider allows Entity Framework Core to be used with IBM Data Ser
 
 To work with IBM Data Server on Windows, install the [IBM.EntityFrameworkCore NuGet package](https://www.nuget.org/packages/IBM.EntityFrameworkCore).
 
-``` terminal
+``` console
    PM>  Install-Package IBM.EntityFrameworkCore
 ```
 
 To work with IBM Data Server on Linux, install the [IBM.EntityFrameworkCore-lnx NuGet package](https://www.nuget.org/packages/IBM.EntityFrameworkCore-lnx).
 
-``` terminal
+``` console
    PM>  Install-Package IBM.EntityFrameworkCore-lnx
 ```
 

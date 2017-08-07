@@ -16,19 +16,19 @@ uid: core/get-started/general/efcore2
 
 You can install EF Core 2.0 by installing a compatible version of an EF Core data provider from NuGet. E.g. you can install or upgrade the SQL Server provider in cross-platform .NET Core application executing this on the command line:
 
-``` terminal
+``` console
 $ dotnet add package Microsoft.EntityFrameworkCore.SqlServer -v 2.0.0
 ```
 
 For any type of application using Visual Studio’s Package Manager Console:
 
-``` terminal
+``` console
 PM> install-package Microsoft.EntityFrameworkCore.SqlServer -Version 2.0.0
 ```
 
 Or to upgrade to EF Core 2.0 from the Package Manager Console:
 
-``` terminal
+``` console
 PM> update-package Microsoft.EntityFrameworkCore.SqlServer -Version 2.0.0
 ```
 
@@ -52,7 +52,7 @@ To use the `dotnet ef` command line tools in cross-platoform development, your a
 
 The Package Manager Console EF Core commands for Visual Studio can be upgraded by issuing the following command:
 
-``` terminal
+``` console
 PM> update-package Microsoft.EntityFrameworkCore.Tools -Version 2.0.0
 ```
 

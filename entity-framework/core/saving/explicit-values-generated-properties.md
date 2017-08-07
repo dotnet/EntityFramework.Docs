@@ -36,7 +36,7 @@ The following code inserts two employees into the database.
 
 Output shows that the database generated a value for the first employee and our explicit value was used for the second.
 
-``` terminal
+``` console
 1: John Doe, 1/26/2017 12:00:00 AM
 2: Jane Doe, 1/1/2000 12:00:00 AM
 ```
@@ -53,7 +53,7 @@ For most situations, the approach shown above will work for key properties. Howe
 
 Output shows that the supplied ids were saved to the database.
 
-``` terminal
+``` console
 100: John Doe
 101: Jane Doe
 ```
@@ -80,7 +80,7 @@ The following code increases the salary of two employees in the database.
 
 Output shows that the database generated a value for the first employee and our explicit value was used for the second.
 
-``` terminal
+``` console
 1: John Doe, 1/26/2017 12:00:00 AM
 2: Jane Doe, 1/19/2017 12:00:00 AM
 ```

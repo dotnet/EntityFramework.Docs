@@ -21,7 +21,7 @@ This database provider allows Entity Framework Core to be used with PostgreSQL. 
 Install the [Npgsql.EntityFrameworkCore.PostgreSQL NuGet package](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL).
 
 <!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": false, "dupnames  : "csharp",", highlight_args}, "names": [] -->
-``` terminal
+``` console
    PM>  Install-Package Npgsql.EntityFrameworkCore.PostgreSQL
 ```
 

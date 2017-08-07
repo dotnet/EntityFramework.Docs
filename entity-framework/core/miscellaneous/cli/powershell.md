@@ -37,7 +37,7 @@ To open the console, follow these steps.
 Adds a new migration.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-``` terminal
+``` console
 SYNTAX
     Add-Migration [-Name] <String> [-OutputDir <String>] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
@@ -66,7 +66,7 @@ PARAMETERS
 Removes the last migration.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-``` terminal
+``` console
 SYNTAX
     Remove-Migration [-Force] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
@@ -92,7 +92,7 @@ PARAMETERS
 Scaffolds a DbContext and entity types for a database.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-``` terminal
+``` console
 SYNTAX
     Scaffold-DbContext [-Connection] <String> [-Provider] <String> [-OutputDir <String>] [-Context <String>] [-Schemas <String[]>] [-Tables <String[]>] [-DataAnnotations] [-Force] [-Environment <String>] [-Project <String>] [-StartupProject <String>]
     [<CommonParameters>]
@@ -137,7 +137,7 @@ PARAMETERS
 Generates a SQL script from migrations.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-``` terminal
+``` console
 SYNTAX
     Script-Migration [-From] <String> [-To] <String> [-Idempotent] [-Output <String>] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
@@ -174,7 +174,7 @@ PARAMETERS
 Updates the database to a specified migration.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-``` terminal
+``` console
 SYNTAX
     Update-Database [[-Migration] <String>] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
@@ -200,7 +200,7 @@ PARAMETERS
 Drops the database.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-``` terminal
+``` console
 SYNTAX
     Drop-Database [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
