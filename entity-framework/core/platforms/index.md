@@ -10,12 +10,12 @@ uid: core/platforms/index
 
 # Platform Support
 
-We want EF Core to be available anywhere you write .NET code, and we're still working towards that goal. The following table provides guidance for each platform where we want to enable EF Core.
+We want EF Core to be available anywhere you can write .NET code, and we're still working towards that goal. The following table provides guidance for each platform where we want to enable EF Core.
 
 EF Core 2.0 targets and therefore requires .NET platforms that support [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard).
 
 | Platform | Status | 1.x requires | 2.x requires
-|-|-
+|-|-|-|-
 | **.NET Core** (ASP.NET Core, Console, etc.) | **Fully supported and recommended:** Covered by automated testing and many applications known to be using it successfully. | Same version [.NET Core SDK](https://www.microsoft.com/net/core/) | Same version [.NET Core SDK](https://www.microsoft.com/net/core/)
 | **.NET Framework** (WinForms, WPF, ASP.NET, Console, etc.) | **Fully supported and recommended:**  Covered by automated testing and many applications known to be using it successfully. EF 6 also available in this platform (see [Compare EF Core & EF6.x](../../efcore-and-ef6/index.md) to choose the right technology). | .NET Framework 4.5.1 | .NET Framework 4.6.1
 | **Mono & Xamarin** | **In progress – issues may be encountered:** Ad-hoc testing has been performed by the EF Core team and customers. Early adopters have reported some success but [issues have been encountered](https://github.com/aspnet/entityframework/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin) and others will likely be uncovered as testing continues. | Mono 4.6 | Mono 5.0
