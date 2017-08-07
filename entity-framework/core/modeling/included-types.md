@@ -1,5 +1,5 @@
 ---
-title: Including & Excluding Types | Microsoft Docs
+title: EF Core | Including & Excluding Types | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: cbe6935e-2679-4b77-8914-a8d772240cf1
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/included-types
 ---
 # Including & Excluding Types
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Including a type in the model means that EF has metadata about that type and will attempt to read and write instances from/to the database.
 

@@ -1,5 +1,5 @@
 ---
-title: Feature Comparison | Microsoft Docs
+title: EF Core and EF6 | Feature Comparison | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -9,7 +9,7 @@ uid: efcore-and-ef6/features
 
 # Feature Comparison
 
-The following information will help you choose between Entity Framework Core and Entity Framework 6.x.
+The following information will help you choose between Entity Framework Core and Entity Framework 6.
 
 ## Features not in EF Core
 
@@ -40,9 +40,9 @@ This is a list of features not currently implemented in EF Core that are likely 
 
 ## Side-by-side comparison
 
-The following table compares the features available in EF Core and EF6.x. It is intended to give a high level comparison and does not list every feature, or attempt to give details on possible differences between how the same feature works.
+The following table compares the features available in EF Core and EF6. It is intended to give a high level comparison and does not list every feature, or attempt to give details on possible differences between how the same feature works.
 
-| **Creating a Model**                                |**EF6.x**|**EF Core 1.1**                 |
+| **Creating a Model**                                |**EF6** |**EF Core 1.1**                  |
 | --------------------------------------------------- | ------ | ------------------------------- |
 | Basic modelling (classes, properties, etc.)         | Yes    | Yes                             |
 | Conventions                                         | Yes    | Yes                             |
@@ -68,7 +68,7 @@ The following table compares the features available in EF Core and EF6.x. It is 
 | Reverse engineer model from database: VS wizard     | Yes    |                                 |
 | Incremental update model from database              | Yes    |                                 |
 |                                                     |        |                                 |
-| **Querying Data**                                   |**EF6.x**|**EF Core 1.1**                 |
+| **Querying Data**                                   |**EF6** |**EF Core 1.1**                  |
 | LINQ: Simple queries                                | Stable | Stable                          |
 | LINQ: Moderate queries                              | Stable | Stabilizing                     |
 | LINQ: Complex queries                               | Stable | In-Progress                     |
@@ -82,7 +82,7 @@ The following table compares the features available in EF Core and EF6.x. It is 
 | Raw SQL queries: Un-mapped types                    | Yes    |                                 |
 | Raw SQL queries: Composing with LINQ                |        | Yes                             |
 |                                                     |        |                                 |
-| **Saving Data**                                     |**EF6.x**|**EF Core 1.1**                 |
+| **Saving Data**                                     |**EF6** |**EF Core 1.1**                  |
 | SaveChanges                                         | Yes    | Yes                             |
 | Change tracking: Snapshot                           | Yes    | Yes                             |
 | Change tracking: Notification                       | Yes    | Yes                             |
@@ -94,24 +94,24 @@ The following table compares the features available in EF Core and EF6.x. It is 
 | Detached graph support (N-Tier): Low level APIs     | Poor   | Yes                             |
 | Detached graph support (N-Tier): End-to-end         |        | Poor                            |
 |                                                     |        |                                 |
-| **Other Features**                                  |**EF6.x**|**EF Core 1.1**                 |
+| **Other Features**                                  |**EF6** |**EF Core 1.1**                  |
 | Migrations                                          | Yes    | Yes                             |
 | Database creation/deletion APIs                     | Yes    | Yes                             |
 | Seed data                                           | Yes    |                                 |
 | Connection resiliency                               | Yes    | Yes                             |
 | Lifecycle hooks (events, command interception, ...) | Yes    |                                 |
 |                                                     |        |                                 |
-| **Database Providers**                              |**EF6.x**|**EF Core 1.1**                 |
+| **Database Providers**                              |**EF6 **|**EF Core 1.1**                  |
 | SQL Server                                          | Yes    | Yes                             |
 | MySQL                                               | Yes    | Yes                             |
 | PostgreSQL                                          | Yes    | Yes                             |
-| Oracle                                              | Yes    | Paid only (1) (2)               |
+| Oracle                                              | Yes    | Paid only <sup>(1) (2)</sup>    |
 | SQLite                                              | Yes    | Yes                             |
-| SQL Compact                                         | Yes    | Yes (2)                         |
+| SQL Compact                                         | Yes    | Yes <sup>(2)</sup>              |
 | DB2                                                 | Yes    |                                 |
 | InMemory (for testing)                              |        | Yes                             |
 |                                                     |        |                                 |
-| **Application Models**                              |**EF6.x**|**EF Core 1.1**                 |
+| **Application Models**                              |**EF6** |**EF Core 1.1**                  |
 | WinForms                                            | Yes    | Yes                             |
 | WPF                                                 | Yes    | Yes                             |
 | Console                                             | Yes    | Yes                             |

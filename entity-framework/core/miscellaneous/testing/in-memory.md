@@ -1,5 +1,5 @@
 ---
-title: Testing with InMemory | Microsoft Docs
+title: EF Core | Testing with InMemory | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,14 +7,11 @@ ms.date: 10/27/2016
 
 ms.assetid: 0d0590f1-1ea3-4d5c-8f44-db17395cd3f3
 ms.technology: entity-framework-core
- 
+
 uid: core/miscellaneous/testing/in-memory
 ---
 
 # Testing with InMemory
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 The InMemory provider is useful when you want to test components using something that approximates connecting to the real database, without the overhead of actual database operations.
 

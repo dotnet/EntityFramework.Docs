@@ -1,5 +1,5 @@
 ---
-title: Connection Resiliency | Microsoft Docs
+title: EF Core | Connection Resiliency | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 11/15/2016
@@ -9,9 +9,6 @@ uid: core/miscellaneous/connection-resiliency
 ---
 
 # Connection Resiliency
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Connection resiliency automatically retries failed database commands. It is specific to relational databases.
 

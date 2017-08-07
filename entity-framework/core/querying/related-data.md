@@ -1,5 +1,5 @@
 ---
-title: Loading Related Data | Microsoft Docs
+title: EF Core | Loading Related Data | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -9,9 +9,6 @@ uid: core/querying/related-data
 ---
 
 # Loading Related Data
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Entity Framework Core allows you to use the navigation properties in your model to load related entities. There are three common O/RM patterns used to load related data.
 * **Eager loading** means that the related data is loaded from the database as part of the initial query.

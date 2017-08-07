@@ -1,5 +1,5 @@
 ---
-title: Logging | Microsoft Docs
+title: EF Core | Logging | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -11,9 +11,6 @@ ms.technology: entity-framework-core
 uid: core/miscellaneous/logging
 ---
 # Logging
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 > [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging) on GitHub.

@@ -1,5 +1,5 @@
 ---
-title: ASP.NET Core - New database with Visual Studio 2017 | Microsoft Docs
+title: EF Core | Getting Started on ASP.NET Core - New database with Visual Studio 2017 | Microsoft Docs
 author: rick-anderson
 ms.author: riande
 ms.author2: tdykstra
@@ -21,10 +21,7 @@ This tutorial requires:
 
 -  .NET Core 1.1 (installed by Visual Studio).
 
-Notes: 
-
-- You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb) on GitHub.
-- This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+> [!TIP] You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb) on GitHub.
 
 ## Create a new project in Visual Studio 2017
 
@@ -91,7 +88,7 @@ Once you have a model, you can use [migrations](https://docs.microsoft.com/aspne
 
   **Tools –> NuGet Package Manager –> Package Manager Console**
 * Run `Add-Migration InitialCreate` to scaffold a migration to create the initial set of tables for your model. If you receive an error stating `The term 'add-migration' is not recognized as the name of a cmdlet`, close and reopen Visual Studio.
-* Run `Update-Database` to apply the new migration to the database. This command creates the database before applying migrations. 
+* Run `Update-Database` to apply the new migration to the database. This command creates the database before applying migrations.
 
 ## Create a controller
 
@@ -111,7 +108,7 @@ Now that scaffolding is enabled, we can scaffold a controller for the `Blog` ent
 
 ## Run the application
 
-Press F5 to run and test the app. 
+Press F5 to run and test the app.
 
 * Navigate to `/Blogs`
 * Use the create link to create some blog entries. Test the details and delete links.

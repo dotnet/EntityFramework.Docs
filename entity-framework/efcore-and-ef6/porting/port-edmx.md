@@ -1,5 +1,5 @@
 ﻿---
-title: Porting an EDMX-Based Model | Microsoft Docs
+title: Porting from EF6 to EF Core | Porting an EDMX-Based Model | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -35,15 +35,15 @@ For example, here is the command to scaffold a model from the Blogging database 
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
 ````
 
-## Remove EF6.x model
+## Remove EF6 model
 
-You would now remove the EF6.x model from your application.
+You would now remove the EF6 model from your application.
 
-It is fine to leave the EF6.x NuGet package (EntityFramework) installed, as EF Core and EF6.x can be used side-by-side in the same application. However, if you aren't intending to use EF6.x in any areas of your application, then uninstalling the package will help give compile errors on pieces of code that need attention.
+It is fine to leave the EF6 NuGet package (EntityFramework) installed, as EF Core and EF6 can be used side-by-side in the same application. However, if you aren't intending to use EF6 in any areas of your application, then uninstalling the package will help give compile errors on pieces of code that need attention.
 
 ## Update your code
 
-At this point, it's a matter of addressing compilation errors and reviewing code to see if the behavior changes between EF6.x and EF Core will impact you.
+At this point, it's a matter of addressing compilation errors and reviewing code to see if the behavior changes between EF6 and EF Core will impact you.
 
 ## Test the port
 

@@ -1,5 +1,5 @@
 ---
-title: Asynchronous Queries | Microsoft Docs
+title: EF Core | Asynchronous Queries | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 01/24/2017
@@ -9,9 +9,6 @@ uid: core/querying/async
 ---
 
 # Asynchronous Queries
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Asynchronous queries avoid blocking a thread while the query is executed in the database. This can be useful to avoid freezing the UI of a thick-client application. Asynchronous operations can also increase throughput in a web application, where the thread can be freed up to service other requests while the database operation completes. For more information, see [Asynchronous Programming in C#](https://msdn.microsoft.com/en-us/library/mt674882.aspx).
 

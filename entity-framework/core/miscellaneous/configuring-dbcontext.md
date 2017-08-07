@@ -1,5 +1,5 @@
 ---
-title: Configuring a DbContext | Microsoft Docs
+title: EF Core | Configuring a DbContext | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -11,9 +11,6 @@ ms.technology: entity-framework-core
 uid: core/miscellaneous/configuring-dbcontext
 ---
 # Configuring a DbContext
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 This article shows patterns for configuring a `DbContext` with `DbContextOptions`. Options are primarily used to select and configure the data store.
 

@@ -1,5 +1,5 @@
 ---
-title: MyCat | Microsoft Docs
+title: EF Core | MyCat | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 02/27/2017
@@ -9,9 +9,6 @@ uid: core/providers/my-cat/index
 ---
 
 # MyCat
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 This database provider allows Entity Framework Core to be used with [MyCat](https://github.com/MyCATApache/Mycat-Server). The provider is maintained as part of the [Pomelo Foundation Project](https://github.com/PomeloFoundation/Entity-Framework-Core-MyCat-Proxy).
 

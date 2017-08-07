@@ -1,5 +1,5 @@
 ---
-title: MySQL | Microsoft Docs
+title: EF Core | MySQL | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 4900b882-79c5-40d2-a44a-ccb0292f6ed9
 ms.technology: entity-framework-core
- 
+
 uid: core/providers/mysql/index
 ---
 # MySQL
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 This database provider allows Entity Framework Core to be used with MySQL. The provider is maintained as part of the [MySQL project](http://dev.mysql.com).
 

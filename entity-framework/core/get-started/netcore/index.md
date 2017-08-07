@@ -1,5 +1,5 @@
 ---
-title: Getting Started on .NET Core | Microsoft Docs
+title: EF Core | Getting Started on .NET Core | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,10 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/get-started/netcore/index
 ---
-# Getting Started on .NET Core 
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+# Getting Started on .NET Core
 
 These 101 tutorials require no previous knowledge of Entity Framework (EF) or Visual Studio. They will take you step-by-step through creating a simple .NET Core Console Application that queries and saves data from a database. The tutorials can be completed on any platform supported by .NET Core (Windows, OSX, Linux, etc.).
 

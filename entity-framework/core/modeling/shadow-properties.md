@@ -1,5 +1,5 @@
 ---
-title: Shadow Properties | Microsoft Docs
+title: EF Core | Shadow Properties | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 75369266-d2b9-4416-b118-ed238f81f599
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/shadow-properties
 ---
 # Shadow Properties
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Shadow properties are properties that do not exist in your entity class. The value and state of these properties is maintained purely in the Change Tracker.
 

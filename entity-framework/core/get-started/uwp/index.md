@@ -1,5 +1,5 @@
 ---
-title: Getting Started on UWP | Microsoft Docs
+title: EF Core | Getting Started on UWP | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -12,9 +12,6 @@ uid: core/get-started/uwp/index
 ---
 
 # Getting Started on Universal Windows Platform (UWP)
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 These 101 tutorials require no previous knowledge of Entity Framework (EF) or Visual Studio. They will take you step-by-step through creating a simple Universal Window Platform (UWP) application that queries and saves data from a database.
 

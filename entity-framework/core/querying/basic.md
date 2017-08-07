@@ -1,5 +1,5 @@
 ---
-title: Basic Query | Microsoft Docs
+title: EF Core | Basic Query | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: ab6e35f1-397f-41c0-9ef4-85aec5466377
 ms.technology: entity-framework-core
- 
+
 uid: core/querying/basic
 ---
 # Basic Query
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Learn how to load entities from the database using Language Integrate Query (LINQ).
 

@@ -1,5 +1,5 @@
 ---
-title: Relationships | Microsoft Docs
+title: EF Core | Relationships | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -8,9 +8,6 @@ ms.technology: entity-framework-core
 uid: core/modeling/relationships
 ---
 # Relationships
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 A relationship defines how two entities relate to each other. In a relational database, this is represented by a foreign key constraint.
 
@@ -386,7 +383,7 @@ public class RecordOfSale
 }
 ````
 
-You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](shadow-properties.md) for more information). We recommend explicitly adding the shadow property to the model before using it as a foreign key (as shown below). 
+You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](shadow-properties.md) for more information). We recommend explicitly adding the shadow property to the model before using it as a foreign key (as shown below).
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/ShadowForeignKey.cs#Sample)]
 

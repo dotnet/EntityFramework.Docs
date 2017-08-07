@@ -1,5 +1,5 @@
 ---
-title: Alternate Keys | Microsoft Docs
+title: EF Core | Alternate Keys | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 8a5931d4-b480-4298-af36-0e29d74a37c0
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/alternate-keys
 ---
 # Alternate Keys
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 An alternate key serves as an alternate unique identifier for each entity instance in addition to the primary key. Alternate keys can be used as the target of a relationship. When using a relational database this maps to the concept of a unique index/constraint on the alternate key column(s) and one or more foreign key constraints that reference the column(s).
 

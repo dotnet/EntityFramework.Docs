@@ -1,5 +1,5 @@
 ﻿---
-title: UWP - New Database | Microsoft Docs
+title: EF Core | Getting Started on UWP - New Database | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -12,9 +12,6 @@ uid: core/get-started/uwp/getting-started
 ---
 
 # UWP - New Database
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
@@ -79,7 +76,7 @@ Now it's time to define a context and entity classes that make up your model.
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/Model.cs)] -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -114,7 +111,7 @@ namespace EFGetStarted.UWP
         public Blog Blog { get; set; }
     }
 }
-````
+```
 
 ## Create your database
 
@@ -131,19 +128,19 @@ Since we want the database to be created on the device that the app runs on, we 
 * Add the highlighted using to the start of the file
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/App.xaml.cs?highlight=1)] -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-````
+```
 
 * Add the highlighted code to apply any pending migrations
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/App.xaml.cs?highlight=6,7,8,9)] -->
-````csharp
+``` csharp
 public App()
 {
     this.InitializeComponent();
@@ -154,7 +151,7 @@ public App()
         db.Database.Migrate();
     }
 }
-````
+```
 
 > [!TIP]
 > If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to apply the corresponding changes to the database. Any pending migrations will be applied to the local database on each device when the application starts.
@@ -170,7 +167,7 @@ You can now use your model to perform data access.
 * Add the page load handler and UI content highlighted below
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/MainPage.xaml?highlight=9,12,13,14,15,16,17,18,19,20,21,22)] -->
-````csharp
+``` xaml
 <Page
     x:Class="EFGetStarted.UWP.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -195,7 +192,7 @@ You can now use your model to perform data access.
         </StackPanel>
     </Grid>
 </Page>
-````
+```
 
 Now we'll add code to wire up the UI with the database
 
@@ -204,7 +201,7 @@ Now we'll add code to wire up the UI with the database
 * Add the highlighted code from the following listing
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/MainPage.xaml.cs?highlight=8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)] -->
-````csharp
+``` csharp
 public sealed partial class MainPage : Page
 {
     public MainPage()
@@ -232,7 +229,7 @@ public sealed partial class MainPage : Page
         }
     }
 }
-````
+```
 
 You can now run the application to see it in action.
 

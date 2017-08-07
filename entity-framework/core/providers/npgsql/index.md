@@ -1,5 +1,5 @@
 ---
-title: Npgsql | Microsoft Docs
+title: EF Core | Npgsql | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 5ecd1b22-c68e-4d87-ba39-b0761f4d5b90
 ms.technology: entity-framework-core
- 
+
 uid: core/providers/npgsql/index
 ---
 # Npgsql
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 This database provider allows Entity Framework Core to be used with PostgreSQL. The provider is maintained as part of the [Npgsql project](http://www.npgsql.org).
 

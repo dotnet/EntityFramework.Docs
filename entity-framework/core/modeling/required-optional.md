@@ -1,5 +1,5 @@
 ---
-title: Required/optional properties | Microsoft Docs
+title: EF Core | Required/optional properties | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: ddaa0a54-9f43-4c34-aae3-f95c96c69842
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/required-optional
 ---
 # Required/optional properties
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 A property is considered optional if it is valid for it to contain `null`. If `null` is not a valid value to be assigned to a property then it is considered to be a required property.
 

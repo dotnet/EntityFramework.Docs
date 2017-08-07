@@ -1,5 +1,5 @@
 ---
-title: Generated Values | Microsoft Docs
+title: EF Core | Generated Values | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -9,9 +9,6 @@ uid: core/modeling/generated-properties
 ---
 
 # Generated Values
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 ## Value Generation Patterns
 

@@ -1,5 +1,5 @@
 ---
-title: Memory-Optimized Tables | Microsoft Docs
+title: EF Core | Memory-Optimized Tables | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,14 +7,11 @@ ms.date: 10/27/2016
 
 ms.assetid: 2e007c82-c6e4-45bb-8129-851b79ec1a0a
 ms.technology: entity-framework-core
- 
+
 uid: core/providers/sql-server/memory-optimized-tables
 ---
 
 # Memory-Optimized Tables
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 [Memory-Optimized Tables](https://msdn.microsoft.com/en-us/library/dn133165.aspx) are a feature of SQL Server where the entire table resides in memory. A second copy of the table data is maintained on disk, but only for durability purposes. Data in memory-optimized tables is only read from disk during database recovery. For example, after a server restart.
 

@@ -1,5 +1,5 @@
 ---
-title: Including & Excluding Properties | Microsoft Docs
+title: EF Core | Including & Excluding Properties | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: e9dff604-3469-4a05-8f9e-18ac281d82a9
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/included-properties
 ---
 # Including & Excluding Properties
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Including a property in the model means that EF has metadata about that property and will attempt to read and write values from/to the database.
 

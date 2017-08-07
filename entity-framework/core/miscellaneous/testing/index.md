@@ -1,5 +1,5 @@
 ---
-title: Test components using Entity Framework | Microsoft Docs
+title: EF Core | Test components using Entity Framework | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 
 ms.assetid: 1603be0c-69bc-4dd9-9a08-3d0129cdc6c1
 ms.technology: entity-framework-core
- 
+
 uid: core/miscellaneous/testing/index
 ---
 

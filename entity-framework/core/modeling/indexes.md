@@ -1,5 +1,5 @@
 ---
-title: Indexes | Microsoft Docs
+title: EF Core | Indexes | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 85b92003-b692-417d-ac1d-76d40dce664b
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/indexes
 ---
 # Indexes
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Indexes are a common concept across many data stores. While their implementation in the data store may vary, they are used to make lookups based on a column (or set of columns) more efficient.
 

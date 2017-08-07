@@ -1,5 +1,5 @@
 ---
-title: Pomelo | Microsoft Docs
+title: EF Core | Pomelo MySQL | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: d0198c04-d30d-4419-98f8-a54690cea3c8
 ms.technology: entity-framework-core
- 
+
 uid: core/providers/pomelo/index
 ---
 # Pomelo
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 This database provider allows Entity Framework Core to be used with MySQL. The provider is maintained as part of the [Pomelo Foundation Project](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql).
 

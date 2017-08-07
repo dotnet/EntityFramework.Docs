@@ -1,5 +1,5 @@
 ---
-title: Concurrency Conflicts | Microsoft Docs
+title: EF Core | Concurrency Conflicts | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: bce0539d-b0cd-457d-be71-f7ca16f3baea
 ms.technology: entity-framework-core
- 
+
 uid: core/saving/concurrency
 ---
 # Concurrency Conflicts
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 If a property is configured as a concurrency token then EF will check that no other user has modified that value in the database when saving changes to that record.
 

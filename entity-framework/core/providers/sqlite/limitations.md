@@ -1,5 +1,5 @@
 ---
-title: SQLite Limitations | Microsoft Docs
+title: EF Core | SQLite Limitations | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -13,8 +13,6 @@ uid: core/providers/sqlite/limitations
 # SQLite limitations
 
 The SQLite provider has a number of migrations limitations. Most of these limitations are a result of limitations in the underlying SQLite database engine and are not specific to EF.
-
-Note: This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 ## Modeling limitations
 

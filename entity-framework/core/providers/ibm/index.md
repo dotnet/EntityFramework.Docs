@@ -1,5 +1,5 @@
 ---
-title: IBM Data Server (DB2) | Microsoft Docs
+title: EF Core | IBM Data Server (DB2) | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 02/15/2017
@@ -9,9 +9,6 @@ uid: core/providers/ibm/index
 ---
 
 # IBM Data Server (DB2)
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 This database provider allows Entity Framework Core to be used with IBM Data Server. The provider is maintained by IBM.
 

@@ -1,5 +1,5 @@
 ---
-title: Related Data | Microsoft Docs
+title: EF Core | Related Data | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 07b6680f-ffcf-412c-9857-f997486b386c
 ms.technology: entity-framework-core
- 
+
 uid: core/saving/related-data
 ---
 # Related Data
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 In addition to isolated entities, you can also make use of the relationships defined in your model.
 

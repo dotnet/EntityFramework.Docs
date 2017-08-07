@@ -1,5 +1,5 @@
 ---
-title: Cascade Delete | Microsoft Docs
+title: EF Core | Cascade Delete | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
 ms.technology: entity-framework-core
- 
+
 uid: core/saving/cascade-delete
 ---
 # Cascade Delete
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Cascade delete allows deletion of a principal/parent entity to have a side effect on dependent/child entities it is related to.
 

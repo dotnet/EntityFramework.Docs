@@ -1,5 +1,5 @@
 ---
-title: Backing Fields | Microsoft Docs
+title: EF Core | Backing Fields | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: a628795e-64df-4f24-a5e8-76bc261e7ed8
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/backing-field
 ---
 # Backing Fields
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Backing fields allow EF to read and/or write to a field rather than a property.
 

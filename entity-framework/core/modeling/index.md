@@ -1,5 +1,5 @@
 ﻿---
-title: Creating a Model | Microsoft Docs
+title: EF Core | Creating a Model | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 88253ff3-174e-485c-b3f8-768243d01ee1
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/index
 ---
 # Creating a Model
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Entity Framework uses a set of conventions to build a model based on the shape of your entity classes. You can specify additional configuration to supplement and/or override what was discovered by convention.
 
@@ -30,7 +27,7 @@ You can override the `OnModelCreating` method in your derived context and use 
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Required.cs?range=5-15&highlight=5-10)] -->
 
-````csharp
+``` csharp
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -42,19 +39,18 @@ You can override the `OnModelCreating` method in your derived context and use 
                 .IsRequired();
         }
     }
-````
+```
 
 ### Data Annotations
 
 You can also apply attributes (known as Data Annotations) to your classes and properties. Data annotations will override conventions, but will be overwritten by Fluent API configuration.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Required.cs?range=11-16&highlight=4)] -->
-
-````csharp
+``` csharp
     public class Blog
     {
         public int BlogId { get; set; }
         [Required]
         public string Url { get; set; }
     }
-````
+```

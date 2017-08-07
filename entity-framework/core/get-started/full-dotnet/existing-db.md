@@ -1,5 +1,5 @@
 ﻿---
-title: .NET Framework - Existing Database | Microsoft Docs
+title: EF Core | Getting Started on .NET Framework - Existing Database | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -12,9 +12,6 @@ uid: core/get-started/full-dotnet/existing-db
 ---
 
 # .NET Framework - Existing Database
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.
 

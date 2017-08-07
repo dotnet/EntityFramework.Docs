@@ -1,5 +1,5 @@
 ---
-title: Default Values | Microsoft Docs
+title: EF Core | Default Values | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: e541366a-130f-47dd-9997-1b110a11febe
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/relational/default-values
 ---
 # Default Values
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 > [!NOTE]
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).

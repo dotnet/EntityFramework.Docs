@@ -1,5 +1,5 @@
 ---
-title: Basic Save | Microsoft Docs
+title: EF Core | Basic Save | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 850d842e-3fad-4ef2-be17-053768e97b9e
 ms.technology: entity-framework-core
- 
+
 uid: core/saving/basic
 ---
 # Basic Save
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Learn how to add, modify, and remove data using your context and entity classes.
 

@@ -1,5 +1,5 @@
 ---
-title: Client vs. Server Evaluation | Microsoft Docs
+title: EF Core | Client vs. Server Evaluation | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 8b6697cc-7067-4dc2-8007-85d80503d123
 ms.technology: entity-framework-core
- 
+
 uid: core/querying/client-eval
 ---
 # Client vs. Server Evaluation
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Entity Framework Core supports parts of the query being evaluated on the client and parts of it being pushed to the database. It is up to the database provider to determine which parts of the query will be evaluated in the database.
 

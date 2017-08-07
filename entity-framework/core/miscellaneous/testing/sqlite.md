@@ -1,5 +1,5 @@
 ---
-title: Testing with SQLite | Microsoft Docs
+title: EF Core | Testing with SQLite | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,14 +7,11 @@ ms.date: 10/27/2016
 
 ms.assetid: 7a2b75e2-1875-4487-9877-feff0651b5a6
 ms.technology: entity-framework-core
- 
+
 uid: core/miscellaneous/testing/sqlite
 ---
 
 # Testing with SQLite
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 SQLite has an in-memory mode that allows you to use SQLite to write tests against a relational database, without the overhead of actual database operations.
 

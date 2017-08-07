@@ -1,5 +1,5 @@
 ---
-title: Inheritance | Microsoft Docs
+title: EF Core | Inheritance | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 754be334-dd21-450e-9d22-2591e80012a2
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/inheritance
 ---
 # Inheritance
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Inheritance in the EF model is used to control how inheritance in the entity classes is represented in the database.
 

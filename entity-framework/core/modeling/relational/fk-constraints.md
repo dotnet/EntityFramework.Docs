@@ -1,5 +1,5 @@
 ---
-title: Foreign Key Constraints | Microsoft Docs
+title: EF Core | Foreign Key Constraints | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: dbaf4bac-1fd5-46c0-ac57-64d7153bc574
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/relational/fk-constraints
 ---
 # Foreign Key Constraints
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 > [!NOTE]
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).

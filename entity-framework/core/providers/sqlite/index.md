@@ -1,5 +1,5 @@
 ---
-title: SQLite | Microsoft Docs
+title: EF Core | SQLite | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 3e2f7698-fec2-4cec-9e2d-2e3e0074120c
 ms.technology: entity-framework-core
- 
+
 uid: core/providers/sqlite/index
 ---
 # SQLite
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 This database provider allows Entity Framework Core to be used with SQLite. The provider is maintained as part of the [EntityFramework GitHub project](https://github.com/aspnet/EntityFramework).
 

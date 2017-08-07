@@ -1,5 +1,5 @@
 ---
-title: Connection Strings | Microsoft Docs
+title: EF Core | Connection Strings | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -11,9 +11,6 @@ ms.technology: entity-framework-core
 uid: core/miscellaneous/connection-strings
 ---
 # Connection Strings
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Most database providers require some form of connection string to connect to the database. Sometimes this connection string contains sensitive information that needs to be protected. You may also need to change the connection string as you move your application between environments, such as development, testing, and production.
 

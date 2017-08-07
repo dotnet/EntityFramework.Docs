@@ -1,5 +1,5 @@
 ﻿---
-title: Package Manager Console (Visual Studio) | Microsoft Docs
+title: EF Core | Package Manager Console (Visual Studio) | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -11,9 +11,6 @@ ms.technology: entity-framework-core
 uid: core/miscellaneous/cli/powershell
 ---
 # Package Manager Console (Visual Studio)
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 EF Core Package Manager Console Tools for Visual Studio
 

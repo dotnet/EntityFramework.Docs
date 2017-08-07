@@ -1,5 +1,5 @@
 ---
-title: Alternate Keys (Unique Constraints) | Microsoft Docs
+title: EF Core | Alternate Keys (Unique Constraints) | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 3d419dcf-2b5d-467c-b408-ea03d830721a
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/relational/unique-constraints
 ---
 # Alternate Keys (Unique Constraints)
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 > [!NOTE]
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
