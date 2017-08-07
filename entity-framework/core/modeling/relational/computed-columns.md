@@ -12,8 +12,7 @@ uid: core/modeling/relational/computed-columns
 ---
 # Computed Columns
 
-> [!NOTE]
-> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 A computed column is a column whose value is calculated in the database. A computed column can use other columns in the table to calculate its value.
 
@@ -30,7 +29,7 @@ Computed columns can not be configured with Data Annotations.
 You can use the Fluent API to specify that a property should map to a computed column.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/ComputedColumn.cs?highlight=9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Person> People { get; set; }
@@ -50,4 +49,4 @@ public class Person
     public string LastName { get; set; }
     public string DisplayName { get; set; }
 }
-````
+```

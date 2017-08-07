@@ -14,8 +14,7 @@ uid: core/saving/related-data
 
 In addition to isolated entities, you can also make use of the relationships defined in your model.
 
-> [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/RelatedData/) on GitHub.
+> [!TIP] You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/RelatedData/) on GitHub.
 
 ## Adding a graph of new entities
 
@@ -24,7 +23,7 @@ If you create several new related entities, adding one of them to the context wi
 In the following example, the blog and three related posts are all inserted into the database. The posts are found and added, because they are reachable via the `Blog.Posts` navigation property.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/RelatedData/Sample.cs)] -->
-````csharp
+``` csharp
         using (var context = new BloggingContext())
         {
             var blog = new Blog
@@ -41,7 +40,7 @@ In the following example, the blog and three related posts are all inserted into
             context.Blogs.Add(blog);
             context.SaveChanges();
         }
-````
+```
 
 ## Adding a related entity
 
@@ -50,7 +49,7 @@ If you reference a new entity from the navigation property of an entity that is 
 In the following example, the `post` entity is inserted because it is added to the `Posts` property of the `blog` entity which was fetched from the database.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/RelatedData/Sample.cs)] -->
-````csharp
+``` csharp
         using (var context = new BloggingContext())
         {
             var blog = context.Blogs.First();
@@ -59,7 +58,7 @@ In the following example, the `post` entity is inserted because it is added to t
             blog.Posts.Add(post);
             context.SaveChanges();
         }
-````
+```
 
 ## Changing relationships
 
@@ -68,7 +67,7 @@ If you change the navigation property of an entity, the corresponding changes wi
 In the following example, the `post` entity is updated to belong to the new `blog` entity because its `Blog` navigation property is set to point to `blog`. Note that `blog` will also be inserted into the database because it is a new entity that is referenced by the navigation property of an entity that is already tracked by the context (`post`).
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/RelatedData/Sample.cs)] -->
-````csharp
+``` csharp
         using (var context = new BloggingContext())
         {
             var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio" };
@@ -77,7 +76,7 @@ In the following example, the `post` entity is updated to belong to the new `blo
             blog.Posts.Add(post);
             context.SaveChanges();
         }
-````
+```
 
 ## Removing relationships
 
@@ -88,7 +87,7 @@ If a cascade delete is configured, the child/dependent entity will be deleted fr
 In the following example, a cascade delete is configured on the relationship between `Blog` and `Post`, so the `post` entity is deleted from the database.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/RelatedData/Sample.cs)] -->
-````csharp
+``` csharp
         using (var context = new BloggingContext())
         {
             var blog = context.Blogs.Include(b => b.Posts).First();
@@ -97,4 +96,4 @@ In the following example, a cascade delete is configured on the relationship bet
             blog.Posts.Remove(post);
             context.SaveChanges();
         }
-````
+```

@@ -12,8 +12,7 @@ uid: core/miscellaneous/cli/dotnet
 ---
 # .NET Command Line Tools
 
-> [!IMPORTANT]
-> The [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.0.0 no longer supports `project.json` or Visual Studio 2015. Everyone doing .NET Core development is encouraged to [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/) and [Visual Studio 2017](https://www.visualstudio.com/downloads/).
+> [!IMPORTANT] The [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.0.0 no longer supports `project.json` or Visual Studio 2015. Everyone doing .NET Core development is encouraged to [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/) and [Visual Studio 2017](https://www.visualstudio.com/downloads/).
 
 Entity Framework Core .NET Command Line Tools
 
@@ -44,7 +43,7 @@ The EF Core .NET Command Line Tools are installed by manually editing the `*.csp
 The resulting project should include these items (in addition to your other project dependencies).
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````xml
+```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -57,10 +56,9 @@ The resulting project should include these items (in addition to your other proj
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
   </ItemGroup>
 </Project>
-````
+```
 
-> [!TIP]
-> A private package reference (`PrivateAssets="All"`) means this dependency is local to the current project. For example, if Project A has a build only dependency and Project B depends on A, `dotnet restore` will not add A's build-only dependencies into Project B.
+> [!TIP] A private package reference (`PrivateAssets="All"`) means this dependency is local to the current project. For example, if Project A has a build only dependency and Project B depends on A, `dotnet restore` will not add A's build-only dependencies into Project B.
 
 ## Usage
 
@@ -68,8 +66,7 @@ Commands can be run from the command line by navigating to the project directory
 
 ### dotnet-ef
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef [options] [command]
 
 Options:
@@ -83,12 +80,11 @@ Commands:
   database    Commands to manage the database.
   dbcontext   Commands to manage DbContext types.
   migrations  Commands to manage migrations.
-````
+```
 
 ### dotnet-ef-database
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef database [options] [command]
 
 Options:
@@ -100,12 +96,11 @@ Options:
 Commands:
   drop    Drops the database.
   update  Updates the database to a specified migration.
-````
+```
 
 ### dotnet-ef-database-drop
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef database drop [options]
 
 Options:
@@ -122,12 +117,11 @@ Options:
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-````
+```
 
 ### dotnet-ef-database-update
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef database update [arguments] [options]
 
 Arguments:
@@ -145,12 +139,11 @@ Options:
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-````
+```
 
 ### dotnet-ef-dbcontext
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef dbcontext [options] [command]
 
 Options:
@@ -163,12 +156,11 @@ Commands:
   info      Gets information about a DbContext type.
   list      Lists available DbContext types.
   scaffold  Scaffolds a DbContext and entity types for a database.
-````
+```
 
 ### dotnet-ef-dbcontext-info
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef dbcontext info [options]
 
 Options:
@@ -184,12 +176,11 @@ Options:
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-````
+```
 
 ### dotnet-ef-dbcontext-list
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef dbcontext list [options]
 
 Options:
@@ -204,12 +195,11 @@ Options:
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-````
+```
 
 ### dotnet-ef-dbcontext-scaffold
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef dbcontext scaffold [arguments] [options]
 
 Arguments:
@@ -234,12 +224,11 @@ Options:
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-````
+```
 
 ### dotnet-ef-migrations
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef migrations [options] [command]
 
 Options:
@@ -253,12 +242,11 @@ Commands:
   list    Lists available migrations.
   remove  Removes the last migration.
   script  Generates a SQL script from migrations.
-````
+```
 
 ### dotnet-ef-migrations-add
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef migrations add [arguments] [options]
 
 Arguments:
@@ -278,12 +266,11 @@ Options:
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-````
+```
 
 ### dotnet-ef-migrations-list
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef migrations list [options]
 
 Options:
@@ -299,12 +286,11 @@ Options:
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-````
+```
 
 ### dotnet-ef-migrations-remove
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef migrations remove [options]
 
 Options:
@@ -321,12 +307,11 @@ Options:
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-````
+```
 
 ### dotnet-ef-migrations-script
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Usage: dotnet ef migrations script [arguments] [options]
 
 Arguments:
@@ -347,7 +332,7 @@ Options:
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-````
+```
 
 ## Common Errors
 
@@ -355,12 +340,11 @@ Options:
 
 Design-time tools attempt to automatically find how your application creates instances of your DbContext type. If EF cannot find a suitable way to initialize your DbContext, you may encounter this error.
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 No parameterless constructor was found on 'TContext'. Either add a parameterless constructor to
 'TContext' or add an implementation of 'IDbContextFactory<TContext>' in the same assembly as
 'TContext'.
-````
+```
 
 As the error message suggests, one solution is to add an implementation of `IDbContextFactory<TContext>` to the current project. See [Using IDbContextFactory<TContext>](../configuring-dbcontext.md) for an example of how to create this factory.
 
@@ -370,10 +354,9 @@ As the error message suggests, one solution is to add an implementation of `IDbC
 
 .NET Core CLI does not fully support projects targeting .NET Standard class libraries. Despite being able to install EF tools, executing commands will show this warning message and may ultimately terminate in error.
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+``` terminal
 Startup project '(your project name)' targets framework '.NETStandard'. This framework is not intended for execution and may fail to resolve runtime dependencies. If so, specify a different project using the --startup-project option and try again.
-````
+```
 
 See issue [https://github.com/dotnet/cli/issues/2645](https://github.com/dotnet/cli/issues/2645).
 
@@ -391,10 +374,9 @@ Specify a startup project that is a "runnable app."
 
 Example:
 
-<!-- literal_block"language": "csharp",ole", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````console
+``` terminal
 dotnet ef migrations list --startup-project ../MyConsoleApp/
-````
+```
 
 #### Workaround 2 - Cross-target a runnable framework
 
@@ -402,22 +384,21 @@ Add an additional target framework to the class library project. This can a vers
 
 To make the project a .NET Core App, add the "netcoreapp1.0" framework to project like in the sample below:
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````xml
+``` xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.0;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 </Project>
-````
+```
 
 When targeting .NET Framework, ensure you project targets version 4.5.1 or newer.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````xml
+``` xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net46;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 </Project>
-````
+```

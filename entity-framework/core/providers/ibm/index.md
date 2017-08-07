@@ -12,22 +12,21 @@ uid: core/providers/ibm/index
 
 This database provider allows Entity Framework Core to be used with IBM Data Server. The provider is maintained by IBM.
 
-> [!NOTE]
-> This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
+> [!NOTE] This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 ## Install
 
 To work with IBM Data Server on Windows, install the [IBM.EntityFrameworkCore NuGet package](https://www.nuget.org/packages/IBM.EntityFrameworkCore).
 
-````text
+``` terminal
    PM>  Install-Package IBM.EntityFrameworkCore
-````
+```
 
 To work with IBM Data Server on Linux, install the [IBM.EntityFrameworkCore-lnx NuGet package](https://www.nuget.org/packages/IBM.EntityFrameworkCore-lnx).
 
-````text
+``` terminal
    PM>  Install-Package IBM.EntityFrameworkCore-lnx
-````
+```
 
 ## Get Started
 

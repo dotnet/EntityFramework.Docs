@@ -12,8 +12,7 @@ uid: core/modeling/relational/unique-constraints
 ---
 # Alternate Keys (Unique Constraints)
 
-> [!NOTE]
-> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 A unique constraint is introduced for each alternate key in the model.
 
@@ -30,7 +29,7 @@ Unique constraints can not be configured using Data Annotations.
 You can use the Fluent API to configure the index and constraint name for an alternate key.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/AlternateKeyName.cs?highlight=9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Car> Cars { get; set; }
@@ -49,4 +48,4 @@ class Car
     public string LicensePlate { get; set; }
     public string Make { get; set; }
     public string Model { get; set; }
-````
+```

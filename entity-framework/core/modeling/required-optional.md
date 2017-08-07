@@ -18,29 +18,28 @@ A property is considered optional if it is valid for it to contain `null`. If `n
 
 By convention, a property whose CLR type can contain null will be configured as optional (`string`, `int?`, `byte[]`, etc.). Properties whose CLR type cannot contain null will be configured as required (`int`, `decimal`, `bool`, etc.).
 
-> [!NOTE]
-> A property whose CLR type cannot contain null cannot be configured as optional. The property will always be considered required by Entity Framework.
+> [!NOTE] A property whose CLR type cannot contain null cannot be configured as optional. The property will always be considered required by Entity Framework.
 
 ## Data Annotations
 
 You can use Data Annotations to indicate that a property is required.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Required.cs?highlight=4)] -->
-````csharp
+``` csharp
 public class Blog
 {
     public int BlogId { get; set; }
     [Required]
     public string Url { get; set; }
 }
-````
+```
 
 ## Fluent API
 
 You can use the Fluent API to indicate that a property is required.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Required.cs?highlight=7,8,9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -58,4 +57,4 @@ public class Blog
     public int BlogId { get; set; }
     public string Url { get; set; }
 }
-````
+```

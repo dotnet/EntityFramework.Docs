@@ -15,8 +15,7 @@ Entity Framework Core allows you to use the navigation properties in your model 
 * **Explicit loading** means that the related data is explicitly loaded from the database at a later time.
 * **Lazy loading** means that the related data is transparently loaded from the database when the navigation property is accessed. Lazy loading is not yet possible with EF Core.
 
-> [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
+> [!TIP] You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
 
 ## Eager loading
 
@@ -24,8 +23,7 @@ You can use the `Include` method to specify related data to be included in query
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#SingleInclude)]
 
-> [!TIP]
-> Entity Framework Core will automatically fix-up navigation properties to any other entities that were previously loaded into the context instance. So even if you don't explicitly include the data for a navigation property, the property may still be populated if some or all of the related entities were previously loaded.
+> [!TIP] Entity Framework Core will automatically fix-up navigation properties to any other entities that were previously loaded into the context instance. So even if you don't explicitly include the data for a navigation property, the property may still be populated if some or all of the related entities were previously loaded.
 
 You can include related data from multiple relationships in a single query.
 
@@ -63,8 +61,7 @@ By default, EF Core will log a warning when include operators are ignored. See [
 
 ## Explicit loading
 
-> [!NOTE]
-> Explicit Loading support was introduced in EF Core 1.1.0. If you are using an earlier release, the functionality shown in this section will not be available.
+> [!NOTE] This feature was introduced in EF Core 1.1.
 
 You can explicitly load a navigation property via the `DbContext.Entry(...)` API.
 
@@ -96,7 +93,7 @@ Some serialization frameworks do not allow such cycles. For example, Json.NET wi
 
 If you are using ASP.NET Core, you can configure Json.NET to ignore cycles that it finds in the object graph. This is done in the `ConfigureServices(...)` method in `Startup.cs`.
 
-```c#
+``` csharp
 public void ConfigureServices(IServiceCollection services)
 {
     ...

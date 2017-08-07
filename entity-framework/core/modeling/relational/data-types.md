@@ -12,8 +12,7 @@ uid: core/modeling/relational/data-types
 ---
 # Data Types
 
-> [!NOTE]
-> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 Data type refers to the database specific type of the column to which a property is mapped.
 
@@ -28,21 +27,21 @@ For example, SQL Server uses `datetime2(7)` for `DateTime` properties, and `nvar
 You can use Data Annotations to specify an exact data type for the column.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/DataAnnotations/Samples/Relational/DataType.cs?highlight=4)] -->
-````csharp
+``` csharp
 public class Blog
 {
     public int BlogId { get; set; }
     [Column(TypeName = "varchar(200)")]
     public string Url { get; set; }
 }
-````
+```
 
 ## Fluent API
 
 You can use the Fluent API to specify an exact data type for the column.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DataType.cs?highlight=7,8,9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -60,13 +59,13 @@ public class Blog
     public int BlogId { get; set; }
     public string Url { get; set; }
 }
-````
+```
 
 If you are targeting more than one relational provider with the same model then you probably want to specify a data type for each provider rather than a global one to be used for all relational providers.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DataTypeForProvider.cs?highlight=3)] -->
-````csharp
+``` csharp
         modelBuilder.Entity<Blog>()
             .Property(b => b.Url)
             .ForSqlServerHasColumnType("varchar(200)");
-````
+```

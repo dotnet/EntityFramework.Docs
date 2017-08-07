@@ -28,7 +28,7 @@ The following prerequisites are needed to complete this walkthrough:
 
 * Create a new `ConsoleApp.SQLite` folder for your project and use the `dotnet` command to populate it with a .NET Core app.
 
-```
+``` terminal
 mkdir ConsoleApp.SQLite
 cd ConsoleApp.SQLite/
 dotnet new console
@@ -40,7 +40,7 @@ To use EF Core, install the package for the database provider(s) you want to tar
 
 * Install Microsoft.EntityFrameworkCore.Sqlite and Microsoft.EntityFrameworkCore.Design
 
-```
+``` terminal
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
 ```
@@ -88,7 +88,7 @@ Once you have a model, you can use [migrations](https://docs.microsoft.com/aspne
 
  One blog is saved to the database and the details of all blogs are displayed in the console.
 
-  ```
+  ``` terminal
   ConsoleApp.SQLite>dotnet run
   Project ConsoleApp.SQLite (.NETCoreApp,Version=v1.1) will be compiled because
   inputs were modified

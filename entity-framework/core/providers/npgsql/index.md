@@ -14,17 +14,16 @@ uid: core/providers/npgsql/index
 
 This database provider allows Entity Framework Core to be used with PostgreSQL. The provider is maintained as part of the [Npgsql project](http://www.npgsql.org).
 
-> [!NOTE]
-> This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
+> [!NOTE] This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 ## Install
 
 Install the [Npgsql.EntityFrameworkCore.PostgreSQL NuGet package](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL).
 
 <!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": false, "dupnames  : "csharp",", highlight_args}, "names": [] -->
-````text
+``` terminal
    PM>  Install-Package Npgsql.EntityFrameworkCore.PostgreSQL
-````
+```
 
 ## Get Started
 

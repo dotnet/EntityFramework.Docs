@@ -12,8 +12,7 @@ uid: core/modeling/relational/default-values
 ---
 # Default Values
 
-> [!NOTE]
-> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 The default value of a column is the value that will be inserted if a new row is inserted but no value is specified for the column.
 
@@ -30,7 +29,7 @@ You can not set a default value using Data Annotations.
 You can use the Fluent API to specify the default value for a property.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DefaultValue.cs?highlight=9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -49,12 +48,12 @@ public class Blog
     public string Url { get; set; }
     public int Rating { get; set; }
 }
-````
+```
 
 You can also specify a SQL fragment that is used to calculate the default value.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DefaultValueSql.cs?highlight=9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -73,4 +72,4 @@ public class Blog
     public string Url { get; set; }
     public DateTime Created { get; set; }
 }
-````
+```

@@ -12,8 +12,7 @@ uid: core/modeling/relational/primary-keys
 ---
 # Primary Keys
 
-> [!NOTE]
-> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 A primary key constraint is introduced for the key of each entity type.
 
@@ -30,7 +29,7 @@ No relational database specific aspects of a primary key can be configured using
 You can use the Fluent API to configure the name of the primary key constraint in the database.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/KeyName.cs?highlight=9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -48,4 +47,4 @@ public class Blog
     public int BlogId { get; set; }
     public string Url { get; set; }
 }
-````
+```

@@ -14,8 +14,7 @@ uid: core/querying/basic
 
 Learn how to load entities from the database using Language Integrate Query (LINQ).
 
-> [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
+> [!TIP] You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
 
 ## 101 LINQ samples
 
@@ -24,32 +23,32 @@ This page shows a few examples to achieve common tasks with Entity Framework Cor
 ## Loading all data
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Basics/Sample.cs)] -->
-````csharp
+``` csharp
 using (var context = new BloggingContext())
 {
     var blogs = context.Blogs.ToList();
 }
-````
+```
 
 ## Loading a single entity
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Basics/Sample.cs)] -->
-````csharp
+``` csharp
 using (var context = new BloggingContext())
 {
     var blog = context.Blogs
         .Single(b => b.BlogId == 1);
 }
-````
+```
 
 ## Filtering
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Basics/Sample.cs)] -->
-````csharp
+``` csharp
 using (var context = new BloggingContext())
 {
     var blogs = context.Blogs
         .Where(b => b.Url.Contains("dotnet"))
         .ToList();
 }
-````
+```

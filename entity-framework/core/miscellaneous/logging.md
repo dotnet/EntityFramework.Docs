@@ -12,8 +12,7 @@ uid: core/miscellaneous/logging
 ---
 # Logging
 
-> [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging) on GitHub.
+> [!TIP] You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging) on GitHub.
 
 ## Create a logger
 
@@ -25,8 +24,7 @@ Here is a simple implementation that logs a human readable representation of eve
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/MyLoggerProvider.cs)]
 
-> [!TIP]
->The arguments passed to the Log method are:
+> [!TIP] The arguments passed to the Log method are:
 > * `logLevel` is the level (e.g. Warning, Info, Verbose, etc.) of the event being logged
 > * `eventId` is a library/assembly specific id that represents the type of event being logged
 > * `state` can be any object that holds state relevant to what is being logged
@@ -39,7 +37,7 @@ Here is a simple implementation that logs a human readable representation of eve
 
 In an ASP.NET Core application, you register your logger in the Configure method of Startup.cs:
 
-```c#
+``` csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 {
     loggerFactory.AddProvider(new MyLoggerProvider());
@@ -52,8 +50,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerF
 
 In your application startup code, create an instance of your context and register your logger.
 
-> [!NOTE]
-> You only need to register the logger with a single context instance. Once you have registered it, it will be used for all other instances of the context in the same AppDomain.
+> [!TIP] You only need to register the logger with a single context instance. Once you have registered it, it will be used for all other instances of the context in the same AppDomain.
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging.ConsoleApp/Program.cs#Sample)]
 

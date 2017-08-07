@@ -14,8 +14,7 @@ uid: core/miscellaneous/cli/powershell
 
 EF Core Package Manager Console Tools for Visual Studio
 
-> [!WARNING]
-> The tools require the [latest version of Windows PowerShell](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
+> [!WARNING] The tools require the [latest version of Windows PowerShell](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
 
 ## Installation
 
@@ -31,15 +30,14 @@ To open the console, follow these steps.
 
 ## Usage
 
-> [!NOTE]
-> All commands support the common parameters: `-Verbose`, `-ErrorAction`, `-ErrorVariable`, `-WarningAction`, `-WarningVariable`, `-OutBuffer`, `-OutVariable`, etc. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+> [!TIP] All commands support the common parameters: `-Verbose`, `-ErrorAction`, `-ErrorVariable`, `-WarningAction`, `-WarningVariable`, `-OutBuffer`, `-OutVariable`, etc. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ### Add-Migration
 
 Adds a new migration.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````text
+``` terminal
 SYNTAX
     Add-Migration [-Name] <String> [-OutputDir <String>] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
@@ -61,14 +59,14 @@ PARAMETERS
 
     -StartupProject <String>
         The startup project to use. Defaults to the solution's startup project.
-````
+```
 
 ### Remove-Migration
 
 Removes the last migration.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````text
+``` terminal
 SYNTAX
     Remove-Migration [-Force] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
@@ -87,14 +85,14 @@ PARAMETERS
 
     -StartupProject <String>
         The startup project to use. Defaults to the solution's startup project.
-````
+```
 
 ### Scaffold-DbContext
 
 Scaffolds a DbContext and entity types for a database.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````text
+``` terminal
 SYNTAX
     Scaffold-DbContext [-Connection] <String> [-Provider] <String> [-OutputDir <String>] [-Context <String>] [-Schemas <String[]>] [-Tables <String[]>] [-DataAnnotations] [-Force] [-Environment <String>] [-Project <String>] [-StartupProject <String>]
     [<CommonParameters>]
@@ -132,14 +130,14 @@ PARAMETERS
 
     -StartupProject <String>
         The startup project to use. Defaults to the solution's startup project.
-````
+```
 
 ### Script-Migration
 
 Generates a SQL script from migrations.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````text
+``` terminal
 SYNTAX
     Script-Migration [-From] <String> [-To] <String> [-Idempotent] [-Output <String>] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
@@ -169,14 +167,14 @@ PARAMETERS
 
     -StartupProject <String>
         The startup project to use. Defaults to the solution's startup project.
-````
+```
 
 ### Update-Database
 
 Updates the database to a specified migration.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````text
+``` terminal
 SYNTAX
     Update-Database [[-Migration] <String>] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
@@ -195,14 +193,14 @@ PARAMETERS
 
     -StartupProject <String>
         The startup project to use. Defaults to the solution's startup project.
-````
+```
 
 ### Drop-Database
 
 Drops the database.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````text
+``` terminal
 SYNTAX
     Drop-Database [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
@@ -224,20 +222,20 @@ PARAMETERS
 
     -Confirm [<SwitchParameter>]
         Prompts you for confirmation before executing the command.
-````
+```
 
 ## Using EF Core Tools and EF6 side-by-side
 
 EF Core Tools do not work on EF6 or earlier version of EF. However, EF Core re-uses some of the same command names from these earlier versions. These tools can be installed side-by-side, however, EF does not automatically know which version of the command to use. This is solved by prefixing the command with the module name. The EF6 PowerShell module is named "EntityFramework", and the EF Core module is named "EntityFrameworkCore". Without the prefix, PowerShell may call the wrong version of the command.
 
 <!-- literal_block"language": "csharp",rShell", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````PowerShell
+```PowerShell
 # Invokes the EF Core command
 PS> EntityFrameworkCore\Add-Migration
 
 # Invokes the EF6 command
 PS> EntityFramework\Add-Migration
-````
+```
 
 ## Common Errors
 
@@ -246,10 +244,10 @@ PS> EntityFramework\Add-Migration
 EF tools attempt to automatically find how your application creates instances of your DbContext type. If it cannot find a suitable way to initialize your DbContext, you may encounter this error.
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````
+```
 No parameterless constructor was found on 'TContext'. Either add a parameterless constructor to
 'TContext' or add an implementation of 'IDbContextFactory<TContext>' in the same assembly as
 'TContext'.
-````
+```
 
 As the error message suggests, one solution is to add an implementation of `IDbContextFactory<TContext>` to the current project. See [Using IDbContextFactory<TContext>](../configuring-dbcontext.md) for an example of how to create this factory.

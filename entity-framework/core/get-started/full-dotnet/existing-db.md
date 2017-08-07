@@ -15,8 +15,7 @@ uid: core/get-started/full-dotnet/existing-db
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.
 
-> [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb) on GitHub.
+> [!TIP] You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb) on GitHub.
 
 ## Prerequisites
 
@@ -34,8 +33,7 @@ The following prerequisites are needed to complete this walkthrough:
 
 This tutorial uses a **Blogging** database on your LocalDb instance as the existing database.
 
-> [!NOTE]
-> If you have already created the **Blogging** database as part of another tutorial, you can skip these steps.
+> [!TIP] If you have already created the **Blogging** database as part of another tutorial, you can skip these steps.
 
 * Open Visual Studio
 
@@ -94,14 +92,14 @@ Now it's time to create the EF model based on your existing database.
 * Run the following command to create a model from the existing database
 
 <!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````text
+``` terminal
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
-````
+```
 
 The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/Blog.cs)] -->
-````csharp
+``` csharp
 using System;
 using System.Collections.Generic;
 
@@ -120,12 +118,12 @@ namespace EFGetStarted.ConsoleApp.ExistingDb
         public virtual ICollection<Post> Post { get; set; }
     }
 }
-````
+```
 
 The context represents a session with the database and allows you to query and save instances of the entity classes.
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/BloggingContext.cs)] -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -158,7 +156,7 @@ namespace EFGetStarted.ConsoleApp.ExistingDb
         public virtual DbSet<Post> Post { get; set; }
     }
 }
-````
+```
 
 ## Use your model
 
@@ -169,7 +167,7 @@ You can now use your model to perform data access.
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/Program.cs)] -->
-````csharp
+``` csharp
 using System;
 
 namespace EFGetStarted.ConsoleApp.ExistingDb
@@ -194,7 +192,7 @@ namespace EFGetStarted.ConsoleApp.ExistingDb
         }
     }
 }
-````
+```
 
 * Debug ‣ Start Without Debugging
 

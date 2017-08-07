@@ -76,7 +76,7 @@ Attempting to run EF commands on Universal Windows Platform (UWP) projects resul
 You need to manually add binding redirects to the UWP project. Create a file named `App.config` in the project root folder and add redirects to the correct assembly versions.
 
 <!-- literal_block"language": "csharp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````xml
+```xml
 <configuration>
  <runtime>
    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
@@ -97,4 +97,4 @@ You need to manually add binding redirects to the UWP project. Create a file nam
    </assemblyBinding>
  </runtime>
 </configuration>
-````
+```

@@ -12,8 +12,7 @@ uid: core/modeling/relational/indexes
 ---
 # Indexes
 
-> [!NOTE]
-> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 An index in a relational database maps to the same concept as an index in the core of Entity Framework.
 
@@ -30,7 +29,7 @@ Indexes can not be configured using Data Annotations.
 You can use the Fluent API to configure the name of an index.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/IndexName.cs?highlight=9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -48,4 +47,4 @@ public class Blog
     public int BlogId { get; set; }
     public string Url { get; set; }
 }
-````
+```

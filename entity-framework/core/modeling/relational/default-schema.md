@@ -12,8 +12,7 @@ uid: core/modeling/relational/default-schema
 ---
 # Default Schema
 
-> [!NOTE]
-> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 The default schema is the database schema that objects will be created in if a schema is not explicitly configured for that object.
 
@@ -30,7 +29,7 @@ You can not set the default schema using Data Annotations.
 You can use the Fluent API to specify a default schema.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DefaultSchema.cs?highlight=7)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -40,4 +39,4 @@ class MyContext : DbContext
         modelBuilder.HasDefaultSchema("blogging");
     }
 }
-````
+```

@@ -15,8 +15,7 @@ uid: core/get-started/full-dotnet/new-db
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use migrations to create the database from your model.
 
-> [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb) on GitHub.
+> [!TIP] You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb) on GitHub.
 
 ## Prerequisites
 
@@ -65,7 +64,7 @@ Now it's time to define a context and entity classes that make up your model.
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Model.cs)] -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -100,10 +99,9 @@ namespace EFGetStarted.ConsoleApp
         public Blog Blog { get; set; }
     }
 }
-````
+```
 
-> [!TIP]
-> In a real application you would put each class in a separate file and put the connection string in the `App.Config` file and read it out using `ConfigurationManager`. For the sake of simplicity, we are putting everything in a single code file for this tutorial.
+> [!TIP] In a real application you would put each class in a separate file and put the connection string in the `App.Config` file and read it out using `ConfigurationManager`. For the sake of simplicity, we are putting everything in a single code file for this tutorial.
 
 ## Create your database
 
@@ -115,8 +113,7 @@ Now that you have a model, you can use migrations to create a database for you.
 
 * Run `Update-Database` to apply the new migration to the database. Because your database doesn't exist yet, it will be created for you before the migration is applied.
 
-> [!TIP]
-> If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to make the corresponding schema changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the `Update-Database` command to apply the changes to the database.
+> [!TIP] If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to make the corresponding schema changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the `Update-Database` command to apply the changes to the database.
 >
 >EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
 
@@ -129,7 +126,7 @@ You can now use your model to perform data access.
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Program.cs)] -->
-````csharp
+``` csharp
 using System;
 
 namespace EFGetStarted.ConsoleApp
@@ -154,7 +151,7 @@ namespace EFGetStarted.ConsoleApp
         }
     }
 }
-````
+```
 
 * Debug ‣ Start Without Debugging
 

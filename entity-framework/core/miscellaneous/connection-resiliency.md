@@ -10,10 +10,9 @@ uid: core/miscellaneous/connection-resiliency
 
 # Connection Resiliency
 
-Connection resiliency automatically retries failed database commands. It is specific to relational databases.
+> [!NOTE] This feature is new in EF Core 1.1.
 
-> [!NOTE]
-> Connection resiliency was introduced in EF Core 1.1.0. If you are using an earlier release, the functionality shown in this article will not be available.
+Connection resiliency automatically retries failed database commands. It is specific to relational databases.
 
 ## SQL Server
 
@@ -27,7 +26,7 @@ An execution strategy is specified when configuring the options for your context
 
 There is a mechanism to register a custom execution strategy of your own.
 
-```c#
+``` csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {
     optionsBuilder
@@ -45,6 +44,6 @@ However, if your code initiates a transaction using `BeginTransaction()` you are
 
 > InvalidOperationException: The configured execution strategy 'SqlServerRetryingExecutionStrategy' does not support user initiated transactions. Use the execution strategy returned by 'DbContext.Database.CreateExecutionStrategy()' to execute all the operations in the transaction as a retriable unit.
 
-The solution, is to manually invoke the execution strategy with a delegate representing everything that needs to be executed. If a transient failure occurs, the execution strategy will invoke the delegate again.
+The solution is to manually invoke the execution strategy with a delegate representing everything that needs to be executed. If a transient failure occurs, the execution strategy will invoke the delegate again.
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#Sample)]

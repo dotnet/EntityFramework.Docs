@@ -24,8 +24,7 @@ If both are used, `OnConfiguring` is executed on the supplied options, meaning i
 
 Context code with constructor
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 public class BloggingContext : DbContext
 {
     public BloggingContext(DbContextOptions<BloggingContext> options)
@@ -34,15 +33,13 @@ public class BloggingContext : DbContext
 
     public DbSet<Blog> Blogs { get; set; }
 }
-````
+```
 
-> [!TIP]
-> The base constructor of DbContext also accepts the non-generic version of `DbContextOptions`. Using the non-generic version is not recommended for applications with multiple context types.
+> [!TIP] The base constructor of DbContext also accepts the non-generic version of `DbContextOptions`. Using the non-generic version is not recommended for applications with multiple context types.
 
 Application code to initialize from constructor argument
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
 optionsBuilder.UseSqlite("Data Source=blog.db");
 
@@ -50,17 +47,15 @@ using (var context = new BloggingContext(optionsBuilder.Options))
 {
     // do stuff
 }
-````
+```
 
 ### OnConfiguring
 
-> [!WARNING]
-> `OnConfiguring` occurs last and can overwrite options obtained from DI or the constructor. This approach does not lend itself to testing (unless you target the full database).
+> [!WARNING] `OnConfiguring` occurs last and can overwrite options obtained from DI or the constructor. This approach does not lend itself to testing (unless you target the full database).
 
-Context code with OnConfiguring
+Context code with `OnConfiguring`:
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -70,17 +65,16 @@ public class BloggingContext : DbContext
         optionsBuilder.UseSqlite("Data Source=blog.db");
     }
 }
-````
+```
 
-Application code to initialize with "OnConfiguring"
+Application code to initialize with `OnConfiguring`:
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 using (var context = new BloggingContext())
 {
     // do stuff
 }
-````
+```
 
 ## Using DbContext with dependency injection
 
@@ -92,20 +86,18 @@ See [more reading](#more-reading) below for information on dependency injection.
 
 Adding dbcontext to dependency injection
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddDbContext<BloggingContext>(options => options.UseSqlite("Data Source=blog.db"));
 }
-````
+```
 
 This requires adding a [constructor argument](#constructor-argument) to your DbContext type that accepts `DbContextOptions`.
 
-Context code
+Context code:
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 public class BloggingContext : DbContext
 {
     public BloggingContext(DbContextOptions<BloggingContext> options)
@@ -114,26 +106,24 @@ public class BloggingContext : DbContext
 
     public DbSet<Blog> Blogs { get; set; }
 }
-````
+```
 
-Application code (in ASP.NET Core)
+Application code (in ASP.NET Core):
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 public MyController(BloggingContext context)
-````
+```
 
-Application code (using ServiceProvider directly, less common)
+Application code (using ServiceProvider directly, less common):
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 using (var context = serviceProvider.GetService<BloggingContext>())
 {
   // do stuff
 }
 
 var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
-````
+```
 
 <a name=use-idbcontextfactory></a>
 
@@ -145,8 +135,7 @@ Implement this interface to enable design-time services for context types that d
 
 Example:
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -163,7 +152,7 @@ namespace MyProject
         }
     }
 }
-````
+```
 
 ## More reading
 

@@ -12,8 +12,7 @@ uid: core/modeling/relational/fk-constraints
 ---
 # Foreign Key Constraints
 
-> [!NOTE]
-> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 A foreign key constraint is introduced for each relationship in the model.
 
@@ -30,7 +29,7 @@ Foreign key constraint names cannot be configured using data annotations.
 You can use the Fluent API to configure the foreign key constraint name for a relationship.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/RelationshipConstraintName.cs?highlight=12)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -63,4 +62,4 @@ public class Post
     public int BlogId { get; set; }
     public Blog Blog { get; set; }
 }
-````
+```
