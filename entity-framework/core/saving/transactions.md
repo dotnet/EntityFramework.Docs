@@ -32,10 +32,10 @@ You can use the `DbContext.Database` API to begin, commit, and rollback transact
 
 Not all database providers support transactions. Some providers may throw or no-op when transaction APIs are called.
 
-[!code-csharp[Main](samples/core/Saving/Saving/Transactions/ControllingTransaction/Sample.cs?highlight=3,17,18,19)]
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/ControllingTransaction/Sample.cs?highlight=3,17,18,19)]
 
 
-Inline: 
+Inline:
 ````csharp
         using (var context = new BloggingContext())
         {
