@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 
 ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
 ms.technology: entity-framework-core
- 
+
 uid: core/saving/transactions
 ---
 # Transactions
@@ -32,35 +32,7 @@ You can use the `DbContext.Database` API to begin, commit, and rollback transact
 
 Not all database providers support transactions. Some providers may throw or no-op when transaction APIs are called.
 
-<!-- [!code-csharp[Main](samples/core/Saving/Saving/Transactions/ControllingTransaction/Sample.cs?highlight=3,17,18,19)] -->
-````csharp
-        using (var context = new BloggingContext())
-        {
-            using (var transaction = context.Database.BeginTransaction())
-            {
-                try
-                {
-                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                    context.SaveChanges();
-
-                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
-                    context.SaveChanges();
-
-                    var blogs = context.Blogs
-                        .OrderBy(b => b.Url)
-                        .ToList();
-
-                    // Commit transaction if all commands succeed, transaction will auto-rollback
-                    // when disposed if either commands fails
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    // TODO: Handle failure
-                }
-            }
-        }
-````
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/ControllingTransaction/Sample.cs#Sample)]
 
 ## Cross-context transaction (relational databases only)
 

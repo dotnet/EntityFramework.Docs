@@ -14,6 +14,7 @@ namespace EFSaving.Transactions.ControllingTransaction
                 context.Database.EnsureCreated();
             }
 
+            #region Sample
             using (var context = new BloggingContext())
             {
                 using (var transaction = context.Database.BeginTransaction())
@@ -40,6 +41,7 @@ namespace EFSaving.Transactions.ControllingTransaction
                     }
                 }
             }
+            #endregion
         }
 
         public class BloggingContext : DbContext
