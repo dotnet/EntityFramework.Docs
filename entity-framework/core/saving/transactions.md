@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 
 ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
 ms.technology: entity-framework-core
- 
+
 uid: core/saving/transactions
 ---
 # Transactions
@@ -32,7 +32,10 @@ You can use the `DbContext.Database` API to begin, commit, and rollback transact
 
 Not all database providers support transactions. Some providers may throw or no-op when transaction APIs are called.
 
-<!-- [!code-csharp[Main](samples/core/Saving/Saving/Transactions/ControllingTransaction/Sample.cs?highlight=3,17,18,19)] -->
+[!code-csharp[Main](samples/core/Saving/Saving/Transactions/ControllingTransaction/Sample.cs?highlight=3,17,18,19)]
+
+
+Inline: 
 ````csharp
         using (var context = new BloggingContext())
         {
