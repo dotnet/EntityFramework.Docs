@@ -1,5 +1,5 @@
 ---
-title: EF Core | Getting Started on ASP.NET Core - New database with Visual Studio 2017 | Microsoft Docs
+title: EF Core | Getting Started on ASP.NET Core - New database | Microsoft Docs
 author: rick-anderson
 ms.author: riande
 ms.author2: tdykstra
@@ -9,7 +9,7 @@ ms.technology: entity-framework-core
 uid: core/get-started/aspnetcore/new-db
 ---
 
-# ASP.NET Core - New database with Visual Studio 2017
+# Getting Started with EF Core on ASP.NET Core with a New database
 
 In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You will use migrations to create the database from your model. See [Additional Resources](#additional-resources) for more Entity Framework Core tutorials.
 

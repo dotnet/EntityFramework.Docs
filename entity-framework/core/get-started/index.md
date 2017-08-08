@@ -1,5 +1,5 @@
 ---
-title: EF Core | Getting Started | Microsoft Docs
+title: Getting Started with EF Core | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/get-started/index
 ---
-# Getting Started
+# Getting Started with EF Core
 
 For a summary of the steps necessary to add EF Core to your application in different platforms and IDEs, see [General Installation Instructions](general/index.md).
 

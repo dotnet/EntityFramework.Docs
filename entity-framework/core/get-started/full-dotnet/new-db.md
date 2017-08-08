@@ -11,7 +11,7 @@ ms.technology: entity-framework-core
 uid: core/get-started/full-dotnet/new-db
 ---
 
-# .NET Framework - New Database
+# Getting started with EF Core on .NET Framework with a New Database
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use migrations to create the database from your model.
 

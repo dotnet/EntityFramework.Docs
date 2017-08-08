@@ -1,5 +1,5 @@
 ---
-title: EF Core | EntityFrameworkCore.PrimaryKey | Microsoft Docs
+title: EF Core Tools & Extensions | EntityFrameworkCore.PrimaryKey | Microsoft Docs
 author: ErikEJ
 ms.author: divega
 ms.date: 01/19/2017
@@ -8,7 +8,7 @@ ms.technology: entity-framework-core
 uid: core/extensions/entityframeworkcore-primarykey
 ---
 
-# EntityFrameworkCore.PrimaryKey
+# EF Core Tools & Extensions: EntityFrameworkCore.PrimaryKey
 
 > [!NOTE] This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 

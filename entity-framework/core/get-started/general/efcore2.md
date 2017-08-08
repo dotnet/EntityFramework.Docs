@@ -1,5 +1,5 @@
 ---
-title: EF Core | Installing EF Core 2.0 | Microsoft Docs
+title: Installing EF Core 2.0 | Microsoft Docs
 author: divega
 ms.author: divega
 

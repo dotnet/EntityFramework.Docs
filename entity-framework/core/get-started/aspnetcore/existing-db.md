@@ -8,7 +8,7 @@ ms.technology: entity-framework-core
 uid: core/get-started/aspnetcore/existing-db
 ---
 
-# ASP.NET Core - Existing Database
+# Getting Started with EF Core on ASP.NET Core with an Existing Database
 
 > [!IMPORTANT] The [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.0.0 no longer supports `project.json` or Visual Studio 2015. Everyone doing .NET Core development is encouraged to [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/) and [Visual Studio 2017](https://www.visualstudio.com/downloads/).
 

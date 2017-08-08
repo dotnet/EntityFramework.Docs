@@ -11,7 +11,7 @@ ms.technology: entity-framework-core
 uid: core/get-started/uwp/getting-started
 ---
 
-# UWP - New Database
+# Getting Started with EF Core on Universal Windows Platform (UWP) with a New Database
 
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 

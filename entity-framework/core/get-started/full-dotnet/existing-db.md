@@ -11,7 +11,7 @@ ms.technology: entity-framework-core
 uid: core/get-started/full-dotnet/existing-db
 ---
 
-# .NET Framework - Existing Database
+# Getting started with EF Core on .NET Framework with an Existing Database
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.
 

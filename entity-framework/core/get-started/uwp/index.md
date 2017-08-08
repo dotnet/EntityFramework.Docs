@@ -11,7 +11,7 @@ ms.technology: entity-framework-core
 uid: core/get-started/uwp/index
 ---
 
-# Getting Started on Universal Windows Platform (UWP)
+# Getting Started with EF Core on Universal Windows Platform (UWP)
 
 These 101 tutorials require no previous knowledge of Entity Framework (EF) or Visual Studio. They will take you step-by-step through creating a simple Universal Window Platform (UWP) application that queries and saves data from a database.
 

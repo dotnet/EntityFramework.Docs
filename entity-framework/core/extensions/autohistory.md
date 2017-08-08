@@ -1,5 +1,5 @@
 ---
-title: EF Core | Microsoft.EntityFrameworkCore.AutoHistory | Microsoft Docs
+title: EF Core Tools & Extensions | Microsoft.EntityFrameworkCore.AutoHistory | Microsoft Docs
 author: ErikEJ
 ms.author: divega
 ms.date: 02/28/2017
@@ -8,7 +8,7 @@ ms.technology: entity-framework-core
 uid: core/extensions/autohistory
 ---
 
-# Microsoft.EntityFrameworkCore.AutoHistory
+# EF Core Tools & Extensions: Microsoft.EntityFrameworkCore.AutoHistory
 
 > [!NOTE] This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
