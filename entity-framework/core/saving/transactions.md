@@ -34,37 +34,6 @@ Not all database providers support transactions. Some providers may throw or no-
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/ControllingTransaction/Sample.cs#Sample)]
 
-
-Inline:
-````csharp
-        using (var context = new BloggingContext())
-        {
-            using (var transaction = context.Database.BeginTransaction())
-            {
-                try
-                {
-                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                    context.SaveChanges();
-
-                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
-                    context.SaveChanges();
-
-                    var blogs = context.Blogs
-                        .OrderBy(b => b.Url)
-                        .ToList();
-
-                    // Commit transaction if all commands succeed, transaction will auto-rollback
-                    // when disposed if either commands fails
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    // TODO: Handle failure
-                }
-            }
-        }
-````
-
 ## Cross-context transaction (relational databases only)
 
 You can also share a transaction across multiple context instances. This functionality is only available when using a relational database provider because it requires the use of `DbTransaction` and `DbConnection`, which are specific to relational databases.
