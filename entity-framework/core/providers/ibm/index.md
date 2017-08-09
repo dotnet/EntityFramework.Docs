@@ -31,7 +31,7 @@ PM> Install-Package IBM.EntityFrameworkCore-lnx
 
 ## Get Started
 
-[Getting started with IBM .NET Provider for .NET Core ](https://www.ibm.com/developerworks/community/blogs/96960515-2ea1-4391-8170-b0515d08e4da/entry/DB2DotnetCore?lang=en)
+[Getting started with IBM .NET Provider for .NET Core](https://www.ibm.com/developerworks/community/blogs/96960515-2ea1-4391-8170-b0515d08e4da/entry/DB2DotnetCore?lang=en)
 
 ## Supported Database Engines
 
