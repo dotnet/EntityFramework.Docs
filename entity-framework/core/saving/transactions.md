@@ -1,5 +1,5 @@
 ---
-title: Transactions | Microsoft Docs
+title: EF Core | Transactions | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
 ms.technology: entity-framework-core
- 
+
 uid: core/saving/transactions
 ---
-# Transactions
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
+# Using Transactions
 
 Transactions allow several database operations to be processed in an atomic manner. If the transaction is committed, all of the operations are successfully applied to the database. If the transaction is rolled back, none of the operations are applied to the database.
 
@@ -33,7 +30,7 @@ You can use the `DbContext.Database` API to begin, commit, and rollback transact
 Not all database providers support transactions. Some providers may throw or no-op when transaction APIs are called.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/Transactions/ControllingTransaction/Sample.cs?highlight=3,17,18,19)] -->
-````csharp
+``` csharp
         using (var context = new BloggingContext())
         {
             using (var transaction = context.Database.BeginTransaction())
@@ -60,7 +57,7 @@ Not all database providers support transactions. Some providers may throw or no-
                 }
             }
         }
-````
+```
 
 ## Cross-context transaction (relational databases only)
 
@@ -78,7 +75,7 @@ The easiest way to allow `DbConnection` to be externally provided, is to stop us
 > `DbContextOptionsBuilder` is the API you used in `DbContext.OnConfiguring` to configure the context, you are now going to use it externally to create `DbContextOptions`.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/Transactions/SharingTransaction/Sample.cs?highlight=3,4,5)] -->
-````csharp
+``` csharp
     public class BloggingContext : DbContext
     {
         public BloggingContext(DbContextOptions<BloggingContext> options)
@@ -87,12 +84,11 @@ The easiest way to allow `DbConnection` to be externally provided, is to stop us
 
         public DbSet<Blog> Blogs { get; set; }
     }
-````
+```
 
 An alternative is to keep using `DbContext.OnConfiguring`, but accept a `DbConnection` that is saved and then used in `DbContext.OnConfiguring`.
 
-<!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": false, "dupnames  : "csharp", highlight_args}, "names": [] -->
-````csharp
+``` csharp
 public class BloggingContext : DbContext
 {
     private DbConnection _connection;
@@ -109,14 +105,14 @@ public class BloggingContext : DbContext
         optionsBuilder.UseSqlServer(_connection);
     }
 }
-````
+```
 
 ### Share connection and transaction
 
 You can now create multiple context instances that share the same connection. Then use the `DbContext.Database.UseTransaction(DbTransaction)` API to enlist both contexts in the same transaction.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/Transactions/SharingTransaction/Sample.cs?highlight=1,2,3,7,16,23,24,25)] -->
-````csharp
+``` csharp
         var options = new DbContextOptionsBuilder<BloggingContext>()
             .UseSqlServer(new SqlConnection(connectionString))
             .Options;
@@ -149,7 +145,7 @@ You can now create multiple context instances that share the same connection. Th
                 }
             }
         }
-````
+```
 
 ## Using external DbTransactions (relational databases only)
 
@@ -158,7 +154,7 @@ If you are using multiple data access technologies to access a relational databa
 The following example, shows how to perform an ADO.NET SqlClient operation and an Entity Framework Core operation in the same transaction.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/Transactions/ExternalDbTransaction/Sample.cs?highlight=4,10,21,26,27,28)] -->
-````csharp
+``` csharp
         var connection = new SqlConnection(connectionString);
         connection.Open();
 
@@ -192,4 +188,4 @@ The following example, shows how to perform an ADO.NET SqlClient operation and a
             {
                 // TODO: Handle failure
             }
-````
+```

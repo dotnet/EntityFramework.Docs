@@ -1,5 +1,5 @@
 ﻿---
-title: Porting an EDMX-Based Model | Microsoft Docs
+title: Porting from EF6 to EF Core | Porting an EDMX-Based Model | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 ms.assetid: 63003709-f1ec-4bdc-8083-65a60c4826d2
 uid: efcore-and-ef6/porting/port-edmx
 ---
-# Porting an EDMX-Based Model
+# Porting an EF6 EDMX-Based Model to EF Core
 
 EF Core does not support the EDMX file format for models. The best option to port these models, is to generate a new code-based model from the database for your application.
 
@@ -23,27 +23,25 @@ You can now use the reverse engineer functionality to create a model based on yo
 
 Run the following command in Package Manager Console (Tools –> NuGet Package Manager –> Package Manager Console). See [Package Manager Console (Visual Studio)](../../core/miscellaneous/cli/powershell.md) for command options to scaffold a subset of tables etc.
 
-<!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": true, "dupnames  : "csharp",", highlight_args}, "names": [] -->
-````text
+``` console
 Scaffold-DbContext "<connection string>" <database provider name>
-````
+```
 
 For example, here is the command to scaffold a model from the Blogging database on your SQL Server LocalDB instance.
 
-<!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": true, "dupnames  : "csharp",", highlight_args}, "names": [] -->
-````text
+``` console
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
-````
+```
 
-## Remove EF6.x model
+## Remove EF6 model
 
-You would now remove the EF6.x model from your application.
+You would now remove the EF6 model from your application.
 
-It is fine to leave the EF6.x NuGet package (EntityFramework) installed, as EF Core and EF6.x can be used side-by-side in the same application. However, if you aren't intending to use EF6.x in any areas of your application, then uninstalling the package will help give compile errors on pieces of code that need attention.
+It is fine to leave the EF6 NuGet package (EntityFramework) installed, as EF Core and EF6 can be used side-by-side in the same application. However, if you aren't intending to use EF6 in any areas of your application, then uninstalling the package will help give compile errors on pieces of code that need attention.
 
 ## Update your code
 
-At this point, it's a matter of addressing compilation errors and reviewing code to see if the behavior changes between EF6.x and EF Core will impact you.
+At this point, it's a matter of addressing compilation errors and reviewing code to see if the behavior changes between EF6 and EF Core will impact you.
 
 ## Test the port
 

@@ -1,5 +1,5 @@
 ---
-title: Inheritance | Microsoft Docs
+title: EF Core | Inheritance | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 754be334-dd21-450e-9d22-2591e80012a2
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/inheritance
 ---
 # Inheritance
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Inheritance in the EF model is used to control how inheritance in the entity classes is represented in the database.
 
@@ -24,7 +21,7 @@ By convention, it is up to the database provider to determine how inheritance wi
 EF will only setup inheritance if two or more inherited types are explicitly included in the model. EF will not scan for base or derived types that were not otherwise included in the model. You can include types in the model by exposing a *DbSet<TEntity>* for each type in the inheritance hierarchy.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/InheritanceDbSets.cs?highlight=3,4)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -41,12 +38,12 @@ public class RssBlog : Blog
 {
     public string RssUrl { get; set; }
 }
-````
+```
 
 If you don't want to expose a *DbSet<TEntity>* for one or more entities in the hierarchy, you can use the Fluent API to ensure they are included in the model.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/InheritanceModelBuilder.cs?highlight=7)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -56,7 +53,7 @@ class MyContext : DbContext
         modelBuilder.Entity<RssBlog>();
     }
 }
-````
+```
 
 ## Data Annotations
 

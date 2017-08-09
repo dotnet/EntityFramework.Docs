@@ -1,5 +1,5 @@
 ---
-title: ASP.NET Core - Existing Database | Microsoft Docs
+title: EF Core | Getting Started on ASP.NET Core - Existing Database | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -8,10 +8,7 @@ ms.technology: entity-framework-core
 uid: core/get-started/aspnetcore/existing-db
 ---
 
-# ASP.NET Core - Existing Database
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+# Getting Started with EF Core on ASP.NET Core with an Existing Database
 
 > [!IMPORTANT]
 > The [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.0.0 no longer supports `project.json` or Visual Studio 2015. Everyone doing .NET Core development is encouraged to [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/) and [Visual Studio 2017](https://www.visualstudio.com/downloads/).
@@ -32,7 +29,7 @@ The following prerequisites are needed to complete this walkthrough:
 
 This tutorial uses a **Blogging** database on your LocalDb instance as the existing database.
 
-> [!NOTE]
+> [!TIP]
 > If you have already created the **Blogging** database as part of another tutorial, you can skip these steps.
 
 * Open Visual Studio
@@ -78,7 +75,7 @@ Now it's time to create the EF model based on your existing database.
 * **Tools –> NuGet Package Manager –> Package Manager Console**
 * Run the following command to create a model from the existing database. If you receive an error stating `The term 'Scaffold-DbContext' is not recognized as the name of a cmdlet`, then close and reopen Visual Studio.
 
-```
+``` console
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 ```
 
@@ -91,7 +88,7 @@ The reverse engineer process created entity classes (`Blog.cs` & `Post.cs`) and 
  The context represents a session with the database and allows you to query and save instances of the entity classes.
 
 <!-- Static code listing, rather than a linked file, because the walkthrough modifies the context file heavily -->
- ```c#
+ ``` csharp
 public partial class BloggingContext : DbContext
 {
     public virtual DbSet<Blog> Blog { get; set; }
@@ -131,7 +128,7 @@ In ASP.NET Core, configuration is generally performed in **Startup.cs**. To conf
 * Open `Models\BloggingContext.cs`
 * Delete the `OnConfiguring(...)` method
 
-```c#
+``` csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {
     #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
@@ -158,7 +155,7 @@ Now we can use the `AddDbContext(...)` method to register it as a service.
 
 [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Startup.cs?name=ConfigureServices&highlight=7-8)]
 
-> [!NOTE]
+> [!TIP]
 > In a real application you would typically put the connection string in a configuration file. For the sake of simplicity, we are defining it in code. For more information, see [Connection Strings](../../miscellaneous/connection-strings.md).
 
 ## Create a controller

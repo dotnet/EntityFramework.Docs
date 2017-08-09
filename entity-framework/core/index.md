@@ -1,5 +1,5 @@
 ---
-title: Entity Framework Core | Microsoft Docs
+title: EF Core | Quick Overview | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,14 +7,11 @@ ms.date: 10/27/2016
 
 ms.assetid: bc2a2676-bc46-493f-bf49-e3cc97994d57
 ms.technology: entity-framework-core
- 
+
 uid: core/index
 ---
 
-# Entity Framework Core
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../ef6/index.md).
+# Entity Framework Core Quick Overview
 
 Entity Framework (EF) Core is a lightweight, extensible, and cross-platform version of the popular Entity Framework data access technology.
 
@@ -24,12 +21,18 @@ If you like to learn by writing code, we'd recommend one of our [Getting Started
 
 ## Get Entity Framework Core
 
-[Install the NuGet package](https://docs.nuget.org/ndocs/quickstart/use-a-package) for the database provider you want to use. See [Database Providers](providers/index.md) for information.
+[Install the NuGet package](https://docs.nuget.org/ndocs/quickstart/use-a-package) for the database provider you want to use. E.g. to install the SQL Server provider in cross-platform development using `dotnet` tool in the command line:
 
-<!-- literal_block"ids  "dupnames  "names  "xml:space": "preserve", : "csharp",", "classes  "linenos": false, "backrefs  highlight_args} -->
-````text
-PM>  Install-Package Microsoft.EntityFrameworkCore.SqlServer
-````
+``` console
+$ dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+```
+
+Or in Visual Studio, using the Package Manager Console:
+
+``` console
+PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer
+```
+See [Database Providers](providers/index.md) for information on available providers and [Installing EF Core](get-started/general/index.md) for more detailed installation steps.
 
 ## The Model
 
@@ -37,8 +40,7 @@ With EF Core, data access is performed using a model. A model is made up of enti
 
 You can generate a model from an existing database, hand code a model to match your database, or use EF Migrations to create a database from your model (and evolve it as your model changes over time).
 
-<!-- literal_block"ids  "dupnames  "names  "xml:space": "preserve", : "csharp", "classes  "linenos": true, "backrefs  highlight_args} -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -73,14 +75,13 @@ namespace Intro
         public Blog Blog { get; set; }
     }
 }
-````
+```
 
 ## Querying
 
 Instances of your entity classes are retrieved from the database using Language Integrated Query (LINQ). See [Querying Data](querying/index.md) to learn more.
 
-<!-- literal_block"ids  "dupnames  "names  "xml:space": "preserve", : "csharp", "classes  "linenos": true, "backrefs  highlight_args} -->
-````csharp
+``` csharp
 using (var db = new BloggingContext())
 {
     var blogs = db.Blogs
@@ -88,18 +89,17 @@ using (var db = new BloggingContext())
         .OrderBy(b => b.Url)
         .ToList();
 }
-````
+```
 
 ## Saving Data
 
 Data is created, deleted, and modified in the database using instances of your entity classes. See [Saving Data](saving/index.md) to learn more.
 
-<!-- literal_block"ids  "dupnames  "names  "xml:space": "preserve", : "csharp", "classes  "linenos": true, "backrefs  highlight_args} -->
-````csharp
+``` csharp
 using (var db = new BloggingContext())
 {
     var blog = new Blog { Url = "http://sample.com" };
     db.Blogs.Add(blog);
     db.SaveChanges();
 }
-````
+```

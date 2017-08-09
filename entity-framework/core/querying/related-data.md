@@ -1,5 +1,5 @@
 ---
-title: Loading Related Data | Microsoft Docs
+title: EF Core | Loading Related Data | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -9,9 +9,6 @@ uid: core/querying/related-data
 ---
 
 # Loading Related Data
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Entity Framework Core allows you to use the navigation properties in your model to load related entities. There are three common O/RM patterns used to load related data.
 * **Eager loading** means that the related data is loaded from the database as part of the initial query.
@@ -67,7 +64,7 @@ By default, EF Core will log a warning when include operators are ignored. See [
 ## Explicit loading
 
 > [!NOTE]
-> Explicit Loading support was introduced in EF Core 1.1.0. If you are using an earlier release, the functionality shown in this section will not be available.
+> This feature was introduced in EF Core 1.1.
 
 You can explicitly load a navigation property via the `DbContext.Entry(...)` API.
 
@@ -99,7 +96,7 @@ Some serialization frameworks do not allow such cycles. For example, Json.NET wi
 
 If you are using ASP.NET Core, you can configure Json.NET to ignore cycles that it finds in the object graph. This is done in the `ConfigureServices(...)` method in `Startup.cs`.
 
-```c#
+``` csharp
 public void ConfigureServices(IServiceCollection services)
 {
     ...

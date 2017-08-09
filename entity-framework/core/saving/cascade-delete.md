@@ -1,5 +1,5 @@
 ---
-title: Cascade Delete | Microsoft Docs
+title: EF Core | Cascade Delete | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
 ms.technology: entity-framework-core
- 
+
 uid: core/saving/cascade-delete
 ---
 # Cascade Delete
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Cascade delete allows deletion of a principal/parent entity to have a side effect on dependent/child entities it is related to.
 
@@ -39,45 +36,43 @@ Consider a simple *Blog* and *Post* model where the relationship between the two
 The following code loads a Blog and all its related Posts from the database (using the *Include* method). The code then deletes the Blog.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/CascadeDelete/Sample.cs)] -->
-````csharp
+``` csharp
         using (var db = new BloggingContext())
         {
             var blog = db.Blogs.Include(b => b.Posts).First();
             db.Remove(blog);
             db.SaveChanges();
         }
-````
+```
 
 Because all the Posts are tracked by the context, the cascade behavior is applied to them before saving to the database. EF therefore issues a  *DELETE* statement for each entity.
 
-<!-- literal_block"xml:space": "preserve", "classes  "backrefs  "names  "dupnames   -->
-````
+``` sql
    DELETE FROM [Post]
    WHERE [PostId] = @p0;
    DELETE FROM [Post]
    WHERE [PostId] = @p1;
    DELETE FROM [Blog]
    WHERE [BlogId] = @p2;
-````
+```
 
 ## Cascading to untracked entities
 
 The following code is almost the same as our previous example, except it does not load the related Posts from the database.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/CascadeDelete/Sample.cs)] -->
-````csharp
+``` csharp
         using (var db = new BloggingContext())
         {
             var blog = db.Blogs.First();
             db.Remove(blog);
             db.SaveChanges();
         }
-````
+```
 
 Because the Posts are not tracked by the context, a *DELETE* statement is only issued for the *Blog*. This relies on a corresponding cascade behavior being present in the database to ensure data that is not tracked by the context is also deleted. If you use EF to create the database, this cascade behavior will be setup for you.
 
-<!-- literal_block"xml:space": "preserve", "classes  "backrefs  "names  "dupnames   -->
-````
+``` sql
    DELETE FROM [Blog]
    WHERE [BlogId] = @p0;
-````
+```

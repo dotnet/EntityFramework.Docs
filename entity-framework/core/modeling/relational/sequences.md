@@ -1,5 +1,5 @@
 ---
-title: Sequences | Microsoft Docs
+title: EF Core | Sequences | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: 94f81a92-3c72-4e14-912a-f99310374e42
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/relational/sequences
 ---
 # Sequences
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 > [!NOTE]
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
@@ -33,7 +30,7 @@ You can not configure a sequence using Data Annotations.
 You can use the Fluent API to create a sequence in the model.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/Sequence.cs?highlight=7)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Order> Orders { get; set; }
@@ -50,12 +47,12 @@ public class Order
     public int OrderNo { get; set; }
     public string Url { get; set; }
 }
-````
+```
 
 You can also configure additional aspect of the sequence, such as its schema, start value, and increment.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/SequenceConfigured.cs?highlight=7,8,9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Order> Orders { get; set; }
@@ -67,12 +64,12 @@ class MyContext : DbContext
             .IncrementsBy(5);
     }
 }
-````
+```
 
 Once a sequence is introduced, you can use it to generate values for properties in your model. For example, you can use [Default Values](default-values.md) to insert the next value from the sequence.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/SequenceUsed.cs?highlight=11,12,13)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Order> Orders { get; set; }
@@ -95,4 +92,4 @@ public class Order
     public int OrderNo { get; set; }
     public string Url { get; set; }
 }
-````
+```

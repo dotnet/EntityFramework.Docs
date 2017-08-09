@@ -1,5 +1,5 @@
 ---
-title: How Query Works | Microsoft Docs
+title: EF Core | How Queries Work | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -8,10 +8,7 @@ ms.technology: entity-framework-core
 uid: core/querying/overview
 ---
 
-# How Query Works
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
+# How Queries Work
 
 Entity Framework Core uses Language Integrate Query (LINQ) to query data from the database. LINQ allows you to use C# (or your .NET language of choice) to write strongly typed queries based on your derived context and entity classes.
 
@@ -45,4 +42,4 @@ The most common operations that result in the query being sent to the database a
 * Databinding the results of a query to a UI
 
 > [!WARNING]
-> __Always validate user input:__ While EF does provide protection from SQL injection attacks, it does not do any general validation of input. Therefore if values being passed to APIs, used in LINQ queries, assigned to entity properties, etc., come from an untrusted source then appropriate validation, per your application requirements, should be performed. This includes any user input used to dynamically construct queries. Even when using LINQ, if you are accepting user input to build expressions you need to make sure than only intended expressions can be constructed.
+> **Always validate user input:** While EF does provide protection from SQL injection attacks, it does not do any general validation of input. Therefore if values being passed to APIs, used in LINQ queries, assigned to entity properties, etc., come from an untrusted source then appropriate validation, per your application requirements, should be performed. This includes any user input used to dynamically construct queries. Even when using LINQ, if you are accepting user input to build expressions you need to make sure than only intended expressions can be constructed.

@@ -1,5 +1,5 @@
 ﻿---
-title: .NET Framework - New Database | Microsoft Docs
+title: EF Core | Getting Started on .NET Framework - New Database | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -11,10 +11,7 @@ ms.technology: entity-framework-core
 uid: core/get-started/full-dotnet/new-db
 ---
 
-# .NET Framework - New Database
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+# Getting started with EF Core on .NET Framework with a New Database
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use migrations to create the database from your model.
 
@@ -68,7 +65,7 @@ Now it's time to define a context and entity classes that make up your model.
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Model.cs)] -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -103,7 +100,7 @@ namespace EFGetStarted.ConsoleApp
         public Blog Blog { get; set; }
     }
 }
-````
+```
 
 > [!TIP]
 > In a real application you would put each class in a separate file and put the connection string in the `App.Config` file and read it out using `ConfigurationManager`. For the sake of simplicity, we are putting everything in a single code file for this tutorial.
@@ -132,7 +129,7 @@ You can now use your model to perform data access.
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Program.cs)] -->
-````csharp
+``` csharp
 using System;
 
 namespace EFGetStarted.ConsoleApp
@@ -157,7 +154,7 @@ namespace EFGetStarted.ConsoleApp
         }
     }
 }
-````
+```
 
 * Debug ‣ Start Without Debugging
 

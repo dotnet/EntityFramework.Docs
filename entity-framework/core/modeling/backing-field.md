@@ -1,5 +1,5 @@
 ---
-title: Backing Fields | Microsoft Docs
+title: EF Core | Backing Fields | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,18 +7,15 @@ ms.date: 10/27/2016
 
 ms.assetid: a628795e-64df-4f24-a5e8-76bc261e7ed8
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/backing-field
 ---
 # Backing Fields
 
 > [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
+> This feature is new in EF Core 1.1.
 
 Backing fields allow EF to read and/or write to a field rather than a property.
-
-> [!NOTE]
-> Backing Field support was introduced in EF Core 1.1.0. If you are using an earlier release, the functionality shown in this article will not be available.
 
 ## Conventions
 
@@ -63,6 +60,6 @@ You can also choose to give the property a name, other than the field name. This
 
 When there is no property in the entity class, you can use the `EF.Property(...)` method in a LINQ query to refer to the property that is conceptually part of the model.
 
-```c#
-var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "Url"))
+``` csharp
+var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "Url"));
 ```

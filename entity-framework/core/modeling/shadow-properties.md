@@ -1,5 +1,5 @@
 ---
-title: Shadow Properties | Microsoft Docs
+title: EF Core | Shadow Properties | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,30 +7,25 @@ ms.date: 10/27/2016
 
 ms.assetid: 75369266-d2b9-4416-b118-ed238f81f599
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/shadow-properties
 ---
 # Shadow Properties
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Shadow properties are properties that do not exist in your entity class. The value and state of these properties is maintained purely in the Change Tracker.
 
 Shadow property values can be obtained and changed through the `ChangeTracker` API.
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
    context.Entry(myBlog).Property("LastUpdated").CurrentValue = DateTime.Now;
-````
+```
 
 Shadow properties can be referenced in LINQ queries via the `EF.Property` static method.
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 var blogs = context.Blogs
     .OrderBy(b => EF.Property<DateTime>(b, "LastUpdated"));
-````
+```
 
 ## Conventions
 
@@ -39,7 +34,7 @@ By convention, shadow properties are only created when a relationship is discove
 For example, the following code listing will result in a `BlogId` shadow property being introduced to the `Post` entity.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/ShadowForeignKey.cs)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -62,7 +57,7 @@ public class Post
 
     public Blog Blog { get; set; }
 }
-````
+```
 
 ## Data Annotations
 
@@ -75,7 +70,7 @@ You can use the Fluent API to configure shadow properties. Once you have called 
 If the name supplied to the `Property` method matches the name of an existing property (a shadow property or one defined on the entity class), then the code will configure that existing property rather than introducing a new shadow property.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/ShadowProperty.cs?highlight=7,8)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -92,4 +87,4 @@ public class Blog
     public int BlogId { get; set; }
     public string Url { get; set; }
 }
-````
+```

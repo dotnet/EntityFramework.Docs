@@ -1,5 +1,5 @@
 ---
-title: Asynchronous Saving | Microsoft Docs
+title: EF Core | Asynchronous Saving | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 01/24/2017
@@ -9,9 +9,6 @@ uid: core/saving/async
 ---
 
 # Asynchronous Saving
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Asynchronous saving avoids blocking a thread while the changes are written to the database. This can be useful to avoid freezing the UI of a thick-client application. Asynchronous operations can also increase throughput in a web application, where the thread can be freed up to service other requests while the database operation completes. For more information, see [Asynchronous Programming in C#](https://msdn.microsoft.com/en-us/library/mt674882.aspx).
 

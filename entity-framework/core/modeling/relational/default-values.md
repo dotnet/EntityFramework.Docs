@@ -1,5 +1,5 @@
 ---
-title: Default Values | Microsoft Docs
+title: EF Core | Default Values | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: e541366a-130f-47dd-9997-1b110a11febe
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/relational/default-values
 ---
 # Default Values
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 > [!NOTE]
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
@@ -33,7 +30,7 @@ You can not set a default value using Data Annotations.
 You can use the Fluent API to specify the default value for a property.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DefaultValue.cs?highlight=9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -52,12 +49,12 @@ public class Blog
     public string Url { get; set; }
     public int Rating { get; set; }
 }
-````
+```
 
 You can also specify a SQL fragment that is used to calculate the default value.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DefaultValueSql.cs?highlight=9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -76,4 +73,4 @@ public class Blog
     public string Url { get; set; }
     public DateTime Created { get; set; }
 }
-````
+```

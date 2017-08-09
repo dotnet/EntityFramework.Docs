@@ -1,5 +1,5 @@
 ---
-title: Upgrading from RC2 to RTM | Microsoft Docs
+title: EF Core | Upgrading from EF Core 1.0 RC2 to RTM | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: c3c1940b-136d-45d8-aa4f-cb5040f8980a
 ms.technology: entity-framework-core
- 
+
 uid: core/miscellaneous/rc2-rtm-upgrade
 ---
-# Upgrading from RC2 to RTM
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
+# Upgrading from EF Core 1.0 RC2 to RTM
 
 This article provides guidance for moving an application built with the RC2 packages to 1.0.0 RTM.
 
@@ -61,15 +58,15 @@ Failure to make this change will result in the following exception when the init
 
 If you were targeting .NET Core with RC2, you needed to add `imports` to project.json as a temporary workaround for some of EF Core's dependencies not supporting .NET Standard. These can now be removed.
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args"h1_lines":4}, "ids  "linenos": false -->
-````json
+``` json
 {
   "frameworks": {
     "netcoreapp1.0": {
       "imports": ["dnxcore50", "portable-net451+win8"]
     }
+  }
 }
-````
+```
 
 ## UWP: Add binding redirects
 
@@ -79,8 +76,7 @@ Attempting to run EF commands on Universal Windows Platform (UWP) projects resul
 
 You need to manually add binding redirects to the UWP project. Create a file named `App.config` in the project root folder and add redirects to the correct assembly versions.
 
-<!-- literal_block"language": "csharp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````xml
+``` xml
 <configuration>
  <runtime>
    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
@@ -101,4 +97,4 @@ You need to manually add binding redirects to the UWP project. Create a file nam
    </assemblyBinding>
  </runtime>
 </configuration>
-````
+```

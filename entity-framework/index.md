@@ -15,7 +15,7 @@ uid: index
     </section>
 
     <aside class="alert section-border">
-        <p>Entity Framework Core or Entity Framework 6.x?</p>
+        <p>Entity Framework Core or Entity Framework 6?</p>
         <ol class="action-list">
             <li><a href="efcore-and-ef6/index.md" class="button-bordered button-translucent">Compare</a></li>
             <li><a href="efcore-and-ef6/porting/index.md" class="button-bordered button-translucent">Port to EF Core</a></li>
@@ -62,10 +62,10 @@ uid: index
                     <header class="journey-step-header row">
                         <div class="title column-third">
                             <span class="icon icon-tip"></span>
-                            <p>Entity Framework 6.x (EF6.x)</p>
+                            <p>Entity Framework 6 (EF6)</p>
                         </div>
                         <p class="description column-two-thirds">
-                            EF 6.x is a tried and tested data access technology with many years of features and stabilization.
+                            EF 6 is a tried and tested data access technology with many years of features and stabilization.
                         </p>
                     </header>
                     <section class="journey-step-elements content">
@@ -73,13 +73,13 @@ uid: index
                             <li class="column column-third">
                                 <a href="ef6/index.md">
                                     <h3>Getting Started</h3>
-                                    <p>Learn how to access data with Entity Framework 6.x.</p>
+                                    <p>Learn how to access data with Entity Framework 6.</p>
                                 </a>
                             </li>
                             <li class="column column-third">
                                 <a href="https://msdn.microsoft.com/library/dn223258(v=vs.113).aspx">
                                     <h3>API Reference</h3>
-                                    <p>Browse the Entity Framework 6.x API, organized by namespace.</p>
+                                    <p>Browse the Entity Framework 6 API, organized by namespace.</p>
                                 </a>
                             </li>
                         </ul>

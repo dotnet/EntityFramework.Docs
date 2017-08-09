@@ -1,5 +1,5 @@
 ---
-title: EntityFrameworkCore.Triggers | Microsoft Docs
+title: EF Core | Tools & Extensions: EntityFrameworkCore.Triggers | Microsoft Docs
 author: ErikEJ
 ms.author: divega
 ms.date: 01/19/2017
@@ -8,10 +8,7 @@ ms.technology: entity-framework-core
 uid: core/extensions/entityframeworkcore-triggers
 ---
 
-# EntityFrameworkCore.Triggers
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
+# EntityFrameworkCore.Triggers Extension
 
 > [!NOTE]
 > This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.

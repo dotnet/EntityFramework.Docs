@@ -1,5 +1,5 @@
 ---
-title: EF Core | Installing EF Core 1.x | Microsoft Docs
+title: Installing EF Core 1.x | Microsoft Docs
 author: divega
 ms.author: divega
 
@@ -23,13 +23,13 @@ $ dotnet add package Microsoft.EntityFrameworkCore.SqlServer -v 1.1.2
 For any type of application using Visual Studio’s Package Manager Console:
 
 ``` console
-PM> install-package Microsoft.EntityFrameworkCore.SqlServer -Version 1.1.2
+PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 1.1.2
 ```
 
 Or to upgrade to EF Core 1.1.2 from the Package Manager Console:
 
 ``` console
-PM> update-package Microsoft.EntityFrameworkCore.SqlServer -Version 1.1.2
+PM> Update-Package Microsoft.EntityFrameworkCore.SqlServer -Version 1.1.2
 ```
 
 If you need to update an application that is using a third-party data provider, check for an update of the provider that is compatible with EF Core 1.x.
@@ -51,7 +51,7 @@ To use the `dotnet ef` command line tools in cross-platoform development, your a
 The Package Manager Console EF Core commands for Visual Studio can be upgraded by issuing the following command:
 
 ``` console
-PM> update-package Microsoft.EntityFrameworkCore.Tools -Version 1.1.2
+PM> Update-Package Microsoft.EntityFrameworkCore.Tools -Version 1.1.2
 ```
 
 Some design-time functionality such as `DbContext` scaffolding  requires installing the design-time package for the specific database provider. E.g. for the SQL Server provider you can use:  
@@ -63,5 +63,5 @@ $ dotnet add package Microsoft.EntityFrameworkCore.SqlServer.Design -v 1.1.2
 Or from the Package Manager Console:
 
 ``` console
-PM> install-package Microsoft.EntityFrameworkCore.SqlServer.Design -Version 1.1.2
+PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer.Design -Version 1.1.2
 ```

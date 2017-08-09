@@ -1,5 +1,5 @@
 ---
-title: IBM Data Server (DB2) | Microsoft Docs
+title: EF Core | IBM Data Server (DB2) Database Provider | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 02/15/2017
@@ -8,10 +8,7 @@ ms.technology: entity-framework-core
 uid: core/providers/ibm/index
 ---
 
-# IBM Data Server (DB2)
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+# IBM Data Server (DB2) EF Core Database Providers
 
 This database provider allows Entity Framework Core to be used with IBM Data Server. The provider is maintained by IBM.
 
@@ -22,19 +19,19 @@ This database provider allows Entity Framework Core to be used with IBM Data Ser
 
 To work with IBM Data Server on Windows, install the [IBM.EntityFrameworkCore NuGet package](https://www.nuget.org/packages/IBM.EntityFrameworkCore).
 
-````text
-   PM>  Install-Package IBM.EntityFrameworkCore
-````
+``` console
+PM> Install-Package IBM.EntityFrameworkCore
+```
 
 To work with IBM Data Server on Linux, install the [IBM.EntityFrameworkCore-lnx NuGet package](https://www.nuget.org/packages/IBM.EntityFrameworkCore-lnx).
 
-````text
-   PM>  Install-Package IBM.EntityFrameworkCore-lnx
-````
+``` console
+PM> Install-Package IBM.EntityFrameworkCore-lnx
+```
 
 ## Get Started
 
-[Getting started with IBM .NET Provider for .NET Core ](https://www.ibm.com/developerworks/community/blogs/96960515-2ea1-4391-8170-b0515d08e4da/entry/DB2DotnetCore?lang=en)
+[Getting started with IBM .NET Provider for .NET Core](https://www.ibm.com/developerworks/community/blogs/96960515-2ea1-4391-8170-b0515d08e4da/entry/DB2DotnetCore?lang=en)
 
 ## Supported Database Engines
 

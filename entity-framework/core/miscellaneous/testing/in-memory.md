@@ -1,5 +1,5 @@
 ---
-title: Testing with InMemory | Microsoft Docs
+title: EF Core | Testing with InMemory | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,14 +7,11 @@ ms.date: 10/27/2016
 
 ms.assetid: 0d0590f1-1ea3-4d5c-8f44-db17395cd3f3
 ms.technology: entity-framework-core
- 
+
 uid: core/miscellaneous/testing/in-memory
 ---
 
 # Testing with InMemory
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 The InMemory provider is useful when you want to test components using something that approximates connecting to the real database, without the overhead of actual database operations.
 
@@ -45,7 +42,7 @@ Consider the following service that allows application code to perform some oper
 
 In your tests you are going to externally configure the context to use the InMemory provider. If you are configuring a database provider by overriding `OnConfiguring` in your context, then you need to add some conditional code to ensure that you only configure the database provider if one has not already been configured.
 
-> [!NOTE]
+> [!TIP]
 > If you are using ASP.NET Core, then you should not need this code since your database provider is configured outside of the context (in Startup.cs).
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs#OnConfiguring)]
@@ -56,7 +53,7 @@ The simplest way to enable testing against a different database is to modify you
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs#Constructors)]
 
-> [!NOTE]
+> [!TIP]
 > `DbContextOptions<TContext>` tells the context all of its settings, such as which database to connect to. This is the same object that is built by running the OnConfiguring method in your context.
 
 ## Writing tests

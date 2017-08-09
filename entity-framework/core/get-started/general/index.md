@@ -10,6 +10,6 @@ ms.technology: entity-framework-core
 
 uid: core/get-started/general/index
 ---
-# General Installation Instructions
+# Installing EF Core
 
-Select the version of EF Core you want to install for detailed instructions. 
+Select the version of EF Core you want to install for detailed instructions.

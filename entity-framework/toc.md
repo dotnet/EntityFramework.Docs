@@ -12,9 +12,9 @@
 ##[Entity Framework Core](core/index.md)
 <!-- Getting Started -->
 ###[Getting Started](core/get-started/index.md)
-####[General Installation Instructions](core/get-started/general/index.md)
-#####[Installing EF Core 1.x](core/get-started/general/efcore1.md)
-#####[Installing EF Core 2.0](core/get-started/general/efcore2.md)
+####[Installing EF Core](core/get-started/general/index.md)
+#####[Version 1.x](core/get-started/general/efcore1.md)
+#####[Version 2.0](core/get-started/general/efcore2.md)
 ####[.NET Framework (Console, WinForms, WPF, etc.)](core/get-started/full-dotnet/index.md)
 #####[.NET Framework - New Database](core/get-started/full-dotnet/new-db.md)
 #####[.NET Framework - Existing Database](core/get-started/full-dotnet/existing-db.md)
@@ -123,6 +123,6 @@
 ####[Configuring a DbContext](core/miscellaneous/configuring-dbcontext.md)
 ####[Upgrading from RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
 
-##[Entity Framework 6.x](ef6/index.md)
+##[Entity Framework 6](ef6/index.md)
 ###[Documentation](http://msdn.com/data/ef)
 ###[API Reference](https://msdn.microsoft.com/library/dn223258(v=vs.113).aspx)

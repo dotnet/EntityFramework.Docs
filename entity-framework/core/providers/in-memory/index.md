@@ -1,5 +1,5 @@
 ---
-title: InMemory | Microsoft Docs
+title: EF Core | InMemory Database Provider | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,10 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/providers/in-memory/index
 ---
-# InMemory
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+# EF Core In-Memory Database Provider
 
 This database provider allows Entity Framework Core to be used with an in-memory database. This is useful when testing code that uses Entity Framework Core. The provider is maintained as part of the [EntityFramework GitHub project](https://github.com/aspnet/EntityFramework).
 
@@ -21,11 +18,9 @@ This database provider allows Entity Framework Core to be used with an in-memory
 
 Install the [Microsoft.EntityFrameworkCore.InMemory NuGet package](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory/).
 
-<!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": false, "dupnames  : "csharp",", highlight_args}, "names": [] -->
-````text
-
-   PM>  Install-Package Microsoft.EntityFrameworkCore.InMemory
-````
+``` console
+PM> Install-Package Microsoft.EntityFrameworkCore.InMemory
+```
 
 ## Get Started
 

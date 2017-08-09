@@ -1,5 +1,5 @@
 ---
-title: Concurrency Conflicts | Microsoft Docs
+title: EF Core | Handling Concurrency | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,22 +7,19 @@ ms.date: 10/27/2016
 
 ms.assetid: bce0539d-b0cd-457d-be71-f7ca16f3baea
 ms.technology: entity-framework-core
- 
+
 uid: core/saving/concurrency
 ---
-# Concurrency Conflicts
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
+# Handling Concurrency
 
 If a property is configured as a concurrency token then EF will check that no other user has modified that value in the database when saving changes to that record.
 
 > [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Concurrency/) on GitHub.
 
-## How concurrency works in EF
+## How concurrency handling works in EF Core
 
-For a detailed description of how concurrency works in Entity Framework Core, see [Concurrency Tokens](../modeling/concurrency.md).
+For a detailed description of how concurrency handling works in Entity Framework Core, see [Concurrency Tokens](../modeling/concurrency.md).
 
 ## Resolving concurrency conflicts
 
@@ -41,7 +38,7 @@ To handle a concurrency conflict, catch a `DbUpdateConcurrencyException` during 
 In the following example, `Person.FirstName` and `Person.LastName` are setup as concurrency token. There is a `// TODO:` comment in the location where you would include application specific logic to choose the value to be saved to the database.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/Concurrency/Sample.cs?highlight=53,54)] -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -138,4 +135,4 @@ namespace EFSaving.Concurrency
 
     }
 }
-````
+```

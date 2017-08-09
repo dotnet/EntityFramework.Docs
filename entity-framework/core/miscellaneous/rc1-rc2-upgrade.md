@@ -1,5 +1,5 @@
 ---
-title: Upgrading from RC1 to RC2 | Microsoft Docs
+title: EF Core | Upgrading from EF Core 1.0 RC1 to RC2 | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,10 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/miscellaneous/rc1-rc2-upgrade
 ---
-# Upgrading from RC1 to RC2
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
+# Upgrading from EF Core 1.0 RC1 to 1.0 RC2
 
 This article provides guidance for moving an application built with the RC1 packages to RC2.
 
@@ -45,13 +42,12 @@ A significant functional change we took in RC2 was to use the name of the `DbSet
 
 For existing RC1 applications, we recommend adding the following code to the start of your `OnModelCreating` method to keep the RC1 naming strategy:
 
-<!-- literal_block"xml:space": "preserve", "classes  "backrefs  "names  "dupnames   -->
-````
+``` csharp
 foreach (var entity in modelBuilder.Model.GetEntityTypes())
 {
     entity.Relational().TableName = entity.DisplayName();
 }
-````
+```
 
 If you want to adopt the new naming strategy, we would recommend successfully completing the rest of the upgrade steps and then removing the code and creating a migration to apply the table renames.
 
@@ -59,31 +55,28 @@ If you want to adopt the new naming strategy, we would recommend successfully co
 
 In RC1, you had to add Entity Framework services to the application service provider - in `Startup.ConfigureServices(...)`:
 
-<!-- literal_block"xml:space": "preserve", "classes  "backrefs  "names  "dupnames   -->
-````
+``` csharp
 services.AddEntityFramework()
   .AddSqlServer()
   .AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-````
+```
 
 In RC2, you can remove the calls to `AddEntityFramework()`, `AddSqlServer()`, etc.:
 
-<!-- literal_block"xml:space": "preserve", "classes  "backrefs  "names  "dupnames   -->
-````
+``` csharp
 services.AddDbContext<ApplicationDbContext>(options =>
   options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-````
+```
 
 You also need to add a constructor, to your derived context, that takes context options and passes them to the base constructor. This is needed because we removed some of the scary magic that snuck them in behind the scenes:
 
-<!-- literal_block"xml:space": "preserve", "classes  "backrefs  "names  "dupnames   -->
-````
+``` csharp
 public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : base(options)
 {
 }
-````
+```
 
 ## Passing in an IServiceProvider
 
@@ -97,13 +90,12 @@ The most common scenario for doing this was to control the scope of an InMemory 
 
 If you have an ASP.NET Core application and you want EF to resolve internal services from the application service provider, there is an overload of `AddDbContext` that allows you to configure this:
 
-<!-- literal_block"xml:space": "preserve", "classes  "backrefs  "names  "dupnames   -->
-````
+``` csharp
 services.AddEntityFrameworkSqlServer()
   .AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
     options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"])
            .UseInternalServiceProvider(serviceProvider)); );
-````
+```
 
 > [!WARNING]
 > We recommend allowing EF to internally manage its own services, unless you have a reason to combine the internal EF services into your application service provider. The main reason you may want to do this is to use your application service provider to replace services that EF uses internally
@@ -114,8 +106,7 @@ If you previously used the `dnx ef` commands for ASP.NET 5 projects, these have 
 
 The way commands are registered has changed in RC2, due to DNX being replaced by .NET CLI. Commands are now registered in a `tools` section in `project.json`:
 
-<!-- literal_block"xml:space": "preserve", "classes  "backrefs  "names  "dupnames   -->
-````
+``` json
 "tools": {
   "Microsoft.EntityFrameworkCore.Tools": {
     "version": "1.0.0-preview1-final",
@@ -125,7 +116,7 @@ The way commands are registered has changed in RC2, due to DNX being replaced by
     ]
   }
 }
-````
+```
 
 > [!TIP]
 > If you use Visual Studio, you can now use Package Manager Console to run EF commands for ASP.NET Core projects (this was not supported in RC1). You still need to register the commands in the `tools` section of `project.json` to do this.
@@ -140,8 +131,7 @@ Some of EF Core's dependencies do not support .NET Standard yet. EF Core in .NET
 
 When adding EF, NuGet restore will display this error message:
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````text
+``` console
 Package Ix-Async 1.2.5 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). Package Ix-Async 1.2.5 supports:
   - net40 (.NETFramework,Version=v4.0)
   - net45 (.NETFramework,Version=v4.5)
@@ -151,20 +141,20 @@ Package Remotion.Linq 2.0.2 is not compatible with netcoreapp1.0 (.NETCoreApp,Ve
   - net40 (.NETFramework,Version=v4.0)
   - net45 (.NETFramework,Version=v4.5)
   - portable-net45+win8+wp8+wpa81 (.NETPortable,Version=v0.0,Profile=Profile259)
-````
+```
 
 The workaround is to manually import the portable profile "portable-net451+win8". This forces NuGet to treat this binaries that match this provide as a compatible framework with .NET Standard, even though they are not. Although "portable-net451+win8" is not 100% compatible with .NET Standard, it is compatible enough for the transition from PCL to .NET Standard. Imports can be removed when EF's dependencies eventually upgrade to .NET Standard.
 
 Multiple frameworks can be added to "imports" in array syntax. Other imports may be necessary if you add additional libraries to your project.
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````json
+``` json
 {
   "frameworks": {
     "netcoreapp1.0": {
       "imports": ["dnxcore50", "portable-net451+win8"]
     }
+  }
 }
-````
+```
 
 See [Issue #5176](https://github.com/aspnet/EntityFramework/issues/5176).
