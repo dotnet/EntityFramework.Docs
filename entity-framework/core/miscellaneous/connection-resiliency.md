@@ -10,7 +10,7 @@ uid: core/miscellaneous/connection-resiliency
 
 # Connection Resiliency
 
-> [!NOTE] 
+> [!NOTE]  ~
 > This feature is new in EF Core 1.1.
 
 Connection resiliency automatically retries failed database commands. It is specific to relational databases.

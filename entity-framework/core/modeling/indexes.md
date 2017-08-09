@@ -78,5 +78,5 @@ public class Person
 }
 ```
 
-> [!TIP] 
+> [!TIP]
 > There is only one index per distinct set of properties. If you use the Fluent API to configure an index on a set of properties that already has an index defined, either by convention or previous configuration, then you will be changing the definition of that index. This is useful if you want to further configure an index that was created by convention.

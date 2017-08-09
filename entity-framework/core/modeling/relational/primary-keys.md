@@ -12,7 +12,7 @@ uid: core/modeling/relational/primary-keys
 ---
 # Primary Keys
 
-> [!NOTE] 
+> [!NOTE]
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 A primary key constraint is introduced for the key of each entity type.

@@ -35,7 +35,7 @@ public class BloggingContext : DbContext
 }
 ```
 
-> [!TIP] 
+> [!TIP]
 > The base constructor of DbContext also accepts the non-generic version of `DbContextOptions`. Using the non-generic version is not recommended for applications with multiple context types.
 
 Application code to initialize from constructor argument
@@ -52,7 +52,7 @@ using (var context = new BloggingContext(optionsBuilder.Options))
 
 ### OnConfiguring
 
-> [!WARNING] 
+> [!WARNING]
 > `OnConfiguring` occurs last and can overwrite options obtained from DI or the constructor. This approach does not lend itself to testing (unless you target the full database).
 
 Context code with `OnConfiguring`:

@@ -11,7 +11,7 @@ uid: core/modeling/relationships
 
 A relationship defines how two entities relate to each other. In a relational database, this is represented by a foreign key constraint.
 
-> [!NOTE] 
+> [!NOTE]
 > Most of the samples in this article use a one-to-many relationship to demonstrate concepts. For examples of one-to-one and many-to-many relationships see the [Other Relationship Patterns](#other-relationship-patterns) section at the end of the article.
 
 ## Definition of Terms
@@ -75,7 +75,7 @@ public class Post
 
 By convention, a relationship will be created when there is a navigation property discovered on a type. A property is considered a navigation property if the type it points to can not be mapped as a scalar type by the current database provider.
 
-> [!NOTE] 
+> [!NOTE]
 > Relationships that are discovered by convention will always target the primary key of the principal entity. To target an alternate key, additional configuration must be performed using the Fluent API.
 
 ### Fully Defined Relationships
@@ -107,7 +107,7 @@ public class Post
 }
 ```
 
-> [!WARNING] 
+> [!WARNING]
 > If there are multiple navigation properties defined between two types (i.e. more than one distinct pair of navigations that point to each other), then no relationships will be created by convention and you will need to manually configure them to identify how the navigation properties pair up.
 
 ### No Foreign Key Property
@@ -160,7 +160,7 @@ public class Post
 
 By convention, cascade delete will be set to *Cascade* for required relationships and *Restrict* for optional relationships (see the [Required](#required) section for the difference between required and optional relationships). *Cascade* means dependent entities are also deleted. *Restrict* means that dependent entities that are not loaded into memory will remain unchanged and must be manually deleted, or updated to point to a valid principal entity. For entities that are loaded into memory, EF will attempt to set the foreign key properties to null.
 
-> [!NOTE] 
+> [!NOTE]
 > This cascading behavior is only applied to entities that are being tracked by the context. A corresponding cascade behavior should be setup in the database to ensure data that is not being tracked by the context has the same action applied. If you use EF to create the database, this cascade behavior will be setup for you.
 
 ## Data Annotations
@@ -194,7 +194,7 @@ public class Post
 }
 ```
 
-> [!TIP] 
+> [!TIP]
 > The `[ForeignKey]` annotation can be placed on either navigation property in the relationship. It does not need to go on the navigation property in the dependent entity class.
 
 ### [InverseProperty]
@@ -469,7 +469,7 @@ public class RecordOfSale
 }
 ```
 
-> [!WARNING] 
+> [!WARNING]
 > The order in which you specify principal key properties must match the order in which they are specified for the foreign key.
 
 ### Required
@@ -522,7 +522,7 @@ There are three behaviors that control how a delete operation is applied to depe
 
 * **Restrict:** The delete operation is not applied to dependent entities. The dependent entities remain unchanged.
 
-> [!NOTE] 
+> [!NOTE]
 > This cascading behavior is only applied to entities that are being tracked by the context. A corresponding cascade behavior should be setup in the database to ensure data that is not being tracked by the context has the same action applied. If you use EF to create the database, this cascade behavior will be setup for you.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Relationships/CascadeDelete.cs?highlight=11)] -->
@@ -587,7 +587,7 @@ public class BlogImage
 }
 ```
 
-> [!NOTE] 
+> [!NOTE]
 > EF will choose one of the entities to be the dependent based on its ability to detect a foreign key property. If the wrong entity is chosen as the dependent, you can use the Fluent API to correct this.
 
 When configuring the relationship with the Fluent API, you use the `HasOne` and `WithOne` methods.

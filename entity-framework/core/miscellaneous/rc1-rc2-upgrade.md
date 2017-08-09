@@ -97,7 +97,7 @@ services.AddEntityFrameworkSqlServer()
            .UseInternalServiceProvider(serviceProvider)); );
 ```
 
-> [!WARNING] 
+> [!WARNING]
 > We recommend allowing EF to internally manage its own services, unless you have a reason to combine the internal EF services into your application service provider. The main reason you may want to do this is to use your application service provider to replace services that EF uses internally
 
 ## DNX Commands => .NET CLI (ASP.NET Core Projects Only)
@@ -118,7 +118,7 @@ The way commands are registered has changed in RC2, due to DNX being replaced by
 }
 ```
 
-> [!TIP] 
+> [!TIP]
 > If you use Visual Studio, you can now use Package Manager Console to run EF commands for ASP.NET Core projects (this was not supported in RC1). You still need to register the commands in the `tools` section of `project.json` to do this.
 
 ## Package Manager Commands Require PowerShell 5

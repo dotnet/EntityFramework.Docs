@@ -16,7 +16,7 @@ Entity Framework uses a set of conventions to build a model based on the shape o
 
 This article covers configuration that can be applied to a model targeting any data store and that which can be applied when targeting any relational database. Providers may also enable configuration that is specific to a particular data store. For documentation on provider specific configuration see the [Database Providers](../providers/index.md) section.
 
-> [!TIP] 
+> [!TIP]
 > You can view this article’s [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples) on GitHub.
 
 ## Methods of configuration

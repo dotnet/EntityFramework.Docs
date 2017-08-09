@@ -14,7 +14,7 @@ uid: core/modeling/alternate-keys
 
 An alternate key serves as an alternate unique identifier for each entity instance in addition to the primary key. Alternate keys can be used as the target of a relationship. When using a relational database this maps to the concept of a unique index/constraint on the alternate key column(s) and one or more foreign key constraints that reference the column(s).
 
-> [!TIP] 
+> [!TIP]
 > If you just want to enforce uniqueness of a column then you want a unique index rather than an alternate key, see [Indexes](indexes.md). In EF, alternate keys provide greater functionality than unique indexes because they can be used as the target of a foreign key.
 
 Alternate keys are typically introduced for you when needed and you do not need to manually configure them. See [Conventions](#conventions) for more details.

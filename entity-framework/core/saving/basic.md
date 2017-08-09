@@ -14,7 +14,7 @@ uid: core/saving/basic
 
 Learn how to add, modify, and remove data using your context and entity classes.
 
-> [!TIP] 
+> [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Basics/) on GitHub.
 
 ## Adding Data
@@ -69,7 +69,7 @@ If the entity already exists in the database, it will be deleted during *SaveCha
 
 You can combine multiple Add/Update/Remove operations into a single call to *SaveChanges*.
 
-> [!NOTE] 
+> [!NOTE]
 > For most database providers, *SaveChanges* is transactional. This means  all the operations will either succeed or fail and the operations will never be left partially applied.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/Basics/Sample.cs)] -->
