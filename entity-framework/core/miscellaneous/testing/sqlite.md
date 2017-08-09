@@ -15,7 +15,7 @@ uid: core/miscellaneous/testing/sqlite
 
 SQLite has an in-memory mode that allows you to use SQLite to write tests against a relational database, without the overhead of actual database operations.
 
-> [!TIP]  
+> [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing) on GitHub
 
 ## Example testing scenario
@@ -30,7 +30,7 @@ Consider the following service that allows application code to perform some oper
 
 In your tests you are going to externally configure the context to use the InMemory provider. If you are configuring a database provider by overriding `OnConfiguring` in your context, then you need to add some conditional code to ensure that you only configure the database provider if one has not already been configured.
 
-> [!TIP]  
+> [!TIP]
 > If you are using ASP.NET Core, then you should not need this code since your database provider is configured outside of the context (in Startup.cs).
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs#OnConfiguring)]
@@ -41,7 +41,7 @@ The simplest way to enable testing against a different database is to modify you
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs#Constructors)]
 
-> [!TIP]  
+> [!TIP]
 > `DbContextOptions<TContext>` tells the context all of its settings, such as which database to connect to. This is the same object that is built by running the OnConfiguring method in your context.
 
 ## Writing tests

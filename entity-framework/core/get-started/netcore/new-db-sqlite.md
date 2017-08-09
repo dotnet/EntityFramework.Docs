@@ -15,9 +15,10 @@ uid: core/get-started/netcore/new-db-sqlite
 
 In this walkthrough, you will create a .NET Core console app that performs basic data access against a SQLite database using Entity Framework Core. You will use migrations to create the database from your model. See [ASP.NET Core - New database](xref:core/get-started/aspnetcore/new-db) for a Visual Studio version using ASP.NET Core MVC.
 
-> [!NOTE]  
+> [!NOTE]
 > The [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.1.x no longer supports `project.json` or Visual Studio 2015. We recommend you [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/). If you are using Visual Studio, we recommend you migrate to [Visual Studio 2017](https://www.visualstudio.com/downloads/).
-> [!TIP]  
+
+> [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/NetCore/ConsoleApp.SQLite) on GitHub.
 
 ## Prerequisites
@@ -76,7 +77,7 @@ Once you have a model, you can use [migrations](https://docs.microsoft.com/aspne
 * Run `dotnet ef migrations add InitialCreate` to scaffold a migration and create the initial set of tables for the model.
 * Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations.
 
-> [!NOTE]  
+> [!NOTE]
 > When using relative paths with SQLite, the path will be relative to the application's main assembly. In this sample, the main binary is `bin/Debug/netcoreapp1.1/ConsoleApp.SQLite.dll`, so the SQLite database will be in `bin/Debug/netcoreapp1.1/blogging.db`.
 
 ## Use your model
