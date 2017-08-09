@@ -43,7 +43,7 @@ The EF Core .NET Command Line Tools are installed by manually editing the `*.csp
 
 The resulting project should include these items (in addition to your other project dependencies).
 
-```xml
+``` xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>

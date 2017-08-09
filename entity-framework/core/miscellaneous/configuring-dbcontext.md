@@ -46,7 +46,7 @@ optionsBuilder.UseSqlite("Data Source=blog.db");
 
 using (var context = new BloggingContext(optionsBuilder.Options))
 {
-    // do stuff
+  // do stuff
 }
 ```
 
@@ -74,7 +74,7 @@ Application code to initialize with `OnConfiguring`:
 ``` csharp
 using (var context = new BloggingContext())
 {
-    // do stuff
+  // do stuff
 }
 ```
 

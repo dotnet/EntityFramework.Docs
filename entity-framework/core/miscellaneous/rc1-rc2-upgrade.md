@@ -153,6 +153,7 @@ Multiple frameworks can be added to "imports" in array syntax. Other imports may
     "netcoreapp1.0": {
       "imports": ["dnxcore50", "portable-net451+win8"]
     }
+  }
 }
 ```
 

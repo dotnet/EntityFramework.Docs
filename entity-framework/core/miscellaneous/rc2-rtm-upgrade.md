@@ -64,6 +64,7 @@ If you were targeting .NET Core with RC2, you needed to add `imports` to project
     "netcoreapp1.0": {
       "imports": ["dnxcore50", "portable-net451+win8"]
     }
+  }
 }
 ```
 
@@ -75,7 +76,7 @@ Attempting to run EF commands on Universal Windows Platform (UWP) projects resul
 
 You need to manually add binding redirects to the UWP project. Create a file named `App.config` in the project root folder and add redirects to the correct assembly versions.
 
-```xml
+``` xml
 <configuration>
  <runtime>
    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">

@@ -18,7 +18,7 @@ Most database providers require some form of connection string to connect to the
 
 .NET Framework applications, such as WinForms, WPF, Console, and ASP.NET 4, have a tried and tested connection string pattern. The connection string should be added to your applications App.config file (Web.config if you are using ASP.NET). If your connection string contains sensitive information, such as username and password, you can protect the contents of the configuration file using [Protected Configuration](https://msdn.microsoft.com/en-us/library/53tyfkaw.aspx).
 
-```xml
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
 
