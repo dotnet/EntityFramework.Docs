@@ -105,7 +105,8 @@ public class Post
 }
 ```
 
-> [!WARNING] If there are multiple navigation properties defined between two types (i.e. more than one distinct pair of navigations that point to each other), then no relationships will be created by convention and you will need to manually configure them to identify how the navigation properties pair up.
+> [!WARNING] 
+> If there are multiple navigation properties defined between two types (i.e. more than one distinct pair of navigations that point to each other), then no relationships will be created by convention and you will need to manually configure them to identify how the navigation properties pair up.
 
 ### No Foreign Key Property
 
@@ -190,7 +191,8 @@ public class Post
 }
 ```
 
-> [!TIP] The `[ForeignKey]` annotation can be placed on either navigation property in the relationship. It does not need to go on the navigation property in the dependent entity class.
+> [!TIP] 
+> The `[ForeignKey]` annotation can be placed on either navigation property in the relationship. It does not need to go on the navigation property in the dependent entity class.
 
 ### [InverseProperty]
 
@@ -464,7 +466,8 @@ public class RecordOfSale
 }
 ```
 
-> [!WARNING] The order in which you specify principal key properties must match the order in which they are specified for the foreign key.
+> [!WARNING] 
+> The order in which you specify principal key properties must match the order in which they are specified for the foreign key.
 
 ### Required
 

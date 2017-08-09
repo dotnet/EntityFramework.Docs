@@ -14,7 +14,8 @@ A generated property is a property whose value is generated (either by EF or the
 
 There may be situations where you want to set an explicit value for a generated property, rather than having one generated.
 
-> [!TIP] You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/ExplicitValuesGenerateProperties/) on GitHub.
+> [!TIP] 
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/ExplicitValuesGenerateProperties/) on GitHub.
 
 ## The model
 

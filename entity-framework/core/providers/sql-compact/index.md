@@ -14,7 +14,8 @@ uid: core/providers/sql-compact/index
 
 This database provider allows Entity Framework Core to be used with SQL Server Compact Edition. The provider is maintained as part of the [ErikEJ/EntityFramework.SqlServerCompact GitHub Project](https://github.com/ErikEJ/EntityFramework.SqlServerCompact).
 
-> [!NOTE] This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
+> [!NOTE]
+> This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 ## Install
 

@@ -24,7 +24,8 @@ Cascade delete allows deletion of a principal/parent entity to have a side effec
 
 See [Relationships](../modeling/relationships.md) for more information about conventions and configuration for cascade delete.
 
-> [!TIP] You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/CascadeDelete/) on GitHub.
+> [!TIP] 
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/CascadeDelete/) on GitHub.
 
 ## Cascading to tracked entities
 

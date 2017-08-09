@@ -41,4 +41,5 @@ The most common operations that result in the query being sent to the database a
 * Using an operator such as `ToList`, `ToArray`, `Single`, `Count`
 * Databinding the results of a query to a UI
 
-> [!WARNING] **Always validate user input:** While EF does provide protection from SQL injection attacks, it does not do any general validation of input. Therefore if values being passed to APIs, used in LINQ queries, assigned to entity properties, etc., come from an untrusted source then appropriate validation, per your application requirements, should be performed. This includes any user input used to dynamically construct queries. Even when using LINQ, if you are accepting user input to build expressions you need to make sure than only intended expressions can be constructed.
+> [!WARNING] 
+> **Always validate user input:** While EF does provide protection from SQL injection attacks, it does not do any general validation of input. Therefore if values being passed to APIs, used in LINQ queries, assigned to entity properties, etc., come from an untrusted source then appropriate validation, per your application requirements, should be performed. This includes any user input used to dynamically construct queries. Even when using LINQ, if you are accepting user input to build expressions you need to make sure than only intended expressions can be constructed.

@@ -14,7 +14,8 @@ uid: core/miscellaneous/cli/powershell
 
 EF Core Package Manager Console Tools for Visual Studio
 
-> [!WARNING] The tools require the [latest version of Windows PowerShell](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
+> [!WARNING] 
+> The tools require the [latest version of Windows PowerShell](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
 
 ## Installation
 
@@ -30,7 +31,8 @@ To open the console, follow these steps.
 
 ## Usage
 
-> [!TIP] All commands support the common parameters: `-Verbose`, `-ErrorAction`, `-ErrorVariable`, `-WarningAction`, `-WarningVariable`, `-OutBuffer`, `-OutVariable`, etc. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+> [!TIP] 
+> All commands support the common parameters: `-Verbose`, `-ErrorAction`, `-ErrorVariable`, `-WarningAction`, `-WarningVariable`, `-OutBuffer`, `-OutVariable`, etc. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ### Add-Migration
 

@@ -14,7 +14,8 @@ uid: core/saving/basic
 
 Learn how to add, modify, and remove data using your context and entity classes.
 
-> [!TIP] You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Basics/) on GitHub.
+> [!TIP] 
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Basics/) on GitHub.
 
 ## Adding Data
 
