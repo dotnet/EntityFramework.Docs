@@ -12,9 +12,9 @@
 ##[Entity Framework Core](core/index.md)
 <!-- Getting Started -->
 ###[Getting Started](core/get-started/index.md)
-####[General Installation Instructions](core/get-started/general/index.md)
-#####[Installing EF Core 1.x](core/get-started/general/efcore1.md)
-#####[Installing EF Core 2.0](core/get-started/general/efcore2.md)
+####[Installing EF Core](core/get-started/general/index.md)
+#####[Version 1.x](core/get-started/general/efcore1.md)
+#####[Version 2.0](core/get-started/general/efcore2.md)
 ####[.NET Framework (Console, WinForms, WPF, etc.)](core/get-started/full-dotnet/index.md)
 #####[.NET Framework - New Database](core/get-started/full-dotnet/new-db.md)
 #####[.NET Framework - Existing Database](core/get-started/full-dotnet/existing-db.md)
