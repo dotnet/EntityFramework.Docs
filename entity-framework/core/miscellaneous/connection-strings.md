@@ -29,7 +29,7 @@ Most database providers require some form of connection string to connect to the
 </configuration>
 ```
 
-> [!TIP] 
+> [!TIP]
 > The `providerName` setting is not required on EF Core connection strings stored in App.config because the database provider is configured via code.
 
 You can then read the connection string using the `ConfigurationManager` API in your context's `OnConfiguring` method. You may need to add a reference to the `System.Configuration` framework assembly to be able to use this API.
@@ -68,7 +68,6 @@ public class BloggingContext : DbContext
 
 In ASP.NET Core the configuration system is very flexible, and the connection string could be stored in `appsettings.json`, an environment variable, the user secret store, or another configuration source. See the [Configuration section of the ASP.NET Core documentation](https://docs.asp.net/en/latest/fundamentals/configuration.html) for more details. The following example shows the connection string stored in `appsettings.json`.
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": true -->
 ``` json
 {
   "ConnectionStrings": {

@@ -12,7 +12,7 @@ uid: core/miscellaneous/cli/dotnet
 ---
 # .NET Command Line Tools
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > The [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.0.0 no longer supports `project.json` or Visual Studio 2015. Everyone doing .NET Core development is encouraged to [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/) and [Visual Studio 2017](https://www.visualstudio.com/downloads/).
 
 Entity Framework Core .NET Command Line Tools
@@ -43,7 +43,6 @@ The EF Core .NET Command Line Tools are installed by manually editing the `*.csp
 
 The resulting project should include these items (in addition to your other project dependencies).
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
@@ -59,7 +58,7 @@ The resulting project should include these items (in addition to your other proj
 </Project>
 ```
 
-> [!TIP] 
+> [!TIP]
 > A private package reference (`PrivateAssets="All"`) means this dependency is local to the current project. For example, if Project A has a build only dependency and Project B depends on A, `dotnet restore` will not add A's build-only dependencies into Project B.
 
 ## Usage
@@ -396,7 +395,6 @@ To make the project a .NET Core App, add the "netcoreapp1.0" framework to projec
 
 When targeting .NET Framework, ensure you project targets version 4.5.1 or newer.
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 ``` xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>

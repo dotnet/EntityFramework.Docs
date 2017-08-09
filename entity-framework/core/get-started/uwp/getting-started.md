@@ -15,7 +15,7 @@ uid: core/get-started/uwp/getting-started
 
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
-> [!WARNING] 
+> [!WARNING]
 > **Avoid using anonymous types in LINQ queries on UWP**. Deploying a UWP application to the app store requires your application to be compiled with .NET Native. Queries with anonymous types have poor performance on .NET Native or may crash the application.
 
 > [!TIP]

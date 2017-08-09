@@ -16,14 +16,12 @@ Shadow properties are properties that do not exist in your entity class. The val
 
 Shadow property values can be obtained and changed through the `ChangeTracker` API.
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 ``` csharp
    context.Entry(myBlog).Property("LastUpdated").CurrentValue = DateTime.Now;
 ```
 
 Shadow properties can be referenced in LINQ queries via the `EF.Property` static method.
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 ``` csharp
 var blogs = context.Blogs
     .OrderBy(b => EF.Property<DateTime>(b, "LastUpdated"));

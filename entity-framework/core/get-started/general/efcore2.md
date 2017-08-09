@@ -23,13 +23,13 @@ $ dotnet add package Microsoft.EntityFrameworkCore.SqlServer -v 2.0.0
 For any type of application using Visual Studio’s Package Manager Console:
 
 ``` console
-PM> install-package Microsoft.EntityFrameworkCore.SqlServer -Version 2.0.0
+PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 2.0.0
 ```
 
 Or to upgrade to EF Core 2.0 from the Package Manager Console:
 
 ``` console
-PM> update-package Microsoft.EntityFrameworkCore.SqlServer -Version 2.0.0
+PM> Update-Package Microsoft.EntityFrameworkCore.SqlServer -Version 2.0.0
 ```
 
 If you need to update an application that is using a third-party data provider, check for an update of the provider that is compatible with EF Core 2.0. Data providers for previous versions are not compatible with version 2.0.
@@ -53,7 +53,7 @@ To use the `dotnet ef` command line tools in cross-platoform development, your a
 The Package Manager Console EF Core commands for Visual Studio can be upgraded by issuing the following command:
 
 ``` console
-PM> update-package Microsoft.EntityFrameworkCore.Tools -Version 2.0.0
+PM> Update-Package Microsoft.EntityFrameworkCore.Tools -Version 2.0.0
 ```
 
 If your existing project references any of the tooling and design packages, make sure you update the version to 2.0.

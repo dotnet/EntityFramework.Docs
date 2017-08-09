@@ -15,7 +15,7 @@ uid: core/get-started/full-dotnet/existing-db
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.
 
-> [!TIP] 
+> [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb) on GitHub.
 
 ## Prerequisites
@@ -34,7 +34,7 @@ The following prerequisites are needed to complete this walkthrough:
 
 This tutorial uses a **Blogging** database on your LocalDb instance as the existing database.
 
-> [!TIP] 
+> [!TIP]
 > If you have already created the **Blogging** database as part of another tutorial, you can skip these steps.
 
 * Open Visual Studio
@@ -93,7 +93,6 @@ Now it's time to create the EF model based on your existing database.
 
 * Run the following command to create a model from the existing database
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
 ``` console
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
 ```

@@ -29,7 +29,6 @@ As described in [Ensure EF Core Will Work for Your Application](ensure-requireme
 
 Most EF6 applications store the connection string in the applications `App/Web.config` file. In EF Core, you read this connection string using the `ConfigurationManager` API. You may need to add a reference to the `System.Configuration` framework assembly to be able to use this API.
 
-<!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": true, "dupnames  : "csharp", highlight_args}, "names": [] -->
 ``` csharp
 public class BloggingContext : DbContext
 {
