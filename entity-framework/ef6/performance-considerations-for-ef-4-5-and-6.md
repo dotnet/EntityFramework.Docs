@@ -1,13 +1,13 @@
 ---
-title: "Performance Considerations for EF 4, 5, and 6 | Microsoft Docs"
-ms.custom: ""
+title: "Performance Considerations for EF 4, 5, and 6 - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: d6d5a465-6434-45fa-855d-5eb48c61a2ea
 caps.latest.revision: 4
@@ -23,11 +23,11 @@ Last updated: May 2014
 
 ## 1. Introduction
 
-Object-Relational Mapping frameworks are a convenient way to provide an abstraction for data access in an object-oriented application. For .NET applications, Microsoft's recommended O/RM is the Entity Framework. With any abstraction though, performance can become a concern.
+Object-Relational Mapping frameworks are a convenient way to provide an abstraction for data access in an object-oriented application. For .NET applications, Microsoft's recommended O/RM is Entity Framework. With any abstraction though, performance can become a concern.
 
-This whitepaper was written to show the performance considerations when developing applications using the Entity Framework, to give developers an idea of the Entity Framework internal algorithms that can affect performance, and to provide tips for investigation and improving performance in their applications that use the Entity Framework. There are a number of good topics on performance already available on the web, and we've also tried pointing to these resources where possible.
+This whitepaper was written to show the performance considerations when developing applications using Entity Framework, to give developers an idea of the Entity Framework internal algorithms that can affect performance, and to provide tips for investigation and improving performance in their applications that use Entity Framework. There are a number of good topics on performance already available on the web, and we've also tried pointing to these resources where possible.
 
-Performance is a tricky topic. This whitepaper is intended as a resource to help you make performance related decisions for your applications that use the Entity Framework. We have included some test metrics to demonstrate performance, but these metrics aren't intended as absolute indicators of the performance you will see in your application.
+Performance is a tricky topic. This whitepaper is intended as a resource to help you make performance related decisions for your applications that use Entity Framework. We have included some test metrics to demonstrate performance, but these metrics aren't intended as absolute indicators of the performance you will see in your application.
 
 For practical purposes, this document assumes Entity Framework 4 is run under .NET 4.0 and Entity Framework 5 and 6 are run under .NET 4.5. Many of the performance improvements made for Entity Framework 5 reside within the core components that ship with .NET 4.5.
 
@@ -129,7 +129,7 @@ We have seen a number of cases where switching the associations in the model fro
 
 To demonstrate this improvement, we generated two versions of the Navision model by using EDMGen. *Note: seeappendix Cfor a description of the Navision model.* The Navision model is interesting for this exercise due to its very large amount of entities and relationships between them.
 
-One version of this very large model was generated with Foreign Keys Associations and the other was generated with Independent Associations. We then timed how long it took to generate the views for each model. The Entity Framework 5 test used the GenerateViews() method from class EntityViewGenerator to generate the views, while the Entity Framework 6 test used the GenerateViews() method from class StorageMappingItemCollection. This due to code restructuring that occurred in the Entity Framework 6 codebase.
+One version of this very large model was generated with Foreign Keys Associations and the other was generated with Independent Associations. We then timed how long it took to generate the views for each model. Entity Framework5 test used the GenerateViews() method from class EntityViewGenerator to generate the views, while the Entity Framework 6 test used the GenerateViews() method from class StorageMappingItemCollection. This due to code restructuring that occurred in the Entity Framework 6 codebase.
 
 Using Entity Framework 5, view generation for the model with Foreign Keys took 65 minutes in a lab machine. It's unknown how long it would have taken to generate the views for the model that used independent associations. We left the test running for over a month before the machine was rebooted in our lab to install monthly updates.
 
@@ -145,7 +145,7 @@ If you have a large Code First model, using Independent Associations will have t
 
 | When using | Do this |
 |------------|---------|
-| Entity Designer | After adding an association between two entities, make sure you have a referential constraint. Referential constraints tell the Entity Framework to use Foreign Keys instead of Independent Associations. For additional details visit \<http://blogs.msdn.com/b/efdesign/archive/2009/03/16/foreign-keys-in-the-entity-framework.aspx>. |
+| Entity Designer | After adding an association between two entities, make sure you have a referential constraint. Referential constraints tell Entity Frameworkto use Foreign Keys instead of Independent Associations. For additional details visit \<http://blogs.msdn.com/b/efdesign/archive/2009/03/16/foreign-keys-in-the-entity-framework.aspx>. |
 | EDMGen | When using EDMGen to generate your files from the database, your Foreign Keys will be respected and added to the model as such. For more information on the different options exposed by EDMGen visit [http://msdn.microsoft.com/library/bb387165.aspx](https://msdn.microsoft.com/library/bb387165.aspx). |
 | Code First | See the "Relationship Convention" section of the [Code First Conventions](../ef6/entity-framework-code-first-conventions.md) topic for information on how to include foreign key properties on dependent objects when using Code First. |
 
@@ -163,13 +163,13 @@ Note that performance improvements were made to the Entity Framework Designer fo
 
 ## 3 Caching in the Entity Framework
 
-The Entity Framework has the following forms of caching built-in:
+Entity Framework has the following forms of caching built-in:
 
 1.  Object caching – the ObjectStateManager built into an ObjectContext instance keeps track in memory of the objects that have been retrieved using that instance. This is also known as first-level cache.
 2.  Query Plan Caching - reusing the generated store command when a query is executed more than once.
 3.  Metadata caching - sharing the metadata for a model across different connections to the same model.
 
-Besides the caches that EF provides out of the box, a special kind of ADO.NET data provider known as a wrapping provider can also be used to extend the Entity Framework with a cache for the results retrieved from the database, also known as second-level caching.
+Besides the caches that EF provides out of the box, a special kind of ADO.NET data provider known as a wrapping provider can also be used to extend Entity Framework with a cache for the results retrieved from the database, also known as second-level caching.
 
 ### 3.1 Object Caching
 
@@ -203,7 +203,7 @@ Also, keep in mind that Find only returns the entity you are looking for and it 
 
 #### 3.1.2 Performance issues when the object cache has many entities
 
-The object cache helps to increase the overall responsiveness of the Entity Framework. However, when the object cache has a very large amount of entities loaded it may affect certain operations such as Add, Remove, Find, Entry, SaveChanges and more. In particular, operations that trigger a call to DetectChanges will be negatively affected by very large object caches. DetectChanges synchronizes the object graph with the object state manager and its performance will determined directly by the size of the object graph. For more information about DetectChanges, see [Tracking Changes in POCO Entities](https://msdn.microsoft.com/library/dd456848.aspx).
+The object cache helps to increase the overall responsiveness of Entity Framework. However, when the object cache has a very large amount of entities loaded it may affect certain operations such as Add, Remove, Find, Entry, SaveChanges and more. In particular, operations that trigger a call to DetectChanges will be negatively affected by very large object caches. DetectChanges synchronizes the object graph with the object state manager and its performance will determined directly by the size of the object graph. For more information about DetectChanges, see [Tracking Changes in POCO Entities](https://msdn.microsoft.com/library/dd456848.aspx).
 
 When using Entity Framework 6, developers are able to call AddRange and RemoveRange directly on a DbSet, instead of iterating on a collection and calling Add once per instance. The advantage of using the range methods is that the cost of DetectChanges is only paid once for the entire set of entities as opposed to once per each added entity.
 
@@ -414,13 +414,13 @@ The query plan cache instance lives in the MetadataWorkspace's ItemCollection of
 
 ### 3.5 Results caching
 
-With results caching (also known as "second-level caching"), you keep the results of queries in a local cache. When issuing a query, you first see if the results are available locally before you query against the store. While results caching isn't directly supported by the Entity Framework, it's possible to add a second level cache by using a wrapping provider. An example wrapping provider with a second-level cache is available on CodePlex at \<https://efwrappers.codeplex.com/> and in the MSDN code samples at [http://code.msdn.microsoft.com/EFProviderWrappers-c0b88f32/view/Discussions/2](http://code.msdn.microsoft.com/efproviderwrappers-c0b88f32/view/discussions/2).
+With results caching (also known as "second-level caching"), you keep the results of queries in a local cache. When issuing a query, you first see if the results are available locally before you query against the store. While results caching isn't directly supported by Entity Framework, it's possible to add a second level cache by using a wrapping provider. An example wrapping provider with a second-level cache is available on CodePlex at \<https://efwrappers.codeplex.com/> and in the MSDN code samples at [http://code.msdn.microsoft.com/EFProviderWrappers-c0b88f32/view/Discussions/2](http://code.msdn.microsoft.com/efproviderwrappers-c0b88f32/view/discussions/2).
 
 This implementation of second-level caching is an injected functionality that takes place after the LINQ expression has been evaluated (and funcletized) and the query execution plan is computed or retrieved from the first-level cache. The second-level cache will then store only the raw database results, so the materialization pipeline still executes afterwards.
 
 #### 3.5.1 Additional references for results caching with the wrapping provider
 
--   Julie Lerman has written a "Second-Level Caching in the Entity Framework and Windows Azure" MSDN article that includes how to update the sample wrapping provider to use Windows Server AppFabric caching: [http://msdn.microsoft.com/magazine/hh394143.aspx](https://msdn.microsoft.com/magazine/hh394143.aspx)
+-   Julie Lerman has written a "Second-Level Caching in Entity Frameworkand Windows Azure" MSDN article that includes how to update the sample wrapping provider to use Windows Server AppFabric caching: [http://msdn.microsoft.com/magazine/hh394143.aspx](https://msdn.microsoft.com/magazine/hh394143.aspx)
 -   If you are working with Entity Framework 5, the team blog has a post that describes how to get things running with the caching provider for Entity Framework 5: \<http://blogs.msdn.com/b/adonet/archive/2010/09/13/ef-caching-with-jarek-kowalski-s-provider.aspx>. It also includes a T4 template to help automate adding the 2nd-level caching to your project.
 
 ## 4 Autocompiled Queries
@@ -532,7 +532,7 @@ using (var context = new MyContext())
     var query = from entity in context.MyEntities
                 where entity.Name.StartsWith(myObject.MyProperty)
                 select entity;
- 
+
    var results = query.ToList();
     ...
 }
@@ -881,7 +881,7 @@ In this end-to-end case, Entity Framework 6 outperforms Entity Framework 5 due t
 
 ### 7.1       Inheritance Strategies
 
-Another performance consideration when using the Entity Framework is the inheritance strategy you use. Entity Framework supports 3 basic types of inheritance and their combinations:
+Another performance consideration when using Entity Frameworkis the inheritance strategy you use. Entity Framework supports 3 basic types of inheritance and their combinations:
 
 -   Table per Hierarchy (TPH) – where each inheritance set maps to a table with a discriminator column to indicate which particular type in the hierarchy is being represented in the row.
 -   Table per Type (TPT) – where each type has its own table in the database; the child tables only define the columns that the parent table doesn’t contain.
@@ -897,7 +897,7 @@ When you create a model over an existing database that has a TPT schema, you don
 
 When you use Model First in the Entity Designer Wizard, you will get TPT for any inheritance in your model. If you want to switch to a TPH inheritance strategy with Model First, you can use the "Entity Designer Database Generation Power Pack" available from the Visual Studio Gallery ( \<http://visualstudiogallery.msdn.microsoft.com/df3541c3-d833-4b65-b942-989e7ec74c87/>).
 
-When using Code First to configure the mapping of a model with inheritance, EF will use TPH by default, i.e. all entities in the inheritance hierarchy will be mapped to the same table. See the "Mapping with the Fluent API" section of the "Code First in the ADO.NET Entity Framework 4.1" article in MSDN Magazine ( [http://msdn.microsoft.com/magazine/hh126815.aspx](https://msdn.microsoft.com/magazine/hh126815.aspx)) for more details.
+When using Code First to configure the mapping of a model with inheritance, EF will use TPH by default, i.e. all entities in the inheritance hierarchy will be mapped to the same table. See the "Mapping with the Fluent API" section of the "Code First in Entity Framework4.1" article in MSDN Magazine ( [http://msdn.microsoft.com/magazine/hh126815.aspx](https://msdn.microsoft.com/magazine/hh126815.aspx)) for more details.
 
 ### 7.2       Upgrading from EF4 to improve model generation time
 
@@ -919,7 +919,7 @@ It's worth noting that when generating the SSDL, the load is almost entirely spe
 
 As model size increases, the designer surface becomes cluttered and difficult to use. We typically consider a model with more than 300 entities to be too large to effectively use the designer. The following blog post describes several options for splitting large models: \<http://blogs.msdn.com/b/adonet/archive/2008/11/25/working-with-large-models-in-entity-framework-part-2.aspx>.
 
-The post was written for the first version of the Entity Framework, but the steps still apply.
+The post was written for the first version of Entity Framework, but the steps still apply.
 
 ### 7.4       Performance considerations with the Entity Data Source Control
 
@@ -931,7 +931,7 @@ Setting the ContextTypeName field also prevents a functional problem where the E
 
 ### 7.5       POCO entities and change tracking proxies
 
-The Entity Framework enables you to use custom data classes together with your data model without making any modifications to the data classes themselves. This means that you can use "plain-old" CLR objects (POCO), such as existing domain objects, with your data model. These POCO data classes (also known as persistence-ignorant objects), which are mapped to entities that are defined in a data model, support most of the same query, insert, update, and delete behaviors as entity types that are generated by the Entity Data Model tools.
+Entity Frameworkenables you to use custom data classes together with your data model without making any modifications to the data classes themselves. This means that you can use "plain-old" CLR objects (POCO), such as existing domain objects, with your data model. These POCO data classes (also known as persistence-ignorant objects), which are mapped to entities that are defined in a data model, support most of the same query, insert, update, and delete behaviors as entity types that are generated by the Entity Data Model tools.
 
 Entity Framework can also create proxy classes derived from your POCO types, which are used when you want to enable features such as lazy loading and automatic change tracking on POCO entities. Your POCO classes must meet certain requirements to allow Entity Framework to use proxies, as described here: [http://msdn.microsoft.com/library/dd468057.aspx](https://msdn.microsoft.com/library/dd468057.aspx).
 
@@ -945,7 +945,7 @@ In summary: you’ll pay a performance hit when creating the change tracking pro
 
 ### 8.1 Lazy Loading vs. Eager Loading
 
-The Entity Framework offers several different ways to load the entities that are related to your target entity. For example, when you query for Products, there are different ways that the related Orders will be loaded into the Object State Manager. From a performance standpoint, the biggest question to consider when loading related entities will be whether to use Lazy Loading or Eager Loading.
+Entity Frameworkoffers several different ways to load the entities that are related to your target entity. For example, when you query for Products, there are different ways that the related Orders will be loaded into the Object State Manager. From a performance standpoint, the biggest question to consider when loading related entities will be whether to use Lazy Loading or Eager Loading.
 
 When using Eager Loading, the related entities are loaded along with your target entity set. You use an Include statement in your query to indicate which related entities you want to bring in.
 
@@ -1180,7 +1180,7 @@ This should decrease your thread contention and increase your throughput by up t
 
 ### 9.2      AutoDetectChanges
 
-As mentioned earlier, the Entity Framework might show performance issues when the object cache has many entities. Certain operations, such as Add, Remove, Find, Entry and SaveChanges, trigger calls to DetectChanges which might consume a large amount of CPU based on how large the object cache has become. The reason for this is that the object cache and the object state manager try to stay as synchronized as possible on each operation performed to a context so that the produced data is guaranteed to be correct under a wide array of scenarios.
+As mentioned earlier, Entity Frameworkmight show performance issues when the object cache has many entities. Certain operations, such as Add, Remove, Find, Entry and SaveChanges, trigger calls to DetectChanges which might consume a large amount of CPU based on how large the object cache has become. The reason for this is that the object cache and the object state manager try to stay as synchronized as possible on each operation performed to a context so that the produced data is guaranteed to be correct under a wide array of scenarios.
 
 It is generally a good practice to leave Entity Framework’s automatic change detection enabled for the entire life of your application. If your scenario is being negatively affected by high CPU usage and your profiles indicate that the culprit is the call to DetectChanges, consider temporarily turning off AutoDetectChanges in the sensitive portion of your code:
 
@@ -1254,7 +1254,7 @@ Entity Framework 6 does not come in the default installation of .NET framework. 
 
 Entity Framework reasons about the impedance mismatch problem between object oriented programming and relational databases by having an in-memory representation of the conceptual model (the objects), the storage schema (the database) and a mapping between the two. This metadata is called an Entity Data Model, or EDM for short. From this EDM, Entity Framework will derive the views to roundtrip data from the objects in memory to the database and back.
 
-When the Entity Framework is used with an EDMX file that formally specifies the conceptual model, the storage schema, and the mapping, then the model loading stage only has to validate that the EDM is correct (for example, make sure that no mappings are missing), then generate the views, then validate the views and have this metadata ready for use. Only then can a query be executed or new data be saved to the data store.
+When Entity Frameworkis used with an EDMX file that formally specifies the conceptual model, the storage schema, and the mapping, then the model loading stage only has to validate that the EDM is correct (for example, make sure that no mappings are missing), then generate the views, then validate the views and have this metadata ready for use. Only then can a query be executed or new data be saved to the data store.
 
 The Code First approach is, at its heart, a sophisticated Entity Data Model generator. The Entity Framework has to produce an EDM from the provided code; it does so by analyzing the classes involved in the model, applying conventions and configuring the model via the Fluent API. After the EDM is built, the Entity Framework essentially behaves the same way as it would had an EDMX file been present in the project. Thus, building the model from Code First adds extra complexity that translates into a slower startup time for the Entity Framework when compared to having an EDMX. The cost is completely dependent on the size and complexity of the model that’s being built.
 
@@ -1349,167 +1349,167 @@ This environment uses a 2-machine setup with the database on a separate machine 
 The Northwind model was used to execute these tests. It was generated from the database using the Entity Framework designer. Then, the following code was used to compare the performance of the query execution options:
 
 ```
-using System; 
-using System.Collections.Generic; 
-using System.Data; 
-using System.Data.Common; 
-using System.Data.Entity.Infrastructure; 
-using System.Data.EntityClient; 
-using System.Data.Objects; 
-using System.Linq; 
- 
-namespace QueryComparison 
-{ 
-    public partial class NorthwindEntities : ObjectContext 
-    { 
-        private static readonly Func<NorthwindEntities, string, IQueryable<Product>> productsForCategoryCQ = CompiledQuery.Compile( 
-            (NorthwindEntities context, string categoryName) => 
-                context.Products.Where(p => p.Category.CategoryName == categoryName) 
-                ); 
- 
-        public IQueryable<Product> InvokeProductsForCategoryCQ(string categoryName) 
-        { 
-            return productsForCategoryCQ(this, categoryName); 
-        } 
-    } 
- 
-    public class QueryTypePerfComparison 
-    { 
-        private static string entityConnectionStr = @"metadata=res://*/Northwind.csdl|res://*/Northwind.ssdl|res://*/Northwind.msl;provider=System.Data.SqlClient;provider connection string='data source=.;initial catalog=Northwind;integrated security=True;multipleactiveresultsets=True;App=EntityFramework'"; 
- 
-        public void LINQIncludingContextCreation() 
-        { 
-            using (NorthwindEntities context = new NorthwindEntities()) 
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Data.Entity.Infrastructure;
+using System.Data.EntityClient;
+using System.Data.Objects;
+using System.Linq;
+
+namespace QueryComparison
+{
+    public partial class NorthwindEntities : ObjectContext
+    {
+        private static readonly Func<NorthwindEntities, string, IQueryable<Product>> productsForCategoryCQ = CompiledQuery.Compile(
+            (NorthwindEntities context, string categoryName) =>
+                context.Products.Where(p => p.Category.CategoryName == categoryName)
+                );
+
+        public IQueryable<Product> InvokeProductsForCategoryCQ(string categoryName)
+        {
+            return productsForCategoryCQ(this, categoryName);
+        }
+    }
+
+    public class QueryTypePerfComparison
+    {
+        private static string entityConnectionStr = @"metadata=res://*/Northwind.csdl|res://*/Northwind.ssdl|res://*/Northwind.msl;provider=System.Data.SqlClient;provider connection string='data source=.;initial catalog=Northwind;integrated security=True;multipleactiveresultsets=True;App=EntityFramework'";
+
+        public void LINQIncludingContextCreation()
+        {
+            using (NorthwindEntities context = new NorthwindEntities())
             {                 
-                var q = context.Products.Where(p => p.Category.CategoryName == "Beverages"); 
-                q.ToList(); 
-            } 
-        } 
- 
-        public void LINQNoTracking() 
-        { 
-            using (NorthwindEntities context = new NorthwindEntities()) 
-            { 
-                context.Products.MergeOption = MergeOption.NoTracking; 
- 
-                var q = context.Products.Where(p => p.Category.CategoryName == "Beverages"); 
-                q.ToList(); 
-            } 
-        } 
- 
-        public void CompiledQuery() 
-        { 
-            using (NorthwindEntities context = new NorthwindEntities()) 
-            { 
-                var q = context.InvokeProductsForCategoryCQ("Beverages"); 
-                q.ToList(); 
-            } 
-        } 
- 
-        public void ObjectQuery() 
-        { 
-            using (NorthwindEntities context = new NorthwindEntities()) 
-            { 
-                ObjectQuery<Product> products = context.Products.Where("it.Category.CategoryName = 'Beverages'"); 
-                products.ToList(); 
-            } 
-        } 
- 
-        public void EntityCommand() 
-        { 
-            using (EntityConnection eConn = new EntityConnection(entityConnectionStr)) 
-            { 
-                eConn.Open(); 
-                EntityCommand cmd = eConn.CreateCommand(); 
-                cmd.CommandText = "Select p From NorthwindEntities.Products As p Where p.Category.CategoryName = 'Beverages'"; 
- 
-                using (EntityDataReader reader = cmd.ExecuteReader(CommandBehavior.SequentialAccess)) 
-                { 
-                    List<Product> productsList = new List<Product>(); 
-                    while (reader.Read()) 
-                    { 
-                        DbDataRecord record = (DbDataRecord)reader.GetValue(0); 
-                                                 
-                        // 'materialize' the product by accessing each field and value. Because we are materializing products, we won't have any nested data readers or records. 
-                        int fieldCount = record.FieldCount; 
- 
-                        // Treat all products as Product, even if they are the subtype DiscontinuedProduct. 
+                var q = context.Products.Where(p => p.Category.CategoryName == "Beverages");
+                q.ToList();
+            }
+        }
+
+        public void LINQNoTracking()
+        {
+            using (NorthwindEntities context = new NorthwindEntities())
+            {
+                context.Products.MergeOption = MergeOption.NoTracking;
+
+                var q = context.Products.Where(p => p.Category.CategoryName == "Beverages");
+                q.ToList();
+            }
+        }
+
+        public void CompiledQuery()
+        {
+            using (NorthwindEntities context = new NorthwindEntities())
+            {
+                var q = context.InvokeProductsForCategoryCQ("Beverages");
+                q.ToList();
+            }
+        }
+
+        public void ObjectQuery()
+        {
+            using (NorthwindEntities context = new NorthwindEntities())
+            {
+                ObjectQuery<Product> products = context.Products.Where("it.Category.CategoryName = 'Beverages'");
+                products.ToList();
+            }
+        }
+
+        public void EntityCommand()
+        {
+            using (EntityConnection eConn = new EntityConnection(entityConnectionStr))
+            {
+                eConn.Open();
+                EntityCommand cmd = eConn.CreateCommand();
+                cmd.CommandText = "Select p From NorthwindEntities.Products As p Where p.Category.CategoryName = 'Beverages'";
+
+                using (EntityDataReader reader = cmd.ExecuteReader(CommandBehavior.SequentialAccess))
+                {
+                    List<Product> productsList = new List<Product>();
+                    while (reader.Read())
+                    {
+                        DbDataRecord record = (DbDataRecord)reader.GetValue(0);
+
+                        // 'materialize' the product by accessing each field and value. Because we are materializing products, we won't have any nested data readers or records.
+                        int fieldCount = record.FieldCount;
+
+                        // Treat all products as Product, even if they are the subtype DiscontinuedProduct.
                         Product product = new Product();  
- 
-                        product.ProductID = record.GetInt32(0); 
-                        product.ProductName = record.GetString(1); 
-                        product.SupplierID = record.GetInt32(2); 
-                        product.CategoryID = record.GetInt32(3); 
-                        product.QuantityPerUnit = record.GetString(4); 
-                        product.UnitPrice = record.GetDecimal(5); 
-                        product.UnitsInStock = record.GetInt16(6); 
-                        product.UnitsOnOrder = record.GetInt16(7); 
-                        product.ReorderLevel = record.GetInt16(8); 
-                        product.Discontinued = record.GetBoolean(9); 
- 
-                        productsList.Add(product); 
-                    } 
-                } 
-            } 
-        } 
- 
-        public void ExecuteStoreQuery() 
-        { 
-            using (NorthwindEntities context = new NorthwindEntities()) 
-            { 
-                ObjectResult<Product> beverages = context.ExecuteStoreQuery<Product>( 
-@"    SELECT        P.ProductID, P.ProductName, P.SupplierID, P.CategoryID, P.QuantityPerUnit, P.UnitPrice, P.UnitsInStock, P.UnitsOnOrder, P.ReorderLevel, P.Discontinued 
-    FROM            Products AS P INNER JOIN Categories AS C ON P.CategoryID = C.CategoryID 
-    WHERE        (C.CategoryName = 'Beverages')" 
-); 
-                beverages.ToList(); 
-            } 
-        } 
- 
-        public void ExecuteStoreQueryDbContext() 
-        { 
-            using (var context = new QueryComparison.DbC.NorthwindEntities()) 
-            { 
-                var beverages = context.Database.SqlQuery\<QueryComparison.DbC.Product>( 
-@"    SELECT        P.ProductID, P.ProductName, P.SupplierID, P.CategoryID, P.QuantityPerUnit, P.UnitPrice, P.UnitsInStock, P.UnitsOnOrder, P.ReorderLevel, P.Discontinued 
-    FROM            Products AS P INNER JOIN Categories AS C ON P.CategoryID = C.CategoryID 
-    WHERE        (C.CategoryName = 'Beverages')" 
-); 
-                beverages.ToList(); 
-            } 
-        } 
- 
-        public void ExecuteStoreQueryDbSet() 
-        { 
-            using (var context = new QueryComparison.DbC.NorthwindEntities()) 
-            { 
-                var beverages = context.Products.SqlQuery( 
-@"    SELECT        P.ProductID, P.ProductName, P.SupplierID, P.CategoryID, P.QuantityPerUnit, P.UnitPrice, P.UnitsInStock, P.UnitsOnOrder, P.ReorderLevel, P.Discontinued 
-    FROM            Products AS P INNER JOIN Categories AS C ON P.CategoryID = C.CategoryID 
-    WHERE        (C.CategoryName = 'Beverages')" 
-); 
-                beverages.ToList(); 
-            } 
-        } 
- 
-        public void LINQIncludingContextCreationDbContext() 
-        { 
-            using (var context = new QueryComparison.DbC.NorthwindEntities()) 
+
+                        product.ProductID = record.GetInt32(0);
+                        product.ProductName = record.GetString(1);
+                        product.SupplierID = record.GetInt32(2);
+                        product.CategoryID = record.GetInt32(3);
+                        product.QuantityPerUnit = record.GetString(4);
+                        product.UnitPrice = record.GetDecimal(5);
+                        product.UnitsInStock = record.GetInt16(6);
+                        product.UnitsOnOrder = record.GetInt16(7);
+                        product.ReorderLevel = record.GetInt16(8);
+                        product.Discontinued = record.GetBoolean(9);
+
+                        productsList.Add(product);
+                    }
+                }
+            }
+        }
+
+        public void ExecuteStoreQuery()
+        {
+            using (NorthwindEntities context = new NorthwindEntities())
+            {
+                ObjectResult<Product> beverages = context.ExecuteStoreQuery<Product>(
+@"    SELECT        P.ProductID, P.ProductName, P.SupplierID, P.CategoryID, P.QuantityPerUnit, P.UnitPrice, P.UnitsInStock, P.UnitsOnOrder, P.ReorderLevel, P.Discontinued
+    FROM            Products AS P INNER JOIN Categories AS C ON P.CategoryID = C.CategoryID
+    WHERE        (C.CategoryName = 'Beverages')"
+);
+                beverages.ToList();
+            }
+        }
+
+        public void ExecuteStoreQueryDbContext()
+        {
+            using (var context = new QueryComparison.DbC.NorthwindEntities())
+            {
+                var beverages = context.Database.SqlQuery\<QueryComparison.DbC.Product>(
+@"    SELECT        P.ProductID, P.ProductName, P.SupplierID, P.CategoryID, P.QuantityPerUnit, P.UnitPrice, P.UnitsInStock, P.UnitsOnOrder, P.ReorderLevel, P.Discontinued
+    FROM            Products AS P INNER JOIN Categories AS C ON P.CategoryID = C.CategoryID
+    WHERE        (C.CategoryName = 'Beverages')"
+);
+                beverages.ToList();
+            }
+        }
+
+        public void ExecuteStoreQueryDbSet()
+        {
+            using (var context = new QueryComparison.DbC.NorthwindEntities())
+            {
+                var beverages = context.Products.SqlQuery(
+@"    SELECT        P.ProductID, P.ProductName, P.SupplierID, P.CategoryID, P.QuantityPerUnit, P.UnitPrice, P.UnitsInStock, P.UnitsOnOrder, P.ReorderLevel, P.Discontinued
+    FROM            Products AS P INNER JOIN Categories AS C ON P.CategoryID = C.CategoryID
+    WHERE        (C.CategoryName = 'Beverages')"
+);
+                beverages.ToList();
+            }
+        }
+
+        public void LINQIncludingContextCreationDbContext()
+        {
+            using (var context = new QueryComparison.DbC.NorthwindEntities())
             {                 
-                var q = context.Products.Where(p => p.Category.CategoryName == "Beverages"); 
-                q.ToList(); 
-            } 
-        } 
- 
-        public void LINQNoTrackingDbContext() 
-        { 
-            using (var context = new QueryComparison.DbC.NorthwindEntities()) 
-            { 
-                var q = context.Products.AsNoTracking().Where(p => p.Category.CategoryName == "Beverages"); 
-                q.ToList(); 
-            } 
-        } 
-    } 
+                var q = context.Products.Where(p => p.Category.CategoryName == "Beverages");
+                q.ToList();
+            }
+        }
+
+        public void LINQNoTrackingDbContext()
+        {
+            using (var context = new QueryComparison.DbC.NorthwindEntities())
+            {
+                var q = context.Products.AsNoTracking().Where(p => p.Category.CategoryName == "Beverages");
+                q.ToList();
+            }
+        }
+    }
 }
 ```
  

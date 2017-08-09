@@ -1,19 +1,19 @@
 ---
-title: "Entity Framework Self-Tracking Entities Walkthrough | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Self-Tracking Entities Walkthrough - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: b21207c9-1d95-4aa3-ae05-bc5fe300dab0
 caps.latest.revision: 3
 ---
 # Entity Framework Self-Tracking Entities Walkthrough
-This walkthrough demonstrates the scenario in which a Windows Communication Foundation (WCF) service exposes an operation that returns an entity graph. Next, a client application manipulates that graph and submits the modifications to a service operation that validates and saves the updates to a database using the Entity Framework.
+This walkthrough demonstrates the scenario in which a Windows Communication Foundation (WCF) service exposes an operation that returns an entity graph. Next, a client application manipulates that graph and submits the modifications to a service operation that validates and saves the updates to a database using Entity Framework.
 
 Before completing this walkthrough make sure you read the [Self-Tracking Entities](../ef6/entity-framework-self-tracking-entities.md) page.
 
@@ -240,7 +240,7 @@ Now it's time to implement the actual service.
         public class Service1 : IService1
         {
             /// <summary>
-            /// Gets all the Blogs and related Posts. 
+            /// Gets all the Blogs and related Posts.
             /// </summary>
             public List<Blog> GetBlogs()
             {
@@ -251,7 +251,7 @@ Now it's time to implement the actual service.
             }
 
             /// <summary>
-            /// Updates Blog and its related Posts. 
+            /// Updates Blog and its related Posts.
             /// </summary>
             public void UpdateBlog(Blog blog)
             {
@@ -261,9 +261,9 @@ Now it's time to implement the actual service.
                     {
                         // TODO: Perform validation on the updated order before applying the changes.
 
-                        // The ApplyChanges method examines the change tracking information 
+                        // The ApplyChanges method examines the change tracking information
                         // contained in the graph of self-tracking entities to infer the set of operations
-                        // that need to be performed to reflect the changes in the database. 
+                        // that need to be performed to reflect the changes in the database.
                         context.Blogs.ApplyChanges(blog);
                         context.SaveChanges();
 
@@ -374,7 +374,7 @@ Now we can write some code to consume the service.
                             new Post { Title = "What's new on the new blog"}
                         }
                     };
-                   
+
                     // Save the changes using the service
                     service.UpdateBlog(newBlog);
                 }
@@ -387,7 +387,7 @@ Now we can write some code to consume the service.
                     // Get all the Blogs
                     var blogs = service.GetBlogs();
 
-                    // Use LINQ to Objects to find The New Blog 
+                    // Use LINQ to Objects to find The New Blog
                     var blog = blogs.First(b => b.Name == "The New Blog");
 
                     // Update the Blogs name
@@ -408,11 +408,11 @@ Now we can write some code to consume the service.
                     // Get all the Blogs
                     var blogs = service.GetBlogs();
 
-                    // Use LINQ to Objects to find The Not-So-New Blog 
+                    // Use LINQ to Objects to find The Not-So-New Blog
                     var blog = blogs.First(b => b.Name == "The Not-So-New Blog");
 
                     // Mark all related Posts for deletion
-                    // We need to call ToList because each Post will be removed from the 
+                    // We need to call ToList because each Post will be removed from the
                     // Posts collection when we call MarkAsDeleted
                     foreach (var post in blog.Posts.ToList())
                     {
@@ -496,23 +496,23 @@ Now we can write some code to consume the service.
     \<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:STESample="clr-namespace:STESample;assembly=STESample.Entities" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:STESample="clr-namespace:STESample;assembly=STESample.Entities"
         mc:Ignorable="d" x:Class="STESample.WPFTest.MainWindow"
         Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
-        
+
         \<Window.Resources>
-            \<CollectionViewSource 
-                x:Key="blogViewSource" 
+            \<CollectionViewSource
+                x:Key="blogViewSource"
                 d:DesignSource="{d:DesignInstance {x:Type STESample:Blog}, CreateList=True}"/>
-            \<CollectionViewSource 
-                x:Key="blogPostsViewSource" 
+            \<CollectionViewSource
+                x:Key="blogPostsViewSource"
                 Source="{Binding Posts, Source={StaticResource blogViewSource}}"/>
         \</Window.Resources>
-        
+
         <Grid DataContext="{StaticResource blogViewSource}">
-            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" 
+            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True"
                       ItemsSource="{Binding}" Margin="10,10,10,179">
                 \<DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding BlogId}" Header="Id" Width="Auto" IsReadOnly="True" />
@@ -520,7 +520,7 @@ Now we can write some code to consume the service.
                     <DataGridTextColumn Binding="{Binding Url}" Header="Url" Width="Auto"/>
                 \</DataGrid.Columns>
             </DataGrid>
-            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" 
+            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True"
                       ItemsSource="{Binding Source={StaticResource blogPostsViewSource}}" Margin="10,145,10,38">
                 \<DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding PostId}" Header="Id" Width="Auto"  IsReadOnly="True"/>
@@ -528,7 +528,7 @@ Now we can write some code to consume the service.
                     <DataGridTextColumn Binding="{Binding Content}" Header="Content" Width="Auto"/>
                 \</DataGrid.Columns>
             </DataGrid>
-            <Button Width="68" Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+            <Button Width="68" Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     Margin="0,0,10,10" Click="buttonSave_Click">Save</Button>
         </Grid>
     </Window>

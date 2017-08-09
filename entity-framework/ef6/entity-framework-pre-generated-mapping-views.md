@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Pre-Generated Mapping Views | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Pre-Generated Mapping Views - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 917ba9c8-6ddf-4631-ab8c-c4fb378c2fcd
 caps.latest.revision: 3
@@ -110,12 +110,12 @@ The following is an extract from the DbMappingViewCache that is generated with t
             SELECT VALUE -- Constructing Blogs
             [BlogApp.Models.Blog](T1.Blog_BlogId, T1.Blog_Test, T1.Blog_title, T1.Blog_Active, T1.Blog_SomeDecimal)
             FROM (
-            SELECT 
-                T.BlogId AS Blog_BlogId, 
-                T.Test AS Blog_Test, 
-                T.title AS Blog_title, 
-                T.Active AS Blog_Active, 
-                T.SomeDecimal AS Blog_SomeDecimal, 
+            SELECT
+                T.BlogId AS Blog_BlogId,
+                T.Test AS Blog_Test,
+                T.title AS Blog_title,
+                T.Active AS Blog_Active,
+                T.SomeDecimal AS Blog_SomeDecimal,
                 True AS _from0
             FROM CodeFirstDatabase.Blog AS T
             ) AS T1");

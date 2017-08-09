@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework migrate.exe | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework migrate.exe - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 989ea862-e936-4c85-926a-8cfbef5df5b8
 caps.latest.revision: 3
@@ -31,7 +31,8 @@ If your application targets .NET 4, and not 4.5, then you will need to copy the 
 |----------|----------|
 | ![Net45Files](../ef6/media/net45files.png) | ![Net40Files](../ef6/media/net40files.png) |
 
-***Note:** migrate.exe currently doesn't support x64 assemblies.*
+> [!NOTE]
+> migrate.exe doesn't support x64 assemblies.
 
  
 

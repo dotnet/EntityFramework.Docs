@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Enum Support - Code First (EF5 onwards) Video | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Enum Support - Code First (EF5 onwards) Video - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: b8ce9cac-7e60-49ee-a828-86c37d996e4e
 caps.latest.revision: 3

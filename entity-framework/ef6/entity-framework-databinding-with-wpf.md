@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Databinding with WPF | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Databinding with WPF - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: e90d48e6-bea5-47ef-b756-7b89cce4daf0
 caps.latest.revision: 3
@@ -102,7 +102,7 @@ When using Code First development you usually begin by writing .NET Framework cl
             {
                 this.Products = new ObservableCollection<Product>();
             }
-     
+
             public int CategoryId { get; set; }
             public string Name { get; set; }
 
@@ -154,19 +154,19 @@ Let's go ahead and generate the database.
 -   **View -&gt; Server Explorer**
 -   Right click on **Data Connections -&gt; Add Connection…**
 -   If you haven’t connected to a database from Server Explorer before you’ll need to select Microsoft SQL Server as the data source
-    
+
     ![ChangeDataSource](../ef6/media/changedatasource.png)
-    
+
 -   Connect to either LocalDb (**(localdb)\\v11.0**) or SQL Express (**.\\SQLEXPRESS**), depending on which one you have installed, and enter **Products** as the database name
-    
+
     ![AddConnectionLocalDb](../ef6/media/addconnectionlocaldb.png)
-    
+
     ![AddConnectionExpress](../ef6/media/addconnectionexpress.png)
-    
+
 -   Select **OK** and you will be asked if you want to create a new database, select **Yes**
-    
+
     ![CreateDatabase](../ef6/media/createdatabase.png)
-    
+
 -   The new database will now appear in Server Explorer, right-click on it and select **New Query**
 -   Copy the following SQL into the new query, then right-click on the query and select **Execute**
 
@@ -198,15 +198,15 @@ We’re going to make use of Entity Framework Designer, which is included as par
 -   Enter **ProductModel** as the name and click **OK**
 -   This launches the **Entity Data Model Wizard**
 -   Select **Generate from Database** and click **Next**
-    
+
     ![ChooseModelContents](../ef6/media/choosemodelcontents.png)
-    
+
 -   Select the connection to the database you created in the first section, enter **ProductContext** as the name of the connection string and click **Next**
-    
+
     ![ChooseYourConnection](../ef6/media/chooseyourconnection.png)
-    
+
 -   Click the checkbox next to ‘Tables’ to import all tables and click ‘Finish’
-    
+
     ![ChooseYourObjects](../ef6/media/chooseyourobjects.png)
 
  
@@ -227,9 +227,9 @@ EF generates code from your model using T4 templates. The templates shipped with
 
 -   Open the **Solution Explorer** and find **ProductModel.edmx** file
 -   Find the **ProductModel.tt** file which will be nested under the ProductModel.edmx file
-    
+
     ![WpfProductModelTemplate](../ef6/media/wpfproductmodeltemplate.png)
-    
+
 -   Double-click on the ProductModel.tt file to open it in the Visual Studio editor
 -   Find and replace the two occurrences of “**ICollection**” with “**ObservableCollection**”. These are located approximately at lines 296 and 484.
 -   Find and replace the first occurrence of “**HashSet**” with “**ObservableCollection**”. This occurrence is located approximately at line 50. **Do not** replace the second occurrence of HashSet found later in the code.
@@ -264,16 +264,16 @@ Add the classes that are defined in the model as data sources for this WPF appli
 -   In the Choose a Data Source Typewindow, select **Object** and click **Next**
 -   In the Select the Data Objects dialog, unfold the **WPFwithEFSample** two times and select **Category**  
     *There is no need to select the **Product** data source, because we will get to it through the **Product**’s property on the **Category** data source*  
-    
+
     ![SelectDataObjects](../ef6/media/selectdataobjects.png)
-    
+
 -   Click **Finish.**
 -   The Data Sources window is opened next to the MainWindow.xaml window
     *If the Data Sources window is not showing up, select **View -&gt; Other Windows-&gt; Data Sources***
 -   Press the pin icon, so the Data Sources window does not auto hide. You may need to hit the refresh button if the window was already visible.
-    
+
     ![DataSources](../ef6/media/datasources.png)
-    
+
 -   Select the **Category **data source and drag it on the form.
 
 The following happened when we dragged this source:
@@ -283,17 +283,17 @@ The following happened when we dragged this source:
 
 ```
     \<Window.Resources>
-        \<CollectionViewSource x:Key="categoryViewSource" 
+        \<CollectionViewSource x:Key="categoryViewSource"
                                 d:DesignSource="{d:DesignInstance {x:Type local:Category}, CreateList=True}"/>
     \</Window.Resources>
     <Grid DataContext="{StaticResource categoryViewSource}">
-        \<DataGrid x:Name="categoryDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                    ItemsSource="{Binding}" Margin="13,13,43,191" 
+        \<DataGrid x:Name="categoryDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
+                    ItemsSource="{Binding}" Margin="13,13,43,191"
                     RowDetailsVisibilityMode="VisibleWhenSelected">
             \<DataGrid.Columns>
-                \<DataGridTextColumn x:Name="categoryIdColumn" Binding="{Binding CategoryId}" 
+                \<DataGridTextColumn x:Name="categoryIdColumn" Binding="{Binding CategoryId}"
                                     Header="Category Id" Width="SizeToHeader"/>
-                \<DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" 
+                \<DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}"
                                     Header="Name" Width="SizeToHeader"/>
             \</DataGrid.Columns>
         </DataGrid>
@@ -324,9 +324,9 @@ It's time to add some event handlers to the main window.
 
 -   In the XAML window, click on the **&lt;Window** element, this selects the main window
 -   In the **Properties** window choose **Events** at the top right, then double-click the text box to right of the **Loaded** label
-    
+
     ![MainWindowProperties](../ef6/media/mainwindowproperties.png)
-    
+
 -   Also add the **Click** event for the **Save** button by double-clicking the Save button in the designer. 
 
 This brings you to the code behind for the form, we'll now edit the code to use the ProductContext to perform data access. Update the code for the MainWindow as shown below.
@@ -353,34 +353,34 @@ The code declares a long-running instance of **ProductContext**. The **ProductCo
                 System.Windows.Data.CollectionViewSource categoryViewSource =
                     ((System.Windows.Data.CollectionViewSource)(this.FindResource("categoryViewSource")));
 
-                // Load is an extension method on IQueryable, 
+                // Load is an extension method on IQueryable,
                 // defined in the System.Data.Entity namespace.
-                // This method enumerates the results of the query, 
+                // This method enumerates the results of the query,
                 // similar to ToList but without creating a list.
-                // When used with Linq to Entities this method 
+                // When used with Linq to Entities this method
                 // creates entity objects and adds them to the context.
                 _context.Categories.Load();
 
-                // After the data is loaded call the DbSet<T>.Local property 
+                // After the data is loaded call the DbSet<T>.Local property
                 // to use the DbSet<T> as a binding source.
                 categoryViewSource.Source = _context.Categories.Local;
             }
 
             private void buttonSave_Click(object sender, RoutedEventArgs e)
             {
-                // When you delete an object from the related entities collection 
-                // (in this case Products), the Entity Framework doesn’t mark 
+                // When you delete an object from the related entities collection
+                // (in this case Products), the Entity Framework doesn’t mark
                 // these child entities as deleted.
                 // Instead, it removes the relationship between the parent and the child
                 // by setting the parent reference to null.
-                // So we manually have to delete the products 
+                // So we manually have to delete the products
                 // that have a Category reference set to null.
 
-                // The following code uses LINQ to Objects 
+                // The following code uses LINQ to Objects
                 // against the Local collection of Products.
                 // The ToList call is required because otherwise the collection will be modified
                 // by the Remove call while it is being enumerated.
-                // In most other situations you can use LINQ to Objects directly 
+                // In most other situations you can use LINQ to Objects directly
                 // against the Local property without using ToList first.
                 foreach (var product in _context.Products.Local.ToList())
                 {
@@ -416,9 +416,9 @@ The code declares a long-running instance of **ProductContext**. The **ProductCo
     **Note:** SQL Express will always get precedence if it is installed, even if you are using Visual Studio 2012*
 -   Enter a category name in the top grid and product names in the bottom grid
     *Do not enter anything in ID columns, because the primary key is generated by the database*
-    
+
     ![Screen1](../ef6/media/screen1.png)
-    
+
 -   Press the **Save** button to save the data to the database
 
 After the call to DbContext’s **SaveChanges**(), the IDs are populated with the database generated values. Because we called **Refresh**() after **SaveChanges**() the **DataGrid** controls are updated with the new values as well.

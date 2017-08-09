@@ -1,11 +1,11 @@
 ---
-title: "Entity Framework 4.1 Validation | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework 4.1 Validation - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 99d7221b-3817-4aa3-ab54-f328c06316fa
 caps.latest.revision: 3
@@ -24,7 +24,7 @@ Entity Framework provides a great variety of validation features that can feed t
 I’ll demonstrate the validations with a simple pair of classes: Blog and Post.
 
 ```
-    public class Blog
+      public class Blog
       {
           public int Id { get; set; }
           public string Title { get; set; }
@@ -83,7 +83,7 @@ You can use code first’s fluent API instead of annotations to get the same cli
 Fluent API configurations are applied as code first is building the model from the classes. You can inject the configurations by overriding the DbContext class’ OnModelCreating  method. Here is a configuration specifying that the BloggerName property can be no longer than 10 characters.
 
 ```
-    public class BlogContext : DbContext
+      public class BlogContext : DbContext
       {
           public DbSet<Blog> Blogs { get; set; }
           public DbSet<Post> Posts { get; set; }
@@ -134,7 +134,7 @@ Configurations such as Required and MaxLength perform validaton on a single fiel
 In the following example, the Blog class has been extended to implement IValidatableObject and then provide a rule that the Title and BloggerName cannot match.
 
 ```
-    public class Blog : IValidatableObject
+     public class Blog : IValidatableObject
      {
          public int Id { get; set; }
          [Required]
@@ -186,11 +186,11 @@ DbEntityValidationResult houses a DbEntityEntry and an ICollection of DbValidati
             }
         }
 
-        if (result.ValidationErrors.Count > 0) 
+        if (result.ValidationErrors.Count > 0)
         {
             return result;
         }
-        else 
+        else
         {
          return base.ValidateEntity(entityEntry, items);
         }

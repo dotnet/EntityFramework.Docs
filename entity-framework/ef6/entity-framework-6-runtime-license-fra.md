@@ -2,12 +2,12 @@
 title: "Entity Framework 6 Runtime License (FRA) | Microsoft Docs"
 ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: b7066d9f-8b86-4218-9463-57665f391aaa
 caps.latest.revision: 3

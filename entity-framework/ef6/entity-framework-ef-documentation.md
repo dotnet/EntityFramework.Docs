@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework (EF) Documentation | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework (EF) Documentation - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
 caps.latest.revision: 3
@@ -32,7 +32,7 @@ Use **Code First** to create a code based model that maps to an existing databas
 
 [I am creating a new database](../ef6/entity-framework-model-first.md)  
 Use **Model First** to define your model using boxes and lines and then generate a database.
- 	 
+
 [I need to access an existing database](../ef6/entity-framework-database-first.md)  
 Use **Database First** to create a boxes and lines model that maps to an existing database.
 

@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Table-Valued Functions (TVFs) (EF5 onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Table-Valued Functions (TVFs) (EF5 onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: f019c97b-87b0-4e93-98f4-2c539f77b2dc
 caps.latest.revision: 3
@@ -52,18 +52,18 @@ You will need to have Visual Studio 2012, Ultimate, Premium, Professional, or We
 -   In T-SQL Editor, paste the following TVF definition
 
 ```
-CREATE FUNCTION [dbo].[GetStudentGradesForCourse] 
- 
-(@CourseID INT) 
- 
-RETURNS TABLE 
- 
-RETURN 
-    SELECT [EnrollmentID], 
-           [CourseID], 
-           [StudentID], 
-           [Grade] 
-    FROM   [dbo].[StudentGrade] 
+CREATE FUNCTION [dbo].[GetStudentGradesForCourse]
+
+(@CourseID INT)
+
+RETURNS TABLE
+
+RETURN
+    SELECT [EnrollmentID],
+           [CourseID],
+           [StudentID],
+           [Grade]
+    FROM   [dbo].[StudentGrade]
     WHERE  CourseID = @CourseID
 ```
 
@@ -99,28 +99,28 @@ Open the file where the Main method is defined. Add the following code into the 
 The following code demonstrates how to build a query that uses a Table-valued Function. The query projects the results into an anonymous type that contains the related Course title and related students with a grade greater or equal to 3.5.
 
 ```
-using (var context = new SchoolEntities()) 
-{ 
-    var CourseID = 4022; 
-    var Grade = 3.5M; 
-     
-    // Return all the best students in the Microeconomics class. 
-    var students = from s in context.GetStudentGradesForCourse(CourseID) 
-                            where s.Grade >= Grade 
-                            select new 
-                            { 
-                                s.Person, 
-                                s.Course.Title 
-                            }; 
- 
-    foreach (var result in students) 
-    { 
-        Console.WriteLine( 
-            "Couse: {0}, Student: {1} {2}", 
+using (var context = new SchoolEntities())
+{
+    var CourseID = 4022;
+    var Grade = 3.5M;
+
+    // Return all the best students in the Microeconomics class.
+    var students = from s in context.GetStudentGradesForCourse(CourseID)
+                            where s.Grade >= Grade
+                            select new
+                            {
+                                s.Person,
+                                s.Course.Title
+                            };
+
+    foreach (var result in students)
+    {
+        Console.WriteLine(
+            "Couse: {0}, Student: {1} {2}",
             result.Title,  
             result.Person.FirstName,  
-            result.Person.LastName); 
-    } 
+            result.Person.LastName);
+    }
 }
 ```
 

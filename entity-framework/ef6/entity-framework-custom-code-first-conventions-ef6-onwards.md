@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Custom Code First Conventions (EF6 onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Custom Code First Conventions (EF6 onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: dd2bdbd9-ae9e-470a-aeb8-d0ba160499b7
 caps.latest.revision: 3
@@ -42,10 +42,10 @@ Let's start by defining a simple model that we can use with our conventions. Add
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ProductContext>());
         }
-     
+
         public DbSet<Product> Products { get; set; }
     }
-     
+
     public class Product
     {
         public int Key { get; set; }
@@ -231,7 +231,7 @@ One of the things that Type level conventions can be really useful for is changi
     private string GetTableName(Type type)
     {
         var result = Regex.Replace(type.Name, ".[A-Z]", m => m.Value[0] + "_" + m.Value[1]);
-        
+
         return result.ToLower();
     }
 ```

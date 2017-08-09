@@ -1,13 +1,13 @@
 ---
-title: "Past Versions of Entity Framework | Microsoft Docs"
-ms.custom: ""
+title: "Past Versions of Entity Framework - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 1060bb99-765f-4f32-aaeb-d6635d3dbd3e
 caps.latest.revision: 4
@@ -143,7 +143,7 @@ Install-Package EntityFramework -Version 4.1.10715
 
 You’ll notice that the strange ‘10715’ patch version of the package. We used to use date based patch versions before we decided to adopt the \<http://semver.org> standard for semantic versioning. Think of this version as patch 1 (i.e. 4.1.1). There is also 4.1.10331 version of the package which should really have been 4.1. In addition there is a 4.1.10311 version which should have been 4.1.0-rc (the ‘rc’ stands for ‘release candidate’).
 
-Here is a useful list of content we put together for the 4.1 release. Much of it still applies to later releases of the Entity Framework:
+Here is a useful list of content we put together for the 4.1 release. Much of it still applies to later releases of Entity Framework:
 
 -   [EF 4.1.1 Release Post](http://blogs.msdn.com/b/adonet/archive/2011/07/25/ef-4-1-update-1-released.aspx)
 -   [EF 4.1 Release Post](http://blogs.msdn.com/b/adonet/archive/2011/04/11/ef-4-1-released.aspx)
@@ -172,9 +172,9 @@ Here are some useful links to get you started:
 
 -   [Entity Framework 3.5 MSDN Content](https://msdn.microsoft.com/library/bb399572(v=vs.90).aspx)
 -   [.NET Framework 3.5 Enhancements Training Kit](https://www.microsoft.com/download/en/details.aspx?displaylang=en&id=13772)
--   [Introducing the Entity Framework (200 Level)](https://msdn.microsoft.com/data/bb399567)
--   [Achieve Flexible Data Modeling with the Entity Framework (300 level)](https://msdn.microsoft.com/magazine/cc700331.aspx)
+-   [Introducing Entity Framework(200 Level)](https://msdn.microsoft.com/data/bb399567)
+-   [Achieve Flexible Data Modeling with Entity Framework(300 level)](https://msdn.microsoft.com/magazine/cc700331.aspx)
 -   Training
     -   [Visual Studio 2008: ADO.NET 3.5](https://www.microsoft.com/learning/en/us/course.aspx?ID=6464A&locale=en-us) (2 days)
-    -   [Implementing the Entity Framework in ADO.NET 3.5 Applications](https://www.microsoftelearning.com/eLearning/courseDetail.aspx?courseId=92817&tab=overview) (2 hours)
+    -   [Implementing Entity Frameworkin ADO.NET 3.5 Applications](https://www.microsoftelearning.com/eLearning/courseDetail.aspx?courseId=92817&tab=overview) (2 hours)
     -   [Visual Studio 2008 ADO.NET 3.5](https://www.microsoftelearning.com/eLearning/offerDetail.aspx?offerPriceId=220335) (20 hours)

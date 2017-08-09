@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework CSDL Specification | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework CSDL Specification - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: c54255f4-253f-49eb-bec8-ad7927ac2fa3
 caps.latest.revision: 3
@@ -17,9 +17,9 @@ Conceptual schema definition language (CSDL) is an XML-based language that descr
 
 CSDL is the Entity Framework's implementation of the Entity Data Model.
 
-In an Entity Framework application, conceptual model metadata is loaded from a .csdl file (written in CSDL) into an instance of the System.Data.Metadata.Edm.EdmItemCollection and is accessible by using methods in the System.Data.Metadata.Edm.MetadataWorkspace class. The Entity Framework uses conceptual model metadata to translate queries against the conceptual model to data source-specific commands.
+In an Entity Framework application, conceptual model metadata is loaded from a .csdl file (written in CSDL) into an instance of the System.Data.Metadata.Edm.EdmItemCollection and is accessible by using methods in the System.Data.Metadata.Edm.MetadataWorkspace class. Entity Framework uses conceptual model metadata to translate queries against the conceptual model to data source-specific commands.
 
-The EF Designer stores conceptual model information in an .edmx file at design time. At build time, the EF Designer uses information in an .edmx file to create the .csdl file that is needed by the Entity Framework at runtime.
+The EF Designer stores conceptual model information in an .edmx file at design time. At build time, the EF Designer uses information in an .edmx file to create the .csdl file that is needed by Entity Framework at runtime.
 
 Versions of CSDL are differentiated by XML namespaces.
 
@@ -64,32 +64,32 @@ The table below describes the attributes that can be applied to the **Associatio
 The following example shows an **Association** element that defines the **CustomerOrders** association when foreign keys have not been exposed on the **Customer** and **Order** entity types. The **Multiplicity** values for each **End** of the association indicate that many **Orders** can be associated with a **Customer**, but only one **Customer** can be associated with an **Order**. Additionally, the **OnDelete** element indicates that all **Orders** that are related to a particular **Customer** and have been loaded into the ObjectContext will be deleted if the **Customer** is deleted.
 
 ```
- <Association Name="CustomerOrders"> 
-   <End Type="ExampleModel.Customer" Role="Customer" Multiplicity="1" > 
-         <OnDelete Action="Cascade" /> 
-   </End> 
-   <End Type="ExampleModel.Order" Role="Order" Multiplicity="*" /> 
- </Association> 
+ <Association Name="CustomerOrders">
+   <End Type="ExampleModel.Customer" Role="Customer" Multiplicity="1" >
+         <OnDelete Action="Cascade" />
+   </End>
+   <End Type="ExampleModel.Order" Role="Order" Multiplicity="*" />
+ </Association>
 ```
  
 
 The following example shows an **Association** element that defines the **CustomerOrders** association when foreign keys have been exposed on the **Customer** and **Order** entity types. With foreign keys exposed, the relationship between the entities is managed with a **ReferentialConstraint** element. A corresponding AssociationSetMapping element is not necessary to map this association to the data source.
 
 ```
- <Association Name="CustomerOrders"> 
-   <End Type="ExampleModel.Customer" Role="Customer" Multiplicity="1" > 
-         <OnDelete Action="Cascade" /> 
-   </End> 
-   <End Type="ExampleModel.Order" Role="Order" Multiplicity="*" /> 
-   <ReferentialConstraint> 
-        <Principal Role="Customer"> 
-            <PropertyRef Name="Id" /> 
-        </Principal> 
-        <Dependent Role="Order"> 
-             <PropertyRef Name="CustomerId" /> 
-         </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="CustomerOrders">
+   <End Type="ExampleModel.Customer" Role="Customer" Multiplicity="1" >
+         <OnDelete Action="Cascade" />
+   </End>
+   <End Type="ExampleModel.Order" Role="Order" Multiplicity="*" />
+   <ReferentialConstraint>
+        <Principal Role="Customer">
+            <PropertyRef Name="Id" />
+        </Principal>
+        <Dependent Role="Order">
+             <PropertyRef Name="CustomerId" />
+         </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
  
 
@@ -127,19 +127,19 @@ The table below describes the attributes that can be applied to the **Associatio
 The following example shows an **EntityContainer** element with two **AssociationSet** elements:
 
 ```
- <EntityContainer Name="BooksContainer" > 
-   <EntitySet Name="Books" EntityType="BooksModel.Book" /> 
-   <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" /> 
-   <EntitySet Name="Authors" EntityType="BooksModel.Author" /> 
-   <AssociationSet Name="PublishedBy" Association="BooksModel.PublishedBy"> 
-     <End Role="Book" EntitySet="Books" /> 
-     <End Role="Publisher" EntitySet="Publishers" /> 
-   </AssociationSet> 
-   <AssociationSet Name="WrittenBy" Association="BooksModel.WrittenBy"> 
-     <End Role="Book" EntitySet="Books" /> 
-     <End Role="Author" EntitySet="Authors" /> 
-   </AssociationSet> 
- </EntityContainer> 
+ <EntityContainer Name="BooksContainer" >
+   <EntitySet Name="Books" EntityType="BooksModel.Book" />
+   <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" />
+   <EntitySet Name="Authors" EntityType="BooksModel.Author" />
+   <AssociationSet Name="PublishedBy" Association="BooksModel.PublishedBy">
+     <End Role="Book" EntitySet="Books" />
+     <End Role="Publisher" EntitySet="Publishers" />
+   </AssociationSet>
+   <AssociationSet Name="WrittenBy" Association="BooksModel.WrittenBy">
+     <End Role="Book" EntitySet="Books" />
+     <End Role="Author" EntitySet="Authors" />
+   </AssociationSet>
+ </EntityContainer>
 ```
  
 
@@ -186,56 +186,56 @@ The following table describes the attributes that can be applied to the **Collec
 The following example shows a model-defined function that that uses a **CollectionType** element to specify that the function returns a collection of **Person** entity types (as specified with the **ElementType** attribute).
 
 ```
- <Function Name="LastNamesAfter"> 
-        <Parameter Name="someString" Type="Edm.String"/> 
-        <ReturnType> 
-             <CollectionType  ElementType="SchoolModel.Person"/> 
-        </ReturnType> 
-        <DefiningExpression> 
-             SELECT VALUE p 
-             FROM SchoolEntities.People AS p 
-             WHERE p.LastName >= someString 
-        </DefiningExpression> 
- </Function> 
+ <Function Name="LastNamesAfter">
+        <Parameter Name="someString" Type="Edm.String"/>
+        <ReturnType>
+             <CollectionType  ElementType="SchoolModel.Person"/>
+        </ReturnType>
+        <DefiningExpression>
+             SELECT VALUE p
+             FROM SchoolEntities.People AS p
+             WHERE p.LastName >= someString
+        </DefiningExpression>
+ </Function>
 ```
  
 
 The following example shows a model-defined function that uses a **CollectionType** element to specify that the function returns a collection of rows (as specified in the **RowType** element).
 
 ```
- <Function Name="LastNamesAfter"> 
-   <Parameter Name="someString" Type="Edm.String" /> 
-   <ReturnType> 
-    <CollectionType> 
-      <RowType> 
-        <Property Name="FirstName" Type="Edm.String" Nullable="false" /> 
-        <Property Name="LastName" Type="Edm.String" Nullable="false" /> 
-      </RowType> 
-    </CollectionType> 
-   </ReturnType> 
-   <DefiningExpression> 
-             SELECT VALUE ROW(p.FirstName, p.LastName) 
-             FROM SchoolEntities.People AS p 
-             WHERE p.LastName &gt;= somestring 
-   </DefiningExpression> 
- </Function> 
+ <Function Name="LastNamesAfter">
+   <Parameter Name="someString" Type="Edm.String" />
+   <ReturnType>
+    <CollectionType>
+      <RowType>
+        <Property Name="FirstName" Type="Edm.String" Nullable="false" />
+        <Property Name="LastName" Type="Edm.String" Nullable="false" />
+      </RowType>
+    </CollectionType>
+   </ReturnType>
+   <DefiningExpression>
+             SELECT VALUE ROW(p.FirstName, p.LastName)
+             FROM SchoolEntities.People AS p
+             WHERE p.LastName &gt;= somestring
+   </DefiningExpression>
+ </Function>
 ```
  
 
 The following example shows a model-defined function that uses the **CollectionType** element to specify that the function accepts as a parameter a collection of **Department** entity types.
 
 ```
- <Function Name="GetAvgBudget"> 
-      <Parameter Name="Departments"> 
-          <CollectionType> 
-             <TypeRef Type="SchoolModel.Department"/> 
-          </CollectionType> 
-           </Parameter> 
-       <ReturnType Type="Collection(Edm.Decimal)"/> 
-       <DefiningExpression> 
-             SELECT VALUE AVG(d.Budget) FROM Departments AS d 
-       </DefiningExpression> 
- </Function> 
+ <Function Name="GetAvgBudget">
+      <Parameter Name="Departments">
+          <CollectionType>
+             <TypeRef Type="SchoolModel.Department"/>
+          </CollectionType>
+           </Parameter>
+       <ReturnType Type="Collection(Edm.Decimal)"/>
+       <DefiningExpression>
+             SELECT VALUE AVG(d.Budget) FROM Departments AS d
+       </DefiningExpression>
+ </Function>
 ```
  
 
@@ -274,29 +274,29 @@ The table below describes the attributes that can be applied to the **ComplexTyp
 The following example shows a complex type, **Address**, with the **EdmSimpleType** properties **StreetAddress**, **City**, **StateOrProvince**, **Country**, and **PostalCode**.
 
 ```
- <ComplexType Name="Address" > 
-   <Property Type="String" Name="StreetAddress" Nullable="false" /> 
-   <Property Type="String" Name="City" Nullable="false" /> 
-   <Property Type="String" Name="StateOrProvince" Nullable="false" /> 
-   <Property Type="String" Name="Country" Nullable="false" /> 
-   <Property Type="String" Name="PostalCode" Nullable="false" /> 
- </ComplexType> 
+ <ComplexType Name="Address" >
+   <Property Type="String" Name="StreetAddress" Nullable="false" />
+   <Property Type="String" Name="City" Nullable="false" />
+   <Property Type="String" Name="StateOrProvince" Nullable="false" />
+   <Property Type="String" Name="Country" Nullable="false" />
+   <Property Type="String" Name="PostalCode" Nullable="false" />
+ </ComplexType>
 ```
  
 
 To define the complex type **Address** (above) as a property of an entity type, you must declare the property type in the entity type definition. The following example shows the **Address** property as a complex type on an entity type (**Publisher**):
 
 ```
- <EntityType Name="Publisher"> 
-       <Key> 
-         <PropertyRef Name="Id" /> 
-       </Key> 
-       <Property Type="Int32" Name="Id" Nullable="false" /> 
-       <Property Type="String" Name="Name" Nullable="false" /> 
-       <Property Type="BooksModel.Address" Name="Address" Nullable="false" /> 
-       <NavigationProperty Name="Books" Relationship="BooksModel.PublishedBy" 
-                           FromRole="Publisher" ToRole="Book" /> 
-     </EntityType> 
+ <EntityType Name="Publisher">
+       <Key>
+         <PropertyRef Name="Id" />
+       </Key>
+       <Property Type="Int32" Name="Id" Nullable="false" />
+       <Property Type="String" Name="Name" Nullable="false" />
+       <Property Type="BooksModel.Address" Name="Address" Nullable="false" />
+       <NavigationProperty Name="Books" Relationship="BooksModel.PublishedBy"
+                           FromRole="Publisher" ToRole="Book" />
+     </EntityType>
 ```
  
 
@@ -306,7 +306,7 @@ To define the complex type **Address** (above) as a property of an entity type, 
 
 The **DefiningExpression** element in conceptual schema definition language (CSDL) contains an Entity SQL expression that defines a function in the conceptual model.  
 
-> **Note**: For validation purposes, a **DefiningExpression** element can contain arbitrary content. However, the Entity Framework will throw an exception at runtime if a **DefiningExpression** element does not contain valid Entity SQL.
+> **Note**: For validation purposes, a **DefiningExpression** element can contain arbitrary content. However, Entity Framework will throw an exception at runtime if a **DefiningExpression** element does not contain valid Entity SQL.
 
  
 
@@ -319,12 +319,12 @@ Any number of annotation attributes (custom XML attributes) may be applied to th
 The following example uses a **DefiningExpression** element to define a function that returns the number of years since a book was published. The content of the **DefiningExpression** element is written in Entity SQL.
 
 ```
- <Function Name="GetYearsInPrint" ReturnType="Edm.Int32" > 
-       <Parameter Name="book" Type="BooksModel.Book" /> 
-       <DefiningExpression> 
-         Year(CurrentDateTime()) - Year(cast(book.PublishedDate as DateTime)) 
-       </DefiningExpression> 
-     </Function> 
+ <Function Name="GetYearsInPrint" ReturnType="Edm.Int32" >
+       <Parameter Name="book" Type="BooksModel.Book" />
+       <DefiningExpression>
+         Year(CurrentDateTime()) - Year(cast(book.PublishedDate as DateTime))
+       </DefiningExpression>
+     </Function>
 ```
  
 
@@ -358,19 +358,19 @@ The table below describes the attributes that can be applied to the **Dependent*
 The following example shows a **ReferentialConstraint** element being used as part of the definition of the **PublishedBy** association. The **PublisherId** property of the **Book** entity type makes up the dependent end of the referential constraint.
 
 ```
- <Association Name="PublishedBy"> 
-   <End Type="BooksModel.Book" Role="Book" Multiplicity="*" > 
-   </End> 
-   <End Type="BooksModel.Publisher" Role="Publisher" Multiplicity="1" /> 
-   <ReferentialConstraint> 
-     <Principal Role="Publisher"> 
-       <PropertyRef Name="Id" /> 
-     </Principal> 
-     <Dependent Role="Book"> 
-       <PropertyRef Name="PublisherId" /> 
-     </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="PublishedBy">
+   <End Type="BooksModel.Book" Role="Book" Multiplicity="*" >
+   </End>
+   <End Type="BooksModel.Publisher" Role="Publisher" Multiplicity="1" />
+   <ReferentialConstraint>
+     <Principal Role="Publisher">
+       <PropertyRef Name="Id" />
+     </Principal>
+     <Dependent Role="Book">
+       <PropertyRef Name="PublisherId" />
+     </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
  
 
@@ -395,17 +395,17 @@ Any number of annotation attributes (custom XML attributes) may be applied to th
 The following example shows the **Documentation** element as a child element of an EntityType element. If the snippet below were in the CSDL content of an .edmx file, the contents of the **Summary** and **LongDescription** elements would appear in the Visual Studio **Properties** window when you click on the `Customer` entity type.
 
 ```
- <EntityType Name="Customer"> 
-    <Documentation> 
-      <Summary>Summary here.</Summary> 
-      <LongDescription>Long description here.</LongDescription> 
-    </Documentation> 
-    <Key> 
-      <PropertyRef Name="CustomerId" /> 
-    </Key> 
-    <Property Type="Int32" Name="CustomerId" Nullable="false" /> 
-    <Property Type="String" Name="Name" Nullable="false" /> 
- </EntityType> 
+ <EntityType Name="Customer">
+    <Documentation>
+      <Summary>Summary here.</Summary>
+      <LongDescription>Long description here.</LongDescription>
+    </Documentation>
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Type="Int32" Name="CustomerId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" />
+ </EntityType>
 ```
  
 
@@ -446,12 +446,12 @@ The following table describes the attributes that can be applied to the **End** 
 The following example shows an **Association** element that defines the **CustomerOrders** association. The **Multiplicity** values for each **End** of the association indicate that many **Orders** can be associated with a **Customer**, but only one **Customer** can be associated with an **Order**. Additionally, the **OnDelete** element indicates that all **Orders** that are related to a particular **Customer** and that have been loaded into the ObjectContext will be deleted if the **Customer** is deleted.
 
 ```
- <Association Name="CustomerOrders"> 
-   <End Type="ExampleModel.Customer" Role="Customer" Multiplicity="1" /> 
-   <End Type="ExampleModel.Order" Role="Order" Multiplicity="*"> 
-         <OnDelete Action="Cascade" /> 
-   </End> 
- </Association> 
+ <Association Name="CustomerOrders">
+   <End Type="ExampleModel.Customer" Role="Customer" Multiplicity="1" />
+   <End Type="ExampleModel.Order" Role="Order" Multiplicity="*">
+         <OnDelete Action="Cascade" />
+   </End>
+ </Association>
 ```
  
 
@@ -488,19 +488,19 @@ The following table describes the attributes that can be applied to the **End** 
 The following example shows an **EntityContainer** element with two **AssociationSet** elements, each with two **End** elements:
 
 ```
- <EntityContainer Name="BooksContainer" > 
-   <EntitySet Name="Books" EntityType="BooksModel.Book" /> 
-   <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" /> 
-   <EntitySet Name="Authors" EntityType="BooksModel.Author" /> 
-   <AssociationSet Name="PublishedBy" Association="BooksModel.PublishedBy"> 
-     <End Role="Book" EntitySet="Books" /> 
-     <End Role="Publisher" EntitySet="Publishers" /> 
-   </AssociationSet> 
-   <AssociationSet Name="WrittenBy" Association="BooksModel.WrittenBy"> 
-     <End Role="Book" EntitySet="Books" /> 
-     <End Role="Author" EntitySet="Authors" /> 
-   </AssociationSet> 
- </EntityContainer> 
+ <EntityContainer Name="BooksContainer" >
+   <EntitySet Name="Books" EntityType="BooksModel.Book" />
+   <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" />
+   <EntitySet Name="Authors" EntityType="BooksModel.Author" />
+   <AssociationSet Name="PublishedBy" Association="BooksModel.PublishedBy">
+     <End Role="Book" EntitySet="Books" />
+     <End Role="Publisher" EntitySet="Publishers" />
+   </AssociationSet>
+   <AssociationSet Name="WrittenBy" Association="BooksModel.WrittenBy">
+     <End Role="Book" EntitySet="Books" />
+     <End Role="Author" EntitySet="Authors" />
+   </AssociationSet>
+ </EntityContainer>
 ```
  
 
@@ -541,19 +541,19 @@ The table below describes the attributes that can be applied to the **Using** el
 The following example shows an **EntityContainer** element that defines three entity sets and two association sets.
 
 ```
- <EntityContainer Name="BooksContainer" > 
-   <EntitySet Name="Books" EntityType="BooksModel.Book" /> 
-   <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" /> 
-   <EntitySet Name="Authors" EntityType="BooksModel.Author" /> 
-   <AssociationSet Name="PublishedBy" Association="BooksModel.PublishedBy"> 
-     <End Role="Book" EntitySet="Books" /> 
-     <End Role="Publisher" EntitySet="Publishers" /> 
-   </AssociationSet> 
-   <AssociationSet Name="WrittenBy" Association="BooksModel.WrittenBy"> 
-     <End Role="Book" EntitySet="Books" /> 
-     <End Role="Author" EntitySet="Authors" /> 
-   </AssociationSet> 
- </EntityContainer> 
+ <EntityContainer Name="BooksContainer" >
+   <EntitySet Name="Books" EntityType="BooksModel.Book" />
+   <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" />
+   <EntitySet Name="Authors" EntityType="BooksModel.Author" />
+   <AssociationSet Name="PublishedBy" Association="BooksModel.PublishedBy">
+     <End Role="Book" EntitySet="Books" />
+     <End Role="Publisher" EntitySet="Publishers" />
+   </AssociationSet>
+   <AssociationSet Name="WrittenBy" Association="BooksModel.WrittenBy">
+     <End Role="Book" EntitySet="Books" />
+     <End Role="Author" EntitySet="Authors" />
+   </AssociationSet>
+ </EntityContainer>
 ```
  
 
@@ -594,39 +594,39 @@ The table below describes the attributes that can be applied to the **EntitySet*
 The following example shows an **EntityContainer** element with three **EntitySet** elements:
 
 ```
- <EntityContainer Name="BooksContainer" > 
-   <EntitySet Name="Books" EntityType="BooksModel.Book" /> 
-   <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" /> 
-   <EntitySet Name="Authors" EntityType="BooksModel.Author" /> 
-   <AssociationSet Name="PublishedBy" Association="BooksModel.PublishedBy"> 
-     <End Role="Book" EntitySet="Books" /> 
-     <End Role="Publisher" EntitySet="Publishers" /> 
-   </AssociationSet> 
-   <AssociationSet Name="WrittenBy" Association="BooksModel.WrittenBy"> 
-     <End Role="Book" EntitySet="Books" /> 
-     <End Role="Author" EntitySet="Authors" /> 
-   </AssociationSet> 
- </EntityContainer> 
+ <EntityContainer Name="BooksContainer" >
+   <EntitySet Name="Books" EntityType="BooksModel.Book" />
+   <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" />
+   <EntitySet Name="Authors" EntityType="BooksModel.Author" />
+   <AssociationSet Name="PublishedBy" Association="BooksModel.PublishedBy">
+     <End Role="Book" EntitySet="Books" />
+     <End Role="Publisher" EntitySet="Publishers" />
+   </AssociationSet>
+   <AssociationSet Name="WrittenBy" Association="BooksModel.WrittenBy">
+     <End Role="Book" EntitySet="Books" />
+     <End Role="Author" EntitySet="Authors" />
+   </AssociationSet>
+ </EntityContainer>
 ```
  
 
 It is possible to define multiple entity sets per type (MEST). The following example defines an entity container with two entity sets for the **Book** entity type:
 
 ```
- <EntityContainer Name="BooksContainer" > 
-   <EntitySet Name="Books" EntityType="BooksModel.Book" /> 
-   <EntitySet Name="FictionBooks" EntityType="BooksModel.Book" /> 
-   <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" /> 
-   <EntitySet Name="Authors" EntityType="BooksModel.Author" /> 
-   <AssociationSet Name="PublishedBy" Association="BooksModel.PublishedBy"> 
-     <End Role="Book" EntitySet="Books" /> 
-     <End Role="Publisher" EntitySet="Publishers" /> 
-   </AssociationSet> 
-   <AssociationSet Name="BookAuthor" Association="BooksModel.BookAuthor"> 
-     <End Role="Book" EntitySet="Books" /> 
-     <End Role="Author" EntitySet="Authors" /> 
-   </AssociationSet> 
- </EntityContainer> 
+ <EntityContainer Name="BooksContainer" >
+   <EntitySet Name="Books" EntityType="BooksModel.Book" />
+   <EntitySet Name="FictionBooks" EntityType="BooksModel.Book" />
+   <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" />
+   <EntitySet Name="Authors" EntityType="BooksModel.Author" />
+   <AssociationSet Name="PublishedBy" Association="BooksModel.PublishedBy">
+     <End Role="Book" EntitySet="Books" />
+     <End Role="Publisher" EntitySet="Publishers" />
+   </AssociationSet>
+   <AssociationSet Name="BookAuthor" Association="BooksModel.BookAuthor">
+     <End Role="Book" EntitySet="Books" />
+     <End Role="Author" EntitySet="Authors" />
+   </AssociationSet>
+ </EntityContainer>
 ```
  
 
@@ -675,18 +675,18 @@ The table below describes the attributes that can be applied to the **EntityType
 The following example shows an **EntityType** element with three **Property** elements and two **NavigationProperty** elements:
 
 ```
- <EntityType Name="Book"> 
-   <Key> 
-     <PropertyRef Name="ISBN" /> 
-   </Key> 
-   <Property Type="String" Name="ISBN" Nullable="false" /> 
-   <Property Type="String" Name="Title" Nullable="false" /> 
-   <Property Type="Decimal" Name="Revision" Nullable="false" Precision="29" Scale="29" /> 
-   <NavigationProperty Name="Publisher" Relationship="BooksModel.PublishedBy" 
-                       FromRole="Book" ToRole="Publisher" /> 
-   <NavigationProperty Name="Authors" Relationship="BooksModel.WrittenBy" 
-                       FromRole="Book" ToRole="Author" /> 
- </EntityType> 
+ <EntityType Name="Book">
+   <Key>
+     <PropertyRef Name="ISBN" />
+   </Key>
+   <Property Type="String" Name="ISBN" Nullable="false" />
+   <Property Type="String" Name="Title" Nullable="false" />
+   <Property Type="Decimal" Name="Revision" Nullable="false" Precision="29" Scale="29" />
+   <NavigationProperty Name="Publisher" Relationship="BooksModel.PublishedBy"
+                       FromRole="Book" ToRole="Publisher" />
+   <NavigationProperty Name="Authors" Relationship="BooksModel.WrittenBy"
+                       FromRole="Book" ToRole="Author" />
+ </EntityType>
 ```
  
 
@@ -723,11 +723,11 @@ The table below describes the attributes that can be applied to the **EnumType**
 The following example shows an **EnumType** element with three **Member** elements:
 
 ```
- \<EnumType Name="Color" IsFlags=”false” UnderlyingTyp=”Edm.Byte”> 
-   <Member Name="Red" /> 
-   <Member Name="Green" /> 
-   <Member Name="Blue" /> 
- </EntityType> 
+ \<EnumType Name="Color" IsFlags=”false” UnderlyingTyp=”Edm.Byte”>
+   <Member Name="Red" />
+   <Member Name="Green" />
+   <Member Name="Blue" />
+ </EntityType>
 ```
  
 
@@ -767,12 +767,12 @@ The table below describes the attributes that can be applied to the **Function**
 The following example uses a **Function** element to define a function that returns the number of years since an instructor was hired.
 
 ```
- <Function Name="YearsSince" ReturnType="Edm.Int32"> 
-   <Parameter Name="date" Type="Edm.DateTime" /> 
-   <DefiningExpression> 
-     Year(CurrentDateTime()) - Year(date) 
-   </DefiningExpression> 
- </Function> 
+ <Function Name="YearsSince" ReturnType="Edm.Int32">
+   <Parameter Name="date" Type="Edm.DateTime" />
+   <DefiningExpression>
+     Year(CurrentDateTime()) - Year(date)
+   </DefiningExpression>
+ </Function>
 ```
  
 
@@ -815,11 +815,11 @@ The table below describes the attributes that can be applied to the **FunctionIm
 The following example shows a **FunctionImport** element that accepts one parameter and returns a collection of entity types:
 
 ```
- <FunctionImport Name="GetStudentGrades" 
-                 EntitySet="StudentGrade" 
-                 ReturnType="Collection(SchoolModel.StudentGrade)"> 
-        <Parameter Name="StudentID" Mode="In" Type="Int32" /> 
- </FunctionImport> 
+ <FunctionImport Name="GetStudentGrades"
+                 EntitySet="StudentGrade"
+                 ReturnType="Collection(SchoolModel.StudentGrade)">
+        <Parameter Name="StudentID" Mode="In" Type="Int32" />
+ </FunctionImport>
 ```
  
 
@@ -843,18 +843,18 @@ Any number of annotation attributes (custom XML attributes) may be applied to th
 The example below defines an entity type named **Book**. The entity key is defined by referencing the **ISBN** property of the entity type.
 
 ```
- <EntityType Name="Book"> 
-   <Key> 
-     <PropertyRef Name="ISBN" /> 
-   </Key> 
-   <Property Type="String" Name="ISBN" Nullable="false" /> 
-   <Property Type="String" Name="Title" Nullable="false" /> 
-   <Property Type="Decimal" Name="Revision" Nullable="false" Precision="29" Scale="29" /> 
-   <NavigationProperty Name="Publisher" Relationship="BooksModel.PublishedBy" 
-                       FromRole="Book" ToRole="Publisher" /> 
-   <NavigationProperty Name="Authors" Relationship="BooksModel.WrittenBy" 
-                       FromRole="Book" ToRole="Author" /> 
- </EntityType> 
+ <EntityType Name="Book">
+   <Key>
+     <PropertyRef Name="ISBN" />
+   </Key>
+   <Property Type="String" Name="ISBN" Nullable="false" />
+   <Property Type="String" Name="Title" Nullable="false" />
+   <Property Type="Decimal" Name="Revision" Nullable="false" Precision="29" Scale="29" />
+   <NavigationProperty Name="Publisher" Relationship="BooksModel.PublishedBy"
+                       FromRole="Book" ToRole="Publisher" />
+   <NavigationProperty Name="Authors" Relationship="BooksModel.WrittenBy"
+                       FromRole="Book" ToRole="Author" />
+ </EntityType>
 ```
  
 
@@ -863,16 +863,16 @@ The **ISBN** property is a good choice for the entity key because an Internation
 The following example shows an entity type (**Author**) that has an entity key that consists of two properties, **Name** and **Address**.
 
 ```
- <EntityType Name="Author"> 
-   <Key> 
-     <PropertyRef Name="Name" /> 
-     <PropertyRef Name="Address" /> 
-   </Key> 
-   <Property Type="String" Name="Name" Nullable="false" /> 
-   <Property Type="String" Name="Address" Nullable="false" /> 
-   <NavigationProperty Name="Books" Relationship="BooksModel.WrittenBy" 
-                       FromRole="Author" ToRole="Book" /> 
- </EntityType> 
+ <EntityType Name="Author">
+   <Key>
+     <PropertyRef Name="Name" />
+     <PropertyRef Name="Address" />
+   </Key>
+   <Property Type="String" Name="Name" Nullable="false" />
+   <Property Type="String" Name="Address" Nullable="false" />
+   <NavigationProperty Name="Books" Relationship="BooksModel.WrittenBy"
+                       FromRole="Author" ToRole="Book" />
+ </EntityType>
 ```
  
 
@@ -904,11 +904,11 @@ The table below describes the attributes that can be applied to the **FunctionIm
 The following example shows an **EnumType** element with three **Member** elements:
 
 ```
- <EnumType Name="Color"> 
-   \<Member Name="Red" Value=”1”/> 
-   \<Member Name="Green" Value=”3” /> 
-   \<Member Name="Blue" Value=”5”/> 
- </EntityType> 
+ <EnumType Name="Color">
+   \<Member Name="Red" Value=”1”/>
+   \<Member Name="Green" Value=”3” />
+   \<Member Name="Blue" Value=”5”/>
+ </EntityType>
 ```
  
 
@@ -949,18 +949,18 @@ The table below describes the attributes that can be applied to the **Navigation
 The following example defines an entity type (**Book**) with two navigation properties (**PublishedBy** and **WrittenBy**):
 
 ```
- <EntityType Name="Book"> 
-   <Key> 
-     <PropertyRef Name="ISBN" /> 
-   </Key> 
-   <Property Type="String" Name="ISBN" Nullable="false" /> 
-   <Property Type="String" Name="Title" Nullable="false" /> 
-   <Property Type="Decimal" Name="Revision" Nullable="false" Precision="29" Scale="29" /> 
-   <NavigationProperty Name="Publisher" Relationship="BooksModel.PublishedBy" 
-                       FromRole="Book" ToRole="Publisher" /> 
-   <NavigationProperty Name="Authors" Relationship="BooksModel.WrittenBy" 
-                       FromRole="Book" ToRole="Author" /> 
- </EntityType> 
+ <EntityType Name="Book">
+   <Key>
+     <PropertyRef Name="ISBN" />
+   </Key>
+   <Property Type="String" Name="ISBN" Nullable="false" />
+   <Property Type="String" Name="Title" Nullable="false" />
+   <Property Type="Decimal" Name="Revision" Nullable="false" Precision="29" Scale="29" />
+   <NavigationProperty Name="Publisher" Relationship="BooksModel.PublishedBy"
+                       FromRole="Book" ToRole="Publisher" />
+   <NavigationProperty Name="Authors" Relationship="BooksModel.WrittenBy"
+                       FromRole="Book" ToRole="Author" />
+ </EntityType>
 ```
  
 
@@ -998,12 +998,12 @@ The table below describes the attributes that can be applied to the **OnDelete**
 The following example shows an **Association** element that defines the **CustomerOrders** association. The **OnDelete** element indicates that all **Orders** that are related to a particular **Customer** and have been loaded into the ObjectContext will be deleted when the **Customer** is deleted.
 
 ```
- <Association Name="CustomerOrders"> 
-   <End Type="ExampleModel.Customer" Role="Customer" Multiplicity="1"> 
-         <OnDelete Action="Cascade" /> 
-   </End> 
-   <End Type="ExampleModel.Order" Role="Order" Multiplicity="*" /> 
- </Association> 
+ <Association Name="CustomerOrders">
+   <End Type="ExampleModel.Customer" Role="Customer" Multiplicity="1">
+         <OnDelete Action="Cascade" />
+   </End>
+   <End Type="ExampleModel.Order" Role="Order" Multiplicity="*" />
+ </Association>
 ```
  
 
@@ -1047,11 +1047,11 @@ The following table describes the attributes that can be applied to the **Parame
 The following example shows a **FunctionImport** element with one **Parameter** child element. The function accepts one input parameter and returns a collection of entity types.
 
 ```
- <FunctionImport Name="GetStudentGrades" 
-                 EntitySet="StudentGrade" 
-                 ReturnType="Collection(SchoolModel.StudentGrade)"> 
-        <Parameter Name="StudentID" Mode="In" Type="Int32" /> 
- </FunctionImport> 
+ <FunctionImport Name="GetStudentGrades"
+                 EntitySet="StudentGrade"
+                 ReturnType="Collection(SchoolModel.StudentGrade)">
+        <Parameter Name="StudentID" Mode="In" Type="Int32" />
+ </FunctionImport>
 ```
  
 
@@ -1105,12 +1105,12 @@ The following table describes the attributes that can be applied to the **Parame
 The following example shows a **Function** element that uses one **Parameter** child element to define a function parameter.
 
 ```
- <Function Name="GetYearsEmployed" ReturnType="Edm.Int32"> 
- <Parameter Name="Instructor" Type="SchoolModel.Person" /> 
-   <DefiningExpression> 
-   Year(CurrentDateTime()) - Year(cast(Instructor.HireDate as DateTime)) 
-   </DefiningExpression> 
- </Function> 
+ <Function Name="GetYearsEmployed" ReturnType="Edm.Int32">
+ <Parameter Name="Instructor" Type="SchoolModel.Person" />
+   <DefiningExpression>
+   Year(CurrentDateTime()) - Year(cast(Instructor.HireDate as DateTime))
+   </DefiningExpression>
+ </Function>
 ``` 
 
  
@@ -1143,19 +1143,19 @@ The table below describes the attributes that can be applied to the **Principal*
 The following example shows a **ReferentialConstraint** element that is part of the definition of the **PublishedBy** association. The **Id** property of the **Publisher** entity type makes up the principal end of the referential constraint.
 
 ```
- <Association Name="PublishedBy"> 
-   <End Type="BooksModel.Book" Role="Book" Multiplicity="*" > 
-   </End> 
-   <End Type="BooksModel.Publisher" Role="Publisher" Multiplicity="1" /> 
-   <ReferentialConstraint> 
-     <Principal Role="Publisher"> 
-       <PropertyRef Name="Id" /> 
-     </Principal> 
-     <Dependent Role="Book"> 
-       <PropertyRef Name="PublisherId" /> 
-     </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="PublishedBy">
+   <End Type="BooksModel.Book" Role="Book" Multiplicity="*" >
+   </End>
+   <End Type="BooksModel.Publisher" Role="Publisher" Multiplicity="1" />
+   <ReferentialConstraint>
+     <Principal Role="Publisher">
+       <PropertyRef Name="Id" />
+     </Principal>
+     <Dependent Role="Book">
+       <PropertyRef Name="PublisherId" />
+     </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
  
 
@@ -1210,31 +1210,31 @@ The following table describes the attributes that can be applied to the **Proper
 The following example shows an **EntityType** element with three **Property** elements:
 
 ```
- <EntityType Name="Book"> 
-   <Key> 
-     <PropertyRef Name="ISBN" /> 
-   </Key> 
-   <Property Type="String" Name="ISBN" Nullable="false" /> 
-   <Property Type="String" Name="Title" Nullable="false" /> 
-   <Property Type="Decimal" Name="Revision" Nullable="false" Precision="29" Scale="29" /> 
-   <NavigationProperty Name="Publisher" Relationship="BooksModel.PublishedBy" 
-                       FromRole="Book" ToRole="Publisher" /> 
-   <NavigationProperty Name="Authors" Relationship="BooksModel.WrittenBy" 
-                       FromRole="Book" ToRole="Author" /> 
- </EntityType> 
+ <EntityType Name="Book">
+   <Key>
+     <PropertyRef Name="ISBN" />
+   </Key>
+   <Property Type="String" Name="ISBN" Nullable="false" />
+   <Property Type="String" Name="Title" Nullable="false" />
+   <Property Type="Decimal" Name="Revision" Nullable="false" Precision="29" Scale="29" />
+   <NavigationProperty Name="Publisher" Relationship="BooksModel.PublishedBy"
+                       FromRole="Book" ToRole="Publisher" />
+   <NavigationProperty Name="Authors" Relationship="BooksModel.WrittenBy"
+                       FromRole="Book" ToRole="Author" />
+ </EntityType>
 ```
  
 
 The following example shows a **ComplexType** element with five **Property** elements:
 
 ```
- <ComplexType Name="Address" > 
-   <Property Type="String" Name="StreetAddress" Nullable="false" /> 
-   <Property Type="String" Name="City" Nullable="false" /> 
-   <Property Type="String" Name="StateOrProvince" Nullable="false" /> 
-   <Property Type="String" Name="Country" Nullable="false" /> 
-   <Property Type="String" Name="PostalCode" Nullable="false" /> 
- </ComplexType> 
+ <ComplexType Name="Address" >
+   <Property Type="String" Name="StreetAddress" Nullable="false" />
+   <Property Type="String" Name="City" Nullable="false" />
+   <Property Type="String" Name="StateOrProvince" Nullable="false" />
+   <Property Type="String" Name="Country" Nullable="false" />
+   <Property Type="String" Name="PostalCode" Nullable="false" />
+ </ComplexType>
 ```
  
 
@@ -1283,22 +1283,22 @@ The following table describes the attributes that can be applied to the **Proper
 The following example shows **Property** elements used to define the shape of the return type of a model-defined function.
 
 ```
- <Function Name="LastNamesAfter"> 
-   <Parameter Name="someString" Type="Edm.String" /> 
-   <ReturnType> 
-    <CollectionType> 
-      <RowType> 
-        <Property Name="FirstName" Type="Edm.String" Nullable="false" /> 
-        <Property Name="LastName" Type="Edm.String" Nullable="false" /> 
-      </RowType> 
-    </CollectionType> 
-   </ReturnType> 
-   <DefiningExpression> 
-             SELECT VALUE ROW(p.FirstName, p.LastName) 
-             FROM SchoolEntities.People AS p 
-             WHERE p.LastName &gt;= somestring 
-   </DefiningExpression> 
- </Function> 
+ <Function Name="LastNamesAfter">
+   <Parameter Name="someString" Type="Edm.String" />
+   <ReturnType>
+    <CollectionType>
+      <RowType>
+        <Property Name="FirstName" Type="Edm.String" Nullable="false" />
+        <Property Name="LastName" Type="Edm.String" Nullable="false" />
+      </RowType>
+    </CollectionType>
+   </ReturnType>
+   <DefiningExpression>
+             SELECT VALUE ROW(p.FirstName, p.LastName)
+             FROM SchoolEntities.People AS p
+             WHERE p.LastName &gt;= somestring
+   </DefiningExpression>
+ </Function>
 ```
  
 
@@ -1336,37 +1336,37 @@ The table below describes the attributes that can be applied to the **PropertyRe
 The example below defines an entity type (**Book**). The entity key is defined by referencing the **ISBN** property of the entity type.
 
 ```
- <EntityType Name="Book"> 
-   <Key> 
-     <PropertyRef Name="ISBN" /> 
-   </Key> 
-   <Property Type="String" Name="ISBN" Nullable="false" /> 
-   <Property Type="String" Name="Title" Nullable="false" /> 
-   <Property Type="Decimal" Name="Revision" Nullable="false" Precision="29" Scale="29" /> 
-   <NavigationProperty Name="Publisher" Relationship="BooksModel.PublishedBy" 
-                       FromRole="Book" ToRole="Publisher" /> 
-   <NavigationProperty Name="Authors" Relationship="BooksModel.WrittenBy" 
-                       FromRole="Book" ToRole="Author" /> 
- </EntityType> 
+ <EntityType Name="Book">
+   <Key>
+     <PropertyRef Name="ISBN" />
+   </Key>
+   <Property Type="String" Name="ISBN" Nullable="false" />
+   <Property Type="String" Name="Title" Nullable="false" />
+   <Property Type="Decimal" Name="Revision" Nullable="false" Precision="29" Scale="29" />
+   <NavigationProperty Name="Publisher" Relationship="BooksModel.PublishedBy"
+                       FromRole="Book" ToRole="Publisher" />
+   <NavigationProperty Name="Authors" Relationship="BooksModel.WrittenBy"
+                       FromRole="Book" ToRole="Author" />
+ </EntityType>
 ```
  
 
 In the next example, two **PropertyRef** elements are used to indicate that two properties (**Id** and **PublisherId**) are the principal and dependent ends of a referential constraint.
 
 ```
- <Association Name="PublishedBy"> 
-   <End Type="BooksModel.Book" Role="Book" Multiplicity="*" > 
-   </End> 
-   <End Type="BooksModel.Publisher" Role="Publisher" Multiplicity="1" /> 
-   <ReferentialConstraint> 
-     <Principal Role="Publisher"> 
-       <PropertyRef Name="Id" /> 
-     </Principal> 
-     <Dependent Role="Book"> 
-       <PropertyRef Name="PublisherId" /> 
-     </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="PublishedBy">
+   <End Type="BooksModel.Book" Role="Book" Multiplicity="*" >
+   </End>
+   <End Type="BooksModel.Publisher" Role="Publisher" Multiplicity="1" />
+   <ReferentialConstraint>
+     <Principal Role="Publisher">
+       <PropertyRef Name="Id" />
+     </Principal>
+     <Dependent Role="Book">
+       <PropertyRef Name="PublisherId" />
+     </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
  
 
@@ -1406,29 +1406,29 @@ The table below describes the attributes that can be applied to the **ReferenceT
 The following example shows the **ReferenceType** element used as a child of a **Parameter** element in a model-defined function that accepts a reference to a **Person** entity type:
 
 ```
- <Function Name="GetYearsEmployed" ReturnType="Edm.Int32"> 
-   <Parameter Name="instructor"> 
-     <ReferenceType Type="SchoolModel.Person" /> 
-   </Parameter> 
-   <DefiningExpression> 
-   Year(CurrentDateTime()) - Year(cast(instructor.HireDate as DateTime)) 
-   </DefiningExpression> 
- </Function> 
+ <Function Name="GetYearsEmployed" ReturnType="Edm.Int32">
+   <Parameter Name="instructor">
+     <ReferenceType Type="SchoolModel.Person" />
+   </Parameter>
+   <DefiningExpression>
+   Year(CurrentDateTime()) - Year(cast(instructor.HireDate as DateTime))
+   </DefiningExpression>
+ </Function>
 ```
  
 
 The following example shows the **ReferenceType** element used as a child of a **ReturnType** (Function) element in a model-defined function that returns a reference to a **Person** entity type:
 
 ```
- <Function Name="GetPersonReference"> 
-     <Parameter Name="p" Type="SchoolModel.Person" /> 
-     <ReturnType> 
-         <ReferenceType Type="SchoolModel.Person" /> 
-     </ReturnType> 
-     <DefiningExpression> 
-           REF(p) 
-     </DefiningExpression> 
- </Function> 
+ <Function Name="GetPersonReference">
+     <Parameter Name="p" Type="SchoolModel.Person" />
+     <ReturnType>
+         <ReferenceType Type="SchoolModel.Person" />
+     </ReturnType>
+     <DefiningExpression>
+           REF(p)
+     </DefiningExpression>
+ </Function>
 ```
  
 
@@ -1458,19 +1458,19 @@ The **ReferentialConstraint** element can have any number of annotation attribut
 The following example shows a **ReferentialConstraint** element being used as part of the definition of the **PublishedBy** association.
 
 ```
- <Association Name="PublishedBy"> 
-   <End Type="BooksModel.Book" Role="Book" Multiplicity="*" > 
-   </End> 
-   <End Type="BooksModel.Publisher" Role="Publisher" Multiplicity="1" /> 
-   <ReferentialConstraint> 
-     <Principal Role="Publisher"> 
-       <PropertyRef Name="Id" /> 
-     </Principal> 
-     <Dependent Role="Book"> 
-       <PropertyRef Name="PublisherId" /> 
-     </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="PublishedBy">
+   <End Type="BooksModel.Book" Role="Book" Multiplicity="*" >
+   </End>
+   <End Type="BooksModel.Publisher" Role="Publisher" Multiplicity="1" />
+   <ReferentialConstraint>
+     <Principal Role="Publisher">
+       <PropertyRef Name="Id" />
+     </Principal>
+     <Dependent Role="Book">
+       <PropertyRef Name="PublisherId" />
+     </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
  
 
@@ -1511,13 +1511,13 @@ The following table describes the attributes that can be applied to the **Return
 The following example uses a **Function** element to define a function that returns the number of years a book has been in print. Note that the return type is specified by the **Type** attribute of a **ReturnType** (Function) element.
 
 ```
- <Function Name="GetYearsInPrint"> 
-   \<ReturnType Type=="Edm.Int32"> 
-   <Parameter Name="book" Type="BooksModel.Book" /> 
-   <DefiningExpression> 
-    Year(CurrentDateTime()) - Year(cast(book.PublishedDate as DateTime)) 
-   </DefiningExpression> 
- </Function> 
+ <Function Name="GetYearsInPrint">
+   \<ReturnType Type=="Edm.Int32">
+   <Parameter Name="book" Type="BooksModel.Book" />
+   <DefiningExpression>
+    Year(CurrentDateTime()) - Year(cast(book.PublishedDate as DateTime))
+   </DefiningExpression>
+ </Function>
 ```
  
 
@@ -1551,9 +1551,9 @@ The following table describes the attributes that can be applied to the **Return
 The following example uses a **FunctionImport** that returns books and publishers. Note that the function returns two result sets and therefore two **ReturnType** (FunctionImport) elements are specified.
 
 ```
- <FunctionImport Name="GetBooksAndPublishers"> 
-   \<ReturnType Type=="Collection(BooksModel.Book )" EntitySet=”Books”> 
-   \<ReturnType Type=="Collection(BooksModel.Publisher)" EntitySet=”Publishers”> 
+ <FunctionImport Name="GetBooksAndPublishers">
+   \<ReturnType Type=="Collection(BooksModel.Book )" EntitySet=”Books”>
+   \<ReturnType Type=="Collection(BooksModel.Publisher)" EntitySet=”Publishers”>
  </FunctionImport>
 ```
  
@@ -1584,22 +1584,22 @@ Any number of annotation attributes (custom XML attributes) may be applied to th
 The following example shows a model-defined function that uses a **CollectionType** element to specify that the function returns a collection of rows (as specified in the **RowType** element).
 
 ```
- <Function Name="LastNamesAfter"> 
-   <Parameter Name="someString" Type="Edm.String" /> 
-   <ReturnType> 
-    <CollectionType> 
-      <RowType> 
-        <Property Name="FirstName" Type="Edm.String" Nullable="false" /> 
-        <Property Name="LastName" Type="Edm.String" Nullable="false" /> 
-      </RowType> 
-    </CollectionType> 
-   </ReturnType> 
-   <DefiningExpression> 
-             SELECT VALUE ROW(p.FirstName, p.LastName) 
-             FROM SchoolEntities.People AS p 
-             WHERE p.LastName &gt;= somestring 
-   </DefiningExpression> 
- </Function> 
+ <Function Name="LastNamesAfter">
+   <Parameter Name="someString" Type="Edm.String" />
+   <ReturnType>
+    <CollectionType>
+      <RowType>
+        <Property Name="FirstName" Type="Edm.String" Nullable="false" />
+        <Property Name="LastName" Type="Edm.String" Nullable="false" />
+      </RowType>
+    </CollectionType>
+   </ReturnType>
+   <DefiningExpression>
+             SELECT VALUE ROW(p.FirstName, p.LastName)
+             FROM SchoolEntities.People AS p
+             WHERE p.LastName &gt;= somestring
+   </DefiningExpression>
+ </Function>
 ```
  
 
@@ -1649,60 +1649,60 @@ The table below describes the attributes can be applied to the **Schema** elemen
 The following example shows a **Schema** element that contains an **EntityContainer** element, two **EntityType** elements, and one **Association** element.
 
 ```
- \<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" 
-      xmlns:cg="http://schemas.microsoft.com/ado/2009/11/codegeneration" 
-      xmlns:store="http://schemas.microsoft.com/ado/2009/11/edm/EntityStoreSchemaGenerator" 
-       Namespace="ExampleModel" Alias="Self"> 
-         <EntityContainer Name="ExampleModelContainer"> 
-           <EntitySet Name="Customers" 
-                      EntityType="ExampleModel.Customer" /> 
-           <EntitySet Name="Orders" EntityType="ExampleModel.Order" /> 
-           <AssociationSet 
-                       Name="CustomerOrder" 
-                       Association="ExampleModel.CustomerOrders"> 
-             <End Role="Customer" EntitySet="Customers" /> 
-             <End Role="Order" EntitySet="Orders" /> 
-           </AssociationSet> 
-         </EntityContainer> 
-         <EntityType Name="Customer"> 
-           <Key> 
-             <PropertyRef Name="CustomerId" /> 
-           </Key> 
-           <Property Type="Int32" Name="CustomerId" Nullable="false" /> 
-           <Property Type="String" Name="Name" Nullable="false" /> 
-           <NavigationProperty 
-                    Name="Orders" 
-                    Relationship="ExampleModel.CustomerOrders" 
-                    FromRole="Customer" ToRole="Order" /> 
-         </EntityType> 
-         <EntityType Name="Order"> 
-           <Key> 
-             <PropertyRef Name="OrderId" /> 
-           </Key> 
-           <Property Type="Int32" Name="OrderId" Nullable="false" /> 
-           <Property Type="Int32" Name="ProductId" Nullable="false" /> 
-           <Property Type="Int32" Name="Quantity" Nullable="false" /> 
-           <NavigationProperty 
-                    Name="Customer" 
-                    Relationship="ExampleModel.CustomerOrders" 
-                    FromRole="Order" ToRole="Customer" /> 
-           <Property Type="Int32" Name="CustomerId" Nullable="false" /> 
-         </EntityType> 
-         <Association Name="CustomerOrders"> 
-           <End Type="ExampleModel.Customer" 
-                Role="Customer" Multiplicity="1" /> 
-           <End Type="ExampleModel.Order" 
-                Role="Order" Multiplicity="*" /> 
-           <ReferentialConstraint> 
-             <Principal Role="Customer"> 
-               <PropertyRef Name="CustomerId" /> 
-             </Principal> 
-             <Dependent Role="Order"> 
-               <PropertyRef Name="CustomerId" /> 
-             </Dependent> 
-           </ReferentialConstraint> 
-         </Association> 
-       </Schema> 
+ \<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm"
+      xmlns:cg="http://schemas.microsoft.com/ado/2009/11/codegeneration"
+      xmlns:store="http://schemas.microsoft.com/ado/2009/11/edm/EntityStoreSchemaGenerator"
+       Namespace="ExampleModel" Alias="Self">
+         <EntityContainer Name="ExampleModelContainer">
+           <EntitySet Name="Customers"
+                      EntityType="ExampleModel.Customer" />
+           <EntitySet Name="Orders" EntityType="ExampleModel.Order" />
+           <AssociationSet
+                       Name="CustomerOrder"
+                       Association="ExampleModel.CustomerOrders">
+             <End Role="Customer" EntitySet="Customers" />
+             <End Role="Order" EntitySet="Orders" />
+           </AssociationSet>
+         </EntityContainer>
+         <EntityType Name="Customer">
+           <Key>
+             <PropertyRef Name="CustomerId" />
+           </Key>
+           <Property Type="Int32" Name="CustomerId" Nullable="false" />
+           <Property Type="String" Name="Name" Nullable="false" />
+           <NavigationProperty
+                    Name="Orders"
+                    Relationship="ExampleModel.CustomerOrders"
+                    FromRole="Customer" ToRole="Order" />
+         </EntityType>
+         <EntityType Name="Order">
+           <Key>
+             <PropertyRef Name="OrderId" />
+           </Key>
+           <Property Type="Int32" Name="OrderId" Nullable="false" />
+           <Property Type="Int32" Name="ProductId" Nullable="false" />
+           <Property Type="Int32" Name="Quantity" Nullable="false" />
+           <NavigationProperty
+                    Name="Customer"
+                    Relationship="ExampleModel.CustomerOrders"
+                    FromRole="Order" ToRole="Customer" />
+           <Property Type="Int32" Name="CustomerId" Nullable="false" />
+         </EntityType>
+         <Association Name="CustomerOrders">
+           <End Type="ExampleModel.Customer"
+                Role="Customer" Multiplicity="1" />
+           <End Type="ExampleModel.Order"
+                Role="Order" Multiplicity="*" />
+           <ReferentialConstraint>
+             <Principal Role="Customer">
+               <PropertyRef Name="CustomerId" />
+             </Principal>
+             <Dependent Role="Order">
+               <PropertyRef Name="CustomerId" />
+             </Dependent>
+           </ReferentialConstraint>
+         </Association>
+       </Schema>
 ```
  
 
@@ -1745,17 +1745,17 @@ The following table describes the attributes that can be applied to the **TypeRe
 The following example shows a model-defined function that uses the **TypeRef** element (as a child of a **CollectionType** element) to specify that the function accepts a collection of **Department** entity types.
 
 ```
- <Function Name="GetAvgBudget"> 
-      <Parameter Name="Departments"> 
-          <CollectionType> 
-             <TypeRef Type="SchoolModel.Department"/> 
-          </CollectionType> 
-           </Parameter> 
-       <ReturnType Type="Collection(Edm.Decimal)"/> 
-       <DefiningExpression> 
-             SELECT VALUE AVG(d.Budget) FROM Departments AS d 
-       </DefiningExpression> 
- </Function> 
+ <Function Name="GetAvgBudget">
+      <Parameter Name="Departments">
+          <CollectionType>
+             <TypeRef Type="SchoolModel.Department"/>
+          </CollectionType>
+           </Parameter>
+       <ReturnType Type="Collection(Edm.Decimal)"/>
+       <DefiningExpression>
+             SELECT VALUE AVG(d.Budget) FROM Departments AS d
+       </DefiningExpression>
+ </Function>
 ```
  
 
@@ -1794,27 +1794,27 @@ The table below describes the attributes can be applied to the **Using** element
 The following example demonstrates the **Using** element being used to import a namespace that is defined elsewhere. Note that the namespace for the **Schema** element shown is `BooksModel`. The `Address` property on the `Publisher`**EntityType** is a complex type that is defined in the `ExtendedBooksModel` namespace (imported with the **Using** element).
 
 ```
- \<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" 
-           xmlns:cg="http://schemas.microsoft.com/ado/2009/11/codegeneration" 
-           xmlns:store="http://schemas.microsoft.com/ado/2009/11/edm/EntityStoreSchemaGenerator" 
-           Namespace="BooksModel" Alias="Self"> 
-   
-     <Using Namespace="BooksModel.Extended" Alias="BMExt" /> 
-     
- <EntityContainer Name="BooksContainer" > 
-       <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" /> 
-     </EntityContainer> 
-     
- <EntityType Name="Publisher"> 
-       <Key> 
-         <PropertyRef Name="Id" /> 
-       </Key> 
-       <Property Type="Int32" Name="Id" Nullable="false" /> 
-       <Property Type="String" Name="Name" Nullable="false" /> 
-       <Property Type="BMExt.Address" Name="Address" Nullable="false" /> 
-     </EntityType> 
-   
- </Schema> 
+ \<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm"
+           xmlns:cg="http://schemas.microsoft.com/ado/2009/11/codegeneration"
+           xmlns:store="http://schemas.microsoft.com/ado/2009/11/edm/EntityStoreSchemaGenerator"
+           Namespace="BooksModel" Alias="Self">
+
+     <Using Namespace="BooksModel.Extended" Alias="BMExt" />
+
+ <EntityContainer Name="BooksContainer" >
+       <EntitySet Name="Publishers" EntityType="BooksModel.Publisher" />
+     </EntityContainer>
+
+ <EntityType Name="Publisher">
+       <Key>
+         <PropertyRef Name="Id" />
+       </Key>
+       <Property Type="Int32" Name="Id" Nullable="false" />
+       <Property Type="String" Name="Name" Nullable="false" />
+       <Property Type="BMExt.Address" Name="Address" Nullable="false" />
+     </EntityType>
+
+ </Schema>
 ```
  
 
@@ -1835,55 +1835,55 @@ Annotation attributes can be used to provide extra metadata about the elements i
 The following example shows an **EntityType** element with an annotation attribute (**CustomAttribute**). The example also shows an annotation element applied to the entity type element.
 
 ```
- \<Schema Namespace="SchoolModel" Alias="Self" 
-         xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" 
-         xmlns="http://schemas.microsoft.com/ado/2009/11/edm"> 
-   \<EntityContainer Name="SchoolEntities" annotation:LazyLoadingEnabled="true"> 
-     <EntitySet Name="People" EntityType="SchoolModel.Person" /> 
-   </EntityContainer> 
-   \<EntityType Name="Person" xmlns:p="http://CustomNamespace.com" 
-               p:CustomAttribute="Data here."> 
-     <Key> 
-       <PropertyRef Name="PersonID" /> 
-     </Key> 
-     \<Property Name="PersonID" Type="Int32" Nullable="false" 
-               annotation:StoreGeneratedPattern="Identity" /> 
-     <Property Name="LastName" Type="String" Nullable="false" 
-               MaxLength="50" Unicode="true" FixedLength="false" /> 
-     <Property Name="FirstName" Type="String" Nullable="false" 
-               MaxLength="50" Unicode="true" FixedLength="false" /> 
-     <Property Name="HireDate" Type="DateTime" /> 
-     <Property Name="EnrollmentDate" Type="DateTime" /> 
-     \<p:CustomElement> 
-       Custom metadata. 
-     \</p:CustomElement> 
-   </EntityType> 
- </Schema> 
+ \<Schema Namespace="SchoolModel" Alias="Self"
+         xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
+         xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+   \<EntityContainer Name="SchoolEntities" annotation:LazyLoadingEnabled="true">
+     <EntitySet Name="People" EntityType="SchoolModel.Person" />
+   </EntityContainer>
+   \<EntityType Name="Person" xmlns:p="http://CustomNamespace.com"
+               p:CustomAttribute="Data here.">
+     <Key>
+       <PropertyRef Name="PersonID" />
+     </Key>
+     \<Property Name="PersonID" Type="Int32" Nullable="false"
+               annotation:StoreGeneratedPattern="Identity" />
+     <Property Name="LastName" Type="String" Nullable="false"
+               MaxLength="50" Unicode="true" FixedLength="false" />
+     <Property Name="FirstName" Type="String" Nullable="false"
+               MaxLength="50" Unicode="true" FixedLength="false" />
+     <Property Name="HireDate" Type="DateTime" />
+     <Property Name="EnrollmentDate" Type="DateTime" />
+     \<p:CustomElement>
+       Custom metadata.
+     \</p:CustomElement>
+   </EntityType>
+ </Schema>
 ```
  
 
 The following code retrieves the metadata in the annotation attribute and writes it to the console:
 
 ```
- EdmItemCollection collection = new EdmItemCollection("School.csdl"); 
- MetadataWorkspace workspace = new MetadataWorkspace(); 
- workspace.RegisterItemCollection(collection); 
- EdmType contentType; 
- workspace.TryGetType("Person", "SchoolModel", DataSpace.CSpace, out contentType); 
- if (contentType.MetadataProperties.Contains("http://CustomNamespace.com:CustomAttribute")) 
- { 
-     MetadataProperty annotationProperty = 
-         contentType.MetadataProperties["http://CustomNamespace.com:CustomAttribute"]; 
-     object annotationValue = annotationProperty.Value; 
-     Console.WriteLine(annotationValue.ToString()); 
- } 
+ EdmItemCollection collection = new EdmItemCollection("School.csdl");
+ MetadataWorkspace workspace = new MetadataWorkspace();
+ workspace.RegisterItemCollection(collection);
+ EdmType contentType;
+ workspace.TryGetType("Person", "SchoolModel", DataSpace.CSpace, out contentType);
+ if (contentType.MetadataProperties.Contains("http://CustomNamespace.com:CustomAttribute"))
+ {
+     MetadataProperty annotationProperty =
+         contentType.MetadataProperties["http://CustomNamespace.com:CustomAttribute"];
+     object annotationValue = annotationProperty.Value;
+     Console.WriteLine(annotationValue.ToString());
+ }
 ```
  
 
 The code above assumes that the `School.csdl` file is in the project's output directory and that you have added the following `Imports` and `Using` statements to your project:
 
 ```
- using System.Data.Metadata.Edm; 
+ using System.Data.Metadata.Edm;
 ```
  
 
@@ -1905,55 +1905,55 @@ Annotation elements can be used to provide extra metadata about the elements in 
 The following example shows an **EntityType** element with an annotation element (**CustomElement**). The example also show an annotation attribute applied to the entity type element.
 
 ```
- \<Schema Namespace="SchoolModel" Alias="Self" 
-         xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" 
-         xmlns="http://schemas.microsoft.com/ado/2009/11/edm"> 
-   \<EntityContainer Name="SchoolEntities" annotation:LazyLoadingEnabled="true"> 
-     <EntitySet Name="People" EntityType="SchoolModel.Person" /> 
-   </EntityContainer> 
-   \<EntityType Name="Person" xmlns:p="http://CustomNamespace.com" 
-               p:CustomAttribute="Data here."> 
-     <Key> 
-       <PropertyRef Name="PersonID" /> 
-     </Key> 
-     \<Property Name="PersonID" Type="Int32" Nullable="false" 
-               annotation:StoreGeneratedPattern="Identity" /> 
-     <Property Name="LastName" Type="String" Nullable="false" 
-               MaxLength="50" Unicode="true" FixedLength="false" /> 
-     <Property Name="FirstName" Type="String" Nullable="false" 
-               MaxLength="50" Unicode="true" FixedLength="false" /> 
-     <Property Name="HireDate" Type="DateTime" /> 
-     <Property Name="EnrollmentDate" Type="DateTime" /> 
-     \<p:CustomElement> 
-       Custom metadata. 
-     \</p:CustomElement> 
-   </EntityType> 
- </Schema> 
+ \<Schema Namespace="SchoolModel" Alias="Self"
+         xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
+         xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+   \<EntityContainer Name="SchoolEntities" annotation:LazyLoadingEnabled="true">
+     <EntitySet Name="People" EntityType="SchoolModel.Person" />
+   </EntityContainer>
+   \<EntityType Name="Person" xmlns:p="http://CustomNamespace.com"
+               p:CustomAttribute="Data here.">
+     <Key>
+       <PropertyRef Name="PersonID" />
+     </Key>
+     \<Property Name="PersonID" Type="Int32" Nullable="false"
+               annotation:StoreGeneratedPattern="Identity" />
+     <Property Name="LastName" Type="String" Nullable="false"
+               MaxLength="50" Unicode="true" FixedLength="false" />
+     <Property Name="FirstName" Type="String" Nullable="false"
+               MaxLength="50" Unicode="true" FixedLength="false" />
+     <Property Name="HireDate" Type="DateTime" />
+     <Property Name="EnrollmentDate" Type="DateTime" />
+     \<p:CustomElement>
+       Custom metadata.
+     \</p:CustomElement>
+   </EntityType>
+ </Schema>
 ```
  
 
 The following code retrieves the metadata in the annotation element and writes it to the console:
 
 ```
- EdmItemCollection collection = new EdmItemCollection("School.csdl"); 
- MetadataWorkspace workspace = new MetadataWorkspace(); 
- workspace.RegisterItemCollection(collection); 
- EdmType contentType; 
- workspace.TryGetType("Person", "SchoolModel", DataSpace.CSpace, out contentType); 
- if (contentType.MetadataProperties.Contains("http://CustomNamespace.com:CustomElement")) 
- { 
-     MetadataProperty annotationProperty = 
-         contentType.MetadataProperties["http://CustomNamespace.com:CustomElement"]; 
-     object annotationValue = annotationProperty.Value; 
-     Console.WriteLine(annotationValue.ToString()); 
- } 
+ EdmItemCollection collection = new EdmItemCollection("School.csdl");
+ MetadataWorkspace workspace = new MetadataWorkspace();
+ workspace.RegisterItemCollection(collection);
+ EdmType contentType;
+ workspace.TryGetType("Person", "SchoolModel", DataSpace.CSpace, out contentType);
+ if (contentType.MetadataProperties.Contains("http://CustomNamespace.com:CustomElement"))
+ {
+     MetadataProperty annotationProperty =
+         contentType.MetadataProperties["http://CustomNamespace.com:CustomElement"];
+     object annotationValue = annotationProperty.Value;
+     Console.WriteLine(annotationValue.ToString());
+ }
 ```
  
 
 The code above assumes that the School.csdl file is in the project's output directory and that you have added the following `Imports` and `Using` statements to your project:
 
 ```
- using System.Data.Metadata.Edm; 
+ using System.Data.Metadata.Edm;
 ```
  
 
@@ -2044,21 +2044,21 @@ For information about data types in a conceptual model, see Conceptual Model Typ
 The following example shows facets applied to the properties of an entity type:
 
 ```
- <EntityType Name="Product"> 
-   <Key> 
-     <PropertyRef Name="ProductId" /> 
-   </Key> 
-   \<Property Type="Int32" 
-             Name="ProductId" Nullable="false" 
-             a:StoreGeneratedPattern="Identity" 
-    xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" /> 
-   <Property Type="String" 
-             Name="ProductName" 
-             Nullable="false" 
-             MaxLength="50" /> 
-   <Property Type="String" 
-             Name="Location" 
-             Nullable="true" 
-             MaxLength="25" /> 
- </EntityType> 
+ <EntityType Name="Product">
+   <Key>
+     <PropertyRef Name="ProductId" />
+   </Key>
+   \<Property Type="Int32"
+             Name="ProductId" Nullable="false"
+             a:StoreGeneratedPattern="Identity"
+    xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+   <Property Type="String"
+             Name="ProductName"
+             Nullable="false"
+             MaxLength="50" />
+   <Property Type="String"
+             Name="Location"
+             Nullable="true"
+             MaxLength="25" />
+ </EntityType>
 ```

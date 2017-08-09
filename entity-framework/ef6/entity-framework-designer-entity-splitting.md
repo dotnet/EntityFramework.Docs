@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Designer Entity Splitting | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Designer Entity Splitting - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: aa2dd48a-1f0e-49dd-863d-d6b4f5834832
 caps.latest.revision: 3
@@ -104,7 +104,7 @@ In this step we will update the **Person** entity type to combine data from the 
 -   Select the **Person **entity and press **Ctrl+V** keys.
 -   On the design surface, select the **PersonInfo** entity and press **Delete** button on the keyboard.
 -   Click **No** when asked if you want to remove the **PersonInfo** table from the model, we are about to map it to the **Person** entity.
-    
+
     ![DeleteTables](../ef6/media/deletetables.png)
 
 The next steps require the **Mapping Details** window. If you cannot see this window, right-click the design surface and select **Mapping Details**.
@@ -151,10 +151,10 @@ The **Person** entity type is now mapped to the **Person** and **PersonInfo
 The following T-SQL statements were executed against the database as a result of running this application. 
 
 -   The following two **INSERT** statements were executed as a result of executing context.SaveChanges(). They take the data from the **Person** entity and split it between the **Person** and **PersonInfo** tables.
-    
+
     ![Insert1](../ef6/media/insert1.png)
-    
+
     ![Insert2](../ef6/media/insert2.png)
 -   The following **SELECT** was executed as a result of enumerating the people in the database. It combines the data from the **Person** and **PersonInfo** table.
-    
+
     ![Select](../ef6/media/select.png)
