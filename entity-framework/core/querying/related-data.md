@@ -63,7 +63,8 @@ By default, EF Core will log a warning when include operators are ignored. See [
 
 ## Explicit loading
 
-> [!NOTE] This feature was introduced in EF Core 1.1.
+> [!NOTE] 
+> This feature was introduced in EF Core 1.1.
 
 You can explicitly load a navigation property via the `DbContext.Entry(...)` API.
 

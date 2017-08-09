@@ -69,7 +69,8 @@ If the entity already exists in the database, it will be deleted during *SaveCha
 
 You can combine multiple Add/Update/Remove operations into a single call to *SaveChanges*.
 
-> [!NOTE] For most database providers, *SaveChanges* is transactional. This means  all the operations will either succeed or fail and the operations will never be left partially applied.
+> [!NOTE] 
+> For most database providers, *SaveChanges* is transactional. This means  all the operations will either succeed or fail and the operations will never be left partially applied.
 
 <!-- [!code-csharp[Main](samples/core/Saving/Saving/Basics/Sample.cs)] -->
 ``` csharp

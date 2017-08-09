@@ -10,7 +10,8 @@ uid: core/extensions/linqkit
 
 # EF Core Tools & Extensions: LinqKit.Microsoft.EntityFrameworkCore
 
-> [!NOTE] This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
+> [!NOTE] 
+> This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 LinqKit.Microsoft.EntityFrameworkCore is a free set of extensions for LINQ to SQL and EntityFrameworkCore power users. With Include(...) and IDbAsync support.
 

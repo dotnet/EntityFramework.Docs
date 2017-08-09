@@ -12,7 +12,8 @@ uid: core/modeling/relational/default-values
 ---
 # Default Values
 
-> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] 
+> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 The default value of a column is the value that will be inserted if a new row is inserted but no value is specified for the column.
 

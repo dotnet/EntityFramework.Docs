@@ -12,7 +12,8 @@ uid: core/platforms/index
 
 We want EF Core to be available anywhere you can write .NET code, and we're still working towards that goal. The following table provides guidance for each platform where we want to enable EF Core.
 
-> [!NOTE] EF Core 2.0 targets and therefore requires .NET platforms that support [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard).
+> [!NOTE] 
+> EF Core 2.0 targets and therefore requires .NET platforms that support [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard).
 
 | Platform | Status | 1.x requires | 2.0 requires
 |-|-|-|-

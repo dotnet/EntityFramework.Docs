@@ -12,7 +12,8 @@ uid: core/modeling/backing-field
 ---
 # Backing Fields
 
-> [!NOTE] This feature is new in EF Core 1.1.
+> [!NOTE] 
+> This feature is new in EF Core 1.1.
 
 Backing fields allow EF to read and/or write to a field rather than a property.
 

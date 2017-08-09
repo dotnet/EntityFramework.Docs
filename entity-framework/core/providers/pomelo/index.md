@@ -14,7 +14,8 @@ uid: core/providers/pomelo/index
 
 This database provider allows Entity Framework Core to be used with MySQL. The provider is maintained as part of the [Pomelo Foundation Project](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql).
 
-> [!NOTE]
+> [!NOTE] 
+>
 > This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 ## Install

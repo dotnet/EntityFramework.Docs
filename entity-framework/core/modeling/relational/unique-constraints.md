@@ -12,7 +12,8 @@ uid: core/modeling/relational/unique-constraints
 ---
 # Alternate Keys (Unique Constraints)
 
-> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] 
+> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 A unique constraint is introduced for each alternate key in the model.
 

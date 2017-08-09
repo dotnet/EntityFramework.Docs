@@ -12,7 +12,8 @@ uid: core/modeling/relational/data-types
 ---
 # Data Types
 
-> [!NOTE] The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
+> [!NOTE] 
+> The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 Data type refers to the database specific type of the column to which a property is mapped.
 

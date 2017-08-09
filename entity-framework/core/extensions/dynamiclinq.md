@@ -10,7 +10,8 @@ uid: core/extensions/dynamiclinq
 
 # EF Core Tools & Extensions: Microsoft.EntityFrameworkCore.DynamicLinq
 
-> [!NOTE] This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
+> [!NOTE] 
+> This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 Dynamic Linq extensions for Microsoft.EntityFrameworkCore which adds Async support
 

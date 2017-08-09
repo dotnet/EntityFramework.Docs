@@ -10,7 +10,8 @@ uid: core/extensions/autohistory
 
 # EF Core Tools & Extensions: Microsoft.EntityFrameworkCore.AutoHistory
 
-> [!NOTE] This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
+> [!NOTE] 
+> This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 A plugin for Microsoft.EntityFrameworkCore to support automatically recording data changes history.
 
