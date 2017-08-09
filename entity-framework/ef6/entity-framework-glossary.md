@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Glossary | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Glossary - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 3f05ffdd-49bc-499c-9732-4a368bf5d2d7
 caps.latest.revision: 3
@@ -37,4 +37,3 @@ caps.latest.revision: 3
 | Table-per-hierarchy (TPH) | A method of mapping the inheritance where all types in the hierarchy are mapped to the same table in the database. A discriminator column(s) is used to identify what type each row is associated with. |
 | Table-per-type (TPT) | A method of mapping the inheritance where the common properties of all types in the hierarchy are mapped to the same table in the database, but properties unique to each type are mapped to a separate table. |
 | Type discovery | The process of identifying the types that should be part of an Entity Framework model. |
-  

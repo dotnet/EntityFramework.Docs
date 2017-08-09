@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Designer Table Splitting | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Designer Table Splitting - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 452f17c3-9f26-4de4-9894-8bc036e23b0f
 caps.latest.revision: 3
@@ -80,9 +80,9 @@ The next step requires the **Mapping Details** window. If you cannot see this 
 -   Select the **HireInfo** entity type and click **&lt;Add a Table or View&gt;** in the **Mapping Details** window.
 -   Select **Person** from the **&lt;Add a Table or View&gt;** field drop-down list. The list contains tables or views to which the selected entity can be mapped.
     The appropriate properties should be mapped by default.
-    
+
     ![Mapping](../ef6/media/mapping.png)
-    
+
 -   Select the **PersonHireInfo** association on the design surface.
 -   Right-click the association on the design surface and select **Properties**.
 -   In the **Properties** window, select the **Referential Constraints** property and click the ellipses button.
@@ -114,7 +114,7 @@ The next step requires the **Mapping Details** window. If you cannot see this 
         context.People.Add(person);
 
         // Insert a row into the Person table.  
-        context.SaveChanges(); 
+        context.SaveChanges();
 
         // Execute a query against the Person table.
         // The query returns columns that map to the Person entity.
@@ -136,13 +136,13 @@ The next step requires the **Mapping Details** window. If you cannot see this 
 The following T-SQL statements were executed against the **School** database as a result of running this application. 
 
 -   The following **INSERT** was executed as a result of executing context.SaveChanges() and combines data from the **Person** and **HireInfo** entities
-    
+
     ![Insert](../ef6/media/insert.png)
-    
+
 -   The following **SELECT** was executed as a result of executing context.People.FirstOrDefault() and selects just the columns mapped to **Person**
-    
+
     ![Select1](../ef6/media/select1.png)
-    
+
 -   The following **SELECT** was executed as a result of accessing the navigation property existingPerson.Instructor and selects just the columns mapped to **HireInfo**
-    
+
     ![Select2](../ef6/media/select2.png)

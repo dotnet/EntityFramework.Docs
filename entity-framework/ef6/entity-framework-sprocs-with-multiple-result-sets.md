@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Sprocs with Multiple Result Sets | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Sprocs with Multiple Result Sets - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 1b3797f9-cd3d-4752-a55e-47b84b399dc1
 caps.latest.revision: 3
@@ -53,9 +53,9 @@ Once we have an ObjectContext then we can use the Translate method to translate 
 
         try
         {
-            
+
             db.Database.Connection.Open();
-            // Run the sproc 
+            // Run the sproc
             var reader = cmd.ExecuteReader();
 
             // Read Blogs from the first result set
@@ -109,7 +109,7 @@ If you are using the EF Designer, you can also modify your model so that it know
 
 -   In order to do this you need to add the stored procedure to your model as you would for a single result set query.
 -   Once you have this then you need to right click on your model and select **Open With..** then **Xml**
-    
+
     ![OpenAs](../ef6/media/openas.png)
 
 Once you have the model opened as XML then you need to do the following steps:
@@ -170,7 +170,7 @@ This tells the model that the stored procedure will return two collections, one 
           </ComplexTypeMapping>
         </ResultMapping>
       </FunctionImportMapping>
-            
+
     ...
 
     \</edmx:Mappings>

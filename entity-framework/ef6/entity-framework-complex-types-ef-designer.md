@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Complex Types - EF Designer | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Complex Types - EF Designer - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 9a8228ef-acfd-4575-860d-769d2c0e18a1
 caps.latest.revision: 3
@@ -73,7 +73,7 @@ Properties of a complex type can be scalar types or existing complex types. Howe
 You can add a property to a complex type in any of the ways listed below.
 
 -   Right-click a complex type in the Model Browser, point to **Add**, then point to **Scalar Property** or **Complex Property**, then select the desired property type. Alternatively, you can select a complex type and then press the **Insert** key on your keyboard.  
-    
+
     ![AddPropertiestoComplexType](../ef6/media/addpropertiestocomplextype.png)
 
     A new property is added to the complex type with a default name.
@@ -120,9 +120,9 @@ When you rename a complex type, all references to the type are updated throughou
 6.  Select the column you want to map, and then right-click the corresponding **Value/Property** field.
     A drop-down list of all the scalar properties is displayed.
 7.  Select the appropriate property.
-    
+
     ![MapComplexType](../ef6/media/mapcomplextype.png)
-    
+
 8.  Repeat steps 6 and 7 for each table column.
 
 > **Note:** To delete a column mapping, select the column that you want to map, and then click the **Value/Property** field. Then, select **Delete** from the drop-down list.
@@ -134,16 +134,16 @@ When you rename a complex type, all references to the type are updated throughou
 Function imports are based on stored procedures. To map a function import to a complex type, the columns returned by the corresponding stored procedure must match the properties of the complex type in number and must have storage types that are compatible with the property types.
 
 -   Double-click on an imported function that you want to map to a complex type.
-    
+
     ![FunctionImports](../ef6/media/functionimports.png)
-    
+
 -   Fill in the settings for the new function import, as follows:
     -   Specify the stored procedure for which you are creating a function import in the **Stored Procedure Name** field. This field is a drop-down list that displays all the stored procedures in the storage model.
     -   Specify the name of the function import in the **Function Import Name** field.
     -   Select **Complex** as the return type and then specify the specific complex return type by choosing the appropriate type from the drop-down list.
-        
+
         ![EditFunctionImport](../ef6/media/editfunctionimport.png)
-        
+
 -   Click **OK**.
     The function import entry is created in the conceptual model.
 

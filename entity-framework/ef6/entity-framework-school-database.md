@@ -1,27 +1,27 @@
 ---
-title: "Entity Framework School Database | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework School Database - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: e83a6a06-e63b-4530-8656-614bf609b12b
 caps.latest.revision: 3
 ---
 # Entity Framework School Database
 This topic contains the schema for the School database. The sample School database is used in various places throughout the Entity Framework documentation.  
-  
+
 The database server that is installed with Visual Studio is different depending on the version of Visual Studio you have installed:  
-  
+
 - If you are using Visual Studio 2012 then you'll be creating a LocalDb database.  
 - If you are using Visual Studio 2010 you'll be creating a SQL Express database.  
-  
+
 Here are the steps to create the database.  
-  
+
 - Open Visual Studio  
 - **View** -> **Server Explorer**  
 - Right click on **Data Connections** -> **Add Connection…**  
@@ -38,7 +38,7 @@ Here are the steps to create the database.
     - Enter **.\SQLEXPRESS** as the server name and click **OK**  
     - Select the **STESample** database from the drop down at the top of the query editor  
     - Copy the following SQL into the new query, then right-click on the query and select **Execute SQL**  
-  
+
 ```  
 SET ANSI_NULLS ON
 GO
@@ -46,8 +46,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 -- Create the Department table.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[Department]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[Department]')
 AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[Department]([DepartmentID] [int] NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE [dbo].[Department]([DepartmentID] [int] NOT NULL,
 [Budget] [money] NOT NULL,
 [StartDate] [datetime] NOT NULL,
 [Administrator] [int] NULL,
-CONSTRAINT [PK_Department] PRIMARY KEY CLUSTERED 
+CONSTRAINT [PK_Department] PRIMARY KEY CLUSTERED
 (
 [DepartmentID] ASC
 )WITH (IGNORE_DUP_KEY = OFF) ON [PRIMARY]) ON [PRIMARY]
@@ -63,8 +63,8 @@ END
 GO
 
 -- Create the Person table.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[Person]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[Person]')
 AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[Person]([PersonID] [int] IDENTITY(1,1) NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE [dbo].[Person]([PersonID] [int] IDENTITY(1,1) NOT NULL,
 [HireDate] [datetime] NULL,
 [EnrollmentDate] [datetime] NULL,
 [Discriminator] [nvarchar](50) NOT NULL,
-CONSTRAINT [PK_School.Student] PRIMARY KEY CLUSTERED 
+CONSTRAINT [PK_School.Student] PRIMARY KEY CLUSTERED
 (
 [PersonID] ASC
 )WITH (IGNORE_DUP_KEY = OFF) ON [PRIMARY]) ON [PRIMARY]
@@ -81,15 +81,15 @@ END
 GO
 
 -- Create the OnsiteCourse table.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[OnsiteCourse]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[OnsiteCourse]')
 AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[OnsiteCourse]([CourseID] [int] NOT NULL,
 [Location] [nvarchar](50) NOT NULL,
 [Days] [nvarchar](50) NOT NULL,
 [Time] [smalldatetime] NOT NULL,
-CONSTRAINT [PK_OnsiteCourse] PRIMARY KEY CLUSTERED 
+CONSTRAINT [PK_OnsiteCourse] PRIMARY KEY CLUSTERED
 (
 [CourseID] ASC
 )WITH (IGNORE_DUP_KEY = OFF) ON [PRIMARY]) ON [PRIMARY]
@@ -97,13 +97,13 @@ END
 GO
 
 -- Create the OnlineCourse table.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[OnlineCourse]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[OnlineCourse]')
 AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[OnlineCourse]([CourseID] [int] NOT NULL,
 [URL] [nvarchar](100) NOT NULL,
-CONSTRAINT [PK_OnlineCourse] PRIMARY KEY CLUSTERED 
+CONSTRAINT [PK_OnlineCourse] PRIMARY KEY CLUSTERED
 (
 [CourseID] ASC
 )WITH (IGNORE_DUP_KEY = OFF) ON [PRIMARY]) ON [PRIMARY]
@@ -111,15 +111,15 @@ END
 GO
 
 --Create the StudentGrade table.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[StudentGrade]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[StudentGrade]')
 AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[StudentGrade]([EnrollmentID] [int] IDENTITY(1,1) NOT NULL,
 [CourseID] [int] NOT NULL,
 [StudentID] [int] NOT NULL,
 [Grade] [decimal](3, 2) NULL,
-CONSTRAINT [PK_StudentGrade] PRIMARY KEY CLUSTERED 
+CONSTRAINT [PK_StudentGrade] PRIMARY KEY CLUSTERED
 (
 [EnrollmentID] ASC
 )WITH (IGNORE_DUP_KEY = OFF) ON [PRIMARY]) ON [PRIMARY]
@@ -127,13 +127,13 @@ END
 GO
 
 -- Create the CourseInstructor table.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[CourseInstructor]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[CourseInstructor]')
 AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[CourseInstructor]([CourseID] [int] NOT NULL,
 [PersonID] [int] NOT NULL,
-CONSTRAINT [PK_CourseInstructor] PRIMARY KEY CLUSTERED 
+CONSTRAINT [PK_CourseInstructor] PRIMARY KEY CLUSTERED
 (
 [CourseID] ASC,
 [PersonID] ASC
@@ -142,15 +142,15 @@ END
 GO
 
 -- Create the Course table.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[Course]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[Course]')
 AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[Course]([CourseID] [int] NOT NULL,
 [Title] [nvarchar](100) NOT NULL,
 [Credits] [int] NOT NULL,
 [DepartmentID] [int] NOT NULL,
-CONSTRAINT [PK_School.Course] PRIMARY KEY CLUSTERED 
+CONSTRAINT [PK_School.Course] PRIMARY KEY CLUSTERED
 (
 [CourseID] ASC
 )WITH (IGNORE_DUP_KEY = OFF) ON [PRIMARY]) ON [PRIMARY]
@@ -158,14 +158,14 @@ END
 GO
 
 -- Create the OfficeAssignment table.
-IF NOT EXISTS (SELECT * FROM sys.objects 
+IF NOT EXISTS (SELECT * FROM sys.objects
 WHERE object_id = OBJECT_ID(N'[dbo].[OfficeAssignment]')
 AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[OfficeAssignment]([InstructorID] [int] NOT NULL,
 [Location] [nvarchar](50) NOT NULL,
 [Timestamp] [timestamp] NOT NULL,
-CONSTRAINT [PK_OfficeAssignment] PRIMARY KEY CLUSTERED 
+CONSTRAINT [PK_OfficeAssignment] PRIMARY KEY CLUSTERED
 (
 [InstructorID] ASC
 )WITH (IGNORE_DUP_KEY = OFF) ON [PRIMARY]) ON [PRIMARY]
@@ -173,82 +173,82 @@ END
 GO
 
 -- Define the relationship between OnsiteCourse and Course.
-IF NOT EXISTS (SELECT * FROM sys.foreign_keys 
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys
 WHERE object_id = OBJECT_ID(N'[dbo].[FK_OnsiteCourse_Course]')
 AND parent_object_id = OBJECT_ID(N'[dbo].[OnsiteCourse]'))
-ALTER TABLE [dbo].[OnsiteCourse] WITH CHECK ADD 
+ALTER TABLE [dbo].[OnsiteCourse] WITH CHECK ADD
 CONSTRAINT [FK_OnsiteCourse_Course] FOREIGN KEY([CourseID])
 REFERENCES [dbo].[Course] ([CourseID])
 GO
-ALTER TABLE [dbo].[OnsiteCourse] CHECK 
+ALTER TABLE [dbo].[OnsiteCourse] CHECK
 CONSTRAINT [FK_OnsiteCourse_Course]
 GO
 
 -- Define the relationship between OnlineCourse and Course.
-IF NOT EXISTS (SELECT * FROM sys.foreign_keys 
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys
 WHERE object_id = OBJECT_ID(N'[dbo].[FK_OnlineCourse_Course]')
 AND parent_object_id = OBJECT_ID(N'[dbo].[OnlineCourse]'))
-ALTER TABLE [dbo].[OnlineCourse] WITH CHECK ADD 
+ALTER TABLE [dbo].[OnlineCourse] WITH CHECK ADD
 CONSTRAINT [FK_OnlineCourse_Course] FOREIGN KEY([CourseID])
 REFERENCES [dbo].[Course] ([CourseID])
 GO
-ALTER TABLE [dbo].[OnlineCourse] CHECK 
+ALTER TABLE [dbo].[OnlineCourse] CHECK
 CONSTRAINT [FK_OnlineCourse_Course]
 GO
 
 -- Define the relationship between StudentGrade and Course.
-IF NOT EXISTS (SELECT * FROM sys.foreign_keys 
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys
 WHERE object_id = OBJECT_ID(N'[dbo].[FK_StudentGrade_Course]')
 AND parent_object_id = OBJECT_ID(N'[dbo].[StudentGrade]'))
-ALTER TABLE [dbo].[StudentGrade] WITH CHECK ADD 
+ALTER TABLE [dbo].[StudentGrade] WITH CHECK ADD
 CONSTRAINT [FK_StudentGrade_Course] FOREIGN KEY([CourseID])
 REFERENCES [dbo].[Course] ([CourseID])
 GO
-ALTER TABLE [dbo].[StudentGrade] CHECK 
+ALTER TABLE [dbo].[StudentGrade] CHECK
 CONSTRAINT [FK_StudentGrade_Course]
 GO
 
 --Define the relationship between StudentGrade and Student.
-IF NOT EXISTS (SELECT * FROM sys.foreign_keys 
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys
 WHERE object_id = OBJECT_ID(N'[dbo].[FK_StudentGrade_Student]')
 AND parent_object_id = OBJECT_ID(N'[dbo].[StudentGrade]'))
-ALTER TABLE [dbo].[StudentGrade] WITH CHECK ADD 
+ALTER TABLE [dbo].[StudentGrade] WITH CHECK ADD
 CONSTRAINT [FK_StudentGrade_Student] FOREIGN KEY([StudentID])
 REFERENCES [dbo].[Person] ([PersonID])
 GO
-ALTER TABLE [dbo].[StudentGrade] CHECK 
+ALTER TABLE [dbo].[StudentGrade] CHECK
 CONSTRAINT [FK_StudentGrade_Student]
 GO
 
 -- Define the relationship between CourseInstructor and Course.
-IF NOT EXISTS (SELECT * FROM sys.foreign_keys 
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys
 WHERE object_id = OBJECT_ID(N'[dbo].[FK_CourseInstructor_Course]')
 AND parent_object_id = OBJECT_ID(N'[dbo].[CourseInstructor]'))
-ALTER TABLE [dbo].[CourseInstructor] WITH CHECK ADD 
+ALTER TABLE [dbo].[CourseInstructor] WITH CHECK ADD
 CONSTRAINT [FK_CourseInstructor_Course] FOREIGN KEY([CourseID])
 REFERENCES [dbo].[Course] ([CourseID])
 GO
-ALTER TABLE [dbo].[CourseInstructor] CHECK 
+ALTER TABLE [dbo].[CourseInstructor] CHECK
 CONSTRAINT [FK_CourseInstructor_Course]
 GO
 
 -- Define the relationship between CourseInstructor and Person.
-IF NOT EXISTS (SELECT * FROM sys.foreign_keys 
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys
 WHERE object_id = OBJECT_ID(N'[dbo].[FK_CourseInstructor_Person]')
 AND parent_object_id = OBJECT_ID(N'[dbo].[CourseInstructor]'))
-ALTER TABLE [dbo].[CourseInstructor] WITH CHECK ADD 
+ALTER TABLE [dbo].[CourseInstructor] WITH CHECK ADD
 CONSTRAINT [FK_CourseInstructor_Person] FOREIGN KEY([PersonID])
 REFERENCES [dbo].[Person] ([PersonID])
 GO
-ALTER TABLE [dbo].[CourseInstructor] CHECK 
+ALTER TABLE [dbo].[CourseInstructor] CHECK
 CONSTRAINT [FK_CourseInstructor_Person]
 GO
 
 -- Define the relationship between Course and Department.
-IF NOT EXISTS (SELECT * FROM sys.foreign_keys 
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys
 WHERE object_id = OBJECT_ID(N'[dbo].[FK_Course_Department]')
 AND parent_object_id = OBJECT_ID(N'[dbo].[Course]'))
-ALTER TABLE [dbo].[Course] WITH CHECK ADD 
+ALTER TABLE [dbo].[Course] WITH CHECK ADD
 CONSTRAINT [FK_Course_Department] FOREIGN KEY([DepartmentID])
 REFERENCES [dbo].[Department] ([DepartmentID])
 GO
@@ -256,20 +256,20 @@ ALTER TABLE [dbo].[Course] CHECK CONSTRAINT [FK_Course_Department]
 GO
 
 --Define the relationship between OfficeAssignment and Person.
-IF NOT EXISTS (SELECT * FROM sys.foreign_keys 
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys
 WHERE object_id = OBJECT_ID(N'[dbo].[FK_OfficeAssignment_Person]')
 AND parent_object_id = OBJECT_ID(N'[dbo].[OfficeAssignment]'))
-ALTER TABLE [dbo].[OfficeAssignment] WITH CHECK ADD 
+ALTER TABLE [dbo].[OfficeAssignment] WITH CHECK ADD
 CONSTRAINT [FK_OfficeAssignment_Person] FOREIGN KEY([InstructorID])
 REFERENCES [dbo].[Person] ([PersonID])
 GO
-ALTER TABLE [dbo].[OfficeAssignment] CHECK 
+ALTER TABLE [dbo].[OfficeAssignment] CHECK
 CONSTRAINT [FK_OfficeAssignment_Person]
 GO
 
 -- Create InsertOfficeAssignment stored procedure.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[InsertOfficeAssignment]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[InsertOfficeAssignment]')
 AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'
@@ -281,16 +281,16 @@ INSERT INTO dbo.OfficeAssignment (InstructorID, Location)
 VALUES (@InstructorID, @Location);
 IF @@ROWCOUNT > 0
 BEGIN
-SELECT [Timestamp] FROM OfficeAssignment 
+SELECT [Timestamp] FROM OfficeAssignment
 WHERE InstructorID=@InstructorID;
 END
-' 
+'
 END
 GO
 
 --Create the UpdateOfficeAssignment stored procedure.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[UpdateOfficeAssignment]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[UpdateOfficeAssignment]')
 AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'
@@ -299,20 +299,20 @@ CREATE PROCEDURE [dbo].[UpdateOfficeAssignment]
 @Location nvarchar(50),
 @OrigTimestamp timestamp
 AS
-UPDATE OfficeAssignment SET Location=@Location 
+UPDATE OfficeAssignment SET Location=@Location
 WHERE InstructorID=@InstructorID AND [Timestamp]=@OrigTimestamp;
 IF @@ROWCOUNT > 0
 BEGIN
-SELECT [Timestamp] FROM OfficeAssignment 
+SELECT [Timestamp] FROM OfficeAssignment
 WHERE InstructorID=@InstructorID;
 END
-' 
+'
 END
 GO
 
 -- Create the DeleteOfficeAssignment stored procedure.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[DeleteOfficeAssignment]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[DeleteOfficeAssignment]')
 AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'
@@ -321,13 +321,13 @@ CREATE PROCEDURE [dbo].[DeleteOfficeAssignment]
 AS
 DELETE FROM OfficeAssignment
 WHERE InstructorID=@InstructorID;
-' 
+'
 END
 GO
 
 -- Create the DeletePerson stored procedure.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[DeletePerson]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[DeletePerson]')
 AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'
@@ -335,13 +335,13 @@ CREATE PROCEDURE [dbo].[DeletePerson]
 @PersonID int
 AS
 DELETE FROM Person WHERE PersonID = @PersonID;
-' 
+'
 END
 GO
 
 -- Create the UpdatePerson stored procedure.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[UpdatePerson]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[UpdatePerson]')
 AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'
@@ -353,19 +353,19 @@ CREATE PROCEDURE [dbo].[UpdatePerson]
 @EnrollmentDate datetime,
 @Discriminator nvarchar(50)
 AS
-UPDATE Person SET LastName=@LastName, 
+UPDATE Person SET LastName=@LastName,
 FirstName=@FirstName,
 HireDate=@HireDate,
 EnrollmentDate=@EnrollmentDate,
 Discriminator=@Discriminator
 WHERE PersonID=@PersonID;
-' 
+'
 END
 GO
 
 -- Create the InsertPerson stored procedure.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[InsertPerson]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[InsertPerson]')
 AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'
@@ -376,24 +376,24 @@ CREATE PROCEDURE [dbo].[InsertPerson]
 @EnrollmentDate datetime,
 @Discriminator nvarchar(50)
 AS
-INSERT INTO dbo.Person (LastName, 
-FirstName, 
-HireDate, 
+INSERT INTO dbo.Person (LastName,
+FirstName,
+HireDate,
 EnrollmentDate,
 Discriminator)
-VALUES (@LastName, 
-@FirstName, 
-@HireDate, 
+VALUES (@LastName,
+@FirstName,
+@HireDate,
 @EnrollmentDate,
 @Discriminator);
 SELECT SCOPE_IDENTITY() as NewPersonID;
-' 
+'
 END
 GO
 
 -- Create GetStudentGrades stored procedure.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[GetStudentGrades]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[GetStudentGrades]')
 AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'
@@ -402,13 +402,13 @@ CREATE PROCEDURE [dbo].[GetStudentGrades]
 AS
 SELECT EnrollmentID, Grade, CourseID, StudentID FROM dbo.StudentGrade
 WHERE StudentID = @StudentID
-' 
+'
 END
 GO
 
 -- Create GetDepartmentName stored procedure.
-IF NOT EXISTS (SELECT * FROM sys.objects 
-WHERE object_id = OBJECT_ID(N'[dbo].[GetDepartmentName]') 
+IF NOT EXISTS (SELECT * FROM sys.objects
+WHERE object_id = OBJECT_ID(N'[dbo].[GetDepartmentName]')
 AND type in (N'P', N'PC'))
 BEGIN
 EXEC dbo.sp_executesql @statement = N'
@@ -510,7 +510,7 @@ INSERT INTO dbo.Department (DepartmentID, [Name], Budget, StartDate, Administrat
 VALUES (7, 'Mathematics', 250000.00, '2007-09-01', 3);
 GO
 
- 
+
 
 -- Insert data into the Course table.
 INSERT INTO dbo.Course (CourseID, Title, Credits, DepartmentID)
@@ -683,4 +683,3 @@ INSERT INTO dbo.StudentGrade (CourseID, StudentID, Grade)
 VALUES (1061, 30, 4);
 GO
 ```  
-  

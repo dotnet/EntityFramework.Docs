@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Designer TPH Inheritance | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Designer TPH Inheritance - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 72d26a8e-20ab-4500-bd13-394a08e73394
 caps.latest.revision: 3
@@ -102,9 +102,9 @@ Two new entity types were added to the design surface. An arrow points from the 
 -   Select **Discriminator** from the drop-down list.
 -   In the **Operator** column of the **Mapping Details** window, select = from the drop-down list.
 -   In the **Value/Property** column, type **Instructor**. The end result should look like this:
-    
+
     ![MappingDetails2](../ef6/media/mappingdetails2.png)
-    
+
 -   Repeat these steps for the **Student** entity type, but make the condition equal to **Student** value.  
     *The reason we wanted to remove the **Discriminator** property, is because you cannot map a table column more than once. This column will be used for conditional mapping, so it cannot be used for property mapping as well. The only way it can be used for both, if a condition uses an **Is Null** or **Is Not Null** comparison.*
 

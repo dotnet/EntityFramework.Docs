@@ -100,7 +100,7 @@
 ## [Entity Framework Tools Keyboard Shortcuts](entity-framework-tools-keyboard-shortcuts.md)
 ## [Entity Framework Validation](entity-framework-validation.md)
 ## [Testability and Entity Framework 4.0](testability-and-entity-framework-4-0.md)
-## [ADO.NET Entity Framework Tools](ado-net-entity-framework-tools.md)
+## [Entity Framework Tools](ado-net-entity-framework-tools.md)
 ## [Get Help Using Entity Framework](get-help-using-entity-framework.md)
 ## [Entity Framework 5 License](entity-framework-5-license.md)
 ### [Entity Framework 5 License (CHS)](entity-framework-5-license-chs.md)

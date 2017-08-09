@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework MSL Specification | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework MSL Specification - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 13ae7bc1-74b4-4ee4-8d73-c337be841467
 caps.latest.revision: 4
@@ -15,9 +15,9 @@ caps.latest.revision: 4
 # Entity Framework MSL Specification
 Mapping specification language (MSL) is an XML-based language that describes the mapping between the conceptual model and storage model of an Entity Framework application.
 
-In an Entity Framework application, mapping metadata is loaded from an .msl file (written in MSL) at build time. The Entity Framework uses mapping metadata at runtime to translate queries against the conceptual model to store-specific commands.
+In an Entity Framework application, mapping metadata is loaded from an .msl file (written in MSL) at build time. Entity Framework uses mapping metadata at runtime to translate queries against the conceptual model to store-specific commands.
 
-The Entity Framework Designer (EF Designer) stores mapping information in an .edmx file at design time. At build time, the Entity Designer uses information in an .edmx file to create the .msl file that is needed by the Entity Framework at runtime
+The Entity Framework Designer (EF Designer) stores mapping information in an .edmx file at design time. At build time, the Entity Designer uses information in an .edmx file to create the .msl file that is needed by Entity Framework at runtime
 
 Names of all conceptual or storage model types that are referenced in MSL must be qualified by their respective namespace names. For information about the conceptual model namespace name, see [CSDL Specification](../ef6/entity-framework-csdl-specification.md). For information about the storage model namespace name, see [SSDL Specification](../ef6/entity-framework-ssdl-specification.md).
 
@@ -55,34 +55,34 @@ The table below describes the attributes that can be applied to the **Alias** el
 The following example shows an **Alias** element that defines an alias, `c`, for types that are defined in the conceptual model.
 
 ```
- <Mapping Space="C-S" 
-          xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs"> 
-   <Alias Key="c" Value="SchoolModel"/> 
-   <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer" 
-                           CdmEntityContainer="SchoolModelEntities"> 
-     <EntitySetMapping Name="Courses"> 
-       <EntityTypeMapping TypeName="c.Course"> 
-         <MappingFragment StoreEntitySet="Course"> 
-           <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-           <ScalarProperty Name="Title" ColumnName="Title" /> 
-           <ScalarProperty Name="Credits" ColumnName="Credits" /> 
-           <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-         </MappingFragment> 
-       </EntityTypeMapping> 
-     </EntitySetMapping> 
-     <EntitySetMapping Name="Departments"> 
-       <EntityTypeMapping TypeName="c.Department"> 
-         <MappingFragment StoreEntitySet="Department"> 
-           <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-           <ScalarProperty Name="Name" ColumnName="Name" /> 
-           <ScalarProperty Name="Budget" ColumnName="Budget" /> 
-           <ScalarProperty Name="StartDate" ColumnName="StartDate" /> 
-           <ScalarProperty Name="Administrator" ColumnName="Administrator" /> 
-         </MappingFragment> 
-       </EntityTypeMapping> 
-     </EntitySetMapping> 
-   </EntityContainerMapping> 
- </Mapping> 
+ <Mapping Space="C-S"
+          xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+   <Alias Key="c" Value="SchoolModel"/>
+   <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer"
+                           CdmEntityContainer="SchoolModelEntities">
+     <EntitySetMapping Name="Courses">
+       <EntityTypeMapping TypeName="c.Course">
+         <MappingFragment StoreEntitySet="Course">
+           <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+           <ScalarProperty Name="Title" ColumnName="Title" />
+           <ScalarProperty Name="Credits" ColumnName="Credits" />
+           <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+         </MappingFragment>
+       </EntityTypeMapping>
+     </EntitySetMapping>
+     <EntitySetMapping Name="Departments">
+       <EntityTypeMapping TypeName="c.Department">
+         <MappingFragment StoreEntitySet="Department">
+           <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+           <ScalarProperty Name="Name" ColumnName="Name" />
+           <ScalarProperty Name="Budget" ColumnName="Budget" />
+           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+           <ScalarProperty Name="Administrator" ColumnName="Administrator" />
+         </MappingFragment>
+       </EntityTypeMapping>
+     </EntitySetMapping>
+   </EntityContainerMapping>
+ </Mapping>
 ```
  
 
@@ -115,83 +115,83 @@ The following table describes the attributes that are applicable to the **Associ
 Consider the following conceptual model entity type:
 
 ```
- <EntityType Name="Course"> 
-   <Key> 
-     <PropertyRef Name="CourseID" /> 
-   </Key> 
-   <Property Type="Int32" Name="CourseID" Nullable="false" /> 
-   <Property Type="String" Name="Title" Nullable="false" MaxLength="100" 
-             FixedLength="false" Unicode="true" /> 
-   <Property Type="Int32" Name="Credits" Nullable="false" /> 
-   <NavigationProperty Name="Department" 
-                       Relationship="SchoolModel.FK_Course_Department" 
-                       FromRole="Course" ToRole="Department" /> 
- </EntityType> 
+ <EntityType Name="Course">
+   <Key>
+     <PropertyRef Name="CourseID" />
+   </Key>
+   <Property Type="Int32" Name="CourseID" Nullable="false" />
+   <Property Type="String" Name="Title" Nullable="false" MaxLength="100"
+             FixedLength="false" Unicode="true" />
+   <Property Type="Int32" Name="Credits" Nullable="false" />
+   <NavigationProperty Name="Department"
+                       Relationship="SchoolModel.FK_Course_Department"
+                       FromRole="Course" ToRole="Department" />
+ </EntityType>
 ```
  
 
 Also consider the following stored procedure:
 
 ```
- CREATE PROCEDURE [dbo].[UpdateCourse] 
-                                @CourseID int, 
-                                @Title nvarchar(50), 
-                                @Credits int, 
-                                @DepartmentID int 
-                                AS 
-                                UPDATE Course SET Title=@Title, 
-                                                              Credits=@Credits, 
-                                                              DepartmentID=@DepartmentID 
-                                WHERE CourseID=@CourseID; 
+ CREATE PROCEDURE [dbo].[UpdateCourse]
+                                @CourseID int,
+                                @Title nvarchar(50),
+                                @Credits int,
+                                @DepartmentID int
+                                AS
+                                UPDATE Course SET Title=@Title,
+                                                              Credits=@Credits,
+                                                              DepartmentID=@DepartmentID
+                                WHERE CourseID=@CourseID;
 ```
  
 
 In order to map the update function of the `Course` entity to this stored procedure, you must supply a value to the **DepartmentID** parameter. The value for `DepartmentID` does not correspond to a property on the entity type; it is contained in an independent association whose mapping is shown here:
 
 ```
- <AssociationSetMapping Name="FK_Course_Department" 
-                        TypeName="SchoolModel.FK_Course_Department" 
-                        StoreEntitySet="Course"> 
-   <EndProperty Name="Course"> 
-     <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-   </EndProperty> 
-   <EndProperty Name="Department"> 
-     <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-   </EndProperty> 
- </AssociationSetMapping> 
+ <AssociationSetMapping Name="FK_Course_Department"
+                        TypeName="SchoolModel.FK_Course_Department"
+                        StoreEntitySet="Course">
+   <EndProperty Name="Course">
+     <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+   </EndProperty>
+   <EndProperty Name="Department">
+     <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+   </EndProperty>
+ </AssociationSetMapping>
 ```
  
 
 The following code shows the **AssociationEnd** element used to map the **DepartmentID** property of the **FK\_Course\_Department** association to the **UpdateCourse** stored procedure (to which the update function of the **Course** entity type is mapped):
 
 ```
- <EntitySetMapping Name="Courses"> 
-   <EntityTypeMapping TypeName="SchoolModel.Course"> 
-     <MappingFragment StoreEntitySet="Course"> 
-       <ScalarProperty Name="Credits" ColumnName="Credits" /> 
-       <ScalarProperty Name="Title" ColumnName="Title" /> 
-       <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="SchoolModel.Course"> 
-     <ModificationFunctionMapping> 
-       <UpdateFunction FunctionName="SchoolModel.Store.UpdateCourse"> 
-         <AssociationEnd AssociationSet="FK_Course_Department" 
-                         From="Course" To="Department"> 
-           <ScalarProperty Name="DepartmentID" 
-                           ParameterName="DepartmentID" 
-                           Version="Current" /> 
-         </AssociationEnd> 
-         <ScalarProperty Name="Credits" ParameterName="Credits" 
-                         Version="Current" /> 
-         <ScalarProperty Name="Title" ParameterName="Title" 
-                         Version="Current" /> 
-         <ScalarProperty Name="CourseID" ParameterName="CourseID" 
-                         Version="Current" /> 
-       </UpdateFunction> 
-     </ModificationFunctionMapping> 
-   </EntityTypeMapping> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="Courses">
+   <EntityTypeMapping TypeName="SchoolModel.Course">
+     <MappingFragment StoreEntitySet="Course">
+       <ScalarProperty Name="Credits" ColumnName="Credits" />
+       <ScalarProperty Name="Title" ColumnName="Title" />
+       <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+     </MappingFragment>
+   </EntityTypeMapping>
+   <EntityTypeMapping TypeName="SchoolModel.Course">
+     <ModificationFunctionMapping>
+       <UpdateFunction FunctionName="SchoolModel.Store.UpdateCourse">
+         <AssociationEnd AssociationSet="FK_Course_Department"
+                         From="Course" To="Department">
+           <ScalarProperty Name="DepartmentID"
+                           ParameterName="DepartmentID"
+                           Version="Current" />
+         </AssociationEnd>
+         <ScalarProperty Name="Credits" ParameterName="Credits"
+                         Version="Current" />
+         <ScalarProperty Name="Title" ParameterName="Title"
+                         Version="Current" />
+         <ScalarProperty Name="CourseID" ParameterName="CourseID"
+                         Version="Current" />
+       </UpdateFunction>
+     </ModificationFunctionMapping>
+   </EntityTypeMapping>
+ </EntitySetMapping>
 ```
  
 
@@ -231,16 +231,16 @@ The following table describes the attributes that can be applied to the **Associ
 The following example shows an **AssociationSetMapping** element in which the **FK\_Course\_Department** association set in the conceptual model is mapped to the **Course** table in the database. Mappings between association type properties and table columns are specified in child **EndProperty** elements.
 
 ```
- <AssociationSetMapping Name="FK_Course_Department" 
-                        TypeName="SchoolModel.FK_Course_Department" 
-                        StoreEntitySet="Course"> 
-   <EndProperty Name="Department"> 
-     <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-   </EndProperty> 
-   <EndProperty Name="Course"> 
-     <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-   </EndProperty> 
- </AssociationSetMapping> 
+ <AssociationSetMapping Name="FK_Course_Department"
+                        TypeName="SchoolModel.FK_Course_Department"
+                        StoreEntitySet="Course">
+   <EndProperty Name="Department">
+     <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+   </EndProperty>
+   <EndProperty Name="Course">
+     <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+   </EndProperty>
+ </AssociationSetMapping>
 ``` 
 
  
@@ -272,49 +272,49 @@ The following table describes the attributes that are applicable to the **Comple
 The following example is based on the School model. The following complex type has been added to the conceptual model:
 
 ```
- <ComplexType Name="FullName"> 
-   <Property Type="String" Name="LastName" 
-             Nullable="false" MaxLength="50" 
-             FixedLength="false" Unicode="true" /> 
-   <Property Type="String" Name="FirstName" 
-             Nullable="false" MaxLength="50" 
-             FixedLength="false" Unicode="true" /> 
- </ComplexType> 
+ <ComplexType Name="FullName">
+   <Property Type="String" Name="LastName"
+             Nullable="false" MaxLength="50"
+             FixedLength="false" Unicode="true" />
+   <Property Type="String" Name="FirstName"
+             Nullable="false" MaxLength="50"
+             FixedLength="false" Unicode="true" />
+ </ComplexType>
 ```
  
 
 The **LastName** and **FirstName** properties of the **Person** entity type have been replaced with one complex property, **Name**:
 
 ```
- <EntityType Name="Person"> 
-   <Key> 
-     <PropertyRef Name="PersonID" /> 
-   </Key> 
-   \<Property Name="PersonID" Type="Int32" Nullable="false" 
-             annotation:StoreGeneratedPattern="Identity" /> 
-   <Property Name="HireDate" Type="DateTime" /> 
-   <Property Name="EnrollmentDate" Type="DateTime" /> 
-   <Property Name="Name" Type="SchoolModel.FullName" Nullable="false" /> 
- </EntityType> 
+ <EntityType Name="Person">
+   <Key>
+     <PropertyRef Name="PersonID" />
+   </Key>
+   \<Property Name="PersonID" Type="Int32" Nullable="false"
+             annotation:StoreGeneratedPattern="Identity" />
+   <Property Name="HireDate" Type="DateTime" />
+   <Property Name="EnrollmentDate" Type="DateTime" />
+   <Property Name="Name" Type="SchoolModel.FullName" Nullable="false" />
+ </EntityType>
 ```
  
 
 The following MSL shows the **ComplexProperty** element used to map the **Name** property to columns in the underlying database:
 
 ```
- <EntitySetMapping Name="People"> 
-   <EntityTypeMapping TypeName="SchoolModel.Person"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="HireDate" ColumnName="HireDate" /> 
-       <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" /> 
-       <ComplexProperty Name="Name" TypeName="SchoolModel.FullName"> 
-         <ScalarProperty Name="FirstName" ColumnName="FirstName" /> 
+ <EntitySetMapping Name="People">
+   <EntityTypeMapping TypeName="SchoolModel.Person">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+       <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+       <ComplexProperty Name="Name" TypeName="SchoolModel.FullName">
+         <ScalarProperty Name="FirstName" ColumnName="FirstName" />
          <ScalarProperty Name="LastName" ColumnName="LastName" />  
-       </ComplexProperty> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
- </EntitySetMapping> 
+       </ComplexProperty>
+     </MappingFragment>
+   </EntityTypeMapping>
+ </EntitySetMapping>
 ```
  
 
@@ -348,45 +348,45 @@ The following table describes the attributes that are applicable to the **Comple
 Consider the following stored procedure:
 
 ```
- CREATE PROCEDURE [dbo].[GetGrades] 
-             @student_Id int 
-             AS 
-             SELECT     EnrollmentID as enroll_id, 
-                                                                             Grade as grade, 
-                                                                             CourseID as course_id, 
-                                                                             StudentID as student_id 
-                                               FROM dbo.StudentGrade 
-             WHERE StudentID = @student_Id 
+ CREATE PROCEDURE [dbo].[GetGrades]
+             @student_Id int
+             AS
+             SELECT     EnrollmentID as enroll_id,
+                                                                             Grade as grade,
+                                                                             CourseID as course_id,
+                                                                             StudentID as student_id
+                                               FROM dbo.StudentGrade
+             WHERE StudentID = @student_Id
 ```
  
 
 Also consider the following conceptual model complex type:
 
 ```
- <ComplexType Name="GradeInfo"> 
-   <Property Type="Int32" Name="EnrollmentID" Nullable="false" /> 
-   <Property Type="Decimal" Name="Grade" Nullable="true" 
-             Precision="3" Scale="2" /> 
-   <Property Type="Int32" Name="CourseID" Nullable="false" /> 
-   <Property Type="Int32" Name="StudentID" Nullable="false" /> 
- </ComplexType> 
+ <ComplexType Name="GradeInfo">
+   <Property Type="Int32" Name="EnrollmentID" Nullable="false" />
+   <Property Type="Decimal" Name="Grade" Nullable="true"
+             Precision="3" Scale="2" />
+   <Property Type="Int32" Name="CourseID" Nullable="false" />
+   <Property Type="Int32" Name="StudentID" Nullable="false" />
+ </ComplexType>
 ```
  
 
 In order to create a function import that returns instances of the previous complex type, the mapping between the columns returned by the stored procedure and the entity type must be defined in a **ComplexTypeMapping** element:
 
 ```
- <FunctionImportMapping FunctionImportName="GetGrades" 
-                        FunctionName="SchoolModel.Store.GetGrades" > 
-   <ResultMapping> 
-     <ComplexTypeMapping TypeName="SchoolModel.GradeInfo"> 
-       <ScalarProperty Name="EnrollmentID" ColumnName="enroll_id"/> 
-       <ScalarProperty Name="CourseID" ColumnName="course_id"/> 
-       <ScalarProperty Name="StudentID" ColumnName="student_id"/> 
-       <ScalarProperty Name="Grade" ColumnName="grade"/> 
-     </ComplexTypeMapping> 
-   </ResultMapping> 
- </FunctionImportMapping> 
+ <FunctionImportMapping FunctionImportName="GetGrades"
+                        FunctionName="SchoolModel.Store.GetGrades" >
+   <ResultMapping>
+     <ComplexTypeMapping TypeName="SchoolModel.GradeInfo">
+       <ScalarProperty Name="EnrollmentID" ColumnName="enroll_id"/>
+       <ScalarProperty Name="CourseID" ColumnName="course_id"/>
+       <ScalarProperty Name="StudentID" ColumnName="student_id"/>
+       <ScalarProperty Name="Grade" ColumnName="grade"/>
+     </ComplexTypeMapping>
+   </ResultMapping>
+ </FunctionImportMapping>
 ```
  
 
@@ -430,32 +430,32 @@ The following table describes the attributes that are applicable to the **Condit
 The following example shows **Condition** elements as children of **MappingFragment** elements. When **HireDate** is not null and **EnrollmentDate** is null, data is mapped between the **SchoolModel.Instructor** type and the **PersonID** and **HireDate** columns of the **Person** table. When **EnrollmentDate** is not null and **HireDate** is null, data is mapped between the **SchoolModel.Student** type and the **PersonID** and **Enrollment** columns of the **Person** table.
 
 ```
- <EntitySetMapping Name="People"> 
-   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Person)"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="FirstName" ColumnName="FirstName" /> 
-       <ScalarProperty Name="LastName" ColumnName="LastName" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Instructor)"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="HireDate" ColumnName="HireDate" /> 
-       <Condition ColumnName="HireDate" IsNull="false" /> 
-       <Condition ColumnName="EnrollmentDate" IsNull="true" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Student)"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ColumnName="EnrollmentDate" /> 
-       <Condition ColumnName="EnrollmentDate" IsNull="false" /> 
-       <Condition ColumnName="HireDate" IsNull="true" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="People">
+   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Person)">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+       <ScalarProperty Name="LastName" ColumnName="LastName" />
+     </MappingFragment>
+   </EntityTypeMapping>
+   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Instructor)">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+       <Condition ColumnName="HireDate" IsNull="false" />
+       <Condition ColumnName="EnrollmentDate" IsNull="true" />
+     </MappingFragment>
+   </EntityTypeMapping>
+   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Student)">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="EnrollmentDate"
+                       ColumnName="EnrollmentDate" />
+       <Condition ColumnName="EnrollmentDate" IsNull="false" />
+       <Condition ColumnName="HireDate" IsNull="true" />
+     </MappingFragment>
+   </EntityTypeMapping>
+ </EntitySetMapping>
 ```
  
 
@@ -495,46 +495,46 @@ The following table describes the attributes that can be applied to the **Delete
 The following example is based on the School model and shows the **DeleteFunction** element mapping the delete function of the **Person** entity type to the **DeletePerson** stored procedure. The **DeletePerson** stored procedure is declared in the storage model.
 
 ```
- <EntitySetMapping Name="People"> 
-   <EntityTypeMapping TypeName="SchoolModel.Person"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="LastName" ColumnName="LastName" /> 
-       <ScalarProperty Name="FirstName" ColumnName="FirstName" /> 
-       <ScalarProperty Name="HireDate" ColumnName="HireDate" /> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ColumnName="EnrollmentDate" /> 
-     </MappingFragment> 
- </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="SchoolModel.Person"> 
-     <ModificationFunctionMapping> 
-       <InsertFunction FunctionName="SchoolModel.Store.InsertPerson"> 
-         <ScalarProperty Name="EnrollmentDate" 
-                         ParameterName="EnrollmentDate" /> 
-         <ScalarProperty Name="HireDate" ParameterName="HireDate" /> 
-         <ScalarProperty Name="FirstName" ParameterName="FirstName" /> 
-         <ScalarProperty Name="LastName" ParameterName="LastName" /> 
-         <ResultBinding Name="PersonID" ColumnName="NewPersonID" /> 
-       </InsertFunction> 
-       <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson"> 
-         <ScalarProperty Name="EnrollmentDate" 
-                         ParameterName="EnrollmentDate" 
-                         Version="Current" /> 
-         <ScalarProperty Name="HireDate" ParameterName="HireDate" 
-                         Version="Current" /> 
-         <ScalarProperty Name="FirstName" ParameterName="FirstName" 
-                         Version="Current" /> 
-         <ScalarProperty Name="LastName" ParameterName="LastName" 
-                         Version="Current" /> 
-         <ScalarProperty Name="PersonID" ParameterName="PersonID" 
-                         Version="Current" /> 
-       </UpdateFunction> 
-       <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson"> 
-         <ScalarProperty Name="PersonID" ParameterName="PersonID" /> 
-       </DeleteFunction> 
-     </ModificationFunctionMapping> 
-   </EntityTypeMapping> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="People">
+   <EntityTypeMapping TypeName="SchoolModel.Person">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="LastName" ColumnName="LastName" />
+       <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+       <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+       <ScalarProperty Name="EnrollmentDate"
+                       ColumnName="EnrollmentDate" />
+     </MappingFragment>
+ </EntityTypeMapping>
+   <EntityTypeMapping TypeName="SchoolModel.Person">
+     <ModificationFunctionMapping>
+       <InsertFunction FunctionName="SchoolModel.Store.InsertPerson">
+         <ScalarProperty Name="EnrollmentDate"
+                         ParameterName="EnrollmentDate" />
+         <ScalarProperty Name="HireDate" ParameterName="HireDate" />
+         <ScalarProperty Name="FirstName" ParameterName="FirstName" />
+         <ScalarProperty Name="LastName" ParameterName="LastName" />
+         <ResultBinding Name="PersonID" ColumnName="NewPersonID" />
+       </InsertFunction>
+       <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson">
+         <ScalarProperty Name="EnrollmentDate"
+                         ParameterName="EnrollmentDate"
+                         Version="Current" />
+         <ScalarProperty Name="HireDate" ParameterName="HireDate"
+                         Version="Current" />
+         <ScalarProperty Name="FirstName" ParameterName="FirstName"
+                         Version="Current" />
+         <ScalarProperty Name="LastName" ParameterName="LastName"
+                         Version="Current" />
+         <ScalarProperty Name="PersonID" ParameterName="PersonID"
+                         Version="Current" />
+       </UpdateFunction>
+       <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson">
+         <ScalarProperty Name="PersonID" ParameterName="PersonID" />
+       </DeleteFunction>
+     </ModificationFunctionMapping>
+   </EntityTypeMapping>
+ </EntitySetMapping>
 ```
  
 
@@ -562,34 +562,34 @@ The following table describes the attributes that can be applied to the **Delete
 The following example is based on the School model and shows the **DeleteFunction** element used to map delete function of the **CourseInstructor** association to the **DeleteCourseInstructor** stored procedure. The **DeleteCourseInstructor** stored procedure is declared in the storage model.
 
 ```
- <AssociationSetMapping Name="CourseInstructor" 
-                        TypeName="SchoolModel.CourseInstructor" 
-                        StoreEntitySet="CourseInstructor"> 
-   <EndProperty Name="Person"> 
-     <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-   </EndProperty> 
-   <EndProperty Name="Course"> 
-     <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-   </EndProperty> 
-   <ModificationFunctionMapping> 
+ <AssociationSetMapping Name="CourseInstructor"
+                        TypeName="SchoolModel.CourseInstructor"
+                        StoreEntitySet="CourseInstructor">
+   <EndProperty Name="Person">
+     <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+   </EndProperty>
+   <EndProperty Name="Course">
+     <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+   </EndProperty>
+   <ModificationFunctionMapping>
      <InsertFunction FunctionName="SchoolModel.Store.InsertCourseInstructor" >   
-       <EndProperty Name="Course"> 
-         <ScalarProperty Name="CourseID" ParameterName="courseId"/> 
-       </EndProperty> 
-       <EndProperty Name="Person"> 
-         <ScalarProperty Name="PersonID" ParameterName="instructorId"/> 
-       </EndProperty> 
-     </InsertFunction> 
-     <DeleteFunction FunctionName="SchoolModel.Store.DeleteCourseInstructor"> 
-       <EndProperty Name="Course"> 
-         <ScalarProperty Name="CourseID" ParameterName="courseId"/> 
-       </EndProperty> 
-       <EndProperty Name="Person"> 
-         <ScalarProperty Name="PersonID" ParameterName="instructorId"/> 
-       </EndProperty> 
-     </DeleteFunction> 
-   </ModificationFunctionMapping> 
- </AssociationSetMapping> 
+       <EndProperty Name="Course">
+         <ScalarProperty Name="CourseID" ParameterName="courseId"/>
+       </EndProperty>
+       <EndProperty Name="Person">
+         <ScalarProperty Name="PersonID" ParameterName="instructorId"/>
+       </EndProperty>
+     </InsertFunction>
+     <DeleteFunction FunctionName="SchoolModel.Store.DeleteCourseInstructor">
+       <EndProperty Name="Course">
+         <ScalarProperty Name="CourseID" ParameterName="courseId"/>
+       </EndProperty>
+       <EndProperty Name="Person">
+         <ScalarProperty Name="PersonID" ParameterName="instructorId"/>
+       </EndProperty>
+     </DeleteFunction>
+   </ModificationFunctionMapping>
+ </AssociationSetMapping>
 ```
  
 
@@ -620,16 +620,16 @@ The following table describes the attributes that are applicable to the **EndPro
 The following example shows an **AssociationSetMapping** element in which the **FK\_Course\_Department** association in the conceptual model is mapped to the **Course** table in the database. Mappings between association type properties and table columns are specified in child **EndProperty** elements.
 
 ```
- <AssociationSetMapping Name="FK_Course_Department" 
-                        TypeName="SchoolModel.FK_Course_Department" 
-                        StoreEntitySet="Course"> 
-   <EndProperty Name="Department"> 
-     <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-   </EndProperty> 
-   <EndProperty Name="Course"> 
-     <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-   </EndProperty> 
- </AssociationSetMapping> 
+ <AssociationSetMapping Name="FK_Course_Department"
+                        TypeName="SchoolModel.FK_Course_Department"
+                        StoreEntitySet="Course">
+   <EndProperty Name="Department">
+     <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+   </EndProperty>
+   <EndProperty Name="Course">
+     <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+   </EndProperty>
+ </AssociationSetMapping>
 ```
  
 
@@ -638,34 +638,34 @@ The following example shows an **AssociationSetMapping** element in which the **
 The following example shows the **EndProperty** element mapping the insert and delete functions of an association (**CourseInstructor**) to stored procedures in the underlying database. The functions that are mapped to are declared in the storage model.
 
 ```
- <AssociationSetMapping Name="CourseInstructor" 
-                        TypeName="SchoolModel.CourseInstructor" 
-                        StoreEntitySet="CourseInstructor"> 
-   <EndProperty Name="Person"> 
-     <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-   </EndProperty> 
-   <EndProperty Name="Course"> 
-     <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-   </EndProperty> 
-   <ModificationFunctionMapping> 
+ <AssociationSetMapping Name="CourseInstructor"
+                        TypeName="SchoolModel.CourseInstructor"
+                        StoreEntitySet="CourseInstructor">
+   <EndProperty Name="Person">
+     <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+   </EndProperty>
+   <EndProperty Name="Course">
+     <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+   </EndProperty>
+   <ModificationFunctionMapping>
      <InsertFunction FunctionName="SchoolModel.Store.InsertCourseInstructor" >   
-       <EndProperty Name="Course"> 
-         <ScalarProperty Name="CourseID" ParameterName="courseId"/> 
-       </EndProperty> 
-       <EndProperty Name="Person"> 
-         <ScalarProperty Name="PersonID" ParameterName="instructorId"/> 
-       </EndProperty> 
-     </InsertFunction> 
-     <DeleteFunction FunctionName="SchoolModel.Store.DeleteCourseInstructor"> 
-       <EndProperty Name="Course"> 
-         <ScalarProperty Name="CourseID" ParameterName="courseId"/> 
-       </EndProperty> 
-       <EndProperty Name="Person"> 
-         <ScalarProperty Name="PersonID" ParameterName="instructorId"/> 
-       </EndProperty> 
-     </DeleteFunction> 
-   </ModificationFunctionMapping> 
- </AssociationSetMapping> 
+       <EndProperty Name="Course">
+         <ScalarProperty Name="CourseID" ParameterName="courseId"/>
+       </EndProperty>
+       <EndProperty Name="Person">
+         <ScalarProperty Name="PersonID" ParameterName="instructorId"/>
+       </EndProperty>
+     </InsertFunction>
+     <DeleteFunction FunctionName="SchoolModel.Store.DeleteCourseInstructor">
+       <EndProperty Name="Course">
+         <ScalarProperty Name="CourseID" ParameterName="courseId"/>
+       </EndProperty>
+       <EndProperty Name="Person">
+         <ScalarProperty Name="PersonID" ParameterName="instructorId"/>
+       </EndProperty>
+     </DeleteFunction>
+   </ModificationFunctionMapping>
+ </AssociationSetMapping>
 ```
  
 
@@ -698,30 +698,30 @@ The following table describes the attributes that can be applied to the **Entity
 The following example shows an **EntityContainerMapping** element that maps the **SchoolModelEntities** container (the conceptual model entity container) to the **SchoolModelStoreContainer** container (the storage model entity container):
 
 ```
- <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer" 
-                         CdmEntityContainer="SchoolModelEntities"> 
-   <EntitySetMapping Name="Courses"> 
-     <EntityTypeMapping TypeName="c.Course"> 
-       <MappingFragment StoreEntitySet="Course"> 
-         <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-         <ScalarProperty Name="Title" ColumnName="Title" /> 
-         <ScalarProperty Name="Credits" ColumnName="Credits" /> 
-         <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-       </MappingFragment> 
-     </EntityTypeMapping> 
-   </EntitySetMapping> 
-   <EntitySetMapping Name="Departments"> 
-     <EntityTypeMapping TypeName="c.Department"> 
-       <MappingFragment StoreEntitySet="Department"> 
-         <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-         <ScalarProperty Name="Name" ColumnName="Name" /> 
-         <ScalarProperty Name="Budget" ColumnName="Budget" /> 
-         <ScalarProperty Name="StartDate" ColumnName="StartDate" /> 
-         <ScalarProperty Name="Administrator" ColumnName="Administrator" /> 
-       </MappingFragment> 
-     </EntityTypeMapping> 
-   </EntitySetMapping> 
- </EntityContainerMapping> 
+ <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer"
+                         CdmEntityContainer="SchoolModelEntities">
+   <EntitySetMapping Name="Courses">
+     <EntityTypeMapping TypeName="c.Course">
+       <MappingFragment StoreEntitySet="Course">
+         <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+         <ScalarProperty Name="Title" ColumnName="Title" />
+         <ScalarProperty Name="Credits" ColumnName="Credits" />
+         <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+       </MappingFragment>
+     </EntityTypeMapping>
+   </EntitySetMapping>
+   <EntitySetMapping Name="Departments">
+     <EntityTypeMapping TypeName="c.Department">
+       <MappingFragment StoreEntitySet="Department">
+         <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+         <ScalarProperty Name="Name" ColumnName="Name" />
+         <ScalarProperty Name="Budget" ColumnName="Budget" />
+         <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+         <ScalarProperty Name="Administrator" ColumnName="Administrator" />
+       </MappingFragment>
+     </EntityTypeMapping>
+   </EntitySetMapping>
+ </EntityContainerMapping>
 ```
  
 
@@ -757,30 +757,30 @@ The following table describes the attributes that can be applied to the **Entity
 The following example shows an **EntitySetMapping** element that maps three types (a base type and two derived types) in the **Courses** entity set of the conceptual model to three different tables in the underlying database. The tables are specified by the **StoreEntitySet** attribute in each **MappingFragment** element.
 
 ```
- <EntitySetMapping Name="Courses"> 
-   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel1.Course)"> 
-     <MappingFragment StoreEntitySet="Course"> 
-       <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-       <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-       <ScalarProperty Name="Credits" ColumnName="Credits" /> 
-       <ScalarProperty Name="Title" ColumnName="Title" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel1.OnlineCourse)"> 
-     <MappingFragment StoreEntitySet="OnlineCourse"> 
-       <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-       <ScalarProperty Name="URL" ColumnName="URL" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel1.OnsiteCourse)"> 
-     <MappingFragment StoreEntitySet="OnsiteCourse"> 
-       <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-       <ScalarProperty Name="Time" ColumnName="Time" /> 
-       <ScalarProperty Name="Days" ColumnName="Days" /> 
-       <ScalarProperty Name="Location" ColumnName="Location" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="Courses">
+   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel1.Course)">
+     <MappingFragment StoreEntitySet="Course">
+       <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+       <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+       <ScalarProperty Name="Credits" ColumnName="Credits" />
+       <ScalarProperty Name="Title" ColumnName="Title" />
+     </MappingFragment>
+   </EntityTypeMapping>
+   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel1.OnlineCourse)">
+     <MappingFragment StoreEntitySet="OnlineCourse">
+       <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+       <ScalarProperty Name="URL" ColumnName="URL" />
+     </MappingFragment>
+   </EntityTypeMapping>
+   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel1.OnsiteCourse)">
+     <MappingFragment StoreEntitySet="OnsiteCourse">
+       <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+       <ScalarProperty Name="Time" ColumnName="Time" />
+       <ScalarProperty Name="Days" ColumnName="Days" />
+       <ScalarProperty Name="Location" ColumnName="Location" />
+     </MappingFragment>
+   </EntityTypeMapping>
+ </EntitySetMapping>
 ```
  
 
@@ -821,33 +821,33 @@ The following table describes the attributes that can be applied to the **Entity
 The following example shows an EntitySetMapping element with two child **EntityTypeMapping** elements. In the first **EntityTypeMapping** element, the **SchoolModel.Person** entity type is mapped to the **Person** table. In the second **EntityTypeMapping** element, the update functionality of the **SchoolModel.Person** type is mapped to a stored procedure, **UpdatePerson**, in the database.
 
 ```
- <EntitySetMapping Name="People"> 
-   <EntityTypeMapping TypeName="SchoolModel.Person"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="LastName" ColumnName="LastName" /> 
-       <ScalarProperty Name="FirstName" ColumnName="FirstName" /> 
-       <ScalarProperty Name="HireDate" ColumnName="HireDate" /> 
-       <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="SchoolModel.Person"> 
-     <ModificationFunctionMapping> 
-       <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson"> 
-         <ScalarProperty Name="EnrollmentDate" ParameterName="EnrollmentDate" 
-                         Version="Current" /> 
-         <ScalarProperty Name="HireDate" ParameterName="HireDate" 
-                         Version="Current" /> 
-         <ScalarProperty Name="FirstName" ParameterName="FirstName" 
-                         Version="Current" /> 
-         <ScalarProperty Name="LastName" ParameterName="LastName" 
-                         Version="Current" /> 
-         <ScalarProperty Name="PersonID" ParameterName="PersonID" 
-                         Version="Current" /> 
-       </UpdateFunction> 
-     </ModificationFunctionMapping> 
-   </EntityTypeMapping> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="People">
+   <EntityTypeMapping TypeName="SchoolModel.Person">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="LastName" ColumnName="LastName" />
+       <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+       <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+       <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+     </MappingFragment>
+   </EntityTypeMapping>
+   <EntityTypeMapping TypeName="SchoolModel.Person">
+     <ModificationFunctionMapping>
+       <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson">
+         <ScalarProperty Name="EnrollmentDate" ParameterName="EnrollmentDate"
+                         Version="Current" />
+         <ScalarProperty Name="HireDate" ParameterName="HireDate"
+                         Version="Current" />
+         <ScalarProperty Name="FirstName" ParameterName="FirstName"
+                         Version="Current" />
+         <ScalarProperty Name="LastName" ParameterName="LastName"
+                         Version="Current" />
+         <ScalarProperty Name="PersonID" ParameterName="PersonID"
+                         Version="Current" />
+       </UpdateFunction>
+     </ModificationFunctionMapping>
+   </EntityTypeMapping>
+ </EntitySetMapping>
 ```
  
 
@@ -856,32 +856,32 @@ The following example shows an EntitySetMapping element with two child **EntityT
 The next example shows the mapping of a type hierarchy in which the root type is abstract. Note the use of the `IsOfType` syntax for the **TypeName** attributes.
 
 ```
- <EntitySetMapping Name="People"> 
-   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Person)"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="FirstName" ColumnName="FirstName" /> 
-       <ScalarProperty Name="LastName" ColumnName="LastName" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Instructor)"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="HireDate" ColumnName="HireDate" /> 
-       <Condition ColumnName="HireDate" IsNull="false" /> 
-       <Condition ColumnName="EnrollmentDate" IsNull="true" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Student)"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ColumnName="EnrollmentDate" /> 
-       <Condition ColumnName="EnrollmentDate" IsNull="false" /> 
-       <Condition ColumnName="HireDate" IsNull="true" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="People">
+   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Person)">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+       <ScalarProperty Name="LastName" ColumnName="LastName" />
+     </MappingFragment>
+   </EntityTypeMapping>
+   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Instructor)">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+       <Condition ColumnName="HireDate" IsNull="false" />
+       <Condition ColumnName="EnrollmentDate" IsNull="true" />
+     </MappingFragment>
+   </EntityTypeMapping>
+   <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.Student)">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="EnrollmentDate"
+                       ColumnName="EnrollmentDate" />
+       <Condition ColumnName="EnrollmentDate" IsNull="false" />
+       <Condition ColumnName="HireDate" IsNull="true" />
+     </MappingFragment>
+   </EntityTypeMapping>
+ </EntitySetMapping>
 ```
  
 
@@ -915,30 +915,30 @@ The following table describes the attributes that are applicable to the **Functi
 The following example is based on the School model. Consider the following function in the storage model:
 
 ```
- <Function Name="GetStudentGrades" Aggregate="false" 
-           BuiltIn="false" NiladicFunction="false" 
-           IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" 
-           Schema="dbo"> 
-   <Parameter Name="StudentID" Type="int" Mode="In" /> 
- </Function> 
+ <Function Name="GetStudentGrades" Aggregate="false"
+           BuiltIn="false" NiladicFunction="false"
+           IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion"
+           Schema="dbo">
+   <Parameter Name="StudentID" Type="int" Mode="In" />
+ </Function>
 ```
  
 
 Also consider this function import in the conceptual model:
 
 ```
- <FunctionImport Name="GetStudentGrades" EntitySet="StudentGrades" 
-                 ReturnType="Collection(SchoolModel.StudentGrade)"> 
-   <Parameter Name="StudentID" Mode="In" Type="Int32" /> 
- </FunctionImport> 
+ <FunctionImport Name="GetStudentGrades" EntitySet="StudentGrades"
+                 ReturnType="Collection(SchoolModel.StudentGrade)">
+   <Parameter Name="StudentID" Mode="In" Type="Int32" />
+ </FunctionImport>
 ```
  
 
 The following example show a **FunctionImportMapping** element used to map the function and function import above to each other:
 
 ```
- <FunctionImportMapping FunctionImportName="GetStudentGrades" 
-                        FunctionName="SchoolModel.Store.GetStudentGrades" /> 
+ <FunctionImportMapping FunctionImportName="GetStudentGrades"
+                        FunctionName="SchoolModel.Store.GetStudentGrades" />
 ```
  
 
@@ -981,34 +981,34 @@ The following table describes the attributes that can be applied to the **Insert
 The following example is based on the School model and shows the **InsertFunction** element used to map insert function of the Person entity type to the **InsertPerson** stored procedure. The **InsertPerson** stored procedure is declared in the storage model.
 
 ```
- <EntityTypeMapping TypeName="SchoolModel.Person"> 
-   <ModificationFunctionMapping> 
-     <InsertFunction FunctionName="SchoolModel.Store.InsertPerson"> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ParameterName="EnrollmentDate" /> 
-       <ScalarProperty Name="HireDate" ParameterName="HireDate" /> 
-       <ScalarProperty Name="FirstName" ParameterName="FirstName" /> 
-       <ScalarProperty Name="LastName" ParameterName="LastName" /> 
-       <ResultBinding Name="PersonID" ColumnName="NewPersonID" /> 
-     </InsertFunction> 
-     <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson"> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ParameterName="EnrollmentDate" 
-                       Version="Current" /> 
-       <ScalarProperty Name="HireDate" ParameterName="HireDate" 
-                       Version="Current" /> 
-       <ScalarProperty Name="FirstName" ParameterName="FirstName" 
-                       Version="Current" /> 
-       <ScalarProperty Name="LastName" ParameterName="LastName" 
-                       Version="Current" /> 
-       <ScalarProperty Name="PersonID" ParameterName="PersonID" 
-                       Version="Current" /> 
-     </UpdateFunction> 
-     <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson"> 
-       <ScalarProperty Name="PersonID" ParameterName="PersonID" /> 
-     </DeleteFunction> 
-   </ModificationFunctionMapping> 
- </EntityTypeMapping> 
+ <EntityTypeMapping TypeName="SchoolModel.Person">
+   <ModificationFunctionMapping>
+     <InsertFunction FunctionName="SchoolModel.Store.InsertPerson">
+       <ScalarProperty Name="EnrollmentDate"
+                       ParameterName="EnrollmentDate" />
+       <ScalarProperty Name="HireDate" ParameterName="HireDate" />
+       <ScalarProperty Name="FirstName" ParameterName="FirstName" />
+       <ScalarProperty Name="LastName" ParameterName="LastName" />
+       <ResultBinding Name="PersonID" ColumnName="NewPersonID" />
+     </InsertFunction>
+     <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson">
+       <ScalarProperty Name="EnrollmentDate"
+                       ParameterName="EnrollmentDate"
+                       Version="Current" />
+       <ScalarProperty Name="HireDate" ParameterName="HireDate"
+                       Version="Current" />
+       <ScalarProperty Name="FirstName" ParameterName="FirstName"
+                       Version="Current" />
+       <ScalarProperty Name="LastName" ParameterName="LastName"
+                       Version="Current" />
+       <ScalarProperty Name="PersonID" ParameterName="PersonID"
+                       Version="Current" />
+     </UpdateFunction>
+     <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson">
+       <ScalarProperty Name="PersonID" ParameterName="PersonID" />
+     </DeleteFunction>
+   </ModificationFunctionMapping>
+ </EntityTypeMapping>
 ```
  
 
@@ -1036,34 +1036,34 @@ The following table describes the attributes that can be applied to the **Insert
 The following example is based on the School model and shows the **InsertFunction** element used to map insert function of the **CourseInstructor** association to the **InsertCourseInstructor** stored procedure. The **InsertCourseInstructor** stored procedure is declared in the storage model.
 
 ```
- <AssociationSetMapping Name="CourseInstructor" 
-                        TypeName="SchoolModel.CourseInstructor" 
-                        StoreEntitySet="CourseInstructor"> 
-   <EndProperty Name="Person"> 
-     <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-   </EndProperty> 
-   <EndProperty Name="Course"> 
-     <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-   </EndProperty> 
-   <ModificationFunctionMapping> 
+ <AssociationSetMapping Name="CourseInstructor"
+                        TypeName="SchoolModel.CourseInstructor"
+                        StoreEntitySet="CourseInstructor">
+   <EndProperty Name="Person">
+     <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+   </EndProperty>
+   <EndProperty Name="Course">
+     <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+   </EndProperty>
+   <ModificationFunctionMapping>
      <InsertFunction FunctionName="SchoolModel.Store.InsertCourseInstructor" >   
-       <EndProperty Name="Course"> 
-         <ScalarProperty Name="CourseID" ParameterName="courseId"/> 
-       </EndProperty> 
-       <EndProperty Name="Person"> 
-         <ScalarProperty Name="PersonID" ParameterName="instructorId"/> 
-       </EndProperty> 
-     </InsertFunction> 
-     <DeleteFunction FunctionName="SchoolModel.Store.DeleteCourseInstructor"> 
-       <EndProperty Name="Course"> 
-         <ScalarProperty Name="CourseID" ParameterName="courseId"/> 
-       </EndProperty> 
-       <EndProperty Name="Person"> 
-         <ScalarProperty Name="PersonID" ParameterName="instructorId"/> 
-       </EndProperty> 
-     </DeleteFunction> 
-   </ModificationFunctionMapping> 
- </AssociationSetMapping> 
+       <EndProperty Name="Course">
+         <ScalarProperty Name="CourseID" ParameterName="courseId"/>
+       </EndProperty>
+       <EndProperty Name="Person">
+         <ScalarProperty Name="PersonID" ParameterName="instructorId"/>
+       </EndProperty>
+     </InsertFunction>
+     <DeleteFunction FunctionName="SchoolModel.Store.DeleteCourseInstructor">
+       <EndProperty Name="Course">
+         <ScalarProperty Name="CourseID" ParameterName="courseId"/>
+       </EndProperty>
+       <EndProperty Name="Person">
+         <ScalarProperty Name="PersonID" ParameterName="instructorId"/>
+       </EndProperty>
+     </DeleteFunction>
+   </ModificationFunctionMapping>
+ </AssociationSetMapping>
 ```
  
 
@@ -1097,34 +1097,34 @@ The table below describes the attributes that can be applied to the **Mapping** 
 The following example shows a **Mapping** element that is based on part of the School model. For more information about the School model, see Quickstart (Entity Framework):
 
 ```
- <Mapping Space="C-S" 
-          xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs"> 
-   <Alias Key="c" Value="SchoolModel"/> 
-   <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer" 
-                           CdmEntityContainer="SchoolModelEntities"> 
-     <EntitySetMapping Name="Courses"> 
-       <EntityTypeMapping TypeName="c.Course"> 
-         <MappingFragment StoreEntitySet="Course"> 
-           <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-           <ScalarProperty Name="Title" ColumnName="Title" /> 
-           <ScalarProperty Name="Credits" ColumnName="Credits" /> 
-           <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-         </MappingFragment> 
-       </EntityTypeMapping> 
-     </EntitySetMapping> 
-     <EntitySetMapping Name="Departments"> 
-       <EntityTypeMapping TypeName="c.Department"> 
-         <MappingFragment StoreEntitySet="Department"> 
-           <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-           <ScalarProperty Name="Name" ColumnName="Name" /> 
-           <ScalarProperty Name="Budget" ColumnName="Budget" /> 
-           <ScalarProperty Name="StartDate" ColumnName="StartDate" /> 
-           <ScalarProperty Name="Administrator" ColumnName="Administrator" /> 
-         </MappingFragment> 
-       </EntityTypeMapping> 
-     </EntitySetMapping> 
-   </EntityContainerMapping> 
- </Mapping> 
+ <Mapping Space="C-S"
+          xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+   <Alias Key="c" Value="SchoolModel"/>
+   <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer"
+                           CdmEntityContainer="SchoolModelEntities">
+     <EntitySetMapping Name="Courses">
+       <EntityTypeMapping TypeName="c.Course">
+         <MappingFragment StoreEntitySet="Course">
+           <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+           <ScalarProperty Name="Title" ColumnName="Title" />
+           <ScalarProperty Name="Credits" ColumnName="Credits" />
+           <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+         </MappingFragment>
+       </EntityTypeMapping>
+     </EntitySetMapping>
+     <EntitySetMapping Name="Departments">
+       <EntityTypeMapping TypeName="c.Department">
+         <MappingFragment StoreEntitySet="Department">
+           <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+           <ScalarProperty Name="Name" ColumnName="Name" />
+           <ScalarProperty Name="Budget" ColumnName="Budget" />
+           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+           <ScalarProperty Name="Administrator" ColumnName="Administrator" />
+         </MappingFragment>
+       </EntityTypeMapping>
+     </EntitySetMapping>
+   </EntityContainerMapping>
+ </Mapping>
 ```
  
 
@@ -1156,16 +1156,16 @@ The following table describes the attributes that can be applied to the **Mappin
 The following example shows a **MappingFragment** element as the child of an **EntityTypeMapping** element. In this example, properties of the **Course** type in the conceptual model are mapped to columns of the **Course** table in the database.
 
 ```
- <EntitySetMapping Name="Courses"> 
-   <EntityTypeMapping TypeName="SchoolModel.Course"> 
-     <MappingFragment StoreEntitySet="Course"> 
-       <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-       <ScalarProperty Name="Title" ColumnName="Title" /> 
-       <ScalarProperty Name="Credits" ColumnName="Credits" /> 
-       <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-     </MappingFragment> 
-   </EntityTypeMapping> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="Courses">
+   <EntityTypeMapping TypeName="SchoolModel.Course">
+     <MappingFragment StoreEntitySet="Course">
+       <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+       <ScalarProperty Name="Title" ColumnName="Title" />
+       <ScalarProperty Name="Credits" ColumnName="Credits" />
+       <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+     </MappingFragment>
+   </EntityTypeMapping>
+ </EntitySetMapping>
 ```
  
 
@@ -1174,14 +1174,14 @@ The following example shows a **MappingFragment** element as the child of an **E
 The following example shows a **MappingFragment** element as the child of an **EntitySetMapping** element. As in the example above, properties of the **Course** type in the conceptual model are mapped to columns of the **Course** table in the database.
 
 ```
- <EntitySetMapping Name="Courses" TypeName="SchoolModel.Course"> 
-     <MappingFragment StoreEntitySet="Course"> 
-       <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-       <ScalarProperty Name="Title" ColumnName="Title" /> 
-       <ScalarProperty Name="Credits" ColumnName="Credits" /> 
-       <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" /> 
-     </MappingFragment> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="Courses" TypeName="SchoolModel.Course">
+     <MappingFragment StoreEntitySet="Course">
+       <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+       <ScalarProperty Name="Title" ColumnName="Title" />
+       <ScalarProperty Name="Credits" ColumnName="Credits" />
+       <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+     </MappingFragment>
+ </EntitySetMapping>
 ```
  
 
@@ -1213,46 +1213,46 @@ No attributes are applicable to the **ModificationFunctionMapping** element.
 The following example shows the entity set mapping for the **People** entity set in the School model. In addition to the column mapping for the **Person** entity type, the mapping of the insert, update, and delete functions of the **Person** type are shown. The functions that are mapped to are declared in the storage model.
 
 ```
- <EntitySetMapping Name="People"> 
-   <EntityTypeMapping TypeName="SchoolModel.Person"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="LastName" ColumnName="LastName" /> 
-       <ScalarProperty Name="FirstName" ColumnName="FirstName" /> 
-       <ScalarProperty Name="HireDate" ColumnName="HireDate" /> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ColumnName="EnrollmentDate" /> 
-     </MappingFragment> 
- </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="SchoolModel.Person"> 
-     <ModificationFunctionMapping> 
-       <InsertFunction FunctionName="SchoolModel.Store.InsertPerson"> 
-         <ScalarProperty Name="EnrollmentDate" 
-                         ParameterName="EnrollmentDate" /> 
-         <ScalarProperty Name="HireDate" ParameterName="HireDate" /> 
-         <ScalarProperty Name="FirstName" ParameterName="FirstName" /> 
-         <ScalarProperty Name="LastName" ParameterName="LastName" /> 
-         <ResultBinding Name="PersonID" ColumnName="NewPersonID" /> 
-       </InsertFunction> 
-       <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson"> 
-         <ScalarProperty Name="EnrollmentDate" 
-                         ParameterName="EnrollmentDate" 
-                         Version="Current" /> 
-         <ScalarProperty Name="HireDate" ParameterName="HireDate" 
-                         Version="Current" /> 
-         <ScalarProperty Name="FirstName" ParameterName="FirstName" 
-                         Version="Current" /> 
-         <ScalarProperty Name="LastName" ParameterName="LastName" 
-                         Version="Current" /> 
-         <ScalarProperty Name="PersonID" ParameterName="PersonID" 
-                         Version="Current" /> 
-       </UpdateFunction> 
-       <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson"> 
-         <ScalarProperty Name="PersonID" ParameterName="PersonID" /> 
-       </DeleteFunction> 
-     </ModificationFunctionMapping> 
-   </EntityTypeMapping> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="People">
+   <EntityTypeMapping TypeName="SchoolModel.Person">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="LastName" ColumnName="LastName" />
+       <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+       <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+       <ScalarProperty Name="EnrollmentDate"
+                       ColumnName="EnrollmentDate" />
+     </MappingFragment>
+ </EntityTypeMapping>
+   <EntityTypeMapping TypeName="SchoolModel.Person">
+     <ModificationFunctionMapping>
+       <InsertFunction FunctionName="SchoolModel.Store.InsertPerson">
+         <ScalarProperty Name="EnrollmentDate"
+                         ParameterName="EnrollmentDate" />
+         <ScalarProperty Name="HireDate" ParameterName="HireDate" />
+         <ScalarProperty Name="FirstName" ParameterName="FirstName" />
+         <ScalarProperty Name="LastName" ParameterName="LastName" />
+         <ResultBinding Name="PersonID" ColumnName="NewPersonID" />
+       </InsertFunction>
+       <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson">
+         <ScalarProperty Name="EnrollmentDate"
+                         ParameterName="EnrollmentDate"
+                         Version="Current" />
+         <ScalarProperty Name="HireDate" ParameterName="HireDate"
+                         Version="Current" />
+         <ScalarProperty Name="FirstName" ParameterName="FirstName"
+                         Version="Current" />
+         <ScalarProperty Name="LastName" ParameterName="LastName"
+                         Version="Current" />
+         <ScalarProperty Name="PersonID" ParameterName="PersonID"
+                         Version="Current" />
+       </UpdateFunction>
+       <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson">
+         <ScalarProperty Name="PersonID" ParameterName="PersonID" />
+       </DeleteFunction>
+     </ModificationFunctionMapping>
+   </EntityTypeMapping>
+ </EntitySetMapping>
 ```
  
 
@@ -1261,34 +1261,34 @@ The following example shows the entity set mapping for the **People** entity set
 The following example shows the association set mapping for the **CourseInstructor** association set in the School model. In addition to the column mapping for the **CourseInstructor** association, the mapping of the insert and delete functions of the **CourseInstructor** association are shown. The functions that are mapped to are declared in the storage model.
 
 ```
- <AssociationSetMapping Name="CourseInstructor" 
-                        TypeName="SchoolModel.CourseInstructor" 
-                        StoreEntitySet="CourseInstructor"> 
-   <EndProperty Name="Person"> 
-     <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-   </EndProperty> 
-   <EndProperty Name="Course"> 
-     <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-   </EndProperty> 
-   <ModificationFunctionMapping> 
+ <AssociationSetMapping Name="CourseInstructor"
+                        TypeName="SchoolModel.CourseInstructor"
+                        StoreEntitySet="CourseInstructor">
+   <EndProperty Name="Person">
+     <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+   </EndProperty>
+   <EndProperty Name="Course">
+     <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+   </EndProperty>
+   <ModificationFunctionMapping>
      <InsertFunction FunctionName="SchoolModel.Store.InsertCourseInstructor" >   
-       <EndProperty Name="Course"> 
-         <ScalarProperty Name="CourseID" ParameterName="courseId"/> 
-       </EndProperty> 
-       <EndProperty Name="Person"> 
-         <ScalarProperty Name="PersonID" ParameterName="instructorId"/> 
-       </EndProperty> 
-     </InsertFunction> 
-     <DeleteFunction FunctionName="SchoolModel.Store.DeleteCourseInstructor"> 
-       <EndProperty Name="Course"> 
-         <ScalarProperty Name="CourseID" ParameterName="courseId"/> 
-       </EndProperty> 
-       <EndProperty Name="Person"> 
-         <ScalarProperty Name="PersonID" ParameterName="instructorId"/> 
-       </EndProperty> 
-     </DeleteFunction> 
-   </ModificationFunctionMapping> 
- </AssociationSetMapping> 
+       <EndProperty Name="Course">
+         <ScalarProperty Name="CourseID" ParameterName="courseId"/>
+       </EndProperty>
+       <EndProperty Name="Person">
+         <ScalarProperty Name="PersonID" ParameterName="instructorId"/>
+       </EndProperty>
+     </InsertFunction>
+     <DeleteFunction FunctionName="SchoolModel.Store.DeleteCourseInstructor">
+       <EndProperty Name="Course">
+         <ScalarProperty Name="CourseID" ParameterName="courseId"/>
+       </EndProperty>
+       <EndProperty Name="Person">
+         <ScalarProperty Name="PersonID" ParameterName="instructorId"/>
+       </EndProperty>
+     </DeleteFunction>
+   </ModificationFunctionMapping>
+ </AssociationSetMapping>
 ```
  
 
@@ -1325,36 +1325,36 @@ The following table describes the attributes that can be applied to the **QueryV
 The following example shows the **QueryView** element as a child of the **EntitySetMapping** element and defines a query view mapping for the **Department** entity type in the School Model.
 
 ```
- <EntitySetMapping Name="Departments" > 
-   <QueryView> 
-     SELECT VALUE SchoolModel.Department(d.DepartmentID, 
-                                         d.Name, 
-                                         d.Budget, 
-                                         d.StartDate) 
-     FROM SchoolModelStoreContainer.Department AS d 
-     WHERE d.Budget > 150000 
-   </QueryView> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="Departments" >
+   <QueryView>
+     SELECT VALUE SchoolModel.Department(d.DepartmentID,
+                                         d.Name,
+                                         d.Budget,
+                                         d.StartDate)
+     FROM SchoolModelStoreContainer.Department AS d
+     WHERE d.Budget > 150000
+   </QueryView>
+ </EntitySetMapping>
 ```
  
 
 Because the query only returns a subset of the members of the **Department** type in the storage model, the **Department** type in the School model has been modified based on this mapping as follows:
 
 ```
- <EntityType Name="Department"> 
-   <Key> 
-     <PropertyRef Name="DepartmentID" /> 
-   </Key> 
-   <Property Type="Int32" Name="DepartmentID" Nullable="false" /> 
-   <Property Type="String" Name="Name" Nullable="false" 
-             MaxLength="50" FixedLength="false" Unicode="true" /> 
-   <Property Type="Decimal" Name="Budget" Nullable="false" 
-             Precision="19" Scale="4" /> 
-   <Property Type="DateTime" Name="StartDate" Nullable="false" /> 
-   <NavigationProperty Name="Courses" 
-                       Relationship="SchoolModel.FK_Course_Department" 
-                       FromRole="Department" ToRole="Course" /> 
- </EntityType> 
+ <EntityType Name="Department">
+   <Key>
+     <PropertyRef Name="DepartmentID" />
+   </Key>
+   <Property Type="Int32" Name="DepartmentID" Nullable="false" />
+   <Property Type="String" Name="Name" Nullable="false"
+             MaxLength="50" FixedLength="false" Unicode="true" />
+   <Property Type="Decimal" Name="Budget" Nullable="false"
+             Precision="19" Scale="4" />
+   <Property Type="DateTime" Name="StartDate" Nullable="false" />
+   <NavigationProperty Name="Courses"
+                       Relationship="SchoolModel.FK_Course_Department"
+                       FromRole="Department" ToRole="Course" />
+ </EntityType>
 ```
  
 
@@ -1363,35 +1363,35 @@ Because the query only returns a subset of the members of the **Department** typ
 The next example shows the **QueryView** element as the child of an **AssociationSetMapping** element and defines a read-only mapping for the `FK_Course_Department` association in the School model.
 
 ```
- <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer" 
-                         CdmEntityContainer="SchoolEntities"> 
-   <EntitySetMapping Name="Courses" > 
-     <QueryView> 
-       SELECT VALUE SchoolModel.Course(c.CourseID, 
-                                       c.Title, 
-                                       c.Credits) 
-       FROM SchoolModelStoreContainer.Course AS c 
-     </QueryView> 
-   </EntitySetMapping> 
-   <EntitySetMapping Name="Departments" > 
-     <QueryView> 
-       SELECT VALUE SchoolModel.Department(d.DepartmentID, 
-                                           d.Name, 
-                                           d.Budget, 
-                                           d.StartDate) 
-       FROM SchoolModelStoreContainer.Department AS d 
-       WHERE d.Budget > 150000 
-     </QueryView> 
-   </EntitySetMapping> 
-   <AssociationSetMapping Name="FK_Course_Department" > 
-     <QueryView> 
-       SELECT VALUE SchoolModel.FK_Course_Department( 
-         CREATEREF(SchoolEntities.Departments, row(c.DepartmentID), SchoolModel.Department), 
-         CREATEREF(SchoolEntities.Courses, row(c.CourseID)) ) 
-       FROM SchoolModelStoreContainer.Course AS c 
-     </QueryView> 
-   </AssociationSetMapping> 
- </EntityContainerMapping> 
+ <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer"
+                         CdmEntityContainer="SchoolEntities">
+   <EntitySetMapping Name="Courses" >
+     <QueryView>
+       SELECT VALUE SchoolModel.Course(c.CourseID,
+                                       c.Title,
+                                       c.Credits)
+       FROM SchoolModelStoreContainer.Course AS c
+     </QueryView>
+   </EntitySetMapping>
+   <EntitySetMapping Name="Departments" >
+     <QueryView>
+       SELECT VALUE SchoolModel.Department(d.DepartmentID,
+                                           d.Name,
+                                           d.Budget,
+                                           d.StartDate)
+       FROM SchoolModelStoreContainer.Department AS d
+       WHERE d.Budget > 150000
+     </QueryView>
+   </EntitySetMapping>
+   <AssociationSetMapping Name="FK_Course_Department" >
+     <QueryView>
+       SELECT VALUE SchoolModel.FK_Course_Department(
+         CREATEREF(SchoolEntities.Departments, row(c.DepartmentID), SchoolModel.Department),
+         CREATEREF(SchoolEntities.Courses, row(c.CourseID)) )
+       FROM SchoolModelStoreContainer.Course AS c
+     </QueryView>
+   </AssociationSetMapping>
+ </EntityContainerMapping>
 ```
  
 
@@ -1447,55 +1447,55 @@ The following table describes the attributes that are applicable to the **Result
 The following example is based on the School model and shows an **InsertFunction** element used to map the insert function of the **Person** entity type to the **InsertPerson** stored procedure. (The **InsertPerson** stored procedure is shown below and is declared in the storage model.) A **ResultBinding** element is used to map a column value that is returned by the stored procedure (**NewPersonID**) to an entity type property (**PersonID**).
 
 ```
- <EntityTypeMapping TypeName="SchoolModel.Person"> 
-   <ModificationFunctionMapping> 
-     <InsertFunction FunctionName="SchoolModel.Store.InsertPerson"> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ParameterName="EnrollmentDate" /> 
-       <ScalarProperty Name="HireDate" ParameterName="HireDate" /> 
-       <ScalarProperty Name="FirstName" ParameterName="FirstName" /> 
-       <ScalarProperty Name="LastName" ParameterName="LastName" /> 
-       <ResultBinding Name="PersonID" ColumnName="NewPersonID" /> 
-     </InsertFunction> 
-     <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson"> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ParameterName="EnrollmentDate" 
-                       Version="Current" /> 
-       <ScalarProperty Name="HireDate" ParameterName="HireDate" 
-                       Version="Current" /> 
-       <ScalarProperty Name="FirstName" ParameterName="FirstName" 
-                       Version="Current" /> 
-       <ScalarProperty Name="LastName" ParameterName="LastName" 
-                       Version="Current" /> 
-       <ScalarProperty Name="PersonID" ParameterName="PersonID" 
-                       Version="Current" /> 
-     </UpdateFunction> 
-     <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson"> 
-       <ScalarProperty Name="PersonID" ParameterName="PersonID" /> 
-     </DeleteFunction> 
-   </ModificationFunctionMapping> 
- </EntityTypeMapping> 
+ <EntityTypeMapping TypeName="SchoolModel.Person">
+   <ModificationFunctionMapping>
+     <InsertFunction FunctionName="SchoolModel.Store.InsertPerson">
+       <ScalarProperty Name="EnrollmentDate"
+                       ParameterName="EnrollmentDate" />
+       <ScalarProperty Name="HireDate" ParameterName="HireDate" />
+       <ScalarProperty Name="FirstName" ParameterName="FirstName" />
+       <ScalarProperty Name="LastName" ParameterName="LastName" />
+       <ResultBinding Name="PersonID" ColumnName="NewPersonID" />
+     </InsertFunction>
+     <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson">
+       <ScalarProperty Name="EnrollmentDate"
+                       ParameterName="EnrollmentDate"
+                       Version="Current" />
+       <ScalarProperty Name="HireDate" ParameterName="HireDate"
+                       Version="Current" />
+       <ScalarProperty Name="FirstName" ParameterName="FirstName"
+                       Version="Current" />
+       <ScalarProperty Name="LastName" ParameterName="LastName"
+                       Version="Current" />
+       <ScalarProperty Name="PersonID" ParameterName="PersonID"
+                       Version="Current" />
+     </UpdateFunction>
+     <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson">
+       <ScalarProperty Name="PersonID" ParameterName="PersonID" />
+     </DeleteFunction>
+   </ModificationFunctionMapping>
+ </EntityTypeMapping>
 ```
  
 
 The following Transact-SQL describes the **InsertPerson** stored procedure:
 
 ```
- CREATE PROCEDURE [dbo].[InsertPerson] 
-                                @LastName nvarchar(50), 
-                                @FirstName nvarchar(50), 
-                                @HireDate datetime, 
-                                @EnrollmentDate datetime 
-                                AS 
-                                INSERT INTO dbo.Person (LastName, 
-                                                                             FirstName, 
-                                                                             HireDate, 
-                                                                             EnrollmentDate) 
-                                VALUES (@LastName, 
-                                               @FirstName, 
-                                               @HireDate, 
-                                               @EnrollmentDate); 
-                                SELECT SCOPE_IDENTITY() as NewPersonID; 
+ CREATE PROCEDURE [dbo].[InsertPerson]
+                                @LastName nvarchar(50),
+                                @FirstName nvarchar(50),
+                                @HireDate datetime,
+                                @EnrollmentDate datetime
+                                AS
+                                INSERT INTO dbo.Person (LastName,
+                                                                             FirstName,
+                                                                             HireDate,
+                                                                             EnrollmentDate)
+                                VALUES (@LastName,
+                                               @FirstName,
+                                               @HireDate,
+                                               @EnrollmentDate);
+                                SELECT SCOPE_IDENTITY() as NewPersonID;
 ```
  
 
@@ -1524,48 +1524,48 @@ No attributes are applicable to the **ResultMapping** Element.
 Consider the following stored procedure:
 
 ```
- CREATE PROCEDURE [dbo].[GetGrades] 
-             @student_Id int 
-             AS 
-             SELECT     EnrollmentID as enroll_id, 
-                                                                             Grade as grade, 
-                                                                             CourseID as course_id, 
-                                                                             StudentID as student_id 
-                                               FROM dbo.StudentGrade 
-             WHERE StudentID = @student_Id 
+ CREATE PROCEDURE [dbo].[GetGrades]
+             @student_Id int
+             AS
+             SELECT     EnrollmentID as enroll_id,
+                                                                             Grade as grade,
+                                                                             CourseID as course_id,
+                                                                             StudentID as student_id
+                                               FROM dbo.StudentGrade
+             WHERE StudentID = @student_Id
 ```
  
 
 Also consider the following conceptual model entity type:
 
 ```
- <EntityType Name="StudentGrade"> 
-   <Key> 
-     <PropertyRef Name="EnrollmentID" /> 
-   </Key> 
-   \<Property Name="EnrollmentID" Type="Int32" Nullable="false" 
-             annotation:StoreGeneratedPattern="Identity" /> 
-   <Property Name="CourseID" Type="Int32" Nullable="false" /> 
-   <Property Name="StudentID" Type="Int32" Nullable="false" /> 
-   <Property Name="Grade" Type="Decimal" Precision="3" Scale="2" /> 
- </EntityType> 
+ <EntityType Name="StudentGrade">
+   <Key>
+     <PropertyRef Name="EnrollmentID" />
+   </Key>
+   \<Property Name="EnrollmentID" Type="Int32" Nullable="false"
+             annotation:StoreGeneratedPattern="Identity" />
+   <Property Name="CourseID" Type="Int32" Nullable="false" />
+   <Property Name="StudentID" Type="Int32" Nullable="false" />
+   <Property Name="Grade" Type="Decimal" Precision="3" Scale="2" />
+ </EntityType>
 ```
  
 
 In order to create a function import that returns instances of the previous entity type, the mapping between the columns returned by the stored procedure and the entity type must be defined in a **ResultMapping** element:
 
 ```
- <FunctionImportMapping FunctionImportName="GetGrades" 
-                        FunctionName="SchoolModel.Store.GetGrades" > 
-   <ResultMapping> 
-     <EntityTypeMapping TypeName="SchoolModel.StudentGrade"> 
-       <ScalarProperty Name="EnrollmentID" ColumnName="enroll_id"/> 
-       <ScalarProperty Name="CourseID" ColumnName="course_id"/> 
-       <ScalarProperty Name="StudentID" ColumnName="student_id"/> 
-       <ScalarProperty Name="Grade" ColumnName="grade"/> 
-     </EntityTypeMapping> 
-   </ResultMapping> 
- </FunctionImportMapping> 
+ <FunctionImportMapping FunctionImportName="GetGrades"
+                        FunctionName="SchoolModel.Store.GetGrades" >
+   <ResultMapping>
+     <EntityTypeMapping TypeName="SchoolModel.StudentGrade">
+       <ScalarProperty Name="EnrollmentID" ColumnName="enroll_id"/>
+       <ScalarProperty Name="CourseID" ColumnName="course_id"/>
+       <ScalarProperty Name="StudentID" ColumnName="student_id"/>
+       <ScalarProperty Name="Grade" ColumnName="grade"/>
+     </EntityTypeMapping>
+   </ResultMapping>
+ </FunctionImportMapping>
 ```
  
 
@@ -1624,46 +1624,46 @@ The following example shows the **ScalarProperty** element used in two ways:
 -   To map the properties of the **Person** entity type to the parameters of the **UpdatePerson** stored procedure. The stored procedures are declared in the storage model.
 
 ```
- <EntitySetMapping Name="People"> 
-   <EntityTypeMapping TypeName="SchoolModel.Person"> 
-     <MappingFragment StoreEntitySet="Person"> 
-       <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-       <ScalarProperty Name="LastName" ColumnName="LastName" /> 
-       <ScalarProperty Name="FirstName" ColumnName="FirstName" /> 
-       <ScalarProperty Name="HireDate" ColumnName="HireDate" /> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ColumnName="EnrollmentDate" /> 
-     </MappingFragment> 
- </EntityTypeMapping> 
-   <EntityTypeMapping TypeName="SchoolModel.Person"> 
-     <ModificationFunctionMapping> 
-       <InsertFunction FunctionName="SchoolModel.Store.InsertPerson"> 
-         <ScalarProperty Name="EnrollmentDate" 
-                         ParameterName="EnrollmentDate" /> 
-         <ScalarProperty Name="HireDate" ParameterName="HireDate" /> 
-         <ScalarProperty Name="FirstName" ParameterName="FirstName" /> 
-         <ScalarProperty Name="LastName" ParameterName="LastName" /> 
-         <ResultBinding Name="PersonID" ColumnName="NewPersonID" /> 
-       </InsertFunction> 
-       <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson"> 
-         <ScalarProperty Name="EnrollmentDate" 
-                         ParameterName="EnrollmentDate" 
-                         Version="Current" /> 
-         <ScalarProperty Name="HireDate" ParameterName="HireDate" 
-                         Version="Current" /> 
-         <ScalarProperty Name="FirstName" ParameterName="FirstName" 
-                         Version="Current" /> 
-         <ScalarProperty Name="LastName" ParameterName="LastName" 
-                         Version="Current" /> 
-         <ScalarProperty Name="PersonID" ParameterName="PersonID" 
-                         Version="Current" /> 
-       </UpdateFunction> 
-       <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson"> 
-         <ScalarProperty Name="PersonID" ParameterName="PersonID" /> 
-       </DeleteFunction> 
-     </ModificationFunctionMapping> 
-   </EntityTypeMapping> 
- </EntitySetMapping> 
+ <EntitySetMapping Name="People">
+   <EntityTypeMapping TypeName="SchoolModel.Person">
+     <MappingFragment StoreEntitySet="Person">
+       <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+       <ScalarProperty Name="LastName" ColumnName="LastName" />
+       <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+       <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+       <ScalarProperty Name="EnrollmentDate"
+                       ColumnName="EnrollmentDate" />
+     </MappingFragment>
+ </EntityTypeMapping>
+   <EntityTypeMapping TypeName="SchoolModel.Person">
+     <ModificationFunctionMapping>
+       <InsertFunction FunctionName="SchoolModel.Store.InsertPerson">
+         <ScalarProperty Name="EnrollmentDate"
+                         ParameterName="EnrollmentDate" />
+         <ScalarProperty Name="HireDate" ParameterName="HireDate" />
+         <ScalarProperty Name="FirstName" ParameterName="FirstName" />
+         <ScalarProperty Name="LastName" ParameterName="LastName" />
+         <ResultBinding Name="PersonID" ColumnName="NewPersonID" />
+       </InsertFunction>
+       <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson">
+         <ScalarProperty Name="EnrollmentDate"
+                         ParameterName="EnrollmentDate"
+                         Version="Current" />
+         <ScalarProperty Name="HireDate" ParameterName="HireDate"
+                         Version="Current" />
+         <ScalarProperty Name="FirstName" ParameterName="FirstName"
+                         Version="Current" />
+         <ScalarProperty Name="LastName" ParameterName="LastName"
+                         Version="Current" />
+         <ScalarProperty Name="PersonID" ParameterName="PersonID"
+                         Version="Current" />
+       </UpdateFunction>
+       <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson">
+         <ScalarProperty Name="PersonID" ParameterName="PersonID" />
+       </DeleteFunction>
+     </ModificationFunctionMapping>
+   </EntityTypeMapping>
+ </EntitySetMapping>
 ```
  
 
@@ -1672,34 +1672,34 @@ The following example shows the **ScalarProperty** element used in two ways:
 The next example shows the **ScalarProperty** element used to map the insert and delete functions of a conceptual model association to stored procedures in the database. The stored procedures are declared in the storage model.
 
 ```
- <AssociationSetMapping Name="CourseInstructor" 
-                        TypeName="SchoolModel.CourseInstructor" 
-                        StoreEntitySet="CourseInstructor"> 
-   <EndProperty Name="Person"> 
-     <ScalarProperty Name="PersonID" ColumnName="PersonID" /> 
-   </EndProperty> 
-   <EndProperty Name="Course"> 
-     <ScalarProperty Name="CourseID" ColumnName="CourseID" /> 
-   </EndProperty> 
-   <ModificationFunctionMapping> 
+ <AssociationSetMapping Name="CourseInstructor"
+                        TypeName="SchoolModel.CourseInstructor"
+                        StoreEntitySet="CourseInstructor">
+   <EndProperty Name="Person">
+     <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+   </EndProperty>
+   <EndProperty Name="Course">
+     <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+   </EndProperty>
+   <ModificationFunctionMapping>
      <InsertFunction FunctionName="SchoolModel.Store.InsertCourseInstructor" >   
-       <EndProperty Name="Course"> 
-         <ScalarProperty Name="CourseID" ParameterName="courseId"/> 
-       </EndProperty> 
-       <EndProperty Name="Person"> 
-         <ScalarProperty Name="PersonID" ParameterName="instructorId"/> 
-       </EndProperty> 
-     </InsertFunction> 
-     <DeleteFunction FunctionName="SchoolModel.Store.DeleteCourseInstructor"> 
-       <EndProperty Name="Course"> 
-         <ScalarProperty Name="CourseID" ParameterName="courseId"/> 
-       </EndProperty> 
-       <EndProperty Name="Person"> 
-         <ScalarProperty Name="PersonID" ParameterName="instructorId"/> 
-       </EndProperty> 
-     </DeleteFunction> 
-   </ModificationFunctionMapping> 
- </AssociationSetMapping> 
+       <EndProperty Name="Course">
+         <ScalarProperty Name="CourseID" ParameterName="courseId"/>
+       </EndProperty>
+       <EndProperty Name="Person">
+         <ScalarProperty Name="PersonID" ParameterName="instructorId"/>
+       </EndProperty>
+     </InsertFunction>
+     <DeleteFunction FunctionName="SchoolModel.Store.DeleteCourseInstructor">
+       <EndProperty Name="Course">
+         <ScalarProperty Name="CourseID" ParameterName="courseId"/>
+       </EndProperty>
+       <EndProperty Name="Person">
+         <ScalarProperty Name="PersonID" ParameterName="instructorId"/>
+       </EndProperty>
+     </DeleteFunction>
+   </ModificationFunctionMapping>
+ </AssociationSetMapping>
 ```
  
 
@@ -1738,32 +1738,32 @@ The following table describes the attributes that can be applied to the **Update
 The following example is based on the School model and shows the **UpdateFunction** element used to map update function of the **Person** entity type to the **UpdatePerson** stored procedure. The **UpdatePerson** stored procedure is declared in the storage model.
 
 ```
- <EntityTypeMapping TypeName="SchoolModel.Person"> 
-   <ModificationFunctionMapping> 
-     <InsertFunction FunctionName="SchoolModel.Store.InsertPerson"> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ParameterName="EnrollmentDate" /> 
-       <ScalarProperty Name="HireDate" ParameterName="HireDate" /> 
-       <ScalarProperty Name="FirstName" ParameterName="FirstName" /> 
-       <ScalarProperty Name="LastName" ParameterName="LastName" /> 
-       <ResultBinding Name="PersonID" ColumnName="NewPersonID" /> 
-     </InsertFunction> 
-     <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson"> 
-       <ScalarProperty Name="EnrollmentDate" 
-                       ParameterName="EnrollmentDate" 
-                       Version="Current" /> 
-       <ScalarProperty Name="HireDate" ParameterName="HireDate" 
-                       Version="Current" /> 
-       <ScalarProperty Name="FirstName" ParameterName="FirstName" 
-                       Version="Current" /> 
-       <ScalarProperty Name="LastName" ParameterName="LastName" 
-                       Version="Current" /> 
-       <ScalarProperty Name="PersonID" ParameterName="PersonID" 
-                       Version="Current" /> 
-     </UpdateFunction> 
-     <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson"> 
-       <ScalarProperty Name="PersonID" ParameterName="PersonID" /> 
-     </DeleteFunction> 
-   </ModificationFunctionMapping> 
- </EntityTypeMapping> 
+ <EntityTypeMapping TypeName="SchoolModel.Person">
+   <ModificationFunctionMapping>
+     <InsertFunction FunctionName="SchoolModel.Store.InsertPerson">
+       <ScalarProperty Name="EnrollmentDate"
+                       ParameterName="EnrollmentDate" />
+       <ScalarProperty Name="HireDate" ParameterName="HireDate" />
+       <ScalarProperty Name="FirstName" ParameterName="FirstName" />
+       <ScalarProperty Name="LastName" ParameterName="LastName" />
+       <ResultBinding Name="PersonID" ColumnName="NewPersonID" />
+     </InsertFunction>
+     <UpdateFunction FunctionName="SchoolModel.Store.UpdatePerson">
+       <ScalarProperty Name="EnrollmentDate"
+                       ParameterName="EnrollmentDate"
+                       Version="Current" />
+       <ScalarProperty Name="HireDate" ParameterName="HireDate"
+                       Version="Current" />
+       <ScalarProperty Name="FirstName" ParameterName="FirstName"
+                       Version="Current" />
+       <ScalarProperty Name="LastName" ParameterName="LastName"
+                       Version="Current" />
+       <ScalarProperty Name="PersonID" ParameterName="PersonID"
+                       Version="Current" />
+     </UpdateFunction>
+     <DeleteFunction FunctionName="SchoolModel.Store.DeletePerson">
+       <ScalarProperty Name="PersonID" ParameterName="PersonID" />
+     </DeleteFunction>
+   </ModificationFunctionMapping>
+ </EntityTypeMapping>
 ```

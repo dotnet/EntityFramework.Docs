@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Model First | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Model First - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: e1b9c319-bb8a-4417-ac94-7890f257e7f6
 caps.latest.revision: 3
@@ -46,7 +46,7 @@ We’re going to make use of Entity Framework Designer, which is included as par
 -   Select **Data** from the left menu and then **ADO.NET Entity Data Model**
 -   Enter **BloggingModel** as the name and click **OK**, this launches the Entity Data Model Wizard
 -   Select **Empty Model** and click **Finish**
-    
+
     ![CreateEmptyModel](../ef6/media/createemptymodel.png)
 
  
@@ -58,9 +58,9 @@ The Entity Framework Designer is opened with a blank model. Now we can start add
     *This is the name of the derived context that will be generated for you, the context represents a session with the database, allowing us to query and save data*
 -   Right-click on the design surface and select **Add New -&gt; Entity…**
 -   Enter **Blog** as the entity name and **BlogId** as the key name and click **OK**
-    
+
     ![AddBlogEntity](../ef6/media/addblogentity.png)
-    
+
 -   Right-click on the new entity on the design surface and select **Add New -&gt; Scalar Property**, enter **Name** as the name of the property.
 -   Repeat this process to add a **Url** property.
 -   Right-click on the **Url** property on the design surface and select **Properties**, in the Properties window change the **Nullable** setting to **True**
@@ -76,7 +76,7 @@ Now that we have a couple of entities, it’s time to add an association (or rel
 -   Make one end of the relationship point to **Blog** with a multiplicity of **One** and the other end point to **Post** with a multiplicity of **Many**
     *This means that a Blog has many Posts and a Post belongs to one Blog*
 -   Ensure the **Add foreign key properties to 'Post' Entity** box is checked and click **OK**
-    
+
     ![AddAssociationMF](../ef6/media/addassociationmf.png)
 
  
@@ -104,7 +104,7 @@ Next, we need to swap our model to generate code that makes use of the DbContext
 -   Right-click on an empty spot of your model in the EF Designer and select **Add Code Generation Item…**
 -   Select **Online Templates** from the left menu and search for **DbContext**
 -   Select the EF **5.x DbContext Generator for C\#**, enter **BloggingModel** as the name and click **Add**
-    
+
     ![DbContextTemplate](../ef6/media/dbcontexttemplate.png)
 
  
@@ -124,11 +124,11 @@ Let's go ahead and generate the database.
 
 -   Right-click on the design surface and select **Generate Database from Model…**
 -   Click **New Connection…** and specify either LocalDb (**(localdb)\\v11.0**) or SQL Express (**.\\SQLEXPRESS**), depending on which version of Visual Studio you are using, enter **ModelFirst.Blogging** as the database name.
-    
+
     ![LocalDbConnectionMF](../ef6/media/localdbconnectionmf.png)
-    
+
     ![SqlExpressConnectionMF](../ef6/media/sqlexpressconnectionmf.png)
-    
+
 -   Select **OK** and you will be asked if you want to create a new database, select **Yes**
 -   Select **Next** and the Entity Framework Designer will calculate a script to create the database schema
 -   Once the script is displayed, click **Finish** and the script will be added to your project and opened
@@ -149,35 +149,35 @@ Now that we have a model it’s time to use it to access some data. The classes 
 Implement the Main method in Program.cs as shown below. This code creates a new instance of our context and then uses it to insert a new Blog. Then it uses a LINQ query to retrieve all Blogs from the database ordered alphabetically by Title.
 
 ```
-class Program 
-{ 
-    static void Main(string[] args) 
-    { 
-        using (var db = new BloggingContext()) 
-        { 
-            // Create and save a new Blog 
-            Console.Write("Enter a name for a new Blog: "); 
-            var name = Console.ReadLine(); 
- 
-            var blog = new Blog { Name = name }; 
-            db.Blogs.Add(blog); 
-            db.SaveChanges(); 
- 
-            // Display all Blogs from the database 
-            var query = from b in db.Blogs 
-                        orderby b.Name 
-                        select b; 
- 
-            Console.WriteLine("All blogs in the database:"); 
-            foreach (var item in query) 
-            { 
-                Console.WriteLine(item.Name); 
-            } 
- 
-            Console.WriteLine("Press any key to exit..."); 
-            Console.ReadKey(); 
-        } 
-    } 
+class Program
+{
+    static void Main(string[] args)
+    {
+        using (var db = new BloggingContext())
+        {
+            // Create and save a new Blog
+            Console.Write("Enter a name for a new Blog: ");
+            var name = Console.ReadLine();
+
+            var blog = new Blog { Name = name };
+            db.Blogs.Add(blog);
+            db.SaveChanges();
+
+            // Display all Blogs from the database
+            var query = from b in db.Blogs
+                        orderby b.Name
+                        select b;
+
+            Console.WriteLine("All blogs in the database:");
+            foreach (var item in query)
+            {
+                Console.WriteLine(item.Name);
+            }
+
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
+        }
+    }
 }
 ```
 
@@ -198,9 +198,9 @@ Now it’s time to make some changes to our model, when we make these changes we
 We’ll start by adding a new User entity to our model.
 
 -   Add a new **User** entity name with **Username** as the key name and **String** as the property type for the key
-    
+
     ![AddUserEntity](../ef6/media/adduserentity.png)
-    
+
 -   Right-click on the **Username** property on the design surface and select **Properties**, In the Properties window change the **MaxLength** setting to **50**
     *This restricts the data that can be stored in username to 50 characters*
 -   Add a **DisplayName** scalar property to the **User** entity

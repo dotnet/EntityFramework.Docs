@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Code First to a New Database | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Code First to a New Database - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 2df6cb0a-7d8b-4e28-9d05-e2b9a90125af
 caps.latest.revision: 3
@@ -45,22 +45,22 @@ Let’s define a very simple model using classes. We’re just defining them in 
 Below the Program class definition in Program.cs add the following two classes.
 
 ```
-public class Blog 
-{ 
-    public int BlogId { get; set; } 
-    public string Name { get; set; } 
- 
-    public virtual List<Post> Posts { get; set; } 
-} 
- 
-public class Post 
-{ 
-    public int PostId { get; set; } 
-    public string Title { get; set; } 
-    public string Content { get; set; } 
- 
-    public int BlogId { get; set; } 
-    public virtual Blog Blog { get; set; } 
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Name { get; set; }
+
+    public virtual List<Post> Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public int BlogId { get; set; }
+    public virtual Blog Blog { get; set; }
 }
 ```
 
@@ -89,55 +89,55 @@ using System.Data.Entity;
 Below the Post class in Program.cs add the following derived context.
 
 ```
-public class BloggingContext : DbContext 
-{ 
-    public DbSet<Blog> Blogs { get; set; } 
-    public DbSet<Post> Posts { get; set; } 
+public class BloggingContext : DbContext
+{
+    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Post> Posts { get; set; }
 }
 ```
 
 Here is a complete listing of what Program.cs should now contain.
 
 ```
-using System; 
-using System.Collections.Generic; 
-using System.Linq; 
-using System.Text; 
-using System.Threading.Tasks; 
-using System.Data.Entity; 
- 
-namespace CodeFirstNewDatabaseSample 
-{ 
-    class Program 
-    { 
-        static void Main(string[] args) 
-        { 
-        } 
-    } 
- 
-    public class Blog 
-    { 
-        public int BlogId { get; set; } 
-        public string Name { get; set; } 
- 
-        public virtual List<Post> Posts { get; set; } 
-    } 
- 
-    public class Post 
-    { 
-        public int PostId { get; set; } 
-        public string Title { get; set; } 
-        public string Content { get; set; } 
- 
-        public int BlogId { get; set; } 
-        public virtual Blog Blog { get; set; } 
-    } 
- 
-    public class BloggingContext : DbContext 
-    { 
-        public DbSet<Blog> Blogs { get; set; } 
-        public DbSet<Post> Posts { get; set; } 
-    } 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.Entity;
+
+namespace CodeFirstNewDatabaseSample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+        }
+    }
+
+    public class Blog
+    {
+        public int BlogId { get; set; }
+        public string Name { get; set; }
+
+        public virtual List<Post> Posts { get; set; }
+    }
+
+    public class Post
+    {
+        public int PostId { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+
+        public int BlogId { get; set; }
+        public virtual Blog Blog { get; set; }
+    }
+
+    public class BloggingContext : DbContext
+    {
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Post> Posts { get; set; }
+    }
 }
 ```
 
@@ -150,35 +150,35 @@ That is all the code we need to start storing and retrieving data. Obviously the
 Implement the Main method in Program.cs as shown below. This code creates a new instance of our context and then uses it to insert a new Blog. Then it uses a LINQ query to retrieve all Blogs from the database ordered alphabetically by Title.
 
 ```
-class Program 
-{ 
-    static void Main(string[] args) 
-    { 
-        using (var db = new BloggingContext()) 
-        { 
-            // Create and save a new Blog 
-            Console.Write("Enter a name for a new Blog: "); 
-            var name = Console.ReadLine(); 
- 
-            var blog = new Blog { Name = name }; 
-            db.Blogs.Add(blog); 
-            db.SaveChanges(); 
- 
-            // Display all Blogs from the database 
-            var query = from b in db.Blogs 
-                        orderby b.Name 
-                        select b; 
- 
-            Console.WriteLine("All blogs in the database:"); 
-            foreach (var item in query) 
-            { 
-                Console.WriteLine(item.Name); 
-            } 
- 
-            Console.WriteLine("Press any key to exit..."); 
-            Console.ReadKey(); 
-        } 
-    } 
+class Program
+{
+    static void Main(string[] args)
+    {
+        using (var db = new BloggingContext())
+        {
+            // Create and save a new Blog
+            Console.Write("Enter a name for a new Blog: ");
+            var name = Console.ReadLine();
+
+            var blog = new Blog { Name = name };
+            db.Blogs.Add(blog);
+            db.SaveChanges();
+
+            // Display all Blogs from the database
+            var query = from b in db.Blogs
+                        orderby b.Name
+                        select b;
+
+            Console.WriteLine("All blogs in the database:");
+            foreach (var item in query)
+            {
+                Console.WriteLine(item.Name);
+            }
+
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
+        }
+    }
 }
 ```
 
@@ -209,13 +209,13 @@ You can connect to this database using Server Explorer in Visual Studio
 -   **View -&gt; Server Explorer**
 -   Right click on **Data Connections** and select **Add Connection…**
 -   If you haven’t connected to a database from Server Explorer before you’ll need to select Microsoft SQL Server as the data source
-    
+
     ![SelectDataSource](../ef6/media/selectdatasource.png)
-    
+
 -   Connect to either LocalDb (**(localdb)\\v11.0**) or SQL Express (**.\\SQLEXPRESS**), depending on which one you have installed
-    
+
     ![LocalDbConnectionCFN](../ef6/media/localdbconnectioncfn.png)
-    
+
     ![SqlExpressConnectionCFN](../ef6/media/sqlexpressconnectioncfn.png)
 
  
@@ -245,13 +245,13 @@ The first step is to enable Code First Migrations for our BloggingContext.
     Now let’s make a change to our model, add a Url property to the Blog class:
 
 ```
-public class Blog 
-{ 
-    public int BlogId { get; set; } 
-    public string Name { get; set; } 
-    public string Url { get; set; } 
- 
-    public virtual List<Post> Posts { get; set; } 
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Name { get; set; }
+    public string Url { get; set; }
+
+    public virtual List<Post> Posts { get; set; }
 }
 ```
 
@@ -260,23 +260,23 @@ public class Blog
     The scaffolded code is saying that we need to add a Url column, that can hold string data, to the dbo.Blogs table. If needed, we could edit the scaffolded code but that’s not required in this case.
 
 ```
-namespace CodeFirstNewDatabaseSample.Migrations 
-{ 
-    using System; 
-    using System.Data.Entity.Migrations; 
-     
-    public partial class AddUrl : DbMigration 
-    { 
-        public override void Up() 
-        { 
-            AddColumn("dbo.Blogs", "Url", c => c.String()); 
-        } 
-         
-        public override void Down() 
-        { 
-            DropColumn("dbo.Blogs", "Url"); 
-        } 
-    } 
+namespace CodeFirstNewDatabaseSample.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+
+    public partial class AddUrl : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.Blogs", "Url", c => c.String());
+        }
+
+        public override void Down()
+        {
+            DropColumn("dbo.Blogs", "Url");
+        }
+    }
 }
 ```
 
@@ -296,21 +296,21 @@ So far we’ve just let EF discover the model using its default conventions, but
 -   Let’s add a User class to our model
 
 ```
-public class User 
-{ 
-    public string Username { get; set; } 
-    public string DisplayName { get; set; } 
+public class User
+{
+    public string Username { get; set; }
+    public string DisplayName { get; set; }
 }
 ```
 
 -   We also need to add a set to our derived context
 
 ```
-public class BloggingContext : DbContext 
-{ 
-    public DbSet<Blog> Blogs { get; set; } 
-    public DbSet<Post> Posts { get; set; } 
-    public DbSet<User> Users { get; set; } 
+public class BloggingContext : DbContext
+{
+    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<User> Users { get; set; }
 }
 ```
 
@@ -324,11 +324,11 @@ using System.ComponentModel.DataAnnotations;
 -   Now annotate the Username property to identify that it is the primary key
 
 ```
-public class User 
-{ 
-    [Key] 
-    public string Username { get; set; } 
-    public string DisplayName { get; set; } 
+public class User
+{
+    [Key]
+    public string Username { get; set; }
+    public string DisplayName { get; set; }
 }
 ```
 
@@ -370,18 +370,18 @@ To access the fluent API you override the OnModelCreating method in DbContext. L
 -   Override the OnModelCreating method on BloggingContext with the following code
 
 ```
-public class BloggingContext : DbContext 
-{ 
-    public DbSet<Blog> Blogs { get; set; } 
-    public DbSet<Post> Posts { get; set; } 
-    public DbSet<User> Users { get; set; } 
- 
-    protected override void OnModelCreating(DbModelBuilder modelBuilder) 
-    { 
-        modelBuilder.Entity<User>() 
-            .Property(u => u.DisplayName) 
-            .HasColumnName("display_name"); 
-    } 
+public class BloggingContext : DbContext
+{
+    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<User> Users { get; set; }
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>()
+            .Property(u => u.DisplayName)
+            .HasColumnName("display_name");
+    }
 }
 ```
 

@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Fluent API with VB.NET | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Fluent API with VB.NET - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 763dc6a2-764a-4600-896c-f6f13abf56ec
 caps.latest.revision: 3
@@ -74,8 +74,8 @@ In this step you will define VB.NET POCO entity types that represent the concept
         Public Property Title() As String
         Public Property Credits() As Integer
 
-        ' Foreign  key that does not follow the Code First convention. 
-        ' The fluent API will be used to configure DepartmentID_FK  to be the foreign key for this entity. 
+        ' Foreign  key that does not follow the Code First convention.
+        ' The fluent API will be used to configure DepartmentID_FK  to be the foreign key for this entity.
         Public Property DepartmentID_FK() As Integer
 
         ' Navigation properties
@@ -91,7 +91,7 @@ In this step you will define VB.NET POCO entity types that represent the concept
 
     Partial Public Class OnsiteCourse
         Inherits Course
-     
+
         Public Sub New()
             Details = New OnsiteCourseDetails()
         End Sub
@@ -129,8 +129,8 @@ In this step you will define VB.NET POCO entity types that represent the concept
     End Class
 
     Public Class OfficeAssignment
-        ' Primary key that does not follow the Code First convention. 
-        ' The HasKey method is used later to configure the primary key for the entity. 
+        ' Primary key that does not follow the Code First convention.
+        ' The HasKey method is used later to configure the primary key for the entity.
         Public Property InstructorID() As Integer
 
         Public Property Location() As String
@@ -189,43 +189,43 @@ This section demonstrates how to use the fluent APIs to configure types to table
 
 ```
     ' Configure Code First to ignore PluralizingTableName convention
-        ' If you keep this convention then the generated tables 
+        ' If you keep this convention then the generated tables
         ' will have pluralized names.
         modelBuilder.Conventions.Remove(Of PluralizingTableNameConvention)()
 
 
         ' Specifying that a Class is a Complex Type
 
-        ' The model defined in this topic defines a type OnsiteCourseDetails. 
-        ' By convention, a type that has no primary key specified 
-        ' is treated as a complex type. 
-        ' There are some scenarios where Code First will not 
-        ' detect a complex type (for example, if you do have a property 
-        ' called ID, but you do not mean for it to be a primary key). 
-        ' In such cases, you would use the fluent API to 
-        ' explicitly specify that a type is a complex type. 
+        ' The model defined in this topic defines a type OnsiteCourseDetails.
+        ' By convention, a type that has no primary key specified
+        ' is treated as a complex type.
+        ' There are some scenarios where Code First will not
+        ' detect a complex type (for example, if you do have a property
+        ' called ID, but you do not mean for it to be a primary key).
+        ' In such cases, you would use the fluent API to
+        ' explicitly specify that a type is a complex type.
         modelBuilder.ComplexType(Of OnsiteCourseDetails)()
 
 
         ' Mapping a CLR Entity Type to a Specific Table in the Database.
 
-        ' All properties of OfficeAssignment will be mapped 
+        ' All properties of OfficeAssignment will be mapped
         ' to columns  in a table called t_OfficeAssignment.
         modelBuilder.Entity(Of OfficeAssignment)().ToTable("t_OfficeAssignment")
 
 
         ' Mapping the Table-Per-Hierarchy (TPH) Inheritance
 
-        ' In the TPH mapping scenario, all types in an inheritance hierarchy 
-        ' are mapped to a single table. 
-        ' A discriminator column is used to identify the type of each row. 
+        ' In the TPH mapping scenario, all types in an inheritance hierarchy
+        ' are mapped to a single table.
+        ' A discriminator column is used to identify the type of each row.
         ' When creating your model with Code First,      
-        ' TPH is the default strategy for the types that 
-        ' participate in the inheritance hierarchy. 
-        ' By default, the discriminator column is added 
-        ' to the table with the name “Discriminator” 
-        ' and the CLR type name of each type in the hierarchy 
-        ' is used for the discriminator values. 
+        ' TPH is the default strategy for the types that
+        ' participate in the inheritance hierarchy.
+        ' By default, the discriminator column is added
+        ' to the table with the name “Discriminator”
+        ' and the CLR type name of each type in the hierarchy
+        ' is used for the discriminator values.
         ' You can modify the default behavior by using the fluent API.
         modelBuilder.Entity(Of Person)().
             Map(Of Person)(Function(t) t.Requires("Type").
@@ -236,10 +236,10 @@ This section demonstrates how to use the fluent APIs to configure types to table
 
         ' Mapping the Table-Per-Type (TPT) Inheritance
 
-        ' In the TPT mapping scenario, all types are mapped to individual tables. 
-        ' Properties that belong solely to a base type or derived type are stored 
-        ' in a table that maps to that type. Tables that map to derived types 
-        ' also store a foreign key that joins the derived table with the base table. 
+        ' In the TPT mapping scenario, all types are mapped to individual tables.
+        ' Properties that belong solely to a base type or derived type are stored
+        ' in a table that maps to that type. Tables that map to derived types
+        ' also store a foreign key that joins the derived table with the base table.
         modelBuilder.Entity(Of Course)().ToTable("Course")
         modelBuilder.Entity(Of OnsiteCourse)().ToTable("OnsiteCourse")
         modelBuilder.Entity(Of OnlineCourse)().ToTable("OnlineCourse")
@@ -247,20 +247,20 @@ This section demonstrates how to use the fluent APIs to configure types to table
 
         ' Configuring a Primary Key
 
-        ' If your class defines a property whose name is “ID” or “Id”, 
-        ' or a class name followed by “ID” or “Id”, 
-        ' the Entity Framework treats this property as a primary key by convention. 
-        ' If your property name does not follow this pattern, use the HasKey method 
-        ' to configure the primary key for the entity. 
+        ' If your class defines a property whose name is “ID” or “Id”,
+        ' or a class name followed by “ID” or “Id”,
+        ' the Entity Framework treats this property as a primary key by convention.
+        ' If your property name does not follow this pattern, use the HasKey method
+        ' to configure the primary key for the entity.
         modelBuilder.Entity(Of OfficeAssignment)().
             HasKey(Function(t) t.InstructorID)
 
 
         ' Specifying the Maximum Length on a Property
 
-        ' In the following example, the Name property 
-        ' should be no longer than 50 characters. 
-        ' If you make the value longer than 50 characters, 
+        ' In the following example, the Name property
+        ' should be no longer than 50 characters.
+        ' If you make the value longer than 50 characters,
         ' you will get a DbEntityValidationException exception.
         modelBuilder.Entity(Of Department)().Property(Function(t) t.Name).
             HasMaxLength(60)
@@ -268,9 +268,9 @@ This section demonstrates how to use the fluent APIs to configure types to table
 
         ' Configuring the Property to be Required
 
-        ' In the following example, the Name property is required. 
-        ' If you do not specify the Name, 
-        ' you will get a DbEntityValidationException exception. 
+        ' In the following example, the Name property is required.
+        ' If you do not specify the Name,
+        ' you will get a DbEntityValidationException exception.
         ' The database column used to store this property will be non-nullable.
         modelBuilder.Entity(Of Department)().Property(Function(t) t.Name).
             IsRequired()
@@ -278,8 +278,8 @@ This section demonstrates how to use the fluent APIs to configure types to table
 
         ' Switching off Identity for Numeric Primary Keys
 
-        ' The following example sets the DepartmentID property to 
-        ' System.ComponentModel.DataAnnotations.DatabaseGeneratedOption.None to indicate that 
+        ' The following example sets the DepartmentID property to
+        ' System.ComponentModel.DataAnnotations.DatabaseGeneratedOption.None to indicate that
         ' the value will not be generated by the database.
         modelBuilder.Entity(Of Course)().Property(Function(t) t.CourseID).
             HasDatabaseGeneratedOption(DatabaseGeneratedOption.None)
@@ -291,11 +291,11 @@ This section demonstrates how to use the fluent APIs to configure types to table
         'Mapping a CLR Property to a Specific Column in the Database
          modelBuilder.Entity(Of Department)().Property(Function(t) t.Budget).
              HasColumnName("DepartmentBudget")
-     
+
         'Configuring the Data Type of a Database Column
          modelBuilder.Entity(Of Department)().Property(Function(t) t.Name).
              HasColumnType("varchar")
-     
+
         'Configuring Properties on a Complex Type
         modelBuilder.Entity(Of OnsiteCourse)().Property(Function(t) t.Details.Days).
             HasColumnName("Days")
@@ -307,7 +307,7 @@ This section demonstrates how to use the fluent APIs to configure types to table
 
         ' Map one-to-zero or one relationship
 
-        ' The OfficeAssignment has the InstructorID 
+        ' The OfficeAssignment has the InstructorID
         ' property that is a primary key and a foreign key.
         modelBuilder.Entity(Of OfficeAssignment)().
             HasRequired(Function(t) t.Instructor).
@@ -316,24 +316,24 @@ This section demonstrates how to use the fluent APIs to configure types to table
 
         ' Configuring a Many-to-Many Relationship
 
-        ' The following code configures a many-to-many relationship 
-        ' between the Course  and Instructor types. 
-        ' In the following example, the default Code First conventions 
+        ' The following code configures a many-to-many relationship
+        ' between the Course  and Instructor types.
+        ' In the following example, the default Code First conventions
         ' are used  to create a join table.
-        ' As a result the CourseInstructor table is created with 
-        ' Course_CourseID  and Instructor_InstructorID columns. 
+        ' As a result the CourseInstructor table is created with
+        ' Course_CourseID  and Instructor_InstructorID columns.
         modelBuilder.Entity(Of Course)().
             HasMany(Function(t) t.Instructors).
             WithMany(Function(t) t.Courses)
 
 
-        ' Configuring a Many-to-Many Relationship and specifying the names 
+        ' Configuring a Many-to-Many Relationship and specifying the names
         ' of the columns in the join table
 
-        ' If you want to specify the join table name 
-        ' and the names of the columns in the table 
-        ' you need to do additional configuration by using the Map method. 
-        ' The following code generates the CourseInstructor 
+        ' If you want to specify the join table name
+        ' and the names of the columns in the table
+        ' you need to do additional configuration by using the Map method.
+        ' The following code generates the CourseInstructor
         ' table with CourseID and InstructorID columns.
         modelBuilder.Entity(Of Course)().
             HasMany(Function(t) t.Instructors).
@@ -354,19 +354,19 @@ This section demonstrates how to use the fluent APIs to configure types to table
             HasRequired(Function(t) t.Department).
             WithMany(Function(t) t.Courses).
             HasForeignKey(Function(t) t.DepartmentID_FK)
-     
+
 
         ' Enabling Cascade Delete
 
-        ' By default, if a foreign key on the dependent entity is not nullable, 
-        ' then Code First sets cascade delete on the relationship. 
-        ' If a foreign key on the dependent entity is nullable, 
-        ' Code First does not set cascade delete on the relationship, 
-        ' and when the principal is deleted the foreign key will be set to null. 
+        ' By default, if a foreign key on the dependent entity is not nullable,
+        ' then Code First sets cascade delete on the relationship.
+        ' If a foreign key on the dependent entity is nullable,
+        ' Code First does not set cascade delete on the relationship,
+        ' and when the principal is deleted the foreign key will be set to null.
         ' The following code configures cascade delete on the relationship.
 
-        ' You can also remove the cascade delete conventions by using: 
-        ' modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>() 
+        ' You can also remove the cascade delete conventions by using:
+        ' modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>()
         ' and modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>().
         modelBuilder.Entity(Of Course)().
             HasRequired(Function(t) t.Department).
@@ -392,7 +392,7 @@ Let's perform some data access using the **SchoolContext** to see out model in a
         Sub Main()
 
         Using context As New SchoolContext()
-     
+
                 ' Create and save a new Department.
                 Console.Write("Enter a name for a new Department: ")
                 Dim name = Console.ReadLine()
@@ -402,7 +402,7 @@ Let's perform some data access using the **SchoolContext** to see out model in a
                 context.SaveChanges()
 
                 ' Display all Departments from the database ordered by name
-                Dim departments = 
+                Dim departments =
                     From d In context.Departments
                     Order By d.Name
                     Select d

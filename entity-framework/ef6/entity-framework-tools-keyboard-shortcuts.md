@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Tools Keyboard Shortcuts | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Tools Keyboard Shortcuts - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 3c76cdd5-17c5-4c54-a6a5-cf21b974636b
 caps.latest.revision: 3

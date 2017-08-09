@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Designer Query Sprocs | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Designer Query Sprocs - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 9554ed25-c5c1-43be-acad-5da37739697f
 caps.latest.revision: 3
@@ -47,10 +47,10 @@ To complete this walkthrough, you must install the [School database](../ef6/enti
     In the Connection Properties dialog box, enter the server name (for example, **(localdb)\\v11.0**), select the authentication method, type **School** for the database name, and then click **OK**.  
     The Choose Your Data Connection dialog box is updated with your database connection setting.
 -   In the Choose Your Database Objects dialog box, check the **Tables** checkbox to select all the tables.  
-    Also, select the following stored procedures under the **Stored Procedures and Functions** node: **GetStudentGrades** and **GetDepartmentName**.  
+    Also, select the following stored procedures under the **Stored Procedures and Functions** node: **GetStudentGrades** and **GetDepartmentName**. 
 
     ![Import](../ef6/media/import.jpg)
-    
+
     *Starting with Visual Studio 2012 the EF Designer supports bulk import of stored procedures. The **Import selected stored procedures and functions into theentity model** is checked by default.*
 -   Click **Finish**.
 
@@ -86,7 +86,7 @@ The code calls two stored procedures: **GetStudentGrades** (returns **StudentGra
             Console.WriteLine("Student grade: " + grade.Grade);
         }
 
-        // Call GetDepartmentName. 
+        // Call GetDepartmentName.
         // Declare the name variable that will contain the value returned by the output parameter.
         ObjectParameter name = new ObjectParameter("Name", typeof(String));
         context.GetDepartmentName(1, name);

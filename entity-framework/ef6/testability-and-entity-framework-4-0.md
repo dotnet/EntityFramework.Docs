@@ -1,13 +1,13 @@
 ---
-title: "Testability and Entity Framework 4.0 | Microsoft Docs"
-ms.custom: ""
+title: "Testability and Entity Framework 4.0 - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 9430e2ab-261c-4e8e-8545-2ebc52d7a247
 caps.latest.revision: 3
@@ -173,7 +173,7 @@ The drawback to a lazy load is that when an application *does* need the time car
 
 Fortunately, we’ll see how EF4 supports both implicit lazy loads and efficient eager loads as we move into the next section and implement these patterns.
 
-## Implementing Patterns with the ADO.NET Entity Framework
+## Implementing Patterns with the Entity Framework
 
 The good news is that all of the design patterns we described in the last section are straightforward to implement with EF4. To demonstrate we are going to use a simple ASP.NET MVC application to edit and display Employees and their associated time card information. We’ll start by using the following “plain old CLR objects” (POCOs). 
 
@@ -639,7 +639,7 @@ When run against a real ObjectContext, the code produces the following single qu
 
 The great news is the code inside the action method remains fully testable. We don’t need to provide any additional features for our fakes to support the Include operator. The bad news is we had to use the Include operator inside of the code we wanted to keep persistence ignorant. This is a prime example of the type of tradeoffs you’ll need to evaluate when building testable code. There are times when you need to let persistence concerns leak outside the repository abstraction to meet performance goals.
 
-The alternative to eager loading is lazy loading. Lazy loading means we do *not* need our business code to explicitly announce the requirement for associated data. Instead, we use our entities in the application and if additional data is needed the Entity Framework will load the data on demand.
+The alternative to eager loading is lazy loading. Lazy loading means we do *not* need our business code to explicitly announce the requirement for associated data. Instead, we use our entities in the application and if additional data is needed Entity Framework will load the data on demand.
 
 ### Lazy Loading
 

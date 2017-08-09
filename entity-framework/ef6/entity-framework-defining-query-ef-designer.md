@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Defining Query - EF Designer | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Defining Query - EF Designer - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: e52a297e-85aa-42f6-a922-ba960f8a4b22
 caps.latest.revision: 3
@@ -58,11 +58,11 @@ This walkthrough is using Visual Studio 2012.
 -   Click **Finish**.
 -   In Solution Explorer, right-click the **DefiningQueryModel.edmx** file and select **Open With…**.
 -   Select **XML (Text) Editor**.
-    
+
     ![XMLEditor](../ef6/media/xmleditor.png)
-    
+
 -   Click **Yes** if prompted with the following message:
-    
+
     ![Warning2](../ef6/media/warning2.png)
 
  
@@ -139,7 +139,7 @@ Open the model in the EF Designer.
 
 -   Double-click the DefiningQueryModel.edmx.
 -   Say **Yes** to the following message:
-    
+
     ![Warning2](../ef6/media/warning2.png)
 
  
@@ -160,9 +160,9 @@ As a result, the following elements were added to the **CSDL** section of the .e
 
 ```
     <EntitySet Name="GradeReport" EntityType="SchoolModel.GradeReport" />
-     
+
     <EntityType Name="GradeReport">
-    . . . 
+    . . .
     </EntityType>
 ```
 

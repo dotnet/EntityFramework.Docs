@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Code First to an Existing Database | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Code First to an Existing Database - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: a7e60b74-973d-4480-868f-500a3899932e
 caps.latest.revision: 3
@@ -34,41 +34,41 @@ Let's go ahead and generate the database.
 -   **View -&gt; Server Explorer**
 -   Right click on **Data Connections -&gt; Add Connection…**
 -   If you haven’t connected to a database from **Server Explorer** before you’ll need to select **Microsoft SQL Server** as the data source
-    
+
     ![SelectDataSource](../ef6/media/selectdatasource.png)
-    
+
 -   Connect to your LocalDb instance (**(localdb)\\v11.0**), and enter **Blogging** as the database name
-    
+
     ![LocalDbConnection](../ef6/media/localdbconnection.png)
-    
+
 -   Select **OK** and you will be asked if you want to create a new database, select **Yes**
-    
+
     ![CreateDatabaseDialog](../ef6/media/createdatabasedialog.png)
-    
+
 -   The new database will now appear in Server Explorer, right-click on it and select **New Query**
 -   Copy the following SQL into the new query, then right-click on the query and select **Execute**
 
 ```
-CREATE TABLE [dbo].[Blogs] ( 
-    [BlogId] INT IDENTITY (1, 1) NOT NULL, 
-    [Name] NVARCHAR (200) NULL, 
-    [Url]  NVARCHAR (200) NULL, 
-    CONSTRAINT [PK_dbo.Blogs] PRIMARY KEY CLUSTERED ([BlogId] ASC) 
-); 
- 
-CREATE TABLE [dbo].[Posts] ( 
-    [PostId] INT IDENTITY (1, 1) NOT NULL, 
-    [Title] NVARCHAR (200) NULL, 
-    [Content] NTEXT NULL, 
-    [BlogId] INT NOT NULL, 
-    CONSTRAINT [PK_dbo.Posts] PRIMARY KEY CLUSTERED ([PostId] ASC), 
-    CONSTRAINT [FK_dbo.Posts_dbo.Blogs_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [dbo].[Blogs] ([BlogId]) ON DELETE CASCADE 
-); 
- 
-INSERT INTO [dbo].[Blogs] ([Name],[Url]) 
-VALUES ('The Visual Studio Blog', 'http://blogs.msdn.com/visualstudio/') 
- 
-INSERT INTO [dbo].[Blogs] ([Name],[Url]) 
+CREATE TABLE [dbo].[Blogs] (
+    [BlogId] INT IDENTITY (1, 1) NOT NULL,
+    [Name] NVARCHAR (200) NULL,
+    [Url]  NVARCHAR (200) NULL,
+    CONSTRAINT [PK_dbo.Blogs] PRIMARY KEY CLUSTERED ([BlogId] ASC)
+);
+
+CREATE TABLE [dbo].[Posts] (
+    [PostId] INT IDENTITY (1, 1) NOT NULL,
+    [Title] NVARCHAR (200) NULL,
+    [Content] NTEXT NULL,
+    [BlogId] INT NOT NULL,
+    CONSTRAINT [PK_dbo.Posts] PRIMARY KEY CLUSTERED ([PostId] ASC),
+    CONSTRAINT [FK_dbo.Posts_dbo.Blogs_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [dbo].[Blogs] ([BlogId]) ON DELETE CASCADE
+);
+
+INSERT INTO [dbo].[Blogs] ([Name],[Url])
+VALUES ('The Visual Studio Blog', 'http://blogs.msdn.com/visualstudio/')
+
+INSERT INTO [dbo].[Blogs] ([Name],[Url])
 VALUES ('.NET Framework Blog', 'http://blogs.msdn.com/dotnet/')
 ```
 
@@ -93,15 +93,15 @@ We’re going to make use of the Entity Framework Tools for Visual Studio to hel
 -   Enter **BloggingContext** as the name and click **OK**
 -   This launches the **Entity Data Model Wizard**
 -   Select **Code First from Database** and click **Next**
-    
+
     ![WizardOneCFE](../ef6/media/wizardonecfe.png)
-    
+
 -   Select the connection to the database you created in the first section and click **Next**
-    
+
     ![WizardTwoCFE](../ef6/media/wizardtwocfe.png)
-    
+
 -   Click the checkbox next to **Tables** to import all tables and click **Finish**
-    
+
     ![WizardThreeCFE](../ef6/media/wizardthreecfe.png)
 
 Once the reverse engineer process completes a number of items will have been added to the project, let's take a look at what's been added.
@@ -111,11 +111,11 @@ Once the reverse engineer process completes a number of items will have been add
 An App.config file has been added to the project, this file contains the connection string to the existing database.
 
 ```
-<connectionStrings> 
+<connectionStrings>
   <add  
     name="BloggingContext"  
     connectionString="data source=(localdb)\v11.0;initial catalog=Blogging;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"  
-    providerName="System.Data.SqlClient" /> 
+    providerName="System.Data.SqlClient" />
 </connectionStrings>
 ```
 
@@ -127,19 +127,19 @@ A **BloggingContext** class has been added to the project. The context represent
 The context exposes a **DbSet&lt;TEntity&gt;** for each type in our model. You’ll also notice that the default constructor calls a base constructor using the **name=** syntax. This tells Code First that the connection string to use for this context should be loaded from the configuration file.
 
 ```
-public partial class BloggingContext : DbContext 
-    { 
-        public BloggingContext() 
-            : base("name=BloggingContext") 
-        { 
-        } 
- 
-        public virtual DbSet<Blog> Blogs { get; set; } 
-        public virtual DbSet<Post> Posts { get; set; } 
- 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder) 
-        { 
-        } 
+public partial class BloggingContext : DbContext
+    {
+        public BloggingContext()
+            : base("name=BloggingContext")
+        {
+        }
+
+        public virtual DbSet<Blog> Blogs { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+        }
     }
 ```
 
@@ -150,22 +150,22 @@ public partial class BloggingContext : DbContext
 Finally, a **Blog** and **Post** class have also been added to the project. These are the domain classes that make up our model. You'll see Data Annotations applied to the classes to specify configuration where the Code First conventions would not align with the structure of the existing database. For example, you'll see the **StringLength** annotation on **Blog.Name** and **Blog.Url** since they have a maximum length of **200** in the database (the Code First default is to use the maximun length supported by the database provider - **nvarchar(max)** in SQL Server).
 
 ```
-public partial class Blog 
-{ 
-    public Blog() 
-    { 
-        Posts = new HashSet<Post>(); 
-    } 
- 
-    public int BlogId { get; set; } 
- 
-    [StringLength(200)] 
-    public string Name { get; set; } 
- 
-    [StringLength(200)] 
-    public string Url { get; set; } 
- 
-    public virtual ICollection<Post> Posts { get; set; } 
+public partial class Blog
+{
+    public Blog()
+    {
+        Posts = new HashSet<Post>();
+    }
+
+    public int BlogId { get; set; }
+
+    [StringLength(200)]
+    public string Name { get; set; }
+
+    [StringLength(200)]
+    public string Url { get; set; }
+
+    public virtual ICollection<Post> Posts { get; set; }
 }
 ```
 
@@ -174,35 +174,35 @@ public partial class Blog
 Now that we have a model it’s time to use it to access some data. Implement the **Main** method in **Program.cs** as shown below. This code creates a new instance of our context and then uses it to insert a new **Blog**. Then it uses a LINQ query to retrieve all **Blogs** from the database ordered alphabetically by **Title**.
 
 ```
-class Program 
-{ 
-    static void Main(string[] args) 
-    { 
-        using (var db = new BloggingContext()) 
-        { 
-            // Create and save a new Blog 
-            Console.Write("Enter a name for a new Blog: "); 
-            var name = Console.ReadLine(); 
- 
-            var blog = new Blog { Name = name }; 
-            db.Blogs.Add(blog); 
-            db.SaveChanges(); 
- 
-            // Display all Blogs from the database 
-            var query = from b in db.Blogs 
-                        orderby b.Name 
-                        select b; 
- 
-            Console.WriteLine("All blogs in the database:"); 
-            foreach (var item in query) 
-            { 
-                Console.WriteLine(item.Name); 
-            } 
- 
-            Console.WriteLine("Press any key to exit..."); 
-            Console.ReadKey(); 
-        } 
-    } 
+class Program
+{
+    static void Main(string[] args)
+    {
+        using (var db = new BloggingContext())
+        {
+            // Create and save a new Blog
+            Console.Write("Enter a name for a new Blog: ");
+            var name = Console.ReadLine();
+
+            var blog = new Blog { Name = name };
+            db.Blogs.Add(blog);
+            db.SaveChanges();
+
+            // Display all Blogs from the database
+            var query = from b in db.Blogs
+                        orderby b.Name
+                        select b;
+
+            Console.WriteLine("All blogs in the database:");
+            foreach (var item in query)
+            {
+                Console.WriteLine(item.Name);
+            }
+
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
+        }
+    }
 }
 ```
 

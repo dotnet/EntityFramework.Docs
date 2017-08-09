@@ -2,12 +2,12 @@
 title: "Entity Framework 6 Runtime License (KOR) | Microsoft Docs"
 ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: fc90a6bf-0958-4d9a-a383-38f8e6d21640
 caps.latest.revision: 3

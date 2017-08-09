@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Power Tools | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Power Tools - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 39436f4a-4945-4848-b9c3-448dc38ca9d8
 caps.latest.revision: 3
@@ -68,15 +68,15 @@ The **Reverse Engineer Code First** command is used to generate the POCO, mappin
 -   Right click the project and select **Entity Framework** –&gt; **Reverse Engineer Code First**.
 -   Enter the information about an existing database based on which you want to reverse engineer Code First
     **Note**: This will reverse engineer all the tables in the database, so if you do not want all of them, you will have to manually delete them from the model  
-    
+
     ![Connection](../ef6/media/connection.png)
 
 You can see the progress of the reverse engineer process in the status bar of Visual Studio. The following updates are made to your project when the process completes.
 
 -   The configuration file (.config) is updated with the connection string
 -   A reference to the **EntityFramework** NuGet package is added to the project
--   A DbContext derived class and a set of POCO classes are generated under the **Models** folder. Also, the mapping classes are generated under the **Mapping** folder that is nested under the **Models** folder.  
-    
+-   A DbContext derived class and a set of POCO classes are generated under the **Models** folder. Also, the mapping classes are generated under the **Mapping** folder that is nested under the **Models** folder. 
+
     ![ModelMappingClasses](../ef6/media/modelmappingclasses.png)
 
 Re-running this command after the initial code generation overwrites the generated files.
@@ -95,9 +95,9 @@ The rest of this section demonstrates how to modify code generation so that the 
 
 -   Right click the project and select **Entity Framework** –&gt; **CustomizeReverse Engineer Templates**
     *Selecting **CustomizeReverse Engineer Templates** adds the T4 templates to your project. The EF Power Tools then uses these templates to generate the code for your context, entities, and mapping classes.*  
-    
+
     ![CodeTemplates](../ef6/media/codetemplates.png)
-    
+
     **Note**: You might see the following error caused by the fact that Visual Studio is trying to validate the templates. Because the templates are never run from your project, you can ignore it.*
     Compiling transformation: The type or namespace name ‘EfTextTemplateHost’ could not be found (are you missing a using directive or an assembly reference?)
 
@@ -111,7 +111,7 @@ Now it's time to edit the templates.
 ```
     var tableSet = efHost.TableSet;
     var tableName = (string)tableSet.MetadataProperties["Table"].Value
-        ?? tableSet.Name;
+         tableSet.Name;
     var schemaName = (string)tableSet.MetadataProperties["Schema"].Value;
 #>
             // Table & Column Mappings
@@ -147,7 +147,7 @@ namespace \<#= code.EscapeNamespace(efHost.Namespace) #>
 \<#
     var tableSet = efHost.TableSet;
     var tableName = (string)tableSet.MetadataProperties["Table"].Value
-        ?? tableSet.Name;
+         tableSet.Name;
     var schemaName = (string)tableSet.MetadataProperties["Schema"].Value;
 #>
 \<#
@@ -171,8 +171,8 @@ namespace \<#= code.EscapeNamespace(efHost.Namespace) #>
 ```
 foreach (var property in efHost.EntityType.Properties)
     {
-#> 
-        [Column("\<#= efHost.PropertyToColumnMappings[property].Name #>")] 
+#>
+        [Column("\<#= efHost.PropertyToColumnMappings[property].Name #>")]
 <#
 ```
  

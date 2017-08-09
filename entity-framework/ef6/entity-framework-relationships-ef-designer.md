@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Relationships - EF Designer | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Relationships - EF Designer - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 402fe960-754b-470f-976b-e5de3e9986b5
 caps.latest.revision: 3
@@ -43,9 +43,9 @@ Creating an association with the EF Designer updates the model content of the .e
 
 1.  Right-click an empty area of the design surface, point to **Add New**, and select **Association…**.
 2.  Fill in the settings for the association in the **Add Association** dialog.
-    
+
     ![AddAssociation](../ef6/media/addassociation.png)
-    
+
     > **Note**: You can choose to not add navigation properties or foreign key properties to the entities at the ends of the association by clearing the **Navigation Property **and **Add foreign key properties to the &lt;entity type name&gt; Entity **checkboxes. If you add only one navigation property, the association will be traversable in only one direction. If you add no navigation properties, you must choose to add foreign key properties in order to access entities at the ends of the association.
 3.  Click **OK**.
 
@@ -75,9 +75,9 @@ When you use the EF Designer to add or edit a referential constraint, the EF Des
     The entity's key properties are added to the **Principal Key** list in the dialog box.
 -   From the **Dependent** drop-down list, select the dependent entity in the referential constraint.
 -   For each principal key that has a dependent key, select a corresponding dependent key from the drop-down lists in the **Dependent Key** column.
-    
+
     ![RefConstraint](../ef6/media/refconstraint.png)
-    
+
 -   Click **OK**.
 
  
@@ -97,7 +97,7 @@ You can specify how an association maps to the database in the **Mapping Details
 -   Select the table to which the association will map.
     The **Mapping Details** window displays both ends of the association and the key properties for the entity type at each **End**.
 -   For each key property, click the **Column** field, and select the column to which the property will map.
-    
+
     ![MappingDetails4](../ef6/media/mappingdetails4.png)
 
 ### Edit an association mapping

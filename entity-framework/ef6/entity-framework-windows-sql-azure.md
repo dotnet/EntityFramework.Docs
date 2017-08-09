@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Windows SQL Azure | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Windows SQL Azure - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: ce0bc4e4-f036-452e-80b3-c483f742631e
 caps.latest.revision: 4
@@ -52,9 +52,9 @@ Prior to EF6, Entity Framework doesn't have native support for retrying an opera
 
 ### SQL Azure Federations
 
-The current release of Entity Framework can be used to work with SQL Azure Federations, however a federated database cannot be created by the Entity Framework. Our Customer Advisory Team has started a series of blog posts with the goal of providing guidance around common scenarios and issues that arise when using the Entity Framework with SQL Azure Federations.
+The current release of Entity Framework can be used to work with SQL Azure Federations, however a federated database cannot be created by Entity Framework. Our Customer Advisory Team has started a series of blog posts with the goal of providing guidance around common scenarios and issues that arise when using Entity Framework with SQL Azure Federations.
 
-The first blog post in this series, SQL Azure Federations with Entity Framework Code-First, is a great getting started guide. It explains the correct procedure to submit the USE FEDERATION statement before sending queries to the database via the Entity Framework (query execution or update operations).
+The first blog post in this series, SQL Azure Federations with Entity Framework Code-First, is a great getting started guide. It explains the correct procedure to submit the USE FEDERATION statement before sending queries to the database via Entity Framework(query execution or update operations).
 
 The next post, Understanding SQL Azure Federations No-MARS Support and Entity Framework, explains the impact of the lack of support for MARS on Entity Framework applications.
 

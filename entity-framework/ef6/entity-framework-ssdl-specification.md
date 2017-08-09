@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework SSDL Specification | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework SSDL Specification - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: a4af4b1a-40f4-48cc-b2e0-fa8f5d9d5419
 caps.latest.revision: 3
@@ -15,9 +15,9 @@ caps.latest.revision: 3
 # Entity Framework SSDL Specification
 Store schema definition language (SSDL) is an XML-based language that describes the storage model of an Entity Framework application.
 
-In an Entity Framework application, storage model metadata is loaded from a .ssdl file (written in SSDL) into an instance of the System.Data.Metadata.Edm.StoreItemCollection and is accessible by using methods in the System.Data.Metadata.Edm.MetadataWorkspace class. The Entity Framework uses storage model metadata to translate queries against the conceptual model to store-specific commands.
+In an Entity Framework application, storage model metadata is loaded from a .ssdl file (written in SSDL) into an instance of the System.Data.Metadata.Edm.StoreItemCollection and is accessible by using methods in the System.Data.Metadata.Edm.MetadataWorkspace class. Entity Frameworkuses storage model metadata to translate queries against the conceptual model to store-specific commands.
 
-The Entity Framework Designer (EF Designer) stores storage model information in an .edmx file at design time. At build time the Entity Designer uses information in an .edmx file to create the .ssdl file that is needed by the Entity Framework at runtime.
+The Entity Framework Designer (EF Designer) stores storage model information in an .edmx file at design time. At build time the Entity Designer uses information in an .edmx file to create the .ssdl file that is needed by Entity Framework at runtime.
 
 Versions of SSDL are differentiated by XML namespaces.
 
@@ -62,22 +62,22 @@ The following table describes the attributes that can be applied to the **Associ
 The following example shows an **Association** element that uses a **ReferentialConstraint** element to specify the columns that participate in the **FK\_CustomerOrders** foreign key constraint:
 
 ```
- <Association Name="FK_CustomerOrders"> 
-   <End Role="Customers" 
-        Type="ExampleModel.Store.Customers" Multiplicity="1"> 
-     <OnDelete Action="Cascade" /> 
-   </End> 
-   <End Role="Orders" 
-        Type="ExampleModel.Store.Orders" Multiplicity="*" /> 
-   <ReferentialConstraint> 
-     <Principal Role="Customers"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Principal> 
-     <Dependent Role="Orders"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="FK_CustomerOrders">
+   <End Role="Customers"
+        Type="ExampleModel.Store.Customers" Multiplicity="1">
+     <OnDelete Action="Cascade" />
+   </End>
+   <End Role="Orders"
+        Type="ExampleModel.Store.Orders" Multiplicity="*" />
+   <ReferentialConstraint>
+     <Principal Role="Customers">
+       <PropertyRef Name="CustomerId" />
+     </Principal>
+     <Dependent Role="Orders">
+       <PropertyRef Name="CustomerId" />
+     </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
  
 
@@ -115,11 +115,11 @@ The following table describes the attributes that can be applied to the **Associ
 The following example shows an **AssociationSet** element that represents the `FK_CustomerOrders` foreign key constraint in the underlying database:
 
 ```
- <AssociationSet Name="FK_CustomerOrders" 
-                 Association="ExampleModel.Store.FK_CustomerOrders"> 
-   <End Role="Customers" EntitySet="Customers" /> 
-   <End Role="Orders" EntitySet="Orders" /> 
- </AssociationSet> 
+ <AssociationSet Name="FK_CustomerOrders"
+                 Association="ExampleModel.Store.FK_CustomerOrders">
+   <End Role="Customers" EntitySet="Customers" />
+   <End Role="Orders" EntitySet="Orders" />
+ </AssociationSet>
 ```
  
 
@@ -138,19 +138,19 @@ The **CollectionType** element in store schema definition language (SSDL) specif
 The following example shows a function that uses a **CollectionType** element to specify that the function returns a collection of rows.
 
 ```
-   <Function Name="GetProducts" IsComposable="true" Schema="dbo"> 
-     <ReturnType> 
-       <CollectionType> 
-         <RowType> 
-           <Property Name="ProductID" Type="int" Nullable="false" /> 
-           <Property Name="CategoryID" Type="bigint" Nullable="false" /> 
-           <Property Name="ProductName" Type="nvarchar" MaxLength="40" Nullable="false" /> 
-           <Property Name="UnitPrice" Type="money" /> 
-           <Property Name="Discontinued" Type="bit" /> 
-         </RowType> 
-       </CollectionType> 
-     </ReturnType> 
-   </Function> 
+   <Function Name="GetProducts" IsComposable="true" Schema="dbo">
+     <ReturnType>
+       <CollectionType>
+         <RowType>
+           <Property Name="ProductID" Type="int" Nullable="false" />
+           <Property Name="CategoryID" Type="bigint" Nullable="false" />
+           <Property Name="ProductName" Type="nvarchar" MaxLength="40" Nullable="false" />
+           <Property Name="UnitPrice" Type="money" />
+           <Property Name="Discontinued" Type="bit" />
+         </RowType>
+       </CollectionType>
+     </ReturnType>
+   </Function>
 ```
  
 
@@ -169,19 +169,19 @@ No attributes are applicable to the **CommandText** element.
 The following example shows a **Function** element with a child **CommandText** element. Expose the **UpdateProductInOrder** function as a method on the ObjectContext by importing it into the conceptual model.  
 
 ```
- <Function Name="UpdateProductInOrder" IsComposable="false"> 
-   <CommandText> 
-     UPDATE Orders 
-     SET ProductId = @productId 
-     WHERE OrderId = @orderId; 
-   </CommandText> 
-   <Parameter Name="productId" 
-              Mode="In" 
-              Type="int"/> 
-   <Parameter Name="orderId" 
-              Mode="In" 
-              Type="int"/> 
- </Function> 
+ <Function Name="UpdateProductInOrder" IsComposable="false">
+   <CommandText>
+     UPDATE Orders
+     SET ProductId = @productId
+     WHERE OrderId = @orderId;
+   </CommandText>
+   <Parameter Name="productId"
+              Mode="In"
+              Type="int"/>
+   <Parameter Name="orderId"
+              Mode="In"
+              Type="int"/>
+ </Function>
 ```
  
 
@@ -194,16 +194,16 @@ The following example shows a **Function** element with a child **CommandText** 
 The following SSDL syntax shows the declaration of an **EntitySet** followed by the **DefiningQuery** element that contains a query used to retrieve the view.
 
 ```
- <Schema> 
-     <EntitySet Name="Tables" EntityType="Self.STable"> 
-         <DefiningQuery> 
-           SELECT  TABLE_CATALOG, 
-                   'test' as TABLE_SCHEMA, 
-                   TABLE_NAME 
-           FROM    INFORMATION_SCHEMA.TABLES 
-         </DefiningQuery> 
-     </EntitySet> 
- </Schema> 
+ <Schema>
+     <EntitySet Name="Tables" EntityType="Self.STable">
+         <DefiningQuery>
+           SELECT  TABLE_CATALOG,
+                   'test' as TABLE_SCHEMA,
+                   TABLE_NAME
+           FROM    INFORMATION_SCHEMA.TABLES
+         </DefiningQuery>
+     </EntitySet>
+ </Schema>
 ```
  
 
@@ -241,22 +241,22 @@ The following table describes the attributes that can be applied to the **Depend
 The following example shows an Association element that uses a **ReferentialConstraint** element to specify the columns that participate in the **FK\_CustomerOrders** foreign key constraint. The **Dependent** element specifies the **CustomerId** column of the **Order** table as the dependent end of the constraint.
 
 ```
- <Association Name="FK_CustomerOrders"> 
-   <End Role="Customers" 
-        Type="ExampleModel.Store.Customers" Multiplicity="1"> 
-     <OnDelete Action="Cascade" /> 
-   </End> 
-   <End Role="Orders" 
-        Type="ExampleModel.Store.Orders" Multiplicity="*" /> 
-   <ReferentialConstraint> 
-     <Principal Role="Customers"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Principal> 
-     <Dependent Role="Orders"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="FK_CustomerOrders">
+   <End Role="Customers"
+        Type="ExampleModel.Store.Customers" Multiplicity="1">
+     <OnDelete Action="Cascade" />
+   </End>
+   <End Role="Orders"
+        Type="ExampleModel.Store.Orders" Multiplicity="*" />
+   <ReferentialConstraint>
+     <Principal Role="Customers">
+       <PropertyRef Name="CustomerId" />
+     </Principal>
+     <Dependent Role="Orders">
+       <PropertyRef Name="CustomerId" />
+     </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
  
 
@@ -280,17 +280,17 @@ Any number of annotation attributes (custom XML attributes) may be applied to th
 The following example shows the **Documentation** element as a child element of an EntityType element.
 
 ```
- <EntityType Name="Customers"> 
-   <Documentation> 
-     <Summary>Summary here.</Summary> 
-     <LongDescription>Long description here.</LongDescription> 
-   </Documentation> 
-   <Key> 
-     <PropertyRef Name="CustomerId" /> 
-   </Key> 
-   <Property Name="CustomerId" Type="int" Nullable="false" /> 
-   <Property Name="Name" Type="nvarchar(max)" Nullable="false" /> 
- </EntityType> 
+ <EntityType Name="Customers">
+   <Documentation>
+     <Summary>Summary here.</Summary>
+     <LongDescription>Long description here.</LongDescription>
+   </Documentation>
+   <Key>
+     <PropertyRef Name="CustomerId" />
+   </Key>
+   <Property Name="CustomerId" Type="int" Nullable="false" />
+   <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+ </EntityType>
 ```
  
 
@@ -331,22 +331,22 @@ The following table describes the attributes that can be applied to the **End** 
 The following example shows an **Association** element that defines the **FK\_CustomerOrders** foreign key constraint. The **Multiplicity** values specified on each **End** element indicate that many rows in the **Orders** table can be associated with a row in the **Customers** table, but only one row in the **Customers** table can be associated with a row in the **Orders** table. Additionally, the **OnDelete** element indicates that all rows in the **Orders** table that reference a particular row in the **Customers** table will be deleted if the row in the **Customers** table is deleted.
 
 ```
- <Association Name="FK_CustomerOrders"> 
-   <End Role="Customers" 
-        Type="ExampleModel.Store.Customers" Multiplicity="1"> 
-     <OnDelete Action="Cascade" /> 
-   </End> 
-   <End Role="Orders" 
-        Type="ExampleModel.Store.Orders" Multiplicity="*" /> 
-   <ReferentialConstraint> 
-     <Principal Role="Customers"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Principal> 
-     <Dependent Role="Orders"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="FK_CustomerOrders">
+   <End Role="Customers"
+        Type="ExampleModel.Store.Customers" Multiplicity="1">
+     <OnDelete Action="Cascade" />
+   </End>
+   <End Role="Orders"
+        Type="ExampleModel.Store.Orders" Multiplicity="*" />
+   <ReferentialConstraint>
+     <Principal Role="Customers">
+       <PropertyRef Name="CustomerId" />
+     </Principal>
+     <Dependent Role="Orders">
+       <PropertyRef Name="CustomerId" />
+     </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
  
 
@@ -379,19 +379,19 @@ The following table describes the attributes that can be applied to the **End** 
 The following example shows an **EntityContainer** element with an **AssociationSet** element with two **End** elements:
 
 ```
- <EntityContainer Name="ExampleModelStoreContainer"> 
-   <EntitySet Name="Customers" 
-              EntityType="ExampleModel.Store.Customers" 
-              Schema="dbo" /> 
-   <EntitySet Name="Orders" 
-              EntityType="ExampleModel.Store.Orders" 
-              Schema="dbo" /> 
-   <AssociationSet Name="FK_CustomerOrders" 
-                   Association="ExampleModel.Store.FK_CustomerOrders"> 
-     <End Role="Customers" EntitySet="Customers" /> 
-     <End Role="Orders" EntitySet="Orders" /> 
-   </AssociationSet> 
- </EntityContainer> 
+ <EntityContainer Name="ExampleModelStoreContainer">
+   <EntitySet Name="Customers"
+              EntityType="ExampleModel.Store.Customers"
+              Schema="dbo" />
+   <EntitySet Name="Orders"
+              EntityType="ExampleModel.Store.Orders"
+              Schema="dbo" />
+   <AssociationSet Name="FK_CustomerOrders"
+                   Association="ExampleModel.Store.FK_CustomerOrders">
+     <End Role="Customers" EntitySet="Customers" />
+     <End Role="Orders" EntitySet="Orders" />
+   </AssociationSet>
+ </EntityContainer>
 ```
  
 
@@ -428,19 +428,19 @@ The table below describes the attributes that can be applied to the **EntityCont
 The following example shows an **EntityContainer** element that defines two entity sets and one association set. Note that entity type and association type names are qualified by the conceptual model namespace name.
 
 ```
- <EntityContainer Name="ExampleModelStoreContainer"> 
-   <EntitySet Name="Customers" 
-              EntityType="ExampleModel.Store.Customers" 
-              Schema="dbo" /> 
-   <EntitySet Name="Orders" 
-              EntityType="ExampleModel.Store.Orders" 
-              Schema="dbo" /> 
-   <AssociationSet Name="FK_CustomerOrders" 
-                   Association="ExampleModel.Store.FK_CustomerOrders"> 
-     <End Role="Customers" EntitySet="Customers" /> 
-     <End Role="Orders" EntitySet="Orders" /> 
-   </AssociationSet> 
- </EntityContainer> 
+ <EntityContainer Name="ExampleModelStoreContainer">
+   <EntitySet Name="Customers"
+              EntityType="ExampleModel.Store.Customers"
+              Schema="dbo" />
+   <EntitySet Name="Orders"
+              EntityType="ExampleModel.Store.Orders"
+              Schema="dbo" />
+   <AssociationSet Name="FK_CustomerOrders"
+                   Association="ExampleModel.Store.FK_CustomerOrders">
+     <End Role="Customers" EntitySet="Customers" />
+     <End Role="Orders" EntitySet="Orders" />
+   </AssociationSet>
+ </EntityContainer>
 ```
  
 
@@ -486,19 +486,19 @@ The following table describes the attributes that can be applied to the **Entity
 The following example shows an **EntityContainer** element that has two **EntitySet** elements and one **AssociationSet** element:
 
 ```
- <EntityContainer Name="ExampleModelStoreContainer"> 
-   <EntitySet Name="Customers" 
-              EntityType="ExampleModel.Store.Customers" 
-              Schema="dbo" /> 
-   <EntitySet Name="Orders" 
-              EntityType="ExampleModel.Store.Orders" 
-              Schema="dbo" /> 
-   <AssociationSet Name="FK_CustomerOrders" 
-                   Association="ExampleModel.Store.FK_CustomerOrders"> 
-     <End Role="Customers" EntitySet="Customers" /> 
-     <End Role="Orders" EntitySet="Orders" /> 
-   </AssociationSet> 
- </EntityContainer> 
+ <EntityContainer Name="ExampleModelStoreContainer">
+   <EntitySet Name="Customers"
+              EntityType="ExampleModel.Store.Customers"
+              Schema="dbo" />
+   <EntitySet Name="Orders"
+              EntityType="ExampleModel.Store.Orders"
+              Schema="dbo" />
+   <AssociationSet Name="FK_CustomerOrders"
+                   Association="ExampleModel.Store.FK_CustomerOrders">
+     <End Role="Customers" EntitySet="Customers" />
+     <End Role="Orders" EntitySet="Orders" />
+   </AssociationSet>
+ </EntityContainer>
 ```
  
 
@@ -533,17 +533,17 @@ The table below describes the attributes that can be applied to the **EntityType
 The following example shows an **EntityType** element with two properties:
 
 ```
- <EntityType Name="Customers"> 
-   <Documentation> 
-     <Summary>Summary here.</Summary> 
-     <LongDescription>Long description here.</LongDescription> 
-   </Documentation> 
-   <Key> 
-     <PropertyRef Name="CustomerId" /> 
-   </Key> 
-   <Property Name="CustomerId" Type="int" Nullable="false" /> 
-   <Property Name="Name" Type="nvarchar(max)" Nullable="false" /> 
- </EntityType> 
+ <EntityType Name="Customers">
+   <Documentation>
+     <Summary>Summary here.</Summary>
+     <LongDescription>Long description here.</LongDescription>
+   </Documentation>
+   <Key>
+     <PropertyRef Name="CustomerId" />
+   </Key>
+   <Property Name="CustomerId" Type="int" Nullable="false" />
+   <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+ </EntityType>
 ```
  
 
@@ -602,16 +602,16 @@ The following table describes the attributes that can be applied to the **Functi
 The following example shows a **Function** element that corresponds to the **UpdateOrderQuantity** stored procedure. The stored procedure accepts two parameters and does not return a value.
 
 ```
- <Function Name="UpdateOrderQuantity" 
-           Aggregate="false" 
-           BuiltIn="false" 
-           NiladicFunction="false" 
-           IsComposable="false" 
-           ParameterTypeSemantics="AllowImplicitConversion" 
-           Schema="dbo"> 
-   <Parameter Name="orderId" Type="int" Mode="In" /> 
-   <Parameter Name="newQuantity" Type="int" Mode="In" /> 
- </Function> 
+ <Function Name="UpdateOrderQuantity"
+           Aggregate="false"
+           BuiltIn="false"
+           NiladicFunction="false"
+           IsComposable="false"
+           ParameterTypeSemantics="AllowImplicitConversion"
+           Schema="dbo">
+   <Parameter Name="orderId" Type="int" Mode="In" />
+   <Parameter Name="newQuantity" Type="int" Mode="In" />
+ </Function>
 ```
  
 
@@ -633,17 +633,17 @@ No attributes are applicable to the **Key** element.
 The following example shows an **EntityType** element with a key that references one property:
 
 ```
- <EntityType Name="Customers"> 
-   <Documentation> 
-     <Summary>Summary here.</Summary> 
-     <LongDescription>Long description here.</LongDescription> 
-   </Documentation> 
-   <Key> 
-     <PropertyRef Name="CustomerId" /> 
-   </Key> 
-   <Property Name="CustomerId" Type="int" Nullable="false" /> 
-   <Property Name="Name" Type="nvarchar(max)" Nullable="false" /> 
- </EntityType> 
+ <EntityType Name="Customers">
+   <Documentation>
+     <Summary>Summary here.</Summary>
+     <LongDescription>Long description here.</LongDescription>
+   </Documentation>
+   <Key>
+     <PropertyRef Name="CustomerId" />
+   </Key>
+   <Property Name="CustomerId" Type="int" Nullable="false" />
+   <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+ </EntityType>
 ```
  
 
@@ -677,22 +677,22 @@ The following table describes the attributes that can be applied to the **OnDele
 The following example shows an **Association** element that defines the **FK\_CustomerOrders** foreign key constraint. The **OnDelete** element indicates that all rows in the **Orders** table that reference a particular row in the **Customers** table will be deleted if the row in the **Customers** table is deleted.
 
 ```
- <Association Name="FK_CustomerOrders"> 
-   <End Role="Customers" 
-        Type="ExampleModel.Store.Customers" Multiplicity="1"> 
-     <OnDelete Action="Cascade" /> 
-   </End> 
-   <End Role="Orders" 
-        Type="ExampleModel.Store.Orders" Multiplicity="*" /> 
-   <ReferentialConstraint> 
-     <Principal Role="Customers"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Principal> 
-     <Dependent Role="Orders"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="FK_CustomerOrders">
+   <End Role="Customers"
+        Type="ExampleModel.Store.Customers" Multiplicity="1">
+     <OnDelete Action="Cascade" />
+   </End>
+   <End Role="Orders"
+        Type="ExampleModel.Store.Orders" Multiplicity="*" />
+   <ReferentialConstraint>
+     <Principal Role="Customers">
+       <PropertyRef Name="CustomerId" />
+     </Principal>
+     <Dependent Role="Orders">
+       <PropertyRef Name="CustomerId" />
+     </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
  
 
@@ -732,16 +732,16 @@ The table below describes the attributes that can be applied to the **Parameter*
 The following example shows a **Function** element that has two **Parameter** elements that specify input parameters:
 
 ```
- <Function Name="UpdateOrderQuantity" 
-           Aggregate="false" 
-           BuiltIn="false" 
-           NiladicFunction="false" 
-           IsComposable="false" 
-           ParameterTypeSemantics="AllowImplicitConversion" 
-           Schema="dbo"> 
-   <Parameter Name="orderId" Type="int" Mode="In" /> 
-   <Parameter Name="newQuantity" Type="int" Mode="In" /> 
- </Function> 
+ <Function Name="UpdateOrderQuantity"
+           Aggregate="false"
+           BuiltIn="false"
+           NiladicFunction="false"
+           IsComposable="false"
+           ParameterTypeSemantics="AllowImplicitConversion"
+           Schema="dbo">
+   <Parameter Name="orderId" Type="int" Mode="In" />
+   <Parameter Name="newQuantity" Type="int" Mode="In" />
+ </Function>
 ```
  
 
@@ -775,22 +775,22 @@ The following table describes the attributes that can be applied to the **Princi
 The following example shows an Association element that uses a **ReferentialConstraint** element to specify the columns that participate in the **FK\_CustomerOrders** foreign key constraint. The **Principal** element specifies the **CustomerId** column of the **Customer** table as the principal end of the constraint.
 
 ```
- <Association Name="FK_CustomerOrders"> 
-   <End Role="Customers" 
-        Type="ExampleModel.Store.Customers" Multiplicity="1"> 
-     <OnDelete Action="Cascade" /> 
-   </End> 
-   <End Role="Orders" 
-        Type="ExampleModel.Store.Orders" Multiplicity="*" /> 
-   <ReferentialConstraint> 
-     <Principal Role="Customers"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Principal> 
-     <Dependent Role="Orders"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="FK_CustomerOrders">
+   <End Role="Customers"
+        Type="ExampleModel.Store.Customers" Multiplicity="1">
+     <OnDelete Action="Cascade" />
+   </End>
+   <End Role="Orders"
+        Type="ExampleModel.Store.Orders" Multiplicity="*" />
+   <ReferentialConstraint>
+     <Principal Role="Customers">
+       <PropertyRef Name="CustomerId" />
+     </Principal>
+     <Dependent Role="Orders">
+       <PropertyRef Name="CustomerId" />
+     </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
  
 
@@ -832,17 +832,17 @@ The following table describes the attributes that can be applied to the **Proper
 The following example shows an **EntityType** element with two child **Property** elements:
 
 ```
- <EntityType Name="Customers"> 
-   <Documentation> 
-     <Summary>Summary here.</Summary> 
-     <LongDescription>Long description here.</LongDescription> 
-   </Documentation> 
-   <Key> 
-     <PropertyRef Name="CustomerId" /> 
-   </Key> 
-   <Property Name="CustomerId" Type="int" Nullable="false" /> 
-   <Property Name="Name" Type="nvarchar(max)" Nullable="false" /> 
- </EntityType> 
+ <EntityType Name="Customers">
+   <Documentation>
+     <Summary>Summary here.</Summary>
+     <LongDescription>Long description here.</LongDescription>
+   </Documentation>
+   <Key>
+     <PropertyRef Name="CustomerId" />
+   </Key>
+   <Property Name="CustomerId" Type="int" Nullable="false" />
+   <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+ </EntityType>
 ```
  
 
@@ -879,17 +879,17 @@ The table below describes the attributes that can be applied to the **PropertyRe
 The following example shows a **PropertyRef** element used to define a primary key by referencing a property that is defined on an **EntityType** element.
 
 ```
- <EntityType Name="Customers"> 
-   <Documentation> 
-     <Summary>Summary here.</Summary> 
-     <LongDescription>Long description here.</LongDescription> 
-   </Documentation> 
-   <Key> 
-     <PropertyRef Name="CustomerId" /> 
-   </Key> 
-   <Property Name="CustomerId" Type="int" Nullable="false" /> 
-   <Property Name="Name" Type="nvarchar(max)" Nullable="false" /> 
- </EntityType> 
+ <EntityType Name="Customers">
+   <Documentation>
+     <Summary>Summary here.</Summary>
+     <LongDescription>Long description here.</LongDescription>
+   </Documentation>
+   <Key>
+     <PropertyRef Name="CustomerId" />
+   </Key>
+   <Property Name="CustomerId" Type="int" Nullable="false" />
+   <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+ </EntityType>
 ```
  
 
@@ -917,22 +917,22 @@ Any number of annotation attributes (custom XML attributes) may be applied to th
 The following example shows an **Association** element that uses a **ReferentialConstraint** element to specify the columns that participate in the **FK\_CustomerOrders** foreign key constraint:
 
 ```
- <Association Name="FK_CustomerOrders"> 
-   <End Role="Customers" 
-        Type="ExampleModel.Store.Customers" Multiplicity="1"> 
-     <OnDelete Action="Cascade" /> 
-   </End> 
-   <End Role="Orders" 
-        Type="ExampleModel.Store.Orders" Multiplicity="*" /> 
-   <ReferentialConstraint> 
-     <Principal Role="Customers"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Principal> 
-     <Dependent Role="Orders"> 
-       <PropertyRef Name="CustomerId" /> 
-     </Dependent> 
-   </ReferentialConstraint> 
- </Association> 
+ <Association Name="FK_CustomerOrders">
+   <End Role="Customers"
+        Type="ExampleModel.Store.Customers" Multiplicity="1">
+     <OnDelete Action="Cascade" />
+   </End>
+   <End Role="Orders"
+        Type="ExampleModel.Store.Orders" Multiplicity="*" />
+   <ReferentialConstraint>
+     <Principal Role="Customers">
+       <PropertyRef Name="CustomerId" />
+     </Principal>
+     <Dependent Role="Orders">
+       <PropertyRef Name="CustomerId" />
+     </Dependent>
+   </ReferentialConstraint>
+ </Association>
 ```
 
 ## ReturnType Element (SSDL)
@@ -952,19 +952,19 @@ The **ReturnType** element can have the following child elements:
 The following example uses a **Function** that returns a collection of rows.
 
 ```
-   <Function Name="GetProducts" IsComposable="true" Schema="dbo"> 
-     <ReturnType> 
-       <CollectionType> 
-         <RowType> 
-           <Property Name="ProductID" Type="int" Nullable="false" /> 
-           <Property Name="CategoryID" Type="bigint" Nullable="false" /> 
-           <Property Name="ProductName" Type="nvarchar" MaxLength="40" Nullable="false" /> 
-           <Property Name="UnitPrice" Type="money" /> 
-           <Property Name="Discontinued" Type="bit" /> 
-         </RowType> 
-       </CollectionType> 
-     </ReturnType> 
-   </Function> 
+   <Function Name="GetProducts" IsComposable="true" Schema="dbo">
+     <ReturnType>
+       <CollectionType>
+         <RowType>
+           <Property Name="ProductID" Type="int" Nullable="false" />
+           <Property Name="CategoryID" Type="bigint" Nullable="false" />
+           <Property Name="ProductName" Type="nvarchar" MaxLength="40" Nullable="false" />
+           <Property Name="UnitPrice" Type="money" />
+           <Property Name="Discontinued" Type="bit" />
+         </RowType>
+       </CollectionType>
+     </ReturnType>
+   </Function>
 ```
 
 
@@ -984,19 +984,19 @@ The following example shows a store function that uses a **CollectionType** elem
 
 
 ```
-   <Function Name="GetProducts" IsComposable="true" Schema="dbo"> 
-     <ReturnType> 
-       <CollectionType> 
-         <RowType> 
-           <Property Name="ProductID" Type="int" Nullable="false" /> 
-           <Property Name="CategoryID" Type="bigint" Nullable="false" /> 
-           <Property Name="ProductName" Type="nvarchar" MaxLength="40" Nullable="false" /> 
-           <Property Name="UnitPrice" Type="money" /> 
-           <Property Name="Discontinued" Type="bit" /> 
-         </RowType> 
-       </CollectionType> 
-     </ReturnType> 
-   </Function> 
+   <Function Name="GetProducts" IsComposable="true" Schema="dbo">
+     <ReturnType>
+       <CollectionType>
+         <RowType>
+           <Property Name="ProductID" Type="int" Nullable="false" />
+           <Property Name="CategoryID" Type="bigint" Nullable="false" />
+           <Property Name="ProductName" Type="nvarchar" MaxLength="40" Nullable="false" />
+           <Property Name="UnitPrice" Type="money" />
+           <Property Name="Discontinued" Type="bit" />
+         </RowType>
+       </CollectionType>
+     </ReturnType>
+   </Function>
 ```
  
 
@@ -1026,7 +1026,7 @@ The table below describes the attributes can be applied to the **Schema** elemen
 | **Namespace** | Yes | The namespace of the storage model. The value of the **Namespace** attribute is used to form the fully qualified name of a type. For example, if an **EntityType** named *Customer* is in the ExampleModel.Store namespace, then the fully qualified name of the **EntityType** is ExampleModel.Store.Customer. <br/> The following strings cannot be used as the value for the **Namespace** attribute: **System**, **Transient**, or **Edm**. The value for the **Namespace** attribute cannot be the same as the value for the **Namespace** attribute in the CSDL Schema element. |
 | **Alias** | No | An identifier used in place of the namespace name. For example, if an **EntityType** named *Customer* is in the ExampleModel.Store namespace and the value of the **Alias** attribute is *StorageModel*, then you can use StorageModel.Customer as the fully qualified name of the **EntityType.** |
 | **Provider** | Yes | The data provider. |
-| **ProviderManifestToken** | Yes | A token that indicates to the provider which provider manifest to return. No format for the token is defined. Values for the token are defined by the provider. For information about SQL Server provider manifest tokens, see SqlClient for the Entity Framework. |
+| **ProviderManifestToken** | Yes | A token that indicates to the provider which provider manifest to return. No format for the token is defined. Values for the token are defined by the provider. For information about SQL Server provider manifest tokens, see SqlClient for Entity Framework. |
 
  
 
@@ -1035,87 +1035,87 @@ The table below describes the attributes can be applied to the **Schema** elemen
 The following example shows a **Schema** element that contains an **EntityContainer** element, two **EntityType** elements, and one **Association** element.
 
 ```
- <Schema Namespace="ExampleModel.Store" 
-       Alias="Self" Provider="System.Data.SqlClient" 
-       ProviderManifestToken="2008" 
-       xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl"> 
-   <EntityContainer Name="ExampleModelStoreContainer"> 
-     <EntitySet Name="Customers" 
-                EntityType="ExampleModel.Store.Customers" 
-                Schema="dbo" /> 
-     <EntitySet Name="Orders" 
-                EntityType="ExampleModel.Store.Orders" 
-                Schema="dbo" /> 
-     <AssociationSet Name="FK_CustomerOrders" 
-                     Association="ExampleModel.Store.FK_CustomerOrders"> 
-       <End Role="Customers" EntitySet="Customers" /> 
-       <End Role="Orders" EntitySet="Orders" /> 
-     </AssociationSet> 
-   </EntityContainer> 
-   <EntityType Name="Customers"> 
-     <Documentation> 
-       <Summary>Summary here.</Summary> 
-       <LongDescription>Long description here.</LongDescription> 
-     </Documentation> 
-     <Key> 
-       <PropertyRef Name="CustomerId" /> 
-     </Key> 
-     <Property Name="CustomerId" Type="int" Nullable="false" /> 
-     <Property Name="Name" Type="nvarchar(max)" Nullable="false" /> 
-   </EntityType> 
-   \<EntityType Name="Orders" xmlns:c="http://CustomNamespace"> 
-     <Key> 
-       <PropertyRef Name="OrderId" /> 
-     </Key> 
-     \<Property Name="OrderId" Type="int" Nullable="false" 
-               c:CustomAttribute="someValue"/> 
-     <Property Name="ProductId" Type="int" Nullable="false" /> 
-     <Property Name="Quantity" Type="int" Nullable="false" /> 
-     <Property Name="CustomerId" Type="int" Nullable="false" /> 
-     \<c:CustomElement> 
-       Custom data here. 
-     \</c:CustomElement> 
-   </EntityType> 
-   <Association Name="FK_CustomerOrders"> 
-     <End Role="Customers" 
-          Type="ExampleModel.Store.Customers" Multiplicity="1"> 
-       <OnDelete Action="Cascade" /> 
-     </End> 
-     <End Role="Orders" 
-          Type="ExampleModel.Store.Orders" Multiplicity="*" /> 
-     <ReferentialConstraint> 
-       <Principal Role="Customers"> 
-         <PropertyRef Name="CustomerId" /> 
-       </Principal> 
-       <Dependent Role="Orders"> 
-         <PropertyRef Name="CustomerId" /> 
-       </Dependent> 
-     </ReferentialConstraint> 
-   </Association> 
-   <Function Name="UpdateOrderQuantity" 
-             Aggregate="false" 
-             BuiltIn="false" 
-             NiladicFunction="false" 
-             IsComposable="false" 
-             ParameterTypeSemantics="AllowImplicitConversion" 
-             Schema="dbo"> 
-     <Parameter Name="orderId" Type="int" Mode="In" /> 
-     <Parameter Name="newQuantity" Type="int" Mode="In" /> 
-   </Function> 
-   <Function Name="UpdateProductInOrder" IsComposable="false"> 
-     <CommandText> 
-       UPDATE Orders 
-       SET ProductId = @productId 
-       WHERE OrderId = @orderId; 
-     </CommandText> 
-     <Parameter Name="productId" 
-                Mode="In" 
-                Type="int"/> 
-     <Parameter Name="orderId" 
-                Mode="In" 
-                Type="int"/> 
-   </Function> 
- </Schema> 
+ <Schema Namespace="ExampleModel.Store"
+       Alias="Self" Provider="System.Data.SqlClient"
+       ProviderManifestToken="2008"
+       xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+   <EntityContainer Name="ExampleModelStoreContainer">
+     <EntitySet Name="Customers"
+                EntityType="ExampleModel.Store.Customers"
+                Schema="dbo" />
+     <EntitySet Name="Orders"
+                EntityType="ExampleModel.Store.Orders"
+                Schema="dbo" />
+     <AssociationSet Name="FK_CustomerOrders"
+                     Association="ExampleModel.Store.FK_CustomerOrders">
+       <End Role="Customers" EntitySet="Customers" />
+       <End Role="Orders" EntitySet="Orders" />
+     </AssociationSet>
+   </EntityContainer>
+   <EntityType Name="Customers">
+     <Documentation>
+       <Summary>Summary here.</Summary>
+       <LongDescription>Long description here.</LongDescription>
+     </Documentation>
+     <Key>
+       <PropertyRef Name="CustomerId" />
+     </Key>
+     <Property Name="CustomerId" Type="int" Nullable="false" />
+     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+   </EntityType>
+   \<EntityType Name="Orders" xmlns:c="http://CustomNamespace">
+     <Key>
+       <PropertyRef Name="OrderId" />
+     </Key>
+     \<Property Name="OrderId" Type="int" Nullable="false"
+               c:CustomAttribute="someValue"/>
+     <Property Name="ProductId" Type="int" Nullable="false" />
+     <Property Name="Quantity" Type="int" Nullable="false" />
+     <Property Name="CustomerId" Type="int" Nullable="false" />
+     \<c:CustomElement>
+       Custom data here.
+     \</c:CustomElement>
+   </EntityType>
+   <Association Name="FK_CustomerOrders">
+     <End Role="Customers"
+          Type="ExampleModel.Store.Customers" Multiplicity="1">
+       <OnDelete Action="Cascade" />
+     </End>
+     <End Role="Orders"
+          Type="ExampleModel.Store.Orders" Multiplicity="*" />
+     <ReferentialConstraint>
+       <Principal Role="Customers">
+         <PropertyRef Name="CustomerId" />
+       </Principal>
+       <Dependent Role="Orders">
+         <PropertyRef Name="CustomerId" />
+       </Dependent>
+     </ReferentialConstraint>
+   </Association>
+   <Function Name="UpdateOrderQuantity"
+             Aggregate="false"
+             BuiltIn="false"
+             NiladicFunction="false"
+             IsComposable="false"
+             ParameterTypeSemantics="AllowImplicitConversion"
+             Schema="dbo">
+     <Parameter Name="orderId" Type="int" Mode="In" />
+     <Parameter Name="newQuantity" Type="int" Mode="In" />
+   </Function>
+   <Function Name="UpdateProductInOrder" IsComposable="false">
+     <CommandText>
+       UPDATE Orders
+       SET ProductId = @productId
+       WHERE OrderId = @orderId;
+     </CommandText>
+     <Parameter Name="productId"
+                Mode="In"
+                Type="int"/>
+     <Parameter Name="orderId"
+                Mode="In"
+                Type="int"/>
+   </Function>
+ </Schema>
 ```
  
 
@@ -1135,19 +1135,19 @@ More than one annotation attribute may be applied to a given SSDL element. Metad
 The following example shows an EntityType element that has an annotation attribute applied to the **OrderId** property. The example also show an annotation element added to the **EntityType** element.
 
 ```
- \<EntityType Name="Orders" xmlns:c="http://CustomNamespace"> 
-   <Key> 
-     <PropertyRef Name="OrderId" /> 
-   </Key> 
-   \<Property Name="OrderId" Type="int" Nullable="false" 
-             c:CustomAttribute="someValue"/> 
-   <Property Name="ProductId" Type="int" Nullable="false" /> 
-   <Property Name="Quantity" Type="int" Nullable="false" /> 
-   <Property Name="CustomerId" Type="int" Nullable="false" /> 
-   \<c:CustomElement> 
-     Custom data here. 
-   \</c:CustomElement> 
- </EntityType> 
+ \<EntityType Name="Orders" xmlns:c="http://CustomNamespace">
+   <Key>
+     <PropertyRef Name="OrderId" />
+   </Key>
+   \<Property Name="OrderId" Type="int" Nullable="false"
+             c:CustomAttribute="someValue"/>
+   <Property Name="ProductId" Type="int" Nullable="false" />
+   <Property Name="Quantity" Type="int" Nullable="false" />
+   <Property Name="CustomerId" Type="int" Nullable="false" />
+   \<c:CustomElement>
+     Custom data here.
+   \</c:CustomElement>
+ </EntityType>
 ```
  
 
@@ -1168,19 +1168,19 @@ More than one annotation element may be a child of a given SSDL element. Startin
 The following example shows an EntityType element that has an annotation element (**CustomElement**). The example also shows an annotation attribute applied to the **OrderId** property.
 
 ```
- \<EntityType Name="Orders" xmlns:c="http://CustomNamespace"> 
-   <Key> 
-     <PropertyRef Name="OrderId" /> 
-   </Key> 
-   \<Property Name="OrderId" Type="int" Nullable="false" 
-             c:CustomAttribute="someValue"/> 
-   <Property Name="ProductId" Type="int" Nullable="false" /> 
-   <Property Name="Quantity" Type="int" Nullable="false" /> 
-   <Property Name="CustomerId" Type="int" Nullable="false" /> 
-   \<c:CustomElement> 
-     Custom data here. 
-   \</c:CustomElement> 
- </EntityType> 
+ \<EntityType Name="Orders" xmlns:c="http://CustomNamespace">
+   <Key>
+     <PropertyRef Name="OrderId" />
+   </Key>
+   \<Property Name="OrderId" Type="int" Nullable="false"
+             c:CustomAttribute="someValue"/>
+   <Property Name="ProductId" Type="int" Nullable="false" />
+   <Property Name="Quantity" Type="int" Nullable="false" />
+   <Property Name="CustomerId" Type="int" Nullable="false" />
+   \<c:CustomElement>
+     Custom data here.
+   \</c:CustomElement>
+ </EntityType>
 ```
  
 

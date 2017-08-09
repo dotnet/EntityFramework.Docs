@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Code First Migrations | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Code First Migrations - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 36591d8f-36e1-4835-8a51-90f34f633d1e
 caps.latest.revision: 3
@@ -140,14 +140,14 @@ We need to scaffold a migration to take care of the new Url property we have add
     {
         using System;
         using System.Data.Entity.Migrations;
-        
+
         public partial class AddBlogUrl : DbMigration
         {
             public override void Up()
             {
                 AddColumn("dbo.Blogs", "Url", c => c.String());
             }
-            
+
             public override void Down()
             {
                 DropColumn("dbo.Blogs", "Url");
@@ -212,7 +212,7 @@ Code First Migrations did a pretty good job of scaffolding these changes, but th
     {
         using System;
         using System.Data.Entity.Migrations;
-        
+
         public partial class AddPostClass : DbMigration
         {
             public override void Up()
@@ -233,7 +233,7 @@ Code First Migrations did a pretty good job of scaffolding these changes, but th
 
                 AddColumn("dbo.Blogs", "Rating", c => c.Int(nullable: false, defaultValue: 3));
             }
-            
+
             public override void Down()
             {
                 DropIndex("dbo.Posts", new[] { "Title" });
@@ -273,7 +273,7 @@ We'll use the **Add-Migration** command to let Code First Migrations scaffold it
     {
         using System;
         using System.Data.Entity.Migrations;
-        
+
         public partial class AddPostAbstract : DbMigration
         {
             public override void Up()
@@ -282,7 +282,7 @@ We'll use the **Add-Migration** command to let Code First Migrations scaffold it
 
                 Sql("UPDATE dbo.Posts SET Abstract = LEFT(Content, 100) WHERE Abstract IS NULL");
             }
-            
+
             public override void Down()
             {
                 DropColumn("dbo.Posts", "Abstract");

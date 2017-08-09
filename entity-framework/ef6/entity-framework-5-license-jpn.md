@@ -2,12 +2,12 @@
 title: "Entity Framework 5 License (JPN) | Microsoft Docs"
 ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 5d1555a3-f3cf-4b25-84fa-a531fda0df0d
 caps.latest.revision: 3

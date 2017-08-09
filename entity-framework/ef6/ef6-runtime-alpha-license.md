@@ -2,12 +2,12 @@
 title: "EF6 Runtime Alpha License | Microsoft Docs"
 ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: bca98fb3-ebb2-4df3-afc8-6fd8f7341c9d
 caps.latest.revision: 3

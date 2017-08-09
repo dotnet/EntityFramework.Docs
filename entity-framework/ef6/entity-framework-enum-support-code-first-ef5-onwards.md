@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Enum Support - Code First (EF5 onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Enum Support - Code First (EF5 onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 77a42501-27c9-4f4b-96df-26c128021467
 caps.latest.revision: 3
@@ -47,18 +47,18 @@ The code also defines the DepartmentNames enumeration. By default, the enumerati
 Open the Program.cs file and paste the following class definitions.
 
 ```
-public enum DepartmentNames 
-{ 
-    English, 
-    Math, 
-    Economics 
+public enum DepartmentNames
+{
+    English,
+    Math,
+    Economics
 }     
- 
-public partial class Department 
-{ 
-    public int DepartmentID { get; set; } 
-    public DepartmentNames Name { get; set; } 
-    public decimal Budget { get; set; } 
+
+public partial class Department
+{
+    public int DepartmentID { get; set; }
+    public DepartmentNames Name { get; set; }
+    public decimal Budget { get; set; }
 }
 ```
  
@@ -87,9 +87,9 @@ using System.Data.Entity;
 In the Program.cs add the context definition. 
 
 ```
-public partial class EnumTestContext : DbContext 
-{ 
-    public DbSet<Department> Departments { get; set; } 
+public partial class EnumTestContext : DbContext
+{
+    public DbSet<Department> Departments { get; set; }
 }
 ```
  
@@ -99,20 +99,20 @@ public partial class EnumTestContext : DbContext
 Open the Program.cs file where the Main method is defined. Add the following code into the Main function. The code adds a new Department object to the context. It then saves the data. The code also executes a LINQ query that returns a Department where the name is DepartmentNames.English.
 
 ```
-using (var context = new EnumTestContext()) 
-{ 
-    context.Departments.Add(new Department { Name = DepartmentNames.English }); 
- 
-    context.SaveChanges(); 
- 
-    var department = (from d in context.Departments 
-                        where d.Name == DepartmentNames.English 
-                        select d).FirstOrDefault(); 
- 
-    Console.WriteLine( 
-        "DepartmentID: {0} Name: {1}", 
+using (var context = new EnumTestContext())
+{
+    context.Departments.Add(new Department { Name = DepartmentNames.English });
+
+    context.SaveChanges();
+
+    var department = (from d in context.Departments
+                        where d.Name == DepartmentNames.English
+                        select d).FirstOrDefault();
+
+    Console.WriteLine(
+        "DepartmentID: {0} Name: {1}",
         department.DepartmentID,  
-        department.Name); 
+        department.Name);
 }
 ```
 

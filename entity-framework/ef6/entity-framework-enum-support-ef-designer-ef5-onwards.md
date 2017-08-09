@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Enum Support - EF Designer (EF5 onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Enum Support - EF Designer (EF5 onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: c6ae6d8f-1ace-47db-ad47-b1718f1ba082
 caps.latest.revision: 3
@@ -71,13 +71,13 @@ The wizard performs the following actions:
 ## Add an Enum Type
 
 1.  In the Entity Framework Designer, right-click the Name property, select **Convert to enum**
-    
+
     ![ConvertToEnum](../ef6/media/converttoenum.png)
-    
+
 2.  In the **Add Enum** dialog box type **DepartmentNames** for the Enum Type Name, change the Underlying Type to **Int32**, and then add the following members to the type: English, Math, and Economics
-    
+
     ![AddEnumType](../ef6/media/addenumtype.png)
-    
+
 3.  Press **OK**
 4.  Save the model and build the project
     **Note:***When you build, warnings about unmapped entities and associations may appear in the Error List. You can ignore these warnings because after we choose to generate the database from the model, the errors will go away. *
@@ -123,20 +123,20 @@ Now we can generate a database that is based on the model.
 Open the Program.cs file where the Main method is defined. Add the following code into the Main function. The code adds a new Department object to the context. It then saves the data. The code also executes a LINQ query that returns a Department where the name is DepartmentNames.English.
 
 ```
-using (var context = new EnumTestModelContainer()) 
-{ 
-    context.Departments.Add(new Department{ Name = DepartmentNames.English }); 
- 
-    context.SaveChanges(); 
- 
-    var department = (from d in context.Departments 
-                        where d.Name == DepartmentNames.English 
-                        select d).FirstOrDefault(); 
- 
-    Console.WriteLine( 
-        "DepartmentID: {0} and Name: {1}", 
+using (var context = new EnumTestModelContainer())
+{
+    context.Departments.Add(new Department{ Name = DepartmentNames.English });
+
+    context.SaveChanges();
+
+    var department = (from d in context.Departments
+                        where d.Name == DepartmentNames.English
+                        select d).FirstOrDefault();
+
+    Console.WriteLine(
+        "DepartmentID: {0} and Name: {1}",
         department.DepartmentID,  
-        department.Name); 
+        department.Name);
 }
 ```
 

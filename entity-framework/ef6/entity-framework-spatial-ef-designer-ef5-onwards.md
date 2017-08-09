@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Spatial - EF Designer (EF5 onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Spatial - EF Designer (EF5 onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 06baa6e1-d680-4a95-845b-81305c87a962
 caps.latest.revision: 3
@@ -100,31 +100,31 @@ Open the Program.cs file where the Main method is defined. Add the following cod
 The code adds two new University objects to the context. Spatial properties are initialized by using the DbGeography.FromText method. The geography point represented as WellKnownText is passed to the method. The code then saves the data. Then, the LINQ query that that returns a University object where its location is closest to the specified location, is constructed and executed.
 
 ```
-using (var context = new UniversityModelContainer()) 
-{ 
-    context.Universities.Add(new University() 
-    { 
-        Name = "Graphic Design Institute", 
-        Location = DbGeography.FromText("POINT(-122.336106 47.605049)"), 
-    }); 
-     
-    context.Universities.Add(new University() 
-    { 
-        Name = "School of Fine Art", 
-        Location = DbGeography.FromText("POINT(-122.335197 47.646711)"), 
-    }); 
- 
-    context.SaveChanges(); 
- 
-    var myLocation = DbGeography.FromText("POINT(-122.296623 47.640405)"); 
- 
-    var university = (from u in context.Universities 
-                                orderby u.Location.Distance(myLocation) 
-                                select u).FirstOrDefault(); 
- 
-    Console.WriteLine( 
-        "The closest University to you is: {0}.", 
-        university.Name); 
+using (var context = new UniversityModelContainer())
+{
+    context.Universities.Add(new University()
+    {
+        Name = "Graphic Design Institute",
+        Location = DbGeography.FromText("POINT(-122.336106 47.605049)"),
+    });
+
+    context.Universities.Add(new University()
+    {
+        Name = "School of Fine Art",
+        Location = DbGeography.FromText("POINT(-122.335197 47.646711)"),
+    });
+
+    context.SaveChanges();
+
+    var myLocation = DbGeography.FromText("POINT(-122.296623 47.640405)");
+
+    var university = (from u in context.Universities
+                                orderby u.Location.Distance(myLocation)
+                                select u).FirstOrDefault();
+
+    Console.WriteLine(
+        "The closest University to you is: {0}.",
+        university.Name);
 }
 ```
 

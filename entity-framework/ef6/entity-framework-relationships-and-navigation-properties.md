@@ -1,19 +1,19 @@
 ---
-title: "Entity Framework Relationships and Navigation Properties | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Relationships and Navigation Properties - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
 caps.latest.revision: 3
 ---
 # Entity Framework Relationships and Navigation Properties
-This topic gives an overview of how the Entity Framework manages relationships between the entities. It also gives some guidance on how to map and manipulate relationships.
+This topic gives an overview of how Entity Framework manages relationships between the entities. It also gives some guidance on how to map and manipulate relationships.
 
  
 
@@ -78,10 +78,10 @@ The following examples show how to use the foreign key properties and navigation
 
  
 
--   To delete the relationship, set the navigation property to **null**. If you are working with the Entity Framework that is based on .NET 4.0, then the related end needs to be loaded before you set it to null. For example:  
+-   To delete the relationship, set the navigation property to **null**. If you are working with Entity Framework that is based on .NET 4.0, then the related end needs to be loaded before you set it to null. For example:  
     **context.Entry(course).Reference(c =&gt; c.Department).Load();  
     course.Department = null;**  
-    Starting with the Entity Framework 5.0, that is based on .NET 4.5, you can set the relationship to null without loading the related end. You can also set the current value to null using the following method.  
+    Starting with Entity Framework 5.0, that is based on .NET 4.5, you can set the relationship to null without loading the related end. You can also set the current value to null using the following method.  
     **context.Entry(course).Reference(c =&gt; c.Department).CurrentValue = null;**
 
  
@@ -110,7 +110,7 @@ In the following example, there is a many-to-many relationship between Instructo
 
 ## Synchronizing the changes between the FKs and Navigation properties
 
-When you change the relationship of the objects attached to the context by using one of the methods described above, the Entity Framework needs to keep foreign keys, references, and collections in sync. The Entity Framework automatically manages this synchronization (also known as relationship fix-up) for the POCO entities with proxies. For more information, see [Working with Proxies](../ef6/entity-framework-working-with-proxies.md).
+When you change the relationship of the objects attached to the context by using one of the methods described above, Entity Framework needs to keep foreign keys, references, and collections in sync. Entity Framework automatically manages this synchronization (also known as relationship fix-up) for the POCO entities with proxies. For more information, see [Working with Proxies](../ef6/entity-framework-working-with-proxies.md).
 
 If you are using POCO entities without proxies, you must make sure that the **DetectChanges** method is called to synchronize the related objects in the context. Note, that the following APIs automatically trigger a **DetectChanges** call.
 
@@ -137,7 +137,7 @@ In Entity Framework you use most commonly use the navigation properties to load 
     // Get the course where currently DepartmentID = 1.
     Course course2 = context.Courses.First(c=>c.DepartmentID == 2);
 
-    // Use DepartmentID foreign key property 
+    // Use DepartmentID foreign key property
     // to change the association.
     course2.DepartmentID = 3;
 
@@ -145,7 +145,7 @@ In Entity Framework you use most commonly use the navigation properties to load 
     context.Entry(course).Reference(c => c.Department).Load();
 ```
 
-In an independent association, the related end of a dependent object is queried based on the foreign key value that is currently in the database. However, if the relationship was modified, and the reference property on the dependent object points to a different principal object that is loaded in the object context, the Entity Framework will try to create a relationship as it is defined on the client.
+In an independent association, the related end of a dependent object is queried based on the foreign key value that is currently in the database. However, if the relationship was modified, and the reference property on the dependent object points to a different principal object that is loaded in the object context, Entity Framework will try to create a relationship as it is defined on the client.
 
  
 

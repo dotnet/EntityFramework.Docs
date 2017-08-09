@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Designer CUD Sprocs | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Designer CUD Sprocs - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
 caps.latest.revision: 3
@@ -59,9 +59,9 @@ To complete this walkthrough, you must install the [School database](../ef6/enti
 -   In the Choose Your Database Objects dialog box, under the **Tables** node, select the **Person** table.
 -   Also, select the following stored procedures under the **Stored Procedures and Functions** node: **DeletePerson**, **InsertPerson**, and **UpdatePerson**. 
 -   Starting with Visual Studio 2012 the EF Designer supports bulk import of stored procedures. The **Import selected stored procedures and functions into the entity model** is checked by default. Since in this example we have stored procedures that insert, update, and delete entity types, we do not want to import them and will uncheck this checkbox. 
-    
+
     ![ImportSProcs](../ef6/media/importsprocs.jpg)
-    
+
 -   Click **Finish**.
     The EF Designer, which provides a design surface for editing your model, is displayed.
 
@@ -79,9 +79,9 @@ To complete this walkthrough, you must install the [School database](../ef6/enti
 -   Type **NewPersonID**, the name of the parameter returned by the **InsertPerson** stored procedure. Make sure not to type leading or trailing spaces.
 -   Press **Enter**.
 -   By default, **NewPersonID** is mapped to the entity key **PersonID**. Note that an arrow indicates the direction of the mapping: The value of the result column is supplied to the property.
-    
+
     ![MappingDetails](../ef6/media/mappingdetails.png)
-    
+
 -   Click **&lt;Select Update Function&gt;** and select **UpdatePerson** from the resulting drop-down list.
 -   Default mappings between stored procedure parameters and entity properties appear.
 -   Click **&lt;Select Delete Function&gt;** and select **DeletePerson** from the resulting drop-down list.
@@ -125,13 +125,13 @@ The code creates a new **Person** object, then updates the object, and finally d
             newInstructor.PersonID);
 
         // SaveChanges will call the InsertPerson sproc.  
-        // The PersonID property will be assigned the value 
-        // returned by the sproc. 
+        // The PersonID property will be assigned the value
+        // returned by the sproc.
         context.SaveChanges();
 
         Console.WriteLine("After SaveChanges, the PersonID is: {0}",
             newInstructor.PersonID);
-                    
+
         // Modify the object and call SaveChanges.
         // This time, the UpdatePerson will be called.
         newInstructor.FirstName = "Rachel";
@@ -147,7 +147,7 @@ The code creates a new **Person** object, then updates the object, and finally d
             FirstOrDefault();
 
         if (deletedInstructor == null)
-            Console.WriteLine("A person with PersonID {0} was deleted.", 
+            Console.WriteLine("A person with PersonID {0} was deleted.",
                 newInstructor.PersonID);
     }
 ```
