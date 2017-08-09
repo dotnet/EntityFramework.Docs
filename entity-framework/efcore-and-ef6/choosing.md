@@ -7,7 +7,7 @@ ms.date: 10/27/2016
 ms.assetid: 288f825b-b3e6-4096-971b-d0a1cb96770e
 uid: efcore-and-ef6/choosing
 ---
-# Which One Is Right for You
+# EF Core and EF6: Which One Is Right for You
 
 The following information will help you choose between Entity Framework Core and Entity Framework 6.
 

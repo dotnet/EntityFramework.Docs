@@ -1,5 +1,5 @@
 ---
-title: EF Core and EF6 | Feature Comparison | Microsoft Docs
+title: EF Core & EF6 | Feature by Feature Comparison | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -7,7 +7,7 @@ ms.assetid: f22f29ef-efc0-475d-b0b2-12a054f80f95
 uid: efcore-and-ef6/features
 ---
 
-# Feature Comparison
+# EF Core and EF6 Feature by Feature Comparison
 
 The following information will help you choose between Entity Framework Core and Entity Framework 6.
 

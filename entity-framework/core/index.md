@@ -1,5 +1,5 @@
 ---
-title: Entity Framework Core | Microsoft Docs
+title: EF Core | Quick Overview | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -11,7 +11,7 @@ ms.technology: entity-framework-core
 uid: core/index
 ---
 
-# Entity Framework Core
+# Entity Framework Core Quick Overview
 
 Entity Framework (EF) Core is a lightweight, extensible, and cross-platform version of the popular Entity Framework data access technology.
 
@@ -32,7 +32,7 @@ Or in Visual Studio, using the Package Manager Console:
 ``` console
 PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer
 ```
-See [Database Providers](providers/index.md) for information on available providers and [General Installation Instructions](get-started/general/index.md) for more detailed instructions.
+See [Database Providers](providers/index.md) for information on available providers and [General Installation Instructions](get-started/general/index.md) for more detailed installation steps.
 
 ## The Model
 

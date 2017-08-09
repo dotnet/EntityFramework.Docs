@@ -60,4 +60,4 @@ If your existing project references any of the tooling and design packages, make
 
 ## Deprecated packages
 
-Some references to older EF Core packages may need to be removed manually. In particular, data provider design-time packages such as `Microsoft.EntityFrameworkCore.SqlServer.Design` or similar, are no longer required or supported in EF Core 2.0, but will not be automatically removed when upgrading other packages.
+If you are upgrading an existing application, some references to older EF Core packages may need to be removed manually. In particular, data provider design-time packages such as `Microsoft.EntityFrameworkCore.SqlServer.Design` are no longer required or supported in EF Core 2.0, but will not be automatically removed when upgrading the other packages.

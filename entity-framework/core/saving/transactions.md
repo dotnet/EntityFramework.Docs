@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/saving/transactions
 ---
-# Transactions
+# Using Transactions
 
 Transactions allow several database operations to be processed in an atomic manner. If the transaction is committed, all of the operations are successfully applied to the database. If the transaction is rolled back, none of the operations are applied to the database.
 

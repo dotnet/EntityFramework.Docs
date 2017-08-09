@@ -1,5 +1,5 @@
 ---
-title: EF Core | Microsoft SQL Server | Microsoft Docs
+title: EF Core | Microsoft SQL Server Database Provider | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/providers/sql-server/index
 ---
-# Microsoft SQL Server
+# Microsoft SQL Server EF Core Database Provider
 
 This database provider allows Entity Framework Core to be used with Microsoft SQL Server (including SQL Azure). The provider is maintained as part of the [EntityFramework GitHub project](https://github.com/aspnet/EntityFramework).
 

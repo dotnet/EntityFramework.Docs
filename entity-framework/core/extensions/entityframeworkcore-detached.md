@@ -1,5 +1,5 @@
 ---
-title: EF Core Tools & Extensions | Detached.EntityFramework | Microsoft Docs
+title: EF Core | Tools & Extensions: Detached.EntityFramework | Microsoft Docs
 author: ErikEJ
 ms.author: divega
 ms.date: 01/19/2017

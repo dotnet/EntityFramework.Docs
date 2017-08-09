@@ -1,5 +1,5 @@
 ---
-title: EF Core Tools & Extensions | Microsoft.EntityFrameworkCore.DynamicLinq | Microsoft Docs
+title: EF Core | Tools & Extensions: Microsoft.EntityFrameworkCore.DynamicLinq | Microsoft Docs
 author: ErikEJ
 ms.author: divega
 ms.date: 02/28/2017

@@ -1,5 +1,5 @@
 ---
-title: EF Core Tools & Extensions | LLBLGen Pro | Microsoft Docs
+title: EF Core | Tools & Extensions: LLBLGen Pro | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

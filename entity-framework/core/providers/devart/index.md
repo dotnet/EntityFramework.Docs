@@ -1,5 +1,5 @@
 ---
-title: EF Core | Devart | Microsoft Docs
+title: EF Core | Devart Database Providers | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/providers/devart/index
 ---
-# Devart
+# Devart EF Core Database Providers
 
 Devart is a third party provider writer that offers database providers for a wide range of databases. Find out more at [devart.com/dotconnect](https://www.devart.com/dotconnect/).
 

@@ -1,5 +1,5 @@
 ---
-title: EF Core | SQLite | Microsoft Docs
+title: EF Core | SQLite Database Provider | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/providers/sqlite/index
 ---
-# SQLite
+# SQLite EF Core Database Provider
 
 This database provider allows Entity Framework Core to be used with SQLite. The provider is maintained as part of the [EntityFramework GitHub project](https://github.com/aspnet/EntityFramework).
 

@@ -8,7 +8,7 @@ ms.assetid: d3b66f3c-9d10-4974-a090-8ad093c9a53d
 uid: efcore-and-ef6/porting/ensure-requirements
 ---
 
-# Validate Requirements
+# Before porting from EF6 to EF Core: Validate your Application's Requirements
 
 Before you start the porting process it is important to validate that EF Core meets the data access requirements for your application.
 

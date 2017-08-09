@@ -1,5 +1,5 @@
 ---
-title: EF Core | MySQL | Microsoft Docs
+title: EF Core | MySQL Database Provider | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/providers/mysql/index
 ---
-# MySQL
+# MySQL EF Core Database Provider
 
 This database provider allows Entity Framework Core to be used with MySQL. The provider is maintained as part of the [MySQL project](http://dev.mysql.com).
 

@@ -1,5 +1,5 @@
 ---
-title: EF Core | Npgsql | Microsoft Docs
+title: EF Core | Npgsql Database Provider for PostgreSQL | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/providers/npgsql/index
 ---
-# Npgsql
+# Npgsql EF Core Database Provider for PostgreSQL
 
 This database provider allows Entity Framework Core to be used with PostgreSQL. The provider is maintained as part of the [Npgsql project](http://www.npgsql.org).
 

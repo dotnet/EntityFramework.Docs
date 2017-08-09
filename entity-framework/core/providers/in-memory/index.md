@@ -1,5 +1,5 @@
 ---
-title: EF Core | InMemory | Microsoft Docs
+title: EF Core | InMemory Database Provider | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/providers/in-memory/index
 ---
-# InMemory
+# EF Core In-Memory Database Provider
 
 This database provider allows Entity Framework Core to be used with an in-memory database. This is useful when testing code that uses Entity Framework Core. The provider is maintained as part of the [EntityFramework GitHub project](https://github.com/aspnet/EntityFramework).
 

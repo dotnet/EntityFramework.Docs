@@ -1,5 +1,5 @@
 ---
-title: EF Core | Related Data | Microsoft Docs
+title: EF Core | Saving Related Data | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/saving/related-data
 ---
-# Related Data
+# Saving Related Data
 
 In addition to isolated entities, you can also make use of the relationships defined in your model.
 

@@ -1,5 +1,5 @@
 ---
-title: EF Core | Microsoft SQL Server Compact Edition | Microsoft Docs
+title: EF Core | Microsoft SQL Server Compact Edition Database Provider | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/providers/sql-compact/index
 ---
-# Microsoft SQL Server Compact Edition
+# Microsoft SQL Server Compact Edition EF Core Database Provider
 
 This database provider allows Entity Framework Core to be used with SQL Server Compact Edition. The provider is maintained as part of the [ErikEJ/EntityFramework.SqlServerCompact GitHub Project](https://github.com/ErikEJ/EntityFramework.SqlServerCompact).
 
