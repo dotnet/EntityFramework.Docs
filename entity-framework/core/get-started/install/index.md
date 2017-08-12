@@ -32,7 +32,7 @@ To develop applications that target [.NET Core](https://www.microsoft.com/net/do
 
 To install or upgrade the SQL Server provider in a cross-platform .NET Core application, switch to the application's directory and run the following in a command line:
 
-``` shell
+``` console
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
