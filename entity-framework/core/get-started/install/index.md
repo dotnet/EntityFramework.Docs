@@ -38,7 +38,7 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 
 You can indicate a specific version install in the `dotnet add package` command, using the `-v` modifier. E.g. to install EF Core 2.0 packages, append `-v 2.0.0` to the command.
 
-EF Core includes a set of [additional commands for the `dotnet` CLI](miscellaneous/cli/dotnet.md), starting with `dotnet ef`. In order to use the `dotnet ef` CLI commands, your application’s `.csproj` file needs to contain the following entry:
+EF Core includes a set of [additional commands for the `dotnet` CLI](../../miscellaneous/cli/dotnet.md), starting with `dotnet ef`. In order to use the `dotnet ef` CLI commands, your application’s `.csproj` file needs to contain the following entry:
 
 ``` xml
 <ItemGroup>
@@ -75,7 +75,7 @@ You can develop many different types of applications that target .NET Core, .NET
 
 ### Tools
 
-There is also a PowerShell version of the [EF Core commands which run inside the PMC](/miscellaneous/cli/powershell.md) in Visual Studio, with similar capabilities to the `dotnet ef` commands. In order to use these, install the `Microsoft.EntityFrameworkCore.Tools` package using either the Package Manager UI or the PMC.
+There is also a PowerShell version of the [EF Core commands which run inside the PMC](../../miscellaneous/cli/powershell.md) in Visual Studio, with similar capabilities to the `dotnet ef` commands. In order to use these, install the `Microsoft.EntityFrameworkCore.Tools` package using either the Package Manager UI or the PMC.
 
 > [!TIP]  
 > Although it is possible to use the `dotnet ef` commands from the PMC in Visual Studio, it is far more convenient to use the PowerShell version:
