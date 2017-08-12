@@ -30,6 +30,9 @@ Besides the runtime libraries, you can install tools which make it easier to per
 
 To develop applications that target [.NET Core](https://www.microsoft.com/net/download/core) you can choose to use the [`dotnet` CLI commands](https://docs.microsoft.com/en-us/dotnet/core/tools/) in combination with your favorite text editor, or an Integrated Development Environment (IDE) such as Visual Studio, Visual Studio for Mac or Visual Studio Code.
 
+> [!IMPORTANT]  
+> Applications that target .NET Core require specific versions of Visual Studio, e.g. .NET Core 1.x development requires Visual Studio 2017, while .NET Core 2.0 development requires Visual Studio 2017 version 15.3.
+
 To install or upgrade the SQL Server provider in a cross-platform .NET Core application, switch to the application's directory and run the following in a command line:
 
 ``` console
@@ -50,7 +53,9 @@ EF Core includes a set of [additional commands for the `dotnet` CLI](../../misce
 <a name="visual-studio"></a>
 ## Visual Studio development
 
-You can develop many different types of applications that target .NET Core, .NET Framework, or other platforms supported by EF Core using Visual Studio. There are two ways you can install an EF Core database provider in your application from Visual Studio:
+You can develop many different types of applications that target .NET Core, .NET Framework, or other platforms supported by EF Core using Visual Studio.
+
+There are two ways you can install an EF Core database provider in your application from Visual Studio:
 
 ### Using NuGet's [Package Manager User Interface](https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui)
 
