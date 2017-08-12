@@ -12,7 +12,7 @@ uid: core/get-started/index
 ---
 # Getting Started with Entity Framework Core
 
-## [General Installation Instructions](general/index.md)
+## [Installing EF Core](install/index.md)
 
 A summary of the steps necessary to add EF Core to your application in different platforms and popular IDEs.
 
