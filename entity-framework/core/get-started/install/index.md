@@ -54,15 +54,15 @@ You can develop many different types of applications that target .NET Core, .NET
 
 ### Using NuGet's [Package Manager User Interface](https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui)
 
-* Select on the menu <kbd>Project</kbd> > <kbd>Manage NuGet Packages</kbd>
+* Select on the menu **Project > Manage NuGet Packages**
 
-* Click on the <kbd>**Browse**</kbd> or the <kbd>**Updates**</kbd> tab
+* Click on the **Browse** or the **Updates** tab
 
 * Select the `Microsoft.EntityFrameworkCore.SqlServer` package and the desired version and confirm
 
 ### Using NuGet's [Package Manager Console (PMC)](https://docs.microsoft.com/en-us/nuget/tools/package-manager-console)
 
-* Select on the menu <kbd>Tools</kbd> > <kbd>NuGet Package Manager</kbd> > <kbd>Package Manager Console</kbd>
+* Select on the menu **Tools > NuGet Package Manager > Package Manager Console**
 
 * Type and run the following command in the PMC:
 
