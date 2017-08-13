@@ -14,7 +14,7 @@ uid: core/saving/concurrency
 
 If a property is configured as a concurrency token then EF will check that no other user has modified that value in the database when saving changes to that record.
 
-> [!TIP]
+> [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Concurrency/) on GitHub.
 
 ## How concurrency handling works in EF Core

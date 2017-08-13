@@ -11,7 +11,7 @@ uid: core/modeling/relationships
 
 A relationship defines how two entities relate to each other. In a relational database, this is represented by a foreign key constraint.
 
-> [!NOTE]
+> [!NOTE]  
 > Most of the samples in this article use a one-to-many relationship to demonstrate concepts. For examples of one-to-one and many-to-many relationships see the [Other Relationship Patterns](#other-relationship-patterns) section at the end of the article.
 
 ## Definition of Terms
@@ -102,7 +102,7 @@ You can use the Data Annotations to configure which property should be used as t
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/Relationships/ForeignKey.cs?name=Entities&highlight=17)]
 
-> [!TIP]
+> [!TIP]  
 > The `[ForeignKey]` annotation can be placed on either navigation property in the relationship. It does not need to go on the navigation property in the dependent entity class.
 
 ### [InverseProperty]
@@ -219,7 +219,7 @@ public class RecordOfSale
 }
 ```
 
-> [!WARNING]
+> [!WARNING]  
 > The order in which you specify principal key properties must match the order in which they are specified for the foreign key.
 
 ### Required and Optional Relationships
@@ -328,7 +328,7 @@ public class BlogImage
 }
 ```
 
-> [!NOTE]
+> [!NOTE]  
 > EF will choose one of the entities to be the dependent based on its ability to detect a foreign key property. If the wrong entity is chosen as the dependent, you can use the Fluent API to correct this.
 
 When configuring the relationship with the Fluent API, you use the `HasOne` and `WithOne` methods.

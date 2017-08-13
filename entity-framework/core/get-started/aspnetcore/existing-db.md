@@ -10,12 +10,12 @@ uid: core/get-started/aspnetcore/existing-db
 
 # Getting Started with EF Core on ASP.NET Core with an Existing Database
 
-> [!IMPORTANT]
+> [!IMPORTANT]  
 > The [.NET Core SDK](https://www.microsoft.com/net/download/core) no longer supports `project.json` or Visual Studio 2015. Everyone doing .NET Core development is encouraged to [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/) and [Visual Studio 2017](https://www.visualstudio.com/downloads/).
 
 In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework.  You will use reverse engineering to create an Entity Framework model based on an existing database.
 
-> [!TIP]
+> [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb) on GitHub.
 
 ## Prerequisites
@@ -32,7 +32,7 @@ The following prerequisites are needed to complete this walkthrough:
 
 This tutorial uses a **Blogging** database on your LocalDb instance as the existing database.
 
-> [!TIP]
+> [!TIP]  
 > If you have already created the **Blogging** database as part of another tutorial, you can skip these steps.
 
 * Open Visual Studio
@@ -165,7 +165,7 @@ Now we can use the `AddDbContext(...)` method to register it as a service.
 
 [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Startup.cs?name=ConfigureServices&highlight=7-8)]
 
-> [!TIP]
+> [!TIP]  
 > In a real application you would typically put the connection string in a configuration file. For the sake of simplicity, we are defining it in code. For more information, see [Connection Strings](../../miscellaneous/connection-strings.md).
 
 ## Create a controller

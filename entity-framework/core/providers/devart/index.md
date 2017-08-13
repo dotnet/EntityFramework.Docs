@@ -14,7 +14,7 @@ uid: core/providers/devart/index
 
 Devart is a third party provider writer that offers database providers for a wide range of databases. Find out more at [devart.com/dotconnect](https://www.devart.com/dotconnect/).
 
-> [!NOTE]
+> [!NOTE]  
 > This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 ## Paid Versions Only

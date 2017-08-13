@@ -12,7 +12,7 @@ uid: core/providers/ibm/index
 
 This database provider allows Entity Framework Core to be used with IBM Data Server. The provider is maintained by IBM.
 
-> [!NOTE]
+> [!NOTE]  
 > This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 ## Install

@@ -14,7 +14,7 @@ uid: core/saving/related-data
 
 In addition to isolated entities, you can also make use of the relationships defined in your model.
 
-> [!TIP]
+> [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/RelatedData/) on GitHub.
 
 ## Adding a graph of new entities

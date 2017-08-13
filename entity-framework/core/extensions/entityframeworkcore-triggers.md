@@ -10,7 +10,7 @@ uid: core/extensions/entityframeworkcore-triggers
 
 # EntityFrameworkCore.Triggers Extension
 
-> [!NOTE]
+> [!NOTE]  
 > This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 Add triggers to your entities with insert, update, and delete events. There are three events for each: before, after, and upon failure.

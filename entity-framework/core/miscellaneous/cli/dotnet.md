@@ -12,7 +12,7 @@ uid: core/miscellaneous/cli/dotnet
 ---
 # .NET Command Line Tools for EF Core
 
-> [!IMPORTANT]
+> [!IMPORTANT]  
 > The [.NET Core SDK](https://www.microsoft.com/net/download/core) no longer supports `project.json` or Visual Studio 2015. Everyone doing .NET Core development is encouraged to [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/) and [Visual Studio 2017](https://www.visualstudio.com/downloads/).
 
 Entity Framework Core .NET Command Line Tools
@@ -58,7 +58,7 @@ The resulting project should include these items (in addition to your other proj
 </Project>
 ```
 
-> [!TIP]
+> [!TIP]  
 > A private package reference (`PrivateAssets="All"`) means this dependency is local to the current project. For example, if Project A has a build only dependency and Project B depends on A, `dotnet restore` will not add A's build-only dependencies into Project B.
 
 ## Usage

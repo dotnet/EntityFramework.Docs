@@ -29,7 +29,7 @@ Most database providers require some form of connection string to connect to the
 </configuration>
 ```
 
-> [!TIP]
+> [!TIP]  
 > The `providerName` setting is not required on EF Core connection strings stored in App.config because the database provider is configured via code.
 
 You can then read the connection string using the `ConfigurationManager` API in your context's `OnConfiguring` method. You may need to add a reference to the `System.Configuration` framework assembly to be able to use this API.

@@ -12,7 +12,7 @@ uid: core/modeling/relational/columns
 ---
 # Column Mapping
 
-> [!NOTE]
+> [!NOTE]  
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 Column mapping identifies which column data should be queried from and saved to in the database.

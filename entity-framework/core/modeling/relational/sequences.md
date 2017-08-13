@@ -12,7 +12,7 @@ uid: core/modeling/relational/sequences
 ---
 # Sequences
 
-> [!NOTE]
+> [!NOTE]  
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 A sequence generates a sequential numeric values in the database. Sequences are not associated with a specific table.

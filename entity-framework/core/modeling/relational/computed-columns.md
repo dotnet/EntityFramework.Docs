@@ -12,7 +12,7 @@ uid: core/modeling/relational/computed-columns
 ---
 # Computed Columns
 
-> [!NOTE]
+> [!NOTE]  
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 A computed column is a column whose value is calculated in the database. A computed column can use other columns in the table to calculate its value.

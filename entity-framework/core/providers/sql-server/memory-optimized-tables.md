@@ -13,7 +13,7 @@ uid: core/providers/sql-server/memory-optimized-tables
 
 # Memory-Optimized Tables support in SQL Server EF Core Database Provider
 
-> [!NOTE]
+> [!NOTE]  
 >
 > This feature was introduced in EF Core 1.1.
 

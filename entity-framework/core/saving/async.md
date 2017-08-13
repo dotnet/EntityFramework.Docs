@@ -12,7 +12,7 @@ uid: core/saving/async
 
 Asynchronous saving avoids blocking a thread while the changes are written to the database. This can be useful to avoid freezing the UI of a thick-client application. Asynchronous operations can also increase throughput in a web application, where the thread can be freed up to service other requests while the database operation completes. For more information, see [Asynchronous Programming in C#](https://msdn.microsoft.com/en-us/library/mt674882.aspx).
 
-> [!WARNING]
+> [!WARNING]  
 > EF Core does not support multiple parallel operations being run on the same context instance. You should always wait for an operation to complete before beginning the next operation. This is typically done by using the `await` keyword on each asynchronous operation.
 
 Entity Framework Core provides `DbContext.SaveChangesAsync()` as an asynchronous alternative to `DbContext.SaveChanges()`.
