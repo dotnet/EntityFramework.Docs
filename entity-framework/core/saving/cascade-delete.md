@@ -12,7 +12,7 @@ uid: core/saving/cascade-delete
 ---
 # Cascade Delete
 
-Cascade delete is commonly used in database terminology to describe a characteristic that allows the deletion of a row to automatically trigger the deletion of related rows. EF Core implements several different delete behaviors and allows for the configuration of the delete behaviors of individual relationships. EF Core also implements conventions that automatically configure useful default delete behaviors for each relationship based on whether they are [optional or required] (../modeling/relationships.md#required-optional-relationships)
+Cascade delete is commonly used in database terminology to describe a characteristic that allows the deletion of a row to automatically trigger the deletion of related rows. EF Core implements several different delete behaviors and allows for the configuration of the delete behaviors of individual relationships. EF Core also implements conventions that automatically configure useful default delete behaviors for each relationship based on the [requiredness of the relationship] (../modeling/relationships.md). TO-DO
 
 ## Delete behaviors
 Delete behaviors are defined in the *DeleteBehavior* enumerator type and are used to control whether the deletion of a principal/parent entity should have a side effect on dependent/child entities it is related to.

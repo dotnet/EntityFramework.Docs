@@ -50,7 +50,7 @@ The following code listing shows a one-to-many relationship between `Blog` and `
 
 * `Post.Blog` is the inverse navigation property of `Blog.Posts` (and vice versa)
 
-[!code-csharp[Main](samples/core/Modeling/Conventions/Samples/Relationships/Full.cs#Entities)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Samples/Relationships/Full.cs#Entities)]
 
 ## Conventions
 
