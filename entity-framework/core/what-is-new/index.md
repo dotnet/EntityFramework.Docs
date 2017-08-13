@@ -44,7 +44,7 @@ Filters may be disabled for individual LINQ queries using the IgnoreQueryFilters
 - Navigation references are not allowed. This feature may be added based on feedback.
 - Filters can only be defined on the root Entity Type of a hierarchy.
 
-### DbContext pooling
+## DbContext pooling
 
 This is one of two opt-in performance features designed to offer benefits in high-scale scenarios.
 
@@ -62,7 +62,7 @@ This is conceptually similar to how connection pooling operates in ADO.NET provi
 
 The new method introduces a few limitations on what can be done in the ```OnConfiguring()``` method of the DbContext but it can be adopted by many ASP.NET Core applications to obtain a performance boost.
 
-### Explicitly compiled queries
+## Explicitly compiled queries
 
 This is the second opt-in performance features designed to offer benefits in high-scale scenarios.
 
@@ -114,7 +114,7 @@ SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1
 
 EF Core supports automatic generation of key values through a variety of mechanisms. When using this feature, a value is generated if the key property is the CLR default--usually zero or null. This means that a graph of entities can be passed to `DbContext.Attach` or `DbSet.Attach` and EF Core will mark those entities that have a key already set as `Unchanged` while those entities that do not have a key set will be marked as `Added`. This makes it easy to attach a graph of mixed new and existing entities when using generated keys. `DbContext.Update` and `DbSet.Update` work in the same way, except that entities with a key set are marked as `Modified` instead of `Unchanged`.
 
-### Table splitting
+## Table splitting
 
 It is now possible to map two or more entity types to the same table where the primary key column(s) will be shared and each row will correspond to two or more entities.
 
@@ -174,7 +174,7 @@ var aCustomers =
 Note that Like() comes with an in-memory implementation, which can be handy when working against an in-memory database or when evaluation of the predicate needs to occur con the client side.
 
 
-### Database scalar function mapping
+## Database scalar function mapping
 
 Preview 2 includes an important contribution from [Paul Middleton](https://github.com/pmiddleton) which enables mapping database scalar functions to method stubs so that they can be used in LINQ queries and translated to SQL.
 
