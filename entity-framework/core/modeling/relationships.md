@@ -139,7 +139,7 @@ public class Post
 
 ### Cascade Delete
 
-By convention, cascade delete will be set to *Cascade* for required relationships and *ClientSetNull* for optional relationships (see the [Required/Optional Relationships](#required-optional-relationship) section for the difference between required and optional relationships). *Cascade* means dependent entities are also deleted. *ClientSetNull* means that dependent entities that are not loaded into memory will remain unchanged and must be manually deleted, or updated to point to a valid principal entity. For entities that are loaded into memory, EF Core will attempt to set the foreign key properties to null. See [Cascade Delete](../saving/cascade-delete.md) for more details about the different delete behaviors and the defaults used by convention.
+By convention, cascade delete will be set to *Cascade* for required relationships and *ClientSetNull* for optional relationships (see the [Required/Optional Relationships](#required-and-optional-relationships) section for the difference between required and optional relationships). *Cascade* means dependent entities are also deleted. *ClientSetNull* means that dependent entities that are not loaded into memory will remain unchanged and must be manually deleted, or updated to point to a valid principal entity. For entities that are loaded into memory, EF Core will attempt to set the foreign key properties to null. See [Cascade Delete](../saving/cascade-delete.md) for more details about the different delete behaviors and the defaults used by convention.
 
 ## Data Annotations
 
@@ -452,7 +452,7 @@ public class RecordOfSale
 
 ### Required and Optional Relationships
 
-You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see [Required/optional properties](required-optional.md) for more information).
+You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see [Required and Optional properties](required-optional.md) for more information).
 
 <!-- [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/Required.cs?highlight=11)] -->
 ``` csharp
