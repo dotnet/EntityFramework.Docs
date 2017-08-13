@@ -450,7 +450,7 @@ public class RecordOfSale
 > [!WARNING]
 > The order in which you specify principal key properties must match the order in which they are specified for the foreign key.
 
-### Required/optional Relationships
+### Required and Optional Relationships
 
 You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see [Required/optional properties](required-optional.md) for more information).
 

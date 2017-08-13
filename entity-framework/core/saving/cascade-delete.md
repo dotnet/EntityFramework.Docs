@@ -12,19 +12,19 @@ uid: core/saving/cascade-delete
 ---
 # Cascade Delete
 
-Cascade delete is commonly used in database terminology to describe a characteristic that allows the deletion of a row to automatically trigger the deletion of related rows. EF Core implements several different delete behaviors and allows for the configuration of the delete behaviors of individual relationships. EF Core also implements conventions that automatically configure useful default delete behaviors for each relationship based on the [requiredness of the relationship] (../modeling/relationships.md). TO-DO
+Cascade delete is commonly used in database terminology to describe a characteristic that allows the deletion of a row to automatically trigger the deletion of related rows. EF Core implements several different delete behaviors and allows for the configuration of the delete behaviors of individual relationships. EF Core also implements conventions that automatically configure useful default delete behaviors for each relationship based on the [requiredness of the relationship] (../modeling/relationships.md#required-and-optional-relationships).
 
 ## Delete behaviors
 Delete behaviors are defined in the *DeleteBehavior* enumerator type and are used to control whether the deletion of a principal/parent entity should have a side effect on dependent/child entities it is related to.
 
 There are four delete behaviors:
 
-|Name | Effect on dependent entities tracked in memory | Effect on dependent entities in database | Default for |
-|-|-|-|
-|**Cascade** | Entities are deleted | Entities are deleted | **Required relationships**|
-|**ClientSetNull** | Foreign key properties are set to null | None |**Optional relationships**|
-|**SetNull** | Foreign key properties are set to null | Foreign key properties are set to null |N/A|
-|**Restrict**| None | None |N/A|
+|Name | Effect on dependent entities tracked in memory | Effect on dependent entities in database | Default for |  
+|-|-|-|  
+|**Cascade** | Entities are deleted | Entities are deleted | **Required relationships** |  
+|**ClientSetNull** | Foreign key properties are set to null | None | **Optional relationships** |  
+|**SetNull** | Foreign key properties are set to null | Foreign key properties are set to null | None |  
+|**Restrict** | None | None | None |  
 
 > [!IMPORTANT]  
 > **Changes in EF Core 2.0:** In previous releases, *Restrict* would cause optional foreign key properties in tracked dependent entities to be set to null, and was the default delete behavior for optional relationships. In EF Core 2.0, the *ClientSetNull* was introduced to represent that behavior and became the default for optional relationships. The behavior of *Restrict* was adjusted to never have any side effects on dependent entities.
