@@ -23,13 +23,9 @@ Entity Framework Core .NET Command Line Tools
 
 .NET Command Line Tools require the .NET Core SDK. See the [.NET Core](https://www.microsoft.com/net/core) website for installation instructions.
 
-### Supported Frameworks
+### Supported .NET platforms
 
-The .NET Command Line Tools will work on projects targeting these frameworks:
-
-* .NET Framework 4.5.1 and newer. ("net451", "net452", "net46", etc.)
-
-* .NET Core App 1.0 and newer. ("netcoreapp1.0", "netcoreapp1.1", etc.)
+The .NET Command Line Tools work on projects targeting .NET Core (e.g. "netcoreapp1.0", "netcoreapp1.1", "netcoreapp2.0", etc.). Use a version of the .NET CLI tools for EF Core package that matches the major version of the EF Core runtime used by the application.
 
 ### Install by editing project
 
@@ -112,13 +108,21 @@ Options:
   -s|--startup-project <PROJECT>         The startup project to use.
   --framework <FRAMEWORK>                The target framework.
   --configuration <CONFIGURATION>        The configuration to use.
+  --runtime <RUNTIME_IDENTIFIER>         The runtime to use.
   --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
-  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  --no-build                             Don't build the project. Only use this when the build is up-to-date.
   -h|--help                              Show help information
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
 ```
+
+> [!NOTE]  
+> EF Core 1.x CLI tools supported an argument called environment which could be use to specify the environment when the commands were run against an ASP.NET Core application. This argument is no longer available in 2.0:
+  ``` console
+  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  ```
+With 2.0, you can use the *ASPNETCORE_ENVIRONMENT* environment variable instead.
 
 ### dotnet-ef-database-update
 
@@ -134,8 +138,9 @@ Options:
   -s|--startup-project <PROJECT>         The startup project to use.
   --framework <FRAMEWORK>                The target framework.
   --configuration <CONFIGURATION>        The configuration to use.
+  --runtime <RUNTIME_IDENTIFIER>         The runtime to use.
   --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
-  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  --no-build                             Don't build the project. Only use this when the build is up-to-date.
   -h|--help                              Show help information
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
@@ -171,8 +176,9 @@ Options:
   -s|--startup-project <PROJECT>         The startup project to use.
   --framework <FRAMEWORK>                The target framework.
   --configuration <CONFIGURATION>        The configuration to use.
+  --runtime <RUNTIME_IDENTIFIER>         The runtime to use.
   --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
-  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  --no-build                             Don't build the project. Only use this when the build is up-to-date.
   -h|--help                              Show help information
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
@@ -190,13 +196,14 @@ Options:
   -s|--startup-project <PROJECT>         The startup project to use.
   --framework <FRAMEWORK>                The target framework.
   --configuration <CONFIGURATION>        The configuration to use.
+  --runtime <RUNTIME_IDENTIFIER>         The runtime to use.
   --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
-  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  --no-build                             Don't build the project. Only use this when the build is up-to-date.
   -h|--help                              Show help information
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-```
+  ```
 
 ### dotnet-ef-dbcontext-scaffold
 
@@ -214,18 +221,20 @@ Options:
   -o|--output-dir <PATH>                 The directory to put files in. Paths are relative to the project directory.
   --schema <SCHEMA_NAME>...              The schemas of tables to generate entity types for.
   -t|--table <TABLE_NAME>...             The tables to generate entity types for.
+  --use-database-names                   Use table and column names directly from the database.
   --json                                 Show JSON output.
   -p|--project <PROJECT>                 The project to use.
   -s|--startup-project <PROJECT>         The startup project to use.
   --framework <FRAMEWORK>                The target framework.
   --configuration <CONFIGURATION>        The configuration to use.
+  --runtime <RUNTIME_IDENTIFIER>         The runtime to use.
   --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
-  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  --no-build                             Don't build the project. Only use this when the build is up-to-date.
   -h|--help                              Show help information
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-```
+  ```
 
 ### dotnet-ef-migrations
 
@@ -243,6 +252,8 @@ Commands:
   list    Lists available migrations.
   remove  Removes the last migration.
   script  Generates a SQL script from migrations.
+
+Use "migrations [command] --help" for more information about a command.
 ```
 
 ### dotnet-ef-migrations-add
@@ -261,8 +272,9 @@ Options:
   -s|--startup-project <PROJECT>         The startup project to use.
   --framework <FRAMEWORK>                The target framework.
   --configuration <CONFIGURATION>        The configuration to use.
+  --runtime <RUNTIME_IDENTIFIER>         The runtime to use.
   --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
-  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  --no-build                             Don't build the project. Only use this when the build is up-to-date.
   -h|--help                              Show help information
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
@@ -281,13 +293,14 @@ Options:
   -s|--startup-project <PROJECT>         The startup project to use.
   --framework <FRAMEWORK>                The target framework.
   --configuration <CONFIGURATION>        The configuration to use.
+  --runtime <RUNTIME_IDENTIFIER>         The runtime to use.
   --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
-  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  --no-build                             Don't build the project. Only use this when the build is up-to-date.
   -h|--help                              Show help information
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
   --prefix-output                        Prefix output with level.
-```
+  ```
 
 ### dotnet-ef-migrations-remove
 
@@ -302,8 +315,9 @@ Options:
   -s|--startup-project <PROJECT>         The startup project to use.
   --framework <FRAMEWORK>                The target framework.
   --configuration <CONFIGURATION>        The configuration to use.
+  --runtime <RUNTIME_IDENTIFIER>         The runtime to use.
   --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
-  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  --no-build                             Don't build the project. Only use this when the build is up-to-date.
   -h|--help                              Show help information
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
@@ -327,8 +341,9 @@ Options:
   -s|--startup-project <PROJECT>         The startup project to use.
   --framework <FRAMEWORK>                The target framework.
   --configuration <CONFIGURATION>        The configuration to use.
+  --runtime <RUNTIME_IDENTIFIER>         The runtime to use.
   --msbuildprojectextensionspath <PATH>  The MSBuild project extensions path. Defaults to "obj".
-  -e|--environment <NAME>                The environment to use. Defaults to "Development".
+  --no-build                             Don't build the project. Only use this when the build is up-to-date.
   -h|--help                              Show help information
   -v|--verbose                           Show verbose output.
   --no-color                             Don't colorize output.
@@ -388,7 +403,7 @@ To make the project a .NET Core App, add the "netcoreapp1.0" framework to projec
 ``` xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.0;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 </Project>
 ```
@@ -398,7 +413,7 @@ When targeting .NET Framework, ensure you project targets version 4.5.1 or newer
 ``` xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net46;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 </Project>
 ```

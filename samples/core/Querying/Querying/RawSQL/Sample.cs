@@ -33,6 +33,15 @@ namespace EFQuerying.RawSQL
 
             using (var context = new BloggingContext())
             {
+                var user = "johndoe";
+
+                var blogs = context.Blogs
+                    .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
+                    .ToList();
+            }
+
+            using (var context = new BloggingContext())
+            {
                 var user = new SqlParameter("user", "johndoe");
 
                 var blogs = context.Blogs
@@ -45,7 +54,7 @@ namespace EFQuerying.RawSQL
                 var searchTerm = ".NET";
 
                 var blogs = context.Blogs
-                    .FromSql("SELECT * FROM dbo.SearchBlogs {0}", searchTerm)
+                    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
                     .Where(b => b.Rating > 3)
                     .OrderByDescending(b => b.Rating)
                     .ToList();
@@ -56,7 +65,7 @@ namespace EFQuerying.RawSQL
                 var searchTerm = ".NET";
 
                 var blogs = context.Blogs
-                    .FromSql("SELECT * FROM dbo.SearchBlogs {0}", searchTerm)
+                    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
                     .Include(b => b.Posts)
                     .ToList();
             }
