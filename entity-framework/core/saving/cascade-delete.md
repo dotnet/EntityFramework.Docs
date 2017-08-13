@@ -19,12 +19,12 @@ Delete behaviors are defined in the *DeleteBehavior* enumerator type and are use
 
 There are four delete behaviors:
 
-|Name | Effect on dependent entities tracked in memory | Effect on dependent entities in database | Default for |  
-|-|-|-|  
-|**Cascade** | Entities are deleted | Entities are deleted | **Required relationships** |  
-|**ClientSetNull** | Foreign key properties are set to null | None | **Optional relationships** |  
-|**SetNull** | Foreign key properties are set to null | Foreign key properties are set to null | None |  
-|**Restrict** | None | None | None |  
+| Name | Effect on dependents tracked in memory | Effect on dependents in database | Used by default for
+|-|-|-  
+| **Cascade** | Entities are deleted | Entities are deleted | **Required relationships**
+| **ClientSetNull** | Foreign key properties are set to null | None | **Optional relationships**
+| **SetNull** | Foreign key properties are set to null | Foreign key properties are set to null | None
+| **Restrict** | None | None | None
 
 > [!IMPORTANT]  
 > **Changes in EF Core 2.0:** In previous releases, *Restrict* would cause optional foreign key properties in tracked dependent entities to be set to null, and was the default delete behavior for optional relationships. In EF Core 2.0, the *ClientSetNull* was introduced to represent that behavior and became the default for optional relationships. The behavior of *Restrict* was adjusted to never have any side effects on dependent entities.

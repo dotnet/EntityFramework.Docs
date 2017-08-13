@@ -139,7 +139,7 @@ public class Post
 
 ### Cascade Delete
 
-By convention, cascade delete will be set to *Cascade* for required relationships and *ClientSetNull* for optional relationships (see the [Required/Optional Relationships](#required-and-optional-relationships) section for the difference between required and optional relationships). *Cascade* means dependent entities are also deleted. *ClientSetNull* means that dependent entities that are not loaded into memory will remain unchanged and must be manually deleted, or updated to point to a valid principal entity. For entities that are loaded into memory, EF Core will attempt to set the foreign key properties to null. See [Cascade Delete](../saving/cascade-delete.md) for more details about the different delete behaviors and the defaults used by convention.
+By convention, cascade delete will be set to *Cascade* for required relationships and *ClientSetNull* for optional relationships (see the [Required and Optional Relationships](#required-and-optional-relationships) section for the difference between required and optional relationships). *Cascade* means dependent entities are also deleted. *ClientSetNull* means that dependent entities that are not loaded into memory will remain unchanged and must be manually deleted, or updated to point to a valid principal entity. For entities that are loaded into memory, EF Core will attempt to set the foreign key properties to null. See [Cascade Delete](../saving/cascade-delete.md) for more details about the different delete behaviors and the defaults used by convention.
 
 ## Data Annotations
 
