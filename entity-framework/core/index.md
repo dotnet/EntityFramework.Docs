@@ -32,7 +32,7 @@ Or in Visual Studio, using the Package Manager Console:
 ``` console
 PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer
 ```
-See [Database Providers](providers/index.md) for information on available providers and [Installing EF Core](get-started/general/index.md) for more detailed installation steps.
+See [Database Providers](providers/index.md) for information on available providers and [Installing EF Core](get-started/install/index.md) for more detailed installation steps.
 
 ## The Model
 

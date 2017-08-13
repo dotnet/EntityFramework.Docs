@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.Configuring.DataAnnotations.Samples.Relationships.ForeignKey
 {
+    #region Model
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -34,4 +35,5 @@ namespace EFModeling.Configuring.DataAnnotations.Samples.Relationships.ForeignKe
         public int BlogForeignKey { get; set; }
         public Blog Blog { get; set; }
     }
+    #endregion
 }

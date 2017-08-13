@@ -9,6 +9,7 @@ namespace EFModeling.Conventions.Samples.Relationships.OneNavigation
         public DbSet<Post> Posts { get; set; }
     }
 
+    #region Entities
     public class Blog
     {
         public int BlogId { get; set; }
@@ -23,4 +24,5 @@ namespace EFModeling.Conventions.Samples.Relationships.OneNavigation
         public string Title { get; set; }
         public string Content { get; set; }
     }
+    #endregion
 }

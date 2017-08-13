@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Conventions.Samples.Relationships.Full
 {
@@ -9,6 +9,7 @@ namespace EFModeling.Conventions.Samples.Relationships.Full
         public DbSet<Post> Posts { get; set; }
     }
 
+    #region Entities
     public class Blog
     {
         public int BlogId { get; set; }
@@ -26,4 +27,5 @@ namespace EFModeling.Conventions.Samples.Relationships.Full
         public int BlogId { get; set; }
         public Blog Blog { get; set; }
     }
+    #endregion
 }

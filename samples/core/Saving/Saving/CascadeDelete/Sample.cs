@@ -9,12 +9,12 @@ namespace EFSaving.CascadeDelete
     {
         public static void Run()
         {
-            using (var db = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-                db.Blogs.Add(new Blog
+                context.Blogs.Add(new Blog
                 {
                     Url = "http://sample.com",
                     Posts = new List<Post>
@@ -24,19 +24,21 @@ namespace EFSaving.CascadeDelete
                     }
                 });
 
-                db.SaveChanges();
+                context.SaveChanges();
             }
 
-            using (var db = new BloggingContext())
+            #region CascadingOnTrackedEntities
+            using (var context = new BloggingContext())
             {
-                var blog = db.Blogs.Include(b => b.Posts).First();
-                db.Remove(blog);
-                db.SaveChanges();
+                var blog = context.Blogs.Include(b => b.Posts).First();
+                context.Remove(blog);
+                context.SaveChanges();
             }
+            #endregion
 
-            using (var db = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                db.Blogs.Add(new Blog
+                context.Blogs.Add(new Blog
                 {
                     Url = "http://sample.com",
                     Posts = new List<Post>
@@ -46,15 +48,16 @@ namespace EFSaving.CascadeDelete
                     }
                 });
 
-                db.SaveChanges();
+                context.SaveChanges();
             }
-
-            using (var db = new BloggingContext())
+            #region CascadingOnDatabaseEntities
+            using (var context = new BloggingContext())
             {
-                var blog = db.Blogs.First();
-                db.Remove(blog);
-                db.SaveChanges();
+                var blog = context.Blogs.First();
+                context.Remove(blog);
+                context.SaveChanges();
             }
+            #endregion
         }
     }
 }

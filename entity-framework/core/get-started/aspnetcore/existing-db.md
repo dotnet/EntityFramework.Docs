@@ -60,7 +60,7 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
-* **Tools -> NuGet Package Manager -> Package Manager Console**
+* **Tools > NuGet Package Manager > Package Manager Console**
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
 We will be using some Entity Framework Tools to create a model from the database. So we will install the tools package as well.

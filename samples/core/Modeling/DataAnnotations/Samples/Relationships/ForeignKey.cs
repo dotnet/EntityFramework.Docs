@@ -10,6 +10,7 @@ namespace EFModeling.Configuring.DataAnnotations.Samples.Relationships.ForeignKe
         public DbSet<Post> Posts { get; set; }
     }
 
+    #region Entities
     public class Blog
     {
         public int BlogId { get; set; }
@@ -29,4 +30,5 @@ namespace EFModeling.Configuring.DataAnnotations.Samples.Relationships.ForeignKe
         [ForeignKey("BlogForeignKey")]
         public Blog Blog { get; set; }
     }
+    #endregion
 }
