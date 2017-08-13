@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.Configuring.FluentAPI.Samples.Relationships.NoForeignKey
 {
+    #region Model
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -32,4 +33,5 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relationships.NoForeignKey
 
         public Blog Blog { get; set; }
     }
+    #endregion
 }

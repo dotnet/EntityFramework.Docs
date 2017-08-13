@@ -15,7 +15,7 @@ uid: core/saving/cascade-delete
 Cascade delete is commonly used in database terminology to describe a characteristic that allows the deletion of a row to automatically trigger the deletion of related rows. EF Core implements several different delete behaviors and allows for the configuration of the delete behaviors of individual relationships. EF Core also implements conventions that automatically configure useful default delete behaviors for each relationship based on the [requiredness of the relationship] (../modeling/relationships.md#required-and-optional-relationships).
 
 ## Delete behaviors
-Delete behaviors are defined in the *DeleteBehavior* enumerator type and are used to control whether the deletion of a principal/parent entity should have a side effect on dependent/child entities it is related to.
+Delete behaviors are defined in the *DeleteBehavior* enumerator type and can be passed to the *OnDelete* fluent API to  control whether the deletion of a principal/parent entity should have a side effect on dependent/child entities it is related to.
 
 There are four delete behaviors:
 
@@ -28,6 +28,8 @@ There are four delete behaviors:
 
 > [!IMPORTANT]  
 > **Changes in EF Core 2.0:** In previous releases, *Restrict* would cause optional foreign key properties in tracked dependent entities to be set to null, and was the default delete behavior for optional relationships. In EF Core 2.0, the *ClientSetNull* was introduced to represent that behavior and became the default for optional relationships. The behavior of *Restrict* was adjusted to never have any side effects on dependent entities.
+
+When either *ClientSetNull* or *SetNull* are explicitly configured on a required relationship (i.e. a relationship controlled by a non-nullable foreign key property), if the principal/parent is deleted and any dependent/child entity exist, the foreign key property won't be set to null (because it cannot be set to null), but instead the attempt to set it to null will be recorded and *SaveChanges* will fail, unless the dependent/child eneities are moved to a new principal/parent.
 
 > [!NOTE]  
 > The delete behavior configured in the EF Core model is only applied when the principal entity is deleted using EF Core and the dependent entities are loaded in memory (i.e. for tracked dependents). A corresponding cascade behavior needs to be setup in the database to ensure data that is not being tracked by the context has the necessary action applied. If you use EF Core to create the database, this cascade behavior will be setup for you.

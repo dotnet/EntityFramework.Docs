@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.Configuring.FluentAPI.Samples.Relationships.OneNavigation
 {
+    #region Model
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -30,4 +31,5 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relationships.OneNavigation
         public string Title { get; set; }
         public string Content { get; set; }
     }
+    #endregion
 }

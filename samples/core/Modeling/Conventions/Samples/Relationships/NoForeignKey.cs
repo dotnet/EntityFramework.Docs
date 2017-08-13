@@ -9,6 +9,7 @@ namespace EFModeling.Conventions.Samples.Relationships.NoForeignKey
         public DbSet<Post> Posts { get; set; }
     }
 
+    #region Entities
     public class Blog
     {
         public int BlogId { get; set; }
@@ -25,4 +26,5 @@ namespace EFModeling.Conventions.Samples.Relationships.NoForeignKey
 
         public Blog Blog { get; set; }
     }
+    #endregion
 }
