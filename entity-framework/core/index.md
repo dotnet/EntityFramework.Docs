@@ -31,13 +31,13 @@ If you are familiar with EF Core and want to jump straight into the details of t
 [Install the NuGet package](https://docs.nuget.org/ndocs/quickstart/use-a-package) for the database provider you want to use. E.g. to install the SQL Server provider in cross-platform development using `dotnet` tool in the command line:
 
 ``` console
-$ dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
 Or in Visual Studio, using the Package Manager Console:
 
-``` console
-PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer
+``` PowerShell
+Install-Package Microsoft.EntityFrameworkCore.SqlServer
 ```
 See [Database Providers](providers/index.md) for information on available providers and [Installing EF Core](get-started/install/index.md) for more detailed installation steps.
 
