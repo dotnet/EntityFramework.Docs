@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/modeling/required-optional
 ---
-# Required/optional properties
+# Required/optional Properties
 
 A property is considered optional if it is valid for it to contain `null`. If `null` is not a valid value to be assigned to a property then it is considered to be a required property.
 

@@ -31,6 +31,7 @@ namespace EFSaving.RelatedData
                 context.Blogs.Add(blog);
                 context.SaveChanges();
             }
+            #endregion
 
             #region AddingRelatedEntity
             using (var context = new BloggingContext())

@@ -8,55 +8,55 @@ namespace EFSaving.Basics
     {
         public static void Run()
         {
-            using (var db = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
             }
 
-            using (var db = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 var blog = new Blog { Url = "http://sample.com" };
-                db.Blogs.Add(blog);
-                db.SaveChanges();
+                context.Blogs.Add(blog);
+                context.SaveChanges();
 
                 Console.WriteLine(blog.BlogId + ": " +  blog.Url);
             }
 
-            using (var db = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var blog = db.Blogs.First();
+                var blog = context.Blogs.First();
                 blog.Url = "http://sample.com/blog";
-                db.SaveChanges();
+                context.SaveChanges();
             }
 
-            using (var db = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var blog = db.Blogs.First();
-                db.Blogs.Remove(blog);
-                db.SaveChanges();
+                var blog = context.Blogs.First();
+                context.Blogs.Remove(blog);
+                context.SaveChanges();
             }
 
             // Insert some seed data for the final example
-            using (var db = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                db.Blogs.Add(new Blog { Url = "http://sample.com/blog" });
-                db.Blogs.Add(new Blog { Url = "http://sample.com/another_blog" });
-                db.SaveChanges();
+                context.Blogs.Add(new Blog { Url = "http://sample.com/blog" });
+                context.Blogs.Add(new Blog { Url = "http://sample.com/another_blog" });
+                context.SaveChanges();
             }
 
-            using (var db = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                db.Blogs.Add(new Blog { Url = "http://sample.com/blog_one" });
-                db.Blogs.Add(new Blog { Url = "http://sample.com/blog_two" });
+                context.Blogs.Add(new Blog { Url = "http://sample.com/blog_one" });
+                context.Blogs.Add(new Blog { Url = "http://sample.com/blog_two" });
 
-                var firstBlog = db.Blogs.First();
+                var firstBlog = context.Blogs.First();
                 firstBlog.Url = "";
 
-                var lastBlog = db.Blogs.Last();
-                db.Blogs.Remove(lastBlog);
+                var lastBlog = context.Blogs.Last();
+                context.Blogs.Remove(lastBlog);
 
-                db.SaveChanges();
+                context.SaveChanges();
             }
         }
     }

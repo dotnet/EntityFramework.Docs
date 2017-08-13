@@ -10,7 +10,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.DataTypeForProvide
         {
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Url)
-                .ForSqlServerHasColumnType("varchar(200)");
+                .HasColumnType("varchar(200)");
         }
     }
 

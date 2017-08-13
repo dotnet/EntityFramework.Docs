@@ -9,10 +9,10 @@ namespace EFSaving.Async
     {
         public static async Task RunAsync()
         {
-            using (var db = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                await db.Database.EnsureDeletedAsync();
-                await db.Database.EnsureCreatedAsync();
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
             }
 
             await AddBlogAsync("http://sample.com");
@@ -21,11 +21,11 @@ namespace EFSaving.Async
         #region Sample
         public static async Task AddBlogAsync(string url)
         {
-            using (var db = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 var blog = new Blog { Url = url };
-                db.Blogs.Add(blog);
-                await db.SaveChangesAsync();
+                context.Blogs.Add(blog);
+                await context.SaveChangesAsync();
             }
         }
         #endregion

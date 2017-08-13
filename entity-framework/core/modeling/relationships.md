@@ -50,26 +50,7 @@ The following code listing shows a one-to-many relationship between `Blog` and `
 
 * `Post.Blog` is the inverse navigation property of `Blog.Posts` (and vice versa)
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/Relationships/Full.cs)] -->
-``` csharp
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public List<Post> Posts { get; set; }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-
-    public int BlogId { get; set; }
-    public Blog Blog { get; set; }
-}
-```
+[!code-csharp[Main](samples/core/Modeling/Conventions/Samples/Relationships/Full.cs#Entities)]
 
 ## Conventions
 
@@ -158,10 +139,7 @@ public class Post
 
 ### Cascade Delete
 
-By convention, cascade delete will be set to *Cascade* for required relationships and *Restrict* for optional relationships (see the [Required](#required) section for the difference between required and optional relationships). *Cascade* means dependent entities are also deleted. *Restrict* means that dependent entities that are not loaded into memory will remain unchanged and must be manually deleted, or updated to point to a valid principal entity. For entities that are loaded into memory, EF will attempt to set the foreign key properties to null.
-
-> [!NOTE]
-> This cascading behavior is only applied to entities that are being tracked by the context. A corresponding cascade behavior should be setup in the database to ensure data that is not being tracked by the context has the same action applied. If you use EF to create the database, this cascade behavior will be setup for you.
+By convention, cascade delete will be set to *Cascade* for required relationships and *ClientSetNull* for optional relationships (see the [Required/Optional Relationships](#required-optional-relationship) section for the difference between required and optional relationships). *Cascade* means dependent entities are also deleted. *ClientSetNull* means that dependent entities that are not loaded into memory will remain unchanged and must be manually deleted, or updated to point to a valid principal entity. For entities that are loaded into memory, EF Core will attempt to set the foreign key properties to null. See [Cascade Delete](../saving/cascade-delete.md) for more details about the different delete behaviors and the defaults used by convention.
 
 ## Data Annotations
 
@@ -472,7 +450,7 @@ public class RecordOfSale
 > [!WARNING]
 > The order in which you specify principal key properties must match the order in which they are specified for the foreign key.
 
-### Required
+### Required/optional Relationships
 
 You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see [Required/optional properties](required-optional.md) for more information).
 
