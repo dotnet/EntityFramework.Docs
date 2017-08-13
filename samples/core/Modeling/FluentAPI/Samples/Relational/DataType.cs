@@ -2,6 +2,7 @@
 
 namespace EFModeling.Configuring.FluentAPI.Samples.Relational.DataType
 {
+    #region Model
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -19,4 +20,5 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.DataType
         public int BlogId { get; set; }
         public string Url { get; set; }
     }
+    #endregion
 }

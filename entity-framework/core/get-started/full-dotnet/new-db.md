@@ -10,7 +10,6 @@ ms.technology: entity-framework-core
 
 uid: core/get-started/full-dotnet/new-db
 ---
-
 # Getting started with EF Core on .NET Framework with a New Database
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use migrations to create the database from your model.
@@ -32,11 +31,11 @@ The following prerequisites are needed to complete this walkthrough:
 
 * Open Visual Studio
 
-* File ‣ New ‣ Project...
+* File > New > Project...
 
-* From the left menu select Templates ‣ Visual C# ‣ Windows
+* From the left menu select Templates > Visual C# > Windows Classic Desktop
 
-* Select the **Console Application** project template
+* Select the **Console App (.NET Framework)** project template
 
 * Ensure you are targeting **.NET Framework 4.5.1** or later
 
@@ -46,7 +45,7 @@ The following prerequisites are needed to complete this walkthrough:
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
-* Tools ‣ NuGet Package Manager ‣ Package Manager Console
+* Tools > NuGet Package Manager > Package Manager Console
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
@@ -58,7 +57,7 @@ Later in this walkthrough we will also be using some Entity Framework Tools to m
 
 Now it's time to define a context and entity classes that make up your model.
 
-* Project ‣ Add Class...
+* Project > Add Class...
 
 * Enter *Model.cs* as the name and click **OK**
 
@@ -156,7 +155,7 @@ namespace EFGetStarted.ConsoleApp
 }
 ```
 
-* Debug ‣ Start Without Debugging
+* Debug > Start Without Debugging
 
 You will see that one blog is saved to the database and then the details of all blogs are printed to the console.
 

@@ -16,7 +16,7 @@ uid: core/get-started/netcore/new-db-sqlite
 In this walkthrough, you will create a .NET Core console app that performs basic data access against a SQLite database using Entity Framework Core. You will use migrations to create the database from your model. See [ASP.NET Core - New database](xref:core/get-started/aspnetcore/new-db) for a Visual Studio version using ASP.NET Core MVC.
 
 > [!NOTE]
-> The [.NET Core SDK](https://www.microsoft.com/net/download/core) 1.1.x no longer supports `project.json` or Visual Studio 2015. We recommend you [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/). If you are using Visual Studio, we recommend you migrate to [Visual Studio 2017](https://www.visualstudio.com/downloads/).
+> The [.NET Core SDK](https://www.microsoft.com/net/download/core) no longer supports `project.json` or Visual Studio 2015. We recommend you [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/). If you are using Visual Studio, we recommend you migrate to [Visual Studio 2017](https://www.visualstudio.com/downloads/).
 
 > [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/NetCore/ConsoleApp.SQLite) on GitHub.
@@ -25,7 +25,7 @@ In this walkthrough, you will create a .NET Core console app that performs basic
 
 The following prerequisites are needed to complete this walkthrough:
 * An operating system that supports .NET Core.
-* [The .NET Core SDK](https://www.microsoft.com/net/core) 1.1 and later.
+* [The .NET Core SDK](https://www.microsoft.com/net/core) 2.0 (although the instructions can be used to create an application with a previous version with very few modifications).
 
 ## Create a new project
 
@@ -48,7 +48,13 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
 ```
 
-*  Manually edit `ConsoleApp.SQLite.csproj` to add a DotNetCliToolReference to Microsoft.EntityFrameworkCore.Tools.DotNet
+* Manually edit `ConsoleApp.SQLite.csproj` to add a DotNetCliToolReference to Microsoft.EntityFrameworkCore.Tools.DotNet:
+
+  ``` xml
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  </ItemGroup>
+  ```
 
  Note: A future version of `dotnet` will support DotNetCliToolReferences via `dotnet add tool`
 
@@ -78,7 +84,7 @@ Once you have a model, you can use [migrations](https://docs.microsoft.com/aspne
 * Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations.
 
 > [!NOTE]
-> When using relative paths with SQLite, the path will be relative to the application's main assembly. In this sample, the main binary is `bin/Debug/netcoreapp1.1/ConsoleApp.SQLite.dll`, so the SQLite database will be in `bin/Debug/netcoreapp1.1/blogging.db`.
+> When using relative paths with SQLite, the path will be relative to the application's main assembly. In this sample, the main binary is `bin/Debug/netcoreapp2.0/ConsoleApp.SQLite.dll`, so the SQLite database will be in `bin/Debug/netcoreapp2.0/blogging.db`.
 
 ## Use your model
 
@@ -94,16 +100,6 @@ Once you have a model, you can use [migrations](https://docs.microsoft.com/aspne
 
   ``` console
   ConsoleApp.SQLite>dotnet run
-  Project ConsoleApp.SQLite (.NETCoreApp,Version=v1.1) will be compiled because
-  inputs were modified
-  Compiling ConsoleApp.SQLite for .NETCoreApp,Version=v1.1
-
-  Compilation succeeded.
-      0 Warning(s)
-      0 Error(s)
-
-  Time elapsed 00:00:00.8735339
-
   1 records saved to database
 
   All blogs in database:

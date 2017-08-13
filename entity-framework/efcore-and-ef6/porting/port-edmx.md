@@ -15,8 +15,6 @@ EF Core does not support the EDMX file format for models. The best option to por
 
 Install the `Microsoft.EntityFrameworkCore.Tools` NuGet package.
 
-You also need to install the **design time** NuGet package for the database provider you want to use. This is typically the runtime database provider package name with `.Design` post-fixed. For example, when targeting SQL Server, you would install `Microsoft.EntityFrameworkCore.SqlServer.Design`. See [Database Providers](../../core/providers/index.md) for details.
-
 ## Regenerate the model
 
 You can now use the reverse engineer functionality to create a model based on your existing database.
