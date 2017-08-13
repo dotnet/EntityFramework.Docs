@@ -45,7 +45,13 @@ In the following example, the `post` entity is updated to belong to the new `blo
 
 You can remove a relationship by setting a reference navigation to `null`, or removing the related entity from a collection navigation.
 
-If a cascade delete is configured, the child/dependent entity will be deleted from the database, see [Cascade Delete](cascade-delete.md) for more information. If no cascade delete is configured, the foreign key column in the database will be set to null (if the column does not accept nulls, an exception will be thrown).
+Removing a relationship can have side effects on the dependent entity, according to the cascade delete behavior configured in the relationship.
+
+By default, for required relationships, a cascade delete behavior is configured and the child/dependent entity will be deleted from the database. For optional relationships, cascade delete is not configured by default, but the foreign key property will be set to null.
+
+See [Required and Optional Relationships](../modeling/relationships.md#required-and-optional-relationships) to learn about how the requiredness of relationships can be configured.
+
+See [Cascade Delete](cascade-delete.md) for more details on cascade delete behaviors and how they are applied by convention.
 
 In the following example, a cascade delete is configured on the relationship between `Blog` and `Post`, so the `post` entity is deleted from the database.
 
