@@ -19,7 +19,7 @@ Delete behaviors are defined in the *DeleteBehavior* enumerator type and are use
 
 There are four delete behaviors:
 
-| Name | Effect on dependents tracked in memory | Effect on dependents in database | Used by default for  
+| Behavior Name | Effect on dependents tracked in memory | Effect on dependents stored in database | Used by default for  
 |-|-|-|-  
 | **Cascade** | Entities are deleted | Entities are deleted | **Required relationships**  
 | **ClientSetNull** | Foreign key properties are set to null | None | **Optional relationships**  
