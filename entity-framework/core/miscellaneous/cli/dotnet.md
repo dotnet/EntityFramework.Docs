@@ -354,15 +354,9 @@ Options:
 
 ### Error: "No parameterless constructor was found"
 
-Design-time tools attempt to automatically find how your application creates instances of your DbContext type. If EF cannot find a suitable way to initialize your DbContext, you may encounter this error.
+Design-time tools attempt to automatically find how your application creates instances of your DbContext type. If EF Core cannot find a suitable way to initialize your DbContext, you may encounter this error.
 
-``` console
-No parameterless constructor was found on 'TContext'. Either add a parameterless constructor to
-'TContext' or add an implementation of 'IDbContextFactory<TContext>' in the same assembly as
-'TContext'.
-```
-
-As the error message suggests, one solution is to add an implementation of `IDbContextFactory<TContext>` to the current project. See [Using IDbContextFactory<TContext>](../configuring-dbcontext.md) for an example of how to create this factory.
+One of the solutions is to add an implementation of `IDesignTimeDbContextFactory<TContext>` to the current project. See [Using IDesignTimeDbContextFactory<TContext>](../configuring-dbcontext.md) for an example of how to create this factory.
 
 <a name=dotnet-cli-issues></a>
 

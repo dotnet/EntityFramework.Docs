@@ -1,0 +1,175 @@
+---
+title: EF Core | Upgrading from previous versions to EF Core 2 | Microsoft Docs
+author: divega
+ms.author: divega
+
+ms.date: 8/13/2017
+
+ms.assetid: 8BD43C8C-63D9-4F3A-B954-7BC518A1B7DB
+ms.technology: entity-framework-core
+
+uid: core/miscellaneous/1x-2x-upgrade
+---
+
+# Upgrading applications from previous versions to EF Core 2.0
+
+## Procedures Common to All Applications
+
+Updating an existing application to EF Core 2.0 may require:
+
+1. Upgrading the target .NET platform of the application to one that supports .NET Standard 2.0. See [Supported Platforms](../platforms/index.md) for more details.
+
+2. Identify a provider for the target database which is compatible with EF Core 2.0. See [EF Core 2.0 requires a 2.0 database provider](ef-core-2.0-requires-a-2.0-database-provider) below.
+
+3. Upgrading all the EF Core packages (runtime and tooling) to 2.0. Refer to [Installing EF Core](../get-started/install/index.md) for more details.
+
+4. Make any necessary code changes to compensate for breaking changes. See the [Breaking Changes](#breaking-changes) section below for more details.
+
+## ASP.NET Core applications
+
+1. See in particular the [new pattern for initializing the application's service provider](new-way-of-getting-application-services) described below.
+
+> [!TIP]  
+> The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement  *IDesignTimeDbContextFactory<TContext>*](configuring-dbcontext.md#using-idesigntimedbcontextfactory).
+
+2. Applications targeting ASP.NET Core 2.0 can use EF Core 2.0 without additional dependencies besides third party database providers. However, applications targeting previous versions of ASP.NET Core need to upgrade to ASP.NET Core 2.0 in order to use EF Core 2.0. For more details on upgrading ASP.NET Core applications to 2.0 see [the ASP.NET Core documentation on the subject](https://docs.microsoft.com/en-us/aspnet/core/migration/1x-to-2x/).
+
+## Breaking Changes
+
+We have taken the opportunity to significantly refine our existing APIs and behaviors in 2.0. There are a few improvements that can require modifying existing application code, although we believe that for the majority of applications the impact will be low, in most cases requiring just recompilation and minimal guided changes to replace obsolete APIs.
+
+### New way of getting application services
+
+The recommended pattern for ASP.NET Core web applications has been updated for 2.0 in a way that broke the design-time logic EF Core used in 1.x. Previously at design-time, EF Core would try to invoke `Startup.ConfigureServices` directly in order to access the application's service provider. In ASP.NET Core 2.0, Configuration is initialized outside of the `Startup` class. Applications using EF Core typically access their connection string from Configuration, so `Startup` by itself is no longer sufficient. If you upgrade an ASP.NET Core 1.x application, you may receive the following error when using the EF Core tools.
+
+> No parameterless constructor was found on 'ApplicationContext'. Either add a parameterless constructor to 'ApplicationContext' or add an implementation of 'IDesignTimeDbContextFactory&lt;ApplicationContext&gt;' in the same assembly as 'ApplicationContext'
+
+A new design-time hook has been added in ASP.NET Core 2.0's default template. The static `Program.BuildWebHost` method enables EF Core to access the application's service provider at design time. If you are upgrading an ASP.NET Core 1.x application, you will need to update you `Program` class to resemble the following.
+
+``` csharp
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+
+namespace AspNetCoreDotNetCore2._0App
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            BuildWebHost(args).Run();
+        }
+
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .Build();
+    }
+}
+```
+
+### IDbContextFactory renamed
+
+In order to support diverse application patterns and give users more control over how their `DbContext` is used at design time, we have, in the past, provided the `IDbContextFactory<TContext>` interface. At design-time, the EF Core tools will discover implementations of this interface in your project and use it to create `DbContext` objects.
+
+This interface had a very general name which mislead some users to try re-using it for other `DbContext`-creating scenarios. They were caught off guard when the EF Tools then tried to use their implementation at design-time and caused commands like `Update-Database` or `dotnet ef database update` to fail.
+
+In order to communicate the strong design-time semantics of this interface, we have renamed it to `IDesignTimeDbContextFactory<TContext>`.
+
+For the 2.0 release the `IDbContextFactory<TContext>` still exists but is marked as obsolete.
+
+### DbContextFactoryOptions removed
+
+Because of the ASP.NET Core 2.0 changes described above, we found that `DbContextFactoryOptions` was no longer needed on the new `IDesignTimeDbContextFactory<TContext>` interface. Here are the alternatives you should be using instead.
+
+DbContextFactoryOptions | Alternative
+--- | ---
+ApplicationBasePath | AppContext.BaseDirectory
+ContentRootPath | Directory.GetCurrentDirectory()
+EnvironmentName | Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+
+### EF Core 2.0 requires a 2.0 database provider
+
+For EF Core 2.0 we have made many simplifications and improvements in the way database providers work. This means that 1.0.x and 1.1.x providers will not work with EF Core 2.0.
+
+The SQL Server and SQLite providers are shipped by the EF team and 2.0 versions will be available as part of the 2.0 release. The open-source third party providers for [SQL Compact](https://github.com/ErikEJ/EntityFramework.SqlServerCompact), [PostgreSQL](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL), and [MySQL](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql) are being updated for 2.0. For all other providers, please contact the provider writer.
+
+### Logging and Diagnostics events have changed
+
+Note: these changes should not impact most application code.
+
+The event IDs for messages sent to an [ILogger](https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging.Abstractions/ILogger.cs) have changed in 2.0. The event IDs are now unique across EF Core code. These messages now also follow the standard pattern for structured logging used by, for example, MVC.
+
+Logger categories have also changed. There is now a well-known set of categories accessed through [DbLoggerCategory](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/DbLoggerCategory.cs).
+
+[DiagnosticSource](https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md) events now use the same event ID names as the corresponding `ILogger` messages. The event payloads are all nominal types derived from [EventData](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Diagnostics/EventData.cs).
+
+Event IDs, payload types, and categories are documented in the [CoreEventId](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Diagnostics/CoreEventId.cs) and the [RelationalEventId](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore.Relational/Diagnostics/RelationalEventId.cs) classes.
+
+IDs have also moved from Microsoft.EntityFrameworkCore.Infraestructure to the new Microsoft.EntityFrameworkCore.Diagnostics namespace.
+
+### EF Core relational metadata API changes
+
+EF Core 2.0 will now build a different [IModel](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IModel.cs) for each different provider being used. This is usually transparent to the application. This has facilitated a simplification of lower-level metadata APIs such that any access to _common relational metadata concepts_ is always made through a call to `.Relational` instead of `.SqlServer`, `.Sqlite`, etc. For example, 1.1.x code like this:
+
+``` csharp
+var tableName = context.Model.FindEntityType(typeof(User)).SqlServer().TableName;
+```
+
+Should now be written like this:
+
+``` csharp
+var tableName = context.Model.FindEntityType(typeof(User)).Relational().TableName;
+```
+
+Instead of using methods like `ForSqlServerToTable`, extension methods are now available to write conditional code based on the current provider in use. For example:
+
+```C#
+modelBuilder.Entity<User>().ToTable(
+    Database.IsSqlServer() ? "SqlServerName" : "OtherName");
+```
+
+Note that this change only applies to APIs/metadata that is defined for _all_ relational providers. The API and metadata remains the same when it is specific to only a single provider. For example, clustered indexes are specific to SQL Sever, so `ForSqlServerIsClustered` and  `.SqlServer().IsClustered()` must still be used.
+
+### Don’t take control of the EF service provider
+
+EF Core uses an internal `IServiceProvider` (i.e. a dependency injection container) for its internal implementation. Applications should allow EF Core to create and manage this provider except in special cases. Strongly consider removing any calls to `UseInternalServiceProvider`. If an application does need to call `UseInternalServiceProvider`, then please consider [filing an issue](https://github.com/aspnet/EntityFramework/Issues) so we can investigate other ways to handle your scenario.
+
+Calling `AddEntityFramework`, `AddEntityFrameworkSqlServer`, etc. is not required by application code unless `UseInternalServiceProvider` is also called. Remove any existing calls to `AddEntityFramework` or `AddEntityFrameworkSqlServer`, etc. `AddDbContext` should still be used in the same way as before.
+
+### In-memory databases must be named
+
+The global unnamed in-memory database has been removed and instead all in-memory databases must be named. For example:
+
+``` csharp
+optionsBuilder.UseInMemoryDatabase("MyDatabase");
+```
+
+This creates/uses a database with the name “MyDatabase”. If `UseInMemoryDatabase` is called again with the same name, then the same in-memory database will be used, allowing it to be shared by multiple context instances.
+
+### Read-only API changes
+
+`IsReadOnlyBeforeSave`, `IsReadOnlyAferSave`, and `IsStoreGeneratedAlways` have been obsoleted and replaced with [BeforeSaveBehavior](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IProperty.cs#L39) and [AfterSaveBehavior](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IProperty.cs#L55). These behaviors apply to any property (not only store-generated properties) and determine how the value of the property should be used when inserting into a database row (`BeforeSaveBehavior`) or when updating an existing database row (`AfterSaveBehavior`).
+
+Properties marked as [ValueGenerated.OnAddOrUpdate](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/ValueGenerated.cs) (e.g. for computed columns) will by default ignore any value currently set on the property. This means that a store-generated value will always be obtained regardless of whether any value has been set or modified on the tracked entity. This can be changed by setting a different `Before\AfterSaveBehavior`.
+
+### New ClientSetNull delete behavior
+
+In previous releases, [DeleteBehavior.Restrict](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/DeleteBehavior.cs) had a behavior for entities tracked by the context that more closed matched `SetNull` semantics. In EF Core 2.0, a new `ClientSetNull` behavior has been introduced as the default for optional relationships. This behavior has `SetNull` semantics for tracked entities and `Restrict` behavior for databases created using EF Core. In our experience, these are the most expected/useful behaviors for tracked entities and the database. `DeleteBehavior.Restrict` is now honored for tracked entities when set for optional relationships.
+
+### Provider design-time packages removed
+
+The `Microsoft.EntityFrameworkCore.Relational.Design` package has been removed. It's contents were consolidated into `Microsoft.EntityFrameworkCore.Relational` and `Microsoft.EntityFrameworkCore.Design`.
+
+This propagates into the provider design-time packages. Those packages (`Microsoft.EntityFrameworkCore.Sqlite.Design`, `Microsoft.EntityFrameworkCore.SqlServer.Design`, etc.) were removed and their contents consolidated into the main provider packages.
+
+To enable `Scaffold-DbContext` or `dotnet ef dbcontext scaffold` in EF Core 2.0, you only need to reference the single provider package:
+
+``` xml
+<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"
+    Version="2.0.0" >
+<PackageReference Include="Microsoft.EntityFrameworkCore.Tools"
+    Version="2.0.0"
+    PrivateAssets="All" >
+<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet"
+    Version="2.0.0" >
+```

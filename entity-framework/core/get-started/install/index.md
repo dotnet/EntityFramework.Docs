@@ -76,7 +76,7 @@ There are two ways you can install an EF Core database provider in your applicat
 
 * Type and run the following command in the PMC:
 
-  ``` powershell
+  ``` PowerShell  
   Install-Package Microsoft.EntityFrameworkCore.SqlServer
   ```
 * You can use the `Update-Package` command instead to update a package that is already installed to a more recent  version

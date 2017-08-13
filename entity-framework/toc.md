@@ -119,7 +119,9 @@
 #####[Testing with SQLite](core/miscellaneous/testing/sqlite.md)
 #####[Testing with InMemory](core/miscellaneous/testing/in-memory.md)
 ####[Configuring a DbContext](core/miscellaneous/configuring-dbcontext.md)
-####[Upgrading from RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
+####[Upgrading from 1.0 RC1 to RC2](core/miscellaneous/rc1-rc2-upgrade.md)
+####[Upgrading from 1.0 RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
+####[Upgrading to EF Core 2.0](core/miscellaneous/1x-2x-upgrade.md)
 
 ##[Entity Framework 6](ef6/index.md)
 ###[Documentation](http://msdn.com/data/ef)

@@ -19,6 +19,13 @@ EF Core is an object-relational mapper (O/RM) that enables .NET developers to wo
 
 If you like to learn by writing code, we'd recommend one of our [Getting Started](get-started/index.md) guides to get you started with EF Core.
 
+## Latest version: EF Core 2.0
+
+If you are familiar with EF Core and want to jump straight into the details of the new version:
+
+- **[New features in EF Core 2.0](what-is-new/index.md)**
+- **[Upgrading existing applications to EF Core 2.0](miscellaneous/1x-to-2x-upgrade.md)**
+
 ## Get Entity Framework Core
 
 [Install the NuGet package](https://docs.nuget.org/ndocs/quickstart/use-a-package) for the database provider you want to use. E.g. to install the SQL Server provider in cross-platform development using `dotnet` tool in the command line:
