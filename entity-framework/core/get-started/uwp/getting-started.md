@@ -18,10 +18,10 @@ uid: core/get-started/uwp/getting-started
 
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
-> [!WARNING]
+> [!WARNING]  
 > **Avoid using anonymous types in LINQ queries on UWP**. Deploying a UWP application to the app store requires your application to be compiled with .NET Native. Queries with anonymous types have poor performance on .NET Native or may crash the application.
 
-> [!TIP]
+> [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/UWP/UWP.SQLite) on GitHub.
 
 ## Prerequisites
@@ -53,7 +53,7 @@ Depending on your version of Visual Studio, the template may have generated your
 
 * Run `Update-Package Microsoft.NETCore.UniversalWindowsPlatform –Version 5.2.2`
 
-> [!TIP]
+> [!TIP]  
 > If you are using Visual Studio 2017, you can upgrade to the latest version of `Microsoft.NETCore.UniversalWindowsPlatform` and do not need to explicitly target `5.2.2`.
 
 ## Install Entity Framework
@@ -156,7 +156,7 @@ public App()
 }
 ```
 
-> [!TIP]
+> [!TIP]  
 > If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to apply the corresponding changes to the database. Any pending migrations will be applied to the local database on each device when the application starts.
 >
 >EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.

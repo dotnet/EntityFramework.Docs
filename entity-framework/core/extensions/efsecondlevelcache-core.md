@@ -10,7 +10,7 @@ uid: core/extensions/efsecondlevelcache-core
 
 # EFSecondLevelCache.Core Extension
 
-> [!NOTE]
+> [!NOTE]  
 > This extension is not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 Second Level Caching Library. Second level caching is a query cache. The results of EF commands will be stored in the cache, so that the same EF commands will retrieve their data from the cache rather than executing them against the database again.

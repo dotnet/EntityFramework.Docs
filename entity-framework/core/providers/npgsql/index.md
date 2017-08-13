@@ -14,7 +14,7 @@ uid: core/providers/npgsql/index
 
 This database provider allows Entity Framework Core to be used with PostgreSQL. The provider is maintained as part of the [Npgsql project](http://www.npgsql.org).
 
-> [!NOTE]
+> [!NOTE]  
 > This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
 
 ## Install

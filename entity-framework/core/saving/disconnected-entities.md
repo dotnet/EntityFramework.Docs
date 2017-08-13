@@ -12,5 +12,5 @@ uid: core/saving/disconnected-entities
 ---
 # 🔧 Disconnected Entities
 
-> [!NOTE]
+> [!NOTE]  
 > This topic hasn't been written yet! You can track the status of this [issue](https://github.com/aspnet/EntityFramework.Docs/issues/126) through our public GitHub issue tracker. Learn how you can [contribute](https://github.com/aspnet/EntityFramework.Docs/blob/master/CONTRIBUTING.md) on GitHub.

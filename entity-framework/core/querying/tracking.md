@@ -14,7 +14,7 @@ uid: core/querying/tracking
 
 Tracking behavior controls whether or not Entity Framework Core will keep information about an entity instance in its change tracker. If an entity is tracked, any changes detected in the entity will be persisted to the database during `SaveChanges()`. Entity Framework Core will also fix-up navigation properties between entities that are obtained from a tracking query and entities that were previously loaded into the DbContext instance.
 
-> [!TIP]
+> [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
 
 ## Tracking queries
@@ -61,7 +61,7 @@ using (var context = new BloggingContext())
 }
 ```
 
-> [!NOTE]
+> [!NOTE]  
 > No tracking queries still perform identity resolution. If the result set contains the same entity multiple times, the same instance of the entity class will be returned for each occurrence in the result set. However, weak references are used to keep track of entities that have already been returned. If a previous result with the same identity goes out of scope, and garbage collection runs, you may get a new entity instance. For more information, see [How Query Works](overview.md).
 
 ## Tracking and projections
