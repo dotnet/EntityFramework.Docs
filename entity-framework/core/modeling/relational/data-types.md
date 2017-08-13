@@ -27,7 +27,7 @@ For example, SQL Server uses `datetime2(7)` for `DateTime` properties, and `nvar
 
 You can use Data Annotations to specify an exact data type for the column.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/DataAnnotations/Samples/Relational/DataType.cs?highlight=4)] -->
+[!code-csharp[Main](../../../../samples/core/Modeling/DataAnnotations/Samples/Relational/DataType.cs?name=Entities&highlight=4)]
 ``` csharp
 public class Blog
 {
@@ -41,32 +41,4 @@ public class Blog
 
 You can use the Fluent API to specify an exact data type for the column.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DataType.cs?highlight=7,8,9)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .Property(b => b.Url)
-            .HasColumnType("varchar(200)");
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-```
-
-If you are targeting more than one relational provider with the same model then you probably want to specify a data type for each provider rather than a global one to be used for all relational providers.
-
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DataTypeForProvider.cs?highlight=3)] -->
-``` csharp
-        modelBuilder.Entity<Blog>()
-            .Property(b => b.Url)
-            .ForSqlServerHasColumnType("varchar(200)");
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/DataType.cs?name=Model&highlight=7,8,9)]

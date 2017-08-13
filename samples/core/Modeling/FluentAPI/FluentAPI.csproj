@@ -130,7 +130,6 @@
     <Compile Include="Samples\AlternateKeySingle.cs" />
     <Compile Include="Samples\MaxLength.cs" />
     <Compile Include="Samples\IgnoreType.cs" />
-    <Compile Include="Samples\Relational\DataTypeForProvider.cs" />
     <Compile Include="Samples\Relational\AlternateKeyName.cs" />
     <Compile Include="Samples\Relational\KeyName.cs" />
     <Compile Include="Samples\Relational\IndexName.cs" />
