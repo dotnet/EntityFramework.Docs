@@ -20,7 +20,7 @@ Delete behaviors are defined in the *DeleteBehavior* enumerator type and are use
 There are four delete behaviors:
 
 | Name | Effect on dependents tracked in memory | Effect on dependents in database | Used by default for  
-|-|-|-  
+|-|-|-|-  
 | **Cascade** | Entities are deleted | Entities are deleted | **Required relationships**  
 | **ClientSetNull** | Foreign key properties are set to null | None | **Optional relationships**  
 | **SetNull** | Foreign key properties are set to null | Foreign key properties are set to null | None  
@@ -30,7 +30,7 @@ There are four delete behaviors:
 > **Changes in EF Core 2.0:** In previous releases, *Restrict* would cause optional foreign key properties in tracked dependent entities to be set to null, and was the default delete behavior for optional relationships. In EF Core 2.0, the *ClientSetNull* was introduced to represent that behavior and became the default for optional relationships. The behavior of *Restrict* was adjusted to never have any side effects on dependent entities.
 
 > [!NOTE]
-> The delete behavior configured in the EF Core model is only applied when the principal entity is deleted using EF Core and the dependent entities that are loaded into memory, i.e. tracked dependent. A corresponding cascade behavior needs to be setup in the database to ensure data that is not being tracked by the context has the necessary action applied. If you use EF Core to create the database, this cascade behavior will be setup for you.
+> The delete behavior configured in the EF Core model is only applied when the principal entity is deleted using EF Core and the dependent entities are loaded in memory (i.e. for tracked dependents). A corresponding cascade behavior needs to be setup in the database to ensure data that is not being tracked by the context has the necessary action applied. If you use EF Core to create the database, this cascade behavior will be setup for you.
 
 > [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/CascadeDelete/) on GitHub.
