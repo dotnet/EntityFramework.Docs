@@ -10,7 +10,7 @@ ms.technology: entity-framework-core
 
 uid: core/miscellaneous/cli/powershell
 ---
-# Package Manager Console (Visual Studio)
+# Package Manager Console (Visual Studio) Tools for EF Core
 
 EF Core Package Manager Console Tools for Visual Studio
 
