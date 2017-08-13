@@ -29,4 +29,4 @@ Unique constraints can not be configured using Data Annotations.
 
 You can use the Fluent API to configure the index and constraint name for an alternate key.
 
-[!code-csharp[Main](../../../../samples/core/relational/Modeling/FluentAPI/Samples/Relational/AlternateKeyName.cs?name=Model&highlight=9)]
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/AlternateKeyName.cs?name=Model&highlight=9)]
