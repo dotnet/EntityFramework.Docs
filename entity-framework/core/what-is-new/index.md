@@ -31,7 +31,9 @@ public class BloggingContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Post>().HasQueryFilter(p => !p.IsDeleted && p.TenantId == this.TenantId );
+        modelBuilder.Entity<Post>().HasQueryFilter(
+            p => !p.IsDeleted
+            && p.TenantId == this.TenantId );
     }
 }
 ```
@@ -53,7 +55,8 @@ The basic pattern for using EF Core in an ASP.NET Core application usually invol
 In version 2.0 we are introducing a new way to register custom DbContext types in dependency injection which transparently introduces a pool of reusable DbContext instances. To use DbContext pooling, use the ```AddDbContextPool``` instead of ```AddDbContext``` during service registration:
 
 ``` csharp
-services.AddDbContextPool<BloggingContext>(options => options.UseSqlServer(connectionString));
+services.AddDbContextPool<BloggingContext>(
+    options => options.UseSqlServer(connectionString));
 ```
 
 If this method is used, at the time a DbContext instance is requested by a controller we will first check if there is an instance available in the pool. Once the request processing finalizes, any state on the instance is reset and the instance is itself returned to the pool.
@@ -71,7 +74,7 @@ Manual or explicitly compiled query APIs have been available in previous version
 Although in general EF Core can automatically compile and cache queries based on a hashed representation of the query expressions, this mechanism can be used to obtain a small performance gain by bypassing the computation of the hash and the cache lookup, allowing the application to use an already compiled query through the invocation of a delegate.
 
 ``` csharp
-// Create an explicit compiled query
+// Create an explicitly compiled query
 private static Func<CustomerContext, int, Customer> _customerById =
     EF.CompileQuery((CustomerContext db, int id) =>
         db.Customers
@@ -97,11 +100,14 @@ var contactTitle = "Sales Representative";
 
 using (var context = CreateContext())
 {
-    context.Set<Customer>().FromSql($@"
-        SELECT *
-        FROM ""Customers""
-        WHERE ""City"" = {city} AND ""ContactTitle"" = {contactTitle}").ToArray();
-}
+    context.Set<Customer>()
+        .FromSql($@"
+            SELECT *
+            FROM ""Customers""
+            WHERE ""City"" = {city} AND
+                ""ContactTitle"" = {contactTitle}")
+            .ToArray();
+  }
 ```
 
 In this example, there are two variables embedded in the SQL format string. EF Core will produce the following SQL:
@@ -110,7 +116,10 @@ In this example, there are two variables embedded in the SQL format string. EF C
 @p0='London' (Size = 4000)
 @p1='Sales Representative' (Size = 4000)
 
-SELECT * FROM ""Customers"" WHERE ""City"" = @p0 AND ""ContactTitle"" = @p1
+SELECT *
+FROM ""Customers""
+WHERE ""City"" = @p0
+    AND ""ContactTitle"" = @p1
 ```
 
 ## Attach can track a graph of new and existing entities
