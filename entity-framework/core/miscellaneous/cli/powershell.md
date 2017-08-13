@@ -14,7 +14,7 @@ uid: core/miscellaneous/cli/powershell
 
 EF Core Package Manager Console Tools for Visual Studio
 
-> [!WARNING]  
+> [!NOTE]  
 > The tools require the [latest version of Windows PowerShell](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
 
 ## Installation
@@ -34,13 +34,19 @@ To open the console, follow these steps.
 > [!TIP]  
 > All commands support the common parameters: `-Verbose`, `-ErrorAction`, `-ErrorVariable`, `-WarningAction`, `-WarningVariable`, `-OutBuffer`, `-OutVariable`, etc. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
+> [!TIP]
+> To obtain help about the PMC commands you can simply type:
+``` console
+Get-Help <command-name>
+```
+
 ### Add-Migration
 
 Adds a new migration.
 
 ``` console
 SYNTAX
-    Add-Migration [-Name] <String> [-OutputDir <String>] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
+    Add-Migration [-Name] <String> [-OutputDir <String>] [-Context <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
 PARAMETERS
     -Name <String>
@@ -51,9 +57,6 @@ PARAMETERS
 
     -Context <String>
         The DbContext type to use.
-
-    -Environment <String>
-        The environment to use. Defaults to "Development".
 
     -Project <String>
         The project to use.
@@ -68,7 +71,7 @@ Removes the last migration.
 
 ``` console
 SYNTAX
-    Remove-Migration [-Force] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
+    Remove-Migration [-Force] [-Context <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
 PARAMETERS
     -Force [<SwitchParameter>]
@@ -76,9 +79,6 @@ PARAMETERS
 
     -Context <String>
         The DbContext to use.
-
-    -Environment <String>
-        The environment to use. Defaults to "Development".
 
     -Project <String>
         The project to use.
@@ -93,8 +93,8 @@ Scaffolds a DbContext and entity types for a database.
 
 ``` console
 SYNTAX
-    Scaffold-DbContext [-Connection] <String> [-Provider] <String> [-OutputDir <String>] [-Context <String>] [-Schemas <String[]>] [-Tables <String[]>] [-DataAnnotations] [-Force] [-Environment <String>] [-Project <String>] [-StartupProject <String>]
-    [<CommonParameters>]
+    Scaffold-DbContext [-Connection] <String> [-Provider] <String> [-OutputDir <String>] [-Context <String>] [-Schemas <String[]>] [-Tables <String[]>] [-DataAnnotations] [-Force] [-Project <String>] [-StartupProject
+    <String>] [<CommonParameters>]
 
 PARAMETERS
     -Connection <String>
@@ -104,7 +104,7 @@ PARAMETERS
         The provider to use. (E.g. Microsoft.EntityFrameworkCore.SqlServer)
 
     -OutputDir <String>
-        The directory to put files in. Paths are relative to the project directory.
+        The directory to put files in. Paths are relaive to the project directory.
 
     -Context <String>
         The name of the DbContext to generate.
@@ -121,9 +121,6 @@ PARAMETERS
     -Force [<SwitchParameter>]
         Overwrite existing files.
 
-    -Environment <String>
-        The environment to use. Defaults to "Development".
-
     -Project <String>
         The project to use.
 
@@ -137,9 +134,9 @@ Generates a SQL script from migrations.
 
 ``` console
 SYNTAX
-    Script-Migration [-From] <String> [-To] <String> [-Idempotent] [-Output <String>] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
+    Script-Migration [-From] <String> [-To] <String> [-Idempotent] [-Output <String>] [-Context <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
-    Script-Migration [[-From] <String>] [-Idempotent] [-Output <String>] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
+    Script-Migration [[-From] <String>] [-Idempotent] [-Output <String>] [-Context <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
 PARAMETERS
     -From <String>
@@ -157,9 +154,6 @@ PARAMETERS
     -Context <String>
         The DbContext to use.
 
-    -Environment <String>
-        The environment to use. Defaults to "Development".
-
     -Project <String>
         The project to use.
 
@@ -173,7 +167,7 @@ Updates the database to a specified migration.
 
 ``` console
 SYNTAX
-    Update-Database [[-Migration] <String>] [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
+    Update-Database [[-Migration] <String>] [-Context <String>] [-Project <String>] [-StartupProject <String>] [<CommonParameters>]
 
 PARAMETERS
     -Migration <String>
@@ -181,9 +175,6 @@ PARAMETERS
 
     -Context <String>
         The DbContext to use.
-
-    -Environment <String>
-        The environment to use. Defaults to "Development".
 
     -Project <String>
         The project to use.
@@ -198,14 +189,11 @@ Drops the database.
 
 ``` console
 SYNTAX
-    Drop-Database [-Context <String>] [-Environment <String>] [-Project <String>] [-StartupProject <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Drop-Database [-Context <String>] [-Project <String>] [-StartupProject <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 
 PARAMETERS
     -Context <String>
         The DbContext to use.
-
-    -Environment <String>
-        The environment to use. Defaults to "Development".
 
     -Project <String>
         The project to use.
@@ -214,10 +202,8 @@ PARAMETERS
         The startup project to use. Defaults to the solution's startup project.
 
     -WhatIf [<SwitchParameter>]
-        Displays a message that describes the effect of the command, instead of executing the command.
 
     -Confirm [<SwitchParameter>]
-        Prompts you for confirmation before executing the command.
 ```
 
 ## Using EF Core Tools and EF6 side-by-side
@@ -226,14 +212,14 @@ EF Core Tools do not work on EF6 or earlier version of EF. However, EF Core re-u
 
 Invokes the EF Core command:
 
-``` console
-PM> EntityFrameworkCore\Add-Migration
+``` PowerShell
+EntityFrameworkCore\Add-Migration
 ```
 
 Invokes the EF6 command:
 
-``` console
-PM> EntityFramework\Add-Migration
+``` PowerShell
+EntityFramework\Add-Migration
 ```
 
 ## Common Errors
@@ -242,10 +228,4 @@ PM> EntityFramework\Add-Migration
 
 EF tools attempt to automatically find how your application creates instances of your DbContext type. If it cannot find a suitable way to initialize your DbContext, you may encounter this error.
 
-``` console
-No parameterless constructor was found on 'TContext'. Either add a parameterless constructor to
-'TContext' or add an implementation of 'IDbContextFactory<TContext>' in the same assembly as
-'TContext'.
-```
-
-As the error message suggests, one solution is to add an implementation of `IDbContextFactory<TContext>` to the current project. See [Using IDbContextFactory<TContext>](../configuring-dbcontext.md) for an example of how to create this factory.
+One of the solutions is to add an implementation of `IDesignTimeDbContextFactory<TContext>` to the current project. See [Using IDesignTimeDbContextFactory<TContext>](../configuring-dbcontext.md) for an example of how to create this factory.

@@ -12,7 +12,7 @@ uid: core/modeling/shadow-properties
 ---
 # Shadow Properties
 
-Shadow properties are properties that do not exist in your entity class. The value and state of these properties is maintained purely in the Change Tracker.
+Shadow properties are properties that are not defined in your .NET entity class but are defined for that entity type in the EF Core model. The value and state of these properties is maintained purely in the Change Tracker.
 
 Shadow property values can be obtained and changed through the `ChangeTracker` API.
 
@@ -29,7 +29,7 @@ var blogs = context.Blogs
 
 ## Conventions
 
-By convention, shadow properties are only created when a relationship is discovered but no foreign key property is found in the dependent entity class. In this case, a shadow foreign key property will be introduced. The shadow foreign key property will be named `<navigation property name><principal key property name>` (the navigation on the dependent entity, which points to the principal entity, is used for the naming). If the principal key property name includes the name of the navigation property, then the name will just be `<principal key property name>`. If there is no navigation property on the dependent entity, then the principal type name is used in its place.
+Shadow properties can be created by convention when a relationship is discovered but no foreign key property is found in the dependent entity class. In this case, a shadow foreign key property will be introduced. The shadow foreign key property will be named `<navigation property name><principal key property name>` (the navigation on the dependent entity, which points to the principal entity, is used for the naming). If the principal key property name includes the name of the navigation property, then the name will just be `<principal key property name>`. If there is no navigation property on the dependent entity, then the principal type name is used in its place.
 
 For example, the following code listing will result in a `BlogId` shadow property being introduced to the `Post` entity.
 

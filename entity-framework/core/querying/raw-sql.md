@@ -63,6 +63,17 @@ var blogs = context.Blogs
     .ToList();
 ```
 
+This is the same query but using string interpolation syntax, which is supported in EF Core 2.0 and above:
+
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+``` csharp
+var user = "johndoe";
+
+var blogs = context.Blogs
+    .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
+    .ToList();
+```
+
 You can also construct a DbParameter and supply it as a parameter value. This allows you to use named parameters in the SQL query string
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
@@ -85,7 +96,7 @@ The following example uses a raw SQL query that selects from a Table-Valued Func
 var searchTerm = ".NET";
 
 var blogs = context.Blogs
-    .FromSql("SELECT * FROM dbo.SearchBlogs {0}", searchTerm)
+    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
     .Where(b => b.Rating > 3)
     .OrderByDescending(b => b.Rating)
     .ToList();
@@ -100,7 +111,7 @@ Composing with LINQ operators can be used to include related data in the query.
 var searchTerm = ".NET";
 
 var blogs = context.Blogs
-    .FromSql("SELECT * FROM dbo.SearchBlogs {0}", searchTerm)
+    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
     .Include(b => b.Posts)
     .ToList();
 ```

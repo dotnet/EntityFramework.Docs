@@ -127,11 +127,11 @@ using (var context = serviceProvider.GetService<BloggingContext>())
 var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
 ```
 
-<a name=use-idbcontextfactory></a>
+<a name=use-idesigntimedbcontextfactory></a>
 
-## Using `IDbContextFactory<TContext>`
+## Using `IDesignTimeDbContextFactory<TContext>`
 
-As an alternative to the options above, you may also provide an implementation of `IDbContextFactory<TContext>`. EF tools can use this factory to create an instance of your DbContext. This may be required in order to enable specific design-time experiences such as migrations.
+As an alternative to the options above, you may also provide an implementation of `IDesignTimeDbContextFactory<TContext>`. EF tools can use this factory to create an instance of your DbContext. This may be required in order to enable specific design-time experiences such as migrations.
 
 Implement this interface to enable design-time services for context types that do not have a public default constructor. Design-time services will automatically discover implementations of this interface that are in the same assembly as the derived context.
 
@@ -143,9 +143,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace MyProject
 {
-    public class BloggingContextFactory : IDbContextFactory<BloggingContext>
+    public class BloggingContextFactory : IDesignTimeDbContextFactory<BloggingContext>
     {
-        public BloggingContext Create(DbContextFactoryOptions options)
+        public BloggingContext Create(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
             optionsBuilder.UseSqlite("Data Source=blog.db");
