@@ -14,12 +14,10 @@ uid: core/get-started/aspnetcore/new-db
 In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You will use migrations to create the database from your model. See [Additional Resources](#additional-resources) for more Entity Framework Core tutorials.
 
 This tutorial requires:
-- [Visual Studio 2017](https://www.visualstudio.com/downloads/) with these workloads:
-
-  - **ASP.NET and web development** (under **Web & Cloud**)
-  - **.NET Core cross-platform development** (under **Other Toolsets**)
-
--  .NET Core 1.1 (installed by Visual Studio).
+* [Visual Studio 2017 15.3](https://www.visualstudio.com/downloads/) with these workloads:
+  * **ASP.NET and web development** (under **Web & Cloud**)
+  * **.NET Core cross-platform development** (under **Other Toolsets**)
+* [.NET Core 2.0 SDK](https://www.microsoft.com/net/download/core).
 
 > [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb) on GitHub.
@@ -32,7 +30,7 @@ This tutorial requires:
 * Enter **EFGetStarted.AspNetCore.NewDb** for the name and click **OK**.
 * In the **New ASP.NET Core Web Application** dialog enter:
 
-  * Under **ASP.NET Core Templates 1.1** select the **Web Application**
+  * Under **ASP.NET Core Templates 2.0** select the **Web Application (Model-View-Controller)**
   * Ensure that **Authentication** is set to **No Authentication**
   * Click **OK**
 
@@ -42,13 +40,17 @@ Warning: If you use **Individual User Accounts** instead of **None** for **Authe
 
 Install the package for the EF Core database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
-* Open the **Package Manager Console** (PMC):
-  **Tools > NuGet Package Manager > Package Manager Console**
-* Enter `Install-Package Microsoft.EntityFrameworkCore.SqlServer` in the PMC.
+* **Tools > NuGet Package Manager > Package Manager Console**
 
-Install the Entity Framework Core Tools to maintain the database:
+* Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
-* Enter `Install-Package Microsoft.EntityFrameworkCore.Tools` in the PMC.
+We will be using some Entity Framework Tools to create a model from the database. So we will install the tools package as well:
+
+* Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
+
+We will be using some ASP.NET Core Scaffolding tools to create controllers and views later on. So we will install this design package as well:
+
+* Run `Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design`
 
 ## Create the model
 

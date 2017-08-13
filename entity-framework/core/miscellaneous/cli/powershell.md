@@ -25,7 +25,7 @@ To open the console, follow these steps.
 
 * Open Visual Studio
 
-* Tools ‣ Nuget Package Manager ‣ Package Manager Console
+* Tools > Nuget Package Manager > Package Manager Console
 
 * Execute `Install-Package Microsoft.EntityFrameworkCore.Tools`
 

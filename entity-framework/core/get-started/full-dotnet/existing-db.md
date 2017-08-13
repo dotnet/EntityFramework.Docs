@@ -10,7 +10,6 @@ ms.technology: entity-framework-core
 
 uid: core/get-started/full-dotnet/existing-db
 ---
-
 # Getting started with EF Core on .NET Framework with an Existing Database
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.
@@ -39,7 +38,7 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 
 * Open Visual Studio
 
-* Tools ‣ Connect to Database...
+* Tools > Connect to Database...
 
 * Select **Microsoft SQL Server** and click **Continue**
 
@@ -61,9 +60,9 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 
 * Open Visual Studio
 
-* File ‣ New ‣ Project...
+* File > New > Project...
 
-* From the left menu select Templates ‣ Visual C# ‣ Windows
+* From the left menu select Templates > Visual C# > Windows
 
 * Select the **Console Application** project template
 
@@ -75,15 +74,13 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
-* Tools ‣ NuGet Package Manager ‣ Package Manager Console
+* Tools > NuGet Package Manager > Package Manager Console
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
 To enable reverse engineering from an existing database we need to install a couple of other packages too.
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
-
-* Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer.Design`
 
 ## Reverse engineer your model
 
@@ -195,7 +192,7 @@ namespace EFGetStarted.ConsoleApp.ExistingDb
 }
 ```
 
-* Debug ‣ Start Without Debugging
+* Debug > Start Without Debugging
 
 You will see that one blog is saved to the database and then the details of all blogs are printed to the console.
 

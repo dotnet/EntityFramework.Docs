@@ -15,3 +15,6 @@ uid: core/get-started/aspnetcore/index
 These 101 tutorials require no previous knowledge of Entity Framework Core or Visual Studio. They will take you step-by-step through creating a simple ASP.NET Core application that queries and saves data from a database. You can chose a tutorial that creates a model based on an existing database, or creates a database for you based on your model.
 
 You can find the ASP.NET Core documentation at [docs.asp.net](https://docs.asp.net).
+
+> [!NOTE]  
+> These tutorials and the accompanying samples have been updated to use EF Core 2.0 (with the exception of the UWP tutorial, that still uses EF Core 1.1). However, in the majority of cases it should be possible to create applications that use previous releases, with minimal modification to the instructions.
