@@ -190,7 +190,7 @@ Note that Like() comes with an in-memory implementation, which can be handy when
 
 Preview 2 includes an important contribution from [Paul Middleton](https://github.com/pmiddleton) which enables mapping database scalar functions to method stubs so that they can be used in LINQ queries and translated to SQL.
 
-The API is still in flux after Preview 2 but here is a brief description of how the feature can be used:
+Here is a brief description of how the feature can be used:
 
 Declare a static method on your `DbContext` and annotate it with `DbFunctionAttribute`:
 
