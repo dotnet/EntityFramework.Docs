@@ -127,7 +127,7 @@ using (var context = serviceProvider.GetService<BloggingContext>())
 var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
 ```
 
-<a name=use-idbcontextfactory></a>
+<a name=use-idesigntimedbcontextfactory></a>
 
 ## Using `IDesignTimeDbContextFactory<TContext>`
 

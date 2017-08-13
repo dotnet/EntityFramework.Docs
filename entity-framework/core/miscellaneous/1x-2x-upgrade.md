@@ -19,7 +19,7 @@ Updating an existing application to EF Core 2.0 may require:
 
 1. Upgrading the target .NET platform of the application to one that supports .NET Standard 2.0. See [Supported Platforms](../platforms/index.md) for more details.
 
-2. Identify a provider for the target database which is compatible with EF Core 2.0. See [EF Core 2.0 requires a 2.0 database provider](ef-core-2.0-requires-a-2.0-database-provider) below.
+2. Identify a provider for the target database which is compatible with EF Core 2.0. See [EF Core 2.0 requires a 2.0 database provider](#ef-core-2.0-requires-a-2.0-database-provider) below.
 
 3. Upgrading all the EF Core packages (runtime and tooling) to 2.0. Refer to [Installing EF Core](../get-started/install/index.md) for more details.
 
@@ -27,10 +27,10 @@ Updating an existing application to EF Core 2.0 may require:
 
 ## ASP.NET Core applications
 
-1. See in particular the [new pattern for initializing the application's service provider](new-way-of-getting-application-services) described below.
+1. See in particular the [new pattern for initializing the application's service provider](#new-way-of-getting-application-services) described below.
 
 > [!TIP]  
-> The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement  *IDesignTimeDbContextFactory<TContext>*](configuring-dbcontext.md#using-idesigntimedbcontextfactory).
+> The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement  *IDesignTimeDbContextFactory<TContext>*](configuring-dbcontext.md#use-idesigntimedbcontextfactory).
 
 2. Applications targeting ASP.NET Core 2.0 can use EF Core 2.0 without additional dependencies besides third party database providers. However, applications targeting previous versions of ASP.NET Core need to upgrade to ASP.NET Core 2.0 in order to use EF Core 2.0. For more details on upgrading ASP.NET Core applications to 2.0 see [the ASP.NET Core documentation on the subject](https://docs.microsoft.com/en-us/aspnet/core/migration/1x-to-2x/).
 
