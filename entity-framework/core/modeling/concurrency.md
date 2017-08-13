@@ -1,5 +1,5 @@
 ---
-title: Concurrency Tokens | Microsoft Docs
+title: EF Core | Concurrency Tokens | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: bc8b1cb0-befe-4b67-8004-26e6c5f69385
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/concurrency
 ---
 # Concurrency Tokens
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 If a property is configured as a concurrency token then EF will check that no other user has modified that value in the database when saving changes to that record. EF uses an optimistic concurrency pattern, meaning it will assume the value has not changed and try to save the data, but throw if it finds the value has been changed.
 
@@ -25,11 +22,10 @@ Data stores can enforce concurrency tokens by checking that any record being upd
 
 For example, relational databases achieve this by including the concurrency token in the `WHERE` clause of any `UPDATE` or `DELETE` commands and checking the number of rows that were affected. If the concurrency token still matches then one row will be updated. If the value in the database has changed, then no rows are updated.
 
-<!-- literal_block"ids  "classes  "xml:space": "preserve", "backrefs  "linenos": false, "dupnames  : "csharp",, highlight_args}, "names": [] -->
-````sql
+```sql
 UPDATE [Person] SET [FirstName] = @p1
 WHERE [PersonId] = @p0 AND [LastName] = @p2;
-````
+```
 
 ## Conventions
 
@@ -40,7 +36,7 @@ By convention, properties are never configured as concurrency tokens.
 You can use the Data Annotations to configure a property as a concurrency token.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Concurrency.cs?highlight=4)] -->
-````csharp
+``` csharp
 public class Person
 {
     public int PersonId { get; set; }
@@ -48,14 +44,14 @@ public class Person
     public string LastName { get; set; }
     public string FirstName { get; set; }
 }
-````
+```
 
 ## Fluent API
 
 You can use the Fluent API to configure a property as a concurrency token.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Concurrency.cs?highlight=7,8,9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Person> People { get; set; }
@@ -74,7 +70,7 @@ public class Person
     public string LastName { get; set; }
     public string FirstName { get; set; }
 }
-````
+```
 
 ## Timestamp/row version
 
@@ -91,7 +87,7 @@ By convention, properties are never configured as timestamps.
 You can use Data Annotations to configure a property as a timestamp.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Timestamp.cs?highlight=6)] -->
-````csharp
+``` csharp
 public class Blog
 {
     public int BlogId { get; set; }
@@ -100,14 +96,14 @@ public class Blog
     [Timestamp]
     public byte[] Timestamp { get; set; }
 }
-````
+```
 
 ### Fluent API
 
 You can use the Fluent API to configure a property as a timestamp.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Timestamp.cs?highlight=7,8,9,10)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -127,4 +123,4 @@ public class Blog
     public string Url { get; set; }
     public byte[] Timestamp { get; set; }
 }
-````
+```

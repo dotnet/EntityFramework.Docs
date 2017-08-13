@@ -1,5 +1,5 @@
 ---
-title: Foreign Key Constraints | Microsoft Docs
+title: EF Core | Foreign Key Constraints | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,15 +7,12 @@ ms.date: 10/27/2016
 
 ms.assetid: dbaf4bac-1fd5-46c0-ac57-64d7153bc574
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/relational/fk-constraints
 ---
 # Foreign Key Constraints
 
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
-
-> [!NOTE]
+> [!NOTE]  
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 A foreign key constraint is introduced for each relationship in the model.
@@ -33,7 +30,7 @@ Foreign key constraint names cannot be configured using data annotations.
 You can use the Fluent API to configure the foreign key constraint name for a relationship.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/RelationshipConstraintName.cs?highlight=12)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -66,4 +63,4 @@ public class Post
     public int BlogId { get; set; }
     public Blog Blog { get; set; }
 }
-````
+```

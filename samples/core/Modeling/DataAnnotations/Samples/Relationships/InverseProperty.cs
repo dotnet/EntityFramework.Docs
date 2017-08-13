@@ -10,6 +10,7 @@ namespace EFModeling.Configuring.DataAnnotations.Samples.Relationships.InversePr
         public DbSet<User> Users { get; set; }
     }
 
+    #region Entities
     public class Post
     {
         public int PostId { get; set; }
@@ -35,4 +36,5 @@ namespace EFModeling.Configuring.DataAnnotations.Samples.Relationships.InversePr
         [InverseProperty("Contributor")]
         public List<Post> ContributedToPosts { get; set; }
     }
+    #endregion
 }

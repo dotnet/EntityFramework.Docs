@@ -1,5 +1,5 @@
 ---
-title: Table Mapping | Microsoft Docs
+title: EF Core | Table Mapping | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,15 +7,12 @@ ms.date: 10/27/2016
 
 ms.assetid: c807aa4c-7845-443d-b8d0-bfc9b42691a3
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/relational/tables
 ---
 # Table Mapping
 
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
-
-> [!NOTE]
+> [!NOTE]  
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 Table mapping identifies which table data should be queried from and saved to in the database.
@@ -28,10 +25,10 @@ By convention, each entity will be setup to map to a table with the same name as
 
 You can use Data Annotations to configure the table that a type maps to.
 
-```csharp
+``` csharp
 using System.ComponentModel.DataAnnotations.Schema;
 ```
-```csharp
+``` csharp
 [Table("blogs")]
 public class Blog
 {
@@ -42,7 +39,7 @@ public class Blog
 
 You can also specify a schema that the table belongs to.
 
-```csharp
+``` csharp
 [Table("blogs", Schema = "blogging")]
 public class Blog
 {
@@ -55,10 +52,10 @@ public class Blog
 
 You can use the Fluent API to configure the table that a type maps to.
 
-```csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 ```
-```csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -80,7 +77,7 @@ public class Blog
 You can also specify a schema that the table belongs to.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/TableAndSchema.cs?highlight=2)] -->
-```csharp
+``` csharp
         modelBuilder.Entity<Blog>()
             .ToTable("blogs", schema: "blogging");
 ```

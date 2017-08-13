@@ -9,6 +9,20 @@ namespace EFQuerying.Tracking
         {
             using (var context = new BloggingContext())
             {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
+
+            using (var context = new BloggingContext())
+            {
+                // seeding database
+                context.Blogs.Add(new Blog { Url = "http://sample.com/blog" });
+                context.Blogs.Add(new Blog { Url = "http://sample.com/another_blog" });
+                context.SaveChanges();
+            }
+
+            using (var context = new BloggingContext())
+            {
                 var blog = context.Blogs.SingleOrDefault(b => b.BlogId == 1);
                 blog.Rating = 5;
                 context.SaveChanges();

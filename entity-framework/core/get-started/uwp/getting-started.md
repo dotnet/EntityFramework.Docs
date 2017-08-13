@@ -1,5 +1,5 @@
 ﻿---
-title: UWP - New Database | Microsoft Docs
+title: EF Core | Getting Started on UWP - New Database | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -11,17 +11,17 @@ ms.technology: entity-framework-core
 uid: core/get-started/uwp/getting-started
 ---
 
-# UWP - New Database
+# Getting Started with EF Core on Universal Windows Platform (UWP) with a New Database
 
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+> [!NOTE]  
+> Temporarily this tutorial uses EF Core 1.1. UWP has not been updated yet to support .NET Standard 2.0 which is required for compatibility with EF Core 2.0. Once it is, we will update the tutorial to use the new version. 
 
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
-> [!WARNING]
+> [!WARNING]  
 > **Avoid using anonymous types in LINQ queries on UWP**. Deploying a UWP application to the app store requires your application to be compiled with .NET Native. Queries with anonymous types have poor performance on .NET Native or may crash the application.
 
-> [!TIP]
+> [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/UWP/UWP.SQLite) on GitHub.
 
 ## Prerequisites
@@ -37,9 +37,9 @@ The following items are required to complete this walkthrough:
 
 * Open Visual Studio
 
-* File ‣ New ‣ Project...
+* File > New > Project...
 
-* From the left menu select Templates ‣ Visual C# ‣ Windows Universal
+* From the left menu select Templates > Visual C# > Windows Universal
 
 * Select the **Blank App (Universal Windows)** project template
 
@@ -49,18 +49,18 @@ The following items are required to complete this walkthrough:
 
 Depending on your version of Visual Studio, the template may have generated your project with an old version of .NET Core for UWP. EF Core requires `Microsoft.NETCore.UniversalWindowsPlatform` version **5.2.2** or greater.
 
-* Tools ‣ NuGet Package Manager ‣ Package Manager Console
+* Tools > NuGet Package Manager > Package Manager Console
 
 * Run `Update-Package Microsoft.NETCore.UniversalWindowsPlatform –Version 5.2.2`
 
-> [!NOTE]
+> [!TIP]  
 > If you are using Visual Studio 2017, you can upgrade to the latest version of `Microsoft.NETCore.UniversalWindowsPlatform` and do not need to explicitly target `5.2.2`.
 
 ## Install Entity Framework
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQLite. For a list of available providers see [Database Providers](../../providers/index.md).
 
-* Tools ‣ NuGet Package Manager ‣ Package Manager Console
+* Tools > NuGet Package Manager > Package Manager Console
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Sqlite`
 
@@ -72,14 +72,14 @@ Later in this walkthrough we will also be using some Entity Framework Tools to m
 
 Now it's time to define a context and entity classes that make up your model.
 
-* Project ‣ Add Class...
+* Project > Add Class...
 
 * Enter *Model.cs* as the name and click **OK**
 
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/Model.cs)] -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -114,7 +114,7 @@ namespace EFGetStarted.UWP
         public Blog Blog { get; set; }
     }
 }
-````
+```
 
 ## Create your database
 
@@ -131,19 +131,19 @@ Since we want the database to be created on the device that the app runs on, we 
 * Add the highlighted using to the start of the file
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/App.xaml.cs?highlight=1)] -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-````
+```
 
 * Add the highlighted code to apply any pending migrations
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/App.xaml.cs?highlight=6,7,8,9)] -->
-````csharp
+``` csharp
 public App()
 {
     this.InitializeComponent();
@@ -154,9 +154,9 @@ public App()
         db.Database.Migrate();
     }
 }
-````
+```
 
-> [!TIP]
+> [!TIP]  
 > If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to apply the corresponding changes to the database. Any pending migrations will be applied to the local database on each device when the application starts.
 >
 >EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
@@ -170,7 +170,7 @@ You can now use your model to perform data access.
 * Add the page load handler and UI content highlighted below
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/MainPage.xaml?highlight=9,12,13,14,15,16,17,18,19,20,21,22)] -->
-````csharp
+``` xaml
 <Page
     x:Class="EFGetStarted.UWP.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -195,7 +195,7 @@ You can now use your model to perform data access.
         </StackPanel>
     </Grid>
 </Page>
-````
+```
 
 Now we'll add code to wire up the UI with the database
 
@@ -204,7 +204,7 @@ Now we'll add code to wire up the UI with the database
 * Add the highlighted code from the following listing
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/UWP/UWP.SQLite/MainPage.xaml.cs?highlight=8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)] -->
-````csharp
+``` csharp
 public sealed partial class MainPage : Page
 {
     public MainPage()
@@ -232,11 +232,11 @@ public sealed partial class MainPage : Page
         }
     }
 }
-````
+```
 
 You can now run the application to see it in action.
 
-* Debug ‣ Start Without Debugging
+* Debug > Start Without Debugging
 
 * The application will build and launch
 

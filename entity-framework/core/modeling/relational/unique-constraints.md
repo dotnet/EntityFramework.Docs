@@ -1,5 +1,5 @@
 ---
-title: Alternate Keys (Unique Constraints) | Microsoft Docs
+title: EF Core | Alternate Keys (Unique Constraints) | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,15 +7,12 @@ ms.date: 10/27/2016
 
 ms.assetid: 3d419dcf-2b5d-467c-b408-ea03d830721a
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/relational/unique-constraints
 ---
 # Alternate Keys (Unique Constraints)
 
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
-
-> [!NOTE]
+> [!NOTE]  
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 A unique constraint is introduced for each alternate key in the model.
@@ -32,25 +29,4 @@ Unique constraints can not be configured using Data Annotations.
 
 You can use the Fluent API to configure the index and constraint name for an alternate key.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/AlternateKeyName.cs?highlight=9)] -->
-````csharp
-class MyContext : DbContext
-{
-    public DbSet<Car> Cars { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Car>()
-            .HasAlternateKey(c => c.LicensePlate)
-            .HasName("AlternateKey_LicensePlate");
-    }
-}
-
-class Car
-{
-    public int CarId { get; set; }
-    public string LicensePlate { get; set; }
-    public string Make { get; set; }
-    public string Model { get; set; }
-}
-````
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/AlternateKeyName.cs?name=Model&highlight=9)]

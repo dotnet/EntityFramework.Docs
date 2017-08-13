@@ -1,5 +1,5 @@
 ---
-title: Including & Excluding Types | Microsoft Docs
+title: EF Core | Including & Excluding Types | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,13 +7,10 @@ ms.date: 10/27/2016
 
 ms.assetid: cbe6935e-2679-4b77-8914-a8d772240cf1
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/included-types
 ---
 # Including & Excluding Types
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 Including a type in the model means that EF has metadata about that type and will attempt to read and write instances from/to the database.
 
@@ -30,7 +27,7 @@ By convention, types that are exposed in `DbSet` properties on your context are 
 * `AuditEntry` because it is mentioned in `OnModelCreating`
 
 <!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/IncludedTypes.cs?highlight=3,7,16)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -64,14 +61,14 @@ public class AuditEntry
     public string Username { get; set; }
     public string Action { get; set; }
 }
-````
+```
 
 ## Data Annotations
 
 You can use Data Annotations to exclude a type from the model.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/IgnoreType.cs?highlight=9)] -->
-````csharp
+``` csharp
 public class Blog
 {
     public int BlogId { get; set; }
@@ -85,14 +82,14 @@ public class BlogMetadata
 {
     public DateTime LoadedFromDatabase { get; set; }
 }
-````
+```
 
 ## Fluent API
 
 You can use the Fluent API to exclude a type from the model.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/IgnoreType.cs?highlight=7)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -115,4 +112,4 @@ public class BlogMetadata
 {
     public DateTime LoadedFromDatabase { get; set; }
 }
-````
+```

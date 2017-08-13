@@ -1,5 +1,5 @@
 ---
-title: Maximum Length | Microsoft Docs
+title: EF Core | Maximum Length | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,17 +7,14 @@ ms.date: 10/27/2016
 
 ms.assetid: c39c5d43-018d-48b8-94f2-b8bc7c686c69
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/max-length
 ---
 # Maximum Length
 
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
-
 Configuring a maximum length provides a hint to the data store about the appropriate data type to use for a given property. Maximum length only applies to array data types, such as `string` and `byte[]`.
 
-> [!NOTE]
+> [!NOTE]  
 > Entity Framework does not do any validation of maximum length before passing data to the provider. It is up to the provider or data store to validate if appropriate. For example, when targeting SQL Server, exceeding the maximum length will result in an exception as the data type of the underlying column will not allow excess data to be stored.
 
 ## Conventions
@@ -29,21 +26,21 @@ By convention, it is left up to the database provider to choose an appropriate d
 You can use the Data Annotations to configure a maximum length for a property. In this example, targeting SQL Server this would result in the `nvarchar(500)` data type being used.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/MaxLength.cs?highlight=4)] -->
-````csharp
+``` csharp
 public class Blog
 {
     public int BlogId { get; set; }
     [MaxLength(500)]
     public string Url { get; set; }
 }
-````
+```
 
 ## Fluent API
 
 You can use the Fluent API to configure a maximum length for a property. In this example, targeting SQL Server this would result in the `nvarchar(500)` data type being used.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/MaxLength.cs?highlight=7,8,9)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -61,4 +58,4 @@ public class Blog
     public int BlogId { get; set; }
     public string Url { get; set; }
 }
-````
+```

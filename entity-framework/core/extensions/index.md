@@ -1,5 +1,5 @@
 ---
-title: Tools & Extensions | Microsoft Docs
+title: EF Core | Tools & Extensions: Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -8,10 +8,7 @@ ms.technology: entity-framework-core
 uid: core/extensions/index
 ---
 
-# Tools & Extensions
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
+# EF Core Tools & Extensions
 
 Tools and extensions provide additional functionality for Entity Framework Core.
 

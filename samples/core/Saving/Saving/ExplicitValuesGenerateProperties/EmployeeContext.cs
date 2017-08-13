@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace EFSaving.ExplicitValuesGenerateProperties
 {
@@ -26,7 +27,7 @@ namespace EFSaving.ExplicitValuesGenerateProperties
 
             modelBuilder.Entity<Employee>()
                 .Property(b => b.LastPayRaise)
-                .Metadata.IsReadOnlyAfterSave = false;
+                .Metadata.AfterSaveBehavior = PropertySaveBehavior.Ignore;
             #endregion
         }
     }

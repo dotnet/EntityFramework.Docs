@@ -1,5 +1,5 @@
 ﻿---
-title: .NET Framework - Existing Database | Microsoft Docs
+title: EF Core | Getting Started on .NET Framework - Existing Database | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,15 +10,11 @@ ms.technology: entity-framework-core
 
 uid: core/get-started/full-dotnet/existing-db
 ---
-
-# .NET Framework - Existing Database
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+# Getting started with EF Core on .NET Framework with an Existing Database
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.
 
-> [!TIP]
+> [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb) on GitHub.
 
 ## Prerequisites
@@ -37,12 +33,12 @@ The following prerequisites are needed to complete this walkthrough:
 
 This tutorial uses a **Blogging** database on your LocalDb instance as the existing database.
 
-> [!NOTE]
+> [!TIP]  
 > If you have already created the **Blogging** database as part of another tutorial, you can skip these steps.
 
 * Open Visual Studio
 
-* Tools ‣ Connect to Database...
+* Tools > Connect to Database...
 
 * Select **Microsoft SQL Server** and click **Continue**
 
@@ -64,9 +60,9 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 
 * Open Visual Studio
 
-* File ‣ New ‣ Project...
+* File > New > Project...
 
-* From the left menu select Templates ‣ Visual C# ‣ Windows
+* From the left menu select Templates > Visual C# > Windows
 
 * Select the **Console Application** project template
 
@@ -78,15 +74,13 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
-* Tools ‣ NuGet Package Manager ‣ Package Manager Console
+* Tools > NuGet Package Manager > Package Manager Console
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
 To enable reverse engineering from an existing database we need to install a couple of other packages too.
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
-
-* Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer.Design`
 
 ## Reverse engineer your model
 
@@ -96,15 +90,14 @@ Now it's time to create the EF model based on your existing database.
 
 * Run the following command to create a model from the existing database
 
-<!-- literal_block"language": "csharp",", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````text
+``` console
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
-````
+```
 
 The reverse engineer process created entity classes and a derived context based on the schema of the existing database. The entity classes are simple C# objects that represent the data you will be querying and saving.
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/Blog.cs)] -->
-````csharp
+``` csharp
 using System;
 using System.Collections.Generic;
 
@@ -123,12 +116,12 @@ namespace EFGetStarted.ConsoleApp.ExistingDb
         public virtual ICollection<Post> Post { get; set; }
     }
 }
-````
+```
 
 The context represents a session with the database and allows you to query and save instances of the entity classes.
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/BloggingContext.cs)] -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -161,7 +154,7 @@ namespace EFGetStarted.ConsoleApp.ExistingDb
         public virtual DbSet<Post> Post { get; set; }
     }
 }
-````
+```
 
 ## Use your model
 
@@ -172,7 +165,7 @@ You can now use your model to perform data access.
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/Program.cs)] -->
-````csharp
+``` csharp
 using System;
 
 namespace EFGetStarted.ConsoleApp.ExistingDb
@@ -197,9 +190,9 @@ namespace EFGetStarted.ConsoleApp.ExistingDb
         }
     }
 }
-````
+```
 
-* Debug ‣ Start Without Debugging
+* Debug > Start Without Debugging
 
 You will see that one blog is saved to the database and then the details of all blogs are printed to the console.
 

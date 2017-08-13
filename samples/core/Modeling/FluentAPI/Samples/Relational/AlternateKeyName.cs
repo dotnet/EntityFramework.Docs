@@ -2,6 +2,7 @@
 
 namespace EFModeling.Configuring.FluentAPI.Samples.Relational.AlternateKeyName
 {
+    #region Model
     class MyContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
@@ -21,4 +22,5 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.AlternateKeyName
         public string Make { get; set; }
         public string Model { get; set; }
     }
+    #endregion
 }

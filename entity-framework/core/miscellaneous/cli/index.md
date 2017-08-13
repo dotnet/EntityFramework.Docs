@@ -1,5 +1,5 @@
 ---
-title: Command Line Reference | Microsoft Docs
+title: EF Core | Command Line Reference | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -11,9 +11,6 @@ ms.technology: entity-framework-core
 uid: core/miscellaneous/cli/index
 ---
 # Command Line Reference
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
 
 Entity Framework provides command line tooling to automate common tasks such as code generation and database migrations. There are two primary command line experiences that EF Core provides.
 * [Package Manager Console](powershell.md) Tools provide command line tools integrated into Visual Studio.

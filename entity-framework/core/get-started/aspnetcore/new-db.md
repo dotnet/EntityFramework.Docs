@@ -1,5 +1,5 @@
 ---
-title: ASP.NET Core - New database with Visual Studio 2017 | Microsoft Docs
+title: EF Core | Getting Started on ASP.NET Core - New database | Microsoft Docs
 author: rick-anderson
 ms.author: riande
 ms.author2: tdykstra
@@ -9,22 +9,18 @@ ms.technology: entity-framework-core
 uid: core/get-started/aspnetcore/new-db
 ---
 
-# ASP.NET Core - New database with Visual Studio 2017
+# Getting Started with EF Core on ASP.NET Core with a New database
 
 In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You will use migrations to create the database from your model. See [Additional Resources](#additional-resources) for more Entity Framework Core tutorials.
 
 This tutorial requires:
-- [Visual Studio 2017](https://www.visualstudio.com/downloads/) with these workloads:
+* [Visual Studio 2017 15.3](https://www.visualstudio.com/downloads/) with these workloads:
+  * **ASP.NET and web development** (under **Web & Cloud**)
+  * **.NET Core cross-platform development** (under **Other Toolsets**)
+* [.NET Core 2.0 SDK](https://www.microsoft.com/net/download/core).
 
-  - **ASP.NET and web development** (under **Web & Cloud**)
-  - **.NET Core cross-platform development** (under **Other Toolsets**)
-
--  .NET Core 1.1 (installed by Visual Studio).
-
-Notes: 
-
-- You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb) on GitHub.
-- This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+> [!TIP]  
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb) on GitHub.
 
 ## Create a new project in Visual Studio 2017
 
@@ -34,7 +30,7 @@ Notes:
 * Enter **EFGetStarted.AspNetCore.NewDb** for the name and click **OK**.
 * In the **New ASP.NET Core Web Application** dialog enter:
 
-  * Under **ASP.NET Core Templates 1.1** select the **Web Application**
+  * Under **ASP.NET Core Templates 2.0** select the **Web Application (Model-View-Controller)**
   * Ensure that **Authentication** is set to **No Authentication**
   * Click **OK**
 
@@ -44,13 +40,17 @@ Warning: If you use **Individual User Accounts** instead of **None** for **Authe
 
 Install the package for the EF Core database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
-* Open the **Package Manager Console** (PMC):
-  **Tools > NuGet Package Manager > Package Manager Console**
-* Enter `Install-Package Microsoft.EntityFrameworkCore.SqlServer` in the PMC.
+* **Tools > NuGet Package Manager > Package Manager Console**
 
-Install the Entity Framework Core Tools to maintain the database:
+* Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
-* Enter `Install-Package Microsoft.EntityFrameworkCore.Tools` in the PMC.
+We will be using some Entity Framework Tools to create a model from the database. So we will install the tools package as well:
+
+* Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
+
+We will be using some ASP.NET Core Scaffolding tools to create controllers and views later on. So we will install this design package as well:
+
+* Run `Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design`
 
 ## Create the model
 
@@ -91,7 +91,7 @@ Once you have a model, you can use [migrations](https://docs.microsoft.com/aspne
 
   **Tools –> NuGet Package Manager –> Package Manager Console**
 * Run `Add-Migration InitialCreate` to scaffold a migration to create the initial set of tables for your model. If you receive an error stating `The term 'add-migration' is not recognized as the name of a cmdlet`, close and reopen Visual Studio.
-* Run `Update-Database` to apply the new migration to the database. This command creates the database before applying migrations. 
+* Run `Update-Database` to apply the new migration to the database. This command creates the database before applying migrations.
 
 ## Create a controller
 
@@ -111,7 +111,7 @@ Now that scaffolding is enabled, we can scaffold a controller for the `Blog` ent
 
 ## Run the application
 
-Press F5 to run and test the app. 
+Press F5 to run and test the app.
 
 * Navigate to `/Blogs`
 * Use the create link to create some blog entries. Test the details and delete links.
@@ -123,6 +123,6 @@ Press F5 to run and test the app.
 ## Additional Resources
 
 * [EF - New database with SQLite](xref:core/get-started/netcore/new-db-sqlite) -  a cross-platform console EF tutorial.
-* [Introduction to ASP.NET Core MVC on Mac or Linux ](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app-xplat/index)
+* [Introduction to ASP.NET Core MVC on Mac or Linux](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app-xplat/index)
 * [Introduction to ASP.NET Core MVC with Visual Studio](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/index)
 * [Getting started with ASP.NET Core and Entity Framework Core using Visual Studio](https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/index)

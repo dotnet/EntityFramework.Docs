@@ -1,5 +1,5 @@
 ﻿---
-title: .NET Framework - New Database | Microsoft Docs
+title: EF Core | Getting Started on .NET Framework - New Database | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -10,15 +10,11 @@ ms.technology: entity-framework-core
 
 uid: core/get-started/full-dotnet/new-db
 ---
-
-# .NET Framework - New Database
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
+# Getting started with EF Core on .NET Framework with a New Database
 
 In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use migrations to create the database from your model.
 
-> [!TIP]
+> [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb) on GitHub.
 
 ## Prerequisites
@@ -35,11 +31,11 @@ The following prerequisites are needed to complete this walkthrough:
 
 * Open Visual Studio
 
-* File ‣ New ‣ Project...
+* File > New > Project...
 
-* From the left menu select Templates ‣ Visual C# ‣ Windows
+* From the left menu select Templates > Visual C# > Windows Classic Desktop
 
-* Select the **Console Application** project template
+* Select the **Console App (.NET Framework)** project template
 
 * Ensure you are targeting **.NET Framework 4.5.1** or later
 
@@ -49,7 +45,7 @@ The following prerequisites are needed to complete this walkthrough:
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
-* Tools ‣ NuGet Package Manager ‣ Package Manager Console
+* Tools > NuGet Package Manager > Package Manager Console
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
@@ -61,14 +57,14 @@ Later in this walkthrough we will also be using some Entity Framework Tools to m
 
 Now it's time to define a context and entity classes that make up your model.
 
-* Project ‣ Add Class...
+* Project > Add Class...
 
 * Enter *Model.cs* as the name and click **OK**
 
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Model.cs)] -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -103,9 +99,9 @@ namespace EFGetStarted.ConsoleApp
         public Blog Blog { get; set; }
     }
 }
-````
+```
 
-> [!TIP]
+> [!TIP]  
 > In a real application you would put each class in a separate file and put the connection string in the `App.Config` file and read it out using `ConfigurationManager`. For the sake of simplicity, we are putting everything in a single code file for this tutorial.
 
 ## Create your database
@@ -118,7 +114,7 @@ Now that you have a model, you can use migrations to create a database for you.
 
 * Run `Update-Database` to apply the new migration to the database. Because your database doesn't exist yet, it will be created for you before the migration is applied.
 
-> [!TIP]
+> [!TIP]  
 > If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to make the corresponding schema changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the `Update-Database` command to apply the changes to the database.
 >
 >EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
@@ -132,7 +128,7 @@ You can now use your model to perform data access.
 * Replace the contents of the file with the following code
 
 <!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Program.cs)] -->
-````csharp
+``` csharp
 using System;
 
 namespace EFGetStarted.ConsoleApp
@@ -157,9 +153,9 @@ namespace EFGetStarted.ConsoleApp
         }
     }
 }
-````
+```
 
-* Debug ‣ Start Without Debugging
+* Debug > Start Without Debugging
 
 You will see that one blog is saved to the database and then the details of all blogs are printed to the console.
 

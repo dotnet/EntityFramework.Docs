@@ -1,5 +1,5 @@
 ---
-title: Configuring a DbContext | Microsoft Docs
+title: EF Core | Configuring a DbContext | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -11,9 +11,6 @@ ms.technology: entity-framework-core
 uid: core/miscellaneous/configuring-dbcontext
 ---
 # Configuring a DbContext
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 This article shows patterns for configuring a `DbContext` with `DbContextOptions`. Options are primarily used to select and configure the data store.
 
@@ -27,8 +24,7 @@ If both are used, `OnConfiguring` is executed on the supplied options, meaning i
 
 Context code with constructor
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 public class BloggingContext : DbContext
 {
     public BloggingContext(DbContextOptions<BloggingContext> options)
@@ -37,33 +33,31 @@ public class BloggingContext : DbContext
 
     public DbSet<Blog> Blogs { get; set; }
 }
-````
+```
 
-> [!TIP]
+> [!TIP]  
 > The base constructor of DbContext also accepts the non-generic version of `DbContextOptions`. Using the non-generic version is not recommended for applications with multiple context types.
 
 Application code to initialize from constructor argument
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
 optionsBuilder.UseSqlite("Data Source=blog.db");
 
 using (var context = new BloggingContext(optionsBuilder.Options))
 {
-    // do stuff
+  // do stuff
 }
-````
+```
 
 ### OnConfiguring
 
-> [!WARNING]
+> [!WARNING]  
 > `OnConfiguring` occurs last and can overwrite options obtained from DI or the constructor. This approach does not lend itself to testing (unless you target the full database).
 
-Context code with OnConfiguring
+Context code with `OnConfiguring`:
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -73,17 +67,16 @@ public class BloggingContext : DbContext
         optionsBuilder.UseSqlite("Data Source=blog.db");
     }
 }
-````
+```
 
-Application code to initialize with "OnConfiguring"
+Application code to initialize with `OnConfiguring`:
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 using (var context = new BloggingContext())
 {
-    // do stuff
+  // do stuff
 }
-````
+```
 
 ## Using DbContext with dependency injection
 
@@ -95,20 +88,18 @@ See [more reading](#more-reading) below for information on dependency injection.
 
 Adding dbcontext to dependency injection
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddDbContext<BloggingContext>(options => options.UseSqlite("Data Source=blog.db"));
 }
-````
+```
 
 This requires adding a [constructor argument](#constructor-argument) to your DbContext type that accepts `DbContextOptions`.
 
-Context code
+Context code:
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 public class BloggingContext : DbContext
 {
     public BloggingContext(DbContextOptions<BloggingContext> options)
@@ -117,47 +108,44 @@ public class BloggingContext : DbContext
 
     public DbSet<Blog> Blogs { get; set; }
 }
-````
+```
 
-Application code (in ASP.NET Core)
+Application code (in ASP.NET Core):
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 public MyController(BloggingContext context)
-````
+```
 
-Application code (using ServiceProvider directly, less common)
+Application code (using ServiceProvider directly, less common):
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 using (var context = serviceProvider.GetService<BloggingContext>())
 {
   // do stuff
 }
 
 var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
-````
+```
 
-<a name=use-idbcontextfactory></a>
+<a name=use-idesigntimedbcontextfactory></a>
 
-## Using `IDbContextFactory<TContext>`
+## Using `IDesignTimeDbContextFactory<TContext>`
 
-As an alternative to the options above, you may also provide an implementation of `IDbContextFactory<TContext>`. EF tools can use this factory to create an instance of your DbContext. This may be required in order to enable specific design-time experiences such as migrations.
+As an alternative to the options above, you may also provide an implementation of `IDesignTimeDbContextFactory<TContext>`. EF tools can use this factory to create an instance of your DbContext. This may be required in order to enable specific design-time experiences such as migrations.
 
 Implement this interface to enable design-time services for context types that do not have a public default constructor. Design-time services will automatically discover implementations of this interface that are in the same assembly as the derived context.
 
 Example:
 
-<!-- literal_block"language": "csharp",rp", "xml:space": "preserve", "classes  "backrefs  "names  "dupnames  highlight_args}, "ids  "linenos": false -->
-````csharp
+``` csharp
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace MyProject
 {
-    public class BloggingContextFactory : IDbContextFactory<BloggingContext>
+    public class BloggingContextFactory : IDesignTimeDbContextFactory<BloggingContext>
     {
-        public BloggingContext Create(DbContextFactoryOptions options)
+        public BloggingContext Create(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
             optionsBuilder.UseSqlite("Data Source=blog.db");
@@ -166,7 +154,7 @@ namespace MyProject
         }
     }
 }
-````
+```
 
 ## More reading
 

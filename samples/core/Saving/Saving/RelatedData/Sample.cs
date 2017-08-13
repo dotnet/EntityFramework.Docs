@@ -14,7 +14,7 @@ namespace EFSaving.RelatedData
                 context.Database.EnsureCreated();
             }
 
-            // Adding a graph of new entities
+            #region AddingGraphOfEntities
             using (var context = new BloggingContext())
             {
                 var blog = new Blog
@@ -31,8 +31,9 @@ namespace EFSaving.RelatedData
                 context.Blogs.Add(blog);
                 context.SaveChanges();
             }
+            #endregion
 
-            // Adding a related entity
+            #region AddingRelatedEntity
             using (var context = new BloggingContext())
             {
                 var blog = context.Blogs.Include(b => b.Posts).First();
@@ -41,17 +42,20 @@ namespace EFSaving.RelatedData
                 blog.Posts.Add(post);
                 context.SaveChanges();
             }
+            #endregion
 
-            // Changing relationships
+            #region ChangingRelationships
             using (var context = new BloggingContext())
             {
                 var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio" };
                 var post = context.Posts.First();
+
                 post.Blog = blog;
                 context.SaveChanges();
             }
+            #endregion
 
-            // Removing relationships
+            #region RemovingRelationships
             using (var context = new BloggingContext())
             {
                 var blog = context.Blogs.Include(b => b.Posts).First();
@@ -60,6 +64,7 @@ namespace EFSaving.RelatedData
                 blog.Posts.Remove(post);
                 context.SaveChanges();
             }
+            #endregion
         }
 
         public class BloggingContext : DbContext

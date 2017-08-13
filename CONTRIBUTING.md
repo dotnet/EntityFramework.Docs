@@ -10,14 +10,14 @@ Articles are stored in the repository as Markdown files. Simple changes to the c
 
 You'll need a basic understanding of [Git and GitHub.com](https://guides.github.com/activities/hello-world/).
 
-* Open an [issue](https://github.com/aspnet/EntityFramework.Docs/issues/new) describing what you want to do, such as change an existing article or create a new one. Wait for approval from the EF team before you invest much time. 
+* Open an [issue](https://github.com/aspnet/EntityFramework.Docs/issues/new) describing what you want to do, such as change an existing article or create a new one. Wait for approval from the EF team before you invest much time.
 * Fork the [aspnet/EntityFramework.Docs](https://github.com/aspnet/EntityFramework.Docs/) repo and create a branch for your changes.
 * Submit a pull request (PR) to master with your changes.
 * Respond to PR feedback.
 
 ## Markdown syntax
 
-FArticles are written in [DocFx-flavored Markdown](http://dotnet.github.io/docfx/spec/docfx_flavored_markdown.html), which is a superset of [GitHub-flavored Markdown (GFM)](https://guides.github.com/features/mastering-markdown/). For examples of DFM syntax for UI features commonly used in the EF documentation, see [Metadata and Markdown Template](https://github.com/dotnet/docs/blob/master/styleguide/template.md) in the .NET Core repo style guide. 
+Articles are written in [DocFx-flavored Markdown](http://dotnet.github.io/docfx/spec/docfx_flavored_markdown.html), which is a superset of [GitHub-flavored Markdown (GFM)](https://guides.github.com/features/mastering-markdown/). For examples of DFM syntax for UI features commonly used in the EF documentation, see [Metadata and Markdown Template](https://github.com/dotnet/docs/blob/master/styleguide/template.md) in the .NET Core repo style guide. 
 
 ## Folder structure conventions
 
@@ -27,33 +27,33 @@ Code samples are stored in the `samples` root folder. They are organized into a 
 
 ## Code snippets
 
-Articles frequently contain code snippets to illustrate points. DFM lets you copy code into the Markdown file or refer to a separate code file. We prefer to use separate code files whenever possible, to minimize the chance of errors in the code. The code files should be stored in the repo using the folder structure described above for sample projects. 
+Articles frequently contain code snippets to illustrate points. DFM lets you copy code into the Markdown file or refer to a separate code file. We prefer to use separate code files whenever possible, to minimize the chance of errors in the code. The code files should be stored in the repo using the folder structure described above for sample projects.
 
 Here are some examples of [DFM code snippet syntax](http://dotnet.github.io/docfx/spec/docfx_flavored_markdown.html#code-snippet).
 
 To render an entire code file as a snippet:
 
-```none
+``` none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs)]
 ```
 
 To render a portion of a file as a snippet by using line numbers:
 
-```none
+``` none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs?range=1-10]
 ```
 
-For C# snippets, you can reference a [C# region](https://msdn.microsoft.com/en-us/library/9a1ybwek.aspx). Whenever possible, use regions rather than line numbers, because line numbers in a code file tend to change and get out of sync with line number references in Markdown. C# regions can be nested, and if you reference the outer region, the inner `#region` and `#endregion` directives are not rendered in a snippet. 
+For C# snippets, you can reference a [C# region](https://msdn.microsoft.com/en-us/library/9a1ybwek.aspx). Whenever possible, use regions rather than line numbers, because line numbers in a code file tend to change and get out of sync with line number references in Markdown. C# regions can be nested, and if you reference the outer region, the inner `#region` and `#endregion` directives are not rendered in a snippet.
 
 To render a C# region named "snippet_Example":
 
-```none
+``` none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs?name=snippet_Example)]
 ```
 
 To highlight selected lines in a rendered snippet (usually renders as yellow background color):
 
-```none
+``` none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs?name=snippet_Example&highlight=1-3,10,20-25)]
 ```
 
@@ -61,7 +61,7 @@ To highlight selected lines in a rendered snippet (usually renders as yellow bac
 
 Test your changes with the [DocFX command line tool](https://dotnet.github.io/docfx/tutorial/docfx_getting_started.html#2-use-docfx-as-a-command-line-tool), which creates a locally hosted version of the site. DocFX doesn't render style and site extensions created for docs.microsoft.com.
 
-DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS. 
+DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS.
 
 ### Windows instructions
 
@@ -69,10 +69,10 @@ DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS.
 * Add DocFX to your PATH.
 * In a command line window, navigate to the cloned repository (which contains the *docfx.json* file) and run the following command:
 
-   ```
+   ``` console
    docfx -t default --serve
    ```
-	
+
 * In a browser, navigate to `http://localhost:8080`.
 
 ### Mono instructions
@@ -82,11 +82,11 @@ DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS.
 * Extract to `\bin\docfx`.
 * Create an alias for **docfx**:
 
-  ```
+  ``` console
   function docfx {
     mono $HOME/bin/docfx/docfx.exe
   }
-    
+
   function docfx-serve {
     mono $HOME/bin/docfx/docfx.exe serve _site
   }

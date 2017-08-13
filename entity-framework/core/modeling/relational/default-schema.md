@@ -1,5 +1,5 @@
 ---
-title: Default Schema | Microsoft Docs
+title: EF Core | Default Schema | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 
@@ -7,15 +7,12 @@ ms.date: 10/27/2016
 
 ms.assetid: e6e58473-9f5e-4a1f-ac0f-b87d2cbb667e
 ms.technology: entity-framework-core
- 
+
 uid: core/modeling/relational/default-schema
 ---
 # Default Schema
 
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../../ef6/index.md).
-
-> [!NOTE]
+> [!NOTE]  
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).
 
 The default schema is the database schema that objects will be created in if a schema is not explicitly configured for that object.
@@ -33,7 +30,7 @@ You can not set the default schema using Data Annotations.
 You can use the Fluent API to specify a default schema.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DefaultSchema.cs?highlight=7)] -->
-````csharp
+``` csharp
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -43,4 +40,4 @@ class MyContext : DbContext
         modelBuilder.HasDefaultSchema("blogging");
     }
 }
-````
+```

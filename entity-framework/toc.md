@@ -1,10 +1,10 @@
 #[Entity Framework](index.md)
 
-##[Compare EF Core & EF6.x](efcore-and-ef6/index.md)
+##[Compare EF Core & EF6](efcore-and-ef6/index.md)
 ###[Which One Is Right for You](efcore-and-ef6/choosing.md)
 ###[Feature Comparison](efcore-and-ef6/features.md)
-###[EF6.x and EF Core in the Same Application](efcore-and-ef6/side-by-side.md)
-###[Porting from EF6.x to EF Core](efcore-and-ef6/porting/index.md)
+###[EF6 and EF Core in the Same Application](efcore-and-ef6/side-by-side.md)
+###[Porting from EF6 to EF Core](efcore-and-ef6/porting/index.md)
 ####[Validate Requirements](efcore-and-ef6/porting/ensure-requirements.md)
 ####[Porting an EDMX-Based Model](efcore-and-ef6/porting/port-edmx.md)
 ####[Porting a Code-Based Model](efcore-and-ef6/porting/port-code.md)
@@ -12,6 +12,7 @@
 ##[Entity Framework Core](core/index.md)
 <!-- Getting Started -->
 ###[Getting Started](core/get-started/index.md)
+####[Installing EF Core](core/get-started/install/index.md)
 ####[.NET Framework (Console, WinForms, WPF, etc.)](core/get-started/full-dotnet/index.md)
 #####[.NET Framework - New Database](core/get-started/full-dotnet/new-db.md)
 #####[.NET Framework - Existing Database](core/get-started/full-dotnet/existing-db.md)
@@ -71,7 +72,7 @@
 ####[🔧 Disconnected Entities](core/saving/disconnected-entities.md)
 ####[Explicit values for generated properties](core/saving/explicit-values-generated-properties.md)
 <!-- Platforms -->
-###[Platforms](core/platforms/index.md)
+###[Platform Support](core/platforms/index.md)
 <!-- Providers -->
 ###[Database Providers](core/providers/index.md)
 ####[Microsoft SQL Server](core/providers/sql-server/index.md)
@@ -118,8 +119,10 @@
 #####[Testing with SQLite](core/miscellaneous/testing/sqlite.md)
 #####[Testing with InMemory](core/miscellaneous/testing/in-memory.md)
 ####[Configuring a DbContext](core/miscellaneous/configuring-dbcontext.md)
-####[Upgrading from RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
+####[Upgrading from 1.0 RC1 to RC2](core/miscellaneous/rc1-rc2-upgrade.md)
+####[Upgrading from 1.0 RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
+####[Upgrading to EF Core 2.0](core/miscellaneous/1x-2x-upgrade.md)
 
-##[Entity Framework 6.x](ef6/index.md)
+##[Entity Framework 6](ef6/index.md)
 ###[Documentation](http://msdn.com/data/ef)
 ###[API Reference](https://msdn.microsoft.com/library/dn223258(v=vs.113).aspx)

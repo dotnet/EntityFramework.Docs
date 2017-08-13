@@ -1,5 +1,5 @@
 ---
-title: Generated Values | Microsoft Docs
+title: EF Core | Generated Values | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -9,9 +9,6 @@ uid: core/modeling/generated-properties
 ---
 
 # Generated Values
-
-> [!NOTE]
-> This documentation is for EF Core. For EF6.x, see [Entity Framework 6](../../ef6/index.md).
 
 ## Value Generation Patterns
 
@@ -29,7 +26,7 @@ Depending on the database provider being used, values may be generated client si
 
 If you add an entity to the context that has a value assigned to the property, then EF will attempt to insert that value rather than generating a new one. A property is considered to have a value assigned if it is not assigned the CLR default value (`null` for `string`, `0` for `int`, `Guid.Empty` for `Guid`, etc.). For more information, see [Explicit values for generated properties](..\saving\explicit-values-generated-properties.md).
 
-> [!WARNING]
+> [!WARNING]  
 > How the value is generated for added entities will depend on the database provider being used. Database providers may automatically setup value generation for some property types, but others may require you to manually setup how the value is generated.
 >
 > For example, when using SQL Server, values will be automatically generated for `GUID` properties (using the SQL Server sequential GUID algorithm). However, if you specify that a `DateTime` property is generated on add, then you must setup a way for the values to be generated. One way to do this, is to configure a default value of `GETDATE()`, see [Default Values](relational/default-values.md).
@@ -40,7 +37,7 @@ Value generated on add or update means that a new value is generated every time 
 
 Like `value generated on add`, if you specify a value for the property on a newly added instance of an entity, that value will be inserted rather than a value being generated. It is also possible to set an explicit value when updating. For more information, see [Explicit values for generated properties](..\saving\explicit-values-generated-properties.md).
 
-> [!WARNING]
+> [!WARNING]  
 > How the value is generated for added and updated entities will depend on the database provider being used. Database providers may automatically setup value generation for some property types, while others will require you to manually setup how the value is generated.
 >
 > For example, when using SQL Server, `byte[]` properties that are set as generated on add or update and marked as concurrency tokens, will be setup with the `rowversion` data type - so that values will be generated in the database. However, if you specify that a `DateTime` property is generated on add or update, then you must setup a way for the values to be generated. One way to do this, is to configure a default value of `GETDATE()` (see [Default Values](relational/default-values.md)) to generate values for new rows. You could then use a database trigger to generate values during updates (such as the following example trigger).
@@ -61,14 +58,14 @@ By convention, primary keys that are of an integer or GUID data type will be set
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/ValueGeneratedOnAdd.cs#Sample)]
 
-> [!WARNING]
+> [!WARNING]  
 > This just lets EF know that values are generated for added entities, it does not guarantee that EF will setup the actual mechanism to generate values. See [Value generated on add](#value-generated-on-add) section for more details.
 
 ### Value generated on add or update (Data Annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/ValueGeneratedOnAddOrUpdate.cs#Sample)]
 
-> [!WARNING]
+> [!WARNING]  
 > This just lets EF know that values are generated for added or updated entities, it does not guarantee that EF will setup the actual mechanism to generate values. See [Value generated on add or update](#value-generated-on-add-or-update) section for more details.
 
 ## Fluent API
@@ -83,12 +80,12 @@ You can use the Fluent API to change the value generation pattern for a given pr
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/ValueGeneratedOnAdd.cs#Sample)]
 
-> [!WARNING]
+> [!WARNING]  
 > `ValueGeneratedOnAdd()` just lets EF know that values are generated for added entities, it does not guarantee that EF will setup the actual mechanism to generate values.  See [Value generated on add](#value-generated-on-add) section for more details.
 
 ### Value generated on add or update (Fluent API)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/ValueGeneratedOnAddOrUpdate.cs#Sample)]
 
-> [!WARNING]
+> [!WARNING]  
 > This just lets EF know that values are generated for added or updated entities, it does not guarantee that EF will setup the actual mechanism to generate values. See [Value generated on add or update](#value-generated-on-add-or-update) section for more details.
