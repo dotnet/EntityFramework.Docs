@@ -19,7 +19,7 @@ See [Supported Platforms](../platforms/index.md) for more details of what is sup
 
 ## Modeling
 
-## Table splitting
+### Table splitting
 
 It is now possible to map two or more entity types to the same table where the primary key column(s) will be shared and each row will correspond to two or more entities.
 
@@ -33,7 +33,7 @@ modelBuilder.Entity<Product>().ToTable("Products");
 modelBuilder.Entity<ProductDetails>().ToTable("Products");
 ```
 
-## Owned types
+### Owned types
 
 An owned entity type can share the same CLR type with another owned entity type, but since it cannot be identified just by the CLR type there must be a navigation to it from another entity type. The entity containing the defining navigation is the owner. When querying the owner the owned types will be included by default.
 
@@ -249,7 +249,7 @@ WHERE ""City"" = @p0
     AND ""ContactTitle"" = @p1
 ```
 
-## EF.Functions.Like()
+### EF.Functions.Like()
 
 We have added the EF.Functions property which can be used by EF Core or providers to define methods that map to database functions or operators so that those can be invoked in LINQ queries. The first example of such a method is Like():
 
