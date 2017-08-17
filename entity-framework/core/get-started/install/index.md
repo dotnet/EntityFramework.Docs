@@ -46,7 +46,7 @@ EF Core includes a set of [additional commands for the `dotnet` CLI](../../misce
 </ItemGroup>
 ```
 
-The .NET Core CLI tools for EF Core also require on a separate package called Microsoft.EntityFrameworkCore.Design. You can simply added it to the project using:
+The .NET Core CLI tools for EF Core also require a separate package called Microsoft.EntityFrameworkCore.Design. You can simply add it to the project using:
 
 ``` console
 dotnet add package Microsoft.EntityFrameworkCore.Design
