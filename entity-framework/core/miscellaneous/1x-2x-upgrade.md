@@ -166,10 +166,10 @@ To enable `Scaffold-DbContext` or `dotnet ef dbcontext scaffold` in EF Core 2.0,
 
 ``` xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"
-    Version="2.0.0" >
+    Version="2.0.0" />
 <PackageReference Include="Microsoft.EntityFrameworkCore.Tools"
     Version="2.0.0"
-    PrivateAssets="All" >
+    PrivateAssets="All" />
 <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet"
-    Version="2.0.0" >
+    Version="2.0.0" />
 ```
