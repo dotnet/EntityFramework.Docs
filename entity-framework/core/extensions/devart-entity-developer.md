@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tools & Extensions: Devart Entity Developer | Microsoft Docs
+title: EF Core | Tools & Extensions - Devart Entity Developer | Microsoft Docs
 author: ErikEJ
 ms.author: divega
 ms.date: 02/28/2017
@@ -7,7 +7,6 @@ ms.assetid: 03DE6911-175C-4BEC-AC5F-333F4EBE352C
 ms.technology: entity-framework-core
 uid: core/extensions/devart-entity-developer
 ---
-
 # Devart Entity Developer
 
 > [!NOTE]  

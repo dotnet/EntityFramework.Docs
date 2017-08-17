@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tools & Extensions: Microsoft.EntityFrameworkCore.AutoHistory | Microsoft Docs
+title: EF Core | Tools & Extensions - Microsoft.EntityFrameworkCore.AutoHistory | Microsoft Docs
 author: ErikEJ
 ms.author: divega
 ms.date: 02/28/2017
@@ -7,7 +7,6 @@ ms.assetid: C1607621-41BD-4089-B396-31342C519AC6
 ms.technology: entity-framework-core
 uid: core/extensions/autohistory
 ---
-
 # Microsoft.EntityFrameworkCore.AutoHistory Extension
 
 > [!NOTE]  

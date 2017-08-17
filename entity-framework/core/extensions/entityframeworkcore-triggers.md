@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tools & Extensions: EntityFrameworkCore.Triggers | Microsoft Docs
+title: EF Core | Tools & Extensions - EntityFrameworkCore.Triggers | Microsoft Docs
 author: ErikEJ
 ms.author: divega
 ms.date: 01/19/2017
@@ -7,7 +7,6 @@ ms.assetid: 52966E86-5B01-4E45-BAB9-DB92DCBB63C5
 ms.technology: entity-framework-core
 uid: core/extensions/entityframeworkcore-triggers
 ---
-
 # EntityFrameworkCore.Triggers Extension
 
 > [!NOTE]  
