@@ -54,7 +54,7 @@ uid: index
                                                 </div>
                                                 <div class="cardText">
                                                     <h3>Entity Framework 6.x</h3>
-                                                    <p>EF 6.x is a tried and tested data access technology with many years of features and stabilization.</p>
+                                                    <p>EF 6 is a tried and tested data access technology with many years of features and stabilization.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -92,7 +92,7 @@ uid: index
                                                 </div>
                                                 <div class="cardText">
                                                     <h3>Port to EF Core</h3>
-                                                    <p>Guidance on porting and exiting EF 6.x application to EF Core.</p>
+                                                    <p>Guidance on porting and exiting EF 6 application to EF Core.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -242,14 +242,14 @@ uid: index
                 </ul>
             </li>
             <li>
-                <a href="#ef6x">EF 6.x</a>
+                <a href="#ef6x">EF 6</a>
                 <ul id="ef6x">
                     <li>
                         <a href="#ef6x1"></a>
                         <ul id="ef6x1" class="cardsC">
                             <li>
                                 <div class="container intro">
-                                    <p>EF 6.x is a tried and tested data access technology with many years of features and stabilization.</p>
+                                    <p>EF 6 is a tried and tested data access technology with many years of features and stabilization.</p>
                                 </div>
                             </li>
                             <li>
