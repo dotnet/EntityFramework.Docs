@@ -53,7 +53,7 @@ uid: index
                                                     </div>
                                                 </div>
                                                 <div class="cardText">
-                                                    <h3>Entity Framework 6.x</h3>
+                                                    <h3>Entity Framework 6</h3>
                                                     <p>EF 6 is a tried and tested data access technology with many years of features and stabilization.</p>
                                                 </div>
                                             </div>
@@ -264,7 +264,7 @@ uid: index
                                                 </div>
                                                 <div class="cardText">
                                                     <h3>Get Started</h3>
-                                                    <p>Learn how to access data with Entity Framework 6.x.</p>
+                                                    <p>Learn how to access data with Entity Framework 6.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -283,7 +283,7 @@ uid: index
                                                 </div>
                                                 <div class="cardText">
                                                     <h3>API Reference</h3>
-                                                    <p>Browse the Entity Framework 6.x API, organized by namespace.</p>
+                                                    <p>Browse the Entity Framework 6 API, organized by namespace.</p>
                                                 </div>
                                             </div>
                                         </div>
