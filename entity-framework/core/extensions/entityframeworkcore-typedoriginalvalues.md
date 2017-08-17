@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tools & Extensions: EntityFrameworkCore.TypedOriginalValues | Microsoft Docs
+title: EF Core | Tools & Extensions - EntityFrameworkCore.TypedOriginalValues | Microsoft Docs
 author: ErikEJ
 ms.author: divega
 ms.date: 01/19/2017
@@ -7,7 +7,6 @@ ms.assetid: 6FDA2B31-E1FA-4213-A714-81AD6789DBA0
 ms.technology: entity-framework-core
 uid: core/extensions/entityframeworkcore-typedoriginalvalues
 ---
-
 # EntityFrameworkCore.TypedOriginalValues Extension
 
 > [!NOTE]  

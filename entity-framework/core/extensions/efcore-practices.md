@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tools & Extensions: EFCore.Practices | Microsoft Docs
+title: EF Core | Tools & Extensions - EFCore.Practices | Microsoft Docs
 author: ErikEJ
 ms.author: divega
 ms.date: 01/19/2017
@@ -7,7 +7,6 @@ ms.assetid: C9B8DEC7-5FE3-4DEE-8797-9DA94D2C56F4
 ms.technology: entity-framework-core
 uid: core/extensions/efcore-practices
 ---
-
 # EFCore.Practices Extension
 
 > [!NOTE]  
