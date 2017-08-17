@@ -10,6 +10,11 @@
 ####[Porting a Code-Based Model](efcore-and-ef6/porting/port-code.md)
 
 ##[Entity Framework Core](core/index.md)
+<!-- What is new -->
+###[What is new](core/what-is-new/index.md)
+####[EF Core 1.0 (previous version)](core/what-is-new/ef-core-1.0.md)
+####[EF Core 1.1 (previous version)](core/what-is-new/ef-core-1.1.md)
+
 <!-- Getting Started -->
 ###[Getting Started](core/get-started/index.md)
 ####[Installing EF Core](core/get-started/install/index.md)
