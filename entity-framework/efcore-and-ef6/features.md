@@ -51,7 +51,7 @@ The EF Core column contains the number of the product version in which the featu
 | Loading related data: Lazy                  | Yes |     |
 | Loading related data: Explicit              | Yes | 1.1 |
 | Raw SQL queries: Model types                | Yes | 1.0 |
-| Raw SQL queries: Un-mapped types            | Yes |     |
+| Raw SQL queries: Non-model types            | Yes |     |
 | Raw SQL queries: Composing with LINQ        |     | 1.0 |
 | Explicitly compiled queries                 | Poor | 2.0 |
 | | | |
@@ -64,7 +64,7 @@ The EF Core column contains the number of the product version in which the featu
 | Batching of statements                      |     | 1.0 |
 | Stored procedure                            | Yes |     |
 | Disconnected graph low-level APIs           | Poor | 1.0 |
-| Disconnected graph End-to-end               |     | Partial |
+| Disconnected graph End-to-end               |     | 1.0 (partial) |
 | | | |
 | **Other Features** |**EF6** |**EF Core** |
 | Migrations                                  | Yes | 1.0 |
