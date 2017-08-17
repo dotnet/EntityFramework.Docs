@@ -100,4 +100,4 @@ Connects to a SQLite 3 database.
 ### In-Memory
 Is designed to easily enable testing without connecting to a real database.
 ### 3rd party providers
-Several providers are available for other database engines. See [Database Providers](../providers/index) for a complete list.
+Several providers are available for other database engines. See [Database Providers](../providers/index.md) for a complete list.
