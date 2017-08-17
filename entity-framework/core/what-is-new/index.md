@@ -305,6 +305,8 @@ EF Core 2.0 will now build a different [IModel](https://github.com/aspnet/Entity
 
 ### Consolidated Logging and Diagnostics
 
+Logging (based on ILogger) and Diagnostics (based on DiagnosticSource) mechanisms now share more code.
+
 The event IDs for messages sent to an ILogger have changed in 2.0. The event IDs are now unique across EF Core code. These messages now also follow the standard pattern for structured logging used by, for example, MVC.
 
 Logger categories have also changed. There is now a well-known set of categories accessed through [DbLoggerCategory](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/DbLoggerCategory.cs).
