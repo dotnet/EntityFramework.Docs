@@ -11,7 +11,7 @@
 
 ##[Entity Framework Core](core/index.md)
 <!-- What is new -->
-###[What is new](core/what-is-new/index.md)
+###[New features in EF Core 2.0](core/what-is-new/index.md)
 ####[EF Core 1.0 (previous version)](core/what-is-new/ef-core-1.0.md)
 ####[EF Core 1.1 (previous version)](core/what-is-new/ef-core-1.1.md)
 
