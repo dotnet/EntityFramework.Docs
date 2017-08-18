@@ -66,10 +66,10 @@
     "globalMetadata":
     {
       "breadcrumb_path": "/breadcrumb/toc.json",
-      "manager": "rowanmiller",
+      "manager": "divega",
       "ms.topic": "article",
       "audience": "developer",
-      "ms.reviewer": "rowmil",
+      "ms.reviewer": "divega",
       "ms.prod": "entity-framework",
       "ms.tgt_pltfrm": "dotnet",
       "ms.devlang": "dotnet"
