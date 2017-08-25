@@ -4,6 +4,7 @@ author: rick-anderson
 ms.author: riande
 ms.author2: tdykstra
 ms.date: 04/07/2017
+ms.topic: get-started-article
 ms.assetid: e153627f-f132-4c11-b13c-6c9a607addce
 ms.technology: entity-framework-core
 uid: core/get-started/aspnetcore/new-db
