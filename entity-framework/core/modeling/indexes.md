@@ -24,7 +24,7 @@ Indexes can not be created using data annotations.
 
 ## Fluent API
 
-You can use the Fluent API specify an index on a single property. By default, indexes are non-unique.
+You can use the Fluent API to specify an index on a single property. By default, indexes are non-unique.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Index.cs?highlight=7,8)] -->
 ``` csharp
