@@ -74,7 +74,7 @@ The EF Core column contains the number of the product version in which the featu
 | Lifecycle hooks (events, interception)      | Yes |     |
 | DbContext pooling                           |     | 2.0 |
 | | | |
-| **Database Providers** |**EF6 **|**EF Core** |
+| **Database Providers** |**EF6**|**EF Core** |
 | SQL Server                                  | Yes | 1.0 |
 | MySQL                                       | Yes | 1.0 |
 | PostgreSQL                                  | Yes | 1.0 |
