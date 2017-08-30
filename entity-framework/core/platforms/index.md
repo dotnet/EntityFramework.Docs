@@ -1,5 +1,5 @@
 ---
-title: EF Core | .NET implementations support | Microsoft Docs
+title: EF Core | Supported .NET implementations | Microsoft Docs
 author: rowanmiller
 ms.author: divega
 ms.date: 08/30/2017
