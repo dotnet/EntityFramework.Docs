@@ -1,20 +1,19 @@
 ---
-title: EF Core | Platform Support | Microsoft Docs
+title: EF Core | Supported .NET implementations | Microsoft Docs
 author: rowanmiller
 ms.author: divega
-ms.date: 03/13/2017
-ms.assetid: bfce70e5-7e14-47d3-87b2-e0b93352e955
+ms.date: 08/30/2017
 ms.technology: entity-framework-core
 uid: core/platforms/index
 ---
 
-# Platforms Supported by EF Core
+# .NET implementations supported by EF Core
 
-We want EF Core to be available anywhere you can write .NET code, and we're still working towards that goal. The following table provides guidance for each platform where we want to enable EF Core.
+We want EF Core to be available anywhere you can write .NET code, and we're still working towards that goal. The following table provides guidance for each .NET implementation where we want to enable EF Core.
 
-EF Core 2.0 targets [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) and therefore requires .NET platforms that support it.
+EF Core 2.0 targets [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) and therefore requires .NET implementations that support it.
 
-| Platform | Status | 1.x requires | 2.x requires
+| .NET implementation | Status | 1.x requires | 2.x requires
 |-|-|-|-
 | **.NET Core** ([ASP.NET Core](../get-started/aspnetcore/index.md), [Console](../get-started/netcore/index.md), etc.) | **Fully supported and recommended:** Covered by automated testing and many applications known to be using it successfully. | [.NET Core SDK 1.x](https://www.microsoft.com/net/core/) | [.NET Core SDK 2.x](https://www.microsoft.com/net/core/)
 | **.NET Framework** (WinForms, WPF, ASP.NET, [Console](../get-started/full-dotnet/index.md), etc.) | **Fully supported and recommended:**  Covered by automated testing and many applications known to be using it successfully. EF 6 also available in this platform (see [Compare EF Core & EF6](../../efcore-and-ef6/index.md) to choose the right technology). | .NET Framework 4.5.1 | .NET Framework 4.6.1
