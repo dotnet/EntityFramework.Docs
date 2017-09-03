@@ -35,7 +35,7 @@ modelBuilder.Entity<ProductDetails>().ToTable("Products");
 
 ### Owned types
 
-An owned entity helps you to map types that do not have their own identity and are used as properties in any of your entities. The OwnsOne fluent mapping alerts the DbContext to this mapping. For example, StreetAddress is a type with no identity property. It is used as a property of the Order type to specify the shipping address for a particular order. In the DbContext, you can use the Entity().OwnsOne method to specify that the ShippingAddress property is an Owned Entity of the Order type.
+An owned entity helps you to map types that do not have their own identity and are used as properties in any of your entities (such as a value object). The OwnsOne fluent mapping alerts the DbContext to this mapping. For example, StreetAddress is a type with no identity property. It is used as a property of the Order type to specify the shipping address for a particular order. In the DbContext, you can use the Entity().OwnsOne method to specify that the ShippingAddress property is an Owned Entity of the Order type.
 
 ```
 public class StreetAddress
