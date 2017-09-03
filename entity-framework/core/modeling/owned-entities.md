@@ -6,6 +6,8 @@ uid: core/modeling/owned-entities
 ---
 # Owned Entity Types
 
+This feature was added to EF Core 2.0.
+
 Owned entity type allow you to map types that do not have their own identity and are used as properties in any of your entities (such as a value object). An owned entity type shares the same CLR type with another entity type. The entity containing the defining navigation is the owner. When querying the owner the owned types will be included by default.
 
 By convention a shadow primary key will be created for the owned type and it will be mapped to the same table as the owner by using table splitting. This allows to use owned types similarly to how complex types are used in EF6. 
