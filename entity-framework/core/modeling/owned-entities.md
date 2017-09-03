@@ -1,10 +1,10 @@
 ---
-title: EF Core | What is new in EF Core 2.0 | Microsoft Docs
+title: EF Core | Owned Entity Types | Microsoft Docs
 author: julielerman
 
 uid: core/modeling/owned-entities
 ---
-# Owned types
+# Owned Entity Types
 
 An owned entity type allows you to map types that do not have their own identity and are used as properties in any of your entities (such as a value object). The OwnsOne fluent mapping alerts the DbContext to this mapping. For example, StreetAddress is a type with no identity property. It is used as a property of the Order type to specify the shipping address for a particular order. In the DbContext, you can use the Entity().OwnsOne method to specify that the ShippingAddress property is an Owned Entity of the Order type.
 
