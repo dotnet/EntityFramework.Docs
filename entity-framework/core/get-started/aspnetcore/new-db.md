@@ -45,7 +45,7 @@ Install the package for the EF Core database provider(s) you want to target. Thi
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
-We will be using some Entity Framework Tools to create a model from the database. So we will install the tools package as well:
+We will be using some Entity Framework Tools to create a database from models. So we will install the tools package as well:
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
 
@@ -57,8 +57,6 @@ We will be using some ASP.NET Core Scaffolding tools to create controllers and v
 
 Define a context and entity classes that make up the model:
 
-* Right-click on the project in **Solution Explorer** and select **Add > New Folder**.
-* Enter **Models** as the name of the folder.
 * Right-click on the **Models** folder and select **Add > Class**.
 * Enter **Model.cs** as the name and click **OK**.
 * Replace the contents of the file with the following code:
