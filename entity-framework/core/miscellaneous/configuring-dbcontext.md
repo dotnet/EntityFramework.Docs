@@ -145,7 +145,7 @@ namespace MyProject
 {
     public class BloggingContextFactory : IDesignTimeDbContextFactory<BloggingContext>
     {
-        public BloggingContext Create(string[] args)
+        public BloggingContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
             optionsBuilder.UseSqlite("Data Source=blog.db");
