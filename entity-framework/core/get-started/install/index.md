@@ -34,7 +34,7 @@ Projects created with previous versions of Visual Studio and targeting .NET Fram
   ```
 
 ## Getting the bits
-The recommended way to add EF Core runtime libraries into an application is to install a an EF Core database provider from NuGet.
+The recommended way to add EF Core runtime libraries into an application is to install an EF Core database provider from NuGet.
 
 Besides the runtime libraries, you can install tools which make it easier to perform several EF Core-related tasks in your project at design time, such as creating and applying migrations, and creating a model based on an existing database.
 
