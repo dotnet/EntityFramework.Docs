@@ -27,7 +27,7 @@ The EF Core column contains the number of the product version in which the featu
 | Alternate keys                              |     | 1.0 |
 | Many-to-many without join entity            | Yes |     |
 | Key generation: Database                    | Yes | 1.0 |
-| Key generation: Client                      |     | 1.0 |
+  | Key generation: Client                      |     | 1.0 |
 | Complex/value types                         | Yes | 2.0 |
 | Spatial data                                | Yes |     |
 | Graphical visualization of model            | Yes |     |
@@ -90,5 +90,5 @@ The EF Core column contains the number of the product version in which the featu
 | Mono & Xamarin                              |     | 1.0 (in-progress) |
 | UWP                                         |     | 1.0 (in-progress) |
 
-<sup>1</sup> A free provider for is being worked on.
-<sup>2</sup> This provider only works on .NET Framework (not .NET Core).
+<sup>1</sup> A free provider for Oracle is being worked on.  
+<sup>2</sup> The SQL CE provider only works on .NET Framework (not .NET Core).
