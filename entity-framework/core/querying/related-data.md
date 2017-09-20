@@ -27,6 +27,7 @@ You can use the `Include` method to specify related data to be included in query
 > [!TIP]  
 > Entity Framework Core will automatically fix-up navigation properties to any other entities that were previously loaded into the context instance. So even if you don't explicitly include the data for a navigation property, the property may still be populated if some or all of the related entities were previously loaded.
 
+
 You can include related data from multiple relationships in a single query.
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#MultipleIncludes)]
@@ -69,6 +70,8 @@ By default, EF Core will log a warning when include operators are ignored. See [
 You can explicitly load a navigation property via the `DbContext.Entry(...)` API.
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#Eager)]
+
+You can also explicitly load a navigation property with a seperate query that returns the related entities.  If change tracking is enables, then when loading an entity EF will set the navigation properties of the newly-loaded entitiy to refer to any entities already loaded, and set the navigation properties of the already-loaded entities to refer to the newly-loaded entity.
 
 ### Querying related entities
 
