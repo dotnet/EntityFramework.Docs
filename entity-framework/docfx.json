@@ -66,6 +66,9 @@
     "globalMetadata":
     {
       "breadcrumb_path": "/breadcrumb/toc.json",
+       "_navPath": "/foo",
+      "_navRel": "/foo",
+      "searchScope": ["EF"],
       "manager": "divega",
       "ms.topic": "article",
       "audience": "developer",
