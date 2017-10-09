@@ -85,6 +85,9 @@ Now it's time to create the EF model based on your existing database.
 ``` console
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 ```
+> [!TIP]  
+> You can specify which tables you want to generate models for by adding the `-Tables Blog,Post` argument to the command above.
+
 
 The reverse engineer process created entity classes (`Blog.cs` & `Post.cs`) and a derived context (`BloggingContext.cs`) based on the schema of the existing database.
 
