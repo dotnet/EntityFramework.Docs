@@ -71,7 +71,7 @@ You can explicitly load a navigation property via the `DbContext.Entry(...)` API
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#Eager)]
 
-You can also explicitly load a navigation property with a seperate query that returns the related entities.  If change tracking is enables, then when loading an entity EF will set the navigation properties of the newly-loaded entitiy to refer to any entities already loaded, and set the navigation properties of the already-loaded entities to refer to the newly-loaded entity.
+You can also explicitly load a navigation property by executing a seperate query that returns the related entities. If change tracking is enabled, then when loading an entity, EF Core will automatically set the navigation properties of the newly-loaded entitiy to refer to any entities already loaded, and set the navigation properties of the already-loaded entities to refer to the newly-loaded entity.
 
 ### Querying related entities
 
