@@ -135,7 +135,7 @@ A few things to note:
 
 ### Self-contained type configuration for code first
 
-In EF6 it was possible to encapsulate the code first configuration of a specific entity type by deriving from *EntityTypeConfiguraiton*. In EF Core 2.0 we are bringing this pattern back:
+In EF6 it was possible to encapsulate the code first configuration of a specific entity type by deriving from *EntityTypeConfiguration*. In EF Core 2.0 we are bringing this pattern back:
 
 ``` csharp
 class CustomerConfiguration : IEntityTypeConfiguration<Customer>
