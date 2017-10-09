@@ -12,7 +12,7 @@ uid: core/get-started/aspnetcore/new-db
 
 # Getting Started with EF Core on ASP.NET Core with a New database
 
-In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You will use migrations to create the database from your model. See [Additional Resources](#additional-resources) for more Entity Framework Core tutorials.
+In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You will use migrations to create the database from your EF Core model. See [Additional Resources](#additional-resources) for more Entity Framework Core tutorials.
 
 This tutorial requires:
 * [Visual Studio 2017 15.3](https://www.visualstudio.com/downloads/) with these workloads:
@@ -27,11 +27,11 @@ This tutorial requires:
 
 * **File > New > Project**
 * From the left menu select **Installed > Templates > Visual C# > .NET Core**.
-* Select **ASP.NET Core Web Application (.NET Core)**.
+* Select **ASP.NET Core Web Application**.
 * Enter **EFGetStarted.AspNetCore.NewDb** for the name and click **OK**.
-* In the **New ASP.NET Core Web Application** dialog enter:
-
-  * Under **ASP.NET Core Templates 2.0** select the **Web Application (Model-View-Controller)**
+* In the **New ASP.NET Core Web Application** dialog:
+  * Ensure the options **.NET Core** and **ASP.NET Core 2.0** are selected in the drop down lists
+  * Select the **Web Application (Model-View-Controller)** project template
   * Ensure that **Authentication** is set to **No Authentication**
   * Click **OK**
 
@@ -45,7 +45,7 @@ Install the package for the EF Core database provider(s) you want to target. Thi
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
-We will be using some Entity Framework Tools to create a database from models. So we will install the tools package as well:
+We will be using some Entity Framework Core Tools to create a database from your EF Core model. So we will install the tools package as well:
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
 
