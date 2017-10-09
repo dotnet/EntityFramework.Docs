@@ -104,7 +104,7 @@ PARAMETERS
         The provider to use. (E.g. Microsoft.EntityFrameworkCore.SqlServer)
 
     -OutputDir <String>
-        The directory to put files in. Paths are relaive to the project directory.
+        The directory to put files in. Paths are relative to the project directory.
 
     -Context <String>
         The name of the DbContext to generate.
