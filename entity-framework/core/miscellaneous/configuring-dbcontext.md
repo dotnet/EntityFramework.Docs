@@ -127,8 +127,6 @@ using (var context = serviceProvider.GetService<BloggingContext>())
 var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
 ```
 
-<a name=use-idesigntimedbcontextfactory></a>
-
 ## Using `IDesignTimeDbContextFactory<TContext>`
 
 As an alternative to the options above, you may also provide an implementation of `IDesignTimeDbContextFactory<TContext>`. EF tools can use this factory to create an instance of your DbContext. This may be required in order to enable specific design-time experiences such as migrations.
