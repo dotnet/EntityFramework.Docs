@@ -125,9 +125,9 @@
 ####[Upgrading from 1.0 RC1 to RC2](core/miscellaneous/rc1-rc2-upgrade.md)
 ####[Upgrading from 1.0 RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
 ####[Upgrading to EF Core 2.0](core/miscellaneous/1x-2x-upgrade.md)
-
-##[Entity Framework 6](ef6/index.md)
 ###[Documentation](http://msdn.com/data/ef)
 <!-- API Reference -->
 ###[API Reference EF Core](https://docs.microsoft.com/en-us/dotnet/api/?view=efcore-2.0)
+
+##[Entity Framework 6](ef6/index.md)
 ###[MSDN API Reference](https://msdn.microsoft.com/library/dn223258(v=vs.113).aspx)
