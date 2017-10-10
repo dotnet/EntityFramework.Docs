@@ -22,4 +22,4 @@ EF Core 2.0 targets [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/
 
 <sup>(1)</sup> This version of .NET UWP adds support for .NET Standard 2.0, but testing has revealed [a few issues](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A2.0.1+label%3Aarea-uwp) with EF Core 2.0 which we are planning to address in an upcoming patch release.
 
-For any combination that doesn’t work as expected, we encourage creating new issues in the [EF Core issue tracker](https://github.com/aspnet/entityframework/issues/new), and for Xamarin related issues, the [Xamarin issue tracker](https://bugzilla.xamarin.com/newbug).
+For any combination that doesn’t work as expected, we encourage creating new issues in the [EF Core issue tracker](https://github.com/aspnet/entityframeworkcore/issues/new), and for Xamarin related issues, the [Xamarin issue tracker](https://bugzilla.xamarin.com/newbug).
