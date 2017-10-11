@@ -1,5 +1,5 @@
 ---
-title: EF Core | Saving Data | Microsoft Docs
+title: Saving Data - EF Core
 author: rowanmiller
 ms.author: divega
 

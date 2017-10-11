@@ -1,5 +1,5 @@
 ---
-title: EF Core | IBM Data Server (DB2) Database Provider | Microsoft Docs
+title: IBM Data Server (DB2) Database Provider - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 02/15/2017

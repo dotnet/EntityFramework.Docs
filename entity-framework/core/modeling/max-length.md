@@ -1,5 +1,5 @@
 ---
-title: EF Core | Maximum Length | Microsoft Docs
+title: Maximum Length - EF Core
 author: rowanmiller
 ms.author: divega
 

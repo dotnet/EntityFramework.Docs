@@ -1,5 +1,5 @@
 ---
-title: EF Core | Inheritance | Microsoft Docs
+title: Inheritance - EF Core
 author: rowanmiller
 ms.author: divega
 

@@ -1,5 +1,5 @@
 ﻿---
-title: EF Core | Creating a Model | Microsoft Docs
+title: Creating a Model - EF Core
 author: rowanmiller
 ms.author: divega
 

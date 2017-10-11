@@ -1,5 +1,5 @@
 ---
-title: EF6 and EF Core | Using them in the Same Application | Microsoft Docs
+title: EF6 and EF Core - Using them in the Same Application 
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

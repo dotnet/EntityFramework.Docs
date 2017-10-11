@@ -1,5 +1,5 @@
 ---
-title: EF Core | InMemory Database Provider | Microsoft Docs
+title: InMemory Database Provider - EF Core
 author: rowanmiller
 ms.author: divega
 

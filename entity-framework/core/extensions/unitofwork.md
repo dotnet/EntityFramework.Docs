@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tools & Extensions - Microsoft.EntityFrameworkCore.UnitOfWork | Microsoft Docs
+title: Microsoft.EntityFrameworkCore.UnitOfWork - Tools & Extensions - EF Core
 author: ErikEJ
 ms.author: divega
 ms.date: 02/28/2017

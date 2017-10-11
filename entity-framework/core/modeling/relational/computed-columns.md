@@ -1,5 +1,5 @@
 ---
-title: EF Core | Computed Columns | Microsoft Docs
+title: Computed Columns - EF Core
 author: rowanmiller
 ms.author: divega
 

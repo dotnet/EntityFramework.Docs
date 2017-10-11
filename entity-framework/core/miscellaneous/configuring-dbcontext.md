@@ -1,5 +1,5 @@
 ---
-title: EF Core | Configuring a DbContext | Microsoft Docs
+title: Configuring a DbContext - EF Core
 author: rowanmiller
 ms.author: divega
 

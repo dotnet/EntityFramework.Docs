@@ -1,5 +1,5 @@
 ---
-title: EF Core | Basic Queries | Microsoft Docs
+title: Basic Queries - EF Core
 author: rowanmiller
 ms.author: divega
 

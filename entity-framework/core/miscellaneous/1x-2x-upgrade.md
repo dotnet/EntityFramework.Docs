@@ -1,5 +1,5 @@
 ---
-title: EF Core | Upgrading from previous versions to EF Core 2 | Microsoft Docs
+title: Upgrading from previous versions to EF Core 2 - EF Core
 author: divega
 ms.author: divega
 

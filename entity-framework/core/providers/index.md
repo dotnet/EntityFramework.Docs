@@ -1,5 +1,5 @@
 ﻿---
-title: EF Core | Database Providers | Microsoft Docs
+title: Database Providers - EF Core
 author: rowanmiller
 ms.author: divega
 

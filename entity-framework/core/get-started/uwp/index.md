@@ -1,5 +1,5 @@
 ---
-title: EF Core | Getting Started on UWP | Microsoft Docs
+title: Getting Started on UWP - EF Core
 author: rowanmiller
 ms.author: divega
 

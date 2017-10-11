@@ -1,5 +1,5 @@
 ---
-title: EF Core | Writing a Database Provider | Microsoft Docs
+title: Writing a Database Provider - EF Core
 author: anmiller
 ms.author: divega
 ms.date: 10/27/2016

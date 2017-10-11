@@ -1,5 +1,5 @@
 ---
-title: EF Core | Required/optional properties | Microsoft Docs
+title: Required/optional properties - EF Core
 author: rowanmiller
 ms.author: divega
 

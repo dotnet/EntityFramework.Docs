@@ -1,5 +1,5 @@
 ---
-title: EF Core | Loading Related Data | Microsoft Docs
+title: Loading Related Data - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

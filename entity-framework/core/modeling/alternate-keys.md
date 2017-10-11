@@ -1,5 +1,5 @@
 ---
-title: EF Core | Alternate Keys | Microsoft Docs
+title: Alternate Keys - EF Core
 author: rowanmiller
 ms.author: divega
 

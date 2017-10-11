@@ -1,5 +1,5 @@
 ---
-title: EF Core | Generated Values | Microsoft Docs
+title: Generated Values - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

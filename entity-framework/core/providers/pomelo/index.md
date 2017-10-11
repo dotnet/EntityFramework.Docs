@@ -1,5 +1,5 @@
 ---
-title: EF Core | Pomelo MySQL Database Provider | Microsoft Docs
+title: Pomelo MySQL Database Provider - EF Core
 author: rowanmiller
 ms.author: divega
 

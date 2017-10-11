@@ -1,5 +1,5 @@
 ---
-title: EF Core | Oracle Database Provider | Microsoft Docs
+title: Oracle Database Provider - EF Core
 author: rowanmiller
 ms.author: divega
 

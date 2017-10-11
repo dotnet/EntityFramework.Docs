@@ -1,5 +1,5 @@
 ---
-title: EF Core | 🔧 Disconnected Entities | Microsoft Docs
+title: 🔧 Disconnected Entities - EF Core
 author: rowanmiller
 ms.author: divega
 

@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tools & Extensions - Devart Entity Developer | Microsoft Docs
+title: Devart Entity Developer - Tools & Extensions - EF Core
 author: ErikEJ
 ms.author: divega
 ms.date: 02/28/2017

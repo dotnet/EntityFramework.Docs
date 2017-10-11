@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tracking vs. No-Tracking Queries | Microsoft Docs
+title: Tracking vs. No-Tracking Queries - EF Core
 author: rowanmiller
 ms.author: divega
 
