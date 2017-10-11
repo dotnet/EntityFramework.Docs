@@ -1,5 +1,5 @@
 ---
-title: Compare EF Core & EF6 | Microsoft Docs
+title: Compare EF Core & EF6 
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

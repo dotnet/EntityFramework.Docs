@@ -1,5 +1,5 @@
 ---
-title: EF Core | Foreign Key Constraints | Microsoft Docs
+title: Foreign Key Constraints - EF Core
 author: rowanmiller
 ms.author: divega
 

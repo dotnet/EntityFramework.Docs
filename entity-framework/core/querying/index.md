@@ -1,5 +1,5 @@
 ---
-title: EF Core | Querying Data | Microsoft Docs
+title: Querying Data - EF Core
 author: rowanmiller
 ms.author: divega
 

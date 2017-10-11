@@ -1,5 +1,5 @@
 ---
-title: EF Core | SQLite Database Provider | Limitations | Microsoft Docs
+title: SQLite Database Provider - Limitations - EF Core
 author: rowanmiller
 ms.author: divega
 

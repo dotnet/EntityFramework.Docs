@@ -1,5 +1,5 @@
 ---
-title: Porting from EF6 to EF Core | Porting a Code-Based Model | Microsoft Docs
+title: Porting from EF6 to EF Core - Porting a Code-Based Model 
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

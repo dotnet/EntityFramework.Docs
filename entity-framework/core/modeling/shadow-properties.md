@@ -1,5 +1,5 @@
 ---
-title: EF Core | Shadow Properties | Microsoft Docs
+title: Shadow Properties - EF Core
 author: rowanmiller
 ms.author: divega
 

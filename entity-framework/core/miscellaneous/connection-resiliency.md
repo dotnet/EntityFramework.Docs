@@ -1,5 +1,5 @@
 ---
-title: EF Core | Connection Resiliency | Microsoft Docs
+title: Connection Resiliency - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 11/15/2016

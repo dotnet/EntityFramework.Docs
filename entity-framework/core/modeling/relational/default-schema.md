@@ -1,5 +1,5 @@
 ---
-title: EF Core | Default Schema | Microsoft Docs
+title: Default Schema - EF Core
 author: rowanmiller
 ms.author: divega
 

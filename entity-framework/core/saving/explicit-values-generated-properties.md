@@ -1,5 +1,5 @@
 ---
-title: EF Core | Setting Explicit Values for Generated Properties | Microsoft Docs
+title: Setting Explicit Values for Generated Properties - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

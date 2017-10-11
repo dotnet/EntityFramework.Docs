@@ -1,5 +1,5 @@
 ---
-title: EF Core | Relationships | Microsoft Docs
+title: Relationships - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

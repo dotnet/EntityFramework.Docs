@@ -1,5 +1,5 @@
 ---
-title: EF Core | Inheritance (Relational Database) | Microsoft Docs
+title: Inheritance (Relational Database) - EF Core
 author: rowanmiller
 ms.author: divega
 

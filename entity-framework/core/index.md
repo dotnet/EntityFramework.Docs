@@ -1,5 +1,5 @@
 ---
-title: EF Core | Quick Overview | Microsoft Docs
+title: Quick Overview - EF Core
 author: rowanmiller
 ms.author: divega
 

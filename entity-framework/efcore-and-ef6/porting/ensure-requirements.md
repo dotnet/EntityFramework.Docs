@@ -1,5 +1,5 @@
 ---
-title: Porting from EF6 to EF Core | Validate Requirements | Microsoft Docs
+title: Porting from EF6 to EF Core - Validate Requirements 
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

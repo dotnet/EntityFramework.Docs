@@ -1,5 +1,5 @@
 ---
-title: Porting from EF6 to EF Core | Microsoft Docs
+title: Porting from EF6 to EF Core 
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

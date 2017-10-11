@@ -1,5 +1,5 @@
 ---
-title: EF Core | .NET Core CLI | Microsoft Docs
+title: .NET Core CLI - EF Core
 author: rowanmiller
 ms.author: divega
 

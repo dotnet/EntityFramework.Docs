@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tools & Extensions - EFSecondLevelCache.Core | Microsoft Docs
+title: EFSecondLevelCache.Core - Tools & Extensions - EF Core
 author: ErikEJ
 ms.author: divega
 ms.date: 01/19/2017

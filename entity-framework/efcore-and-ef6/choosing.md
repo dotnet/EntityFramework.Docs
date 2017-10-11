@@ -1,5 +1,5 @@
 ---
-title: EF Core and EF6 | Which One Is Right for You | Microsoft Docs
+title: EF Core and EF6 - Which One Is Right for You
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

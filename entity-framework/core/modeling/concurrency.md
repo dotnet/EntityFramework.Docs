@@ -1,5 +1,5 @@
 ---
-title: EF Core | Concurrency Tokens | Microsoft Docs
+title: Concurrency Tokens - EF Core
 author: rowanmiller
 ms.author: divega
 

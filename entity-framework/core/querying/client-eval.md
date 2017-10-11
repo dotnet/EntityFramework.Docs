@@ -1,5 +1,5 @@
 ---
-title: EF Core | Client vs. Server Evaluation | Microsoft Docs
+title: Client vs. Server Evaluation - EF Core
 author: rowanmiller
 ms.author: divega
 

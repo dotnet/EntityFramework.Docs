@@ -1,5 +1,5 @@
 ---
-title: EF Core | Primary Keys | Microsoft Docs
+title: Primary Keys - EF Core
 author: rowanmiller
 ms.author: divega
 

@@ -1,5 +1,5 @@
 ---
-title: EF Core | Testing with SQLite | Microsoft Docs
+title: Testing with SQLite - EF Core
 author: rowanmiller
 ms.author: divega
 

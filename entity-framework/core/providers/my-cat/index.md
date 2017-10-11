@@ -1,5 +1,5 @@
 ---
-title: EF Core | Pomelo MyCat Database Provider | Microsoft Docs
+title: Pomelo MyCat Database Provider - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 02/27/2017

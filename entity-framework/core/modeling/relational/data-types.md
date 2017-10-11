@@ -1,5 +1,5 @@
 ---
-title: EF Core | Data Types | Microsoft Docs
+title: Data Types - EF Core
 author: rowanmiller
 ms.author: divega
 

@@ -1,5 +1,5 @@
 ﻿---
-title: EF Core | Package Manager Console (Visual Studio) | Microsoft Docs
+title: Package Manager Console (Visual Studio) - EF Core
 author: rowanmiller
 ms.author: divega
 

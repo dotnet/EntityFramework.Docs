@@ -1,5 +1,5 @@
 ---
-title: EF Core | Table Mapping | Microsoft Docs
+title: Table Mapping - EF Core
 author: rowanmiller
 ms.author: divega
 

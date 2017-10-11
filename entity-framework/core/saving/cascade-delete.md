@@ -1,5 +1,5 @@
 ---
-title: EF Core | Cascade Delete | Microsoft Docs
+title: Cascade Delete - EF Core
 author: rowanmiller
 ms.author: divega
 

@@ -1,5 +1,5 @@
 ---
-title: EF Core | Getting Started on ASP.NET Core - New database | Microsoft Docs
+title: Getting Started on ASP.NET Core - New database - EF Core
 author: rick-anderson
 ms.author: riande
 ms.author2: tdykstra

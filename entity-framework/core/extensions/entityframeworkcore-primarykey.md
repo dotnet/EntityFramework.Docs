@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tools & Extensions - EntityFrameworkCore.PrimaryKey | Microsoft Docs
+title: EntityFrameworkCore.PrimaryKey - Tools & Extensions - EF Core
 author: ErikEJ
 ms.author: divega
 ms.date: 01/19/2017

@@ -1,5 +1,5 @@
 ---
-title: EF Core | What is new in EF Core 1.1 | Microsoft Docs
+title: What is new in EF Core 1.1 - EF Core
 author: divega
 ms.author: divega
 

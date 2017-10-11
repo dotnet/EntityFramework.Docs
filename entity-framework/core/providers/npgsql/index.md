@@ -1,5 +1,5 @@
 ---
-title: EF Core | Npgsql Database Provider for PostgreSQL | Microsoft Docs
+title: Npgsql Database Provider for PostgreSQL - EF Core
 author: rowanmiller
 ms.author: divega
 
