@@ -1,5 +1,5 @@
 ---
-title: EF Core | Test components using Entity Framework | Microsoft Docs
+title: Test components using Entity Framework - EF Core
 author: rowanmiller
 ms.author: divega
 

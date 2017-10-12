@@ -1,5 +1,5 @@
 ---
-title: Entity Framework 6 | Microsoft Docs
+title: Entity Framework 6 
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

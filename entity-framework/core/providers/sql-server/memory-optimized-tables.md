@@ -1,5 +1,5 @@
 ---
-title: EF Core | Microsoft SQL Server Database Provider | Memory-Optimized Tables | Microsoft Docs
+title: Microsoft SQL Server Database Provider - Memory-Optimized Tables - EF Core
 author: rowanmiller
 ms.author: divega
 

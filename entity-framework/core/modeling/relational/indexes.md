@@ -1,5 +1,5 @@
 ---
-title: EF Core | Indexes | Microsoft Docs
+title: Indexes - EF Core
 author: rowanmiller
 ms.author: divega
 

@@ -1,5 +1,5 @@
 ---
-title: EF Core | Devart Database Providers | Microsoft Docs
+title: Devart Database Providers - EF Core
 author: rowanmiller
 ms.author: divega
 

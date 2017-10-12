@@ -1,5 +1,5 @@
 ---
-title: EF Core | Sequences | Microsoft Docs
+title: Sequences - EF Core
 author: rowanmiller
 ms.author: divega
 

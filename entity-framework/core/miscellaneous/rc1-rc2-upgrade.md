@@ -1,5 +1,5 @@
 ---
-title: EF Core | Upgrading from EF Core 1.0 RC1 to RC2 | Microsoft Docs
+title: Upgrading from EF Core 1.0 RC1 to RC2 - EF Core
 author: rowanmiller
 ms.author: divega
 

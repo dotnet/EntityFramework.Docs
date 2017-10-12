@@ -1,5 +1,5 @@
 ---
-title: EF Core | Transactions | Microsoft Docs
+title: Transactions - EF Core
 author: rowanmiller
 ms.author: divega
 

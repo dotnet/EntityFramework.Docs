@@ -1,5 +1,5 @@
 ---
-title: EF Core | MySQL Database Provider | Microsoft Docs
+title: MySQL Database Provider - EF Core
 author: rowanmiller
 ms.author: divega
 

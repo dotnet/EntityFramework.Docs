@@ -1,5 +1,5 @@
 ---
-title: EF Core | Handling Concurrency | Microsoft Docs
+title: Handling Concurrency - EF Core
 author: rowanmiller
 ms.author: divega
 

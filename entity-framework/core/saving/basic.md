@@ -1,5 +1,5 @@
 ---
-title: EF Core | Basic Save | Microsoft Docs
+title: Basic Save - EF Core
 author: rowanmiller
 ms.author: divega
 

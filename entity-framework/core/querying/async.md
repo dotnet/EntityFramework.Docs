@@ -1,5 +1,5 @@
 ---
-title: EF Core | Asynchronous Queries | Microsoft Docs
+title: Asynchronous Queries - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 01/24/2017

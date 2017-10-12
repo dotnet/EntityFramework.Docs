@@ -1,5 +1,5 @@
 ---
-title: EF Core | Testing with InMemory | Microsoft Docs
+title: Testing with InMemory - EF Core
 author: rowanmiller
 ms.author: divega
 

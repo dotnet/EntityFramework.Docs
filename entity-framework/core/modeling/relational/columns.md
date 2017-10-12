@@ -1,5 +1,5 @@
 ---
-title: EF Core | Column Mapping | Microsoft Docs
+title: Column Mapping - EF Core
 author: rowanmiller
 ms.author: divega
 

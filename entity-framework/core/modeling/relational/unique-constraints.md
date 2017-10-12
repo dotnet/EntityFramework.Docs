@@ -1,5 +1,5 @@
 ---
-title: EF Core | Alternate Keys (Unique Constraints) | Microsoft Docs
+title: Alternate Keys (Unique Constraints) - EF Core
 author: rowanmiller
 ms.author: divega
 

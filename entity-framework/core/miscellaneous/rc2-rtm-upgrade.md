@@ -1,5 +1,5 @@
 ---
-title: EF Core | Upgrading from EF Core 1.0 RC2 to RTM | Microsoft Docs
+title: Upgrading from EF Core 1.0 RC2 to RTM - EF Core
 author: rowanmiller
 ms.author: divega
 

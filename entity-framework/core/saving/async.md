@@ -1,5 +1,5 @@
 ---
-title: EF Core | Asynchronous Saving | Microsoft Docs
+title: Asynchronous Saving - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 01/24/2017

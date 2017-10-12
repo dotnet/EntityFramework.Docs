@@ -1,5 +1,5 @@
 ---
-title: EF Core | Raw SQL Queries | Microsoft Docs
+title: Raw SQL Queries - EF Core
 author: rowanmiller
 ms.author: divega
 

@@ -1,5 +1,5 @@
 ---
-title: EF Core | Relational Database Modeling | Microsoft Docs
+title: Relational Database Modeling - EF Core
 author: rowanmiller
 ms.author: divega
 

@@ -1,5 +1,5 @@
 ---
-title: EF Core | Microsoft SQL Server Compact Edition Database Provider | Microsoft Docs
+title: Microsoft SQL Server Compact Edition Database Provider - EF Core
 author: rowanmiller
 ms.author: divega
 

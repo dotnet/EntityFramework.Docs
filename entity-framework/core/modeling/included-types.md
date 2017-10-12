@@ -1,5 +1,5 @@
 ---
-title: EF Core | Including & Excluding Types | Microsoft Docs
+title: Including & Excluding Types - EF Core
 author: rowanmiller
 ms.author: divega
 

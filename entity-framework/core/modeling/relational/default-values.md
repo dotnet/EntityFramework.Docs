@@ -1,5 +1,5 @@
 ---
-title: EF Core | Default Values | Microsoft Docs
+title: Default Values - EF Core
 author: rowanmiller
 ms.author: divega
 

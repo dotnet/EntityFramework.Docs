@@ -1,5 +1,5 @@
 ---
-title: EF Core | Connection Strings | Microsoft Docs
+title: Connection Strings - EF Core
 author: rowanmiller
 ms.author: divega
 

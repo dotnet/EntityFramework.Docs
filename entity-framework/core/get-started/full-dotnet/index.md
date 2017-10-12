@@ -1,5 +1,5 @@
 ---
-title: EF Core | Getting Started on .NET Framework | Microsoft Docs
+title: Getting Started on .NET Framework - EF Core
 author: rowanmiller
 ms.author: divega
 

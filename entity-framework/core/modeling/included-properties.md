@@ -1,5 +1,5 @@
 ---
-title: EF Core | Including & Excluding Properties | Microsoft Docs
+title: Including & Excluding Properties - EF Core
 author: rowanmiller
 ms.author: divega
 

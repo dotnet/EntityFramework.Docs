@@ -1,5 +1,5 @@
 ---
-title: EF Core | Saving Related Data | Microsoft Docs
+title: Saving Related Data - EF Core
 author: rowanmiller
 ms.author: divega
 

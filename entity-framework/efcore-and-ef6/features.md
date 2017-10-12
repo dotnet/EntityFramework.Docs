@@ -1,5 +1,5 @@
 ---
-title: EF Core & EF6 | Feature by Feature Comparison | Microsoft Docs
+title: EF Core & EF6 Feature by Feature Comparison 
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016

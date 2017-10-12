@@ -1,5 +1,5 @@
 ---
-title: EF Core | SQLite Database Provider | Microsoft Docs
+title: SQLite Database Provider - EF Core
 author: rowanmiller
 ms.author: divega
 

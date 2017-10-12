@@ -1,5 +1,5 @@
 ---
-title: EF Core | Logging | Microsoft Docs
+title: Logging - EF Core
 author: rowanmiller
 ms.author: divega
 

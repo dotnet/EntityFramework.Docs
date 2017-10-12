@@ -1,5 +1,5 @@
 ---
-title: EF Core | Tools & Extensions - LinqKit.Microsoft.EntityFrameworkCore | Microsoft Docs
+title: LinqKit.Microsoft.EntityFrameworkCore - Tools & Extensions - EF Core
 author: ErikEJ
 ms.author: divega
 ms.date: 02/28/2017

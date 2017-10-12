@@ -1,5 +1,5 @@
 ---
-title: EF Core | Getting Started | Microsoft Docs
+title: Getting Started - EF Core
 author: rowanmiller
 ms.author: divega
 
