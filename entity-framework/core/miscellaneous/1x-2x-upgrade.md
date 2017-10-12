@@ -30,7 +30,11 @@ Updating an existing application to EF Core 2.0 may require:
 1. See in particular the [new pattern for initializing the application's service provider](#new-way-of-getting-application-services) described below.
 
 > [!TIP]  
+<<<<<<< HEAD
 > The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement *IDesignTimeDbContextFactory\<TContext>*](configuring-dbcontext.md#using-idesigntimedbcontextfactorytcontext).
+=======
+> The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement  *IDesignTimeDbContextFactory<TContext>*](configuring-dbcontext.md#using-idesigntimedbcontextfactorytcontext).
+>>>>>>> c27db305299e2eefc3637907bc74d10a5a342c59
 
 2. Applications targeting ASP.NET Core 2.0 can use EF Core 2.0 without additional dependencies besides third party database providers. However, applications targeting previous versions of ASP.NET Core need to upgrade to ASP.NET Core 2.0 in order to use EF Core 2.0. For more details on upgrading ASP.NET Core applications to 2.0 see [the ASP.NET Core documentation on the subject](https://docs.microsoft.com/en-us/aspnet/core/migration/1x-to-2x/).
 
