@@ -358,8 +358,6 @@ Design-time tools attempt to automatically find how your application creates ins
 
 One of the solutions is to add an implementation of `IDesignTimeDbContextFactory<TContext>` to the current project. See [Using IDesignTimeDbContextFactory<TContext>](../configuring-dbcontext.md) for an example of how to create this factory.
 
-<a name=dotnet-cli-issues></a>
-
 ## .NET Standard Limitation
 
 .NET Core CLI does not fully support projects targeting .NET Standard class libraries. Despite being able to install EF tools, executing commands will show this warning message and may ultimately terminate in error.
