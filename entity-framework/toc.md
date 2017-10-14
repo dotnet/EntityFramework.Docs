@@ -1,6 +1,7 @@
 #[Entity Framework](index.md)
 
 ##[Compare EF Core & EF6](efcore-and-ef6/index.md)
+
 ###[Which One Is Right for You](efcore-and-ef6/choosing.md)
 ###[Feature Comparison](efcore-and-ef6/features.md)
 ###[EF6 and EF Core in the Same Application](efcore-and-ef6/side-by-side.md)
