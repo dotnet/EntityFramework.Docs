@@ -12,10 +12,9 @@ uid: core/what-is-new/index
 ---
 # New features in EF Core 2.0
 
-## Platforms
-### .NET Standard 2.0
-Includes .NET Core 2.0 and .NET Framework 4.6.1 support.
-See [Supported Platforms](../platforms/index.md) for more details of what is supported.
+## .NET Standard 2.0
+EF Core now targets .NET Standard 2.0, which means it can work with .NET Core 2.0, .NET Framework 4.6.1, and other libraries that implement .NET Standard 2.0.
+See [Supported .NET Implementations](../platforms/index.md) for more details on what is supported.
 
 ## Modeling
 
