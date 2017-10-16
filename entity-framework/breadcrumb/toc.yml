@@ -31,7 +31,7 @@
       - name: Database providers
         tocHref: /ef/core/providers/
         topicHref: /ef/core/providers/index
-      - name: Command line reference
+      - name: Command-line reference
         tocHref: /ef/core/miscellaneous/cli/
         topicHref: /ef/core/miscellaneous/cli/index
       - name: Tools & extensions
