@@ -6,9 +6,40 @@
     tocHref: /ef/
     topicHref: /ef/index
     items:
+    - name: Compare EF Core & EF6
+      tocHref: /ef/efcore-and-ef6/
+      topicHref: /ef/efcore-and-ef6/index
     - name: Entity Framework Core
       tocHref: /ef/core/
       topicHref: /ef/core/index
+      items: 
+      - name: What's new
+        tocHref: /ef/core/what-is-new/
+        topicHref: /ef/core/what-is-new/index
+      - name: Getting started
+        tocHref: /ef/core/get-started/
+        topicHref: /ef/core/get-started/index
+      - name: Creating a model
+        tocHref: /ef/core/modeling/
+        topicHref: /ef/core/modeling/index
+      - name: Querying data
+        tocHref: /ef/core/querying/
+        topicHref: /ef/core/querying/index
+      - name: Saving data
+        tocHref: /ef/core/saving/
+        topicHref: /ef/core/saving/index
+      - name: Database providers
+        tocHref: /ef/core/providers/
+        topicHref: /ef/core/providers/index
+      - name: Command-line reference
+        tocHref: /ef/core/miscellaneous/cli/
+        topicHref: /ef/core/miscellaneous/cli/index
+      - name: Tools & extensions
+        tocHref: /ef/core/extensions/
+        topicHref: /ef/core/extensions/index
+      - name: Miscellaneous
+        tocHref: /ef/core/miscellaneous/
+        topicHref: /ef/core/miscellaneous/index
     - name: Entity Framework 6
       tocHref: /ef/ef6/
       topicHref: /ef/ef6/index
