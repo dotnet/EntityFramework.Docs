@@ -9,6 +9,13 @@ uid: efcore-and-ef6/side-by-side
 ---
 # Using EF Core and EF6 in the Same Application
 
-It is possible to use EF Core and EF6 in the same application. EF Core and EF6 have the same type names that differ only by namespace, so this may complicate code that attempts to use both EF Core and EF6 in the same code file.
+It is possible to use EF Core and EF6 in the same .NET Framework application or library by installing both NuGet packages. 
 
-If you are porting an existing application that has multiple EF models, then you can selectively port some of them to EF Core, and continue using EF6 for the others.
+Some types have the same names in EF Core and EF6 and differ only by namespace, which may complicate using both EF Core and EF6 in the same code file. The ambiguity can be easily removed using namespace alias directives, e.g.:
+
+``` csharp
+using Microsoft.EntityFrameworkCore;
+using EF6 = System.Data.Entity; // e.g. EF6.DbContext
+```
+
+If you are porting an existing application that has multiple EF models, you can choose to selectively port some of them to EF Core, and continue using EF6 for the others.

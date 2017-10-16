@@ -15,7 +15,7 @@ The following information will help you choose between Entity Framework Core and
 
 Because EF Core is a new product, and still lacks some critical O/RM features, EF6 will still be the most suitable choice for many applications.
 
-**These are the types of applications we would recommend using EF Core for.**
+**These are the types of applications we would recommend using EF Core for:**
 
 * New applications that do not require features that are not yet implemented in EF Core. Review [Feature Comparison](features.md) to see if EF Core may be a suitable choice for your application.
 

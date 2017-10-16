@@ -28,7 +28,7 @@ The EF Core column contains the number of the product version in which the featu
 | Many-to-many without join entity            | Yes |     |
 | Key generation: Database                    | Yes | 1.0 |
 | Key generation: Client                      |     | 1.0 |
-| Complex/value types                         | Yes | 2.0 |
+| Complex/owned types                         | Yes | 2.0 |
 | Spatial data                                | Yes |     |
 | Graphical visualization of model            | Yes |     |
 | Graphical model editor                      | Yes |     |
@@ -45,7 +45,7 @@ The EF Core column contains the number of the product version in which the featu
 | | | |
 | **Querying Data** |**EF6** |**EF Core** |
 | LINQ queries                                | Yes | 1.0 (in-progress for complex queries) |
-| “Pretty” SQL generation                     | Poor | 1.0 |
+| Readable generated SQL                      | Poor | 1.0 |
 | Mixed client/server evaluation              |     | 1.0 |
 | Loading related data: Eager                 | Yes | 1.0 |
 | Loading related data: Lazy                  | Yes |     |
