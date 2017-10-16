@@ -6,6 +6,9 @@
     tocHref: /ef/
     topicHref: /ef/index
     items:
+    - name: Compare EF Core & EF6
+      tocHref: /ef/efcore-and-ef6/
+      topicHref: /ef/efcore-and-ef6/index
     - name: Entity Framework Core
       tocHref: /ef/core/
       topicHref: /ef/core/index
