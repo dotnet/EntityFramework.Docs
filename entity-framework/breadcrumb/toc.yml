@@ -32,8 +32,8 @@
         tocHref: /ef/core/providers/
         topicHref: /ef/core/providers/index
       - name: Command line reference
-        tocHref: /ef/core/cli/
-        topicHref: /ef/core/cli/index
+        tocHref: /ef/core/miscellaneous/cli/
+        topicHref: /ef/core/miscellaneous/cli/index
       - name: Tools & extensions
         tocHref: /ef/core/extensions/
         topicHref: /ef/core/extensions/index
