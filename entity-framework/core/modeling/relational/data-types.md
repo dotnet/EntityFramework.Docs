@@ -25,20 +25,14 @@ For example, SQL Server uses `datetime2(7)` for `DateTime` properties, and `nvar
 
 ## Data Annotations
 
-You can use Data Annotations to specify an exact data type for the column.
+You can use Data Annotations to specify an exact data type for a column.
 
-[!code-csharp[Main](../../../../samples/core/Modeling/DataAnnotations/Samples/Relational/DataType.cs?name=Entities&highlight=4)]
-``` csharp
-public class Blog
-{
-    public int BlogId { get; set; }
-    [Column(TypeName = "varchar(200)")]
-    public string Url { get; set; }
-}
-```
+For example the following code configures `Url` as a non-unicode string with maximum length of `200` and `Rating` as decimal with precision of `5` and scale of `2`.
+
+[!code-csharp[Main](../../../../samples/core/Modeling/DataAnnotations/Samples/Relational/DataType.cs?name=Entities&highlight=4,6)]
 
 ## Fluent API
 
-You can use the Fluent API to specify an exact data type for the column.
+You can also use the Fluent API to specify the same data types for the columns.
 
-[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/DataType.cs?name=Model&highlight=7,8,9)]
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/DataType.cs?name=Model&highlight=9-10)]
