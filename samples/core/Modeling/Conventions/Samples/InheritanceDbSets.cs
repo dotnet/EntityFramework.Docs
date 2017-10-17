@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Conventions.Samples.InheritanceDbSets
 {
+
+    #region Model
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -18,4 +20,5 @@ namespace EFModeling.Conventions.Samples.InheritanceDbSets
     {
         public string RssUrl { get; set; }
     }
+    #endregion
 }
