@@ -1,16 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Conventions.Samples.InheritanceModelBuilder
 {
+    #region Context
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<RssBlog>();
+            modelBuilder.Entity<RssBlog>().HasBaseType<Blog>();
         }
     }
+    #endregion
 
     public class Blog
     {
