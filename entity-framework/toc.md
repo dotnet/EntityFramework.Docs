@@ -1,4 +1,4 @@
-# [Entity Framework](index.md)\
+# [Entity Framework](index.md)
 
 ## [Compare EF Core & EF6](efcore-and-ef6/index.md)
 
