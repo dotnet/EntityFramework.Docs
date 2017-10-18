@@ -31,7 +31,7 @@ The following items are required to complete this walkthrough:
 
 * [Visual Studio 2017](https://www.visualstudio.com/downloads/)
 
-* The latest version of [Windows 10 Developer Tools](https://dev.windows.com/en-us/downloads)
+* The latest version of [Windows 10 Developer Tools](https://dev.windows.com/downloads)
 
 ## Create a new project
 

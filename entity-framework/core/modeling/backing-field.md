@@ -42,7 +42,7 @@ You can use the Fluent API to configure a backing field for a property.
 
 ### Controlling when the field is used
 
-You can configure when EF uses the field or property. See the [PropertyAccessMode enum](https://docs.microsoft.com/en-us/ef/core/api/microsoft.entityframeworkcore.metadata.propertyaccessmode) for the supported options.
+You can configure when EF uses the field or property. See the [PropertyAccessMode enum](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) for the supported options.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/BackingFieldAccessMode.cs#Sample)]
 
