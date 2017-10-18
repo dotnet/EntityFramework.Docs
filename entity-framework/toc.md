@@ -95,8 +95,6 @@
 ####[Oracle (not yet available)](core/providers/oracle/index.md)
 ####[MyCat](core/providers/my-cat/index.md)
 ####[Writing a Database Provider](core/providers/writing-a-provider.md)
-<!-- API Reference -->
-###[API Reference](https://docs.microsoft.com/ef/core/api)
 <!-- Command line Reference -->
 ###[Command Line Reference](core/miscellaneous/cli/index.md)
 ####[Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
@@ -128,7 +126,9 @@
 ####[Upgrading from 1.0 RC1 to RC2](core/miscellaneous/rc1-rc2-upgrade.md)
 ####[Upgrading from 1.0 RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
 ####[Upgrading to EF Core 2.0](core/miscellaneous/1x-2x-upgrade.md)
+###[Documentation](http://msdn.com/data/ef)
+<!-- API Reference -->
+##[API Reference](https://docs.microsoft.com/en-us/dotnet/api/?view=efcore-2.0)
 
 ##[Entity Framework 6](ef6/index.md)
-###[Documentation](http://msdn.com/data/ef)
-###[API Reference](https://msdn.microsoft.com/library/dn223258(v=vs.113).aspx)
+###[MSDN API Reference](https://msdn.microsoft.com/library/dn223258(v=vs.113).aspx)
