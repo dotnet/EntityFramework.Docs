@@ -3,11 +3,8 @@
 ## [Compare EF Core & EF6](efcore-and-ef6/index.md)
 
 ### [Which One Is Right for You](efcore-and-ef6/choosing.md)
-
 ### [Feature Comparison](efcore-and-ef6/features.md)
-
 ### [EF6 and EF Core in the Same Application](efcore-and-ef6/side-by-side.md)
-
 ### [Porting from EF6 to EF Core](efcore-and-ef6/porting/index.md)
 #### [Validate Requirements](efcore-and-ef6/porting/ensure-requirements.md)
 #### [Porting an EDMX-Based Model](efcore-and-ef6/porting/port-edmx.md)
@@ -99,7 +96,7 @@
 #### [MyCat](core/providers/my-cat/index.md)
 #### [Writing a Database Provider](core/providers/writing-a-provider.md)
 
-### [Command Line Reference](core/miscellaneous/cli/index.md)
+### [Command-Line Reference](core/miscellaneous/cli/index.md)
 #### [Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
 #### [.NET Core CLI](core/miscellaneous/cli/dotnet.md)
 
