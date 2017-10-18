@@ -5,7 +5,6 @@ namespace EFModeling.Samples.DynamicModel
 {
 
     #region Class
-
     public class DynamicContext : DbContext
     {
         public bool? IgnoreIntProperty { get; set; }
@@ -32,6 +31,5 @@ namespace EFModeling.Samples.DynamicModel
             }
         }
     }
-
     #endregion
 }

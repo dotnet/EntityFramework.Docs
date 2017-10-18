@@ -5,7 +5,6 @@ namespace EFModeling.Samples.DynamicModel
 {
 
     #region Class
-
     public class DynamicModelCacheKeyFactory : IModelCacheKeyFactory
     {
         public object Create(DbContext context)
@@ -17,6 +16,5 @@ namespace EFModeling.Samples.DynamicModel
             return context.GetType();
         }
     }
-
     #endregion
 }
