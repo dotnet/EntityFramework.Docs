@@ -47,7 +47,7 @@ Besides the runtime libraries, you can install tools which make it easier to per
 <a name="cli"></a>
 ### Cross-platform development using the .NET Core Command Line Interface (CLI)
 
-To develop applications that target [.NET Core](https://www.microsoft.com/net/download/core) you can choose to use the [`dotnet` CLI commands](https://docs.microsoft.com/en-us/dotnet/core/tools/) in combination with your favorite text editor, or an Integrated Development Environment (IDE) such as Visual Studio, Visual Studio for Mac or Visual Studio Code.
+To develop applications that target [.NET Core](https://www.microsoft.com/net/download/core) you can choose to use the [`dotnet` CLI commands](https://docs.microsoft.com/dotnet/core/tools/) in combination with your favorite text editor, or an Integrated Development Environment (IDE) such as Visual Studio, Visual Studio for Mac or Visual Studio Code.
 
 > [!IMPORTANT]  
 > Applications that target .NET Core require specific versions of Visual Studio, e.g. .NET Core 1.x development requires Visual Studio 2017, while .NET Core 2.0 development requires Visual Studio 2017 version 15.3.
@@ -84,7 +84,7 @@ You can develop many different types of applications that target .NET Core, .NET
 
 There are two ways you can install an EF Core database provider in your application from Visual Studio:
 
-#### Using NuGet's [Package Manager User Interface](https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui)
+#### Using NuGet's [Package Manager User Interface](https://docs.microsoft.com/nuget/tools/package-manager-ui)
 
 * Select on the menu **Project > Manage NuGet Packages**
 
@@ -92,7 +92,7 @@ There are two ways you can install an EF Core database provider in your applicat
 
 * Select the `Microsoft.EntityFrameworkCore.SqlServer` package and the desired version and confirm
 
-#### Using NuGet's [Package Manager Console (PMC)](https://docs.microsoft.com/en-us/nuget/tools/package-manager-console)
+#### Using NuGet's [Package Manager Console (PMC)](https://docs.microsoft.com/nuget/tools/package-manager-console)
 
 * Select on the menu **Tools > NuGet Package Manager > Package Manager Console**
 

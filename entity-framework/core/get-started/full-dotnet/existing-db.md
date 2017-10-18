@@ -25,7 +25,7 @@ The following prerequisites are needed to complete this walkthrough:
 
 * [Latest version of NuGet Package Manager](https://dist.nuget.org/index.html)
 
-* [Latest version of Windows PowerShell](https://www.microsoft.com/en-us/download/details.aspx?id=40855)
+* [Latest version of Windows PowerShell](https://docs.microsoft.com/powershell/scripting/setup/installing-windows-powershell)
 
 * [Blogging database](#blogging-database)
 
