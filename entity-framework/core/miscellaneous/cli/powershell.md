@@ -15,7 +15,7 @@ uid: core/miscellaneous/cli/powershell
 EF Core Package Manager Console Tools for Visual Studio
 
 > [!NOTE]  
-> The tools require the [latest version of Windows PowerShell](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
+> The tools require the [latest version of Windows PowerShell](https://docs.microsoft.com/powershell/scripting/setup/installing-windows-powershell)
 
 ## Installation
 
