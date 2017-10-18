@@ -133,5 +133,5 @@
 ### [⤤ API Reference](https://docs.microsoft.com/en-us/dotnet/api/?view=efcore-2.0) 
 
 ## [Entity Framework 6](ef6/index.md)
-### [Documentation](http://msdn.com/data/ef)
+### [⤤ Documentation](http://msdn.com/data/ef)
 ### [⤤ API Reference](https://msdn.microsoft.com/library/dn223258.aspx)
