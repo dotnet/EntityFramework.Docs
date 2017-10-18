@@ -221,16 +221,16 @@ uid: index
                                             </div>
                                             <div class="cardText">
                                                 <h3>
-                                                    <a href="https://docs.microsoft.com/ef/core/api">API Reference</a>
+                                                    <a href="https://docs.microsoft.com/dotnet/api/?view=efcore-2.0">⤤ API Reference</a>
                                                 </h3>
                                                 <p>
-                                                    <a href="/ef/core/api/microsoft.entityframeworkcore.dbcontext">DbContext</a>
+                                                    <a href="https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.dbcontext?view=efcore-2.0">⤤ DbContext</a>
                                                 </p>
                                                 <p>
-                                                    <a href="/ef/core/api/microsoft.entityframeworkcore.dbset-1">DbSet&lt;T&gt;</a>
+                                                    <a href="https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.dbset-1?view=efcore-2.0">⤤ DbSet&lt;TEntity&gt;</a>
                                                 </p>
                                                 <p>
-                                                    <a href="https://docs.microsoft.com/ef/core/api">more…</a>
+                                                    <a href="https://docs.microsoft.com/dotnet/api/?view=efcore-2.0">⤤ more…</a>
                                                 </p>
                                             </div>
                                         </div>
