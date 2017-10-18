@@ -134,4 +134,4 @@
 
 ## [Entity Framework 6](ef6/index.md)
 ### [Documentation](http://msdn.com/data/ef)
-### [API Reference](https://msdn.microsoft.com/library/dn223258.aspx)
+### [🚪 API Reference](https://msdn.microsoft.com/library/dn223258.aspx)
