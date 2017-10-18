@@ -1,9 +1,13 @@
-# [Entity Framework](index.md)
+# [Entity Framework](index.md)\
 
 ## [Compare EF Core & EF6](efcore-and-ef6/index.md)
+
 ### [Which One Is Right for You](efcore-and-ef6/choosing.md)
+
 ### [Feature Comparison](efcore-and-ef6/features.md)
+
 ### [EF6 and EF Core in the Same Application](efcore-and-ef6/side-by-side.md)
+
 ### [Porting from EF6 to EF Core](efcore-and-ef6/porting/index.md)
 #### [Validate Requirements](efcore-and-ef6/porting/ensure-requirements.md)
 #### [Porting an EDMX-Based Model](efcore-and-ef6/porting/port-edmx.md)
@@ -11,11 +15,10 @@
 
 ## [Entity Framework Core](core/index.md)
 
-<!-- What is new -->
 ### [New in EF Core 2.0](core/what-is-new/index.md)
 #### [EF Core 1.0 (previous version)](core/what-is-new/ef-core-1.0.md)
 #### [EF Core 1.1 (previous version)](core/what-is-new/ef-core-1.1.md)
-<!-- Getting Started -->
+
 ### [Getting Started](core/get-started/index.md)
 #### [Installing EF Core](core/get-started/install/index.md)
 #### [.NET Framework (Console, WinForms, WPF, etc.)](core/get-started/full-dotnet/index.md)
@@ -29,7 +32,7 @@
 ##### [EF Core Tutorial on ASP.NET Core site](https://docs.asp.net/en/latest/data/ef-mvc/intro.html)
 #### [Universal Windows Platform (UWP)](core/get-started/uwp/index.md)
 ##### [UWP - New Database](core/get-started/uwp/getting-started.md)
-<!-- Modeling -->
+
 ### [Creating a Model](core/modeling/index.md)
 #### [Including & Excluding Types](core/modeling/included-types.md)
 #### [Including & Excluding Properties](core/modeling/included-properties.md)
@@ -58,7 +61,7 @@
 ##### [Foreign Key Constraints](core/modeling/relational/fk-constraints.md)
 ##### [Alternate Keys (Unique Constraints)](core/modeling/relational/unique-constraints.md)
 ##### [Inheritance (Relational Database)](core/modeling/relational/inheritance.md)
-<!-- Querying -->
+
 ### [Querying Data](core/querying/index.md)
 #### [Basic Query](core/querying/basic.md)
 #### [Loading Related Data](core/querying/related-data.md)
@@ -67,7 +70,7 @@
 #### [Raw SQL Queries](core/querying/raw-sql.md)
 #### [Asynchronous Queries](core/querying/async.md)
 #### [How Query Works](core/querying/overview.md)
-<!-- Saving -->
+
 ### [Saving Data](core/saving/index.md)
 #### [Basic Save](core/saving/basic.md)
 #### [Related Data](core/saving/related-data.md)
@@ -77,9 +80,9 @@
 #### [Asynchronous Saving](core/saving/async.md)
 #### [🔧 Disconnected Entities](core/saving/disconnected-entities.md)
 #### [Explicit values for generated properties](core/saving/explicit-values-generated-properties.md)
-<!-- Platforms -->
+
 ### [Supported .NET Implementations](core/platforms/index.md)
-<!-- Providers -->
+
 ### [Database Providers](core/providers/index.md)
 #### [Microsoft SQL Server](core/providers/sql-server/index.md)
 ##### [Memory-Optimized Tables](core/providers/sql-server/memory-optimized-tables.md)
@@ -95,13 +98,11 @@
 #### [Oracle (not yet available)](core/providers/oracle/index.md)
 #### [MyCat](core/providers/my-cat/index.md)
 #### [Writing a Database Provider](core/providers/writing-a-provider.md)
-<!-- API Reference -->
-### [API Reference](https://docs.microsoft.com/ef/core/api)
-<!-- Command line Reference -->
+
 ### [Command Line Reference](core/miscellaneous/cli/index.md)
 #### [Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
 #### [.NET Core CLI](core/miscellaneous/cli/dotnet.md)
-<!-- Extensions -->
+
 ### [Tools & Extensions](core/extensions/index.md)
 #### [LLBLGen Pro](core/extensions/llbl-gen-pro.md)
 #### [Devart Entity Developer](core/extensions/devart-entity-developer.md)
@@ -116,7 +117,7 @@
 #### [Microsoft.EntityFrameworkCore.AutoHistory](core/extensions/autohistory.md)
 #### [Microsoft.EntityFrameworkCore.DynamicLinq](core/extensions/dynamiclinq.md)
 #### [Microsoft.EntityFrameworkCore.UnitOfWork](core/extensions/unitofwork.md)
-<!-- Miscellaneous -->
+
 ### Miscellaneous
 #### [Connection Strings](core/miscellaneous/connection-strings.md)
 #### [Logging](core/miscellaneous/logging.md)
@@ -128,6 +129,8 @@
 #### [Upgrading from 1.0 RC1 to RC2](core/miscellaneous/rc1-rc2-upgrade.md)
 #### [Upgrading from 1.0 RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
 #### [Upgrading to EF Core 2.0](core/miscellaneous/1x-2x-upgrade.md)
+
+### [🚪 API Reference](https://docs.microsoft.com/en-us/dotnet/api/?view=efcore-2.0) 
 
 ## [Entity Framework 6](ef6/index.md)
 ### [Documentation](http://msdn.com/data/ef)
