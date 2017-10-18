@@ -16,7 +16,7 @@ Most database providers require some form of connection string to connect to the
 
 ## .NET Framework Applications
 
-.NET Framework applications, such as WinForms, WPF, Console, and ASP.NET 4, have a tried and tested connection string pattern. The connection string should be added to your applications App.config file (Web.config if you are using ASP.NET). If your connection string contains sensitive information, such as username and password, you can protect the contents of the configuration file using [Protected Configuration](https://msdn.microsoft.com/library/53tyfkaw.aspx).
+.NET Framework applications, such as WinForms, WPF, Console, and ASP.NET 4, have a tried and tested connection string pattern. The connection string should be added to your applications App.config file (Web.config if you are using ASP.NET). If your connection string contains sensitive information, such as username and password, you can protect the contents of the configuration file using [Protected Configuration](https://docs.microsoft.com/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -49,7 +49,7 @@ public class BloggingContext : DbContext
 
 ## Universal Windows Platform (UWP)
 
-Connection strings in a UWP application are typically a SQLite connection that just specifies a local filename. They typically do not contain sensitive information, and do not need to be changed as an application is deployed. As such, these connection strings are usually fine to be left in code, as shown below. If you wish to move them out of code then UWP supports the concept of settings, see the [App Settings section of the UWP documentation](https://msdn.microsoft.com/windows/uwp/app-settings/store-and-retrieve-app-data) for details.
+Connection strings in a UWP application are typically a SQLite connection that just specifies a local filename. They typically do not contain sensitive information, and do not need to be changed as an application is deployed. As such, these connection strings are usually fine to be left in code, as shown below. If you wish to move them out of code then UWP supports the concept of settings, see the [App Settings section of the UWP documentation](https://docs.microsoft.com/windows/uwp/app-settings/store-and-retrieve-app-data) for details.
 
 ``` csharp
 public class BloggingContext : DbContext
