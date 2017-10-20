@@ -59,7 +59,7 @@ namespace EFSaving.CascadeDelete
                 return (bloggingContext.DeleteBehavior, bloggingContext.RequiredRelationship);
             }
         }
-        
+
         public static IList<string> LogMessages;
 
         private class MyLoggerProvider : ILoggerProvider
