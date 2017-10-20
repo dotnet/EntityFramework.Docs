@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFQuerying
+namespace EFSaving.Disconnected
 {
     public class BloggingContext : DbContext
     {
@@ -9,7 +9,7 @@ namespace EFQuerying
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFQuerying;Trusted_Connection=True;ConnectRetryCount=0");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFSaving.Disconnected;Trusted_Connection=True;ConnectRetryCount=0");
         }
     }
 }
