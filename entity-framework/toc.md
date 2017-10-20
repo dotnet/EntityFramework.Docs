@@ -75,7 +75,7 @@
 #### [Concurrency Conflicts](core/saving/concurrency.md)
 #### [Transactions](core/saving/transactions.md)
 #### [Asynchronous Saving](core/saving/async.md)
-#### [🔧 Disconnected Entities](core/saving/disconnected-entities.md)
+#### [Disconnected Entities](core/saving/disconnected-entities.md)
 #### [Explicit values for generated properties](core/saving/explicit-values-generated-properties.md)
 
 ### [Supported .NET Implementations](core/platforms/index.md)

@@ -30,7 +30,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb
         {
             services.AddMvc();
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
         }
         #endregion
