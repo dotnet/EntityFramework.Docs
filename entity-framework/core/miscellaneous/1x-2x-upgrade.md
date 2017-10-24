@@ -87,6 +87,10 @@ ApplicationBasePath | AppContext.BaseDirectory
 ContentRootPath | Directory.GetCurrentDirectory()
 EnvironmentName | Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
 
+### Design-time working directory changed
+
+The ASP.NET Core 2.0 changes also required the working directory used by `dotnet ef` to align with the working directory used by Visual Studio when running your application. One observable side effect of this is that SQLite filenames are now relative to the project directory and not the output directory like they used to be.
+
 ### EF Core 2.0 requires a 2.0 database provider
 
 For EF Core 2.0 we have made many simplifications and improvements in the way database providers work. This means that 1.0.x and 1.1.x providers will not work with EF Core 2.0.
