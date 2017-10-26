@@ -15,7 +15,7 @@ uid: core/modeling/backing-field
 > [!NOTE]  
 > This feature is new in EF Core 1.1.
 
-Backing fields allow EF to read and/or write to a field rather than a property.
+Backing fields allow EF to read and/or write to a field rather than a property. This can be useful when encapsulation in the class is being used to restrict the use of and/or enhance the semantics around access to the data by application code, but the value should be read from and/or written to the database without using those restrictions/enhancements.
 
 ## Conventions
 
@@ -48,7 +48,7 @@ You can configure when EF uses the field or property. See the [PropertyAccessMod
 
 ### Fields without a property
 
-You can also create a property in your model that does not have a corresponding property in the entity class, but uses a field to store the data in the entity. This is different from [Shadow Properties](shadow-properties.md), where the data is stored in the change tracker. This would typically be used if the entity class uses methods to get/set values.
+You can also create a conceptual property in your model that does not have a corresponding CLR property in the entity class, but instead uses a field to store the data in the entity. This is different from [Shadow Properties](shadow-properties.md), where the data is stored in the change tracker. This would typically be used if the entity class uses methods to get/set values.
 
 You can give EF the name of the field in the `Property(...)` API. If there is no property with the given name, then EF will look for a field.
 
