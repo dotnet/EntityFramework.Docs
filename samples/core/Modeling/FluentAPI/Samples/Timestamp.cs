@@ -2,6 +2,7 @@
 
 namespace EFModeling.Configuring.FluentAPI.Samples.Timestamp
 {
+    #region ConfigureTimestampFluent
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -10,8 +11,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Timestamp
         {
             modelBuilder.Entity<Blog>()
                 .Property(p => p.Timestamp)
-                .ValueGeneratedOnAddOrUpdate()
-                .IsConcurrencyToken();
+                .IsRowVersion();
         }
     }
 
@@ -21,4 +21,5 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Timestamp
         public string Url { get; set; }
         public byte[] Timestamp { get; set; }
     }
+    #endregion
 }

@@ -2,6 +2,7 @@
 
 namespace EFModeling.Configuring.FluentAPI.Samples.Concurrency
 {
+    #region ConfigureConcurrencyFluent
     class MyContext : DbContext
     {
         public DbSet<Person> People { get; set; }
@@ -20,4 +21,5 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Concurrency
         public string LastName { get; set; }
         public string FirstName { get; set; }
     }
+    #endregion
 }

@@ -14,6 +14,8 @@ uid: core/modeling/shadow-properties
 
 Shadow properties are properties that are not defined in your .NET entity class but are defined for that entity type in the EF Core model. The value and state of these properties is maintained purely in the Change Tracker.
 
+Shadow properties are useful when there is data in the database that should not be exposed on the mapped entity types. They are most often used for foreign key properties, where the relationship between two entities is represented by a foreign key value in the database, but the relationship is managed on the entity types using navigation properties between the entity types.
+
 Shadow property values can be obtained and changed through the `ChangeTracker` API.
 
 ``` csharp
