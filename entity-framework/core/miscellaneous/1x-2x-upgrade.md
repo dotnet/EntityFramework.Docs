@@ -19,7 +19,7 @@ Updating an existing application to EF Core 2.0 may require:
 
 1. Upgrading the target .NET platform of the application to one that supports .NET Standard 2.0. See [Supported Platforms](../platforms/index.md) for more details.
 
-2. Identify a provider for the target database which is compatible with EF Core 2.0. See [EF Core 2.0 requires a 2.0 database provider](#ef-core-2.0-requires-a-2.0-database-provider) below.
+2. Identify a provider for the target database which is compatible with EF Core 2.0. See [EF Core 2.0 requires a 2.0 database provider](#ef-core-20-requires-a-20-database-provider) below.
 
 3. Upgrading all the EF Core packages (runtime and tooling) to 2.0. Refer to [Installing EF Core](../get-started/install/index.md) for more details.
 
