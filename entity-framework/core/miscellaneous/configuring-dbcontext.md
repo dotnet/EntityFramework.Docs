@@ -82,7 +82,7 @@ using (var context = new BloggingContext())
 
 EF supports using `DbContext` with a dependency injection container. Your DbContext type can be added to the service container by using `AddDbContext<TContext>`.
 
-`AddDbContext` will add make both your DbContext type, `TContext`, and `DbContextOptions<TContext>` to the available for injection from the service container.
+`AddDbContext` will make both your DbContext type, `TContext`, and `DbContextOptions<TContext>` available for injection from the service container.
 
 See [more reading](#more-reading) below for information on dependency injection.
 
