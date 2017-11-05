@@ -31,7 +31,7 @@ PM> Install-Package Pomelo.EntityFrameworkCore.MySql
 The following resources will help you get started with this provider.
 * [Getting started documentation](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/blob/master/README.md#getting-started)
 
-* [Yuuko Blog sample application](https://github.com/Kagamine/YuukoBlog-NETCore-MySql)
+* [Yuuko Blog sample application](https://github.com/PomeloFoundation/YuukoBlog)
 
 ## Supported Database Engines
 
