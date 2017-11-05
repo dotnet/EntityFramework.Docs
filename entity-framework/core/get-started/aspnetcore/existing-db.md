@@ -80,11 +80,14 @@ We will be using some ASP.NET Core Scaffolding tools to create controllers and v
 Now it's time to create the EF model based on your existing database.
 
 * **Tools –> NuGet Package Manager –> Package Manager Console**
-* Run the following command to create a model from the existing database. If you receive an error stating `The term 'Scaffold-DbContext' is not recognized as the name of a cmdlet`, then close and reopen Visual Studio.
+* Run the following command to create a model from the existing database. 
 
 ``` powershell
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 ```
+
+If you receive an error stating `The term 'Scaffold-DbContext' is not recognized as the name of a cmdlet`, then close and reopen Visual Studio.
+
 > [!TIP]  
 > You can specify which tables you want to generate entities for by adding the `-Tables` argument to the command above. E.g. `-Tables Blog,Post`.
 
