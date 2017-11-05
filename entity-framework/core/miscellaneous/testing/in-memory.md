@@ -28,7 +28,7 @@ Some examples of this include:
 * If you use DefaultValueSql(string) for a property in your model, this is a relational database API and will have no effect when running against InMemory.
 
 > [!TIP]  
-> For many test purposes these difference will not matter. However, if you want to test against something that behaves more like a true relational database, then consider using [SQLite in-memory mode](sqlite.md).
+> For many test purposes these differences will not matter. However, if you want to test against something that behaves more like a true relational database, then consider using [SQLite in-memory mode](sqlite.md).
 
 ## Example testing scenario
 
@@ -42,10 +42,10 @@ Consider the following service that allows application code to perform some oper
 
 In your tests you are going to externally configure the context to use the InMemory provider. If you are configuring a database provider by overriding `OnConfiguring` in your context, then you need to add some conditional code to ensure that you only configure the database provider if one has not already been configured.
 
-> [!TIP]  
-> If you are using ASP.NET Core, then you should not need this code since your database provider is configured outside of the context (in Startup.cs).
-
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/BusinessLogic/BloggingContext.cs#OnConfiguring)]
+
+> [!TIP]  
+> If you are using ASP.NET Core, then you should not need this code since your database provider is already configured outside of the context (in Startup.cs).
 
 ### Add a constructor for testing
 
