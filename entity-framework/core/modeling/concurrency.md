@@ -16,6 +16,9 @@ If a property is configured as a concurrency token then EF will check that no ot
 
 For example we may want to configure `LastName` on `Person` to be a concurrency token. This means that if one user tries to save some changes to a `Person`, but another user has changed the `LastName` then an exception will be thrown. This may be desirable so that your application can prompt the user to ensure this record still represents the same actual person before saving their changes.
 
+> [!NOTE]
+> This page documents how to configure concurrency tokens. See [Handling Concurrency](../saving/concurrency.md) for examples of how to use optimistic concurrency in your application.
+
 ## How concurrency tokens work in EF
 
 Data stores can enforce concurrency tokens by checking that any record being updated or deleted still has the same value for the concurrency token that was assigned when the context originally loaded the data from the database.
@@ -35,42 +38,13 @@ By convention, properties are never configured as concurrency tokens.
 
 You can use the Data Annotations to configure a property as a concurrency token.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Concurrency.cs?highlight=4)] -->
-``` csharp
-public class Person
-{
-    public int PersonId { get; set; }
-    [ConcurrencyCheck]
-    public string LastName { get; set; }
-    public string FirstName { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/Concurrency.cs#ConfigureConcurrencyAnnotations)]
 
 ## Fluent API
 
 You can use the Fluent API to configure a property as a concurrency token.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Concurrency.cs?highlight=7,8,9)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Person> People { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Person>()
-            .Property(p => p.LastName)
-            .IsConcurrencyToken();
-    }
-}
-
-public class Person
-{
-    public int PersonId { get; set; }
-    public string LastName { get; set; }
-    public string FirstName { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Concurrency.cs#ConfigureConcurrencyFluent)]
 
 ## Timestamp/row version
 
@@ -86,41 +60,10 @@ By convention, properties are never configured as timestamps.
 
 You can use Data Annotations to configure a property as a timestamp.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Timestamp.cs?highlight=6)] -->
-``` csharp
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    [Timestamp]
-    public byte[] Timestamp { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/Timestamp.cs#ConfigureTimestampAnnotations)]
 
 ### Fluent API
 
 You can use the Fluent API to configure a property as a timestamp.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Timestamp.cs?highlight=7,8,9,10)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .Property(p => p.Timestamp)
-            .ValueGeneratedOnAddOrUpdate()
-            .IsConcurrencyToken();
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-    public byte[] Timestamp { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Timestamp.cs#ConfigureTimestampFluent)]
