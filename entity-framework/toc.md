@@ -1,4 +1,4 @@
-# [Entity Framework](index.md)
+﻿# [Entity Framework](index.md)
 
 ## [Compare EF Core & EF6](efcore-and-ef6/index.md)
 
@@ -96,6 +96,10 @@
 #### [MyCat](core/providers/my-cat/index.md)
 #### [Writing a Database Provider](core/providers/writing-a-provider.md)
 
+### [Managing Database Schemas](core/managing-schemas/index.md)
+#### [🔧 Migrations](core/managing-schemas/migrations.md)
+#### [🔧 Reverse Engineering](core/managing-schemas/scaffolding.md)
+
 ### [Command-Line Reference](core/miscellaneous/cli/index.md)
 #### [Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
 #### [.NET Core CLI](core/miscellaneous/cli/dotnet.md)
@@ -127,7 +131,7 @@
 #### [Upgrading from 1.0 RC2 to RTM](core/miscellaneous/rc2-rtm-upgrade.md)
 #### [Upgrading to EF Core 2.0](core/miscellaneous/1x-2x-upgrade.md)
 
-### [⤤ API Reference](https://docs.microsoft.com/dotnet/api/?view=efcore-2.0) 
+### [⤤ API Reference](https://docs.microsoft.com/dotnet/api/?view=efcore-2.0)
 
 ## [Entity Framework 6](ef6/index.md)
 ### [⤤ Documentation](http://msdn.com/data/ef)
