@@ -15,52 +15,42 @@ uid: core/miscellaneous/logging
 > [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging) on GitHub.
 
-## Create a logger
+## ASP.NET Core applications
 
-The first step is to create an implementation of `ILoggerProvider` and `ILogger`.
- * `ILoggerProvider` is the component that decides when to create instances of your logger(s). The provider may choose to create different loggers in different situations.
- * `ILogger` is the component that does the actual logging. It will be passed information from the framework when certain events occur.
+EF Core integrates automatically with the logging mechanims of ASP.NET Core whenever `AddDbContext` or `AddDbContextPool` is used. Therefore, when using ASP.NET Core, logging should be configured as described in the [ASP.NET Core documentation](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging?tabs=aspnetcore2x).
 
-Here is a simple implementation that logs a human readable representation of every event to a text file and the Console.
+## Other applications
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/MyLoggerProvider.cs)]
+EF Core logging currently requires an ILoggerFactory which is itself configured with one or more ILoggerProvider. Common providers are shipped in the following packages:
 
-> [!TIP]  
-> The arguments passed to the Log method are:
-> * `logLevel` is the level (e.g. Warning, Info, Verbose, etc.) of the event being logged
-> * `eventId` is a library/assembly specific id that represents the type of event being logged
-> * `state` can be any object that holds state relevant to what is being logged
-> * `exception` gives you the exception that occurred if an error is being logged
-> * `formatter` uses state and exception to create a human readable string to be logged
+* [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/): A simple console logger.
+* [Microsoft.Extensions.Logging.AzureAppServices](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/): Supports Azure App Services 'Diagnostics logs' and 'Log stream' features.
+* [Microsoft.Extensions.Logging.Debug](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/): Logs to a debugger monitor using System.Diagnostics.Debug.WriteLine().
+* [Microsoft.Extensions.Logging.EventLog](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventLog/): Logs to Windows Event Log.
+* [Microsoft.Extensions.Logging.EventSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/): Supports EventSource/EventListener.
+* [Microsoft.Extensions.Logging.TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/): Logs to a trace listener using System.Diagnostics.TraceSource.TraceEvent().
 
-## Register your logger
+After installing the appropriate package(s), the application should create a singleton/global instance of a LoggerFactory. For example, using the console logger:
 
-### ASP.NET Core
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#DefineLoggerFactory)]
 
-In an ASP.NET Core application, you register your logger in the Configure method of Startup.cs:
+This singleton/global instance should then be registered with EF Core on the `DbContextOptionsBuilder`. For example:
 
-``` csharp
-public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-{
-    loggerFactory.AddProvider(new MyLoggerProvider());
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#RegisterLoggerFactory)]
 
-    ...
-}
-```
-
-### Other applications
-
-In your application startup code, create an instance of your context and register your logger.
-
-> [!TIP]  
-> You only need to register the logger with a single context instance. Once you have registered it, it will be used for all other instances of the context in the same AppDomain.
-
-[!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging.ConsoleApp/Program.cs#Sample)]
+> [!WARNING]
+> It is very important that applications do not create a new ILoggerFactory instance for each context instance. Doing so will result in a memory leak and poor performance.
 
 ## Filtering what is logged
 
-The easiest way to filter what is logged, is to adjust your logger provider to only return your logger for certain categories of events. For EF, the category passed to your logger provider will be the type name of the component that is logging the event.
+The easiest way to filter what is logged is to configure it when registering the ILoggerProvider. For example:
 
-For example, here is a logger provider that returns the logger only for events related to executing SQL against a relational database. For all other categories of events, a null logger (which does nothing) is returned.
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContextWithFiltering.cs#DefineLoggerFactory)]
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/MyFilteredLoggerProvider.cs)]
+In this example, the log is filtered to return only messages:
+ * in the 'Microsoft.EntityFrameworkCore.Database.Command' category
+ * at the 'Information' level
+
+For EF Core, logger categories are defined in the `DbLoggerCategory` class to make it easy to find categories, but these resolve to simple strings.
+
+More details on the underlying logging infrastructure can be found in the [ASP.NET Core logging documentation](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging?tabs=aspnetcore2x).
