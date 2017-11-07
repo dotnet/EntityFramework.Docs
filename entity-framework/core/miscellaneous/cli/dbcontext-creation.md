@@ -7,8 +7,8 @@ ms.technology: entity-framework-core
 ---
 Design-time DbContext Creation
 ==============================
-Some of the EF Tools commands require a DbContext instance to be created at design time. There are various ways the
-tools will try an do this.
+Some of the EF Tools commands require a DbContext instance to be created at design time (for example, when running
+Migrations commands). There are various ways the tools will try and do this.
 
 From application services
 -------------------------
@@ -18,15 +18,15 @@ DbContext registered using `IServiceCollection.AddDbContext<TContext>()` can be 
 
 Using the default constructor
 -----------------------------
-If the DbContext can't be obtained from the application service provider, the tools will find any DbContext types inside
-the project try to create it using the default constructor.
+If the DbContext can't be obtained from the application service provider, the tools will find the DbContext type inside
+the project and try to create it using its default constructor.
 
 From a design-time factory
 --------------------------
-You can also tell the tools how your DbContext should be created by implementing `IDesignTimeDbContextFactory`. If a
-class implementing this interface is found inside your project, the tools will bypass the other ways of creating the
-DbContext and always use the factory at design time. This is especially useful if you need to configure the DbContext
-differently for design time than at runtime.
+You can also tell the tools how to create your DbContext by implementing `IDesignTimeDbContextFactory`. If a class
+implementing this interface is found inside your project, the tools will bypass the other ways of creating the DbContext
+and always use the factory at design time. This is especially useful if you need to configure the DbContext differently
+for design time than at runtime.
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
