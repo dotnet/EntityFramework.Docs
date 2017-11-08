@@ -1,0 +1,4 @@
+[submodule "samples/core-dev"]
+	path = samples/core-dev
+	url = https://github.com/aspnet/EntityFrameworkCore.git
+	branch = dev
