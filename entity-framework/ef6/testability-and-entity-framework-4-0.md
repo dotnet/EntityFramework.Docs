@@ -1,5 +1,5 @@
 ---
-title: "Testability and Entity Framework 4.0 - EF6"
+title: "Testability and Entity Framework 4.0"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"

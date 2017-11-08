@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework Designer CUD Sprocs - EF6"
+title: "Entity Framework Designer CUD Stored Procedures - EF6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"
@@ -12,7 +12,7 @@ ms.topic: "article"
 ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
 caps.latest.revision: 3
 ---
-# Entity Framework Designer CUD Sprocs
+# Entity Framework Designer CUD Stored Procedures
 This step-by-step walkthrough show how to map the create\\insert, update, and delete (CUD) operations of an entity type to stored procedures using the Entity Framework Designer (EF Designer).  By default, the Entity Framework automatically generates the SQL statements for the CUD operations, but you can also map stored procedures to these operations.  
 
 Note, that Code First does not support mapping to stored procedures or functions. However, you can call stored procedures or functions by using the System.Data.Entity.DbSet.SqlQuery method. For example: `context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]")`.

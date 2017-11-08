@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 6 Runtime License | Microsoft Docs"
+title: "Entity Framework 6 Runtime License"
 ms.custom: ""
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"

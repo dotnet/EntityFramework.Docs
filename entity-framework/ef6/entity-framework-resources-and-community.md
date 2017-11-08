@@ -12,9 +12,9 @@ caps.latest.revision: 2
 ---
 # Entity Framework Resources and Community
 Insert introduction here.  
-  
+
 ## Section Heading  
  Insert section body here.  
-  
+
 ### Subsection Heading  
  Insert subsection body here.

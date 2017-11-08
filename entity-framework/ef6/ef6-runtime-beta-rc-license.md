@@ -1,5 +1,5 @@
 ---
-title: "EF6 Runtime Beta/RC License | Microsoft Docs"
+title: "EF6 Runtime Beta/RC License"
 ms.custom: ""
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"

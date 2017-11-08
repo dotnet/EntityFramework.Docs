@@ -1,5 +1,5 @@
 ---
-title: "Performance Considerations for EF 4, 5, and 6 - EF6"
+title: "Performance Considerations for EF4, EF5, and EF6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"

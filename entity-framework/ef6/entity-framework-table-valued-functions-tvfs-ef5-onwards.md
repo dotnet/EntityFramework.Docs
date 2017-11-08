@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework Table-Valued Functions (TVFs) (EF5 onwards) - EF6"
+title: "Entity Framework Table-Valued Functions (TVFs) - EF6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"

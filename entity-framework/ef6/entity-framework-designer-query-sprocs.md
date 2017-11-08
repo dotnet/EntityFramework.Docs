@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework Designer Query Sprocs - EF6"
+title: "Entity Framework Designer Query Stored Procedures - EF6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"
@@ -12,7 +12,7 @@ ms.topic: "article"
 ms.assetid: 9554ed25-c5c1-43be-acad-5da37739697f
 caps.latest.revision: 3
 ---
-# Entity Framework Designer Query Sprocs
+# Entity Framework Designer Query Stored Procedures
 This step-by-step walkthrough show how to use the Entity Framework Designer (EF Designer) to import stored procedures into a model and then call the imported stored procedures to retrieve results. 
 
 Note, that Code First does not support mapping to stored procedures or functions. However, you can call stored procedures or functions by using the System.Data.Entity.DbSet.SqlQuery method. For example: `context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]")`.
