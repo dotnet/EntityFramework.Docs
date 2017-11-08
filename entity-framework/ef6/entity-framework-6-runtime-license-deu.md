@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 6 Runtime License (DEU) | Microsoft Docs"
+title: "Entity Framework 6 Runtime License (DEU)"
 ms.custom: ""
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"

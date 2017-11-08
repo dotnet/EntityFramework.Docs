@@ -1,5 +1,5 @@
 ---
-title: "Building an MVC 3 App with Model First and Entity Framework 4.12 | Microsoft Docs"
+title: "Building an MVC 3 App with Model First and Entity Framework 4.12"
 ms.custom: ""
 ms.date: "2016-10-23"
 ms.prod: "visual-studio-2013"
@@ -12,9 +12,9 @@ caps.latest.revision: 2
 ---
 # Building an MVC 3 App with Model First and Entity Framework 4.1
 Insert introduction here.  
-  
+
 ## Section Heading  
  Insert section body here.  
-  
+
 ### Subsection Heading  
  Insert subsection body here.

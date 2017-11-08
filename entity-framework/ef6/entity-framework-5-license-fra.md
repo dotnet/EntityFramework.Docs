@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 5 License (FRA) | Microsoft Docs"
+title: "Entity Framework 5 License (FRA)"
 ms.custom: ""
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"

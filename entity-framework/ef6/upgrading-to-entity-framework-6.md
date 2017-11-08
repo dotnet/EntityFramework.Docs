@@ -1,5 +1,5 @@
 ---
-title: "Upgrading to Entity Framework 6 | Microsoft Docs"
+title: "Upgrading to Entity Framework 6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"

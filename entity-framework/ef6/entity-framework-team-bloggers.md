@@ -16,4 +16,3 @@ Posts by various members of the ADO.NET team.
 
 [EF Design Team](http://blogs.msdn.com/efdesign/)  
 Posts by various members of the team designing the ADO.NET Entity Framework.
-  

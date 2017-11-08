@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework Logging and Intercepting Database Operations (EF6 Onwards) - EF6"
+title: "Entity Framework Logging and Intercepting Database Operations - EF6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"

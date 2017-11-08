@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework Working with Transactions (EF6 Onwards) - EF6"
+title: "Entity Framework Working with Transactions - EF6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"

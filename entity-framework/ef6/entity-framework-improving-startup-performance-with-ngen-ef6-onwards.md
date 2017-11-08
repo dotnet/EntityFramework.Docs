@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework Improving Startup Performance with NGen (EF6 Onwards) - EF6"
+title: "Entity Framework Improving Startup Performance with NGen - EF6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"
@@ -65,7 +65,7 @@ cd <Solution directory>\packages\EntityFramework.6.0.2\lib\net45
 ```  
 
 > **Note**: This takes advantage of the fact that installing the native images for EF provider for SQL Server will also by default install the native images for the main EF runtime assembly. This works because NGen.exe can detect that EntityFramework.dll is a direct dependency of the EntityFramework.SqlServer.dll assembly located in the same directory.  
-  
+
 ## Creating native images during setup  
 
 The WiX Toolkit supports queuing the generation of native images for managed assemblies during setup, as explained in this [how-to guide](http://wixtoolset.org/documentation/manual/v3/howtos/files_and_registry/ngen_managed_assemblies.html). Another alternative is to create a custom setup task that execute the NGen.exe command.  

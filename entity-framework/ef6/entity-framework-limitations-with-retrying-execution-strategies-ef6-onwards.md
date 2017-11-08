@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework Limitations with Retrying Execution Strategies (EF6 onwards) - EF6"
+title: "Entity Framework Limitations with Retrying Execution Strategies - EF6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"
