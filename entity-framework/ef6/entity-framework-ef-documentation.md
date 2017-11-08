@@ -107,9 +107,6 @@ Use Code First to define your model in code and then generate a database.
 [Code First to an Existing Database](../ef6/entity-framework-code-first-to-an-existing-database.md)  
 Use Code First to create a code based model that maps to an existing database.
 
-[Customizing Code First to an Existing Database](../ef6/customizing-code-first-to-an-existing-database.md)  
-Customize the code that gets scaffolded by the Code First to Existing Database wizard.
-
 [Conventions](../ef6/entity-framework-code-first-conventions.md)  
 Find out about the conventions Code First uses to build your model.
 
