@@ -27,6 +27,12 @@ If everything worked correctly, you should be able to run this command:
 ``` powershell
 Get-Help about_EntityFrameworkCore
 ```
+> [!TIP]
+> If your startup project targets .NET Standad, [cross-target a supported framework][3] before using the tools.
+
+> [!IMPORTANT]
+> If you're using **Universal Windows** or **Xamarin**, move your EF code to a .NET Standard class library and
+> [cross-target a supported framework][3] before using the tools. Specify the class library as your startup project.
 
 Using the tools
 ---------------
@@ -142,3 +148,4 @@ Parameters:
 
   [1]: dotnet.md
   [2]: https://docs.microsoft.com/nuget/tools/package-manager-console
+  [3]: index.md#frameworks

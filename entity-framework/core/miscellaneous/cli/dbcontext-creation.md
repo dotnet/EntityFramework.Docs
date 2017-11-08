@@ -14,7 +14,8 @@ From application services
 -------------------------
 If your startup project is an ASP.NET Core app, the tools will try to obtain the DbContext object from the application's
 service provider. This is done by invoking `Program.BuildWebHost()` and accessing the `IWebHost.Services` property. Any
-DbContext registered using `IServiceCollection.AddDbContext<TContext>()` can be found and created this way.
+DbContext registered using `IServiceCollection.AddDbContext<TContext>()` can be found and created this way. This pattern
+was [introduced in ASP.NET Core 2.0][1]
 
 Using the default constructor
 -----------------------------
@@ -46,3 +47,10 @@ namespace MyProject
     }
 }
 ```
+
+> [!NOTE]
+> The `args` parameter is currently unused. There is [an issue][2] tracking the ability to specify design-time arguments
+> from the tools.
+
+  [1]: https://docs.microsoft.com/aspnet/core/migration/1x-to-2x/#update-main-method-in-programcs
+  [2]: https://github.com/aspnet/EntityFrameworkCore/issues/8332
