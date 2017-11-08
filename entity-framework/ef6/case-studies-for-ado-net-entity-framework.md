@@ -11,7 +11,7 @@ ms.assetid: cd5d3ae3-717d-4095-a2ef-0e8fd72b1a2f
 caps.latest.revision: 3
 ---
 # Case Studies for Entity Framework
-The [Entity Framework](Entity-Framework.md) is an Object/Relational Mapping (O/RM) framework that enables developers to work with relational data as domain-specific objects, eliminating the need for most of the data access plumbing code that developers usually need to write. Using Entity Framework, developers issue queries using LINQ, then retrieve and manipulate data as strongly typed objects. Entity Framework’s O/RM implementation provides services like change tracking, identity resolution, lazy loading, and query translation so that developers can focus on their application-specific business logic rather than the data access fundamentals.  
+The Entity Framework is an Object/Relational Mapping (O/RM) framework that enables developers to work with relational data as domain-specific objects, eliminating the need for most of the data access plumbing code that developers usually need to write. Using Entity Framework, developers issue queries using LINQ, then retrieve and manipulate data as strongly typed objects. Entity Framework’s O/RM implementation provides services like change tracking, identity resolution, lazy loading, and query translation so that developers can focus on their application-specific business logic rather than the data access fundamentals.  
 
 The case studies on this page highlight a few real-world production projects that have employed Entity Framework.  
 
