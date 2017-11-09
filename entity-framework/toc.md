@@ -103,6 +103,8 @@
 ### [Command-Line Reference](core/miscellaneous/cli/index.md)
 #### [Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
 #### [.NET Core CLI](core/miscellaneous/cli/dotnet.md)
+#### [Design-time DbContext Creation](core/miscellaneous/cli/dbcontext-creation.md)
+#### [Design-time Services](core/miscellaneous/cli/services.md)
 
 ### [Tools & Extensions](core/extensions/index.md)
 #### [LLBLGen Pro](core/extensions/llbl-gen-pro.md)
