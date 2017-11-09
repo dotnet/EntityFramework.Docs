@@ -187,5 +187,5 @@ Options:
 | -i | --idempotent     | Generate a script that can be used on a database at any migration. |
 
 
-  [1]: pmc.md
+  [1]: powershell.md
   [2]: https://www.microsoft.com/net/core

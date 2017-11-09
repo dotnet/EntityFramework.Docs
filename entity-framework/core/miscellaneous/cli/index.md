@@ -48,7 +48,7 @@ The startup project is the one emulated by the tools when executing your project
 Both the target project and the startup project can be the same.
 
 
-  [1]: pmc.md
+  [1]: powershell.md
   [2]: https://docs.microsoft.com/nuget/tools/package-manager-console
   [3]: dotnet.md
   [4]: https://docs.microsoft.com/dotnet/core/tools/
