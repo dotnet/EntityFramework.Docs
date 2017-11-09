@@ -51,7 +51,9 @@ The resulting project should look something like this:
 
 If you did everything right, you should be able to successfully run the following command in a command prompt.
 
-    dotnet ef
+``` Console
+dotnet ef
+```
 
 Using the tools
 ---------------
