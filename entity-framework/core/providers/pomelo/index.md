@@ -22,8 +22,8 @@ This database provider allows Entity Framework Core to be used with MySQL. The p
 
 Install the [Pomelo.EntityFrameworkCore.MySql NuGet package](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql).
 
-``` console
-PM> Install-Package Pomelo.EntityFrameworkCore.MySql
+``` powershell
+Install-Package Pomelo.EntityFrameworkCore.MySql
 ```
 
 ## Get Started

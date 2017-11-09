@@ -18,8 +18,8 @@ This database provider allows Entity Framework Core to be used with an in-memory
 
 Install the [Microsoft.EntityFrameworkCore.InMemory NuGet package](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory/).
 
-``` console
-PM> Install-Package Microsoft.EntityFrameworkCore.InMemory
+``` powershell
+Install-Package Microsoft.EntityFrameworkCore.InMemory
 ```
 
 ## Get Started

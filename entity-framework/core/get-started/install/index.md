@@ -54,7 +54,7 @@ To develop applications that target [.NET Core](https://www.microsoft.com/net/do
 
 To install or upgrade the SQL Server provider in a cross-platform .NET Core application, switch to the application's directory and run the following in a command line:
 
-``` console
+``` Console
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
@@ -70,7 +70,7 @@ EF Core includes a set of [additional commands for the `dotnet` CLI](../../misce
 
 The .NET Core CLI tools for EF Core also require a separate package called Microsoft.EntityFrameworkCore.Design. You can simply add it to the project using:
 
-``` console
+``` Console
 dotnet add package Microsoft.EntityFrameworkCore.Design
 ```
 
