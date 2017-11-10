@@ -5,21 +5,21 @@ ms.author: bricelam
 ms.date: 11/6/2017
 ms.technology: entity-framework-core
 ---
-EF Core .NET Command Line Tools
+EF Core .NET Command-line Tools
 ===============================
-The Entity Framework Core .NET Command Line Tools are an extension to the cross-platform **dotnet** command which is
+The Entity Framework Core .NET Command-line Tools are an extension to the cross-platform **dotnet** command, which is
 part of the [.NET Core SDK][2].
 
 > [!TIP]
-> If you're using Visual Studio, we recommend the [the PMC Tools][1] instead since they provide a more integrated
+> If you're using Visual Studio, we recommend [the PMC Tools][1] instead since they provide a more integrated
 > experience.
 
 Installing the tools
 --------------------
-Install the EF Core .NET Command Line Tools using these steps:
+Install the EF Core .NET Command-line Tools using these steps:
 
 1. Edit the project file and add Microsoft.EntityFrameworkCore.Tools.DotNet as a DotNetCliToolReference item (See below)
-2. Run the following in a command prompt:
+2. Run the following commands:
 
        dotnet add package Microsoft.EntityFrameworkCore.Design
        dotnet restore
@@ -46,7 +46,7 @@ The resulting project should look something like this:
 ```
 
 > [!NOTE]
-> A package reference with `PrivateAssets="All"` means it won't be exposed to projects that reference this project. This
+> A package reference with `PrivateAssets="All"` means it isn't exposed to projects that reference this project, which
 > is especially useful for packages that are typically only used during development.
 
 If you did everything right, you should be able to successfully run the following command in a command prompt.
