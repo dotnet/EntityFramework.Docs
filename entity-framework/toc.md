@@ -67,6 +67,7 @@
 #### [Raw SQL Queries](core/querying/raw-sql.md)
 #### [Asynchronous Queries](core/querying/async.md)
 #### [How Query Works](core/querying/overview.md)
+#### [Global Query Filters](core/querying/filters.md)
 
 ### [Saving Data](core/saving/index.md)
 #### [Basic Save](core/saving/basic.md)
