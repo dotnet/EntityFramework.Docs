@@ -13,7 +13,7 @@ DbContext and entity types by reverse engineering the schema of a database, and 
 The [EF Core Package Manager Console (PMC) Tools][1] provide a superior experience inside Visual Studio. Run them using
 NuGet's [Package Manager Console][2]. These tools work with both .NET Framework and .NET Core projects.
 
-The [EF Core .NET Command Line Tools][3] are an extension to the [.NET Core command-line interface (CLI) tools][4] that
+The [EF Core .NET Command-line Tools][3] are an extension to the [.NET Core command-line interface (CLI) tools][4] that
 are cross-platform and can run outside of Visual Studio. These tools require a .NET Core SDK project (one with
 `Sdk="Microsoft.NET.Sdk"` or similar in the project file).
 
@@ -24,7 +24,7 @@ Frameworks
 ----------
 The tools support projects targeting .NET Framework or .NET Core.
 
-If your project targets another framework (e.g. Universal Windows or Xamarin), we recommend creating a separate .NET
+If your project targets another framework (for example, Universal Windows or Xamarin), we recommend creating a separate .NET
 Standard project and cross-targeting one of the supported frameworks.
 
 To cross-target .NET Core, for example, right-click on the project and select **Edit \*.csproj**. Update the

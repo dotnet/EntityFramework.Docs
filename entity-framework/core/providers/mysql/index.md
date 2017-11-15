@@ -24,8 +24,8 @@ This database provider allows Entity Framework Core to be used with MySQL. The p
 
 Install the [MySql.Data.EntityFrameworkCore NuGet package](https://www.nuget.org/packages/MySql.Data.EntityFrameworkCore).
 
-``` console
-PM> Install-Package MySql.Data.EntityFrameworkCore -Pre
+``` powershell
+Install-Package MySql.Data.EntityFrameworkCore -Pre
 ```
 
 ## Get Started

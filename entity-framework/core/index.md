@@ -30,7 +30,7 @@ If you are familiar with EF Core and want to jump straight into the details of t
 
 [Install the NuGet package](https://docs.nuget.org/ndocs/quickstart/use-a-package) for the database provider you want to use. E.g. to install the SQL Server provider in cross-platform development using `dotnet` tool in the command line:
 
-``` console
+``` Console
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 

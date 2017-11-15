@@ -23,7 +23,7 @@ Between RC1 and RC2, we changed from "Entity Framework 7" to "Entity Framework C
 | RC1 Package                                               | RC2 Equivalent                                                       |
 | --------------------------------------------------------- | -------------------------------------------------------------------- |
 | EntityFramework.MicrosoftSqlServer        7.0.0-rc1-final | Microsoft.EntityFrameworkCore.SqlServer         1.0.0-rc2-final      |
-| EntityFramework.SQLite                    7.0.0-rc1-final | Microsoft.EntityFrameworkCore.SQLite            1.0.0-rc2-final      |
+| EntityFramework.SQLite                    7.0.0-rc1-final | Microsoft.EntityFrameworkCore.Sqlite            1.0.0-rc2-final      |
 | EntityFramework7.Npgsql                   3.1.0-rc1-3     | NpgSql.EntityFrameworkCore.Postgres             <to be advised>      |
 | EntityFramework.SqlServerCompact35        7.0.0-rc1-final | EntityFrameworkCore.SqlServerCompact35          1.0.0-rc2-final      |
 | EntityFramework.SqlServerCompact40        7.0.0-rc1-final | EntityFrameworkCore.SqlServerCompact40          1.0.0-rc2-final      |
@@ -131,7 +131,7 @@ Some of EF Core's dependencies do not support .NET Standard yet. EF Core in .NET
 
 When adding EF, NuGet restore will display this error message:
 
-``` console
+``` Console
 Package Ix-Async 1.2.5 is not compatible with netcoreapp1.0 (.NETCoreApp,Version=v1.0). Package Ix-Async 1.2.5 supports:
   - net40 (.NETFramework,Version=v4.0)
   - net45 (.NETFramework,Version=v4.5)

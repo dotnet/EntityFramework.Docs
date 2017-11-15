@@ -11,12 +11,12 @@ The EF Core Package Manager Console (PMC) Tools run inside of Visual Studio usin
 These tools work with both .NET Framework and .NET Core projects.
 
 > [!TIP]
-> Not using Visual Studio? The [EF Core command Line Tools][1] are cross-platform and run inside a command prompt.
+> Not using Visual Studio? The [EF Core Command-line Tools][1] are cross-platform and run inside a command prompt.
 
 Installing the tools
 --------------------
 Install the EF Core Package Manager Console Tools by installing the Microsoft.EntityFrameworkCore.Tools NuGet package.
-You can do this by executing the following command inside [Package Manager Console][2].
+You can install it by executing the following command inside [Package Manager Console][2].
 
 ``` powershell
 Install-Package Microsoft.EntityFrameworkCore.Tools
@@ -28,7 +28,7 @@ If everything worked correctly, you should be able to run this command:
 Get-Help about_EntityFrameworkCore
 ```
 > [!TIP]
-> If your startup project targets .NET Standad, [cross-target a supported framework][3] before using the tools.
+> If your startup project targets .NET Standard, [cross-target a supported framework][3] before using the tools.
 
 > [!IMPORTANT]
 > If you're using **Universal Windows** or **Xamarin**, move your EF code to a .NET Standard class library and
@@ -39,10 +39,10 @@ Using the tools
 Whenever you invoke a command, there are two projects involved:
 
 The target project is where any files are added (or in some cases removed). The target project defaults to the
-**Default project** selected in Pacage Manager Console, but can also be specified using the -Project parameter.
+**Default project** selected in Package Manager Console, but can also be specified using the -Project parameter.
 
 The startup project is the one emulated by the tools when executing your project's code. It defaults to one
-**Set as StartUp Project** in Solution Explorer, but can also be specified using the -StartupProject parameter.
+**Set as StartUp Project** in Solution Explorer. It can also be specified using the -StartupProject parameter.
 
 Common parameters:
 
@@ -112,7 +112,7 @@ Parameters:
 | ---------------------------------------- | ------------------------------------------------------------------------- |
 | <nobr>***-Connection*** \<String></nobr> | The connection string to the database.                                    |
 | ***-Provider*** \<String>                | The provider to use. (E.g. Microsoft.EntityFrameworkCore.SqlServer)       |
-| -OutputDir \<String>                     | The directory to put files in. Paths are relaive to the project directory. |
+| -OutputDir \<String>                     | The directory to put files in. Paths are relative to the project directory. |
 | -Context \<String>                       | The name of the DbContext to generate.                                    |
 | -Schemas \<String[]>                     | The schemas of tables to generate entity types for.                       |
 | -Tables \<String[]>                      | The tables to generate entity types for.                                  |

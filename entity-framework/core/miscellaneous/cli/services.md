@@ -7,9 +7,9 @@ ms.technology: entity-framework-core
 ---
 Design-time services
 ====================
-Some services used by the tools are only used at design time. These services are managed seperately from EF Core's
+Some services used by the tools are only used at design time. These services are managed separately from EF Core's
 runtime services to prevent them from being deployed with your app. To override one of these services (for example the
-service to generate migration files) add an implementation of `IDesignTimeServices` to your startup project.
+service to generate migration files), add an implementation of `IDesignTimeServices` to your startup project.
 
 ``` csharp
 class MyDesignTimeServices : IDesignTimeServices

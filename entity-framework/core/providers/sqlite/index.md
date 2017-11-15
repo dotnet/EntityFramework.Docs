@@ -16,10 +16,10 @@ This database provider allows Entity Framework Core to be used with SQLite. The 
 
 ## Install
 
-Install the [Microsoft.EntityFrameworkCore.SQLite NuGet package](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SQLite/).
+Install the [Microsoft.EntityFrameworkCore.Sqlite NuGet package](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite/).
 
-``` console
-PM> Install-Package Microsoft.EntityFrameworkCore.SQLite
+``` powershell
+Install-Package Microsoft.EntityFrameworkCore.Sqlite
 ```
 
 ## Get Started
