@@ -15,7 +15,7 @@ uid: core/providers/mysql/index
 This database provider allows Entity Framework Core to be used with MySQL. The provider is maintained as part of the [MySQL project](http://dev.mysql.com).
 
 > [!WARNING]  
-> This provider is pre-release.
+> This provider is pre-release. EF 2.x is currently [not supported](https://github.com/aspnet/EntityFrameworkCore/issues/10065).
 
 > [!NOTE]  
 > This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
