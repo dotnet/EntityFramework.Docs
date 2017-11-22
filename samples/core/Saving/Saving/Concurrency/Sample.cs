@@ -25,8 +25,10 @@ namespace EFSaving.Concurrency
                 var person = context.People.Single(p => p.PersonId == 1);
                 person.PhoneNumber = "555-555-5555";
 
-                // Change the persons name in the database (will cause a concurrency conflict)
-                context.Database.ExecuteSqlCommand("UPDATE dbo.People SET FirstName = 'Jane' WHERE PersonId = 1");
+                // Change the persons name in the database - causes a concurrency conflict
+                // Requires NuGet package Microsoft.EntityFrameworkCore.Relational
+                context.Database.ExecuteSqlCommand(
+                    "UPDATE dbo.People SET FirstName = 'Jane' WHERE PersonId = 1");
 
                 try
                 {
@@ -41,25 +43,34 @@ namespace EFSaving.Concurrency
                         {
                             // Using a NoTracking query means we get the entity but it is not tracked by the context
                             // and will not be merged with existing entities in the context.
-                            var databaseEntity = context.People.AsNoTracking().Single(p => p.PersonId == ((Person)entry.Entity).PersonId);
+                            var databaseEntity = context.People
+                                .AsNoTracking()
+                                .Single(p => p.PersonId == ((Person)entry.Entity).PersonId);
                             var databaseEntry = context.Entry(databaseEntity);
 
                             foreach (var property in entry.Metadata.GetProperties())
                             {
-                                var proposedValue = entry.Property(property.Name).CurrentValue;
-                                var originalValue = entry.Property(property.Name).OriginalValue;
-                                var databaseValue = databaseEntry.Property(property.Name).CurrentValue;
+                                var proposedValue = entry.Property(property.Name)
+                                    .CurrentValue;
+                                var originalValue = entry.Property(property.Name)
+                                    .OriginalValue;
+                                var databaseValue = databaseEntry.Property(property.Name)
+                                    .CurrentValue;
 
-                                // TODO: Logic to decide which value should be written to database
-                                // entry.Property(property.Name).CurrentValue = <value to be saved>;
+                                // TODO: Logic to decide which value should be written to DB
+                                // entry.Property(property.Name).CurrentValue =
+                                // <value to be saved>;
 
-                                // Update original values to 
-                                entry.Property(property.Name).OriginalValue = databaseEntry.Property(property.Name).CurrentValue;
+                                // Update original values to
+                                entry.Property(property.Name).OriginalValue =
+                                    databaseEntry.Property(property.Name).CurrentValue;
                             }
                         }
                         else
                         {
-                            throw new NotSupportedException("Don't know how to handle concurrency conflicts for " + entry.Metadata.Name);
+                            throw new NotSupportedException(
+                                "Don't know how to handle concurrency conflicts for "
+                                + entry.Metadata.Name);
                         }
                     }
 
@@ -91,6 +102,5 @@ namespace EFSaving.Concurrency
 
             public string PhoneNumber { get; set; }
         }
-
     }
 }
