@@ -95,6 +95,7 @@
 #### [Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, and more)](core/providers/devart/index.md)
 #### [Oracle (not yet available)](core/providers/oracle/index.md)
 #### [MyCat](core/providers/my-cat/index.md)
+#### [Firebird-Community](core/providers/firebird-community/index.md)
 #### [Writing a Database Provider](core/providers/writing-a-provider.md)
 
 ### [Managing Database Schemas](core/managing-schemas/index.md)
