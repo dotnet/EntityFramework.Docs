@@ -1,7 +1,7 @@
 ---
 title: FirebirdSQL Database Provider - EF Core
-author: rafaelalmeida
-ms.author: rafaelalmeida
+author: ralmsdeveloper
+ms.author: ralmsdeveloper
 
 ms.date: 11/22/2017
 
