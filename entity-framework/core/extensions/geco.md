@@ -1,6 +1,9 @@
 ---
 title: Geco, Reverse Model Generator - Tools & Extensions - EF Core
 author: popcatalin81
+ms.author: divega
+ms.technology: entity-framework-core
+ms.assetid: 41B5D9AB-FE27-4FC9-B1F0-F342692DEF35
 uid: core/extensions/geco-reverse-model-generator
 ---
 # Geco, Reverse Model Generator
