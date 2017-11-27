@@ -62,7 +62,7 @@ using (var context = new BloggingContext())
 ```
 
 > [!NOTE]  
-> No tracking queries still perform identity resolution. If the result set contains the same entity multiple times, the same instance of the entity class will be returned for each occurrence in the result set. However, weak references are used to keep track of entities that have already been returned. If a previous result with the same identity goes out of scope, and garbage collection runs, you may get a new entity instance. For more information, see [How Query Works](overview.md).
+> No tracking queries still perform identity resolution within the excuting query. If the result set contains the same entity multiple times, the same instance of the entity class will be returned for each occurrence in the result set. However, weak references are used to keep track of entities that have already been returned. If a previous result with the same identity goes out of scope, and garbage collection runs, you may get a new entity instance. For more information, see [How Query Works](overview.md).
 
 ## Tracking and projections
 
