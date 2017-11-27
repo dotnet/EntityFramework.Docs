@@ -118,6 +118,7 @@
 #### [LLBLGen Pro](core/extensions/llbl-gen-pro.md)
 #### [Devart Entity Developer](core/extensions/devart-entity-developer.md)
 #### [EFSecondLevelCache.Core](core/extensions/efsecondlevelcache-core.md)
+#### [Geco (Reverse Model Generator)](core/extensions/geco.md)
 #### [EntityFrameworkCore.Detached](core/extensions/entityframeworkcore-detached.md)
 #### [EntityFrameworkCore.Triggers](core/extensions/entityframeworkcore-triggers.md)
 #### [EntityFrameworkCore.Rx](core/extensions/entityframeworkcore-rx.md)
