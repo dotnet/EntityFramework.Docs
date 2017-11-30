@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EFGetStarted.UWP.Migrations
 {
@@ -13,7 +13,7 @@ namespace EFGetStarted.UWP.Migrations
                 columns: table => new
                 {
                     BlogId = table.Column<int>(nullable: false)
-                        .Annotation("Autoincrement", true),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Url = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -26,7 +26,7 @@ namespace EFGetStarted.UWP.Migrations
                 columns: table => new
                 {
                     PostId = table.Column<int>(nullable: false)
-                        .Annotation("Autoincrement", true),
+                        .Annotation("Sqlite:Autoincrement", true),
                     BlogId = table.Column<int>(nullable: false),
                     Content = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true)
