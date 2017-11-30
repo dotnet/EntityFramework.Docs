@@ -116,7 +116,7 @@ As before, when not using auto-generated keys, a query and some processing can b
 
 ## Handling deletes
 
-Delete can be tricky to handle since often the absence of an entity means that it should be deleted. One way to deal with this is to use "soft deletes" such that the entity is marked as deleted rather than actually being deleted. Deletes then becomes the same as updates. Soft deletes can be implemented in using [query filters](..\querying\query-filters).
+Delete can be tricky to handle since often the absence of an entity means that it should be deleted. One way to deal with this is to use "soft deletes" such that the entity is marked as deleted rather than actually being deleted. Deletes then becomes the same as updates. Soft deletes can be implemented in using [query filters](xref:core/querying/filters).
 
 For true deletes, a common pattern is to use an extension of the query pattern to perform what is essentially a graph diff. For example:
 
