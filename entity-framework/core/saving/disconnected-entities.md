@@ -56,7 +56,7 @@ It is beyond the scope of this document to show the full code for passing a flag
 
 ## Saving single entities
 
-If it is known whether or not an insert or update us needed, then either the Add or Update can be used appropriately:
+If it is known whether or not an insert or update is needed, then either Add or Update can be used appropriately:
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertAndUpdateSingleEntity)]
 
@@ -76,7 +76,7 @@ If the entity is not using auto-generated keys, then the application must decide
 The steps here are:
 * If Find returns null, then the database doesn't already contain the blog with this ID, so we call Add mark it for insertion.
 * If Find returns an entity, then it exists in the database and the context is now tracking the existing entity
-  * We then use SetValues to set the values for all properties on this entity to those that came from the client. 
+  * We then use SetValues to set the values for all properties on this entity to those that came from the client.
   * The SetValues call will mark the entity to be updated as needed.
 
 > [!TIP]  
