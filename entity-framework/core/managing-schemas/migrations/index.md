@@ -22,7 +22,7 @@ Add-Migration InitialCreate
 dotnet ef migrations add InitialCreate
 ```
 
-Tree files are added to your project under the **Migrations** directory:
+Three files are added to your project under the **Migrations** directory:
 
 * **00000000000000_InitialCreate.cs**--The main migrations file. Contains the operations necessary to apply the
   migration (in `Up()`) and to revert it (in `Down()`).
