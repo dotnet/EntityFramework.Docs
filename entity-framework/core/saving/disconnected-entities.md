@@ -44,7 +44,7 @@ However, EF also has a built-in way to do this for any entity type and key type:
 
 ### With other keys
 
-Some other mechanism is needed to identity new entities when key values are not generated automatically. There are two general approaches to this:
+Some other mechanism is needed to identify new entities when key values are not generated automatically. There are two general approaches to this:
  * Query for the entity
  * Pass a flag from the client
 
