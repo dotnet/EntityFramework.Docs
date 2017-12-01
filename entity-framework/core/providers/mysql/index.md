@@ -15,7 +15,7 @@ uid: core/providers/mysql/index
 This database provider allows Entity Framework Core to be used with MySQL. The provider is maintained as part of the [MySQL project](http://dev.mysql.com).
 
 > [!WARNING]  
-> This provider is pre-release. EF 2.x is currently [not supported](https://github.com/aspnet/EntityFrameworkCore/issues/10065).
+> This provider is pre-release.
 
 > [!NOTE]  
 > This provider is not maintained as part of the Entity Framework Core project. When considering a third party provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements.
@@ -41,3 +41,5 @@ See [Starting with MySQL EF Core provider and Connector/Net 7.0.4](http://inside
 * .NET Framework (4.5.1 onwards)
 
 * .NET Core
+
+Be sure to review the MySQL documentation for version compatibility information [here](https://dev.mysql.com/doc/connector-net/en/connector-net-versions.html) and [here](https://dev.mysql.com/doc/connector-net/en/connector-net-entityframework-core.html)
