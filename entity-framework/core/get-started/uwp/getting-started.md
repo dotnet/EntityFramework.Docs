@@ -13,8 +13,8 @@ uid: core/get-started/uwp/getting-started
 
 # Getting Started with EF Core on Universal Windows Platform (UWP) with a New Database
 
--> [!NOTE]
--> This tutorial uses EF Core 2.0.1 (released alongside ASP.NET Core and .NET Core SDK 2.0.3). EF Core 2.0.0 lacks some crucial bug fixes required for a good UWP experience.
+> [!NOTE]
+> This tutorial uses EF Core 2.0.1 (released alongside ASP.NET Core and .NET Core SDK 2.0.3). EF Core 2.0.0 lacks some crucial bug fixes required for a good UWP experience.
 
 In this walkthrough, you will build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
