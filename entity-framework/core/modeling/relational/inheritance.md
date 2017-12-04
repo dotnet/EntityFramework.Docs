@@ -17,6 +17,9 @@ uid: core/modeling/relational/inheritance
 
 Inheritance in the EF model is used to control how inheritance in the entity classes is represented in the database.
 
+> [!NOTE]  
+> Currently, only the table-per-hierarchy (TPH) pattern is implemented in EF Core. Other common patterns like table-per-type (TPT) and table-per-concrete-type (TPC) are not yet available.
+
 ## Conventions
 
 By convention, inheritance will be mapped using the table-per-hierarchy (TPH) pattern. TPH uses a single table to store the data for all types in the hierarchy. A discriminator column is used to identify which type each row represents.
