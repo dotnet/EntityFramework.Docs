@@ -43,5 +43,5 @@ If you did everything correctly, you should be able to add new migrations to the
 Add-Migration NewMigration -Project MyApp.Migrations
 ```
 ``` Console
-dotnet ef migraitons add NewMigration --project MyApp.Migrations
+dotnet ef migrations add NewMigration --project MyApp.Migrations
 ```
