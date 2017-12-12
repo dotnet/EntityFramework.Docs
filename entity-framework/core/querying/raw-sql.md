@@ -28,6 +28,8 @@ There are a couple of limitations to be aware of when using raw SQL queries:
 
 * The SQL query cannot contain related data. However, in many cases you can compose on top of the query using the `Include` operator to return related data (see [Including related data](#including-related-data)).
 
+* The SQL query must be composable, therefore no trailing semicolon is allowed.
+
 ## Basic raw SQL queries
 
 You can use the *FromSql* extension method to begin a LINQ query based on a raw SQL query.
