@@ -197,7 +197,7 @@ When you create an ASP.NET Core 2.0 application, this hook is included from the 
 
 In previous versions of EF Core and ASP.NET Core, the tools would try to invoke `Startup.ConfigureServices` directly in order to access the application's service provider, but this pattern no longer works correctly in ASP.NET Core 2.0 applications.
 
-### Using IDesignTimeDbContextFactory\<\TContext\>
+### Using IDesignTimeDbContextFactory\<TContext\>
 
 As an alternative to the options above, you may provide an implementation of `IDesignTimeDbContextFactory<TContext>` to enable design-time services. This is useful for context types that do not have a public default constructor and take additional parameters are not registered in DI, if you are not using DI at all, or if for some reason you prefer not to have a `BuildWebHost` method in your ASP.NET Core application's `Main` class.
 
