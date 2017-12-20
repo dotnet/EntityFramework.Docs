@@ -12,17 +12,19 @@ uid: core/miscellaneous/configuring-dbcontext
 ---
 # Configuring a DbContext
 
-This article shows patterns for configuring a `DbContext` with `DbContextOptions`. Options are primarily used to select and configure the data store.
+This article shows patterns for configuring a `DbContext` via a `DbContextOptions` to connect to a data store using a specific EF Core provider and optional behaviors.
+
+While any pattern that provides the necessary configuration information to the `DbContext` can work at run-time, tools that require using a `DbContext` at design-time such as the [migrations](xref:core/managing-schemas/migrations/index) can only recognize a limited number of patterns.
 
 ## Configuring DbContextOptions
 
-`DbContext` must have an instance of `DbContextOptions` in order to execute. This can be configured by overriding `OnConfiguring`, or supplied externally via a constructor argument.
+`DbContext` must have an instance of `DbContextOptions` in order to perform any work. The `DbContextOptions` can be supplied to the `DbContext` by overriding the `OnConfiguring` method or externally via a constructor argument.
 
-If both are used, `OnConfiguring` is executed on the supplied options, meaning it is additive and can overwrite  options supplied to the constructor argument.
+If both are used, `OnConfiguring` is applied last and can overwrite options supplied to the constructor argument.
 
 ### Constructor argument
 
-Context code with constructor
+Context code with constructor:
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -38,7 +40,7 @@ public class BloggingContext : DbContext
 > [!TIP]  
 > The base constructor of DbContext also accepts the non-generic version of `DbContextOptions`. Using the non-generic version is not recommended for applications with multiple context types.
 
-Application code to initialize from constructor argument
+Application code to initialize from constructor argument:
 
 ``` csharp
 var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
@@ -51,9 +53,6 @@ using (var context = new BloggingContext(optionsBuilder.Options))
 ```
 
 ### OnConfiguring
-
-> [!WARNING]  
-> `OnConfiguring` occurs last and can overwrite options obtained from DI or the constructor. This approach does not lend itself to testing (unless you target the full database).
 
 Context code with `OnConfiguring`:
 
@@ -69,7 +68,7 @@ public class BloggingContext : DbContext
 }
 ```
 
-Application code to initialize with `OnConfiguring`:
+Application code to initialize a `DbContext` with `OnConfiguring`:
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -77,6 +76,9 @@ using (var context = new BloggingContext())
   // do stuff
 }
 ```
+
+> [!TIP]
+> This approach does not lend itself to testing, unless the tests target the full database.
 
 ## Using DbContext with dependency injection
 
@@ -86,7 +88,7 @@ EF supports using `DbContext` with a dependency injection container. Your DbCont
 
 See [more reading](#more-reading) below for information on dependency injection.
 
-Adding dbcontext to dependency injection
+Adding the `Dbcontext` to dependency injection:
 
 ``` csharp
 public void ConfigureServices(IServiceCollection services)
@@ -113,7 +115,17 @@ public class BloggingContext : DbContext
 Application code (in ASP.NET Core):
 
 ``` csharp
-public MyController(BloggingContext context)
+public class MyController
+{
+    private readonly BloggingContext _context;
+
+    public MyController(BloggingContext context)
+    {
+      _context = context;
+    }
+
+    ...
+}
 ```
 
 Application code (using ServiceProvider directly, less common):
@@ -127,11 +139,49 @@ using (var context = serviceProvider.GetService<BloggingContext>())
 var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
 ```
 
-## Using `IDesignTimeDbContextFactory<TContext>`
+## Design-time discovery and configuration
 
-As an alternative to the options above, you may also provide an implementation of `IDesignTimeDbContextFactory<TContext>`. EF tools can use this factory to create an instance of your DbContext. This may be required in order to enable specific design-time experiences such as migrations.
+EF Core design-time tools such as [migrations](xref:core/managing-schemas/migrations/index) need to be able to discover and create a working instance of a `DbContext` type in order to gather details about the application's entity types and how they are mapped to the database schema. This process can work automatically as long as the tool can create the `DbContext` in a way that it will be configured similarly to how it would be configured at runt-time. Concretely, this translates to three  common patterns:
 
-Implement this interface to enable design-time services for context types that do not have a public default constructor. Design-time services will automatically discover implementations of this interface that are in the same assembly as the derived context.
+### Constructor without parameters
+
+A `DbContext` with a constructor with no parameters, in which the `DbContextOptions` are supplied in the `OnConfiguring` method can be discovered and instantiated by design-time tools.
+
+### Using dependency injection in ASP.NET Core applications
+
+The `DbContext` has to itself be registered as a service and take dependencies in its constructor other services that can be resolved from the application's dependency injection container. One of the dependencies will typically be the `DbContextOptions<TContext>`, which together with the `DbContext` can be registered in DI using the `AddDbContext<TContext>()` method.
+
+This pattern also requires the tool to obtain an instance of the application's dependency injection container at design-time. Starting with EF Core 2.0 and ASP.NET Core 2.0, the recommended pattern to achieve that is to have a static `Program.BuildWebHost` method to enable design-tools to access the application's service provider at design time.
+
+If you create an ASP.NET Core 2.0 application, this hook is included in the default templates. If you are upgrading an ASP.NET Core 1.x application to 2.0, you will need to modify you `Program` class to resemble the following code:
+
+``` csharp
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+
+namespace AspNetCoreDotNetCore.Application
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            BuildWebHost(args).Run();
+        }
+
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .Build();
+    }
+}
+
+In previous versions, the tools would try to invoke `Startup.ConfigureServices()` directly in order to access the application's service provider.
+
+### Using IDesignTimeDbContextFactory<TContext>
+
+As an alternative to the options above, you may provide an implementation of `IDesignTimeDbContextFactory<TContext>` to enable design-time services for context types that do not have a public default constructor and take additional parameters are not registered in DI, or if you are not using DI at all. EF Core tools can use this factory to create an instance of your DbContext.
+
+Design-time services will automatically discover implementations of this interface that are in the same assembly as the derived context.
 
 Example:
 
