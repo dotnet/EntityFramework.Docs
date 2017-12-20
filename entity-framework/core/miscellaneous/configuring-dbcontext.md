@@ -195,7 +195,7 @@ namespace MyWebApplication
 
 When you create an ASP.NET Core 2.0 application, this hook is included from the default templates. If you are upgrading an ASP.NET Core 1.x application to 2.0, you will need to modify your `Program` class to resemble the code above.
 
-In previous versions of EF Core and ASP.NET Core, the tools would try to invoke `Startup.ConfigureServices()` directly in order to access the application's service provider, but this pattern no longer works correctly in ASP.NET Core 2.0 applications.
+In previous versions of EF Core and ASP.NET Core, the tools would try to invoke `Startup.ConfigureServices` directly in order to access the application's service provider, but this pattern no longer works correctly in ASP.NET Core 2.0 applications.
 
 ### Using IDesignTimeDbContextFactory<TContext>
 
