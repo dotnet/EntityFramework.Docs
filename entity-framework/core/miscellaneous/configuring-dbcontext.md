@@ -103,9 +103,9 @@ using (var context = new BloggingContext())
 
 EF Core supports using `DbContext` with a dependency injection container. Your DbContext type can be added to the service container by using the `AddDbContext<TContext>` method.
 
-`AddDbContext<TContext>` will make both your DbContext type, `TContext`, and `DbContextOptions<TContext>` available for injection from the service container.
+`AddDbContext<TContext>` will make both your DbContext type, `TContext`, and the corresponding `DbContextOptions<TContext>` available for injection from the service container.
 
-See [more reading](#more-reading) below for more information on dependency injection.
+See [more reading](#more-reading) below for additional information on dependency injection.
 
 Adding the `Dbcontext` to dependency injection:
 
@@ -164,11 +164,11 @@ EF Core design-time tools such as [migrations](xref:core/managing-schemas/migrat
 
 ### Constructor without parameters
 
-Design-time tools can discover and instantiate a `DbContext` with a constructor with no parameters, in which the `DbContextOptions` are supplied in the [`OnConfiguring`](#OnConfiguring) method.
+Design-time tools can discover and instantiate a `DbContext` with a constructor with no parameters, in which the `DbContextOptions` will be usually supplied in the [`OnConfiguring`](#OnConfiguring) method.
 
 ### Using dependency injection in ASP.NET Core applications
 
-The `DbContext` has to itself be registered as a service and any dependencies in its constructor need to be services that can be resolved from the application's dependency injection container. One of the dependencies will typically be the `DbContextOptions<TContext>`, which together with the `DbContext` can be registered in DI using the `AddDbContext<TContext>()` method.
+The `DbContext` has to itself be registered as a service and any dependencies in its constructor need to be services that can be resolved from the application's dependency injection container. One of the dependencies will typically be the `DbContextOptions<TContext>`, which together with the `DbContext` can be registered in DI using the `AddDbContext<TContext>` method.
 
 This pattern also requires tools to be able to obtain an instance of the application's dependency injection container at design-time. Starting with EF Core 2.0 and ASP.NET Core 2.0, the recommended pattern to achieve that is to have a static `Program.BuildWebHost` method as follows:
 
@@ -195,7 +195,7 @@ namespace MyWebApplication
 
 When you create an ASP.NET Core 2.0 application, this hook is included from the default templates. If you are upgrading an ASP.NET Core 1.x application to 2.0, you will need to modify your `Program` class to resemble the code above.
 
-In previous versions of EF Core and ASP.NET Core, the tools would try to invoke `Startup.ConfigureServices()` directly in order to access the application's service provider.
+In previous versions of EF Core and ASP.NET Core, the tools would try to invoke `Startup.ConfigureServices()` directly in order to access the application's service provider, but this pattern no longer works correctly in ASP.NET Core 2.0 applications.
 
 ### Using IDesignTimeDbContextFactory<TContext>
 
