@@ -28,7 +28,12 @@ There are a couple of limitations to be aware of when using raw SQL queries:
 
 * The SQL query cannot contain related data. However, in many cases you can compose on top of the query using the `Include` operator to return related data (see [Including related data](#including-related-data)).
 
-* The SQL query must be composable, therefore no trailing semicolon is allowed.
+* `SELECT` statements passed to this API should generally be composable: If `EF Core` needs to evaluate additional query operators on the server (e.g. if additional LINQ operators are applied after `FromSql`) the supplied SQL query will be treated as a subquery. This means that the SQL passed should not contain any characters or options that are not valid on a subquery, such as:
+  * a trailing semicolon
+  * On SQL Server, trailing query-level hints, e.g. `OPTION (HASH JOIN)`
+  * On SQL Server, an `ORDER BY` clause that is not accompanied of a `TOP 100 PERCENT` in the `SELECT` clause
+
+* SQL statements other than `SELECT` are recognized automatically as non-composable. This means that the full results of stored procedures are always returned and any additional query operators requested are applied in-memory.  
 
 ## Basic raw SQL queries
 
