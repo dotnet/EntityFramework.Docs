@@ -33,7 +33,7 @@ There are a couple of limitations to be aware of when using raw SQL queries:
   * On SQL Server, a trailing query-level hint, e.g. `OPTION (HASH JOIN)`
   * On SQL Server, an `ORDER BY` clause that is not accompanied of `TOP 100 PERCENT` in the `SELECT` clause
 
-* SQL statements other than `SELECT` are recognized automatically as non-composable. As a consequence, the full results of stored procedures are always returned to the client and any additional LINQ operators applied after `FromSql` are evaluated in-memory. 
+* SQL statements other than `SELECT` are recognized automatically as non-composable. As a consequence, the full results of stored procedures are always returned to the client and any LINQ operators applied after `FromSql` are evaluated in-memory. 
 
 ## Basic raw SQL queries
 
