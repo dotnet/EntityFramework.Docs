@@ -4,6 +4,7 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/30/2017
 ms.technology: entity-framework-core
+uid: core/managing-schemas/migrations/index
 ---
 Migrations
 ==========
