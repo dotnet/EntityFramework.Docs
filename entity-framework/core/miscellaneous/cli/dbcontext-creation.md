@@ -43,8 +43,9 @@ default constructor if the `DbContext` is configured using the [`OnConfiguring`]
 From a design-time factory
 --------------------------
 You can also tell the tools how to create your DbContext by implementing the `IDesignTimeDbContextFactory<TContext>`
-interface. If a class implementing this interface is found in the same project as the derived `DbContext`, the tools
-bypass the other ways of creating the DbContext. They always use the factory at design time.
+interface: If a class implementing this interface is found in either the same project as the derived `DbContext` or in 
+the application's startup project, the tools bypass the other ways of creating the DbContext and use the 
+design-time factory instead.
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
