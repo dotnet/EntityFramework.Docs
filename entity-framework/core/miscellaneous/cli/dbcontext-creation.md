@@ -30,8 +30,9 @@ The tool first try to obtain the service provider by invoking `Program.BuildWebH
 > ASP.NET Core 1.x application to 2.0, you can [modify your `Program` class to follow the new pattern][3].
 
 The `DbContext` itself and any dependencies in its constructor need to be registered as services in the application's
-service provider. This can be easily achieved by taking an instance of `DbContextOptions<TContext>` as a
-[constructor argument][4] and using the [`AddDbContext<TContext>` method][5].
+service provider. This can be easily achieved by having 
+[a constructor on the `DbContext` that takes an instance of `DbContextOptions<TContext>` as a argument][4] and using the 
+[`AddDbContext<TContext>` method][5].
 
 Using a constructor with no parameters
 --------------------------------------
@@ -69,7 +70,7 @@ namespace MyProject
 > from the tools.
 
 A design-time factory can be especially useful if you need to configure the DbContext differently for design time than
-at run time, if the `DbContext` constructor take additional parameters are not registered in DI, if you are not using
+at run time, if the `DbContext` constructor takes additional parameters are not registered in DI, if you are not using
 DI at all, or if for some reason you prefer not to have a `BuildWebHost` method in your ASP.NET Core application's  
 `Main` class.
 
