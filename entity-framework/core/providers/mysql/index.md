@@ -41,3 +41,5 @@ See [Starting with MySQL EF Core provider and Connector/Net 7.0.4](http://inside
 * .NET Framework (4.5.1 onwards)
 
 * .NET Core
+
+Be sure to review the MySQL documentation for version compatibility information [here](https://dev.mysql.com/doc/connector-net/en/connector-net-versions.html) and [here](https://dev.mysql.com/doc/connector-net/en/connector-net-entityframework-core.html)
