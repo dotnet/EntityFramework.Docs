@@ -27,7 +27,7 @@ The tool first try to obtain the service provider by invoking `Program.BuildWebH
 > When you create a new ASP.NET Core 2.0 application, this hook is included by default. In previous versions of EF Core
 > and ASP.NET Core, the tools try to invoke `Startup.ConfigureServices` directly in order to obtain the application's
 > service provider, but this pattern no longer works correctly in ASP.NET Core 2.0 applications. If you are upgrading an
-> ASP.NET Core 1.x application to 2.0, you can[modify your `Program` class to follow the new pattern][3].
+> ASP.NET Core 1.x application to 2.0, you can [modify your `Program` class to follow the new pattern][3].
 
 The `DbContext` itself and any dependencies in its constructor need to be registered as services in the application's
 service provider. This can be easily achieved by taking an instance of `DbContextOptions<TContext>` as a
