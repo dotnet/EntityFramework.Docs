@@ -39,7 +39,7 @@ You can drill down thru relationships to include multiple levels of related data
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#SingleThenInclude)]
 
 > [!NOTE]  
-> Current versions of Visual Studio do not offer the correct code completion options when `ThenInclude` is used after collection navigation properties. This is a symptom of an IntelliSense bug tracked at https://github.com/dotnet/roslyn/issues/8237 which can also cause expressions passed to `ThenInclude` to be incorretly flaged as syntax errors. The errors can be ignored as long as the code compiles correctly.
+> Current versions of Visual Studio offer incorrect code completion options when `ThenInclude` is used after collection navigation properties. This is a symptom of an IntelliSense bug tracked at https://github.com/dotnet/roslyn/issues/8237 which can also cause correct expressions passed to `ThenInclude` to be incorretly flaged with syntax errors. The errors can be ignored as long as the expressions are correct. 
 
 You can chain multiple calls to `ThenInclude` to continue including further levels of related data.
 
