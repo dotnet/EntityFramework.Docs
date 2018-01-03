@@ -23,6 +23,7 @@ The following example shows how to use Global Query Filters to implement soft-de
 First, define the entities:
 
 [!code-csharp[Main](../../../efcore-dev/samples/QueryFilters/Program.cs#Entities)]
+<!---Loc Comment: Links with the following reference: (../../../efcore-dev/samples/QueryFilters/Program.cs) are not working--->
 
 Note the declaration of a __tenantId_ field on the _Blog_ entity. This will be used to associate each Blog instance with a specific tenant. Also defined is an _IsDeleted_ property on the _Post_ entity type. This is used this to keep track of whether a _Post_ instance has been "soft-deleted". I.e. The instance is marked as deleted withouth physically removing the underlying data.
 
