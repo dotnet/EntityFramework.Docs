@@ -129,6 +129,7 @@
 #### [Microsoft.EntityFrameworkCore.AutoHistory](core/extensions/autohistory.md)
 #### [Microsoft.EntityFrameworkCore.DynamicLinq](core/extensions/dynamiclinq.md)
 #### [Microsoft.EntityFrameworkCore.UnitOfWork](core/extensions/unitofwork.md)
+#### [NeinLinq.EntityFrameworkCore](core/extensions/neinlinq.md)
 
 ### Miscellaneous
 #### [Connection Strings](core/miscellaneous/connection-strings.md)
