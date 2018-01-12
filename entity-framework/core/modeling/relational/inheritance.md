@@ -84,3 +84,51 @@ public class RssBlog : Blog
     public string RssUrl { get; set; }
 }
 ```
+
+## Configuring the discriminator property
+
+In the examples above, the discriminator is created as a shadow property on the base entity of the hierarchy. Since it is a property in the model, it can be configured just like other properties. For example, to set the max length when the default, by-convention discriminator is being used:
+
+```C#
+modelBuilder.Entity<Blog>()
+    .Property("Discriminator")
+    .HasMaxLength(200);
+```
+
+The discriminator can also be mapped to an actual CLR property in your entity. For example:
+```C#
+class MyContext : DbContext
+{
+    public DbSet<Blog> Blogs { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Blog>()
+            .HasDiscriminator<string>("BlogType");
+    }
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+    public string BlogType { get; set; }
+}
+
+public class RssBlog : Blog
+{
+    public string RssUrl { get; set; }
+}
+```
+
+Combining these two things together it is possible to both map the discriminator to a real property and configure it:
+```C#
+modelBuilder.Entity<Blog>(b =>
+{
+    b.HasDiscriminator<string>("BlogType");
+
+    b.Property(e => e.BlogType)
+        .HasMaxLength(200)
+        .HasColumnName("blog_type");
+});
+```
