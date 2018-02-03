@@ -89,7 +89,7 @@ The steps here are:
 
 ### Identity resolution
 
-As noted above, EF Core can only track one instance of any entity with a given primary key value. When working with graphs the graph should ideally be created such that this invariant is maintained, and the context should be used for only one unit-of-work. If the graph does contain duplicates, then it will be necessary to process the graph before sending it to EF to consolidate multiple instances into one. This may not be trivial where instances have conflicting values and relationships, so consolidating duplicates should be done as soon as possible in your appliation pipeline to avoid conflict resolution.
+As noted above, EF Core can only track one instance of any entity with a given primary key value. When working with graphs the graph should ideally be created such that this invariant is maintained, and the context should be used for only one unit-of-work. If the graph does contain duplicates, then it will be necessary to process the graph before sending it to EF to consolidate multiple instances into one. This may not be trivial where instances have conflicting values and relationships, so consolidating duplicates should be done as soon as possible in your application pipeline to avoid conflict resolution.
 
 ### All new/all existing entities
 
