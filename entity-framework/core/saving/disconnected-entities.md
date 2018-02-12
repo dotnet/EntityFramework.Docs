@@ -19,6 +19,9 @@ However, sometimes entities are queried using one context instance and then save
 > [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Disconnected/) on GitHub.
 
+> [!TIP]
+> EF Core can only track one instance of any entity with a given primary key value. The best way to avoid this being an issue is to use a short-lived context for each unit-of-work such that the context starts empty, has entities attached to it, saves those entities, and then the context is disposed and discarded.
+
 ## Identifying new entities
 
 ### Client identifies new entities
@@ -83,6 +86,10 @@ The steps here are:
 > SetValues will only mark as modified the properties that have different values to those in the tracked entity. This means that when the update is sent, only those columns that have actually changed will be updated. (And if nothing has changed, then no update will be sent at all.)
 
 ## Working with graphs
+
+### Identity resolution
+
+As noted above, EF Core can only track one instance of any entity with a given primary key value. When working with graphs the graph should ideally be created such that this invariant is maintained, and the context should be used for only one unit-of-work. If the graph does contain duplicates, then it will be necessary to process the graph before sending it to EF to consolidate multiple instances into one. This may not be trivial where instances have conflicting values and relationships, so consolidating duplicates should be done as soon as possible in your application pipeline to avoid conflict resolution.
 
 ### All new/all existing entities
 

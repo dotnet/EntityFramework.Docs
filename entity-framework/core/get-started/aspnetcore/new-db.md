@@ -82,7 +82,7 @@ Add the `AddDbContext` method to register it as a service:
 
  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=7-8)]
 
-Note: A real app would gennerally put the connection string in a configuration file. For the sake of simplicity, we are defining it in code. See [Connection Strings](../../miscellaneous/connection-strings.md) for more information.
+Note: A real app would generally put the connection string in a configuration file. For the sake of simplicity, we are defining it in code. See [Connection Strings](../../miscellaneous/connection-strings.md) for more information.
 
 ## Create your database
 
