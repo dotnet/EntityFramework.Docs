@@ -87,7 +87,7 @@ public class RssBlog : Blog
 
 ## Configuring the discriminator property
 
-In the examples above, the discriminator is created as a shadow property on the base entity of the hierarchy. Since it is a property in the model, it can be configured just like other properties. For example, to set the max length when the default, by-convention discriminator is being used:
+In the examples above, the discriminator is created as a [shadow property](xref:core/modeling/shadow-properties) on the base entity of the hierarchy. Since it is a property in the model, it can be configured just like other properties. For example, to set the max length when the default, by-convention discriminator is being used:
 
 ```C#
 modelBuilder.Entity<Blog>()
