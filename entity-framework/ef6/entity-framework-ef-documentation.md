@@ -12,7 +12,7 @@ ms.topic: "article"
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
 caps.latest.revision: 3
 ---
-# Entity Framework (EF) Documentation
+# Entity Framework Documentation
 This page provides an index of videos, tutorials, and advanced documentation to help you make the most of Entity Framework. The following sections are included on this page.
 
 ## Get Started
@@ -53,8 +53,6 @@ These pages will help you move existing applications to EF6.
 
 - [Upgrading to EF6](../ef6/upgrading-to-entity-framework-6.md)  
     A checklist of the things you need to do to upgrade an existing application to EF6.
-- [Database Provider with EF6 Support](../ef6/entity-framework-providers-for-ef6.md)  
-    Find out which database providers currently support EF6.
 
 ## Learn More About Setting Up Your Model
 
