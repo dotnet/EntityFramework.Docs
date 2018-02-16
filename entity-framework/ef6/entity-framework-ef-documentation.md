@@ -1,5 +1,5 @@
 ---
-title: "Get Started - EF6"
+title: "Get Started with Entity Framework - EF6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"
@@ -12,7 +12,7 @@ ms.topic: "article"
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
 caps.latest.revision: 3
 ---
-# Get Started
+# Get Started with Entity Framework
 This page provides an index of videos, tutorials, and advanced documentation to help you make the most of Entity Framework. The following sections are included on this page.
 
 [Which workflow should I use?](../ef6/entity-framework-development-workflows-video.md)  
