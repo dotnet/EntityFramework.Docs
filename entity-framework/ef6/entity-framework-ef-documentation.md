@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework (EF) Documentation - EF6"
+title: "Get Started - EF6"
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"
@@ -12,15 +12,13 @@ ms.topic: "article"
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
 caps.latest.revision: 3
 ---
-# Entity Framework Documentation
+# Get Started
 This page provides an index of videos, tutorials, and advanced documentation to help you make the most of Entity Framework. The following sections are included on this page.
-
-## Get Started
 
 [Which workflow should I use?](../ef6/entity-framework-development-workflows-video.md)  
 Entity Framework allows you to create a model by writing code or using boxes and lines in the EF Designer. Both of these approaches can be used to target an existing database or create a new database. This short video explains the differences and how to find the one that is right for you.
 
-### I just want to write code...
+## I just want to write code...
 
 [I am creating a new database](../ef6/entity-framework-code-first-to-a-new-database.md)  
 Use **Code First** to define your model in code and then generate a database.
@@ -28,14 +26,13 @@ Use **Code First** to define your model in code and then generate a database.
 [I need to access an existing database](../ef6/entity-framework-code-first-to-an-existing-database.md)  
 Use **Code First** to create a code based model that maps to an existing database.
 
-### I want to use a designer...
+## I want to use a designer...
 
 [I am creating a new database](../ef6/entity-framework-model-first.md)  
 Use **Model First** to define your model using boxes and lines and then generate a database.
 
 [I need to access an existing database](../ef6/entity-framework-database-first.md)  
 Use **Database First** to create a boxes and lines model that maps to an existing database.
-
 
 ## Entity Framework Versions
 
@@ -145,7 +142,7 @@ Use Migrations with an existing database, one that wasn't created by Entity Fram
 Automatic migrations allow you to upgrade your database without code-based migrations in your project.
 
 [Customizing the Migrations History Table (Code First only)](../ef6/entity-framework-customizing-the-migrations-history-table-ef6-onwards.md)  
-Customize the definition of the __MigrationHistory table.
+Customize the definition of the `__MigrationHistory` table.
 
 [Custom Migrations Operations (EF6 onwards)](http://romiller.com/2013/02/27/ef6-writing-your-own-code-first-migration-operations/)  
 Create additional operations to be used in your code-based migrations.
