@@ -211,8 +211,14 @@ Find out how to customize the code that is generated from your model.
 [Reverting to ObjectContext](../ef6/reverting-to-objectcontext-in-entity-framework-designer.md)  
 New models created in VS2012 generate code that uses DbContext, but you can revert to ObjectContext.
 
-[EDMX Files](../ef6/entity-framework-edmx.md)  
-Covers properties of EDMX files and specification of the xml format (including [CSDL](../ef6/entity-framework-csdl-specification.md), [SSDL](../ef6/entity-framework-ssdl-specification.md) & [MSL](../ef6/entity-framework-msl-specification.md)).
+[CSDL Specification](../ef6/entity-framework-csdl-specification.md)
+Covers the conceptual schema definition language used in the XML-based EDMX file format used by EF.
+
+[SSDL Specification](../ef6/entity-framework-ssdl-specification.md)
+Covers the store schema definition language used in the XML-based EDMX file format used by EF.
+
+[MSL Specification](../ef6/entity-framework-msl-specification.md)
+Covers the mapping specification language used in the XML-based EDMX file format used by EF.
 
 [Keyboard Shortcuts](../ef6/entity-framework-tools-keyboard-shortcuts.md)  
 A helpful list of keyboard shortcuts in Entity Framework Tools for Visual Studio.
