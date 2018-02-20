@@ -23,8 +23,8 @@ If you like to learn by writing code, we'd recommend one of our [Getting Started
 
 If you are familiar with EF Core and want to jump straight into the details of the new version:
 
-- **[New features in EF Core 2.0](what-is-new/index.md)**
-- **[Upgrading existing applications to EF Core 2.0](miscellaneous/1x-2x-upgrade.md)**
+- **[New features in EF Core 2.0](xref:core/what-is-new/ef-core-2.0)**
+- **[Upgrading existing applications to EF Core 2.0](xref:core/miscellaneous/1x-2x-upgrade)**
 
 ## Get Entity Framework Core
 
