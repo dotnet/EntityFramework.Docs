@@ -56,8 +56,6 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
   </ItemGroup>
   ```
 
- Note: A future version of `dotnet` will support DotNetCliToolReferences via `dotnet add tool`
-
 `ConsoleApp.SQLite.csproj` should now contain the following:
 
 [!code[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/ConsoleApp.SQLite.csproj)]
