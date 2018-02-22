@@ -101,7 +101,7 @@ Filters may be disabled for individual LINQ queries using the IgnoreQueryFilters
 
 ### Database scalar function mapping
 
-Preview 2 includes an important contribution from [Paul Middleton](https://github.com/pmiddleton) which enables mapping database scalar functions to method stubs so that they can be used in LINQ queries and translated to SQL.
+EF Core 2.0 includes an important contribution from [Paul Middleton](https://github.com/pmiddleton) which enables mapping database scalar functions to method stubs so that they can be used in LINQ queries and translated to SQL.
 
 Here is a brief description of how the feature can be used:
 
@@ -118,7 +118,7 @@ public class BloggingContext : DbContext
 }
 ```
 
-Methods like this are automatically registered. Once a method has been registered you can use it anywhere in your queries:
+Methods like this are automatically registered. Once registered, calls to the method in a LINQ query can be translated to function calls in SQL:
 
 ``` csharp
 var query =
