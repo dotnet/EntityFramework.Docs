@@ -259,7 +259,7 @@ var aCustomers =
     select c;
 ```
 
-Note that Like() comes with an in-memory implementation, which can be handy when working against an in-memory database or when evaluation of the predicate needs to occur con the client side.
+Note that Like() comes with an in-memory implementation, which can be handy when working against an in-memory database or when evaluation of the predicate needs to occur on the client side.
 
 ## Database management
 
