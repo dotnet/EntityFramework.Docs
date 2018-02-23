@@ -26,7 +26,7 @@ Conversions are defined using two `Func` expression trees: one from `ModelClrTyp
 ## Configuring a value converter
 
 Value conversions are defined on properties in the OnModelCreating of your DbContext. For example, consider an enum and entity type defined as:
-```C#
+```csharp
 public class Rider
 {
     public int Id { get; set; }
@@ -42,7 +42,7 @@ public enum EquineBeast
 }
 ```
 Then conversions can be defined in OnModelCreating to store the enum values as strings (e.g. "Donkey", "Mule", ...) in the database:
-```C#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder
@@ -59,7 +59,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ## The ValueConverter class
 
 Calling `HasConversion` as shown above will create a `ValueConverter` instance and set it on the property. The `ValueConverter` can instead be created explicitly. For example:
-```C#
+```csharp
 var converter = new ValueConverter<EquineBeast, string>(
     v => v.ToString(),
     v => (EquineBeast)Enum.Parse(typeof(EquineBeast), v));
@@ -100,7 +100,7 @@ EF Core ships with a set of pre-defined `ValueConverter` classes, found in the `
 * `TimeSpanToTicksConverter` - TimeSpan to ticks
 
 Notice that `EnumToStringConverter` is included in this list. This means that there is no need to specify the conversion explicitly, as shown above. Instead, just use the built-in converter:
-```C#
+```csharp
 var converter = new EnumToStringConverter<EquineBeast>();
 
 modelBuilder
@@ -113,14 +113,14 @@ Note that all the built-in converters are stateless and so a single instance can
 ## Pre-defined conversions
 
 For common conversions for which a built-in converter exists there is no need to specify the converter explicitly. Instead, just configure which provider type should be used and EF will automatically use the appropriate build-in converter. Enum to string conversions are used as an example above, but EF will actually do this automatically if the provider type is configured:
-```C#
+```csharp
 modelBuilder
     .Entity<Rider>()
     .Property(e => e.Mount)
     .HasConversion<string>();
 ```
 The same thing can be achieved by explicitly specifying the column type. For example, if the entity type is defined like so:
-```C#
+```csharp
 public class Rider
 {
     public int Id { get; set; }
