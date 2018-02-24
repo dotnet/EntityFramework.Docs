@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.Configuring.FluentAPI.Samples.Relational.IndexName
+namespace EFModeling.Configuring.FluentAPI.Samples.Relational.IndexFilter
 {
     #region Model
     class MyContext : DbContext
@@ -11,7 +11,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relational.IndexName
         {
             modelBuilder.Entity<Blog>()
                 .HasIndex(b => b.Url)
-                .HasName("Index_Url");
+                .HasFilter("[Url] IS NOT NULL");
         }
     }
 
