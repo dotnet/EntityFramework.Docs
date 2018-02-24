@@ -45,6 +45,7 @@
 #### [Inheritance](core/modeling/inheritance.md)
 #### [Backing Fields](core/modeling/backing-field.md)
 #### [Value Conversions](core/modeling/value-conversions.md)
+#### [Entity Type Constructors](core/modeling/constructors.md)
 #### [Alternating models with same DbContext](core/modeling/dynamic-model.md)
 #### [Relational Database Modeling](core/modeling/relational/index.md)
 ##### [Table Mapping](core/modeling/relational/tables.md)
