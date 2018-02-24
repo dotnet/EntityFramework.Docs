@@ -100,6 +100,8 @@
     <Compile Include="Samples\BackingFieldConceptualProperty.cs" />
     <Compile Include="Samples\BackingFieldNoProperty.cs" />
     <Compile Include="Samples\BackingField.cs" />
+    <Compile Include="Samples\Relational\IndexNoFilter.cs" />
+    <Compile Include="Samples\Relational\IndexFilter.cs" />
     <Compile Include="Samples\Relationships\ShadowForeignKey.cs" />
     <Compile Include="Samples\Timestamp.cs" />
     <Compile Include="Samples\InheritanceTphDiscriminator.cs" />
