@@ -12,11 +12,11 @@ uid: core/providers/writing-a-provider
 
 For information about writing an Entity Framework Core database provider, see [So you want to write an EF Core provider](https://blog.oneunicorn.com/2016/11/11/so-you-want-to-write-an-ef-core-provider/) by [Arthur Vickers](https://github.com/ajcvickers).
 
-The EF Core code base is open source and contains several database providers that can be used as a reference. You can find the source code at https://github.com/aspnet/EntityFramework.
+The EF Core code base is open source and contains several database providers that can be used as a reference. You can find the source code at https://github.com/aspnet/EntityFrameworkCore.
 
 ## The providers-beware label
 
-Once you begin work on a provider, watch for the [`providers-beware`](https://github.com/aspnet/EntityFramework/labels/providers-beware) label on our GitHub issues and pull requests. We use this label to identify changes that may impact provider writers.
+Once you begin work on a provider, watch for the [`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) label on our GitHub issues and pull requests. We use this label to identify changes that may impact provider writers.
 
 ## Suggested naming of third party providers
 
