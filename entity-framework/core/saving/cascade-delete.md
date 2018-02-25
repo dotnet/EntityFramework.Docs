@@ -31,21 +31,21 @@ For the second action above, setting a foreign key value to null is not valid if
 
 There are four delete behaviors, as listed in the tables below. For optional relationships (nullable foreign key) it _is_ possible to save a null foreign key value, which results in the following effects:
 
-| Behavior Name | Effect on dependent/child in memory | Effect on dependent/child in database
-|-|-|-
-| **Cascade** | Entities are deleted | Entities are deleted
-| **ClientSetNull** (Default) | Foreign key properties are set to null | None
-| **SetNull** | Foreign key properties are set to null | Foreign key properties are set to null
-| **Restrict** | None | None
+| Behavior Name               | Effect on dependent/child in memory    | Effect on dependent/child in database  |
+|:----------------------------|:---------------------------------------|:---------------------------------------|
+| **Cascade**                 | Entities are deleted                   | Entities are deleted                   |
+| **ClientSetNull** (Default) | Foreign key properties are set to null | None                                   |
+| **SetNull**                 | Foreign key properties are set to null | Foreign key properties are set to null |
+| **Restrict**                | None                                   | None                                   |
 
 For required relationships (non-nullable foreign key) it is _not_ possible to save a null foreign key value, which results in the following effects:
 
-| Behavior Name | Effect on dependent/child in memory | Effect on dependent/child in database
-|-|-|-
-| **Cascade** (Default) | Entities are deleted | Entities are deleted
-| **ClientSetNull** | SaveChanges throws | None
-| **SetNull** | SaveChanges throws | SaveChanges throws
-| **Restrict** | None | None
+| Behavior Name         | Effect on dependent/child in memory | Effect on dependent/child in database |
+|:----------------------|:------------------------------------|:--------------------------------------|
+| **Cascade** (Default) | Entities are deleted                | Entities are deleted                  |
+| **ClientSetNull**     | SaveChanges throws                  | None                                  |
+| **SetNull**           | SaveChanges throws                  | SaveChanges throws                    |
+| **Restrict**          | None                                | None                                  |
 
 In the tables above, *None* can result in a constraint violation. For example, if a principal/child entity is deleted but no action is taken to change the foreign key of a dependent/child, then the database will likely throw on SaveChanges due to a foreign constraint violation.
 

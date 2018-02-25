@@ -21,7 +21,7 @@ Between RC1 and RC2, we changed from "Entity Framework 7" to "Entity Framework C
 **You will need to completely remove the RC1 packages and then install the RC2 ones.** Here is the mapping for some common packages.
 
 | RC1 Package                                               | RC2 Equivalent                                                       |
-| --------------------------------------------------------- | -------------------------------------------------------------------- |
+|:----------------------------------------------------------|:---------------------------------------------------------------------|
 | EntityFramework.MicrosoftSqlServer        7.0.0-rc1-final | Microsoft.EntityFrameworkCore.SqlServer         1.0.0-rc2-final      |
 | EntityFramework.SQLite                    7.0.0-rc1-final | Microsoft.EntityFrameworkCore.Sqlite            1.0.0-rc2-final      |
 | EntityFramework7.Npgsql                   3.1.0-rc1-3     | NpgSql.EntityFrameworkCore.Postgres             <to be advised>      |
