@@ -1,5 +1,5 @@
 ---
-title: Value Conversions - EF Core
+title: Entity types with constructors - EF Core
 author: ajcvickers
 ms.author: divega
 
