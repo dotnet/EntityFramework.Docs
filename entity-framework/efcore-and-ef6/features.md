@@ -91,7 +91,7 @@ The EF Core column contains the number of the product version in which the featu
 | SQL Server Compact                                    | Yes      | 1.0 <sup>(2)</sup>                    |
 | DB2                                                   | Yes      | 1.0                                   |
 | Firebird                                              | Yes      | 2.0                                   |
-| Jet                                                   |          | 2.0                                   |
+| Jet (Microsoft Access)                                |          | 2.0 <sup>(2)</sup>                    |
 | In-memory (for testing)                               |          | 1.0                                   |
 |                                                       |          |                                       |
 | **Platforms**                                         | **EF6**  | **EF Core**                           |
@@ -101,4 +101,4 @@ The EF Core column contains the number of the product version in which the featu
 | UWP                                                   |          | 1.0 (in-progress)                     |
 
 <sup>1</sup> There is currently a paid provider available. A free official provider for Oracle is being worked on.
-<sup>2</sup> The SQL Server Compact provider only works on .NET Framework (not .NET Core).
+<sup>2</sup> This provider only works on .NET Framework (not on .NET Core).
