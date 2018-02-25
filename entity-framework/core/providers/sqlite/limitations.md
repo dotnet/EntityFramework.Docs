@@ -41,7 +41,7 @@ The SQLite database engine does not support a number of schema operations that a
 | DropTable            | ✔          |
 | DropUniqueConstraint | ✗          |
 | RenameColumn         | ✗          |
-| RenameIndex          | ✗          |
+| RenameIndex          | ✔          |
 | RenameTable          | ✔          |
 
 ## Migrations limitations workaround
