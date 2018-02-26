@@ -15,20 +15,20 @@ uid: core/what-is-new/ef-core-2.1
 > [!NOTE]  
 > This release is still in preview.
 
-In this release we have fixed more than a hundred product bugs and added numerous small improvements. Here are some of the new major features:
+Besides numerous small improvements and more than a hundred product bug fixes, EF Core 2.1 includes several new features:
 
 ## Lazy loading
-EF Core now contains the necessary building blocks for anyone to write entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (e.g. classes with virtual navigation properties).
+EF Core now contains the necessary building blocks for anyone to author entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (e.g. classes with virtual navigation properties).
 
 See the [section on lazy loading](xref:core/querying/related-data#lazy-loading) for more information about this topic.
 
 ## Parameters in entity constructors
 As one of the required building blocks for lazy loading, we enabled the creation of entities that take parameters in their constructors. You can use parameters to inject property values, lazy loading delegates, and services.
 
-See the [section on constructor parameters](xref:core/modeling/constructors) for more information about this topic.
+See the [section on entity constructor with parameters](xref:core/modeling/constructors) for more information about this topic.
 
 ## Value conversions
-Until now, EF Core could only map properties of types natively supported by the underlying database provider. Values were copied back and forth between columns and properties without any transformation. Starting with EF Core 2.1, value conversions can be applied to transform the values obtained from columns before they are applied to properties, and vice versa. We have a number of conversions that can be applied by convention as necessary, as well as an explicit configuration API that allows registering delegates for the conversions between columns and properties. Some of the application of this feature are:
+Until now, EF Core could only map properties of types natively supported by the underlying database provider. Values were copied back and forth between columns and properties without any transformation. Starting with EF Core 2.1, value conversions can be applied to transform the values obtained from columns before they are applied to properties, and vice versa. We have a number of conversions that can be applied by convention as necessary, as well as an explicit configuration API that allows registering custom conversions between columns and properties. Some of the application of this feature are:
 
 - Storing enums as strings
 - Mapping unsigned integers with SQL Server
@@ -40,7 +40,7 @@ Read the [section on value conversions](xref:core/modeling/value-conversions) fo
 Before EF Core 2.1, the GroupBy LINQ operator would always be evaluated in memory. We now support translating it to the SQL GROUP BY clause in most common cases.
 
 ## Data Seeding
-With the new release it will be possible to provide initial data to populate a database. Unlike in EF6, in EF Core, seeding data is associated to an entity type as part of the model configuration. Then EF Core migrations can automatically compute what insert, update or delete operations need to be applied when upgrading the database to a new version of the model.
+With the new release it will be possible to provide initial data to populate a database. Unlike in EF6, seeding data is associated to an entity type as part of the model configuration. Then EF Core migrations can automatically compute what insert, update or delete operations need to be applied when upgrading the database to a new version of the model.
 
 As an example, you can use this to configure seed data for a Post in `OnModelCreating`:
 
@@ -71,7 +71,7 @@ var option3 = context.People.Include("School");
 We have added the ability to work with System.Transactions features such as TransactionScope. This will work on both .NET Framework and .NET Core when using database providers that support it.
 
 ## Better column ordering in initial migration
-Based on customer feedback, we have updated migrations to initially generate columns for tables in the same order as properties are declared in classes. Note that we cannot change order when new members are added after the initial table creation.
+Based on customer feedback, we have updated migrations to initially generate columns for tables in the same order as properties are declared in classes. Note that EF Core cannot change order when new members are added after the initial table creation.
 
 ## Optimization of correlated subqueries
 We have improved our query translation to avoid executing "N + 1" SQL queries in many common scenarios in which the usage of a navigation property in the projection leads to joining data from the root query with data from a correlated subquery. The optimization requires buffering the results form the subquery, and we require that you modify the query to opt-in the new behavior.
@@ -82,7 +82,7 @@ As an example, the following query normally gets translated into one query for C
 var query = context.Customers.Select(c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount));
 ```
 
-By including `ToList()` in the right place, you can give up the streaming of the Orders and enable the optimization:
+By including `ToList()` in the right place, you indicate that buffering is appropiate for the Orders and enable the optimization:
 
 ``` csharp
 var query = context.Customers.Select(c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount).ToList());
