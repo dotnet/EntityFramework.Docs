@@ -18,7 +18,7 @@ uid: core/what-is-new/ef-core-2.1
 In this release we have fixed more than a hundred product bugs and added numerous small improvements. Here are some of the new major features:
 
 ## Lazy loading
-EF Core now contains the necessary building blocks for anyone to write entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (e.g. classes with virtual navigation properties). 
+EF Core now contains the necessary building blocks for anyone to write entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (e.g. classes with virtual navigation properties).
 
 ## Parameters in entity constructors
 As one of the required building blocks for lazy loading, we enabled the creation of entities that take parameters in their constructors. You can use parameters to inject property values, lazy loading delegates, and services.
@@ -69,3 +69,21 @@ Based on customer feedback, we have updated migrations to initially generate col
 
 ## Optimization of correlated subqueries
 We have improved our query translation to avoid executing "N + 1" SQL queries in many common scenarios in which the usage of a navigation property in the projection leads to joining data from the root query with data from a correlated subquery. The optimization requires buffering the results form the subquery, and we require that you modify the query to opt-in the new behavior.
+
+As an example, the following query normally gets translated into one query for Customers, plus N (where "N" is the number of customers returned) separate queries for Orders:
+
+``` csharp
+var query = context.Customers.Select(c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount));
+```
+
+By including `ToList()` in the right place, you can give up the streaming of the Orders and enable the optimization:
+
+``` csharp
+var query = context.Customers.Select(c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount).ToList());
+```
+
+Nota that this query will be translated to only two SQL queries: One for Customers and the next one for Orders.
+
+``` csharp
+var query = context.Customers.Select(c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount).ToList())
+```
