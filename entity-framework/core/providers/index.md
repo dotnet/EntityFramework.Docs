@@ -46,7 +46,9 @@ We have been developing an EF Core provider for the DocumentDB API in Cosmos DB.
 The Oracle .NET team has announced they are planning to release a first-party provider for EF Core 2.0 approximately in the third quarter of 2018. See their [statement of direction for .NET Core and Entity Framework Core](http://www.oracle.com/technetwork/topics/dotnet/tech-info/odpnet-dotnet-ef-core-sod-4395108.pdf) for more information.
 Please direct any questions about this provider, including the release timeline, to the [Oracle Community Site](https://community.oracle.com/).
 
-In the meanwhile, the EF team has produced a [sample EF Core provider for Oracle databases](https://github.com/aspnet/EntityFrameworkCore/blob/dev/samples/OracleProvider/README.md). The purpose of the project is not to produce an EF Core provider owned by Microsoft, but to help us identify gaps in EF Core's relational and base functionality which we need to address in order to better support Oracle, and to jumpstart the development of other Oracle providers for EF Core either by Oracle or third parties.    
+In the meanwhile, the EF team has produced a [sample EF Core provider for Oracle databases](https://github.com/aspnet/EntityFrameworkCore/blob/dev/samples/OracleProvider/README.md). The purpose of the project is not to produce an EF Core provider owned by Microsoft, but to help us identify gaps in EF Core's relational and base functionality which we need to address in order to better support Oracle, and to jumpstart the development of other Oracle providers for EF Core by either Oracle or third parties.
+
+We will consider contributions that improve the sample implementation. We would also welcome and encourage a community effort to create an open-source Oracle provider for EF Core, using the sample as a starting point.
 
 ## Adding a database provider to your application
 
