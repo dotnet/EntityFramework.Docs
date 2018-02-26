@@ -82,7 +82,7 @@ As an example, the following query normally gets translated into one query for C
 var query = context.Customers.Select(c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount));
 ```
 
-By including `ToList()` in the right place, you indicate that buffering is appropiate for the Orders and enable the optimization:
+By including `ToList()` in the right place, you indicate that buffering is appropiate for the Orders, which enable the optimization:
 
 ``` csharp
 var query = context.Customers.Select(c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount).ToList());
