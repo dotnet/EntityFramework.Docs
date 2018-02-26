@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Data.SqlClient;
@@ -21,6 +21,7 @@ namespace EFSaving.Transactions.SharingTransaction
                 context.Database.EnsureCreated();
             }
 
+            #region Transaction
             var options = new DbContextOptionsBuilder<BloggingContext>()
                 .UseSqlServer(new SqlConnection(connectionString))
                 .Options;
@@ -53,8 +54,10 @@ namespace EFSaving.Transactions.SharingTransaction
                     }
                 }
             }
+            #endregion
         }
 
+        #region Context
         public class BloggingContext : DbContext
         {
             public BloggingContext(DbContextOptions<BloggingContext> options)
@@ -63,6 +66,7 @@ namespace EFSaving.Transactions.SharingTransaction
 
             public DbSet<Blog> Blogs { get; set; }
         }
+        #endregion
 
         public class Blog
         {
