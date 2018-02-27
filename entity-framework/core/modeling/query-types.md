@@ -8,7 +8,7 @@ ms.technology: entity-framework-core
 uid: core/modeling/query-types
 ---
 # Query Types
-> [!TIP]
+> [!NOTE]
 > This feature is new in EF Core 2.1
 
 Query Types are read-only query result types that can be added to the EF Core model. Query Types enable ad-hoc querying (like anonymous types), but are more flexible because they can have mapping configuration specified.
@@ -62,4 +62,3 @@ Finally, we can query the database view in the standard way:
 
 > [!TIP]
 > Note we have also defined a context level query property (DbQuery) to act as a root for queries against this type.
-
