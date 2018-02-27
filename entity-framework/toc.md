@@ -49,6 +49,7 @@
 #### [Value Conversions](core/modeling/value-conversions.md)
 #### [Data Seeding](core/modeling/data-seeding.md)
 #### [Entity Type Constructors](core/modeling/constructors.md)
+#### [Owned Entity Types](core/modeling/owned-entities.md)
 #### [Query Types](core/modeling/query-types.md)
 #### [Alternating models with same DbContext](core/modeling/dynamic-model.md)
 #### [Relational Database Modeling](core/modeling/relational/index.md)

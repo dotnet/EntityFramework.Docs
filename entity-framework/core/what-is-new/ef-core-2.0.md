@@ -64,6 +64,7 @@ public class StreetAddress
     public string City { get; set; }
 }
 ```
+Read the [section on owned entity types](xref:core/modeling/owned-entities) for more information on this feature.
 
 ### Model-level query filters
 
