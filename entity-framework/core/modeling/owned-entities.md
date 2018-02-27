@@ -12,7 +12,7 @@ uid: core/modeling/owned-entities
 >[!NOTE]
 > This feature is new in EF Core 2.0.
 
-EF Core allows you to model entity types that can only appear on navigation properties in another entity type. These are called _owned entity types_. The entity containing an owned entity type is its _owner_.
+EF Core allows you to model entity types that can only ever appear on navigation properties of other entity types. These are called _owned entity types_. The entity containing an owned entity type is its _owner_.
 
 ## Explicit configuration
 
@@ -70,7 +70,7 @@ In order to understanding how EF Core tracks these objects, it is useful to thin
 
 When using relational databases, by convention owned types are mapped to the same table as the owner. This requires splitting the table in two: some columns will be used to store the data of the owner, and some columns will be used to store data of the owned entity. This is a common feature known as table splitting.
 
-Owned types stored with table splitting are very can be used very similarlyto how complex types are used in EF6.
+Owned types stored with table splitting can be used very similarly to how complex types are used in EF6.
 
 By contention, EF Core will name the database columns for the properties of the owned entity type following the pattern _EntityProperty_OwnedEntityProperty_. Therefore the StreetAddress properties will appear in the Orders table with the names ShippingAddress_Street and ShippingAddress_City.
 
@@ -87,7 +87,7 @@ modelBuilder.Entity<Order>().OwnsOne(p => p.ShippingAddress)
 
 An owned entity type can be of the same .NET type as another owned entity type, therefore the .NET type may not be enough to identify an owned type.
 
-In those cases, the property connecting the owner and the owned entity types becomes the _defining navigation_ of the owned entity type, and from the perspective of EF Core, the defining navigation is part of the type's identity alongside the .NET type.   
+In those cases, the property pointing from the owner to the owned entity becomes the _defining navigation_ of the owned entity type. From the perspective of EF Core, the defining navigation is part of the type's identity alongside the .NET type.   
 
 For example, in the following class, ShippingAddress and BillingAddress are both of the same .NET type, StreetAddress:
 
@@ -150,11 +150,11 @@ public class StreetAddress
 }
 ```
 
-This capability also sets owned entity types apart from complex types in EF6.
+This capability sets owned entity types apart from complex types in EF6.
 
 ## Storing owned types in separate tables
 
-Unlike EF6 complex types, owned types can be stored in a separate table from the owner. In order to override the convention that uses table splitting, you can simply call `ToTable` and provide a different table name. The following example will map OrderDetails and its two addresses to a separate table from Order:
+Also unlike EF6 complex types, owned types can be stored in a separate table from the owner. In order to override the convention that maps an owned type to the same table as the owner, you can simply call `ToTable` and provide a different table name. The following example will map OrderDetails and its two addresses to a separate table from Order:
 
 ``` csharp
 modelBuilder.Entity<Order>().OwnsOne(p => p.OrderDetails, od =>
@@ -186,4 +186,3 @@ Here are some limitations of owned entity types. Some of these limitations are f
 ### By-design restrictions
 - You cannot create a `DbSet<T>`
 - You cannot call `Entity<T>()` with an owned type on `ModelBuilder`
--  
