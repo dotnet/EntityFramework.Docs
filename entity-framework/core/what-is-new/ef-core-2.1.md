@@ -72,7 +72,7 @@ var option3 = context.People.Include("School");
 ## System.Transactions support
 We have added the ability to work with System.Transactions features such as TransactionScope. This will work on both .NET Framework and .NET Core when using database providers that support it.
 
-Read the [section on System.Transactions](xref:core/saving/transactions#using-system-transactions) for more information about this topic.
+Read the [section on System.Transactions](xref:core/saving/transactions#using-systemtransactions) for more information about this topic.
 
 ## Better column ordering in initial migration
 Based on customer feedback, we have updated migrations to initially generate columns for tables in the same order as properties are declared in classes. Note that EF Core cannot change order when new members are added after the initial table creation.
