@@ -46,7 +46,7 @@ Like `value generated on add`, if you specify a value for the property on a newl
 
 ## Conventions
 
-By convention, primary keys that are of an integer or GUID data type will be setup to have values generated on add. All other properties will be setup with no value generation.
+By convention, non-composite primary keys of type short, int, long, or Guid will be setup to have values generated on add. All other properties will be setup with no value generation.
 
 ## Data Annotations
 
