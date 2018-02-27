@@ -58,7 +58,8 @@ var query = context.Orders
 The corresponding SQL translation looks like this:
 
 ``` SQL
-SELECT [o].[CustomerId], [o].[EmployeeId], SUM([o].[Amount]), MIN([o].[Amount]), MAX([o].[Amount]), AVG([o].[Amount])
+SELECT [o].[CustomerId], [o].[EmployeeId],
+    SUM([o].[Amount]), MIN([o].[Amount]), MAX([o].[Amount]), AVG([o].[Amount])
 FROM [Orders] AS [o]
 GROUP BY [o].[CustomerId], [o].[EmployeeId];
 ```
