@@ -19,12 +19,14 @@ EF Core is an object-relational mapper (O/RM) that enables .NET developers to wo
 
 If you like to learn by writing code, we'd recommend one of our [Getting Started](get-started/index.md) guides to get you started with EF Core.
 
-## Latest version: EF Core 2.0
+## What is new in EF Core
 
-If you are familiar with EF Core and want to jump straight into the details of the new version:
+If you are familiar with EF Core and want to jump straight into the details of the latest releases:
 
-- **[New features in EF Core 2.0](xref:core/what-is-new/ef-core-2.0)**
+- **[What is new in EF Core 2.1 (currently in preview)](xref:core/what-is-new/ef-core-2.1)**
+- **[What is new in EF Core 2.0 (the latest released version)](xref:core/what-is-new/ef-core-2.0)**
 - **[Upgrading existing applications to EF Core 2.0](xref:core/miscellaneous/1x-2x-upgrade)**
+
 
 ## Get Entity Framework Core
 

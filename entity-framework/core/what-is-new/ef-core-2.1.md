@@ -20,12 +20,12 @@ Besides numerous small improvements and more than a hundred product bug fixes, E
 ## Lazy loading
 EF Core now contains the necessary building blocks for anyone to author entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (e.g. classes with virtual navigation properties).
 
-See the [section on lazy loading](xref:core/querying/related-data#lazy-loading) for more information about this topic.
+Read the [section on lazy loading](xref:core/querying/related-data#lazy-loading) for more information about this topic.
 
 ## Parameters in entity constructors
 As one of the required building blocks for lazy loading, we enabled the creation of entities that take parameters in their constructors. You can use parameters to inject property values, lazy loading delegates, and services.
 
-See the [section on entity constructor with parameters](xref:core/modeling/constructors) for more information about this topic.
+Read the [section on entity constructor with parameters](xref:core/modeling/constructors) for more information about this topic.
 
 ## Value conversions
 Until now, EF Core could only map properties of types natively supported by the underlying database provider. Values were copied back and forth between columns and properties without any transformation. Starting with EF Core 2.1, value conversions can be applied to transform the values obtained from columns before they are applied to properties, and vice versa. We have a number of conversions that can be applied by convention as necessary, as well as an explicit configuration API that allows registering custom conversions between columns and properties. Some of the application of this feature are:
@@ -56,7 +56,9 @@ An EF Core model can now include query types. Unlike entity types, query types d
 - Mapping to views without primary keys
 - Mapping to tables without primary keys
 - Mapping to queries defined in the model
-- Serving as the return type for FromSql() queries
+- Serving as the return type for `FromSql()` queries
+
+Read the [section on query types](xref:core/modeling/query-types) for more information about this topic.
 
 ## Include for derived types
 It will be now possible to specify navigation properties only defined on derived types when writing expressions for the `Include` method. For the strongly typed version of `Include`, we support using either an explicit cast or the `as` operator. We also now support referencing the names of navigation property defined on derived types in the string version of `Include`:
@@ -70,6 +72,8 @@ var option3 = context.People.Include("School");
 ## System.Transactions support
 We have added the ability to work with System.Transactions features such as TransactionScope. This will work on both .NET Framework and .NET Core when using database providers that support it.
 
+Read the [section on System.Transactions](xref:core/saving/transactions#using-system-transactions) for more information about this topic.
+
 ## Better column ordering in initial migration
 Based on customer feedback, we have updated migrations to initially generate columns for tables in the same order as properties are declared in classes. Note that EF Core cannot change order when new members are added after the initial table creation.
 
@@ -79,13 +83,22 @@ We have improved our query translation to avoid executing "N + 1" SQL queries in
 As an example, the following query normally gets translated into one query for Customers, plus N (where "N" is the number of customers returned) separate queries for Orders:
 
 ``` csharp
-var query = context.Customers.Select(c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount));
+var query = context.Customers.Select(
+    c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount));
 ```
 
-By including `ToList()` in the right place, you indicate that buffering is appropiate for the Orders, which enable the optimization:
+By including `ToList()` in the right place, you indicate that buffering is appropriate for the Orders, which enable the optimization:
 
 ``` csharp
-var query = context.Customers.Select(c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount).ToList());
+var query = context.Customers.Select(
+    c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount).ToList());
 ```
 
 Note that this query will be translated to only two SQL queries: One for Customers and the next one for Orders.
+
+## Database provider compatibility
+
+EF Core 2.1 was designed to be compatible with database providers created for EF Core 2.0. While some of the features described above (e.g. value conversions) require an updated provider others (e.g. lazy loading) will light up with existing providers.
+
+> [!TIP]
+> If you find any unexpected incompatibility or any issue in the new features, or if you have feedback on them, please report it using [our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues/new).

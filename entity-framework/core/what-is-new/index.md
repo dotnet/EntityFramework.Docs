@@ -15,9 +15,11 @@ uid: core/what-is-new/index
 
 You can use the links below to learn about new features in each release:
 
-- [EF Core 2.1](xref:core/what-is-new/ef-core-2.1): This is the latest version, currently in preview.
+## Recent releases
 
-- [EF Core 2.0](xref:core/what-is-new/ef-core-2.0): This is the latest released version.
+- [EF Core 2.1](xref:core/what-is-new/ef-core-2.1): Currently in preview.
+
+- [EF Core 2.0](xref:core/what-is-new/ef-core-2.0): The latest released version.
 
 ## Past versions
 
