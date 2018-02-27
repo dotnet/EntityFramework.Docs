@@ -123,3 +123,12 @@ It is possible to use ambient transactions if you need to coordinate across a la
 It is also possible to enlist in an explicit transaction.
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/CommitableTransaction/Sample.cs?name=Transaction&highlight=1,13,26,27,28)]
+
+### Limitations of System.Transactions  
+
+1. EF Core relies on database providers to implement support for System.Transactions. Although support is quite common among ADO.NET providers for .NET Framework, the API has only been recently added to .NET Core and hence support is not be as widespread. If a provider does not implement support for System.Transactions, it is possible that calls to these APIs will be completely ignored. SqlClient for .NET Core does support it from 2.1 onwards. SqlClient for .NET Core 2.0 will throw an exception of you attempt to use the feature. 
+
+   > [!IMPORTANT]  
+   > It is recommended that you test that the API behaves correctly with your provider before you rely on it for managing transactions. You are encouraged to contact the maintainer of the database provider if it does not. 
+
+2. As of version 2.1, the System.Transactions implementation in .NET Core does not include support for distributed transactions, therefore you cannot use `TransactionScope` or `CommitableTransaction`to coordinate transactions across multiple resource managers. 
