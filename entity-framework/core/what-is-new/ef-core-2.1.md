@@ -121,6 +121,25 @@ var query = context.Customers.Select(
 
 Note that this query will be translated to only two SQL queries: One for Customers and the next one for Orders.
 
+### OwnedAttribute
+
+It is now possible to configure [owned entity types](xref:core/modeling/owned-entities) by simply annotating the type with `[Owned]` and then making sure the owner entity is added to the model:
+
+``` csharp
+[Owned]
+public class StreetAddress
+{
+    public string Street { get; set; }
+    public string City { get; set; }
+}
+
+public class Order
+{
+    public int Id { get; set; }
+    public StreetAddress ShippingAddress { get; set; }
+}
+```
+
 ## Database provider compatibility
 
 EF Core 2.1 was designed to be compatible with database providers created for EF Core 2.0. While some of the features described above (e.g. value conversions) require an updated provider others (e.g. lazy loading) will light up with existing providers.
