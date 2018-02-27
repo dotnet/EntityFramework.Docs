@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UWP", "UWP", "{2D7D0958-8722-40E5-9BCB-A96B096E7534}"
 EndProject
@@ -60,6 +60,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp.SQLite", "GetStarted\NetCore\ConsoleApp.SQLite\ConsoleApp.SQLite.csproj", "{A45E289C-136C-4B0D-A1F7-BA62504AA67E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicModel", "DynamicModel\DynamicModel.csproj", "{70D00673-084C-40B7-B0F1-67498593F8EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSeeding", "DataSeeding\DataSeeding.csproj", "{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -369,6 +371,22 @@ Global
 		{70D00673-084C-40B7-B0F1-67498593F8EE}.Release|x64.Build.0 = Release|Any CPU
 		{70D00673-084C-40B7-B0F1-67498593F8EE}.Release|x86.ActiveCfg = Release|Any CPU
 		{70D00673-084C-40B7-B0F1-67498593F8EE}.Release|x86.Build.0 = Release|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Debug|ARM.Build.0 = Debug|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Debug|x64.Build.0 = Debug|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Debug|x86.Build.0 = Debug|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Release|ARM.Build.0 = Release|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Release|x64.ActiveCfg = Release|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Release|x64.Build.0 = Release|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -398,6 +416,7 @@ Global
 		{E30A16E6-B621-4D3C-BE79-866510451752} = {AC06E61C-1FE2-41B8-95E3-780051DA2275}
 		{A45E289C-136C-4B0D-A1F7-BA62504AA67E} = {E1A10B1E-CD16-47BB-86C1-FE256F1AD0FB}
 		{70D00673-084C-40B7-B0F1-67498593F8EE} = {CA5046EC-C894-4535-8190-A31F75FDEB96}
+		{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7} = {CA5046EC-C894-4535-8190-A31F75FDEB96}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C98D35-54EF-46A6-8F3B-1855C1AE4F70}

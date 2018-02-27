@@ -1,4 +1,4 @@
-﻿# [Entity Framework](index.md)
+# [Entity Framework](index.md)
 
 ## [Compare EF Core & EF6](efcore-and-ef6/index.md)
 
@@ -12,9 +12,11 @@
 
 ## [Entity Framework Core](core/index.md)
 
-### [New in EF Core 2.0](core/what-is-new/index.md)
-#### [EF Core 1.0 (previous version)](core/what-is-new/ef-core-1.0.md)
+### [New in EF Core](core/what-is-new/index.md)
+#### [EF Core 2.1 (in preview)](core/what-is-new/ef-core-2.1.md)
+#### [EF Core 2.0 (latest released)](core/what-is-new/ef-core-2.0.md)
 #### [EF Core 1.1 (previous version)](core/what-is-new/ef-core-1.1.md)
+#### [EF Core 1.0 (previous version)](core/what-is-new/ef-core-1.0.md)
 
 ### [Getting Started](core/get-started/index.md)
 #### [Installing EF Core](core/get-started/install/index.md)
@@ -44,6 +46,11 @@
 #### [Alternate Keys](core/modeling/alternate-keys.md)
 #### [Inheritance](core/modeling/inheritance.md)
 #### [Backing Fields](core/modeling/backing-field.md)
+#### [Value Conversions](core/modeling/value-conversions.md)
+#### [Data Seeding](core/modeling/data-seeding.md)
+#### [Entity Type Constructors](core/modeling/constructors.md)
+#### [Owned Entity Types](core/modeling/owned-entities.md)
+#### [Query Types](core/modeling/query-types.md)
 #### [Alternating models with same DbContext](core/modeling/dynamic-model.md)
 #### [Relational Database Modeling](core/modeling/relational/index.md)
 ##### [Table Mapping](core/modeling/relational/tables.md)
@@ -86,16 +93,7 @@
 ##### [Memory-Optimized Tables](core/providers/sql-server/memory-optimized-tables.md)
 #### [SQLite](core/providers/sqlite/index.md)
 ##### [SQLite Limitations](core/providers/sqlite/limitations.md)
-#### [PostgreSQL (Npgsql)](core/providers/npgsql/index.md)
-#### [IBM Data Server (DB2)](core/providers/ibm/index.md)
-#### [MySQL (Official)](core/providers/mysql/index.md)
-#### [MySQL (Pomelo)](core/providers/pomelo/index.md)
-#### [Microsoft SQL Server Compact Edition](core/providers/sql-compact/index.md)
 #### [InMemory (for Testing)](core/providers/in-memory/index.md)
-#### [Devart (MySQL, Oracle, PostgreSQL, SQLite, DB2, and more)](core/providers/devart/index.md)
-#### [Oracle (not yet available)](core/providers/oracle/index.md)
-#### [MyCat](core/providers/my-cat/index.md)
-#### [Firebird-Community](core/providers/firebird-community/index.md)
 #### [Writing a Database Provider](core/providers/writing-a-provider.md)
 
 ### [Managing Database Schemas](core/managing-schemas/index.md)

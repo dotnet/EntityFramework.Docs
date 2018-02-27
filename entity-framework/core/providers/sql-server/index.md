@@ -12,7 +12,7 @@ uid: core/providers/sql-server/index
 ---
 # Microsoft SQL Server EF Core Database Provider
 
-This database provider allows Entity Framework Core to be used with Microsoft SQL Server (including SQL Azure). The provider is maintained as part of the [EntityFramework GitHub project](https://github.com/aspnet/EntityFramework).
+This database provider allows Entity Framework Core to be used with Microsoft SQL Server (including SQL Azure). The provider is maintained as part of the [Entity Framework Core Project](https://github.com/aspnet/EntityFrameworkCore).
 
 ## Install
 

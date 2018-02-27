@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
+using System.Transactions;
 
-namespace EFSaving.Transactions.ExternalDbTransaction
+namespace EFSaving.Transactions.AmbientTransaction
 {
     public class Sample
     {
@@ -19,16 +20,17 @@ namespace EFSaving.Transactions.ExternalDbTransaction
             }
 
             #region Transaction
-            var connection = new SqlConnection(connectionString);
-            connection.Open();
-
-            using (var transaction = connection.BeginTransaction())
+            using (var scope = new TransactionScope(
+                TransactionScopeOption.Required, 
+                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
             {
+                var connection = new SqlConnection(connectionString);
+                connection.Open();
+
                 try
                 {
                     // Run raw ADO.NET command in the transaction
                     var command = connection.CreateCommand();
-                    command.Transaction = transaction;
                     command.CommandText = "DELETE FROM dbo.Blogs";
                     command.ExecuteNonQuery();
 
@@ -39,14 +41,13 @@ namespace EFSaving.Transactions.ExternalDbTransaction
 
                     using (var context = new BloggingContext(options))
                     {
-                        context.Database.UseTransaction(transaction);
                         context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
                         context.SaveChanges();
                     }
 
                     // Commit transaction if all commands succeed, transaction will auto-rollback
                     // when disposed if either commands fails
-                    transaction.Commit();
+                    scope.Complete();
                 }
                 catch (System.Exception)
                 {

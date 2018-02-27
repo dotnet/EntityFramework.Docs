@@ -1,0 +1,49 @@
+{
+    "redirections": [
+        {
+            "source_path": "entity-framework/core/providers/devart/index.md",
+            "redirect_url": "/ef/core/providers/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/providers/firebird-community/index.md",
+            "redirect_url": "/ef/core/providers/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/providers/ibm/index.md",
+            "redirect_url": "/ef/core/providers/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/providers/my-cat/index.md",
+            "redirect_url": "/ef/core/providers/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/providers/mysql/index.md",
+            "redirect_url": "/ef/core/providers/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/providers/npgsql/index.md",
+            "redirect_url": "/ef/core/providers/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/providers/oracle/index.md",
+            "redirect_url": "/ef/core/providers/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/providers/pomelo/index.md",
+            "redirect_url": "/ef/core/providers/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/providers/sql-compact/index.md",
+            "redirect_url": "/ef/core/providers/index",
+            "redirect_document_id": false
+        }
+    ]
+}

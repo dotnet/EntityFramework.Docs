@@ -47,7 +47,7 @@ The startup project is the one emulated by the tools when executing your project
 Common parameters:
 
 |                           |                             |
-| ------------------------- | --------------------------- |
+|:--------------------------|:----------------------------|
 | -Context \<String>        | The DbContext to use.       |
 | -Project \<String>        | The project to use.         |
 | -StartupProject \<String> | The startup project to use. |
@@ -70,10 +70,10 @@ Adds a new migration.
 
 Parameters:
 
-|                                    |                                                                                 |
-| ---------------------------------- | ------------------------------------------------------------------------------- |
-| ***-Name*** \<String>              | The name of the migration.                                                      |
-| <nobr>-OutputDir \<String></nobr>  | The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to "Migrations". |
+|                                   |                                                                                                                  |
+|:----------------------------------|:-----------------------------------------------------------------------------------------------------------------|
+| ***-Name*** \<String>             | The name of the migration.                                                                                       |
+| <nobr>-OutputDir \<String></nobr> | The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to "Migrations". |
 
 > [!NOTE]
 > Parameters in **bold** are required, and ones in *italics* are positional.
@@ -84,9 +84,9 @@ Drops the database.
 
 Parameters:
 
-|          |                                                          |
-| -------- | -------------------------------------------------------- |
-| -WhatIf  | Show which database would be dropped, but don't drop it. |
+|         |                                                          |
+|:--------|:---------------------------------------------------------|
+| -WhatIf | Show which database would be dropped, but don't drop it. |
 
 ### Get-DbContext
 
@@ -99,7 +99,7 @@ Removes the last migration.
 Parameters:
 
 |        |                                                                       |
-| ------ | --------------------------------------------------------------------- |
+|:-------|:----------------------------------------------------------------------|
 | -Force | Don't check to see if the migration has been applied to the database. |
 
 ### Scaffold-DbContext
@@ -108,17 +108,17 @@ Scaffolds a DbContext and entity types for a database.
 
 Parameters:
 
-|                                          |                                                                           |
-| ---------------------------------------- | ------------------------------------------------------------------------- |
-| <nobr>***-Connection*** \<String></nobr> | The connection string to the database.                                    |
-| ***-Provider*** \<String>                | The provider to use. (E.g. Microsoft.EntityFrameworkCore.SqlServer)       |
-| -OutputDir \<String>                     | The directory to put files in. Paths are relative to the project directory. |
-| -Context \<String>                       | The name of the DbContext to generate.                                    |
-| -Schemas \<String[]>                     | The schemas of tables to generate entity types for.                       |
-| -Tables \<String[]>                      | The tables to generate entity types for.                                  |
+|                                          |                                                                                                  |
+|:-----------------------------------------|:-------------------------------------------------------------------------------------------------|
+| <nobr>***-Connection*** \<String></nobr> | The connection string to the database.                                                           |
+| ***-Provider*** \<String>                | The provider to use. (E.g. Microsoft.EntityFrameworkCore.SqlServer)                              |
+| -OutputDir \<String>                     | The directory to put files in. Paths are relative to the project directory.                      |
+| -Context \<String>                       | The name of the DbContext to generate.                                                           |
+| -Schemas \<String[]>                     | The schemas of tables to generate entity types for.                                              |
+| -Tables \<String[]>                      | The tables to generate entity types for.                                                         |
 | -DataAnnotations                         | Use attributes to configure the model (where possible). If omitted, only the fluent API is used. |
-| -UseDatabaseNames                        | Use table and column names directly from the database.                    |
-| -Force                                   | Overwrite existing files.                                                 |
+| -UseDatabaseNames                        | Use table and column names directly from the database.                                           |
+| -Force                                   | Overwrite existing files.                                                                        |
 
 ### Script-Migration
 
@@ -127,7 +127,7 @@ Generates a SQL script from migrations.
 Parameters:
 
 |                   |                                                                    |
-| ----------------- | ------------------------------------------------------------------ |
+|:------------------|:-------------------------------------------------------------------|
 | *-From* \<String> | The starting migration. Defaults to 0 (the initial database).      |
 | *-To* \<String>   | The ending migration. Defaults to the last migration.              |
 | -Idempotent       | Generate a script that can be used on a database at any migration. |
@@ -138,8 +138,8 @@ Parameters:
 
 ### Update-Database
 
-|                                     |                                                                                |
-| ----------------------------------- | ------------------------------------------------------------------------------ |
+|                                     |                                                                                                |
+|:------------------------------------|:-----------------------------------------------------------------------------------------------|
 | <nobr>*-Migration* \<String></nobr> | The target migration. If '0', all migrations will be reverted. Defaults to the last migration. |
 
 > [!TIP]

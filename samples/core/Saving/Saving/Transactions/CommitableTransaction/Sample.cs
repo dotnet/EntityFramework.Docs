@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
+using System.Transactions;
 
-namespace EFSaving.Transactions.ExternalDbTransaction
+namespace EFSaving.Transactions.CommitableTransaction
 {
     public class Sample
     {
@@ -19,27 +20,28 @@ namespace EFSaving.Transactions.ExternalDbTransaction
             }
 
             #region Transaction
-            var connection = new SqlConnection(connectionString);
-            connection.Open();
-
-            using (var transaction = connection.BeginTransaction())
+            using (var transaction = new CommittableTransaction(
+                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
             {
+                var connection = new SqlConnection(connectionString);
+
                 try
                 {
-                    // Run raw ADO.NET command in the transaction
-                    var command = connection.CreateCommand();
-                    command.Transaction = transaction;
-                    command.CommandText = "DELETE FROM dbo.Blogs";
-                    command.ExecuteNonQuery();
-
-                    // Run an EF Core command in the transaction
                     var options = new DbContextOptionsBuilder<BloggingContext>()
                         .UseSqlServer(connection)
                         .Options;
 
                     using (var context = new BloggingContext(options))
                     {
-                        context.Database.UseTransaction(transaction);
+                        context.Database.EnlistTransaction(transaction);
+                        context.Database.OpenConnection();
+
+                        // Run raw ADO.NET command in the transaction
+                        var command = connection.CreateCommand();
+                        command.CommandText = "DELETE FROM dbo.Blogs";
+                        command.ExecuteNonQuery();
+
+                        // Run an EF Core command in the transaction
                         context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
                         context.SaveChanges();
                     }

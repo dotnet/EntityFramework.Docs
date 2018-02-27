@@ -98,6 +98,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +129,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelatedData\Sample.cs" />
+    <Compile Include="Transactions\AmbientTransaction\Sample.cs" />
+    <Compile Include="Transactions\CommitableTransaction\Sample.cs" />
     <Compile Include="Transactions\ControllingTransaction\Sample.cs" />
     <Compile Include="Transactions\SharingTransaction\Sample.cs" />
     <Compile Include="Transactions\ExternalDbTransaction\Sample.cs" />
@@ -136,6 +139,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
