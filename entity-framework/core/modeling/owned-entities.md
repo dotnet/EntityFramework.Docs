@@ -77,10 +77,13 @@ By contention, EF Core will name the database columns for the properties of the 
 You can append the `HasColumnName` method to rename those columns. In the case where StreetAddress is a public property, the mappings would be
 
 ``` csharp
-modelBuilder.Entity<Order>().OwnsOne(p => p.ShippingAddress)
-                            .Property(p=>p.Street).HasColumnName("ShipsToStreet");
-modelBuilder.Entity<Order>().OwnsOne(p => p.ShippingAddress)
-                            .Property(p=>p.City).HasColumnName("ShipsToCity");
+modelBuilder.Entity<Order>().OwnsOne(
+    o => o.ShippingAddress,
+    sa =>
+        {
+            sa.Property(p=>p.Street).HasColumnName("ShipsToStreet");
+            sa.Property(p=>p.City).HasColumnName("ShipsToCity");
+        });
 ```
 
 ## Sharing the same .NET type among multiple owned types
