@@ -37,7 +37,31 @@ Until now, EF Core could only map properties of types natively supported by the 
 Read the [section on value conversions](xref:core/modeling/value-conversions) for more information about this topic.  
 
 ## LINQ GroupBy translation
-Before EF Core 2.1, the GroupBy LINQ operator would always be evaluated in memory. We now support translating it to the SQL GROUP BY clause in most common cases.
+Before version 2.1, in EF Core the GroupBy LINQ operator was always be evaluated in memory. We now support translating it to the SQL GROUP BY clause in most common cases.
+
+This example shows a query with GroupBy used to compute various aggregate functions:
+
+``` csharp
+var query = context.Orders
+    .GroupBy(o => new { o.CustomerId, o.EmployeeId })
+    .Select(g => new
+        {
+          g.Key.CustomerId,
+          g.Key.EmployeeId,
+          Sum = g.Sum(o => o.Amount),
+          Min = g.Min(o => o.Amount),
+          Max = g.Max(o => o.Amount),
+          Avg = g.Average(o => Amount)
+        });
+```
+
+The corresponding SQL translation looks like this:
+
+``` SQL
+SELECT [o].[CustomerId], [o].[EmployeeId], SUM([o].[Amount]), MIN([o].[Amount]), MAX([o].[Amount]), AVG([o].[Amount])
+FROM [Orders] AS [o]
+GROUP BY [o].[CustomerId], [o].[EmployeeId];
+```
 
 ## Data Seeding
 With the new release it will be possible to provide initial data to populate a database. Unlike in EF6, seeding data is associated to an entity type as part of the model configuration. Then EF Core migrations can automatically compute what insert, update or delete operations need to be applied when upgrading the database to a new version of the model.
