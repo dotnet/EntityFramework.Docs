@@ -20,7 +20,9 @@ namespace EFSaving.Transactions.AmbientTransaction
             }
 
             #region Transaction
-            using (var scope = new TransactionScope(TransactionScopeOption.Required))
+            using (var scope = new TransactionScope(
+                TransactionScopeOption.Required, 
+                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
             {
                 var connection = new SqlConnection(connectionString);
                 connection.Open();

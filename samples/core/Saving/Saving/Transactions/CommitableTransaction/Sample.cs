@@ -20,7 +20,8 @@ namespace EFSaving.Transactions.CommitableTransaction
             }
 
             #region Transaction
-            using (var transaction = new CommittableTransaction())
+            using (var transaction = new CommittableTransaction(
+                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
             {
                 var connection = new SqlConnection(connectionString);
 
