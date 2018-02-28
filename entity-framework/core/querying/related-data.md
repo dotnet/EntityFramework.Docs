@@ -53,6 +53,61 @@ You may want to include multiple related entities for one of the entities that i
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
 
+### Include on derived types
+
+You can include related data from navigations defined only on a derived type using `Include` and `ThenInclude`. 
+
+Given the following model:
+
+```Csharp
+    public class SchoolContext : DbContext
+    {
+        public DbSet<Person> People { get; set; }
+        public DbSet<School> Schools { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<School>().HasMany(s => s.Students).WithOne(s => s.School);
+        }
+    }
+
+    public class Person
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Student : Person
+    {
+        public School School { get; set; }
+    }
+
+    public class School
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public List<Student> Students { get; set; }
+    }
+```
+
+Contents of `School` navigation of all People who are Students can be eagerly loaded using a number of patterns:
+
+- using cast
+```Csharp
+context.People.Include(person => ((Student)person).School).ToList()
+```
+
+- using `as` operator
+```Csharp
+context.People.Include(person => (person as Student).School).ToList()
+```
+
+- using overload of `Include` that takes parameter of type `string`
+```Csharp
+context.People.Include("Student").ToList()
+```
+
 ### Ignored includes
 
 If you change the query so that it no longer returns instances of the entity type that the query began with, then the include operators are ignored.
