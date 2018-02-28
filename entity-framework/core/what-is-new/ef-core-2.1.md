@@ -94,6 +94,8 @@ var option2 = context.People.Include(p => (p as Student).School);
 var option3 = context.People.Include("School");
 ```
 
+Read the [section on Include with derived types](xref:core/querying/related-data#include-on-derived-types) for more information about this topic.
+
 ## System.Transactions support
 We have added the ability to work with System.Transactions features such as TransactionScope. This will work on both .NET Framework and .NET Core when using database providers that support it.
 
