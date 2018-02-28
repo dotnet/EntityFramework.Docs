@@ -62,7 +62,7 @@ public class Order
 
 ## Implicit keys
 
-In EF Core 2.0 and 2.1, only reference navigation properties can point to owned types. Collections of owned types are not supported. These reference owned types always have a one-to-one relationship with the owner, therefore they don't need their own key values. In the previous example, the StreetAddress type does need to define a key property.  
+In EF Core 2.0 and 2.1, only reference navigation properties can point to owned types. Collections of owned types are not supported. These reference owned types always have a one-to-one relationship with the owner, therefore they don't need their own key values. In the previous example, the StreetAddress type does not need to define a key property.  
 
 In order to understanding how EF Core tracks these objects, it is useful to think that a primary key is created as a [shadow property](xref:core/modeling/shadow-properties) for the owned type. The value of the key of an instance of the owned type will be the same as the value of the key of the owner instance.      
 
@@ -70,9 +70,10 @@ In order to understanding how EF Core tracks these objects, it is useful to thin
 
 When using relational databases, by convention owned types are mapped to the same table as the owner. This requires splitting the table in two: some columns will be used to store the data of the owner, and some columns will be used to store data of the owned entity. This is a common feature known as table splitting.
 
-Owned types stored with table splitting can be used very similarly to how complex types are used in EF6.
+> [!TIP]
+> Owned types stored with table splitting can be used very similarly to how complex types are used in EF6.
 
-By contention, EF Core will name the database columns for the properties of the owned entity type following the pattern _EntityProperty_OwnedEntityProperty_. Therefore the StreetAddress properties will appear in the Orders table with the names ShippingAddress_Street and ShippingAddress_City.
+By convention, EF Core will name the database columns for the properties of the owned entity type following the pattern _EntityProperty_OwnedEntityProperty_. Therefore the StreetAddress properties will appear in the Orders table with the names ShippingAddress_Street and ShippingAddress_City.
 
 You can append the `HasColumnName` method to rename those columns. In the case where StreetAddress is a public property, the mappings would be
 
@@ -140,7 +141,7 @@ modelBuilder.Entity<Order>().OwnsOne(p => p.OrderDetails, od =>
     });
 ```
 
-Of course, it would be possible to achieve the same thing using `OwnedAttribute`.
+It is possible to achieve the same thing using `OwnedAttribute` on both OrderDetails and StreetAdress.
 
 In addition to nested owned types, an owned type can reference a regular entity. In the following example, Country is a regular (i.e. non-owned) entity:
 
@@ -169,7 +170,7 @@ modelBuilder.Entity<Order>().OwnsOne(p => p.OrderDetails, od =>
 
 ## Querying owned types
 
-When querying the owner the owned types will be included by default. It is not necessary to use the `Include` method, even if the owned types are stored in a separate table. Based on the model described before, the following query will pull Order, OrderDetails and the two owned StreeAddresses for all pending orders:
+When querying the owner the owned types will be included by default. It is not necessary to use the `Include` method, even if the owned types are stored in a separate table. Based on the model described before, the following query will pull Order, OrderDetails and the two owned StreeAddresses for all pending orders from the database:
 
 ``` csharp
 var orders = context.Orders.Where(o => o.Status == OrderStatus.Pending);
