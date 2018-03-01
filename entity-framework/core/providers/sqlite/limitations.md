@@ -40,8 +40,8 @@ The SQLite database engine does not support a number of schema operations that a
 | DropPrimaryKey       | ✗          |                  |
 | DropTable            | ✔          | 1.0              |
 | DropUniqueConstraint | ✗          |                  |
-| RenameColumn         | ✔          | 2.1              |
-| RenameIndex          | ✔          | 1.0              |
+| RenameColumn         | ✗          |                  |
+| RenameIndex          | ✔          | 2.1              |
 | RenameTable          | ✔          | 1.0              |
 | EnsureSchema         | ✔ (no-op)  | 2.0              |
 | DropSchema           | ✔ (no-op)  | 2.0              |
