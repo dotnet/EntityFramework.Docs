@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Concurrency
 {
@@ -19,65 +19,58 @@ namespace EFSaving.Concurrency
                 context.SaveChanges();
             }
 
+            # region ConcurrencyHandlingCode
             using (var context = new PersonContext())
             {
                 // Fetch a person from database and change phone number
                 var person = context.People.Single(p => p.PersonId == 1);
                 person.PhoneNumber = "555-555-5555";
 
-                // Change the persons name in the database - causes a concurrency conflict
-                // Requires NuGet package Microsoft.EntityFrameworkCore.Relational
+                // Change the person's name in the database to simulate a concurrency conflict
                 context.Database.ExecuteSqlCommand(
                     "UPDATE dbo.People SET FirstName = 'Jane' WHERE PersonId = 1");
 
-                try
+                var saved = false;
+                while (!saved)
                 {
-                    // Attempt to save changes to the database
-                    context.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException ex)
-                {
-                    foreach (var entry in ex.Entries)
+                    try
                     {
-                        if (entry.Entity is Person)
+                        // Attempt to save changes to the database
+                        context.SaveChanges();
+                        saved = true;
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        foreach (var entry in ex.Entries)
                         {
-                            // Using a NoTracking query means we get the entity but it is not tracked by the context
-                            // and will not be merged with existing entities in the context.
-                            var databaseEntity = context.People
-                                .AsNoTracking()
-                                .Single(p => p.PersonId == ((Person)entry.Entity).PersonId);
-                            var databaseEntry = context.Entry(databaseEntity);
-
-                            foreach (var property in entry.Metadata.GetProperties())
+                            if (entry.Entity is Person)
                             {
-                                var proposedValue = entry.Property(property.Name)
-                                    .CurrentValue;
-                                var originalValue = entry.Property(property.Name)
-                                    .OriginalValue;
-                                var databaseValue = databaseEntry.Property(property.Name)
-                                    .CurrentValue;
+                                var proposedValues = entry.CurrentValues;
+                                var databaseValues = entry.GetDatabaseValues();
 
-                                // TODO: Logic to decide which value should be written to DB
-                                // entry.Property(property.Name).CurrentValue =
-                                // <value to be saved>;
+                                foreach (var property in proposedValues.Properties)
+                                {
+                                    var proposedValue = proposedValues[property];
+                                    var databaseValue = databaseValues[property];
 
-                                // Update original values to
-                                entry.Property(property.Name).OriginalValue =
-                                    databaseEntry.Property(property.Name).CurrentValue;
+                                    // TODO: decide which value should be written to database
+                                    // proposedValues[property] = <value to be saved>;
+                                }
+
+                                // Refresh original values to bypass next concurrency check
+                                entry.OriginalValues.SetValues(databaseValues);
+                            }
+                            else
+                            {
+                                throw new NotSupportedException(
+                                    "Don't know how to handle concurrency conflicts for "
+                                    + entry.Metadata.Name);
                             }
                         }
-                        else
-                        {
-                            throw new NotSupportedException(
-                                "Don't know how to handle concurrency conflicts for "
-                                + entry.Metadata.Name);
-                        }
                     }
-
-                    // Retry the save operation
-                    context.SaveChanges();
                 }
             }
+            # endregion
         }
 
         public class PersonContext : DbContext
@@ -86,7 +79,9 @@ namespace EFSaving.Concurrency
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True;ConnectRetryCount=0");
+                // Requires NuGet package Microsoft.EntityFrameworkCore.SqlServer
+                optionsBuilder.UseSqlServer(
+                    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True;ConnectRetryCount=0");
             }
         }
 
