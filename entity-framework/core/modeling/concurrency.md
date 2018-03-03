@@ -3,7 +3,7 @@ title: Concurrency Tokens - EF Core
 author: rowanmiller
 ms.author: divega
 
-ms.date: 10/27/2016
+ms.date: 03/03/2018
 
 ms.assetid: bc8b1cb0-befe-4b67-8004-26e6c5f69385
 ms.technology: entity-framework-core
@@ -12,23 +12,10 @@ uid: core/modeling/concurrency
 ---
 # Concurrency Tokens
 
-If a property is configured as a concurrency token then EF will check that no other user has modified that value in the database when saving changes to that record. EF uses an optimistic concurrency pattern, meaning it will assume the value has not changed and try to save the data, but throw if it finds the value has been changed.
-
-For example we may want to configure `LastName` on `Person` to be a concurrency token. This means that if one user tries to save some changes to a `Person`, but another user has changed the `LastName` then an exception will be thrown. This may be desirable so that your application can prompt the user to ensure this record still represents the same actual person before saving their changes.
-
 > [!NOTE]
-> This page documents how to configure concurrency tokens. See [Handling Concurrency](../saving/concurrency.md) for examples of how to use optimistic concurrency in your application.
+> This page documents how to configure concurrency tokens. See [Handling Concurrency Conflicts](../saving/concurrency.md) for a detailed explanation of how concurrency control works on EF Core and examples of how to handle concurrency conflicts in your application.
 
-## How concurrency tokens work in EF
-
-Data stores can enforce concurrency tokens by checking that any record being updated or deleted still has the same value for the concurrency token that was assigned when the context originally loaded the data from the database.
-
-For example, relational databases achieve this by including the concurrency token in the `WHERE` clause of any `UPDATE` or `DELETE` commands and checking the number of rows that were affected. If the concurrency token still matches then one row will be updated. If the value in the database has changed, then no rows are updated.
-
-```sql
-UPDATE [Person] SET [FirstName] = @p1
-WHERE [PersonId] = @p0 AND [LastName] = @p2;
-```
+Properties configured as concurrency tokens are used to implement optimistic concurrency control.
 
 ## Conventions
 
