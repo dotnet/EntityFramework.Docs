@@ -44,6 +44,81 @@
             "source_path": "entity-framework/core/providers/sql-compact/index.md",
             "redirect_url": "/ef/core/providers/index",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/neinlinq.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/unitofwork.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/dynamiclinq.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/autohistory.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/linqkit.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/efcore-practices.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/entityframeworkcore-typedoriginalvalues.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/entityframeworkcore-primarykey.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/entityframeworkcore-rx.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/entityframeworkcore-triggers.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/entityframeworkcore-detached.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/geco.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/efsecondlevelcache-core.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/devart-entity-developer.md.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/extensions/llbl-gen-pro.md",
+            "redirect_url": "/ef/core/extensions/index",
+            "redirect_document_id": false
         }
     ]
 }
