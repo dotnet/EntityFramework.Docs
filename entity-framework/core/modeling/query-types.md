@@ -53,7 +53,7 @@ Next, we define a simple database view that will allow us to query the number of
 
 Next, we define a class to hold the result from the database view:
 
-[!code-csharp[Main](../../../efcore-dev/samples/QueryTypes/Program.cs#Query%20Type)]
+[!code-csharp[Main](../../../efcore-dev/samples/QueryTypes/Program.cs#Query Type)]
 
 Next, we configure the query type in _OnModelCreating_ using the ```modelBuilder.Query<T>``` API.
 We use standard fluent configuration APIs to configure the mapping for the Query Type:
@@ -63,3 +63,6 @@ We use standard fluent configuration APIs to configure the mapping for the Query
 Finally, we can query the database view in the standard way:
 
 [!code-csharp[Main](../../../efcore-dev/samples/QueryTypes/Program.cs#Query)]
+
+-> [!TIP] 
+-> Note we have also defined a context level query property (DbQuery) to act as a root for queries against this type. 
