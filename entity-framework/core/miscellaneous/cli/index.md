@@ -24,18 +24,9 @@ Frameworks
 ----------
 The tools support projects targeting .NET Framework or .NET Core.
 
-If your project targets another framework (for example, Universal Windows or Xamarin), we recommend creating a separate .NET
-Standard project and cross-targeting one of the supported frameworks.
+If you want to use a class library, then consider using a .NET Core or .NET Framework class library if possible. This will result in the least issues with .NET tooling. If instead you wish to use a .NET Standard class library, then you will need to use a startup project that targets .NET Framework or .NET Core so that the tooling has a conrete target platform into which it can load your class library. This startup project can be a dummy project with no real code--it is only needed to provide a target for the tooling.
 
-To cross-target .NET Core, for example, right-click on the project and select **Edit \*.csproj**. Update the
-`TargetFramework` property as follows. (Note, the property name becomes plural.)
-
-``` xml
-<TargetFrameworks>netcoreapp2.0;netstandard2.0</TargetFrameworks>
-```
-
-If you're using a .NET Standard class library, you don't need to cross-target if your startup project targets .NET
-Framework or .NET Core.
+If your project targets another framework (for example, Universal Windows or Xamarin), then you will need to create a separate .NET Standard class library. In this case, follow the guidance above to also create a startup project that can be used by the tooling.
 
 Startup and Target Projects
 ---------------------------
