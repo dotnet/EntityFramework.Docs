@@ -65,4 +65,4 @@ Finally, we can query the database view in the standard way:
 [!code-csharp[Main](../../../efcore-dev/samples/QueryTypes/Program.cs#Query)]
 
 > [!TIP]
-> Note we have also defined a context level query property (DbQuery) to act as a root for queries against this type. 
+> Note we have also defined a context level query property (DbQuery) to act as a root for queries against this type.
