@@ -123,7 +123,7 @@ var query = context.Customers.Select(
 
 Note that this query will be translated to only two SQL queries: One for Customers and the next one for Orders.
 
-### OwnedAttribute
+## OwnedAttribute
 
 It is now possible to configure [owned entity types](xref:core/modeling/owned-entities) by simply annotating the type with `[Owned]` and then making sure the owner entity is added to the model:
 
