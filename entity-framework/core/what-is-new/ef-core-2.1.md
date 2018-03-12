@@ -144,7 +144,7 @@ public class Order
 
 ## Database provider compatibility
 
-EF Core 2.1 was designed to be compatible with database providers created for EF Core 2.0. While some of the features described above (e.g. value conversions) require an updated provider others (e.g. lazy loading) will light up with existing providers.
+EF Core 2.1 was designed to be compatible with database providers created for EF Core 2.0. While some of the features described above (e.g. value conversions) require an updated provider, others (e.g. lazy loading) will light up with existing providers.
 
 > [!TIP]
 > If you find any unexpected incompatibility or any issue in the new features, or if you have feedback on them, please report it using [our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues/new).
