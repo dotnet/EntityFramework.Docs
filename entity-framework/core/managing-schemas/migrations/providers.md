@@ -19,7 +19,7 @@ In the first approach, you generate two migrations for each model change.
 One way to do this is to put each migration set [in a separate assembly][2] and manually switch the active provider (and
 migrations assembly) between adding the two migrations.
 
-Another approach that makes working with the tools easier is to create a new type derives from your DbContext and
+Another approach that makes working with the tools easier is to create a new type that derives from your DbContext and
 overrides the active provider. This type is used at design time when adding or applying migrations.
 
 ``` csharp
