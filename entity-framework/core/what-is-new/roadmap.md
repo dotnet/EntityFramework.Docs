@@ -16,11 +16,11 @@ uid: core/what-is-new/roadmap
 > [!IMPORTANT]
 > Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
 
-The first preview of EF Core 2.1 was released on February 2018, therefore for more information on the feature set included, you can see [What is new in EF Core 2.1](xref:core/what-is-new/ef-core-2.1).
+The first preview of EF Core 2.1 was released on February 2018. You can now find more information about this release in [What is new in EF Core 2.1](xref:core/what-is-new/ef-core-2.1).
 
-We intend to release additional previews monthly, and a final release of 2.1 on the second calendar quarter of 2018.
+We intend to release additional previews of EF Core 2.1 monthly, and a final release on the second calendar quarter of 2018.
 
-We have not completed the [release planning](#release-planning-process) for the next release after EF Core 2.1.
+We have not completed the [release planning](#release-planning-process) for the next release after 2.1.
 
 ## Schedule
 
@@ -30,9 +30,11 @@ The schedule for EF Core is in-sync with the [.NET Core schedule](https://github
 
 We use the [Backlog Milestone](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3ABacklog+sort%3Areactions-%2B1-desc) in our issue tracker to maintain a detailed list of issues and features. Customers can comment and up-vote these.
 
-We tend to leave issues open that we reasonably expect we will work on at some point, or that someone from the community could tackle, but that does not imply the intent to resolve them in a specific timeframe until we assign them to a specific milestone as part of our [release planning process](#release-planning-process). If we do not plan to ever implement a feature, we will likely close the issue.
+We tend to leave issues open that we reasonably expect we will work on at some point, or that someone from the community could tackle, but that does not imply the intent to resolve them in a specific timeframe until we assign them to a specific milestone as part of our [release planning process](#release-planning-process).
 
-All that said, plans can change: priorities can change, release schedules change, resources change… As in all software projects, everything is subject to change. We don’t have enough information about the future to be able to say that feature X will be resolved by time/release Y. Even an issue that we closed can be reconsidered at a later point if we obtain new information about it.
+If we do not plan to ever implement a feature, we will likely close the issue. An issue that we closed can be reconsidered at a later point if we obtain new information about it.
+
+All that said, we don’t have enough information about the future to be able to say that feature X will be resolved by time/release Y. As in all software projects, priorities, release schedules, and available resources can change at any point.
 
 ## Release planning process
 
