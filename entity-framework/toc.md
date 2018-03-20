@@ -13,10 +13,11 @@
 ## [Entity Framework Core](core/index.md)
 
 ### [New in EF Core](core/what-is-new/index.md)
+#### [EF Core Roadmap](core/what-is-new/roadmap.md)
 #### [EF Core 2.1 (in preview)](core/what-is-new/ef-core-2.1.md)
-#### [EF Core 2.0 (latest released)](core/what-is-new/ef-core-2.0.md)
-#### [EF Core 1.1 (previous version)](core/what-is-new/ef-core-1.1.md)
-#### [EF Core 1.0 (previous version)](core/what-is-new/ef-core-1.0.md)
+#### [EF Core 2.0 (latest release)](core/what-is-new/ef-core-2.0.md)
+#### [EF Core 1.1](core/what-is-new/ef-core-1.1.md)
+#### [EF Core 1.0](core/what-is-new/ef-core-1.0.md)
 
 ### [Getting Started](core/get-started/index.md)
 #### [Installing EF Core](core/get-started/install/index.md)

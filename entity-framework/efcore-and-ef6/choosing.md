@@ -13,13 +13,11 @@ The following information will help you choose between Entity Framework Core and
 
 ## Guidance for new applications
 
-Because EF Core is a new product, and still lacks some critical O/RM features, EF6 will still be the most suitable choice for many applications.
+Consider using EF Core for new applications if you want to take advantage of the all the capabilities of EF Core and your application does not require any features that are not yet implemented in EF Core.
 
-**These are the types of applications we would recommend using EF Core for:**
+EF6 requires .NET Framework 4.0 (or a later version) and is only supported on Windows (i.e. it does not run on .NET Core and is not supported in other operating systems), but it is still a viable choice for new applications as long those constraints are acceptable and the application does not require new features in EF Core that are not available to EF6.
 
-* New applications that do not require features that are not yet implemented in EF Core. Review [Feature Comparison](features.md) to see if EF Core may be a suitable choice for your application.
-
-* Applications that target .NET Core, such as Universal Windows Platform (UWP) and ASP.NET Core applications. These applications can not use EF6 as it requires the .NET Framework (i.e. .NET Framework 4.5).
+Review [Feature Comparison](features.md) to see if EF Core may be a suitable choice for your application.
 
 ## Guidance for existing EF6 applications
 
