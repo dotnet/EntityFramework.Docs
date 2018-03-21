@@ -65,6 +65,9 @@ in the current directory, but can be changed using the <nobr>**--project**</nobr
 The startup project is the one emulated by the tools when executing your project's code. It also defaults to the project
 in the current directory, but can be changed using the **--startup-project** option.
 
+> [!NOTE]
+> Running a `database update` for an ASP.NET Core project that has EF Core installed in a different class library would look like this: `dotnet ef --startup-project {Web-Project-Path} database update` (from the library directory that has the CLI tool installed)
+
 Common options:
 
 |    |                                  |                             |
