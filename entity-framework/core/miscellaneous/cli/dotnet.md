@@ -66,7 +66,7 @@ The startup project is the one emulated by the tools when executing your project
 in the current directory, but can be changed using the **--startup-project** option.
 
 > [!NOTE]
-> Running a `database update` for an ASP.NET Core project that has EF Core installed in a different class library would look like this: `dotnet ef --startup-project {Web-Project-Path} database update` (from the library directory that has the CLI tool installed)
+> For instance, updating the database of your web application that has EF Core installed in a different project would look like this: `dotnet ef database update --project {project-path}` (from your web app directory)
 
 Common options:
 
