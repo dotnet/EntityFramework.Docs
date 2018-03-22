@@ -10,9 +10,6 @@ uid: core/get-started/aspnetcore/existing-db
 
 # Getting Started with EF Core on ASP.NET Core with an Existing Database
 
-> [!IMPORTANT]  
-> The [.NET Core SDK](https://www.microsoft.com/net/download/core) no longer supports `project.json` or Visual Studio 2015. Everyone doing .NET Core development is encouraged to [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/) and [Visual Studio 2017](https://www.visualstudio.com/downloads/).
-
 In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.
 
 > [!TIP]  
