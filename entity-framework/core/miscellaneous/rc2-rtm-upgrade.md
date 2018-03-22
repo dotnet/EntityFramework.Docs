@@ -68,6 +68,9 @@ If you were targeting .NET Core with RC2, you needed to add `imports` to project
 }
 ```
 
+> [!NOTE]  
+> As of version 1.0 RTM, the [.NET Core SDK](https://www.microsoft.com/net/download/core) no longer supports `project.json` or developing .NET Core applications using Visual Studio 2015. We recommend you [migrate from project.json to csproj](https://docs.microsoft.com/dotnet/articles/core/migration/). If you are using Visual Studio, we recommend you upgrade to [Visual Studio 2017](https://www.visualstudio.com/downloads/).
+
 ## UWP: Add binding redirects
 
 Attempting to run EF commands on Universal Windows Platform (UWP) projects results in the following error:
