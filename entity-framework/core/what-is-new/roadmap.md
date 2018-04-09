@@ -16,7 +16,7 @@ uid: core/what-is-new/roadmap
 > [!IMPORTANT]
 > Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
 
-The first preview of EF Core 2.1 was released on February 2018. You can now find more information about this release in [What is new in EF Core 2.1](xref:core/what-is-new/ef-core-2.1).
+The second preview of EF Core 2.1 was released on April 2018. You can now find more information about this release in [What is new in EF Core 2.1](xref:core/what-is-new/ef-core-2.1).
 
 We intend to release additional previews of EF Core 2.1 monthly, and a final release on the second calendar quarter of 2018.
 

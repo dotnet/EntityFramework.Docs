@@ -15,7 +15,7 @@ uid: core/what-is-new/ef-core-2.1
 > [!NOTE]  
 > This release is still in preview.
 
-Besides numerous small improvements and more than a hundred product bug fixes, EF Core 2.1 includes several new features:
+Besides numerous bug fixes and small functional and performance enhancements, EF Core 2.1 includes some compelling new features:
 
 ## Lazy loading
 EF Core now contains the necessary building blocks for anyone to author entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (e.g. classes with virtual navigation properties).
@@ -70,7 +70,7 @@ With the new release it will be possible to provide initial data to populate a d
 As an example, you can use this to configure seed data for a Post in `OnModelCreating`:
 
 ``` csharp
-modelBuilder.Entity<Post>().SeedData(new Post{ Id = 1, Text = "Hello World!" });
+modelBuilder.Entity<Post>().HasData(new Post{ Id = 1, Text = "Hello World!" });
 ```
 
 Read the [section on data seeding](xref:core/modeling/data-seeding) for more information about this topic.  
@@ -142,9 +142,29 @@ public class Order
 }
 ```
 
+## New dotnet-ef global tool
+
+The _dotnet-ef_ commands have been converted to a .NET CLI global tool, so it will no longer be necessary to use DotNetCliToolReference in the project to be able to use migrations or to scaffold a DbContext from an existing database.
+
+## Microsoft.EntityFrameworkCore.Abstractions package
+The new package contains attributes and interfaces that you can use in your projects to light up EF Core features without taking a dependency on EF Core as a whole. E.g. the [Owned] attribute introduced in Preview 1 was moved here.
+
+## State change events
+
+New `Tracked` And `StateChanged` events on `ChangeTracker` can be used to write logic that reacts to entities entering the DbContext or changing their state.
+
+## Raw SQL parameter analyzer
+
+A new code analyzer is included with EF Core that detects potentially unsafe usages of our raw-SQL APIs, like `FromSql` or `ExecuteSqlCommand`. E.g. for the following query, you will see a warning because _minAge_ is not parameterized:
+
+``` csharp
+var sql = $"SELECT * FROM People WHERE Age > {minAge}";
+var query = context.People.FromSql(sql);
+```
+
 ## Database provider compatibility
 
-EF Core 2.1 was designed to be compatible with database providers created for EF Core 2.0. While some of the features described above (e.g. value conversions) require an updated provider, others (e.g. lazy loading) will light up with existing providers.
+EF Core 2.1 was designed to be compatible with database providers created for EF Core 2.0, or at least require minimal changes. While some of the features described above (e.g. value conversions) require an updated provider, others (e.g. lazy loading) will light up with existing providers.
 
 > [!TIP]
 > If you find any unexpected incompatibility or any issue in the new features, or if you have feedback on them, please report it using [our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues/new).
