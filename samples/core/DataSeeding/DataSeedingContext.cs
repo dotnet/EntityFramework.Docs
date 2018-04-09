@@ -19,7 +19,7 @@ namespace EFModeling.Samples.DataSeeding
             });
 
             #region BlogSeed
-            modelBuilder.Entity<Blog>().SeedData(new Blog {BlogId = 1, Url = "http://sample.com"});
+            modelBuilder.Entity<Blog>().HasData(new Blog {BlogId = 1, Url = "http://sample.com"});
             #endregion
 
             modelBuilder.Entity<Post>(entity =>
@@ -30,7 +30,7 @@ namespace EFModeling.Samples.DataSeeding
             });
 
             #region PostSeed
-            modelBuilder.Entity<Post>().SeedData(
+            modelBuilder.Entity<Post>().HasData(
                 new {BlogId = 1, PostId = 1, Title = "First post", Content = "Test 1"},
                 new {BlogId = 1, PostId = 2, Title = "Second post", Content = "Test 2"});
             #endregion
