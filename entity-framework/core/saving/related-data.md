@@ -25,6 +25,9 @@ In the following example, the blog and three related posts are all inserted into
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/RelatedData/Sample.cs#AddingGraphOfEntities)]
 
+> [!TIP]  
+> Use the EntityEntry.State property to set the state of just a single entity. For example, `context.Entry(blog).State = EntityState.Modified`.
+
 ## Adding a related entity
 
 If you reference a new entity from the navigation property of an entity that is already tracked by the context, the entity will be discovered and inserted into the database.
