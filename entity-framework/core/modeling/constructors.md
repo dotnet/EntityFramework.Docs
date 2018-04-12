@@ -252,7 +252,7 @@ public class Post
 }
 ```
 A few things to notice about this:
-* The constructor is private, since it is only ever call by EF Core, and there is another public constructor for general use.
+* The constructor is private, since it is only ever called by EF Core, and there is another public constructor for general use.
 * The code using the injected service (i.e. the context) is defensive against it being `null` to handle cases where EF Core is not creating the instance.
 * Because service is stored in a read/write property it will be reset when the entity is attached to a new context instance.
 
