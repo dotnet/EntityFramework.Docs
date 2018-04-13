@@ -98,9 +98,9 @@ Removes the last migration.
 
 Parameters:
 
-|        |                                                                       |
-|:-------|:----------------------------------------------------------------------|
-| -Force | Don't check to see if the migration has been applied to the database. |
+|        |                                                              |
+|:-------|:-------------------------------------------------------------|
+| -Force | Revert the migration if it has been applied to the database. |
 
 ### Scaffold-DbContext
 
@@ -113,6 +113,7 @@ Parameters:
 | <nobr>***-Connection*** \<String></nobr> | The connection string to the database.                                                           |
 | ***-Provider*** \<String>                | The provider to use. (E.g. Microsoft.EntityFrameworkCore.SqlServer)                              |
 | -OutputDir \<String>                     | The directory to put files in. Paths are relative to the project directory.                      |
+| -ContextDir \<String>                    | The directory to put DbContext file in. Paths are relative to the project directory.             |
 | -Context \<String>                       | The name of the DbContext to generate.                                                           |
 | -Schemas \<String[]>                     | The schemas of tables to generate entity types for.                                              |
 | -Tables \<String[]>                      | The tables to generate entity types for.                                                         |
