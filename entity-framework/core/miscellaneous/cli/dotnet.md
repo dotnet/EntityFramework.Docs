@@ -137,6 +137,7 @@ Options:
 |:----------------|:----------------------------------------|:-------------------------------------------------------------------------------------------------|
 | <nobr>-d</nobr> | --data-annotations                      | Use attributes to configure the model (where possible). If omitted, only the fluent API is used. |
 | -c              | --context \<NAME>                       | The name of the DbContext.                                                                       |
+|                 | --context-dir \<PATH>                   | The directory to put DbContext file in. Paths are relative to the project directory.             |
 | -f              | --force                                 | Overwrite existing files.                                                                        |
 | -o              | --output-dir \<PATH>                    | The directory to put files in. Paths are relative to the project directory.                      |
 |                 | <nobr>--schema \<SCHEMA_NAME>...</nobr> | The schemas of tables to generate entity types for.                                              |
@@ -171,7 +172,7 @@ Options:
 
 |    |         |                                                                       |
 |:---|:--------|:----------------------------------------------------------------------|
-| -f | --force | Don't check to see if the migration has been applied to the database. |
+| -f | --force | Revert the migration if it has been applied to the database. |
 
 ### dotnet ef migrations script
 
