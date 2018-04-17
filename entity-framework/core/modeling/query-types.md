@@ -23,7 +23,7 @@ Query Types are different from entity types in that they:
 - Do not require a key to be defined.
 - Are never tracked by the Change Tracker.
 - Are never discovered by convention.
-- Are mapped to a database object using the `ToView` method, instead of `ToTable`.
+- Are mapped to database objects using the `ToView` method, rather than `ToTable`.
 - Only support a subset of navigation mapping capabilities - Specifically, they may never act as the principal end of a relationship.
 - May be mapped to a _defining query_ - A Defining Query is a secondary query that acts a data source for a Query Type.
 
@@ -35,7 +35,7 @@ Some of the main usage scenarios for query types are:
 - Mapping to queries defined in the model.
 
 > [!TIP]
-> Mapping a query type to a database view is achieved using the `ToView` fluent API. However, you can also pass the name of a table to this method. For simplicity, EF Core follows the convention that database objects that it can use as table sources (that is, for relational databases, they can appear in the FROM clause of a SELECT statement) but it cannot update (that is, for relational databases, they cannot be the target of INSERT, UPDATE or DELETE statements) are considered ___views___. Conversely, database objects that can both be used as table sources and targets for updates are considered ___tables___. This does not need to match the actual type of the object in the database in all cases.
+> Mapping a query type to a database view is achieved using the `ToView` fluent API. However, you can pass the name of a table to this method. For simplicity, EF Core follows the convention that database objects that it can use as table sources (that is, for relational databases, they can appear in the FROM clause of a SELECT statement) but it cannot update (that is, for relational databases, they cannot be the target of INSERT, UPDATE or DELETE statements) are considered to be ___views___. Conversely, database objects that can both be used as table sources and targets for updates are considered to be ___tables___. This does not need to match the actual type of the object in the database in all cases.
 
 ## Example
 
