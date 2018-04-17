@@ -23,7 +23,7 @@ Query Types are different from entity types in that they:
 - Do not require a key to be defined.
 - Are never tracked by the Change Tracker.
 - Are never discovered by convention.
-- In order to map it to a database object, you se the `ToView` method, instead of `ToTable`.
+- Are mapped to a database object using the `ToView` method, instead of `ToTable`.
 - Only support a subset of navigation mapping capabilities - Specifically, they may never act as the principal end of a relationship.
 - May be mapped to a _defining query_ - A Defining Query is a secondary query that acts a data source for a Query Type.
 
