@@ -15,14 +15,15 @@ Query Types are read-only query result types that can be added to the EF Core mo
 
 They are conceptually similar to Entity Types in that:
 
-- They are POCO C# types that are added to the model, either in ```OnModelCreating``` using the ```ModelBuilder.Query``` method, or via a DbContext "set" property (for query types such a property is typed as ```DbQuery<T>``` rather than ```DbSet<T>```).
-- They support much of the same mapping capabilities as regular entity types. For example, inheritance mapping, navigations (see limitiations below) and, on relational stores, the ability to configure the target database schema objects via ```ToTable```, ```HasColumn``` fluent-api methods (or data annotations).
+- They are simple classes that are added to the model, either in `OnModelCreating` using the `ModelBuilder.Query` method, or via a DbContext "set" property (for query types such a property is typed as `DbQuery<T>` rather than `DbSet<T>`).
+- They support much of the same mapping capabilities as regular entity types. For example, inheritance mapping, navigations (see limitiations below) and, on relational stores, the ability to configure the target database schema objects via fluent-api methods (or data annotations).
 
 Query Types are different from entity types in that they:
 
 - Do not require a key to be defined.
 - Are never tracked by the Change Tracker.
 - Are never discovered by convention.
+- In order to map it to a database object, you se the `ToView` method, instead of `ToTable`.
 - Only support a subset of navigation mapping capabilities - Specifically, they may never act as the principal end of a relationship.
 - May be mapped to a _defining query_ - A Defining Query is a secondary query that acts a data source for a Query Type.
 
@@ -30,11 +31,11 @@ Some of the main usage scenarios for query types are:
 
 - Mapping to database views.
 - Mapping to tables that do not have a primary key defined.
-- Serving as the return type for ad hoc ```FromSql()``` queries.
+- Serving as the return type for ad hoc `FromSql()` queries.
 - Mapping to queries defined in the model.
 
 > [!TIP]
-> Mapping a query type to a database view is achieved using the ```ToTable``` fluent API.
+> Mapping a query type to a database view is achieved using the `ToView` fluent API. However, you can also pass the name of a table to this method. For simplicity, EF Core follows the convention that database objects that it can use as table sources (that is, for relational databases, they can appear in the FROM clause of a SELECT statement) but it cannot update (that is, for relational databases, they cannot be the target of INSERT, UPDATE or DELETE statements) are considered ___views___. Conversely, database objects that can both be used as table sources and targets for updates are considered ___tables___. This does not need to match the actual type of the object in the database in all cases.
 
 ## Example
 
@@ -55,7 +56,7 @@ Next, we define a class to hold the result from the database view:
 
 [!code-csharp[Main](../../../efcore-dev/samples/QueryTypes/Program.cs#QueryType)]
 
-Next, we configure the query type in _OnModelCreating_ using the ```modelBuilder.Query<T>``` API.
+Next, we configure the query type in _OnModelCreating_ using the `modelBuilder.Query<T>` API.
 We use standard fluent configuration APIs to configure the mapping for the Query Type:
 
 [!code-csharp[Main](../../../efcore-dev/samples/QueryTypes/Program.cs#Configuration)]
