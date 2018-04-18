@@ -11,31 +11,33 @@ uid: core/modeling/query-types
 > [!NOTE]
 > This feature is new in EF Core 2.1
 
-Query Types are read-only query result types that can be added to the EF Core model. Query Types enable ad-hoc querying (like anonymous types), but are more flexible because they can have mapping configuration specified.
+In addition to entity types, an EF Core model can contain _query types_, which can be used to carry out database queries against data that isn't mapped to entity types.
 
-They are conceptually similar to Entity Types in that:
+Query types have many similarities with entity types:
 
-- They are data classes that are added to the model, either in `OnModelCreating` using the `ModelBuilder.Query` method, or via a DbContext "set" property (for query types such a property is typed as `DbQuery<T>` rather than `DbSet<T>`).
-- They support many of the same mapping capabilities. For example, inheritance mapping, navigations (see limitations below) and, on relational stores, the ability to configure the target database objects via fluent API methods or data annotations.
+- They can also be added to the model either in `OnModelCreating`, or via a "set" property on a derived _DbContext_.
+- They support many of the same mapping capabilities, like inheritance mapping, navigation properties (see limitations below) and, on relational stores, the ability to configure the target database objects and columns via fluent API methods or data annotations.
 
-Query Types are different from entity types in that they:
+However they are different from entity types in that they:
 
 - Do not require a key to be defined.
-- Are never tracked by the Change Tracker.
+- Are never tracked for changes on the _DbContext_ and therefore are never inserted, updated or deleted on the database.
 - Are never discovered by convention.
-- Are mapped to database objects using the `ToView` method, rather than `ToTable`.
 - Only support a subset of navigation mapping capabilities - Specifically, they may never act as the principal end of a relationship.
-- May be mapped to a _defining query_ - A Defining Query is a secondary query that acts a data source for a Query Type.
+- Are addressed on the _ModelBuilder_ using the `Query` method rather than the `Entity` method.
+- Are mapped on the _DbContext_ through properties of type `DbQuery<T>` rather than `DbSet<T>`
+- Are mapped to database objects using the `ToView` method, rather than `ToTable`.
+- May be mapped to a _defining query_ - A defining query is a secondary query declared in the model that acts a data source for a query type.
 
 Some of the main usage scenarios for query types are:
 
+- Serving as the return type for ad hoc `FromSql()` queries.
 - Mapping to database views.
 - Mapping to tables that do not have a primary key defined.
-- Serving as the return type for ad hoc `FromSql()` queries.
 - Mapping to queries defined in the model.
 
 > [!TIP]
-> Mapping a query type to a database object is achieved using the `ToView` fluent API. From the perspective of EF Core, the database object specified in this method is a _view_, which simply means that it is treated as a read-only query source and cannot be the target of update, insert or delete operations. However, this does not mean that the database object is actually required to be a database view - It can alternatively be a database table that will be treated as read-only. Conversely, for entity types, EF Core assumes that a database object specified in the `ToTable` method can be treated as a _table_, meaning that it can be used as a query source but also targeted by update, delete and insert operations. In fact, you can specify the name of a database view in `ToTable` and everything should work as long as the view is configured to be updatable on the database.
+> Mapping a query type to a database object is achieved using the `ToView` fluent API. From the perspective of EF Core, the database object specified in this method is a _view_, meaning that it is treated as a read-only query source and cannot be the target of update, insert or delete operations. However, this does not mean that the database object is actually required to be a database view - It can alternatively be a database table that will be treated as read-only. Conversely, for entity types, EF Core assumes that a database object specified in the `ToTable` method can be treated as a _table_, meaning that it can be used as a query source but also targeted by update, delete and insert operations. In fact, you can specify the name of a database view in `ToTable` and everything should work fine as long as the view is configured to be updatable on the database.
 
 ## Example
 
