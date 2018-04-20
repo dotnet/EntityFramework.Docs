@@ -24,3 +24,7 @@ As an example, you can use this to configure seed data for a `Blog` in `OnModelC
 To add entities that have a relationship the foreign key values need to be specified. Frequently the foreign key properties are in shadow state, so to be able to set the values an anonymous class should be used:
 
 [!code-csharp[Main](../../../samples/core/DataSeeding/DataSeedingContext.cs?name=PostSeed)]
+
+Make sure to call `EnsureCreated()` to add the data to the database.
+
+[!code-csharp[Main](../../../samples/core/DataSeeding/Program.cs?)]
