@@ -1,4 +1,4 @@
-﻿---
+---
 title: Creating a Model - EF Core
 author: rowanmiller
 ms.author: divega
