@@ -85,13 +85,13 @@ Once you have a model, you can use [migrations](https://docs.microsoft.com/aspne
 
 * Open *Program.cs* and replace the contents with the following code:
 
- [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Program.cs)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Program.cs)]
 
 * Test the app:
 
- `dotnet run`
+  `dotnet run`
 
- One blog is saved to the database and the details of all blogs are displayed in the console.
+  One blog is saved to the database and the details of all blogs are displayed in the console.
 
   ``` Console
   ConsoleApp.SQLite>dotnet run

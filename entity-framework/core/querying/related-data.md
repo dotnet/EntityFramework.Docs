@@ -94,19 +94,19 @@ Given the following model:
 Contents of `School` navigation of all People who are Students can be eagerly loaded using a number of patterns:
 
 - using cast
-```Csharp
-context.People.Include(person => ((Student)person).School).ToList()
-```
+  ```Csharp
+  context.People.Include(person => ((Student)person).School).ToList()
+  ```
 
 - using `as` operator
-```Csharp
-context.People.Include(person => (person as Student).School).ToList()
-```
+  ```Csharp
+  context.People.Include(person => (person as Student).School).ToList()
+  ```
 
 - using overload of `Include` that takes parameter of type `string`
-```Csharp
-context.People.Include("Student").ToList()
-```
+  ```Csharp
+  context.People.Include("Student").ToList()
+  ```
 
 ### Ignored includes
 

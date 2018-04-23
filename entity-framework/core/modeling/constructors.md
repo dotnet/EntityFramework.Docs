@@ -38,7 +38,7 @@ public class Blog
 public class Post
 {
     public int Id { get; set; }
-    
+
     public string Title { get; set; }
     public string Content { get; set; }
     public DateTime PostedOn { get; set; }
@@ -133,7 +133,6 @@ public class Post
 
     public Blog Blog { get; set; }
 }
-
 ```
 EF Core sees a property with a private setter as read-write, which means that all properties are mapped as before and the key can still be store-generated.
 

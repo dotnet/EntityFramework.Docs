@@ -1,4 +1,4 @@
-﻿---
+---
 title: 🔧 Reverse Engineering - EF Core
 author: smitpatel
 ms.author: divega

@@ -62,10 +62,11 @@
         ]
       }
     ],
-    "globalMetadata":
-    {
+    "globalMetadata": {
       "breadcrumb_path": "/ef/breadcrumb/toc.json",
-      "searchScope": ["Entity Framework"],
+      "searchScope": [
+        "Entity Framework"
+      ],
       "manager": "divega",
       "ms.topic": "article",
       "audience": "developer",
@@ -77,6 +78,7 @@
     "dest": "_site",
     "template": [
       "default"
-    ]
+    ],
+    "markdownEngineName": "markdig"
   }
 }

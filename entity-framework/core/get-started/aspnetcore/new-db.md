@@ -61,7 +61,7 @@ Define a context and entity classes that make up the model:
 * Enter **Model.cs** as the name and click **OK**.
 * Replace the contents of the file with the following code:
 
- [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Models/Model.cs)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Models/Model.cs)]
 
 Note: In a real app you would typically put each class from your model in a separate file. For the sake of simplicity, we are putting all the classes in one file for this tutorial.
 
@@ -74,13 +74,13 @@ In order for our MVC controllers to make use of `BloggingContext` we will regist
 * Open **Startup.cs**
 * Add the following `using` statements:
 
- [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs#AddedUsings)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs#AddedUsings)]
 
 Add the `AddDbContext` method to register it as a service:
 
 * Add the following code to the `ConfigureServices` method:
 
- [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=7-8)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=7-8)]
 
 Note: A real app would generally put the connection string in a configuration file. For the sake of simplicity, we are defining it in code. See [Connection Strings](../../miscellaneous/connection-strings.md) for more information.
 

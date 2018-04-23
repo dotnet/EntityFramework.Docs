@@ -1,4 +1,4 @@
-﻿---
+---
 title: Getting Started on .NET Framework - New Database - EF Core
 author: rowanmiller
 ms.author: divega
