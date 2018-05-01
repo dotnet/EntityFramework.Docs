@@ -19,10 +19,10 @@ Entity Framework Core allows you to drop down to raw SQL queries when working wi
 
 ## Limitations
 
-There are a couple of limitations to be aware of when using raw SQL queries:
+There are a few limitations to be aware of when using raw SQL queries:
 * SQL queries can only be used to return entity types that are part of your model. There is an enhancement on our backlog to [enable returning ad-hoc types from raw SQL queries](https://github.com/aspnet/EntityFramework/issues/1862).
 
-* The SQL query must return data for all properties of the entity type.
+* The SQL query must return data for all properties of the entity or query type.
 
 * The column names in the result set must match the column names that properties are mapped to. Note this is different from EF6 where property/column mapping was ignored for raw SQL queries and result set column names had to match the property names.
 
