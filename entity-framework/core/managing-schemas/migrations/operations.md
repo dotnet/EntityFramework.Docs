@@ -32,7 +32,7 @@ static MigrationBuilder CreateUser(
 ```
 
 If your migrations need to support multiple database providers, you can use the `MigrationBuilder.ActiveProvider`
-property. Here's an example supporting both Microsoft SQL Server and PostreSQL.
+property. Here's an example supporting both Microsoft SQL Server and PostgreSQL.
 
 ``` csharp
 static MigrationBuilder CreateUser(
