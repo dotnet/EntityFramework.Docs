@@ -31,8 +31,9 @@ namespace ConnectionResiliency
                 strategy.Execute(() =>
                 {
                     using (var context = new BloggingContext())
+                    using (var transaction = context.Database.BeginTransaction())
                     {
-                        using (var transaction = context.Database.BeginTransaction())
+                        try
                         {
                             context.Blogs.Add(new Blog {Url = "http://blogs.msdn.com/dotnet"});
                             context.SaveChanges();
@@ -41,6 +42,12 @@ namespace ConnectionResiliency
                             context.SaveChanges();
 
                             transaction.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            transaction.Rollback();
+                            // TODO: Handle failure
+                            throw;
                         }
                     }
                 });
