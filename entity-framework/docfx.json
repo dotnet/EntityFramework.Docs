@@ -80,7 +80,7 @@
     },
     "fileMetadata": {
       "feedback_product_url": {
-        "entity-framework/ef6/**/**.md": "https://github.com/aspnet/EntityFramework6/issues/new"
+        "ef6/**/**.md": "https://github.com/aspnet/EntityFramework6/issues/new"
       }
     },
     "dest": "_site",
