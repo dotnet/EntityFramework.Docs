@@ -73,7 +73,15 @@
       "ms.reviewer": "divega",
       "ms.prod": "entity-framework",
       "ms.tgt_pltfrm": "dotnet",
-      "ms.devlang": "dotnet"
+      "ms.devlang": "dotnet",
+      "feedback_system": "GitHub",
+      "feedback_github_repo": "aspnet/EntityFramework.Docs",
+      "feedback_product_url": "https://github.com/aspnet/EntityFrameworkCore/issues/new"
+    },
+    "fileMetadata": {
+      "feedback_product_url": {
+        "entity-framework/ef6/**/**.md": "https://github.com/aspnet/EntityFramework6/issues/new"
+      }
     },
     "dest": "_site",
     "template": [
