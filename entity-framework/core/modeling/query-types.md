@@ -23,7 +23,10 @@ However they are different from entity types in that they:
 - Do not require a key to be defined.
 - Are never tracked for changes on the _DbContext_ and therefore are never inserted, updated or deleted on the database.
 - Are never discovered by convention.
-- Only support a subset of navigation mapping capabilities - Specifically, they may never act as the principal end of a relationship.
+- Only support a subset of navigation mapping capabilities - Specifically:
+  - They may never act as the principal end of a relationship.
+  - They can only contain reference navigation properties pointing to entities
+  - Entities cannot contain navigation properties to query types
 - Are addressed on the _ModelBuilder_ using the `Query` method rather than the `Entity` method.
 - Are mapped on the _DbContext_ through properties of type `DbQuery<T>` rather than `DbSet<T>`
 - Are mapped to database objects using the `ToView` method, rather than `ToTable`.
