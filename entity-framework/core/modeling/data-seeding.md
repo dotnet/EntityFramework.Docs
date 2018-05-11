@@ -15,7 +15,7 @@ uid: core/modeling/data-seeding
 > [!NOTE]  
 > This feature is new in EF Core 2.1.
 
-Data seeding allows to provide initial data to populate a database. Unlike in EF6, in EF Core, seeding data is associated with an entity type as part of the model configuration. Then EF Core migrations can automatically compute what insert, update or delete operations need to be applied when upgrading the database to a new version of the model.
+Data seeding allows to provide initial data to populate a database. Unlike in EF6, in EF Core, seeding data is associated with an entity type as part of the model configuration. Then EF Core [migrations](xref:core/managing-schemas/migrations/index) can automatically compute what insert, update or delete operations need to be applied when upgrading the database to a new version of the model.
 
 As an example, you can use this to configure seed data for a `Blog` in `OnModelCreating`:
 
@@ -25,6 +25,4 @@ To add entities that have a relationship the foreign key values need to be speci
 
 [!code-csharp[Main](../../../samples/core/DataSeeding/DataSeedingContext.cs?name=PostSeed)]
 
-Make sure to call `EnsureCreated()` to add the data to the database.
-
-[!code-csharp[Main](../../../samples/core/DataSeeding/Program.cs?)]
+Once entities have been added, it is recommended to use [migrations](xref:core/managing-schemas/migrations/index) to apply changes.
