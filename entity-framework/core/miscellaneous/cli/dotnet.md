@@ -19,7 +19,7 @@ Installing the tools
 > [!NOTE]
 > The .NET Core SDK version 2.1.300 and newer includes **dotnet ef** commands that are compatible with EF Core 2.0 and later versions. Therefore if you are using recent versions of the .NET Core SDK and the EF Core runtime, no installation is required and you can ignore the rest of this section.
 
-On the other hand, the **dotnet ef** tool contained in .NET Core SDK version 2.1.300 and newer is not compatible with EF Core version 1.0 and 1.1. Before you can work with a project that uses these earlier versions of EF Core on a computer that has one of these recent versions of the .NET Core SDK installed, you must also have installed a version of the .NET Core SDK 2.1.200 or older and specify that the application should use it in its [global.json](https://docs.microsoft.com/en-us/dotnet/core/tools/global-json) file. This file is normally included in the solution directory (one above the project). Then you can proceed with the instruction steps below.
+On the other hand, the **dotnet ef** tool contained in .NET Core SDK version 2.1.300 and newer is not compatible with EF Core version 1.0 and 1.1. Before you can work with a project that uses these earlier versions of EF Core on a computer that has .NET Core SDK 2.1.300 or newer installed, you must also install version 2.1.200 or older of the SDK and configure the application to use that older version by modifying its [global.json](https://docs.microsoft.com/en-us/dotnet/core/tools/global-json) file. This file is normally included in the solution directory (one above the project). Then you can proceed with the installlation instruction below.
 
 For previous versions of the .NET Core SDK, you can install the EF Core .NET Command-line Tools using these steps:
 
