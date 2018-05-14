@@ -16,14 +16,18 @@ part of the [.NET Core SDK][2].
 
 Installing the tools
 --------------------
-Install the EF Core .NET Command-line Tools using these steps:
+> [!NOTE]
+> The .NET Core SDK version 2.1.300 and newer includes **dotnet ef** commands that are compatible with EF Core 2.0 and later versions. Therefore if you are using recent versions of the .NET Core SDK and the EF Core runtime, no installation is required and you can ignore the rest of this section.
+
+On the other hand, the **dotnet ef** tool contained in .NET Core SDK version 2.1.300 and newer is not compatible with EF Core version 1.0 and 1.1. Before you can work with a project that uses these earlier versions of EF Core on a computer that has .NET Core SDK 2.1.300 or newer installed, you must also install version 2.1.200 or older of the SDK and configure the application to use that older version by modifying its [global.json](https://docs.microsoft.com/en-us/dotnet/core/tools/global-json) file. This file is normally included in the solution directory (one above the project). Then you can proceed with the installlation instruction below.
+
+For previous versions of the .NET Core SDK, you can install the EF Core .NET Command-line Tools using these steps:
 
 1. Edit the project file and add Microsoft.EntityFrameworkCore.Tools.DotNet as a DotNetCliToolReference item (See below)
 2. Run the following commands:
 
        dotnet add package Microsoft.EntityFrameworkCore.Design
        dotnet restore
-
 
 The resulting project should look something like this:
 
