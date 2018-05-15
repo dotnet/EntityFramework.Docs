@@ -2,6 +2,7 @@
   "build_entry_point": "docs",
   "need_generate_intellisense": false,
   "need_generate_pdf_url_template": true,
+  "git_repository_branch_open_to_public_contributors": "master",
   "branch_target_mapping": {
 		"live": ["Publish", "Pdf"],
 		"master": ["Publish", "Pdf"]
