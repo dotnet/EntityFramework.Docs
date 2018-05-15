@@ -76,7 +76,7 @@ This can be useful when multiple properties use the same conversion.
 
 ## Built-in converters
 
-EF Core ships with a set of pre-defined `ValueConverter` classes, found in the `Microsoft.EntityFrameworkCore.Storage.Converters` namespace. These are:
+EF Core ships with a set of pre-defined `ValueConverter` classes, found in the `Microsoft.EntityFrameworkCore.Storage.ValueConversion` namespace. These are:
 * `BoolToZeroOneConverter` - Bool to zero and one
 * `BoolToStringConverter` - Bool to strings such as "Y" and "N"
 * `BoolToTwoValuesConverter` - Bool to any two values
