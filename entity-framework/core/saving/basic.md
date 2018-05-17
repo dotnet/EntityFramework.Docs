@@ -36,7 +36,7 @@ Simply modify the values assigned to properties and then call *SaveChanges*.
 
 ## Deleting Data
 
-Use the *DbSet.Remove* method to delete instances of you entity classes.
+Use the *DbSet.Remove* method to delete instances of your entity classes.
 
 If the entity already exists in the database, it will be deleted during *SaveChanges*. If the entity has not yet been saved to the database (i.e. it is tracked as added) then it will be removed from the context and will no longer be inserted when *SaveChanges* is called.
 
