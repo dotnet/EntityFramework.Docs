@@ -45,7 +45,7 @@ WHERE [PersonId] = @p0 AND [LastName] = @p2;
 
 ## Resolving concurrency conflicts
 
-Continuing with the previous example, if one user tries to save some changes to a `Person`, but another user has already changed the `LastName` the an exception will be thrown.
+Continuing with the previous example, if one user tries to save some changes to a `Person`, but another user has already changed the `LastName`, then an exception will be thrown.
 
 At this point, the application could simply inform the user that the update was not successful due to conflicting changes and move on. But it may be desirable to prompt the user to ensure this record still represents the same actual person and to retry the operation.
 
