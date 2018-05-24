@@ -37,7 +37,7 @@ Until now, EF Core could only map properties of types natively supported by the 
 Read the [section on value conversions](xref:core/modeling/value-conversions) for more information about this topic.  
 
 ## LINQ GroupBy translation
-Before version 2.1, in EF Core the GroupBy LINQ operator was always be evaluated in memory. We now support translating it to the SQL GROUP BY clause in most common cases.
+Before version 2.1, in EF Core the GroupBy LINQ operator would always be evaluated in memory. We now support translating it to the SQL GROUP BY clause in most common cases.
 
 This example shows a query with GroupBy used to compute various aggregate functions:
 
