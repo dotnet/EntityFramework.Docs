@@ -4,6 +4,7 @@ author: bricelam
 ms.author: bricelam
 ms.date: 11/6/2017
 ms.technology: entity-framework-core
+uid: core/miscellaneous/cli/dotnet
 ---
 EF Core .NET Command-line Tools
 ===============================
