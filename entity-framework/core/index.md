@@ -25,9 +25,8 @@ If you like to learn by writing code, we'd recommend one of our [Getting Started
 
 If you are familiar with EF Core and want to jump straight into the details of the latest releases:
 
-- **[What is new in EF Core 2.1 (currently in preview)](xref:core/what-is-new/ef-core-2.1)**
-- **[What is new in EF Core 2.0 (the latest released version)](xref:core/what-is-new/ef-core-2.0)**
-- **[Upgrading existing applications to EF Core 2.0](xref:core/miscellaneous/1x-2x-upgrade)**
+- **[What is new in EF Core 2.1](xref:core/what-is-new/ef-core-2.1)**
+- **[Upgrading existing applications to EF Core 2.x](xref:core/miscellaneous/1x-2x-upgrade)**
 
 
 ## Get Entity Framework Core
