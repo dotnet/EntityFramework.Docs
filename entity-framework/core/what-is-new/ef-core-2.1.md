@@ -16,7 +16,7 @@ uid: core/what-is-new/ef-core-2.1
 Besides numerous bug fixes and small functional and performance enhancements, EF Core 2.1 includes some compelling new features:
 
 ## Lazy loading
-EF Core now contains the necessary building blocks for anyone to author entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (e.g. classes with virtual navigation properties).
+EF Core now contains the necessary building blocks for anyone to author entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (for example, classes with virtual navigation properties).
 
 Read the [section on lazy loading](xref:core/querying/related-data#lazy-loading) for more information about this topic.
 
