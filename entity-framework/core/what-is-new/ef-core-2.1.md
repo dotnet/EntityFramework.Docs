@@ -147,7 +147,7 @@ The _dotnet-ef_ commands are now part of the .NET Core SDK, therefore it will no
 See the section on [installing the tools](xref:core/miscellaneous/cli/dotnet#installing-the-tools) for more details on how to enable command line tools for different versions of the .NET Core SDK and EF Core.
 
 ## Microsoft.EntityFrameworkCore.Abstractions package
-The new package contains attributes and interfaces that you can use in your projects to light up EF Core features without taking a dependency on EF Core as a whole. E.g. the [Owned] attribute and the ILazyLoader interface are located here.
+The new package contains attributes and interfaces that you can use in your projects to light up EF Core features without taking a dependency on EF Core as a whole. For example, the [Owned] attribute and the ILazyLoader interface are located here.
 
 ## State change events
 
