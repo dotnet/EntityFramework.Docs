@@ -130,10 +130,10 @@ Scaffolds a DbContext and entity types for a database.
 
 Arguments:
 
-|               |                                                                     |
-|:--------------|:--------------------------------------------------------------------|
-| \<CONNECTION> | The connection string to the database.                              |
-| \<PROVIDER>   | The provider to use. (E.g. Microsoft.EntityFrameworkCore.SqlServer) |
+|               |                                                                             |
+|:--------------|:----------------------------------------------------------------------------|
+| \<CONNECTION> | The connection string to the database.                                      |
+| \<PROVIDER>   | The provider to use. (for example, Microsoft.EntityFrameworkCore.SqlServer) |
 
 Options:
 
