@@ -16,7 +16,7 @@ uid: core/what-is-new/ef-core-2.1
 Besides numerous bug fixes and small functional and performance enhancements, EF Core 2.1 includes some compelling new features:
 
 ## Lazy loading
-EF Core now contains the necessary building blocks for anyone to author entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (e.g. classes with virtual navigation properties).
+EF Core now contains the necessary building blocks for anyone to author entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (for example, classes with virtual navigation properties).
 
 Read the [section on lazy loading](xref:core/querying/related-data#lazy-loading) for more information about this topic.
 
@@ -140,12 +140,14 @@ public class Order
 }
 ```
 
-## New dotnet-ef global tool
+## Command-line tool dotnet-ef included in .NET Core SDK
 
-The _dotnet-ef_ commands have been converted to a .NET CLI global tool, so it will no longer be necessary to use DotNetCliToolReference in the project to be able to use migrations or to scaffold a DbContext from an existing database.
+The _dotnet-ef_ commands are now part of the .NET Core SDK, therefore it will no longer be necessary to use DotNetCliToolReference in the project to be able to use migrations or to scaffold a DbContext from an existing database.
+
+See the section on [installing the tools](xref:core/miscellaneous/cli/dotnet#installing-the-tools) for more details on how to enable command line tools for different versions of the .NET Core SDK and EF Core.
 
 ## Microsoft.EntityFrameworkCore.Abstractions package
-The new package contains attributes and interfaces that you can use in your projects to light up EF Core features without taking a dependency on EF Core as a whole. E.g. the [Owned] attribute introduced in Preview 1 was moved here.
+The new package contains attributes and interfaces that you can use in your projects to light up EF Core features without taking a dependency on EF Core as a whole. For example, the [Owned] attribute and the ILazyLoader interface are located here.
 
 ## State change events
 
@@ -162,7 +164,7 @@ var query = context.People.FromSql(sql);
 
 ## Database provider compatibility
 
-EF Core 2.1 was designed to be compatible with database providers created for EF Core 2.0, or at least require minimal changes. While some of the features described above (e.g. value conversions) require an updated provider, others (e.g. lazy loading) will light up with existing providers.
+It is recommended that you use EF Core 2.1 with providers that have been updated or at least tested to work with EF Core 2.1.
 
 > [!TIP]
 > If you find any unexpected incompatibility or any issue in the new features, or if you have feedback on them, please report it using [our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues/new).
