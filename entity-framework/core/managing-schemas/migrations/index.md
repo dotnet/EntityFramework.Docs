@@ -190,7 +190,7 @@ myDbContext.Database.Migrate();
 ```
 
 > [!WARNING]
-> Don't call `EnsureCreated()` before `Migrate()`. `EnsureCreated()` bypasses Migrations to create the schema which
+> Don't call `EnsureCreated()` before `Migrate()`. `EnsureCreated()` bypasses Migrations to create the schema, which
 > causes `Migrate()` to fail.
 
 > [!NOTE]
