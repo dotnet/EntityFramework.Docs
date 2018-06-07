@@ -12,7 +12,7 @@ uid: core/querying/raw-sql
 ---
 # Raw SQL Queries
 
-Entity Framework Core allows you to drop down to raw SQL queries when working with a relational database. This can be useful if the query you want to perform can't be expressed using LINQ, or if using a LINQ query is resulting in inefficient SQL being sent to the database.
+Entity Framework Core allows you to drop down to raw SQL queries when working with a relational database. This can be useful if the query you want to perform can't be expressed using LINQ, or if using a LINQ query is resulting in inefficient SQL being sent to the database. Raw SQL queries can either return entity types or, starting with EF Core 2.1, [query types](xref:core/modeling/query-types)  that are part of your model. 
 
 > [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
@@ -20,7 +20,6 @@ Entity Framework Core allows you to drop down to raw SQL queries when working wi
 ## Limitations
 
 There are a few limitations to be aware of when using raw SQL queries:
-* SQL queries can only be used to return entity types that are part of your model. There is an enhancement on our backlog to [enable returning ad-hoc types from raw SQL queries](https://github.com/aspnet/EntityFramework/issues/1862).
 
 * The SQL query must return data for all properties of the entity or query type.
 
