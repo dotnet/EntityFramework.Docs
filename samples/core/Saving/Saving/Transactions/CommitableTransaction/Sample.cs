@@ -44,6 +44,7 @@ namespace EFSaving.Transactions.CommitableTransaction
                         // Run an EF Core command in the transaction
                         context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
                         context.SaveChanges();
+                        Adding context.Database.CloseConnection();
                     }
 
                     // Commit transaction if all commands succeed, transaction will auto-rollback
