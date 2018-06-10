@@ -35,6 +35,12 @@ Visual Studio 2017+ extension. You can reverse engineer of DbContext and POCO cl
 
 [GitHub wiki](https://github.com/ErikEJ/SqlCeToolbox/wiki/EF-Core-Power-Tools)
 
+### Entity Framework Visual Editor
+
+A Visual Studio 2017 extension that adds an ORM designer for visual design of Entity Framework 6, Core 2.0 and Core 2.1 classes. Code is generated using T4 templates so can be completely customized to suit any needs. Inheritance, unidirectional and bidirectional associations are all supported, as are enumerations and the ability to color-code your classes and add text blocks to explain potentially arcane parts of your design.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner)
+
 ## Extensions
 
 ### Microsoft.EntityFrameworkCore.AutoHistory
