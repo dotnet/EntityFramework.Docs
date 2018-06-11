@@ -31,8 +31,18 @@ namespace EFModeling.Samples.DataSeeding
 
             #region PostSeed
             modelBuilder.Entity<Post>().HasData(
-                new {BlogId = 1, PostId = 1, Title = "First post", Content = "Test 1"},
-                new {BlogId = 1, PostId = 2, Title = "Second post", Content = "Test 2"});
+                new Post() { BlogId = 1, PostId = 1, Title = "First post", Content = "Test 1" });
+            #endregion
+
+            #region AnonymousPostSeed
+            modelBuilder.Entity<Post>().HasData(
+                new { BlogId = 1, PostId = 2, Title = "Second post", Content = "Test 2" });
+            #endregion
+
+            #region OwnedTypeSeed
+            modelBuilder.Entity<Post>().OwnsOne(p => p.AuthorName).HasData(
+                new { PostId = 1, First = "Andriy", Last = "Svyryd" },
+                new { PostId = 2, First = "Diego", Last = "Vega" });
             #endregion
         }
     }
