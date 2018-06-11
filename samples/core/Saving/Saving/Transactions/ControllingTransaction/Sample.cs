@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -14,6 +14,7 @@ namespace EFSaving.Transactions.ControllingTransaction
                 context.Database.EnsureCreated();
             }
 
+            #region Transaction
             using (var context = new BloggingContext())
             {
                 using (var transaction = context.Database.BeginTransaction())
@@ -40,6 +41,7 @@ namespace EFSaving.Transactions.ControllingTransaction
                     }
                 }
             }
+            #endregion
         }
 
         public class BloggingContext : DbContext
