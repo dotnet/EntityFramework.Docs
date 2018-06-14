@@ -184,7 +184,7 @@ Some of these limitations are fundamental to how owned entity types work, but so
 - In EF Core 2.0, navigations to owned entity types cannot be declared in derived entity types unless the owned entities are explicitly mapped to a separate table from the owner hierarchy. This limitation has been removed in EF Core 2.1
  
 ### Current shortcomings
-- Inheritance hierarchies of owned entity types are not supported
+- Inheritance hierarchies that include owned entity types are not supported
 - Owned entity types cannot be pointed at by a collection navigation property (only reference navigations are currently supported)
 - Navigations to owned entity types cannot be null unless they are explicitly mapped to a separate table from the owner 
 - Instances of owned entity types cannot be shared by multiple owners (this is a well-known scenario for value objects that cannot be implemented using owned entity types)
