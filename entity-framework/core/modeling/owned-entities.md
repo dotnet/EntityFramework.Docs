@@ -176,7 +176,7 @@ When querying the owner the owned types will be included by default. It is not n
 var orders = context.Orders.Where(o => o.Status == OrderStatus.Pending);
 ```  
 
-## Limitations 
+## Limitations
 
 Here are some limitations of owned entity types. Some of these limitations are fundamental to how owned types work, but some others are restrictions that we may be able to remove in future releases:
 
