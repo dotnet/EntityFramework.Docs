@@ -178,10 +178,10 @@ var orders = context.Orders.Where(o => o.Status == OrderStatus.Pending);
 
 ## Limitations
 
-Here are some limitations of owned entity types. Some of these limitations are fundamental to how owned types work, but some others are restrictions that we may be able to remove in future releases:
+Some of these limitations are fundamental to how owned eneity types work, but some others are restrictions that we may be able to remove in future releases:
 
 ### Shortcomings in previous versions
-- In EF Core 2.0, navigations to owned entity types cannot be declared in derived entity types unless the owned entities are explicitly mapped to a separate table from the owner hierarchy. This limitation has been removed in EF Core 2.1.
+- In EF Core 2.0, navigations to owned entity types cannot be declared in derived entity types unless the owned entities are explicitly mapped to a separate table from the owner hierarchy. This limitation has been removed in EF Core 2.1
  
 ### Current shortcomings
 - Inheritance hierarchies of owned entity types are not supported
