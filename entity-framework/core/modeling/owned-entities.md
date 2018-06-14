@@ -176,16 +176,18 @@ When querying the owner the owned types will be included by default. It is not n
 var orders = context.Orders.Where(o => o.Status == OrderStatus.Pending);
 ```  
 
-## Limitations
+## Limitations 
 
-Here are some limitations of owned entity types. Some of these limitations are fundamental to how owned types work, but some others are point-in-time restrictions that we would like to remove in future releases:
+Here are some limitations of owned entity types. Some of these limitations are fundamental to how owned types work, but some others are restrictions that we may be able to remove in future releases:
 
+### Shortcomings in previous versions
+- In EF Core 2.0, navigations to owned entity types cannot be declared in derived entity types unless the owned entities are explicitly mapped to a separate table from the owner hierarchy. This limitation has been removed in EF Core 2.1.
+ 
 ### Current shortcomings
-- Inheritance of owned types is not supported
-- Owned types cannot be pointed at by a collection navigation property
-- Since they use table splitting by default owned types also have the following restrictions unless explicitly mapped to a different table:
-   - They cannot be owned by a derived type
-   - The defining navigation property cannot be set to null (i.e. owned types on the same table are always required)
+- Inheritance hierarchies of owned entity types are not supported
+- Owned entity types cannot be pointed at by a collection navigation property (only reference navigations are currently supported)
+- Navigations to owned entity types cannot be null unless they are explicitly mapped to a separate table from the owner 
+- Instances of owned entity types cannot be shared by multiple owners (this is a well-known scenario for value objects that cannot be implemented using owned entity types)
 
 ### By-design restrictions
 - You cannot create a `DbSet<T>`
