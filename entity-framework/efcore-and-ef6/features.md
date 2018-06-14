@@ -59,7 +59,7 @@ The EF Core column contains the number of the product version in which the featu
 | Raw SQL queries: Non-entity types (e.g. query types)  | Yes      | 2.1                                   |
 | Raw SQL queries: Composing with LINQ                  |          | 1.0                                   |
 | Explicitly compiled queries                           | Poor     | 2.0                                   |
-| Text-based query language (e.g. Entity SQL)           | 1.0      |                                       |
+| Text-based query language (e.g. Entity SQL)           | Yes      |                                       |
 |                                                       |          |                                       |
 | **Saving Data**                                       | **EF6**  | **EF Core**                           |
 | Change tracking: Snapshot                             | Yes      | 1.0                                   |
