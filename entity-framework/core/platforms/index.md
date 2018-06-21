@@ -24,7 +24,7 @@ The following table provides guidance for each .NET implementation:
 
 <sup>(2)</sup> See [Compare EF Core & EF6](../../efcore-and-ef6/index.md) to choose the right technology.
 
-<sup>(3)</sup> There are issues and known limitations with Xamarin which may prevent some applications developed using EF Core 2.0 from working correctly. Check the list of [active issues]([](https://github.com/aspnet/entityframeworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin) for workarounds.
+<sup>(3)</sup> There are issues and known limitations with Xamarin which may prevent some applications developed using EF Core 2.0 from working correctly. Check the list of [active issues](https://github.com/aspnet/entityframeworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin) for workarounds.
 
 <sup>(4)</sup> Earlier versions of EF Core and .NET UWP had numerous compatibility issues, especially with applications compiled with the .NET Native toolchain. The new .NET UWP version adds support for .NET Standard 2.0 and contains .NET Native 2.0, which fixes most of the compatibility issues previously reported. EF Core 2.0.1 has been tested more thoroughly with UWP but testing is not automated.
 
