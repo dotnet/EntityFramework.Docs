@@ -23,9 +23,10 @@ The InMemory provider is useful when you want to test components using something
 EF Core database providers do not have to be relational databases. InMemory is designed to be a general purpose database for testing, and is not designed to mimic a relational database.
 
 Some examples of this include:
-* InMemory will allow you to save data that would violate referential integrity constraints in a relational database.
 
+* InMemory will allow you to save data that would violate referential integrity constraints in a relational database.
 * If you use DefaultValueSql(string) for a property in your model, this is a relational database API and will have no effect when running against InMemory.
+* [Concurrency via Timestamp/row version](https://github.com/aspnet/EntityFramework.Docs/blob/master/entity-framework/core/modeling/concurrency.md#timestamprow-version) (`[Timestamp]` or `IsRowVersion`) is not supported. No [DbUpdateConcurrencyException](https://docs.microsoft.com/en-us/ef/core/api/microsoft.entityframeworkcore.dbupdateconcurrencyexception) will be thrown if an update is done using an old concurrency token.
 
 > [!TIP]  
 > For many test purposes these differences will not matter. However, if you want to test against something that behaves more like a true relational database, then consider using [SQLite in-memory mode](sqlite.md).
