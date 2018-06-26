@@ -29,7 +29,7 @@
 #### [ASP.NET Core](core/get-started/aspnetcore/index.md)
 ##### [ASP.NET Core - New Database](core/get-started/aspnetcore/new-db.md)
 ##### [ASP.NET Core - Existing Database](core/get-started/aspnetcore/existing-db.md)
-##### [EF Core Tutorial on ASP.NET Core site](https://docs.asp.net/en/latest/data/ef-mvc/intro.html)
+##### [EF Core Tutorial on ASP.NET Core site](/aspnet/core/data/ef-rp/intro)
 #### [Universal Windows Platform (UWP)](core/get-started/uwp/index.md)
 ##### [UWP - New Database](core/get-started/uwp/getting-started.md)
 
