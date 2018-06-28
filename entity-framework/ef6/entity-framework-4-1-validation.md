@@ -1,11 +1,11 @@
 ---
-title: "Entity Framework 4.1 Validation | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework 4.1 Validation - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 99d7221b-3817-4aa3-ab54-f328c06316fa
 caps.latest.revision: 3

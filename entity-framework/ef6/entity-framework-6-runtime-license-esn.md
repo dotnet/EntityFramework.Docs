@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework 6 Runtime License (ESN) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework 6 Runtime License (ESN) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 5e8d67b3-5c60-4a12-a86f-c7276bb8d9e7
 caps.latest.revision: 3

@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework 5 License (KOR) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework 5 License (KOR) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: b105993a-ebb3-466e-af76-a0ec0c651f82
 caps.latest.revision: 3

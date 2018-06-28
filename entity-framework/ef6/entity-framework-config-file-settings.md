@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Config File Settings | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Config File Settings - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 000044c6-1d32-4cf7-ae1f-ea21d86ebf8f
 caps.latest.revision: 3

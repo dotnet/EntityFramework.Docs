@@ -1,11 +1,11 @@
 ---
-title: "Entity Framework EDMX | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework EDMX - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 9c868a24-7648-40ec-9fcc-725ef5149327
 caps.latest.revision: 2

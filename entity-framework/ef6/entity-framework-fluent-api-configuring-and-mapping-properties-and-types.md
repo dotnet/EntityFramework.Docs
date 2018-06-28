@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Fluent API - Configuring and Mapping Properties and Types | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Fluent API - Configuring and Mapping Properties and Types - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 648ed274-c501-4630-88e0-d728ab5c4057
 caps.latest.revision: 3

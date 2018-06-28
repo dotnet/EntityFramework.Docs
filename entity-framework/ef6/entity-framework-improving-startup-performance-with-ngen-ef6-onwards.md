@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Improving Startup Performance with NGen (EF6 Onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Improving Startup Performance with NGen (EF6 Onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: dc6110a0-80a0-4370-8190-cea942841cee
 caps.latest.revision: 4

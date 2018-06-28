@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Self-Tracking Entities | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Self-Tracking Entities - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
 caps.latest.revision: 3

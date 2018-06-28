@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Multiple Diagrams per Model (EF5 onwards) Video | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Multiple Diagrams per Model (EF5 onwards) Video - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 6efc5d74-1986-49a1-b07b-9c2b27845e21
 caps.latest.revision: 3

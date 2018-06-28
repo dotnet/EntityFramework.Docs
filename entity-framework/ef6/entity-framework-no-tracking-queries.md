@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework No-Tracking Queries | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework No-Tracking Queries - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: f80ac260-c2dc-484d-94a3-3424fd862f8b
 caps.latest.revision: 3

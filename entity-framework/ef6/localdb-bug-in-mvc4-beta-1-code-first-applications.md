@@ -1,11 +1,11 @@
 ---
-title: "LocalDb Bug in MVC4 Beta 1 Code First Applications | Microsoft Docs"
-ms.custom: ""
+title: "LocalDb Bug in MVC4 Beta 1 Code First Applications - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 1052800e-8040-4d0d-a26b-07f48ddde6e3
 caps.latest.revision: 3

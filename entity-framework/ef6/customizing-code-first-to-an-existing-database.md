@@ -1,11 +1,11 @@
 ---
-title: "Customizing Code First to an Existing Database | Microsoft Docs"
-ms.custom: ""
+title: "Customizing Code First to an Existing Database - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 07a8f0af-8892-421d-a196-34184cef311c
 caps.latest.revision: 2

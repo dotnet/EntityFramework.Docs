@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Customizing the Migrations History Table (EF6 onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Customizing the Migrations History Table (EF6 onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: ed5518f0-a9a6-454e-9e98-a4fa7748c8d0
 caps.latest.revision: 3

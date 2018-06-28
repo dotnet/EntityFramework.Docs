@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Code First to a New Database Video | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Code First to a New Database Video - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 78c79d1a-8210-49ee-9578-7b5005655f1f
 caps.latest.revision: 4

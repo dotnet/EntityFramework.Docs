@@ -1,11 +1,11 @@
 ---
-title: "EDM - Inheritance Mapping Scenarios | Microsoft Docs"
-ms.custom: ""
+title: "EDM - Inheritance Mapping Scenarios - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 508d94b1-ab25-4850-81dc-4bb1c75f8ec4
 caps.latest.revision: 2

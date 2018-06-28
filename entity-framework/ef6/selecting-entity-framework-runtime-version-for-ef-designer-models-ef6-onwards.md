@@ -1,13 +1,13 @@
 ---
-title: "Selecting Entity Framework Runtime Version for EF Designer Models (EF6 onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Selecting Entity Framework Runtime Version for EF Designer Models (EF6 onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 7ace90a6-46f8-4f55-a88c-7cad9620085c
 caps.latest.revision: 3

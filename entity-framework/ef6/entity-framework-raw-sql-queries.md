@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Raw SQL Queries | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Raw SQL Queries - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 9e1ee76e-2499-408c-81e8-9b6c5d1945a0
 caps.latest.revision: 3
