@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Fluent API - Relationships | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Fluent API - Relationships - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: fd73b4f8-16d5-40f1-9640-885ceafe67a1
 caps.latest.revision: 3

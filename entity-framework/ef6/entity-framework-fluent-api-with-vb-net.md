@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Fluent API with VB.NET | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Fluent API with VB.NET - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 763dc6a2-764a-4600-896c-f6f13abf56ec
 caps.latest.revision: 3

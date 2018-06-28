@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Designer Table Splitting | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Designer Table Splitting - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 452f17c3-9f26-4de4-9894-8bc036e23b0f
 caps.latest.revision: 3

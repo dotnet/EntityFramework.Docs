@@ -1,11 +1,11 @@
 ---
-title: "Entity Framework Community Bloggers | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Community Bloggers - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: f8fcfb34-35de-4e82-b419-8f99fd2eb92a
 caps.latest.revision: 4

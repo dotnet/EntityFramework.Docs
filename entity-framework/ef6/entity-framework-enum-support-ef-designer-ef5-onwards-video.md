@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Enum Support - EF Designer (EF5 onwards) Video | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Enum Support - EF Designer (EF5 onwards) Video - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: b22efeca-7243-408b-989b-6494c493713c
 caps.latest.revision: 3

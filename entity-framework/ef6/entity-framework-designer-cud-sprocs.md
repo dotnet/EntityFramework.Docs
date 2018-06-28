@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Designer CUD Sprocs | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Designer CUD Sprocs - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
 caps.latest.revision: 3

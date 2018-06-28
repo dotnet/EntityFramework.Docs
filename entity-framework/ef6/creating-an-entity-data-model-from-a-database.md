@@ -1,11 +1,11 @@
 ---
-title: "Creating an Entity Data Model from a Database | Microsoft Docs"
-ms.custom: ""
+title: "Creating an Entity Data Model from a Database - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: b34f4017-427d-4102-8771-6dda32bc8089
 caps.latest.revision: 2

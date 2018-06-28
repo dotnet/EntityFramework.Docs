@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Spatial - EF Designer (EF5 onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Spatial - EF Designer (EF5 onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 06baa6e1-d680-4a95-845b-81305c87a962
 caps.latest.revision: 3

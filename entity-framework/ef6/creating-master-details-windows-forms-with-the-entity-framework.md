@@ -1,11 +1,11 @@
 ---
-title: "Creating Master-Details Windows Forms with the Entity Framework | Microsoft Docs"
-ms.custom: ""
+title: "Creating Master-Details Windows Forms with the Entity Framework - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 4d6a83a9-a313-44b7-8113-8dedeecb871b
 caps.latest.revision: 2

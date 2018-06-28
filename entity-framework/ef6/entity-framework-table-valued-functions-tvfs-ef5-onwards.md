@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Table-Valued Functions (TVFs) (EF5 onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Table-Valued Functions (TVFs) (EF5 onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: f019c97b-87b0-4e93-98f4-2c539f77b2dc
 caps.latest.revision: 3

@@ -1,13 +1,13 @@
 ---
-title: "Get Help Using Entity Framework | Microsoft Docs"
-ms.custom: ""
+title: "Get Help Using Entity Framework - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 592cae61-02e1-485a-bbb0-a508ade9c67d
 caps.latest.revision: 4

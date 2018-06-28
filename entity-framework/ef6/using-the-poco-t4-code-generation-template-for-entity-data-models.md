@@ -1,11 +1,11 @@
 ---
-title: "Using the POCO T4 Code Generation Template for Entity Data Models | Microsoft Docs"
-ms.custom: ""
+title: "Using the POCO T4 Code Generation Template for Entity Data Models - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 663bd1f9-d7d7-4ca6-afd6-0f90edf015fa
 caps.latest.revision: 2

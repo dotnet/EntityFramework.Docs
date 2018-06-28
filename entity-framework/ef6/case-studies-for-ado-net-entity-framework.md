@@ -1,11 +1,11 @@
 ---
-title: "Case Studies for ADO.NET Entity Framework | Microsoft Docs"
-ms.custom: ""
+title: "Case Studies for ADO.NET Entity Framework - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: cd5d3ae3-717d-4095-a2ef-0e8fd72b1a2f
 caps.latest.revision: 3

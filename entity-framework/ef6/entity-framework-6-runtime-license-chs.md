@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework 6 Runtime License (CHS) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework 6 Runtime License (CHS) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 06214a30-0097-4bce-9e30-91586928f3a7
 caps.latest.revision: 3

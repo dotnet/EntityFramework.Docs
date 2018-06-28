@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Working with Transactions (EF6 Onwards) | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Working with Transactions (EF6 Onwards) - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: 0d0f1824-d781-4cb3-8fda-b7eaefced1cd
 caps.latest.revision: 3

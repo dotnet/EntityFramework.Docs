@@ -1,13 +1,13 @@
 ---
-title: "Entity Framework Databinding with WPF | Microsoft Docs"
-ms.custom: ""
+title: "Entity Framework Databinding with WPF - EF6"
+author: divega
 ms.date: "2016-10-23"
-ms.prod: "visual-studio-2013"
-ms.reviewer: ""
-ms.suite: ""
-ms.technology: 
-  - "visual-studio-sdk"
-ms.tgt_pltfrm: ""
+ms.prod: "entity-framework"
+ms.author: divega
+ms.manager: avickers
+
+
+ms.technology: entity-framework-6
 ms.topic: "article"
 ms.assetid: e90d48e6-bea5-47ef-b756-7b89cce4daf0
 caps.latest.revision: 3
