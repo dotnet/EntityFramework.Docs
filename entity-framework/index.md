@@ -1,6 +1,6 @@
 ---
 layout: HubPage
-title: Entity Framework 
+title: Entity Framework
 author: rowanmiller
 ms.topic: hub-page
 ms.author: divega
@@ -254,7 +254,7 @@ uid: index
                                 </div>
                             </li>
                             <li>
-                                <a href="/ef/ef6/index">
+                                <a href="/ef/ef6/get-started">
                                     <div class="cardSize">
                                         <div class="cardPadding">
                                             <div class="card">
@@ -264,7 +264,7 @@ uid: index
                                                     </div>
                                                 </div>
                                                 <div class="cardText">
-                                                    <h3>⤤ Get Started</h3>
+                                                    <h3>Get Started</h3>
                                                     <p>Learn how to access data with Entity Framework 6.</p>
                                                 </div>
                                             </div>
