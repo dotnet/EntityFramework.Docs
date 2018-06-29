@@ -1,14 +1,51 @@
 ---
-title: Entity Framework 6 
-author: rowanmiller
+title: Entity Framework 6 Quick Overview
+author: divega
+ms.date: "2016-10-23"
+ms.prod: "entity-framework"
 ms.author: divega
-ms.date: 10/27/2016
-ms.assetid: d16eb5be-7e94-477a-84cd-e6dce25df12a
+ms.manager: avickers
 ms.technology: entity-framework-6
+ms.topic: "article"
+ms.assetid: 8ae74d63-6bad-4686-b325-bbf9d68f3743
+caps.latest.revision: 5
 uid: ef6/index
 ---
-# Entity Framework 6
+# Entity Framework 6 Quick Overview
 
-Entity Framework 6 (EF6) is a tried and tested data access technology with many years of features and stabilization. It first released in 2008, as part of .NET Framework 3.5 SP1 and Visual Studio 2008 SP1. Starting with the EF4.1 release it has shipped as the [EntityFramework NuGet package](https://www.nuget.org/packages/EntityFramework/) - currently one of the most popular packages on NuGet.org.
+Entity Framework 6 (EF6) is a tried and tested object-relational mapper (O/RM) for .NET with many years of feature development and stabilization.
 
-The Entity Framework 6 documentation is currently available at [msdn.com/data/ef](http://msdn.com/data/ef).
+EF6 implements many popular O/RM features:
+- Mapping "persistence ignorant" (also known as "POCO", for Plan-Old CLR Object) entity classes which do not depend on any EF types
+
+- Automatic change tracking
+- Identity resolution and Unit of Work
+- Eager, lazy and explicit loading
+- Translation of strongly-typed queries using LINQ (Language INtegrated Query) to the native SQL dialect of the target database
+- Rich mapping capabilities, including support for:
+  - Inheritance (table per hierarchy, table per type and table per concrete class)
+  - Complex types
+  - Stored procedures
+- A visual designer to create entity models.
+- A "Code First" experience that supports creating entity models by writing code.
+- Models can be either generated form existing databases and then hand-edited, or they can be created from scratch and then used to generate new databases.   
+- Integration with .NET Framework application models, including ASP.NET, and through databinding, with WPF and WinForms.
+- Database connectivity based on ADO.NET and numerous providers available to connect to SQL Server, Oracle, MySQL, SQLite, PostgreSQL, DB2, etc.  
+
+As an O/RM, EF6 reduces the impedance mismatch between the relational and object-oriented worlds, enabling developers to write applications that interact with data stored in relational databases using strongly-typed .NET objects that represent the application's domain, and eliminating the need for a large portion of the data access "plumbing" code that they usually need to write.
+
+## Should I use EF6 or EF Core?
+
+EF Core is a more modern, lightweight and extensible version of Entity Framework that has very similar capabilities and benefits to EF6.
+EF Core is a complete rewrite and contains many new features not available in EF6, although it also still lacks some of the most advanced mapping capabilities of EF6.
+We recommend using EF Core in new applications as long as the feature set matches your requirements.
+[Compare EF Core & EF6](xref:efcore-and-ef6/index) examines this choice in greater detail.
+
+## [Get Started](~/ef6/get-started.md)
+
+Add the EntityFramework NuGet package to your project or install the Entity Framework Tools for Visual Studio. Then watch videos, read tutorials, and advanced documentation to help you make the most of Entity Framework 6.
+
+## Past Entity Framework Versions
+
+This is the documentation for the latest version of Entity Framework 6, although much of it also applies to past releases.
+Check out [What's New](~/ef6/what-is-new/index.md) and [Past Releases](~/ef6/what-is-new/past-releases.md) for a complete list of EF releases and the features they introduced.
