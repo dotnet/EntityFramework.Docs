@@ -12,7 +12,7 @@ uid: core/get-started/aspnetcore/index
 ---
 # Getting Started with EF Core on ASP.NET Core
 
-These 101 tutorials require no previous knowledge of Entity Framework Core or Visual Studio. They will take you step-by-step through creating a simple ASP.NET Core application that queries and saves data from a database. You can chose a tutorial that creates a model based on an existing database, or creates a database for you based on your model.
+These 101 tutorials require no previous knowledge of Entity Framework Core or Visual Studio. They will take you step-by-step through creating a simple ASP.NET Core application that queries and saves data from a database. You can choose a tutorial that creates a model based on an existing database, or creates a database for you based on your model.
 
 You can find the ASP.NET Core documentation at [docs.asp.net](https://docs.asp.net).
 
