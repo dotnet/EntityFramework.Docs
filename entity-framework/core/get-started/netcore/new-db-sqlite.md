@@ -24,7 +24,7 @@ In this walkthrough, you create a .NET Core console app that performs data acces
 
 ## Create a new project
 
-* Create a *ConsoleApp.SQLite* folder for the project and use the `dotnet` command to populate it with a .NET Core app.
+* Create a new console project:
 
 ``` Console
 dotnet new console -o ConsoleApp.SQLite
