@@ -29,7 +29,10 @@ There are three actions EF can take when a principal/parent entity is deleted or
 
 For the second action above, setting a foreign key value to null is not valid if foreign key is not nullable. (A non-nullable foreign key is equivalent to a required relationship.) In these cases, EF Core tracks that the foreign key property has been marked as null until SaveChanges is called, at which time an exception is thrown because the change cannot be persisted to the database. This is similar to getting a constraint violation from the database.
 
-There are four delete behaviors, as listed in the tables below. For optional relationships (nullable foreign key) it _is_ possible to save a null foreign key value, which results in the following effects:
+There are four delete behaviors, as listed in the tables below.
+
+### Optional relationships
+For optional relationships (nullable foreign key) it _is_ possible to save a null foreign key value, which results in the following effects:
 
 | Behavior Name               | Effect on dependent/child in memory    | Effect on dependent/child in database  |
 |:----------------------------|:---------------------------------------|:---------------------------------------|
@@ -38,6 +41,7 @@ There are four delete behaviors, as listed in the tables below. For optional rel
 | **SetNull**                 | Foreign key properties are set to null | Foreign key properties are set to null |
 | **Restrict**                | None                                   | None                                   |
 
+### Required relationships
 For required relationships (non-nullable foreign key) it is _not_ possible to save a null foreign key value, which results in the following effects:
 
 | Behavior Name         | Effect on dependent/child in memory | Effect on dependent/child in database |
