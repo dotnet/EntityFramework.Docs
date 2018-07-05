@@ -124,6 +124,12 @@ public class OrderDetails
     public StreetAddress ShippingAddress { get; set; }
 }
 
+public enum OrderStatus
+{
+    Pending,
+    Shipped
+}
+
 public class StreetAddress
 {
     public string Street { get; set; }
