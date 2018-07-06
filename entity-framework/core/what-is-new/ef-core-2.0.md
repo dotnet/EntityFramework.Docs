@@ -257,7 +257,7 @@ We have added the EF.Functions property which can be used by EF Core or provider
 ``` csharp
 var aCustomers =
     from c in context.Customers
-    where EF.Functions.Like(c.Name, "a%");
+    where EF.Functions.Like("Name", "a%")
     select c;
 ```
 
