@@ -48,9 +48,9 @@
       "branch": "master"
     },
     {
-      "path_to_root": "efcore-dev",
+      "path_to_root": "efcore-repo",
       "url": "https://github.com/aspnet/EntityFrameworkCore.git",
-      "branch": "dev"
+      "branch": "master"
     }
   ]
 }

@@ -22,13 +22,13 @@ The following example shows how to use Global Query Filters to implement soft-de
 
 First, define the entities:
 
-[!code-csharp[Main](../../../efcore-dev/samples/QueryFilters/Program.cs#Entities)]
+[!code-csharp[Main](../../../efcore-repo/samples/QueryFilters/Program.cs#Entities)]
 
 Note the declaration of a __tenantId_ field on the _Blog_ entity. This will be used to associate each Blog instance with a specific tenant. Also defined is an _IsDeleted_ property on the _Post_ entity type. This is used this to keep track of whether a _Post_ instance has been "soft-deleted". I.e. The instance is marked as deleted withouth physically removing the underlying data.
 
 Next, configure the query filters in _OnModelCreating_ using the ```HasQueryFilter``` API.
 
-[!code-csharp[Main](../../../efcore-dev/samples/QueryFilters/Program.cs#Configuration)]
+[!code-csharp[Main](../../../efcore-repo/samples/QueryFilters/Program.cs#Configuration)]
 
 The predicate expressions passed to the _HasQueryFilter_ calls will now automatically be applied to any LINQ queries for those types.
 
@@ -39,7 +39,7 @@ The predicate expressions passed to the _HasQueryFilter_ calls will now automati
 
 Filters may be disabled for individual LINQ queries by using the ```IgnoreQueryFilters()``` operator.
 
-[!code-csharp[Main](../../../efcore-dev/samples/QueryFilters/Program.cs#IgnoreFilters)]
+[!code-csharp[Main](../../../efcore-repo/samples/QueryFilters/Program.cs#IgnoreFilters)]
 
 ## Limitations
 
