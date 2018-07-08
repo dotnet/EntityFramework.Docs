@@ -51,13 +51,13 @@ This version is mostly about bug fixes. We also accepted a couple of noteworthy 
     ```
 - **SqlFile and SqlResource methods on DbMigration** allow you to run a SQL script stored as a file or embedded resource.
 
-### EF 6.1.1
+## EF 6.1.1
 The EF 6.1.1 runtime was released to NuGet in June of 2014.
 This version contains fixes for issues that a number of people have encountered. Among others:
 - Designer: Error opening EF5 edmx with decimal precision in EF6 designer
 - Default instance detection logic for LocalDB doesn't work with SQL Server 2014
 
-### EF 6.1.0
+## EF 6.1.0
 The EF 6.1.0 runtime was released to NuGet in March of 2014.
 This minor update includes a significant number of new features:
 
