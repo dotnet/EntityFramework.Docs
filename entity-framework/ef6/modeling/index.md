@@ -12,9 +12,9 @@ caps.latest.revision: 3
 ---
 # Creating a Model
 
-An EF model stores the details about how application objects and properties map to database tables and columns. There are two main ways to create an EF:
+An EF model stores the details about how application classes and properties map to database tables and columns. There are two main ways to create an EF model:
 
-- **Using Code First**: The developer writes code to specify the model. EF generates the models and mappings at runtime based on entity objects and additional model configuration provided by the developer.
+- **Using Code First**: The developer writes code to specify the model. EF generates the models and mappings at runtime based on entity classes and additional model configuration provided by the developer.
 
 - **Using the EF Designer**: The developer draws boxes and lines to specify the model using the EF Designer. The resulting model is stored as XML in a file with the EDMX extension. The application's domain objects are typically generated automatically from the conceptual model.
 
