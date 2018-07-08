@@ -17,7 +17,6 @@ Entity Framework 6 (EF6) is a tried and tested object-relational mapper (O/RM) f
 
 EF6 implements many popular O/RM features:
 - Mapping "persistence ignorant" (also known as "POCO", for Plan-Old CLR Object) entity classes which do not depend on any EF types
-
 - Automatic change tracking
 - Identity resolution and Unit of Work
 - Eager, lazy and explicit loading
