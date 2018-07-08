@@ -11,6 +11,7 @@ ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
 caps.latest.revision: 3
 ---
 # Self-tracking entities
+
 > [!IMPORTANT]
 > We no longer recommend using the self-tracking-entities template. It will only continue to be available to support existing applications. If your application requires working with disconnected graphs of entities, consider other alternatives such as [Trackable Entities](http://trackableentities.github.io/), which is a technology similar to Self-Tracking-Entities that is more actively developed by the community, or writing custom code using the low-level change tracking APIs.
 
@@ -22,10 +23,6 @@ This template item generates two .tt (text template) files:
 
 - The **\<model name\>.tt** file generates the entity types and a helper class that contains the change-tracking logic that is used by self-tracking entities and the extension methods that allow setting state on self-tracking entities.  
 - The **\<model name\>.Context.tt** file generates a derived context and an extension class that contains **ApplyChanges** methods for the **ObjectContext** and **ObjectSet** classes. These methods examine the change-tracking information that is contained in the graph of self-tracking entities to infer the set of operations that must be performed to save the changes in the database.  
-
-## STEs No Longer Recommended  
-
-We no longer recommend using the STE template, it continues to be available to support existing applications. Visit the [Working with disconnected entities](~/ef6/fundamentals/disconnected-entities/index.md) article for other options we recommend for N-Tier scenarios.  
 
 ## Get Started  
 
