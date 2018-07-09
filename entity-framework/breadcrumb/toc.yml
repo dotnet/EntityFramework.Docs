@@ -58,7 +58,6 @@
         topicHref: /ef/ef6/get-started
       - name: Fundamentals
         tocHref: /ef/ef6/fundamentals/
-        topicHref: /ef/ef6/fundamentals/index
       - name: Creating a Model
         tocHref: /ef/ef6/modeling/
         topicHref: /ef/ef6/modeling/index
