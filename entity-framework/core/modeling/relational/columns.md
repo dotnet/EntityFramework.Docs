@@ -19,7 +19,7 @@ Column mapping identifies which column data should be queried from and saved to 
 
 ## Conventions
 
-By convention, each property will be setup to map to a column with the same name as the property.
+By convention, each property will be set up to map to a column with the same name as the property.
 
 ## Data Annotations
 
