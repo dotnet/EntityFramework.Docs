@@ -176,7 +176,7 @@ modelBuilder.Entity<Order>().OwnsOne(p => p.OrderDetails, od =>
 
 ## Querying owned types
 
-When querying the owner the owned types will be included by default. It is not necessary to use the `Include` method, even if the owned types are stored in a separate table. Based on the model described before, the following query will pull Order, OrderDetails and the two owned StreeAddresses for all pending orders from the database:
+When querying the owner the owned types will be included by default. It is not necessary to use the `Include` method, even if the owned types are stored in a separate table. Based on the model described before, the following query will pull Order, OrderDetails and the two owned StreetAddresses for all pending orders from the database:
 
 ``` csharp
 var orders = context.Orders.Where(o => o.Status == OrderStatus.Pending);
