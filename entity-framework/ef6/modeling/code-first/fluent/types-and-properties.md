@@ -86,6 +86,7 @@ modelBuilder.Entity<Department>().Property(t => t.Name).IsRequired();
 
 ### Configuring an Index on one or more properties  
 
+> [!NOTE]
 > **EF6.1 Onwards Only** - The Index attribute was introduced in Entity Framework 6.1. If you are using an earlier version the information in this section does not apply.  
 
 Creating indexes isn't natively supported by the Fluent API, but you can make use of the support for **IndexAttribute** via the Fluent API. Index attributes are processed by including a model annotation on the model that is then turned into an Index in the database later in the pipeline. You can manually add these same annotations using the Fluent API.  

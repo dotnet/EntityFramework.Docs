@@ -10,7 +10,8 @@ ms.topic: "article"
 ms.assetid: 0d0f1824-d781-4cb3-8fda-b7eaefced1cd
 caps.latest.revision: 3
 ---
-# Working with Transactions (EF6 Onwards)
+# Working with Transactions
+> [!NOTE]
 > **EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6. If you are using an earlier version, some or all of the information does not apply.  
 
 This document will describe using transactions in EF6 including the enhancements we have added since EF5 to make working with transactions easy.  
@@ -34,7 +35,7 @@ However some users require greater control over their transactions – this is c
 Prior to EF6 Entity Framework insisted on opening the database connection itself (it threw an exception if it was passed a connection that was already open). Since a transaction can only be started on an open connection, this meant that the only way a user could wrap several operations into one transaction was either to use a [TransactionScope](https://msdn.microsoft.com/library/system.transactions.transactionscope.aspx) or use the **ObjectContext.Connection** property and start calling **Open()** and **BeginTransaction()** directly on the returned **EntityConnection** object. In addition, API calls which contacted the database would fail if you had started a transaction on the underlying database connection on your own.  
 
 > [!NOTE]
-> The limitation of only accepting closed connections was removed in Entity Framework 6. For details, see [Connection Management (EF6 Onwards)](~/ef6/fundamentals/connection-management.md).  
+> The limitation of only accepting closed connections was removed in Entity Framework 6. For details, see [Connection Management](~/ef6/fundamentals/connection-management.md).  
 
 Starting with EF6 the framework now provides:  
 

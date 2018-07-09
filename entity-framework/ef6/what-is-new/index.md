@@ -22,14 +22,14 @@ This page documents the features that are included on each new release.
 
 ### EF Tools Update in Visual Studio 2017 15.7
 
-In May 2018, we released an updated version of the EF6 Tools in Visual Studio 2017 15.7.
-It includes improvements in some common pain areas:
+In May 2018, we released an updated version of the EF Tools as part of Visual Studio 2017 15.7.
+It includes improvements for some common pain points:
 
-- An overhaul to the accessibility of the user interface
-- Workaround for SQL Server performance regression on reverse engineering [#4](https://github.com/aspnet/entityframework6/issues/4)
-- Update model from database support for larger models on SQL Server [#185](https://github.com/aspnet/EntityFramework6/issues/185)
+- Fixes for several user interface accessibility bugs
+- Workaround for SQL Server performance regression when generating models from existing databases [#4](https://github.com/aspnet/entityframework6/issues/4)
+- Support for updating models for larger models on SQL Server [#185](https://github.com/aspnet/EntityFramework6/issues/185)
 
-This new version of EF Tools installs the EF 6.2 runtime when creating a model in a new project. With older versions of Visual Studio, it is possible to use the EF 6.2 runtime (as well as any past version of EF) by installing the corresponding version of the NuGet package.
+Another improvement in this this new version of EF Tools is that it installs the EF 6.2 runtime when creating a model in a new project. With older versions of Visual Studio, it is possible to use the EF 6.2 runtime (as well as any past version of EF) by installing the corresponding version of the NuGet package.
 
 ### EF 6.2 Runtime
 
@@ -53,4 +53,4 @@ For information on future version of EF6, please look at our [Roadmap](roadmap.m
 
 ## Past Releases
 
-The [Past Releases](past-releases.md) page contains an archive of all previous versions of EF and the major features that were introduced on each release. 
+The [Past Releases](past-releases.md) page contains an archive of all previous versions of EF and the major features that were introduced on each release.

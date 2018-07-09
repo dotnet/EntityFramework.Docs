@@ -11,7 +11,6 @@ ms.assetid: 592cae61-02e1-485a-bbb0-a508ade9c67d
 caps.latest.revision: 4
 ---
 # Get Help Using Entity Framework
-
 ## ![StackOverflow](~/ef6/media/stackoverflow.png) Questions About Using EF  
 
 The best way to get help using Entity Framework is to [post a question on Stack Overflow](http://stackoverflow.com/questions/ask) using the **entity-framework** tag.  

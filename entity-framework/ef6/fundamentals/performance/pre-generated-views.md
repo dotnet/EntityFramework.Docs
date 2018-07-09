@@ -32,6 +32,7 @@ Now when you run your application EF will use this class to load views as requir
 
 The other way to generate views is to use the APIs that EF provides. When using this method you have the freedom to serialize the views however you like, but you also need to load the views yourself.
 
+> [!NOTE]
 > **EF6 Onwards Only** - The APIs shown in this section were introduced in Entity Framework 6. If you are using an earlier version this information does not apply.
 
 ### Generating Views

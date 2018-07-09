@@ -11,6 +11,7 @@ ms.assetid: 7ace90a6-46f8-4f55-a88c-7cad9620085c
 caps.latest.revision: 3
 ---
 # Selecting Entity Framework Runtime Version for EF Designer Models
+> [!NOTE]
 > **EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6. If you are using an earlier version, some or all of the information does not apply.
 
 Starting with EF6 the following screen was added to the EF Designer to allow you to select the version of the runtime you wish to target when creating a model. The screen will appear when the latest version of Entity Framework is not already installed in the project. If the latest version is already installed it will just be used by default.

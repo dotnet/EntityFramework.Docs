@@ -128,7 +128,7 @@ Also the contextOwnsConnection flag now controls whether or not the connection i
 Of course it is still possible for the DbContext to take control of the connection (just set contextOwnsConnection to true or use one of the other constructors) if you so wish.  
 
 > [!NOTE]
-> There are some additional considerations when using transactions with this new model. For details see [Working with Transactions (EF6 Onwards)](~/ef6/saving/transactions.md).  
+> There are some additional considerations when using transactions with this new model. For details see [Working with Transactions](~/ef6/saving/transactions.md).  
 
 ## Database.Connection.Open()  
 

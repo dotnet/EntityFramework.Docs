@@ -305,7 +305,7 @@ If another developer wants these changes on their machine they can just sync onc
 
 Code First Migrations will run the migration pipeline but instead of actually applying the changes it will write them out to a .sql file for you. Once the script is generated, it is opened for you in Visual Studio, ready for you to view or save.
 
-### Generating Idempotent Scripts (EF6 onwards)
+### Generating Idempotent Scripts
 
 Starting with EF6, if you specify **–SourceMigration $InitialDatabase** then the generated script will be ‘idempotent’. Idempotent scripts can upgrade a database currently at any version to the latest version (or the specified version if you use **–TargetMigration**). The generated script includes logic to check the **\_\_MigrationsHistory** table and only apply changes that haven't been previously applied.
 

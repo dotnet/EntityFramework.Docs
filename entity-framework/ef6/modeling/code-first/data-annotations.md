@@ -11,6 +11,7 @@ ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
 caps.latest.revision: 3
 ---
 # Code First Data Annotations
+> [!NOTE]
 > **EF4.1 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 4.1. If you are using an earlier version, some or all of the information does not apply.
 
 The content on this page is adapted from and article originally written by Julie Lerman (\<http://thedatafarm.com>).
@@ -330,6 +331,7 @@ You read above that by default, a key property that is an integer will become an
 
 ## Index
 
+> [!NOTE]
 > **EF6.1 Onwards Only** - The Index attribute was introduced in Entity Framework 6.1. If you are using an earlier version the information in this section does not apply.
 
 You can create an index on one or more columns using the **IndexAttribute**. Adding the attribute to one or more properties will cause EF to create the corresponding index in the database when it creates the database, or scaffold the corresponding **CreateIndex** calls if you are using Code First Migrations.

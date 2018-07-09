@@ -11,6 +11,7 @@ ms.assetid: 5b1f7a7d-1b24-4645-95ec-5608a31ef577
 caps.latest.revision: 3
 ---
 # Handling transaction commit failures
+> [!NOTE]
 > **EF6.1 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6.1. If you are using an earlier version, some or all of the information does not apply.  
 
 As part of 6.1 we are introducing a new connection resiliency feature for EF: the ability to detect and recover automatically when transient connection failures affect the acknowledgement of transaction commits. The full details of the scenario are best described in the blog post [SQL Database Connectivity and the Idempotency Issue](http://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx).  In summary, the scenario is that when an exception is raised during a transaction commit there are two possible causes:  

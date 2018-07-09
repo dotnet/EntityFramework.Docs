@@ -11,6 +11,7 @@ ms.assetid: 13886d24-2c74-4a00-89eb-aa0dee328d83
 caps.latest.revision: 3
 ---
 # Code-based configuration
+> [!NOTE]
 > **EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6. If you are using an earlier version, some or all of the information does not apply.  
 
 Configuration for an Entity Framework application can be specified in a config file (app.config/web.config) or through code. The latter is known as code-based configuration.  

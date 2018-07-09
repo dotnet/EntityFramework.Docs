@@ -13,7 +13,7 @@ caps.latest.revision: 3
 # Microsoft Case Studies for Entity Framework
 The case studies on this page highlight a few real-world production projects that have employed Entity Framework.
 > [!NOTE]
-> The detailed case studies originally linked when this page as first published are no longer available on the Microsoft website. Therefore the links have been removed.
+> The detailed versions of these case studies are no longer available on the Microsoft website. Therefore the links have been removed.
 
 ## Epicor
 Epicor is a large global software company (with over 400 developers) that develops Enterprise Resource Planning (ERP) solutions for companies in more than 150 countries.

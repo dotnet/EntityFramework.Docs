@@ -11,6 +11,7 @@ ms.assetid: f0cc4f93-67dd-4664-9753-0a9f913814db
 caps.latest.revision: 3
 ---
 # Code First Migrations with an existing database
+> [!NOTE]
 > **EF4.3 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 4.1. If you are using an earlier version, some or all of the information does not apply.
 
 This article covers using Code First Migrations with an existing database, one that wasn’t created by Entity Framework.

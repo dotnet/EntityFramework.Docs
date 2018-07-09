@@ -11,6 +11,7 @@ ms.assetid: f019c97b-87b0-4e93-98f4-2c539f77b2dc
 caps.latest.revision: 3
 ---
 # Table-Valued Functions (TVFs)
+> [!NOTE]
 > **EF5 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 5. If you are using an earlier version, some or all of the information does not apply.
 
 The video and step-by-step walkthrough shows how to map table-valued functions (TVFs) using the Entity Framework Designer. It also demonstrates how to call a TVF from a LINQ query.

@@ -11,6 +11,7 @@ ms.assetid: dc6110a0-80a0-4370-8190-cea942841cee
 caps.latest.revision: 4
 ---
 # Improving startup performance with NGen
+> [!NOTE]
 > **EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6. If you are using an earlier version, some or all of the information does not apply.  
 
 The .NET Framework supports the generation of native images for managed applications and libraries as a way to help applications start faster and also in some cases use less memory. Native images are created by translating managed code assemblies into files containing native machine instructions before the application is executed, relieving the .NET JIT (Just-In-Time) compiler from having to generate the native instructions at application runtime.  

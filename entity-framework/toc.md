@@ -67,6 +67,16 @@
 ##### [Alternate Keys (Unique Constraints)](core/modeling/relational/unique-constraints.md)
 ##### [Inheritance (Relational Database)](core/modeling/relational/inheritance.md)
 
+### [Managing Database Schemas](core/managing-schemas/index.md)
+#### [Migrations](core/managing-schemas/migrations/index.md)
+##### [Team Environments](core/managing-schemas/migrations/teams.md)
+##### [Custom Operations](core/managing-schemas/migrations/operations.md)
+##### [Using a Separate Project](core/managing-schemas/migrations/projects.md)
+##### [Multiple Providers](core/managing-schemas/migrations/providers.md)
+##### [Custom History Table](core/managing-schemas/migrations/history-table.md)
+#### [🔧 Create and Drop APIs](core/managing-schemas/ensure-created.md)
+#### [🔧 Reverse Engineering](core/managing-schemas/scaffolding.md)
+
 ### [Querying Data](core/querying/index.md)
 #### [Basic Query](core/querying/basic.md)
 #### [Loading Related Data](core/querying/related-data.md)
@@ -97,23 +107,13 @@
 #### [InMemory (for Testing)](core/providers/in-memory/index.md)
 #### [Writing a Database Provider](core/providers/writing-a-provider.md)
 
-### [Managing Database Schemas](core/managing-schemas/index.md)
-#### [Migrations](core/managing-schemas/migrations/index.md)
-##### [Team Environments](core/managing-schemas/migrations/teams.md)
-##### [Custom Operations](core/managing-schemas/migrations/operations.md)
-##### [Using a Separate Project](core/managing-schemas/migrations/projects.md)
-##### [Multiple Providers](core/managing-schemas/migrations/providers.md)
-##### [Custom History Table](core/managing-schemas/migrations/history-table.md)
-#### [🔧 Create and Drop APIs](core/managing-schemas/ensure-created.md)
-#### [🔧 Reverse Engineering](core/managing-schemas/scaffolding.md)
+### [Tools & Extensions](core/extensions/index.md)
 
 ### [Command-Line Reference](core/miscellaneous/cli/index.md)
 #### [Package Manager Console (Visual Studio)](core/miscellaneous/cli/powershell.md)
 #### [.NET Core CLI](core/miscellaneous/cli/dotnet.md)
 #### [Design-time DbContext Creation](core/miscellaneous/cli/dbcontext-creation.md)
 #### [Design-time Services](core/miscellaneous/cli/services.md)
-
-### [Tools & Extensions](core/extensions/index.md)
 
 ### Miscellaneous
 #### [Connection Strings](core/miscellaneous/connection-strings.md)

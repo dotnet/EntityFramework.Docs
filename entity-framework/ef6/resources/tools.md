@@ -11,7 +11,6 @@ ms.assetid: 7f166290-d9f0-4eec-b4fd-e7a83068d977
 caps.latest.revision: 3
 ---
 # Entity Framework Tools & Extensions
-
 > [!IMPORTANT]  
 > Extensions are built by a variety of sources and not maintained as part of Entity Framework. When considering a third party extension, be sure to evaluate quality, licensing, compatibility, support, etc. to ensure they meet your requirements.
 

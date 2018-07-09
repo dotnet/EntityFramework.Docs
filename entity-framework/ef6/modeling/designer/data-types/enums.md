@@ -10,7 +10,8 @@ ms.topic: "article"
 ms.assetid: c6ae6d8f-1ace-47db-ad47-b1718f1ba082
 caps.latest.revision: 3
 ---
-# Enum Support - EF Designer (EF5 onwards)
+# Enum Support - EF Designer
+> [!NOTE]
 > **EF5 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 5. If you are using an earlier version, some or all of the information does not apply.
 
 This video and step-by-step walkthrough shows how to use enum types with the Entity Framework Designer. It also demonstrates how to use enums in a LINQ query.

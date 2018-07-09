@@ -10,7 +10,8 @@ ms.topic: "article"
 ms.assetid: 9a7ae7f9-4072-4843-877d-506dd7eef576
 caps.latest.revision: 3
 ---
-# Code First Insert, Update, and Delete Stored Procedures (EF6 onwards)
+# Code First Insert, Update, and Delete Stored Procedures
+> [!NOTE]
 > **EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6. If you are using an earlier version, some or all of the information does not apply.  
 
 By default, Code First will configure all entities to perform insert, update and delete commands using direct table access. Starting in EF6 you can configure your Code First model to use stored procedures for some or all entities in your model.  
