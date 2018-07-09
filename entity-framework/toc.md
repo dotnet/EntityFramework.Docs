@@ -139,7 +139,7 @@
 
 ### [Get Started](ef6/get-started.md)
 
-### Fundamentals
+### [Fundamentals](ef6/fundamentals/index.md)
 #### [Get Entity Framework](ef6/fundamentals/install.md)
 #### [Working with DbContext](ef6/fundamentals/working-with-dbcontext.md)
 #### [Understanding Relationships](ef6/fundamentals/relationships.md)
