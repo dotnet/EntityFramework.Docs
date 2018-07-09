@@ -12,7 +12,7 @@ uid: core/querying/basic
 ---
 # Basic Queries
 
-Learn how to load entities from the database using Language Integrate Query (LINQ).
+Learn how to load entities from the database using Language Integrated Query (LINQ).
 
 > [!TIP]  
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
