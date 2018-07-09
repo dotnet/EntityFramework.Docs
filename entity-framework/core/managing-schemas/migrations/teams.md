@@ -8,7 +8,7 @@ ms.technology: entity-framework-core
 Migrations in Team Environments
 ===============================
 When working with Migrations in team environments, pay extra attention to the model snapshot file. This file can tell
-you if your teammate's migration merges cleanly with yours of if you need to resolve a conflict by re-creating your
+you if your teammate's migration merges cleanly with yours or if you need to resolve a conflict by re-creating your
 migration before sharing it.
 
 Merging
