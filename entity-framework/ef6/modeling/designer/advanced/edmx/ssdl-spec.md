@@ -44,12 +44,8 @@ The following table describes the attributes that can be applied to the **Associ
 |:---------------|:------------|:---------------------------------------------------------------------------------|
 | **Name**       | Yes         | The name of the corresponding foreign key constraint in the underlying database. |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **Association** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -73,9 +69,6 @@ The following example shows an **Association** element that uses a **Referential
    </ReferentialConstraint>
  </Association>
 ```
- 
-
- 
 
 ## AssociationSet Element (SSDL)
 
@@ -98,12 +91,8 @@ The following table describes the attributes that can be applied to the **Associ
 | **Name**        | Yes         | The name of the foreign key constraint that the association set represents.                          |
 | **Association** | Yes         | The name of the association that defines the columns that participate in the foreign key constraint. |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **AssociationSet** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -116,9 +105,6 @@ The following example shows an **AssociationSet** element that represents the `F
    <End Role="Orders" EntitySet="Orders" />
  </AssociationSet>
 ```
- 
-
- 
 
 ## CollectionType Element (SSDL)
 
@@ -126,8 +112,6 @@ The **CollectionType** element in store schema definition language (SSDL) specif
 
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **CollectionType** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -148,9 +132,6 @@ The following example shows a function that uses a **CollectionType** element to
      </ReturnType>
    </Function>
 ```
- 
-
- 
 
 ## CommandText Element (SSDL)
 
@@ -179,13 +160,10 @@ The following example shows a **Function** element with a child **CommandText** 
               Type="int"/>
  </Function>
 ```
- 
-
- 
 
 ## DefiningQuery Element (SSDL)
 
- The **DefiningQuery** element in store schema definition language (SSDL) allows you to execute a SQL statement directly in the underlying database. The **DefiningQuery** element is commonly used like a database view, but the view is defined in the storage model instead of the database. The view defined in a **DefiningQuery** element can be mapped to an entity type in the conceptual model through an EntitySetMapping element. These mappings are read-only.  
+The **DefiningQuery** element in store schema definition language (SSDL) allows you to execute a SQL statement directly in the underlying database. The **DefiningQuery** element is commonly used like a database view, but the view is defined in the storage model instead of the database. The view defined in a **DefiningQuery** element can be mapped to an entity type in the conceptual model through an EntitySetMapping element. These mappings are read-only.  
 
 The following SSDL syntax shows the declaration of an **EntitySet** followed by the **DefiningQuery** element that contains a query used to retrieve the view.
 
@@ -201,13 +179,10 @@ The following SSDL syntax shows the declaration of an **EntitySet** followed by 
      </EntitySet>
  </Schema>
 ```
- 
 
 You can use stored procedures in the Entity Framework to enable read-write scenarios over views. You can use either a data source view or an Entity SQL view as the base table for retrieving data and for change processing by stored procedures.
 
 You can use the **DefiningQuery** element to target Microsoft SQL Server Compact 3.5. Though SQL Server Compact 3.5 does not support stored procedures, you can implement similar functionality with the **DefiningQuery** element. Another place where it can be useful is in creating stored procedures to overcome a mismatch between the data types used in the programming language and those of the data source. You could write a **DefiningQuery** that takes a certain set of parameters and then calls a stored procedure with a different set of parameters, for example, a stored procedure that deletes data.
-
- 
 
 ## Dependent Element (SSDL)
 
@@ -226,12 +201,8 @@ The following table describes the attributes that can be applied to the **Depend
 |:---------------|:------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Role**       | Yes         | The same value as the **Role** attribute (if used) of the corresponding End element; otherwise, the name of the table that contains the referencing column. |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **Dependent** element. However, custom attributes may not belong to any XML namespace that is reserved for CSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -255,9 +226,6 @@ The following example shows an Association element that uses a **ReferentialCons
    </ReferentialConstraint>
  </Association>
 ```
- 
-
- 
 
 ## Documentation Element (SSDL)
 
@@ -289,9 +257,6 @@ The following example shows the **Documentation** element as a child element of 
    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
  </EntityType>
 ```
- 
-
- 
 
 ## End Element (SSDL)
 
@@ -317,12 +282,8 @@ The following table describes the attributes that can be applied to the **End** 
 | **Role**         | No          | The value of the **Role** attribute in either the Principal or Dependent element of the corresponding ReferentialConstraint element (if used).                                                                                                                                                                                                                                             |
 | **Multiplicity** | Yes         | **1**, **0..1**, or **\*** depending on the number of rows that can be at the end of the foreign key constraint. <br/> **1** indicates that exactly one row exists at the foreign key constraint end. <br/> **0..1** indicates that zero or one row exists at the foreign key constraint end. <br/> **\*** indicates that zero, one, or more rows exist at the foreign key constraint end. |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **End** element. However, custom attributes may not belong to any XML namespace that is reserved for CSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 #### Example
 
@@ -346,7 +307,6 @@ The following example shows an **Association** element that defines the **FK\_Cu
    </ReferentialConstraint>
  </Association>
 ```
- 
 
 ### End Element as a Child of the AssociationSet Element
 
@@ -366,12 +326,8 @@ The following table describes the attributes that can be applied to the **End** 
 | **EntitySet**  | Yes         | The name of the SSDL entity set that is at the end of the foreign key constraint.                                      |
 | **Role**       | No          | The value of one of the **Role** attributes specified on one **End** element of the corresponding Association element. |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **End** element. However, custom attributes may not belong to any XML namespace that is reserved for CSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 #### Example
 
@@ -392,9 +348,6 @@ The following example shows an **EntityContainer** element with an **Association
    </AssociationSet>
  </EntityContainer>
 ```
- 
-
- 
 
 ## EntityContainer Element (SSDL)
 
@@ -416,12 +369,8 @@ The table below describes the attributes that can be applied to the **EntityCont
 |:---------------|:------------|:------------------------------------------------------------------------|
 | **Name**       | Yes         | The name of the entity container. This name cannot contain periods (.). |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **EntityContainer** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -442,13 +391,10 @@ The following example shows an **EntityContainer** element that defines two enti
    </AssociationSet>
  </EntityContainer>
 ```
- 
-
- 
 
 ## EntitySet Element (SSDL)
 
- An **EntitySet** element in store schema definition language (SSDL) represents a table or view in the underlying database. An EntityType element in SSDL represents a row in the table or view. The **EntityType** attribute of an **EntitySet** element specifies the particular SSDL entity type that represents rows in an SSDL entity set. The mapping between a CSDL entity set and an SSDL entity set is specified in an EntitySetMapping element.
+An **EntitySet** element in store schema definition language (SSDL) represents a table or view in the underlying database. An EntityType element in SSDL represents a row in the table or view. The **EntityType** attribute of an **EntitySet** element specifies the particular SSDL entity type that represents rows in an SSDL entity set. The mapping between a CSDL entity set and an SSDL entity set is specified in an EntitySetMapping element.
 
 The **EntitySet** element can have the following child elements (in the order listed):
 
@@ -463,25 +409,15 @@ The following table describes the attributes that can be applied to the **Entity
 > [!NOTE]
 > Some attributes (not listed here) may be qualified with the **store** alias. These attributes are used by the Update Model Wizard when updating a model.
 
- 
-
 | Attribute Name | Is Required | Value                                                                                    |
 |:---------------|:------------|:-----------------------------------------------------------------------------------------|
 | **Name**       | Yes         | The name of the entity set.                                                              |
 | **EntityType** | Yes         | The fully-qualified name of the entity type for which the entity set contains instances. |
 | **Schema**     | No          | The database schema.                                                                     |
 | **Table**      | No          | The database table.                                                                      |
- 
- 
- 
- 
- 
- 
 
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **EntitySet** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -502,9 +438,6 @@ The following example shows an **EntityContainer** element that has two **Entity
    </AssociationSet>
  </EntityContainer>
 ```
- 
-
- 
 
 ## EntityType Element (SSDL)
 
@@ -524,12 +457,8 @@ The table below describes the attributes that can be applied to the **EntityType
 |:---------------|:------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Name**       | Yes         | The name of the entity type. This value is usually the same as the name of the table in which the entity type represents a row. This value can contain no periods (.). |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **EntityType** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -548,9 +477,6 @@ The following example shows an **EntityType** element with two properties:
    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
  </EntityType>
 ```
- 
-
- 
 
 ## Function Element (SSDL)
 
@@ -575,8 +501,6 @@ The following table describes the attributes that can be applied to the **Functi
 > [!NOTE]
 > Some attributes (not listed here) may be qualified with the **store** alias. These attributes are used by the Update Model Wizard when updating a model.
 
- 
-
 | Attribute Name             | Is Required | Value                                                                                                                                                                                                              |
 |:---------------------------|:------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Name**                   | Yes         | The name of the stored procedure.                                                                                                                                                                                  |
@@ -589,8 +513,6 @@ The following table describes the attributes that can be applied to the **Functi
 | **ParameterTypeSemantics** | No          | The enumeration that defines the type semantics used to resolve function overloads. The enumeration is defined in the provider manifest per function definition. The default value is **AllowImplicitConversion**. |
 | **Schema**                 | No          | The name of the schema in which the stored procedure is defined.                                                                                                                                                   |
 
- 
-
 <sup>1</sup> A built-in function is a function that is defined in the database. For information about functions that are defined in the storage model, see CommandText Element (SSDL).
 
 <sup>2</sup> A niladic function is a function that accepts no parameters and, when called, does not require parentheses.
@@ -599,8 +521,6 @@ The following table describes the attributes that can be applied to the **Functi
 
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **Function** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -618,9 +538,6 @@ The following example shows a **Function** element that corresponds to the **Upd
    <Parameter Name="newQuantity" Type="int" Mode="In" />
  </Function>
 ```
- 
-
- 
 
 ## Key Element (SSDL)
 
@@ -650,9 +567,6 @@ The following example shows an **EntityType** element with a key that references
    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
  </EntityType>
 ```
- 
-
- 
 
 ## OnDelete Element (SSDL)
 
@@ -671,12 +585,8 @@ The following table describes the attributes that can be applied to the **OnDele
 |:---------------|:------------|:----------------------------------------------------------------------------------------------------|
 | **Action**     | Yes         | **Cascade** or **None**. (The value **Restricted** is valid but has the same behavior as **None**.) |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **OnDelete** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -700,9 +610,6 @@ The following example shows an **Association** element that defines the **FK\_Cu
    </ReferentialConstraint>
  </Association>
 ```
- 
-
- 
 
 ## Parameter Element (SSDL)
 
@@ -727,12 +634,8 @@ The table below describes the attributes that can be applied to the **Parameter*
 | **Scale**      | No          | The scale of the parameter.                                                                                                                                                                                                     |
 | **SRID**       | No          | Spatial System Reference Identifier. Valid only for parameters of spatial types. For more information, see [SRID](http://en.wikipedia.org/wiki/SRID) and [SRID (SQL Server)](https://msdn.microsoft.com/library/bb964707.aspx). |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **Parameter** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -750,9 +653,6 @@ The following example shows a **Function** element that has two **Parameter** el
    <Parameter Name="newQuantity" Type="int" Mode="In" />
  </Function>
 ```
- 
-
- 
 
 ## Principal Element (SSDL)
 
@@ -771,12 +671,8 @@ The following table describes the attributes that can be applied to the **Princi
 |:---------------|:------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Role**       | Yes         | The same value as the **Role** attribute (if used) of the corresponding End element; otherwise, the name of the table that contains the referenced column. |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **Principal** element. However, custom attributes may not belong to any XML namespace that is reserved for CSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -800,9 +696,6 @@ The following example shows an Association element that uses a **ReferentialCons
    </ReferentialConstraint>
  </Association>
 ```
- 
-
- 
 
 ## Property Element (SSDL)
 
@@ -829,12 +722,8 @@ The following table describes the attributes that can be applied to the **Proper
 | **SRID**                  | No          | Spatial System Reference Identifier. Valid only for properties of spatial types. For more information, see [SRID](http://en.wikipedia.org/wiki/SRID) and [SRID (SQL Server)](https://msdn.microsoft.com/library/bb964707.aspx). |
 | **StoreGeneratedPattern** | No          | **None**, **Identity** (if the corresponding column value is an identity that is generated in the database), or **Computed** (if the corresponding column value is computed in the database). Not Valid for RowType properties. |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **Property** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -853,9 +742,6 @@ The following example shows an **EntityType** element with two child **Property*
    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
  </EntityType>
 ```
- 
-
- 
 
 ## PropertyRef Element (SSDL)
 
@@ -877,12 +763,8 @@ The table below describes the attributes that can be applied to the **PropertyRe
 |:---------------|:------------|:-------------------------------------|
 | **Name**       | Yes         | The name of the referenced property. |
 
- 
-
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **PropertyRef** element. However, custom attributes may not belong to any XML namespace that is reserved for CSDL. The fully-qualified names for any two custom attributes cannot be the same.
-
- 
 
 ### Example
 
@@ -901,9 +783,6 @@ The following example shows a **PropertyRef** element used to define a primary k
    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
  </EntityType>
 ```
- 
-
- 
 
 ## ReferentialConstraint Element (SSDL)
 
@@ -1009,9 +888,6 @@ The following example shows a store function that uses a **CollectionType** elem
      </ReturnType>
    </Function>
 ```
- 
-
- 
 
 ## Schema Element (SSDL)
 
@@ -1038,8 +914,6 @@ The table below describes the attributes can be applied to the **Schema** elemen
 | **Alias**                 | No          | An identifier used in place of the namespace name. For example, if an **EntityType** named *Customer* is in the ExampleModel.Store namespace and the value of the **Alias** attribute is *StorageModel*, then you can use StorageModel.Customer as the fully qualified name of the **EntityType.**                                                                                                                                                                                                                                                                                    |
 | **Provider**              | Yes         | The data provider.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | **ProviderManifestToken** | Yes         | A token that indicates to the provider which provider manifest to return. No format for the token is defined. Values for the token are defined by the provider. For information about SQL Server provider manifest tokens, see SqlClient for Entity Framework.                                                                                                                                                                                                                                                                                                                        |
-
- 
 
 ### Example
 
@@ -1128,9 +1002,6 @@ The following example shows a **Schema** element that contains an **EntityContai
    </Function>
  </Schema>
 ```
- 
-
- 
 
 ## Annotation Attributes
 
@@ -1160,9 +1031,6 @@ The following example shows an EntityType element that has an annotation attribu
    </c:CustomElement>
  </EntityType>
 ```
- 
-
- 
 
 ## Annotation Elements (SSDL)
 
@@ -1193,9 +1061,6 @@ The following example shows an EntityType element that has an annotation element
    </c:CustomElement>
  </EntityType>
 ```
- 
-
- 
 
 ## Facets (SSDL)
 

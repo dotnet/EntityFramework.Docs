@@ -30,8 +30,8 @@ Doing this will cause Code First to use some conventions to build the expected s
 
 - Three stored procedures named **\<type_name\>_Insert**, **\<type_name\>_Update** and **\<type_name\>_Delete** (e.g. Blog_Insert, Blog_Update and Blog_Delete).  
 - Parameter names correspond to the property names.  
-    > [!NOTE]
-> If you use HasColumnName() or the Column attribute to rename the column for a given property then this name is used for parameters instead of the property name.  
+  > [!NOTE]
+  > If you use HasColumnName() or the Column attribute to rename the column for a given property then this name is used for parameters instead of the property name.  
 - **The insert stored procedure** will have a parameter for every property, except for those marked as store generated (identity or computed). The stored procedure should return a result set with a column for each store generated property.  
 - **The update stored procedure** will have a parameter for every property, except for those marked with a store generated pattern of 'Computed'. Some concurrency tokens require a parameter for the original value, see the *Concurrency Tokens* section below for details. The stored procedure should return a result set with a column for each computed property.  
 - **The delete stored procedure** should have a parameter for the key value of the entity (or multiple parameters if the entity has a composite key). Additionally, the delete procedure should also have parameters for any independent association foreign keys on the target table (relationships that do not have corresponding foreign key properties declared in the entity). Some concurrency tokens require a parameter for the original value, see the *Concurrency Tokens* section below for details.  

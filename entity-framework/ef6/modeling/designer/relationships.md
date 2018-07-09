@@ -47,7 +47,8 @@ Creating an association with the EF Designer updates the model content of the .e
     ![AddAssociation](~/ef6/media/addassociation.png)
 
     > [!NOTE]
-> You can choose to not add navigation properties or foreign key properties to the entities at the ends of the association by clearing the **Navigation Property **and **Add foreign key properties to the &lt;entity type name&gt; Entity **checkboxes. If you add only one navigation property, the association will be traversable in only one direction. If you add no navigation properties, you must choose to add foreign key properties in order to access entities at the ends of the association.
+    > You can choose to not add navigation properties or foreign key properties to the entities at the ends of the association by clearing the **Navigation Property **and **Add foreign key properties to the &lt;entity type name&gt; Entity **checkboxes. If you add only one navigation property, the association will be traversable in only one direction. If you add no navigation properties, you must choose to add foreign key properties in order to access entities at the ends of the association.
+    
 3.  Click **OK**.
 
 ### To delete an association
