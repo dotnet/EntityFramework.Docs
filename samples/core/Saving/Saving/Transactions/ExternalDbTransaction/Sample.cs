@@ -19,38 +19,40 @@ namespace EFSaving.Transactions.ExternalDbTransaction
             }
 
             #region Transaction
-            var connection = new SqlConnection(connectionString);
-            connection.Open();
-
-            using (var transaction = connection.BeginTransaction())
+            using (var connection = new SqlConnection(connectionString))
             {
-                try
+                connection.Open();
+
+                using (var transaction = connection.BeginTransaction())
                 {
-                    // Run raw ADO.NET command in the transaction
-                    var command = connection.CreateCommand();
-                    command.Transaction = transaction;
-                    command.CommandText = "DELETE FROM dbo.Blogs";
-                    command.ExecuteNonQuery();
-
-                    // Run an EF Core command in the transaction
-                    var options = new DbContextOptionsBuilder<BloggingContext>()
-                        .UseSqlServer(connection)
-                        .Options;
-
-                    using (var context = new BloggingContext(options))
+                    try
                     {
-                        context.Database.UseTransaction(transaction);
-                        context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                        context.SaveChanges();
-                    }
+                        // Run raw ADO.NET command in the transaction
+                        var command = connection.CreateCommand();
+                        command.Transaction = transaction;
+                        command.CommandText = "DELETE FROM dbo.Blogs";
+                        command.ExecuteNonQuery();
 
-                    // Commit transaction if all commands succeed, transaction will auto-rollback
-                    // when disposed if either commands fails
-                    transaction.Commit();
-                }
-                catch (System.Exception)
-                {
-                    // TODO: Handle failure
+                        // Run an EF Core command in the transaction
+                        var options = new DbContextOptionsBuilder<BloggingContext>()
+                            .UseSqlServer(connection)
+                            .Options;
+
+                        using (var context = new BloggingContext(options))
+                        {
+                            context.Database.UseTransaction(transaction);
+                            context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                            context.SaveChanges();
+                        }
+
+                        // Commit transaction if all commands succeed, transaction will auto-rollback
+                        // when disposed if either commands fails
+                        transaction.Commit();
+                    }
+                    catch (System.Exception)
+                    {
+                        // TODO: Handle failure
+                    }
                 }
             }
             #endregion
