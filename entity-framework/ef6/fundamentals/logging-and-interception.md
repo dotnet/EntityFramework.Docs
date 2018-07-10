@@ -128,7 +128,7 @@ Looking at the example output above, each of the four commands logged are:
 
 As shown above logging to the console is super easy. It’s also easy to log to memory, file, etc. by using different kinds of [TextWriter](https://msdn.microsoft.com/library/system.io.textwriter.aspx).  
 
-If you are familiar with LINQ to SQL you might notice that in LINQ to SQL the Log property is set to the actual TextWriter object (e.g. Console.Out) while in EF the Log property is set to a method that accepts a string (e.g. Console.Write or Console.Out.Write). The reason for this is to decouple EF from TextWriter by accepting any delegate that can act as a sink for strings. For example, imagine that you already have some logging framework and it defines a logging method like so:  
+If you are familiar with LINQ to SQL you might notice that in LINQ to SQL the Log property is set to the actual TextWriter object (for example, Console.Out) while in EF the Log property is set to a method that accepts a string (for example, Console.Write or Console.Out.Write). The reason for this is to decouple EF from TextWriter by accepting any delegate that can act as a sink for strings. For example, imagine that you already have some logging framework and it defines a logging method like so:  
 
 ``` csharp
 public class MyLogger
@@ -269,7 +269,7 @@ Looking at the methods defined on any of the interceptor interfaces it is appare
 
 ### Result handling  
 
-The DbCommandInterceptionContext\<\> class contains a properties called Result, OriginalResult, Exception, and OriginalException. These properties are set to null/zero for calls to the interception methods that are called before the operation is executed—i.e. the …Executing methods. If the operation is executed and succeeds, then Result and OriginalResult are set to the result of the operation. These values can then be observed in the interception methods that are called after the operation has executed—i.e. the …Executed methods. Likewise, if the operation throws, then the Exception and OriginalException properties will be set.  
+The DbCommandInterceptionContext\<\> class contains a properties called Result, OriginalResult, Exception, and OriginalException. These properties are set to null/zero for calls to the interception methods that are called before the operation is executed — that is, for the …Executing methods. If the operation is executed and succeeds, then Result and OriginalResult are set to the result of the operation. These values can then be observed in the interception methods that are called after the operation has executed — that is, on the …Executed methods. Likewise, if the operation throws, then the Exception and OriginalException properties will be set.  
 
 #### Suppressing execution  
 

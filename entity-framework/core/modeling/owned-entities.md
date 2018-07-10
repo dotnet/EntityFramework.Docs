@@ -149,7 +149,7 @@ modelBuilder.Entity<Order>().OwnsOne(p => p.OrderDetails, od =>
 
 It is possible to achieve the same thing using `OwnedAttribute` on both OrderDetails and StreetAdress.
 
-In addition to nested owned types, an owned type can reference a regular entity. In the following example, Country is a regular (i.e. non-owned) entity:
+In addition to nested owned types, an owned type can reference a regular entity. In the following example, Country is a regular non-owned entity:
 
 ``` csharp
 public class StreetAddress
@@ -188,11 +188,11 @@ Some of these limitations are fundamental to how owned entity types work, but so
 
 ### Shortcomings in previous versions
 - In EF Core 2.0, navigations to owned entity types cannot be declared in derived entity types unless the owned entities are explicitly mapped to a separate table from the owner hierarchy. This limitation has been removed in EF Core 2.1
- 
+
 ### Current shortcomings
 - Inheritance hierarchies that include owned entity types are not supported
 - Owned entity types cannot be pointed at by a collection navigation property (only reference navigations are currently supported)
-- Navigations to owned entity types cannot be null unless they are explicitly mapped to a separate table from the owner 
+- Navigations to owned entity types cannot be null unless they are explicitly mapped to a separate table from the owner
 - Instances of owned entity types cannot be shared by multiple owners (this is a well-known scenario for value objects that cannot be implemented using owned entity types)
 
 ### By-design restrictions

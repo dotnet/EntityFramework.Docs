@@ -15,7 +15,7 @@ uid: core/index
 
 Entity Framework (EF) Core is a lightweight, extensible, and cross-platform version of the popular Entity Framework data access technology.
 
-EF Core can serve as an object-relational mapper (O/RM), enabling .NET developers to work with a database using .NET objects, and eliminating the need for most of the data-access code they usually need to write. 
+EF Core can serve as an object-relational mapper (O/RM), enabling .NET developers to work with a database using .NET objects, and eliminating the need for most of the data-access code they usually need to write.
 
 EF Core supports many database engines, see [Database Providers](providers/index.md) for details.
 
@@ -31,7 +31,7 @@ If you are familiar with EF Core and want to jump straight into the details of t
 
 ## Get Entity Framework Core
 
-[Install the NuGet package](https://docs.nuget.org/ndocs/quickstart/use-a-package) for the database provider you want to use. E.g. to install the SQL Server provider in cross-platform development using `dotnet` tool in the command line:
+[Install the NuGet package](https://docs.nuget.org/ndocs/quickstart/use-a-package) for the database provider you want to use. For example, to install the SQL Server provider in cross-platform development using `dotnet` tool in the command line:
 
 ``` Console
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer

@@ -194,7 +194,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 Things to note:
-* The key "property" is now a field. It is not a `readonly` field so that store-generated keys can be used. 
+* The key "property" is now a field. It is not a `readonly` field so that store-generated keys can be used.
 * The other properties are read-only properties set only in the constructor.
 * If the primary key value is only ever set by EF or read from the database, then there is no need to include it in the constructor. This leaves the key "property" as a simple field and makes it clear that it should not be set explicitly when creating new blogs or posts.
 
@@ -252,7 +252,7 @@ public class Post
 ```
 A few things to notice about this:
 * The constructor is private, since it is only ever called by EF Core, and there is another public constructor for general use.
-* The code using the injected service (i.e. the context) is defensive against it being `null` to handle cases where EF Core is not creating the instance.
+* The code using the injected service (that is, the context) is defensive against it being `null` to handle cases where EF Core is not creating the instance.
 * Because service is stored in a read/write property it will be reset when the entity is attached to a new context instance.
 
 > [!WARNING]  

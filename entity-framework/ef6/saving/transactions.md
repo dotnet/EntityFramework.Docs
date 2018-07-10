@@ -104,7 +104,7 @@ Sometimes you would like a transaction which is even broader in scope and which 
 To do this you must define and use a constructor on your context class which inherits from one of the DbContext constructors which take i) an existing connection parameter and ii) the contextOwnsConnection boolean.  
 
 > [!NOTE]
-> The contextOwnsConnection flag must be set to false when called in this scenario. This is important as it informs Entity Framework that it should not close the connection when it is done with it (e.g. see line 4 below):  
+> The contextOwnsConnection flag must be set to false when called in this scenario. This is important as it informs Entity Framework that it should not close the connection when it is done with it (for example, see line 4 below):  
 
 ``` csharp
 using (var conn = new SqlConnection("..."))
@@ -118,7 +118,7 @@ using (var conn = new SqlConnection("..."))
 
 Furthermore, you must start the transaction yourself (including the IsolationLevel if you want to avoid the default setting) and let Entity Framework know that there is an existing transaction already started on the connection (see line 33 below).  
 
-Then you are free to execute database operations either directly on the SqlConnection itself, or on the DbContext. All such operations are executed within one transaction. You take responsibility for committing or rolling back the transaction and for calling Dispose() on it, as well as for closing and disposing the database connection. E.g.:  
+Then you are free to execute database operations either directly on the SqlConnection itself, or on the DbContext. All such operations are executed within one transaction. You take responsibility for committing or rolling back the transaction and for calling Dispose() on it, as well as for closing and disposing the database connection. For example:  
 
 ``` csharp
 using System;
@@ -185,7 +185,7 @@ You can pass null to Database.UseTransaction() to clear Entity Framework’s kno
 You will see an exception from Database.UseTransaction() if you pass a transaction when:  
 - Entity Framework already has an existing transaction  
 - Entity Framework is already operating within a TransactionScope  
-- The connection object in the transaction passed is null (i.e. one which has no connection – usually this is a sign that that transaction has already completed)  
+- The connection object in the transaction passed is null. That is, the transaction is not associated with a connection – usually this is a sign that that transaction has already completed  
 - The connection object in the transaction passed does not match the Entity Framework’s connection.  
 
 ## Using transactions with other features  

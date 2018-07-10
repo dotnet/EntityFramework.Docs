@@ -28,7 +28,7 @@ These build an initial model based on the shape of the entity classes.
 ### Fluent API
 Allows you to override the `OnModelCreating` method on your context to further configure the model that was discovered by convention.
 ### Data annotations
-Are attributes that can be added to your entity classes/properties and will influence the EF model (i.e. adding [Required] will let EF know that a property is required).
+Are attributes that can be added to your entity classes/properties and will influence the EF model. For example, adding `[Required]` will let EF know that a property is required.
 ### Relational Table mapping
 Allows entities to be mapped to tables/columns.
 ### Key value generation
@@ -76,7 +76,7 @@ Provides the ability to use LINQ to retrieve data from the database.
 ### Mixed client/server evaluation
 Enables queries to contain logic that cannot be evaluated in the database, and must therefore be evaluated after the data is retrieved into memory.
 ### NoTracking
-Queries enables quicker query execution when the context does not need to monitor for changes to the entity instances (i.e. the results are read-only).
+Queries enables quicker query execution when the context does not need to monitor for changes to the entity instances (this is useful if the results are read-only).
 ### Eager loading
 Provides the `Include` and `ThenInclude` methods to identify related data that should also be fetched when querying.
 ### Async query

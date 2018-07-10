@@ -52,4 +52,4 @@ It is difficult to detail here the whole process we follow to plan a release, pa
 
 6. **What are the capabilities of the people available to work on a feature, and how to best leverage these resources?** Each member of the EF team and even our community contributors have different levels of experience in different areas and we have to plan accordingly. Even if we wanted to have “all hands on deck” to work on a specific feature like GroupBy translations, or many-to-many, that wouldn’t be practical.
 
-As mentioned before, this process evolves on every release, and in the future we would like to add more opportunities for members of the developer community to provide inputs into release plans, e.g. by making it easier to review proposed drafts of the features and of the release plan itself.
+As mentioned before, this process evolves on every release, and in the future we would like to add more opportunities for members of the developer community to provide inputs into release plans, for example, by making it easier to review proposed drafts of the features and of the release plan itself.

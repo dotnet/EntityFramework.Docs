@@ -1,5 +1,5 @@
 ---
-title: Porting from EF6 to EF Core - Validate Requirements 
+title: Porting from EF6 to EF Core - Validate Requirements
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -32,7 +32,7 @@ In EF6, calling `DbSet.Add()` on an entity results in a recursive search for all
 
     *  **If the primary key of the entity is store generated**
 
-        * If the primary key is not set to a value, the state is set to added. The primary key value is considered "not set" if it is assigned the CLR default value for the property type (i.e. `0` for `int`, `null` for `string`, etc.).
+        * If the primary key is not set to a value, the state is set to added. The primary key value is considered "not set" if it is assigned the CLR default value for the property type (for example, `0` for `int`, `null` for `string`, etc.).
 
         * If the primary key is set to a value, the state is set to unchanged.
 

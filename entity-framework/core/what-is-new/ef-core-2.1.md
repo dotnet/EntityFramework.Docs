@@ -74,7 +74,7 @@ modelBuilder.Entity<Post>().HasData(new Post{ Id = 1, Text = "Hello World!" });
 Read the [section on data seeding](xref:core/modeling/data-seeding) for more information about this topic.  
 
 ## Query types
-An EF Core model can now include query types. Unlike entity types, query types do not have keys defined on them and cannot be inserted, deleted or updated (i.e. they are read-only), but they can be returned directly by queries. Some of the usage scenarios for query types are:
+An EF Core model can now include query types. Unlike entity types, query types do not have keys defined on them and cannot be inserted, deleted or updated (that is, they are read-only), but they can be returned directly by queries. Some of the usage scenarios for query types are:
 
 - Mapping to views without primary keys
 - Mapping to tables without primary keys
@@ -155,7 +155,7 @@ New `Tracked` And `StateChanged` events on `ChangeTracker` can be used to write 
 
 ## Raw SQL parameter analyzer
 
-A new code analyzer is included with EF Core that detects potentially unsafe usages of our raw-SQL APIs, like `FromSql` or `ExecuteSqlCommand`. E.g. for the following query, you will see a warning because _minAge_ is not parameterized:
+A new code analyzer is included with EF Core that detects potentially unsafe usages of our raw-SQL APIs, like `FromSql` or `ExecuteSqlCommand`. For example, for the following query, you will see a warning because _minAge_ is not parameterized:
 
 ``` csharp
 var sql = $"SELECT * FROM People WHERE Age > {minAge}";

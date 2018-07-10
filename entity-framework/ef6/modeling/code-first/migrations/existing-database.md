@@ -84,7 +84,7 @@ Here are some examples of when you need to be aware of this:
 
 **If you used ‘Option Two: Use empty database as a starting point’ from Step 3:**
 
--   Trying to run the Down method of the initial migration (i.e. reverting to an empty database) against your local database may fail because Migrations will try to drop indexes and foreign key constraints using the incorrect names. This will only affect your local database since other databases will be created from scratch using the Up method of the initial migration.
+-   Trying to run the Down method of the initial migration (that is, reverting to an empty database) against your local database may fail because Migrations will try to drop indexes and foreign key constraints using the incorrect names. This will only affect your local database since other databases will be created from scratch using the Up method of the initial migration.
     If you want to downgrade your existing local database to an empty state it is easiest to do this manually, either by dropping the database or dropping all the tables. After this initial downgrade all database objects will be recreated with the default names, so this issue will not present itself again.
 -   If future changes in your model require changing or dropping one of the database objects that is named differently, this will not work against your existing local database – since the names won’t match the defaults. However, it will work against databases that were created ‘from scratch’ since they will have used the default names chosen by Migrations.
     You could either make these changes manually on your local existing database, or consider having Migrations recreate your database from scratch – as it will on other machines.

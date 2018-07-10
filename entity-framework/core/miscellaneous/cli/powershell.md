@@ -111,7 +111,7 @@ Parameters:
 |                                          |                                                                                                  |
 |:-----------------------------------------|:-------------------------------------------------------------------------------------------------|
 | <nobr>***-Connection*** \<String></nobr> | The connection string to the database.                                                           |
-| ***-Provider*** \<String>                | The provider to use. (E.g. Microsoft.EntityFrameworkCore.SqlServer)                              |
+| ***-Provider*** \<String>                | The provider to use. (for example, Microsoft.EntityFrameworkCore.SqlServer)                      |
 | -OutputDir \<String>                     | The directory to put files in. Paths are relative to the project directory.                      |
 | -ContextDir \<String>                    | The directory to put DbContext file in. Paths are relative to the project directory.             |
 | -Context \<String>                       | The name of the DbContext to generate.                                                           |

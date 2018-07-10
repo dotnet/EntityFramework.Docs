@@ -79,7 +79,7 @@ These types are in the *Core* namespaces because they are not used directly for 
 - System.Data.Objects.EntityFunctions => System.Data.**Entity.DbFunctions**  
   > [!NOTE]
   > This class has been renamed; a class with the old name still exists and works, but it now marked as obsolete.)  
-- Spatial classes (e.g. DbGeography, DbGeometry) have moved from System.Data.Spatial => System.Data.**Entity.**Spatial
+- Spatial classes (for example, DbGeography, DbGeometry) have moved from System.Data.Spatial => System.Data.**Entity.**Spatial
 
 > [!NOTE]
 > Some types in the System.Data namespace are in System.Data.dll which is not an EF assembly. These types have not moved and so their namespaces remain unchanged.

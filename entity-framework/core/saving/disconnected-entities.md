@@ -32,7 +32,7 @@ The remainder of this section covers the cases where it necessary to determine i
 
 ### With auto-generated keys
 
-The value of an automatically generated key can often be used to determine whether an entity needs to be inserted or updated. If the key has not been set (i.e. it still has the CLR default value of null, zero, etc.), then the entity must be new and needs inserting. On the other hand, if the key value has been set, then it must have already been previously saved and now needs updating. In other words, if the key has a value, then the entity was queried, sent to the client, and has now come back to be updated.
+The value of an automatically generated key can often be used to determine whether an entity needs to be inserted or updated. If the key has not been set (that is, it still has the CLR default value of null, zero, etc.), then the entity must be new and needs inserting. On the other hand, if the key value has been set, then it must have already been previously saved and now needs updating. In other words, if the key has a value, then the entity was queried, sent to the client, and has now come back to be updated.
 
 It is easy to check for an unset key when the entity type is known:
 

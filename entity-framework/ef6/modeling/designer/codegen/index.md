@@ -146,7 +146,7 @@ You will need to select the **Online** tab when adding the template to download 
 
 ### What are the "Web Sites" Templates
 
-The "Web Sites" templates (i.e. **EF 5.x DbContext Generator for C\# Web Sites**) are for use in Web Site projects created via **File -&gt; New -&gt; Web Site...**. These are different from Web Applications, created via **File -&gt; New -&gt; Project...**, which use the standard templates. We provide separate templates because the item template system in Visual Studio requires them.
+The "Web Sites" templates (for example, **EF 5.x DbContext Generator for C\# Web Sites**) are for use in Web Site projects created via **File -&gt; New -&gt; Web Site...**. These are different from Web Applications, created via **File -&gt; New -&gt; Project...**, which use the standard templates. We provide separate templates because the item template system in Visual Studio requires them.
 
 ## Using a Template
 

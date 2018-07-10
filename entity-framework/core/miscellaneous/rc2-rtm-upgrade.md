@@ -20,7 +20,7 @@ The names of the top level packages that you would typically install into an app
 
 **You need to upgrade the installed packages to the RTM versions:**
 
-* Runtime packages (e.g. `Microsoft.EntityFrameworkCore.SqlServer`) changed from `1.0.0-rc2-final` to `1.0.0`.
+* Runtime packages (for example, `Microsoft.EntityFrameworkCore.SqlServer`) changed from `1.0.0-rc2-final` to `1.0.0`.
 
 * The `Microsoft.EntityFrameworkCore.Tools` package changed from `1.0.0-preview1-final` to `1.0.0-preview2-final`. Note that tooling is still pre-release.
 

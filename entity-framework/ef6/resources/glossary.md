@@ -42,13 +42,13 @@ A pattern of loading related data where related objects are loaded by calling an
 An API that can be used to configure a Code First model.
 
 ## Foreign key association
-An association between entities where a property that represents the foreign key is included in the class of the dependent entity (i.e. the Product contains a CategoryId property).
+An association between entities where a property that represents the foreign key is included in the class of the dependent entity. For example, Product contains a CategoryId property.
 
 ## Identifying relationship
 A relationship where the primary key of the principal entity is part of the primary key of the dependent entity. In this kind of relationship, the dependent entity cannot exist without the principal entity.
 
 ## Independent association
-An association between entities where there is no property representing the foreign key in the class of the dependent entity (i.e. a Product class contains a relationship to Category but no CategoryId property). Entity Framework will use an independent object to track this relationship.
+An association between entities where there is no property representing the foreign key in the class of the dependent entity. For example, a Product class contains a relationship to Category but no CategoryId property. Entity Framework tracks the state of the association independently of the state of the entities at the two association ends.
 
 ## Lazy loading
 A pattern of loading related data where related objects are automatically loaded when a navigation property is accessed.
@@ -57,7 +57,7 @@ A pattern of loading related data where related objects are automatically loaded
 Creating an Entity Framework model, using the EF Designer, that is then used to create a new database.
 
 ## Navigation property
-A property of an entity that references another entity (i.e. Product contains a Category navigation property and Category contains a Products navigation property).
+A property of an entity that references another entity. For example, Product contains a Category navigation property and Category contains a Products navigation property.
 
 ## POCO
 Acronym for Plain-Old CLR Object. A simple user class that has no dependencies with any framework. In the context of EF, a an entity class that does not derive from EntityObject, implements any interfaces or carries any attributes defined in EF. Such entity classes that are decoupled from the persistence framework are also said to be "persistence ignorant".  

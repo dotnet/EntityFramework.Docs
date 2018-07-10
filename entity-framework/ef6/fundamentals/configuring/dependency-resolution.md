@@ -25,7 +25,7 @@ public interface IDbDependencyResolver
 
 The GetService method is typically called by EF and is handled by an implementation of IDbDependencyResolver provided either by EF or by the application. When called, the type argument is the interface or base class type of the service being requested, and the key object is either null or an object providing contextual information about the requested service.  
 
-This article does not contain full details on how to implement IDbDependencyResolver, but instead acts as a reference for the service types (i.e. interface and base class types) for which EF calls GetService and the semantics of the key object for each of these calls. This document will be kept up-to-date as additional services are added.  
+This article does not contain full details on how to implement IDbDependencyResolver, but instead acts as a reference for the service types (that is, the interface and base class types) for which EF calls GetService and the semantics of the key object for each of these calls. This document will be kept up-to-date as additional services are added.  
 
 ## Services resolved  
 
@@ -65,7 +65,7 @@ Unless otherwise stated any object returned must be thread-safe since it can be 
 
 **Version introduced**: EF6.0.0  
 
-**Object returned**: The connection factory that will be used when EF creates a database connection by convention. That is, when no connection or connection string is given to EF, and no connection string can be found in the app.config or web.config, then this service is used to create a connection by convention. Changing the connection factory can allow EF to use a different type of database (e.g. SQL Server Compact Edition) by default.  
+**Object returned**: The connection factory that will be used when EF creates a database connection by convention. That is, when no connection or connection string is given to EF, and no connection string can be found in the app.config or web.config, then this service is used to create a connection by convention. Changing the connection factory can allow EF to use a different type of database (for example, SQL Server Compact Edition) by default.  
 
 **Key**: Not used; will be null  
 

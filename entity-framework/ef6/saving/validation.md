@@ -196,7 +196,7 @@ DbEntityValidationResult houses a DbEntityEntry and an ICollection of DbValidati
 
 A call to SaveChanges triggers all of the validations covered in this article. But you don’t need to rely on SaveChanges. You may prefer to validate elsewhere in your application.
 
-DbContext.GetValidationErrors will trigger all of the validations, those defined by annotations or the Fluent API, the validation created in IValidatableObject (e.g., Blog.Validate), and the validations performed in the DbContext.ValidateEntity method.
+DbContext.GetValidationErrors will trigger all of the validations, those defined by annotations or the Fluent API, the validation created in IValidatableObject (for example, Blog.Validate), and the validations performed in the DbContext.ValidateEntity method.
 
 The following code will call GetValidationErrors on the current instance of a DbContext. ValidationErrors are grouped by entity type into DbValidationRestuls. The code iterates first through the DbValidationResults returned by the method and then through each ValidationError inside.
 

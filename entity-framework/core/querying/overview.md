@@ -20,7 +20,7 @@ The following is a high level overview of the process each query goes through.
    1. The result is cached so that this processing does not need to be done every time the query is executed
 2. The result is passed to the database provider
    1. The database provider identifies which parts of the query can be evaluated in the database
-   2. These parts of the query are translated to database specific query language (e.g. SQL for a relational database)
+   2. These parts of the query are translated to database specific query language (for example, SQL for a relational database)
    3. One or more queries are sent to the database and the result set returned (results are values from the database, not entity instances)
 3. For each item in the result set
    1. If this is a tracking query, EF checks if the data represents an entity already in the change tracker for the context instance

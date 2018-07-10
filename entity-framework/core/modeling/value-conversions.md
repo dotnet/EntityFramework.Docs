@@ -41,7 +41,7 @@ public enum EquineBeast
     Unicorn
 }
 ```
-Then conversions can be defined in OnModelCreating to store the enum values as strings (e.g. "Donkey", "Mule", ...) in the database:
+Then conversions can be defined in OnModelCreating to store the enum values as strings (for example, "Donkey", "Mule", ...) in the database:
 ```Csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {

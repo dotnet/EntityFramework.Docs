@@ -45,7 +45,7 @@ From EF 4.1 onwards, new versions of the EF runtime have been released as the [E
 Install-Package EntityFramework -Version <number>
 ```
 
-Note that `<number>` represents the specific version of EF to install, e.g. 6.2.0 is the version of number for EF 6.2.   
+Note that `<number>` represents the specific version of EF to install. For example, 6.2.0 is the version of number for EF 6.2.   
 
 EF runtimes before 4.1 were part of .NET Framework and cannot be installed separately.
 

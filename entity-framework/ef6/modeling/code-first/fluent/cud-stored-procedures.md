@@ -28,7 +28,7 @@ modelBuilder
 
 Doing this will cause Code First to use some conventions to build the expected shape of the stored procedures in the database.  
 
-- Three stored procedures named **\<type_name\>_Insert**, **\<type_name\>_Update** and **\<type_name\>_Delete** (e.g. Blog_Insert, Blog_Update and Blog_Delete).  
+- Three stored procedures named **\<type_name\>_Insert**, **\<type_name\>_Update** and **\<type_name\>_Delete** (for example, Blog_Insert, Blog_Update and Blog_Delete).  
 - Parameter names correspond to the property names.  
   > [!NOTE]
   > If you use HasColumnName() or the Column attribute to rename the column for a given property then this name is used for parameters instead of the property name.  
@@ -214,7 +214,7 @@ Update and delete stored procedures may also need to deal with concurrency:
 
 - If the entity contains concurrency tokens, the stored procedure can optionally have an output parameter that returns the number of rows updated/deleted (rows affected). Such a parameter must be configured using the RowsAffectedParameter method.  
 By default EF uses the return value from ExecuteNonQuery to determine how many rows were affected. Specifying a rows affected output parameter is useful if you perform any logic in your sproc that would result in the return value of ExecuteNonQuery being incorrect (from EF's perspective) at the end of execution.  
-- For each concurrency token there will be a parameter named **\<property_name\>_Original** (i.e. Timestamp_Original). This will be passed the original value of this property – the value when queried from the database.  
+- For each concurrency token there will be a parameter named **\<property_name\>_Original** (for example, Timestamp_Original ). This will be passed the original value of this property – the value when queried from the database.  
     - Concurrency tokens that are computed by the database – such as timestamps – will only have an original value parameter.  
     - Non-computed properties that are set as concurrency tokens will also have a parameter for the new value in the update procedure. This uses the naming conventions already discussed for new values. An example of such a token would be using a Blog's URL as a concurrency token, the new value is required because this can be updated to a new value by your code (unlike a Timestamp token which is only updated by the database).  
 
@@ -330,8 +330,8 @@ modelBuilder
 
 If no other configuration is supplied then the following stored procedure shape is used by default.  
 
-- Two stored procedures named **\<type_one\>\<type_two\>_Insert** and **\<type_one\>\<type_two\>_Delete** (i.e. PostTag_Insert and PostTag_Delete).  
-- The parameters will be the key value(s) for each type. The name of each parameter being **\<type_name\>_\<property_name\>** (i.e. Post_PostId and Tag_TagId).
+- Two stored procedures named **\<type_one\>\<type_two\>_Insert** and **\<type_one\>\<type_two\>_Delete** (for example, PostTag_Insert and PostTag_Delete).  
+- The parameters will be the key value(s) for each type. The name of each parameter being **\<type_name\>_\<property_name\>** (for example, Post_PostId and Tag_TagId).
 
 Here are example insert and update stored procedures.  
 

@@ -38,7 +38,7 @@ Simply modify the values assigned to properties and then call *SaveChanges*.
 
 Use the *DbSet.Remove* method to delete instances of your entity classes.
 
-If the entity already exists in the database, it will be deleted during *SaveChanges*. If the entity has not yet been saved to the database (i.e. it is tracked as added) then it will be removed from the context and will no longer be inserted when *SaveChanges* is called.
+If the entity already exists in the database, it will be deleted during *SaveChanges*. If the entity has not yet been saved to the database (that is, it is tracked as added) then it will be removed from the context and will no longer be inserted when *SaveChanges* is called.
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/Basics/Sample.cs#Remove)]
 

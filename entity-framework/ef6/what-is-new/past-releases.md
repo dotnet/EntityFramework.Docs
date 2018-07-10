@@ -223,7 +223,7 @@ These components are used by Code First Migrations (included in EF 4.3) and the 
 
 You’ll notice that the strange version number 4.1.10715 of the package.
 We used to use date based patch versions before we decided to adopt [Semantic Versioning](https://semver.org).
-Think of this version as EF 4.1 patch 1 (i.e. 4.1.1).
+Think of this version as EF 4.1 patch 1 (or EF 4.1.1).
 
 Here is a list of content we put together for the 4.1.1 release:
 

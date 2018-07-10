@@ -15,7 +15,7 @@ This topic covers how Entity Framework discovers which database connection to us
 
 Typically an Entity Framework application uses a class derived from DbContext. This derived class will call one of the constructors on the base DbContext class to control:  
 
-- How the context will connect to a database—i.e. how a connection string is found/used  
+- How the context will connect to a database — that is, how a connection string is found/used  
 - Whether the context will use calculate a model using Code First or load a model created with the EF Designer  
 - Additional advanced options  
 

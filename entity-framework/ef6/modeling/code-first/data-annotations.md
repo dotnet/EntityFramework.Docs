@@ -113,7 +113,7 @@ When you have composite keys, Entity Framework requires you to define an order o
 
 If you have entities with composite foreign keys then you must specify the same column ordering that you used for the corresponding primary key properties.
 
-Only the relative ordering within the foreign key properties needs to be the same, the exact values assigned to **Order** do not need to match. I.e. in the following example 3 and 4 could be used in place of 1 and 2.
+Only the relative ordering within the foreign key properties needs to be the same, the exact values assigned to **Order** do not need to match. For example, in the following class, 3 and 4 could be used in place of 1 and 2.
 
 ``` csharp
     public class PassportStamp
@@ -350,7 +350,7 @@ For example, the following code will result in an index being created on the **R
     }
 ```
 
-By default, the index will be named **IX\_&lt;property name&gt;** (i.e. IX\_Rating in the above example). You can also specify a name for the index though. The following example specifies that the index should be named **PostRatingIndex**.
+By default, the index will be named **IX\_&lt;property name&gt;** (IX\_Rating in the above example). You can also specify a name for the index though. The following example specifies that the index should be named **PostRatingIndex**.
 
 ``` csharp
     [Index("PostRatingIndex")]

@@ -86,7 +86,7 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 If you receive an error stating `The term 'Scaffold-DbContext' is not recognized as the name of a cmdlet`, then close and reopen Visual Studio.
 
 > [!TIP]  
-> You can specify which tables you want to generate entities for by adding the `-Tables` argument to the command above. E.g. `-Tables Blog,Post`.
+> You can specify which tables you want to generate entities for by adding the `-Tables` argument to the command above. For example, `-Tables Blog,Post`.
 
 The reverse engineer process created entity classes (`Blog.cs` & `Post.cs`) and a derived context (`BloggingContext.cs`) based on the schema of the existing database.
 

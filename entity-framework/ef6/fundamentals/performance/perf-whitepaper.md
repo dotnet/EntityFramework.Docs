@@ -207,7 +207,7 @@ When using Entity Framework 6, developers are able to call AddRange and RemoveRa
 
 ### 3.2 Query Plan Caching
 
-The first time a query is executed, it goes through the internal plan compiler to translate the conceptual query into the store command (e.g. the T-SQL which is executed when run against SQL Server).  If query plan caching is enabled, the next time the query is executed the store command is retrieved directly from the query plan cache for execution, bypassing the plan compiler.
+The first time a query is executed, it goes through the internal plan compiler to translate the conceptual query into the store command (for example, the T-SQL which is executed when run against SQL Server).  If query plan caching is enabled, the next time the query is executed the store command is retrieved directly from the query plan cache for execution, bypassing the plan compiler.
 
 The query plan cache is shared across ObjectContext instances within the same AppDomain. You don't need to hold onto an ObjectContext instance to benefit from query plan caching.
 
@@ -227,7 +227,7 @@ The query plan cache is shared across ObjectContext instances within the same Ap
                     ObjectQuery oQuery = query as ObjectQuery;
                     oQuery.EnablePlanCaching = false;
 ```
--   For parameterized queries, changing the parameter's value will still hit the cached query. But changing a parameter's facets (e.g. size, precision, or scale) will hit a different entry in the cache.
+-   For parameterized queries, changing the parameter's value will still hit the cached query. But changing a parameter's facets (for example, size, precision, or scale) will hit a different entry in the cache.
 -   When using Entity SQL, the query string is part of the key. Changing the query at all will result in different cache entries, even if the queries are functionally equivalent. This includes changes to casing or whitespace.
 -   When using LINQ, the query is processed to generate a part of the key. Changing the LINQ expression will therefore generate a different key.
 -   Other technical limitations may apply; see Autocompiled Queries for more details.
@@ -328,7 +328,7 @@ Some components will make use of composed IQueryable objects to enable advanced 
 
 The Customer Advisory Team discusses this in their "Potential Performance Issues with Compiled LINQ Query Re-Compiles" blog post: <http://blogs.msdn.com/b/appfabriccat/archive/2010/08/06/potential-performance-issues-with-compiled-linq-query-re-compiles.aspx>.
 
-One place where you may run into this is when adding progressive filters to a query. For example, suppose you had a Customers page with several drop-down lists for optional filters (e.g. Country and OrdersCount). You can compose these filters over the IQueryable results of a CompiledQuery, but doing so will result in the new query going through the plan compiler every time you execute it.
+One place where you may run into this is when adding progressive filters to a query. For example, suppose you had a Customers page with several drop-down lists for optional filters (for example, Country and OrdersCount). You can compose these filters over the IQueryable results of a CompiledQuery, but doing so will result in the new query going through the plan compiler every time you execute it.
 
 ``` csharp
     using (NorthwindEntities context = new NorthwindEntities())
@@ -397,7 +397,7 @@ The Entity Framework also supports Metadata caching. This is essentially caching
 #### 3.4.1 Metadata Caching algorithm
 
 1.  Metadata information for a model is stored in an ItemCollection for each EntityConnection.
-    -   As a side note, there are different ItemCollection objects for different parts of the model, e.g. StoreItemCollections contains the information about the database model; ObjectItemCollection contains information about the data model; EdmItemCollection contains information about the conceptual model.
+    -   As a side note, there are different ItemCollection objects for different parts of the model. For example, StoreItemCollections contains the information about the database model; ObjectItemCollection contains information about the data model; EdmItemCollection contains information about the conceptual model.
 
 2.  If two connections use the same connection string, they will share the same ItemCollection instance.
 3.  Functionally equivalent but textually different connection strings may result in different metadata caches. We do tokenize connection strings, so simply changing the order of the tokens should result in shared metadata. But two connection strings that seem functionally the same may not be evaluated as identical after tokenization.
@@ -887,7 +887,7 @@ When you create a model over an existing database that has a TPT schema, you don
 
 When you use Model First in the Entity Designer Wizard, you will get TPT for any inheritance in your model. If you want to switch to a TPH inheritance strategy with Model First, you can use the "Entity Designer Database Generation Power Pack" available from the Visual Studio Gallery ( \<http://visualstudiogallery.msdn.microsoft.com/df3541c3-d833-4b65-b942-989e7ec74c87/>).
 
-When using Code First to configure the mapping of a model with inheritance, EF will use TPH by default, i.e. all entities in the inheritance hierarchy will be mapped to the same table. See the "Mapping with the Fluent API" section of the "Code First in Entity Framework4.1" article in MSDN Magazine ( [http://msdn.microsoft.com/magazine/hh126815.aspx](https://msdn.microsoft.com/magazine/hh126815.aspx)) for more details.
+When using Code First to configure the mapping of a model with inheritance, EF will use TPH by default, therefore all entities in the inheritance hierarchy will be mapped to the same table. See the "Mapping with the Fluent API" section of the "Code First in Entity Framework4.1" article in MSDN Magazine ( [http://msdn.microsoft.com/magazine/hh126815.aspx](https://msdn.microsoft.com/magazine/hh126815.aspx)) for more details.
 
 ### 7.2       Upgrading from EF4 to improve model generation time
 
@@ -1099,7 +1099,7 @@ There’s no such thing as a one-size-fits-all to choosing eager loading versus 
 
 When we hear performance questions that involve server response time problems, the source of the issue is frequently queries with multiple Include statements. While including related entities in a query is powerful, it's important to understand what's happening under the covers.
 
-It takes a relatively long time for a query with multiple Include statements in it to go through our internal plan compiler to produce the store command. The majority of this time is spent trying to optimize the resulting query. The generated store command will contain an Outer Join or Union for each Include, depending on your mapping. Queries like this will bring in large connected graphs from your database in a single payload, which will acerbate any bandwidth issues, especially when there is a lot of redundancy in the payload (i.e. with multiple levels of Include to traverse associations in the one-to-many direction).
+It takes a relatively long time for a query with multiple Include statements in it to go through our internal plan compiler to produce the store command. The majority of this time is spent trying to optimize the resulting query. The generated store command will contain an Outer Join or Union for each Include, depending on your mapping. Queries like this will bring in large connected graphs from your database in a single payload, which will acerbate any bandwidth issues, especially when there is a lot of redundancy in the payload (for example, when multiple levels of Include are used to traverse associations in the one-to-many direction).
 
 You can check for cases where your queries are returning excessively large payloads by accessing the underlying TSQL for the query by using ToTraceString and executing the store command in SQL Server Management Studio to see the payload size. In such cases you can try to reduce the number of Include statements in your query to just bring in the data you need. Or you may be able to break your query into a smaller sequence of subqueries, for example:
 

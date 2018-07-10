@@ -140,7 +140,7 @@ In EF5 and earlier versions there is a bug such that the **ObjectContext.Connect
 ((IObjectContextAdapter)context).ObjectContext.Connection.State
 ```  
 
-Separately, if you open the database connection by calling Database.Connection.Open() it will be open until the next time you execute a query or call anything which requires a database connection (e.g. SaveChanges()) but after that the underlying store connection will be closed. The context will then re-open and re-close the connection any time another database operation is required:  
+Separately, if you open the database connection by calling Database.Connection.Open() it will be open until the next time you execute a query or call anything which requires a database connection (for example, SaveChanges()) but after that the underlying store connection will be closed. The context will then re-open and re-close the connection any time another database operation is required:  
 
 ``` csharp
 using System;

@@ -56,10 +56,10 @@ The EF Core column contains the number of the product version in which the featu
 | Loading related data: Lazy                            | Yes      | 2.1                                   |
 | Loading related data: Explicit                        | Yes      | 1.1                                   |
 | Raw SQL queries: Entity types                         | Yes      | 1.0                                   |
-| Raw SQL queries: Non-entity types (e.g. query types)  | Yes      | 2.1                                   |
+| Raw SQL queries: Non-entity types (query types)       | Yes      | 2.1                                   |
 | Raw SQL queries: Composing with LINQ                  |          | 1.0                                   |
 | Explicitly compiled queries                           | Poor     | 2.0                                   |
-| Text-based query language (e.g. Entity SQL)           | Yes      |                                       |
+| Text-based query language (Entity SQL)                | Yes      |                                       |
 |                                                       |          |                                       |
 | **Saving Data**                                       | **EF6**  | **EF Core**                           |
 | Change tracking: Snapshot                             | Yes      | 1.0                                   |
@@ -79,7 +79,7 @@ The EF Core column contains the number of the product version in which the featu
 | Seed data                                             | Yes      | 2.1                                   |
 | Connection resiliency                                 | Yes      | 1.1                                   |
 | Lifecycle hooks (events, interception)                | Yes      |                                       |
-| Simple Logging (e.g. Database.Log)                    | Yes      |                                       |
+| Simple Logging (Database.Log)                         | Yes      |                                       |
 | DbContext pooling                                     |          | 2.0                                   |
 |                                                       |          |                                       |
 | **Database Providers**                                | **EF6**  | **EF Core**                           |

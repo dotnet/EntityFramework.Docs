@@ -136,7 +136,7 @@ Note that this change only applies to APIs/metadata that is defined for _all_ re
 
 ### Don’t take control of the EF service provider
 
-EF Core uses an internal `IServiceProvider` (i.e. a dependency injection container) for its internal implementation. Applications should allow EF Core to create and manage this provider except in special cases. Strongly consider removing any calls to `UseInternalServiceProvider`. If an application does need to call `UseInternalServiceProvider`, then please consider [filing an issue](https://github.com/aspnet/EntityFramework/Issues) so we can investigate other ways to handle your scenario.
+EF Core uses an internal `IServiceProvider` (a dependency injection container) for its internal implementation. Applications should allow EF Core to create and manage this provider except in special cases. Strongly consider removing any calls to `UseInternalServiceProvider`. If an application does need to call `UseInternalServiceProvider`, then please consider [filing an issue](https://github.com/aspnet/EntityFramework/Issues) so we can investigate other ways to handle your scenario.
 
 Calling `AddEntityFramework`, `AddEntityFrameworkSqlServer`, etc. is not required by application code unless `UseInternalServiceProvider` is also called. Remove any existing calls to `AddEntityFramework` or `AddEntityFrameworkSqlServer`, etc. `AddDbContext` should still be used in the same way as before.
 
@@ -154,7 +154,7 @@ This creates/uses a database with the name “MyDatabase”. If `UseInMemoryData
 
 `IsReadOnlyBeforeSave`, `IsReadOnlyAferSave`, and `IsStoreGeneratedAlways` have been obsoleted and replaced with [BeforeSaveBehavior](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IProperty.cs#L39) and [AfterSaveBehavior](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IProperty.cs#L55). These behaviors apply to any property (not only store-generated properties) and determine how the value of the property should be used when inserting into a database row (`BeforeSaveBehavior`) or when updating an existing database row (`AfterSaveBehavior`).
 
-Properties marked as [ValueGenerated.OnAddOrUpdate](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/ValueGenerated.cs) (e.g. for computed columns) will by default ignore any value currently set on the property. This means that a store-generated value will always be obtained regardless of whether any value has been set or modified on the tracked entity. This can be changed by setting a different `Before\AfterSaveBehavior`.
+Properties marked as [ValueGenerated.OnAddOrUpdate](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/ValueGenerated.cs) (for example, for computed columns) will by default ignore any value currently set on the property. This means that a store-generated value will always be obtained regardless of whether any value has been set or modified on the tracked entity. This can be changed by setting a different `Before\AfterSaveBehavior`.
 
 ### New ClientSetNull delete behavior
 
