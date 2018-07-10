@@ -33,7 +33,7 @@ Next, configure the query filters in _OnModelCreating_ using the ```HasQueryFilt
 The predicate expressions passed to the _HasQueryFilter_ calls will now automatically be applied to any LINQ queries for those types.
 
 > [!TIP]
-> Note the use of a DbContext instance level field: ```_tenantId``` used to set the current tenant. Model-level filters will use the value from the correct context instance. I.e. The instance that is executing the query.
+> Note the use of a DbContext instance level field: ```_tenantId``` used to set the current tenant. Model-level filters will use the value from the correct context instance. I.e. the instance that is executing the query.
 
 ## Disabling Filters
 
