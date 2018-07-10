@@ -21,37 +21,39 @@ namespace EFSaving.Transactions.AmbientTransaction
 
             #region Transaction
             using (var scope = new TransactionScope(
-                TransactionScopeOption.Required, 
+                TransactionScopeOption.Required,
                 new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
             {
-                var connection = new SqlConnection(connectionString);
-                connection.Open();
-
-                try
+                using (var connection = new SqlConnection(connectionString))
                 {
-                    // Run raw ADO.NET command in the transaction
-                    var command = connection.CreateCommand();
-                    command.CommandText = "DELETE FROM dbo.Blogs";
-                    command.ExecuteNonQuery();
+                    connection.Open();
 
-                    // Run an EF Core command in the transaction
-                    var options = new DbContextOptionsBuilder<BloggingContext>()
-                        .UseSqlServer(connection)
-                        .Options;
-
-                    using (var context = new BloggingContext(options))
+                    try
                     {
-                        context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                        context.SaveChanges();
-                    }
+                        // Run raw ADO.NET command in the transaction
+                        var command = connection.CreateCommand();
+                        command.CommandText = "DELETE FROM dbo.Blogs";
+                        command.ExecuteNonQuery();
 
-                    // Commit transaction if all commands succeed, transaction will auto-rollback
-                    // when disposed if either commands fails
-                    scope.Complete();
-                }
-                catch (System.Exception)
-                {
-                    // TODO: Handle failure
+                        // Run an EF Core command in the transaction
+                        var options = new DbContextOptionsBuilder<BloggingContext>()
+                            .UseSqlServer(connection)
+                            .Options;
+
+                        using (var context = new BloggingContext(options))
+                        {
+                            context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                            context.SaveChanges();
+                        }
+
+                        // Commit transaction if all commands succeed, transaction will auto-rollback
+                        // when disposed if either commands fails
+                        scope.Complete();
+                    }
+                    catch (System.Exception)
+                    {
+                        // TODO: Handle failure
+                    }
                 }
             }
             #endregion
