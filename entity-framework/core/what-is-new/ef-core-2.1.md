@@ -103,7 +103,7 @@ Read the [section on System.Transactions](xref:core/saving/transactions#using-sy
 Based on customer feedback, we have updated migrations to initially generate columns for tables in the same order as properties are declared in classes. Note that EF Core cannot change order when new members are added after the initial table creation.
 
 ## Optimization of correlated subqueries
-We have improved our query translation to avoid executing "N + 1" SQL queries in many common scenarios in which the usage of a navigation property in the projection leads to joining data from the root query with data from a correlated subquery. The optimization requires buffering the results form the subquery, and we require that you modify the query to opt-in the new behavior.
+We have improved our query translation to avoid executing "N + 1" SQL queries in many common scenarios in which the usage of a navigation property in the projection leads to joining data from the root query with data from a correlated subquery. The optimization requires buffering the results from the subquery, and we require that you modify the query to opt-in the new behavior.
 
 As an example, the following query normally gets translated into one query for Customers, plus N (where "N" is the number of customers returned) separate queries for Orders:
 
