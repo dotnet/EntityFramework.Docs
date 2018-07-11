@@ -11,7 +11,7 @@ ms.assetid: 4528a509-ace7-4dfb-8065-1b833f5e03a0
 caps.latest.revision: 3
 ---
 # Defining DbSets
-When developing with the Code First workflow you define a derived DbContext that represents you session with the database and exposes a DbSet for each type in your model. This topic covers the various ways you can define the DbSet properties.  
+When developing with the Code First workflow you define a derived DbContext that represents your session with the database and exposes a DbSet for each type in your model. This topic covers the various ways you can define the DbSet properties.  
 
 ## DbContext with DbSet properties  
 
@@ -25,11 +25,11 @@ public class BloggingContext : DbContext
 }
 ```  
 
-When used in Code First mode, this will configure Unicorn, Princess, LadyInWaiting, and Castle as entity types, as well as configuring other types reachable from these. In addition DbContext will automatically call the setter for each of these properties to set an instance of the appropriate DbSet.  
+When used in Code First mode, this will configure Blogs and Posts as entity types, as well as configuring other types reachable from these. In addition DbContext will automatically call the setter for each of these properties to set an instance of the appropriate DbSet.  
 
 ## DbContext with IDbSet properties  
 
-There a situations, such as when creating mocks or fakes, where it is more useful to declare your set properties using an interface. In such cases the IDbSet interface can be used in place of DbSet. For example:  
+There are situations, such as when creating mocks or fakes, where it is more useful to declare your set properties using an interface. In such cases the IDbSet interface can be used in place of DbSet. For example:  
 
 ``` csharp
 public class BloggingContext : DbContext
