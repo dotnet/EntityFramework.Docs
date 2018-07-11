@@ -19,7 +19,7 @@ Here you will learn how to add Entity Framework to your applications and, if you
 
 ## [Creating a Model: Code First, the EF Designer, and the EF Workflows](~/ef6/modeling/index.md)
 Do you prefer to specify your EF model writing code or drawing boxes and lines?
-Are you going to use EF to map your objects ton an existing database or would you like EF to create a database tailored for your objects?
+Are you going to use EF to map your objects to an existing database or would you like EF to create a database tailored for your objects?
 Here your learn about two different approaches to use EF6: EF Designer and Code First.
 Make sure you follow the discussion and watch the video about the different.
 
