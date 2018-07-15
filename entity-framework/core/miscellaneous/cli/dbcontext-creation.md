@@ -73,8 +73,7 @@ namespace MyProject
 
 A design-time factory can be especially useful if you need to configure the DbContext differently for design time than
 at run time, if the `DbContext` constructor takes additional parameters are not registered in DI, if you are not using
-DI at all, or if for some reason you prefer not to have a `BuildWebHost` method in your ASP.NET Core application's  
-`Main` class.
+DI at all, or if for some reason you prefer not to have a `BuildWebHost` method in your ASP.NET Core application's `Main` class.
 
   [1]: xref:core/managing-schemas/migrations/index
   [2]: xref:core/miscellaneous/configuring-dbcontext
