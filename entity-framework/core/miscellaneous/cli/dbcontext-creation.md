@@ -31,7 +31,7 @@ The tool first try to obtain the service provider by invoking `Program.BuildWebH
 
 The `DbContext` itself and any dependencies in its constructor need to be registered as services in the application's
 service provider. This can be easily achieved by having 
-[a constructor on the `DbContext` that takes an instance of `DbContextOptions<TContext>` as a argument][4] and using the 
+[a constructor on the `DbContext` that takes an instance of `DbContextOptions<TContext>` as an argument][4] and using the 
 [`AddDbContext<TContext>` method][5].
 
 Using a constructor with no parameters
