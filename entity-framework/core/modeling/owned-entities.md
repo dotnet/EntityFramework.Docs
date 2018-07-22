@@ -64,7 +64,7 @@ public class Order
 
 In EF Core 2.0 and 2.1, only reference navigation properties can point to owned types. Collections of owned types are not supported. These reference owned types always have a one-to-one relationship with the owner, therefore they don't need their own key values. In the previous example, the StreetAddress type does not need to define a key property.  
 
-In order to understanding how EF Core tracks these objects, it is useful to think that a primary key is created as a [shadow property](xref:core/modeling/shadow-properties) for the owned type. The value of the key of an instance of the owned type will be the same as the value of the key of the owner instance.      
+In order to understand how EF Core tracks these objects, it is useful to think that a primary key is created as a [shadow property](xref:core/modeling/shadow-properties) for the owned type. The value of the key of an instance of the owned type will be the same as the value of the key of the owner instance.      
 
 ## Mapping owned types with table splitting
 
