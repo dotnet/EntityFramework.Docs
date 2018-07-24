@@ -250,6 +250,7 @@
 ### [Additional Resources](ef6/resources/index.md)
 #### [Blogs](ef6/resources/blogs.md)
 #### [Case Studies](ef6/resources/case-studies.md)
+#### [Contribute](ef6/resources/contribute.md)
 #### [Getting Help](ef6/resources/get-help.md)
 #### [Glossary](ef6/resources/glossary.md)
 #### [School Sample Database](ef6/resources/school-database.md)
