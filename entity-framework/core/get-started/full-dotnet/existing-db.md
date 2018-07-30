@@ -21,7 +21,7 @@ In this walkthrough, you will build a console application that performs basic da
 
 The following prerequisites are needed to complete this walkthrough:
 
-* [Visual Studio 2017](https://www.visualstudio.com/downloads/)
+* [Visual Studio 2017](https://www.visualstudio.com/downloads/) - at least version 15.3
 
 * [Latest version of NuGet Package Manager](https://dist.nuget.org/index.html)
 
@@ -66,7 +66,7 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 
 * Select the **Console Application** project template
 
-* Ensure you are targeting **.NET Framework 4.5.1** or later
+* Ensure you are targeting **.NET Framework 4.6.1** or later
 
 * Give the project a name and click **OK**
 
