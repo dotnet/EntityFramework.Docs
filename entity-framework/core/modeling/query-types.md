@@ -47,7 +47,7 @@ Some of the main usage scenarios for query types are:
 The following example shows how to use Query Type to query a database view.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFrameworkCore/tree/dev/samples/QueryTypes) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFrameworkCore/tree/master/samples/QueryTypes) on GitHub.
 
 First, we define a simple Blog and Post model:
 
