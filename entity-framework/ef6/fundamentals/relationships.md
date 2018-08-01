@@ -47,7 +47,7 @@ public class Course
   public virtual Department Department { get; set; }
 }
 
-public class DepartmentID
+public class Department
 {
    public Department()
    {
