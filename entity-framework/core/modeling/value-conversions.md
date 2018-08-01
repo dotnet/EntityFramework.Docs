@@ -25,7 +25,7 @@ Conversions are defined using two `Func` expression trees: one from `ModelClrTyp
 
 ## Configuring a value converter
 
-Value conversions are defined on properties in the OnModelCreating of your DbContext. For example, consider an enum and entity type defined as:
+Value conversions are defined on properties in the `OnModelCreating` of your `DbContext`. For example, consider an enum and entity type defined as:
 ```Csharp
 public class Rider
 {
@@ -41,7 +41,7 @@ public enum EquineBeast
     Unicorn
 }
 ```
-Then conversions can be defined in OnModelCreating to store the enum values as strings (for example, "Donkey", "Mule", ...) in the database:
+Then conversions can be defined in `OnModelCreating` to store the enum values as strings (for example, "Donkey", "Mule", ...) in the database:
 ```Csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
@@ -112,7 +112,7 @@ Note that all the built-in converters are stateless and so a single instance can
 
 ## Pre-defined conversions
 
-For common conversions for which a built-in converter exists there is no need to specify the converter explicitly. Instead, just configure which provider type should be used and EF will automatically use the appropriate build-in converter. Enum to string conversions are used as an example above, but EF will actually do this automatically if the provider type is configured:
+For common conversions for which a built-in converter exists there is no need to specify the converter explicitly. Instead, just configure which provider type should be used and EF will automatically use the appropriate built-in converter. Enum to string conversions are used as an example above, but EF will actually do this automatically if the provider type is configured:
 ```Csharp
 modelBuilder
     .Entity<Rider>()
@@ -129,11 +129,11 @@ public class Rider
     public EquineBeast Mount { get; set; }
 }
 ```
-Then the enum values will be saved as strings in the database without any further configuration in OnModelCreating.
+Then the enum values will be saved as strings in the database without any further configuration in `OnModelCreating`.
 
 ## Limitations
 
-There are a few known current limitations of the value convertion system:
+There are a few known current limitations of the value conversion system:
 * As noted above, `null` cannot be converted.
 * There is currently no way to spread a conversion of one property to multiple columns or vice-versa.
 * Use of value conversions may impact the ability of EF Core to translate expressions to SQL. A warning will be logged for such cases.
