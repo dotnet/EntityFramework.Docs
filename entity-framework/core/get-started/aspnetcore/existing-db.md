@@ -10,7 +10,7 @@ uid: core/get-started/aspnetcore/existing-db
 
 # Getting Started with EF Core on ASP.NET Core with an Existing Database
 
-In this tutorial, you build an ASP.NET Core MVC application that performs basic data access using Entity Framework. You reverse engineer an existing database to create an Entity Framework model.
+In this tutorial, you build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You reverse engineer an existing database to create an Entity Framework model.
 
 [View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb).
 
@@ -78,9 +78,14 @@ If you receive an error stating `The term 'Scaffold-DbContext' is not recognized
 
 The reverse engineer process created entity classes (`Blog.cs` & `Post.cs`) and a derived context (`BloggingContext.cs`) based on the schema of the existing database.
 
- The entity classes are simple C# objects that represent the data you will be querying and saving. Here's *Blog.cs*:
+ The entity classes are simple C# objects that represent the data you will be querying and saving. Here are the `Blog` and `Post` entity classes:
 
  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Models/Blog.cs)]
+
+[!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Models/Post.cs)]
+
+> [!TIP]  
+> To enable lazy loading, you can make navigation properties `virtual` (Blog.Post and Post.Blog).
 
  The context represents a session with the database and allows you to query and save instances of the entity classes.
 
@@ -143,7 +148,7 @@ Now we can use the `AddDbContext(...)` method to register it as a service.
 * Locate the `ConfigureServices(...)` method
 * Add the following code to register the context as a service
 
-[!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Startup.cs?name=ConfigureServices&highlight=13-14)]
+[!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Startup.cs?name=ConfigureServices&highlight=14-15)]
 
 > [!TIP]  
 > In a real application you would typically put the connection string in a configuration file or environment variable. For the sake of simplicity, we are defining it in code. For more information, see [Connection Strings](../../miscellaneous/connection-strings.md).
