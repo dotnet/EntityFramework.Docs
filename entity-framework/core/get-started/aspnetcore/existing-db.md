@@ -2,7 +2,7 @@
 title: Getting Started on ASP.NET Core - Existing Database - EF Core
 author: rowanmiller
 ms.author: divega
-ms.date: 10/27/2016
+ms.date: 08/02/2018
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 ms.technology: entity-framework-core
 uid: core/get-started/aspnetcore/existing-db
@@ -10,27 +10,22 @@ uid: core/get-started/aspnetcore/existing-db
 
 # Getting Started with EF Core on ASP.NET Core with an Existing Database
 
-In this walkthrough, you will build an ASP.NET Core MVC application that performs basic data access using Entity Framework. You will use reverse engineering to create an Entity Framework model based on an existing database.
+In this tutorial, you build an ASP.NET Core MVC application that performs basic data access using Entity Framework. You reverse engineer an existing database to create an Entity Framework model.
 
-> [!TIP]  
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb) on GitHub.
+[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb).
 
 ## Prerequisites
 
-The following prerequisites are needed to complete this walkthrough:
+Install the following software:
 
-* [Visual Studio 2017 15.3](https://www.visualstudio.com/downloads/) with these workloads:
+* [Visual Studio 2017 15.7](https://www.visualstudio.com/downloads/) with these workloads:
   * **ASP.NET and web development** (under **Web & Cloud**)
   * **.NET Core cross-platform development** (under **Other Toolsets**)
-* [.NET Core 2.0 SDK](https://www.microsoft.com/net/download/core).
-* [Blogging database](#blogging-database)
+* [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core).
 
-### Blogging database
+## Create Blogging database
 
-This tutorial uses a **Blogging** database on your LocalDb instance as the existing database.
-
-> [!TIP]  
-> If you have already created the **Blogging** database as part of another tutorial, you can skip these steps.
+This tutorial uses a **Blogging** database on your LocalDb instance as the existing database. If you have already created the **Blogging** database as part of another tutorial, skip these steps.
 
 * Open Visual Studio
 * **Tools -> Connect to Database...**
@@ -47,12 +42,13 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 ## Create a new project
 
 * Open Visual Studio 2017
-* **File -> New -> Project...**
-* From the left menu select **Installed -> Templates -> Visual C# -> Web**
-* Select the **ASP.NET Core Web Application (.NET Core)** project template
+* **File > New > Project...**
+* From the left menu select **Installed > Visual C# > Web**
+* Select the **ASP.NET Core Web Application** project template
 * Enter **EFGetStarted.AspNetCore.ExistingDb** as the name and click **OK**
 * Wait for the **New ASP.NET Core Web Application** dialog to appear
-* Under **ASP.NET Core Templates 2.0** select the **Web Application (Model-View-Controller)**
+* Make sure that the target framework dropdown is set to **.NET Core**, and the version dropdown is set to **ASP.NET Core 2.1**
+* Select the **Web Application (Model-View-Controller)** template
 * Ensure that **Authentication** is set to **No Authentication**
 * Click **OK**
 
@@ -63,14 +59,6 @@ To use EF Core, install the package for the database provider(s) you want to tar
 * **Tools > NuGet Package Manager > Package Manager Console**
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
-
-We will be using some Entity Framework Tools to create a model from the database. So we will install the tools package as well:
-
-* Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
-
-We will be using some ASP.NET Core Scaffolding tools to create controllers and views later on. So we will install this design package as well:
-
-* Run `Install-Package Microsoft.VisualStudio.Web.CodeGeneration.Design`
 
 ## Reverse engineer your model
 
@@ -90,7 +78,7 @@ If you receive an error stating `The term 'Scaffold-DbContext' is not recognized
 
 The reverse engineer process created entity classes (`Blog.cs` & `Post.cs`) and a derived context (`BloggingContext.cs`) based on the schema of the existing database.
 
- The entity classes are simple C# objects that represent the data you will be querying and saving.
+ The entity classes are simple C# objects that represent the data you will be querying and saving. Here's *Blog.cs*:
 
  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Models/Blog.cs)]
 
@@ -100,6 +88,15 @@ The reverse engineer process created entity classes (`Blog.cs` & `Post.cs`) and 
  ``` csharp
 public partial class BloggingContext : DbContext
 {
+    public BloggingContext()
+    {
+    }
+
+    public BloggingContext(DbContextOptions<BloggingContext> options)
+        : base(options)
+    {
+    }
+
     public virtual DbSet<Blog> Blog { get; set; }
     public virtual DbSet<Post> Post { get; set; }
 
@@ -133,28 +130,9 @@ public partial class BloggingContext : DbContext
 
 The concept of dependency injection is central to ASP.NET Core. Services (such as `BloggingContext`) are registered with dependency injection during application startup. Components that require these services (such as your MVC controllers) are then provided these services via constructor parameters or properties. For more information on dependency injection see the [Dependency Injection](http://docs.asp.net/en/latest/fundamentals/dependency-injection.html) article on the ASP.NET site.
 
-### Remove inline context configuration
-
-In ASP.NET Core, configuration is generally performed in **Startup.cs**. To conform to this pattern, we will move configuration of the database provider to **Startup.cs**.
-
-* Open `Models\BloggingContext.cs`
-* Delete the `OnConfiguring(...)` method
-
-``` csharp
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-{
-    #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-    optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;");
-}
-```
-
-* Add the following constructor, which will allow configuration to be passed into the context by dependency injection
-
-[!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Models/BloggingContext.cs#Constructor)]
-
 ### Register and configure your context in Startup.cs
 
-In order for our MVC controllers to make use of `BloggingContext` we are going to register it as a service.
+To make `BloggingContext` available to MVC controllers, register it as a service.
 
 * Open **Startup.cs**
 * Add the following `using` statements at the start of the file
@@ -165,20 +143,12 @@ Now we can use the `AddDbContext(...)` method to register it as a service.
 * Locate the `ConfigureServices(...)` method
 * Add the following code to register the context as a service
 
-[!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Startup.cs?name=ConfigureServices&highlight=7-8)]
+[!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Startup.cs?name=ConfigureServices&highlight=13-14)]
 
 > [!TIP]  
-> In a real application you would typically put the connection string in a configuration file. For the sake of simplicity, we are defining it in code. For more information, see [Connection Strings](../../miscellaneous/connection-strings.md).
+> In a real application you would typically put the connection string in a configuration file or environment variable. For the sake of simplicity, we are defining it in code. For more information, see [Connection Strings](../../miscellaneous/connection-strings.md).
 
-## Create a controller
-
-Next, we'll enable scaffolding in our project.
-
-* Right-click on the **Controllers** folder in **Solution Explorer** and select **Add -> Controller...**
-* Select **Full Dependencies** and click **Add**
-* You can ignore the instructions in the `ScaffoldingReadMe.txt` file that opens
-
-Now that scaffolding is enabled, we can scaffold a controller for the `Blog` entity.
+## Create a controller and views
 
 * Right-click on the **Controllers** folder in **Solution Explorer** and select **Add -> Controller...**
 * Select **MVC Controller with views, using Entity Framework** and click **Ok**
@@ -190,7 +160,7 @@ Now that scaffolding is enabled, we can scaffold a controller for the `Blog` ent
 You can now run the application to see it in action.
 
 * **Debug -> Start Without Debugging**
-* The application will build and open in a web browser
+* The application builds and opens in a web browser
 * Navigate to `/Blogs`
 * Click **Create New**
 * Enter a **Url** for the new blog and click **Create**

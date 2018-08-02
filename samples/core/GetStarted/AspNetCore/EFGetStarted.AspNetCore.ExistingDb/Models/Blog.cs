@@ -13,6 +13,6 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Models
         public int BlogId { get; set; }
         public string Url { get; set; }
 
-        public virtual ICollection<Post> Post { get; set; }
+        public ICollection<Post> Post { get; set; }
     }
 }

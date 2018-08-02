@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
 
         public BlogsController(BloggingContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // GET: Blogs
@@ -33,7 +33,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
             }
 
             var blog = await _context.Blog
-                .SingleOrDefaultAsync(m => m.BlogId == id);
+                .FirstOrDefaultAsync(m => m.BlogId == id);
             if (blog == null)
             {
                 return NotFound();
@@ -59,7 +59,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
             {
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(blog);
         }
@@ -72,7 +72,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
                 return NotFound();
             }
 
-            var blog = await _context.Blog.SingleOrDefaultAsync(m => m.BlogId == id);
+            var blog = await _context.Blog.FindAsync(id);
             if (blog == null)
             {
                 return NotFound();
@@ -110,7 +110,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(blog);
         }
@@ -124,7 +124,7 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
             }
 
             var blog = await _context.Blog
-                .SingleOrDefaultAsync(m => m.BlogId == id);
+                .FirstOrDefaultAsync(m => m.BlogId == id);
             if (blog == null)
             {
                 return NotFound();
@@ -138,10 +138,10 @@ namespace EFGetStarted.AspNetCore.ExistingDb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var blog = await _context.Blog.SingleOrDefaultAsync(m => m.BlogId == id);
+            var blog = await _context.Blog.FindAsync(id);
             _context.Blog.Remove(blog);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         private bool BlogExists(int id)
