@@ -52,7 +52,7 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 * Ensure that **Authentication** is set to **No Authentication**
 * Click **OK**
 
-## Install Entity Framework
+## Install Entity Framework Core
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
@@ -146,7 +146,7 @@ To make `BloggingContext` available to MVC controllers, register it as a service
 
 Now you can use the `AddDbContext(...)` method to register it as a service.
 * Locate the `ConfigureServices(...)` method
-* Add the following code to register the context as a service
+* Add the following highlighted code to register the context as a service
 
 [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Startup.cs?name=ConfigureServices&highlight=14-15)]
 
