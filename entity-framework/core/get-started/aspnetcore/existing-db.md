@@ -34,7 +34,7 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 * Enter **master** as the **Database Name** and click **OK**
 * The master database is now displayed under **Data Connections** in **Server Explorer**
 * Right-click on the database in **Server Explorer** and select **New Query**
-* Copy the script, listed below, into the query editor
+* Copy the script listed below into the query editor
 * Right-click on the query editor and select **Execute**
 
 [!code-sql[Main](../_shared/create-blogging-database-script.sql)]
@@ -144,14 +144,14 @@ To make `BloggingContext` available to MVC controllers, register it as a service
 
 [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Startup.cs#AddedUsings)]
 
-Now we can use the `AddDbContext(...)` method to register it as a service.
+Now you can use the `AddDbContext(...)` method to register it as a service.
 * Locate the `ConfigureServices(...)` method
 * Add the following code to register the context as a service
 
 [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.ExistingDb/Startup.cs?name=ConfigureServices&highlight=14-15)]
 
 > [!TIP]  
-> In a real application you would typically put the connection string in a configuration file or environment variable. For the sake of simplicity, we are defining it in code. For more information, see [Connection Strings](../../miscellaneous/connection-strings.md).
+> In a real application you would typically put the connection string in a configuration file or environment variable. For the sake of simplicity, this tutorial has you define it in code. For more information, see [Connection Strings](../../miscellaneous/connection-strings.md).
 
 ## Create a controller and views
 
