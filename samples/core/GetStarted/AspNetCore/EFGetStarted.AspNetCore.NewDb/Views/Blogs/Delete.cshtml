@@ -1,4 +1,4 @@
-@model EFGetStarted.AspNetCore.NewDb.Models.Blog
+﻿@model EFGetStarted.AspNetCore.NewDb.Models.Blog
 
 @{
     ViewData["Title"] = "Delete";
@@ -20,9 +20,8 @@
     </dl>
     
     <form asp-action="Delete">
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            <a asp-action="Index">Back to List</a>
-        </div>
+        <input type="hidden" asp-for="BlogId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
     </form>
 </div>
