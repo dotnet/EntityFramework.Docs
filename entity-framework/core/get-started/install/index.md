@@ -60,6 +60,15 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 
 You can indicate a specific version install in the `dotnet add package` command, using the `-v` modifier. For example, to install EF Core 2.1 packages, append `-v 2.1.0` to the command.
 
+EF Core includes a set of [additional commands for the `dotnet` CLI](../../miscellaneous/cli/dotnet.md), starting with `dotnet ef`. The .NET Core CLI tools for EF Core require a package called `Microsoft.EntityFrameworkCore.Design`. You can add it to the project using:
+
+ ``` Console	
+dotnet add package Microsoft.EntityFrameworkCore.Design	
+```	
+
+> [!IMPORTANT]  	
+> Always use the version of the tools package that matches the major version of the runtime packages.
+
 <a name="visual-studio"></a>
 ### Visual Studio development
 
