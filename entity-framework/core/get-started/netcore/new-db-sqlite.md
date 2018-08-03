@@ -25,10 +25,10 @@ View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.
 
 * Create a new console project:
 
-``` Console
-dotnet new console -o ConsoleApp.SQLite
-cd ConsoleApp.SQLite/
-```
+  ``` Console
+  dotnet new console -o ConsoleApp.SQLite
+  cd ConsoleApp.SQLite/
+  ```
 
 ## Install Entity Framework Core
 
@@ -36,10 +36,10 @@ To use EF Core, install the package for the database provider(s) you want to tar
 
 * Install Microsoft.EntityFrameworkCore.Sqlite and Microsoft.EntityFrameworkCore.Design
 
-``` Console
-dotnet add package Microsoft.EntityFrameworkCore.Sqlite
-dotnet add package Microsoft.EntityFrameworkCore.Design
-```
+  ```Console
+  dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+  dotnet add package Microsoft.EntityFrameworkCore.Design
+  ```
 
 * Run `dotnet restore` to install the new packages.
 
@@ -49,7 +49,7 @@ Define a context and entity classes that make up your model.
 
 * Create a new *Model.cs* file with the following contents.
 
-[!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Model.cs)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Model.cs)]
 
 Tip: In a real application, you put each class in a separate file and put the connection string in a configuration file or environment variable. To keep the tutorial simple, everything is contained in one file.
 
@@ -74,7 +74,7 @@ The *blogging.db** SQLite DB is in the project directory.
 
   One blog is saved to the database and the details of all blogs are displayed in the console.
 
-  ``` Console
+  ```Console
   ConsoleApp.SQLite>dotnet run
   1 records saved to database
 
