@@ -54,11 +54,9 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 
 ## Install Entity Framework Core
 
-To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
+To install EF Core, you install the package for the EF Core database provider(s) you want to target. For a list of available providers see [Database Providers](../../providers/index.md). 
 
-* **Tools > NuGet Package Manager > Package Manager Console**
-
-* Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
+For this tutorial, you don't have to install a provider package because the tutorial uses SQL Server. The SQL Server provider package is included in the [Microsoft.AspnetCore.App metapackage](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/metapackage-app?view=aspnetcore-2.1).
 
 ## Reverse engineer your model
 
@@ -89,7 +87,7 @@ The reverse engineer process created entity classes (`Blog.cs` & `Post.cs`) and 
 
  The context represents a session with the database and allows you to query and save instances of the entity classes.
 
-<!-- Static code listing, rather than a linked file, because the walkthrough modifies the context file heavily -->
+<!-- Static code listing, rather than a linked file, because the tutorial modifies the context file heavily -->
  ``` csharp
 public partial class BloggingContext : DbContext
 {
