@@ -90,16 +90,16 @@ The reverse engineer process created entity classes (`Blog.cs` & `Post.cs`) and 
 
 The entity classes are simple C# objects that represent the data you will be querying and saving. Here are the `Blog` and `Post` entity classes:
 
- [!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/Models/Blog.cs)]
+ [!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/Blog.cs)]
 
-[!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/Models/Post.cs)]
+[!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/Post.cs)]
 
 > [!TIP]  
 > To enable lazy loading, you can make navigation properties `virtual` (Blog.Post and Post.Blog).
 
 The context represents a session with the database and allows you to query and save instances of the entity classes.
 
-[!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/Models/BloggingContext.cs)]
+[!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.ExistingDb/BloggingContext.cs)]
 
 ## Use your model
 
