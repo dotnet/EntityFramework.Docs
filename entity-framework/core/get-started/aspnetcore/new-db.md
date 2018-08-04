@@ -38,15 +38,13 @@ Install the following software:
   * Ensure that **Authentication** is set to **No Authentication**
   * Click **OK**
 
-Warning: If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework Core model will be added to your project in `Models\IdentityModel.cs`. Using the techniques you learn in this walkthrough, you can choose to add a second model, or extend this existing model to contain your entity classes.
+Warning: If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework Core model will be added to your project in `Models\IdentityModel.cs`. Using the techniques you learn in this tutorial, you can choose to add a second model, or extend this existing model to contain your entity classes.
 
 ## Install Entity Framework Core
 
-Install the package for the EF Core database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
+To install EF Core, you install the package for the EF Core database provider(s) you want to target. For a list of available providers see [Database Providers](../../providers/index.md). 
 
-* **Tools > NuGet Package Manager > Package Manager Console**
-
-* Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
+For this tutorial, you don't have to install a provider package because the tutorial uses SQL Server. The SQL Server provider package is included in the [Microsoft.AspnetCore.App metapackage](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/metapackage-app?view=aspnetcore-2.1).
 
 ## Create the model
 
