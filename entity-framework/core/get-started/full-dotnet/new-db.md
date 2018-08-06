@@ -2,161 +2,95 @@
 title: Getting Started on .NET Framework - New Database - EF Core
 author: rowanmiller
 ms.author: divega
-
-ms.date: 10/27/2016
-
+ms.date: 08/06/2018
 ms.assetid: 52b69727-ded9-4a7b-b8d5-73f3acfbbad3
 ms.technology: entity-framework-core
-
 uid: core/get-started/full-dotnet/new-db
 ---
+
 # Getting started with EF Core on .NET Framework with a New Database
 
-In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You will use migrations to create the database from your model.
+In this tutorial, you build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework. You use migrations to create the database from a model.
 
-> [!TIP]  
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb) on GitHub.
+[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb).
 
 ## Prerequisites
 
-The following prerequisites are needed to complete this walkthrough:
-
-* [Visual Studio 2017](https://www.visualstudio.com/downloads/)
-
-* [Latest version of NuGet Package Manager](https://dist.nuget.org/index.html)
-
-* [Latest version of Windows PowerShell](https://docs.microsoft.com/powershell/scripting/setup/installing-windows-powershell)
+* [Visual Studio 2017 version 15.7 or later](https://www.visualstudio.com/downloads/)
 
 ## Create a new project
 
-* Open Visual Studio
+* Open Visual Studio 2017
 
-* File > New > Project...
+* **File > New > Project...**
 
-* From the left menu select Templates > Visual C# > Windows Classic Desktop
+* From the left menu select **Installed > Visual C# > Windows Desktop**
 
 * Select the **Console App (.NET Framework)** project template
 
-* Ensure you are targeting **.NET Framework 4.5.1** or later
+* Make sure that the project targets **.NET Framework 4.6.1** or later
 
-* Give the project a name and click **OK**
+* Name the project *ConsoleApp.NewDb* and click **OK**
 
 ## Install Entity Framework
 
-To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
+To use EF Core, install the package for the database provider(s) you want to target. This tutorial uses SQL Server. For a list of available providers see [Database Providers](../../providers/index.md).
 
 * Tools > NuGet Package Manager > Package Manager Console
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
-Later in this walkthrough we will also be using some Entity Framework Tools to maintain the database. So we will install the tools package as well.
+Later in this tutorial you use some Entity Framework Tools to maintain the database. So install the tools package as well.
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
 
-## Create your model
+## Create the model
 
-Now it's time to define a context and entity classes that make up your model.
+Now it's time to define a context and entity classes that make up the model.
 
-* Project > Add Class...
+* **Project > Add Class...**
 
 * Enter *Model.cs* as the name and click **OK**
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Model.cs)] -->
-``` csharp
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-
-namespace EFGetStarted.ConsoleApp
-{
-    public class BloggingContext : DbContext
-    {
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.ConsoleApp.NewDb;Trusted_Connection=True;");
-        }
-    }
-
-    public class Blog
-    {
-        public int BlogId { get; set; }
-        public string Url { get; set; }
-
-        public List<Post> Posts { get; set; }
-    }
-
-    public class Post
-    {
-        public int PostId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-
-        public int BlogId { get; set; }
-        public Blog Blog { get; set; }
-    }
-}
-```
+  [!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Model.cs)] 
 
 > [!TIP]  
-> In a real application you would put each class in a separate file and put the connection string in the `App.Config` file and read it out using `ConfigurationManager`. For the sake of simplicity, we are putting everything in a single code file for this tutorial.
+> In a real application you would put each class in a separate file and put the connection string in a configuration file or environment variable. For the sake of simplicity, everything is in a single code file for this tutorial.
 
-## Create your database
+## Create the database
 
-Now that you have a model, you can use migrations to create a database for you.
+Now that you have a model, you can use migrations to create a database.
 
-* Tools –> NuGet Package Manager –> Package Manager Console
+* **Tools > NuGet Package Manager > Package Manager Console**
 
-* Run `Add-Migration MyFirstMigration` to scaffold a migration to create the initial set of tables for your model.
+* Run `Add-Migration InitialCreate` to scaffold a migration to create the initial set of tables for the model.
 
-* Run `Update-Database` to apply the new migration to the database. Because your database doesn't exist yet, it will be created for you before the migration is applied.
+* Run `Update-Database` to apply the new migration to the database. Because the database doesn't exist yet, it will be created before the migration is applied.
 
 > [!TIP]  
-> If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to make the corresponding schema changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the `Update-Database` command to apply the changes to the database.
+> If you make changes to the model, you can use the `Add-Migration` command to scaffold a new migration to make the corresponding schema changes to the database. Once you have checked the scaffolded code (and made any required changes), you can use the `Update-Database` command to apply the changes to the database.
 >
->EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
+> EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
 
-## Use your model
+## Use the model
 
-You can now use your model to perform data access.
+You can now use the model to perform data access.
 
 * Open *Program.cs*
 
 * Replace the contents of the file with the following code
 
-<!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Program.cs)] -->
-``` csharp
-using System;
+  [!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Program.cs)]
 
-namespace EFGetStarted.ConsoleApp
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            using (var db = new BloggingContext())
-            {
-                db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/adonet" });
-                var count = db.SaveChanges();
-                Console.WriteLine("{0} records saved to database", count);
+* **Debug > Start Without Debugging**
 
-                Console.WriteLine();
-                Console.WriteLine("All blogs in database:");
-                foreach (var blog in db.Blogs)
-                {
-                    Console.WriteLine(" - {0}", blog.Url);
-                }
-            }
-        }
-    }
-}
-```
+  You see that one blog is saved to the database and then the details of all blogs are printed to the console.
 
-* Debug > Start Without Debugging
+  ![image](_static/output-new-db.png)
 
-You will see that one blog is saved to the database and then the details of all blogs are printed to the console.
+## Additional Resources
 
-![image](_static/output-new-db.png)
+* [EF Core on .NET Framework with an existing database](xref:core/get-started/full-dotnet/existing-db)
+* [EF Core on .NET Core with a new database - SQLite](xref:core/get-started/netcore/new-db-sqlite) -  a cross-platform console EF tutorial.

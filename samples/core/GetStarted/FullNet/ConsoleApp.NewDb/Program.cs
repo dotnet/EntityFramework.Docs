@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EFGetStarted.ConsoleApp
+namespace ConsoleApp.NewDb
 {
     class Program
     {
