@@ -16,7 +16,7 @@ In this tutorial, you build a console application that performs basic data acces
 
 ## Prerequisites
 
-Install [Visual Studio 2017](https://www.visualstudio.com/downloads/) - at least version 15.7.
+* [Visual Studio 2017 version 15.7 or later](https://www.visualstudio.com/downloads/)
 
 ## Create Blogging database
 
