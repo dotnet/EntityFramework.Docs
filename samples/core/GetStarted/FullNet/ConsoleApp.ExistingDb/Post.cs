@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EFGetStarted.ConsoleApp.ExistingDb
+namespace ConsoleApp.ExistingDb
 {
     public partial class Post
     {
@@ -10,6 +10,6 @@ namespace EFGetStarted.ConsoleApp.ExistingDb
         public string Content { get; set; }
         public string Title { get; set; }
 
-        public virtual Blog Blog { get; set; }
+        public Blog Blog { get; set; }
     }
 }
