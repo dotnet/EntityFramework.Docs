@@ -62,7 +62,7 @@ Once you have a model, you use [migrations](https://docs.microsoft.com/aspnet/co
 
 The *blogging.db** SQLite DB is in the project directory.
 
-## Use your model
+## Use the model
 
 * Open *Program.cs* and replace the contents with the following code:
 
@@ -84,9 +84,9 @@ The *blogging.db** SQLite DB is in the project directory.
 
 ### Changing the model:
 
-- If you make changes to your model, you can use the `dotnet ef migrations add` command to scaffold a new [migration](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations). Once you have checked the scaffolded code (and made any required changes), you can use the `dotnet ef database update` command to apply the schema changes to the database.
+- If you make changes to the model, you can use the `dotnet ef migrations add` command to scaffold a new [migration](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations). Once you have checked the scaffolded code (and made any required changes), you can use the `dotnet ef database update` command to apply the schema changes to the database.
 - EF Core uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
-- For some kinds of schema changes, EF Core Migrations doesn't automatically generate code. See [SQLite Limitations](../../providers/sqlite/limitations.md). For new development, consider dropping the database and creating a new one rather than using migrations when your model changes.
+- The SQLite database engine doesn't support certain schema changes that are supported by most other relational databases. For example, the `DropColumn` operation is not supported. EF Core Migrations will generate code for these operations. But if you try to apply them to a database or generate a script, EF Core throws exceptions. See [SQLite Limitations](../../providers/sqlite/limitations.md). For new development, consider dropping the database and creating a new one rather than using migrations when the model changes.
 
 ## Additional Resources
 
