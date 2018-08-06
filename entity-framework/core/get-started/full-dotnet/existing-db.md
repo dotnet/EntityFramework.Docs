@@ -16,13 +16,7 @@ In this tutorial, you build a console application that performs basic data acces
 
 ## Prerequisites
 
-Install the following software:
-
-* [Visual Studio 2017](https://www.visualstudio.com/downloads/) - at least version 15.7
-
-* [Latest version of NuGet Package Manager](https://dist.nuget.org/index.html)
-
-* [Latest version of Windows PowerShell](https://docs.microsoft.com/powershell/scripting/setup/installing-windows-powershell)
+Install [Visual Studio 2017](https://www.visualstudio.com/downloads/) - at least version 15.7.
 
 ## Create Blogging database
 
@@ -70,16 +64,19 @@ To use EF Core, install the package for the database provider(s) you want to tar
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
+In the next step, you use some Entity Framework Tools to reverse engineer your database. So install the tools package as well.
+
+* Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
+
 ## Reverse engineer your model
 
 Now it's time to create the EF model based on your existing database.
 
 * **Tools –> NuGet Package Manager –> Package Manager Console**
 
-* Run the following commands to install the tools package and then create a model from the existing database
+* Run the following command to create a model from the existing database
 
   ``` powershell
-  Install-Package Microsoft.EntityFrameworkCore.Tools
   Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
   ```
 

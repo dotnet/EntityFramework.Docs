@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace EFGetStarted.ConsoleApp.NewDb.Migrations
+namespace ConsoleApp.NewDb.Migrations
 {
-    public partial class MyFirstMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,9 +26,9 @@ namespace EFGetStarted.ConsoleApp.NewDb.Migrations
                 {
                     PostId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BlogId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    BlogId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

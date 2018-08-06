@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace EFGetStarted.ConsoleApp
+namespace ConsoleApp.NewDb
 {
     public class BloggingContext : DbContext
     {
@@ -10,7 +10,7 @@ namespace EFGetStarted.ConsoleApp
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.ConsoleApp.NewDb;Trusted_Connection=True;ConnectRetryCount=0");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.ConsoleApp.NewDb;Trusted_Connection=True;");
         }
     }
 
