@@ -19,7 +19,7 @@ View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.
 
 ## Prerequisites
 
-[The .NET Core 2.1 SDK](https://www.microsoft.com/net/core)
+* [The .NET Core 2.1 SDK](https://www.microsoft.com/net/core)
 
 ## Create a new project
 
