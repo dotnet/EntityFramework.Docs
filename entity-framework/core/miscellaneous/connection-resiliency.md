@@ -34,7 +34,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 ## Execution strategies and transactions
 
-An execution strategy that automatically retries on failures needs to be able to play back each operation in an retry block that fails. When retries are enabled, each operation you perform via EF Core becomes its own retriable operation. That is, each query and each call to `SaveChanges()` will be retried as a unit if a transient failure occurs.
+An execution strategy that automatically retries on failures needs to be able to play back each operation in a retry block that fails. When retries are enabled, each operation you perform via EF Core becomes its own retriable operation. That is, each query and each call to `SaveChanges()` will be retried as a unit if a transient failure occurs.
 
 However, if your code initiates a transaction using `BeginTransaction()` you are defining your own group of operations that need to be treated as a unit, and everything inside the transaction would need to be played back shall a failure occur. You will receive an exception like the following if you attempt to do this when using an execution strategy:
 
