@@ -1,5 +1,5 @@
 ---
-title: Entity Framework 6 Quick Overview
+title: Overview - EF6
 author: divega
 ms.date: "2016-10-23"
 ms.prod: "entity-framework"
@@ -11,7 +11,7 @@ ms.assetid: 8ae74d63-6bad-4686-b325-bbf9d68f3743
 caps.latest.revision: 5
 uid: ef6/index
 ---
-# Entity Framework 6 Quick Overview
+# Entity Framework 6
 Entity Framework 6 (EF6) is a tried and tested object-relational mapper (O/RM) for .NET with many years of feature development and stabilization.
 
 As an O/RM, EF6 reduces the impedance mismatch between the relational and object-oriented worlds, enabling developers to write applications that interact with data stored in relational databases using strongly-typed .NET objects that represent the application's domain, and eliminating the need for a large portion of the data access "plumbing" code that they usually need to write.
