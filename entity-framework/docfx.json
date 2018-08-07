@@ -68,7 +68,7 @@
         "Entity Framework"
       ],
       "manager": "divega",
-      "ms.topic": "article",
+      "ms.topic": "conceptual",
       "audience": "developer",
       "ms.reviewer": "divega",
       "ms.prod": "entity-framework",
@@ -81,7 +81,11 @@
     "fileMetadata": {
       "feedback_product_url": {
         "ef6/**/**.md": "https://github.com/aspnet/EntityFramework6/issues/new"
-      }
+      },
+      "ms.technology": {
+        "entity-framework/core/**/**.md": "entity-framework-core",
+        "entity-framework/ef6/**/**.md": "entity-framework-6"
+      }      
     },
     "dest": "_site",
     "template": [
