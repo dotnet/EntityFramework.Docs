@@ -2,13 +2,8 @@
 title: "Designer Entity Splitting - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: aa2dd48a-1f0e-49dd-863d-d6b4f5834832
-caps.latest.revision: 3
 ---
 # Designer Entity Splitting
 This walkthrough shows how to map an entity type to two tables by modifying a model with the Entity Framework Designer (EF Designer). You can map an entity to multiple tables when the tables share a common key. The concepts that apply to mapping an entity type to two tables are easily extended to mapping an entity type to more than two tables.

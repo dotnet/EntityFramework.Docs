@@ -2,12 +2,8 @@
 title: Microsoft SQL Server Database Provider - Memory-Optimized Tables - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: 2e007c82-c6e4-45bb-8129-851b79ec1a0a
-ms.technology: entity-framework-core
-
 uid: core/providers/sql-server/memory-optimized-tables
 ---
 

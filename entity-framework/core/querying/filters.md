@@ -3,7 +3,6 @@ title: Global Query Filters - EF Core
 author: anpete
 ms.author: anpete
 ms.date: 11/03/2017
-ms.technology: entity-framework-core
 uid: core/querying/filters
 ---
 # Global Query Filters

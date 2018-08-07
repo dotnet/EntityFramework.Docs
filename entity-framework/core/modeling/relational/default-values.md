@@ -2,12 +2,8 @@
 title: Default Values - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: e541366a-130f-47dd-9997-1b110a11febe
-ms.technology: entity-framework-core
-
 uid: core/modeling/relational/default-values
 ---
 # Default Values

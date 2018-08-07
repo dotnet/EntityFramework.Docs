@@ -2,12 +2,8 @@
 title: Computed Columns - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: e9d81f06-805d-45c9-97c2-3546df654829
-ms.technology: entity-framework-core
-
 uid: core/modeling/relational/computed-columns
 ---
 # Computed Columns

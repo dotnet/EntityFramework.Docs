@@ -2,12 +2,8 @@
 title: Saving Related Data - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: 07b6680f-ffcf-412c-9857-f997486b386c
-ms.technology: entity-framework-core
-
 uid: core/saving/related-data
 ---
 # Saving Related Data

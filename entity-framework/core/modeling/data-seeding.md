@@ -2,12 +2,8 @@
 title: Data Seeding - EF Core
 author: AndriySvyryd
 ms.author: divega
-
 ms.date: 02/23/2018
-
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
-ms.technology: entity-framework-core
-
 uid: core/modeling/data-seeding
 ---
 # Data Seeding

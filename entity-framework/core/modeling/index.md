@@ -2,12 +2,8 @@
 title: Creating a Model - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: 88253ff3-174e-485c-b3f8-768243d01ee1
-ms.technology: entity-framework-core
-
 uid: core/modeling/index
 ---
 # Creating a Model

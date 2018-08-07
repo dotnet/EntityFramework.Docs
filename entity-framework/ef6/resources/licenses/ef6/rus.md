@@ -1,14 +1,8 @@
 ---
 title: "Entity Framework 6 Runtime License (RUS)"
-ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 6326e9e8-15c6-4ce3-a5b4-6cb6a97c6bf4
-caps.latest.revision: 3
 ---
 # Entity Framework 6 Runtime License (RUS)
 **УСЛОВИЯ ЛИЦЕНЗИИ НА ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ MICROSOFT**

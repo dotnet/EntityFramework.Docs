@@ -2,13 +2,8 @@
 title: "Defining DbSets - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 4528a509-ace7-4dfb-8065-1b833f5e03a0
-caps.latest.revision: 3
 ---
 # Defining DbSets
 When developing with the Code First workflow you define a derived DbContext that represents your session with the database and exposes a DbSet for each type in your model. This topic covers the various ways you can define the DbSet properties.  

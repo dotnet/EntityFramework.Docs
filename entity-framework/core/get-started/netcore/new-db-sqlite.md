@@ -2,12 +2,9 @@
 title: Getting Started on .NET Core - New database - EF Core
 author: rick-anderson
 ms.author: riande
-ms.author2: tdykstra
 description: Getting started with .NET Core using Entity Framework Core
-keywords: .NET Core, Entity Framework Core, VS Code, Visual Studio Code, Mac, Linux
 ms.date: 06/05/2018
 ms.assetid: 099d179e-dd7b-4755-8f3c-fcde914bf50b
-ms.technology: entity-framework-core
 uid: core/get-started/netcore/new-db-sqlite
 ---
 

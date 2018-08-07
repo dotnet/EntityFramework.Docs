@@ -2,12 +2,8 @@
 title: Disconnected Entities - EF Core
 author: ajcvickers
 ms.author: avickers
-
 ms.date: 10/27/2016
-
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
-ms.technology: entity-framework-core
-
 uid: core/saving/disconnected-entities
 ---
 # Disconnected entities

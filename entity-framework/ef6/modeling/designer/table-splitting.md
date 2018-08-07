@@ -2,13 +2,8 @@
 title: "Designer Table Splitting - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 452f17c3-9f26-4de4-9894-8bc036e23b0f
-caps.latest.revision: 3
 ---
 # Designer Table Splitting
 This walkthrough shows how to map multiple entity types to a single table by modifying a model with the Entity Framework Designer (EF Designer).

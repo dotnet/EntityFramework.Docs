@@ -2,13 +2,8 @@
 title: "Contribute to Entity Framework - EF6"
 author: divega
 ms.date: "2018-07-05"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: EFA3C3F5-79A4-4A0A-BB37-035C31FC7372
-caps.latest.revision: 4
 ---
 # Contribute to Entity Framework 6
 Entity Framework 6 is developed using an open source model on GitHub. Although the main focus of the Entity Framework Team at Microsoft is on adding new features to Entity Framework Core, and we don't expect any major features to be added to Entity Framework 6, we still accept contributions.

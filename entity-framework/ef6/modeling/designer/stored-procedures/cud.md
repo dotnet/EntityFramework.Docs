@@ -2,13 +2,8 @@
 title: "Designer CUD Stored Procedures - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
-caps.latest.revision: 3
 ---
 # Designer CUD Stored Procedures
 This step-by-step walkthrough show how to map the create\\insert, update, and delete (CUD) operations of an entity type to stored procedures using the Entity Framework Designer (EF Designer).  By default, the Entity Framework automatically generates the SQL statements for the CUD operations, but you can also map stored procedures to these operations.  

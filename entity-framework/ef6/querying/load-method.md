@@ -2,13 +2,8 @@
 title: "The Load Method - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 03c5a069-b7b4-455f-a16f-ee3b96cc4e28
-caps.latest.revision: 3
 ---
 # The Load Method
 There are several scenarios where you may want to load entities from the database into the context without immediately doing anything with those entities. A good example of this is loading entities for data binding as described in [Local Data](~/ef6/querying/local-data.md). One common way to do this is to write a LINQ query and then call ToList on it, only to immediately discard the created list. The Load extension method works just like ToList except that it avoids the creation of the list altogether.  

@@ -2,13 +2,8 @@
 title: "Improving startup performance with NGen - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: dc6110a0-80a0-4370-8190-cea942841cee
-caps.latest.revision: 4
 ---
 # Improving startup performance with NGen
 > [!NOTE]

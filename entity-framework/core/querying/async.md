@@ -4,7 +4,6 @@ author: rowanmiller
 ms.author: divega
 ms.date: 01/24/2017
 ms.assetid: b6429b14-cba0-4af4-878f-b829777c89cb
-ms.technology: entity-framework-core
 uid: core/querying/async
 ---
 

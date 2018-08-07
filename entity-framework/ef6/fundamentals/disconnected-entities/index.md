@@ -2,13 +2,8 @@
 title: "Working with disconnected entities - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 12138003-a373-4817-b1b7-724130202f5f
-caps.latest.revision: 3
 ---
 # Working with disconnected entities
 In an Entity Framework-based application, a context class is responsible for detecting changes applied to tracked entities. Calling the SaveChanges method persists the changes tracked by the context to the database. When working with n-tier applications, entity objects are usually modified while disconnected from the context, and you must decide how to track changes and report those changes back to the context. This topic discusses different options that are available when using Entity Framework with disconnected entities.   

@@ -2,12 +2,8 @@
 title: Raw SQL Queries - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
-ms.technology: entity-framework-core
-
 uid: core/querying/raw-sql
 ---
 # Raw SQL Queries

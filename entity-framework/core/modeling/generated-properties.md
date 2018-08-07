@@ -4,7 +4,6 @@ author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: eb082011-11a1-41b4-a108-15daafa03e80
-ms.technology: entity-framework-core
 uid: core/modeling/generated-properties
 ---
 

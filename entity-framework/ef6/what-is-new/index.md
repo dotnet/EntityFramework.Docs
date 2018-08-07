@@ -2,13 +2,8 @@
 title: "What's New - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 41d1f86b-ce66-4bf2-8963-48514406fb4c
-caps.latest.revision: 3
 ---
 # What's New in EF6
 

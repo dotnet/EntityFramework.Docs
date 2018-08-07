@@ -2,13 +2,8 @@
 title: "Code First Data Annotations - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
-caps.latest.revision: 3
 ---
 # Code First Data Annotations
 > [!NOTE]

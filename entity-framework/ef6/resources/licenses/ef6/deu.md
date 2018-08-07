@@ -1,14 +1,8 @@
 ---
 title: "Entity Framework 6 Runtime License (DEU)"
-ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 0bafee16-ed55-4560-97f5-bc5b27e0df36
-caps.latest.revision: 3
 ---
 # Entity Framework 6 Runtime License (DEU)
 **MICROSOFT-SOFTWARELIZENZBESTIMMUNGEN**

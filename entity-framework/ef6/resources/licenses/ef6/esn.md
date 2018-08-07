@@ -1,14 +1,8 @@
 ---
 title: "Entity Framework 6 Runtime License (ESN)"
-ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 5e8d67b3-5c60-4a12-a86f-c7276bb8d9e7
-caps.latest.revision: 3
 ---
 # Entity Framework 6 Runtime License (ESN)
 **TÉRMINOS DE LICENCIA DEL SOFTWARE DE MICROSOFT**

@@ -2,12 +2,8 @@
 title: Primary Keys - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: c78f8f42-564a-45a4-aca7-3ede9f7ed2bc
-ms.technology: entity-framework-core
-
 uid: core/modeling/relational/primary-keys
 ---
 # Primary Keys

@@ -1,14 +1,8 @@
 ---
 title: "Entity Framework 5 License (FRA)"
-ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 4fed93b8-10a4-4ac9-9eb4-8e24816034b0
-caps.latest.revision: 3
 ---
 # Entity Framework 5 License (FRA)
 **TERMES DU CONTRAT DE LICENCE D'UN SUPPLÉMENT MICROSOFT**

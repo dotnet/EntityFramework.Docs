@@ -2,13 +2,8 @@
 title: "Visual Studio Releases - EF6"
 author: divega
 ms.date: "2018-07-05"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 028FF890-4EDB-4F03-AE53-72F9C33EC92F
-caps.latest.revision: 3
 ---
 # Visual Studio Releases
 

@@ -2,13 +2,8 @@
 title: "Performance considerations for EF4, EF5, and EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: d6d5a465-6434-45fa-855d-5eb48c61a2ea
-caps.latest.revision: 4
 ---
 # Performance considerations for EF 4, 5, and 6
 By David Obando, Eric Dettinger and others
