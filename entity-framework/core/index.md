@@ -1,5 +1,5 @@
 ---
-title: Quick Overview - EF Core
+title: Overview - EF Core
 author: rowanmiller
 ms.author: divega
 
@@ -11,7 +11,7 @@ ms.technology: entity-framework-core
 uid: core/index
 ---
 
-# Entity Framework Core Quick Overview
+# Entity Framework Core
 
 Entity Framework (EF) Core is a lightweight, extensible, and cross-platform version of the popular Entity Framework data access technology.
 
