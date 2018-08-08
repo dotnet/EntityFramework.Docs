@@ -84,7 +84,8 @@
       },
       "ms.technology": {
         "core/**/**.md": "entity-framework-core",
-        "ef6/**/**.md": "entity-framework-6"
+        "ef6/**/**.md": "entity-framework-6",
+        "efcore-and-ef6/**/**.md": "entity-framework-core"
       }      
     },
     "dest": "_site",
