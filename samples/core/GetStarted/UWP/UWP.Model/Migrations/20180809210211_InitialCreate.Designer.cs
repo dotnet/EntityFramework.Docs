@@ -8,7 +8,7 @@ using UWP.Model;
 namespace UWP.Model.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20180809191942_InitialCreate")]
+    [Migration("20180809210211_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

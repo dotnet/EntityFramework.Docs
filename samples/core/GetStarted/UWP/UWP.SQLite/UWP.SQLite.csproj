@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{EAC5ED10-E93D-4A5F-BBF6-C08EE77A27CD}</ProjectGuid>
+    <ProjectGuid>{972D2A4B-C69C-4F7D-959F-6D4D75668112}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UWP.SQLite</RootNamespace>
@@ -133,7 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UWP.Model\UWP.Model.csproj">
-      <Project>{89c53db5-9e15-4a9a-9a8b-b16922f0a355}</Project>
+      <Project>{ef118963-d30d-41ac-9086-d7647b531dd3}</Project>
       <Name>UWP.Model</Name>
     </ProjectReference>
   </ItemGroup>

@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="fcc7792a-1c54-439c-80f4-3c152eb983c6"
+    Name="06bd9364-44ca-4b59-885a-34db197fc057"
     Publisher="CN=tdykstra"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="fcc7792a-1c54-439c-80f4-3c152eb983c6" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="06bd9364-44ca-4b59-885a-34db197fc057" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>UWP.SQLite</DisplayName>
