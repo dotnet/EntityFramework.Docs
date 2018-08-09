@@ -2,12 +2,8 @@
 title: Testing with SQLite - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: 7a2b75e2-1875-4487-9877-feff0651b5a6
-ms.technology: entity-framework-core
-
 uid: core/miscellaneous/testing/sqlite
 ---
 

@@ -2,13 +2,8 @@
 title: "Case Studies for Entity Framework - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: cd5d3ae3-717d-4095-a2ef-0e8fd72b1a2f
-caps.latest.revision: 3
 ---
 # Microsoft Case Studies for Entity Framework
 The case studies on this page highlight a few real-world production projects that have employed Entity Framework.

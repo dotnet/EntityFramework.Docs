@@ -2,12 +2,8 @@
 title: Basic Queries - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: ab6e35f1-397f-41c0-9ef4-85aec5466377
-ms.technology: entity-framework-core
-
 uid: core/querying/basic
 ---
 # Basic Queries

@@ -2,13 +2,8 @@
 title: "Code-based configuration - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 13886d24-2c74-4a00-89eb-aa0dee328d83
-caps.latest.revision: 3
 ---
 # Code-based configuration
 > [!NOTE]

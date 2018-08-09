@@ -2,13 +2,8 @@
 title: "Designer TPH Inheritance - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 72d26a8e-20ab-4500-bd13-394a08e73394
-caps.latest.revision: 3
 ---
 # Designer TPH Inheritance
 This step-by-step walkthrough shows how to implement table-per-hierarchy (TPH) inheritance in your conceptual model with the Entity Framework Designer (EF Designer). TPH inheritance uses one database table to maintain data for all of the entity types in an inheritance hierarchy.

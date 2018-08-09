@@ -2,13 +2,8 @@
 title: "Relationships, navigation properties and foreign keys - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
-caps.latest.revision: 3
 ---
 # Relationships, navigation properties and foreign keys
 This topic gives an overview of how Entity Framework manages relationships between entities. It also gives some guidance on how to map and manipulate relationships.

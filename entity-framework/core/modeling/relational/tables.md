@@ -2,12 +2,8 @@
 title: Table Mapping - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: c807aa4c-7845-443d-b8d0-bfc9b42691a3
-ms.technology: entity-framework-core
-
 uid: core/modeling/relational/tables
 ---
 # Table Mapping

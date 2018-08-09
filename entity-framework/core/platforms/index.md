@@ -3,7 +3,6 @@ title: Supported .NET implementations - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 08/30/2017
-ms.technology: entity-framework-core
 uid: core/platforms/index
 ---
 

@@ -3,7 +3,6 @@ title: Migrations in Team Environments - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 10/30/2017
-ms.technology: entity-framework-core
 ---
 Migrations in Team Environments
 ===============================

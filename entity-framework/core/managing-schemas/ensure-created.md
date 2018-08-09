@@ -3,7 +3,6 @@ title: 🔧 Create and Drop APIs - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/10/2017
-ms.technology: entity-framework-core
 ---
 # 🔧 Create and Drop APIs
 

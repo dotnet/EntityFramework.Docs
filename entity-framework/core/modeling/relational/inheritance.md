@@ -2,12 +2,8 @@
 title: Inheritance (Relational Database) - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: 9a7c5488-aaf4-4b40-b1ff-f435ff30f6ec
-ms.technology: entity-framework-core
-
 uid: core/modeling/relational/inheritance
 ---
 # Inheritance (Relational Database)

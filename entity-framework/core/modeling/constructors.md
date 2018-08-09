@@ -2,12 +2,8 @@
 title: Entity types with constructors - EF Core
 author: ajcvickers
 ms.author: divega
-
 ms.date: 02/23/2018
-
 ms.assetid: 420AFFE7-B709-4A68-9149-F06F8746FB33
-ms.technology: entity-framework-core
-
 uid: core/modeling/constructors
 ---
 # Entity types with constructors

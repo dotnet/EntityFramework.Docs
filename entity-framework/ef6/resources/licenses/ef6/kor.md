@@ -1,14 +1,8 @@
 ---
 title: "Entity Framework 6 Runtime License (KOR)"
-ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: fc90a6bf-0958-4d9a-a383-38f8e6d21640
-caps.latest.revision: 3
 ---
 # Entity Framework 6 Runtime License (KOR)
 **MICROSOFT 소프트웨어 사용권 계약서**

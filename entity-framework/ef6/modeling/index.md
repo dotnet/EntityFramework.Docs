@@ -2,13 +2,8 @@
 title: "Creating a Model - EF6"
 author: divega
 ms.date: "2018-07-05"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 4890228E-CEA1-4595-B8AD-CA81253F8767
-caps.latest.revision: 3
 ---
 # Creating a Model
 

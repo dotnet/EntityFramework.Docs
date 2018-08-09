@@ -4,7 +4,6 @@ author: rowanmiller
 ms.author: divega
 ms.date: 08/08/2016
 ms.assetid: 105765eb-7ce1-47e1-b716-b28f8f3647ff
-ms.technology: entity-framework-core
 uid: core/get-started/uwp/index
 ---
 

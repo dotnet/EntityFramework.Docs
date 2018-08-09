@@ -2,12 +2,8 @@
 title: Backing Fields - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: a628795e-64df-4f24-a5e8-76bc261e7ed8
-ms.technology: entity-framework-core
-
 uid: core/modeling/backing-field
 ---
 # Backing Fields

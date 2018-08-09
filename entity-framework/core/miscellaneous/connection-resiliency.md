@@ -4,7 +4,6 @@ author: rowanmiller
 ms.author: divega
 ms.date: 11/15/2016
 ms.assetid: e079d4af-c455-4a14-8e15-a8471516d748
-ms.technology: entity-framework-core
 uid: core/miscellaneous/connection-resiliency
 ---
 

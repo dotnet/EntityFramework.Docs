@@ -2,12 +2,8 @@
 title: Saving Data - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: ef044629-feca-4fd1-a48f-d208daedaf92
-ms.technology: entity-framework-core
-
 uid: core/saving/index
 ---
 # Saving Data

@@ -2,13 +2,8 @@
 title: "Code First Migrations in Team Environments - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 4c2d9a95-de6f-4e97-9738-c1f8043eff69
-caps.latest.revision: 3
 ---
 # Code First Migrations in Team Environments
 > [!NOTE]

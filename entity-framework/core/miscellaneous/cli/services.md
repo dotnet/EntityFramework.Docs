@@ -3,7 +3,6 @@ title: Design-time services - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 10/26/2017
-ms.technology: entity-framework-core
 ---
 Design-time services
 ====================

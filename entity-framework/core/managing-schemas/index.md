@@ -3,7 +3,6 @@ title: Managing Database Schemas - EF Core
 author: bricelam
 ms.author: divega
 ms.date: 10/30/2017
-ms.technology: entity-framework-core
 ---
 # Managing Database Schemas
 EF Core provides two primary ways of keeping your EF Core model and database schema in sync. To choose between the two,

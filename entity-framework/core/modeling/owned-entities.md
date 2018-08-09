@@ -4,7 +4,6 @@ author: julielerman
 ms.author: divega
 ms.date: 2/26/2018
 ms.assetid: 2B0BADCE-E23E-4B28-B8EE-537883E16DF3
-ms.technology: entity-framework-core
 uid: core/modeling/owned-entities
 ---
 # Owned Entity Types

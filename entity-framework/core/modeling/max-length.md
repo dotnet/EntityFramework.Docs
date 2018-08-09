@@ -2,12 +2,8 @@
 title: Maximum Length - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: c39c5d43-018d-48b8-94f2-b8bc7c686c69
-ms.technology: entity-framework-core
-
 uid: core/modeling/max-length
 ---
 # Maximum Length

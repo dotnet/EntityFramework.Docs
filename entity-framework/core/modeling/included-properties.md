@@ -2,12 +2,8 @@
 title: Including & Excluding Properties - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: e9dff604-3469-4a05-8f9e-18ac281d82a9
-ms.technology: entity-framework-core
-
 uid: core/modeling/included-properties
 ---
 # Including & Excluding Properties
