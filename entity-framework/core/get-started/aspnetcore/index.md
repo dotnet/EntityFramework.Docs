@@ -2,12 +2,8 @@
 title: Getting Started on ASP.NET Core - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: bcf6d28a-5a2a-40b9-87ea-19ed9ef2e555
-ms.technology: entity-framework-core
-
 uid: core/get-started/aspnetcore/index
 ---
 # Getting Started with EF Core on ASP.NET Core

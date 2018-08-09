@@ -1,14 +1,8 @@
 ---
 title: "Entity Framework 5 License (KOR)"
-ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: b105993a-ebb3-466e-af76-a0ec0c651f82
-caps.latest.revision: 3
 ---
 # Entity Framework 5 License (KOR)
 **MICROSOFT 소프트웨어 사용권 조항**

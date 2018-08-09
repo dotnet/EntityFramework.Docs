@@ -4,7 +4,6 @@ author: ErikEJ
 ms.author: divega
 ms.date: 7/3/2018
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
-ms.technology: entity-framework-core
 uid: core/extensions/index
 ---
 

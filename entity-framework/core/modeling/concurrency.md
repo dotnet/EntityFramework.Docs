@@ -2,12 +2,8 @@
 title: Concurrency Tokens - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 03/03/2018
-
 ms.assetid: bc8b1cb0-befe-4b67-8004-26e6c5f69385
-ms.technology: entity-framework-core
-
 uid: core/modeling/concurrency
 ---
 # Concurrency Tokens

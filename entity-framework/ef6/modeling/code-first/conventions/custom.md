@@ -2,13 +2,8 @@
 title: "Custom Code First Conventions - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: dd2bdbd9-ae9e-470a-aeb8-d0ba160499b7
-caps.latest.revision: 3
 ---
 # Custom Code First Conventions
 > [!NOTE]

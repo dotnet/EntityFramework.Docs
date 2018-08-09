@@ -3,7 +3,6 @@ title: Design-time DbContext Creation - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 10/27/2017
-ms.technology: entity-framework-core
 uid: core/miscellaneous/cli/dbcontext-creation
 ---
 Design-time DbContext Creation

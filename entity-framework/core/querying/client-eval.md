@@ -2,12 +2,8 @@
 title: Client vs. Server Evaluation - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: 8b6697cc-7067-4dc2-8007-85d80503d123
-ms.technology: entity-framework-core
-
 uid: core/querying/client-eval
 ---
 # Client vs. Server Evaluation

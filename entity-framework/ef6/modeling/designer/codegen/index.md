@@ -2,13 +2,8 @@
 title: "Designer Code Generation Templates - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 56e00fa2-f9f0-48b3-8006-f8266ca7e74b
-caps.latest.revision: 3
 ---
 # Designer Code Generation Templates
 When you create a model using the Entity Framework Designer your classes and derived context are automatically generated for you. In addition to the default code generation we also provide a number of templates that can be used to customize the code that gets generated. These templates are provided as T4 Text Templates, allowing you to customize the templates if needed.

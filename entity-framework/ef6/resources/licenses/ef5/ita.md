@@ -1,14 +1,8 @@
 ---
 title: "Entity Framework 5 License (ITA)"
-ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 9ccb2adc-a631-4cc8-bd77-43abc2e7f812
-caps.latest.revision: 3
 ---
 # Entity Framework 5 License (ITA)
 **CONTRATTO DI LICENZA SUPPLEMENTARE PER IL SOFTWARE MICROSOFT**

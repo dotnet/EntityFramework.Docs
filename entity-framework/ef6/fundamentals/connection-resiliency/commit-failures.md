@@ -2,13 +2,8 @@
 title: "Handling transaction commit failures - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 5b1f7a7d-1b24-4645-95ec-5608a31ef577
-caps.latest.revision: 3
 ---
 # Handling transaction commit failures
 > [!NOTE]

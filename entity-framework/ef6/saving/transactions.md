@@ -2,13 +2,8 @@
 title: "Working with Transactions - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 0d0f1824-d781-4cb3-8fda-b7eaefced1cd
-caps.latest.revision: 3
 ---
 # Working with Transactions
 > [!NOTE]

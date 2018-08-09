@@ -2,13 +2,8 @@
 title: "Working with entity states - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: acb27f46-3f3a-4179-874a-d6bea5d7120c
-caps.latest.revision: 3
 ---
 # Working with entity states
 This topic will cover how to add and attach entities to a context and how Entity Framework processes these during SaveChanges.

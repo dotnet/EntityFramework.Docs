@@ -2,13 +2,8 @@
 title: "Future Versions of Entity Framework  - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: d8666b7a-deda-45e7-8b8e-d1d64a2724d3
-caps.latest.revision: 3
 ---
 # Future Versions of Entity Framework 
 Here you can find information on upcoming versions of Entity Framework.

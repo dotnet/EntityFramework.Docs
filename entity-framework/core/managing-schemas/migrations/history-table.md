@@ -3,7 +3,6 @@ title: Custom Migrations History Table - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/7/2017
-ms.technology: entity-framework-core
 ---
 Custom Migrations History Table
 ===============================

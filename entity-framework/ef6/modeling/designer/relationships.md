@@ -2,13 +2,8 @@
 title: "Relationships - EF Designer - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 402fe960-754b-470f-976b-e5de3e9986b5
-caps.latest.revision: 3
 ---
 # Relationships - EF Designer
 > [!NOTE]

@@ -2,13 +2,8 @@
 title: "Model-Based Conventions - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 0fc4eef8-29b8-4192-9c77-08fd33d3db3a
-caps.latest.revision: 3
 ---
 # Model-Based Conventions
 > [!NOTE]

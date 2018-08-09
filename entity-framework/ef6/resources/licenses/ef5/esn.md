@@ -1,14 +1,8 @@
 ---
 title: "Entity Framework 5 License (ESN)"
-ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 637cccbb-5418-4562-8187-02f644f4c091
-caps.latest.revision: 3
 ---
 # Entity Framework 5 License (ESN)
 **TÉRMINOS SUPLEMENTARIOS A LA LICENCIA DE USO DE SOFTWARE DE MICROSOFT**

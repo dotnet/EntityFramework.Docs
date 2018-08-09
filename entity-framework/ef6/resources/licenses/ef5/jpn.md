@@ -1,14 +1,8 @@
 ---
 title: "Entity Framework 5 License (JPN)"
-ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 5d1555a3-f3cf-4b25-84fa-a531fda0df0d
-caps.latest.revision: 3
 ---
 # Entity Framework 5 License (JPN)
 **マイクロソフト ソフトウェア 追加ライセンス条項**

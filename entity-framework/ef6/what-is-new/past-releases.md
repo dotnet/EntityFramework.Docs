@@ -2,13 +2,8 @@
 title: "Past Releases of Entity Framework - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 1060bb99-765f-4f32-aaeb-d6635d3dbd3e
-caps.latest.revision: 4
 ---
 # Past Releases of Entity Framework
 

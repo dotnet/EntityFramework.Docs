@@ -2,12 +2,8 @@
 title: What is new in EF Core 2.0 - EF Core
 author: divega
 ms.author: divega
-
 ms.date: 02/20/2018
-
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
-ms.technology: entity-framework-core
-
 uid: core/what-is-new/ef-core-2.0
 ---
 

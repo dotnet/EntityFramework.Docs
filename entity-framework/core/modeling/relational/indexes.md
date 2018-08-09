@@ -2,12 +2,8 @@
 title: Indexes - EF Core
 author: rowanmiller
 ms.author: divega
-
 ms.date: 10/27/2016
-
 ms.assetid: 4581e7ba-5e7f-452c-9937-0aaf790ba10a
-ms.technology: entity-framework-core
-
 uid: core/modeling/relational/indexes
 ---
 # Indexes

@@ -2,13 +2,8 @@
 title: "Complex Types - EF Designer - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 9a8228ef-acfd-4575-860d-769d2c0e18a1
-caps.latest.revision: 3
 ---
 # Complex Types - EF Designer
 This topic shows how to map complex types with the Entity Framework Designer (EF Designer) and how to query for entities that contain properties of complex type.

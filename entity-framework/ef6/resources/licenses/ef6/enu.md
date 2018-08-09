@@ -1,14 +1,8 @@
 ---
 title: "Entity Framework 6 Runtime License"
-ms.custom: ""
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 5bc55bf3-2404-4811-8d13-d2eed822cdc4
-caps.latest.revision: 3
 ---
 # Entity Framework 6 Runtime License (ENU)
 **MICROSOFT SOFTWARE LICENSE TERMS**

@@ -2,13 +2,8 @@
 title: "School Sample Database - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: e83a6a06-e63b-4530-8656-614bf609b12b
-caps.latest.revision: 3
 ---
 # School Sample Database
 This topic contains the schema and data for the School database. The sample School database is used in various places throughout the Entity Framework documentation.  

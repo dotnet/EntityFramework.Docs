@@ -2,13 +2,8 @@
 title: "Connection management - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: ecaa5a27-b19e-4bf9-8142-a3fb00642270
-caps.latest.revision: 3
 ---
 # Connection management
 This page describes the behavior of Entity Framework with regard to passing connections to the context and the functionality of the **Database.Connection.Open()** API.  

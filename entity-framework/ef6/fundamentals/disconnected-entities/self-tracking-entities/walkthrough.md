@@ -2,13 +2,8 @@
 title: "Self-Tracking Entities Walkthrough - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: b21207c9-1d95-4aa3-ae05-bc5fe300dab0
-caps.latest.revision: 3
 ---
 # Self-Tracking Entities Walkthrough
 > [!IMPORTANT]

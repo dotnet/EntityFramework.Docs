@@ -2,13 +2,8 @@
 title: "Entity Framework Providers - EF6"
 author: divega
 ms.date: "2018-06-27"
-ms.prod: "entity-framework"
 ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: "article"
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
-caps.latest.revision: 3
 ---
 
 # Entity Framework 6 Providers
