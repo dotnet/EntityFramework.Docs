@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="ef1261aa-9e88-46ab-bc06-2ef42b50d630"
-    Publisher="CN=rowmil"
+    Name="fcc7792a-1c54-439c-80f4-3c152eb983c6"
+    Publisher="CN=tdykstra"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="ef1261aa-9e88-46ab-bc06-2ef42b50d630" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="fcc7792a-1c54-439c-80f4-3c152eb983c6" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>EFGetStarted.UWP</DisplayName>
-    <PublisherDisplayName>rowmil</PublisherDisplayName>
+    <DisplayName>UWP.SQLite</DisplayName>
+    <PublisherDisplayName>tdykstra</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="EFGetStarted.UWP.App">
+      EntryPoint="UWP.SQLite.App">
       <uap:VisualElements
-        DisplayName="EFGetStarted.UWP"
+        DisplayName="UWP.SQLite"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="EFGetStarted.UWP"
+        Description="UWP.SQLite"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
