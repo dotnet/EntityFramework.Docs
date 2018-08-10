@@ -9,7 +9,7 @@ uid: core/get-started/uwp/getting-started
 
 # Getting Started with EF Core on Universal Windows Platform (UWP) with a New Database
 
-In this tutorial, you build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
+In this tutorial, you build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework Core.
 
 [View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/UWP).
 
@@ -40,7 +40,7 @@ In this tutorial, you build a Universal Windows Platform (UWP) application that 
 
 * Click **OK**.
 
-## Install Entity Framework
+## Install Entity Framework Core
 
 To use EF Core, install the package for the database provider(s) you want to target. This tutorial uses SQLite. For a list of available providers see [Database Providers](../../providers/index.md).
 
@@ -48,7 +48,7 @@ To use EF Core, install the package for the database provider(s) you want to tar
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Sqlite`
 
-Later in this tutorial you will be using some Entity Framework Tools to maintain the database. So install the tools package as well.
+Later in this tutorial you will be using some Entity Framework Core tools to maintain the database. So install the tools package as well.
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
 
@@ -159,4 +159,4 @@ You can now run the application to see it in action.
 
 For compatibility and performance information that you should know when using EF Core with UWP, see [.NET implementations supported by EF Core](../../platforms/index.md#universal-windows-platform).
 
-Check out other articles in this documentation to learn more about Entity Framework's features.
+Check out other articles in this documentation to learn more about Entity Framework Core features.
