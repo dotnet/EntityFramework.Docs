@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
-namespace EFGetStarted.UWP.Migrations
+namespace Blogging.Model.Migrations
 {
-    public partial class MyFirstMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,9 +25,9 @@ namespace EFGetStarted.UWP.Migrations
                 {
                     PostId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    BlogId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    BlogId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
