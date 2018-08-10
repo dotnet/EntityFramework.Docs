@@ -17,7 +17,9 @@ To do this...
 2. Add a reference to your DbContext assembly.
 
 3. Move the migrations and model snapshot files to the class library.
-   * If you haven't added any, add one to the DbContext project then move it.
+   > [!TIP]
+   > If you have no existing migrations, generate one in the project containing the DbContext then move it. 
+   > This is important because if the migrations assembly does not contain an existing migration, the Add-Migration command will be unable to find the DbContext.
 
 4. Configure the migrations assembly:
 
@@ -32,7 +34,7 @@ To do this...
 
      ``` xml
      <PropertyGroup>
-       <OutputPath>..\MyStarupProject\bin\$(Configuration)\</OutputPath>
+       <OutputPath>..\MyStartupProject\bin\$(Configuration)\</OutputPath>
      </PropertyGroup>
      ```
 
