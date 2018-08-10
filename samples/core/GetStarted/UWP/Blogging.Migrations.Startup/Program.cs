@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UWP.ConsoleApp
+namespace Blogging.Migrations.Startup
 {
     class Program
     {

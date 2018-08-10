@@ -11,7 +11,7 @@ uid: core/get-started/uwp/getting-started
 
 In this tutorial, you build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
-[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/UWP/UWP.SQLite).
+[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/UWP/Blogging.UWP).
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ In this tutorial, you build a Universal Windows Platform (UWP) application that 
 
 * [.NET Core 2.1 SDK or later](https://www.microsoft.com/net/core) or later.
 
-## Create a new model project
+## Create a model project
 
 > [!IMPORTANT]
 > Due to limitations in the way .NET Core tools interact with UWP projects the model needs to be placed in a non-UWP project to be able to run migrations commands in the **Package Manager Console** (PMC)
@@ -34,9 +34,9 @@ In this tutorial, you build a Universal Windows Platform (UWP) application that 
 
 * Select the **Class Library (.NET Standard)** template.
 
-* Name the project *UWP.Model*.
+* Name the project *Blogging.Model*.
 
-* Name the solution *UWP*.
+* Name the solution *Blogging*.
 
 * Click **OK**.
 
@@ -52,8 +52,6 @@ Later in this tutorial you will be using some Entity Framework Tools to maintain
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
 
-* Edit the *.csproj* file and replace `<TargetFramework>netstandard2.0</TargetFramework>` with `<TargetFrameworks>netcoreapp2.0;netstandard2.0</TargetFrameworks>`
-
 ## Create the model
 
 Now it's time to define a context and entity classes that make up the model.
@@ -62,7 +60,7 @@ Now it's time to define a context and entity classes that make up the model.
 
 * Create *Model.cs* with the following code:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/UWP/UWP.Model/Model.cs)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/UWP/Blogging.Model/Model.cs)]
 
 ## Create a new UWP project
 
@@ -72,7 +70,7 @@ Now it's time to define a context and entity classes that make up the model.
 
 * Select the **Blank App (Universal Windows)** project template.
 
-* Name the project *UWP.SQLite*, and click **OK**
+* Name the project *Blogging.UWP*, and click **OK**
 
 * Set the target and minimum versions to at least **Windows 10 Fall Creators Update (10.0; build 16299.0)**.
 
@@ -80,37 +78,41 @@ Now it's time to define a context and entity classes that make up the model.
 
 Now that you have a model, set up the app to create a database the first time it runs. In this section, you create the initial migration. In the following section, you add code that applies this migration when the app starts.
 
+Migrations tools require a non-UWP startup project, so create that first.
+
+* In **Solution Explorer**, right-click the solution, and then choose **Add > New Project**.
+
+* From the left menu select **Installed > Visual C# > .NET Core**.
+
+* Select the **Console App (.NET Core)** project template.
+
+* Name the project *Blogging.Migrations.Startup*, and click **OK**.
+
+* Add a project reference from the *Blogging.Migrations.Startup* project to the *Blogging.Model* project.
+
+Now you can create your initial migration.
+
 * **Tools > NuGet Package Manager > Package Manager Console**
 
-* Select the model project as the **Default project**.
+* Select the *Blogging.Model* project as the **Default project**.
 
-* In **Solution Explorer**, set the model project as the startup project.
+* In **Solution Explorer**, set the *Blogging.Migrations.Startup* project as the startup project.
 
 * Run `Add-Migration InitialCreate`.
 
   This command scaffolds a migration that creates the initial set of tables for your model.
 
-  If you get an error when you run the command, close and open Visual Studio.
-
 ## Create the database on app startup
 
 Since you want the database to be created on the device that the app runs on, add code to apply any pending migrations to the local database on application startup. The first time that the app runs, this will take care of creating the local database.
 
-* In the *UWP.Model* project, edit the *.csproj* file and make `netstandard2.0` the first target framework.
-
-  ```
-  <TargetFrameworks>netstandard2.0;netcoreapp2.1</TargetFrameworks>
-  ```
-
-* Close and reopen Visual Studio.
-
-* In the *UWP.SQLite* project, add a reference to the *UWP.Model* project.
+* Add a project reference from the *Blogging.UWP* project to the *Blogging.Model* project.
 
 * Open *App.xaml.cs*.
 
 * Add the highlighted code to apply any pending migrations.
 
-[!code-csharp[Main](../../../../samples/core/GetStarted/UWP/UWP.SQLite/App.xaml.cs?highlight=1-2,26-29)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/UWP/Blogging.UWP/App.xaml.cs?highlight=1-2,26-29)]
 
 > [!TIP]  
 > If you change your model, use the `Add-Migration` command to scaffold a new migration to apply the corresponding changes to the database. Any pending migrations will be applied to the local database on each device when the application starts.
@@ -125,7 +127,7 @@ You can now use the model to perform data access.
 
 * Add the page load handler and UI content highlighted below
 
-[!code-xml[Main](../../../../samples/core/GetStarted/UWP/UWP.SQLite/MainPage.xaml?highlight=9,11-23)]
+[!code-xml[Main](../../../../samples/core/GetStarted/UWP/Blogging.UWP/MainPage.xaml?highlight=9,11-23)]
 
 Now add code to wire up the UI with the database
 
@@ -133,13 +135,13 @@ Now add code to wire up the UI with the database
 
 * Add the highlighted code from the following listing:
 
-[!code-csharp[Main](../../../../samples/core/GetStarted/UWP/UWP.SQLite/MainPage.xaml.cs?highlight=1,31-49)]
+[!code-csharp[Main](../../../../samples/core/GetStarted/UWP/Blogging.UWP/MainPage.xaml.cs?highlight=1,31-49)]
 
 You can now run the application to see it in action.
 
-* In **Solution Explorer**, right-click the *UWP.SQLite* project and then select **Deploy**.
+* In **Solution Explorer**, right-click the *Blogging.UWP* project and then select **Deploy**.
 
-* Set *UWP.SQLite* as the startup project.
+* Set *Blogging.UWP* as the startup project.
 
 * **Debug > Start Without Debugging**
 

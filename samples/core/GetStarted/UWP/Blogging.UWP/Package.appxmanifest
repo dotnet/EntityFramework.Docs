@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="06bd9364-44ca-4b59-885a-34db197fc057"
+    Name="e045f456-27d9-4966-b639-01e2281b249f"
     Publisher="CN=tdykstra"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="06bd9364-44ca-4b59-885a-34db197fc057" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="e045f456-27d9-4966-b639-01e2281b249f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>UWP.SQLite</DisplayName>
+    <DisplayName>Blogging.UWP</DisplayName>
     <PublisherDisplayName>tdykstra</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="UWP.SQLite.App">
+      EntryPoint="Blogging.UWP.App">
       <uap:VisualElements
-        DisplayName="UWP.SQLite"
+        DisplayName="Blogging.UWP"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="UWP.SQLite"
+        Description="Blogging.UWP"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace UWP.Model
+namespace Blogging.Model
 {
     public class BloggingContext : DbContext
     {

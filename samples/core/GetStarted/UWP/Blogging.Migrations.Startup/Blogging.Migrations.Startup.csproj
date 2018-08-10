@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UWP.Model\UWP.Model.csproj" />
+    <ProjectReference Include="..\Blogging.Model\Blogging.Model.csproj" />
   </ItemGroup>
 
 </Project>

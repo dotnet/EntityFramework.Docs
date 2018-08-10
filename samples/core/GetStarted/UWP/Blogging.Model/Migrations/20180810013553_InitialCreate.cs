@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace UWP.Model.Migrations
+namespace Blogging.Model.Migrations
 {
     public partial class InitialCreate : Migration
     {
