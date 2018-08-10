@@ -19,7 +19,7 @@ From application services
 If your startup project is an ASP.NET Core app, the tools try to obtain the DbContext object from the application's
 service provider.
 
-The tool first try to obtain the service provider by invoking `Program.BuildWebHost()` and accessing the
+The tools first try to obtain the service provider by invoking `Program.BuildWebHost()` and accessing the
 `IWebHost.Services` property.
 
 > [!NOTE]
