@@ -11,7 +11,7 @@ uid: core/get-started/uwp/getting-started
 
 In this tutorial, you build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework.
 
-[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/UWP/Blogging.UWP).
+[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/UWP).
 
 ## Prerequisites
 
@@ -149,18 +149,14 @@ You can now run the application to see it in action.
 
 * Enter a URL and click the **Add** button
 
-![image](_static/create.png)
+  ![image](_static/create.png)
 
-![image](_static/list.png)
+  ![image](_static/list.png)
+
+  Tada! You now have a simple UWP app running Entity Framework Core.
 
 ## Next steps
 
-Tada! You now have a simple UWP app running Entity Framework Core.
-
-> [!IMPORTANT]
-> **Consider avoiding anonymous types in LINQ queries on UWP**. Deploying a UWP application to the app store requires your application to be compiled with .NET Native. Queries with anonymous types have worse performance on .NET Native.
-
-> [!TIP]
-> `SaveChanges()` performance can be improved by implementing [`INotifyPropertyChanged`](https://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanged.aspx), [`INotifyPropertyChanging`](https://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanging.aspx), [`INotifyCollectionChanged`](https://msdn.microsoft.com/en-us/library/system.collections.specialized.inotifycollectionchanged.aspx) in your entity types and using `ChangeTrackingStrategy.ChangingAndChangedNotifications`.
+For compatibility and performance information that you should know when using EF Core with UWP, see [.NET implementations supported by EF Core](../../platforms/index.md#universal-windows-platform).
 
 Check out other articles in this documentation to learn more about Entity Framework's features.

@@ -10,6 +10,8 @@ uid: core/platforms/index
 
 We want EF Core to be available anywhere you can write .NET code, and we're still working towards that goal. While EF Core's support on .NET Core and .NET Framework is covered by automated testing and many applications known to be using it successfully, Mono, Xamarin and UWP have some issues.
 
+## Overview
+
 The following table provides guidance for each .NET implementation:
 
 | .NET implementation                                                                                                  | Status                                                             | EF Core 1.x requirements                                                                                | EF Core 2.x requirements <sup>(1)</sup>                                                                 |
@@ -25,6 +27,18 @@ The following table provides guidance for each .NET implementation:
 
 <sup>(3)</sup> There are issues and known limitations with Xamarin which may prevent some applications developed using EF Core 2.0 from working correctly. Check the list of [active issues](https://github.com/aspnet/entityframeworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin) for workarounds.
 
-<sup>(4)</sup> Earlier versions of EF Core and .NET UWP had numerous compatibility issues, especially with applications compiled with the .NET Native toolchain. The new .NET UWP version adds support for .NET Standard 2.0 and contains .NET Native 2.0, which fixes most of the compatibility issues previously reported. EF Core 2.0.1 has been tested more thoroughly with UWP but testing is not automated.
+<sup>(4)</sup> See the [Universal Windows Platform](#universal-windows-platform) section of this article.
+
+## Universal Windows Platform
+
+Earlier versions of EF Core and .NET UWP had numerous compatibility issues, especially with applications compiled with the .NET Native toolchain. The new .NET UWP version adds support for .NET Standard 2.0 and contains .NET Native 2.0, which fixes most of the compatibility issues previously reported. EF Core 2.0.1 has been tested more thoroughly with UWP but testing is not automated.
+
+When using EF Core on UWP:
+
+* To optimize query performance, avoid anonymous types in LINQ queries. Deploying a UWP application to the app store requires an application to be compiled with .NET Native. Queries with anonymous types have worse performance on .NET Native.
+
+* To optimize `SaveChanges()` performance, use [ChangeTrackingStrategy.ChangingAndChangedNotifications](dotnet/api/microsoft.entityframeworkcore.changetrackingstrategy) and implement [`INotifyPropertyChanged`](https://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanged.aspx), [`INotifyPropertyChanging`](https://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanging.aspx), and [`INotifyCollectionChanged`](https://msdn.microsoft.com/en-us/library/system.collections.specialized.inotifycollectionchanged.aspx) in your entity types.
+
+## Report issues
 
 For any combination that doesn’t work as expected, we encourage creating new issues on the [EF Core issue tracker](https://github.com/aspnet/entityframeworkcore/issues/new). For Xamarin-specific issues use the issue tracker for [Xamarin.Android](https://github.com/xamarin/xamarin-android/issues/new) or [Xamarin.iOS](https://github.com/xamarin/xamarin-macios/issues/new).
