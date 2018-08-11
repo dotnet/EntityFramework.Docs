@@ -12,7 +12,7 @@ uid: core/providers/provider-log
 
 This page contains links to pull requests made on the EF Core repo that may require authors of other database providers to react. The intention is to provide a starting point for authors of existing third-party database providers when updating their provider to a new version.
 
-We are starting this log with changes from 2.1 to 2.2. Priot to 2.1 we used the [`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) and [`providers-fyi`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) labels on our issues and pull requests.
+We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the [`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) and [`providers-fyi`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) labels on our issues and pull requests.
 
 ### 2.1 ---> 2.2
 
@@ -20,13 +20,13 @@ We are starting this log with changes from 2.1 to 2.2. Priot to 2.1 we used the 
 
 * https://github.com/aspnet/EntityFrameworkCore/pull/12057 - Allow customizable SQL delimeters in tests
   * Test changes that allow non-strict floating point comparisons in BuiltInDataTypesTestBase
-  * Test changes that allow query tests to be re-used with different SQK delimeters
-* https://github.com/aspnet/EntityFrameworkCore/pull/12072 - Add DbFuction tests to the relational specification tests
+  * Test changes that allow query tests to be re-used with different SQL delimeters
+* https://github.com/aspnet/EntityFrameworkCore/pull/12072 - Add DbFunction tests to the relational specification tests
   * Such that these tests can be run against all database providers
 * https://github.com/aspnet/EntityFrameworkCore/pull/12362 - Async test cleanup
   * Remove `Wait` calls, unneeded async, and renamed some test methods
 * https://github.com/aspnet/EntityFrameworkCore/pull/12666 - Unify logging test infrastructure
-  * `CreateListLoggerFactory` changed, which will require providers using these tests to react
+  * Added `CreateListLoggerFactory` and removed some previous logging infrastructure, which will require providers using these tests to react
 * https://github.com/aspnet/EntityFrameworkCore/pull/12500 - Run more query tests both synchronously and asynchronously
   * Test names and factoring has changed, which will require providers using these tests to react
 * https://github.com/aspnet/EntityFrameworkCore/pull/12766 - Renaming navigations in the ComplexNavigations model
@@ -39,7 +39,7 @@ We are starting this log with changes from 2.1 to 2.2. Priot to 2.1 we used the 
 
 * https://github.com/aspnet/EntityFrameworkCore/pull/9561 - Add support for System.Transactions
   * System.Transactions was not previously supported by .NET Core. Now it is, excluding distributed transactions. These changes add support to the EF project code and also add specification tests for use by other providers.
-* https://github.com/aspnet/EntityFrameworkCore/pull/11978 - Consolidate RelationalTypeMapping.Clone methods
-  * Changes to the RelationalTypeMapping allows for a simplification in derived classes. We don't believe this will be breaking to providers, but providers can take advantage of this change in their derived type mapping classes. See https://github.com/aspnet/EntityFrameworkCore/pull/12109 for the changes make to the providers we ship
+* https://github.com/aspnet/EntityFrameworkCore/pull/12109 - Consolidate RelationalTypeMapping.Clone methods
+  * Changes in 2.1 to the RelationalTypeMapping allowed for a simplification in derived classes. We don't believe this was breaking to providers, but providers can take advantage of this change in their derived type mapping classes.
 * https://github.com/aspnet/EntityFrameworkCore/pull/12069 - Tagged or named queries
-  * Adds infrastructure for tagging LINQ quieries and having those tags show up as comments in the SQL. This may require providers to react in SQL generation.
+  * Adds infrastructure for tagging LINQ queries and having those tags show up as comments in the SQL. This may require providers to react in SQL generation.
