@@ -37,8 +37,6 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
 
 #### Test and product code changes
 
-* https://github.com/aspnet/EntityFrameworkCore/pull/9561 - Add support for System.Transactions
-  * System.Transactions was not previously supported by .NET Core. Now it is, excluding distributed transactions. These changes add support to the EF project code and also add specification tests for use by other providers.
 * https://github.com/aspnet/EntityFrameworkCore/pull/12109 - Consolidate RelationalTypeMapping.Clone methods
   * Changes in 2.1 to the RelationalTypeMapping allowed for a simplification in derived classes. We don't believe this was breaking to providers, but providers can take advantage of this change in their derived type mapping classes.
 * https://github.com/aspnet/EntityFrameworkCore/pull/12069 - Tagged or named queries
