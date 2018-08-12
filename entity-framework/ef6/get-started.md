@@ -16,7 +16,7 @@ Here you will learn how to add Entity Framework to your applications and, if you
 Do you prefer to specify your EF model writing code or drawing boxes and lines?
 Are you going to use EF to map your objects to an existing database or would you like EF to create a database tailored for your objects?
 Here your learn about two different approaches to use EF6: EF Designer and Code First.
-Make sure you follow the discussion and watch the video about the different.
+Make sure you follow the discussion and watch the video about the difference.
 
 ## [Working with DbContext](~/ef6/fundamentals/working-with-dbcontext.md)
 DbContext is the first and most important EF type that you need to learn how to use. It serves as the launchpad for database queries and keeps track of changes you make to objects so that they can be persisted back to the database.
