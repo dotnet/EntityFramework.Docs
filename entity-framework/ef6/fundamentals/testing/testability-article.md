@@ -968,8 +968,8 @@ In this paper we’ve demonstrated several approaches to creating testable code 
 -   Martin Fowler, “ [Mocks Aren’t Stubs](http://martinfowler.com/articles/mocksArentStubs.html)”
 -   Martin Fowler, “ [Test Double](http://martinfowler.com/bliki/TestDouble.html)”
 -   Jeremy Miller, “ [State versus Interaction Testing](http://codebetter.com/blogs/jeremy.miller/articles/129544.aspx)”
--   Moq, \<http://code.google.com/p/moq/>
+-   [Moq](http://code.google.com/p/moq/)
 
 ### Biography
 
-Scott Allen is a member of the technical staff at Pluralsight and the founder of OdeToCode.com. In 15 years of commercial software development, Scott has worked on solutions for everything from 8-bit embedded devices to highly scalable ASP.NET web applications. You can reach Scott on his blog at OdeToCode, or on Twitter at \<http://twitter.com/OdeToCode>.
+Scott Allen is a member of the technical staff at Pluralsight and the founder of OdeToCode.com. In 15 years of commercial software development, Scott has worked on solutions for everything from 8-bit embedded devices to highly scalable ASP.NET web applications. You can reach Scott on his blog at OdeToCode, or on Twitter at [http://twitter.com/OdeToCode](http://twitter.com/OdeToCode).
