@@ -132,7 +132,7 @@ Now that we have an EF model, let's write some code that uses it to perform some
 
 This code calls the **PerformDatabaseOperations** method which saves a new **Blog** to the database and then retrieves all **Blogs** from the database and prints them to the **Console**. After this, the program writes a quote of the day to the **Console**.
 
-Since the code is syncronous, we can observe the following execution flow when we run the program:
+Since the code is synchronous, we can observe the following execution flow when we run the program:
 
 1.  **SaveChanges** begins to push the new **Blog** to the database
 2.  **SaveChanges** completes
