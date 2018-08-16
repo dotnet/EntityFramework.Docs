@@ -9,13 +9,15 @@ uid: core/providers/writing-a-provider
 
 # Writing a Database Provider
 
-For information about writing an Entity Framework Core database provider, see [So you want to write an EF Core provider](https://blog.oneunicorn.com/2016/11/11/so-you-want-to-write-an-ef-core-provider/) by [Arthur Vickers](https://github.com/ajcvickers).
+For information about writing an Entity Framework Core database provider, see [So you want to write an EF Core provider](https://blog.oneunicorn.com/2016/11/11/so-you-want-to-write-an-ef-core-provider/) by [Arthur Vickers](https://github.com/ajcvickers). (These posts have not been updated since EF Core 1.1 and there have been significant changes since that time [Issue 681](https://github.com/aspnet/EntityFramework.Docs/issues/681) is tracking updates to this documentation.)
 
-The EF Core code base is open source and contains several database providers that can be used as a reference. You can find the source code at https://github.com/aspnet/EntityFrameworkCore.
+The EF Core codebase is open source and contains several database providers that can be used as a reference. You can find the source code at https://github.com/aspnet/EntityFrameworkCore. It may also be helpful to look at the code for commonly used third-party providers, such as [Npgsql](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL), [MySQL](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql), and [SQL Server CE](https://github.com/ErikEJ/EntityFramework.SqlServerCompact). In particular, these projects are setup to extend from and run functional tests that we publish on NuGet. This kind of setup is strongly recommended.
 
-## The providers-beware label
+## Keeping up-to-date with provider changes
 
-Once you begin work on a provider, watch for the [`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) label on our GitHub issues and pull requests. We use this label to identify changes that may impact provider writers.
+Starting with work after the 2.1 release, we have created a [log of changes](change-log.md) that may need corresponding changes in provider code. This is intended to help when updating an existing provider to work with a new version of EF Core.
+
+Prior to 2.1, we used the [`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) and [`providers-fyi`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) labels on our GitHub issues and pull requests for a similar purpose. We will continiue to use these lables on issues to give an indication which work items in a given release may also require work to be done in providers. A `providers-beware` label typically means that the implementation of an work item may break providers, while a `providers-fyi` label typically means that providers will not be broken, but code may need to be changed anyway, for example, to enable new functionality.
 
 ## Suggested naming of third party providers
 
