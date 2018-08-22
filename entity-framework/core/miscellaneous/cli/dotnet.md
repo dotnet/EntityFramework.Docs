@@ -64,10 +64,10 @@ Using the tools
 Whenever you invoke a command, there are two projects involved:
 
 The target project is where any files are added (or in some cases removed). The target project defaults to the project
-in the current directory, but can be changed using the <nobr>**--project**</nobr> option.
+in the current directory, but can be changed using the <**`--project`**</nobr> option.
 
 The startup project is the one emulated by the tools when executing your project's code. It also defaults to the project
-in the current directory, but can be changed using the **--startup-project** option.
+in the current directory, but can be changed using the **`--startup-project`** option.
 
 > [!NOTE]
 > For instance, updating the database of your web application that has EF Core installed in a different project would look like this: `dotnet ef database update --project {project-path}` (from your web app directory)
@@ -76,17 +76,17 @@ Common options:
 
 |    |                                  |                             |
 |:---|:---------------------------------|:----------------------------|
-|    | --json                           | Show JSON output.           |
-| -c | --context \<DBCONTEXT>           | The DbContext to use.       |
-| -p | --project \<PROJECT>             | The project to use.         |
-| -s | --startup-project \<PROJECT>     | The startup project to use. |
-|    | --framework \<FRAMEWORK>         | The target framework.       |
-|    | --configuration \<CONFIGURATION> | The configuration to use.   |
-|    | --runtime \<IDENTIFIER>          | The runtime to use.         |
-| -h | --help                           | Show help information.      |
-| -v | --verbose                        | Show verbose output.        |
-|    | --no-color                       | Don't colorize output.      |
-|    | --prefix-output                  | Prefix output with level.   |
+|    | `--json`                           | Show JSON output.           |
+| -c | `--context <DBCONTEXT>`           | The DbContext to use.       |
+| -p | `--project <PROJECT>`             | The project to use.         |
+| -s | `--startup-project <PROJECT>`     | The startup project to use. |
+|    | `--framework <FRAMEWORK>`         | The target framework.       |
+|    | `--configuration <CONFIGURATION>` | The configuration to use.   |
+|    | `--runtime <IDENTIFIER>`          | The runtime to use.         |
+| -h | `--help`                           | Show help information.      |
+| -v | `--verbose`                        | Show verbose output.        |
+|    | `--no-color`                       | Don't colorize output.      |
+|    | `--prefix-output`                  | Prefix output with level.   |
 
 
 > [!TIP]
@@ -103,8 +103,8 @@ Options:
 
 |    |           |                                                          |
 |:---|:----------|:---------------------------------------------------------|
-| -f | --force   | Don't confirm.                                           |
-|    | --dry-run | Show which database would be dropped, but don't drop it. |
+| -f | `--force`   | Don't confirm.                                           |
+|    | `--dry-run` | Show which database would be dropped, but don't drop it. |
 
 ### dotnet ef database update
 
@@ -114,7 +114,7 @@ Arguments:
 
 |              |                                                                                              |
 |:-------------|:---------------------------------------------------------------------------------------------|
-| \<MIGRATION> | The target migration. If 0, all migrations will be reverted. Defaults to the last migration. |
+| `<MIGRATION>` | The target migration. If 0, all migrations will be reverted. Defaults to the last migration. |
 
 ### dotnet ef dbcontext info
 
@@ -132,21 +132,21 @@ Arguments:
 
 |               |                                                                             |
 |:--------------|:----------------------------------------------------------------------------|
-| \<CONNECTION> | The connection string to the database.                                      |
-| \<PROVIDER>   | The provider to use. (for example, Microsoft.EntityFrameworkCore.SqlServer) |
+| `<CONNECTION>` | The connection string to the database.                                      |
+| `<PROVIDER>`   | The provider to use. (for example, Microsoft.EntityFrameworkCore.SqlServer) |
 
 Options:
 
 |                 |                                         |                                                                                                  |
 |:----------------|:----------------------------------------|:-------------------------------------------------------------------------------------------------|
-| <nobr>-d</nobr> | --data-annotations                      | Use attributes to configure the model (where possible). If omitted, only the fluent API is used. |
-| -c              | --context \<NAME>                       | The name of the DbContext.                                                                       |
-|                 | --context-dir \<PATH>                   | The directory to put DbContext file in. Paths are relative to the project directory.             |
-| -f              | --force                                 | Overwrite existing files.                                                                        |
-| -o              | --output-dir \<PATH>                    | The directory to put files in. Paths are relative to the project directory.                      |
-|                 | <nobr>--schema \<SCHEMA_NAME>...</nobr> | The schemas of tables to generate entity types for.                                              |
-| -t              | --table \<TABLE_NAME>...                | The tables to generate entity types for.                                                         |
-|                 | --use-database-names                    | Use table and column names directly from the database.                                           |
+| <nobr>-d</nobr> | `--data-annotations`                      | Use attributes to configure the model (where possible). If omitted, only the fluent API is used. |
+| -c              | `--context <NAME>`                       | The name of the DbContext.                                                                       |
+|                 | `--context-dir <PATH>`                   | The directory to put DbContext file in. Paths are relative to the project directory.             |
+| -f              | `--force`                                 | Overwrite existing files.                                                                        |
+| -o              | `--output-dir <PATH>`                    | The directory to put files in. Paths are relative to the project directory.                      |
+|                 | <nobr>`--schema <SCHEMA_NAME>...`</nobr> | The schemas of tables to generate entity types for.                                              |
+| -t              | `--table <TABLE_NAME>`...                | The tables to generate entity types for.                                                         |
+|                 | `--use-database-names`                    | Use table and column names directly from the database.                                           |
 
 ### dotnet ef migrations add
 
@@ -156,13 +156,13 @@ Arguments:
 
 |         |                            |
 |:--------|:---------------------------|
-| \<NAME> | The name of the migration. |
+| `<NAME>` | The name of the migration. |
 
 Options:
 
 |                 |                                   |                                                                                                                  |
 |:----------------|:----------------------------------|:-----------------------------------------------------------------------------------------------------------------|
-| <nobr>-o</nobr> | <nobr>--output-dir \<PATH></nobr> | The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to "Migrations". |
+| <nobr>-o</nobr> | <nobr> `--output-dir <PATH>` </nobr> | The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to "Migrations". |
 
 ### dotnet ef migrations list
 
@@ -176,7 +176,7 @@ Options:
 
 |    |         |                                                                       |
 |:---|:--------|:----------------------------------------------------------------------|
-| -f | --force | Revert the migration if it has been applied to the database. |
+| -f | `--force` | Revert the migration if it has been applied to the database. |
 
 ### dotnet ef migrations script
 
@@ -186,15 +186,15 @@ Arguments:
 
 |         |                                                               |
 |:--------|:--------------------------------------------------------------|
-| \<FROM> | The starting migration. Defaults to 0 (the initial database). |
-| \<TO>   | The ending migration. Defaults to the last migration.         |
+| `<FROM>` | The starting migration. Defaults to 0 (the initial database). |
+| `<TO>`   | The ending migration. Defaults to the last migration.         |
 
 Options:
 
 |    |                  |                                                                    |
 |:---|:-----------------|:-------------------------------------------------------------------|
-| -o | --output \<FILE> | The file to write the result to.                                   |
-| -i | --idempotent     | Generate a script that can be used on a database at any migration. |
+| -o | `--output <FILE>` | The file to write the result to.                                   |
+| -i | `--idempotent`     | Generate a script that can be used on a database at any migration. |
 
 
   [1]: powershell.md
