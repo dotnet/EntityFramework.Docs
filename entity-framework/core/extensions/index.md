@@ -125,3 +125,9 @@ Lazy Loading for EF Core 1.1
 EntityFrameworkCore extensions for Bulk operations (Insert, Update, Delete).
 
 [GitHub repository](https://github.com/borisdj/EFCore.BulkExtensions)
+
+### Bricelam.EntityFrameworkCore.Pluralizer
+
+Adds design-time pluralization to EF Core.
+
+[GitHub repository](https://github.com/bricelam/EFCore.Pluralizer)
