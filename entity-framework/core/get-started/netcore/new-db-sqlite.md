@@ -34,8 +34,8 @@ To use EF Core, install the package for the database provider(s) you want to tar
 * Install Microsoft.EntityFrameworkCore.Sqlite and Microsoft.EntityFrameworkCore.Design
 
   ```Console
-  dotnet add package Microsoft.EntityFrameworkCore.Sqlite
-  dotnet add package Microsoft.EntityFrameworkCore.Design
+  dotnet add <YOURPROJECT> package Microsoft.EntityFrameworkCore.Sqlite
+  dotnet add <YOURPROJECT> package Microsoft.EntityFrameworkCore.Design
   ```
 
 * Run `dotnet restore` to install the new packages.
