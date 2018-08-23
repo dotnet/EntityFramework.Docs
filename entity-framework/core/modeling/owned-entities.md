@@ -170,7 +170,8 @@ modelBuilder.Entity<Order>().OwnsOne(p => p.OrderDetails, od =>
     {
         od.OwnsOne(c => c.BillingAddress);
         od.OwnsOne(c => c.ShippingAddress);
-    }).ToTable("OrderDetails");
+        od.ToTable("OrderDetails");
+    });
 ```
 
 ## Querying owned types
