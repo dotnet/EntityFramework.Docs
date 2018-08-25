@@ -2,7 +2,6 @@
 title: "Testability and Entity Framework 4.0"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 9430e2ab-261c-4e8e-8545-2ebc52d7a247
 ---
 # Testability and Entity Framework 4.0

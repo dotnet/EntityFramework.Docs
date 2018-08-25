@@ -2,7 +2,6 @@
 title: "Enum Support - Code First - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 77a42501-27c9-4f4b-96df-26c128021467
 ---
 # Enum Support - Code First

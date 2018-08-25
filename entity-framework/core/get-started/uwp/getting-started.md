@@ -1,7 +1,6 @@
 ---
 title: Getting Started on UWP - New Database - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 08/08/2018
 ms.assetid: a0ae2f21-1eef-43c6-83ad-92275f9c0727
 uid: core/get-started/uwp/getting-started

@@ -1,7 +1,6 @@
 ---
 title: Global Query Filters - EF Core
 author: anpete
-ms.author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
 ---

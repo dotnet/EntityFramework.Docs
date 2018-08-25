@@ -2,7 +2,6 @@
 title: "Connection resiliency and retry logic - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 47d68ac1-927e-4842-ab8c-ed8c8698dff2
 ---
 # Connection resiliency and retry logic

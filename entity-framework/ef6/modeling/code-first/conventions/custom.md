@@ -2,7 +2,6 @@
 title: "Custom Code First Conventions - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: dd2bdbd9-ae9e-470a-aeb8-d0ba160499b7
 ---
 # Custom Code First Conventions

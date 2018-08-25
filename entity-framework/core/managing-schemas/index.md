@@ -1,7 +1,6 @@
 ---
 title: Managing Database Schemas - EF Core
 author: bricelam
-ms.author: divega
 ms.date: 10/30/2017
 ---
 # Managing Database Schemas

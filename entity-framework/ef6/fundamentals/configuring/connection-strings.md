@@ -2,7 +2,6 @@
 title: "Connection strings and models - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 294bb138-978f-4fe2-8491-fdf3cd3c60c4
 ---
 # Connection strings and models

@@ -1,7 +1,6 @@
 ---
 title: Alternate Keys (Unique Constraints) - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 3d419dcf-2b5d-467c-b408-ea03d830721a
 uid: core/modeling/relational/unique-constraints

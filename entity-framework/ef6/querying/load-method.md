@@ -2,7 +2,6 @@
 title: "The Load Method - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 03c5a069-b7b4-455f-a16f-ee3b96cc4e28
 ---
 # The Load Method

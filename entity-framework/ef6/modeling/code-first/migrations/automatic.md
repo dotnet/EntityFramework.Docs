@@ -2,7 +2,6 @@
 title: "Automatic Code First Migrations - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 0eb86787-2161-4cb4-9cb8-67c5d6e95650
 ---
 # Automatic Code First Migrations

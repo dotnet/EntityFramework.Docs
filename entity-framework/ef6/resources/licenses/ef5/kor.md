@@ -1,7 +1,6 @@
 ---
 title: "Entity Framework 5 License (KOR)"
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: b105993a-ebb3-466e-af76-a0ec0c651f82
 ---
 # Entity Framework 5 License (KOR)

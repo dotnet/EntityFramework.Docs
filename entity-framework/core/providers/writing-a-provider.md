@@ -1,7 +1,6 @@
 ---
 title: Writing a Database Provider - EF Core
 author: anmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 1165e2ec-e421-43fc-92ab-d92f9ab3c494
 uid: core/providers/writing-a-provider

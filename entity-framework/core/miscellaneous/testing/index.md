@@ -1,7 +1,6 @@
 ---
 title: Test components using Entity Framework - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 1603be0c-69bc-4dd9-9a08-3d0129cdc6c1
 uid: core/miscellaneous/testing/index

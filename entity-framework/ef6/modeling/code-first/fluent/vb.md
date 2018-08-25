@@ -2,7 +2,6 @@
 title: "Fluent API with VB.NET - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 763dc6a2-764a-4600-896c-f6f13abf56ec
 ---
 # Fluent API with VB.NET

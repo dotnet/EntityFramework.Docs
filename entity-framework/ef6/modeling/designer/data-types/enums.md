@@ -2,7 +2,6 @@
 title: "Enum Support - EF Designer - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: c6ae6d8f-1ace-47db-ad47-b1718f1ba082
 ---
 # Enum Support - EF Designer

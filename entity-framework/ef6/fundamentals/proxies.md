@@ -2,7 +2,6 @@
 title: "Working with proxies - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 869ee4dc-06f1-471d-8e0e-0a1a2bc59c30
 ---
 # Working with proxies

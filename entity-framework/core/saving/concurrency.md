@@ -1,7 +1,6 @@
 ---
 title: Handling Concurrency Conflicts - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 03/03/2018
 uid: core/saving/concurrency
 ---

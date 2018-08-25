@@ -1,7 +1,6 @@
 ---
 title: Getting Started on .NET Framework - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 08/06/2018
 ms.assetid: 06f1f18b-3267-4f79-b94e-173f9db0a7cb
 uid: core/get-started/full-dotnet/index

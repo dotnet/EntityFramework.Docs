@@ -1,7 +1,6 @@
 ---
 title: Tracking vs. No-Tracking Queries - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: e17e060c-929f-4180-8883-40c438fbcc01
 uid: core/querying/tracking

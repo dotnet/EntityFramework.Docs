@@ -2,7 +2,6 @@
 title: "Fluent API - Configuring and Mapping Properties and Types - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 648ed274-c501-4630-88e0-d728ab5c4057
 ---
 # Fluent API - Configuring and Mapping Properties and Types

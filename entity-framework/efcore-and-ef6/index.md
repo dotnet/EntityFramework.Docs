@@ -1,9 +1,7 @@
 ---
 title: Compare EF Core & EF6
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
-
 ms.assetid: a6b9cd22-6803-4c6c-a4d4-21147c0a81cb
 uid: efcore-and-ef6/index
 ---

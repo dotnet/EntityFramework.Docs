@@ -1,9 +1,7 @@
 ---
 title: Porting from EF6 to EF Core - Validate Requirements
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
-
 ms.assetid: d3b66f3c-9d10-4974-a090-8ad093c9a53d
 uid: efcore-and-ef6/porting/ensure-requirements
 ---

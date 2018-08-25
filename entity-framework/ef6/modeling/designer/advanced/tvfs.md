@@ -2,7 +2,6 @@
 title: "Table-Valued Functions (TVFs) - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: f019c97b-87b0-4e93-98f4-2c539f77b2dc
 ---
 # Table-Valued Functions (TVFs)

@@ -1,7 +1,6 @@
 ---
 title: "Entity Framework 6 Runtime License (ESN)"
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 5e8d67b3-5c60-4a12-a86f-c7276bb8d9e7
 ---
 # Entity Framework 6 Runtime License (ESN)

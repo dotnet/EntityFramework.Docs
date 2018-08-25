@@ -1,7 +1,6 @@
 ---
 title: "Entity Framework 5 License (RUS)"
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 01c78013-8b66-4bf2-9873-94c4ebdaae19
 ---
 # Entity Framework 5 License (RUS)

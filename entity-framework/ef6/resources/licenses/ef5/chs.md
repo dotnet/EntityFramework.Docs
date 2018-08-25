@@ -1,7 +1,6 @@
 ---
 title: "Entity Framework 5 License (CHS)"
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 72b83f2c-d892-4181-bc6a-290688d3d3f2
 ---
 # Entity Framework 5 License (CHS)

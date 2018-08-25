@@ -2,7 +2,6 @@
 title: "Relationships - EF Designer - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 402fe960-754b-470f-976b-e5de3e9986b5
 ---
 # Relationships - EF Designer

@@ -1,7 +1,6 @@
 ---
 title: "Entity Framework 5 License (FRA)"
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 4fed93b8-10a4-4ac9-9eb4-8e24816034b0
 ---
 # Entity Framework 5 License (FRA)

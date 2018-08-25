@@ -2,7 +2,6 @@
 title: "Pre-generated mapping views - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 917ba9c8-6ddf-4631-ab8c-c4fb378c2fcd
 ---
 # Pre-generated mapping views

@@ -2,7 +2,6 @@
 title: "Defining Query - EF Designer - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: e52a297e-85aa-42f6-a922-ba960f8a4b22
 ---
 # Defining Query - EF Designer

@@ -2,7 +2,6 @@
 title: "The Entity Framework 6 provider model - EF6"
 author: divega
 ms.date: "2018-06-27"
-ms.author: divega
 ms.assetid: 066832F0-D51B-4655-8BE7-C983C557E0E4
 ---
 # The Entity Framework 6 provider model

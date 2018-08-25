@@ -2,7 +2,6 @@
 title: "Improving startup performance with NGen - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: dc6110a0-80a0-4370-8190-cea942841cee
 ---
 # Improving startup performance with NGen

@@ -1,7 +1,6 @@
 ---
 title: What is new in EF Core - EF Core
 author: divega
-ms.author: divega
 ms.date: 02/20/2018
 ms.assetid: C21F89EE-FB08-4ED9-A2A0-76CB7656E6E4
 uid: core/what-is-new/index

@@ -2,7 +2,6 @@
 title: "Databinding with WPF - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: e90d48e6-bea5-47ef-b756-7b89cce4daf0
 ---
 # Databinding with WPF

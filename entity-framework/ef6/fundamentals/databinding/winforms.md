@@ -2,7 +2,6 @@
 title: "Databinding with WinForms - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 80fc5062-2f1c-4dbd-ab6e-b99496784b36
 ---
 # Databinding with WinForms
