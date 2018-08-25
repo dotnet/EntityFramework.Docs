@@ -2,8 +2,6 @@
 layout: HubPage
 title: Entity Framework
 author: rowanmiller
-ms.topic: hub-page
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 6bb12583-c39a-454c-8d83-d2a2793ca9ef
 uid: index

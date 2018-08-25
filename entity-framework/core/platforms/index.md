@@ -1,7 +1,6 @@
 ---
 title: Supported .NET implementations - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 08/30/2017
 uid: core/platforms/index
 ---

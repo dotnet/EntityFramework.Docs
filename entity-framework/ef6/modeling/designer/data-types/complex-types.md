@@ -2,7 +2,6 @@
 title: "Complex Types - EF Designer - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 9a8228ef-acfd-4575-860d-769d2c0e18a1
 ---
 # Complex Types - EF Designer

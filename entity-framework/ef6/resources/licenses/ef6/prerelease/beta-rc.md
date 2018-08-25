@@ -1,7 +1,6 @@
 ---
 title: "Entity Framework 6 Runtime Beta/RC License"
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: db123990-8290-41c8-a41f-494d3f2994f7
 ---
 # Entity Framework 6 Runtime Beta/RC License (ENU)

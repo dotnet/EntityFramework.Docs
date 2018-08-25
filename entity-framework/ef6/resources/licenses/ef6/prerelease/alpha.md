@@ -1,7 +1,6 @@
 ---
 title: "Entity Framework 6 Runtime Alpha License"
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: bca98fb3-ebb2-4df3-afc8-6fd8f7341c9d
 ---
 # Entity Framework 6 Runtime Alpha License (ENU)

@@ -1,7 +1,6 @@
 ---
 title: Relational Database Modeling - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 2c1fc33a-baac-477e-bd35-7360badb8303
 uid: core/modeling/relational/index

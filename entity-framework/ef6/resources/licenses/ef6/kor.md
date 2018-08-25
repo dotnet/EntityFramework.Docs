@@ -1,7 +1,6 @@
 ---
 title: "Entity Framework 6 Runtime License (KOR)"
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: fc90a6bf-0958-4d9a-a383-38f8e6d21640
 ---
 # Entity Framework 6 Runtime License (KOR)

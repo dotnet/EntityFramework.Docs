@@ -1,7 +1,6 @@
 ---
 title: Sequences - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 94f81a92-3c72-4e14-912a-f99310374e42
 uid: core/modeling/relational/sequences

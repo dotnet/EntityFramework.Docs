@@ -1,7 +1,6 @@
 ---
 title: 🔧 Reverse Engineering - EF Core
 author: smitpatel
-ms.author: divega
 ms.date: 10/30/2017
 ---
 # 🔧 Reverse Engineering

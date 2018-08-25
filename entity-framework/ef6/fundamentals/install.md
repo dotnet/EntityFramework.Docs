@@ -2,7 +2,6 @@
 title: "Get Entity Framework - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 122c38a2-f9e8-4ecc-9c72-a83bc9af7814
 ---
 # Get Entity Framework

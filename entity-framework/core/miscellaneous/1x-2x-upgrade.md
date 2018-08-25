@@ -1,7 +1,6 @@
 ---
 title: Upgrading from previous versions to EF Core 2 - EF Core
 author: divega
-ms.author: divega
 ms.date: 8/13/2017
 ms.assetid: 8BD43C8C-63D9-4F3A-B954-7BC518A1B7DB
 uid: core/miscellaneous/1x-2x-upgrade

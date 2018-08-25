@@ -1,7 +1,6 @@
 ---
 title: SQLite Database Provider - Limitations - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 04/09/2017
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations

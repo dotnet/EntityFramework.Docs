@@ -1,7 +1,6 @@
 ---
 title: Entity Framework Core Roadmap
 author: divega
-ms.author: divega
 ms.date: 02/20/2018
 ms.assetid: 834C9729-7F6E-4355-917D-DE3EE9FE149E
 uid: core/what-is-new/roadmap

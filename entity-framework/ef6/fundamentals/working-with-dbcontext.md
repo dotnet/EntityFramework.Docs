@@ -2,7 +2,6 @@
 title: "Working with DbContext - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: b0e6bddc-8a87-4d51-b1cb-7756df938c23
 ---
 # Working with DbContext

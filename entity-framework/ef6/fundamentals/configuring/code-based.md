@@ -2,7 +2,6 @@
 title: "Code-based configuration - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 13886d24-2c74-4a00-89eb-aa0dee328d83
 ---
 # Code-based configuration

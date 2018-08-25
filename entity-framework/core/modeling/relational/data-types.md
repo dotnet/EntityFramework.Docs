@@ -1,7 +1,6 @@
 ---
 title: Data Types - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 9d2e647f-29e4-483b-af00-74269eb06e8f
 uid: core/modeling/relational/data-types

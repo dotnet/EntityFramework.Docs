@@ -2,7 +2,6 @@
 title: "Visual Studio Releases - EF6"
 author: divega
 ms.date: "2018-07-05"
-ms.author: divega
 ms.assetid: 028FF890-4EDB-4F03-AE53-72F9C33EC92F
 ---
 # Visual Studio Releases

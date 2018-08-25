@@ -2,7 +2,6 @@
 title: "Designer Table Splitting - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 452f17c3-9f26-4de4-9894-8bc036e23b0f
 ---
 # Designer Table Splitting

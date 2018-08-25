@@ -2,7 +2,6 @@
 title: "Upgrading to Entity Framework 6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 29958ae5-85d3-4585-9ba6-550b8ec9393a
 ---
 # Upgrading to Entity Framework 6

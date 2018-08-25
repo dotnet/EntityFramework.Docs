@@ -1,7 +1,6 @@
 ---
 title: "Entity Framework 5 License (JPN)"
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 5d1555a3-f3cf-4b25-84fa-a531fda0df0d
 ---
 # Entity Framework 5 License (JPN)

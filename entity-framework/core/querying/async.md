@@ -1,7 +1,6 @@
 ---
 title: Asynchronous Queries - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 01/24/2017
 ms.assetid: b6429b14-cba0-4af4-878f-b829777c89cb
 uid: core/querying/async

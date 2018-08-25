@@ -2,7 +2,6 @@
 title: Overview - EF6
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 8ae74d63-6bad-4686-b325-bbf9d68f3743
 uid: ef6/index
 ---

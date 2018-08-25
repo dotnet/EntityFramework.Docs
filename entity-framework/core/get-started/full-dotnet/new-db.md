@@ -1,7 +1,6 @@
 ---
 title: Getting Started on .NET Framework - New Database - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 08/06/2018
 ms.assetid: 52b69727-ded9-4a7b-b8d5-73f3acfbbad3
 uid: core/get-started/full-dotnet/new-db

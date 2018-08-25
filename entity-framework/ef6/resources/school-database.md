@@ -2,7 +2,6 @@
 title: "School Sample Database - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: e83a6a06-e63b-4530-8656-614bf609b12b
 ---
 # School Sample Database

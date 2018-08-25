@@ -2,7 +2,6 @@
 title: "Code First to an Existing Database - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: a7e60b74-973d-4480-868f-500a3899932e
 ---
 # Code First to an Existing Database

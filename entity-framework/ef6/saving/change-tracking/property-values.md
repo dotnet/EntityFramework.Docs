@@ -2,7 +2,6 @@
 title: "Working with property values - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: e3278b4b-9378-4fdb-923d-f64d80aaae70
 ---
 # Working with property values

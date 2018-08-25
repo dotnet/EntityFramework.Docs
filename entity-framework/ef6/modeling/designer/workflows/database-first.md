@@ -2,7 +2,6 @@
 title: "Database First - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: cc6ffdb3-388d-4e79-a201-01ec2577c949
 ---
 # Database First

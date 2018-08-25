@@ -2,7 +2,6 @@
 title: "Dependency resolution - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 32d19ac6-9186-4ae1-8655-64ee49da55d0
 ---
 # Dependency resolution

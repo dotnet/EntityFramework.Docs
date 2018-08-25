@@ -2,7 +2,6 @@
 title: "Case Studies for Entity Framework - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: cd5d3ae3-717d-4095-a2ef-0e8fd72b1a2f
 ---
 # Microsoft Case Studies for Entity Framework

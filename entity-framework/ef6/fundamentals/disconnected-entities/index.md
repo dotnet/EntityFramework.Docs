@@ -2,7 +2,6 @@
 title: "Working with disconnected entities - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 12138003-a373-4817-b1b7-724130202f5f
 ---
 # Working with disconnected entities

@@ -2,7 +2,6 @@
 title: "No-Tracking Queries - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: f80ac260-c2dc-484d-94a3-3424fd862f8b
 ---
 # No-Tracking Queries

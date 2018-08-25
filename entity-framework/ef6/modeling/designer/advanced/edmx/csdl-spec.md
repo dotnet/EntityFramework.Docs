@@ -2,7 +2,6 @@
 title: "CSDL Specification - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: c54255f4-253f-49eb-bec8-ad7927ac2fa3
 ---
 # CSDL Specification

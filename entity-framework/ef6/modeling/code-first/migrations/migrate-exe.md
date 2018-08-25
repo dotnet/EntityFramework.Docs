@@ -2,7 +2,6 @@
 title: "Using migrate.exe - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 989ea862-e936-4c85-926a-8cfbef5df5b8
 ---
 # Using migrate.exe

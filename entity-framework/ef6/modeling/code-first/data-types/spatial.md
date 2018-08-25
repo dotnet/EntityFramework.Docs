@@ -2,7 +2,6 @@
 title: "Spatial - Code First - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: d617aed1-15f2-48a9-b187-186991c666e3
 ---
 # Spatial - Code First

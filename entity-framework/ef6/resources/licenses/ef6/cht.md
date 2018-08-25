@@ -1,7 +1,6 @@
 ---
 title: "Entity Framework 6 Runtime License (CHT)"
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 88468c89-2a84-4c5b-a8d3-5e1d2bd0b457
 ---
 # Entity Framework 6 Runtime License (CHT)

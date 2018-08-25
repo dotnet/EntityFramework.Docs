@@ -2,7 +2,6 @@
 title: "Customizing the migrations history table - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: ed5518f0-a9a6-454e-9e98-a4fa7748c8d0
 ---
 # Customizing the migrations history table

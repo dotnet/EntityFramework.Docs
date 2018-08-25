@@ -1,7 +1,6 @@
 ---
 title: Getting Started on ASP.NET Core - Existing Database - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 08/02/2018
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 uid: core/get-started/aspnetcore/existing-db

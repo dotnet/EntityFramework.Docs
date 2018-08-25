@@ -2,7 +2,6 @@
 title: "Loading Related Entities - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: c8417e18-a2ee-499c-9ce9-2a48cc5b468a
 ---
 # Loading Related Entities

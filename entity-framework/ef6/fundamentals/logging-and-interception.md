@@ -2,7 +2,6 @@
 title: "Logging and intercepting database operations - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: b5ee7eb1-88cc-456e-b53c-c67e24c3f8ca
 ---
 # Logging and intercepting database operations

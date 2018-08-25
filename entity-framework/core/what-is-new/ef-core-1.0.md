@@ -1,7 +1,6 @@
 ---
 title: What is new in EF Core 1.0 - EF Core
 author: divega
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 20A25111-AEBE-4BC2-83A5-3F651952DF72
 uid: core/what-is-new/ef-core-1.0

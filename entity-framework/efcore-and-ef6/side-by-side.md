@@ -1,9 +1,7 @@
 ---
 title: EF6 and EF Core - Using them in the Same Application
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
-
 ms.assetid: a06e3c35-110c-4294-a1e2-32d2c31c90a7
 uid: efcore-and-ef6/side-by-side
 ---

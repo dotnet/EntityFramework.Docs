@@ -2,7 +2,6 @@
 title: "Defining DbSets - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 4528a509-ace7-4dfb-8065-1b833f5e03a0
 ---
 # Defining DbSets

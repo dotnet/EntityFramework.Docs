@@ -2,7 +2,6 @@
 title: "Tools & Extensions - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: 7f166290-d9f0-4eec-b4fd-e7a83068d977
 ---
 # Entity Framework Tools & Extensions

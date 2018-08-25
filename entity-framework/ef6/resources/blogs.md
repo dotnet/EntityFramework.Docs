@@ -2,7 +2,6 @@
 title: "Entity Framework Blogs - EF6"
 author: divega
 ms.date: "2016-10-23"
-ms.author: divega
 ms.assetid: f8fcfb34-35de-4e82-b419-8f99fd2eb92a
 ---
 # Entity Framework Blogs
