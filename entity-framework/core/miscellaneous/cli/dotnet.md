@@ -64,7 +64,7 @@ Using the tools
 Whenever you invoke a command, there are two projects involved:
 
 The target project is where any files are added (or in some cases removed). The target project defaults to the project
-in the current directory, but can be changed using the <**`--project`**</nobr> option.
+in the current directory, but can be changed using the <nobr>**`--project`**</nobr> option.
 
 The startup project is the one emulated by the tools when executing your project's code. It also defaults to the project
 in the current directory, but can be changed using the **`--startup-project`** option.
