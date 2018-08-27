@@ -23,7 +23,7 @@ EF6 implements many popular O/RM features:
   - Stored procedures
 - A visual designer to create entity models.
 - A "Code First" experience to create entity models by writing code.
-- Models can either be generated form existing databases and then hand-edited, or they can be created from scratch and then used to generate new databases.
+- Models can either be generated from existing databases and then hand-edited, or they can be created from scratch and then used to generate new databases.
 - Integration with .NET Framework application models, including ASP.NET, and through databinding, with WPF and WinForms.
 - Database connectivity based on ADO.NET and numerous providers available to connect to SQL Server, Oracle, MySQL, SQLite, PostgreSQL, DB2, etc.
 
