@@ -5,10 +5,10 @@ ms.date: "2016-10-23"
 ms.assetid: 2df6cb0a-7d8b-4e28-9d05-e2b9a90125af
 ---
 # Code First to a New Database
-This video and step-by-step walkthrough provide an introduction to Code First development targeting a new database. This scenario includes targeting a database that doesn’t exist and Code First will create, or an empty database that Code First will add new tables too. Code First allows you to define your model using C\# or VB.Net classes. Additional configuration can optionally be performed using attributes on your classes and properties or by using a fluent API.
+This video and step-by-step walkthrough provide an introduction to Code First development targeting a new database. This scenario includes targeting a database that doesn’t exist and Code First will create, or an empty database that Code First will add new tables to. Code First allows you to define your model using C\# or VB.Net classes. Additional configuration can optionally be performed using attributes on your classes and properties or by using a fluent API.
 
 ## Watch the video
-This video provides an introduction to Code First development targeting a new database. This scenario includes targeting a database that doesn’t exist and Code First will create, or an empty database that Code First will add new tables too. Code First allows you to define your model using C# or VB.Net classes. Additional configuration can optionally be performed using attributes on your classes and properties or by using a fluent API.
+This video provides an introduction to Code First development targeting a new database. This scenario includes targeting a database that doesn’t exist and Code First will create, or an empty database that Code First will add new tables to. Code First allows you to define your model using C# or VB.Net classes. Additional configuration can optionally be performed using attributes on your classes and properties or by using a fluent API.
 
 **Presented By**: [Rowan Miller](http://romiller.com/)
 
