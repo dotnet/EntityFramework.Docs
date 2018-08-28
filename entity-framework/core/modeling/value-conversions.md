@@ -76,7 +76,7 @@ EF Core ships with a set of pre-defined `ValueConverter` classes, found in the `
 * `BoolToStringConverter` - Bool to strings such as "Y" and "N"
 * `BoolToTwoValuesConverter` - Bool to any two values
 * `BytesToStringConverter` - Byte array to Base64-encoded string
-* `CastingConverter` - Conversions that require only a Csharp cast
+* `CastingConverter` - Conversions that require only a type cast
 * `CharToStringConverter` - Char to single character string
 * `DateTimeOffsetToBinaryConverter` - DateTimeOffset to binary-encoded 64-bit value
 * `DateTimeOffsetToBytesConverter` - DateTimeOffset to byte array
