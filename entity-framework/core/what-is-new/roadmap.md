@@ -11,9 +11,21 @@ uid: core/what-is-new/roadmap
 > [!IMPORTANT]
 > Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
 
+## Last release: EF Core 2.1
+
 The stable version of EF Core 2.1 was released on May 30, 2018. You can find more information about this release in [What is new in EF Core 2.1](xref:core/what-is-new/ef-core-2.1).
 
-We have not completed the [release planning process](#release-planning-process) for the next release after 2.1.
+## Future releases
+
+### EF Core 2.2
+
+This release will include many bug fixes, and relatively small number of new features. Details about this release are included in the the [EF Core 2.2 roadmap announcement](https://github.com/aspnet/Announcements/issues/308). 
+
+### EF Core 3.0
+
+Although we have not completed the [release planning process](#release-planning-process) for the next release after 2.2, we are currently planning to have a major release, algined with .NET Core 3.0 and ASP.NET 3.0. 
+
+You can use [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) to see work items tenatively assigned to this future release.
 
 ## Schedule
 
