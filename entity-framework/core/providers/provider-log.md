@@ -41,3 +41,8 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
   * Changes in 2.1 to the RelationalTypeMapping allowed for a simplification in derived classes. We don't believe this was breaking to providers, but providers can take advantage of this change in their derived type mapping classes.
 * https://github.com/aspnet/EntityFrameworkCore/pull/12069 - Tagged or named queries
   * Adds infrastructure for tagging LINQ queries and having those tags show up as comments in the SQL. This may require providers to react in SQL generation.
+* https://github.com/aspnet/EntityFrameworkCore/pull/13115 - Support spatial data via NTS
+  * Allows type mappings and member translators to be registered outside of the provider
+    * Providers must call base.FindMapping() in their ITypeMappingSource implementation for it to work
+  * Follow this pattern to add spatial support to your provider that is consistent across providers.
+
