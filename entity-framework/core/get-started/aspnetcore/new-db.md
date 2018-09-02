@@ -17,12 +17,22 @@ In this tutorial, you build an ASP.NET Core MVC application that performs basic 
 
 Install the following software:
 
+# [Visual Studio](#tab/visual-studio)
+
 * [Visual Studio 2017 15.7](https://www.visualstudio.com/downloads/) with these workloads:
   * **ASP.NET and web development** (under **Web & Cloud**)
   * **.NET Core cross-platform development** (under **Other Toolsets**)
 * [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core).
 
-## Create a new project in Visual Studio 2017
+# [.NET Core CLI](#tab/netcore-cli)
+
+* [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core).
+
+---
+
+## Create a new project
+
+# [Visual Studio](#tab/visual-studio)
 
 * Open Visual Studio 2017
 * **File > New > Project**
@@ -37,6 +47,18 @@ Install the following software:
 
 Warning: If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework Core model will be added to your project in `Models\IdentityModel.cs`. Using the techniques you learn in this tutorial, you can choose to add a second model, or extend this existing model to contain your entity classes.
 
+# [.NET Core CLI](#tab/netcore-cli)
+
+* In the **Terminal**, navigate to a folder that you can use for a new project.
+
+* Run the following command:
+
+   ```cli
+   dotnet new mvc -o EFGetStarted.AspNetCore.NewDb
+   ```
+
+---
+
 ## Install Entity Framework Core
 
 To install EF Core, you install the package for the EF Core database provider(s) you want to target. For a list of available providers see [Database Providers](../../providers/index.md). 
@@ -45,13 +67,23 @@ For this tutorial, you don't have to install a provider package because the tuto
 
 ## Create the model
 
-Define a context class and entity classes that make up the model:
+Define a context class and entity classes that make up the model.
+
+# [Visual Studio](#tab/visual-studio)
 
 * Right-click on the **Models** folder and select **Add > Class**.
 * Enter **Model.cs** as the name and click **OK**.
 * Replace the contents of the file with the following code:
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Models/Model.cs)]
+
+# [.NET Core CLI](#tab/netcore-cli)
+
+* In the **Models** folder create **Model.cs** with the following code:
+
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Models/Model.cs)]
+
+---
 
 In a real app you would typically put each class from your model in a separate file. For the sake of simplicity, this tutorial puts all the classes in one file.
 
@@ -61,40 +93,69 @@ Services (such as `BloggingContext`) are registered with [dependency injection](
 
 To make `BloggingContext` available to MVC controllers, register it as a service.
 
-* Open **Startup.cs**
-* Add the following `using` statements:
+* In **Startup.cs** add the following `using` statements:
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs#AddedUsings)]
-
-Call the `AddDbContext` method to register the context as a service.
 
 * Add the following highlighted code to the `ConfigureServices` method:
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=13-14)]
 
-Note: A real app would generally put the connection string in a configuration file or environment variable. For the sake of simplicity, this tutorial defines it in code. See [Connection Strings](../../miscellaneous/connection-strings.md) for more information.
+A real app would generally put the connection string in a configuration file or environment variable. For the sake of simplicity, this tutorial defines it in code. See [Connection Strings](../../miscellaneous/connection-strings.md) for more information.
 
 ## Create the database
 
 Once you have a model, you can use [migrations](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations) to create a database.
 
+# [Visual Studio](#tab/visual-studio)
+
 * **Tools > NuGet Package Manager > Package Manager Console**
 * Run `Add-Migration InitialCreate` to scaffold a migration to create the initial set of tables for your model. If you receive an error stating `The term 'add-migration' is not recognized as the name of a cmdlet`, close and reopen Visual Studio.
 * Run `Update-Database` to apply the new migration to the database. This command creates the database before applying migrations.
 
+# [.NET Core CLI](#tab/netcore-cli)
+
+* Run `dotnet ef migrations add InitialCreate` to scaffold a migration to create the initial set of tables for your model.
+* Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations.
+
+---
+
 ## Create a controller
 
 Scaffold a controller and views for the `Blog` entity.
+
+# [Visual Studio](#tab/visual-studio)
 
 * Right-click on the **Controllers** folder in **Solution Explorer** and select **Add > Controller**.
 * Select **MVC Controller with views, using Entity Framework** and click **Add**.
 * Set **Model class** to **Blog** and **Data context class** to **BloggingContext**.
 * Click **Add**.
 
+# [.NET Core CLI](#tab/netcore-cli)
+
+```cli
+dotnet aspnet-codegenerator controller -name BlogsController -m Blog -dc BloggingContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries 
+```
+
+---
+
+The scaffolding engine creates the following:
+
+* A controller (*Controllers/BlogsController.cs*)
+* Razor view files for Create, Delete, Details, Edit, and Index pages (_Views/Movies/*.cshtml_)
 
 ## Run the application
 
+# [Visual Studio](#tab/visual-studio)
+
 Press F5 to run and test the app.
+
+# [.NET Core CLI](#tab/netcore-cli)
+
+```cli
+dotnet run
+```
+---
 
 * Navigate to `/Blogs`
 * Use the create link to create some blog entries. Test the details and delete links.
