@@ -11,22 +11,12 @@ uid: core/get-started/aspnetcore/new-db
 
 In this tutorial, you build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. The tutorial uses migrations to create the database from the data model.
 
-You can follow the tutorial by using Visual Studio 2017 on Windows, or by using the .NET Core CLI with any code editor on any platform that .NET Core supports:
+You can follow the tutorial by using Visual Studio 2017 on Windows, or by using the .NET Core CLI on Windows, macOS, or Linux.
 
-# [Visual Studio](#tab/visual-studio)
+View this article's sample on GitHub:
+* [Visual Studio 2017 with SQL Server](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb)
+* [.NET Core CLI with SQLite](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCoreNewDb.Sqlite/EFGetStarted.AspNetCore.NewDb).
 
-Choose this tab for Visual Studio 2017 instructions.
-
-[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb).
-
-# [.NET Core CLI](#tab/netcore-cli)
-
-Choose this tab to use the .NET Core CLI with any code editor on Windows, macOS, or Linux.
-
-[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCoreNewDb.Sqlite/EFGetStarted.AspNetCore.NewDb).
-
----
- 
 ## Prerequisites
 
 Install the following software:
@@ -63,7 +53,7 @@ Warning: If you use **Individual User Accounts** instead of **None** for **Authe
 
 # [.NET Core CLI](#tab/netcore-cli)
 
-* At a command prompt run the following command:
+* Run the following command to create an MVC project:
 
    ```cli
    dotnet new mvc -o EFGetStarted.AspNetCore.NewDb
@@ -81,7 +71,7 @@ For this tutorial, you don't have to install a provider package because the tuto
 
 # [.NET Core CLI](#tab/netcore-cli)
 
-For this tutorial, you use SQLite because it runs on all platforms that .NET Core supports.
+This tutorial uses SQLite because it runs on all platforms that .NET Core supports.
 
 * Run the following command to install the SQLite provider:
 
@@ -115,7 +105,7 @@ A production app would typically put each class in a separate file. For the sake
 
 ## Register the context with dependency injection
 
-Services (such as `BloggingContext`) are registered with [dependency injection](http://docs.asp.net/en/latest/fundamentals/dependency-injection.html) during application startup. Components that require these services (such as MVC controllers) are then provided these services via constructor parameters or properties.
+Services (such as `BloggingContext`) are registered with [dependency injection](http://docs.asp.net/en/latest/fundamentals/dependency-injection.html) during application startup. Components that require these services (such as MVC controllers) are provided these services via constructor parameters or properties.
 
 To make `BloggingContext` available to MVC controllers, register it as a service.
 
@@ -127,7 +117,7 @@ To make `BloggingContext` available to MVC controllers, register it as a service
 
 * Add the following highlighted code to the `ConfigureServices` method:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=13-14)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=12-14)]
 
 # [.NET Core CLI](#tab/netcore-cli)
 
@@ -137,7 +127,7 @@ To make `BloggingContext` available to MVC controllers, register it as a service
 
 * Add the following highlighted code to the `ConfigureServices` method:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb.Sqlite/Startup.cs?name=ConfigureServices&highlight=13-14)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb.Sqlite/Startup.cs?name=ConfigureServices&highlight=12-14)]
 
 
 ---
@@ -151,13 +141,27 @@ The following steps use [migrations](https://docs.microsoft.com/aspnet/core/data
 # [Visual Studio](#tab/visual-studio)
 
 * **Tools > NuGet Package Manager > Package Manager Console**
-* Run `Add-Migration InitialCreate` to scaffold a migration to create the initial set of tables for the model. If you receive an error stating `The term 'add-migration' is not recognized as the name of a cmdlet`, close and reopen Visual Studio.
-* Run `Update-Database` to apply the new migration to the database. This command creates the database before applying migrations.
+* Run the following commands:
+
+  ```powershell
+  Add-Migration InitialCreate
+  Update-Database
+  ```
+
+  If you get an error stating `The term 'add-migration' is not recognized as the name of a cmdlet`, close and reopen Visual Studio.
+
+  The `Add-Migration` command scaffolds a migration to create the initial set of tables for the model. The `Update-Database` command creates the database and applies the new migration to it.
 
 # [.NET Core CLI](#tab/netcore-cli)
 
-* Run `dotnet ef migrations add InitialCreate` to scaffold a migration to create the initial set of tables for the model.
-* Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations.
+* Run the following commands:
+
+  ```cli
+  dotnet ef migrations add InitialCreate
+  dotnet ef database update
+  ```
+
+  The `migrations` command scaffolds a migration to create the initial set of tables for the model. The database update command creates the database and applies the new migration to it.
 
 ---
 

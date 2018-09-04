@@ -25,8 +25,8 @@ namespace EFGetStarted.AspNetCore.NewDb
 
         public IConfiguration Configuration { get; }
 
-#region ConfigureServices
         // This method gets called by the runtime. Use this method to add services to the container.
+#region ConfigureServices
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -39,7 +39,8 @@ namespace EFGetStarted.AspNetCore.NewDb
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<BloggingContext>
+                (options => options.UseSqlServer(connection));
         }
 #endregion
 
