@@ -50,13 +50,13 @@ Install the following software:
 
 * Open Visual Studio 2017
 * **File > New > Project**
-* From the left menu select **Installed > Visual C# > .NET Core**.
+* From the left menu, select **Installed > Visual C# > .NET Core**.
 * Select **ASP.NET Core Web Application**.
 * Enter **EFGetStarted.AspNetCore.NewDb** for the name and click **OK**.
 * In the **New ASP.NET Core Web Application** dialog:
-  * Ensure the options **.NET Core** and **ASP.NET Core 2.1** are selected in the drop down lists
+  * Make sure that **.NET Core** and **ASP.NET Core 2.1** are selected in the drop-down lists
   * Select the **Web Application (Model-View-Controller)** project template
-  * Ensure that **Authentication** is set to **No Authentication**
+  * Make sure that **Authentication** is set to **No Authentication**
   * Click **OK**
 
 Warning: If you use **Individual User Accounts** instead of **None** for **Authentication** then an Entity Framework Core model will be added to the project in `Models\IdentityModel.cs`. Using the techniques you learn in this tutorial, you can choose to add a second model, or extend this existing model to contain your entity classes.
@@ -73,7 +73,7 @@ Warning: If you use **Individual User Accounts** instead of **None** for **Authe
 
 ## Install Entity Framework Core
 
-To install EF Core, you install the package for the EF Core database provider(s) you want to target. For a list of available providers see [Database Providers](../../providers/index.md). 
+To install EF Core, you install the package for the EF Core database provider(s) you want to target. For a list of available providers, see [Database Providers](../../providers/index.md). 
 
 # [Visual Studio](#tab/visual-studio)
 
@@ -164,7 +164,7 @@ The following steps use [migrations](https://docs.microsoft.com/aspnet/core/data
   The EF Core tools version '2.1.1-rtm-30846' is older than that of the runtime '2.1.2-rtm-xxxxx'. Update the tools for the latest features and bug fixes.
   ```
 
-  For this tutorial the tools version is fine.
+  For this tutorial, the tools version is fine.
 
 * Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations.
 
