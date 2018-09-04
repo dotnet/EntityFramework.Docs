@@ -161,7 +161,7 @@ The following steps use [migrations](https://docs.microsoft.com/aspnet/core/data
   dotnet ef database update
   ```
 
-  The `migrations` command scaffolds a migration to create the initial set of tables for the model. The database update command creates the database and applies the new migration to it.
+  The `migrations` command scaffolds a migration to create the initial set of tables for the model. The `database update` command creates the database and applies the new migration to it.
 
 ---
 
