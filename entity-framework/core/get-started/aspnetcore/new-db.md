@@ -11,15 +11,29 @@ uid: core/get-started/aspnetcore/new-db
 
 In this tutorial, you build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You use migrations to create the database from your EF Core model.
 
+You can follow the tutorial by using Visual Studio 2017 on Windows, or by using the .NET Core CLI with any code editor on any platform that .NET Core supports:
+
+# [Visual Studio](#tab/visual-studio)
+
+Choose this tab if you want to use Visual Studio.
+
 [View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb).
 
+# [.NET Core CLI](#tab/netcore-cli)
+
+Choose this tab to use the .NET Core CLI with any code editor or IDE, on Windows, macOS, or Linux.
+
+[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCoreNewDbXplat/EFGetStarted.AspNetCore.NewDb).
+
+---
+ 
 ## Prerequisites
 
 Install the following software:
 
 # [Visual Studio](#tab/visual-studio)
 
-* [Visual Studio 2017 15.7](https://www.visualstudio.com/downloads/) with these workloads:
+* [Visual Studio 2017 version 15.7 or later](https://www.visualstudio.com/downloads/) with these workloads:
   * **ASP.NET and web development** (under **Web & Cloud**)
   * **.NET Core cross-platform development** (under **Other Toolsets**)
 * [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core).
@@ -63,7 +77,19 @@ Warning: If you use **Individual User Accounts** instead of **None** for **Authe
 
 To install EF Core, you install the package for the EF Core database provider(s) you want to target. For a list of available providers see [Database Providers](../../providers/index.md). 
 
+# [Visual Studio](#tab/visual-studio)
+
 For this tutorial, you don't have to install a provider package because the tutorial uses SQL Server. The SQL Server provider package is included in the [Microsoft.AspnetCore.App metapackage](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/metapackage-app?view=aspnetcore-2.1).
+
+# [.NET Core CLI](#tab/netcore-cli)
+
+* For this tutorial you use SQLite because it runs on all platforms that .NET Core supports. Run the following command to install the SQLite provider:
+
+   ```cli
+   dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+   ```
+
+---
 
 ## Create the model
 
@@ -81,17 +107,19 @@ Define a context class and entity classes that make up the model.
 
 * In the **Models** folder create **Model.cs** with the following code:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Models/Model.cs)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCoreXplat/EFGetStarted.AspNetCore.NewDb/Models/Model.cs)]
 
 ---
 
 In a real app you would typically put each class from your model in a separate file. For the sake of simplicity, this tutorial puts all the classes in one file.
 
-## Register your context with dependency injection
+## Register the context with dependency injection
 
 Services (such as `BloggingContext`) are registered with [dependency injection](http://docs.asp.net/en/latest/fundamentals/dependency-injection.html) during application startup. Components that require these services (such as your MVC controllers) are then provided these services via constructor parameters or properties.
 
 To make `BloggingContext` available to MVC controllers, register it as a service.
+
+# [Visual Studio](#tab/visual-studio)
 
 * In **Startup.cs** add the following `using` statements:
 
@@ -101,7 +129,20 @@ To make `BloggingContext` available to MVC controllers, register it as a service
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=13-14)]
 
-A real app would generally put the connection string in a configuration file or environment variable. For the sake of simplicity, this tutorial defines it in code. See [Connection Strings](../../miscellaneous/connection-strings.md) for more information.
+# [.NET Core CLI](#tab/netcore-cli)
+
+* In **Startup.cs** add the following `using` statements:
+
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCoreXplat/EFGetStarted.AspNetCore.NewDb/Startup.cs#AddedUsings)]
+
+* Add the following highlighted code to the `ConfigureServices` method:
+
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCoreXplat/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=13-14)]
+
+
+---
+
+A real app would typically put the connection string in a configuration file or environment variable. For the sake of simplicity, this tutorial defines it in code. See [Connection Strings](../../miscellaneous/connection-strings.md) for more information.
 
 ## Create the database
 
@@ -133,9 +174,24 @@ Scaffold a controller and views for the `Blog` entity.
 
 # [.NET Core CLI](#tab/netcore-cli)
 
-```cli
-dotnet aspnet-codegenerator controller -name BlogsController -m Blog -dc BloggingContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries 
-```
+Do the following steps to install the scaffolding tools:
+
+* Add the following highlighted lines to the EFGetStarted.AspNetCore.NewDb.csproj file:
+
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCoreXplat/EFGetStarted.AspNetCore.NewDb/EFGetStarted.AspNetCore.NewDb.csproj?highlight=13-15)]
+
+* Run the following command:
+
+  ```cli
+  dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+  ```
+
+* Now you can run the scaffolding command:
+
+  ```cli
+  dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+  dotnet aspnet-codegenerator controller -name BlogsController -m Blog -dc BloggingContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries 
+  ```
 
 ---
 
