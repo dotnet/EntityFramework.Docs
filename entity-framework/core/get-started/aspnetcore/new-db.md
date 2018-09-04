@@ -214,7 +214,9 @@ dotnet run
 
 * Navigate to `/Blogs`
 
-* Use the create link to create some blog entries. Test the details and delete links.
+* Use the **Create New** link to create some blog entries.
+
+* Test the **Details**, **Edit**, and **Delete** links.
 
 ![image](_static/create.png)
 
