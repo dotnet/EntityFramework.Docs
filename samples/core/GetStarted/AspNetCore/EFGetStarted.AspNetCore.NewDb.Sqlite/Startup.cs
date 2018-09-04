@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+#region AddedUsings
 using EFGetStarted.AspNetCore.NewDb.Models;
 using Microsoft.EntityFrameworkCore;
+#endregion
 
 namespace EFGetStarted.AspNetCore.NewDb
 {
@@ -23,6 +25,7 @@ namespace EFGetStarted.AspNetCore.NewDb
 
         public IConfiguration Configuration { get; }
 
+#region ConfigureServices
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -40,6 +43,7 @@ namespace EFGetStarted.AspNetCore.NewDb
             services.AddDbContext<BloggingContext>(options => options.UseSqlite(connection));
 
         }
+#endregion
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
