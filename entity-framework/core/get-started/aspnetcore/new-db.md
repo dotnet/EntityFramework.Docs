@@ -216,11 +216,11 @@ dotnet run
 
 * Use the **Create New** link to create some blog entries.
 
+  ![image](_static/create.png)
+
 * Test the **Details**, **Edit**, and **Delete** links.
 
-![image](_static/create.png)
-
-![image](_static/index-new-db.png)
+  ![image](_static/index-new-db.png)
 
 ## Additional Resources
 
