@@ -178,7 +178,7 @@ Do the following steps to install the scaffolding tools:
 
 * Add the following highlighted lines to the EFGetStarted.AspNetCore.NewDb.csproj file:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/EFGetStarted.AspNetCore.NewDbSqlite.csproj?highlight=13-15)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDbSqlite/EFGetStarted.AspNetCore.NewDb.csproj?highlight=13-15)]
 
 * Run the following command:
 
