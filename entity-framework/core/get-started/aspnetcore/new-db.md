@@ -107,7 +107,7 @@ Define a context class and entity classes that make up the model.
 
 * In the **Models** folder create **Model.cs** with the following code:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCoreXplat/EFGetStarted.AspNetCore.NewDb/Models/Model.cs)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDbSqlite/Models/Model.cs)]
 
 ---
 
@@ -133,11 +133,11 @@ To make `BloggingContext` available to MVC controllers, register it as a service
 
 * In **Startup.cs** add the following `using` statements:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCoreXplat/EFGetStarted.AspNetCore.NewDb/Startup.cs#AddedUsings)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDbSqlite/Startup.cs#AddedUsings)]
 
 * Add the following highlighted code to the `ConfigureServices` method:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCoreXplat/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=13-14)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDbSqlite/Startup.cs?name=ConfigureServices&highlight=13-14)]
 
 
 ---
@@ -178,7 +178,7 @@ Do the following steps to install the scaffolding tools:
 
 * Add the following highlighted lines to the EFGetStarted.AspNetCore.NewDb.csproj file:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCoreXplat/EFGetStarted.AspNetCore.NewDb/EFGetStarted.AspNetCore.NewDb.csproj?highlight=13-15)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/EFGetStarted.AspNetCore.NewDbSqlite.csproj?highlight=13-15)]
 
 * Run the following command:
 
