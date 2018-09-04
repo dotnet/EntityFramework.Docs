@@ -23,7 +23,7 @@ Choose this tab for Visual Studio 2017 instructions.
 
 Choose this tab to use the .NET Core CLI with any code editor on Windows, macOS, or Linux.
 
-[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCoreNewDbXplat/EFGetStarted.AspNetCore.NewDb).
+[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCoreNewDb.Sqlite/EFGetStarted.AspNetCore.NewDb).
 
 ---
  
@@ -63,9 +63,7 @@ Warning: If you use **Individual User Accounts** instead of **None** for **Authe
 
 # [.NET Core CLI](#tab/netcore-cli)
 
-* In the **Terminal**, navigate to a folder that you can use for a new project.
-
-* Run the following command:
+* At a command prompt run the following command:
 
    ```cli
    dotnet new mvc -o EFGetStarted.AspNetCore.NewDb
@@ -83,7 +81,9 @@ For this tutorial, you don't have to install a provider package because the tuto
 
 # [.NET Core CLI](#tab/netcore-cli)
 
-* For this tutorial, you use SQLite because it runs on all platforms that .NET Core supports. Run the following command to install the SQLite provider:
+For this tutorial, you use SQLite because it runs on all platforms that .NET Core supports.
+
+* Run the following command to install the SQLite provider:
 
    ```cli
    dotnet add package Microsoft.EntityFrameworkCore.Sqlite
@@ -157,6 +157,15 @@ The following steps use [migrations](https://docs.microsoft.com/aspnet/core/data
 # [.NET Core CLI](#tab/netcore-cli)
 
 * Run `dotnet ef migrations add InitialCreate` to scaffold a migration to create the initial set of tables for the model.
+
+  You might see a warning about the tools version, similar to this example:
+
+  ```console
+  The EF Core tools version '2.1.1-rtm-30846' is older than that of the runtime '2.1.2-rtm-xxxxx'. Update the tools for the latest features and bug fixes.
+  ```
+
+  For this tutorial the tools version is fine.
+
 * Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations.
 
 ---
@@ -180,7 +189,7 @@ Do the following steps to install the scaffolding tools:
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb.Sqlite/EFGetStarted.AspNetCore.NewDb.csproj?highlight=13-15)]
 
-* Run the following command:
+* Run the following command to install another tooling package:
 
   ```cli
   dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
