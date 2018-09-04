@@ -161,7 +161,7 @@ The following steps use [migrations](https://docs.microsoft.com/aspnet/core/data
   You might see a warning about the tools version, similar to this example:
 
   ```console
-  The EF Core tools version '2.1.1-rtm-30846' is older than that of the runtime '2.1.2-rtm-xxxxx'. Update the tools for the latest features and bug fixes.
+  The EF Core tools version '2.1.1-rtm-xxxxx' is older than that of the runtime '2.1.2-rtm-xxxxx'. Update the tools for the latest features and bug fixes.
   ```
 
   For this tutorial, the tools version is fine.
