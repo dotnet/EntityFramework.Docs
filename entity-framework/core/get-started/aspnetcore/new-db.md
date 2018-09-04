@@ -157,15 +157,6 @@ The following steps use [migrations](https://docs.microsoft.com/aspnet/core/data
 # [.NET Core CLI](#tab/netcore-cli)
 
 * Run `dotnet ef migrations add InitialCreate` to scaffold a migration to create the initial set of tables for the model.
-
-  You might see a warning about the tools version, similar to this example:
-
-  ```console
-  The EF Core tools version '2.1.1-rtm-xxxxx' is older than that of the runtime '2.1.2-rtm-xxxxx'. Update the tools for the latest features and bug fixes.
-  ```
-
-  For this tutorial, the tools version is fine.
-
 * Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations.
 
 ---
