@@ -20,13 +20,18 @@ View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.
 
 ## Create a new project
 
-* Create a new console project:
+Create a new console project:
 
   ``` Console
   dotnet new console -o ConsoleApp.SQLite
+  ```
+## Change the current directory to the application's directory
+
+In subsequent steps, we need to issue `dotnet` commands against the application, so we change the current directory like this:
+
+  ``` Console
   cd ConsoleApp.SQLite/
   ```
-
 ## Install Entity Framework Core
 
 To use EF Core, install the package for the database provider(s) you want to target. This walkthrough uses SQLite. For a list of available providers see [Database Providers](../../providers/index.md).
