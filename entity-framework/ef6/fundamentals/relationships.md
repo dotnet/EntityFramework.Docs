@@ -87,7 +87,7 @@ The following examples show how to use the foreign key properties and navigation
     ```
 
  -   To delete the relationship, set the navigation property to `null`. If you are working with Entity Framework that is based on .NET 4.0, then the related end needs to be loaded before you set it to null. For example:  
-    ``` chsarp
+    ``` csharp
     context.Entry(course).Reference(c => c.Department).Load();  
     course.Department = null;
     ```  
