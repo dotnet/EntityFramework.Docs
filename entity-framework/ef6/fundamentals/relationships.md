@@ -69,15 +69,16 @@ In a *foreign key association*, when you change the relationship, the state of a
 
 The following examples show how to use the foreign key properties and navigation properties to associate the related objects. With foreign key associations, you can use either method to change, create, or modify relationships. With independent associations, you cannot use the foreign key property.
 
--  By assigning a new value to a foreign key property, as in the following example.  
-   ``` csharp
+- By assigning a new value to a foreign key property, as in the following example.  
+  ``` csharp
   course.DepartmentID = newCourse.DepartmentID;
   ```
 
 - The following code removes a relationship by setting the foreign key to **null**. Note, that the foreign key property must be nullable.  
   ``` csharp
   course.DepartmentID = null;
-  ```  
+  ```
+
   >[!NOTE]
   > If the reference is in the added state (in this example, the course object), the reference navigation property will not be synchronized with the key values of a new object until SaveChanges is called. Synchronization does not occur because the object context does not contain permanent keys for added objects until they are saved. If you must have new objects fully synchronized as soon as you set the relationship, use one of the following methods.*
 
