@@ -20,14 +20,16 @@ View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.
 
 ## Create a new project
 
-Create a new console project:
+* Create a new console project:
 
   ``` Console
   dotnet new console -o ConsoleApp.SQLite
   ```
-## Change the current directory to the application's directory
+## Change the current directory 
 
-In subsequent steps, we need to issue `dotnet` commands against the application, so we change the current directory like this:
+In subsequent steps, we need to issue `dotnet` commands against the application. 
+
+* We change the current directory to the application's directory like this:
 
   ``` Console
   cd ConsoleApp.SQLite/
