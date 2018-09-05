@@ -86,12 +86,13 @@ The following examples show how to use the foreign key properties and navigation
     course.Department = department;
     ```
 
- -   To delete the relationship, set the navigation property to `null`. If you are working with Entity Framework that is based on .NET 4.0, then the related end needs to be loaded before you set it to null. For example:  
+ -  To delete the relationship, set the navigation property to `null`. If you are working with Entity Framework that is based on .NET 4.0, then the related end needs to be loaded before you set it to null. For example:   
     ``` csharp
     context.Entry(course).Reference(c => c.Department).Load();  
     course.Department = null;
     ```  
-    Starting with Entity Framework 5.0, that is based on .NET 4.5, you can set the relationship to null without loading the related end. You can also set the current value to null using the following method.  
+
+    Starting with Entity Framework 5.0, that is based on .NET 4.5, you can set the relationship to null without loading the related end. You can also set the current value to null using the following method.   
     ``` csharp
     context.Entry(course).Reference(c => c.Department).CurrentValue = null;
     ```
