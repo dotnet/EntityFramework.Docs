@@ -14,31 +14,6 @@ EF Core can serve as an object-relational mapper (O/RM), enabling .NET developer
 
 EF Core supports many database engines, see [Database Providers](providers/index.md) for details.
 
-If you like to learn by writing code, we'd recommend one of our [Getting Started](get-started/index.md) guides to get you started with EF Core.
-
-## What is new in EF Core
-
-If you are familiar with EF Core and want to jump straight into the details of the latest releases:
-
-- **[What is new in EF Core 2.1](xref:core/what-is-new/ef-core-2.1)**
-- **[Upgrading existing applications to EF Core 2.x](xref:core/miscellaneous/1x-2x-upgrade)**
-
-
-## Get Entity Framework Core
-
-[Install the NuGet package](https://docs.nuget.org/ndocs/quickstart/use-a-package) for the database provider you want to use. For example, to install the SQL Server provider in cross-platform development using `dotnet` tool in the command line:
-
-``` Console
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-```
-
-Or in Visual Studio, using the Package Manager Console:
-
-``` PowerShell
-Install-Package Microsoft.EntityFrameworkCore.SqlServer
-```
-See [Database Providers](providers/index.md) for information on available providers and [Installing EF Core](get-started/install/index.md) for more detailed installation steps.
-
 ## The Model
 
 With EF Core, data access is performed using a model. A model is made up of entity classes and a derived context that represents a session with the database, allowing you to query and save data. See [Creating a Model](modeling/index.md) to learn more.
@@ -108,3 +83,8 @@ using (var db = new BloggingContext())
     db.SaveChanges();
 }
 ```
+
+## Next steps
+
+For introductory tutorials, see [Getting Started with Entity Framework Core](get-started/index.md).
+
