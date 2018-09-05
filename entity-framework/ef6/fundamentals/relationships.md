@@ -65,60 +65,59 @@ The rest of this page covers how to access and manipulate data using relationshi
 
 ## Creating and modifying relationships
 
-In a *foreign key association*, when you change the relationship, the state of a dependent object with an EntityState.Unchanged state changes to EntityState.Modified. In an independent relationship, changing the relationship does not update the state of the dependent object.
+In a *foreign key association*, when you change the relationship, the state of a dependent object with an `EntityState.Unchanged` state changes to `EntityState.Modified`. In an independent relationship, changing the relationship does not update the state of the dependent object.
 
 The following examples show how to use the foreign key properties and navigation properties to associate the related objects. With foreign key associations, you can use either method to change, create, or modify relationships. With independent associations, you cannot use the foreign key property.
 
--   By assigning a new value to a foreign key property, as in the following example.  
-    ``` csharp
-    course.DepartmentID = newCourse.DepartmentID;
-    ```
+-  By assigning a new value to a foreign key property, as in the following example.  
+   ``` csharp
+  course.DepartmentID = newCourse.DepartmentID;
+  ```
 
--   The following code removes a relationship by setting the foreign key to **null**. Note, that the foreign key property must be nullable.  
-    ``` csharp
-    course.DepartmentID = null;
-    ```  
-    >[!NOTE]
-    > If the reference is in the added state (in this example, the course object), the reference navigation property will not be synchronized with the key values of a new object until SaveChanges is called. Synchronization does not occur because the object context does not contain permanent keys for added objects until they are saved. If you must have new objects fully synchronized as soon as you set the relationship, use one of the following methods.*
+- The following code removes a relationship by setting the foreign key to **null**. Note, that the foreign key property must be nullable.  
+  ``` csharp
+  course.DepartmentID = null;
+  ```  
+  >[!NOTE]
+  > If the reference is in the added state (in this example, the course object), the reference navigation property will not be synchronized with the key values of a new object until SaveChanges is called. Synchronization does not occur because the object context does not contain permanent keys for added objects until they are saved. If you must have new objects fully synchronized as soon as you set the relationship, use one of the following methods.*
 
--   By assigning a new object to a navigation property. The following code creates a relationship between a course and a `department`. If the objects are attached to the context, the `course` is also added to the `department.Courses` collection, and the corresponding foreign key property on the `course` object is set to the key property value of the department.  
-    ``` csharp
-    course.Department = department;
-    ```
+- By assigning a new object to a navigation property. The following code creates a relationship between a course and a `department`. If the objects are attached to the context, the `course` is also added to the `department.Courses` collection, and the corresponding foreign key property on the `course` object is set to the key property value of the department.  
+  ``` csharp
+  course.Department = department;
+  ```
 
- -  To delete the relationship, set the navigation property to `null`. If you are working with Entity Framework that is based on .NET 4.0, then the related end needs to be loaded before you set it to null. For example:   
-    ``` csharp
-    context.Entry(course).Reference(c => c.Department).Load();  
-    course.Department = null;
-    ```  
+- To delete the relationship, set the navigation property to `null`. If you are working with Entity Framework that is based on .NET 4.0, then the related end needs to be loaded before you set it to null. For example:   
+  ``` csharp
+  context.Entry(course).Reference(c => c.Department).Load();
+  course.Department = null;
+  ```
 
-    Starting with Entity Framework 5.0, that is based on .NET 4.5, you can set the relationship to null without loading the related end. You can also set the current value to null using the following method.   
-    ``` csharp
-    context.Entry(course).Reference(c => c.Department).CurrentValue = null;
-    ```
+  Starting with Entity Framework 5.0, that is based on .NET 4.5, you can set the relationship to null without loading the related end. You can also set the current value to null using the following method.   
+  ``` csharp
+  context.Entry(course).Reference(c => c.Department).CurrentValue = null;
+  ```
 
--   By deleting or adding an object in an entity collection. For example, you can add an object of type `Course` to the `department.Courses` collection. This operation creates a relationship between a particular **course** and a particular `department`. If the objects are attached to the context, the department reference and the foreign key property on the **course** object will be set to the appropriate `department`.  
-    ``` csharp
-    department.Courses.Add(newCourse);
-    ```
+- By deleting or adding an object in an entity collection. For example, you can add an object of type `Course` to the `department.Courses` collection. This operation creates a relationship between a particular **course** and a particular `department`. If the objects are attached to the context, the department reference and the foreign key property on the **course** object will be set to the appropriate `department`.  
+  ``` csharp
+  department.Courses.Add(newCourse);
+  ```
 
 - By using the `ChangeRelationshipState` method to change the state of the specified relationship between two entity objects. This method is most commonly used when working with N-Tier applications and an *independent association* (it cannot be used with a foreign key association). Also, to use this method you must drop down to `ObjectContext`, as shown in the example below.  
 In the following example, there is a many-to-many relationship between Instructors and Courses. Calling the `ChangeRelationshipState` method and passing the `EntityState.Added` parameter, lets the `SchoolContext` know that a relationship has been added between the two objects:
+  ``` csharp
 
-``` csharp
+  ((IObjectContextAdapter)context).ObjectContext.
+    ObjectStateManager.
+    ChangeRelationshipState(course, instructor, c => c.Instructor, EntityState.Added);
+  ```
 
-       ((IObjectContextAdapter)context).ObjectContext.
-                 ObjectStateManager.
-                  ChangeRelationshipState(course, instructor, c => c.Instructor, EntityState.Added);
-```
+  Note that if you are updating (not just adding) a relationship, you must delete the old relationship after adding the new one:
 
-    Note that if you are updating (not just adding) a relationship, you must delete the old relationship after adding the new one:
-
-``` csharp
-       ((IObjectContextAdapter)context).ObjectContext.
-                  ObjectStateManager.
-                  ChangeRelationshipState(course, oldInstructor, c => c.Instructor, EntityState.Deleted);
-```
+  ``` csharp
+  ((IObjectContextAdapter)context).ObjectContext.
+    ObjectStateManager.
+    ChangeRelationshipState(course, oldInstructor, c => c.Instructor, EntityState.Deleted);
+  ```
 
 ## Synchronizing the changes between the foreign keys and navigation properties
 
