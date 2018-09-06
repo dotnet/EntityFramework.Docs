@@ -56,9 +56,13 @@ Warning: If you use **Individual User Accounts** instead of **None** for **Authe
 * Run the following command to create an MVC project:
 
    ```cli
-   dotnet new mvc -o EFGetStarted.AspNetCore.NewDb
+   dotnet new mvc -n EFGetStarted.AspNetCore.NewDb
    ```
+* Change to the project directory. The next commands you enter need to run against the new project.
 
+   ```cli
+   cd EFGetStarted.AspNetCore.NewDb
+   ```
 ---
 
 ## Install Entity Framework Core
