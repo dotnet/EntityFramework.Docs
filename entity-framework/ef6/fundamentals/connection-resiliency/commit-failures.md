@@ -44,23 +44,23 @@ Although EF will do a best effort to prune rows from the table when they aren’
 
 Before EF 6.1 there was not mechanism to handle commit failures in the EF product. There are several ways to dealing with this situation that can be applied to previous versions of EF6:  
 
-### Option 1 - Do nothing  
+* Option 1 - Do nothing  
 
-The likelihood of a connection failure during transaction commit is low so it may be acceptable for your application to just fail if this condition actually occurs.  
+  The likelihood of a connection failure during transaction commit is low so it may be acceptable for your application to just fail if this condition actually occurs.  
 
-## Option 2 - Use the database to reset state  
+* Option 2 - Use the database to reset state  
 
-1. Discard the current DbContext  
-2. Create a new DbContext and restore the state of your application from the database  
-3. Inform the user that the last operation might not have been completed successfully  
+  1. Discard the current DbContext  
+  2. Create a new DbContext and restore the state of your application from the database  
+  3. Inform the user that the last operation might not have been completed successfully  
 
-## Option 3 - Manually track the transaction  
+* Option 3 - Manually track the transaction  
 
-1. Add a non-tracked table to the database used to track the status of the transactions.  
-2. Insert a row into the table at the beginning of each transaction.  
-3. If the connection fails during the commit, check for the presence of the corresponding row in the database.  
-    - If the row is present, continue normally, as the transaction was committed successfully  
-    - If the row is absent, use an execution strategy to retry the current operation.  
-4. If the commit is successful, delete the corresponding row to avoid the growth of the table.  
+  1. Add a non-tracked table to the database used to track the status of the transactions.  
+  2. Insert a row into the table at the beginning of each transaction.  
+  3. If the connection fails during the commit, check for the presence of the corresponding row in the database.  
+     - If the row is present, continue normally, as the transaction was committed successfully  
+     - If the row is absent, use an execution strategy to retry the current operation.  
+  4. If the commit is successful, delete the corresponding row to avoid the growth of the table.  
 
 [This blog post](http://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx) contains sample code for accomplishing this on SQL Azure.  

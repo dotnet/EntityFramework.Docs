@@ -62,11 +62,9 @@ The SqlAzureExecutionStrategy will retry instantly the first time a transient fa
 
 The execution strategies will only retry a limited number of exceptions that are usually tansient, you will still need to handle other errors as well as catching the RetryLimitExceeded exception for the case where an error is not transient or takes too long to resolve itself.  
 
-## Limitations  
-
 There are some known of limitations when using a retrying execution strategy:  
 
-### Streaming queries are not supported  
+## Streaming queries are not supported  
 
 By default, EF6 and later version will buffer query results rather than streaming them. If you want to have results streamed you can use the AsStreaming method to change a LINQ to Entities query to streaming.  
 
@@ -82,11 +80,11 @@ using (var db = new BloggingContext())
 
 Streaming is not supported when a retrying execution strategy is registered. This limitation exists because the connection could drop part way through the results being returned. When this occurs, EF needs to re-run the entire query but has no reliable way of knowing which results have already been returned (data may have changed since the initial query was sent, results may come back in a different order, results may not have a unique identifier, etc.).  
 
-### User initiated transactions not supported  
+## User initiated transactions not supported  
 
 When you have configured an execution strategy that results in retries, there are some limitations around the use of transactions.  
 
-#### What's Supported: EF's default transaction behavior  
+### default transaction behavior  
 
 By default, EF will perform any database updates within a transaction. You don’t need to do anything to enable this, EF always does this automatically.  
 
@@ -101,7 +99,7 @@ using (var db = new BloggingContext())
 }
 ```  
 
-#### What’s not supported: User initiated transactions  
+### What’s not supported: User initiated transactions  
 
 When not using a retrying execution strategy you can wrap multiple operations in a single transaction. For example, the following code wraps two SaveChanges calls in a single transaction. If any part of either operation fails then none of the changes are applied.  
 
@@ -124,9 +122,7 @@ using (var db = new BloggingContext())
 
 This is not supported when using a retrying execution strategy because EF isn’t aware of any previous operations and how to retry them. For example, if the second SaveChanges failed then EF no longer has the required information to retry the first SaveChanges call.  
 
-#### Possible workarounds  
-
-##### Suspend Execution Strategy  
+### Workaround: Suspend Execution Strategy  
 
 One possible workaround is to suspend the retrying execution strategy for the piece of code that needs to use a user initiated transaction. The easiest way to do this is to add a SuspendExecutionStrategy flag to your code based configuration class and change the execution strategy lambda to return the default (non-retying) execution strategy when the flag is set.  
 
@@ -187,7 +183,7 @@ using (var db = new BloggingContext())
 }
 ```  
 
-##### Manually Call Execution Strategy  
+### Workaround: Manually Call Execution Strategy  
 
 Another option is to manually use the execution strategy and give it the entire set of logic to be run, so that it can retry everything if one of the operations fails. We still need to suspend the execution strategy - using the technique shown above - so that any contexts used inside the retryable code block do not attempt to retry.  
 

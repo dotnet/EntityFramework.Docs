@@ -18,13 +18,13 @@ With EF6 the core code that was previously part of the .NET Framework is now bei
 
 An EF provider is really a collection of provider-specific services defined by CLR types that these services extend from (for a base class) or implement (for an interface). Two of these services are fundamental and necessary for EF to function at all. Others are optional and only need to be implemented if specific functionality is required and/or the default implementations of these services does not work for the specific database server being targeted.
 
-### Fundamental provider types
+## Fundamental provider types
 
-#### DbProviderFactory
+### DbProviderFactory
 
 EF depends on having a type derived from [System.Data.Common.DbProviderFactory](http://msdn.microsoft.com/en-us/library/system.data.common.dbproviderfactory.aspx) for performing all low-level database access. DbProviderFactory is not actually part of EF but is instead a class in the .NET Framework that serves an entry point for ADO.NET providers that can be used by EF, other O/RMs or directly by an application to obtain instances of connections, commands, parameters and other ADO.NET abstractions in a provider agnostic way. More information about DbProviderFactory an be found in the [MSDN documentation for ADO.NET](http://msdn.microsoft.com/en-us/library/a6cd7c08.aspx).
 
-#### DbProviderServices
+### DbProviderServices
 
 EF depends on having a type derived from DbProviderServices for providing additional functionality needed by EF on top of the functionality already provided by the ADO.NET provider. In older versions of EF the DbProviderServices class was part of the .NET Framework and was found in the System.Data.Common namespace. Starting with EF6 this class is now part of EntityFramework.dll and is in the System.Data.Entity.Core.Common namespace.
 
@@ -32,33 +32,33 @@ More details about the fundamental functionality of a DbProviderServices impleme
 
 In older versions of EF the DbProviderServices implementation to use was obtained directly from an ADO.NET provider. This was done by casting DbProviderFactory to IServiceProvider and calling the GetService method. This tightly coupled the EF provider to the DbProviderFactory. This coupling blocked EF from being moved out of the .NET Framework and therefore for EF6 this tight coupling has been removed and an implementation of DbProviderServices is now registered directly in the application’s configuration file or in code-based configuration as described in more detail the _Registering DbProviderServices_ section below.
 
-### Additional services
+## Additional services
 
 In addition to the fundamental services described above there are also many other services used by EF which are either always or sometimes provider-specific. Default provider-specific implementations of these services can be supplied by a DbProviderServices implementation. Applications can also override the implementations of these services, or provide implementations when a DbProviderServices type does not provide a default. This is described in more detail in the _Resolving additional services_ section below.
 
 The additional service types that a provider may be of interest to a provider are listed below. More details about each of these service types can be found in the API documentation.
 
-#### IDbExecutionStrategy
+### IDbExecutionStrategy
 
 This is an optional service that allows a provider to implement retries or other behavior when queries and commands are executed against the database. If no implementation is provided, then EF will simply execute the commands and propagate any exceptions thrown. For SQL Server this service is used to provide a retry policy which is especially useful when running against cloud-based database servers such as SQL Azure.
 
-#### IDbConnectionFactory
+### IDbConnectionFactory
 
 This is an optional service that allows a provider to create DbConnection objects by convention when given only a database name. Note that while this service can be resolved by a DbProviderServices implementation it has been present since EF 4.1 and can also be explicitly set in either the config file or in code. The provider will only get a chance to resolve this service if it registered as the default provider (see _The default provider_ below) and if a default connection factory has not been set elsewhere.
 
-#### DbSpatialServices
+### DbSpatialServices
 
 This is an optional services that allows a provider to add support for geography and geometry spatial types. An implementation of this service must be supplied in order for an application to use EF with spatial types. DbSptialServices is asked for in two ways. First, provider-specific spatial services are requested using a DbProviderInfo object (which contains invariant name and manifest token) as key. Second, DbSpatialServices can be asked for with no key. This is used to resolve the “global spatial provider” that is used when creating stand-alone DbGeography or DbGeometry types.
 
-#### MigrationSqlGenerator
+### MigrationSqlGenerator
 
 This is an optional service that allows EF Migrations to be used for the generation of SQL used in creating and modifying database schemas by Code First. An implementation is required in order to support Migrations. If an implementation is provided then it will also be used when databases are created using database initializers or the Database.Create method.
 
-#### Func<DbConnection, string, HistoryContextFactory>
+### Func<DbConnection, string, HistoryContextFactory>
 
 This is an optional service that allows a provider to configure the mapping of the HistoryContext to the `__MigrationHistory` table used by EF Migrations. The HistoryContext is a Code First DbContext and can be configured using the normal fluent API to change things like the name of the table and the column mapping specifications. The default implementation of this service returned by EF for all providers may work for a given database server if all the default table and column mappings are supported by that provider. In such a case the provider does not need to supply an implementation of this service.
 
-#### IDbProviderFactoryResolver
+### IDbProviderFactoryResolver
 
 This is an optional service for obtaining the correct DbProviderFactory from a given DbConnection object. The default implementation of this service returned by EF for all providers is intended to work for all providers. However, when running on .NET 4, the DbProviderFactory is not publicly accessible from one if its DbConnections. Therefore, EF uses some heuristics to search the registered providers to find a match. It is possible that for some providers these heuristics will fail and in such situations the provider should supply a new implementation.
 

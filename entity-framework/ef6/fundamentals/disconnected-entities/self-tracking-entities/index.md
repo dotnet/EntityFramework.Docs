@@ -40,7 +40,7 @@ Consider the following when working with self-tracking entities:
 - Self-tracking entities are not enabled to perform lazy loading.  
 - Binary serialization and serialization to ASP.NET state management objects is not supported by self-tracking entities. However, you can customize the template to add the binary serialization support. For more information, see [Using Binary Serialization and ViewState with Self-Tracking Entities](http://go.microsoft.com/fwlink/?LinkId=199208).  
 
-### Security Considerations  
+## Security Considerations  
 
 The following security considerations should be taken into account when working with self-tracking entities:  
 
