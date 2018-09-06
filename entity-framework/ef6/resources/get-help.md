@@ -11,6 +11,6 @@ The best way to get help using Entity Framework is to [post a question on Stack 
 
 If you are not familiar with Stack Overflow, be sure to [read the guidelines on asking questions](http://stackoverflow.com/help/asking). In particular, do not use Stack Overflow to report bugs, ask roadmap questions, or suggest new features.  
 
-## ![GitHub-Mark-32px](~/ef6/media/github-mark-32px.png) Bug Reports and Feature Requests  
+## ![GitHub Mark](~/ef6/media/github-mark-32px.png) Bug Reports and Feature Requests  
 
 If you have found a bug that you think should be fixed, have a feature you would like to see implemented, or a question you couldn't find an answer to, create an issue on [the EF6 GitHub repository](https://github.com/aspnet/EntityFramework6/issues).

@@ -47,7 +47,7 @@ You can also create a new complex type that does not contain properties of an ex
 
 Right-click the **Complex Types** folder in the Model Browser, point to **AddNew Complex Type…**. Alternatively, you can select the **Complex Types** folder and press the **Insert** key on your keyboard.
 
-![Ad dNew Complex type](~/ef6/media/addnewcomplextype.png)
+![Add New Complex type](~/ef6/media/addnewcomplextype.png)
 
 A new complex type is added to the folder with a default name. You can now add properties to the type.
 

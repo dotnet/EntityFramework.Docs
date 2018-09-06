@@ -48,7 +48,7 @@ Code First uses annotations from the System.ComponentModel.DataAnnotations assem
 
 With no additional code or markup changes in the application, an existing MVC application will perform client side validation, even dynamically building a message using the property and annotation names.
 
-![figure01](~/ef6/media/figure01.png)
+![figure 1](~/ef6/media/figure01.png)
 
 In the post back method of this Create view, Entity Framework is used to save the new blog to the database, but MVC’s client-side validation is triggered before the application reaches that code.
 
@@ -147,7 +147,7 @@ The ValidationResult constructor takes a string that represents the error messag
 
 Unlike the validation provided by the Fluent API, this validation result will be recognized by the View and the exception handler that I used earlier to add the error into ModelState is unnecessary. Because I set both property names in the ValidationResult, the MVC HtmlHelpers display the error message for both of those properties.
 
-![figure02](~/ef6/media/figure02.png)
+![figure 2](~/ef6/media/figure02.png)
 
 ## DbContext.ValidateEntity
 

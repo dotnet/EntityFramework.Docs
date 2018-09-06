@@ -279,7 +279,7 @@ Add the classes that are defined in the model as data sources for this WinForms 
     *If the Data Sources window is not showing up, select***View -&gt; Other Windows-&gt; Data Sources**
 -   Press the pin icon, so the Data Sources window does not auto hide. You may need to hit the refresh button if the window was already visible.
 
-    ![Data Source2](~/ef6/media/datasource2.png)
+    ![Data Source 2](~/ef6/media/datasource2.png)
 
 -   In Solution Explorer, double-click the **Form1.cs** file to open the main form in designer.
 -   Select the **Category** data source and drag it on the form. By default, a new DataGridView (**categoryDataGridView**) and Navigation toolbar controls are added to the designer. These controls are bound to the BindingSource (**categoryBindingSource**) and Binding Navigator (**categoryBindingNavigator**) components that are created as well.

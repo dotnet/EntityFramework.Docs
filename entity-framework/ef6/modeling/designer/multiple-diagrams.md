@@ -33,7 +33,7 @@ The visual design surface window is automatically opened when the Entity Data Mo
 
 The following screenshot shows an .edmx file opened in the EF Designer. The screenshot shows the visual design surface (to the left) and the **Model Browser** window (to the right).
 
-![EFDesigner2](~/ef6/media/efdesigner2.png)
+![EF Designer 2](~/ef6/media/efdesigner2.png)
 
 To undo an operation done in the EF Designer, click Ctrl-Z.
 

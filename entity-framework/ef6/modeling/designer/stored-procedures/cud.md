@@ -48,7 +48,7 @@ To complete this walkthrough, you will need:
 -   Also, select the following stored procedures under the **Stored Procedures and Functions** node: **DeletePerson**, **InsertPerson**, and **UpdatePerson**. 
 -   Starting with Visual Studio 2012 the EF Designer supports bulk import of stored procedures. The **Import selected stored procedures and functions into the entity model** is checked by default. Since in this example we have stored procedures that insert, update, and delete entity types, we do not want to import them and will uncheck this checkbox. 
 
-    ![ImportSProcs](~/ef6/media/importsprocs.jpg)
+    ![Import S Procs](~/ef6/media/importsprocs.jpg)
 
 -   Click **Finish**.
     The EF Designer, which provides a design surface for editing your model, is displayed.
@@ -66,7 +66,7 @@ To complete this walkthrough, you will need:
 -   Press **Enter**.
 -   By default, **NewPersonID** is mapped to the entity key **PersonID**. Note that an arrow indicates the direction of the mapping: The value of the result column is supplied to the property.
 
-    ![MappingDetails](~/ef6/media/mappingdetails.png)
+    ![Mapping Details](~/ef6/media/mappingdetails.png)
 
 -   Click **&lt;Select Update Function&gt;** and select **UpdatePerson** from the resulting drop-down list.
 -   Default mappings between stored procedure parameters and entity properties appear.

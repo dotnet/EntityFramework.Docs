@@ -28,7 +28,7 @@ This short video explains the differences, and how to find the one that is right
 
 **Presented By**: [Rowan Miller](http://romiller.com/)
 
-![WhichWorkflow_Thumb](../media/whichworkflow-thumb.png)
+![Which Workflow Thumb](../media/whichworkflow-thumb.png)
  [WMV](http://download.microsoft.com/download/8/F/8/8F81F4CD-3678-4229-8D79-0C63FFA3C595/HDI_ITPro_Technet_winvideo_ChoseYourWorkflow.wmv) | [MP4](http://download.microsoft.com/download/8/F/8/8F81F4CD-3678-4229-8D79-0C63FFA3C595/HDI_ITPro_Technet_mp4video_ChoseYourWorkflow.m4v) | [WMV (ZIP)](http://download.microsoft.com/download/8/F/8/8F81F4CD-3678-4229-8D79-0C63FFA3C595/HDI_ITPro_Technet_winvideo_ChoseYourWorkflow.zip)
 
 If after watching the video you still don't feel comfortable deciding if you want to use the EF Designer or Code First, learn both!

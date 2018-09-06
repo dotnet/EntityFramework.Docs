@@ -39,7 +39,7 @@ We’re going to make use of Entity Framework Designer, which is included as par
 -   Enter **BloggingModel** as the name and click **OK**, this launches the Entity Data Model Wizard
 -   Select **Empty Model** and click **Finish**
 
-    ![CreateEmptyModel](~/ef6/media/createemptymodel.png)
+    ![Create Empty Model](~/ef6/media/createemptymodel.png)
 
 The Entity Framework Designer is opened with a blank model. Now we can start adding entities, properties and associations to the model.
 
@@ -49,7 +49,7 @@ The Entity Framework Designer is opened with a blank model. Now we can start add
 -   Right-click on the design surface and select **Add New -&gt; Entity…**
 -   Enter **Blog** as the entity name and **BlogId** as the key name and click **OK**
 
-    ![AddBlogEntity](~/ef6/media/addblogentity.png)
+    ![Add Blog Entity](~/ef6/media/addblogentity.png)
 
 -   Right-click on the new entity on the design surface and select **Add New -&gt; Scalar Property**, enter **Name** as the name of the property.
 -   Repeat this process to add a **Url** property.
@@ -65,11 +65,11 @@ Now that we have a couple of entities, it’s time to add an association (or rel
     *This means that a Blog has many Posts and a Post belongs to one Blog*
 -   Ensure the **Add foreign key properties to 'Post' Entity** box is checked and click **OK**
 
-    ![AddAssociationMF](~/ef6/media/addassociationmf.png)
+    ![Add Association MF](~/ef6/media/addassociationmf.png)
 
 We now have a simple model that we can generate a database from and use to read and write data.
 
-![ModelInitial](~/ef6/media/modelinitial.png)
+![Model Initial](~/ef6/media/modelinitial.png)
 
 ### Additional Steps in Visual Studio 2010
 
@@ -89,7 +89,7 @@ Next, we need to swap our model to generate code that makes use of the DbContext
 -   Select **Online Templates** from the left menu and search for **DbContext**
 -   Select the EF **5.x DbContext Generator for C\#**, enter **BloggingModel** as the name and click **Add**
 
-    ![DbContextTemplate](~/ef6/media/dbcontexttemplate.png)
+    ![DbContext Template](~/ef6/media/dbcontexttemplate.png)
 
 ## 3. Generating the Database
 
@@ -105,9 +105,9 @@ Let's go ahead and generate the database.
 -   Right-click on the design surface and select **Generate Database from Model…**
 -   Click **New Connection…** and specify either LocalDB or SQL Express, depending on which version of Visual Studio you are using, enter **ModelFirst.Blogging** as the database name.
 
-    ![LocalDBConnectionMF](~/ef6/media/localdbconnectionmf.png)
+    ![LocalDB Connection MF](~/ef6/media/localdbconnectionmf.png)
 
-    ![SqlExpressConnectionMF](~/ef6/media/sqlexpressconnectionmf.png)
+    ![Sql Express Connection MF](~/ef6/media/sqlexpressconnectionmf.png)
 
 -   Select **OK** and you will be asked if you want to create a new database, select **Yes**
 -   Select **Next** and the Entity Framework Designer will calculate a script to create the database schema
@@ -120,7 +120,7 @@ Now that we have a model it’s time to use it to access some data. The classes 
 
 *This screen shot is from Visual Studio 2012, if you are using Visual Studio 2010 the BloggingModel.tt and BloggingModel.Context.tt files will be directly under your project rather than nested under the EDMX file.*
 
-![GeneratedClasses](~/ef6/media/generatedclasses.png)
+![Generated Classes](~/ef6/media/generatedclasses.png)
 
 Implement the Main method in Program.cs as shown below. This code creates a new instance of our context and then uses it to insert a new Blog. Then it uses a LINQ query to retrieve all Blogs from the database ordered alphabetically by Title.
 
@@ -174,7 +174,7 @@ We’ll start by adding a new User entity to our model.
 
 -   Add a new **User** entity name with **Username** as the key name and **String** as the property type for the key
 
-    ![AddUserEntity](~/ef6/media/adduserentity.png)
+    ![Add User Entity](~/ef6/media/adduserentity.png)
 
 -   Right-click on the **Username** property on the design surface and select **Properties**, In the Properties window change the **MaxLength** setting to **50**
     *This restricts the data that can be stored in username to 50 characters*
