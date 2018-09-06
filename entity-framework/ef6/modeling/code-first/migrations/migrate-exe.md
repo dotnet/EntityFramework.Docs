@@ -20,7 +20,7 @@ If your application targets .NET 4, and not 4.5, then you will need to copy the 
 
 | .NET 4.5                                   | .NET 4.0                                   |
 |:-------------------------------------------|:-------------------------------------------|
-| ![Net45Files](~/ef6/media/net45files.png)  | ![Net40Files](~/ef6/media/net40files.png)  |
+| ![.NET 4.5 Files](~/ef6/media/net45files.png)  | ![.NET 4.0 Files](~/ef6/media/net40files.png)  |
 
 > [!NOTE]
 > migrate.exe doesn't support x64 assemblies.

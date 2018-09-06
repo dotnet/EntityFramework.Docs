@@ -27,15 +27,15 @@ Let's go ahead and generate the database.
 -   Right click on **Data Connections -&gt; Add Connection…**
 -   If you haven’t connected to a database from **Server Explorer** before you’ll need to select **Microsoft SQL Server** as the data source
 
-    ![SelectDataSource](~/ef6/media/selectdatasource.png)
+    ![Select Data Source](~/ef6/media/selectdatasource.png)
 
 -   Connect to your LocalDB instance, and enter **Blogging** as the database name
 
-    ![LocalDBConnection](~/ef6/media/localdbconnection.png)
+    ![LocalDB Connection](~/ef6/media/localdbconnection.png)
 
 -   Select **OK** and you will be asked if you want to create a new database, select **Yes**
 
-    ![CreateDatabaseDialog](~/ef6/media/createdatabasedialog.png)
+    ![Create Database Dialog](~/ef6/media/createdatabasedialog.png)
 
 -   The new database will now appear in Server Explorer, right-click on it and select **New Query**
 -   Copy the following SQL into the new query, then right-click on the query and select **Execute**
@@ -86,15 +86,15 @@ We’re going to make use of the Entity Framework Tools for Visual Studio to hel
 -   This launches the **Entity Data Model Wizard**
 -   Select **Code First from Database** and click **Next**
 
-    ![WizardOneCFE](~/ef6/media/wizardonecfe.png)
+    ![Wizard One CFE](~/ef6/media/wizardonecfe.png)
 
 -   Select the connection to the database you created in the first section and click **Next**
 
-    ![WizardTwoCFE](~/ef6/media/wizardtwocfe.png)
+    ![Wizard Two CFE](~/ef6/media/wizardtwocfe.png)
 
 -   Click the checkbox next to **Tables** to import all tables and click **Finish**
 
-    ![WizardThreeCFE](~/ef6/media/wizardthreecfe.png)
+    ![Wizard Three CFE](~/ef6/media/wizardthreecfe.png)
 
 Once the reverse engineer process completes a number of items will have been added to the project, let's take a look at what's been added.
 

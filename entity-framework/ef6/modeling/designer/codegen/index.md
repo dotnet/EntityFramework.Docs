@@ -146,7 +146,7 @@ The "Web Sites" templates (for example, **EF 5.x DbContext Generator for C\# Web
 
 To start using a code generation template, right-click an empty spot on the design surface in the EF Designer and select **Add Code Generation Item...**.
 
-![Add_Code_Gen_Item](~/ef6/media/add-code-gen-item.png)
+![Add Code Gen Item](~/ef6/media/add-code-gen-item.png)
 
 If you've already installed the template you want to use (or it was included in Visual Studio), then it will be available under either the **Code** or **Data** section from the left menu.
 
@@ -161,8 +161,8 @@ If you are using Visual Studio 2012, the new .tt files will be nested under the 
 > [!NOTE]
 > For models created in Visual Studio 2012 you will need to delete the templates used for default code generation, otherwise you will have duplicate classes and context generated. The default files are **&lt;model name&gt;.tt** and **&lt;model name&gt;.context.tt**. 
 
-![VS2012_Templates](~/ef6/media/vs2012-templates.png)
+![VS2012 Templates](~/ef6/media/vs2012-templates.png)
 
 If you are using Visual Studio 2010, the tt files are added directly to your project.  
 
-![VS2010_Templates](~/ef6/media/vs2010-templates.png)
+![VS2010 Templates](~/ef6/media/vs2010-templates.png)

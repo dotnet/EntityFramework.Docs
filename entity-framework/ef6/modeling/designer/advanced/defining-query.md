@@ -48,11 +48,11 @@ This walkthrough is using Visual Studio 2012 or newer.
 -   In Solution Explorer, right-click the **DefiningQueryModel.edmx** file and select **Open With…**.
 -   Select **XML (Text) Editor**.
 
-    ![XMLEditor](~/ef6/media/xmleditor.png)
+    ![XML Editor](~/ef6/media/xmleditor.png)
 
 -   Click **Yes** if prompted with the following message:
 
-    ![Warning2](~/ef6/media/warning2.png)
+    ![Warning 2](~/ef6/media/warning2.png)
 
  
 
@@ -130,7 +130,7 @@ Open the model in the EF Designer.
 -   Double-click the DefiningQueryModel.edmx.
 -   Say **Yes** to the following message:
 
-    ![Warning2](~/ef6/media/warning2.png)
+    ![Warning 2](~/ef6/media/warning2.png)
 
  
 
@@ -166,7 +166,7 @@ In this step, we will use the Mapping Details window to map the conceptual and s
     The **Mapping Details** window is displayed.
 -   Select **GradeReport** from the **&lt;Add a Table or View&gt;** dropdown list (located under **Table**s).  
     Default mappings between the conceptual and storage **GradeReport** entity type appear.  
-    ![MappingDetails3](~/ef6/media/mappingdetails.png)
+    ![Mapping Details3](~/ef6/media/mappingdetails.png)
 
 As a result, the **EntitySetMapping** element is added to the mapping section of the .edmx file. 
 

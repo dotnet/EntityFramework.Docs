@@ -48,7 +48,7 @@ The Entity Designer, which provides a design surface for editing your model, is 
 
 That is how the **Person** table looks in the database.
 
-![PersonTable](~/ef6/media/persontable.png) 
+![Person Table](~/ef6/media/persontable.png) 
 
 ## Implement Table-per-Hierarchy Inheritance
 
@@ -88,14 +88,14 @@ Two new entity types were added to the design surface. An arrow points from the 
 -   In the **Operator** column of the **Mapping Details** window, select = from the drop-down list.
 -   In the **Value/Property** column, type **Instructor**. The end result should look like this:
 
-    ![MappingDetails2](~/ef6/media/mappingdetails2.png)
+    ![Mapping Details](~/ef6/media/mappingdetails2.png)
 
 -   Repeat these steps for the **Student** entity type, but make the condition equal to **Student** value.  
     *The reason we wanted to remove the **Discriminator** property, is because you cannot map a table column more than once. This column will be used for conditional mapping, so it cannot be used for property mapping as well. The only way it can be used for both, if a condition uses an **Is Null** or **Is Not Null** comparison.*
 
 Table-per-hierarchy inheritance is now implemented.
 
-![FinalTPH](~/ef6/media/finaltph.png)
+![Final TPH](~/ef6/media/finaltph.png)
 
 ## Use the Model
 

@@ -193,13 +193,13 @@ You can connect to this database using Server Explorer in Visual Studio
 -   Right click on **Data Connections** and select **Add Connection…**
 -   If you haven’t connected to a database from Server Explorer before you’ll need to select Microsoft SQL Server as the data source
 
-    ![SelectDataSource](~/ef6/media/selectdatasource.png)
+    ![Select Data Source](~/ef6/media/selectdatasource.png)
 
 -   Connect to either LocalDB or SQL Express, depending on which one you have installed
 
 We can now inspect the schema that Code First created.
 
-![SchemaInitial](~/ef6/media/schemainitial.png)
+![Schema Initial](~/ef6/media/schemainitial.png)
 
 DbContext worked out what classes to include in the model by looking at the DbSet properties that we defined. It then uses the default set of Code First conventions to determine table and column names, determine data types, find primary keys, etc. Later in this walkthrough we’ll look at how you can override these conventions.
 
@@ -260,7 +260,7 @@ namespace CodeFirstNewDatabaseSample.Migrations
 
 The new Url column is now added to the Blogs table in the database:
 
-![SchemaWithUrl](~/ef6/media/schemawithurl.png)
+![Schema With Url](~/ef6/media/schemawithurl.png)
 
 ## 6. Data Annotations
 
@@ -310,7 +310,7 @@ public class User
 
 The new table is now added to the database:
 
-![SchemaWithUsers](~/ef6/media/schemawithusers.png)
+![Schema With Users](~/ef6/media/schemawithusers.png)
 
 The full list of annotations supported by EF is:
 
@@ -359,7 +359,7 @@ public class BloggingContext : DbContext
 
 The DisplayName column is now renamed to display\_name:
 
-![SchemaWithDisplayNameRenamed](~/ef6/media/schemawithdisplaynamerenamed.png)
+![Schema With Display Name Renamed](~/ef6/media/schemawithdisplaynamerenamed.png)
 
 ## Summary
 

@@ -98,7 +98,7 @@ If you are using the EF Designer, you can also modify your model so that it know
 -   In order to do this you need to add the stored procedure to your model as you would for a single result set query.
 -   Once you have this then you need to right click on your model and select **Open With..** then **Xml**
 
-    ![OpenAs](~/ef6/media/openas.png)
+    ![Open As](~/ef6/media/openas.png)
 
 Once you have the model opened as XML then you need to do the following steps:
 
