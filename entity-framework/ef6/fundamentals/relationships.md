@@ -13,7 +13,7 @@ In relational databases, relationships (also called associations) between tables
 
 The following image shows two tables that participate in one-to-many relationship. The **Course** table is the dependent table because it contains the **DepartmentID** column that links it to the **Department** table.
 
-![Database2](~/ef6/media/database2.png)
+![Department and Course tables](~/ef6/media/database2.png)
 
 In Entity Framework, an entity can be related to other entities through an association or relationship. Each relationship contains two ends that describe the entity type and the multiplicity of the type (one, zero-or-one, or many) for the two entities in that relationship. The relationship may be governed by a referential constraint, which describes which end in the relationship is a principal role and which is a dependent role.
 
@@ -27,7 +27,7 @@ You can choose to use one or both types of associations in your model. However, 
 
 The following image shows a conceptual model that was created with the Entity Framework Designer. The model contains two entities that participate in one-to-many relationship. Both entities have navigation properties. **Course** is the depend entity and has the **DepartmentID** foreign key property defined.
 
-![RelationshipEFDesigner](~/ef6/media/relationshipefdesigner.png)
+![Department and Course tables with navigation properties](~/ef6/media/relationshipefdesigner.png)
 
 The following code snippet shows the same model that was created with Code First.
 

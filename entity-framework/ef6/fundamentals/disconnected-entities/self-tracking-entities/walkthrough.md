@@ -136,7 +136,7 @@ Next, we are going to add a new project and generate the entity classes in it
 -   Select the **STETemplate.tt** file
 -   Click on the drop down arrow next to the **Add** button and select **Add As Link**
 
-    ![AddLinkedTemplate](~/ef6/media/addlinkedtemplate.png)
+    ![Add Linked Template](~/ef6/media/addlinkedtemplate.png)
 
 We're also going to make sure the entity classes get generated in the same namespace as the context. This just reduces the number of using statements we need to add throughout our application.
 
@@ -546,4 +546,4 @@ You can now run the application to see it in action.
 -   Right-click the **STESample.WPFTest** project in **Solution Explorer** and select **Debug -&gt; Start new instance**
 -   You can manipulate the data using the screen and save it via the service using the **Save** button
 
-![WPF](~/ef6/media/wpf.png)
+![WPF Main window](~/ef6/media/wpf.png)

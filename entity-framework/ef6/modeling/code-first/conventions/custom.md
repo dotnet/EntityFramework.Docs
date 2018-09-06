@@ -109,7 +109,7 @@ An interesting feature of the IsKey method is that it is additive. Which means t
 
 This code will configure the types in our model to have a composite key consisting of the int Key column and the string Name column. If we view the model in the designer it would look like this:
 
-![compositeKey](~/ef6/media/compositekey.png)
+![composite Key](~/ef6/media/compositekey.png)
 
 Another example of property conventions is to configure all DateTime properties in my model to map to the datetime2 type in SQL Server instead of datetime. You can achieve this with the following:
 
@@ -286,7 +286,7 @@ By default both employee and manager are mapped to the same table (Employees) in
 
 The code above will map to a table structure that looks like the following:
 
-![tptExample](~/ef6/media/tptexample.jpg)
+![tpt Example](~/ef6/media/tptexample.jpg)
 
 You can avoid this, and maintain the default TPH mapping, in a couple ways:
 

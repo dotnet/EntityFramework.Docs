@@ -188,13 +188,13 @@ These class definitions will change slightly as we explore different approaches 
 
 With the POCOs in place we can create an Entity Data Model (EDM) in Visual Studio (see figure 1). We will not use the EDM to generate code for our entities. Instead, we want to use the entities we lovingly craft by hand. We will only use the EDM to generate our database schema and provide the metadata EF4 needs to map objects into the database.
 
-![eftest_01](~/ef6/media/eftest-01.jpg)
+![ef test_01](~/ef6/media/eftest-01.jpg)
 
 **Figure 1**
 
 Note: if you want to develop the EDM model first, it is possible to generate clean, POCO code from the EDM. You can do this with a Visual Studio 2010 extension provided by the Data Programmability team. To download the extension, launch the Extension Manager from the Tools menu in Visual Studio and search the online gallery of templates for “POCO” (See figure 2). There are several POCO templates available for EF. For more information on using the template, see “ [Walkthrough: POCO Template for the Entity Framework](http://blogs.msdn.com/adonet/pages/walkthrough-poco-template-for-the-entity-framework.aspx)”.
 
-![eftest_02](~/ef6/media/eftest-02.png)
+![ef test_02](~/ef6/media/eftest-02.png)
 
 **Figure 2**
 
@@ -409,13 +409,13 @@ The “object mother” we use in the base class is one common pattern for creat
 
 We can use the EmployeeControllerTestBase as the base class for a number of test fixtures (see figure 3). Each test fixture will test a specific controller action. For example, one test fixture will focus on testing the Create action used during an HTTP GET request (to display the view for creating an employee), and a different fixture will focus on the Create action used in an HTTP POST request (to take information submitted by the user to create an employee). Each derived class is only responsible for the setup needed in its specific context, and to provide the assertions needed to verify the outcomes for its specific test context.
 
-![eftest_03](~/ef6/media/eftest-03.png)
+![ef test_03](~/ef6/media/eftest-03.png)
 
 **Figure 3**
 
 The naming convention and test style presented here isn’t required for testable code – it’s just one approach. Figure 4 shows the tests running in the Jet Brains Resharper test runner plugin for Visual Studio 2010.
 
-![eftest_04](~/ef6/media/eftest-04.png)
+![ef test_04](~/ef6/media/eftest-04.png)
 
 **Figure 4**
 
