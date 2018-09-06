@@ -38,15 +38,15 @@ namespace EFGetStarted.AspNetCore.NewDb
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = "Data Source=blogging.db";
             services.AddDbContext<BloggingContext>
-                (options => options.UseSqlServer(connection));
+                (options => options.UseSqlite(connection));
             // BloggingContext requires
             // using EFGetStarted.AspNetCore.NewDb.Models;
-            // UseSqlServer requires
+            // UseSqlite requires
             // using Microsoft.EntityFrameworkCore;
         }
-        #endregion
+#endregion
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
