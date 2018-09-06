@@ -64,7 +64,7 @@ The Blog and Post classes both follow this convention. But what if they didn’t
 
 If you are using code first’s database generation feature, the Blog table will have a primary key column named PrimaryTrackingKey which is also defined as Identity by default.
 
-![jj591583_figure01](~/ef6/media/jj591583-figure01.png)
+![Blog table with primary key](~/ef6/media/jj591583-figure01.png)
 
 ### Composite keys
 
@@ -142,7 +142,7 @@ Adding Required to the Title property will force EF (and MVC) to ensure that the
 
 With no additional no code or markup changes in the application, an MVC application will perform client side validation, even dynamically building a message using the property and annotation names.
 
-![jj591583_figure02](~/ef6/media/jj591583-figure02.png)
+![Create page with Title is required error](~/ef6/media/jj591583-figure02.png)
 
 The Required attribute will also affect the generated database by making the mapped property non-nullable. Notice that the Title field has changed to “not null”.
 
@@ -151,7 +151,7 @@ The Required attribute will also affect the generated database by making the map
 
  
 
-![jj591583_figure03](~/ef6/media/jj591583-figure03.png)
+![Blogs table](~/ef6/media/jj591583-figure03.png)
 
  
 
@@ -168,7 +168,7 @@ Here is the BloggerName with length requirements. The example also demonstrates 
 
 The MaxLength annotation will impact the database by setting the property’s length to 10.
 
-![jj591583_figure04](~/ef6/media/jj591583-figure04.png)
+![Blogs table showing max length on BloggerName column](~/ef6/media/jj591583-figure04.png)
 
 MVC client-side annotation and EF 4.1 server-side annotation will both honor this validation, again dynamically building an error message: “The field BloggerName must be a string or array type with a maximum length of '10'.” That message is a little long. Many annotations let you specify an error message with the ErrorMessage attribute.
 

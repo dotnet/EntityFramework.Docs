@@ -43,7 +43,7 @@ public static string StandardizeUrl(string url)
 }
 ```
 
-## Disabling client evaluation
+## How to find code that causes client evaluation
 
 While client evaluation can be very useful, in some instances it can result in poor performance. Consider the following query, where the helper method is now used in a filter. Because this can't be performed in the database, all the data is pulled into memory and then the filter is applied on the client. Depending on the amount of data, and how much of that data is filtered out, this could result in poor performance.
 

@@ -28,7 +28,8 @@ Projects created with previous versions of Visual Studio and targeting .NET Fram
   <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   ```
 
-## Getting the bits
+## Get Entity Framework Core runtime and tools
+
 The recommended way to add EF Core runtime libraries into an application is to install an EF Core database provider from NuGet.
 
 Besides the runtime libraries, you can install tools which make it easier to perform several EF Core-related tasks in your project at design time, such as creating and applying migrations, and creating a model based on an existing database.
@@ -40,7 +41,8 @@ Besides the runtime libraries, you can install tools which make it easier to per
 > Applications targeting ASP.NET Core 2.1 can use EF Core 2.1 without additional dependencies besides third party database providers. Applications targeting previous versions of ASP.NET Core need to upgrade to ASP.NET Core 2.1 in order to use EF Core 2.1.
 
 <a name="cli"></a>
-### Cross-platform development using the .NET Core Command Line Interface (CLI)
+
+## Using the .NET Core Command Line Interface (CLI)
 
 To develop applications that target [.NET Core](https://www.microsoft.com/net/download/core) you can choose to use the [`dotnet` CLI commands](https://docs.microsoft.com/dotnet/core/tools/) in combination with your favorite text editor, or an Integrated Development Environment (IDE) such as Visual Studio, Visual Studio for Mac, or Visual Studio Code.
 
@@ -65,21 +67,24 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 > Always use the version of the tools package that matches the major version of the runtime packages.
 
 <a name="visual-studio"></a>
-### Visual Studio development
+
+## Visual Studio development
 
 You can develop many different types of applications that target .NET Core, .NET Framework, or other platforms supported by EF Core using Visual Studio.
 
 There are two ways you can install an EF Core database provider in your application from Visual Studio:
 
-#### Using NuGet's [Package Manager User Interface](https://docs.microsoft.com/nuget/tools/package-manager-ui)
+### NuGet Package Manager User Interface
 
 * Select on the menu **Project > Manage NuGet Packages**
 
 * Click on the **Browse** or the **Updates** tab
 
-* Select the `Microsoft.EntityFrameworkCore.SqlServer` package and the desired version and confirm
+* Select the `Microsoft.EntityFrameworkCore.SqlServer` package and the desired version and confirm.
 
-#### Using NuGet's [Package Manager Console (PMC)](https://docs.microsoft.com/nuget/tools/package-manager-console)
+For more information, see [NuGet Package Manager UI](https://docs.microsoft.com/nuget/tools/package-manager-ui).
+
+### NuGet Package Manager Console (PMC)
 
 * Select on the menu **Tools > NuGet Package Manager > Package Manager Console**
 
@@ -92,9 +97,11 @@ There are two ways you can install an EF Core database provider in your applicat
 
 * To specify a specific version, you can use the `-Version` modifier. For example, to install EF Core 2.1 packages, append `-Version 2.1.0` to the commands
 
-#### Tools
+For more information, see [Package Manager Console](https://docs.microsoft.com/nuget/tools/package-manager-console).
 
-There is also a PowerShell version of the [EF Core commands which run inside the PMC](../../miscellaneous/cli/powershell.md) in Visual Studio, with similar capabilities to the `dotnet ef` commands. 
+### PowerShell Tools
+
+There is a [PowerShell version of the EF Core commands](../../miscellaneous/cli/powershell.md). The PowerShell cmdlets run inside the PMC in Visual Studio, with similar capabilities to the `dotnet ef` commands. 
 
 > [!TIP]  
 > Although it is possible to use the `dotnet ef` commands from the PMC in Visual Studio, it is far more convenient to use the PowerShell version:

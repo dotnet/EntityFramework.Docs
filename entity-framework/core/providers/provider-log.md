@@ -14,9 +14,9 @@ This page contains links to pull requests made on the EF Core repo that may requ
 
 We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the [`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) and [`providers-fyi`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) labels on our issues and pull requests.
 
-### 2.1 ---> 2.2
+## 2.1 ---> 2.2
 
-#### Test-only changes
+### Test-only changes
 
 * https://github.com/aspnet/EntityFrameworkCore/pull/12057 - Allow customizable SQL delimeters in tests
   * Test changes that allow non-strict floating point comparisons in BuiltInDataTypesTestBase
@@ -35,7 +35,7 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
   * This change includes some test refactoring which may require providers to react
 
 
-#### Test and product code changes
+### Test and product code changes
 
 * https://github.com/aspnet/EntityFrameworkCore/pull/12109 - Consolidate RelationalTypeMapping.Clone methods
   * Changes in 2.1 to the RelationalTypeMapping allowed for a simplification in derived classes. We don't believe this was breaking to providers, but providers can take advantage of this change in their derived type mapping classes.

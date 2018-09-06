@@ -30,4 +30,4 @@ Entity Framework Core can create a model based on an existing database, or creat
   * [New Database](uwp/getting-started.md)
 
 > [!NOTE]  
-> These tutorials and the accompanying samples have been updated to use EF Core 2.0 (with the exception of the UWP tutorial, that still uses EF Core 1.1). However, in the majority of cases it should be possible to create applications that use previous releases, with minimal modification to the instructions. 
+> These tutorials and the accompanying samples have been updated to use EF Core 2.1. However, in the majority of cases it should be possible to create applications that use previous releases, with minimal modification to the instructions. 
