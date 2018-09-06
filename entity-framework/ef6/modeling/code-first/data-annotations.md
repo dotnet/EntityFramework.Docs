@@ -82,11 +82,11 @@ Entity Framework supports composite keys - primary keys that consist of more tha
     }
 ```
 
-If you were to try and use the above class in your EF model you wuld get an InvalidOperationExceptions stating;
+If you were to try to use the above class in your EF model, you would get an `InvalidOperationException`:
 
 *Unable to determine composite primary key ordering for type 'Passport'. Use the ColumnAttribute or the HasKey method to specify an order for composite primary keys.*
 
-When you have composite keys, Entity Framework requires you to define an order of the key properties. You can do this using the Column annotation to specify an order.
+When using composite keys, Entity Framework requires you to define an order for the key properties. You can acheive this by using the Column annotation to specify an order.
 
 >[!NOTE]
 > The order value is relative (rather than index based) so any values can be used. For example, 100 and 200 would be acceptable in place of 1 and 2.
