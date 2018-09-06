@@ -182,24 +182,16 @@ Scaffold a controller and views for the `Blog` entity.
 
 # [.NET Core CLI](#tab/netcore-cli)
 
-Do the following steps to install the scaffolding tools:
-
-* Add the following highlighted lines to the EFGetStarted.AspNetCore.NewDb.csproj file:
-
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb.Sqlite/EFGetStarted.AspNetCore.NewDb.csproj?highlight=13-15)]
-
-* Run the following command to install another tooling package:
+* Run the following commands:
 
   ```cli
+  dotnet tool install -g dotnet-aspnet-codegenerator
   dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
-  ```
-
-* Now you can run the scaffolding command:
-
-  ```cli
+  dotnet restore
   dotnet aspnet-codegenerator controller -name BlogsController -m Blog -dc BloggingContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries 
   ```
 
+  The `tool install` and `add package` commands install the tooling that can scaffold controllers and views. The `restore` command ensures that all of the project's packages are downloaded, and the `aspnet-codegenerator` command does the scaffolding.
 ---
 
 The scaffolding engine creates the following files:
