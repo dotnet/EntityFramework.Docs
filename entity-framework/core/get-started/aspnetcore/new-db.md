@@ -121,7 +121,7 @@ To make `BloggingContext` available to MVC controllers, register it as a service
 
 * Add the following highlighted code to the `ConfigureServices` method:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=12-18)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb/Startup.cs?name=ConfigureServices&highlight=12-14)]
 
 # [.NET Core CLI](#tab/netcore-cli)
 
@@ -131,7 +131,7 @@ To make `BloggingContext` available to MVC controllers, register it as a service
 
 * Add the following highlighted code to the `ConfigureServices` method:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb.Sqlite/Startup.cs?name=ConfigureServices&highlight=12-18)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb.Sqlite/Startup.cs?name=ConfigureServices&highlight=12-14)]
 
 ---
 
