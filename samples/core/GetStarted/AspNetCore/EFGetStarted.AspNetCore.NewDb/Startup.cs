@@ -43,7 +43,7 @@ namespace EFGetStarted.AspNetCore.NewDb
                 (options => options.UseSqlServer(connection));
             // BloggingContext requires
             // using EFGetStarted.AspNetCore.NewDb.Models;
-            // UseSqlite requires
+            // UseSqlServer requires
             // using Microsoft.EntityFrameworkCore;
         }
         #endregion
