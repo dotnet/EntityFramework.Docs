@@ -40,17 +40,17 @@ Let's go ahead and generate the database.
 -   Right click on **Data Connections -&gt; Add Connection…**
 -   If you haven’t connected to a database from Server Explorer before you’ll need to select Microsoft SQL Server as the data source
 
-    ![SelectDataSource](~/ef6/media/selectdatasource.png)
+    ![Select Data Source](~/ef6/media/selectdatasource.png)
 
 -   Connect to either LocalDB or SQL Express, depending on which one you have installed, and enter **DatabaseFirst.Blogging** as the database name
 
-    ![SqlExpressConnectionDF](~/ef6/media/sqlexpressconnectiondf.png)
+    ![Sql Express Connection DF](~/ef6/media/sqlexpressconnectiondf.png)
 
-    ![LocalDBConnectionDF](~/ef6/media/localdbconnectiondf.png)
+    ![LocalDB Connection DF](~/ef6/media/localdbconnectiondf.png)
 
 -   Select **OK** and you will be asked if you want to create a new database, select **Yes**
 
-    ![CreateDatabaseDialog](~/ef6/media/createdatabasedialog.png)
+    ![Create Database Dialog](~/ef6/media/createdatabasedialog.png)
 
 -   The new database will now appear in Server Explorer, right-click on it and select **New Query**
 -   Copy the following SQL into the new query, then right-click on the query and select **Execute**
@@ -95,21 +95,21 @@ We’re going to make use of Entity Framework Designer, which is included as par
 -   This launches the **Entity Data Model Wizard**
 -   Select **Generate from Database** and click **Next**
 
-    ![WizardStep1](~/ef6/media/wizardstep1.png)
+    ![Wizard Step 1](~/ef6/media/wizardstep1.png)
 
 -   Select the connection to the database you created in the first section, enter **BloggingContext** as the name of the connection string and click **Next**
 
-    ![WizardStep2](~/ef6/media/wizardstep2.png)
+    ![Wizard Step 2](~/ef6/media/wizardstep2.png)
 
 -   Click the checkbox next to ‘Tables’ to import all tables and click ‘Finish’
 
-    ![WizardStep3](~/ef6/media/wizardstep3.png)
+    ![Wizard Step 3](~/ef6/media/wizardstep3.png)
 
  
 
 Once the reverse engineer process completes the new model is added to your project and opened up for you to view in the Entity Framework Designer. An App.config file has also been added to your project with the connection details for the database.
 
-![ModelInitial](~/ef6/media/modelinitial.png)
+![Model Initial](~/ef6/media/modelinitial.png)
 
 ### Additional Steps in Visual Studio 2010
 
@@ -129,7 +129,7 @@ Next, we need to swap our model to generate code that makes use of the DbContext
 -   Select **Online Templates** from the left menu and search for **DbContext**
 -   Select the EF **5.x DbContext Generator for C\#**, enter **BloggingModel** as the name and click **Add**
 
-    ![DbContextTemplate](~/ef6/media/dbcontexttemplate.png)
+    ![DbContext Template](~/ef6/media/dbcontexttemplate.png)
 
  
 
@@ -139,7 +139,7 @@ Now that we have a model it’s time to use it to access some data. The classes 
 
 *This screen shot is from Visual Studio 2012, if you are using Visual Studio 2010 the BloggingModel.tt and BloggingModel.Context.tt files will be directly under your project rather than nested under the EDMX file.*
 
-![GeneratedClassesDF](~/ef6/media/generatedclassesdf.png)
+![Generated Classes DF](~/ef6/media/generatedclassesdf.png)
 
  
 
@@ -211,7 +211,7 @@ Now that the schema is updated, it’s time to update the model with those chang
 -   On the Add tab of the Update Wizard check the box next to Tables, this indicates that we want to add any new tables from the schema.
     *The Refresh tab shows any existing tables in the model that will be checked for changes during the update. The Delete tabs show any tables that have been removed from the schema and will also be removed from the model as part of the update. The information on these two tabs is automatically detected and is provided for informational purposes only, you cannot change any settings.*
 
-    ![RefreshWizard](~/ef6/media/refreshwizard.png)
+    ![Refresh Wizard](~/ef6/media/refreshwizard.png)
 
 -   Click Finish on the Update Wizard
 
@@ -219,7 +219,7 @@ Now that the schema is updated, it’s time to update the model with those chang
 
 The model is now updated to include a new User entity that maps to the Users table we added to the database.
 
-![ModelUpdated](~/ef6/media/modelupdated.png)
+![Model Updated](~/ef6/media/modelupdated.png)
 
 ## Summary
 

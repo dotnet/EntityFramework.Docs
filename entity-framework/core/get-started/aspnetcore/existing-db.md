@@ -166,6 +166,6 @@ You can now run the application to see it in action.
 * Click **Create New**
 * Enter a **Url** for the new blog and click **Create**
 
-![image](_static/create.png)
+  ![Create page](_static/create.png)
 
-![image](_static/index-existing-db.png)
+  ![Index page](_static/index-existing-db.png)

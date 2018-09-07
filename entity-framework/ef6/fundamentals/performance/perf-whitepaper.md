@@ -175,7 +175,7 @@ Find uses the primary key value to attempt to find an entity tracked by the cont
 
 There is a performance consideration to be taken when using Find. Invocations to this method by default will trigger a validation of the object cache in order to detect changes that are still pending commit to the database. This process can be very expensive if there are a very large number of objects in the object cache or in a large object graph being added to the object cache, but it can also be disabled. In certain cases, you may perceive over an order of magnitude of difference in calling the Find method when you disable auto detect changes. Yet a second order of magnitude is perceived when the object actually is in the cache versus when the object has to be retrieved from the database. Here is an example graph with measurements taken using some of our microbenchmarks, expressed in milliseconds, with a load of 5000 entities:
 
-![Net45LogScale](~/ef6/media/net45logscale.png ".NET 4.5 - logarithmic scale")
+![.NET 4.5 logarithmic scale](~/ef6/media/net45logscale.png ".NET 4.5 - logarithmic scale")
 
 Example of Find with auto-detect changes disabled:
 
@@ -819,9 +819,9 @@ Simple microbenchmarks where the context creation was not timed were put to the 
 | EF6 | DbContext Linq Query                 | 3420      | 47652864 |
 | EF6 | ObjectContext Linq Query No Tracking | 3593      | 45260800 |
 
-![EF5Micro5000Warm](~/ef6/media/ef5micro5000warm.png)
+![EF5 micro benchmarks, 5000 warm iterations](~/ef6/media/ef5micro5000warm.png)
 
-![EF6Micro5000Warm](~/ef6/media/ef6micro5000warm.png)
+![EF6 micro benchmarks, 5000 warm iterations](~/ef6/media/ef6micro5000warm.png)
 
 Microbenchmarks are very sensitive to small changes in the code. In this case, the difference between the costs of Entity Framework 5 and Entity Framework 6 are due to the addition of [interception](~/ef6/fundamentals/logging-and-interception.md) and [transactional improvements](~/ef6/saving/transactions.md). These microbenchmarks numbers, however, are an amplified vision into a very small fragment of what Entity Framework does. Real-world scenarios of warm queries should not see a performance regression when upgrading from Entity Framework 5 to Entity Framework 6.
 
@@ -852,9 +852,9 @@ To compare the real-world performance of the different query options, we created
 | EF6 | DbContext Linq Query                        | 1290      | 47529984 |
 
 
-![EF5WarmQuery1000](~/ef6/media/ef5warmquery1000.png)
+![EF5 warm query 1000 iterations](~/ef6/media/ef5warmquery1000.png)
 
-![EF6WarmQuery1000](~/ef6/media/ef6warmquery1000.png)
+![EF6 warm query 1000 iterations](~/ef6/media/ef6warmquery1000.png)
 
 > [!NOTE]
 > For completeness, we included a variation where we execute an Entity SQL query on an EntityCommand. However, because results are not materialized for such queries, the comparison isn't necessarily apples-to-apples. The test includes a close approximation to materializing to try making the comparison fairer.

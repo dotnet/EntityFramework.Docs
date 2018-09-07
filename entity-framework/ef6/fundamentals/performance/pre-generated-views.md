@@ -14,11 +14,11 @@ The easiest way to pre-generate views is to use the [EF Power Tools](http://visu
 -   For **Code First** models right-click on the code file that contains your DbContext class.
 -   For **EF Designer** models right-click on your EDMX file.
 
-![generateViews](~/ef6/media/generateviews.png)
+![generate Views](~/ef6/media/generateviews.png)
 
 Once the process is finished you will have a class similar to the following generated
 
-![generatedViews](~/ef6/media/generatedviews.png)
+![generated Views](~/ef6/media/generatedviews.png)
 
 Now when you run your application EF will use this class to load views as required. If your model changes and you do not re-generate this class then EF will throw an exception.
 

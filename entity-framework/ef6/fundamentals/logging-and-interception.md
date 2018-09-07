@@ -31,8 +31,6 @@ using (var context = new BlogContext())
 
 Notice that context.Database.Log is set to Console.Write. This is all that is needed to log SQL to the console.  
 
-### Example output  
-
 Let’s add some simple query/insert/update code so that we can see some output:  
 
 ``` csharp
@@ -92,7 +90,7 @@ WHERE @@ROWCOUNT > 0 AND [Id] = scope_identity()
 
 (Note that this is the output assuming any database initialization has already happened. If database initialization had not already happened then there would be a lot more output showing all the work Migrations does under the covers to check for or create a new database.)  
 
-### What gets logged?  
+## What gets logged?  
 
 When the Log property is set all of the following will be logged:  
 
@@ -118,7 +116,7 @@ Looking at the example output above, each of the four commands logged are:
     - Notice the parameter details for the FK and Title properties  
     - Notice that these commands are being executed asynchronously  
 
-### Logging to different places  
+## Logging to different places  
 
 As shown above logging to the console is super easy. It’s also easy to log to memory, file, etc. by using different kinds of [TextWriter](https://msdn.microsoft.com/library/system.io.textwriter.aspx).  
 
@@ -141,7 +139,7 @@ var logger = new MyLogger();
 context.Database.Log = s => logger.Log("EFApp", s);
 ```  
 
-### Result logging  
+## Result logging  
 
 The default logger logs command text (SQL), parameters, and the “Executing” line with a timestamp before the command is sent to the database. A “completed” line containing elapsed time is logged following execution of the command.  
 
@@ -149,11 +147,11 @@ Note that for async commands the “completed” line is not logged until the as
 
 The “completed” line contains different information depending on the type of command and whether or not execution was successful.  
 
-#### Successful execution  
+### Successful execution  
 
 For commands that complete successfully the output is “Completed in x ms with result: “ followed by some indication of what the result was. For commands that return a data reader the result indication is the type of [DbDataReader](https://msdn.microsoft.com/library/system.data.common.dbdatareader.aspx) returned. For commands that return an integer value such as the update command shown above the result shown is that integer.  
 
-#### Failed execution  
+### Failed execution  
 
 For commands that fail by throwing an exception, the output contains the message from the exception. For example, using SqlQuery to query against a table that does exist will result in log output something like this:  
 
@@ -163,7 +161,7 @@ SELECT * from ThisTableIsMissing
 -- Failed in 1 ms with error: Invalid object name 'ThisTableIsMissing'.
 ```  
 
-#### Canceled execution  
+### Canceled execution  
 
 For async commands where the task is canceled the result could be failure with an exception, since this is what the underlying ADO.NET provider often does when an attempt is made to cancel. If this doesn’t happen and the task is canceled cleanly then the output will look something like this:  
 
@@ -174,8 +172,6 @@ update Blogs set Title = 'No' where Id = -1
 ```  
 
 ## Changing log content and formatting  
-
-### DatabaseLogFormatter  
 
 Under the covers the Database.Log property makes use of a DatabaseLogFormatter object. This object effectively binds an IDbCommandInterceptor implementation (see below) to a delegate that accepts strings and a DbContext. This means that methods on DatabaseLogFormatter are called before and after the execution of commands by EF. These DatabaseLogFormatter methods gather and format log output and send it to the delegate.  
 

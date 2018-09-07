@@ -64,7 +64,7 @@ The Blog and Post classes both follow this convention. But what if they didn’t
 
 If you are using code first’s database generation feature, the Blog table will have a primary key column named PrimaryTrackingKey which is also defined as Identity by default.
 
-![jj591583_figure01](~/ef6/media/jj591583-figure01.png)
+![Blog table with primary key](~/ef6/media/jj591583-figure01.png)
 
 ### Composite keys
 
@@ -142,7 +142,7 @@ Adding Required to the Title property will force EF (and MVC) to ensure that the
 
 With no additional no code or markup changes in the application, an MVC application will perform client side validation, even dynamically building a message using the property and annotation names.
 
-![jj591583_figure02](~/ef6/media/jj591583-figure02.png)
+![Create page with Title is required error](~/ef6/media/jj591583-figure02.png)
 
 The Required attribute will also affect the generated database by making the mapped property non-nullable. Notice that the Title field has changed to “not null”.
 
@@ -151,7 +151,7 @@ The Required attribute will also affect the generated database by making the map
 
  
 
-![jj591583_figure03](~/ef6/media/jj591583-figure03.png)
+![Blogs table](~/ef6/media/jj591583-figure03.png)
 
  
 
@@ -168,7 +168,7 @@ Here is the BloggerName with length requirements. The example also demonstrates 
 
 The MaxLength annotation will impact the database by setting the property’s length to 10.
 
-![jj591583_figure04](~/ef6/media/jj591583-figure04.png)
+![Blogs table showing max length on BloggerName column](~/ef6/media/jj591583-figure04.png)
 
 MVC client-side annotation and EF 4.1 server-side annotation will both honor this validation, again dynamically building an error message: “The field BloggerName must be a string or array type with a maximum length of '10'.” That message is a little long. Many annotations let you specify an error message with the ErrorMessage attribute.
 
@@ -179,7 +179,7 @@ MVC client-side annotation and EF 4.1 server-side annotation will both honor thi
 
 You can also specify ErrorMessage in the Required annotation.
 
-![jj591583_figure05](~/ef6/media/jj591583-figure05.png)
+![Create page with custom error message](~/ef6/media/jj591583-figure05.png)
 
  
 
@@ -237,7 +237,7 @@ Now you can add a property in the Blog class to represent the BlogDetails for th
 
 In the database, the Blog table will contain all of the properties of the blog including the properties contained in its BlogDetail property. By default, each one is preceded with the name of the complex type, BlogDetail.
 
-![jj591583_figure06](~/ef6/media/jj591583-figure06.png)
+![Blog table with complex type](~/ef6/media/jj591583-figure06.png)
 
 Another interesting note is that although the DateCreated property was defined as a non-nullable DateTime in the class, the relevant database field is nullable. You must use the Required annotation if you wish to affect the database schema.
 
@@ -278,7 +278,7 @@ Adding the following property to the Blog class:
 
 results in code first creating a non-nullable timestamp column in the database table.
 
-![jj591583_figure07](~/ef6/media/jj591583-figure07.png)
+![Blogs table with time stamp column](~/ef6/media/jj591583-figure07.png)
 
  
 
@@ -304,7 +304,7 @@ Don’t confuse Column’s TypeName attribute with the DataType DataAnnotation. 
 
 Here is the table after it’s been regenerated. The table name has changed to InternalBlogs and Description column from the complex type is now BlogDescription. Because the name was specified in the annotation, code first will not use the convention of starting the column name with the name of the complex type.
 
-![jj591583_figure08](~/ef6/media/jj591583-figure08.png)
+![Blogs table and column renamed](~/ef6/media/jj591583-figure08.png)
 
  
 
@@ -412,7 +412,7 @@ When generating the database, code first sees the BlogId property in the Post cl
 
 The constraint in the database shows a relationship between InternalBlogs.PrimaryTrackingKey and Posts.BlogId. 
 
-![jj591583_figure09](~/ef6/media/jj591583-figure09.png)
+![relationship between InternalBlogs.PrimaryTrackingKey and Posts.BlogId](~/ef6/media/jj591583-figure09.png)
 
 The InverseProperty is used when you have multiple relationships between classes.
 
@@ -437,7 +437,7 @@ You’ll also need to add in the Person class referenced by these properties. Th
 
 Code first is not able to match up the properties in the two classes on its own. The database table for Posts should have one foreign key for the CreatedBy person and one for the UpdatedBy person but code first will create four will foreign key properties: Person\_Id, Person\_Id1, CreatedBy\_Id and UpdatedBy\_Id.
 
-![jj591583_figure10](~/ef6/media/jj591583-figure10.png)
+![Posts table with extra foreign keys](~/ef6/media/jj591583-figure10.png)
 
 To fix these problems, you can use the InverseProperty annotation to specify the alignment of the properties.
 
@@ -451,7 +451,7 @@ To fix these problems, you can use the InverseProperty annotation to specify the
 
 Because the PostsWritten property in Person knows that this refers to the Post type, it will build the relationship to Post.CreatedBy. Similarly, PostsUpdated will be connected to Post.UpdatedBy. And code first will not create the extra foreign keys.
 
-![jj591583_figure11](~/ef6/media/jj591583-figure11.png)
+![Posts table without extra foreign keys](~/ef6/media/jj591583-figure11.png)
 
  
 

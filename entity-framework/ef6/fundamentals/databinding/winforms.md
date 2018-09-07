@@ -173,17 +173,17 @@ Let's go ahead and generate the database.
 -   Right click on **Data Connections -&gt; Add Connection…**
 -   If you haven’t connected to a database from Server Explorer before you’ll need to select Microsoft SQL Server as the data source
 
-    ![ChangeDataSource](~/ef6/media/changedatasource.png)
+    ![Change Data Source](~/ef6/media/changedatasource.png)
 
 -   Connect to either LocalDB or SQL Express, depending on which one you have installed, and enter **Products** as the database name
 
-    ![AddConnectionLocalDB](~/ef6/media/addconnectionlocaldb.png)
+    ![Add Connection LocalDB](~/ef6/media/addconnectionlocaldb.png)
 
-    ![AddConnectionExpress](~/ef6/media/addconnectionexpress.png)
+    ![Add Connection Express](~/ef6/media/addconnectionexpress.png)
 
 -   Select **OK** and you will be asked if you want to create a new database, select **Yes**
 
-    ![CreateDatabase](~/ef6/media/createdatabase.png)
+    ![Create Database](~/ef6/media/createdatabase.png)
 
 -   The new database will now appear in Server Explorer, right-click on it and select **New Query**
 -   Copy the following SQL into the new query, then right-click on the query and select **Execute**
@@ -221,11 +221,11 @@ We’re going to make use of Entity Framework Designer, which is included as par
 
 -   Select the connection to the database you created in the first section, enter **ProductContext** as the name of the connection string and click **Next**
 
-    ![ChooseYourConnection](~/ef6/media/chooseyourconnection.png)
+    ![Choose Your Connection](~/ef6/media/chooseyourconnection.png)
 
 -   Click the checkbox next to ‘Tables’ to import all tables and click ‘Finish’
 
-    ![ChooseYourObjects](~/ef6/media/chooseyourobjects.png)
+    ![Choose Your Objects](~/ef6/media/chooseyourobjects.png)
 
 Once the reverse engineer process completes the new model is added to your project and opened up for you to view in the Entity Framework Designer. An App.config file has also been added to your project with the connection details for the database.
 
@@ -244,7 +244,7 @@ EF generates code from your model using T4 templates. The templates shipped with
 -   Open the **Solution Explorer** and find **ProductModel.edmx** file
 -   Find the **ProductModel.tt** file which will be nested under the ProductModel.edmx file
 
-    ![ProductModelTemplate](~/ef6/media/productmodeltemplate.png)
+    ![Product Model Template](~/ef6/media/productmodeltemplate.png)
 
 -   Double-click on the ProductModel.tt file to open it in the Visual Studio editor
 -   Find and replace the two occurrences of “**ICollection**” with “**ObservableListSource**”. These are located at approximately lines 296 and 484.
@@ -273,13 +273,13 @@ Add the classes that are defined in the model as data sources for this WinForms 
 -   In the Select the Data Objects dialog, unfold the **WinFormswithEFSample** two times and select **Category**
     There is no need to select the Product data source, because we will get to it through the Product’s property on the Category data source.
 
-    ![DataSource](~/ef6/media/datasource.png)
+    ![Data Source](~/ef6/media/datasource.png)
 
 -   Click **Finish.**
     *If the Data Sources window is not showing up, select***View -&gt; Other Windows-&gt; Data Sources**
 -   Press the pin icon, so the Data Sources window does not auto hide. You may need to hit the refresh button if the window was already visible.
 
-    ![DataSource2](~/ef6/media/datasource2.png)
+    ![Data Source 2](~/ef6/media/datasource2.png)
 
 -   In Solution Explorer, double-click the **Form1.cs** file to open the main form in designer.
 -   Select the **Category** data source and drag it on the form. By default, a new DataGridView (**categoryDataGridView**) and Navigation toolbar controls are added to the designer. These controls are bound to the BindingSource (**categoryBindingSource**) and Binding Navigator (**categoryBindingNavigator**) components that are created as well.
@@ -297,7 +297,7 @@ Add the classes that are defined in the model as data sources for this WinForms 
     So far, we associated our DataGridView controls with BindingSource components in the designer. In the next section we will add code to the code behind to set categoryBindingSource.DataSource to the collection of entities that are currently tracked by DbContext. When we dragged-and-dropped Products from under the Category, the WinForms took care of setting up the productsBindingSource.DataSource property to categoryBindingSource and productsBindingSource.DataMember property to Products. Because of this binding, only the products that belong to the currently selected Category will be displayed in the productDataGridView.
 -   Enable the **Save** button on the Navigation toolbar by clicking the right mouse button and selecting **Enabled**.
 
-    ![Form1-Designer](~/ef6/media/form1-designer.png)
+    ![Form 1 Designer](~/ef6/media/form1-designer.png)
 
 -   Add the event handler for the save button by double-clicking on the button. This will add the event handler and bring you to the code behind for the form. The code for the **categoryBindingNavigatorSaveItem\_Click** event handler will be added in the next section.
 
@@ -396,12 +396,12 @@ The code declares a long-running instance of ProductContext. The ProductContext 
 
 -   Compile and run the application and you can test out the functionality.
 
-    ![Form1BeforeSave](~/ef6/media/form1beforesave.png)
+    ![Form 1 Before Save](~/ef6/media/form1beforesave.png)
 
 -   After saving the store generated keys are shown on the screen.
 
-    ![Form1AfterSave](~/ef6/media/form1aftersave.png)
+    ![Form 1 After Save](~/ef6/media/form1aftersave.png)
 
 -   If you used Code First, then you will also see that a **WinFormswithEFSample.ProductContext** database is created for you.
 
-    ![ServerObjExplorer](~/ef6/media/serverobjexplorer.png)
+    ![Server Object Explorer](~/ef6/media/serverobjexplorer.png)

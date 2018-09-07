@@ -139,7 +139,7 @@ Since the code is synchronous, we can observe the following execution flow when 
 4.  Query returns and results are written to **Console**
 5.  Quote of the day is written to **Console**
 
-![SyncOutput](~/ef6/media/syncoutput.png) 
+![Sync Output](~/ef6/media/syncoutput.png) 
 
  
 
@@ -223,7 +223,7 @@ Now that the code is asyncronous, we can observe a different execution flow when
     *Again, the managed thread is free to do other work while the query is processed in the database. Since all other execution has completed, the thread will just halt on the Wait call though.*
 5.  Query returns and results are written to **Console**
 
-![AsyncOutput](~/ef6/media/asyncoutput.png) 
+![Async Output](~/ef6/media/asyncoutput.png) 
 
  
 

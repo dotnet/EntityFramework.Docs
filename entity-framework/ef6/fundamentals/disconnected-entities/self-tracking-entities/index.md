@@ -22,7 +22,7 @@ This template item generates two .tt (text template) files:
 
 To get started, visit the [Self-Tracking Entities Walkthrough](walkthrough.md) page.  
 
-## Considerations When Working with Self-Tracking Entities  
+## Functional Considerations When Working with Self-Tracking Entities  
 > [!IMPORTANT]
 > We no longer recommend using the self-tracking-entities template. It will only continue to be available to support existing applications. If your application requires working with disconnected graphs of entities, consider other alternatives such as [Trackable Entities](http://trackableentities.github.io/), which is a technology similar to Self-Tracking-Entities that is more actively developed by the community, or writing custom code using the low-level change tracking APIs.
 
@@ -40,7 +40,7 @@ Consider the following when working with self-tracking entities:
 - Self-tracking entities are not enabled to perform lazy loading.  
 - Binary serialization and serialization to ASP.NET state management objects is not supported by self-tracking entities. However, you can customize the template to add the binary serialization support. For more information, see [Using Binary Serialization and ViewState with Self-Tracking Entities](http://go.microsoft.com/fwlink/?LinkId=199208).  
 
-### Security Considerations  
+## Security Considerations  
 
 The following security considerations should be taken into account when working with self-tracking entities:  
 

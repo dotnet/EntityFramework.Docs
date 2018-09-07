@@ -11,7 +11,7 @@ One reason you may want to use table splitting is delaying the loading of some p
 
 The following image shows the main windows that are used when working with the EF Designer.
 
-![EFDesigner](~/ef6/media/efdesigner.png)
+![EF Designer](~/ef6/media/efdesigner.png)
 
 ## Prerequisites
 
@@ -124,8 +124,8 @@ The following T-SQL statements were executed against the **School** database as 
 
 -   The following **SELECT** was executed as a result of executing context.People.FirstOrDefault() and selects just the columns mapped to **Person**
 
-    ![Select1](~/ef6/media/select1.png)
+    ![Select 1](~/ef6/media/select1.png)
 
 -   The following **SELECT** was executed as a result of accessing the navigation property existingPerson.Instructor and selects just the columns mapped to **HireInfo**
 
-    ![Select2](~/ef6/media/select2.png)
+    ![Select 2](~/ef6/media/select2.png)

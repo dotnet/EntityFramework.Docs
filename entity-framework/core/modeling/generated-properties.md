@@ -10,7 +10,10 @@ uid: core/modeling/generated-properties
 
 ## Value Generation Patterns
 
-There are three value generation patterns that can be used for properties.
+There are three value generation patterns that can be used for properties:
+* No value generation
+* Value generated on add
+* Value generated on add or update
 
 ### No value generation
 

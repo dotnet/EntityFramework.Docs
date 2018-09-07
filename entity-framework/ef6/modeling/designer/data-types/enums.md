@@ -65,11 +65,11 @@ The wizard performs the following actions:
 
 1.  In the Entity Framework Designer, right-click the Name property, select **Convert to enum**
 
-    ![ConvertToEnum](~/ef6/media/converttoenum.png)
+    ![Convert To Enum](~/ef6/media/converttoenum.png)
 
 2.  In the **Add Enum** dialog box type **DepartmentNames** for the Enum Type Name, change the Underlying Type to **Int32**, and then add the following members to the type: English, Math, and Economics
 
-    ![AddEnumType](~/ef6/media/addenumtype.png)
+    ![Add Enum Type](~/ef6/media/addenumtype.png)
 
 3.  Press **OK**
 4.  Save the model and build the project
@@ -80,7 +80,7 @@ If you look at the Properties window, you will notice that the type of the Name 
 
 If you switch to the Model Browser window, you will see that the type was also added to the Enum Types node.
 
-![ModelBrowser](~/ef6/media/modelbrowser.png)
+![Model Browser](~/ef6/media/modelbrowser.png)
 
 >[!NOTE]
 > You can also add new enum types from this window by clicking the right mouse button and selecting **Add Enum Type**. Once the type is created it will appear in the list of types and you would be able to associate with a property
