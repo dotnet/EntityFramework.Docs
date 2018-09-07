@@ -47,7 +47,7 @@ As they are, the Blog and Post classes conveniently follow code first convention
 
 ## Key
 
-Entity Framework relies on every entity having a key value that is used for entity tracking. One convention of Code First is implicit keu properties; Code First will look for a property named “Id”, or a combination of class name and “Id”, such as “BlogId”. This property will map to a primary key column in the database.
+Entity Framework relies on every entity having a key value that is used for entity tracking. One convention of Code First is implicit key properties; Code First will look for a property named “Id”, or a combination of class name and “Id”, such as “BlogId”. This property will map to a primary key column in the database.
 
 The Blog and Post classes both follow this convention. What if they didn’t? What if Blog used the name *PrimaryTrackingKey* instead, or even *foo*? If code first does not find a property that matches this convention it will throw an exception because of Entity Framework’s requirement that you must have a key property. You can use the key annotation to specify which property is to be used as the EntityKey.
 
