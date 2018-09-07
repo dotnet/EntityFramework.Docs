@@ -62,13 +62,13 @@ The Blog and Post classes both follow this convention. What if they didn’t? Wh
     }
 ```
 
-If you are using code first’s database generation feature, the Blog table will have a primary key column named PrimaryTrackingKey which is also defined as Identity by default.
+If you are using code first’s database generation feature, the Blog table will have a primary key column named PrimaryTrackingKey, which is also defined as Identity by default.
 
 ![jj591583_figure01](~/ef6/media/jj591583-figure01.png)
 
 ### Composite keys
 
-Entity Framework supports composite keys - primary keys that consist of more than one property. For example, your could have a Passport class whose primary key is a combination of PassportNumber and IssuingCountry.
+Entity Framework supports composite keys - primary keys that consist of more than one property. For example, you could have a Passport class whose primary key is a combination of PassportNumber and IssuingCountry.
 
 ``` csharp
     public class Passport
@@ -82,11 +82,11 @@ Entity Framework supports composite keys - primary keys that consist of more tha
     }
 ```
 
-If you were to try to use the above class in your EF model, you would get an `InvalidOperationException`:
+Attempting to use the above class in your EF model, would result in an `InvalidOperationException`:
 
 *Unable to determine composite primary key ordering for type 'Passport'. Use the ColumnAttribute or the HasKey method to specify an order for composite primary keys.*
 
-When using composite keys, Entity Framework requires you to define an order for the key properties. You can acheive this by using the Column annotation to specify an order.
+In order to use composite keys, Entity Framework requires you to define an order for the key properties. You can do this by using the Column annotation to specify an order.
 
 >[!NOTE]
 > The order value is relative (rather than index based) so any values can be used. For example, 100 and 200 would be acceptable in place of 1 and 2.
@@ -105,7 +105,7 @@ When using composite keys, Entity Framework requires you to define an order for 
     }
 ```
 
-If you have entities with composite foreign keys then you must specify the same column ordering that you used for the corresponding primary key properties.
+If you have entities with composite foreign keys, then you must specify the same column ordering that you used for the corresponding primary key properties.
 
 Only the relative ordering within the foreign key properties needs to be the same, the exact values assigned to **Order** do not need to match. For example, in the following class, 3 and 4 could be used in place of 1 and 2.
 
