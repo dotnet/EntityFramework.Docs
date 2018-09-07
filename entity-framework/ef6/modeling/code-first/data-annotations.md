@@ -6,20 +6,20 @@ ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
 ---
 # Code First Data Annotations
 > [!NOTE]
-> **EF4.1 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 4.1. If you are using an earlier version, some or all of the information does not apply.
+> **EF4.1 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 4.1. If you are using an earlier version, some or all of this information does not apply.
 
-The content on this page is adapted from and article originally written by Julie Lerman (\<http://thedatafarm.com>).
+The content on this page is adapted from an article originally written by Julie Lerman (\<http://thedatafarm.com>).
 
-Entity Framework Code First allows you to use your own domain classes to represent the model which EF relies on to perform querying, change tracking and updating functions. Code first leverages a programming pattern referred to as convention over configuration. What this means is that code first will assume that your classes follow the conventions that EF uses. In that case, EF will be able to work out the details it needs to do its job. However, if your classes do not follow those conventions, you have the ability to add configurations to your classes to provide EF with the information it needs.
+Entity Framework Code First allows you to use your own domain classes to represent the model that EF relies on to perform querying, change tracking, and updating functions. Code First leverages a programming pattern referred to as 'convention over configuration.' Code First will assume that your classes follow the conventions of Entity Framework, and in that case, will automatically work out how to perform it's job. However, if your classes do not follow those conventions, you have the ability to add configurations to your classes to provide EF with the requisite information.
 
-Code first gives you two ways to add these configurations to your classes. One is using simple attributes called DataAnnotations and the other is using code first’s Fluent API, which provides you with a way to describe configurations imperatively, in code.
+Code First gives you two ways to add these configurations to your classes. One is using simple attributes called DataAnnotations, and the second is using Code First’s Fluent API, which provides you with a way to describe configurations imperatively, in code.
 
 This article will focus on using DataAnnotations (in the System.ComponentModel.DataAnnotations namespace) to configure your classes – highlighting the most commonly needed configurations. DataAnnotations are also understood by a number of .NET applications, such as ASP.NET MVC which allows these applications to leverage the same annotations for client-side validations.
 
 
 ## The model
 
-I’ll demonstrate code first DataAnnotations with a simple pair of classes: Blog and Post.
+I’ll demonstrate Code First DataAnnotations with a simple pair of classes: Blog and Post.
 
 ``` csharp
     public class Blog
@@ -41,15 +41,15 @@ I’ll demonstrate code first DataAnnotations with a simple pair of classes: Blo
     }
 ```
 
-As they are, the Blog and Post classes conveniently follow code first convention and required no tweaks to help EF work with them. But you can also use the annotations to provide more information to EF about the classes and the database that they map to.
+As they are, the Blog and Post classes conveniently follow code first convention and require no tweaks to enable EF compatability. However, you can also use the annotations to provide more information to EF, about the classes and the database to which they map.
 
  
 
 ## Key
 
-Entity Framework relies on every entity having a key value that it uses for tracking entities. One of the conventions that code first depends on is how it implies which property is the key in each of the code first classes. That convention is to look for a property named “Id” or one that combines the class name and “Id”, such as “BlogId”. The property will map to a primary key column in the database.
+Entity Framework relies on every entity having a key value that is used for entity tracking. One convention of Code First is implicit keu properties; Code First will look for a property named “Id”, or a combination of class name and “Id”, such as “BlogId”. This property will map to a primary key column in the database.
 
-The Blog and Post classes both follow this convention. But what if they didn’t? What if Blog used the name *PrimaryTrackingKey* instead or even *foo*? If code first does not find a property that matches this convention it will throw an exception because of Entity Framework’s requirement that you must have a key property. You can use the key annotation to specify which property is to be used as the EntityKey.
+The Blog and Post classes both follow this convention. What if they didn’t? What if Blog used the name *PrimaryTrackingKey* instead, or even *foo*? If code first does not find a property that matches this convention it will throw an exception because of Entity Framework’s requirement that you must have a key property. You can use the key annotation to specify which property is to be used as the EntityKey.
 
 ``` csharp
     public class Blog
