@@ -80,11 +80,9 @@ using (var db = new BloggingContext())
 
 Streaming is not supported when a retrying execution strategy is registered. This limitation exists because the connection could drop part way through the results being returned. When this occurs, EF needs to re-run the entire query but has no reliable way of knowing which results have already been returned (data may have changed since the initial query was sent, results may come back in a different order, results may not have a unique identifier, etc.).  
 
-## User initiated transactions not supported  
+## User initiated transactions are not supported  
 
 When you have configured an execution strategy that results in retries, there are some limitations around the use of transactions.  
-
-### default transaction behavior  
 
 By default, EF will perform any database updates within a transaction. You don’t need to do anything to enable this, EF always does this automatically.  
 
@@ -98,8 +96,6 @@ using (var db = new BloggingContext())
     db.SaveChanges();
 }
 ```  
-
-### What’s not supported: User initiated transactions  
 
 When not using a retrying execution strategy you can wrap multiple operations in a single transaction. For example, the following code wraps two SaveChanges calls in a single transaction. If any part of either operation fails then none of the changes are applied.  
 

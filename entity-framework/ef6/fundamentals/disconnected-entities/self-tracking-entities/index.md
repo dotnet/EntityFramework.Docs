@@ -22,7 +22,7 @@ This template item generates two .tt (text template) files:
 
 To get started, visit the [Self-Tracking Entities Walkthrough](walkthrough.md) page.  
 
-## Considerations When Working with Self-Tracking Entities  
+## Functional Considerations When Working with Self-Tracking Entities  
 > [!IMPORTANT]
 > We no longer recommend using the self-tracking-entities template. It will only continue to be available to support existing applications. If your application requires working with disconnected graphs of entities, consider other alternatives such as [Trackable Entities](http://trackableentities.github.io/), which is a technology similar to Self-Tracking-Entities that is more actively developed by the community, or writing custom code using the low-level change tracking APIs.
 

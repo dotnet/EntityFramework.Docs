@@ -43,7 +43,7 @@ public static string StandardizeUrl(string url)
 }
 ```
 
-## How to find code that causes client evaluation
+## Client evaluation performance issues
 
 While client evaluation can be very useful, in some instances it can result in poor performance. Consider the following query, where the helper method is now used in a filter. Because this can't be performed in the database, all the data is pulled into memory and then the filter is applied on the client. Depending on the amount of data, and how much of that data is filtered out, this could result in poor performance.
 
@@ -54,7 +54,13 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-By default, EF Core will log a warning when client evaluation is performed. See [Logging](../miscellaneous/logging.md) for more information on viewing logging output. You can change the behavior when client evaluation occurs to either throw or do nothing. This is done when setting up the options for your context - typically in `DbContext.OnConfiguring`, or in `Startup.cs` if you are using ASP.NET Core.
+## Client evaluation logging
+
+By default, EF Core will log a warning when client evaluation is performed. See [Logging](../miscellaneous/logging.md) for more information on viewing logging output. 
+
+## Optional behavior: throw an exception for client evaluation
+
+You can change the behavior when client evaluation occurs to either throw or do nothing. This is done when setting up the options for your context - typically in `DbContext.OnConfiguring`, or in `Startup.cs` if you are using ASP.NET Core.
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/ClientEval/ThrowOnClientEval/BloggingContext.cs?highlight=5)] -->
 ``` csharp

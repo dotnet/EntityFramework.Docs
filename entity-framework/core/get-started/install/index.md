@@ -9,16 +9,23 @@ uid: core/get-started/install/index
 
 ## Prerequisites
 
-In order to develop .NET Core 2.1 applications (including ASP.NET Core 2.1 applications that target .NET Core) you will need to download and install a version of the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core) that is appropriate to your platform. **This is true even if you have installed Visual Studio 2017 version 15.7.**
+In order to develop .NET Core 2.1 applications (including ASP.NET Core 2.1 applications that target .NET Core) you need to download and install a version of the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core) that is appropriate to your platform. **This is true even if you have installed Visual Studio 2017 version 15.7 or later.**
 
-In order to use EF Core 2.1 or any other .NET Standard 2.0 library with a .NET platform besides .NET Core 2.1 (for example, with .NET Framework 4.6.1 or greater) you will need a version of NuGet that is aware of the .NET Standard 2.0 and its compatible frameworks. Here are a few ways you can obtain this:
+In order to use EF Core 2.1 or any other .NET Standard 2.0 library with a .NET platform besides .NET Core 2.1 (for example, with .NET Framework 4.6.1 or greater) you need a version of NuGet that is aware of the .NET Standard 2.0 and its compatible frameworks. Here are a few ways you can obtain this:
 
-* Install Visual Studio 2017 version 15.7
-* If you are using Visual Studio 2015, [download and upgrade NuGet client to version 3.6.0](https://www.nuget.org/downloads)
+* Install Visual Studio 2017 version 15.7 or later.
+* If you are using Visual Studio 2015, [download and upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads).
+
+### ASP.NET apps
+
+Applications targeting previous versions of ASP.NET Core need to upgrade to ASP.NET Core 2.1 in order to use EF Core 2.1. Applications targeting ASP.NET Core 2.1 can use EF Core 2.1 without additional dependencies besides third party database providers. 
+
+### Earlier versions of Visual Studio
 
 Projects created with previous versions of Visual Studio and targeting .NET Framework may need additional modifications in order to be compatible with .NET Standard 2.0 libraries:
 
 * Edit the project file and make sure the following entry appears in the initial property group:
+
   ``` xml
   <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   ```
@@ -28,21 +35,21 @@ Projects created with previous versions of Visual Studio and targeting .NET Fram
   <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   ```
 
-## Get Entity Framework Core runtime and tools
+## Get Entity Framework Core runtime
 
 The recommended way to add EF Core runtime libraries into an application is to install an EF Core database provider from NuGet.
-
-Besides the runtime libraries, you can install tools which make it easier to perform several EF Core-related tasks in your project at design time, such as creating and applying migrations, and creating a model based on an existing database.
 
 > [!TIP]  
 > If you need to update an application that is using a third-party database provider, always check for an update of the provider that is compatible with the version of EF Core you want to use. For example, database providers for previous versions are not compatible with version 2.1 of the EF Core runtime.  
 
-> [!TIP]  
-> Applications targeting ASP.NET Core 2.1 can use EF Core 2.1 without additional dependencies besides third party database providers. Applications targeting previous versions of ASP.NET Core need to upgrade to ASP.NET Core 2.1 in order to use EF Core 2.1.
+## Get Entity Framework Core tools
+
+Besides the runtime libraries, you can install tools which make it easier to perform several EF Core-related tasks in your project at design time, such as creating and applying migrations, and creating a model based on an existing database.
+
 
 <a name="cli"></a>
 
-## Using the .NET Core Command Line Interface (CLI)
+## Get the Command Line Interface (CLI) tools
 
 To develop applications that target [.NET Core](https://www.microsoft.com/net/download/core) you can choose to use the [`dotnet` CLI commands](https://docs.microsoft.com/dotnet/core/tools/) in combination with your favorite text editor, or an Integrated Development Environment (IDE) such as Visual Studio, Visual Studio for Mac, or Visual Studio Code.
 

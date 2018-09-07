@@ -31,8 +31,6 @@ using (var context = new BlogContext())
 
 Notice that context.Database.Log is set to Console.Write. This is all that is needed to log SQL to the console.  
 
-## Example output  
-
 Let’s add some simple query/insert/update code so that we can see some output:  
 
 ``` csharp
