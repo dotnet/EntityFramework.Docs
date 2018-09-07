@@ -82,7 +82,7 @@ Entity Framework supports composite keys - primary keys that consist of more tha
     }
 ```
 
-Attempting to use the above class in your EF model, would result in an `InvalidOperationException`:
+Attempting to use the above class in your EF model would result in an `InvalidOperationException`:
 
 *Unable to determine composite primary key ordering for type 'Passport'. Use the ColumnAttribute or the HasKey method to specify an order for composite primary keys.*
 
