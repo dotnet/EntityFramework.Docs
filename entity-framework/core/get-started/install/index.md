@@ -42,7 +42,7 @@ You can indicate a specific version in the `dotnet add package` command, using t
 
 * Click on the **Browse** or the **Updates** tab
 
-* To install or upddate the SQL Server provider, select the `Microsoft.EntityFrameworkCore.SqlServer` package, and confirm.
+* To install or update the SQL Server provider, select the `Microsoft.EntityFrameworkCore.SqlServer` package, and confirm.
 
 For more information, see [NuGet Package Manager UI](https://docs.microsoft.com/nuget/tools/package-manager-ui).
 
@@ -100,7 +100,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Tools
 
 For ASP.NET Core 2.1 apps, this package is included automatically.
 
-## Upgading to EF Core 2.1
+## Upgrading to EF Core 2.1
 
 If you're upgrading an existing application to EF Core 2.1, some references to older EF Core packages may need to be removed manually:
 
