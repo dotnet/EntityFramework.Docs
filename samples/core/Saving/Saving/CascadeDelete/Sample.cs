@@ -150,8 +150,8 @@ namespace EFSaving.CascadeDelete
                 var postEntry = context.Entry(post);
 
                 Console.WriteLine(
-                    $"      Post '{blog.BlogId}' is in state {postEntry.State} " + 
-                    $"with FK '{post.BlogId?.ToString() ?? "null"}' and {(post.Blog == null ? "no reference to a blog." : $"reference to blog '{blog.BlogId}'." )}");
+                    $"      Post '{post.PostId}' is in state {postEntry.State} " + 
+                    $"with FK '{post.BlogId?.ToString() ?? "null"}' and {(post.Blog == null ? "no reference to a blog." : $"reference to blog '{post.BlogId}'." )}");
             }
         }
 
