@@ -65,7 +65,7 @@ Collection properties must implement the IListSource interface to enable two-way
 
             IList IListSource.GetList()
             {
-                return _bindingList  (_bindingList = this.ToBindingList());
+                return _bindingList ?? (_bindingList = this.ToBindingList());
             }
         }
     }
