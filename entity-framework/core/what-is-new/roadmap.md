@@ -23,7 +23,7 @@ This release will include many bug fixes, and relatively small number of new fea
 
 ### EF Core 3.0
 
-Although we have not completed the [release planning process](#release-planning-process) for the next release after 2.2, we are currently planning to have a major release, algined with .NET Core 3.0 and ASP.NET 3.0. 
+Although we have not completed the [release planning process](#release-planning-process) for the next release after 2.2, we are currently planning to have a major release, aligned with .NET Core 3.0 and ASP.NET 3.0. 
 
 You can use [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) to see work items tenatively assigned to this future release.
 
