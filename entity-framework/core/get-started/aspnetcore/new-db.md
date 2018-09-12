@@ -15,7 +15,7 @@ You can follow the tutorial by using Visual Studio 2017 on Windows, or by using 
 
 View this article's sample on GitHub:
 * [Visual Studio 2017 with SQL Server](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb)
-* [.NET Core CLI with SQLite](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCoreNewDb.Sqlite/EFGetStarted.AspNetCore.NewDb).
+* [.NET Core CLI with SQLite](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/AspNetCore/EFGetStarted.AspNetCore.NewDb.Sqlite).
 
 ## Prerequisites
 
