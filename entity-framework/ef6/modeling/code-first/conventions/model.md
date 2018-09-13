@@ -1,7 +1,7 @@
 ---
 title: "Model-Based Conventions - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 0fc4eef8-29b8-4192-9c77-08fd33d3db3a
 ---
 # Model-Based Conventions

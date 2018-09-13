@@ -2,7 +2,7 @@
 title: Package Manager Console (Visual Studio) - EF Core
 author: bricelam
 ms.author: bricelam
-ms.date: 11/6/2017
+ms.date: 11/06/2017
 ---
 EF Core Package Manager Console Tools
 =====================================

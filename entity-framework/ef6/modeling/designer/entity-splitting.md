@@ -1,7 +1,7 @@
 ---
 title: "Designer Entity Splitting - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: aa2dd48a-1f0e-49dd-863d-d6b4f5834832
 ---
 # Designer Entity Splitting

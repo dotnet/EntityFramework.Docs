@@ -1,7 +1,7 @@
 ---
 title: "Self-tracking entities - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
 ---
 # Self-tracking entities

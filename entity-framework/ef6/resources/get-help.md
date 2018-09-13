@@ -1,7 +1,7 @@
 ---
 title: "Get Help Using Entity Framework - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 592cae61-02e1-485a-bbb0-a508ade9c67d
 ---
 # Get Help Using Entity Framework

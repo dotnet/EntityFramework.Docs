@@ -1,7 +1,7 @@
 ---
 title: "Raw SQL Queries - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 9e1ee76e-2499-408c-81e8-9b6c5d1945a0
 ---
 # Raw SQL Queries

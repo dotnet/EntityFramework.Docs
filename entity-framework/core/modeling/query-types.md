@@ -1,7 +1,7 @@
 ---
 title: Query Types - EF Core
 author: anpete
-ms.date: 2/26/2018
+ms.date: 02/26/2018
 ms.assetid: 9F4450C5-1A3F-4BB6-AC19-9FAC64292AAD
 uid: core/modeling/query-types
 ---

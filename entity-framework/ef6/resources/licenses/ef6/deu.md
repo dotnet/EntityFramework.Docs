@@ -1,6 +1,6 @@
 ---
 title: "Entity Framework 6 Runtime License (DEU)"
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 0bafee16-ed55-4560-97f5-bc5b27e0df36
 ---
 # Entity Framework 6 Runtime License (DEU)

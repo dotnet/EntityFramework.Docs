@@ -1,7 +1,7 @@
 ---
 title: "Stored Procedures with Multiple Result Sets - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 1b3797f9-cd3d-4752-a55e-47b84b399dc1
 ---
 # Stored Procedures with Multiple Result Sets

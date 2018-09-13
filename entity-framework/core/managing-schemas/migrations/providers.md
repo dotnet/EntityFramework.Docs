@@ -2,7 +2,7 @@
 title: Migrations with Multiple Providers - EF Core
 author: bricelam
 ms.author: bricelam
-ms.date: 11/8/2017
+ms.date: 11/08/2017
 ---
 Migrations with Multiple Providers
 ==================================

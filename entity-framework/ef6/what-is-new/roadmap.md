@@ -1,7 +1,7 @@
 ---
 title: "Future Versions of Entity Framework  - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: d8666b7a-deda-45e7-8b8e-d1d64a2724d3
 ---
 # Future Versions of Entity Framework 

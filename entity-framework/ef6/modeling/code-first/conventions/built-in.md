@@ -1,7 +1,7 @@
 ---
 title: "Code First Conventions - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: bc644573-c2b2-4ed7-8745-3c37c41058ad
 ---
 # Code First Conventions

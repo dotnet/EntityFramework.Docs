@@ -1,7 +1,7 @@
 ---
 title: "What's New - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 41d1f86b-ce66-4bf2-8963-48514406fb4c
 ---
 # What's New in EF6

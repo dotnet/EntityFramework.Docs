@@ -1,7 +1,7 @@
 ---
 title: Tools & Extensions - EF Core
 author: ErikEJ
-ms.date: 7/3/2018
+ms.date: 07/03/2018
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
 ---
