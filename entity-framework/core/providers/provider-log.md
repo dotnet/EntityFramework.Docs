@@ -49,3 +49,5 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
   * Allows DbContextOptionsExtensions to implement a new interface that can help people understand why the internal service provider is being re-built
 * https://github.com/aspnet/EntityFrameworkCore/pull/13289 - Adds CanConnect API for use by health checks
   * This PR adds the concept of `CanConnect` which will be used by ASP.NET Core health checks to determine if the database is available. By default, the relational implementation just calls `Exist`, but providers can implement something different if necessary. Non-relational providers will need to implement the new API in order for the health check to be usable.
+* https://github.com/aspnet/EntityFrameworkCore/pull/13306 - Update base RelationalTypeMapping to not set DbParameter Size
+  * Stop setting Size by default since it can cause truncation. Providers may need to add their own logic if Size needs to be set.
