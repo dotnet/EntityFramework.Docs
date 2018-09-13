@@ -1,7 +1,7 @@
 ---
 title: "Automatic detect changes - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: a8d1488d-9a54-4623-a76b-e81329ff2756
 ---
 # Automatic detect changes

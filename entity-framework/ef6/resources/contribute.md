@@ -1,7 +1,7 @@
 ---
 title: "Contribute to Entity Framework - EF6"
 author: divega
-ms.date: "2018-07-05"
+ms.date: "07/05/2018"
 ms.assetid: EFA3C3F5-79A4-4A0A-BB37-035C31FC7372
 ---
 # Contribute to Entity Framework 6

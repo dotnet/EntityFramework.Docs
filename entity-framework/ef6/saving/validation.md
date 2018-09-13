@@ -1,7 +1,7 @@
 ---
 title: "Validation - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 77d6a095-c0d0-471e-80b9-8f9aea6108b2
 ---
 # Data Validation

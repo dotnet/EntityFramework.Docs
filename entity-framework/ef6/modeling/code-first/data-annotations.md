@@ -1,7 +1,7 @@
 ---
 title: "Code First Data Annotations - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
 ---
 # Code First Data Annotations

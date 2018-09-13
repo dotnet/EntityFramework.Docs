@@ -1,7 +1,7 @@
 ---
 title: "Code First Insert, Update, and Delete Stored Procedures - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 9a7ae7f9-4072-4843-877d-506dd7eef576
 ---
 # Code First Insert, Update, and Delete Stored Procedures

@@ -1,7 +1,7 @@
 ---
 title: "Designer Query Stored Procedures - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 9554ed25-c5c1-43be-acad-5da37739697f
 ---
 # Designer Query Stored Procedures

@@ -1,7 +1,7 @@
 ---
 title: "Code First Migrations - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 36591d8f-36e1-4835-8a51-90f34f633d1e
 ---
 # Code First Migrations

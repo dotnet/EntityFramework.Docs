@@ -1,7 +1,7 @@
 ---
 title: "Saving Data - EF6"
 author: divega
-ms.date: "2018-07-05"
+ms.date: "07/05/2018"
 ms.assetid: C7744A30-8655-4EF8-8657-F5B796D1EB7E
 ---
 
