@@ -1,7 +1,7 @@
 ---
 title: "Entity Framework Providers - EF6"
 author: divega
-ms.date: "2018-06-27"
+ms.date: "06/27/2018"
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
 ---
 

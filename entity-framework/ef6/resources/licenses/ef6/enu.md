@@ -1,6 +1,6 @@
 ---
 title: "Entity Framework 6 Runtime License"
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 5bc55bf3-2404-4811-8d13-d2eed822cdc4
 ---
 # Entity Framework 6 Runtime License (ENU)

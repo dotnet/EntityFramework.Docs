@@ -1,7 +1,7 @@
 ---
 title: "Code First Migrations in Team Environments - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 4c2d9a95-de6f-4e97-9738-c1f8043eff69
 ---
 # Code First Migrations in Team Environments

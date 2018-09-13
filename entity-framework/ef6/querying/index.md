@@ -1,7 +1,7 @@
 ---
 title: "Querying and Finding Entities - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 65bb3db2-2226-44af-8864-caa575cf1b46
 ---
 # Querying and Finding Entities

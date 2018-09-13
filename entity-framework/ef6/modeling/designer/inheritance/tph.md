@@ -1,7 +1,7 @@
 ---
 title: "Designer TPH Inheritance - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 72d26a8e-20ab-4500-bd13-394a08e73394
 ---
 # Designer TPH Inheritance

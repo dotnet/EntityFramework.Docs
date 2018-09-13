@@ -1,7 +1,7 @@
 ---
 title: "Async query and save - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
 ---
 # Async query and save

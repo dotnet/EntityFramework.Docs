@@ -1,7 +1,7 @@
 ---
 title: "Designer TPT Inheritance - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: efc78c31-b4ea-4ea3-a0cd-c69eb507020e
 ---
 # Designer TPT Inheritance

@@ -1,6 +1,6 @@
 ---
 title: "Entity Framework 5 License (CHT)"
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: f6b3fc39-a02a-46f5-9696-67f0ca8e7ec4
 ---
 # Entity Framework 5 License (CHT)

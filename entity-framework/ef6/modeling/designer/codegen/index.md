@@ -1,7 +1,7 @@
 ---
 title: "Designer Code Generation Templates - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 56e00fa2-f9f0-48b3-8006-f8266ca7e74b
 ---
 # Designer Code Generation Templates

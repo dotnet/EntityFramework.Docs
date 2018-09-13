@@ -1,7 +1,7 @@
 ---
 title: "Handling Concurrency Conflicts - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 2318e4d3-f561-4720-bbc3-921556806476
 ---
 # Handling Concurrency Conflicts

@@ -1,7 +1,7 @@
 ---
 title: "Entity Framework Glossary - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 3f05ffdd-49bc-499c-9732-4a368bf5d2d7
 ---
 # Entity Framework Glossary

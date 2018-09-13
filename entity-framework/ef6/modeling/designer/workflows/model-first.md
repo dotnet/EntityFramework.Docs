@@ -1,7 +1,7 @@
 ---
 title: "Model First - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: e1b9c319-bb8a-4417-ac94-7890f257e7f6
 ---
 # Model First

@@ -1,7 +1,7 @@
 ---
 title: "Handling transaction commit failures - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 5b1f7a7d-1b24-4645-95ec-5608a31ef577
 ---
 # Handling transaction commit failures

@@ -1,7 +1,7 @@
 ---
 title: "Multiple Diagrams per Model - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: b95db5c8-de8d-43bd-9ccc-5df6a5e25e1b
 ---
 # Multiple Diagrams per Model

@@ -1,7 +1,7 @@
 ---
 title: "Relationships, navigation properties and foreign keys - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
 ---
 # Relationships, navigation properties and foreign keys

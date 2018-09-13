@@ -1,7 +1,7 @@
 ---
 title: "Designer CUD Stored Procedures - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
 ---
 # Designer CUD Stored Procedures

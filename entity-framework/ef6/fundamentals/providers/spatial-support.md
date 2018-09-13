@@ -1,7 +1,7 @@
 ---
 title: "Provider Support for Spatial Types - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 1097cb00-15f5-453d-90ed-bff9403d23e3
 ---
 # Provider Support for Spatial Types

@@ -1,7 +1,7 @@
 ---
 title: "Local Data - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: 2eda668b-1e5d-487d-9a8c-0e3beef03fcb
 ---
 # Local Data

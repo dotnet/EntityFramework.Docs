@@ -1,7 +1,7 @@
 ---
 title: "Code First Migrations with an existing database - EF6"
 author: divega
-ms.date: "2016-10-23"
+ms.date: "10/23/2016"
 ms.assetid: f0cc4f93-67dd-4664-9753-0a9f913814db
 ---
 # Code First Migrations with an existing database
