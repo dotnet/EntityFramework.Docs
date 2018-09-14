@@ -22,13 +22,13 @@ An EF provider is really a collection of provider-specific services defined by C
 
 ### DbProviderFactory
 
-EF depends on having a type derived from [System.Data.Common.DbProviderFactory](http://msdn.microsoft.com/en-us/library/system.data.common.dbproviderfactory.aspx) for performing all low-level database access. DbProviderFactory is not actually part of EF but is instead a class in the .NET Framework that serves an entry point for ADO.NET providers that can be used by EF, other O/RMs or directly by an application to obtain instances of connections, commands, parameters and other ADO.NET abstractions in a provider agnostic way. More information about DbProviderFactory an be found in the [MSDN documentation for ADO.NET](http://msdn.microsoft.com/en-us/library/a6cd7c08.aspx).
+EF depends on having a type derived from [System.Data.Common.DbProviderFactory](https://msdn.microsoft.com/en-us/library/system.data.common.dbproviderfactory.aspx) for performing all low-level database access. DbProviderFactory is not actually part of EF but is instead a class in the .NET Framework that serves an entry point for ADO.NET providers that can be used by EF, other O/RMs or directly by an application to obtain instances of connections, commands, parameters and other ADO.NET abstractions in a provider agnostic way. More information about DbProviderFactory an be found in the [MSDN documentation for ADO.NET](https://msdn.microsoft.com/en-us/library/a6cd7c08.aspx).
 
 ### DbProviderServices
 
 EF depends on having a type derived from DbProviderServices for providing additional functionality needed by EF on top of the functionality already provided by the ADO.NET provider. In older versions of EF the DbProviderServices class was part of the .NET Framework and was found in the System.Data.Common namespace. Starting with EF6 this class is now part of EntityFramework.dll and is in the System.Data.Entity.Core.Common namespace.
 
-More details about the fundamental functionality of a DbProviderServices implementation can be found on [MSDN](http://msdn.microsoft.com/en-us/library/ee789835.aspx). However, note that as of the time of writing this information is not updated for EF6 although most of the concepts are still valid. The SQL Server and SQL Server Compact implementations of DbProviderServices are also checked into to the [open-source codebase](https://github.com/aspnet/EntityFramework6/) and can serve as useful references for other implementations.
+More details about the fundamental functionality of a DbProviderServices implementation can be found on [MSDN](https://msdn.microsoft.com/en-us/library/ee789835.aspx). However, note that as of the time of writing this information is not updated for EF6 although most of the concepts are still valid. The SQL Server and SQL Server Compact implementations of DbProviderServices are also checked into to the [open-source codebase](https://github.com/aspnet/EntityFramework6/) and can serve as useful references for other implementations.
 
 In older versions of EF the DbProviderServices implementation to use was obtained directly from an ADO.NET provider. This was done by casting DbProviderFactory to IServiceProvider and calling the GetService method. This tightly coupled the EF provider to the DbProviderFactory. This coupling blocked EF from being moved out of the .NET Framework and therefore for EF6 this tight coupling has been removed and an implementation of DbProviderServices is now registered directly in the application’s configuration file or in code-based configuration as described in more detail the _Registering DbProviderServices_ section below.
 
@@ -82,7 +82,7 @@ The _type_ string must be the assembly-qualified type name of the DbProviderServ
 
 ### Code-based registration
 
-Starting with EF6 providers can also be registered using code. This allows an EF provider to be used without any change to the application’s configuration file. To use code-based configuration an application should create a DbConfiguration class as described in the [code-based configuration documentation](http://msdn.com/data/jj680699). The constructor of the DbConfiguration class should then call SetProviderServices to register the EF provider. For example:
+Starting with EF6 providers can also be registered using code. This allows an EF provider to be used without any change to the application’s configuration file. To use code-based configuration an application should create a DbConfiguration class as described in the [code-based configuration documentation](https://msdn.com/data/jj680699). The constructor of the DbConfiguration class should then call SetProviderServices to register the EF provider. For example:
 
 ``` csharp
 public class MyConfiguration : DbConfiguration

@@ -16,7 +16,7 @@ This page assumes you have a basic understanding of Code First. Check out the fo
 
 You will need to have at least Visual Studio 2010 or Visual Studio 2012 installed to complete this walkthrough.
 
-If you are using Visual Studio 2010, you will also need to have [NuGet](http://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) installed
+If you are using Visual Studio 2010, you will also need to have [NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) installed
 
 ## Create the Application
 
@@ -133,7 +133,7 @@ We’re about to start to using types from the Entity Framework so we need to ad
 
 -   **Project –&gt; **Manage NuGet Packages…**
 > [!NOTE]
-> If you don’t have the **Manage NuGet Packages…** option you should install the [latest version of NuGet](http://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
+> If you don’t have the **Manage NuGet Packages…** option you should install the [latest version of NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
 -   Select the **Online** tab
 -   Select the **EntityFramework** package
 -   Click **Install**

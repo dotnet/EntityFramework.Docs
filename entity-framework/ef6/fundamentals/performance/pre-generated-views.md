@@ -9,7 +9,7 @@ Before the Entity Framework can execute a query or save changes to the data sour
 
 ## Generating Mapping Views with the EF Power Tools
 
-The easiest way to pre-generate views is to use the [EF Power Tools](http://visualstudiogallery.msdn.microsoft.com/72a60b14-1581-4b9b-89f2-846072eff19d). Once you have the Power Tools installed you will have a menu option to Generate Views, as below.
+The easiest way to pre-generate views is to use the [EF Power Tools](https://visualstudiogallery.msdn.microsoft.com/72a60b14-1581-4b9b-89f2-846072eff19d). Once you have the Power Tools installed you will have a menu option to Generate Views, as below.
 
 -   For **Code First** models right-click on the code file that contains your DbContext class.
 -   For **EF Designer** models right-click on your EDMX file.
