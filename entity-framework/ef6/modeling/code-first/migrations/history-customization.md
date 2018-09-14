@@ -63,7 +63,7 @@ Let’s say you want to rename the migrations history table and put it to a cust
     }
 ```
 
-Once your custom HistoryContext is ready you need to make EF aware of it by registering it via [code-based configuration](http://msdn.com/data/jj680699):
+Once your custom HistoryContext is ready you need to make EF aware of it by registering it via [code-based configuration](https://msdn.com/data/jj680699):
 
 ``` csharp
     using System.Data.Entity;

@@ -121,7 +121,7 @@ The Entity Framework Designer in Visual Studio 2012 also introduces support for 
 
 Here is a list of content we put together specifically for the EF 5 release.
 
--   [EF 5 Release Post](http://blogs.msdn.com/b/adonet/archive/2012/08/15/ef5-released.aspx)
+-   [EF 5 Release Post](https://blogs.msdn.com/b/adonet/archive/2012/08/15/ef5-released.aspx)
 -   New Features in EF5
     -   [Enum Support in Code First](~/ef6/modeling/code-first/data-types/enums.md)
     -   [Enum Support in EF Designer](~/ef6/modeling/designer/data-types/enums.md)
@@ -188,16 +188,16 @@ This patch release included some bug fixes to the EF 4.3 release and introduced 
 
 Here is a list of content we put together specifically for the EF 4.3.1 release, most of the content provided for EF 4.1 still applies to EF 4.3 as well.
 
--   [EF 4.3.1 Release Blog  Post](http://blogs.msdn.com/b/adonet/archive/2012/02/29/ef4-3-1-and-ef5-beta-1-available-on-nuget.aspx)
+-   [EF 4.3.1 Release Blog  Post](https://blogs.msdn.com/b/adonet/archive/2012/02/29/ef4-3-1-and-ef5-beta-1-available-on-nuget.aspx)
 
 ## EF 4.3
 The EF 4.3.0 runtime was released to NuGet in February of 2012.
 This release included the new Code First Migrations feature that allows a database created by Code First to be incrementally changed as your Code First model evolves.
 
 Here is a list of content we put together specifically for the EF 4.3 release, most of the content provided for EF 4.1 still applies to EF 4.3 as well:
--   [EF 4.3 Release Post](http://blogs.msdn.com/b/adonet/archive/2012/02/09/ef-4-3-released.aspx)
--   [EF 4.3 Code-Based Migrations Walkthrough](http://blogs.msdn.com/b/adonet/archive/2012/02/09/ef-4-3-code-based-migrations-walkthrough.aspx)
--   [EF 4.3 Automatic Migrations Walkthrough](http://blogs.msdn.com/b/adonet/archive/2012/02/09/ef-4-3-automatic-migrations-walkthrough.aspx)
+-   [EF 4.3 Release Post](https://blogs.msdn.com/b/adonet/archive/2012/02/09/ef-4-3-released.aspx)
+-   [EF 4.3 Code-Based Migrations Walkthrough](https://blogs.msdn.com/b/adonet/archive/2012/02/09/ef-4-3-code-based-migrations-walkthrough.aspx)
+-   [EF 4.3 Automatic Migrations Walkthrough](https://blogs.msdn.com/b/adonet/archive/2012/02/09/ef-4-3-automatic-migrations-walkthrough.aspx)
 
 ## EF 4.2
 The EF 4.2.0 runtime was released to NuGet in November of 2011.
@@ -206,9 +206,9 @@ Because this release only included bug fixes it could have been the EF 4.1.2 pat
 
 Here is a list of content we put together specifically for the EF 4.2 release, the content provided for EF 4.1 still applies to EF 4.2 as well.
 
--   [EF 4.2 Release Post](http://blogs.msdn.com/b/adonet/archive/2011/11/01/ef-4-2-released.aspx)
--   [Code First Walkthrough](http://blogs.msdn.com/b/adonet/archive/2011/09/28/ef-4-2-code-first-walkthrough.aspx)
--   [Model & Database First Walkthrough](http://blogs.msdn.com/b/adonet/archive/2011/09/28/ef-4-2-model-amp-database-first-walkthrough.aspx)
+-   [EF 4.2 Release Post](https://blogs.msdn.com/b/adonet/archive/2011/11/01/ef-4-2-released.aspx)
+-   [Code First Walkthrough](https://blogs.msdn.com/b/adonet/archive/2011/09/28/ef-4-2-code-first-walkthrough.aspx)
+-   [Model & Database First Walkthrough](https://blogs.msdn.com/b/adonet/archive/2011/09/28/ef-4-2-model-amp-database-first-walkthrough.aspx)
 
 ## EF 4.1.1
 The EF 4.1.10715 runtime was released to NuGet in July of 2011.
@@ -221,7 +221,7 @@ Think of this version as EF 4.1 patch 1 (or EF 4.1.1).
 
 Here is a list of content we put together for the 4.1.1 release:
 
--   [EF 4.1.1 Release Post](http://blogs.msdn.com/b/adonet/archive/2011/07/25/ef-4-1-update-1-released.aspx)
+-   [EF 4.1.1 Release Post](https://blogs.msdn.com/b/adonet/archive/2011/07/25/ef-4-1-update-1-released.aspx)
 
 ## EF 4.1
 The EF 4.1.10331 runtime was the first to be published on NuGet, in April of 2011.
@@ -232,10 +232,10 @@ We used to use date based patch versions before we decided to adopt [Semantic Ve
 
 Here is a list of content we put together for the 4.1 release. Much of it still applies to later releases of Entity Framework:
 
--   [EF 4.1 Release Post](http://blogs.msdn.com/b/adonet/archive/2011/04/11/ef-4-1-released.aspx)
--   [Code First Walkthrough](http://blogs.msdn.com/b/adonet/archive/2011/03/15/ef-4-1-code-first-walkthrough.aspx)
--   [Model & Database First Walkthrough](http://blogs.msdn.com/b/adonet/archive/2011/03/15/ef-4-1-model-amp-database-first-walkthrough.aspx)
--   [SQL Azure Federations and the Entity Framework](http://blogs.msdn.com/b/adonet/archive/2012/01/10/sql-azure-federations-and-the-entity-framework.aspx)
+-   [EF 4.1 Release Post](https://blogs.msdn.com/b/adonet/archive/2011/04/11/ef-4-1-released.aspx)
+-   [Code First Walkthrough](https://blogs.msdn.com/b/adonet/archive/2011/03/15/ef-4-1-code-first-walkthrough.aspx)
+-   [Model & Database First Walkthrough](https://blogs.msdn.com/b/adonet/archive/2011/03/15/ef-4-1-model-amp-database-first-walkthrough.aspx)
+-   [SQL Azure Federations and the Entity Framework](https://blogs.msdn.com/b/adonet/archive/2012/01/10/sql-azure-federations-and-the-entity-framework.aspx)
 
 ## EF 4.0
 This release was included in .NET Framework 4 and Visual Studio 2010, in April of 2010.

@@ -94,4 +94,4 @@ The department name is Engineering
 Output Parameters
 -----------------
 
-If output parameters are used, their values will not be available until the results have been read completely. This is due to the underlying behavior of DbDataReader, see [Retrieving Data Using a DataReader](http://go.microsoft.com/fwlink/?LinkID=398589) for more details.
+If output parameters are used, their values will not be available until the results have been read completely. This is due to the underlying behavior of DbDataReader, see [Retrieving Data Using a DataReader](https://go.microsoft.com/fwlink/?LinkID=398589) for more details.
