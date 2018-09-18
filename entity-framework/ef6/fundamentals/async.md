@@ -22,7 +22,7 @@ In most applications using async will have no noticeable benefits and even could
 
 Here are some more resources to learn about async:
 
--   [Brandon Bray’s overview of async/await in .NET 4.5](http://blogs.msdn.com/b/dotnet/archive/2012/04/03/async-in-4-5-worth-the-await.aspx)
+-   [Brandon Bray’s overview of async/await in .NET 4.5](https://blogs.msdn.com/b/dotnet/archive/2012/04/03/async-in-4-5-worth-the-await.aspx)
 -   [Asynchronous Programming](https://msdn.microsoft.com/library/hh191443.aspx) pages in the MSDN Library
 -   [How to Build ASP.NET Web Applications Using Async](http://channel9.msdn.com/events/teched/northamerica/2013/dev-b337) (includes a demo of increased server throughput)
 

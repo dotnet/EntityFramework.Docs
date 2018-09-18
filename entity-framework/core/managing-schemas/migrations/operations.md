@@ -121,13 +121,13 @@ class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
         MigrationCommandListBuilder builder)
     {
         var sqlHelper = Dependencies.SqlGenerationHelper;
-        var stringMapping = Dependencies.TypeMapper.GetMapping(typeof(string));
+        var stringMapping = Dependencies.TypeMappingSource.FindMapping(typeof(string));
 
         builder
             .Append("CREATE USER ")
-            .Append(sqlHelper.DelimitIdentifier(name))
+            .Append(sqlHelper.DelimitIdentifier(operation.Name))
             .Append(" WITH PASSWORD = ")
-            .Append(stringMapping.GenerateSqlLiteral(password))
+            .Append(stringMapping.GenerateSqlLiteral(operation.Password))
             .AppendLine(sqlHelper.StatementTerminator)
             .EndCommand();
     }

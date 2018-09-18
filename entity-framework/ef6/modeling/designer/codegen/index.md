@@ -39,19 +39,19 @@ If you are using Visual Studio 2013 or 2012 this template is already installed.
 
 If you are using Visual Studio 2010 you will need to select the **Online** tab when adding the template to download it from Visual Studio Gallery. Alternatively you can install the template directly from Visual Studio Gallery ahead of time. Because the templates are included in later versions of Visual Studio the versions on the gallery can only be installed on Visual Studio 2010.
 
-- [EF 5.x DbContext Generator for C#](http://visualstudiogallery.msdn.microsoft.com/da740968-02f9-42a9-9ee4-1a9a06d896a2)
-- [EF 5.x DbContext Generator for C# Web Sites](http://visualstudiogallery.msdn.microsoft.com/5d01a981-91b8-492c-b42c-c771c3f31e03)
-- [EF 5.x DbContext Generator for VB.NET](http://visualstudiogallery.msdn.microsoft.com/875c882d-333e-455a-8dae-5353510527dd?src=featured)
-- [EF 5.x DbContext Generator for VB.NET Web Sites](http://visualstudiogallery.msdn.microsoft.com/d4d7d4cd-c2d0-43e6-8944-12f6ff8f2614)
+- [EF 5.x DbContext Generator for C#](https://visualstudiogallery.msdn.microsoft.com/da740968-02f9-42a9-9ee4-1a9a06d896a2)
+- [EF 5.x DbContext Generator for C# Web Sites](https://visualstudiogallery.msdn.microsoft.com/5d01a981-91b8-492c-b42c-c771c3f31e03)
+- [EF 5.x DbContext Generator for VB.NET](https://visualstudiogallery.msdn.microsoft.com/875c882d-333e-455a-8dae-5353510527dd?src=featured)
+- [EF 5.x DbContext Generator for VB.NET Web Sites](https://visualstudiogallery.msdn.microsoft.com/d4d7d4cd-c2d0-43e6-8944-12f6ff8f2614)
 
 #### DbContext Generator for EF 4.x
 
 If you are using an older version of the EntityFramework NuGet package (one with a major version of 4) you will need to use the **EF 4.x DbContext Generator** template. This can be found in the **Online** tab when adding the template, or you can install the template directly from Visual Studio Gallery ahead of time.
 
-- [EF 4.x DbContext Generator for C#](http://visualstudiogallery.msdn.microsoft.com/7812b04c-db36-4817-8a84-e73c452410a2)
-- [EF 4.x DbContext Generator for C# Web Sites](http://visualstudiogallery.msdn.microsoft.com/de0e9bc6-e86a-4448-8a2e-a1260a53203e)
-- [EF 4.x DbContext Generator for VB.NET](http://visualstudiogallery.msdn.microsoft.com/73679ae5-e358-4e76-a538-c7b5e04ac073)
-- [EF 4.x DbContext Generator for VB.NET Web Sites](http://visualstudiogallery.msdn.microsoft.com/86f5a660-306e-4831-840c-2e4ee7474a92)
+- [EF 4.x DbContext Generator for C#](https://visualstudiogallery.msdn.microsoft.com/7812b04c-db36-4817-8a84-e73c452410a2)
+- [EF 4.x DbContext Generator for C# Web Sites](https://visualstudiogallery.msdn.microsoft.com/de0e9bc6-e86a-4448-8a2e-a1260a53203e)
+- [EF 4.x DbContext Generator for VB.NET](https://visualstudiogallery.msdn.microsoft.com/73679ae5-e358-4e76-a538-c7b5e04ac073)
+- [EF 4.x DbContext Generator for VB.NET Web Sites](https://visualstudiogallery.msdn.microsoft.com/86f5a660-306e-4831-840c-2e4ee7474a92)
 
 ### EntityObject Generator
 
@@ -66,20 +66,20 @@ The DbContext Generator is now the recommended template for new applications. Th
 
 You will need to select the **Online** tab when adding the template to download it from Visual Studio Gallery. Alternatively you can install the template directly from Visual Studio Gallery ahead of time.
 
-- [EF 6.x EntityObject Generator for C#](http://visualstudiogallery.msdn.microsoft.com/66612113-549c-4a9e-a14a-f629ceb3f89a)
-- [EF 6.x EntityObject Generator for C# Web Sites](http://visualstudiogallery.msdn.microsoft.com/076140f3-6dbe-451f-a0e0-16b6d2bd8996)
-- [EF 6.x EntityObject Generator for VB.NET](http://visualstudiogallery.msdn.microsoft.com/ff479d55-2c85-43c5-a4d6-21cd659435ea)
-- [EF 6.x EntityObject Generator for VB.NET Web Sites](http://visualstudiogallery.msdn.microsoft.com/668e2b92-c142-4da2-8e60-866c6346fc6a)
+- [EF 6.x EntityObject Generator for C#](https://visualstudiogallery.msdn.microsoft.com/66612113-549c-4a9e-a14a-f629ceb3f89a)
+- [EF 6.x EntityObject Generator for C# Web Sites](https://visualstudiogallery.msdn.microsoft.com/076140f3-6dbe-451f-a0e0-16b6d2bd8996)
+- [EF 6.x EntityObject Generator for VB.NET](https://visualstudiogallery.msdn.microsoft.com/ff479d55-2c85-43c5-a4d6-21cd659435ea)
+- [EF 6.x EntityObject Generator for VB.NET Web Sites](https://visualstudiogallery.msdn.microsoft.com/668e2b92-c142-4da2-8e60-866c6346fc6a)
 
 **EntityObject Generator for EF 5.x**
 
 
 If you are using Visual Studio 2012 or 2013 you will need to select the **Online** tab when adding the template to download it from Visual Studio Gallery. Alternatively you can install the template directly from Visual Studio Gallery ahead of time. Because the templates are included in Visual Studio 2010 the versions on the gallery can only be installed on Visual Studio 2012 &amp; 2013.
 
-- [EF 5.x EntityObject Generator for C#](http://visualstudiogallery.msdn.microsoft.com/1da40393-b5ec-404a-a000-6a7e6e911339)
-- [EF 5.x EntityObject Generator for C# Web Sites](http://visualstudiogallery.msdn.microsoft.com/94b48556-fcf0-4b9b-8615-20f9066ae9ac)
-- [EF 5.x EntityObject Generator for VB.NET](http://visualstudiogallery.msdn.microsoft.com/92c0129e-40dc-488c-a836-7e30846dfb30)
-- [EF 5.x EntityObject Generator for VB.NET Web Sites](http://visualstudiogallery.msdn.microsoft.com/5dd7f75c-8c98-4eb7-b4bc-06f0d0b03b41)
+- [EF 5.x EntityObject Generator for C#](https://visualstudiogallery.msdn.microsoft.com/1da40393-b5ec-404a-a000-6a7e6e911339)
+- [EF 5.x EntityObject Generator for C# Web Sites](https://visualstudiogallery.msdn.microsoft.com/94b48556-fcf0-4b9b-8615-20f9066ae9ac)
+- [EF 5.x EntityObject Generator for VB.NET](https://visualstudiogallery.msdn.microsoft.com/92c0129e-40dc-488c-a836-7e30846dfb30)
+- [EF 5.x EntityObject Generator for VB.NET Web Sites](https://visualstudiogallery.msdn.microsoft.com/5dd7f75c-8c98-4eb7-b4bc-06f0d0b03b41)
 
 If you just want ObjectContext code generation without needing to edit the template you can [revert to EntityObject code generation](~/ef6/modeling/designer/codegen/legacy-objectcontext.md).
 
@@ -105,10 +105,10 @@ We no longer recommend using the STE template in new applications, it continues 
 
 If you are using Visual Studio 2012 you will need to select the **Online** tab when adding the template to download it from Visual Studio Gallery. Alternatively you can install the template directly from Visual Studio Gallery ahead of time. Because the templates are included in Visual Studio 2010 the versions on the gallery can only be installed on Visual Studio 2012.
 
-- [EF 5.x STE Generator for C#](http://visualstudiogallery.msdn.microsoft.com/a3ac10a5-9365-4096-bb58-d9a1ba71db8f)
-- [EF 5.x STE Generator for C# Web Sites](http://visualstudiogallery.msdn.microsoft.com/1b55ab82-eeb4-47ba-8d35-3c7c8b5f5a8c)
-- [EF 5.x STE Generator for VB.NET](http://visualstudiogallery.msdn.microsoft.com/1ba8c6a3-44e9-4e1f-b21e-596f3168474b)
-- [EF 5.x STE Generator for VB.NET Web Sites](http://visualstudiogallery.msdn.microsoft.com/a9fd5f0a-9af4-4e32-9c09-0e057072152e)
+- [EF 5.x STE Generator for C#](https://visualstudiogallery.msdn.microsoft.com/a3ac10a5-9365-4096-bb58-d9a1ba71db8f)
+- [EF 5.x STE Generator for C# Web Sites](https://visualstudiogallery.msdn.microsoft.com/1b55ab82-eeb4-47ba-8d35-3c7c8b5f5a8c)
+- [EF 5.x STE Generator for VB.NET](https://visualstudiogallery.msdn.microsoft.com/1ba8c6a3-44e9-4e1f-b21e-596f3168474b)
+- [EF 5.x STE Generator for VB.NET Web Sites](https://visualstudiogallery.msdn.microsoft.com/a9fd5f0a-9af4-4e32-9c09-0e057072152e)
 
 #### Visual Studio 2010**
 
@@ -133,10 +133,10 @@ The DbContext Generator is now the recommended template for generating POCO clas
 
 You will need to select the **Online** tab when adding the template to download it from Visual Studio Gallery. Alternatively you can install the template directly from Visual Studio Gallery ahead of time.
 
-- [EF 4.x POCO Generator for C#](http://visualstudiogallery.msdn.microsoft.com/23df0450-5677-4926-96cc-173d02752313)
-- [EF 4.x POCO Generator for C# Web Sites](http://visualstudiogallery.msdn.microsoft.com/fe568da5-aa1a-4178-a2a5-48813c707a7f)
-- [EF 4.x POCO Generator for VB.NET](http://visualstudiogallery.msdn.microsoft.com/53ecbded-8936-4299-ab04-1e44e5489752)
-- [EF 4.x POCO Generator for VB.NET Web Sites](http://visualstudiogallery.msdn.microsoft.com/463c5aca-05ad-4cdb-910b-2e4f83269e34)
+- [EF 4.x POCO Generator for C#](https://visualstudiogallery.msdn.microsoft.com/23df0450-5677-4926-96cc-173d02752313)
+- [EF 4.x POCO Generator for C# Web Sites](https://visualstudiogallery.msdn.microsoft.com/fe568da5-aa1a-4178-a2a5-48813c707a7f)
+- [EF 4.x POCO Generator for VB.NET](https://visualstudiogallery.msdn.microsoft.com/53ecbded-8936-4299-ab04-1e44e5489752)
+- [EF 4.x POCO Generator for VB.NET Web Sites](https://visualstudiogallery.msdn.microsoft.com/463c5aca-05ad-4cdb-910b-2e4f83269e34)
 
 ### What are the "Web Sites" Templates
 
