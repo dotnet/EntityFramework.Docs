@@ -10,34 +10,27 @@ uid: core/miscellaneous/1x-2x-upgrade
 
 We have taken the opportunity to significantly refine our existing APIs and behaviors in 2.0. There are a few improvements that can require modifying existing application code, although we believe that for the majority of applications the impact will be low, in most cases requiring just recompilation and minimal guided changes to replace obsolete APIs.
 
-## Procedures Common to All Applications
-
 Updating an existing application to EF Core 2.0 may require:
 
-1. Upgrading the target .NET platform of the application to one that supports .NET Standard 2.0. See [Supported Platforms](../platforms/index.md) for more details.
+1. Upgrading the target .NET implementation of the application to one that supports .NET Standard 2.0. See [Supported .NET Implementations](../platforms/index.md) for more details.
 
 2. Identify a provider for the target database which is compatible with EF Core 2.0. See [EF Core 2.0 requires a 2.0 database provider](#ef-core-20-requires-a-20-database-provider) below.
 
 3. Upgrading all the EF Core packages (runtime and tooling) to 2.0. Refer to [Installing EF Core](../get-started/install/index.md) for more details.
 
-4. Make any necessary code changes to compensate for breaking changes. See the [Breaking Changes](#breaking-changes) section below for more details.
+4. Make any necessary code changes to compensate for the breaking changes described in the rest of this document.
 
-## ASP.NET Core applications
+## ASP.NET Core now includes EF Core
 
-1. See in particular the [new pattern for initializing the application's service provider](#new-way-of-getting-application-services) described below.
+Applications targeting ASP.NET Core 2.0 can use EF Core 2.0 without additional dependencies besides third party database providers. However, applications targeting previous versions of ASP.NET Core need to upgrade to ASP.NET Core 2.0 in order to use EF Core 2.0. For more details on upgrading ASP.NET Core applications to 2.0 see [the ASP.NET Core documentation on the subject](https://docs.microsoft.com/aspnet/core/migration/1x-to-2x/).
 
-> [!TIP]  
-> The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement *IDesignTimeDbContextFactory\<TContext>*](xref:core/miscellaneous/cli/dbcontext-creation#from-a-design-time-factory).
-
-2. Applications targeting ASP.NET Core 2.0 can use EF Core 2.0 without additional dependencies besides third party database providers. However, applications targeting previous versions of ASP.NET Core need to upgrade to ASP.NET Core 2.0 in order to use EF Core 2.0. For more details on upgrading ASP.NET Core applications to 2.0 see [the ASP.NET Core documentation on the subject](https://docs.microsoft.com/aspnet/core/migration/1x-to-2x/).
-
-## New way of getting application services
+## New way of getting application services in ASP.NET Core
 
 The recommended pattern for ASP.NET Core web applications has been updated for 2.0 in a way that broke the design-time logic EF Core used in 1.x. Previously at design-time, EF Core would try to invoke `Startup.ConfigureServices` directly in order to access the application's service provider. In ASP.NET Core 2.0, Configuration is initialized outside of the `Startup` class. Applications using EF Core typically access their connection string from Configuration, so `Startup` by itself is no longer sufficient. If you upgrade an ASP.NET Core 1.x application, you may receive the following error when using the EF Core tools.
 
 > No parameterless constructor was found on 'ApplicationContext'. Either add a parameterless constructor to 'ApplicationContext' or add an implementation of 'IDesignTimeDbContextFactory&lt;ApplicationContext&gt;' in the same assembly as 'ApplicationContext'
 
-A new design-time hook has been added in ASP.NET Core 2.0's default template. The static `Program.BuildWebHost` method enables EF Core to access the application's service provider at design time. If you are upgrading an ASP.NET Core 1.x application, you will need to update you `Program` class to resemble the following.
+A new design-time hook has been added in ASP.NET Core 2.0's default template. The static `Program.BuildWebHost` method enables EF Core to access the application's service provider at design time. If you are upgrading an ASP.NET Core 1.x application, you will need to update the `Program` class to resemble the following.
 
 ``` csharp
 using Microsoft.AspNetCore;
@@ -59,6 +52,8 @@ namespace AspNetCoreDotNetCore2._0App
     }
 }
 ```
+
+The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement *IDesignTimeDbContextFactory\<TContext>*](xref:core/miscellaneous/cli/dbcontext-creation#from-a-design-time-factory).
 
 ## IDbContextFactory renamed
 
