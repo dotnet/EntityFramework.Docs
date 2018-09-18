@@ -5,7 +5,7 @@ ms.date: "10/23/2016"
 ms.assetid: 36591d8f-36e1-4835-8a51-90f34f633d1e
 ---
 # Code First Migrations
-Code First Migrations is the recommended way to evolve you application's database schema if you are using the Code First workflow. Migrations provide a set of tools that allow:
+Code First Migrations is the recommended way to evolve your application's database schema if you are using the Code First workflow. Migrations provide a set of tools that allow:
 
 1. Create an initial database that works with your EF model
 2. Generating migrations to keep track of changes you make to your EF model
