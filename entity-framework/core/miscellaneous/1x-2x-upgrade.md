@@ -26,14 +26,11 @@ Applications targeting ASP.NET Core 2.0 can use EF Core 2.0 without additional d
 
 ## New way of getting application services in ASP.NET Core
 
-> [!TIP]  
-> The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement *IDesignTimeDbContextFactory\<TContext>*](xref:core/miscellaneous/cli/dbcontext-creation#from-a-design-time-factory).
-
 The recommended pattern for ASP.NET Core web applications has been updated for 2.0 in a way that broke the design-time logic EF Core used in 1.x. Previously at design-time, EF Core would try to invoke `Startup.ConfigureServices` directly in order to access the application's service provider. In ASP.NET Core 2.0, Configuration is initialized outside of the `Startup` class. Applications using EF Core typically access their connection string from Configuration, so `Startup` by itself is no longer sufficient. If you upgrade an ASP.NET Core 1.x application, you may receive the following error when using the EF Core tools.
 
 > No parameterless constructor was found on 'ApplicationContext'. Either add a parameterless constructor to 'ApplicationContext' or add an implementation of 'IDesignTimeDbContextFactory&lt;ApplicationContext&gt;' in the same assembly as 'ApplicationContext'
 
-A new design-time hook has been added in ASP.NET Core 2.0's default template. The static `Program.BuildWebHost` method enables EF Core to access the application's service provider at design time. If you are upgrading an ASP.NET Core 1.x application, you will need to update you `Program` class to resemble the following.
+A new design-time hook has been added in ASP.NET Core 2.0's default template. The static `Program.BuildWebHost` method enables EF Core to access the application's service provider at design time. If you are upgrading an ASP.NET Core 1.x application, you will need to update the `Program` class to resemble the following.
 
 ``` csharp
 using Microsoft.AspNetCore;
@@ -55,6 +52,8 @@ namespace AspNetCoreDotNetCore2._0App
     }
 }
 ```
+
+The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement *IDesignTimeDbContextFactory\<TContext>*](xref:core/miscellaneous/cli/dbcontext-creation#from-a-design-time-factory).
 
 ## IDbContextFactory renamed
 
