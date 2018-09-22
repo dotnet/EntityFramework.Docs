@@ -8,7 +8,7 @@ uid: core/miscellaneous/cli/powershell
 
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
 
-The Package Manager Console (PMC) tools for Entity Framework Core perform design-time development tasks. For example, they create migrations, apply migrations, and scaffold a model based on an existing database. The commands run inside of Visual Studio using the [Package Manager Console](https://docs.microsoft.com/nuget/tools/package-manager-console). These tools work with both .NET Framework and .NET Core projects.
+The Package Manager Console (PMC) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](xref:core/managing-schemas/migrations/index), apply migrations, and generate code for a model based on an existing database. The commands run inside of Visual Studio using the [Package Manager Console](https://docs.microsoft.com/nuget/tools/package-manager-console). These tools work with both .NET Framework and .NET Core projects.
 
 If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools](dotnet.md) instead. The CLI tools are cross-platform and run inside a command prompt.
 
@@ -172,7 +172,7 @@ Parameters:
 
 ## Scaffold-DbContext
 
-Scaffolds a `DbContext` and entity types for a database.
+Generates code for a `DbContext` and entity types for a database.
 
 Parameters:
 

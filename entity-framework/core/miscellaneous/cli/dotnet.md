@@ -8,7 +8,7 @@ uid: core/miscellaneous/cli/dotnet
 
 # Entity Framework Core tools reference - .NET CLI
 
-The command-line interface (CLI) tools for Entity Framework Core perform design-time development tasks. For example, they create migrations, apply migrations, and scaffold a model based on an existing database. The commands are an extension to the cross-platform [dotnet](/dotnet/core/tools) command, which is part of the [.NET Core SDK](https://www.microsoft.com/net/core). These tools work with .NET Core projects.
+The command-line interface (CLI) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](xref:core/managing-schemas/migrations/index), apply migrations, and generate code for a model based on an existing database. The commands are an extension to the cross-platform [dotnet](/dotnet/core/tools) command, which is part of the [.NET Core SDK](https://www.microsoft.com/net/core). These tools work with .NET Core projects.
 
 If you're using Visual Studio, we recommend the [Package Manager Console tools](powershell.md) instead:
 * They automatically work with the current project selected in the **Package Manager Console** without requiring that you manually switch directories.
@@ -111,30 +111,20 @@ The commands refer to a *project* and a *startup project*.
 
 * The *project* is also known as the *target project* because it's where the commands add or remove files. By default, the project in the current directory is the target project. You can specify a different project as target project by using the <nobr>`--project`</nobr> option.
 
-* The *startup project* is the one that the tools build and run. The tools have to execute application code at design time to get information about the project, such as the database connection string and the configuration of the model. By default, the project in the current directory is the target project. You can specify a different project as target project by using the <nobr>`--startup-project`</nobr> option.
+* The *startup project* is the one that the tools build and run. The tools have to execute application code at design time to get information about the project, such as the database connection string and the configuration of the model. By default, the project in the current directory is the startup project. You can specify a different project as startup project by using the <nobr>`--startup-project`</nobr> option.
 
-The startup project and target project are often the same project.
+The startup project and target project are often the same project. A typical scenario where they are separate projects is when:
 
-One scenario where they are separate projects is when you put EF Core code in a class library:
-
-* EF Core context, entity classes, and migrations code are in a .NET Core class library.
+* The EF Core context and entity classes are in a .NET Core class library.
 * A .NET Core console app or web app references the class library.
 
-Another scenario where they are separate projects is when you put migrations code in a separate library:
+It's also possible to [put only migrations code in a separate class library project](xref:core/managing-schemas/migraions/projects).
 
-* Migrations code is in a .NET Core class library.
-* EF Core context and entity classes are in a .NET Core console app or web app.
+### Other target frameworks
 
-### Dummy startup projects
+The CLI tools work with .NET Core projects. Apps that have the EF Core model in a .NET Standard class library might not have a .NET Core project. For example, this is true of Xamarin and Universal Windows Platform apps. In such cases, you can create a .NET Core console app project whose only purpose is to act as startup project for the tools. The project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
 
-In the following scenario, you have to create a project whose only purpose is to act as startup project for the EF Core tools:
-
-* EF Core context, entity classes, and migrations code are in a .NET Standard class library.
-* A Xamarin or Universal Windows Platform app references the class library.
-
-As explained earlier, the tools have to execute application code at design time. To do that, they need .NET Core. When the EF Core model is in a project that targets .NET Core, the EF Core tools borrow the runtime from the project. They can't do that if the EF Core model is in a .NET Standard class library and there is no .NET Core project in the solution. The .NET Standard is not an actual .NET implementation; it's a specification of a set of APIs that .NET implementations must support. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code.
-
-In order to use the tools in this scenario, you can create a .NET Core console app project whose only purpose is to act as startup project for the EF Core tools. That project provides a concrete target platform into which the tools can load the .NET Standard class library. This startup project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
+Why is a dummy project required? As mentioned earlier, the tools have to execute application code at design time. To do that, they need to use the .NET Core runtime. When the EF Core model is in a project that targets .NET Core, the EF Core tools borrow the runtime from the project. They can't do that if the EF Core model is in a .NET Standard class library. The .NET Standard is not an actual .NET implementation; it's a specification of a set of APIs that .NET implementations must support. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code. The dummy project you create to use as startup project provides a concrete target platform into which the tools can load the .NET Standard class library. 
 
 ### ASP.NET Core environment
 
@@ -197,7 +187,7 @@ Lists available `DbContext` types.
 
 ### dotnet ef dbcontext scaffold
 
-Scaffolds a `DbContext` and entity types for a database.
+Generates code for a `DbContext` and entity types for a database.
 
 Arguments:
 

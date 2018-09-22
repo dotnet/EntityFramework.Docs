@@ -3,6 +3,7 @@ title: Migrations with Multiple Projects - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 10/30/2017
+uid:core/managing-schemas/migraions/projects
 ---
 Using a Separate Project
 ========================
