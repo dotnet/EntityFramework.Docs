@@ -92,34 +92,24 @@ Before using the tools:
 
 ### Target and startup project
 
-The commands refer to *target project* and *startup project*:
+The commands refer to a *project* and a *startup project*.
 
-* The target project is where the EF context and entity classes reside. It's also where any files are added or removed by the commands. The target project defaults to the **Default project** selected in **Package Manager Console**. It can also be specified by using the `-Project` parameter.
+* The *project* is also known as the *target project* because it's where the commands add or remove files. By default, the **Default project** selected in **Package Manager Console** is the target project. You can specify a different project as target project by using the <nobr>`--project`</nobr> option.
 
-* The *startup project* is the one that the tools build and run. The startup project defaults to the project that is designated
-**Startup Project** in **Solution Explorer**. It can be specified by using the `-StartupProject` parameter.
+* The *startup project* is the one that the tools build and run. The tools have to execute application code at design time to get information about the project, such as the database connection string and the configuration of the model. By default, the **Startup Project** in **Solution Explorer** is the startup project. You can specify a different project as startup project by using the <nobr>`--startup-project`</nobr> option.
 
-One project may be both target project and startup project. A typical scenario where they are separate projects is the following:
+The startup project and target project are often the same project. A typical scenario where they are separate projects is when:
 
-* EF Core context and entity classes are in a class library.
-* A console app or web app references the class library.
+* The EF Core context and entity classes are in a .NET Core class library.
+* A .NET Core console app or web app references the class library.
 
-In this scenario, if the command prompt runs in the class library project folder, you would specify the startup project as in the following example:
+It's also possible to [put only migrations code in a separate class library project](xref:core/managing-schemas/migraions/projects).
 
-```console
-Add-Migration InitialCreate -StartupProject MyConsoleApplication
-```
+### Other target frameworks
 
-### .NET Standard class libraries
+The Package Manager Console tools work with .NET Core or .NET Framework projects. Apps that have the EF Core model in a .NET Standard class library might not have a .NET Core or .NET Framework project. For example, this is true of Xamarin and Universal Windows Platform apps. In such cases, you can create a .NET Core or .NET Framework console app project whose only purpose is to act as startup project for the tools. The project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
 
-The various EF Core tools need to execute application code at design-time in order to figure out several aspects of the project, like the configuration of the code first model, and the database connection string.
-
-In order to execute application code, they need a .NET runtime such as .NET Core or .NET Framework. Normally, when the EF Core model is located in a project that targets a .NET runtime, the EF Core tools borrow it from the project.
-
-.NET Standard on the other hand, is not an actual .NET runtime but a specification of a set of APIs that .NET runtimes can implement. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code.
-
-In order to use the tools when the EF Core model is located in a .NET Standard library, you have to create a separate startup project that does target a specific .NET runtime.
-The **Package Manager Console** tools work only with .NET Framework and .NET Core projects. If your project targets a framework other than these (for example, Universal Windows Platform or Xamarin), you have to use EF Core in a .NET Standard class library. In that case, you have to create a startup project that targets .NET Core so that the tooling has a concrete target platform into which it can load your class library. This startup project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
+Why is a dummy project required? As mentioned earlier, the tools have to execute application code at design time. To do that, they need to use the .NET Core or .NET Framework runtime. When the EF Core model is in a project that targets .NET Core or .NET Framework, the EF Core tools borrow the runtime from the project. They can't do that if the EF Core model is in a .NET Standard class library. The .NET Standard is not an actual .NET implementation; it's a specification of a set of APIs that .NET implementations must support. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code. The dummy project you create to use as startup project provides a concrete target platform into which the tools can load the .NET Standard class library. 
 
 ### ASP.NET Core environment
 
