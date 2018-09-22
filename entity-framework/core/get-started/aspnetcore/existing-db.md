@@ -173,5 +173,5 @@ You can now run the application to see it in action.
 ## Next steps
 
 For more information about how to scaffold a context and entity classes, see the following articles:
-* [Entity Framework Core tools reference - .NET CLI](xref:miscellaneous/cli/dotnet#dotnet-ef-dbcontext-scaffold)
-* [Entity Framework Core tools reference - Package Manager Console](xref:miscellaneous/cli/powershell#scaffold-dbcontext)
+* [Entity Framework Core tools reference - .NET CLI](xref:core/miscellaneous/cli/dotnet#dotnet-ef-dbcontext-scaffold)
+* [Entity Framework Core tools reference - Package Manager Console](xref:core/miscellaneous/cli/powershell#scaffold-dbcontext)

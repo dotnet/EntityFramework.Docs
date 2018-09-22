@@ -18,7 +18,15 @@ The procedures for installing and updating the tools differ between ASP.NET Core
 
 ## ASP.NET Core version 2.1 and later
 
-You don't need to do anything to install the tools. They are automatically included in the project because the `Microsoft.EntityFrameworkCore.Tools` package is included in the [Microsoft.AspNetCore.App metapackage](/aspnet/core/fundamentals/metapackage-app).
+The tools are automatically included in an ASP.NET Core 2.1+ project because the `Microsoft.EntityFrameworkCore.Tools` package is included in the [Microsoft.AspNetCore.App metapackage](/aspnet/core/fundamentals/metapackage-app).
+
+Therefore, you don't need to do anything to install the tools, but you do have to:
+* Restore packages before using the tools in a new project.
+* Install a package to update the tools to a newer version.
+
+Update the tools when you get a message like the following example:
+
+> The EF Core tools version '2.1.1-rtm-30846' is older than that of the runtime '2.1.3-rtm-32065'. Update the tools for the latest features and bug fixes.
 
 To update the tools:
 * Install the latest .NET Core SDK.
@@ -104,9 +112,14 @@ Add-Migration InitialCreate -StartupProject MyConsoleApplication
 
 ### .NET Standard class libraries
 
-The **Package Manager Console** tools work only with .NET Framework and .NET Core projects. If your project targets a framework other than these (for example, Universal Windows Platform or Xamarin), you have to use EF Core in a .NET Standard class library. In that case, you have to create a startup project that targets .NET Core so that the tooling has a concrete target platform into which it can load your class library. This startup project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
+The various EF Core tools need to execute application code at design-time in order to figure out several aspects of the project, like the configuration of the code first model, and the database connection string.
 
-For projects that target .NET Framework or .NET Core, you don't have to use a .NET Standard class library. In that case, it will be easier to work with the EF Core tools if you use a .NET Core or .NET Framework class library.
+In order to execute application code, they need a .NET runtime such as .NET Core or .NET Framework. Normally, when the EF Core model is located in a project that targets a .NET runtime, the EF Core tools borrow it from the project.
+
+.NET Standard on the other hand, is not an actual .NET runtime but a specification of a set of APIs that .NET runtimes can implement. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code.
+
+In order to use the tools when the EF Core model is located in a .NET Standard library, you have to create a separate startup project that does target a specific .NET runtime.
+The **Package Manager Console** tools work only with .NET Framework and .NET Core projects. If your project targets a framework other than these (for example, Universal Windows Platform or Xamarin), you have to use EF Core in a .NET Standard class library. In that case, you have to create a startup project that targets .NET Core so that the tooling has a concrete target platform into which it can load your class library. This startup project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
 
 ### ASP.NET Core environment
 
