@@ -103,7 +103,7 @@ The startup project and target project are often the same project. A typical sce
 * The EF Core context and entity classes are in a .NET Core class library.
 * A .NET Core console app or web app references the class library.
 
-It's also possible to [put only migrations code in a separate class library project](xref:core/managing-schemas/migraions/projects).
+It's also possible to [put only migrations code in a separate class library project](xref:core/managing-schemas/migrations/projects).
 
 ### Other target frameworks
 
