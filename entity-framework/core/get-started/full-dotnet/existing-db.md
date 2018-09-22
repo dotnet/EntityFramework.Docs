@@ -115,5 +115,5 @@ You can now use the model to perform data access.
 ## Next steps
 
 For more information about how to scaffold a context and entity classes, see the following articles:
-* [Entity Framework Core tools reference - .NET CLI](../../miscellaneous/cli/dotnet.md#dotnet-ef-dbcontext-scaffold)
-* [Entity Framework Core tools reference - Package Manager Console](../../miscellaneous/cli/powershell.md#scaffold-dbcontext)
+* [Entity Framework Core tools reference - .NET CLI](xref:miscellaneous/cli/dotnet#dotnet-ef-dbcontext-scaffold)
+* [Entity Framework Core tools reference - Package Manager Console](xref:miscellaneous/cli/powershell#scaffold-dbcontext)
