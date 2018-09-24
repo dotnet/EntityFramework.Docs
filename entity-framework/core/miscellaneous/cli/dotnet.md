@@ -134,7 +134,6 @@ To specify the environment for ASP.NET Core projects, set the **ASPNETCORE_ENVIR
 
 |                   | Option                             | Description                                                                                                                                                                                                                                                   |
 |-------------------|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :---              | :--------------------------------- | :----------------------------                                                                                                                                                                                                                                 |
 |                   | `--json`                           | Show JSON output.                                                                                                                                                                                                                                             |
 | <nobr>`-c`</nobr> | `--context <DBCONTEXT>`            | The `DbContext` class to use. Class name only or fully qualified with namespaces.  If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.                                            |
 | `-p`              | `--project <PROJECT>`              | Relative path to the project folder of the target project.  Default value is the current folder.                                                                                                                                                              |
@@ -155,7 +154,6 @@ Options:
 
 |                   | Option                   | Description                                                |
 |-------------------|--------------------------|------------------------------------------------------------|
-| :---              | :----------              | :--------------------------------------------------------- |
 | <nobr>`-f`</nobr> | <nobr>`--force`</nobr>   | Don't confirm.                                             |
 |                   | <nobr>`--dry-run`</nobr> | Show which database would be dropped, but don't drop it.   |
 
@@ -167,7 +165,6 @@ Arguments:
 
 | Argument       | Description                                                                                                                                                                                                                                                     |
 |----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :------------- | :---------------------------------------------------------------------------------------------                                                                                                                                                                  |
 | `<MIGRATION>`  | The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration* and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration. |
 
 The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID:
@@ -193,7 +190,6 @@ Arguments:
 
 | Argument        | Description                                                                                                                                                                                                             |
 |-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :-------------- | :----------------------------------------------------------------------------                                                                                                                                           |
 | `<CONNECTION>`  | The connection string to the database. For ASP.NET Core 2.x projects, the value can be *name=\<name of connection string>*. In that case the name comes from the configuration sources that are set up for the project. |
 | `<PROVIDER>`    | The provider to use. Typically this is the name of the NuGet package, for example: `Microsoft.EntityFrameworkCore.SqlServer`.                                                                                           |
 
@@ -201,7 +197,6 @@ Options:
 
 |                   | Option                                    | Description                                                                                                                                                                    |
 |-------------------|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :---------------- | :---------------------------------------- | :-------------------------------------------------------------------------------------------------                                                                             |
 | <nobr>-d</nobr>   | `--data-annotations`                      | Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.                                                                |
 | `-c`              | `--context <NAME>`                        | The name of the `DbContext` class to generate.                                                                                                                                 |
 |                   | `--context-dir <PATH>`                    | The directory to put the `DbContext` class file in. Paths are relative to the project directory. Namespaces are derived from the folder names.                                 |
@@ -231,14 +226,12 @@ Arguments:
 
 | Argument  | Description                  |
 |-----------|------------------------------|
-| :-------- | :--------------------------- |
 | `<NAME>`  | The name of the migration.   |
 
 Options:
 
 |                   | Option                              | Description                                                                                                        |
 |-------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| :---------------- | :---------------------------------- | :----------------------------------------------------------------------------------------------------------------- |
 | <nobr>`-o`</nobr> | <nobr>`--output-dir <PATH>`</nobr>  | The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to "Migrations".   |
 
 ### dotnet ef migrations list
@@ -253,7 +246,6 @@ Options:
 
 |                   | Option    | Description                                                             |
 |-------------------|-----------|-------------------------------------------------------------------------|
-| :---              | :-------- | :---------------------------------------------------------------------- |
 | <nobr>`-f`</nobr> | `--force` | Revert the migration even if it has been applied to the database.       |
 
 ### dotnet ef migrations script
@@ -264,7 +256,6 @@ Arguments:
 
 | Argument  | Description                                                                                                                                                   |
 |-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :-------- | :--------------------------------------------------------------                                                                                               |
 | `<FROM>`  | The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration*. Defaults to 0. |
 | `<TO>`    | The ending migration. Defaults to the last migration.                                                                                                         |
 
@@ -272,7 +263,6 @@ Options:
 
 |                   | Option             | Description                                                          |
 |-------------------|--------------------|----------------------------------------------------------------------|
-| :---              | :----------------- | :------------------------------------------------------------------- |
 | <nobr>`-o`</nobr> | `--output <FILE>`  | The file to write the script to.                                     |
 | `-i`              | `--idempotent`     | Generate a script that can be used on a database at any migration.   |
 

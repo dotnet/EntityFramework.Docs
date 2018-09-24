@@ -121,7 +121,6 @@ The following table shows parameters that are common to all of the EF Core comma
 
 | Parameter                 | Description                                                                                                                                                                                                          |
 |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :-----------              | :------------                                                                                                                                                                                                        |
 | -Context \<String>        | The `DbContext` class to use. Class name only or fully qualified with namespaces.  If this parameter is omitted, EF Core finds the context class. If there are multiple context classes, this parameter is required. |
 | -Project \<String>        | The target project. If this parameter is omitted, the **Default project** for **Package Manager Console** is used as the target project.                                                                             |
 | -StartupProject \<String> | The startup project. If this parameter is omitted, the **Startup project** in **Solution properties** is used as the target project.                                                                                 |
@@ -140,7 +139,6 @@ Parameters:
 
 | Parameter                         | Description                                                                                                             |
 |-----------------------------------|-------------------------------------------------------------------------------------------------------------------------|
-| :-----------                      | :------------                                                                                                           |
 | <nobr>-Name \<String><nobr>       | The name of the migration. This is a positional parameter and is required.                                              |
 | <nobr>-OutputDir \<String></nobr> | The directory (and sub-namespace) to use. Paths are relative to the target project directory. Defaults to "Migrations". |
 
@@ -152,7 +150,6 @@ Parameters:
 
 | Parameter | Description                                                |
 |-----------|------------------------------------------------------------|
-| :-------- | :--------------------------------------------------------- |
 | -WhatIf   | Show which database would be dropped, but don't drop it.   |
 
 ## Get-DbContext
@@ -167,7 +164,6 @@ Parameters:
 
 | Parameter | Description                                                       |
 |-----------|-------------------------------------------------------------------|
-| :-------  | :-------------------------------------------------------------    |
 | -Force    | Revert the migration even if it has been applied to the database. |
 
 ## Scaffold-DbContext
@@ -178,7 +174,6 @@ Parameters:
 
 | Parameter                                  | Description                                                                                                                                                                                                                                                             |
 |--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :----------------------------------------- | :-------------------------------------------------------------------------------------------------                                                                                                                                                                      |
 | <nobr>-Connection \<String></nobr>         | The connection string to the database. For ASP.NET Core 2.x projects, the value can be *name=\<name of connection string>*. In that case the name comes from the configuration sources that are set up for the project. This is a positional parameter and is required. |
 | <nobr>-Provider \<String></nobr>           | The provider to use. Typically this is the name of the NuGet package, for example: `Microsoft.EntityFrameworkCore.SqlServer`. This is a positional parameter and is required.                                                                                           |
 | -OutputDir \<String>                       | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
@@ -210,7 +205,6 @@ Parameters:
 
 | Parameter           | Description                                                                                                                                                                                                                |
 |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :------------------ | :-------------------------------------------------------------------                                                                                                                                                       |
 | *-From* \<String>   | The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration*. Defaults to 0.                                                              |
 | *-To* \<String>     | The ending migration. Defaults to the last migration.                                                                                                                                                                      |
 | -Idempotent         | Generate a script that can be used on a database at any migration.                                                                                                                                                         |
@@ -232,7 +226,6 @@ Updates the database to the last migration or to a specified migration.
 
 | Parameter                             | Description                                                                                                                                                                                                                                                     |
 |---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| :------------------------------------ | :-----------------------------------------------------------------------------------------------                                                                                                                                                                |
 | <nobr>*-Migration* \<String></nobr>   | The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration* and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration. |
 
 > [!TIP]
