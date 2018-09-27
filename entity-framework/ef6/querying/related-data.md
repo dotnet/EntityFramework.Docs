@@ -51,8 +51,8 @@ using (var context = new BloggingContext())
 {
     // Load all blogs, all related posts, and all related comments
     var blogs1 = context.Blogs
-                       .Include(b => b.Posts.Select(p => p.Comments))
-                       .ToList();
+                        .Include(b => b.Posts.Select(p => p.Comments))
+                        .ToList();
 
     // Load all users, their related profiles, and related avatar
     var users1 = context.Users
