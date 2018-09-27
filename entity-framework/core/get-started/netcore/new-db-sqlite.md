@@ -100,6 +100,13 @@ The *blogging.db** SQLite DB is in the project directory.
 To run this sample from Visual Studio, you must set the working directory manually to be the root of the project. If  you don't set the working directory, the following `Microsoft.Data.Sqlite.SqliteException` is thrown:
 `SQLite Error 1: 'no such table: Blogs'`.
 
+To set the working directory:
+
+* In **Solution Explorer**, right click the project and then select **Properties**.
+* Select the **Debug** tab in the left pane.
+* Set **Working directory** to the project directory.
+* Save the changes.
+
 ## Additional Resources
 
 * [Introduction to ASP.NET Core MVC on Mac or Linux](https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app-xplat/index)
