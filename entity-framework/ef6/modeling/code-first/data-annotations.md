@@ -313,13 +313,13 @@ Here is the table after it’s been regenerated. The table name has changed to I
 An important database features is the ability to have computed properties. If you're mapping your Code First classes to tables that contain computed columns, you don't want Entity Framework to try to update those columns. But you do want EF to return those values from the database after you've inserted or updated data. You can use the DatabaseGenerated annotation to flag those properties in your class along with the Computed enum. Other enums are None and Identity.
 
 ``` csharp
-    [DatabaseGenerated(DatabaseGenerationOption.Computed)]
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime DateCreated { get; set; }
 ```
 
 You can use database generated on byte or timestamp columns when code first is generating the database, otherwise you should only use this when pointing to existing databases because code first won't be able to determine the formula for the computed column.
 
-You read above that by default, a key property that is an integer will become an identity key in the database. That would be the same as setting DatabaseGenerated to DatabaseGenerationOption.Identity. If you do not want it to be an identity key, you can set the value to DatabaseGenerationOption.None.
+You read above that by default, a key property that is an integer will become an identity key in the database. That would be the same as setting DatabaseGenerated to DatabaseGeneratedOption.Identity. If you do not want it to be an identity key, you can set the value to DatabaseGeneratedOption.None.
 
  
 

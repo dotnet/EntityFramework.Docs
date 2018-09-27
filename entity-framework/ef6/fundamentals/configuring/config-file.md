@@ -147,7 +147,7 @@ The configuration section allows you to specify a default connection factory tha
 
 When you installed the EF NuGet package a default connection factory was registered that points to either SQL Express or LocalDB, depending on which one you have installed.  
 
-To set a connection factory, you specify the assembly qualified type name in the **deafultConnectionFactory** element.  
+To set a connection factory, you specify the assembly qualified type name in the **defaultConnectionFactory** element.  
 
 > [!NOTE]
 > An assembly qualified name is the namespace qualified name, followed by a comma, then the assembly that the type resides in. You can optionally also specify the assembly version, culture and public key token.  

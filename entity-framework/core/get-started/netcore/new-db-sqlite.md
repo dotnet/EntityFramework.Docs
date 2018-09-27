@@ -72,7 +72,7 @@ The *blogging.db** SQLite DB is in the project directory.
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Program.cs)]
 
-* Test the app:
+* Test the app from the console. See the [Visual Studio note](#vs) to run the app from Visual Studio.
 
   `dotnet run`
 
@@ -91,6 +91,21 @@ The *blogging.db** SQLite DB is in the project directory.
 - If you make changes to the model, you can use the `dotnet ef migrations add` command to scaffold a new [migration](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations). Once you have checked the scaffolded code (and made any required changes), you can use the `dotnet ef database update` command to apply the schema changes to the database.
 - EF Core uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
 - The SQLite database engine doesn't support certain schema changes that are supported by most other relational databases. For example, the `DropColumn` operation is not supported. EF Core Migrations will generate code for these operations. But if you try to apply them to a database or generate a script, EF Core throws exceptions. See [SQLite Limitations](../../providers/sqlite/limitations.md). For new development, consider dropping the database and creating a new one rather than using migrations when the model changes.
+- 
+
+<a name="vs"></a>
+
+### Run from Visual Studio
+
+To run this sample from Visual Studio, you must set the working directory manually to be the root of the project. If  you don't set the working directory, the following `Microsoft.Data.Sqlite.SqliteException` is thrown:
+`SQLite Error 1: 'no such table: Blogs'`.
+
+To set the working directory:
+
+* In **Solution Explorer**, right click the project and then select **Properties**.
+* Select the **Debug** tab in the left pane.
+* Set **Working directory** to the project directory.
+* Save the changes.
 
 ## Additional Resources
 
