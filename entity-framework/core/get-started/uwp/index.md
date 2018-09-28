@@ -8,6 +8,6 @@ uid: core/get-started/uwp/index
 
 # Getting Started with EF Core on Universal Windows Platform (UWP)
 
-These 101-level tutorials require no previous knowledge of Entity Framework Core or Visual Studio. They will take you step-by-step through creating a simple Universal Window Platform (UWP) application that queries and saves data from a database.
+These 101-level tutorials require no previous knowledge of Entity Framework Core or Visual Studio. They will take you step-by-step through creating a simple Universal Window Platform (UWP) application that queries and saves data from a database using EF Core.
 
-You can find the UWP documentation at [developer.microsoft.com/windows/apps/develop](https://developer.microsoft.com/windows/apps/develop).
+More details about developing UWP applications can be found in the [UWP documentation](https://docs.microsoft.com/windows/uwp/develop/).

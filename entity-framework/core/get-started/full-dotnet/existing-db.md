@@ -112,7 +112,8 @@ You can now use the model to perform data access.
 
   ![image](_static/output-existing-db.png)
 
-## Additional Resources
+## Next steps
 
-* [EF Core on .NET Framework with a new database](xref:core/get-started/full-dotnet/new-db)
-* [EF Core on .NET Core with a new database - SQLite](xref:core/get-started/netcore/new-db-sqlite) -  a cross-platform console EF tutorial.
+For more information about how to scaffold a context and entity classes, see the following articles:
+* [Entity Framework Core tools reference - .NET CLI](xref:core/miscellaneous/cli/dotnet#dotnet-ef-dbcontext-scaffold)
+* [Entity Framework Core tools reference - Package Manager Console](xref:core/miscellaneous/cli/powershell#scaffold-dbcontext)
