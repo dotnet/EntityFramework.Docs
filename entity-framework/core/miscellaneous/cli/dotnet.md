@@ -118,13 +118,13 @@ The startup project and target project are often the same project. A typical sce
 * The EF Core context and entity classes are in a .NET Core class library.
 * A .NET Core console app or web app references the class library.
 
-It's also possible to [put only migrations code in a separate class library project](xref:core/managing-schemas/migrations/projects).
+It's also possible to [put migrations code in a class library separate from the EF Core context](xref:core/managing-schemas/migrations/projects).
 
 ### Other target frameworks
 
-The CLI tools work with .NET Core projects. Apps that have the EF Core model in a .NET Standard class library might not have a .NET Core project. For example, this is true of Xamarin and Universal Windows Platform apps. In such cases, you can create a .NET Core console app project whose only purpose is to act as startup project for the tools. The project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
+The CLI tools work with .NET Core projects and .NET Framework projects. Apps that have the EF Core model in a .NET Standard class library might not have a .NET Core or .NET Framework project. For example, this is true of Xamarin and Universal Windows Platform apps. In such cases, you can create a .NET Core console app project whose only purpose is to act as startup project for the tools. The project can be a dummy project with no real code &mdash; it is only needed to provide a target for the tooling.
 
-Why is a dummy project required? As mentioned earlier, the tools have to execute application code at design time. To do that, they need to use the .NET Core runtime. When the EF Core model is in a project that targets .NET Core, the EF Core tools borrow the runtime from the project. They can't do that if the EF Core model is in a .NET Standard class library. The .NET Standard is not an actual .NET implementation; it's a specification of a set of APIs that .NET implementations must support. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code. The dummy project you create to use as startup project provides a concrete target platform into which the tools can load the .NET Standard class library. 
+Why is a dummy project required? As mentioned earlier, the tools have to execute application code at design time. To do that, they need to use the .NET Core runtime. When the EF Core model is in a project that targets .NET Core or .NET Framework, the EF Core tools borrow the runtime from the project. They can't do that if the EF Core model is in a .NET Standard class library. The .NET Standard is not an actual .NET implementation; it's a specification of a set of APIs that .NET implementations must support. Therefore .NET Standard is not sufficient for the EF Core tools to execute application code. The dummy project you create to use as startup project provides a concrete target platform into which the tools can load the .NET Standard class library. 
 
 ### ASP.NET Core environment
 
@@ -240,13 +240,13 @@ Lists available migrations.
 
 ### dotnet ef migrations remove
 
-Removes the last migration.
+Removes the last migration (rolls back the code changes that were done for the migration). 
 
 Options:
 
-|                   | Option    | Description                                                             |
-|-------------------|-----------|-------------------------------------------------------------------------|
-| <nobr>`-f`</nobr> | `--force` | Revert the migration even if it has been applied to the database.       |
+|                   | Option    | Description                                                                        |
+|-------------------|-----------|------------------------------------------------------------------------------------|
+| <nobr>`-f`</nobr> | `--force` | Revert the migration (roll back the changes that were applied to the database).    |
 
 ### dotnet ef migrations script
 

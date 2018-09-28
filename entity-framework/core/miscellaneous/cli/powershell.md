@@ -24,6 +24,18 @@ Therefore, you don't need to do anything to install the tools, but you do have t
 * Restore packages before using the tools in a new project.
 * Install a package to update the tools to a newer version.
 
+To make sure that you're getting the latest version of the tools, we recommend that you also do the following step:
+
+* Edit your *.csproj* file and add a line specifying the latest version of the [Microsoft.EntityFrameworkCore.Tools](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/) package. For example, the *.csproj* file might include an `ItemGroup` that looks like this:
+
+  ```xml
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+  ```
+
 Update the tools when you get a message like the following example:
 
 > The EF Core tools version '2.1.1-rtm-30846' is older than that of the runtime '2.1.3-rtm-32065'. Update the tools for the latest features and bug fixes.
@@ -31,15 +43,7 @@ Update the tools when you get a message like the following example:
 To update the tools:
 * Install the latest .NET Core SDK.
 * Update Visual Studio to the latest version.
-* Edit your *.csproj* file and add a line specifying the latest tools package. For example, the *.csproj* file might include an `ItemGroup` that looks like this:
-
-  ```xml
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-  </ItemGroup>
-  ```
+* Edit the *.csproj* file so that it includes a package reference to the latest tools package, as shown earlier.
 
 ## Other versions and project types
 
@@ -103,7 +107,7 @@ The startup project and target project are often the same project. A typical sce
 * The EF Core context and entity classes are in a .NET Core class library.
 * A .NET Core console app or web app references the class library.
 
-It's also possible to [put only migrations code in a separate class library project](xref:core/managing-schemas/migrations/projects).
+It's also possible to [put migrations code in a class library separate from the EF Core context](xref:core/managing-schemas/migrations/projects).
 
 ### Other target frameworks
 
@@ -158,13 +162,13 @@ Lists available `DbContext` types.
 
 ## Remove-Migration
 
-Removes the last migration.
+Removes the last migration (rolls back the code changes that were done for the migration). 
 
 Parameters:
 
-| Parameter | Description                                                       |
-|-----------|-------------------------------------------------------------------|
-| -Force    | Revert the migration even if it has been applied to the database. |
+| Parameter | Description                                                                     |
+|-----------|---------------------------------------------------------------------------------|
+| -Force    | Revert the migration (roll back the changes that were applied to the database). |
 
 ## Scaffold-DbContext
 
