@@ -174,15 +174,15 @@ dotnet ef database update InitialCreate
 dotnet ef database update 20180904195021_InitialCreate
 ```
 
-### dotnet ef dbcontext info
+## dotnet ef dbcontext info
 
 Gets information about a `DbContext` type.
 
-### dotnet ef dbcontext list
+## dotnet ef dbcontext list
 
 Lists available `DbContext` types.
 
-### dotnet ef dbcontext scaffold
+## dotnet ef dbcontext scaffold
 
 Generates code for a `DbContext` and entity types for a database.
 
@@ -218,7 +218,7 @@ The following example scaffolds only selected tables and creates the context in 
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -t Blog -t Post --context-dir Context -c BlogContext
 ```
 
-### dotnet ef migrations add
+## dotnet ef migrations add
 
 Adds a new migration.
 
@@ -234,11 +234,11 @@ Options:
 |-------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------|
 | <nobr>`-o`</nobr> | <nobr>`--output-dir <PATH>`</nobr>  | The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to "Migrations".   |
 
-### dotnet ef migrations list
+## dotnet ef migrations list
 
 Lists available migrations.
 
-### dotnet ef migrations remove
+## dotnet ef migrations remove
 
 Removes the last migration (rolls back the code changes that were done for the migration). 
 
@@ -248,7 +248,7 @@ Options:
 |-------------------|-----------|------------------------------------------------------------------------------------|
 | <nobr>`-f`</nobr> | `--force` | Revert the migration (roll back the changes that were applied to the database).    |
 
-### dotnet ef migrations script
+## dotnet ef migrations script
 
 Generates a SQL script from migrations.
 
