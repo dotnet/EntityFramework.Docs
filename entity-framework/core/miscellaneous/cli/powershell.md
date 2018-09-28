@@ -20,7 +20,7 @@ The procedures for installing and updating the tools differ between ASP.NET Core
 
 The tools are automatically included in an ASP.NET Core 2.1+ project because the `Microsoft.EntityFrameworkCore.Tools` package is included in the [Microsoft.AspNetCore.App metapackage](/aspnet/core/fundamentals/metapackage-app).
 
-Therefore, you don't need to do anything to install the tools, but you do have to:
+Therefore, you don't have to do anything to install the tools, but you do have to:
 * Restore packages before using the tools in a new project.
 * Install a package to update the tools to a newer version.
 
@@ -84,7 +84,7 @@ TOPIC
 SHORT DESCRIPTION
     Provides information about the Entity Framework Core Package Manager Console Tools.
 
-<A list of available commands follows, omitted here for brevity.>
+<A list of available commands follows, omitted here.>
 ```
 
 ## Using the tools
@@ -211,16 +211,21 @@ Parameters:
 |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | *-From* \<String>   | The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration*. Defaults to 0.                                                              |
 | *-To* \<String>     | The ending migration. Defaults to the last migration.                                                                                                                                                                      |
-| -Idempotent         | Generate a script that can be used on a database at any migration.                                                                                                                                                         |
+| <nobr>-Idempotent</nobr>         | Generate a script that can be used on a database at any migration.                                                                                                                                                         |
 | -Output \<String>   | The file to write the result to. IF this parameter is omitted, the file is created with a generated name in the same folder as the app's runtime files are created, for example: */obj/Debug/netcoreapp2.1/ghbkztfz.sql/*. |
 
 > [!TIP]
 > The To, From, and Output parameters support tab-expansion.
 
-The following examples create scripts for the InitialCreate migration and for all migrations after it.
+The following example creates a script for the InitialCreate migration, using the migration name.
 
 ```powershell
 Script-Migration -To InitialCreate
+```
+
+The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
+
+```powershell
 Script-Migration -From 20180904195021_InitialCreate
 ```
 
