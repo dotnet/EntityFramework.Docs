@@ -7,9 +7,9 @@ ms.assetid: 917ba9c8-6ddf-4631-ab8c-c4fb378c2fcd
 # Pre-generated mapping views
 Before the Entity Framework can execute a query or save changes to the data source, it must generate a set of mapping views to access the database. These mapping views are a set of Entity SQL statement that represent the database in an abstract way, and are part of the metadata which is cached per application domain. If you create multiple instances of the same context in the same application domain, they will reuse mapping views from the cached metadata rather than regenerating them. Because mapping view generation is a significant part of the overall cost of executing the first query, the Entity Framework enables you to pre-generate mapping views and include them in the compiled project. For more information, see  [Performance Considerations (Entity Framework)](~/ef6/fundamentals/performance/perf-whitepaper.md).
 
-## Generating Mapping Views with the EF Power Tools
+## Generating Mapping Views with the EF Power Tools Community Edition
 
-The easiest way to pre-generate views is to use the [EF Power Tools](https://visualstudiogallery.msdn.microsoft.com/72a60b14-1581-4b9b-89f2-846072eff19d). Once you have the Power Tools installed you will have a menu option to Generate Views, as below.
+The easiest way to pre-generate views is to use the [EF Power Tools Community Edition](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EntityFramework6PowerToolsCommunityEdition). Once you have the Power Tools installed you will have a menu option to Generate Views, as below.
 
 -   For **Code First** models right-click on the code file that contains your DbContext class.
 -   For **EF Designer** models right-click on your EDMX file.

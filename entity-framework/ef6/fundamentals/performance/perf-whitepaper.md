@@ -82,19 +82,17 @@ For small, simple models the cost may be small enough to not bother using pre-ge
 
 ### 2.3 Using Pre-Generated Views to decrease model load time
 
-#### 2.3.1 Pre-Generated views using the Entity Framework Power Tools
+For detailed information on how to use pre-generated views on Entity Framework 6 visit [Pre-Generated Mapping Views](~/ef6/fundamentals/performance/pre-generated-views.md)
 
-You can also consider using the Entity Framework Power Tools to generate views of EDMX and Code First models by right-clicking the model class file and using the Entity Framework menu to select “Generate Views”. The Entity Framework Power Tools work only on DbContext-derived contexts and can be found at \<http://visualstudiogallery.msdn.microsoft.com/72a60b14-1581-4b9b-89f2-846072eff19d>.
+#### 2.3.1 Pre-Generated views using the Entity Framework Power Tools Community Edition
 
-For more information on how to use pre-generated views on Entity Framework 6 visit [Pre-Generated Mapping Views](~/ef6/fundamentals/performance/pre-generated-views.md).
+You can use the [Entity Framework 6 Power Tools Community Edition](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EntityFramework6PowerToolsCommunityEdition) to generate views of EDMX and Code First models by right-clicking the model class file and using the Entity Framework menu to select “Generate Views”. The Entity Framework Power Tools Community Edition work only on DbContext-derived contexts.
 
 #### 2.3.2 How to use Pre-generated views with a model created by EDMGen
 
 EDMGen is a utility that ships with .NET and works with Entity Framework 4 and 5, but not with Entity Framework 6. EDMGen allows you to generate a model file, the object layer and the views from the command line. One of the outputs will be a Views file in your language of choice, VB or C\#. This is a code file containing Entity SQL snippets for each entity set. To enable pre-generated views, you simply include the file in your project.
 
 If you manually make edits to the schema files for the model, you will need to re-generate the views file. You can do this by running EDMGen with the **/mode:ViewGeneration** flag.
-
-For further reference, see [How to: Pre-Generate Views to Improve Query Performance](https://msdn.microsoft.com/library/bb896240.aspx).
 
 #### 2.3.3 How to use Pre-Generated Views with an EDMX file
 
@@ -107,13 +105,9 @@ The ADO.NET team blog has a post that describes how to use a T4 template for vie
 
 If you’re using Entity Framework 6 you can get the view generation T4 templates from the Visual Studio Gallery at \<http://visualstudiogallery.msdn.microsoft.com/18a7db90-6705-4d19-9dd1-0a6c23d0751f>.
 
-#### 2.3.4 How to use Pre-Generated Views with a Code First model
-
-It's also possible to use pre-generated views with a Code First project. The Entity Framework Power Tools has the ability to generate a views file for your Code First project. You can find the Entity Framework Power Tools in the Visual Studio Gallery at \<http://visualstudiogallery.msdn.microsoft.com/72a60b14-1581-4b9b-89f2-846072eff19d/>.
-
 ### 2.4 Reducing the cost of view generation
 
-Using pre-generated views moves the cost of view generation from model loading (run time) to compile time. While this improves startup performance at runtime, you will still experience the pain of view generation while you are developing. There are several additional tricks that can help reduce the cost of view generation, both at compile time and run time.
+Using pre-generated views moves the cost of view generation from model loading (run time) to design time. While this improves startup performance at runtime, you will still experience the pain of view generation while you are developing. There are several additional tricks that can help reduce the cost of view generation, both at compile time and run time.
 
 #### 2.4.1 Using Foreign Key Associations to reduce view generation cost
 
