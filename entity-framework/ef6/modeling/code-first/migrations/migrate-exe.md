@@ -18,9 +18,9 @@ Once you have migrate.exe then you need to copy it to the location of the assemb
 
 If your application targets .NET 4, and not 4.5, then you will need to copy the **Redirect.config** into the location as well and rename it **migrate.exe.config**. This is so that migrate.exe gets the correct binding redirects to be able to locate the Entity Framework assembly.
 
-| .NET 4.5                                   | .NET 4.0                                   |
-|:-------------------------------------------|:-------------------------------------------|
-| ![.NET 4.5 Files](~/ef6/media/net45files.png)  | ![.NET 4.0 Files](~/ef6/media/net40files.png)  |
+| .NET 4.5                                      | .NET 4.0                                      |
+|:----------------------------------------------|:----------------------------------------------|
+| ![.NET 4.5 Files](~/ef6/media/net45files.png) | ![.NET 4.0 Files](~/ef6/media/net40files.png) |
 
 > [!NOTE]
 > migrate.exe doesn't support x64 assemblies.
