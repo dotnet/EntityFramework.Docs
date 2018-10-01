@@ -1132,7 +1132,7 @@ The following example shows a **Function** element that uses one **Parameter** c
    Year(CurrentDateTime()) - Year(cast(Instructor.HireDate as DateTime))
    </DefiningExpression>
  </Function>
-``` 
+```
 
  
 
