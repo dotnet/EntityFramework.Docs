@@ -213,7 +213,7 @@ The following example shows an **AssociationSetMapping** element in which the **
      <ScalarProperty Name="CourseID" ColumnName="CourseID" />
    </EndProperty>
  </AssociationSetMapping>
-``` 
+```
 
 ## ComplexProperty Element (MSL)
 
