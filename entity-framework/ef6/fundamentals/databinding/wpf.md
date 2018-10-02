@@ -25,7 +25,7 @@ If needed, you can [revert to ObjectContext based code generation](~/ef6/modelin
 
 You need to have Visual Studio 2013, Visual Studio 2012 or Visual Studio 2010 installed to complete this walkthrough.
 
-If you are using Visual Studio 2010, you also have to install NuGet. For more information, see [Installing NuGet](http://docs.nuget.org/docs/start-here/installing-nuget).  
+If you are using Visual Studio 2010, you also have to install NuGet. For more information, see [Installing NuGet](https://docs.microsoft.com/nuget/install-nuget-client-tools).  
 
 ## Create the Application
 
@@ -247,12 +247,12 @@ Add the classes that are defined in the model as data sources for this WPF appli
 
     ![Data Sources](~/ef6/media/datasources.png)
 
--   Select the **Category **data source and drag it on the form.
+-   Select the **Category** data source and drag it on the form.
 
 The following happened when we dragged this source:
 
--   The **categoryViewSource** resource and the** categoryDataGrid** control were added to XAML. For more information about DataViewSources, see http://bea.stollnitz.com/blog/?p=387.
--   The DataContext property on the parent Grid element was set to "{StaticResource **categoryViewSource** }".  The **categoryViewSource** resource serves as a binding source for the outer\\parent Grid element. The inner Grid elements then inherit the DataContext value from the parent Grid (the categoryDataGrid’s ItemsSource property is set to "{Binding}"). 
+-   The **categoryViewSource** resource and the **categoryDataGrid** control were added to XAML 
+-   The DataContext property on the parent Grid element was set to "{StaticResource **categoryViewSource** }". The **categoryViewSource** resource serves as a binding source for the outer\\parent Grid element. The inner Grid elements then inherit the DataContext value from the parent Grid (the categoryDataGrid’s ItemsSource property is set to "{Binding}")
 
 ``` xml
     <Window.Resources>
@@ -277,7 +277,7 @@ The following happened when we dragged this source:
 
 Now that we have a grid to display Categories let's add a details grid to display the associated Products.
 
--   Select the **Products **property from under the **Category **data source and drag it on the form.
+-   Select the **Products** property from under the **Category** data source and drag it on the form.
     -   The **categoryProductsViewSource** resource and **productDataGrid** grid are added to XAML
     -   The binding path for this resource is set to Products
     -   WPF data-binding framework ensures that only Products related to the selected Category show up in **productDataGrid**
@@ -300,7 +300,7 @@ It's time to add some event handlers to the main window.
 
 This brings you to the code behind for the form, we'll now edit the code to use the ProductContext to perform data access. Update the code for the MainWindow as shown below.
 
-The code declares a long-running instance of **ProductContext**. The **ProductContext** object is used to query and save data to the database. The **Dispose**() on the **ProductContext** instance is then called from the overridden **OnClosing** method. The code comments provide details about what the code does.
+The code declares a long-running instance of **ProductContext**. The **ProductContext** object is used to query and save data to the database. The **Dispose()** on the **ProductContext** instance is then called from the overridden **OnClosing** method. The code comments provide details about what the code does.
 
 ``` csharp
     using System.Data.Entity;
@@ -385,6 +385,10 @@ The code declares a long-running instance of **ProductContext**. The **ProductCo
 
 -   Press the **Save** button to save the data to the database
 
-After the call to DbContext’s **SaveChanges**(), the IDs are populated with the database generated values. Because we called **Refresh**() after **SaveChanges**() the **DataGrid** controls are updated with the new values as well.
+After the call to DbContext’s **SaveChanges()**, the IDs are populated with the database generated values. Because we called **Refresh()** after **SaveChanges()** the **DataGrid** controls are updated with the new values as well.
 
 ![Main Window with IDs populated](~/ef6/media/screen2.png)
+
+## Additional Resources
+
+To learn more about data binding to collections using WPF, see [this topic](https://docs.microsoft.com/dotnet/framework/wpf/data/data-binding-overview#binding-to-collections) in the WPF documentation.  
