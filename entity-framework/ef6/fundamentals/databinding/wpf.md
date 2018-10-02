@@ -385,10 +385,10 @@ The code declares a long-running instance of **ProductContext**. The **ProductCo
 
 -   Press the **Save** button to save the data to the database
 
-After the call to DbContext’s **SaveChanges**(), the IDs are populated with the database generated values. Because we called **Refresh**() after **SaveChanges**() the **DataGrid** controls are updated with the new values as well.
+After the call to DbContext’s **SaveChanges()**, the IDs are populated with the database generated values. Because we called **Refresh()** after **SaveChanges()** the **DataGrid** controls are updated with the new values as well.
 
 ![Main Window with IDs populated](~/ef6/media/screen2.png)
 
 ## Additional Resources
 
-For more details about data binding to collections using WPF, see [this topic](https://docs.microsoft.com/dotnet/framework/wpf/data/data-binding-overview#binding-to-collections) in the WPF documentation.  
+To learn more about data binding to collections using WPF, see [this topic](https://docs.microsoft.com/dotnet/framework/wpf/data/data-binding-overview#binding-to-collections) in the WPF documentation.  
