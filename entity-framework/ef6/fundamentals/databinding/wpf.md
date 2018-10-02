@@ -247,11 +247,11 @@ Add the classes that are defined in the model as data sources for this WPF appli
 
     ![Data Sources](~/ef6/media/datasources.png)
 
--   Select the **Category **data source and drag it on the form.
+-   Select the **Category **data source and drag it on the form.<!-- extra asterisks -->
 
 The following happened when we dragged this source:
 
--   The **categoryViewSource** resource and the** categoryDataGrid** control were added to XAML. For more information about DataViewSources, see http://bea.stollnitz.com/blog/?p=387.
+-   The **categoryViewSource** resource and the** categoryDataGrid** <!-- extra asterisks -->control were added to XAML. For more information about DataViewSources, see http://bea.stollnitz.com/blog/?p=387.<!-- link seems to be broken --> 
 -   The DataContext property on the parent Grid element was set to "{StaticResource **categoryViewSource** }".  The **categoryViewSource** resource serves as a binding source for the outer\\parent Grid element. The inner Grid elements then inherit the DataContext value from the parent Grid (the categoryDataGrid’s ItemsSource property is set to "{Binding}"). 
 
 ``` xml
