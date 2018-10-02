@@ -25,7 +25,7 @@ If needed, you can [revert to ObjectContext based code generation](~/ef6/modelin
 
 You need to have Visual Studio 2013, Visual Studio 2012 or Visual Studio 2010 installed to complete this walkthrough.
 
-If you are using Visual Studio 2010, you also have to install NuGet. For more information, see [Installing NuGet](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools).  
+If you are using Visual Studio 2010, you also have to install NuGet. For more information, see [Installing NuGet](https://docs.microsoft.com/nuget/install-nuget-client-tools).  
 
 ## Create the Application
 
