@@ -206,7 +206,7 @@ namespace TestingDemo
             mockSet.As<IQueryable<Blog>>().Setup(m => m.Provider).Returns(data.Provider);
             mockSet.As<IQueryable<Blog>>().Setup(m => m.Expression).Returns(data.Expression);
             mockSet.As<IQueryable<Blog>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Blog>>().Setup(m => m.GetEnumerator()).Returns(0 => data.GetEnumerator());
+            mockSet.As<IQueryable<Blog>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
             var mockContext = new Mock<BloggingContext>();
             mockContext.Setup(c => c.Blogs).Returns(mockSet.Object);
