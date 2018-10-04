@@ -54,3 +54,4 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
 * https://github.com/aspnet/EntityFrameworkCore/pull/13372 - RevEng: Always specify column type for decimal columns
   * Always configure column type for decimal columns in scaffolded code rather than configuring by convention.
   * Providers should not require any changes on their end.
+* https://github.com/aspnet/EntityFrameworkCore/pull/13469 - Adds CaseExpression for generating SQL CASE expressions
