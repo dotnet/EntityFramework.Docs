@@ -59,7 +59,7 @@ Tip: In a real application, you put each class in a separate file and put the co
 
 ## Create the database
 
-Once you have a model, you use [migrations](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/) to create a database.
+Once you have a model, you use [migrations](xref:core/managing-schemas/migrations/index) to create a database.
 
 * Run `dotnet ef migrations add InitialCreate` to scaffold a migration and create the initial set of tables for the model.
 * Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations.
@@ -88,10 +88,9 @@ The *blogging.db** SQLite DB is in the project directory.
 
 ### Changing the model:
 
-- If you make changes to the model, you can use the `dotnet ef migrations add` command to scaffold a new [migration](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/). Once you have checked the scaffolded code (and made any required changes), you can use the `dotnet ef database update` command to apply the schema changes to the database.
+- If you make changes to the model, you can use the `dotnet ef migrations add` command to scaffold a new [migration](xref:core/managing-schemas/migrations/index). Once you have checked the scaffolded code (and made any required changes), you can use the `dotnet ef database update` command to apply the schema changes to the database.
 - EF Core uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
-- The SQLite database engine doesn't support certain schema changes that are supported by most other relational databases. For example, the `DropColumn` operation is not supported. EF Core Migrations will generate code for these operations. But if you try to apply them to a database or generate a script, EF Core throws exceptions. 
-- See [SQLite Limitations](../../providers/sqlite/limitations.md). For new development, consider dropping the database and creating a new one rather than using migrations when the model changes.
+- The SQLite database engine doesn't support certain schema changes that are supported by most other relational databases. For example, the `DropColumn` operation is not supported. EF Core Migrations will generate code for these operations. But if you try to apply them to a database or generate a script, EF Core throws exceptions. See [SQLite Limitations](../../providers/sqlite/limitations.md). For new development, consider dropping the database and creating a new one rather than using migrations when the model changes.
  
 
 <a name="vs"></a>
