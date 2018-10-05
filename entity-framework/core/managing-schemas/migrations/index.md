@@ -8,17 +8,17 @@ uid: core/managing-schemas/migrations/index
 Migrations
 ==========
 
-A data model changes during development and gets out of sync with the database. You can drop the database and let EF create a new one that matches the model, but this procedure results in the loss of data. The EF Core Migrations feature preserves data by incrementally updating the database schema instead of creating a new database.
+A data model changes during development and gets out of sync with the database. You can drop the database and let EF create a new one that matches the model, but this procedure results in the loss of data. The migrations feature in EF Core provides a way to incrementally update the database schema to keep it in sync with the application's data model while preserving existing data in the database.
 
 Migrations includes command-line tools and APIs that help with the following tasks:
 
-* Create a migration. Generate code that can update the database to sync it with a set of model changes.
-* Update the database. Run the migration code to update the database schema.
-* Customize migration code. Sometimes the generated code needs to be modified or supplemented.
-* Remove a migration. Delete the generated code.
-* Revert a migration. Undo the database changes.
-* Generate SQL scripts. You might need a script to update a production database or to troubleshoot migration code.
-* Apply migrations at runtime. When design-time updates and running scripts aren't the best options, call the `Migrate()` method.
+* [Create a migration](#create-a-migration). Generate code that can update the database to sync it with a set of model changes.
+* [Update the database](#update-the-database). Apply pending migrations to update the database schema.
+* [Customize migration code](#customize-migration-code). Sometimes the generated code needs to be modified or supplemented.
+* [Remove a migration](#remove-a-migration). Delete the generated code.
+* [Revert a migration](#revert-a-migration). Undo the database changes.
+* [Generate SQL scripts](#generate-sql-scripts). You might need a script to update a production database or to troubleshoot migration code.
+* [Apply migrations at runtime](#apply-migrations-at-runtime). When design-time updates and running scripts aren't the best options, call the `Migrate()` method.
 
 Install the tools
 -----------------
@@ -77,7 +77,7 @@ Add-Migration AddProductReviews
 dotnet ef migrations add AddProductReviews
 ```
 
-Once the migration is scaffolded (code generated for it), review the code for accuracy and add any additional operations required to apply it correctly.
+Once the migration is scaffolded (code generated for it), review the code for accuracy and add, remove or modify any operations required to apply it correctly.
 
 For example, a migration might contain the following operations:
 
@@ -190,15 +190,13 @@ Some apps may want to apply migrations at runtime during startup or first run. D
 
 This method builds on top of the `IMigrator` service, which can be used for more advanced scenarios. Use `DbContext.GetService<IMigrator>()` to access it.
 
-Caution, this approach isn't for everyone. While it's great for apps with a local database, most applications will require more robust deployment strategy like generating SQL scripts.
-
 ``` csharp
 myDbContext.Database.Migrate();
 ```
 
 > [!WARNING]
-> Don't call `EnsureCreated()` before `Migrate()`. `EnsureCreated()` bypasses Migrations to create the schema, which
-> causes `Migrate()` to fail.
+> * This approach isn't for everyone. While it's great for apps with a local database, most applications will require more robust deployment strategy like generating SQL scripts.
+> * Don't call `EnsureCreated()` before `Migrate()`. `EnsureCreated()` bypasses Migrations to create the schema, which causes `Migrate()` to fail.
 
 Next steps
 ----------
