@@ -172,7 +172,7 @@ Parameters:
 
 ## Scaffold-DbContext
 
-Generates code for a `DbContext` and entity types for a database. In order for `Scaffold-DbContext` to generate the model, the database table must have a primary key identified. 
+Generates code for a `DbContext` and entity types for a database. In order for `Scaffold-DbContext` to generate an entity type, the database table must have a primary key.
 
 Parameters:
 
