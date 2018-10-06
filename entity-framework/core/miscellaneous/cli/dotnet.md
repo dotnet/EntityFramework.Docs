@@ -184,7 +184,7 @@ Lists available `DbContext` types.
 
 ## dotnet ef dbcontext scaffold
 
-Generates code for a `DbContext` and entity types for a database.
+Generates code for a `DbContext` and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.
 
 Arguments:
 
