@@ -25,9 +25,9 @@ View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.
   ``` Console
   dotnet new console -o ConsoleApp.SQLite
   ```
-## Change the current directory 
+## Change the current directory
 
-In subsequent steps, we need to issue `dotnet` commands against the application. 
+In subsequent steps, we need to issue `dotnet` commands against the application.
 
 * We change the current directory to the application's directory like this:
 
@@ -91,10 +91,8 @@ The *blogging.db** SQLite DB is in the project directory.
 - If you make changes to the model, you can use the `dotnet ef migrations add` command to scaffold a new [migration](xref:core/managing-schemas/migrations/index). Once you have checked the scaffolded code (and made any required changes), you can use the `dotnet ef database update` command to apply the schema changes to the database.
 - EF Core uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
 - The SQLite database engine doesn't support certain schema changes that are supported by most other relational databases. For example, the `DropColumn` operation is not supported. EF Core Migrations will generate code for these operations. But if you try to apply them to a database or generate a script, EF Core throws exceptions. See [SQLite Limitations](../../providers/sqlite/limitations.md). For new development, consider dropping the database and creating a new one rather than using migrations when the model changes.
- 
 
 <a name="vs"></a>
-
 ### Run from Visual Studio
 
 To run this sample from Visual Studio, you must set the working directory manually to be the root of the project. If  you don't set the working directory, the following `Microsoft.Data.Sqlite.SqliteException` is thrown:
@@ -109,6 +107,6 @@ To set the working directory:
 
 ## Additional Resources
 
-* [Introduction to ASP.NET Core MVC on Mac or Linux](https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app-xplat/index)
-* [Introduction to ASP.NET Core MVC with Visual Studio](https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app/index)
-* [Getting started with ASP.NET Core and Entity Framework Core using Visual Studio](https://docs.microsoft.com/aspnet/core/data/ef-mvc/index)
+* [Tutorial: Get started with EF Core on ASP.NET Core with a new database using SQLite](xref:core/get-started/aspnetcore/new-db)
+* [Tutorial: Get started with Razor Pages in ASP.NET Core](https://docs.microsoft.com/aspnet/core/tutorials/razor-pages/razor-pages-start)
+* [Tutorial: Razor Pages with Entity Framework Core in ASP.NET Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)

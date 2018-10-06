@@ -67,7 +67,7 @@ Warning: If you use **Individual User Accounts** instead of **None** for **Authe
 
 ## Install Entity Framework Core
 
-To install EF Core, you install the package for the EF Core database provider(s) you want to target. For a list of available providers, see [Database Providers](../../providers/index.md). 
+To install EF Core, you install the package for the EF Core database provider(s) you want to target. For a list of available providers, see [Database Providers](../../providers/index.md).
 
 # [Visual Studio](#tab/visual-studio)
 
@@ -139,7 +139,7 @@ A production app would typically put the connection string in a configuration fi
 
 ## Create the database
 
-The following steps use [migrations](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations) to create a database.
+The following steps use [migrations](xref:core/managing-schemas/migrations/index) to create a database.
 
 # [Visual Studio](#tab/visual-studio)
 
@@ -187,7 +187,7 @@ Scaffold a controller and views for the `Blog` entity.
   dotnet tool install -g dotnet-aspnet-codegenerator
   dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
   dotnet restore
-  dotnet aspnet-codegenerator controller -name BlogsController -m Blog -dc BloggingContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries 
+  dotnet aspnet-codegenerator controller -name BlogsController -m Blog -dc BloggingContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
   ```
 
   The `tool install` and `add package` commands install the tooling that can scaffold controllers and views. The `restore` command ensures that all of the project's packages are downloaded, and the `aspnet-codegenerator` command does the scaffolding.
@@ -223,7 +223,6 @@ dotnet run
 
 ## Additional Resources
 
-* [EF - New database with SQLite](xref:core/get-started/netcore/new-db-sqlite) -  a cross-platform console EF tutorial.
-* [Introduction to ASP.NET Core MVC on Mac or Linux](https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app-xplat/index)
-* [Introduction to ASP.NET Core MVC with Visual Studio](https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app/index)
-* [Getting started with ASP.NET Core and Entity Framework Core using Visual Studio](https://docs.microsoft.com/aspnet/core/data/ef-mvc/index)
+* [Tutorial: Get started with EF Core on .NET Core with a new database using SQLite](xref:core/get-started/netcore/new-db-sqlite)
+* [Tutorial: Get started with Razor Pages in ASP.NET Core](https://docs.microsoft.com/aspnet/core/tutorials/razor-pages/razor-pages-start)
+* [Tutorial: Razor Pages with Entity Framework Core in ASP.NET Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
