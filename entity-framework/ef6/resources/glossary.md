@@ -54,7 +54,7 @@ Creating an Entity Framework model, using the EF Designer, that is then used to 
 A property of an entity that references another entity. For example, Product contains a Category navigation property and Category contains a Products navigation property.
 
 ## POCO
-Acronym for Plain-Old CLR Object. A simple user class that has no dependencies with any framework. In the context of EF, a an entity class that does not derive from EntityObject, implements any interfaces or carries any attributes defined in EF. Such entity classes that are decoupled from the persistence framework are also said to be "persistence ignorant".  
+Acronym for Plain-Old CLR Object. A simple user class that has no dependencies with any framework. In the context of EF, an entity class that does not derive from EntityObject, implements any interfaces or carries any attributes defined in EF. Such entity classes that are decoupled from the persistence framework are also said to be "persistence ignorant".  
 
 ## Relationship inverse
 The opposite end of a relationship, for example, product.Category and category.Product.
