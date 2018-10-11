@@ -148,7 +148,7 @@ In Entity Framework you use most commonly use the navigation properties to load 
 
 ``` csharp
     // Get the course where currently DepartmentID = 1.
-    Course course2 = context.Courses.First(c=>c.DepartmentID == 2);
+    Course course2 = context.Courses.First(c=>c.DepartmentID == 1);
 
     // Use DepartmentID foreign key property
     // to change the association.
