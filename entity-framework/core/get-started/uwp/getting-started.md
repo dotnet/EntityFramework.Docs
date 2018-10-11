@@ -99,7 +99,7 @@ Now you can create your initial migration.
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Design`
 
-This package is required by the toolkit Microsoft.EntityFrameworkCore.Tools.
+  This package is required by the toolkit Microsoft.EntityFrameworkCore.Tools.
 
 * Run `Add-Migration InitialCreate`.
 
