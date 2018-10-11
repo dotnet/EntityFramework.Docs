@@ -19,7 +19,7 @@ EF6 continues to be a supported product, and will continue to see bug fixes and 
 
 ## Entity Framework Core
 
-Entity Framework Core (EF Core) is a complete rewrite of EF6 that was first released in 2016. It ships in several Nuget packages, the main one being Microsoft.EntityFrameworkCore](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/). EF Core is a cross-platform product that can run on .NET Core or .NET Framework.
+Entity Framework Core (EF Core) is a complete rewrite of EF6 that was first released in 2016. It ships in Nuget packages, the main one being [Microsoft.EntityFrameworkCore](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/). EF Core is a cross-platform product that can run on .NET Core or .NET Framework.
 
 EF Core was designed to provide a developer experience similar to EF6. Most of the top-level APIs remain the same, so EF Core will feel familiar to developers who have used EF6.
 
@@ -126,8 +126,9 @@ The EF Core column indicates the product version in which the feature first appe
 | Jet (Microsoft Access)                                |          | 2.0 <sup>(2)</sup>                    |
 | In-memory (for testing)                               |          | 1.0                                   |
 
-<sup>1</sup> There is currently a paid provider available. A free official provider for Oracle is being worked on.
-<sup>2</sup> This provider only works on .NET Framework (not on .NET Core).
+<sup>1</sup> There is currently a paid provider available for Oracle. A free official provider for Oracle is being worked on.
+
+<sup>2</sup> The SQL Server Compact and Jet providers only work on .NET Framework (not on .NET Core).
 
 ### .NET implementations
 
