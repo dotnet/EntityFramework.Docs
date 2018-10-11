@@ -1,6 +1,16 @@
 {
     "redirections": [
         {
+            "source_path": "entity-framework/efcore-and-ef6/choosing.md",
+            "redirect_url": "/ef/efcore-and-ef6/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/efcore-and-ef6/features.md",
+            "redirect_url": "/ef/efcore-and-ef6/index",
+            "redirect_document_id": false
+        },
+        {
             "source_path": "entity-framework/core/providers/devart/index.md",
             "redirect_url": "/ef/core/providers/index",
             "redirect_document_id": false
