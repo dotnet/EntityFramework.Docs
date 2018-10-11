@@ -97,6 +97,10 @@ Now you can create your initial migration.
 
 * In **Solution Explorer**, set the *Blogging.Migrations.Startup* project as the startup project.
 
+* Run `Install-Package Microsoft.EntityFrameworkCore.Design`
+
+This package is required by the toolkit Microsoft.EntityFrameworkCore.Tools.
+
 * Run `Add-Migration InitialCreate`.
 
   This command scaffolds a migration that creates the initial set of tables for your model.
