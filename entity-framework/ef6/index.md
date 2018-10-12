@@ -31,7 +31,7 @@ EF6 implements many popular O/RM features:
 
 EF Core is a more modern, lightweight and extensible version of Entity Framework that has very similar capabilities and benefits to EF6.
 EF Core is a complete rewrite and contains many new features not available in EF6, although it also still lacks some of the most advanced mapping capabilities of EF6.
-We recommend using EF Core in new applications as long as the feature set matches your requirements.
+Consider using EF Core in new applications if the feature set matches your requirements.
 [Compare EF Core & EF6](xref:efcore-and-ef6/index) examines this choice in greater detail.
 
 ## [Get Started](~/ef6/get-started.md)
