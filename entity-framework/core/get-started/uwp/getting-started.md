@@ -21,9 +21,9 @@ In this tutorial, you build a Universal Windows Platform (UWP) application that 
 * [.NET Core 2.1 SDK or later](https://www.microsoft.com/net/core) or later.
 
 > [!IMPORTANT]
-> Later in this tutorial you will use Entity Framework Core migrations commands to create and update the schema of the database.
-> The EF Core migration commands don't work directly with UWP projects.
-> For this reason, you will place the application's data model in a shared library project, and you will then create a separate .NET Core console application to execute the commands.
+> This tutorial uses Entity Framework Core migrations commands to create and update the schema of the database.
+> These commands don't work directly with UWP projects.
+> For this reason, the application's data model is placed in a shared library project, and a separate .NET Core console application is used to run the commands.
 
 ## Create a library project for the data model
 
@@ -46,6 +46,8 @@ In this tutorial, you build a Universal Windows Platform (UWP) application that 
 To use EF Core, install the package for the database provider(s) you want to target. This tutorial uses SQLite. For a list of available providers see [Database Providers](../../providers/index.md).
 
 * **Tools > NuGet Package Manager > Package Manager Console**.
+
+* Make sure that the library project *Blogging.Model* is selected the **Default Project** in the Package Manager Console.
 
 * Run `Install-Package Microsoft.EntityFrameworkCore.Sqlite`
 
@@ -81,7 +83,7 @@ To enable the EF Core migration commands in the Package Manager Console (PMC), i
 
 ## Create the initial migration
 
- Create the initial migration. You indicate the command to use the console application as the startup project.
+ Create the initial migration, specifying the console application as the startup project.
 
 * Run `Add-Migration InitialCreate -StartupProject Blogging.Migrations.Startup`
 
