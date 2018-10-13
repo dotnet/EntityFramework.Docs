@@ -81,13 +81,13 @@ To enable the EF Core migration commands in the Package Manager Console (PMC), i
 
 ## Create the initial migration
 
- Create the initial migration.
+ Create the initial migration. You indicate the command to use the console application as the startup project.
 
 * Run `Add-Migration InitialCreate -StartupProject Blogging.Migrations.Startup`
 
-This command scaffolds a migration that creates the initial set of tables for your model.
+This command scaffolds a migration that creates the initial set of database tables for your data model.
 
-## Create a new UWP project
+## Create the UWP project
 
 * In **Solution Explorer**, right-click the solution, and then choose **Add > New Project**.
 
@@ -116,11 +116,11 @@ Since you want the database to be created on the device that the app runs on, ad
 > [!TIP]  
 > If you change your model, use the `Add-Migration` command to scaffold a new migration to apply the corresponding changes to the database. Any pending migrations will be applied to the local database on each device when the application starts.
 >
->EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
+>EF Core uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
 
-## Use the model
+## Use the data model
 
-You can now use the model to perform data access.
+You can now use EF Core to perform data access.
 
 * Open *MainPage.xaml*.
 
