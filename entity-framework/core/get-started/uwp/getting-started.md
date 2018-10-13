@@ -8,7 +8,7 @@ uid: core/get-started/uwp/getting-started
 
 # Getting Started with EF Core on Universal Windows Platform (UWP) with a New Database
 
-In this tutorial, you build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework Core.   
+In this tutorial, you build a Universal Windows Platform (UWP) application that performs basic data access against a local SQLite database using Entity Framework Core.
 
 [View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/UWP).
 
@@ -25,7 +25,7 @@ In this tutorial, you build a Universal Windows Platform (UWP) application that 
 > These commands don't work directly with UWP projects.
 > For this reason, the application's data model is placed in a shared library project, and a separate .NET Core console application is used to run the commands.
 
-## Create a library project for the data model
+## Create a library project to hold the data model
 
 * Open Visual Studio
 
@@ -75,7 +75,7 @@ Now it's time to define a context and entity classes that make up the model.
 
 ## Install Entity Framework Core tools in the migrations startup project
 
-To enable the EF Core migration commands in the Package Manager Console (PMC), install the EF Core tools package.
+To enable the EF Core migration commands in the Package Manager Console (PMC), install the EF Core tools package in the console application.
 
 * **Tools > NuGet Package Manager > Package Manager Console**
 
@@ -103,7 +103,7 @@ This command scaffolds a migration that creates the initial set of database tabl
 > Set the target and minimum versions to at least **Windows 10 Fall Creators Update (10.0; build 16299.0)**.
 > Previous  versions of Windows 10 do not support .NET Standard 2.0, which is required by Entity Framework Core.
 
-## Create the database on application startup
+## Add code to create the database on application startup
 
 Since you want the database to be created on the device that the app runs on, add code to apply any pending migrations to the local database on application startup. The first time that the app runs, this will take care of creating the local database.
 
