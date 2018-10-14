@@ -147,7 +147,7 @@ In Entity Framework you use most commonly use the navigation properties to load 
 > In a foreign key association, when you load a related end of a dependent object, the related object will be loaded based on the foreign key value of the dependent that is currently in memory:
 
 ``` csharp
-    // Get the course where currently DepartmentID = 1.
+    // Get the course where currently DepartmentID = 2.
     Course course2 = context.Courses.First(c=>c.DepartmentID == 2);
 
     // Use DepartmentID foreign key property
