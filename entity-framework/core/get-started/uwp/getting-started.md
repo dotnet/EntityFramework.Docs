@@ -1,7 +1,7 @@
 ---
 title: Getting Started on UWP - New Database - EF Core
 author: rowanmiller
-ms.date: 08/08/2018
+ms.date: 10/13/2018
 ms.assetid: a0ae2f21-1eef-43c6-83ad-92275f9c0727
 uid: core/get-started/uwp/getting-started
 ---
@@ -20,10 +20,12 @@ In this tutorial, you build a Universal Windows Platform (UWP) application that 
 
 * [.NET Core 2.1 SDK or later](https://www.microsoft.com/net/core) or later.
 
-## Create a model project
-
 > [!IMPORTANT]
-> Due to limitations in the way .NET Core tools interact with UWP projects the model needs to be placed in a non-UWP project to be able to run migrations commands in the **Package Manager Console** (PMC)
+> This tutorial uses Entity Framework Core [migrations](xref:core/managing-schemas/migrations/index) commands to create and update the schema of the database.
+> These commands don't work directly with UWP projects.
+> For this reason, the application's data model is placed in a shared library project, and a separate .NET Core console application is used to run the commands.
+
+## Create a library project to hold the data model
 
 * Open Visual Studio
 
@@ -39,21 +41,19 @@ In this tutorial, you build a Universal Windows Platform (UWP) application that 
 
 * Click **OK**.
 
-## Install Entity Framework Core
+## Install Entity Framework Core runtime in the data model project
 
 To use EF Core, install the package for the database provider(s) you want to target. This tutorial uses SQLite. For a list of available providers see [Database Providers](../../providers/index.md).
 
 * **Tools > NuGet Package Manager > Package Manager Console**.
 
+* Make sure that the library project *Blogging.Model* is selected as the **Default Project** in the Package Manager Console.
+
 * Run `Install-Package Microsoft.EntityFrameworkCore.Sqlite`
 
-Later in this tutorial you will be using some Entity Framework Core tools to maintain the database. So install the tools package as well.
+## Create the data model
 
-* Run `Install-Package Microsoft.EntityFrameworkCore.Tools`
-
-## Create the model
-
-Now it's time to define a context and entity classes that make up the model.
+Now it's time to define the *DbContext* and entity classes that make up the model.
 
 * Delete *Class1.cs*.
 
@@ -61,23 +61,7 @@ Now it's time to define a context and entity classes that make up the model.
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/UWP/Blogging.Model/Model.cs)]
 
-## Create a new UWP project
-
-* In **Solution Explorer**, right-click the solution, and then choose **Add > New Project**.
-
-* From the left menu select **Installed > Visual C# > Windows Universal**.
-
-* Select the **Blank App (Universal Windows)** project template.
-
-* Name the project *Blogging.UWP*, and click **OK**
-
-* Set the target and minimum versions to at least **Windows 10 Fall Creators Update (10.0; build 16299.0)**.
-
-## Create the initial migration
-
-Now that you have a model, set up the app to create a database the first time it runs. In this section, you create the initial migration. In the following section, you add code that applies this migration when the app starts.
-
-Migrations tools require a non-UWP startup project, so create that first.
+## Create a new console project to run migrations commands
 
 * In **Solution Explorer**, right-click the solution, and then choose **Add > New Project**.
 
@@ -89,19 +73,37 @@ Migrations tools require a non-UWP startup project, so create that first.
 
 * Add a project reference from the *Blogging.Migrations.Startup* project to the *Blogging.Model* project.
 
-Now you can create your initial migration.
+## Install Entity Framework Core tools in the migrations startup project
+
+To enable the EF Core migration commands in the Package Manager Console, install the EF Core tools package in the console application.
 
 * **Tools > NuGet Package Manager > Package Manager Console**
 
-* Select the *Blogging.Model* project as the **Default project**.
+* Run `Install-Package Microsoft.EntityFrameworkCore.Tools -ProjectName Blogging.Migrations.Startup`
 
-* In **Solution Explorer**, set the *Blogging.Migrations.Startup* project as the startup project.
+## Create the initial migration
 
-* Run `Add-Migration InitialCreate`.
+ Create the initial migration, specifying the console application as the startup project.
 
-  This command scaffolds a migration that creates the initial set of tables for your model.
+* Run `Add-Migration InitialCreate -StartupProject Blogging.Migrations.Startup`
 
-## Create the database on app startup
+This command scaffolds a migration that creates the initial set of database tables for your data model.
+
+## Create the UWP project
+
+* In **Solution Explorer**, right-click the solution, and then choose **Add > New Project**.
+
+* From the left menu select **Installed > Visual C# > Windows Universal**.
+
+* Select the **Blank App (Universal Windows)** project template.
+
+* Name the project *Blogging.UWP*, and click **OK**
+
+> [!IMPORTANT]
+> Set the target and minimum versions to at least **Windows 10 Fall Creators Update (10.0; build 16299.0)**.
+> Previous  versions of Windows 10 do not support .NET Standard 2.0, which is required by Entity Framework Core.
+
+## Add code to create the database on application startup
 
 Since you want the database to be created on the device that the app runs on, add code to apply any pending migrations to the local database on application startup. The first time that the app runs, this will take care of creating the local database.
 
@@ -116,11 +118,11 @@ Since you want the database to be created on the device that the app runs on, ad
 > [!TIP]  
 > If you change your model, use the `Add-Migration` command to scaffold a new migration to apply the corresponding changes to the database. Any pending migrations will be applied to the local database on each device when the application starts.
 >
->EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
+>EF Core uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.
 
-## Use the model
+## Use the data model
 
-You can now use the model to perform data access.
+You can now use EF Core to perform data access.
 
 * Open *MainPage.xaml*.
 
