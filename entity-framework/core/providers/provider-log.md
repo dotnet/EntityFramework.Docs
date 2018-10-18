@@ -55,3 +55,4 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
   * Always configure column type for decimal columns in scaffolded code rather than configuring by convention.
   * Providers should not require any changes on their end.
 * https://github.com/aspnet/EntityFrameworkCore/pull/13469 - Adds CaseExpression for generating SQL CASE expressions
+* https://github.com/aspnet/EntityFrameworkCore/pull/13648 - Adds the ability to specify type mappings on SqlFunctionExpression to improve store type inference of arguments and results.
