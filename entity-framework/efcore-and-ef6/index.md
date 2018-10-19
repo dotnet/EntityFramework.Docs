@@ -68,7 +68,7 @@ The EF Core column indicates the product version in which the feature first appe
 
 ### Querying data
 
-| **Feature                                             | **EF6**  | **EF Core**                           |
+| **Feature**                                           | **EF6**  | **EF Core**                           |
 |:------------------------------------------------------|:---------|:--------------------------------------|
 | LINQ queries                                          | Yes      | 1.0 (in-progress for complex queries) |
 | Readable generated SQL                                | Poor     | 1.0                                   |
