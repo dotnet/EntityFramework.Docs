@@ -12,7 +12,7 @@ uid: core/get-started/netcore/new-db-sqlite
 
 In this tutorial, you create a .NET Core console app that performs data access against a SQLite database using Entity Framework Core. You use migrations to create the database from the model. See [ASP.NET Core - New database](xref:core/get-started/aspnetcore/new-db) for a Visual Studio version using ASP.NET Core MVC.
 
-View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/NetCore/ConsoleApp.SQLite).
+[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/NetCore/ConsoleApp.SQLite).
 
 ## Prerequisites
 
