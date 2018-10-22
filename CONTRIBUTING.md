@@ -43,7 +43,7 @@ To render a portion of a file as a snippet by using line numbers:
 [!code-csharp[Main](../../../samples/core/saving/Program.cs?range=1-10]
 ```
 
-For C# snippets, you can reference a [C# region](https://msdn.microsoft.com/en-us/library/9a1ybwek.aspx). Whenever possible, use regions rather than line numbers, because line numbers in a code file tend to change and get out of sync with line number references in Markdown. C# regions can be nested, and if you reference the outer region, the inner `#region` and `#endregion` directives are not rendered in a snippet.
+For C# snippets, you can reference a [C# region](https://msdn.microsoft.com/library/9a1ybwek.aspx). Whenever possible, use regions rather than line numbers, because line numbers in a code file tend to change and get out of sync with line number references in Markdown. C# regions can be nested, and if you reference the outer region, the inner `#region` and `#endregion` directives are not rendered in a snippet.
 
 To render a C# region named "snippet_Example":
 

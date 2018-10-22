@@ -6,7 +6,7 @@ ms.assetid: d8666b7a-deda-45e7-8b8e-d1d64a2724d3
 ---
 # Future Versions of Entity Framework 
 Here you can find information on upcoming versions of Entity Framework.
-While most of the focus of the EF team is nowadays on adding new features and improvements to [EF Core](https://docs.microsoft.com/en-us/ef/core/index), we plan to  still fix important bugs, implement small improvements, and incorporate community contributions in the EF6 codebase.
+While most of the focus of the EF team is nowadays on adding new features and improvements to [EF Core](https://docs.microsoft.com/ef/core/index), we plan to  still fix important bugs, implement small improvements, and incorporate community contributions in the EF6 codebase.
 
 ## Post-EF 6.2 releases
 

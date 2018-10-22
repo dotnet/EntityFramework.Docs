@@ -63,7 +63,7 @@ The “type” in this registration is the assembly-qualified name of the provid
 
 ### Code-based registration
 
-Starting with Entity Framework 6 application-wide configuration for EF can be specified in code. For full details see _[Entity Framework Code-Based Configuration](https://msdn.microsoft.com/en-us/data/jj680699)_. The normal way to register an EF provider using code-based configuration is to create a new class that derives from System.Data.Entity.DbConfiguration and place it in the same assembly as your DbContext class. Your DbConfiguration class should then register the provider in its constructor. For example, to register the SQL Compact provider the DbConfiguration class looks like this:
+Starting with Entity Framework 6 application-wide configuration for EF can be specified in code. For full details see _[Entity Framework Code-Based Configuration](https://msdn.microsoft.com/data/jj680699)_. The normal way to register an EF provider using code-based configuration is to create a new class that derives from System.Data.Entity.DbConfiguration and place it in the same assembly as your DbContext class. Your DbConfiguration class should then register the provider in its constructor. For example, to register the SQL Compact provider the DbConfiguration class looks like this:
 
 ``` csharp
     public class MyConfiguration : DbConfiguration

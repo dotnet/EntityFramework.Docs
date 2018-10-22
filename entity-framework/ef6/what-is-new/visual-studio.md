@@ -35,7 +35,7 @@ Remember to use a verbatim string prefixed with `@` or double back-slashes "\\\\
 
 ## Visual Studio 2013
 - This version of Visual Studio includes and older version of Entity Framework tools and runtime.
-It is recommended that you upgrade to Entity Framework Tools 6.1.3, using [the installer](https://www.microsoft.com/en-us/download/details.aspx?id=40762) available in the Microsoft Download Center.
+It is recommended that you upgrade to Entity Framework Tools 6.1.3, using [the installer](https://www.microsoft.com/download/details.aspx?id=40762) available in the Microsoft Download Center.
 See [Past Releases](~/ef6/what-is-new/past-releases.md#ef-613) for more details on these releases.
 - Adding Entity Framework to new projects using the upgraded EF tools will automatically add the EF 6.1.3 NuGet package.
 You can manually install or upgrade to any EF NuGet package available online.
@@ -46,7 +46,7 @@ Remember to use a verbatim string prefixed with `@` or double back-slashes "\\\\
 ## Visual Studio 2012
 
 - This version of Visual Studio includes and older version of Entity Framework tools and runtime.
-It is recommended that you upgrade to Entity Framework Tools 6.1.3, using [the installer](https://www.microsoft.com/en-us/download/details.aspx?id=40762) available in the Microsoft Download Center.
+It is recommended that you upgrade to Entity Framework Tools 6.1.3, using [the installer](https://www.microsoft.com/download/details.aspx?id=40762) available in the Microsoft Download Center.
 See [Past Releases](~/ef6/what-is-new/past-releases.md#ef-613) for more details on these releases.
 - Adding Entity Framework to new projects using the upgraded EF tools will automatically add the EF 6.1.3 NuGet package.
 You can manually install or upgrade to any EF NuGet package available online.
