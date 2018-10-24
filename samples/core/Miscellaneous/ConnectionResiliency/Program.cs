@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 
 namespace ConnectionResiliency
@@ -15,6 +16,8 @@ namespace ConnectionResiliency
             }
 
             ExecuteWithManualTransaction();
+
+            ExecuteWithManualAmbientTransaction();
 
             ExecuteInTransactionWithVerification();
 
@@ -41,6 +44,34 @@ namespace ConnectionResiliency
                             context.SaveChanges();
 
                             transaction.Commit();
+                        }
+                    }
+                });
+            }
+            #endregion
+        }
+
+        private static void ExecuteWithManualAmbientTransaction()
+        {
+            #region AmbientTransaction
+            using (var context1 = new BloggingContext())
+            {
+                context1.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
+
+                var strategy = context1.Database.CreateExecutionStrategy();
+
+                strategy.Execute(() =>
+                {
+                    using (var context2 = new BloggingContext())
+                    {
+                        using (var transaction = new TransactionScope())
+                        {
+                            context2.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                            context2.SaveChanges();
+
+                            context1.SaveChanges();
+
+                            transaction.Complete();
                         }
                     }
                 });
