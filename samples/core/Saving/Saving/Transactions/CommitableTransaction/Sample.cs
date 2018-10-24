@@ -35,7 +35,7 @@ namespace EFSaving.Transactions.CommitableTransaction
                     {
                         context.Database.OpenConnection();
                         context.Database.EnlistTransaction(transaction);
-                  
+
                         // Run raw ADO.NET command in the transaction
                         var command = connection.CreateCommand();
                         command.CommandText = "DELETE FROM dbo.Blogs";
