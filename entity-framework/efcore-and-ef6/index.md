@@ -68,7 +68,7 @@ The EF Core column indicates the product version in which the feature first appe
 
 ### Querying data
 
-| **Feature                                             | **EF6**  | **EF Core**                           |
+| **Feature**                                           | **EF6**  | **EF Core**                           |
 |:------------------------------------------------------|:---------|:--------------------------------------|
 | LINQ queries                                          | Yes      | 1.0 (in-progress for complex queries) |
 | Readable generated SQL                                | Poor     | 1.0                                   |
@@ -142,7 +142,7 @@ The EF Core column indicates the product version in which the feature first appe
 ## Guidance for new applications
 
 Consider using EF Core for a new application if both of the following conditions are true:
-* The app needs the capabilities of .NET Core. For more information, see [Choosing between .NET Core and .NET Framework for server apps](https://docs.microsoft.com/en-us/dotnet/standard/choosing-core-framework-server).
+* The app needs the capabilities of .NET Core. For more information, see [Choosing between .NET Core and .NET Framework for server apps](https://docs.microsoft.com/dotnet/standard/choosing-core-framework-server).
 * EF Core supports all of the features that the app requires. If a desired feature is missing, check the [EF Core Roadmap](xref:core/what-is-new/roadmap) to find out if there are plans to support it in the future. 
 
 Consider using EF6 if both of the following conditions are true:
