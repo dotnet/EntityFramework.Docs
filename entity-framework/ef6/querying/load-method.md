@@ -34,7 +34,7 @@ using (var context = new BloggingContext())
     context.Entry(blog)
         .Collection(b => b.Posts)
         .Query()
-        .Where(p => p.Tags.Contains("entity-framework")
+        .Where(p => p.Tags.Contains("entity-framework"))
         .Load();
 }
 ```  
