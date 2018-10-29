@@ -19,7 +19,7 @@ While any pattern that provides the necessary configuration information to the `
 
 `DbContext` must have an instance of `DbContextOptions` in order to perform any work. The `DbContextOptions` instance carries configuration information such as:
 
-- The database provider to use, typically selected by invoking a method such as `UseSqlServer` or `UseSqlite`. These extension methods require the corresponding provider package, such as `Microsoft.EntityFrameworkCore.SqlServer` and `Microsoft.EntityFrameworkCore.Sqlite`. A `using` statement for `Microsoft.EntityFrameworkCore` is also required.
+- The database provider to use, typically selected by invoking a method such as `UseSqlServer` or `UseSqlite`. These extension methods require the corresponding provider package, such as `Microsoft.EntityFrameworkCore.SqlServer` or `Microsoft.EntityFrameworkCore.Sqlite`. The methods are defined in the `Microsoft.EntityFrameworkCore` namespace.
 - Any necessary connection string or identifier of the database instance, typically passed as an argument to the provider selection method mentioned above
 - Any provider-level optional behavior selectors, typically also chained inside the call to the provider selection method
 - Any general EF Core behavior selectors, typically chained after or before the provider selector method
