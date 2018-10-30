@@ -296,7 +296,7 @@ My class is named Blog and by convention, code first presumes this will map to a
 The Column annotation is a more adept in specifying the attributes of a mapped column. You can stipulate a name, data type or even the order in which a column appears in the table. Here is an example of the Column attribute.
 
 ``` csharp
-    [Column(“BlogDescription", TypeName="ntext")]
+    [Column("BlogDescription", TypeName="ntext")]
     public String Description {get;set;}
 ```
 
