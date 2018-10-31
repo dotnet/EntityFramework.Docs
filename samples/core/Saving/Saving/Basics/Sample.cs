@@ -20,8 +20,6 @@ namespace EFSaving.Basics
                 var blog = new Blog { Url = "http://sample.com" };
                 context.Blogs.Add(blog);
                 context.SaveChanges();
-
-                Console.WriteLine(blog.BlogId + ": " +  blog.Url);
             }
             #endregion
 
