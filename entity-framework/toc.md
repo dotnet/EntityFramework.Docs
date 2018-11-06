@@ -72,7 +72,7 @@
 ##### [Using a Separate Project](core/managing-schemas/migrations/projects.md)
 ##### [Multiple Providers](core/managing-schemas/migrations/providers.md)
 ##### [Custom History Table](core/managing-schemas/migrations/history-table.md)
-#### [🔧 Create and Drop APIs](core/managing-schemas/ensure-created.md)
+#### [Create and Drop APIs](core/managing-schemas/ensure-created.md)
 #### [🔧 Reverse Engineering](core/managing-schemas/scaffolding.md)
 
 ### [Querying Data](core/querying/index.md)
