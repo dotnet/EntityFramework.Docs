@@ -3,6 +3,7 @@ title: Custom Migrations Operations - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/07/2017
+uid: core/managing-schemas/migrations/operations
 ---
 Custom Migrations Operations
 ============================

@@ -57,7 +57,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp.SQLite", "GetSta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicModel", "DynamicModel\DynamicModel.csproj", "{70D00673-084C-40B7-B0F1-67498593F8EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSeeding", "DataSeeding\DataSeeding.csproj", "{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSeeding", "Modeling\DataSeeding\DataSeeding.csproj", "{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogging.Model", "GetStarted\UWP\Blogging.Model\Blogging.Model.csproj", "{4C5E6619-5934-43AD-AAF7-D983FCCE9200}"
 EndProject
