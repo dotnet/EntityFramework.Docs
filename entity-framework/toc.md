@@ -74,7 +74,7 @@
 ##### [Multiple Providers](core/managing-schemas/migrations/providers.md)
 ##### [Custom History Table](core/managing-schemas/migrations/history-table.md)
 #### [Create and Drop APIs](core/managing-schemas/ensure-created.md)
-#### [🔧 Reverse Engineering](core/managing-schemas/scaffolding.md)
+#### [Reverse Engineering (Scaffolding)](core/managing-schemas/scaffolding.md)
 
 ### [Querying Data](core/querying/index.md)
 #### [Basic Query](core/querying/basic.md)
