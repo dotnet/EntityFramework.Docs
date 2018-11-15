@@ -10,7 +10,8 @@ uid: core/querying/tags
 > [!NOTE]
 > This feature is new in EF Core 2.2.
 
-This feature helps correlate LINQ queries in code with generated SQL queries captured in logs by annotating LINQ query using the new TagWith() method: 
+This feature helps correlate LINQ queries in code with generated SQL queries captured in logs.
+You annotate a LINQ query using the new TagWith() method: 
 
 ``` csharp
   var nearestFriends =
@@ -19,7 +20,7 @@ This feature helps correlate LINQ queries in code with generated SQL queries cap
       select f).Take(5).ToList();
 ```
 
-This LINQ query is translated to the following SQL query:
+This LINQ query is translated to the following SQL statement:
 
 ``` sql
 -- This is my spatial query!
