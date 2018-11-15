@@ -52,7 +52,7 @@ The EF Core column indicates the product version in which the feature first appe
 | Key generation: Database                              | Yes      | 1.0                                   |
 | Key generation: Client                                |          | 1.0                                   |
 | Complex/owned types                                   | Yes      | 2.0                                   |
-| Spatial data                                          | Yes      |                                       |
+| Spatial data                                          | Yes      | 2.2                                   |
 | Graphical visualization of model                      | Yes      |                                       |
 | Graphical model editor                                | Yes      |                                       |
 | Model format: Code                                    | Yes      | 1.0                                   |

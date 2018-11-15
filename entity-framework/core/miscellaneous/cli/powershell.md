@@ -252,3 +252,8 @@ The following examples update the database to a specified migration. The first u
 Update-Database -Migration InitialCreate
 Update-Database -Migration 20180904195021_InitialCreate
 ```
+
+## Additional resources
+
+* [Migrations](xref:core/managing-schemas/migrations/index)
+* [Reverse Engineering](xref:core/managing-schemas/scaffolding)

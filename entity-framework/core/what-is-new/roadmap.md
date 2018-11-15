@@ -11,21 +11,15 @@ uid: core/what-is-new/roadmap
 > [!IMPORTANT]
 > Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
 
-## Last release: EF Core 2.1
-
-The stable version of EF Core 2.1 was released on May 30, 2018. You can find more information about this release in [What is new in EF Core 2.1](xref:core/what-is-new/ef-core-2.1).
-
-## Future releases
-
 ### EF Core 2.2
 
-This release will include many bug fixes, and relatively small number of new features. Details about this release are included in the the [EF Core 2.2 roadmap announcement](https://github.com/aspnet/Announcements/issues/308). 
+This release will include many bug fixes, and relatively small number of new features. This release is planned for end of year 2018. Details about this release are included in [What's new in EF Core 2.2](xref:core/what-is-new/ef-core-2.2). 
 
 ### EF Core 3.0
 
-Although we have not completed the [release planning process](#release-planning-process) for the next release after 2.2, we are currently planning to have a major release, aligned with .NET Core 3.0 and ASP.NET 3.0. 
+We plan to have major EF Core release aligned with .NET Core 3.0 and ASP.NET 3.0, but we haven't completed the [release planning process](#release-planning-process) for it.
 
-You can use [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) to see work items tenatively assigned to this future release.
+Use [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) to see work items tentatively assigned to 3.0.
 
 ## Schedule
 
@@ -33,30 +27,40 @@ The schedule for EF Core is in-sync with the [.NET Core schedule](https://github
 
 ## Backlog
 
-We use the [Backlog Milestone](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3ABacklog+sort%3Areactions-%2B1-desc) in our issue tracker to maintain a detailed list of issues and features. Customers can comment and up-vote these.
+The [Backlog Milestone](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3ABacklog+sort%3Areactions-%2B1-desc) in our issue tracker contains issues that we expect to work on someday, or that we think someone from the community could tackle.
+Customers are welcome to submit comments and votes on these issues.
+Contributors looking to work on any of these issues are encouraged to first start a discussion on how to approach them.
 
-We tend to leave issues open that we reasonably expect we will work on at some point, or that someone from the community could tackle, but that does not imply the intent to resolve them in a specific timeframe until we assign them to a specific milestone as part of our [release planning process](#release-planning-process).
+There is never a guarantee that we will work on any given feature in a specific version of EF Core.
+As in all software projects, priorities, release schedules, and available resources can change at any point.
+But if we intend to resolve an issue in a specific timeframe, we'll assign it to a release milestone instead of the backlog milestone.
+We routinely move issues between the backlog and release milestones as part of our [release planning process](#release-planning-process).
 
-If we do not plan to ever implement a feature, we will likely close the issue. An issue that we closed can be reconsidered at a later point if we obtain new information about it.
-
-All that said, we don’t have enough information about the future to be able to say that feature X will be resolved by time/release Y. As in all software projects, priorities, release schedules, and available resources can change at any point.
+We'll likely close an issue if we don't plan to ever address it.
+But we can reconsider an issue that we previously closed if we get new information about it.
 
 ## Release planning process
 
-We often get questions about how we choose specific features to go into a particular release. Our backlog certainly does not automatically translate into release plans. The presence of a feature in EF6 also does not automatically mean that the feature needs to be implemented in EF Core.
+We often get questions about how we choose specific features to go into a particular release.
+Our backlog certainly doesn't automatically translate into release plans.
+The presence of a feature in EF6 also doesn't automatically mean that the feature needs to be implemented in EF Core.
 
-It is difficult to detail here the whole process we follow to plan a release, partly because a lot of it is discussing the specific features, opportunities and priorities, and partly because the process itself usually evolves with every release. However, it is relatively easy to summarize the common questions we try to answer when deciding what to work on next:
+It's difficult to detail the whole process we follow to plan a release.
+Much of it is discussing the specific features, opportunities and priorities, and the process itself also evolves with every release.
+However, we can summarize the common questions we try to answer when deciding what to work on next:
 
-1. **How many developers we think will use the feature and how much better will it make their applications/experience?** We aggregate feedback from many sources into this — Comments and votes on issues is one of those sources.
+1. **How many developers we think will use the feature and how much better will it make their applications/experience?** To answer this, we collect feedback from many sources — Comments and votes on issues is one of those sources.
 
-2. **What are the workarounds people can use if we don’t implement this feature yet?** For example, many developers are able to map a join table in order to work around lack of native many-to-many support. Obviously, not all developers can do this, but many can, and this is a factor which counts.
+2. **What are the workarounds people can use if we don't implement this feature yet?** For example, many developers can map a join table to work around lack of native many-to-many support. Obviously, not all developers want to do it, but many can, and that counts as a factor in our decision.
 
-3. **Does implementing this feature evolve the architecture of EF Core such that it moves us closer to implementing other features?** We tend to favor features that act as building blocks for other features—for example, the table splitting that was done for owned types helps us move towards TPT support.
+3. **Does implementing this feature evolve the architecture of EF Core such that it moves us closer to implementing other features?** We tend to favor features that act as building blocks for other features. For example, property bag entities can help us move towards many-to-many support, and entity constructors enabled our lazy loading support. 
 
-4. **Is the feature an extensibility point?** We tend to favor extensibility points because they enable developers to more easily hook in their own behaviors and get some of the missing functionality that way. We’re planning to do some of this as a start to the lazy loading work.
+4. **Is the feature an extensibility point?** We tend to favor extensibility points over normal features because they enable developers to hook their own behaviors and compensate for any missing functionality. 
 
-5. **What is the synergy of the feature when used in combination with other products?** We tend to favor features that allow EF Core to be used with other products or to significantly improve the experience of using other products, such as .NET Core, the latest version of Visual Studio, Microsoft Azure, etc.
+5. **What is the synergy of the feature when used in combination with other products?** We favor features that enable or significantly improve the experience of using EF Core with other products, such as .NET Core, the latest version of Visual Studio, Microsoft Azure, etc.
 
-6. **What are the capabilities of the people available to work on a feature, and how to best leverage these resources?** Each member of the EF team and even our community contributors have different levels of experience in different areas and we have to plan accordingly. Even if we wanted to have “all hands on deck” to work on a specific feature like GroupBy translations, or many-to-many, that wouldn’t be practical.
+6. **What are the skills of the people available to work on a feature, and how to best leverage these resources?** Each member of the EF team and our community contributors has different levels of experience in different areas, so we have to plan accordingly. Even if we wanted to have "all hands on deck" to work on a specific feature like GroupBy translations, or many-to-many, that wouldn't be practical.
 
-As mentioned before, this process evolves on every release, and in the future we would like to add more opportunities for members of the developer community to provide inputs into release plans, for example, by making it easier to review proposed drafts of the features and of the release plan itself.
+As mentioned before, the process evolves on every release.
+In the future we'll try to add more opportunities for members of the community to provide inputs into our release plans.
+For example, we would like to make it easier to review draft designs of the features and of the release plan itself.

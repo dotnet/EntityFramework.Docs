@@ -277,3 +277,8 @@ The following example creates a script for all migrations after the InitialCreat
 ```console
 dotnet ef migrations script 20180904195021_InitialCreate
 ```
+
+## Additional resources
+
+* [Migrations](xref:core/managing-schemas/migrations/index)
+* [Reverse Engineering](xref:core/managing-schemas/scaffolding)
