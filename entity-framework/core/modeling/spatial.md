@@ -3,6 +3,7 @@ title: Spatial Data - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/01/2018
+ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
 ---
 # Spatial Data
