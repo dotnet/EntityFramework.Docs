@@ -304,4 +304,5 @@ Polygon.NumInteriorRings | ✔ | ✔ | ✔ | ✔
 
 * [Spatial Data in SQL Server](https://docs.microsoft.com/sql/relational-databases/spatial/spatial-data-sql-server)
 * [SpatiaLite Homepage](https://www.gaia-gis.it/fossil/libspatialite)
+* [Npgsql Spatial Documentation](http://www.npgsql.org/efcore/mapping/nts.html)
 * [PostGIS Documentation](http://postgis.net/documentation/)
