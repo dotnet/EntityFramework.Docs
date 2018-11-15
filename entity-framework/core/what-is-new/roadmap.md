@@ -27,18 +27,17 @@ The schedule for EF Core is in-sync with the [.NET Core schedule](https://github
 
 ## Backlog
 
-We use the [Backlog Milestone](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3ABacklog+sort%3Areactions-%2B1-desc) in our issue tracker to maintain a list of issues that we expect to work on someday, or that we think someone from the community could tackle.
+The [Backlog Milestone](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3ABacklog+sort%3Areactions-%2B1-desc) in our issue tracker contains issues that we expect to work on someday, or that we think someone from the community could tackle.
 Customers are welcome to submit comments and votes on these issues.
-Anyone looking to work on any of these issues is encouraged to start a discussion on how to approach it.  
+Contributors looking to work on any of these issues are encouraged to first start a discussion on how to approach them.
 
-If we intend to resolve an issue in a specific timeframe, we'll assign it to a specific release milestone rather than the backlog milestone.
-We routinely move issues from the backlog to specific release milestones as part of our [planning](#release-planning-process).
+There is never a guarantee that we will work on any given feature in a specific version of EF Core.
+As in all software projects, priorities, release schedules, and available resources can change at any point.
+But if we intend to resolve an issue in a specific timeframe, we'll assign it to a release milestone instead of the backlog milestone.
+We routinely move issues between the backlog and release milestones as part of our [release planning process](#release-planning-process).
 
 We'll likely close an issue if we don't plan to ever address it.
-But any issue that we close can be reconsidered at a later point if we get new information about it.
-
-All that said, there is never a guarantee that we will add any given feature in a specific version of EF Core. 
-As in all software projects, priorities, release schedules, and available resources can change at any point.
+But we can reconsider an issue that we previously closed if we get new information about it.
 
 ## Release planning process
 
@@ -56,11 +55,12 @@ However, we can summarize the common questions we try to answer when deciding wh
 
 3. **Does implementing this feature evolve the architecture of EF Core such that it moves us closer to implementing other features?** We tend to favor features that act as building blocks for other features. For example, property bag entities can help us move towards many-to-many support, and entity constructors enabled our lazy loading support. 
 
-4. **Is the feature an extensibility point?** We tend to favor extensibility points over normal features because they enable developers to hook behaviors optimized for their scenarios and compensate for any missing functionality. 
+4. **Is the feature an extensibility point?** We tend to favor extensibility points over normal features because they enable developers to hook their own behaviors and compensate for any missing functionality. 
 
 5. **What is the synergy of the feature when used in combination with other products?** We favor features that enable or significantly improve the experience of using EF Core with other products, such as .NET Core, the latest version of Visual Studio, Microsoft Azure, etc.
 
-6. **What are the skills of the people available to work on a feature, and how to best leverage these resources?** Each member of the EF team and our community contributors have different levels of experience in different areas, so we have to plan accordingly. Even if we wanted to have "all hands on deck" to work on a specific feature like GroupBy translations, or many-to-many, that wouldn't be practical.
+6. **What are the skills of the people available to work on a feature, and how to best leverage these resources?** Each member of the EF team and our community contributors has different levels of experience in different areas, so we have to plan accordingly. Even if we wanted to have "all hands on deck" to work on a specific feature like GroupBy translations, or many-to-many, that wouldn't be practical.
 
-As mentioned before, the process evolves on every release, and in the future we'll try to add more opportunities for members of the community to provide inputs into release plans.
+As mentioned before, the process evolves on every release.
+In the future we'll try to add more opportunities for members of the community to provide inputs into our release plans.
 For example, we would like to make it easier to review draft designs of the features and of the release plan itself.
