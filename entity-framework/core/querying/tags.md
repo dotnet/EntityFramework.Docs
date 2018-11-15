@@ -11,7 +11,7 @@ uid: core/querying/tags
 > This feature is new in EF Core 2.2.
 
 This feature helps correlate LINQ queries in code with generated SQL queries captured in logs.
-You annotate a LINQ query using the new TagWith() method: 
+You annotate a LINQ query using the new `TagWith()` method: 
 
 ``` csharp
   var nearestFriends =
