@@ -18,7 +18,7 @@ The code first fluent API is most commonly accessed by overriding the [OnModelCr
 Starting with EF6 you can use the HasDefaultSchema method on DbModelBuilder to specify the database schema to use for all tables, stored procedures, etc. This default setting will be overridden for any objects that you explicitly configure a different schema for.  
 
 ``` csharp
-modelBuilder.HasDefaultSchema(“sales”);
+modelBuilder.HasDefaultSchema("sales");
 ```  
 
 ### Custom Conventions (EF6 onwards)  
