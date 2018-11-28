@@ -271,7 +271,7 @@ uid: index
                                 </a>
                             </li>
                             <li>
-                                <a href="https://msdn.microsoft.com/library/dn223258(v=vs.113).aspx">
+                                <a href="https://docs.microsoft.com/dotnet/api/?view=entity-framework-6.2.0">
                                     <div class="cardSize">
                                         <div class="cardPadding">
                                             <div class="card">
