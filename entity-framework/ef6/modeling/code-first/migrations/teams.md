@@ -134,8 +134,7 @@ The following process can be used for this approach, starting from the time you 
 1.  Ensure any pending model changes in your local code base have been written to a migration. This step ensures you don’t miss any legitimate changes when it comes time to generate the blank migration.
 2.  Sync with source control.
 3.  Run **Update-Database** to apply any new migrations that other developers have checked in.
-    **
-    *Note:****if you don’t get any warnings from the Update-Database command then there were no new migrations from other developers and there is no need to perform any further merging.*
+    **_Note:_** *if you don’t get any warnings from the Update-Database command then there were no new migrations from other developers and there is no need to perform any further merging.*
 4.  Run **Add-Migration &lt;pick\_a\_name&gt; –IgnoreChanges** (for example, **Add-Migration Merge –IgnoreChanges**). This generates a migration with all the metadata (including a snapshot of the current model) but will ignore any changes it detects when comparing the current model to the snapshot in the last migrations (meaning you get a blank **Up** and **Down** method).
 5.  Continue developing, or submit to source control (after running your unit tests of course).
 
@@ -156,14 +155,11 @@ The following process can be used for this approach, starting from the time you 
 1.  Ensure any pending model changes in your local code base have been written to a migration. This step ensures you don’t miss any legitimate changes when it comes time to generate the blank migration.
 2.  Sync with the source control.
 3.  Run **Update-Database** to apply any new migrations that other developers have checked in.
-    **
-    *Note:****if you don’t get any warnings from the Update-Database command then there were no new migrations from other developers and there is no need to perform any further merging.*
+    **_Note:_** *if you don’t get any warnings from the Update-Database command then there were no new migrations from other developers and there is no need to perform any further merging.*
 4.  Run **Update-Database –TargetMigration &lt;second\_last\_migration&gt;** (in the example we’ve been following this would be **Update-Database –TargetMigration AddRating**). This roles the database back to the state of the second last migration – effectively ‘un-applying’ the last migration from the database.
-    **
-    *Note:****This step is required to make it safe to edit the metadata of the migration since the metadata is also stored in the \_\_MigrationsHistoryTable of the database. This is why you should only use this option if the last migration is only in your local code base. If other databases had the last migration applied you would also have to roll them back and re-apply the last migration to update the metadata.* 
+    **_Note:_** *This step is required to make it safe to edit the metadata of the migration since the metadata is also stored in the \_\_MigrationsHistoryTable of the database. This is why you should only use this option if the last migration is only in your local code base. If other databases had the last migration applied you would also have to roll them back and re-apply the last migration to update the metadata.* 
 5.  Run **Add-Migration &lt;full\_name\_including\_timestamp\_of\_last\_migration**&gt; (in the example we’ve been following this would be something like **Add-Migration 201311062215252\_AddReaders**).
-    **
-    *Note:****You need to include the timestamp so that migrations knows you want to edit the existing migration rather than scaffolding a new one.*
+    **_Note:_** *You need to include the timestamp so that migrations knows you want to edit the existing migration rather than scaffolding a new one.*
     This will update the metadata for the last migration to match the current model. You’ll get the following warning when the command completes, but that’s exactly what you want. “*Only the Designer Code for migration '201311062215252\_AddReaders' was re-scaffolded. To re-scaffold the entire migration, use the -Force parameter.”*
 6.  Run **Update-Database** to re-apply the latest migration with the updated metadata.
 7.  Continue developing, or submit to source control (after running your unit tests of course).
