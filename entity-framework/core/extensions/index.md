@@ -15,6 +15,12 @@ Tools and extensions provide additional functionality for Entity Framework Core.
 
 ## Tools
 
+### CatFactory
+
+CatFactory is a scaffolding engine for .NET Core and Entity Framework Core. The concept behind CatFactory it's export an existing database from SQL Server instance, then with the representation in models for database; scaffold entities, configurations, repositories and more.
+
+[GitHub repository](https://github.com/hherzl/CatFactory.EntityFrameworkCore)
+
 ### LLBLGen Pro
 
 LLBLGen Pro is an entity modeling solution with support for Entity Framework and Entity Framework Core. It lets you easily define your entity model and map it to your database, using database first or model first, so you can get started writing queries right away.
