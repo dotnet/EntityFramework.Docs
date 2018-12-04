@@ -65,7 +65,6 @@ using (var context = new BloggingContext())
     blog.Owner = new User { UserName = "johndoe1987" };
 
     // Add a new Post by adding to the collection of a tracked Blog
-    var blog = context.Blogs.Find(2);
     blog.Posts.Add(new Post { Name = "How to Add Entities" });
 
     context.SaveChanges();
