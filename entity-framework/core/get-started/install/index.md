@@ -9,36 +9,35 @@ uid: core/get-started/install/index
 
 ## Prerequisites
 
-* To develop apps that target .NET Core, install the [.NET Core SDK](https://dotnet.microsoft.com/download). You can also use a development environment that supports .NET Core, like Visual Studio, Visual Studio for Mac, or Visual Studio Code. Check [Getting Started with .NET Core](/dotnet/core/get-started) for more details. 
+* EF Core is itself implemented as a [.NET Standard 2.0](/dotnet/standard/net-standard) library. This means that you can use it on applications that target any .NET implementation that supports .NET Standard 2.0, or on other .NET Standard 2.0 libraries.
 
-* Current versions of Entity Framework Core are included in ASP.NET Core. To develop ASP.NET Core apps that use a specific version of EF Core, target the corresponding version of ASP.NET Core.
+* To develop apps that target .NET Core, always install the [.NET Core SDK](https://dotnet.microsoft.com/download). You can also use a development environment that supports .NET Core, like Visual Studio, Visual Studio for Mac, or Visual Studio Code. Check [Getting Started with .NET Core](/dotnet/core/get-started) for more details. 
 
-* EF Core itself is implemented as a [.NET Standard 2.0](/dotnet/standard/net-standard) library, so that it can be used on different .NET implementations that support .NET Standard 2.0. In practice, different .NET implementations have different runtime limitations that may affect how well they support EF Core. See [.NET implementations supported by EF Core](xref:core/platforms/index) for more details.
+* You can use EF Core to develop applications that target .NET Framework 4.6.1 or later on Windows, using Visual Studio. The latest version of Visual Studio is recommended. If you want to use an older version, like Visual Studio 2015, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads), which is aware of .NET Standard 2.0 compatibility.
 
-* For example, you can use EF Core to develop applications that target .NET Framework 4.6.1 or later on Windows, using Visual Studio. The latest version of Visual Studio is always recommended. But if you want to use an older version, like Visual Studio 2015, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads), which is aware of .NET Standard 2.0 compatiblity.
+* In practice, different .NET implementations besides .NET Core and .NET Framework have different runtime limitations that may affect how well they support EF Core. For more information, see [.NET implementations supported by EF Core](xref:core/platforms/index).
 
-* Finally, make sure an [EF Core database provider](xref:core/providers/index) is available that supports the .NET implementation and operating system you target in your application.
+* Finally, make sure an [EF Core database provider](xref:core/providers/index) is available that supports the combination of database, .NET implementation, and operating system targeted by your application.
 
 ## Get the Entity Framework Core runtime
 
-To add EF Core runtime libraries to an application, install the NuGet package for the database provider you want to use. For a list of supported providers and their NuGet package names, see [Database providers](.xref:/core/providers/index).
+To add EF Core to an application, install the NuGet package for the database provider you want to use.
 
-To install or update NuGet packages, use the .NET Core CLI, the Visual Studio Package Manager Dialog, or the Visual Studio Package Manager Console.
+You won't need to install the in-memory and SQL Server providers if you are building an ASP.NET Core application. Those providers, as well as the EF Core runtime, are included in current versions of ASP.NET Core.  
 
-For ASP.NET Core 2.1 applications, the in-memory and SQL Server providers are automatically included, so there's no need to install them separately.
-
-> [!TIP]  
-> If you need to update an application that is using a third-party database provider, always check for an update of the provider that is compatible with the version of EF Core you want to use. For example, database providers for previous versions are not compatible with version 2.1 of the EF Core runtime.  
+To install or update NuGet packages, you can use the .NET Core CLI, the Visual Studio Package Manager Dialog, or the Visual Studio Package Manager Console.
 
 ### .NET Core CLI
 
-The following .NET Core CLI command installs or updates the SQL Server provider:
+* The following .NET Core CLI command installs or updates the SQL Server provider:
 
-``` Console
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-```
+  ``` Console
+  dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+  ```
 
-You can indicate a specific version in the `dotnet add package` command, using the `-v` modifier. For example, to install EF Core 2.1.0 packages, append `-v 2.1.0` to the command.
+* You can indicate a specific version in the `dotnet add package` command, using the `-v` modifier. For example, to install EF Core 2.2.0 packages, append `-v 2.2.0` to the command.
+
+For more information, see [.NET command-line interface (CLI) tools](/dotnet/core/tools/).
 
 ### Visual Studio NuGet Package Manager Dialog
 
@@ -61,35 +60,39 @@ For more information, see [NuGet Package Manager Dialog](https://docs.microsoft.
   ```
 * To update the provider, use the `Update-Package` command.
 
-* To specify a specific version, use the `-Version` modifier. For example, to install EF Core 2.1.0 packages, append `-Version 2.1.0` to the commands
+* To specify a specific version, use the `-Version` modifier. For example, to install EF Core 2.2.0 packages, append `-Version 2.2.0` to the commands
 
 For more information, see [Package Manager Console](https://docs.microsoft.com/nuget/tools/package-manager-console).
 
 ## Get Entity Framework Core tools
 
-Besides the runtime libraries, you can install tools that can perform some EF Core-related tasks in your project at design time. For example, you can create migrations, apply migrations, and create a model based on an existing database.
+You can install tools to carry out EF Core-related tasks in your project, like creating and applying database migrations, or creating an EF Core model based on an existing database.
 
 Two sets of tools are available:
+
 * The .NET Core [command-line interface (CLI) tools](../../miscellaneous/cli/dotnet.md) can be used on Windows, Linux, or macOS. These commands begin with `dotnet ef`. 
-* The [Package Manager Console tools](../../miscellaneous/cli/powershell.md)  run in Visual Studio 2017 on Windows. These commands start with a verb, for example `Add-Migration`, `Update-Database`.
+
+* The [Package Manager Console (PMC) tools](../../miscellaneous/cli/powershell.md) run in Visual Studio 2017 on Windows. These commands start with a verb, for example `Add-Migration`, `Update-Database`.
 
 Although you can use the `dotnet ef` commands from the Package Manager Console, it's more convenient to use the Package Manager Console tools when you're using Visual Studio:
-* They automatically work with the current project selected in the Package Manager Console without requiring manually switching directories.  
+
+* Commands automatically work with the current project, without requiring manually switching directories.  
+
 * They automatically open files generated by the commands in Visual Studio after the command is completed.
 
 <a name="cli"></a>
 
 ### Get the CLI tools
 
-The `dotnet ef` commands are included in the .NET Core SDK, but to enable the commands you have to install the `Microsoft.EntityFrameworkCore.Design` package:
+.NET Core CLI tools require the .NET Core SDK, mentioned earlier in [Prerequisites](#prerequisites).
+
+The `dotnet ef` commands are included in current versions of the .NET Core SDK, but to enable the commands you have to install the `Microsoft.EntityFrameworkCore.Design` package:
 
  ``` Console	
 dotnet add package Microsoft.EntityFrameworkCore.Design	
 ```	
 
-For ASP.NET Core 2.1 apps, this package is included automatically.
-
-As explained earlier in [Prerequisites](#prerequisites), you also need to install the .NET Core 2.1 SDK.
+For ASP.NET Core apps, this package is included automatically.
 
 > [!IMPORTANT]  	
 > Always use the version of the tools package that matches the major version of the runtime packages.
@@ -102,21 +105,25 @@ To get the Package Manager Console tools for EF Core, install the `Microsoft.Ent
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 ```	
 
-For ASP.NET Core 2.1 apps, this package is included automatically.
+For ASP.NET Core apps, this package is included automatically.
 
-## Upgrading to EF Core 2.1
+## Upgrading to the latest EF Core
 
-If you're upgrading an existing application to EF Core 2.1, some references to older EF Core packages may need to be removed manually:
+* If you need to update an application that is using a third-party database provider, always check for an update of the provider that is compatible with the version of EF Core you want to use. For example, database providers for previous versions are not compatible with version 2.0 of the EF Core runtime.  
 
-* Database provider design-time packages such as `Microsoft.EntityFrameworkCore.SqlServer.Design` are no longer required or supported in EF Core 2.1, but aren't automatically removed when upgrading the other packages.
+* Since EF Core is included in current versions of ASP.NET Core, to upgrade to a newer version of EF Core, upgrade the version of ASP.NET Core.
 
-* The .NET CLI tools are now included in the .NET SDK, so the reference to that package can be removed from the *.csproj* file:
+* If you're upgrading an existing application to the latest version of EF Core, some references to older EF Core packages may need to be removed manually:
 
-  ```
-  <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
-  ```
+  * Database provider design-time packages such as `Microsoft.EntityFrameworkCore.SqlServer.Design` are no longer required or supported from EF Core 2.0 and later, but aren't automatically removed when upgrading the other packages.
 
-For applications that target the .NET Framework and were created by earlier versions of Visual Studio, make sure that they are compatible with .NET Standard 2.0 libraries:
+  * The .NET CLI tools are included in the .NET SDK since version 2.1, so the reference to that package can be removed from the project file:
+
+    ```
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+    ```
+
+* Applications that target .NET Framework may need changes to work with .NET Standard 2.0 libraries:
 
   * Edit the project file and make sure the following entry appears in the initial property group:
 
