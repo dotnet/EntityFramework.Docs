@@ -9,13 +9,15 @@ uid: core/get-started/install/index
 
 ## Prerequisites
 
-* To develop apps that target .NET Core 2.1, install [the .NET Core 2.1 SDK](https://www.microsoft.com/net/download/core). The SDK has to be installed even if you have the latest version of Visual Studio 2017.
+* To develop apps that target .NET Core, install the [.NET Core SDK](https://dotnet.microsoft.com/download). You can also use a development environment that supports .NET Core, like Visual Studio, Visual Studio for Mac, or Visual Studio Code. Check [Getting Started with .NET Core](/dotnet/core/get-started) for more details. 
 
-* To use Visual Studio for development of apps that target .NET Core 2.1, install Visual Studio 2017 version 15.7 or later.
+* Current versions of Entity Framework Core are included in ASP.NET Core. To develop ASP.NET Core apps that use a specific version of EF Core, target the corresponding version of ASP.NET Core.
 
-* To use Entity Framework 2.1 in ASP.NET Core applications, use ASP.NET Core 2.1. Applications that use earlier versions of ASP.NET Core must be updated to 2.1.
+* EF Core itself is implemented as a [.NET Standard 2.0](/dotnet/standard/net-standard) library, so that it can be used on different .NET implementations that support .NET Standard 2.0. In practice, different .NET implementations have different runtime limitations that may affect how well they support EF Core. See [.NET implementations supported by EF Core](xref:core/platforms/index) for more details.
 
-* You can use Visual Studio 2015 for apps that target the .NET Framework 4.6.1 or later. But you need a version of NuGet that is aware of the .NET Standard 2.0 and its compatible frameworks. To get that in Visual Studio 2015, [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads).
+* For example, you can use EF Core to develop applications that target .NET Framework 4.6.1 or later on Windows, using Visual Studio. The latest version of Visual Studio is always recommended. But if you want to use an older version, like Visual Studio 2015, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads), which is aware of .NET Standard 2.0 compatiblity.
+
+* Finally, make sure an [EF Core database provider](core/providers/index) is available that supports the .NET implementation and operating system you target in your application.
 
 ## Get the Entity Framework Core runtime
 
