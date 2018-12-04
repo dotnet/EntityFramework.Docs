@@ -17,11 +17,11 @@ uid: core/get-started/install/index
 
 * For example, you can use EF Core to develop applications that target .NET Framework 4.6.1 or later on Windows, using Visual Studio. The latest version of Visual Studio is always recommended. But if you want to use an older version, like Visual Studio 2015, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads), which is aware of .NET Standard 2.0 compatiblity.
 
-* Finally, make sure an [EF Core database provider](core/providers/index) is available that supports the .NET implementation and operating system you target in your application.
+* Finally, make sure an [EF Core database provider](xref:core/providers/index) is available that supports the .NET implementation and operating system you target in your application.
 
 ## Get the Entity Framework Core runtime
 
-To add EF Core runtime libraries to an application, install the NuGet package for the database provider you want to use. For a list of supported providers and their NuGet package names, see [Database providers](../../providers/index.md).
+To add EF Core runtime libraries to an application, install the NuGet package for the database provider you want to use. For a list of supported providers and their NuGet package names, see [Database providers](.xref:/core/providers/index).
 
 To install or update NuGet packages, use the .NET Core CLI, the Visual Studio Package Manager Dialog, or the Visual Studio Package Manager Console.
 
