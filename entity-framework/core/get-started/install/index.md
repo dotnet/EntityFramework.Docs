@@ -9,19 +9,19 @@ uid: core/get-started/install/index
 
 ## Prerequisites
 
-* EF Core is itself implemented as a [.NET Standard 2.0](/dotnet/standard/net-standard) library. This means that you can use it on applications that target any .NET implementation that supports .NET Standard 2.0, or on other .NET Standard 2.0 libraries.
+* EF Core is a [.NET Standard 2.0](/dotnet/standard/net-standard) library. This means that EF Core requires a .NET implementation that supports .NET Standard 2.0 to run. It can also be referenced by other .NET Standard 2.0 libraries. 
 
-* To develop apps that target .NET Core, always install the [.NET Core SDK](https://dotnet.microsoft.com/download). You can also use a development environment that supports .NET Core, like Visual Studio, Visual Studio for Mac, or Visual Studio Code. Check [Getting Started with .NET Core](/dotnet/core/get-started) for more details. 
+* For example, you can use EF Core to develop apps that target .NET Core. This requires the [.NET Core SDK](https://dotnet.microsoft.com/download) and optinially a development environment, like Visual Studio, Visual Studio for Mac, or Visual Studio Code. For more information, check [Getting Started with .NET Core](/dotnet/core/get-started).
 
-* You can use EF Core to develop applications that target .NET Framework 4.6.1 or later on Windows, using Visual Studio. The latest version of Visual Studio is recommended. If you want to use an older version, like Visual Studio 2015, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads), which is aware of .NET Standard 2.0 compatibility.
+* You can use EF Core to develop applications that target .NET Framework 4.6.1 or later on Windows, using Visual Studio. The latest version of Visual Studio is recommended. If you want to use an older version, like Visual Studio 2015, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads) to work with .NET Standard 2.0 libraries.
 
-* In practice, different .NET implementations besides .NET Core and .NET Framework have different runtime limitations that may affect how well they support EF Core. For more information, see [.NET implementations supported by EF Core](xref:core/platforms/index).
+* EF Core can be used with other .NET implementations like Xamarin and .NET Native, but in practice those have runtime limitations that may affect how well they work with EF Core and your app. For more information, see [.NET implementations supported by EF Core](xref:core/platforms/index).
 
-* Finally, make sure an [EF Core database provider](xref:core/providers/index) is available that supports the combination of database, .NET implementation, and operating system targeted by your application.
+* Finally, different database providers have different requirements regarding database engine versions, .NET implementations, and operating systems. Make sure an [EF Core database provider](xref:core/providers/index) is available that supports the right envinroment  for your application.
 
 ## Get the Entity Framework Core runtime
 
-To add EF Core to an application, install the NuGet package for the database provider you want to use.
+To add EF Core to an application, you install the NuGet package for the database provider you want to use.
 
 You won't need to install the in-memory and SQL Server providers if you are building an ASP.NET Core application. Those providers, as well as the EF Core runtime, are included in current versions of ASP.NET Core.  
 
@@ -47,7 +47,7 @@ For more information, see [.NET command-line interface (CLI) tools](/dotnet/core
 
 * To install or update the SQL Server provider, select the `Microsoft.EntityFrameworkCore.SqlServer` package, and confirm.
 
-For more information, see [NuGet Package Manager Dialog](https://docs.microsoft.com/nuget/tools/package-manager-ui).
+For more information, see [NuGet Package Manager Dialog](/nuget/tools/package-manager-ui).
 
 ### Visual Studio NuGet Package Manager Console
 
@@ -62,21 +62,21 @@ For more information, see [NuGet Package Manager Dialog](https://docs.microsoft.
 
 * To specify a specific version, use the `-Version` modifier. For example, to install EF Core 2.2.0 packages, append `-Version 2.2.0` to the commands
 
-For more information, see [Package Manager Console](https://docs.microsoft.com/nuget/tools/package-manager-console).
+For more information, see [Package Manager Console](/nuget/tools/package-manager-console).
 
-## Get Entity Framework Core tools
+## Get the Entity Framework Core tools
 
 You can install tools to carry out EF Core-related tasks in your project, like creating and applying database migrations, or creating an EF Core model based on an existing database.
 
 Two sets of tools are available:
 
-* The .NET Core [command-line interface (CLI) tools](../../miscellaneous/cli/dotnet.md) can be used on Windows, Linux, or macOS. These commands begin with `dotnet ef`. 
+* The .NET Core [command-line interface (CLI) tools](xref:core/miscellaneous/cli/dotnet) can be used on Windows, Linux, or macOS. These commands begin with `dotnet ef`. 
 
-* The [Package Manager Console (PMC) tools](../../miscellaneous/cli/powershell.md) run in Visual Studio 2017 on Windows. These commands start with a verb, for example `Add-Migration`, `Update-Database`.
+* The [Package Manager Console (PMC) tools](xref:core/miscellaneous/cli/powershell) run in Visual Studio on Windows. These commands start with a verb, for example `Add-Migration`, `Update-Database`.
 
 Although you can use the `dotnet ef` commands from the Package Manager Console, it's more convenient to use the Package Manager Console tools when you're using Visual Studio:
 
-* Commands automatically work with the current project, without requiring manually switching directories.  
+* They automatically work with the current project selected in the PMC in Visual Studio, without requiring manually switching directories.  
 
 * They automatically open files generated by the commands in Visual Studio after the command is completed.
 
