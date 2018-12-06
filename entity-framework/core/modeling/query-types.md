@@ -50,28 +50,28 @@ Mapping a query type to a database object is achieved using the `ToView` fluent 
 The following example shows how to use Query Type to query a database view.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFrameworkCore/tree/master/samples/QueryTypes) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/QueryTypes) on GitHub.
 
 First, we define a simple Blog and Post model:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryTypes/Program.cs#Entities)]
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Entities)]
 
 Next, we define a simple database view that will allow us to query the number of posts associated with each blog:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryTypes/Program.cs#View)]
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#View)]
 
 Next, we define a class to hold the result from the database view:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryTypes/Program.cs#QueryType)]
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#QueryType)]
 
 Next, we configure the query type in _OnModelCreating_ using the `modelBuilder.Query<T>` API.
 We use standard fluent configuration APIs to configure the mapping for the Query Type:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryTypes/Program.cs#Configuration)]
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Configuration)]
 
 Finally, we can query the database view in the standard way:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryTypes/Program.cs#Query)]
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Query)]
 
 > [!TIP]
 > Note we have also defined a context level query property (DbQuery) to act as a root for queries against this type.

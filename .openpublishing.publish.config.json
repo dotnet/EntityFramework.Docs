@@ -46,11 +46,6 @@
       "path_to_root": "_themes.pdf",
       "url": "https://github.com/Microsoft/templates.docs.msft.pdf",
       "branch": "master"
-    },
-    {
-      "path_to_root": "efcore-repo",
-      "url": "https://github.com/aspnet/EntityFrameworkCore.git",
-      "branch": "master"
     }
   ]
 }

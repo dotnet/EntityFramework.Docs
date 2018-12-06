@@ -16,17 +16,17 @@ Global query filters are LINQ query predicates (a boolean expression typically p
 The following example shows how to use Global Query Filters to implement soft-delete and multi-tenancy query behaviors in a simple blogging model.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFrameworkCore/tree/master/samples/QueryFilters) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/QueryFilters) on GitHub.
 
 First, define the entities:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryFilters/Program.cs#Entities)]
+[!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Entities)]
 
 Note the declaration of a __tenantId_ field on the _Blog_ entity. This will be used to associate each Blog instance with a specific tenant. Also defined is an _IsDeleted_ property on the _Post_ entity type. This is used to keep track of whether a _Post_ instance has been "soft-deleted". That is, the instance is marked as deleted without physically removing the underlying data.
 
 Next, configure the query filters in _OnModelCreating_ using the ```HasQueryFilter``` API.
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryFilters/Program.cs#Configuration)]
+[!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Configuration)]
 
 The predicate expressions passed to the _HasQueryFilter_ calls will now automatically be applied to any LINQ queries for those types.
 
@@ -37,7 +37,7 @@ The predicate expressions passed to the _HasQueryFilter_ calls will now automati
 
 Filters may be disabled for individual LINQ queries by using the ```IgnoreQueryFilters()``` operator.
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryFilters/Program.cs#IgnoreFilters)]
+[!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#IgnoreFilters)]
 
 ## Limitations
 
