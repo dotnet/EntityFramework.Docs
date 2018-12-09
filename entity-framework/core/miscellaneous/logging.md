@@ -38,7 +38,7 @@ This singleton/global instance should then be registered with EF Core on the `Db
 
 ## Filtering what is logged
 
-The easiest way to filter what is logged is to configure it when registering the ILoggerProvider. For example:
+The easiest way to filter what is logged is to configure the ILoggingBuilder. For example:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContextWithFiltering.cs#DefineLoggerFactory)]
 
