@@ -60,20 +60,20 @@ Types like ObjectContext that were previously in System.Data.Entity.dll have bee
 
 The general rule for namespace changes is that any type in System.Data.* is moved to System.Data.Entity.Core.*. In other words, just insert **Entity.Core.** after System.Data. For example:
 
-- System.Data.EntityException => System.Data.**Entity.Core.**EntityException  
-- System.Data.Objects.ObjectContext => System.Data.**Entity.Core.**Objects.ObjectContext  
-- System.Data.Objects.DataClasses.RelationshipManager => System.Data.**Entity.Core.**Objects.DataClasses.RelationshipManager  
+- System.Data.EntityException => System.Data.**Entity.Core**.EntityException  
+- System.Data.Objects.ObjectContext => System.Data.**Entity.Core**.Objects.ObjectContext  
+- System.Data.Objects.DataClasses.RelationshipManager => System.Data.**Entity.Core**.Objects.DataClasses.RelationshipManager  
 
 These types are in the *Core* namespaces because they are not used directly for most DbContext-based applications. Some types that were part of System.Data.Entity.dll are still used commonly and directly for DbContext-based applications and so have not been moved into the *Core* namespaces. These are:
 
-- System.Data.EntityState => System.Data.**Entity.**EntityState  
+- System.Data.EntityState => System.Data.**Entity**.EntityState  
 - System.Data.Objects.DataClasses.EdmFunctionAttribute => System.Data.**Entity.DbFunctionAttribute**  
   > [!NOTE]
   > This class has been renamed; a class with the old name still exists and works, but it now marked as obsolete.  
 - System.Data.Objects.EntityFunctions => System.Data.**Entity.DbFunctions**  
   > [!NOTE]
   > This class has been renamed; a class with the old name still exists and works, but it now marked as obsolete.)  
-- Spatial classes (for example, DbGeography, DbGeometry) have moved from System.Data.Spatial => System.Data.**Entity.**Spatial
+- Spatial classes (for example, DbGeography, DbGeometry) have moved from System.Data.Spatial => System.Data.**Entity**.Spatial
 
 > [!NOTE]
 > Some types in the System.Data namespace are in System.Data.dll which is not an EF assembly. These types have not moved and so their namespaces remain unchanged.
