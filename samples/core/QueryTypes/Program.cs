@@ -80,7 +80,8 @@ namespace Samples
                     #region View
                     db.Database.ExecuteSqlCommand(
                         @"CREATE VIEW View_BlogPostCounts AS 
-                            SELECT Name, Count(p.PostId) as PostCount from Blogs b
+                            SELECT b.Name, Count(p.PostId) as PostCount 
+                            FROM Blogs b
                             JOIN Posts p on p.BlogId = b.BlogId
                             GROUP BY b.Name");
                     #endregion
