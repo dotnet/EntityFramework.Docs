@@ -21,7 +21,7 @@ uid: core/get-started/install/index
 
 ## Get the Entity Framework Core runtime
 
-To add EF Core to an application, you install the NuGet package for the database provider you want to use.
+To add EF Core to an application, install the NuGet package for the database provider you want to use.
 
 You won't need to install the in-memory and SQL Server providers if you are building an ASP.NET Core application. Those providers, as well as the EF Core runtime, are included in current versions of ASP.NET Core.  
 
