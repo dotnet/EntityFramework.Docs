@@ -11,19 +11,19 @@ uid: core/get-started/install/index
 
 * EF Core is a [.NET Standard 2.0](/dotnet/standard/net-standard) library. This means that EF Core requires a .NET implementation that supports .NET Standard 2.0 to run. It can also be referenced by other .NET Standard 2.0 libraries. 
 
-* For example, you can use EF Core to develop apps that target .NET Core. This requires the [.NET Core SDK](https://dotnet.microsoft.com/download) and optinially a development environment, like Visual Studio, Visual Studio for Mac, or Visual Studio Code. For more information, check [Getting Started with .NET Core](/dotnet/core/get-started).
+* For example, you can use EF Core to develop apps that target .NET Core. This requires the [.NET Core SDK](https://dotnet.microsoft.com/download). Optionally, you can use a development environment like Visual Studio, Visual Studio for Mac, or Visual Studio Code. For more information, check [Getting Started with .NET Core](/dotnet/core/get-started).
 
 * You can use EF Core to develop applications that target .NET Framework 4.6.1 or later on Windows, using Visual Studio. The latest version of Visual Studio is recommended. If you want to use an older version, like Visual Studio 2015, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads) to work with .NET Standard 2.0 libraries.
 
-* EF Core can be used with other .NET implementations like Xamarin and .NET Native, but in practice those have runtime limitations that may affect how well they work with EF Core and your app. For more information, see [.NET implementations supported by EF Core](xref:core/platforms/index).
+* EF Core can run on other .NET implementations like Xamarin and .NET Native. But in practice those implementations have runtime limitations that may affect how well EF Core works on your app. For more information, see [.NET implementations supported by EF Core](xref:core/platforms/index).
 
-* Finally, different database providers have different requirements regarding database engine versions, .NET implementations, and operating systems. Make sure an [EF Core database provider](xref:core/providers/index) is available that supports the right envinroment  for your application.
+* Finally, different database providers have different requirements on database engine versions, .NET implementations, and operating systems. Make sure an [EF Core database provider](xref:core/providers/index) is available that supports the right environment  for your application.
 
 ## Get the Entity Framework Core runtime
 
 To add EF Core to an application, install the NuGet package for the database provider you want to use.
 
-You won't need to install the in-memory and SQL Server providers if you are building an ASP.NET Core application. Those providers, as well as the EF Core runtime, are included in current versions of ASP.NET Core.  
+If you're building an ASP.NET Core application, you don't need to install the in-memory and SQL Server providers. Those providers are included in current versions of ASP.NET Core, alongside the EF Core runtime.  
 
 To install or update NuGet packages, you can use the [.NET Core command-line interface (CLI), the Visual Studio Package Manager Dialog, or the Visual Studio Package Manager Console.
 
@@ -109,13 +109,13 @@ For ASP.NET Core apps, this package is included automatically.
 
 ## Upgrading to the latest EF Core
 
+* Any time we release a new version of EF Core, we also release a new version of the providers that are part of the EF Core project, like Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Sqlite, and Microsoft.EntityFrameworkCore.InMemory. You can just upgrade to the new version of the provider to get all the improvements. 
+
+* EF Core, together with the SQL Server and the in-memory providers are included in current versions of ASP.NET Core. To upgrade an existing ASP.NET Core application to a newer version of EF Core, always upgrade the version of ASP.NET Core.
+
 * If you need to update an application that is using a third-party database provider, always check for an update of the provider that is compatible with the version of EF Core you want to use. For example, database providers for previous versions are not compatible with version 2.0 of the EF Core runtime.
 
-* Since EF Core is included in current versions of ASP.NET Core, to upgrade an existing ASP.NET Core application to a newer version of EF Core, always simply upgrade the version of ASP.NET Core.
-
-* Any time we release a patch version of EF Core, we also release a patch version of the providers that are part of the EF Core project. You can upgrade to the patch version of the provider to obtain all the improvements in the patch. 
-
-* Third party providers for EF Core don't neecessarily release patch versions alongside Microsoft. To upgrade to a patch version of EF Core using a third party provider, you may need to add a reference to the patch version of individual EF Core runtime components, such as Microsoft.EntityFrameworkCore, and Microsoft.EntityFrameworkCore.Relational.  
+* Third-party providers for EF Core usually don't release patch versions alongside the EF Core runtime. To upgrade an application that uses a third-party provider to a patch version of EF Core, you may need to add a direct reference to individual EF Core runtime components, such as Microsoft.EntityFrameworkCore, and Microsoft.EntityFrameworkCore.Relational.
 
 * If you're upgrading an existing application to the latest version of EF Core, some references to older EF Core packages may need to be removed manually:
 
