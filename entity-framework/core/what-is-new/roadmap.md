@@ -17,35 +17,35 @@ With EF Core 2.2 out the door, our main focus is now EF Core 3.0, which will be 
 
 We haven't completed any new features yet, so the [EF Core 3.0 Preview 1 packages published to the NuGet Gallery](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.0.0-preview.18572.1) on December 2018 only contain [bug fixes, minor improvements, and changes we made in preparation for the 3.0 work](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aissue+milestone%3A3.0.0+is%3Aclosed+label%3Aclosed-fixed).
 
-In fact, we still need to revisit our [release planning](#release-planning-process) for 3.0, and a lot more information will be shared in upcoming announcements.
-Here are some of the themes and new features we know about so far:
+In fact, we still need to refine our [release planning](#release-planning-process) for 3.0, to make sure we have the right set of features that can be completed in the allotted time.
+We will share more information as we get more clarity, but here are some high-level themes and features we itend to work on:
 
-- **LINQ improvements**: LINQ enables you to write database queries without leaving your language of choice, taking advantage of rich type information to get IntelliSense and compile-time type checking.
+- **LINQ improvements ([#12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795))**: LINQ enables you to write database queries without leaving your language of choice, taking advantage of rich type information to get IntelliSense and compile-time type checking.
   But LINQ also enables you to write an unlimited number of complicated queries, and that has always been a huge challenge for LINQ providers.
   In the first few versions of EF Core, we solved that in part by figuring out what portions of a query could be translated to SQL, and then by allowing the rest of the query to execute in memory on the client.
   This client-side execution can be desirable in some situations, but in many other cases it can result in inefficient queries that may not identified until an application is deployed to production.
   In EF Core 3.0, we are planning to make profound changes to how our LINQ implementation works, and how we test it.
   The goals are to make it more robust (for example, to avoid breaking queries in patch releases), to be able to translate more expressions correctly into SQL, to generate efficient queries in more cases, and to prevent inefficient queries from going undetected.
 
-- **Cosmos DB support**: We're working on a Cosmos DB provider for EF Core, to enable developers familiar with the EF programing model to easily target Azure Cosmos DB as an application database.
+- **Cosmos DB support ([#8443](https://github.com/aspnet/EntityFrameworkCore/issues/8443))**: We're working on a Cosmos DB provider for EF Core, to enable developers familiar with the EF programing model to easily target Azure Cosmos DB as an application database.
   The goal is to make some of the advantages of Cosmos DB, like global distribution, “always on” availability, elastic scalability, and low latency, even more accessible to .NET developers.
   The provider will enable most EF Core features, like automatic change tracking, LINQ, and value conversions, against the SQL API in Cosmos DB. We started this effort before EF Core 2.2, and [we have made some preview versions of the provider available](https://blogs.msdn.microsoft.com/dotnet/2018/10/17/announcing-entity-framework-core-2-2-preview-3/).
   The new plan is to continue developing the provider alongside EF Core 3.0.   
 
-- **C# 8.0 support**: We want our customers to take advantage some of the [new features coming in C# 8.0](https://blogs.msdn.microsoft.com/dotnet/2018/11/12/building-c-8-0/) like async streams (including await for each) and nullable reference types while using EF Core.
+- **C# 8.0 support ([#12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047))**: We want our customers to take advantage some of the [new features coming in C# 8.0](https://blogs.msdn.microsoft.com/dotnet/2018/11/12/building-c-8-0/) like async streams (including await for each) and nullable reference types while using EF Core.
 
-- **Reverse engineering database views into query types:** In EF Core 2.1, we added support for query types, which can represent data that can be read from the database, but cannot be updated.
+- **Reverse engineering database views into query types ([#1679](https://github.com/aspnet/EntityFrameworkCore/issues/1679))**: In EF Core 2.1, we added support for query types, which can represent data that can be read from the database, but cannot be updated.
   Query types are a great fit for mapping database views, so in EF Core 3.0, we would like to automate the creation of query types for database views.
 
-- **Property bag entities**: This feature is about enabling entities that store data in indexed properties instead of regular properties, and also about being able to use instances of the same .NET class (potentially something as simple as a `Dictionary<string, object>`) to represent different entity types in the same EF Core model.
+- **Property bag entities ([#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) and [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914))**: This feature is about enabling entities that store data in indexed properties instead of regular properties, and also about being able to use instances of the same .NET class (potentially something as simple as a `Dictionary<string, object>`) to represent different entity types in the same EF Core model.
   This feature is a stepping stone to support many-to-many relationships without a join entity, which is one of the most requested improvements for EF Core.
 
-- **EF 6.3 on .NET Core**: We understand that many existing applications use previous versions of EF, and that porting them to EF Core only to take advantage of .NET Core can sometimes require a significant effort.
+- **EF 6.3 on .NET Core ([EF6 #271](https://github.com/aspnet/EntityFramework6/issues/271))**: We understand that many existing applications use previous versions of EF, and that porting them to EF Core only to take advantage of .NET Core can sometimes require a significant effort.
   For that reason, we will be adapting the next version of EF 6 to run on .NET Core 3.0.
   We are doing this to facilitate porting existing applications with minimal changes.
   There are going to be some limitations (for example, it will require new providers, spatial support with SQL Server won't be enabled), and there are no new features planned for EF 6.
 
-Use [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) to see work items tentatively assigned to 3.0.
+In the meantime, you can use [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) to see work items tentatively assigned to 3.0.
 
 ## Schedule
 
