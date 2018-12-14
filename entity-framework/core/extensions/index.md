@@ -41,7 +41,7 @@ A Visual Studio 2017 extension that adds an ORM designer for visual design of En
 
 ### CatFactory
 
-CatFactory is a scaffolding engine for .NET Core and Entity Framework Core. The concept behind CatFactory it's export an existing database from SQL Server instance, then with the representation in models for database; scaffold entities, configurations, repositories and more.
+CatFactory is a scaffolding engine for .NET Core and Entity Framework Core. The concept behind CatFactory it's export an existing database from SQL Server instance, then with the representation in models for database; scaffold entities, configurations, repositories and more.<!-- sentence needs review -->
 
 [GitHub repository](https://github.com/hherzl/CatFactory.EntityFrameworkCore)
 
