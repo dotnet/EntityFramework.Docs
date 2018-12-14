@@ -75,7 +75,7 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-You can also construct a DbParameter and supply it as a parameter value. This allows you to use named parameters in the SQL query string
+You can also construct a DbParameter and supply it as a parameter value. This allows you to use named parameters in the SQL query string.
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
