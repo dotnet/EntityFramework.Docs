@@ -90,7 +90,6 @@ Now that we have an EF model, let's write some code that uses it to perform some
             {
                 PerformDatabaseOperations();
 
-                Console.WriteLine();
                 Console.WriteLine("Quote of the day");
                 Console.WriteLine(" Don't worry about the world coming to an end today... ");
                 Console.WriteLine(" It's already tomorrow in Australia.");
@@ -120,8 +119,8 @@ Now that we have an EF model, let's write some code that uses it to perform some
                                 select b).ToList();
 
                     // Write all blogs out to Console
-                    Console.WriteLine();
-                   Console.WriteLine("Query completed with following results:");
+
+                    Console.WriteLine("Query completed with following results:");
                     foreach (var blog in blogs)
                     {
                         Console.WriteLine(" " + blog.Name);
