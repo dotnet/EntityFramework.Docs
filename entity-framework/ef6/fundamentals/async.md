@@ -119,7 +119,6 @@ Now that we have an EF model, let's write some code that uses it to perform some
                                 select b).ToList();
 
                     // Write all blogs out to Console
-
                     Console.WriteLine("Query completed with following results:");
                     foreach (var blog in blogs)
                     {
