@@ -1,14 +1,14 @@
 ---
 title: Tools & Extensions - EF Core
 author: ErikEJ
-ms.date: 07/03/2018
+ms.date: 01/03/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
 ---
 
 # EF Core Tools & Extensions
 
-Tools and extensions provide additional functionality for Entity Framework Core.
+Tools and extensions provide additional functionality for Entity Framework Core 2.0 and later.
 
 > [!IMPORTANT]  
 > Extensions are built by a variety of sources and not maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate quality, licensing, compatibility, support, etc. to ensure they meet your requirements.
@@ -29,9 +29,9 @@ Entity Developer is a powerful ORM designer for ADO.NET Entity Framework, NHiber
 
 ### EF Core Power Tools
 
-Visual Studio 2017+ extension. You can reverse engineer of DbContext and POCO classes from an existing database or SQL Server Database project, and visualize and inspect your DbContext in various ways.
+Visual Studio 2017+ extension. Reverse engineer a DbContext class and POCO classes from an existing database or SQL Server Database project (.dacpac), manage migrations and visualize and inspect your DbContext in various ways.
 
-[GitHub wiki](https://github.com/ErikEJ/SqlCeToolbox/wiki/EF-Core-Power-Tools)
+[GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki)
 
 ### Entity Framework Visual Editor
 
@@ -41,7 +41,7 @@ A Visual Studio 2017 extension that adds an ORM designer for visual design of En
 
 ### CatFactory
 
-CatFactory is a scaffolding engine for .NET Core and Entity Framework Core. The concept behind CatFactory it's export an existing database from SQL Server instance, then with the representation in models for database; scaffold entities, configurations, repositories and more.
+CatFactory is a scaffolding engine for .NET Core and Entity Framework Core. The concept behind CatFactory is to export an existing database from a SQL Server instance, then with the representation in models for database; scaffold entities, configurations, repositories and more.
 
 [GitHub repository](https://github.com/hherzl/CatFactory.EntityFrameworkCore)
 
@@ -66,41 +66,17 @@ Dynamic Linq extensions for Microsoft.EntityFrameworkCore which adds Async suppo
 
  [GitHub repository](https://github.com/StefH/System.Linq.Dynamic.Core/)
 
-### EFCore.Practices
-
-Attempt to capture some good or best practices in an API that supports testing – including a small framework to scan for N+1 queries.
-
-[GitHub repository](https://github.com/riezebosch/efcore-practices/tree/master/src/EFCore.Practices/)
-
 ### EFSecondLevelCache.Core
 
 Second Level Caching Library. Second level caching is a query cache. The results of EF commands will be stored in the cache, so that the same EF commands will retrieve their data from the cache rather than executing them against the database again.
 
 [GitHub repository](https://github.com/VahidN/EFSecondLevelCache.Core/)
 
-### Detached.EntityFramework
-
-Loads and saves entire detached entity graphs (the entity with their child entities and lists). Inspired by [GraphDiff](https://github.com/refactorthis/GraphDiff/). The idea is also add some plugins to simplificate some repetitive tasks, like auditing and pagination.
-
-[GitHub repository](https://github.com/leonardoporro/Detached/)
-
 ### EntityFrameworkCore.PrimaryKey
 
 Retrieve the primary key (including composite keys) from any entity as a dictionary.
 
 [GitHub repository](https://github.com/NickStrupat/EntityFramework.PrimaryKey/)
-
-### EntityFrameworkCore.Rx
-
-Reactive extension wrappers for hot observables of Entity Framework entities.
-
-[GitHub repository](https://github.com/NickStrupat/EntityFramework.Rx/)
-
-### EntityFrameworkCore.Triggers
-
-Add triggers to your entities with insert, update, and delete events. There are three events for each: before, after, and upon failure.
-
-[GitHub repository](https://github.com/NickStrupat/EntityFramework.Triggers/)
 
 ### EntityFrameworkCore.TypedOriginalValues
 
@@ -132,12 +108,6 @@ A plugin for Microsoft.EntityFrameworkCore to support repository, unit of work p
 
 [GitHub repository](https://github.com/Arch/UnitOfWork/)
 
-### EntityFramework.LazyLoading
-
-Lazy Loading for EF Core 1.1
-
-[GitHub repository](https://github.com/darxis/EntityFramework.LazyLoading)
-
 ### EFCore.BulkExtensions
 
 EntityFrameworkCore extensions for Bulk operations (Insert, Update, Delete).
@@ -149,3 +119,33 @@ EntityFrameworkCore extensions for Bulk operations (Insert, Update, Delete).
 Adds design-time pluralization to EF Core.
 
 [GitHub repository](https://github.com/bricelam/EFCore.Pluralizer)
+
+### PomeloFoundation/Pomelo.EntityFrameworkCore.Extensions.ToSql
+
+Get the generated SQL.
+
+[GitHub repository](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.Extensions.ToSql)
+
+### Toolbelt.EntityFrameworkCore.IndexAttribute
+
+Revival of [Index] attribute for EF Core (with extension for model building).
+
+[GitHub repository](https://github.com/jsakamoto/EntityFrameworkCore.IndexAttribute)
+
+### EfCore.InMemoryHelpers
+
+Provides a wrapper around the EF Core In-Memory Database Provider. Makes it act more like a relational provider.
+
+[GitHub repository](https://github.com/SimonCropp/EfCore.InMemoryHelpers)
+
+### EFCore.TemporalSupport
+
+An implementation of temporal support for EF Core.
+
+[GitHub repository](https://github.com/cpoDesign/EFCore.TemporalSupport)
+
+### EntityFrameworkCore.Cacheable
+
+A high performance second level query cache for Entity Framework Core.
+
+[GitHub repository](https://github.com/SteffenMangold/EntityFrameworkCore.Cacheable)
