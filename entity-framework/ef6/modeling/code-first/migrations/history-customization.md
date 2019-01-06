@@ -13,7 +13,7 @@ ms.assetid: ed5518f0-a9a6-454e-9e98-a4fa7748c8d0
 
 ## What is Migrations History Table?
 
-Migrations history table is a table used by Code First Migrations to store details about migrations applied to the database. By default the name of the table in the database is \_\_MigrationHistory and it is created when applying the first migration do the database. In Entity Framework 5 this table was a system table if the application used Microsoft Sql Server database. This has changed in Entity Framework 6 however and the migrations history table is no longer marked a system table.
+Migrations history table is a table used by Code First Migrations to store details about migrations applied to the database. By default the name of the table in the database is \_\_MigrationHistory and it is created when applying the first migration to the database. In Entity Framework 5 this table was a system table if the application used Microsoft Sql Server database. This has changed in Entity Framework 6 however and the migrations history table is no longer marked a system table.
 
 ## Why customize Migrations History Table?
 

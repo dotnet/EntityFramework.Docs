@@ -43,7 +43,7 @@ This tutorial uses a **Blogging** database on your LocalDb instance as the exist
 * **File > New > Project...**
 * From the left menu select **Installed > Visual C# > Web**
 * Select the **ASP.NET Core Web Application** project template
-* Enter **EFGetStarted.AspNetCore.ExistingDb** as the name and click **OK**
+* Enter **EFGetStarted.AspNetCore.ExistingDb** as the name (it has to match exactly the namespace later used in the code) and click **OK** 
 * Wait for the **New ASP.NET Core Web Application** dialog to appear
 * Make sure that the target framework dropdown is set to **.NET Core**, and the version dropdown is set to **ASP.NET Core 2.1**
 * Select the **Web Application (Model-View-Controller)** template

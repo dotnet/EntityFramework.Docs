@@ -23,7 +23,7 @@ We will share more information as we get more clarity, but here are some high-le
 - **LINQ improvements ([#12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795))**: LINQ enables you to write database queries without leaving your language of choice, taking advantage of rich type information to get IntelliSense and compile-time type checking.
   But LINQ also enables you to write an unlimited number of complicated queries, and that has always been a huge challenge for LINQ providers.
   In the first few versions of EF Core, we solved that in part by figuring out what portions of a query could be translated to SQL, and then by allowing the rest of the query to execute in memory on the client.
-  This client-side execution can be desirable in some situations, but in many other cases it can result in inefficient queries that may not identified until an application is deployed to production.
+  This client-side execution can be desirable in some situations, but in many other cases it can result in inefficient queries that may not be identified until an application is deployed to production.
   In EF Core 3.0, we are planning to make profound changes to how our LINQ implementation works, and how we test it.
   The goals are to make it more robust (for example, to avoid breaking queries in patch releases), to be able to translate more expressions correctly into SQL, to generate efficient queries in more cases, and to prevent inefficient queries from going undetected.
 
@@ -32,7 +32,7 @@ We will share more information as we get more clarity, but here are some high-le
   The provider will enable most EF Core features, like automatic change tracking, LINQ, and value conversions, against the SQL API in Cosmos DB. We started this effort before EF Core 2.2, and [we have made some preview versions of the provider available](https://blogs.msdn.microsoft.com/dotnet/2018/10/17/announcing-entity-framework-core-2-2-preview-3/).
   The new plan is to continue developing the provider alongside EF Core 3.0.   
 
-- **C# 8.0 support ([#12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047))**: We want our customers to take advantage some of the [new features coming in C# 8.0](https://blogs.msdn.microsoft.com/dotnet/2018/11/12/building-c-8-0/) like async streams (including await for each) and nullable reference types while using EF Core.
+- **C# 8.0 support ([#12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047))**: We want our customers to take advantage of some of the [new features coming in C# 8.0](https://blogs.msdn.microsoft.com/dotnet/2018/11/12/building-c-8-0/) like async streams (including await for each) and nullable reference types while using EF Core.
 
 - **Reverse engineering database views into query types ([#1679](https://github.com/aspnet/EntityFrameworkCore/issues/1679))**: In EF Core 2.1, we added support for query types, which can represent data that can be read from the database, but cannot be updated.
   Query types are a great fit for mapping database views, so in EF Core 3.0, we would like to automate the creation of query types for database views.

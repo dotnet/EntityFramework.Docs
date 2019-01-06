@@ -91,7 +91,7 @@ uid: index
                                                 </div>
                                                 <div class="cardText">
                                                     <h3>Port to EF Core</h3>
-                                                    <p>Guidance on porting and exiting EF 6 application to EF Core.</p>
+                                                    <p>Guidance on porting an existing EF 6 application to EF Core.</p>
                                                 </div>
                                             </div>
                                         </div>

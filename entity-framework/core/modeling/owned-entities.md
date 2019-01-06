@@ -120,4 +120,4 @@ Some of these limitations are fundamental to how owned entity types work, but so
 
 ### Shortcomings in previous versions
 - In EF Core 2.0, navigations to owned entity types cannot be declared in derived entity types unless the owned entities are explicitly mapped to a separate table from the owner hierarchy. This limitation has been removed in EF Core 2.1
-- En EF Core 2.0 and 2.1 only reference navigations to owned types were supported. This limitation has been removed in EF Core 2.2
+- In EF Core 2.0 and 2.1 only reference navigations to owned types were supported. This limitation has been removed in EF Core 2.2
