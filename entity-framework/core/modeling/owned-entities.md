@@ -46,7 +46,7 @@ In order to understand how EF Core tracks these objects, it is useful to think t
 >[!NOTE]
 > This feature is new in EF Core 2.2.
 
-To configure a collection of owned types `OwnsMany` should be used in `OnModelCreating`. However the primary key will not be configured by convention, so it need to be specified explicitly. It is common to use a complex key for these type of entities incorporating the foreign key to the owner and an additional unique property that can also be in shadow state:
+To configure a collection of owned types `OwnsMany` should be used in `OnModelCreating`. However the primary key will not be configured by convention, so it needs to be specified explicitly. It is common to use a complex key for these type of entities incorporating the foreign key to the owner and an additional unique property that can also be in shadow state:
 
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
 
