@@ -30,7 +30,7 @@ The spatial NuGet packages also enable [reverse engineering](../managing-schemas
 
 ## NetTopologySuite (NTS)
 
-NetTopologySuite is a spatial library for .NET. EF Core enables mapping to spatial data types in the database by using NTS types in your model.
+NetTopologySuite is a spatial library for .NET. EF Core that enables mapping to spatial data types in the database by using NTS types in your model.
 
 To enable mapping to spatial types via NTS, call the UseNetTopologySuite method on the provider's DbContext options builder. For example, with SQL Server you'd call it like this.
 
