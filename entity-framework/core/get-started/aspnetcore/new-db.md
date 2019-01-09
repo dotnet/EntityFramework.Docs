@@ -196,7 +196,7 @@ Scaffold a controller and views for the `Blog` entity.
 The scaffolding engine creates the following files:
 
 * A controller (*Controllers/BlogsController.cs*)
-* Razor views for Create, Delete, Details, Edit, and Index pages (_Views/Movies/*.cshtml_)
+* Razor views for Create, Delete, Details, Edit, and Index pages (_Views/Blogs/*.cshtml_)
 
 ## Run the application
 
