@@ -8,7 +8,7 @@ ms.assetid: 77d6a095-c0d0-471e-80b9-8f9aea6108b2
 > [!NOTE]
 > **EF4.1 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 4.1. If you are using an earlier version, some or all of the information does not apply
 
-The content on this page is adapted from and article originally written by Julie Lerman ([http://thedatafarm.com](http://thedatafarm.com)).
+The content on this page is adapted from an article originally written by Julie Lerman ([http://thedatafarm.com](http://thedatafarm.com)).
 
 Entity Framework provides a great variety of validation features that can feed through to a user interface for client-side validation or be used for server-side validation. When using code first, you can specify validations using annotation or fluent API configurations. Additional validations, and more complex, can be specified in code and will work whether your model hails from code first, model first or database first.
 
@@ -37,6 +37,7 @@ I’ll demonstrate the validations with a simple pair of classes: Blog and Post.
           public ICollection<Comment> Comments { get; set; }
       }
 ```
+
 ## Data Annotations
 
 Code First uses annotations from the System.ComponentModel.DataAnnotations assembly as one means of configuring code first classes. Among these annotations are those which provide rules such as the Required, MaxLength and MinLength. A number of .NET client applications also recognize these annotations, for example, ASP.NET MVC. You can achieve both client side and server side validation with these annotations. For example, you can force the Blog Title property to be a required property.
@@ -155,7 +156,7 @@ DbContext has an Overridable method called ValidateEntity. When you call SaveCha
 
 Here’s an example of a ValidateEntity override that validates new Posts to ensure that the post title hasn’t been used already. It first checks to see if the entity is a post and that its state is Added. If that’s the case, then it looks in the database to see if there is already a post with the same title. If there is an existing post already, then a new DbEntityValidationResult is created.
 
-DbEntityValidationResult houses a DbEntityEntry and an ICollection of DbValidationErrors for a single entity. At the start of this method, a  DbEntityValidationResult is instantiated and then any errors that are discovered are added into its ValidationErrors collection.
+DbEntityValidationResult houses a DbEntityEntry and an ICollection of DbValidationErrors for a single entity. At the start of this method, a DbEntityValidationResult is instantiated and then any errors that are discovered are added into its ValidationErrors collection.
 
 ``` csharp
     protected override DbEntityValidationResult ValidateEntity (
@@ -192,7 +193,7 @@ A call to SaveChanges triggers all of the validations covered in this article. B
 
 DbContext.GetValidationErrors will trigger all of the validations, those defined by annotations or the Fluent API, the validation created in IValidatableObject (for example, Blog.Validate), and the validations performed in the DbContext.ValidateEntity method.
 
-The following code will call GetValidationErrors on the current instance of a DbContext. ValidationErrors are grouped by entity type into DbValidationRestuls. The code iterates first through the DbValidationResults returned by the method and then through each ValidationError inside.
+The following code will call GetValidationErrors on the current instance of a DbContext. ValidationErrors are grouped by entity type into DbValidationResults. The code iterates first through the DbValidationResults returned by the method and then through each ValidationError inside.
 
 ``` csharp
     foreach (var validationResults in db.GetValidationErrors())
