@@ -143,7 +143,7 @@ namespace Demo
         {
             get
             {
-                return (bool?)CallContext.LogicalGetData("SuspendExecutionStrategy")  false;
+                return (bool?)CallContext.LogicalGetData("SuspendExecutionStrategy") ?? false;
             }
             set
             {
