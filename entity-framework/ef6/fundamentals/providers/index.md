@@ -30,7 +30,7 @@ Providers we are aware of that have been rebuilt for EF6 include:
 *   **Visual Fox Pro provider**
     *   Available as a [NuGet package](https://www.nuget.org/packages/VFPEntityFrameworkProvider2/)
 *   **MySQL**
-    *   [MySQL Connector/Net](http://dev.mysql.com/downloads/connector/net/)
+    *   [MySQL Connector/NET for Entity Framework](https://dev.mysql.com/doc/connector-net/en/connector-net-entityframework60.html)
 *   **PostgreSQL**
     *   Npgsql is available as a [NuGet package](http://www.nuget.org/packages/Npgsql.EF6/)
 *   **Oracle**
