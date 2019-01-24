@@ -26,7 +26,7 @@ Providers we are aware of that have been rebuilt for EF6 include:
 *   [**CData Software providers**](http://www.cdata.com/ado/)
     *   There are third-party providers from [CData Software](http://www.cdata.com/ado/) for a variety of data stores including Salesforce, Azure Table Storage, MySql, and many more
 *   **Firebird provider**
-    *   Available as a [NuGet Package](http://www.nuget.org/packages/FirebirdSql.Data.FirebirdClient/)
+    *   Available as a [NuGet Package](http://www.nuget.org/packages/EntityFramework.Firebird/)
 *   **Visual Fox Pro provider**
     *   Available as a [NuGet package](https://www.nuget.org/packages/VFPEntityFrameworkProvider2/)
 *   **MySQL**
