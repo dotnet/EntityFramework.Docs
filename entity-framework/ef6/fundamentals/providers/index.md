@@ -32,7 +32,7 @@ Providers we are aware of that have been rebuilt for EF6 include:
 *   **MySQL**
     *   [MySQL Connector/Net](http://dev.mysql.com/downloads/connector/net/)
 *   **PostgreSQL**
-    *   Npgsql is available as a [NuGet package](http://www.nuget.org/packages/Npgsql.EF6/)
+    *   Npgsql is available as a [NuGet package](https://www.nuget.org/packages/EntityFramework6.Npgsql/)
 *   **Oracle**
     *   ODP.NET is available as a [NuGet package](https://www.nuget.org/packages/Oracle.ManagedDataAccess.EntityFramework/)
 
