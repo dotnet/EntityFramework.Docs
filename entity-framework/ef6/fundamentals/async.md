@@ -218,7 +218,7 @@ Now that the code is asyncronous, we can observe a different execution flow when
 1.  **SaveChanges** begins to push the new **Blog** to the database
     *Once the command is sent to the database no more compute time is needed on the current managed thread. The **PerformDatabaseOperations** method returns (even though it hasn't finished executing) and program flow in the Main method continues.*
 2.  **Quote of the day is written to Console**
-    *Since there is no more work to do in the Main method, the managed thread is blocked on the Wait call until the database operation completes. Once it completes, the remainder of our **PerformDatabaseOperations*** will be executed.
+    *Since there is no more work to do in the Main method, the managed thread is blocked on the Wait call until the database operation completes. Once it completes, the remainder of our **PerformDatabaseOperations** will be executed.*
 3.  **SaveChanges** completes
 4.  Query for all **Blogs** is sent to the database
     *Again, the managed thread is free to do other work while the query is processed in the database. Since all other execution has completed, the thread will just halt on the Wait call though.*
