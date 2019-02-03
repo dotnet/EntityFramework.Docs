@@ -26,13 +26,13 @@ Providers we are aware of that have been rebuilt for EF6 include:
 *   [**CData Software providers**](http://www.cdata.com/ado/)
     *   There are third-party providers from [CData Software](http://www.cdata.com/ado/) for a variety of data stores including Salesforce, Azure Table Storage, MySql, and many more
 *   **Firebird provider**
-    *   Available as a [NuGet Package](http://www.nuget.org/packages/FirebirdSql.Data.FirebirdClient/)
+    *   Available as a [NuGet Package](https://www.nuget.org/packages/EntityFramework.Firebird/)
 *   **Visual Fox Pro provider**
     *   Available as a [NuGet package](https://www.nuget.org/packages/VFPEntityFrameworkProvider2/)
 *   **MySQL**
-    *   [MySQL Connector/Net](http://dev.mysql.com/downloads/connector/net/)
+    *   [MySQL Connector/NET for Entity Framework](https://dev.mysql.com/doc/connector-net/en/connector-net-entityframework60.html)
 *   **PostgreSQL**
-    *   Npgsql is available as a [NuGet package](http://www.nuget.org/packages/Npgsql.EF6/)
+    *   Npgsql is available as a [NuGet package](https://www.nuget.org/packages/EntityFramework6.Npgsql/)
 *   **Oracle**
     *   ODP.NET is available as a [NuGet package](https://www.nuget.org/packages/Oracle.ManagedDataAccess.EntityFramework/)
 
