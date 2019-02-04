@@ -103,6 +103,21 @@ var blogs = context.Blogs
     .ToList();
 ```
 
+## Disabling Change Tracking
+
+The following example uses a raw SQL query that selects from a Table-Valued Function (TVF) and then disables change tracking, and then executes the query.  This therefore demonstrates that change tracking is supported by [query types](xref:core/modeling/query-types).
+
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+``` csharp
+var searchTerm = ".NET";
+
+var blogs = context.Blogs
+    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+    .AsNoTracking()
+    .ToList();
+```
+
+
 ### Including related data
 
 Composing with LINQ operators can be used to include related data in the query.
