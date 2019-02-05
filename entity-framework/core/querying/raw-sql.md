@@ -111,7 +111,7 @@ The following example uses a raw SQL query that selects from a Table-Valued Func
 ``` csharp
 var searchTerm = ".NET";
 
-var blogs = context.Blogs
+var blogs = context.Query<SearchBlogsDto>()
     .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
     .AsNoTracking()
     .ToList();
