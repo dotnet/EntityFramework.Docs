@@ -26,7 +26,7 @@ EF Core logging currently requires an ILoggerFactory which is itself configured 
 * [Microsoft.Extensions.Logging.TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/): Logs to a trace listener using System.Diagnostics.TraceSource.TraceEvent().
 
 > [!NOTE]
-> The following code sample uses a constructor that has been marked as obsolete in Microsoft.Extensions.Logging version 2.2. Proper replacements for obsolete logging APIs will be available in version 3.0. In the meantime, it is safe to ignore and suppress the warnings.
+> The following code sample uses a `ConsoleLoggerProvider` constructor that has been marked as obsolete in version 2.2. Proper replacements for obsolete logging APIs will be available in version 3.0. In the meantime, it is safe to ignore and suppress the warnings.
 
 After installing the appropriate package(s), the application should create a singleton/global instance of a LoggerFactory. For example, using the console logger:
 
@@ -42,7 +42,7 @@ This singleton/global instance should then be registered with EF Core on the `Db
 ## Filtering what is logged
 
 > [!NOTE]
-> The following code sample uses a constructor that has been marked as obsolete in Microsoft.Extensions.Logging version 2.2. Proper replacements for obsolete logging APIs will be available in version 3.0. In the meantime, it is safe to ignore and suppress the warnings.
+> The following code sample uses a `ConsoleLoggerProvider` constructor that has been marked as obsolete in version 2.2. Proper replacements for obsolete logging APIs will be available in version 3.0. In the meantime, it is safe to ignore and suppress the warnings.
 
 The easiest way to filter what is logged is to configure it when registering the ILoggerProvider. For example:
 
