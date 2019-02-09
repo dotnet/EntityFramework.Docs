@@ -38,6 +38,9 @@ This singleton/global instance should then be registered with EF Core on the `Db
 
 ## Filtering what is logged
 
+> [!NOTE]
+> Some of the methods and constructors used in the following code sample have been marked as obsolete in Microsoft.Extensions.Logging version 2.2. There are proper replacements for these APIs coming in version 3.0. In the meantime, it is safe to ignore and suppress the warnings.
+
 The easiest way to filter what is logged is to configure it when registering the ILoggerProvider. For example:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContextWithFiltering.cs#DefineLoggerFactory)]
