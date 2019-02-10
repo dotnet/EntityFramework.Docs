@@ -25,6 +25,9 @@ EF Core logging currently requires an ILoggerFactory which is itself configured 
 * [Microsoft.Extensions.Logging.EventSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/): Supports EventSource/EventListener.
 * [Microsoft.Extensions.Logging.TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/): Logs to a trace listener using System.Diagnostics.TraceSource.TraceEvent().
 
+> [!NOTE]
+> The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2. Proper replacements for obsolete logging APIs will be available in version 3.0. In the meantime, it is safe to ignore and suppress the warnings.
+
 After installing the appropriate package(s), the application should create a singleton/global instance of a LoggerFactory. For example, using the console logger:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#DefineLoggerFactory)]
@@ -37,6 +40,9 @@ This singleton/global instance should then be registered with EF Core on the `Db
 > It is very important that applications do not create a new ILoggerFactory instance for each context instance. Doing so will result in a memory leak and poor performance.
 
 ## Filtering what is logged
+
+> [!NOTE]
+> The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2. Proper replacements for obsolete logging APIs will be available in version 3.0. In the meantime, it is safe to ignore and suppress the warnings.
 
 The easiest way to filter what is logged is to configure it when registering the ILoggerProvider. For example:
 
