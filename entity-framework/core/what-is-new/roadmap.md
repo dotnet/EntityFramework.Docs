@@ -18,7 +18,7 @@ With EF Core 2.2 out the door, our main focus is now EF Core 3.0, which will be 
 We haven't completed any new features yet, so the [EF Core 3.0 Preview 1 packages published to the NuGet Gallery](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.0.0-preview.18572.1) on December 2018 only contain [bug fixes, minor improvements, and changes we made in preparation for the 3.0 work](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aissue+milestone%3A3.0.0+is%3Aclosed+label%3Aclosed-fixed).
 
 In fact, we still need to refine our [release planning](#release-planning-process) for 3.0, to make sure we have the right set of features that can be completed in the allotted time.
-We will share more information as we get more clarity, but here are some high-level themes and features we itend to work on:
+We will share more information as we get more clarity, but here are some high-level themes and features we intend to work on:
 
 - **LINQ improvements ([#12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795))**: LINQ enables you to write database queries without leaving your language of choice, taking advantage of rich type information to get IntelliSense and compile-time type checking.
   But LINQ also enables you to write an unlimited number of complicated queries, and that has always been a huge challenge for LINQ providers.
