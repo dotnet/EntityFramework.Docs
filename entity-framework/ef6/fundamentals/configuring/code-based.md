@@ -39,7 +39,7 @@ namespace MyNamespace
         public MyConfiguration()
         {
             SetExecutionStrategy("System.Data.SqlClient", () => new SqlAzureExecutionStrategy());
-            SetDefaultConnectionFactory(new LocalDBConnectionFactory("mssqllocaldb"));
+            SetDefaultConnectionFactory(new LocalDbConnectionFactory("mssqllocaldb"));
         }
     }
 }
