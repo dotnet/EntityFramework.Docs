@@ -64,7 +64,7 @@ Once you have a model, you use [migrations](xref:core/managing-schemas/migration
 * Run `dotnet ef migrations add InitialCreate` to scaffold a migration and create the initial set of tables for the model.
 * Run `dotnet ef database update` to apply the new migration to the database. This command creates the database before applying migrations.
 
-The *blogging.db** SQLite DB is in the project directory.
+The *blogging.db* SQLite DB is in the project directory.
 
 ## Use the model
 
