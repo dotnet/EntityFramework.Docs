@@ -12,9 +12,22 @@ Connection resiliency automatically retries failed database commands. The featur
 
 As an example, the SQL Server provider includes an execution strategy that is specifically tailored to SQL Server (including SQL Azure). It is aware of the exception types that can be retried and has sensible defaults for maximum retries, delay between retries, etc.
 
-An execution strategy is specified when configuring the options for your context. This is typically in the `OnConfiguring` method of your derived context, or in `Startup.cs` for an ASP.NET Core application.
+An execution strategy is specified when configuring the options for your context. This is typically in the `OnConfiguring` method of your derived context:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#OnConfiguring)]
+
+or in `Startup.cs` for an ASP.NET Core application:
+
+``` csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddDbContext<PicnicContext>
+        (options => options.UseSqlServer(
+            "<connection string>",
+            x => x.EnableRetryOnFailure()
+            ));
+}
+```
 
 ## Custom execution strategy
 
