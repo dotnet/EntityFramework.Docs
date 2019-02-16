@@ -21,11 +21,10 @@ or in `Startup.cs` for an ASP.NET Core application:
 ``` csharp
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddDbContext<PicnicContext>
-        (options => options.UseSqlServer(
+    services.AddDbContext<PicnicContext>(
+        options => options.UseSqlServer(
             "<connection string>",
-            providerOptions => providerOptions.EnableRetryOnFailure()
-            ));
+            providerOptions => providerOptions.EnableRetryOnFailure()));
 }
 ```
 
