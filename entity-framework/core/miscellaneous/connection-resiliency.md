@@ -24,7 +24,7 @@ public void ConfigureServices(IServiceCollection services)
     services.AddDbContext<PicnicContext>
         (options => options.UseSqlServer(
             "<connection string>",
-            x => x.EnableRetryOnFailure()
+            providerOptions => providerOptions.EnableRetryOnFailure()
             ));
 }
 ```
