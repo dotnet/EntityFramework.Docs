@@ -12,6 +12,9 @@
 
 ### [What's New](core/what-is-new/index.md)
 #### [EF Core Roadmap](core/what-is-new/roadmap.md)
+#### [EF Core 3.0 (in preview)](core/what-is-new/ef-core-3.0/index.md)
+##### [New features](core/what-is-new/ef-core-3.0/features.md)
+##### [Breaking changes](core/what-is-new/ef-core-3.0/breaking-changes.md)
 #### [EF Core 2.2 (latest stable release)](core/what-is-new/ef-core-2.2.md)
 #### [EF Core 2.1](core/what-is-new/ef-core-2.1.md)
 #### [EF Core 2.0](core/what-is-new/ef-core-2.0.md)
