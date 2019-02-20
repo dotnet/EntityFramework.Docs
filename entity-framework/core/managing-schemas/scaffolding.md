@@ -73,7 +73,7 @@ Table and column names are fixed up to better match the .NET naming conventions 
 
 Entity types are configured using the Fluent API by default. Specify `-DataAnnotations` (PMC) or `--data-annotations` (CLI) to instead use data annotations when possible.
 
-For example, using the Fluent API will scaffold this.
+For example, using the Fluent API will scaffold this:
 
 ``` csharp
 entity.Property(e => e.Title)
@@ -81,7 +81,7 @@ entity.Property(e => e.Title)
     .HasMaxLength(160);
 ```
 
-While using Data Annotations will scaffold this.
+While using Data Annotations will scaffold this:
 
 ``` csharp
 [Required]
