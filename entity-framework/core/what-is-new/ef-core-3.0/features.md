@@ -8,8 +8,11 @@ uid: core/what-is-new/ef-core-3.0/features
 
 # New features included in EF Core 3.0 (in preview)
 
+The following is a list of the main improvements planned for EF Core 3.0. 
+
 > [!IMPORTANT]
-> Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
+> Many of these features are not included in the current preview, but will become available as we make progress towards RTM.
+Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
 
 ## LINQ improvements ([#12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795))
 
