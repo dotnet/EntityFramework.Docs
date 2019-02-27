@@ -76,7 +76,7 @@ public class Order
 }
 
 ```
-In previous versions of EF Core `CustomerId` property would be used for the foreign key by convention, but if `Order` is an owned type that would also make `CustomerId` the primary key and this is usually not the exceptation.
+In previous versions of EF Core `CustomerId` property would be used for the foreign key by convention, but if `Order` is an owned type that would also make `CustomerId` the primary key and this is usually not the expectation.
 
 Now EF Core will not try to use properties for foreign keys by convention if they have the same name as the principal property. Principal type name + principal property name and navigation + principal property name patterns would still be used:
 ```C#
