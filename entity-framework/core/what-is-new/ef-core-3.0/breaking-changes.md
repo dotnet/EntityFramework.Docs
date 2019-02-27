@@ -11,4 +11,7 @@ uid: core/what-is-new/ef-core-3.0/breaking-changes
 > [!IMPORTANT]
 > Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
 
-(TBD)
+## SQLite
+
+* Microsoft.EntityFrameworkCore.Sqlite now depends on SQLitePCLRaw.bundle_e_sqlite3 instead of SQLitePCLRaw.bundle_green. This makes the version of SQLite used on iOS consistent with other platforms.
+* Removed SqliteDbContextOptionsBuilder.SuppressForeignKeyEnforcement(). EF Core no longer sends `PRAGMA foreign_keys = 1` when a connection is opened. Foreign keys are enabled by default in SQLitePCLRaw.bundle_e_sqlite3. If you're not using that, you can enable foreign keys by specifying `Foreign Keys=True` in your connection string.
