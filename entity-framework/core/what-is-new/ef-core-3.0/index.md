@@ -13,6 +13,6 @@ uid: core/what-is-new/ef-core-3.0/index
 
 EF Core 3.0 is currently under development and available in preview. EF Core 3.0 will bring a set of [new features](xref:core/what-is-new/ef-core-3.0/features) and also [breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes) you should be aware of when upgrading.
 
-Early [preview packages published to the NuGet Gallery](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/) only contain [bug fixes, minor improvements, and changes we made in preparation for the 3.0 work](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aissue+milestone%3A3.0.0+is%3Aclosed+label%3Aclosed-fixed).
+It is early in the release and current [preview packages published to the NuGet Gallery](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/) only contain breaking changes and minor improvements we have made in preparation for the rest of the 3.0 work. 
 
-Successive preview releases will contain more of the planned features and breaking changes. In the meantime, you can use [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) to see work items tentatively assigned to 3.0.
+Successive preview releases will contain more of the planned features and breaking changes. In the meantime, you can use [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) to see work items assigned to 3.0.
