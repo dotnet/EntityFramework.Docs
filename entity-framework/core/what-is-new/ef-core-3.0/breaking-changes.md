@@ -639,3 +639,5 @@ This change was made so that the version of SQLite used on iOS consistent with o
 To use the native SQLite version on iOS, configure `Microsoft.Data.Sqlite` to use a different `SQLitePCLRaw` bundle.
 
 ## Breaks that should only impact database providers
+
+Changes that we expect to only impact database providers are documented under [provider changes](../../providers/provider-log.md).
