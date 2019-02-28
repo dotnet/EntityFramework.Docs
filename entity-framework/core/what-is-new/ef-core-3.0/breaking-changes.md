@@ -32,11 +32,11 @@ Starting with EF Core 3.0, we only allow the top level projection (the expressio
 
 The automatic client-evaluation of queries allowed many queries to be executed even if important parts of them could not be translated. This can result in unexpected and potentially damaging behavior that may only become apparent in production. For example, a query containing an expression in the Where LINQ operator that cannot be translated, can result in all rows from the table to be transferred from the database server, and the filter to be applied on the client. This can easily go undetected if the table contains only a few rows in development and staging, but hit hard when you move the application to production where the table contains millions of rows. Client evaluation warnings also proved too easy to ignore during development.
 
-Besides this, automatic client-evaluation can lead issues in which improving query translation for specific expressions caused breaking changes between releases.
+Besides this, automatic client-evaluation can lead to issues in which improving query translation for specific expressions caused breaking changes between releases.
 
 **Mitigations**
 
-If a query cannot be fully translated then either re-write the query in a form that can be translated or use `AsEnumerable()`, `ToList` or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
+If a query cannot be fully translated then either re-write the query in a form that can be translated or use `AsEnumerable()`, `ToList()` or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
 
 
 ## Query execution is logged at Debug level
@@ -164,7 +164,7 @@ Prior to EF Core 3.0, [Query types](xref:core/modeling/query-types) were a means
 
 A query type now becomes just an entity type without a primary key. Keyless entity types have the same functionality as query types in previous versions.
 
-** Why**
+**Why**
 
 This change was made to reduce the confusion around the purpose of query types. Specifically, they are keyless entity types. They are inherently read-only because of this, but should not be used just because an entity type is read-only. Likewise, they are often mapped to views, but this is only because views often don't define keys.
 
