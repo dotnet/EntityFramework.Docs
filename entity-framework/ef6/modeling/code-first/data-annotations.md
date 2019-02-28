@@ -368,7 +368,7 @@ By default, indexes are non-unique, but you can use the **IsUnique** named param
 
 ### Multiple-Column Indexes
 
-Indexes that span multiple columns are specified by using the same name in multiple Index annotations for a given table. When you create multi-column indexes, you need to specify an order for the columns in the index. For example, the following code creates a multi-column index on **Rating** and **BlogId** called **IX\_BlogAndRating**. **BlogId** is the first column in the index and **Rating** is the second.
+Indexes that span multiple columns are specified by using the same name in multiple Index annotations for a given table. When you create multi-column indexes, you need to specify an order for the columns in the index. For example, the following code creates a multi-column index on **Rating** and **BlogId** called **IX\_BlogIdAndRating**. **BlogId** is the first column in the index and **Rating** is the second.
 
 ``` csharp
     public class Post
