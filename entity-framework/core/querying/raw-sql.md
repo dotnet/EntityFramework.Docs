@@ -136,4 +136,4 @@ There are a few limitations to be aware of when using raw SQL queries:
 > [!WARNING]  
 > **Always use parameterization for raw SQL queries:** In addition to validating user input, always use parameterization for any values used in a raw SQL query/command. APIs that accept a raw SQL string such as `FromSql` and `ExecuteSqlCommand` allow values to be easily passed as parameters. Overloads of `FromSql` and `ExecuteSqlCommand` that accept FormattableString also allow using string interpolation syntaxt in a way that helps protect against SQL injection attacks. 
 > 
-> If you are using string concatenation or interpolation to dynamically build any part of the query string, or passing use input to statements or stored procedures that can execute those strings as dynamic SQL, then you are responsible for validating any input to protect against SQL injection attacks.
+> If you are using string concatenation or interpolation to dynamically build any part of the query string, or passing user input to statements or stored procedures that can execute those inputs as dynamic SQL, then you are responsible for validating any input to protect against SQL injection attacks.
