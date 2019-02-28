@@ -15,4 +15,4 @@ EF Core 3.0 is currently under development and available in preview. EF Core 3.0
 
 It is early in the release and current [preview packages published to the NuGet Gallery](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/) only contain breaking changes and minor improvements we have made in preparation for the rest of the 3.0 work. 
 
-Successive preview releases will contain more of the planned features and breaking changes. In the meantime, you can use [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) to see work items assigned to 3.0.
+Successive preview releases will contain more of the planned features. In the meantime, you can use [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) to see work items assigned to 3.0.
