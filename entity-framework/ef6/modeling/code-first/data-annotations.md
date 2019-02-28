@@ -435,7 +435,7 @@ You’ll also need to add in the Person class referenced by these properties. Th
     }
 ```
 
-Code first is not able to match up the properties in the two classes on its own. The database table for Posts should have one foreign key for the CreatedBy person and one for the UpdatedBy person but code first will create four will foreign key properties: Person\_Id, Person\_Id1, CreatedBy\_Id and UpdatedBy\_Id.
+Code first is not able to match up the properties in the two classes on its own. The database table for Posts should have one foreign key for the CreatedBy person and one for the UpdatedBy person but code first will create four foreign key properties: Person\_Id, Person\_Id1, CreatedBy\_Id and UpdatedBy\_Id.
 
 ![Posts table with extra foreign keys](~/ef6/media/jj591583-figure10.png)
 
