@@ -85,11 +85,11 @@ context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
 
-### Query types and entity types are consolidated into `IEntityType`
+### Query types are consolidated with entity types
 
 [Tracking Issue #14194](https://github.com/aspnet/EntityFrameworkCore/issues/14194)
 
-[Query types](xref:core/modeling/query-types) were introduced in 2.1 as a means to query data that doesn't contain a primary key in a structured way. However it caused some confusion when deciding whether to configure something as an entity type or a query type. Therefor we have decided to bring the two closer together in the API.
+[Query types](xref:core/modeling/query-types) were introduced in 2.1 as a means to query data that doesn't contain a primary key in a structured way. However it caused some confusion when deciding whether to configure something as an entity type or a query type. Therefore we have decided to bring the two closer together in the API.
 
 A query type now becomes just an entity type without a primary key, but will have the same functionality as in previous versions. The following parts of the API are now obsolete:
 * **`ModelBuilder.Query<>()`** - Instead `ModelBuilder.Entity<>().HasNoKey()` needs to be called to mark an entity type as having no keys. This would still not be configured by convention to avoid misconfiguration when a primary key is expected, but doesn't match the convention.
