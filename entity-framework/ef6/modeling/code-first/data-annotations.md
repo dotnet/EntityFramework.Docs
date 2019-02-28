@@ -207,7 +207,7 @@ It’s not uncommon to describe your domain entities across a set of classes and
 ``` csharp
     public class BlogDetails
     {
-        public DateTime? DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [MaxLength(250)]
         public string Description { get; set; }
@@ -222,7 +222,7 @@ However as a property in the Blog class, BlogDetails it will be tracked as part 
     [ComplexType]
     public class BlogDetails
     {
-        public DateTime? DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [MaxLength(250)]
         public string Description { get; set; }
