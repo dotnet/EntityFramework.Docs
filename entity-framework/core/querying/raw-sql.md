@@ -134,6 +134,6 @@ There are a few limitations to be aware of when using raw SQL queries:
 * SQL statements other than `SELECT` are recognized automatically as non-composable. As a consequence, the full results of stored procedures are always returned to the client and any LINQ operators applied after `FromSql` are evaluated in-memory.
 
 > [!WARNING]  
-> **Always use parameterization for raw SQL queries:** APIs that accept a raw SQL string such as `FromSql` and `ExecuteSqlCommand` allow values to be easily passed as parameters. In addition to validating user input, always use parameterization for any values used in a raw SQL query/command. If you are using string concatenation to dynamically build any part of the query string then you are responsible for validating any input to protect against SQL injection attacks.
->
-> While the string interpolation and params methods protect `FromSql` and `ExecuteSqlCommand` from SQL Injection Attacks, neither can protect attacks against *non-parameterised dynamic sql* in the SQL string or stored procedures.
+> **Always use parameterization for raw SQL queries:** In addition to validating user input, always use parameterization for any values used in a raw SQL query/command. APIs that accept a raw SQL string such as `FromSql` and `ExecuteSqlCommand` allow values to be easily passed as parameters. Overloads of `FromSql` and `ExecuteSqlCommand` that accept FormattableString also allow using string interpolation syntaxt in a way that helps protect against SQL injection attacks. 
+> 
+> If you are using string concatenation or interpolation to dynamically build any part of the query string, or passing use input to statements or stored procedures that can execute those strings as dynamic SQL, then you are responsible for validating any input to protect against SQL injection attacks.
