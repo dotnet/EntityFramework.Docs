@@ -11,7 +11,9 @@ uid: core/what-is-new/ef-core-3.0/breaking-changes
 > [!IMPORTANT]
 > Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
 
-These are breaks in either API or behavior between the 2.2.x releases and the 3.0.0 release. Breaks in new features introduced from one 3.0 preview to another 3.0 preview are not documented here.
+These are breaks in either API or behavior between the 2.2.x releases and the 3.0.0 release that we believe can affect applications.
+Changes that we expect to only impact database providers are documented under [provider changes](../../providers/provider-log.md).
+Breaks in new features introduced from one 3.0 preview to another 3.0 preview are not documented here.
 
 ## Queries are not evaluated on the client
 
@@ -637,7 +639,3 @@ This change was made so that the version of SQLite used on iOS consistent with o
 **Mitigations**
 
 To use the native SQLite version on iOS, configure `Microsoft.Data.Sqlite` to use a different `SQLitePCLRaw` bundle.
-
-## Breaks that should only impact database providers
-
-Changes that we expect to only impact database providers are documented under [provider changes](../../providers/provider-log.md).
