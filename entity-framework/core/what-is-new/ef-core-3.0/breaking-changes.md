@@ -28,7 +28,7 @@ Prior to EF Core 3.0, any part of a query that could not be translated to SQL wo
 
 **New behavior**
 
-Starting with EF Core 3.0, we only allow the top level projection (the expression passed to the last Select LINQ operator in the query) to be evaluated on the client. If expressions in any other part of the query cannot be translated to SQL, then an exception is thrown.
+Starting with EF Core 3.0, we only allow the top level projection (the expression passed to the last Select LINQ operator in the query) to be evaluated on the client. If expressions in any other part of the query cannot be either captured as a parameter or translated to SQL, then an exception is thrown.
 
 **Why**
 
