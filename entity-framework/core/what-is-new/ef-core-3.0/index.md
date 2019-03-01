@@ -6,7 +6,7 @@ ms.assetid: 8C90C074-0A5B-4567-AF79-799B7BC78062
 uid: core/what-is-new/ef-core-3.0/index
 ---
 
-# What is new in EF Core 3.0 (in preview)
+# What is new in EF Core 3.0 (currently in preview)
 
 > [!IMPORTANT]
 > Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
