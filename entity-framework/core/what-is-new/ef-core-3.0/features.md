@@ -6,7 +6,7 @@ ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/features
 ---
 
-# New features included in EF Core 3.0 (in preview)
+# New features included in EF Core 3.0 (currently in preview)
 
 The following is a list of the main improvements planned for EF Core 3.0. 
 
