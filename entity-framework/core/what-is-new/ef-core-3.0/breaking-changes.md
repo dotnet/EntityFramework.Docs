@@ -11,11 +11,11 @@ uid: core/what-is-new/ef-core-3.0/breaking-changes
 > [!IMPORTANT]
 > Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
 
-These are breaks in either API or behavior between the 2.2.x releases and the 3.0.0 release that we believe can affect applications.
+The following API and behavior changes have the potential to break applications developed for EF Core 2.2.x when upgrading them to 3.0.0.
 Changes that we expect to only impact database providers are documented under [provider changes](../../providers/provider-log.md).
-Breaks in new features introduced from one 3.0 preview to another 3.0 preview are not documented here.
+Breaks in new features introduced from one 3.0 preview to another 3.0 preview aren't documented here.
 
-## Queries are not evaluated on the client
+## LINQ queries aren't evaluated on the client
 
 [Tracking Issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
@@ -45,7 +45,27 @@ Besides this, automatic client-evaluation can lead to issues in which improving 
 
 **Mitigations**
 
-If a query cannot be fully translated then either re-write the query in a form that can be translated or use `AsEnumerable()`, `ToList()` or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
+If a query cannot be fully translated, then either rewrite the query in a form that can be translated or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
+
+
+## Entity Framework Core is not part of the ASP.NET Core shared framework
+
+This change was introduced in ASP.NET Core 3.0 preview 1. 
+
+**Old behavior**
+
+Prior to ASP.NET Core 3.0, when you added a package reference to `Microsoft.AspNetCore.App` or `Microsoft.AspNetCore.All`, it would include EF Core and some of the EF Core data providers like the SQL Server provider.
+
+**New behavior**
+
+Starting in 3.0, the ASP.NET Core shared framework does not include EF Core or any EF Core providers. In order to use EF Core in an ASP.NET Core 3.0 application, you need to explicitly add package references to the EF Core database providers that your application will use.
+
+**Why**
+The removal from the ASP.NET Core shared framework enables a NuGet-based acquisition and servicing story for EF Core that works uniformly across all EF Core providers and on all the supported .NET implementations and application types. 
+
+Prior to this change, if your application targetd ASP.NET Core and used SQL Server, acquiring EF Core required one less step. But if the application doesn't target ASP.NET Core or uses a different provider, then you needed to learn a different set of steps. Also, performing a minor version upgrade of ASP.NET Core on a machine or targeted by an application, would force the upgrade of the EF Core and SQL Server povider version, which isn't recommended without proper testing. 
+
+Note, Entity Framework Core moving out of the shared framework has no impact on its status as a Microsoft developed, supported, and serviceable library, and it will continue to be covered by the [.NET Core support policy.](https://www.microsoft.com/net/platform/support-policy)
 
 
 ## Entity Framework Core isn't part of the ASP.NET Core shared framework
@@ -429,7 +449,7 @@ Starting with EF Core 3.0, if multiple fields are matched to the same property, 
 
 **Why**
 
-This change was made to avoid silently using one field over the another when only one can be correct.
+This change was made to avoid silently using one field over another when only one can be correct.
 
 **Mitigations**
 
@@ -525,7 +545,7 @@ Starting with EF Core 3.0, `ILoggerFactory` is now registered as scoped.
 
 **Why**
 
-This change was made to allow association of a logger with a `DbContext` instance which enables other functionality and removes some cases of pathological behavior such as an explosion of internal service providers.
+This change was made to allow association of a logger with a `DbContext` instance, which enables other functionality and removes some cases of pathological behavior such as an explosion of internal service providers.
 
 **Mitigations**
 
@@ -685,7 +705,7 @@ This change was made to consolidate the API for indexes with `Includes` into one
 
 Use the new API, as shown above.
 
-## EF Core no longer sends pragmas for SQLite FK enforcement
+## EF Core no longer sends pragma for SQLite FK enforcement
 
 [Tracking Issue #12151](https://github.com/aspnet/EntityFrameworkCore/issues/12151)
 
