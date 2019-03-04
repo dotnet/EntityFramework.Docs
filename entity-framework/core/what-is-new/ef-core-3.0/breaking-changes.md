@@ -41,6 +41,35 @@ Besides this, automatic client-evaluation can lead to issues in which improving 
 If a query cannot be fully translated then either re-write the query in a form that can be translated or use `AsEnumerable()`, `ToList()` or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
 
 
+## Entity Framework Core isn't part of the ASP.NET Core shared framework
+
+[Tracking Issue Announcements#325](https://github.com/aspnet/Announcements/issues/325).
+
+This change was introduced in ASP.NET Core 3.0 preview 1. 
+
+**Old behavior**
+
+Prior to ASP.NET Core 3.0, when you added a package reference to `Microsoft.AspNetCore.App` or `Microsoft.AspNetCore.All`, it would include EF Core and some of the EF Core data providers like the SQL Server provider.
+
+**New behavior**
+
+Starting in 3.0, the ASP.NET Core shared framework doesn't include EF Core or any EF Core providers.
+
+**Why**
+The change enables a NuGet-based acquisition and servicing story for EF Core that works uniformly across all EF Core providers and on all the supported .NET implementations and application types.
+
+Prior to this change, if your application targeted ASP.NET Core and used SQL Server, acquiring EF Core required one less step.
+But if the application didn't target ASP.NET Core or used a different provider, you needed to learn a different set of steps.
+Also, performing a version upgrade of ASP.NET Core would always force the upgrade of the EF Core and SQL Server provider version regardless of what version of EF Core you tested your application against.  
+
+The change has no impact on EF Core's status as a Microsoft developed, supported, and serviceable library.
+EF Core will continue to be covered by the [.NET Core support policy.](https://www.microsoft.com/net/platform/support-policy)
+
+**Mitigations**
+
+To use EF Core in an ASP.NET Core 3.0 application, explicitly add package references to the EF Core database providers that your application will use.
+This is what you do to use EF Core in any type of application.
+
 ## Query execution is logged at Debug level
 
 [Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
