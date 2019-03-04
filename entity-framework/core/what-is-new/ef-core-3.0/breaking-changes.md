@@ -88,18 +88,19 @@ This change was introduced in ASP.NET Core 3.0 preview 1.
 
 **Old behavior**
 
-Prior to ASP.NET Core 3.0, when you added a package reference to `Microsoft.AspNetCore.App` or `Microsoft.AspNetCore.All`, it would include EF Core and some of the EF Core data providers like the SQL Server provider.
+Before ASP.NET Core 3.0, when you added a package reference to `Microsoft.AspNetCore.App` or `Microsoft.AspNetCore.All`, it would include EF Core and some of the EF Core data providers like the SQL Server provider.
 
 **New behavior**
 
 Starting in 3.0, the ASP.NET Core shared framework doesn't include EF Core or any EF Core providers.
 
 **Why**
-The change enables a NuGet-based acquisition and servicing story for EF Core that works uniformly across all EF Core providers and on all the supported .NET implementations and application types.
 
-Prior to this change, if your application targeted ASP.NET Core and used SQL Server, acquiring EF Core required one less step.
+Before this change, if your application targeted ASP.NET Core and used SQL Server, installing EF Core required one less step.
 But if the application didn't target ASP.NET Core or used a different provider, you needed to learn a different set of steps.
-Also, performing a version upgrade of ASP.NET Core would always force the upgrade of the EF Core and SQL Server provider version regardless of what version of EF Core you tested your application against.
+Also, a version upgrade of ASP.NET Core would always force the upgrade of the EF Core and SQL Server provider, which wasn't always desirable.
+
+With this change, installing and upgrading EF Core works uniformly across all EF Core providers and on all the supported .NET implementations and application types.
 
 The change has no impact on EF Core's status as a Microsoft developed, supported, and serviceable library.
 EF Core will continue to be covered by the [.NET Core support policy.](https://www.microsoft.com/net/platform/support-policy)
@@ -241,7 +242,7 @@ This change was introduced in EF Core 3.0-preview 3.
 **Old behavior**
 
 Before EF Core 3.0, [Query types](xref:core/modeling/query-types) were a means to query data that doesn't contain a primary key in a structured way.
-That is, a query type was used for mapping entity types without keys (more likely from a view, but possibly from a table) while a regular entity type was used when a key was available (more likely from a table, but possibly from a view.)
+That is, a query type was used for mapping entity types without keys (more likely from a view, but possibly from a table) while a regular entity type was used when a key was available (more likely from a table, but possibly from a view).
 
 **New behavior**
 
@@ -251,8 +252,8 @@ Keyless entity types have the same functionality as query types in previous vers
 **Why**
 
 This change was made to reduce the confusion around the purpose of query types.
-Specifically, they are keyless entity types.
-They are inherently read-only because of this, but should not be used just because an entity type is read-only.
+Specifically, they're keyless entity types.
+They're inherently read-only because of this, but should not be used just because an entity type is read-only.
 Likewise, they are often mapped to views, but this is only because views often don't define keys.
 
 **Mitigations**
@@ -277,7 +278,7 @@ Before EF Core 3.0, configuration of the owned relationship was performed direct
 
 **New behavior**
 
-Starting with EF Core 3.0, there is now fluent API to configure a navigation to the owner using `WithOwner()`.
+Starting with EF Core 3.0, there is now fluent API to configure a navigation property to the owner using `WithOwner()`.
 For example:
 
 ```C#
@@ -345,7 +346,7 @@ public class Order
 
 ```
 Before EF Core 3.0, the `CustomerId` property would be used for the foreign key by convention.
-However, if `Order` is an owned type, then this would also make `CustomerId` the primary key and this is usually not the expectation.
+However, if `Order` is an owned type, then this would also make `CustomerId` the primary key and this isn't usually the expectation.
 
 **New behavior**
 
@@ -602,7 +603,7 @@ In these cases, attempting to lazy-load would be a no-op.
 
 **New behavior**
 
-Starting with EF Core 3.0, proxies keep track of whether or not a navigation is loaded.
+Starting with EF Core 3.0, proxies keep track of whether or not a navigation property is loaded.
 This means attempting to access a navigation property that is loaded after the context has been disposed will always be a no-op, even when the loaded navigation is empty or null.
 Conversely, attempting to access a navigation property that isn't loaded will throw an exception if the context is disposed even if the navigation property is a non-empty collection.
 If this situation arises, it means the application code is attempting to use lazy-loading at an invalid time and the application should be changed to not do this.
