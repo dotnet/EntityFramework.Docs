@@ -15,6 +15,7 @@ The following API and behavior changes have the potential to break applications 
 Changes that we expect to only impact database providers are documented under [provider changes](../../providers/provider-log.md).
 Breaks in new features introduced from one 3.0 preview to another 3.0 preview aren't documented here.
 
+
 ## LINQ queries aren't evaluated on the client
 
 [Tracking Issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
@@ -25,30 +26,33 @@ It has not yet shipped in any 3.0 preview.
 
 **Old behavior**
 
-Prior to EF Core 3.0, any part of a query that could not be translated to SQL would be instead evaluated on the client.
-Client evaluation of potentially expensive expressions only triggered a warning by default.
+Prior to 3.0, when EF Core failed to convert a query expression to SQL or to a parameter, it would instead evaluate it on the client.
+By default, client evaluation of potentially expensive expressions only triggered a warning.
 
 **New behavior**
 
-Starting with EF Core 3.0, we only allow the top level projection (the expression passed to the last Select LINQ operator in the query) to be evaluated on the client.
-If expressions in any other part of the query cannot be either captured as a parameter or translated to SQL, then an exception is thrown.
+Starting with 3.0, EF Core only allows expressions in the top-level projection (what you pass to the last `Select()` LINQ operator in the query) to be evaluated on the client.
+If expressions in any other part of the query can't be converted to either parameters or SQL, an exception is thrown.
 
 **Why**
 
-The automatic client-evaluation of queries allowed many queries to be executed even if important parts of them could not be translated.
-This can result in unexpected and potentially damaging behavior that may only become apparent in production.
-For example, a query containing an expression in the Where LINQ operator that cannot be translated, can result in all rows from the table to be transferred from the database server, and the filter to be applied on the client.
-This can easily go undetected if the table contains only a few rows in development and staging, but hit hard when you move the application to production where the table contains millions of rows.
+Automatic client evaluation of queries allows many queries to be executed even if important parts of them can't be translated.
+This behavior can result in unexpected and potentially damaging behavior that may only become evident in production.
+For example, a query containing a condition in `Where()` which can't be translated, results in all rows from the table being transferred from the database server, and the filter being applied on the client.
+This situation can easily go undetected if the table contains only a few rows in development.
+But once in production, if the table contains millions of rows, it can be enough to take down the application. 
 Client evaluation warnings also proved too easy to ignore during development.
 
-Besides this, automatic client-evaluation can lead to issues in which improving query translation for specific expressions caused breaking changes between releases.
+Besides this, automatic client evaluation can lead to issues in which improving query translation for specific expressions caused unintended breaking changes between releases.
 
 **Mitigations**
 
-If a query cannot be fully translated, then either rewrite the query in a form that can be translated or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
+If a query can't be fully translated, then either rewrite the query in a form that can be translated or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
 
 
-## Entity Framework Core is not part of the ASP.NET Core shared framework
+## Entity Framework Core isn't part of the ASP.NET Core shared framework
+
+Tracking issue [Announcements#325](https://github.com/aspnet/Announcements/issues/325).
 
 This change was introduced in ASP.NET Core 3.0 preview 1. 
 
@@ -58,15 +62,22 @@ Prior to ASP.NET Core 3.0, when you added a package reference to `Microsoft.AspN
 
 **New behavior**
 
-Starting in 3.0, the ASP.NET Core shared framework does not include EF Core or any EF Core providers. In order to use EF Core in an ASP.NET Core 3.0 application, you need to explicitly add package references to the EF Core database providers that your application will use.
+Starting in 3.0, the ASP.NET Core shared framework doesn't include EF Core or any EF Core providers.
 
 **Why**
-The removal from the ASP.NET Core shared framework enables a NuGet-based acquisition and servicing story for EF Core that works uniformly across all EF Core providers and on all the supported .NET implementations and application types. 
+The change enables a NuGet-based acquisition and servicing story for EF Core that works uniformly across all EF Core providers and on all the supported .NET implementations and application types.
 
-Prior to this change, if your application targetd ASP.NET Core and used SQL Server, acquiring EF Core required one less step. But if the application doesn't target ASP.NET Core or uses a different provider, then you needed to learn a different set of steps. Also, performing a minor version upgrade of ASP.NET Core on a machine or targeted by an application, would force the upgrade of the EF Core and SQL Server povider version, which isn't recommended without proper testing. 
+Prior to this change, if your application targeted ASP.NET Core and used SQL Server, acquiring EF Core required one less step.
+But if the application didn't target ASP.NET Core or used a different provider, you needed to learn a different set of steps.
+Also, performing a version upgrade of ASP.NET Core would always force the upgrade of the EF Core and SQL Server provider version regardless of what version of EF Core you tested your application against. 
 
-Note, Entity Framework Core moving out of the shared framework has no impact on its status as a Microsoft developed, supported, and serviceable library, and it will continue to be covered by the [.NET Core support policy.](https://www.microsoft.com/net/platform/support-policy)
+The change has no impact on EF Core's status as a Microsoft developed, supported, and serviceable library.
+EF Core will continue to be covered by the [.NET Core support policy.](https://www.microsoft.com/net/platform/support-policy)
 
+**Mitigations**
+
+To use EF Core in an ASP.NET Core 3.0 application, explicitly add package references to the EF Core database providers that your application will use.
+This is what you do to use EF Core with any type of application.
 
 ## Entity Framework Core isn't part of the ASP.NET Core shared framework
 
