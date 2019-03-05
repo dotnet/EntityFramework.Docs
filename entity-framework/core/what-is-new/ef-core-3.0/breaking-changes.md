@@ -239,7 +239,7 @@ This change was introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
-Before EF Core 3.0, [Query types](xref:core/modeling/query-types) were a means to query data that doesn't contain a primary key in a structured way.
+Before EF Core 3.0, [query types](xref:core/modeling/query-types) were a means to query data that doesn't contain a primary key in a structured way.
 That is, a query type was used for mapping entity types without keys (more likely from a view, but possibly from a table) while a regular entity type was used when a key was available (more likely from a table, but possibly from a view).
 
 **New behavior**
