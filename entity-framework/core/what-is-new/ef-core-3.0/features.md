@@ -33,7 +33,7 @@ The provider will enable most EF Core features, like automatic change tracking, 
 The new plan is to continue developing the provider alongside EF Core 3.0.   
 
 ## C# 8.0 support 
-Tracking issues [#12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047) and [#10347] (https://github.com/aspnet/EntityFrameworkCore/issues/10347)
+Tracking issues [#12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047) and [#10347](https://github.com/aspnet/EntityFrameworkCore/issues/10347)
 
 We want our customers to take advantage of some of the [new features coming in C# 8.0](https://blogs.msdn.microsoft.com/dotnet/2018/11/12/building-c-8-0/) like async streams (including await for each) and nullable reference types while using EF Core.
 
