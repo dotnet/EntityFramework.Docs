@@ -24,7 +24,7 @@ For a complete list of bug fixes and enhancements underway, you can see [this qu
 
 [Tracking Issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
-This feature isn't included in the current preview. 
+Work on this feature has started but it isn't included in the current preview.
 
 LINQ enables you to write database queries without leaving your language of choice, taking advantage of rich type information to get IntelliSense and compile-time type checking.
 But LINQ also enables you to write an unlimited number of complicated queries, and that has always been a huge challenge for LINQ providers.
