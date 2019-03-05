@@ -15,7 +15,6 @@ The following API and behavior changes have the potential to break applications 
 Changes that we expect to only impact database providers are documented under [provider changes](../../providers/provider-log.md).
 Breaks in new features introduced from one 3.0 preview to another 3.0 preview aren't documented here.
 
-
 ## LINQ queries aren't evaluated on the client
 
 [Tracking Issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
@@ -31,7 +30,7 @@ By default, client evaluation of potentially expensive expressions only triggere
 
 **New behavior**
 
-Starting with 3.0, EF Core only allows expressions in the top-level projection (what you pass to the last `Select()` LINQ operator in the query) to be evaluated on the client.
+Starting with 3.0, EF Core only allows expressions in the top-level projection (the last `Select()` in the query) to be evaluated on the client.
 If expressions in any other part of the query can't be converted to either parameters or SQL, an exception is thrown.
 
 **Why**
@@ -48,7 +47,6 @@ Besides this, automatic client evaluation can lead to issues in which improving 
 **Mitigations**
 
 If a query can't be fully translated, then either rewrite the query in a form that can be translated or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
-
 
 ## Entity Framework Core isn't part of the ASP.NET Core shared framework
 
@@ -733,7 +731,7 @@ Starting with EF Core 3.0, EF Core no longer sends `PRAGMA foreign_keys = 1` whe
 
 **Why**
 
-This change was made because EF Core uses `SQLitePCLRaw.bundle_e_sqlite3` by default, which in turn means that FK enforcement is switched on by default and does not need to be explicitly enabled each time a connection is opened.
+This change was made because EF Core uses `SQLitePCLRaw.bundle_e_sqlite3` by default, which in turn means that FK enforcement is switched on by default and doesn't need to be explicitly enabled each time a connection is opened.
 
 **Mitigations**
 
