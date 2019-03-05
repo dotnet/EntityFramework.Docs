@@ -45,7 +45,8 @@ The provider will enable most EF Core features, like automatic change tracking, 
 We started this effort before EF Core 2.2, and [we have made some preview versions of the provider available](https://blogs.msdn.microsoft.com/dotnet/2018/10/17/announcing-entity-framework-core-2-2-preview-3/).
 The new plan is to continue developing the provider alongside EF Core 3.0. 
 
-## C# 8.0 support 
+## C# 8.0 support
+
 [Tracking Issue #12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047)
 [Tracking Issue #10347](https://github.com/aspnet/EntityFrameworkCore/issues/10347)
 
