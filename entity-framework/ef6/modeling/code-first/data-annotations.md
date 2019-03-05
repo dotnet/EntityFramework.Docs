@@ -239,9 +239,6 @@ In the database, the Blog table will contain all of the properties of the blog i
 
 ![Blog table with complex type](~/ef6/media/jj591583-figure06.png)
 
-Another interesting note is that although the DateCreated property was defined as a non-nullable DateTime in the class, the relevant database field is nullable. You must use the Required annotation if you wish to affect the database schema.
-
- 
 
 ## ConcurrencyCheck
 
