@@ -176,7 +176,7 @@ Before EF Core 3.0, an untracked entity found by `DetectChanges` would be tracke
 
 Starting with EF Core 3.0, if an entity is using generated key values and some key value is set, then the entity will be tracked in the `Modified` state.
 This means that a row for the entity is assumed to exist and it will be updated when `SaveChanges` is called.
-If the key value isn't set, or if the entity type isn't using generated keys, then the new entity will still be tacked as `Added` as in previous versions.
+If the key value isn't set, or if the entity type isn't using generated keys, then the new entity will still be tracked as `Added` as in previous versions.
 
 **Why**
 
