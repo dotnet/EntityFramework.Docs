@@ -31,15 +31,14 @@ By default, client evaluation of potentially expensive expressions only triggere
 **New behavior**
 
 Starting with 3.0, EF Core only allows expressions in the top-level projection (the last `Select()` in the query) to be evaluated on the client.
-If expressions in any other part of the query can't be converted to either parameters or SQL, an exception is thrown.
+If expressions in any other part of the query can't be converted to either parameters or SQL, then an exception is thrown.
 
 **Why**
 
 Automatic client evaluation of queries allows many queries to be executed even if important parts of them can't be translated.
 This behavior can result in unexpected and potentially damaging behavior that may only become evident in production.
 For example, a query containing a condition in `Where()` which can't be translated, results in all rows from the table being transferred from the database server, and the filter being applied on the client.
-This situation can easily go undetected if the table contains only a few rows in development.
-But once in production, if the table contains millions of rows, it can be enough to take down the application. 
+This situation can easily go undetected if the table contains only a few rows in development, but hit hard when you move the application to production, where the table may contain millions of rows. 
 Client evaluation warnings also proved too easy to ignore during development.
 
 Besides this, automatic client evaluation can lead to issues in which improving query translation for specific expressions caused unintended breaking changes between releases.
@@ -50,7 +49,7 @@ If a query can't be fully translated, then either rewrite the query in a form th
 
 ## Entity Framework Core isn't part of the ASP.NET Core shared framework
 
-Tracking issue [Announcements#325](https://github.com/aspnet/Announcements/issues/325).
+[Tracking Issue Announcements#325](https://github.com/aspnet/Announcements/issues/325)
 
 This change was introduced in ASP.NET Core 3.0 preview 1. 
 
@@ -64,49 +63,15 @@ Starting in 3.0, the ASP.NET Core shared framework doesn't include EF Core or an
 
 **Why**
 
-The change makes the acquisition and servicing for EF Core work uniformly across all EF Core providers and on all the supported .NET implementations and application types.
+Before this change, getting EF Core required different steps depending on whether applications targeted ASP.NET Core and SQL Server. 
+Also, upgrading ASP.NET Core forced the upgrade of EF Core and the SQL Server provider, which isn't always desirable.
 
-Before this change, if your application targeted ASP.NET Core and used SQL Server, acquiring EF Core required one less step.
-But if the application didn't target ASP.NET Core or used a different provider, you needed to learn a different set of steps.
-Also, a version upgrade of ASP.NET Core would always force the upgrade of the EF Core and SQL Server provider, which wasn't always desirable.
-
-The change has no impact on EF Core's status as a Microsoft developed, supported, and serviceable library.
-EF Core will continue to be covered by the [.NET Core support policy.](https://www.microsoft.com/net/platform/support-policy)
+With this change, the experience of getting EF Core is the same across all providers, supported .NET implementations and application types.
+Developers can also control when EF Core and providers are upgraded.
 
 **Mitigations**
 
-To use EF Core in an ASP.NET Core 3.0 application, explicitly add package references to the EF Core database providers that your application will use.
-This same method can now be used to install EF Core in any type of application.
-
-## Entity Framework Core isn't part of the ASP.NET Core shared framework
-
-[Tracking Issue Announcements#325](https://github.com/aspnet/Announcements/issues/325).
-
-This change was introduced in ASP.NET Core 3.0 preview 1. 
-
-**Old behavior**
-
-Before ASP.NET Core 3.0, when you added a package reference to `Microsoft.AspNetCore.App` or `Microsoft.AspNetCore.All`, it would include EF Core and some of the EF Core data providers like the SQL Server provider.
-
-**New behavior**
-
-Starting in 3.0, the ASP.NET Core shared framework doesn't include EF Core or any EF Core providers.
-
-**Why**
-
-Before this change, if your application targeted ASP.NET Core and used SQL Server, installing EF Core required one less step.
-But if the application didn't target ASP.NET Core or used a different provider, you needed to learn a different set of steps.
-Also, a version upgrade of ASP.NET Core would always force the upgrade of the EF Core and SQL Server provider, which wasn't always desirable.
-
-With this change, installing and upgrading EF Core works uniformly across all EF Core providers and on all the supported .NET implementations and application types.
-
-The change has no impact on EF Core's status as a Microsoft developed, supported, and serviceable library.
-EF Core will continue to be covered by the [.NET Core support policy.](https://www.microsoft.com/net/platform/support-policy)
-
-**Mitigations**
-
-To use EF Core in an ASP.NET Core 3.0 application, explicitly add package references to the EF Core database providers that your application will use.
-This is what you do to use EF Core in any type of application.
+To use EF Core in an ASP.NET Core 3.0 application or any other supported application, explicitly add a package reference to the EF Core database provider that your application will use.
 
 ## Query execution is logged at Debug level
 
@@ -156,7 +121,7 @@ This change was made to avoid temporary key values erroneously becoming permanen
 Applications may be using the temporary key values to form associations between entities.
 For example, the temporary primary key value may have been used to set an FK value.
 To avoid this, you can:
-* Use key values that aren't stored generated.
+* Use key values that aren't store-generated.
 * Use navigation properties to form relationships instead of setting the FK values.
 
 As an alternative, you can obtain the temporary values from the entity's tracking information.
@@ -210,7 +175,7 @@ This change was introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
-Before 3.0, EF Core applied cascading actions (deleted dependent entities when a required principal was deleted or when the relationship to a required principal was severed) during SaveChanges.
+Before 3.0, EF Core applied cascading actions (deleting dependent entities when a required principal is deleted or when the relationship to a required principal is severed) did not happen until SaveChanges was called.
 
 **New behavior**
 
@@ -250,8 +215,7 @@ Keyless entity types have the same functionality as query types in previous vers
 **Why**
 
 This change was made to reduce the confusion around the purpose of query types.
-Specifically, they're keyless entity types.
-They're inherently read-only because of this, but should not be used just because an entity type is read-only.
+Specifically, they are keyless entity types and they are inherently read-only because of this, but should not be used just because an entity type is read-only.
 Likewise, they are often mapped to views, but this is only because views often don't define keys.
 
 **Mitigations**
@@ -309,7 +273,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
     });
 ```
 
-Additionally calling `Entity()`, `HasOne()` or `Set()` with an owned type target will now throw an exception.
+Additionally calling `Entity()`, `HasOne()`, or `Set()` with an owned type target will now throw an exception.
 
 **Why**
 
@@ -348,8 +312,8 @@ However, if `Order` is an owned type, then this would also make `CustomerId` the
 
 **New behavior**
 
-Starting with EF Core 3.0, EF will not try to use properties for foreign keys by convention if they have the same name as the principal property.
-Principal type name concatenated with principal property name and navigation name concatenated with principal property name patterns will still be matched.
+Starting with 3.0, EF Core won't try to use properties for foreign keys by convention if they have the same name as the principal property.
+Principal type name concatenated with principal property name, and navigation name concatenated with principal property name patterns are still matched.
 For example:
 
 ```C#
@@ -421,7 +385,7 @@ This change was introduced in EF Core 3.0-preview 2.
 
 **Old behavior**
 
-Before EF Core 3.0, even if the backing field for a property was known, EF would still by default read and write the property value using the property getter and setter methods.
+Before 3.0, even if the backing field for a property was known, EF Core would still by default read and write the property value using the property getter and setter methods.
 The exception to this was query execution, where the backing field would be set directly if known.
 
 **New behavior**
@@ -431,7 +395,7 @@ This could cause an application break if the application is relying on additiona
 
 **Why**
 
-This change was made to prevent EF from erroneously triggering business logic by default when performing database operations involving the entities.
+This change was made to prevent EF Core from erroneously triggering business logic by default when performing database operations involving the entities.
 
 **Mitigations**
 
@@ -518,7 +482,7 @@ Starting with EF Core 3.0 an exception will be thrown indicating that no key val
 
 **Why**
 
-This change was made because client-generated `string`/`byte[]` values are generally not useful and this inappropriate default configuration was causing issues with reasoning about generated key values in a common way.
+This change was made because client-generated `string`/`byte[]` values generally aren't useful, and the default behavior made it hard to reason about generated key values in a common way.
 
 **Mitigations**
 
@@ -559,7 +523,7 @@ This change was made to allow association of a logger with a `DbContext` instanc
 
 **Mitigations**
 
-This change should not impact application code unless it is registering and using custom services on the EF internal service provider.
+This change should not impact application code unless it is registering and using custom services on the EF Core internal service provider.
 This isn't common.
 In these cases, most things will still work, but any singleton service that was depending on `ILoggerFactory` will need to be changed to obtain the `ILoggerFactory` in a different way.
 
@@ -604,7 +568,7 @@ In these cases, attempting to lazy-load would be a no-op.
 Starting with EF Core 3.0, proxies keep track of whether or not a navigation property is loaded.
 This means attempting to access a navigation property that is loaded after the context has been disposed will always be a no-op, even when the loaded navigation is empty or null.
 Conversely, attempting to access a navigation property that isn't loaded will throw an exception if the context is disposed even if the navigation property is a non-empty collection.
-If this situation arises, it means the application code is attempting to use lazy-loading at an invalid time and the application should be changed to not do this.
+If this situation arises, it means the application code is attempting to use lazy-loading at an invalid time, and the application should be changed to not do this.
 
 **Why**
 
