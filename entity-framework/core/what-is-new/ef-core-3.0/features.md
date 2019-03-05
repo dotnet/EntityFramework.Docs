@@ -46,7 +46,6 @@ We started this effort before EF Core 2.2, and [we have made some preview versio
 The new plan is to continue developing the provider alongside EF Core 3.0. 
 
 ## C# 8.0 support 
-
 [Tracking Issue #12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047)
 [Tracking Issue #10347](https://github.com/aspnet/EntityFrameworkCore/issues/10347)
 
