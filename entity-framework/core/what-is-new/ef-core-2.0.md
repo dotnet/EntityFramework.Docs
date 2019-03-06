@@ -174,7 +174,7 @@ The new method introduces a few limitations on what can be done in the ```OnConf
 
 ### Explicitly compiled queries
 
-This is the second opt-in performance features designed to offer benefits in high-scale scenarios.
+This is the second opt-in performance feature designed to offer benefits in high-scale scenarios.
 
 Manual or explicitly compiled query APIs have been available in previous versions of EF and also in LINQ to SQL to allow applications to cache the translation of queries so that they can be computed only once and executed many times.
 

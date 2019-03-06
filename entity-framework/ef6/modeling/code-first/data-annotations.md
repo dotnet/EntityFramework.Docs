@@ -239,9 +239,6 @@ In the database, the Blog table will contain all of the properties of the blog i
 
 ![Blog table with complex type](~/ef6/media/jj591583-figure06.png)
 
-Another interesting note is that although the DateCreated property was defined as a non-nullable DateTime in the class, the relevant database field is nullable. You must use the Required annotation if you wish to affect the database schema.
-
- 
 
 ## ConcurrencyCheck
 
@@ -368,7 +365,7 @@ By default, indexes are non-unique, but you can use the **IsUnique** named param
 
 ### Multiple-Column Indexes
 
-Indexes that span multiple columns are specified by using the same name in multiple Index annotations for a given table. When you create multi-column indexes, you need to specify an order for the columns in the index. For example, the following code creates a multi-column index on **Rating** and **BlogId** called **IX\_BlogAndRating**. **BlogId** is the first column in the index and **Rating** is the second.
+Indexes that span multiple columns are specified by using the same name in multiple Index annotations for a given table. When you create multi-column indexes, you need to specify an order for the columns in the index. For example, the following code creates a multi-column index on **Rating** and **BlogId** called **IX\_BlogIdAndRating**. **BlogId** is the first column in the index and **Rating** is the second.
 
 ``` csharp
     public class Post
@@ -435,7 +432,7 @@ You’ll also need to add in the Person class referenced by these properties. Th
     }
 ```
 
-Code first is not able to match up the properties in the two classes on its own. The database table for Posts should have one foreign key for the CreatedBy person and one for the UpdatedBy person but code first will create four will foreign key properties: Person\_Id, Person\_Id1, CreatedBy\_Id and UpdatedBy\_Id.
+Code first is not able to match up the properties in the two classes on its own. The database table for Posts should have one foreign key for the CreatedBy person and one for the UpdatedBy person but code first will create four foreign key properties: Person\_Id, Person\_Id1, CreatedBy\_Id and UpdatedBy\_Id.
 
 ![Posts table with extra foreign keys](~/ef6/media/jj591583-figure10.png)
 

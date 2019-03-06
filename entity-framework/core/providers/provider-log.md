@@ -14,6 +14,14 @@ This page contains links to pull requests made on the EF Core repo that may requ
 
 We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the [`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) and [`providers-fyi`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) labels on our issues and pull requests.
 
+## 2.2 ---> 3.0
+
+* https://github.com/aspnet/EntityFrameworkCore/pull/14022
+  * Removed obsolete APIs and collapsed optional parameter overloads
+  * Removed DatabaseColumn.GetUnderlyingStoreType()
+* https://github.com/aspnet/EntityFrameworkCore/pull/14589
+  * Removed obsolete APIs
+
 ## 2.1 ---> 2.2
 
 ### Test-only changes

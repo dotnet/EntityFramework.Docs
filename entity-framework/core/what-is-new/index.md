@@ -8,11 +8,11 @@ uid: core/what-is-new/index
 
 # What is new in EF core
 
-You can use the links below to learn about new features in each release:
-
 ## Future releases
 
-- [EF Core Roadmap](xref:core/what-is-new/roadmap)
+EF Core 3.0 is currently available in preview. EF Core 3.0 brings a set of [new features](xref:core/what-is-new/ef-core-3.0/features) and also [breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes) you should be aware of when upgrading.
+
+For more details on how we plan future releases like 3.0 and beyond, see the [EF Core Roadmap](xref:core/what-is-new/roadmap).
 
 ## Recent releases
 
