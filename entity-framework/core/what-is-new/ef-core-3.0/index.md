@@ -15,4 +15,4 @@ EF Core 3.0 is currently under development and available as [preview packages pu
 
 Current previews of EF Core 3.0 only include minor improvements and [breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes) we have made in preparation for the rest of the 3.0 work. 
 
-Successive preview releases will contain more of [the planned features](xref:core/what-is-new/ef-core-3.0/features).
+Successive preview releases will contain more of [the features planned for EF Core 3.0](xref:core/what-is-new/ef-core-3.0/features).

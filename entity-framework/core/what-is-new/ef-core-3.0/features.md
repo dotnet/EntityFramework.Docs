@@ -16,7 +16,7 @@ Most of these features are not included in the current preview, but will become 
 
 The reason is that at the beginning of the release we are focusing on implementing planned [breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes).
 Many of these breaking changes are improvements to EF Core on their own.
-Many others are implemented to unblock further improvements. 
+Many others are required to unblock further improvements. 
 
 For a complete list of bug fixes and enhancements underway, you can see [this query in our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc).
 
