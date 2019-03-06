@@ -15,7 +15,7 @@ The following API and behavior changes have the potential to break applications 
 Changes that we expect to only impact database providers are documented under [provider changes](../../providers/provider-log.md).
 Breaks in new features introduced from one 3.0 preview to another 3.0 preview aren't documented here.
 
-## LINQ queries aren't evaluated on the client
+## LINQ queries are no longer evaluated on the client
 
 [Tracking Issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
@@ -25,33 +25,33 @@ It has not yet shipped in any 3.0 preview.
 
 **Old behavior**
 
-Before 3.0, when EF Core failed to convert a query expression to SQL or to a parameter, it would instead evaluate it on the client.
+Before 3.0, when EF Core couldn't convert an expression that was part of a query to either SQL or a parameter, it automatically evaluated the expression on the client.
 By default, client evaluation of potentially expensive expressions only triggered a warning.
 
 **New behavior**
 
-Starting with 3.0, EF Core only allows expressions in the top-level projection (the last `Select()` in the query) to be evaluated on the client.
-If expressions in any other part of the query can't be converted to either parameters or SQL, then an exception is thrown.
+Starting with 3.0, EF Core only allows expressions in the top-level projection (the last `Select()` call in the query) to be evaluated on the client.
+When expressions in any other part of the query can't be converted to either SQL or a parameter, an exception is thrown.
 
 **Why**
 
 Automatic client evaluation of queries allows many queries to be executed even if important parts of them can't be translated.
 This behavior can result in unexpected and potentially damaging behavior that may only become evident in production.
-For example, a query containing a condition in `Where()` which can't be translated, results in all rows from the table being transferred from the database server, and the filter being applied on the client.
-This situation can easily go undetected if the table contains only a few rows in development, but hit hard when you move the application to production, where the table may contain millions of rows. 
+For example, a condition in a `Where()` call which can't be translated can cause all rows from the table to be transferred from the database server, and the filter to be applied on the client.
+This situation can easily go undetected if the table contains only a few rows in development, but hit hard when the application moves to production, where the table may contain millions of rows.
 Client evaluation warnings also proved too easy to ignore during development.
 
 Besides this, automatic client evaluation can lead to issues in which improving query translation for specific expressions caused unintended breaking changes between releases.
 
 **Mitigations**
 
-If a query can't be fully translated, then either rewrite the query in a form that can be translated or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
+If a query can't be fully translated, then either rewrite the query in a form that can be translated, or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
 
-## Entity Framework Core isn't part of the ASP.NET Core shared framework
+## Entity Framework Core is no longer part of the ASP.NET Core shared framework
 
 [Tracking Issue Announcements#325](https://github.com/aspnet/Announcements/issues/325)
 
-This change was introduced in ASP.NET Core 3.0 preview 1. 
+This change was introduced in ASP.NET Core 3.0-preview 1. 
 
 **Old behavior**
 
@@ -59,15 +59,15 @@ Before ASP.NET Core 3.0, when you added a package reference to `Microsoft.AspNet
 
 **New behavior**
 
-Starting in 3.0, the ASP.NET Core shared framework doesn't include EF Core or any EF Core providers.
+Starting in 3.0, the ASP.NET Core shared framework doesn't include EF Core or any EF Core data providers.
 
 **Why**
 
-Before this change, getting EF Core required different steps depending on whether applications targeted ASP.NET Core and SQL Server. 
+Before this change, getting EF Core required different steps depending on whether the application targeted ASP.NET Core and SQL Server or not. 
 Also, upgrading ASP.NET Core forced the upgrade of EF Core and the SQL Server provider, which isn't always desirable.
 
 With this change, the experience of getting EF Core is the same across all providers, supported .NET implementations and application types.
-Developers can also control when EF Core and providers are upgraded.
+Developers can also now control exactly when EF Core and EF Core data providers are upgraded.
 
 **Mitigations**
 
@@ -97,7 +97,7 @@ This logging event is defined by `RelationalEventId.CommandExecuting` with event
 To log SQL at the `Info` level again, switch on logging at the `Debug` level and filter to just this event.
 
 
-## Temporary key values aren't set onto entity instances
+## Temporary key values are no longer set onto entity instances
 
 [Tracking Issue #12378](https://github.com/aspnet/EntityFrameworkCore/issues/12378)
 
@@ -114,17 +114,15 @@ Starting with 3.0, EF Core stores the temporary key value as part of the entity'
 
 **Why**
 
-This change was made to avoid temporary key values erroneously becoming permanent when an entity that has been previously tracked by some `DbContext` instance is moved to a new instance. 
+This change was made to prevent temporary key values from erroneously becoming permanent when an entity that has been previously tracked by some `DbContext` instance is moved to a different `DbContext` instance. 
 
 **Mitigations**
 
-Applications may be using the temporary key values to form associations between entities.
-For example, the temporary primary key value may have been used to set an FK value.
-To avoid this, you can:
-* Use key values that aren't store-generated.
-* Use navigation properties to form relationships instead of setting the FK values.
-
-As an alternative, you can obtain the temporary values from the entity's tracking information.
+Applications that assign primary key values onto foreign keys to form associations between entities may depend on the old behavior if the primary keys are store-generated and belong to entities in the `Added` state.
+This can be avoided by:
+* Not using store-generated keys.
+* Setting navigation properties to form relationships instead of setting foreign key values.
+* Obtain the actual temporary key values from the entity's tracking information.
 For example, `context.Entry(blog).Property(e => e.Id).CurrentValue` will return the temporary value even though `blog.Id` itself hasn't been set.
 
 ## DetectChanges honors store-generated key values
@@ -204,7 +202,7 @@ This change was introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
-Before EF Core 3.0, [query types](xref:core/modeling/query-types) were a means to query data that doesn't contain a primary key in a structured way.
+Before EF Core 3.0, [query types](xref:core/modeling/query-types) were a means to query data that doesn't define a primary key in a structured way.
 That is, a query type was used for mapping entity types without keys (more likely from a view, but possibly from a table) while a regular entity type was used when a key was available (more likely from a table, but possibly from a view).
 
 **New behavior**
@@ -215,7 +213,7 @@ Keyless entity types have the same functionality as query types in previous vers
 **Why**
 
 This change was made to reduce the confusion around the purpose of query types.
-Specifically, they are keyless entity types and they are inherently read-only because of this, but should not be used just because an entity type is read-only.
+Specifically, they are keyless entity types and they are inherently read-only because of this, but they should not be used just because an entity type needs to be read-only.
 Likewise, they are often mapped to views, but this is only because views often don't define keys.
 
 **Mitigations**
@@ -277,7 +275,7 @@ Additionally calling `Entity()`, `HasOne()`, or `Set()` with an owned type targe
 
 **Why**
 
-This change was made to make a cleaner separation between configuring the owned type itself and the _relationship to_ the owned type.
+This change was made to create a cleaner separation between configuring the owned type itself and the _relationship to_ the owned type.
 This in turn removes ambiguity and confusion around methods like `HasForeignKey`.
 
 **Mitigations**
@@ -645,7 +643,7 @@ Before EF Core 3.0, `ToTable()` called on a derived type would be ignored since 
 
 **New behavior**
 
-Starting with EF Core 3.0 and in preparation for adding TPT and TPC support, `ToTable()` called on a derived type will now throw an exception to avoid an unexpected mapping change in the future.
+Starting with EF Core 3.0 and in preparation for adding TPT and TPC support in a later release, `ToTable()` called on a derived type will now throw an exception to avoid an unexpected mapping change in the future.
 
 **Why**
 
