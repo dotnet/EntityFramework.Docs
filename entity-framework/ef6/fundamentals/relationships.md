@@ -45,7 +45,7 @@ public class Department
 {
    public Department()
    {
-     this.Course = new HashSet<Course>();
+     this.Courses = new HashSet<Course>();
    }  
    public int DepartmentID { get; set; }
    public string Name { get; set; }
