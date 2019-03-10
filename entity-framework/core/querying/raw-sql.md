@@ -90,7 +90,7 @@ var blogs = context.Blogs
 
 Queries that use the `FromSql()` follow the exact same change tracking rules as any other LINQ query in EF Core. For example, if the query projects entity types, the results will be tracked by default.  
 
-The following example uses a raw SQL query that selects from a Table-Valued Function (TVF), then disables change tracking with teh call to .AsNoTracking():
+The following example uses a raw SQL query that selects from a Table-Valued Function (TVF), then disables change tracking with the call to .AsNoTracking():
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
