@@ -70,7 +70,7 @@ This characteristic makes them an excellent fit for database views in most scena
 Work on this feature has started but it isn't included in the current preview. 
 
 This feature is about enabling entities that store data in indexed properties instead of regular properties, and also about being able to use instances of the same .NET class (potentially something as simple as a `Dictionary<string, object>`) to represent different entity types in the same EF Core model.
-This feature is a stepping stone to support many-to-many relationships without a join entity [Issue #1368](https://github.com/aspnet/EntityFrameworkCore/issues/1368), which is the most requested improvements for EF Core.
+This feature is a stepping stone to support many-to-many relationships without a join entity ([Issue #1368](https://github.com/aspnet/EntityFrameworkCore/issues/1368)), which is the most requested improvements for EF Core.
 
 ## EF 6.3 on .NET Core 
 
