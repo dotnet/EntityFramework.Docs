@@ -93,8 +93,14 @@ This change was made to reduce the noise at the `Info` log level.
 **Mitigations**
 
 This logging event is defined by `RelationalEventId.CommandExecuting` with event ID 20100.
-To log SQL at the `Info` level again, switch on logging at the `Debug` level and filter to just this event.
-
+To log SQL at the `Info` level again, explicitly configure the level in `OnConfiguring` or `AddDbContext`.
+For example:
+```C#
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer(connectionString)
+        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Info)));
+```
 
 ## Temporary key values are no longer set onto entity instances
 
