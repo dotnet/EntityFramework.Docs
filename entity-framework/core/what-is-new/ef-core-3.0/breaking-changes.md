@@ -17,11 +17,10 @@ Breaks in new features introduced from one 3.0 preview to another 3.0 preview ar
 
 ## LINQ queries are no longer evaluated on the client
 
-[Tracking Issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
+[Tracking Issue #14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
+[Also see issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
-> [!IMPORTANT]
-> We are pre-announcing this break.
-It has not yet shipped in any 3.0 preview.
+This change will be introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -435,6 +434,28 @@ modelBuilder
     .HasField("_id");
 ```
 
+## AddDbContext/AddDbContextPool no longer call AddLogging and AddMemoryCache
+
+[Tracking Issue #14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
+
+This change will be introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Before EF Core 3.0, calling `AddDbContext` or `AddDbContextPool` would also register logging and memory caching services with D.I through calls to [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) and [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
+
+**New behavior**
+
+Starting with EF Core 3.0, `AddDbContext` and `AddDbContextPool` will no longer register these services with Dependency Injection (DI).
+
+**Why**
+
+EF Core 3.0 does not require that these services are in the application's DI cotainer. However, if `ILoggerFactory` is registered in the application's DI container, then it will still be used by EF Core.
+
+**Mitigations**
+
+If your application needs these services, then register them explicitly with the DI container using  [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) or [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
+
 ## DbContext.Entry now performs a local DetectChanges
 
 [Tracking Issue #13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
@@ -606,6 +627,43 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     optionsBuilder
         .ConfigureWarnings(w => w.Log(CoreEventId.ManyServiceProvidersCreatedWarning));
 }
+```
+
+## New behavior for HasOne/HasMany called with a single string
+
+[Tracking Issue #9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
+
+This change will be introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Before EF Core 3.0, code calling `HasOne` or `HasMany` with a single string was interpretted in a confusing way.
+For example:
+```C#
+modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
+```
+
+The code looks like it is relating `Samuri` to some other entity type using the `Entrance` navigation property, which may be private.
+
+In reality, this code attempts to create a relationship to some entity type called `Entrance` with no navigation property.
+
+**New behavior**
+
+Starting with EF Core 3.0, the code above now does what it looked like it should have been doing before.
+
+**Why**
+
+The old behavior was very confusing, especially when reading the configuration code and looking for errors.
+
+**Mitigations**
+
+This will only break applications that are explicitly configuring relationships using strings for type names and without specifying the navigation property explicitly.
+This is not common.
+The previous behavior can be obtained through explicitly passing `null` for the navigation property name.
+For example:
+
+```C#
+modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ```
 
 ## The Relational:TypeMapping annotation is now just TypeMapping
