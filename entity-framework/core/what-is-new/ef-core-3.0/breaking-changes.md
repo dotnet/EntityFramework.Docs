@@ -442,19 +442,19 @@ This change will be introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
-Before EF Core 3.0, calling `AddDbContext` or `AddDbContextPool` would also register logging and memory caching services with D.I through calls to [AddLogging](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging?view=aspnetcore-2.2) and [AddMemoryCache](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache?view=aspnetcore-2.2).
+Before EF Core 3.0, calling `AddDbContext` or `AddDbContextPool` would also register logging and memory caching services with D.I through calls to [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) and [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
 
 **New behavior**
 
-Starting with EF Core 3.0, `AddDbContext` and `AddDbContextPool` will no longer register these services with D.I.
+Starting with EF Core 3.0, `AddDbContext` and `AddDbContextPool` will no longer register these services with Dependency Injection (DI).
 
 **Why**
 
-EF Core 3.0 does not require that these services are in the application's D.I. cotainer. However, if `ILoggerFactory` is registered in the application's D.I. container, then it will still be used by EF Core.
+EF Core 3.0 does not require that these services are in the application's DI cotainer. However, if `ILoggerFactory` is registered in the application's DI container, then it will still be used by EF Core.
 
 **Mitigations**
 
-If your application needs these services, then register them explicitly with the D.I. container using  [AddLogging](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging?view=aspnetcore-2.2) or [AddMemoryCache](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache?view=aspnetcore-2.2).
+If your application needs these services, then register them explicitly with the DI container using  [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) or [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
 
 ## DbContext.Entry now performs a local DetectChanges
 
