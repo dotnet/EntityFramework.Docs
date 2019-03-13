@@ -65,7 +65,7 @@ You can also construct a DbParameter and supply it as a parameter value. This al
 var user = new SqlParameter("user", "johndoe");
 
 var blogs = context.Blogs
-    .FromSql("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
+    .FromSql("EXECUTE dbo.GetMostPopularBlogsForUser @user=@user", user)
     .ToList();
 ```
 
