@@ -6,7 +6,7 @@ ms.assetid: 3f05ffdd-49bc-499c-9732-4a368bf5d2d7
 ---
 # Entity Framework Glossary
 ## Code First
-Creating an Entity Framework model using code. The model can target and existing database or a new database.
+Creating an Entity Framework model using code. The model can target an existing database or a new database.
 
 ## Context
 A class that represents a session with the database, allowing you to query and save data. A context derives from the DbContext or ObjectContext class.
