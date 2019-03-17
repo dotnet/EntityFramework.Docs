@@ -33,7 +33,8 @@ namespace Intro
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=BloggingDatabase;Trusted_Connection=True;ConnectRetryCount=0");
         }
     }
 
