@@ -21,6 +21,8 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
   * Removed DatabaseColumn.GetUnderlyingStoreType()
 * https://github.com/aspnet/EntityFrameworkCore/pull/14589
   * Removed obsolete APIs
+* https://github.com/aspnet/EntityFrameworkCore/pull/15044
+  * Subclasses of CharTypeMapping may have been broken due to behavior changes required to fixing a couple bugs in the base implementation.
 
 ## 2.1 ---> 2.2
 
