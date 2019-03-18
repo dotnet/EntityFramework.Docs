@@ -109,7 +109,7 @@ A production app would typically put each class in a separate file. For the sake
 
 ## Register the context with dependency injection
 
-Services (such as `BloggingContext`) are registered with [dependency injection](http://docs.asp.net/en/latest/fundamentals/dependency-injection.html) during application startup. Components that require these services (such as MVC controllers) are provided these services via constructor parameters or properties.
+Services (such as `BloggingContext`) are registered with [dependency injection](http://docs.asp.net/en/latest/fundamentals/dependency-injection.html) during application startup. Components that require these services (such as MVC controllers) are provided via constructor parameters or properties.
 
 To make `BloggingContext` available to MVC controllers, register it as a service.
 
