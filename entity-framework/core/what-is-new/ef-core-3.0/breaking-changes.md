@@ -649,7 +649,7 @@ For example:
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
 
-The code looks like it is relating `Samuri` to some other entity type using the `Entrance` navigation property, which may be private.
+The code looks like it is relating `Samurai` to some other entity type using the `Entrance` navigation property, which may be private.
 
 In reality, this code attempts to create a relationship to some entity type called `Entrance` with no navigation property.
 
