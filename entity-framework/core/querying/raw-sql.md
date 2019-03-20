@@ -124,6 +124,8 @@ There are a few limitations to be aware of when using raw SQL queries:
 
 * The column names in the result set must match the column names that properties are mapped to. Note this is different from EF6 where property/column mapping was ignored for raw SQL queries and result set column names had to match the property names.
 
+* The column names are ignored if mapping from a stored procedure. Object properties are mapped based on column order. [See Github Issue](https://github.com/aspnet/EntityFrameworkCore/issues/13489)
+
 * The SQL query cannot contain related data. However, in many cases you can compose on top of the query using the `Include` operator to return related data (see [Including related data](#including-related-data)).
 
 * `SELECT` statements passed to this method should generally be composable: If EF Core needs to evaluate additional query operators on the server (for example, to translate LINQ operators applied after `FromSql`), the supplied SQL will be treated as a subquery. This means that the SQL passed should not contain any characters or options that are not valid on a subquery, such as:
