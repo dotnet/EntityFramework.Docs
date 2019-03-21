@@ -18,7 +18,7 @@ EF will only setup inheritance if two or more inherited types are explicitly inc
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Samples/InheritanceDbSets.cs?highlight=3-4&name=Model)]
 
 If you don't want to expose a *DbSet<TEntity>* for one or more entities in the hierarchy, you can use the Fluent API to ensure they are included in the model.
-And if you don't rely on conventions you can specify the base type explicitly using `HasBaseType`.
+And if you don't rely on conventions, you can specify the base type explicitly using `HasBaseType`.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Samples/InheritanceModelBuilder.cs?highlight=7&name=Context)]
 

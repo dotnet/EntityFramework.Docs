@@ -141,7 +141,7 @@ If you are using POCO entities without proxies, you must make sure that the **De
 
 ## Loading related objects
 
-In Entity Framework you use most commonly use the navigation properties to load entities that are related to the returned entity by the defined association. For more information, see [Loading Related Objects](~/ef6/querying/related-data.md).
+In Entity Framework you commonly use navigation properties to load entities that are related to the returned entity by the defined association. For more information, see [Loading Related Objects](~/ef6/querying/related-data.md).
 
 > [!NOTE]
 > In a foreign key association, when you load a related end of a dependent object, the related object will be loaded based on the foreign key value of the dependent that is currently in memory:

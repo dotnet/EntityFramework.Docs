@@ -649,7 +649,7 @@ For example:
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
 
-The code looks like it is relating `Samuri` to some other entity type using the `Entrance` navigation property, which may be private.
+The code looks like it is relating `Samurai` to some other entity type using the `Entrance` navigation property, which may be private.
 
 In reality, this code attempts to create a relationship to some entity type called `Entrance` with no navigation property.
 
@@ -781,3 +781,83 @@ This change was made so that the version of SQLite used on iOS consistent with o
 **Mitigations**
 
 To use the native SQLite version on iOS, configure `Microsoft.Data.Sqlite` to use a different `SQLitePCLRaw` bundle.
+
+## Char values are now stored as TEXT on SQLite
+
+[Tracking Issue #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
+
+This change was introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Char values were previously sored as INTEGER values on SQLite. For example, a char value of *A* was stored as the integer value 65.
+
+**New behavior**
+
+Char values are now sotred as TEXT.
+
+**Why**
+
+Storing the values as TEXT is more natural and makes the database more compatible with other technologies.
+
+**Mitigations**
+
+You can migrate existing databases to the new format by executing SQL like the following.
+
+``` sql
+UPDATE MyTable
+SET CharColumn = char(CharColumn)
+WHERE typeof(CharColumn) = 'integer';
+```
+
+In EF Core, you could also continue using the previous behavior by configuirng a value converter on these properties.
+
+``` csharp
+modelBuilder
+    .Entity<MyEntity>()
+    .Property(e => e.CharProperty)
+    .HasConversion(
+        c => (long)c,
+        i => (char)i);
+```
+
+Microsoft.Data.Sqlite also remains capable of reading character values from both INTEGER and TEXT columns, so certain scenarios may not require any action.
+
+## Migration IDs are now generated using the invariant culture's calendar
+
+[Tracking Issue #12978](https://github.com/aspnet/EntityFrameworkCore/issues/12978)
+
+This change was introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Migration IDs were inadvertantly generated using the currret culture's calendar.
+
+**New behavior**
+
+Migration IDs are now always generated using the invariant culture's calendar (Gregorian).
+
+**Why**
+
+The order of migrations is important when updating the database or resolving merge conflicts. Using the invariant calendar avoids ordering issues that can result from team members having different system calendars.
+
+**Mitigations**
+
+This change affects anyone using a non-Gregorian calender where the year is greater than the Gregorian calendar (like the Thai Buddhist calendar). Existing migration IDs will need to be updated so that new migrations are ordered after existing migrations.
+
+The migration ID can be found in the Migration attribute in the migrations' designer files.
+
+``` diff
+ [DbContext(typeof(MyDbContext))]
+-[Migration("25620318122820_MyMigration")]
++[Migration("20190318122820_MyMigration")]
+ partial class MyMigration
+ {
+```
+
+The Migrations history table also needs to be updated.
+
+``` sql
+UPDATE __EFMigrationsHistory
+SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
+```

@@ -15,7 +15,7 @@ When writing tests for your application it is often desirable to avoid hitting t
 There are two different approaches that can be used to create an in-memory version of your context.  
 
 - **Create your own test doubles** – This approach involves writing your own in-memory implementation of your context and DbSets. This gives you a lot of control over how the classes behave but can involve writing and owning a reasonable amount of code.  
-- **Use a mocking framework to create test doubles** – Using a mocking framework (such as Moq) you can have the in-memory implementations of you context and sets created dynamically at runtime for you.  
+- **Use a mocking framework to create test doubles** – Using a mocking framework (such as Moq) you can have the in-memory implementations of your context and sets created dynamically at runtime for you.  
 
 This article will deal with using a mocking framework. For creating your own test doubles see [Testing with Your Own Test Doubles](writing-test-doubles.md).  
 
