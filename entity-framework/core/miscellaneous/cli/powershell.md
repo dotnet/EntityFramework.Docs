@@ -158,7 +158,7 @@ Parameters:
 
 ## Get-DbContext
 
-Lists available `DbContext` types.
+Gets information about a `DbContext` type.
 
 ## Remove-Migration
 
