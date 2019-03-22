@@ -25,6 +25,8 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
   * Subclasses of CharTypeMapping may have been broken due to behavior changes required to fixing a couple bugs in the base implementation.
 * https://github.com/aspnet/EntityFrameworkCore/pull/15090
   * Added a base class for IDatabaseModelFactory and updated it to use a paramater object to mitigate future breaks.
+* https://github.com/aspnet/EntityFrameworkCore/pull/15123
+  * Used parameter objects in MigrationsSqlGenerator to mitigate future breaks.
 
 ## 2.1 ---> 2.2
 
