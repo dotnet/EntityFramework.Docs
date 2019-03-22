@@ -16,6 +16,8 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
 
 ## 2.2 ---> 3.0
 
+Note that many of the [application-level breaking changes](../what-is-new/ef-core-3.0/breaking-changes.md) will also impact providers.
+
 * https://github.com/aspnet/EntityFrameworkCore/pull/14022
   * Removed obsolete APIs and collapsed optional parameter overloads
   * Removed DatabaseColumn.GetUnderlyingStoreType()
@@ -27,6 +29,33 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
   * Added a base class for IDatabaseModelFactory and updated it to use a paramater object to mitigate future breaks.
 * https://github.com/aspnet/EntityFrameworkCore/pull/15123
   * Used parameter objects in MigrationsSqlGenerator to mitigate future breaks.
+* https://github.com/aspnet/EntityFrameworkCore/pull/14972
+  * Explicit configuration of log levels required some changes to APIs that providers may be using. Specifically, if providers are using the logging infrastructure directly, then this change may break that use. Also, Providers that use the infrastructure (which will be public) going forward will need to derive from `LoggingDefinitions` or `RelationalLoggingDefinitions`. See the SQL Server and in-memory providers for examples.
+* https://github.com/aspnet/EntityFrameworkCore/pull/15091
+  * Core, Relational, and Abstractions resource strings are now public.
+  * `CoreLoggerExtensions` and `RelationalLoggerExtensions` are now public. Providers should use these APIs when logging events that are   * `IRawSqlCommandBuilder` has changed from a singleton service to a scoped service
+  * `IMigrationsSqlGenerator` has changed from a singleton service to a scoped service
+defined at the core or relational level. Do not access logging resources directly; these are still internal.
+* https://github.com/aspnet/EntityFrameworkCore/pull/14706
+  * The infrastructure for building relational commands has been made public so it can be safely used by providers and refactored slightly.
+  * `IRelationalCommandBuilderFactory`has changed from singleton service to a scoped service
+  * `IShaperCommandContextFactory` has changed from singleton service to a scoped service
+  * `ISelectExpressionFactory` has changed from singleton service to a scoped service
+* https://github.com/aspnet/EntityFrameworkCore/pull/14733
+  * `ILazyLoader` has changed from a scoped service to a transient service
+* https://github.com/aspnet/EntityFrameworkCore/pull/14610
+  * `IUpdateSqlGenerator` has changed from a scoped service to a singleton service
+  * Also, `ISingletonUpdateSqlGenerator` has been removed
+* https://github.com/aspnet/EntityFrameworkCore/pull/15067
+  * A lot of internal code that was being used by providers has now been made public
+  * It should no longer be necssary to reference `IndentedStringBuilder` since it has been factored out of the places that exposed it
+  * Usages of `NonCapturingLazyInitializer` should be replaced with `LazyInitializer` from the BCL
+* https://github.com/aspnet/EntityFrameworkCore/pull/14608
+  * This change is fully covereded in the application breaking changes document. For providers, this may be more impacting because testing EF core can often result in hitting this issue, so test infrastructure has changed to make that less likely.
+* https://github.com/aspnet/EntityFrameworkCore/issues/13961
+  * `EntityMaterializerSource` has been simplified
+* https://github.com/aspnet/EntityFrameworkCore/pull/14895
+  * StartsWith translation has changed in a way that providers may want/need to react
 
 ## 2.1 ---> 2.2
 
