@@ -15,6 +15,7 @@ The common relational library (shared by Entity Framework relational database pr
 
 * Schemas
 * Sequences
+* Computed columns
 
 ## Migrations limitations
 
