@@ -6,7 +6,7 @@ ms.assetid: C21F89EE-FB08-4ED9-A2A0-76CB7656E6E4
 uid: core/what-is-new/index
 ---
 
-# What is new in EF core
+# What is new in EF Core
 
 ## Future releases
 
