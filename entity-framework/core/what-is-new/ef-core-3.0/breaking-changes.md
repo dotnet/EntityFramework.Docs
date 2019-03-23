@@ -861,3 +861,21 @@ The Migrations history table also needs to be updated.
 UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
+
+## LogQueryPossibleExceptionWithAggregateOperator has been renamed
+
+[Tracking Issue #15139](https://github.com/aspnet/EntityFrameworkCore/issues/15139)
+
+This change was introduced in EF Core 3.0-preview 4.
+
+**Change**
+
+`RelationalEventId.LogQueryPossibleExceptionWithAggregateOperator` has been renamed to `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperatorWarning`.
+
+**Why**
+
+Aligns the naming of this warning event with all other warning events.
+
+**Mitigations**
+
+Use the new name. (Note that the event ID number has not changed.)
