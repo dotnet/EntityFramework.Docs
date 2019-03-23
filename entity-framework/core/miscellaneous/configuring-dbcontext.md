@@ -165,26 +165,16 @@ One code pattern that could lead to parallel operations with a single `DbContext
 
 ### Avoiding DbContext threading issues with dependency injection
 
-Another code pattern that can lead to accidental use of a `DbContext` on multiple parallel threads is retrieving `DbContext` instances from dependency injection. Registering a `DbContext` using `AddDbContext<TContext>`, as described previously, will add the `DbContext` to the app's dependency injection container with a [scoped lifetime](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2#service-lifetimes). Although a scoped lifetime is generally correct for `DbContext` objects, this can lead to threading problems if a service consuming the `DbContext` performs work in parallel. There are a few options for avoiding parallel `DbContext` usage in these scenarios:
+Another code pattern that can lead to accidental use of a `DbContext` on multiple parallel threads is retrieving `DbContext` instances from dependency injection since the `AddDbContext<TContext>` method will register the `DbContext` with a [scoped lifetime](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2#service-lifetimes) by default. Although a scoped lifetime is generally correct for `DbContext` objects, this can lead to threading problems if a service performs work in parallel within a scope.
 
-1. When registering a `DbContext` with dependency injection, a service lifetime of transient can be requested. This will mean that every instance of the `DbContext` retrieved from  dependency injection will be unique. Services that perform work in parallel can simply request a new instance of the `DbContext` for each worker. Be aware that using a transient lifetime means that different services which request a `DbContext` in a given scope will receive different instances which could be undesirable depending on the scenario.
-    ```csharp
-    // Transient lifetime will provide unique instances for every DbContext retrieval
-    services.AddDbContext<BloggingContext>(options => options.UseSqlite("Data Source=blog.db"), ServiceLifetime.Transient);
-    ```
-2. Alternatively, instead of retrieving a `DbContext` instance from dependency injection, you can create new instances for each worker using a `DbContextOptions<TContext>` object retrieved from dependency injection. Although `DbContext`s cannot be shared between parallel threads, `DbContextOptions<TContext>` instances can be.
-    ```csharp
-    // _contextOptions is a DbContextOptions<BloggingContext>
-    // instance provided by dependency injection
-    var context = new BloggingContext(_contextOptions);
-    ```
-3. Finally, parallel workers can create their own dependency injection scopes (using an `IServiceScopeFactory` instance) and retrieve `DbContext` instances from those scopes. Bear in mind that with this approach all services with scoped lifetime will have new instances retrieved within the worker's scope (not just `DbContext`).
-    ```csharp
-    using (var scope = _scopeFactory.CreateScope())
-    {
-        var scopedContext = scope.ServiceProvider.GetRequiredService<BloggingContext>();    
-        ...
-    ```
+Be sure to use separate `DbContext` objects for parallel workers. This can be done by creating new `DbContext` instances using `DbContextOptions<TContext>` (which can be retrieved via dependency injection and is safe to use in parallel), or by registering the `DbContext` with a transient lifetime as shown here:
+
+```csharp
+// Transient lifetime will provide unique instances for every DbContext retrieval
+services.AddDbContext<BloggingContext>(options => options.UseSqlite("Data Source=blog.db"), ServiceLifetime.Transient);
+```
+
+Another option is to create a new scope for each worker thread using `IServiceScopeFactory`. Bear in mind that this new scope will apply to all services retrieved by the worker.
 
 ## More reading
 
