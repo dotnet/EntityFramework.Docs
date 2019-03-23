@@ -45,6 +45,9 @@ public class RssBlog : Blog
 
 ![image](_static/inheritance-tph-data.png)
 
+>[!NOTE]
+> Database colmmns are automatically made nullable as necessary when using TPH mapping.
+
 ## Data Annotations
 
 You cannot use Data Annotations to configure inheritance.
