@@ -33,9 +33,9 @@ Note that many of the [application-level breaking changes](../what-is-new/ef-cor
   * Explicit configuration of log levels required some changes to APIs that providers may be using. Specifically, if providers are using the logging infrastructure directly, then this change may break that use. Also, Providers that use the infrastructure (which will be public) going forward will need to derive from `LoggingDefinitions` or `RelationalLoggingDefinitions`. See the SQL Server and in-memory providers for examples.
 * https://github.com/aspnet/EntityFrameworkCore/pull/15091
   * Core, Relational, and Abstractions resource strings are now public.
-  * `CoreLoggerExtensions` and `RelationalLoggerExtensions` are now public. Providers should use these APIs when logging events that are   * `IRawSqlCommandBuilder` has changed from a singleton service to a scoped service
+  * `CoreLoggerExtensions` and `RelationalLoggerExtensions` are now public. Providers should use these APIs when logging events that are defined at the core or relational level. Do not access logging resources directly; these are still internal.
+  * `IRawSqlCommandBuilder` has changed from a singleton service to a scoped service
   * `IMigrationsSqlGenerator` has changed from a singleton service to a scoped service
-defined at the core or relational level. Do not access logging resources directly; these are still internal.
 * https://github.com/aspnet/EntityFrameworkCore/pull/14706
   * The infrastructure for building relational commands has been made public so it can be safely used by providers and refactored slightly.
   * `IRelationalCommandBuilderFactory`has changed from singleton service to a scoped service
@@ -51,7 +51,7 @@ defined at the core or relational level. Do not access logging resources directl
   * It should no longer be necssary to reference `IndentedStringBuilder` since it has been factored out of the places that exposed it
   * Usages of `NonCapturingLazyInitializer` should be replaced with `LazyInitializer` from the BCL
 * https://github.com/aspnet/EntityFrameworkCore/pull/14608
-  * This change is fully covereded in the application breaking changes document. For providers, this may be more impacting because testing EF core can often result in hitting this issue, so test infrastructure has changed to make that less likely.
+  * This change is fully covered in the application breaking changes document. For providers, this may be more impacting because testing EF core can often result in hitting this issue, so test infrastructure has changed to make that less likely.
 * https://github.com/aspnet/EntityFrameworkCore/issues/13961
   * `EntityMaterializerSource` has been simplified
 * https://github.com/aspnet/EntityFrameworkCore/pull/14895
