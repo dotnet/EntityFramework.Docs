@@ -861,3 +861,51 @@ The Migrations history table also needs to be updated.
 UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
+
+## LogQueryPossibleExceptionWithAggregateOperator has been renamed
+
+[Tracking Issue #10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
+
+This change was introduced in EF Core 3.0-preview 4.
+
+**Change**
+
+`RelationalEventId.LogQueryPossibleExceptionWithAggregateOperator` has been renamed to `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperatorWarning`.
+
+**Why**
+
+Aligns the naming of this warning event with all other warning events.
+
+**Mitigations**
+
+Use the new name. (Note that the event ID number has not changed.)
+
+## Clarify API for foreign key constraint names
+
+[Tracking Issue #10730](https://github.com/aspnet/EntityFrameworkCore/issues/10730)
+
+This change was introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Before EF Core 3.0, foreign key constraint names were referred to as simply the "name". For example:
+
+```C#
+var constraintName = myForeignKey.Name;
+```
+
+**New behavior**
+
+Starting with EF Core 3.0, foreign key constraint names are now referred to as the "constaint name". For example:
+
+```C#
+var constraintName = myForeignKey.ConstraintName;
+```
+
+**Why**
+
+This change brings consistency to naming in this area, and also clarifies that this is the name of the foreign key constaint, and not the column or property name that the foreign key is defined on.
+
+**Mitigations**
+
+Use the new name.
