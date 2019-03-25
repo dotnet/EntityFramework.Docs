@@ -830,6 +830,8 @@ modelBuilder
         b => new Guid(b));
 ```
 
+Microsoft.Data.Sqlite remains capable of reading Guid values from both BLOB and TEXT columns; however, since the default format for parameters and constants has changed you'll likely need to take action for most scenarios involving Guids.
+
 ## Char values are now stored as TEXT on SQLite
 
 [Tracking Issue #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
