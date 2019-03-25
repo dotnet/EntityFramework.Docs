@@ -782,6 +782,54 @@ This change was made so that the version of SQLite used on iOS consistent with o
 
 To use the native SQLite version on iOS, configure `Microsoft.Data.Sqlite` to use a different `SQLitePCLRaw` bundle.
 
+## Guid values are now stored as TEXT on SQLite
+
+[Tracking Issue #15078](https://github.com/aspnet/EntityFrameworkCore/issues/15078)
+
+This change was introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Guid values were previously sored as BLOB values on SQLite.
+
+**New behavior**
+
+Guid values are now sotred as TEXT.
+
+**Why**
+
+The binary format of Guids is not standardized. Storing the values as TEXT makes the database more compatible with other technologies.
+
+**Mitigations**
+
+You can migrate existing databases to the new format by executing SQL like the following.
+
+``` sql
+UPDATE MyTable
+SET GuidColumn = hex(substr(GuidColumn, 4, 1)) ||
+                 hex(substr(GuidColumn, 3, 1)) ||
+                 hex(substr(GuidColumn, 2, 1)) ||
+                 hex(substr(GuidColumn, 1, 1)) || '-' ||
+                 hex(substr(GuidColumn, 6, 1)) ||
+                 hex(substr(GuidColumn, 5, 1)) || '-' ||
+                 hex(substr(GuidColumn, 8, 1)) ||
+                 hex(substr(GuidColumn, 7, 1)) || '-' ||
+                 hex(substr(GuidColumn, 9, 2)) || '-' ||
+                 hex(substr(GuidColumn, 11, 6))
+WHERE typeof(GuidColumn) == 'blob';
+```
+
+In EF Core, you could also continue using the previous behavior by configuirng a value converter on these properties.
+
+``` csharp
+modelBuilder
+    .Entity<MyEntity>()
+    .Property(e => e.GuidProperty)
+    .HasConversion(
+        g => g.ToByteArray(),
+        b => new Guid(b));
+```
+
 ## Char values are now stored as TEXT on SQLite
 
 [Tracking Issue #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
