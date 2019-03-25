@@ -37,7 +37,7 @@ This article gives complete code listings that you can copy into Visual Studio t
 
 ## Creating a context interface  
 
-We're going to look at testing a service that makes use of an EF model. In order to be able to replace our EF context with an in-memory version for testing, we'll define an interface that our EF context (and it's in-memory double) will imeplement.  
+We're going to look at testing a service that makes use of an EF model. In order to be able to replace our EF context with an in-memory version for testing, we'll define an interface that our EF context (and it's in-memory double) will implement.
 
 The service we are going to test will query and modify data using the DbSet properties of our context and also call SaveChanges to push changes to the database. So we're including these members on the interface.  
 
