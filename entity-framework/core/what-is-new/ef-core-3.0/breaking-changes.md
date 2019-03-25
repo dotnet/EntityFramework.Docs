@@ -782,6 +782,56 @@ This change was made so that the version of SQLite used on iOS consistent with o
 
 To use the native SQLite version on iOS, configure `Microsoft.Data.Sqlite` to use a different `SQLitePCLRaw` bundle.
 
+## Guid values are now stored as TEXT on SQLite
+
+[Tracking Issue #15078](https://github.com/aspnet/EntityFrameworkCore/issues/15078)
+
+This change was introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Guid values were previously sored as BLOB values on SQLite.
+
+**New behavior**
+
+Guid values are now sotred as TEXT.
+
+**Why**
+
+The binary format of Guids is not standardized. Storing the values as TEXT makes the database more compatible with other technologies.
+
+**Mitigations**
+
+You can migrate existing databases to the new format by executing SQL like the following.
+
+``` sql
+UPDATE MyTable
+SET GuidColumn = hex(substr(GuidColumn, 4, 1)) ||
+                 hex(substr(GuidColumn, 3, 1)) ||
+                 hex(substr(GuidColumn, 2, 1)) ||
+                 hex(substr(GuidColumn, 1, 1)) || '-' ||
+                 hex(substr(GuidColumn, 6, 1)) ||
+                 hex(substr(GuidColumn, 5, 1)) || '-' ||
+                 hex(substr(GuidColumn, 8, 1)) ||
+                 hex(substr(GuidColumn, 7, 1)) || '-' ||
+                 hex(substr(GuidColumn, 9, 2)) || '-' ||
+                 hex(substr(GuidColumn, 11, 6))
+WHERE typeof(GuidColumn) == 'blob';
+```
+
+In EF Core, you could also continue using the previous behavior by configuirng a value converter on these properties.
+
+``` csharp
+modelBuilder
+    .Entity<MyEntity>()
+    .Property(e => e.GuidProperty)
+    .HasConversion(
+        g => g.ToByteArray(),
+        b => new Guid(b));
+```
+
+Microsoft.Data.Sqlite remains capable of reading Guid values from both BLOB and TEXT columns; however, since the default format for parameters and constants has changed you'll likely need to take action for most scenarios involving Guids.
+
 ## Char values are now stored as TEXT on SQLite
 
 [Tracking Issue #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
@@ -861,3 +911,51 @@ The Migrations history table also needs to be updated.
 UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
+
+## LogQueryPossibleExceptionWithAggregateOperator has been renamed
+
+[Tracking Issue #10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
+
+This change was introduced in EF Core 3.0-preview 4.
+
+**Change**
+
+`RelationalEventId.LogQueryPossibleExceptionWithAggregateOperator` has been renamed to `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperatorWarning`.
+
+**Why**
+
+Aligns the naming of this warning event with all other warning events.
+
+**Mitigations**
+
+Use the new name. (Note that the event ID number has not changed.)
+
+## Clarify API for foreign key constraint names
+
+[Tracking Issue #10730](https://github.com/aspnet/EntityFrameworkCore/issues/10730)
+
+This change was introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Before EF Core 3.0, foreign key constraint names were referred to as simply the "name". For example:
+
+```C#
+var constraintName = myForeignKey.Name;
+```
+
+**New behavior**
+
+Starting with EF Core 3.0, foreign key constraint names are now referred to as the "constaint name". For example:
+
+```C#
+var constraintName = myForeignKey.ConstraintName;
+```
+
+**Why**
+
+This change brings consistency to naming in this area, and also clarifies that this is the name of the foreign key constaint, and not the column or property name that the foreign key is defined on.
+
+**Mitigations**
+
+Use the new name.
