@@ -56,6 +56,10 @@ Note that many of the [application-level breaking changes](../what-is-new/ef-cor
   * `EntityMaterializerSource` has been simplified
 * https://github.com/aspnet/EntityFrameworkCore/pull/14895
   * StartsWith translation has changed in a way that providers may want/need to react
+* https://github.com/aspnet/EntityFrameworkCore/pull/15168
+  * Convention set services have changed. Providers should now inherit from either "ProviderConventionSet" or "RelationalConventionSet".
+  * Customizations can be added through `IConventionSetCustomizer` services, but this is intended to be used by other extensions, not providers.
+  * Conventions used at runtime should be resolved from `IConventionSetBuilder`.
 
 ## 2.1 ---> 2.2
 
