@@ -93,19 +93,19 @@ context.Products.FromSqlRaw(
     product.Name);
 ```
 
-Use `FromSqlInterpolated`, `ExecuteSqlInterpolated`, and `ExecuteSqlInterpolatedAsync` to create a parameterized query where the parameters are passed as part of the query string.
+Use `FromSqlInterpolated`, `ExecuteSqlInterpolated`, and `ExecuteSqlInterpolatedAsync` to create a parameterized query where the parameters are passed as part of an interpolated query string.
 For example:
 
 ```C#
 context.Products.FromSqlInterpolated(
-    "SELECT * FROM Products WHERE Name = {product.Name}");
+    $"SELECT * FROM Products WHERE Name = {product.Name}");
 ```
 
 Note that both of the queries above will produce the same parameterized SQL with the same SQL parameters.
 
 **Why**
 
-Method overloads like this make it very easy to accidentally call the raw srting method when the intent was to call the interpolated string method.
+Method overloads like this make it very easy to accidentally call the raw srting method when the intent was to call the interpolated string method, and the other way around.
 This could result in queries not being parameterized when they should have been.
 
 **Mitigations**
