@@ -38,9 +38,6 @@ Note that many of the [application-level breaking changes](../what-is-new/ef-cor
   * `IMigrationsSqlGenerator` has changed from a singleton service to a scoped service
 * https://github.com/aspnet/EntityFrameworkCore/pull/14706
   * The infrastructure for building relational commands has been made public so it can be safely used by providers and refactored slightly.
-  * `IRelationalCommandBuilderFactory`has changed from singleton service to a scoped service
-  * `IShaperCommandContextFactory` has changed from singleton service to a scoped service
-  * `ISelectExpressionFactory` has changed from singleton service to a scoped service
 * https://github.com/aspnet/EntityFrameworkCore/pull/14733
   * `ILazyLoader` has changed from a scoped service to a transient service
 * https://github.com/aspnet/EntityFrameworkCore/pull/14610
