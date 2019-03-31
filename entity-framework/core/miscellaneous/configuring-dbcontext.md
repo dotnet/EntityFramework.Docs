@@ -155,6 +155,13 @@ using (var context = serviceProvider.GetService<BloggingContext>())
 
 var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
 ```
+## Avoiding DbContext threading issues
+
+Entity Framework Core does not support multiple parallel operations being run on the same `DbContext`. Concurrent access will result in undefined behavior potentially resulting in application crashes or data corruption. Because of this, it's important to use separate `DbContext` instances for operations that may execute in parallel. 
+
+One common code pattern that could lead to parallel operations with a single `DbContext` is the use of asynchronous extension methods. These methods enable Entity Framework Core operations to be performed in a non-blocking way, but if callers do not `await` completion of one operation before starting another, a `DbContext` could encounter issues from running more than one operation in parallel.
+
+Another code pattern that can lead to accidental use of a `DbContext` on multiple parallel threads is retrieving `DbContext` instances from dependency injection since the `AddDbContext<TContext>` method will register the `DbContext` with a [scoped lifetime](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2#service-lifetimes) by default. Care should be taken to ensure that a `DbContext` instance retrieved from dependency injection is not shared when creating new threads. This is usually achieved by either registering the context as scoped and creating scopes as needed (using `IServiceScopeFactory`), by explicitly creating new `DbContext` instances for each thread, or by registering the `DbContext` as transient (using the overload of `AddDbContext` which takes a `ServiceLifetime` parameter).
 
 ## More reading
 
