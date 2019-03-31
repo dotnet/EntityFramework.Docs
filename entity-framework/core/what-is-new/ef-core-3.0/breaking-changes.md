@@ -72,6 +72,46 @@ Developers can also now control exactly when EF Core and EF Core data providers 
 
 To use EF Core in an ASP.NET Core 3.0 application or any other supported application, explicitly add a package reference to the EF Core database provider that your application will use.
 
+## FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed
+
+[Tracking Issue #10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
+
+This change was introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Before EF Core 3.0, these method names were overloaded to work with either a normal string or a string that should be interpolated into SQL and parameters.
+
+**New behavior**
+
+Starting with EF Core 3.0, use `FromSqlRaw`, `ExecuteSqlRaw`, and `ExecuteSqlRawAsync` to create a parameterized query where the parameters are passed separately from the query string.
+For example:
+
+```C#
+context.Products.FromSqlRaw(
+    "SELECT * FROM Products WHERE Name = {0}",
+    product.Name);
+```
+
+Use `FromSqlInterpolated`, `ExecuteSqlInterpolated`, and `ExecuteSqlInterpolatedAsync` to create a parameterized query where the parameters are passed as part of the query string.
+For example:
+
+```C#
+context.Products.FromSqlInterpolated(
+    "SELECT * FROM Products WHERE Name = {product.Name}");
+```
+
+Note that both of the queries above will produce the same parameterized SQL with the same SQL parameters.
+
+**Why**
+
+Method overloads like this make it very easy to accidentally call the raw srting method when the intent was to call the interpolated string method.
+This could result in queries not being parameterized when they should have been.
+
+**Mitigations**
+
+Switch to use the new method names.
+
 ## Query execution is logged at Debug level
 
 [Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
