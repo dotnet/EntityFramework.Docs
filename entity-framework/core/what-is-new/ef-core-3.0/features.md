@@ -45,6 +45,31 @@ The provider will enable most EF Core features, like automatic change tracking, 
 We started this effort before EF Core 2.2, and [we have made some preview versions of the provider available](https://blogs.msdn.microsoft.com/dotnet/2018/10/17/announcing-entity-framework-core-2-2-preview-3/).
 The new plan is to continue developing the provider alongside EF Core 3.0. 
 
+## Dependent entities sharing the table with the principal are now optional
+
+[Tracking Issue #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
+
+This feature will be introduced in EF Core 3.0-preview 4.
+
+Consider the following model:
+```C#
+public class Order
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public OrderDetails Details { get; set; }
+}
+
+public class OrderDetails
+{
+    public int Id { get; set; }
+    public string ShippingAddress { get; set; }
+}
+```
+
+Starting with EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table it will be possible to add an `Order` without an `OrderDetails` and all of the `OrderDetails` properties except the primary key will be mapped to nullable columns.
+When querying EF Core will set `OrderDetails` to `null` if any of its required properties doesn't have a value or if it has no required properties besides the primary key and all properties are `null`.
+
 ## C# 8.0 support
 
 [Tracking Issue #12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047)
@@ -63,7 +88,7 @@ This feature isn't included in the current preview.
 [Query types](xref:core/modeling/query-types), introduced in EF Core 2.1 and considered entity types without keys in EF Core 3.0, represent data that can be read from the database, but cannot be updated.
 This characteristic makes them an excellent fit for database views in most scenarios, so we plan to automate the creation of entity types without keys when reverse engineering database views.
 
-## Property bag entities 
+## Property bag entities
 
 [Tracking Issue #13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) and [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914)
 
@@ -72,7 +97,7 @@ Work on this feature has started but it isn't included in the current preview.
 This feature is about enabling entities that store data in indexed properties instead of regular properties, and also about being able to use instances of the same .NET class (potentially something as simple as a `Dictionary<string, object>`) to represent different entity types in the same EF Core model.
 This feature is a stepping stone to support many-to-many relationships without a join entity ([issue #1368](https://github.com/aspnet/EntityFrameworkCore/issues/1368)), which is one of the most requested improvements for EF Core.
 
-## EF 6.3 on .NET Core 
+## EF 6.3 on .NET Core
 
 [Tracking Issue EF6#271](https://github.com/aspnet/EntityFramework6/issues/271)
 
