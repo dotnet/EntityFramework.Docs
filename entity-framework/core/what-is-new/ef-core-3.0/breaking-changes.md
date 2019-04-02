@@ -327,6 +327,156 @@ This in turn removes ambiguity and confusion around methods like `HasForeignKey`
 
 Change configuration of owned type relationships to use the new API surface as shown in the example above.
 
+## Dependent entities sharing the table with the principal are now optional
+
+[Tracking Issue #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
+
+This change will be introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Consider the following model:
+```C#
+public class Order
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public OrderDetails Details { get; set; }
+}
+
+public class OrderDetails
+{
+    public int Id { get; set; }
+    public string ShippingAddress { get; set; }
+}
+```
+Before EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table then an `OrderDetails` instance was always required when adding a new `Order`.
+
+
+**New behavior**
+
+Starting with 3.0, EF Core allows to add an `Order` without an `OrderDetails` and maps all of the `OrderDetails` properties except the primary key to nullable columns.
+When querying EF Core sets `OrderDetails` to `null` if any of its required properties doesn't have a value or if it has no required properties besides the primary key and all properties are `null`.
+
+**Mitigations**
+
+If your model has a table sharing dependent with all optional columns, but the navigation pointing to it is not expected to be `null` then the application should be modified to handle cases when the navigation is `null`. If this is not possible a required property should be added to the entity type or at least one property should have a non-`null` value assigned to it.
+
+## All entities sharing a table with a concurrency token column have to map it to a property
+
+[Tracking Issue #14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
+
+This change will be introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Consider the following model:
+```C#
+public class Order
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public byte[] Version { get; set; }
+    public OrderDetails Details { get; set; }
+}
+
+public class OrderDetails
+{
+    public int Id { get; set; }
+    public string ShippingAddress { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Order>()
+        .Property(o => o.Version).IsRowVersion().HasColumnName("Version");
+}
+```
+Before EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table then updating just `OrderDetails` will not update `Version` value on client and the next update will fail.
+
+
+**New behavior**
+
+Starting with 3.0, EF Core propagates the new `Version` value to `Order` if it owns `OrderDetails`. Otherwise an exception is thrown during model validation.
+
+**Why**
+
+This change was made to avoid a stale concurrency token value when only one of the entities mapped to the same table is updated.
+
+**Mitigations**
+
+All entities sharing the table have to include a property that is mapped to the concurrency token column. It's possible the create one in shadow-state:
+```C#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<OrderDetails>()
+        .Property<byte[]>("Version").IsRowVersion().HasColumnName("Version");
+}
+```
+
+## Inherited properties from unmapped types are now mapped to a single column for all derived types
+
+[Tracking Issue #13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
+
+This change will be introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Consider the following model:
+```C#
+public abstract class EntityBase
+{
+    public int Id { get; set; }
+}
+
+public abstract class OrderBase : EntityBase
+{
+    public int ShippingAddress { get; set; }
+}
+
+public class BulkOrder : OrderBase
+{
+}
+
+public class Order : OrderBase
+{
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Ignore<OrderBase>();
+    modelBuilder.Entity<EntityBase>();
+    modelBuilder.Entity<BulkOrder>();
+    modelBuilder.Entity<Order>();
+}
+```
+
+Before EF Core 3.0, the `ShippingAddress` property would be mapped to separate columns for `BulkOrder` and `Order` by default.
+
+**New behavior**
+
+Starting with 3.0, EF Core only creates one column for `ShippingAddress`.
+
+**Why**
+
+The old behavoir was unexpected.
+
+**Mitigations**
+
+The property can still be explicitly mapped to separate column on the derived types:
+
+```C#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Ignore<OrderBase>();
+    modelBuilder.Entity<EntityBase>();
+    modelBuilder.Entity<BulkOrder>()
+        .Property(o => o.ShippingAddress).HasColumnName("BulkShippingAddress");
+    modelBuilder.Entity<Order>()
+        .Property(o => o.ShippingAddress).HasColumnName("ShippingAddress");
+}
+```
+
 ## The foreign key property convention no longer matches same name as the principal property
 
 [Tracking Issue #13274](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
@@ -348,14 +498,13 @@ public class Order
     public int Id { get; set; }
     public int CustomerId { get; set; }
 }
-
 ```
 Before EF Core 3.0, the `CustomerId` property would be used for the foreign key by convention.
 However, if `Order` is an owned type, then this would also make `CustomerId` the primary key and this isn't usually the expectation.
 
 **New behavior**
 
-Starting with 3.0, EF Core won't try to use properties for foreign keys by convention if they have the same name as the principal property.
+Starting with 3.0, EF Core doesn't try to use properties for foreign keys by convention if they have the same name as the principal property.
 Principal type name concatenated with principal property name, and navigation name concatenated with principal property name patterns are still matched.
 For example:
 
@@ -395,6 +544,58 @@ This change was made to avoid erroneously defining a primary key property on the
 **Mitigations**
 
 If the property was intended to be the foreign key, and hence part of the primary key, then explicitly configure it as such.
+
+## Database connection is now closed if not used anymore before the TransactionScope has been completed
+
+[Tracking Issue #14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
+
+This change will be introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Before EF Core 3.0, if the context opens the connection inside a `TransactionScope`, the connection remains open while the current `TransactionScope` is active.
+
+```C#
+using (new TransactionScope())
+{
+    using (AdventureWorks context = new AdventureWorks())
+    {
+        context.ProductCategories.Add(new ProductCategory());
+        context.SaveChanges();
+
+        // Old behavior: Connection is still open at this point
+		
+        var categories = context.ProductCategories().ToList();
+    }
+}
+```
+
+**New behavior**
+
+Starting with 3.0, EF Core closes the connection as soon as it's done using it.
+
+**Why**
+
+This change allows to use multiple contexts in the same `TransactionScope`. The new behavior alose matches EF6.
+
+**Mitigations**
+
+If the connection needs to remain open explicit call to `OpenConnection()` will ensure that EF Core doesn't close it prematurely:
+
+```C#
+using (new TransactionScope())
+{
+    using (AdventureWorks context = new AdventureWorks())
+    {
+        context.Database.OpenConnection();
+        context.ProductCategories.Add(new ProductCategory());
+        context.SaveChanges();
+		
+        var categories = context.ProductCategories().ToList();
+        context.Database.CloseConnection();
+    }
+}
+```
 
 ## Each property uses independent in-memory integer key generation
 
