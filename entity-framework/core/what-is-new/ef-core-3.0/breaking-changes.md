@@ -315,12 +315,12 @@ Before EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped t
 
 **New behavior**
 
-Starting with 3.0, EF Core will allow to add an `Order` without an `OrderDetails` and will map all of the `OrderDetails` properties except the primary key to nullable columns.
-When querying EF Core will set `OrderDetails` to `null` if any of its required properties doesn't have a value or if it has no required properties besides the primary key and all properties are `null`.
+Starting with 3.0, EF Core allows to add an `Order` without an `OrderDetails` and maps all of the `OrderDetails` properties except the primary key to nullable columns.
+When querying EF Core sets `OrderDetails` to `null` if any of its required properties doesn't have a value or if it has no required properties besides the primary key and all properties are `null`.
 
 **Mitigations**
 
-If your model has a table sharing dependent with all optional columns, but the navigation pointing to it should never be `null` then a required property should be added to it or at least one property should have a value.
+If your model has a table sharing dependent with all optional columns, but the navigation pointing to it is not expected to be `null` then the application should be modified to handle cases when the navigation is `null`. If this is not possible a required property should be added to the entity type or at least one property should have a non-`null` value assigned to it.
 
 ## All entities sharing a table with a concurrency token column have to map it to a property
 
@@ -357,7 +357,7 @@ Before EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped t
 
 **New behavior**
 
-Starting with 3.0, EF Core will propagate the new `Version` value to `Order` it owns `OrderDetails`. Otherwise it will throw an exception during model validation.
+Starting with 3.0, EF Core propagates the new `Version` value to `Order` if it owns `OrderDetails`. Otherwise an exception is thrown during model validation.
 
 **Why**
 
@@ -415,7 +415,7 @@ Before EF Core 3.0, the `ShippingAddress` property would be mapped to separate c
 
 **New behavior**
 
-Starting with 3.0, EF Core will only create one column for `ShippingAddress`.
+Starting with 3.0, EF Core only creates one column for `ShippingAddress`.
 
 **Why**
 
@@ -464,7 +464,7 @@ However, if `Order` is an owned type, then this would also make `CustomerId` the
 
 **New behavior**
 
-Starting with 3.0, EF Core won't try to use properties for foreign keys by convention if they have the same name as the principal property.
+Starting with 3.0, EF Core doesn't try to use properties for foreign keys by convention if they have the same name as the principal property.
 Principal type name concatenated with principal property name, and navigation name concatenated with principal property name patterns are still matched.
 For example:
 
@@ -513,7 +513,7 @@ This change will be introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
-Before EF Core 3.0, if the context was created with a closed connection it will be maintained opened while the current `TransactionScope` is active.
+Before EF Core 3.0, if the context opens the connection inside a `TransactionScope`, the connection remains open while the current `TransactionScope` is active.
 
 ```C#
 using (new TransactionScope())
@@ -532,11 +532,11 @@ using (new TransactionScope())
 
 **New behavior**
 
-Starting with 3.0, EF Core will close the connection as soon as it's done using it.
+Starting with 3.0, EF Core closes the connection as soon as it's done using it.
 
 **Why**
 
-This change was made to make the behavior more predictable and match EF6.
+This change allows to use multiple contexts in the same `TransactionScope`. The new behavior alose matches EF6.
 
 **Mitigations**
 
