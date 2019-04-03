@@ -58,14 +58,25 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-You can also construct a DbParameter and supply it as a parameter value. This allows you to use named parameters in the SQL query string.
+You can also construct a DbParameter and supply it as a parameter value:
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var user = new SqlParameter("user", "johndoe");
 
 var blogs = context.Blogs
-    .FromSql("EXECUTE dbo.GetMostPopularBlogsForUser @user=@user", user)
+    .FromSql("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
+    .ToList();
+```
+
+This allows you to use named parameters in the SQL query string, which is useful when a stored procedure has optional parameters:
+
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+``` csharp
+var user = new SqlParameter("user", "johndoe");
+
+var blogs = context.Blogs
+    .FromSql("EXECUTE dbo.GetMostPopularBlogs @filterByUser=@user", user)
     .ToList();
 ```
 
