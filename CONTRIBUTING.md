@@ -1,10 +1,10 @@
 # Contributing to the Entity Framework documentation
 
-The process of contributing the articles and code samples for Entity Framework documentation site are explained below. Contributions can be as simple as typo corrections to as complex as new articles.
+The process of contributing articles and code samples to the Entity Framework documentation is explained below. Contributions can be as simple as typo corrections or as complex as new articles.
 
 ## How to make a simple correction or suggestion
 
-Articles are stored as ‘Markdown’ files in the repository. To make a simple changes to the content of a Markdown file, click the ‘**Edit**’ link in the upper right corner of the browser window. You might need to expand the '**options**' bar to see the ‘**Edit**’ link. Follow the directions to create a pull request (PR). The EF team will review the PR and accept it or suggest changes.
+Articles are stored as Markdown files in this repository. To make a simple change to the content of a Markdown file, click the **Edit** link in the upper right corner of the browser window. You might need to expand the **options** bar to see the **Edit** link. Follow the directions to create a pull request (PR). The EF team will review the PR and accept it or suggest changes.
 
 ## How to make a more complex submission
 
@@ -17,11 +17,11 @@ You'll need a basic understanding of [Git and GitHub.com](https://guides.github.
 
 ## Markdown syntax
 
-Articles are written in [DocFx-flavored Markdown](http://dotnet.github.io/docfx/spec/docfx_flavored_markdown.html), a superset of [GitHub-flavored Markdown (GFM)](https://guides.github.com/features/mastering-markdown/). For examples of DFM syntax for UI features commonly used in the EF documentation, see [Metadata and Markdown Template](https://github.com/dotnet/docs/blob/master/styleguide/template.md) in the .NET Core repo style guide. 
+Articles are written in [DocFx-flavored Markdown (DFM)](http://dotnet.github.io/docfx/spec/docfx_flavored_markdown.html), a superset of [GitHub-flavored Markdown (GFM)](https://guides.github.com/features/mastering-markdown/). For examples of DFM syntax and metadata for UI features commonly used in the EF documentation, see [Metadata and Markdown Template](https://github.com/dotnet/docs/blob/master/styleguide/template.md) in the .NET Core repo style guide.
 
 ## Folder structure conventions
 
-Images, and other static contents are stored in an `_static` folder within each area/folder of the site.
+Images and other static content are stored in an `_static` folder within each area/folder of the site.
 
 Code samples are stored in the `samples` root folder. They are organized into a folder structure that mimics the documentation structure (found under the `entity-framework` root folder).
 
@@ -59,7 +59,7 @@ To highlight selected lines in a rendered snippet (usually renders as yellow bac
 
 ## Test your changes with DocFX
 
-Test your changes with the [DocFX command line tool](https://dotnet.github.io/docfx/tutorial/docfx_getting_started.html#2-use-docfx-as-a-command-line-tool), which creates a locally hosted version of the site. DocFX doesn't render style and site extensions created for docs.microsoft.com.
+Test your changes with the [DocFX command-line tool](https://dotnet.github.io/docfx/tutorial/docfx_getting_started.html#2-use-docfx-as-a-command-line-tool), which creates a locally hosted version of the site. DocFX doesn't render style and site extensions created for docs.microsoft.com.
 
 DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS.
 
@@ -67,7 +67,7 @@ DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS.
 
 * Download and unzip *docfx.zip* from [DocFX releases](https://github.com/dotnet/docfx/releases).
 * Add DocFX to your PATH.
-* In a command line window, navigate to the cloned repository (which contains the *docfx.json* file) and run the following command:
+* In a command-line window, navigate to the cloned repository (which contains the *docfx.json* file) and run the following command:
 
    ``` console
    docfx -t default --serve
