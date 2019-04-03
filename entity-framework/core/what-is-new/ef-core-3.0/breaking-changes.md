@@ -913,6 +913,36 @@ For example:
 modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ```
 
+## The return type for several async methods has been changed from Task to ValueTask
+
+[Tracking Issue #15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
+
+This change will be introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+The following async methods previously returned a `Task<T>`:
+
+* `DbContext.FindAsync()`
+* `DbSet.FindAsync()`
+* `DbContext.AddAsync()`
+* `DbSet.AddAsync()`
+* `ValueGenerator.NextValueAsync()` (and deriving classes)
+
+**New behavior**
+
+The aforementioned methods now return a `ValueTask<T>` over the same `T` as before.
+
+**Why**
+
+This change reduces the number of heap allocations incurred when invoking these methods, improving general performance.
+
+**Mitigations**
+
+Applications simply awaiting the above APIs only need to be recompiled - no source changes are necessary.
+A more complex usage (e.g. passing the returned `Task` to `Task.WhenAny()`) typically require that the returned `ValueTask<T>` be converted to a `Task<T>` by calling `AsTask()` on it.
+Note that this negates the allocation reduction that this change brings.
+
 ## The Relational:TypeMapping annotation is now just TypeMapping
 
 [Tracking Issue #9913](https://github.com/aspnet/EntityFrameworkCore/issues/9913)
