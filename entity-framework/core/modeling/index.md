@@ -40,6 +40,7 @@ You can also apply attributes (known as Data Annotations) to your classes and pr
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Required.cs?range=11-16&highlight=4)] -->
 ``` csharp
+    using System.ComponentModel.DataAnnotations;
     public class Blog
     {
         public int BlogId { get; set; }

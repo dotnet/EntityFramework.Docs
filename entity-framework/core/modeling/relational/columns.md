@@ -22,6 +22,7 @@ You can use Data Annotations to configure the column to which a property is mapp
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/DataAnnotations/Samples/Relational/Column.cs?highlight=3)] -->
 ``` csharp
+using System.ComponentModel.DataAnnotations.Schema;
 public class Blog
 {
     [Column("blog_id")]

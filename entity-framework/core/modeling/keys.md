@@ -43,6 +43,7 @@ You can use Data Annotations to configure a single property to be the key of an 
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/KeySingle.cs?highlight=3,4)] -->
 ``` csharp
+using System.ComponentModel.DataAnnotations;
 class Car
 {
     [Key]

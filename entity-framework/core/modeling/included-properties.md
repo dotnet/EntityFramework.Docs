@@ -19,6 +19,7 @@ You can use Data Annotations to exclude a property from the model.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/IgnoreProperty.cs?highlight=6)] -->
 ``` csharp
+using System.ComponentModel.DataAnnotations.Schema;
 public class Blog
 {
     public int BlogId { get; set; }

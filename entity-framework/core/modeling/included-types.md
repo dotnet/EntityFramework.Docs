@@ -64,6 +64,7 @@ You can use Data Annotations to exclude a type from the model.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/IgnoreType.cs?highlight=9)] -->
 ``` csharp
+using System.ComponentModel.DataAnnotations.Schema;
 public class Blog
 {
     public int BlogId { get; set; }

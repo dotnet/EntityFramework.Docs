@@ -92,7 +92,7 @@ See [Cascade Delete](../saving/cascade-delete.md) for more details about the dif
 
 ## Data Annotations
 
-There are two data annotations that can be used to configure relationships, `[ForeignKey]` and `[InverseProperty]`.
+There are two data annotations that can be used to configure relationships, `[ForeignKey]` and `[InverseProperty]`. These are available in the `System.ComponentModel.DataAnnotations` assembly.
 
 ### [ForeignKey]
 

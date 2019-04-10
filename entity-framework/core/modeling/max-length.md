@@ -22,6 +22,7 @@ You can use the Data Annotations to configure a maximum length for a property. I
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/MaxLength.cs?highlight=4)] -->
 ``` csharp
+using System.ComponentModel.DataAnnotations;
 public class Blog
 {
     public int BlogId { get; set; }
