@@ -103,7 +103,7 @@ Contents of `School` navigation of all People who are Students can be eagerly lo
 
 - using overload of `Include` that takes parameter of type `string`
   ```csharp
-  context.People.Include("Student").ToList()
+  context.People.Include("School").ToList()
   ```
 
 ### Ignored includes
