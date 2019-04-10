@@ -16,7 +16,8 @@ namespace TableSplitting
             #region TableSplitting
             modelBuilder.Entity<DetailedOrder>()
                 .ToTable("Orders")
-                .HasBaseType((string)null);
+                .HasBaseType((string)null)
+                .Ignore(o => o.DetailedOrder);
 
             modelBuilder.Entity<Order>()
                 .ToTable("Orders")
