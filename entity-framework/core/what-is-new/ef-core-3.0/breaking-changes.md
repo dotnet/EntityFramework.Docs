@@ -681,6 +681,44 @@ modelBuilder
     .HasField("_id");
 ```
 
+## Field-only property names should match the field name
+
+This change will be introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Before EF Core 3.0, a property could be specified by a string value and if no property with that name was found on the CLR type then EF Core would try to match it to a field using convetion rules.
+```C#
+private class Blog
+{
+    private int _id;
+    public string Name { get; set; }
+}
+```
+```C#
+modelBuilder
+    .Entity<Blog>()
+    .Property("Id");
+```
+
+**New behavior**
+
+Starting with EF Core 3.0, a field-only property must match the field name exactly.
+
+```C#
+modelBuilder
+    .Entity<Blog>()
+    .Property("_id");
+```
+
+**Why**
+
+This change was made to avoid using the same field for two properties named similarly, it also makes the matching rules for field-only properties the same as for properties mapped to CLR properties.
+
+**Mitigations**
+
+Field-only properties must be named the same as the field they are mapped to.
+
 ## AddDbContext/AddDbContextPool no longer call AddLogging and AddMemoryCache
 
 [Tracking Issue #14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
@@ -1006,11 +1044,35 @@ Use `HasIndex().ForSqlServerInclude()`.
 
 **Why**
 
-This change was made to consolidate the API for indexes with `Includes` into one place for all database providers.
+This change was made to consolidate the API for indexes with `Include` into one place for all database providers.
 
 **Mitigations**
 
 Use the new API, as shown above.
+
+## Metadata API changes
+
+[Tracking Issue #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
+
+This change will be introduced in EF Core 3.0-preview 4.
+
+**New behavior**
+
+The following properties were converted to extension methods:
+
+* `IEntityType.QueryFilter` -> `GetQueryFilter()`
+* `IEntityType.DefiningQuery` -> `GetDefiningQuery()`
+* `IProperty.IsShadowProperty` -> `IsShadowProperty()`
+* `IProperty.BeforeSaveBehavior` -> `GetBeforeSaveBehavior()`
+* `IProperty.AfterSaveBehavior` -> `GetAfterSaveBehavior()`
+
+**Why**
+
+This change simplifies the implementation of the aforementioned interfaces.
+
+**Mitigations**
+
+Use the new extension methods.
 
 ## EF Core no longer sends pragma for SQLite FK enforcement
 
