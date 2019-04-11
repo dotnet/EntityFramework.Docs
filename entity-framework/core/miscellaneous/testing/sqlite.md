@@ -44,6 +44,6 @@ The simplest way to enable testing against a different database is to modify you
 The key to testing with this provider is the ability to tell the context to use SQLite, and control the scope of the in-memory database. The scope of the database is controlled by opening and closing the connection. The database is scoped to the duration that the connection is open. Typically you want a clean database for each test method.
 
 >[!TIP]
-> To use SqliteConnection() and the .UseSqlite() extension method, reference the NuGet package Microsoft.EntityFrameworkCore.Sqlite.
+> To use `SqliteConnection()` and the `.UseSqlite()` extension method, reference the NuGet package [Microsoft.EntityFrameworkCore.Sqlite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite/).
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/TestProject/SQLite/BlogServiceTests.cs)]
