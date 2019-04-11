@@ -20,38 +20,10 @@ By convention, each property will be set up to map to a column with the same nam
 
 You can use Data Annotations to configure the column to which a property is mapped.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/DataAnnotations/Samples/Relational/Column.cs?highlight=3)] -->
-``` csharp
-using System.ComponentModel.DataAnnotations.Schema;
-public class Blog
-{
-    [Column("blog_id")]
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/DataAnnotations/Samples/Relational/Column.cs?highlight=13)]
 
 ## Fluent API
 
 You can use the Fluent API to configure the column to which a property is mapped.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/Column.cs?highlight=7,8,9)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .Property(b => b.BlogId)
-            .HasColumnName("blog_id");
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/Column.cs?highlight=11-13)]

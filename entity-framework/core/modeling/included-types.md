@@ -62,50 +62,10 @@ public class AuditEntry
 
 You can use Data Annotations to exclude a type from the model.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/IgnoreType.cs?highlight=9)] -->
-``` csharp
-using System.ComponentModel.DataAnnotations.Schema;
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public BlogMetadata Metadata { get; set; }
-}
-
-[NotMapped]
-public class BlogMetadata
-{
-    public DateTime LoadedFromDatabase { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/IgnoreType.cs?highlight=20)]
 
 ## Fluent API
 
 You can use the Fluent API to exclude a type from the model.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/IgnoreType.cs?highlight=7)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Ignore<BlogMetadata>();
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public BlogMetadata Metadata { get; set; }
-}
-
-public class BlogMetadata
-{
-    public DateTime LoadedFromDatabase { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/IgnoreType.cs?highlight=12)]

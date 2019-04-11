@@ -41,66 +41,14 @@ class Car
 
 You can use Data Annotations to configure a single property to be the key of an entity.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/KeySingle.cs?highlight=3,4)] -->
-``` csharp
-using System.ComponentModel.DataAnnotations;
-class Car
-{
-    [Key]
-    public string LicensePlate { get; set; }
-
-    public string Make { get; set; }
-    public string Model { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/KeySingle.cs?highlight=13)]
 
 ## Fluent API
 
 You can use the Fluent API to configure a single property to be the key of an entity.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/KeySingle.cs?highlight=7,8)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Car> Cars { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Car>()
-            .HasKey(c => c.LicensePlate);
-    }
-}
-
-class Car
-{
-    public string LicensePlate { get; set; }
-
-    public string Make { get; set; }
-    public string Model { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/KeySingle.cs?highlight=11,12)]
 
 You can also use the Fluent API to configure multiple properties to be the key of an entity (known as a composite key). Composite keys can only be configured using the Fluent API - conventions will never setup a composite key and you can not use Data Annotations to configure one.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/KeyComposite.cs?highlight=7,8)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Car> Cars { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Car>()
-            .HasKey(c => new { c.State, c.LicensePlate });
-    }
-}
-
-class Car
-{
-    public string State { get; set; }
-    public string LicensePlate { get; set; }
-
-    public string Make { get; set; }
-    public string Model { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/KeyComposite.cs?highlight=11,12)]
