@@ -59,6 +59,6 @@ The key to testing with this provider is the ability to tell the context to use 
 Here is an example of a test class that uses the InMemory database. Each test method specifies a unique database name, meaning each method has its own InMemory database.
 
 >[!TIP]
-> To use the `.UseInMemoryDatabase()` extension method, reference the NuGet package `Microsoft.EntityFrameworkCore.InMemory`.
+> To use the `.UseInMemoryDatabase()` extension method, reference the NuGet package [Microsoft.EntityFrameworkCore.InMemory](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory/).
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/TestProject/InMemory/BlogServiceTests.cs)]
