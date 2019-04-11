@@ -718,6 +718,14 @@ This change was made to avoid using the same field for two properties named simi
 **Mitigations**
 
 Field-only properties must be named the same as the field they are mapped to.
+In a later preview of EF Core 3.0, we plan to re-enable explicitly configuring a field name that is different from the property name:
+
+```C#
+modelBuilder
+    .Entity<Blog>()
+    .Property("Id")
+    .HasField("_id");
+```
 
 ## AddDbContext/AddDbContextPool no longer call AddLogging and AddMemoryCache
 
