@@ -11,7 +11,7 @@ uid: core/what-is-new/roadmap
 > [!IMPORTANT]
 > Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
 
-### EF Core 3.0
+## EF Core 3.0
 
 With EF Core 2.2 out the door, our main focus is now EF Core 3.0.
 See [What's new in EF Core 3.0](xref:core/what-is-new/ef-core-3.0/index) for information on planned [new features](xref:core/what-is-new/ef-core-3.0/features) and intentional [breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes) included in the release.

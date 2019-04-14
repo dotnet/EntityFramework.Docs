@@ -41,9 +41,9 @@ dotnet ef migrations add InitialCreate
 
 Three files are added to your project under the **Migrations** directory:
 
-* **00000000000000_InitialCreate.cs**--The main migrations file. Contains the operations necessary to apply the
+* **XXXXXXXXXXXXXX_InitialCreate.cs**--The main migrations file. Contains the operations necessary to apply the
   migration (in `Up()`) and to revert it (in `Down()`).
-* **00000000000000_InitialCreate.Designer.cs**--The migrations metadata file. Contains information used by EF.
+* **XXXXXXXXXXXXXX_InitialCreate.Designer.cs**--The migrations metadata file. Contains information used by EF.
 * **MyContextModelSnapshot.cs**--A snapshot of your current model. Used to determine what changed when adding the next
   migration.
 

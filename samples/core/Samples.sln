@@ -37,9 +37,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "Miscellaneou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "Miscellaneous\Testing\BusinessLogic\BusinessLogic.csproj", "{60B2C7AF-655F-4709-9E7F-7403E61F3A08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Miscellaneous\Logging\Logging\Logging.csproj", "{D3A5391D-9351-44D6-8122-2821C6E4BD62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging", "Miscellaneous\Logging\Logging\Logging.csproj", "{D3A5391D-9351-44D6-8122-2821C6E4BD62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging.ConsoleApp", "Miscellaneous\Logging\Logging.ConsoleApp\Logging.ConsoleApp.csproj", "{804A9357-D201-468C-ABB4-9B77E1D91EA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging.ConsoleApp", "Miscellaneous\Logging\Logging.ConsoleApp\Logging.ConsoleApp.csproj", "{804A9357-D201-468C-ABB4-9B77E1D91EA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.NewDb", "GetStarted\FullNet\ConsoleApp.NewDb\ConsoleApp.NewDb.csproj", "{BCF1FCE4-8D96-4265-96E0-D0AA8AADBDF0}"
 EndProject
@@ -65,7 +65,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogging.Migrations.Startup
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blogging.UWP", "GetStarted\UWP\Blogging.UWP\Blogging.UWP.csproj", "{DEB830D7-7EF9-4792-8B37-DA0A61DF28C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwnedEntities", "Modeling\OwnedEntities\OwnedEntities.csproj", "{802E31AD-2F1E-41A1-A662-5929E2626601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OwnedEntities", "Modeling\OwnedEntities\OwnedEntities.csproj", "{802E31AD-2F1E-41A1-A662-5929E2626601}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryFilters", "QueryFilters\QueryFilters.csproj", "{F96E15B3-C203-4DDC-BA7B-D33EB60B85CC}"
 EndProject
@@ -74,6 +74,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbContextPooling", "DbContextPooling\DbContextPooling.csproj", "{EFA3A7DD-F76C-4DA9-A657-D08E78E7E397}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryTypes", "QueryTypes\QueryTypes.csproj", "{BB293879-4741-4D7A-87E8-3B9727B43A19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableSplitting", "Modeling\TableSplitting\TableSplitting.csproj", "{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -461,6 +463,22 @@ Global
 		{BB293879-4741-4D7A-87E8-3B9727B43A19}.Release|ARM.ActiveCfg = Release|Any CPU
 		{BB293879-4741-4D7A-87E8-3B9727B43A19}.Release|x64.ActiveCfg = Release|Any CPU
 		{BB293879-4741-4D7A-87E8-3B9727B43A19}.Release|x86.ActiveCfg = Release|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Debug|ARM.Build.0 = Debug|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Debug|x64.Build.0 = Debug|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Debug|x86.Build.0 = Debug|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|ARM.ActiveCfg = Release|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|ARM.Build.0 = Release|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|x64.ActiveCfg = Release|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|x64.Build.0 = Release|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|x86.ActiveCfg = Release|Any CPU
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -493,6 +511,7 @@ Global
 		{0B0B2801-3AEA-4BCE-8DA1-7DDE93C89A85} = {2D7D0958-8722-40E5-9BCB-A96B096E7534}
 		{DEB830D7-7EF9-4792-8B37-DA0A61DF28C4} = {2D7D0958-8722-40E5-9BCB-A96B096E7534}
 		{802E31AD-2F1E-41A1-A662-5929E2626601} = {CA5046EC-C894-4535-8190-A31F75FDEB96}
+		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D} = {CA5046EC-C894-4535-8190-A31F75FDEB96}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C98D35-54EF-46A6-8F3B-1855C1AE4F70}

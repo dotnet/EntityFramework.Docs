@@ -4,7 +4,7 @@ namespace OwnedEntities
 {
     public class OwnedEntityContext : DbContext
     {
-        public DbSet<Order> Order { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<DetailedOrder> DetailedOrders { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

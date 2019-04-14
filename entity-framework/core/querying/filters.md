@@ -6,6 +6,9 @@ uid: core/querying/filters
 ---
 # Global Query Filters
 
+> [!NOTE]
+> This feature was introduced in EF Core 2.0.
+
 Global query filters are LINQ query predicates (a boolean expression typically passed to the LINQ *Where* query operator) applied to Entity Types in the metadata model (usually in *OnModelCreating*). Such filters are automatically applied to any LINQ queries involving those Entity Types, including Entity Types referenced indirectly, such as through the use of Include or direct navigation property references. Some common applications of this feature are:
 
 * **Soft delete** - An Entity Type defines an *IsDeleted* property.
