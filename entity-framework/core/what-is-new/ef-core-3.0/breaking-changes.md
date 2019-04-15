@@ -239,6 +239,28 @@ context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
 
+## DeleteBehavior.Restrict has cleaner semantics
+
+[Tracking Issue #12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
+
+This change will be introduced in EF Core 3.0-preview 5.
+
+**Old behavior**
+
+Before 3.0, `DeleteBehavior.Restrict` created foreign keys in the database with `Restrict` semantics, but also changed internal fixup in a non-obvious way.
+
+**New behavior**
+
+Starting with 3.0, `DeleteBehavior.Restrict` ensures that foreign keys are created with `Restrict` semantics--that is, no cascades; throw on constraint violation--without also impacting EF internal fixup.
+
+**Why**
+
+This change was made to improve the experience for using `DeleteBehavior` in an intuitive manner, without unexpected side-effects.
+
+**Mitigations**
+
+The previous behavior can be restored by using `DeleteBehavior.ClientNoAction`.
+
 ## Query types are consolidated with entity types
 
 [Tracking Issue #14194](https://github.com/aspnet/EntityFrameworkCore/issues/14194)
