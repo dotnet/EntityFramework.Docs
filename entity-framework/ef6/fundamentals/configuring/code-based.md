@@ -100,7 +100,7 @@ For this, EntityFramework allows an event handler to be registered that can modi
 - At app startup (before EF is used) the plug-in or provider should register the event handler method for this event. (Note that this must happen before the application uses EF.)  
 - The event handler makes a call to ReplaceService for every service that needs to be replaced.  
 
-For example, to repalce IDbConnectionFactory and DbProviderService you would register a handler something like this:  
+For example, to replace IDbConnectionFactory and DbProviderService you would register a handler something like this:  
 
 ``` csharp
 DbConfiguration.Loaded += (_, a) =>
