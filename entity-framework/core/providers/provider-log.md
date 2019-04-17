@@ -77,7 +77,7 @@ Note that many of the [application-level breaking changes](../what-is-new/ef-cor
   * Providers using these tests may need to react
 * https://github.com/aspnet/EntityFrameworkCore/pull/12141 - Return the context to the pool instead of disposing in functional tests
   * This change includes some test refactoring which may require providers to react
-
+* https://github.com/aspnet/EntityFrameworkCore/pull/15288 - Data seeding has been refactored into a public API to avoid the need to use internal types. This should only impact non-relational providers, since seeding is handled by the base relational class for all relational providers.
 
 ### Test and product code changes
 
