@@ -22,6 +22,8 @@ You can use Data Annotations to indicate that a property is required.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Required.cs?highlight=4)] -->
 ``` csharp
+using System.ComponentModel.DataAnnotations;
+
 public class Blog
 {
     public int BlogId { get; set; }
