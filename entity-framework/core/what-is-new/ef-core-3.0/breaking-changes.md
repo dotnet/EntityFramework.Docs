@@ -91,6 +91,7 @@ Starting in 3.0, the .NET SDK does not incude the `dotnet ef` tool, so before yo
 This change allows us to distribute and update `dotnet ef` as a regular .NET CLI tool on NuGet, consistent with the fact that the EF Core 3.0 is also always distributed as a NuGet package.
 
 **Mitigations**
+
 To be able to manage migrations or scaffold a `DbContext`, install `dotnet-ef` using the `dotnet tool install` command.
 For example, to install it as a global tool, you can type this command:
 
