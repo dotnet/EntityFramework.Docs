@@ -72,6 +72,33 @@ Developers can also now control exactly when EF Core and EF Core data providers 
 
 To use EF Core in an ASP.NET Core 3.0 application or any other supported application, explicitly add a package reference to the EF Core database provider that your application will use.
 
+## The Entity Framework Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK
+
+[Tracking Issue #14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
+
+This change was introduced in EF Core 3.0-preview 4 and the corresponding version of the .NET Core SDK.
+
+**Old behavior**
+
+Before 3.0, the `dotnet ef` tool was included in the .NET Core SDK and was readily available to use from the command line from any project without requiring extra steps. 
+
+**New behavior**
+
+Starting in 3.0, the .NET SDK does not incude the `dotnet ef` tool, so before you can use it you have to explicitly install it as a local or global tool. 
+
+**Why**
+
+This change allows us to distribute and update `dotnet ef` as a regular .NET CLI tool on NuGet, consistent with the fact that the EF Core 3.0 is also always distributed as a NuGet package.
+
+**Mitigations**
+To be able to manage migrations or scaffold a `DbContext`, install `dotnet-ef` using the `dotnet tool install` command. For example, to install it as a global tool, you can type this command:
+
+  ``` console
+  $ dotnet tool install --global dotnet-ef --version <exact-version>
+  ```
+
+You can also obtain it a local tool when you restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](https://github.com/dotnet/cli/issues/10288).
+
 ## FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed
 
 [Tracking Issue #10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
