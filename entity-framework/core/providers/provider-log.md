@@ -57,6 +57,7 @@ Note that many of the [application-level breaking changes](../what-is-new/ef-cor
   * Convention set services have changed. Providers should now inherit from either "ProviderConventionSet" or "RelationalConventionSet".
   * Customizations can be added through `IConventionSetCustomizer` services, but this is intended to be used by other extensions, not providers.
   * Conventions used at runtime should be resolved from `IConventionSetBuilder`.
+* https://github.com/aspnet/EntityFrameworkCore/pull/15288 - Data seeding has been refactored into a public API to avoid the need to use internal types. This should only impact non-relational providers, since seeding is handled by the base relational class for all relational providers.
 
 ## 2.1 ---> 2.2
 
@@ -77,7 +78,6 @@ Note that many of the [application-level breaking changes](../what-is-new/ef-cor
   * Providers using these tests may need to react
 * https://github.com/aspnet/EntityFrameworkCore/pull/12141 - Return the context to the pool instead of disposing in functional tests
   * This change includes some test refactoring which may require providers to react
-
 
 ### Test and product code changes
 
