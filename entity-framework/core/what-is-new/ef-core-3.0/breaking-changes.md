@@ -72,7 +72,7 @@ Developers can also now control exactly when EF Core and EF Core data providers 
 
 To use EF Core in an ASP.NET Core 3.0 application or any other supported application, explicitly add a package reference to the EF Core database provider that your application will use.
 
-## The Entity Framework Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK
+## The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK
 
 [Tracking Issue #14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
 
