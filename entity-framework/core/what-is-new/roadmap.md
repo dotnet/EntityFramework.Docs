@@ -44,7 +44,7 @@ It's difficult to detail the whole process we follow to plan a release.
 Much of it is discussing the specific features, opportunities and priorities, and the process itself also evolves with every release.
 However, we can summarize the common questions we try to answer when deciding what to work on next:
 
-1. **How many developers we think will use the feature and how much better will it make their applications/experience?** To answer this, we collect feedback from many sources — Comments and votes on issues is one of those sources.
+1. **How many developers we think will use the feature and how much better will it make their applications or experience?** To answer this, we collect feedback from many sources — Comments and votes on issues is one of those sources.
 
 2. **What are the workarounds people can use if we don't implement this feature yet?** For example, many developers can map a join table to work around lack of native many-to-many support. Obviously, not all developers want to do it, but many can, and that counts as a factor in our decision.
 
