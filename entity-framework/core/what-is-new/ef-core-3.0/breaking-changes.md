@@ -627,7 +627,7 @@ Starting with 3.0, EF Core closes the connection as soon as it's done using it.
 
 **Why**
 
-This change allows to use multiple contexts in the same `TransactionScope`. The new behavior alose matches EF6.
+This change allows to use multiple contexts in the same `TransactionScope`. The new behavior also matches EF6.
 
 **Mitigations**
 
