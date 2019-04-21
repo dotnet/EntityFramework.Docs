@@ -685,7 +685,7 @@ The exception to this was query execution, where the backing field would be set 
 
 **New behavior**
 
-Starting with EF Core 3.0, if the backing field for a property is known, then will always read and write that property using the backing field.
+Starting with EF Core 3.0, if the backing field for a property is known, then EF Core will always read and write that property using the backing field.
 This could cause an application break if the application is relying on additional behavior coded into the getter or setter methods.
 
 **Why**
