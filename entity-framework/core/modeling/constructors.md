@@ -84,7 +84,7 @@ Some things to note:
 * Not all properties need to have constructor parameters. For example, the Post.Content property is not set by any constructor parameter, so EF Core will set it after calling the constructor in the normal way.
 * The parameter types and names must match property types and names, except that properties can be Pascal-cased while the parameters are camel-cased.
 * EF Core cannot set navigation properties (such as Blog or Posts above) using a constructor.
-* The constructor can be public, private, or have any other accessibility.
+* The constructor can be public, private, or have any other accessibility. However when using Lazy Loading Proxies the constructor must be, at minimum, protected.
 
 ### Read-only properties
 
