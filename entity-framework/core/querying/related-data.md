@@ -329,3 +329,5 @@ public void ConfigureServices(IServiceCollection services)
     ...
 }
 ```
+
+Or you could decorate the inverse navigation property with the `JsonIgnore` attribute.
