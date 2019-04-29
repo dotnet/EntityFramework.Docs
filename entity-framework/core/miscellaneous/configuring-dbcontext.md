@@ -161,7 +161,7 @@ Entity Framework Core does not support multiple parallel operations being run on
 
 When EF Core detects an attempt to use a `DbContext` instance concurrently, you'll see an `InvalidOperationException` with a message like this: 
 
-_A second operation started on this context before a previous operation completed. This is usually caused by different threads using the same instance of DbContext, however instance members are not guaranteed to be thread safe._
+> A second operation started on this context before a previous operation completed. This is usually caused by different threads using the same instance of DbContext, however instance members are not guaranteed to be thread safe.
 
 When concurrent access goes undetected, it can result in undefined behavior, application crashes and data corruption.
 
