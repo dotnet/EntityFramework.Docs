@@ -330,4 +330,4 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-Or you could decorate the inverse navigation property with the `JsonIgnore` attribute.
+Another alternative is to decorate one of the navigation properties with the `[JsonIgnore]` attribute, which instructs Json.NET to not traverse that navigation property while serializing.
