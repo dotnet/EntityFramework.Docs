@@ -329,3 +329,5 @@ public void ConfigureServices(IServiceCollection services)
     ...
 }
 ```
+
+Another alternative is to decorate one of the navigation properties with the `[JsonIgnore]` attribute, which instructs Json.NET to not traverse that navigation property while serializing.
