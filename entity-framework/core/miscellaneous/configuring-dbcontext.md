@@ -157,7 +157,7 @@ var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
 ```
 ## Avoiding DbContext threading issues
 
-Entity Framework Core does not support multiple parallel operations being run on the same `DbContext` instance. Because of this it's important to always use separate `DbContext` instances for operations that execute in parallel. 
+Entity Framework Core does not support multiple parallel operations being run on the same `DbContext` instance. This includes both parallel execution of async queries and any explicit concurrent use from multiple threads. Therefore, always `await` async calls immediately, or use separate `DbContext` instances for operations that execute in parallel.
 
 When EF Core detects an attempt to use a `DbContext` instance concurrently, you'll see an `InvalidOperationException` with a message like this: 
 
