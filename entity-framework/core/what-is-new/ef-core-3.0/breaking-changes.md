@@ -134,7 +134,7 @@ Note that both of the queries above will produce the same parameterized SQL with
 
 **Why**
 
-Method overloads like this make it very easy to accidentally call the raw srting method when the intent was to call the interpolated string method, and the other way around.
+Method overloads like this make it very easy to accidentally call the raw string method when the intent was to call the interpolated string method, and the other way around.
 This could result in queries not being parameterized when they should have been.
 
 **Mitigations**
