@@ -223,7 +223,7 @@ dotnet run
 
 ## Additional Resources
 
+* [Get started with ASP.NET Core MVC
+](/aspnet/core/tutorials/first-mvc-app/start-mvc) or [Get started with Razor Pages in ASP.NET Core](/aspnet/core/tutorials/razor-pages/razor-pages-start)
+* [Get started with EF Core in an ASP.NET MVC web app](/aspnet/core/data/ef-mvc/intro) or [Tutorial: Razor Pages with Entity Framework Core in ASP.NET Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
 * [Tutorial: Get started with EF Core on .NET Core with a new database using SQLite](xref:core/get-started/netcore/new-db-sqlite)
-* [Get started with Razor Pages in ASP.NET Core](/aspnet/core/tutorials/razor-pages/razor-pages-start) or [Get started with ASP.NET Core MVC
-](/aspnet/core/tutorials/first-mvc-app/start-mvc)
-* [Tutorial: Razor Pages with Entity Framework Core in ASP.NET Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro) or [Get started with EF Core in an ASP.NET MVC web app](/aspnet/core/data/ef-mvc/intro)
