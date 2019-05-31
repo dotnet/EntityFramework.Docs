@@ -84,7 +84,7 @@ Before 3.0, the `dotnet ef` tool was included in the .NET Core SDK and was readi
 
 **New behavior**
 
-Starting in 3.0, the .NET SDK does not incude the `dotnet ef` tool, so before you can use it you have to explicitly install it as a local or global tool. 
+Starting in 3.0, the .NET SDK does not include the `dotnet ef` tool, so before you can use it you have to explicitly install it as a local or global tool. 
 
 **Why**
 
@@ -738,7 +738,7 @@ This change will be introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
-Before EF Core 3.0, a property could be specified by a string value and if no property with that name was found on the CLR type then EF Core would try to match it to a field using convetion rules.
+Before EF Core 3.0, a property could be specified by a string value and if no property with that name was found on the CLR type then EF Core would try to match it to a field using convention rules.
 ```C#
 private class Blog
 {
@@ -794,7 +794,7 @@ Starting with EF Core 3.0, `AddDbContext` and `AddDbContextPool` will no longer 
 
 **Why**
 
-EF Core 3.0 does not require that these services are in the application's DI cotainer. However, if `ILoggerFactory` is registered in the application's DI container, then it will still be used by EF Core.
+EF Core 3.0 does not require that these services are in the application's DI container. However, if `ILoggerFactory` is registered in the application's DI container, then it will still be used by EF Core.
 
 **Mitigations**
 
@@ -981,7 +981,7 @@ This change will be introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
-Before EF Core 3.0, code calling `HasOne` or `HasMany` with a single string was interpretted in a confusing way.
+Before EF Core 3.0, code calling `HasOne` or `HasMany` with a single string was interpreted in a confusing way.
 For example:
 ```C#
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
@@ -1211,7 +1211,7 @@ SET GuidColumn = hex(substr(GuidColumn, 4, 1)) ||
 WHERE typeof(GuidColumn) == 'blob';
 ```
 
-In EF Core, you could also continue using the previous behavior by configuirng a value converter on these properties.
+In EF Core, you could also continue using the previous behavior by configuring a value converter on these properties.
 
 ``` csharp
 modelBuilder
@@ -1236,7 +1236,7 @@ Char values were previously sored as INTEGER values on SQLite. For example, a ch
 
 **New behavior**
 
-Char values are now sotred as TEXT.
+Char values are now stored as TEXT.
 
 **Why**
 
@@ -1252,7 +1252,7 @@ SET CharColumn = char(CharColumn)
 WHERE typeof(CharColumn) = 'integer';
 ```
 
-In EF Core, you could also continue using the previous behavior by configuirng a value converter on these properties.
+In EF Core, you could also continue using the previous behavior by configuring a value converter on these properties.
 
 ``` csharp
 modelBuilder
@@ -1273,7 +1273,7 @@ This change was introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
-Migration IDs were inadvertantly generated using the currret culture's calendar.
+Migration IDs were inadvertently generated using the current culture's calendar.
 
 **New behavior**
 
@@ -1285,7 +1285,7 @@ The order of migrations is important when updating the database or resolving mer
 
 **Mitigations**
 
-This change affects anyone using a non-Gregorian calender where the year is greater than the Gregorian calendar (like the Thai Buddhist calendar). Existing migration IDs will need to be updated so that new migrations are ordered after existing migrations.
+This change affects anyone using a non-Gregorian calendar where the year is greater than the Gregorian calendar (like the Thai Buddhist calendar). Existing migration IDs will need to be updated so that new migrations are ordered after existing migrations.
 
 The migration ID can be found in the Migration attribute in the migrations' designer files.
 
@@ -1338,7 +1338,7 @@ var constraintName = myForeignKey.Name;
 
 **New behavior**
 
-Starting with EF Core 3.0, foreign key constraint names are now referred to as the "constaint name". For example:
+Starting with EF Core 3.0, foreign key constraint names are now referred to as the "constraint name". For example:
 
 ```C#
 var constraintName = myForeignKey.ConstraintName;
@@ -1346,7 +1346,7 @@ var constraintName = myForeignKey.ConstraintName;
 
 **Why**
 
-This change brings consistency to naming in this area, and also clarifies that this is the name of the foreign key constaint, and not the column or property name that the foreign key is defined on.
+This change brings consistency to naming in this area, and also clarifies that this is the name of the foreign key constraint, and not the column or property name that the foreign key is defined on.
 
 **Mitigations**
 

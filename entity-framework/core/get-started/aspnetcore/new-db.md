@@ -221,9 +221,12 @@ dotnet run
 
   ![Index page](_static/index-new-db.png)
 
-## Additional Resources
+## Additional tutorials
 
-* [Tutorial: Get started with EF Core on .NET Core with a new database using SQLite](xref:core/get-started/netcore/new-db-sqlite)
-* [Get started with Razor Pages in ASP.NET Core](/aspnet/core/tutorials/razor-pages/razor-pages-start) or [Get started with ASP.NET Core MVC
-](/aspnet/core/tutorials/first-mvc-app/start-mvc)
-* [Tutorial: Razor Pages with Entity Framework Core in ASP.NET Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro) or [Get started with EF Core in an ASP.NET MVC web app](/aspnet/core/data/ef-mvc/intro)
+* [Get started with EF Core on .NET Core with a new database using SQLite](xref:core/get-started/netcore/new-db-sqlite)
+* ASP.NET Core MVC:
+  * [Get started with ASP.NET Core MVC](/aspnet/core/tutorials/first-mvc-app/start-mvc)
+  * [Get started with EF Core in an ASP.NET MVC web app](/aspnet/core/data/ef-mvc/intro)
+* [Razor Pages](/aspnet/core/razor-pages/index):
+  * [Get started with Razor Pages in ASP.NET Core](/aspnet/core/tutorials/razor-pages/razor-pages-start)
+  * [Razor Pages with Entity Framework Core in ASP.NET Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
