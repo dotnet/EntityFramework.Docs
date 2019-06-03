@@ -694,7 +694,7 @@ This change was made to prevent EF Core from erroneously triggering business log
 
 **Mitigations**
 
-The pre-3.0 behavior can be restored through configuration of the property access mode in the modelBuilder fluent API.
+The pre-3.0 behavior can be restored through configuration of the property access mode on `ModelBuilder`.
 For example:
 
 ```C#
