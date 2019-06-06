@@ -14,7 +14,7 @@ Shadow properties are useful when there is data in the database that should not 
 Shadow property values can be obtained and changed through the `ChangeTracker` API.
 
 ``` csharp
-   context.Entry(myBlog).Property("LastUpdated").CurrentValue = DateTime.Now;
+context.Entry(myBlog).Property("LastUpdated").CurrentValue = DateTime.Now;
 ```
 
 Shadow properties can be referenced in LINQ queries via the `EF.Property` static method.

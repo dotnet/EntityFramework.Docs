@@ -694,7 +694,7 @@ This change was made to prevent EF Core from erroneously triggering business log
 
 **Mitigations**
 
-The pre-3.0 behavior can be restored through configuration of the property access mode in the modelBuilder fluent API.
+The pre-3.0 behavior can be restored through configuration of the property access mode on `ModelBuilder`.
 For example:
 
 ```C#
@@ -1186,7 +1186,7 @@ Guid values were previously sored as BLOB values on SQLite.
 
 **New behavior**
 
-Guid values are now sotred as TEXT.
+Guid values are now stored as TEXT.
 
 **Why**
 
