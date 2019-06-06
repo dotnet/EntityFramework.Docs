@@ -1186,7 +1186,7 @@ Guid values were previously sored as BLOB values on SQLite.
 
 **New behavior**
 
-Guid values are now sotred as TEXT.
+Guid values are now stored as TEXT.
 
 **Why**
 
