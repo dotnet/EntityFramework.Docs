@@ -14,7 +14,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relationships.NoNavigation
             modelBuilder.Entity<Post>()
                 .HasOne<Blog>()
                 .WithMany()
-                .HasForeignKey(p => p.PostForeignKey);
+                .HasForeignKey(p => p.BlogId);
         }
     }
 
@@ -30,7 +30,7 @@ namespace EFModeling.Configuring.FluentAPI.Samples.Relationships.NoNavigation
         public string Title { get; set; }
         public string Content { get; set; }
 
-        public int PostForeignKey { get; set; }
+        public int BlogId { get; set; }
     }
     #endregion
 }
