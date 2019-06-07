@@ -20,7 +20,7 @@ Breaks in new features introduced from one 3.0 preview to another 3.0 preview ar
 [Tracking Issue #14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
 [Also see issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -50,7 +50,7 @@ If a query can't be fully translated, then either rewrite the query in a form th
 
 [Tracking Issue Announcements#325](https://github.com/aspnet/Announcements/issues/325)
 
-This change was introduced in ASP.NET Core 3.0-preview 1. 
+This change is introduced in ASP.NET Core 3.0-preview 1. 
 
 **Old behavior**
 
@@ -76,7 +76,7 @@ To use EF Core in an ASP.NET Core 3.0 application or any other supported applica
 
 [Tracking Issue #14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
 
-This change was introduced in EF Core 3.0-preview 4 and the corresponding version of the .NET Core SDK.
+This change is introduced in EF Core 3.0-preview 4 and the corresponding version of the .NET Core SDK.
 
 **Old behavior**
 
@@ -105,7 +105,7 @@ You can also obtain it a local tool when you restore the dependencies of a proje
 
 [Tracking Issue #10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
 
-This change was introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -145,7 +145,7 @@ Switch to use the new method names.
 
 [Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -175,7 +175,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 [Tracking Issue #12378](https://github.com/aspnet/EntityFrameworkCore/issues/12378)
 
-This change was introduced in EF Core 3.0-preview 2.
+This change is introduced in EF Core 3.0-preview 2.
 
 **Old behavior**
 
@@ -203,7 +203,7 @@ For example, `context.Entry(blog).Property(e => e.Id).CurrentValue` will return 
 
 [Tracking Issue #14616](https://github.com/aspnet/EntityFrameworkCore/issues/14616)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -243,7 +243,7 @@ public string Id { get; set; }
 
 [Tracking Issue #10114](https://github.com/aspnet/EntityFrameworkCore/issues/10114)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -272,7 +272,7 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 
 [Tracking Issue #12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
 
-This change will be introduced in EF Core 3.0-preview 5.
+This change is introduced in EF Core 3.0-preview 5.
 
 **Old behavior**
 
@@ -294,7 +294,7 @@ The previous behavior can be restored by using `DeleteBehavior.ClientNoAction`.
 
 [Tracking Issue #14194](https://github.com/aspnet/EntityFrameworkCore/issues/14194)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -326,7 +326,7 @@ This would still not be configured by convention to avoid misconfiguration when 
 [Tracking Issue #9148](https://github.com/aspnet/EntityFrameworkCore/issues/9148)
 [Tracking Issue #14153](https://github.com/aspnet/EntityFrameworkCore/issues/14153)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -382,7 +382,7 @@ Change configuration of owned type relationships to use the new API surface as s
 
 [Tracking Issue #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -417,7 +417,7 @@ If your model has a table sharing dependent with all optional columns, but the n
 
 [Tracking Issue #14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -469,7 +469,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 [Tracking Issue #13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -532,7 +532,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 [Tracking Issue #13274](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -600,7 +600,7 @@ If the property was intended to be the foreign key, and hence part of the primar
 
 [Tracking Issue #14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -652,7 +652,7 @@ using (new TransactionScope())
 
 [Tracking Issue #6872](https://github.com/aspnet/EntityFrameworkCore/issues/6872)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -676,7 +676,7 @@ Consider instead not relying on specific key values, or updating to match the ne
 
 [Tracking Issue #12430](https://github.com/aspnet/EntityFrameworkCore/issues/12430)
 
-This change was introduced in EF Core 3.0-preview 2.
+This change is introduced in EF Core 3.0-preview 2.
 
 **Old behavior**
 
@@ -705,7 +705,7 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 
 [Tracking Issue #12523](https://github.com/aspnet/EntityFrameworkCore/issues/12523)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -734,7 +734,7 @@ modelBuilder
 
 ## Field-only property names should match the field name
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -782,7 +782,7 @@ modelBuilder
 
 [Tracking Issue #14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -804,7 +804,7 @@ If your application needs these services, then register them explicitly with the
 
 [Tracking Issue #13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -832,7 +832,7 @@ Call `ChgangeTracker.DetectChanges()` explicitly before calling `Entry` to ensur
 
 [Tracking Issue #14617](https://github.com/aspnet/EntityFrameworkCore/issues/14617)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -870,7 +870,7 @@ public string Id { get; set; }
 
 [Tracking Issue #14698](https://github.com/aspnet/EntityFrameworkCore/issues/14698)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -896,7 +896,7 @@ If you run into situations like this, please file an issue at on the [EF Core Gi
 
 [Tracking Issue #13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -918,7 +918,7 @@ Any implementations of `IDbContextOptionsExtension` will need to be updated to s
 
 [Tracking Issue #12780](https://github.com/aspnet/EntityFrameworkCore/issues/12780)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -945,7 +945,7 @@ Update application code to not attempt lazy-loading with a disposed context, or 
 
 [Tracking Issue #10236](https://github.com/aspnet/EntityFrameworkCore/issues/10236)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -977,7 +977,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 [Tracking Issue #9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -1014,7 +1014,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 [Tracking Issue #15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -1044,7 +1044,7 @@ Note that this negates the allocation reduction that this change brings.
 
 [Tracking Issue #9913](https://github.com/aspnet/EntityFrameworkCore/issues/9913)
 
-This change was introduced in EF Core 3.0-preview 2.
+This change is introduced in EF Core 3.0-preview 2.
 
 **Old behavior**
 
@@ -1067,7 +1067,7 @@ The most appropriate action to fix is to use API surface to access type mappings
 
 [Tracking Issue #11811](https://github.com/aspnet/EntityFrameworkCore/issues/11811)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -1090,7 +1090,7 @@ Remove any attempts to map derived types to other tables.
 
 [Tracking Issue #12366](https://github.com/aspnet/EntityFrameworkCore/issues/12366)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -1113,7 +1113,7 @@ Use the new API, as shown above.
 
 [Tracking Issue #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
 
-This change will be introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **New behavior**
 
@@ -1133,11 +1133,33 @@ This change simplifies the implementation of the aforementioned interfaces.
 
 Use the new extension methods.
 
+## Provider-specific Metadata API changes
+
+[Tracking Issue #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
+
+This change is introduced in EF Core 3.0-preview 6.
+
+**New behavior**
+
+The provider-specific extension methods will be flattened out:
+
+* `IProperty.Relational().ColumnName` -> `IProperty.GetColumnName()`
+* `IEntityType.SqlServer().IsMemoryOptimized` -> `IEntityType.GetSqlServerIsMemoryOptimized()`
+* `PropertyBuilder.UseSqlServerIdentityColumn()` -> `PropertyBuilder.ForSqlServerUseIdentityColumn()`
+
+**Why**
+
+This change simplifies the implementation of the aforementioned extension methods.
+
+**Mitigations**
+
+Use the new extension methods.
+
 ## EF Core no longer sends pragma for SQLite FK enforcement
 
 [Tracking Issue #12151](https://github.com/aspnet/EntityFrameworkCore/issues/12151)
 
-This change was introduced in EF Core 3.0-preview 3.
+This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
@@ -1178,7 +1200,7 @@ To use the native SQLite version on iOS, configure `Microsoft.Data.Sqlite` to us
 
 [Tracking Issue #15078](https://github.com/aspnet/EntityFrameworkCore/issues/15078)
 
-This change was introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -1228,7 +1250,7 @@ Microsoft.Data.Sqlite remains capable of reading Guid values from both BLOB and 
 
 [Tracking Issue #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
 
-This change was introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -1269,7 +1291,7 @@ Microsoft.Data.Sqlite also remains capable of reading character values from both
 
 [Tracking Issue #12978](https://github.com/aspnet/EntityFrameworkCore/issues/12978)
 
-This change was introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
@@ -1308,7 +1330,7 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 [Tracking Issue #10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
 
-This change was introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Change**
 
@@ -1326,7 +1348,7 @@ Use the new name. (Note that the event ID number has not changed.)
 
 [Tracking Issue #10730](https://github.com/aspnet/EntityFrameworkCore/issues/10730)
 
-This change was introduced in EF Core 3.0-preview 4.
+This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
