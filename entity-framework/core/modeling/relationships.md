@@ -135,6 +135,12 @@ You can use the string overload of `HasForeignKey(...)` to configure a shadow pr
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/ShadowForeignKey.cs#Sample)]
 
+### Without Navigation Property
+
+You don't necessarily need to provide a navigation property. You can simply provide a Foreign Key on one side of the relationship.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/NoNavigation.cs?highlight=14-17)]
+
 ### Principal Key
 
 If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be setup as an alternate key (see [Alternate Keys](alternate-keys.md) for more information).
