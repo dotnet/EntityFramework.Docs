@@ -14,6 +14,24 @@ EF Core can serve as an object-relational mapper (O/RM), enabling .NET developer
 
 EF Core supports many database engines, see [Database Providers](providers/index.md) for details.
 
+## Inatalling Entity Framework core
+
+Ensure you have scaffolded a dotnet core project before this. [Scaffold dotnet project](https://docs.microsoft.com/en-us/dotnet/core/get-started?tabs=macos)
+
+Now, lets install Entity Framework core. 
+
+For .NET CLI
+
+```
+dotnet add package Microsoft.EntityFrameworkCore --version 2.2.4
+```
+
+For Package Manager
+
+```
+Install-Package Microsoft.EntityFrameworkCore -Version 2.2.4
+```
+
 ## The Model
 
 With EF Core, data access is performed using a model. A model is made up of entity classes and a context object that represents a session with the database, allowing you to query and save data. See [Creating a Model](modeling/index.md) to learn more.
