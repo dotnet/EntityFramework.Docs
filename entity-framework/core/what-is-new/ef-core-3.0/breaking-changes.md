@@ -141,6 +141,28 @@ This could result in queries not being parameterized when they should have been.
 
 Switch to use the new method names.
 
+## FromSql methods can only be specified on query roots
+
+[Tracking Issue #15704](https://github.com/aspnet/EntityFrameworkCore/issues/15704)
+
+This change is introduced in EF Core 3.0-preview 6.
+
+**Old behavior**
+
+Before EF Core 3.0, the `FromSql` method could be specified anywhere in the query.
+
+**New behavior**
+
+Starting with EF Core 3.0, the new `FromSqlRaw` and `FromSqlInterpolated` methods (which replace `FromSql`) can only be specified on query roots, i.e. directly on the `DbSet<>`. Attempting to specify them anywhere else will result in a compilation error.
+
+**Why**
+
+Specifying `FromSql` anywhere other than on a `DbSet` had no added meaning or added value, and could cause ambiguity in certain scenarios.
+
+**Mitigations**
+
+`FromSql` invocations should be moved to be directly on the `DbSet` to which they apply.
+
 ## Query execution is logged at Debug level
 
 [Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
