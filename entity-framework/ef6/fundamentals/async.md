@@ -153,7 +153,7 @@ Now that we have our program up and running, we can begin making use of the new 
 3.  Line 12 & 18: We are capturing as task that monitors the progress of **PerformSomeDatabaseOperations** (line 12) and then blocking program execution for this task to complete once all the work for the program is done (line 18).
 4.  Line 25: We've update **PerformSomeDatabaseOperations** to be marked as **async** and return a **Task**.
 5.  Line 35: We're now calling the Async version of SaveChanges and awaiting it's completion.
-6.  Line 42: We're now calling hte Async version of ToList and awaiting on the result.
+6.  Line 42: We're now calling the Async version of ToList and awaiting on the result.
 
 For a comprehensive list of available extension methods in the System.Data.Entity namespace, refer to the QueryableExtensions class. *You’ll also need to add “using System.Data.Entity” to your using statements.*
 
