@@ -163,34 +163,18 @@ Specifying `FromSql` anywhere other than on a `DbSet` had no added meaning or ad
 
 `FromSql` invocations should be moved to be directly on the `DbSet` to which they apply.
 
-## Query execution is logged at Debug level
+## ~~Query execution is logged at Debug level~~ Reverted
 
 [Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
 
-This change is introduced in EF Core 3.0-preview 3.
+This change is reverted in EF Core 3.0-preview 7.
 
-**Old behavior**
-
-Before EF Core 3.0, execution of queries and other commands was logged at the `Info` level.
-
-**New behavior**
-
-Starting with EF Core 3.0, logging of command/SQL execution is at the `Debug` level.
-
-**Why**
-
-This change was made to reduce the noise at the `Info` log level.
-
-**Mitigations**
-
-This logging event is defined by `RelationalEventId.CommandExecuting` with event ID 20100.
-To log SQL at the `Info` level again, explicitly configure the level in `OnConfiguring` or `AddDbContext`.
-For example:
+We reverted this change because new configuration in EF Core 3.0 allows the log level for any event to be specified by the application. For example, to switch logging of SQL to `Debug`, explicitly configure the level in `OnConfiguring` or `AddDbContext`:
 ```C#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
         .UseSqlServer(connectionString)
-        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Info)));
+        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Debug)));
 ```
 
 ## Temporary key values are no longer set onto entity instances
@@ -914,28 +898,6 @@ In these cases, most things will still work, but any singleton service that was 
 
 If you run into situations like this, please file an issue at on the [EF Core GitHub issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues) to let us know how you are using `ILoggerFactory` such that we can better understand how not to break this again in the future.
 
-## IDbContextOptionsExtensionWithDebugInfo merged into IDbContextOptionsExtension
-
-[Tracking Issue #13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
-
-This change is introduced in EF Core 3.0-preview 3.
-
-**Old behavior**
-
-`IDbContextOptionsExtensionWithDebugInfo` was an additional optional interface extended from `IDbContextOptionsExtension` to avoid making a breaking change to the interface during the 2.x release cycle.
-
-**New behavior**
-
-The interfaces are now merged together into `IDbContextOptionsExtension`.
-
-**Why**
-
-This change was made because the interfaces are conceptually one.
-
-**Mitigations**
-
-Any implementations of `IDbContextOptionsExtension` will need to be updated to support the new member.
-
 ## Lazy-loading proxies no longer assume navigation properties are fully loaded
 
 [Tracking Issue #12780](https://github.com/aspnet/EntityFrameworkCore/issues/12780)
@@ -1348,6 +1310,30 @@ UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
 
+## Extension info/metadata has been removed from IDbContextOptionsExtension
+
+[Tracking Issue #16119](https://github.com/aspnet/EntityFrameworkCore/issues/16119)
+
+This change is introduced in EF Core 3.0-preview 7.
+
+**Old behavior**
+
+`IDbContextOptionsExtension` contained methods for providing metadata about the extension.
+
+**New behavior**
+
+These methods have been moved onto a new `DbContextOptionsExtensionInfo` abstract base class, which is returned from a new `IDbContextOptionsExtension.Info` property.
+
+**Why**
+
+Over the releases from 2.0 to 3.0 we needed to add to or change these methods several times.
+Breaking them out into a new abstract base class will make it easier to make these kind of changes without breaking existing extensions.
+
+**Mitigations**
+
+Update extensions to follow the new pattern.
+Examples are found in the many implementations of `IDbContextOptionsExtension` for different kinds of extensions in the EF Core source code.
+
 ## LogQueryPossibleExceptionWithAggregateOperator has been renamed
 
 [Tracking Issue #10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
@@ -1395,3 +1381,29 @@ This change brings consistency to naming in this area, and also clarifies that t
 **Mitigations**
 
 Use the new name.
+
+## IRelationalDatabaseCreator.HasTables/HasTablesAsync have been made public
+
+[Tracking Issue #15997](https://github.com/aspnet/EntityFrameworkCore/issues/15997)
+
+This change is introduced in EF Core 3.0-preview 7.
+
+**Old behavior**
+
+Before EF Core 3.0, these methods were protected.
+
+```C#
+var constraintName = myForeignKey.Name;
+```
+
+**New behavior**
+
+Starting with EF Core 3.0, these methods are public.
+
+**Why**
+
+These methods are used by EF to determine if a database is created but empty. This can also be useful from outside EF when determining whether or not to apply migrations.
+
+**Mitigations**
+
+Change the accessibility of any overrides.
