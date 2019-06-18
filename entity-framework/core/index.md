@@ -18,7 +18,7 @@ EF Core supports many database engines, see [Database Providers](providers/index
 
 With EF Core, data access is performed using a model. A model is made up of entity classes and a context object that represents a session with the database, allowing you to query and save data. See [Creating a Model](modeling/index.md) to learn more.
 
-You can generate a model from an existing database, hand code a model to match your database, or use EF Migrations to create a database from your model, and then evolve it as your model changes over time.
+You can generate a model from an existing database, hand code a model to match your database, or use [EF Migrations](managing-schemas/migrations/index.md) to create a database from your model, and then evolve it as your model changes over time.
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
