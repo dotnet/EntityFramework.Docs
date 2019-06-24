@@ -44,7 +44,7 @@ var query = context.Orders
           Sum = g.Sum(o => o.Amount),
           Min = g.Min(o => o.Amount),
           Max = g.Max(o => o.Amount),
-          Avg = g.Average(o => Amount)
+          Avg = g.Average(o => o.Amount)
         });
 ```
 
