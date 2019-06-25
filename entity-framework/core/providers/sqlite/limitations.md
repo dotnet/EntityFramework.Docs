@@ -19,16 +19,16 @@ The common relational library (shared by Entity Framework relational database pr
 
 ## Query limitations
 
-SQLite does not have native support for the following data types. You can read and write values for them using EF Core, and query query for equality (`where e.Property == value`); however, ordering, comparison, and other operations on them will need to be performed on the client.
+SQLite doesn't natively support the following data types. EF Core can read and write values of these types, and querying for equality (`where e.Property == value`) is also support. Other operations, however, like comparison and ordering will require evaluation on the client.
 
 * DateTimeOffset
 * Decimal
 * TimeSpan
 * UInt64
 
-Instead of `DateTimeOffset`, we recommend using DateTime values. If you need to handle multiple time zones, we recommend converting the values to UTC before saving them, and converting them back to the appropriate time zone before displaying them.
+Instead of `DateTimeOffset`, we recommend using DateTime values. When handling multiple time zones, we recommend converting the values to UTC before saving and then converting back to the appropriate time zone.
 
-If you don't need the high level of precision provided by `Decimal`, we recommend using double instead. You can even use a [value converter](../../modeling/value-conversions.md) if you want to continue using decimal in your classes.
+The `Decimal` type provides a high level of precision. If you don't need that level of precision, however, we recommend using double instead. You can use a [value converter](../../modeling/value-conversions.md) to continue using decimal in your classes.
 
 ``` csharp
 modelBuilder.Entity<MyEntity>()

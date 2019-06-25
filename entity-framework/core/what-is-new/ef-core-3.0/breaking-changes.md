@@ -1437,3 +1437,25 @@ If you need to reference this package to override EF Core's design-time behavior
   <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
 </PackageReference>
 ```
+
+## SQLitePCL.raw updated to version 2.0.0
+
+[Tracking Issue #14824](https://github.com/aspnet/EntityFrameworkCore/issues/14824)
+
+This change is introduced in EF Core 3.0-preview 7.
+
+**Old behavior**
+
+Microsoft.EntityFrameworkCore.Sqlite previously depended on version 1.1.12 of SQLitePCL.raw.
+
+**New behavior**
+
+We've update our package to depend on version 2.0.0.
+
+**Why**
+
+Version 2.0.0 of SQLitePCL.raw targets .NET Standard 2.0. It previously targeted .NET Standard 1.1 which required a large closure transitive packages to work.
+
+**Mitigations**
+
+SQLitePCL.raw version 2.0.0 includes some breaking changes. See the [release notes](https://github.com/ericsink/SQLitePCL.raw/blob/v2/v2.md) for details.
