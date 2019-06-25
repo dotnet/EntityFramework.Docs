@@ -1454,7 +1454,7 @@ We've update our package to depend on version 2.0.0.
 
 **Why**
 
-Version 2.0.0 of SQLitePCL.raw targets .NET Standard 2.0. It previously targeted .NET Standard 1.1 which required a large closure transitive packages to work.
+Version 2.0.0 of SQLitePCL.raw targets .NET Standard 2.0. It previously targeted .NET Standard 1.1 which required a large closure of transitive packages to work.
 
 **Mitigations**
 
