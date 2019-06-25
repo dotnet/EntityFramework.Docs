@@ -388,7 +388,7 @@ class MyContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<PostTag>()
-            .HasKey(t => new { t.PostId, t.TagId });
+            .HasKey(pt => new { pt.PostId, pt.TagId });
 
         modelBuilder.Entity<PostTag>()
             .HasOne(pt => pt.Post)
