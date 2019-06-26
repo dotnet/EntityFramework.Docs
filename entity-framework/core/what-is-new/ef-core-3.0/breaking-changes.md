@@ -1407,3 +1407,55 @@ These methods are used by EF to determine if a database is created but empty. Th
 **Mitigations**
 
 Change the accessibility of any overrides.
+
+## Microsoft.EntityFrameworkCore.Design is now a DevelopmentDependency package
+
+[Tracking Issue #11506](https://github.com/aspnet/EntityFrameworkCore/issues/11506)
+
+This change is introduced in EF Core 3.0-preview 4.
+
+**Old behavior**
+
+Before EF Core 3.0, Microsoft.EntityFrameworkCore.Design was a regular NuGet package whose assembly could be referenced by projects that depended on it.
+
+**New behavior**
+
+Starting with EF Core 3.0, it is a DevelopmentDependency package. Which means that the dependency won't flow transitively into other projects, and that you can no longer, by default, reference its assembly.
+
+**Why**
+
+This package is only intended to be used at design time. Deployed applications shouldn't reference it. Making the package a DevelopmentDependency reinforces this recommendation.
+
+**Mitigations**
+
+If you need to reference this package to override EF Core's design-time behavior, you can update update PackageReference item metadata in your project. If the package is being referenced transitively via Microsoft.EntityFrameworkCore.Tools, you will need to add an explicit PackageReference to the package to change its metadata.
+
+``` xml
+<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0-preview4.19216.3">
+  <PrivateAssets>all</PrivateAssets>
+  <!-- Remove IncludeAssets to allow compiling against the assembly -->
+  <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
+</PackageReference>
+```
+
+## SQLitePCL.raw updated to version 2.0.0
+
+[Tracking Issue #14824](https://github.com/aspnet/EntityFrameworkCore/issues/14824)
+
+This change is introduced in EF Core 3.0-preview 7.
+
+**Old behavior**
+
+Microsoft.EntityFrameworkCore.Sqlite previously depended on version 1.1.12 of SQLitePCL.raw.
+
+**New behavior**
+
+We've update our package to depend on version 2.0.0.
+
+**Why**
+
+Version 2.0.0 of SQLitePCL.raw targets .NET Standard 2.0. It previously targeted .NET Standard 1.1 which required a large closure of transitive packages to work.
+
+**Mitigations**
+
+SQLitePCL.raw version 2.0.0 includes some breaking changes. See the [release notes](https://github.com/ericsink/SQLitePCL.raw/blob/v2/v2.md) for details.
