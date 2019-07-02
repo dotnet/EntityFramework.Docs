@@ -1392,10 +1392,6 @@ This change is introduced in EF Core 3.0-preview 7.
 
 Before EF Core 3.0, these methods were protected.
 
-```C#
-var constraintName = myForeignKey.Name;
-```
-
 **New behavior**
 
 Starting with EF Core 3.0, these methods are public.
