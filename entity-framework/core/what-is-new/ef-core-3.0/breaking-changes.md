@@ -1392,10 +1392,6 @@ This change is introduced in EF Core 3.0-preview 7.
 
 Before EF Core 3.0, these methods were protected.
 
-```C#
-var constraintName = myForeignKey.Name;
-```
-
 **New behavior**
 
 Starting with EF Core 3.0, these methods are public.
@@ -1459,3 +1455,26 @@ Version 2.0.0 of SQLitePCL.raw targets .NET Standard 2.0. It previously targeted
 **Mitigations**
 
 SQLitePCL.raw version 2.0.0 includes some breaking changes. See the [release notes](https://github.com/ericsink/SQLitePCL.raw/blob/v2/v2.md) for details.
+
+
+## NetTopologySuite updated to version 2.0.0
+
+[Tracking Issue #14825](https://github.com/aspnet/EntityFrameworkCore/issues/14825)
+
+This change is introduced in EF Core 3.0-preview 7.
+
+**Old behavior**
+
+The spatial packages previously depended on version 1.15.1 of NetTopologySuite.
+
+**New behavior**
+
+We've update our package to depend on version 2.0.0.
+
+**Why**
+
+Version 2.0.0 of NetTopologySuite aims to address several usability issues encountered by EF Core users.
+
+**Mitigations**
+
+NetTopologySuite version 2.0.0 includes some breaking changes. See the [release notes](https://www.nuget.org/packages/NetTopologySuite/2.0.0-pre001) for details.
