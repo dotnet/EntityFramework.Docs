@@ -58,6 +58,39 @@ namespace Intro
 }
 ```
 
+```vb
+Imports Microsoft.EntityFrameworkCore
+Imports System.Collections.Generic
+
+Namespace Intro
+    Public Class BloggingContext
+        Inherits DbContext
+        
+        Public Property Blogs As DbSet(Of Blog)
+        Public Property Posts As DbSet(Of Post)
+    
+        Protected Overrides Sub OnConfiguring(ByVal optionsBuilder As DbContextOptionsBuilder)
+            optionsBuilder.UseSqlServer("Server=(localdb)\mssqllocaldb;Database=Blogging;Integrated Security=True")
+        End Sub
+    End Class
+
+    Public Class Blog
+        Public Property BlogId As Integer
+        Public Property Url As String
+        Public Property Rating As Integer
+        Public Property Posts As List(Of Post)
+    End Class
+
+    Public Class Post
+        Public Property PostId As Integer
+        Public Property Title As String
+        Public Property Content As String
+
+        Public Propery BlogId As Integer
+        Public Property Blog As Blog
+    End Class
+End Namespace
+```
 ## Querying
 
 Instances of your entity classes are retrieved from the database using Language Integrated Query (LINQ). See [Querying Data](querying/index.md) to learn more.
@@ -72,6 +105,14 @@ using (var db = new BloggingContext())
 }
 ```
 
+```vb
+Using db As New BloggingContext()
+    Dim blogs = db.Blogs.Where(Function(b) b.Rating > 3).
+        OrderBy(Function(b) b.Url).
+        ToList()
+End Using
+```
+
 ## Saving Data
 
 Data is created, deleted, and modified in the database using instances of your entity classes. See [Saving Data](saving/index.md) to learn more.
@@ -83,6 +124,14 @@ using (var db = new BloggingContext())
     db.Blogs.Add(blog);
     db.SaveChanges();
 }
+```
+
+```vb
+Using db As New BloggingContext()
+    Dim blog = New Blog() With { .Url = "http://sample.com" }
+    db.Blogs.Add(blog)
+    db.SaveChanges()
+End Using
 ```
 
 ## Next steps
