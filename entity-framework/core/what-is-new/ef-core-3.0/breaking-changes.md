@@ -92,11 +92,10 @@ This change allows us to distribute and update `dotnet ef` as a regular .NET CLI
 
 **Mitigations**
 
-To be able to manage migrations or scaffold a `DbContext`, install `dotnet-ef` using the `dotnet tool install` command.
-For example, to install it as a global tool, you can type this command:
+To be able to manage migrations or scaffold a `DbContext`, install `dotnet-ef` as a global tool:
 
   ``` console
-  $ dotnet tool install --global dotnet-ef --version <exact-version>
+    $ dotnet tool install --global dotnet-ef --version 3.0.0-*
   ```
 
 You can also obtain it a local tool when you restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](https://github.com/dotnet/cli/issues/10288).
