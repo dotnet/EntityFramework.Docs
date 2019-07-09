@@ -20,7 +20,7 @@ Migrations includes command-line tools and APIs that help with the following tas
 * [Generate SQL scripts](#generate-sql-scripts). You might need a script to update a production database or to troubleshoot migration code.
 * [Apply migrations at runtime](#apply-migrations-at-runtime). When design-time updates and running scripts aren't the best options, call the `Migrate()` method.
 
-If the `DbContext` is in a different assembly than the startup project, specify the project and startup project by adding one of the following:
+If the `DbContext` is in a different assembly than the startup project, specify the project and startup project:
 
 - `-Project <project with DbContext> -StartupProject <start up project>` to all PowerShell commands.
 - `--project <project with DbContext> --startup-project <start up project>` to all dotnet commands.
