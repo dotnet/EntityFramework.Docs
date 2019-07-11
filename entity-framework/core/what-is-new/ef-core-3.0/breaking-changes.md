@@ -1309,6 +1309,28 @@ UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
 
+## UseRowNumberForPaging has been removed
+
+[Tracking Issue #16400](https://github.com/aspnet/EntityFrameworkCore/issues/16400)
+
+This change is introduced in EF Core 3.0-preview 6.
+
+**Old behavior**
+
+Before EF Core 3.0, `UseRowNumberForPaging` could be used to generate SQL for paging that is compatible with SQL Server 2008.
+
+**New behavior**
+
+Starting with EF Core 3.0, EF will only generate SQL for paging that is only compatible with later SQL Server versions. 
+
+**Why**
+
+We are making this change because [SQL Server 2008 is no longer a supported product](https://blogs.msdn.microsoft.com/sqlreleaseservices/end-of-mainstream-support-for-sql-server-2008-and-sql-server-2008-r2/) and updating this feature to work with the query changes made in EF Core 3.0 is significant work.
+
+**Mitigations**
+
+We recommend updating to a newer version of SQL Server, or using a higher compatibility level, so that the generated SQL is supported. That being said, if you are unable to do this, then please [comment on the tracking issue](https://github.com/aspnet/EntityFrameworkCore/issues/16400) with details. We may revisit this decision based on feedback.
+
 ## Extension info/metadata has been removed from IDbContextOptionsExtension
 
 [Tracking Issue #16119](https://github.com/aspnet/EntityFrameworkCore/issues/16119)
