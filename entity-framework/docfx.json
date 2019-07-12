@@ -69,7 +69,7 @@
       ],
       "manager": "divega",
       "audience": "developer",
-      "ms.topic": "conceptual",
+      "ms.topic": "bad-value",
       "ms.reviewer": "divega",
       "ms.prod": "entity-framework",
       "ms.tgt_pltfrm": "dotnet",
