@@ -68,8 +68,8 @@
         "Entity Framework"
       ],
       "manager": "divega",
-      "ms.topic": "conceptual",
       "audience": "developer",
+      "ms.topic": "conceptual",
       "ms.reviewer": "divega",
       "ms.prod": "entity-framework",
       "ms.tgt_pltfrm": "dotnet",
