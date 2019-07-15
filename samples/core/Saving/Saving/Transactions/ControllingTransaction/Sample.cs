@@ -19,26 +19,19 @@ namespace EFSaving.Transactions.ControllingTransaction
             {
                 using (var transaction = context.Database.BeginTransaction())
                 {
-                    try
-                    {
-                        context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                        context.SaveChanges();
+                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                    context.SaveChanges();
 
-                        context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
-                        context.SaveChanges();
+                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
+                    context.SaveChanges();
 
-                        var blogs = context.Blogs
-                            .OrderBy(b => b.Url)
-                            .ToList();
+                    var blogs = context.Blogs
+                        .OrderBy(b => b.Url)
+                        .ToList();
 
-                        // Commit transaction if all commands succeed, transaction will auto-rollback
-                        // when disposed if either commands fails
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        // TODO: Handle failure
-                    }
+                    // Commit transaction if all commands succeed, transaction will auto-rollback
+                    // when disposed if either commands fails
+                    transaction.Commit();
                 }
             }
             #endregion
