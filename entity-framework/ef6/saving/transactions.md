@@ -60,20 +60,27 @@ namespace TransactionsExamples
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
-                    context.Database.ExecuteSqlCommand(
-                        @"UPDATE Blogs SET Rating = 5" +
-                            " WHERE Name LIKE '%Entity Framework%'"
-                        );
-
-                    var query = context.Posts.Where(p => p.Blog.Rating >= 5);
-                    foreach (var post in query)
+                    try
                     {
-                        post.Title += "[Cool Blog]";
+                        context.Database.ExecuteSqlCommand(
+                            @"UPDATE Blogs SET Rating = 5" +
+                                " WHERE Name LIKE '%Entity Framework%'"
+                            );
+
+                        var query = context.Posts.Where(p => p.Blog.Rating >= 5);
+                        foreach (var post in query)
+                        {
+                            post.Title += "[Cool Blog]";
+                        }
+
+                        context.SaveChanges();
+
+                        dbContextTransaction.Commit();
                     }
-
-                    context.SaveChanges();
-
-                    dbContextTransaction.Commit();
+                    catch (Exception)
+                    {
+                        dbContextTransaction.Rollback();
+                    }
                 }
             }
         }
@@ -127,28 +134,35 @@ namespace TransactionsExamples
 
                using (var sqlTxn = conn.BeginTransaction(System.Data.IsolationLevel.Snapshot))
                {
-                   var sqlCommand = new SqlCommand();
-                   sqlCommand.Connection = conn;
-                   sqlCommand.Transaction = sqlTxn;
-                   sqlCommand.CommandText =
-                       @"UPDATE Blogs SET Rating = 5" +
-                        " WHERE Name LIKE '%Entity Framework%'";
-                   sqlCommand.ExecuteNonQuery();
+                   try
+                   {
+                       var sqlCommand = new SqlCommand();
+                       sqlCommand.Connection = conn;
+                       sqlCommand.Transaction = sqlTxn;
+                       sqlCommand.CommandText =
+                           @"UPDATE Blogs SET Rating = 5" +
+                            " WHERE Name LIKE '%Entity Framework%'";
+                       sqlCommand.ExecuteNonQuery();
 
-                   using (var context =  
-                     new BloggingContext(conn, contextOwnsConnection: false))
-                    {
-                        context.Database.UseTransaction(sqlTxn);
-
-                        var query =  context.Posts.Where(p => p.Blog.Rating >= 5);
-                        foreach (var post in query)
+                       using (var context =  
+                         new BloggingContext(conn, contextOwnsConnection: false))
                         {
-                            post.Title += "[Cool Blog]";
-                        }
-                       context.SaveChanges();
-                    }
+                            context.Database.UseTransaction(sqlTxn);
 
-                    sqlTxn.Commit();
+                            var query =  context.Posts.Where(p => p.Blog.Rating >= 5);
+                            foreach (var post in query)
+                            {
+                                post.Title += "[Cool Blog]";
+                            }
+                           context.SaveChanges();
+                        }
+
+                        sqlTxn.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        sqlTxn.Rollback();
+                    }
                 }
             }
         }
