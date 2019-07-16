@@ -140,7 +140,7 @@ Adding Required to the Title property will force EF (and MVC) to ensure that the
     public string Title { get; set; }
 ```
 
-With no additional no code or markup changes in the application, an MVC application will perform client side validation, even dynamically building a message using the property and annotation names.
+With no additional code or markup changes in the application, an MVC application will perform client side validation, even dynamically building a message using the property and annotation names.
 
 ![Create page with Title is required error](~/ef6/media/jj591583-figure02.png)
 
