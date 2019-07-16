@@ -213,7 +213,7 @@ For a comprehensive list of available extension methods in the System.Data.Entit
     }
 ```
 
-Now that the code is asyncronous, we can observe a different execution flow when we run the program:
+Now that the code is asynchronous, we can observe a different execution flow when we run the program:
 
 1.  **SaveChanges** begins to push the new **Blog** to the database
     *Once the command is sent to the database no more compute time is needed on the current managed thread. The **PerformDatabaseOperations** method returns (even though it hasn't finished executing) and program flow in the Main method continues.*

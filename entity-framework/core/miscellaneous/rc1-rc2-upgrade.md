@@ -89,7 +89,7 @@ If you have an ASP.NET Core application and you want EF to resolve internal serv
 services.AddEntityFrameworkSqlServer()
   .AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
     options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"])
-           .UseInternalServiceProvider(serviceProvider)); );
+           .UseInternalServiceProvider(serviceProvider));
 ```
 
 > [!WARNING]  
