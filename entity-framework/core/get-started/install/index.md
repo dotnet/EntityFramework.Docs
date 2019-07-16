@@ -88,7 +88,7 @@ Although you can also use the `dotnet ef` commands from the Package Manager Cons
 
 The `dotnet ef` commands are included in current versions of the .NET Core SDK, but to enable the commands on a specific project, you have to install the `Microsoft.EntityFrameworkCore.Design` package:
 
- ``` Console	
+``` Console	
 dotnet add package Microsoft.EntityFrameworkCore.Design	
 ```	
 

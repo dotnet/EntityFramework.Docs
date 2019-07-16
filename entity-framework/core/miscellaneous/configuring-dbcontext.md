@@ -105,7 +105,7 @@ EF Core supports using `DbContext` with a dependency injection container. Your D
 
 See [more reading](#more-reading) below for additional information on dependency injection.
 
-Adding the `Dbcontext` to dependency injection:
+Adding the `DbContext` to dependency injection:
 
 ``` csharp
 public void ConfigureServices(IServiceCollection services)
@@ -165,7 +165,7 @@ When EF Core detects an attempt to use a `DbContext` instance concurrently, you'
 
 When concurrent access goes undetected, it can result in undefined behavior, application crashes and data corruption.
 
-There are common mistakes that can inadvernetly cause concurrent access on the same `DbContext` instance:
+There are common mistakes that can inadvertently cause concurrent access on the same `DbContext` instance:
 
 ### Forgetting to await the completion of an asynchronous operation before starting any other operation on the same DbContext
 
@@ -179,7 +179,7 @@ The [`AddDbContext`](https://docs.microsoft.com/dotnet/api/microsoft.extensions.
 
 This is safe from concurrent access issues in ASP.NET Core applications because there is only one thread executing each client request at a given time, and because each request gets a separate dependency injection scope (and therefore a separate `DbContext` instance).
 
-However any code that explicitly executes multiple threads in paralell should ensure that `DbContext` instances aren't ever accesed concurrently.
+However any code that explicitly executes multiple threads in parallel should ensure that `DbContext` instances aren't ever accessed concurrently.
 
 Using dependency injection, this can be achieved by either registering the context as scoped and creating scopes (using `IServiceScopeFactory`) for each thread, or by registering the `DbContext` as transient (using the overload of `AddDbContext` which takes a `ServiceLifetime` parameter).
 
