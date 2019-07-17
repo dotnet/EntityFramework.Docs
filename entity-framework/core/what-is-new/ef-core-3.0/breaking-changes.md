@@ -27,17 +27,17 @@ Breaks in new features introduced from one 3.0 preview to another 3.0 preview ar
 | [Cascade deletions now happen immediately by default](#cascade) | Medium      |
 | [DeleteBehavior.Restrict has cleaner semantics](#deletebehavior) | Medium      |
 | [Configuration API for owned type relationships has changed](#config) | Medium      |
-| [Each property uses independent in-memory integer key generation](#Each-property-uses-independent-in-memory-integer-key-generation) | Medium      |
-| [Metadata API changes](#Metadata-API-changes) | Medium      |
-| [Provider-specific Metadata API changes](#Provider-specific-Metadata-API-changes) | Medium      |
-| [UseRowNumberForPaging has been removed](#UseRowNumberForPaging-has-been-removed) | Medium      |
-| [FromSql methods can only be specified on query roots](#FromSql-methods-can-only-be-specified-on-query-roots) | Low      |
-| [~~Query execution is logged at Debug level~~ Reverted](#~~Query-execution-is-logged-at-Debug-level~~-Reverted) | Low      |
-| [Temporary key values are no longer set onto entity instances](#Temporary-key-values-are-no-longer-set-onto-entity-instances) | Low      |
-| [DetectChanges honors store-generated key values](#DetectChanges-honors-store-generated-key-values) | Low      |
-| [Dependent entities sharing the table with the principal are now optional](#Dependent-entities-sharing-the-table-with-the-principal-are-now-optional) | Low      |
-| [All entities sharing a table with a concurrency token column have to map it to a property](#All-entities-sharing-a-table-with-a-concurrency-token-column-have-to-map-it-to-a-property) | Low      |
-| [Inherited properties from unmapped types are now mapped to a single column for all derived types](#Inherited-properties-from-unmapped-types-are-now-mapped-to-a-single-column-for-all-derived-types) | Low      |
+| [Each property uses independent in-memory integer key generation](#each) | Medium      |
+| [Metadata API changes](#metadata-api-changes) | Medium      |
+| [Provider-specific Metadata API changes](#provider) | Medium      |
+| [UseRowNumberForPaging has been removed](#urn) | Medium      |
+| [FromSql methods can only be specified on query roots](#fromsql) | Low      |
+| [~~Query execution is logged at Debug level~~ Reverted](#qe) | Low      |
+| [Temporary key values are no longer set onto entity instances](#tkv) | Low      |
+| [DetectChanges honors store-generated key values](#dc) | Low      |
+| [Dependent entities sharing the table with the principal are now optional](#de) | Low      |
+| [All entities sharing a table with a concurrency token column have to map it to a property](#aes) | Low      |
+| [Inherited properties from unmapped types are now mapped to a single column for all derived types](#ip) | Low      |
 | [The foreign key property convention no longer matches same name as the principal property](#The-foreign-key-property-convention-no-longer-matches-same-name-as-the-principal-property) | Low      |
 | [Database connection is now closed if not used anymore before the TransactionScope has been completed](#Database-connection-is-now-closed-if-not-used-anymore-before-the-TransactionScope-has-been-completed) | Low      |
 | [Backing fields are used by default](#Backing-fields-are-used-by-default) | Low      |
@@ -195,6 +195,8 @@ This could result in queries not being parameterized when they should have been.
 
 Switch to use the new method names.
 
+<a name="fromsql"></a>
+
 ## FromSql methods can only be specified on query roots
 
 [Tracking Issue #15704](https://github.com/aspnet/EntityFrameworkCore/issues/15704)
@@ -217,6 +219,8 @@ Specifying `FromSql` anywhere other than on a `DbSet` had no added meaning or ad
 
 `FromSql` invocations should be moved to be directly on the `DbSet` to which they apply.
 
+<a name="qe"></a>
+
 ## ~~Query execution is logged at Debug level~~ Reverted
 
 [Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
@@ -230,6 +234,8 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         .UseSqlServer(connectionString)
         .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Debug)));
 ```
+
+<a name="tkv"></a>
 
 ## Temporary key values are no longer set onto entity instances
 
@@ -258,6 +264,8 @@ This can be avoided by:
 * Setting navigation properties to form relationships instead of setting foreign key values.
 * Obtain the actual temporary key values from the entity's tracking information.
 For example, `context.Entry(blog).Property(e => e.Id).CurrentValue` will return the temporary value even though `blog.Id` itself hasn't been set.
+
+<a name="dc"></a>
 
 ## DetectChanges honors store-generated key values
 
@@ -440,6 +448,8 @@ This in turn removes ambiguity and confusion around methods like `HasForeignKey`
 
 Change configuration of owned type relationships to use the new API surface as shown in the example above.
 
+<a name="de"></a>
+
 ## Dependent entities sharing the table with the principal are now optional
 
 [Tracking Issue #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
@@ -474,6 +484,8 @@ When querying EF Core sets `OrderDetails` to `null` if any of its required prope
 **Mitigations**
 
 If your model has a table sharing dependent with all optional columns, but the navigation pointing to it is not expected to be `null` then the application should be modified to handle cases when the navigation is `null`. If this is not possible a required property should be added to the entity type or at least one property should have a non-`null` value assigned to it.
+
+<a name="aes"></a>
 
 ## All entities sharing a table with a concurrency token column have to map it to a property
 
@@ -526,6 +538,8 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         .Property<byte[]>("Version").IsRowVersion().HasColumnName("Version");
 }
 ```
+
+<a name="ip"></a>
 
 ## Inherited properties from unmapped types are now mapped to a single column for all derived types
 
@@ -709,6 +723,8 @@ using (new TransactionScope())
     }
 }
 ```
+
+<a name="each"></a>
 
 ## Each property uses independent in-memory integer key generation
 
@@ -1173,6 +1189,8 @@ This change simplifies the implementation of the aforementioned interfaces.
 
 Use the new extension methods.
 
+<a name="provider"></a>
+
 ## Provider-specific Metadata API changes
 
 [Tracking Issue #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
@@ -1365,6 +1383,8 @@ The Migrations history table also needs to be updated.
 UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
+
+<a name="urn"></a>
 
 ## UseRowNumberForPaging has been removed
 
