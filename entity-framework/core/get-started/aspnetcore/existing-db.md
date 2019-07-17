@@ -1,5 +1,5 @@
 ---
-title: Getting Started on ASP.NET Core - Existing Database - EF Core
+title: Get started on ASP.NET Core - existing database - EF Core
 author: rowanmiller
 description: Getting started with EF Core on ASP.NET Core with an existing Database
 ms.date: 08/02/2018
