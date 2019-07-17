@@ -19,14 +19,14 @@ Breaks in new features introduced from one 3.0 preview to another 3.0 preview ar
 
 | **Breaking change**                                                                                               | **Impact** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
-| [LINQ queries are no longer evaluated on the client](#LINQ-queries-are-no-longer-evaluated-on-the-client)         | High       |
-| [The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK](#The-EF-Core-command-line-tool,-dotnet-ef,-is-no-longer-part-of-the-.NET-Core-SDK) | High      |
-| [FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed](#FromSql,-ExecuteSql,-and-ExecuteSqlAsync-have-been-renamed) | High      |
-| [Query types are consolidated with entity types](#Query-types-are-consolidated-with-entity-types) | High      |
-| [Entity Framework Core is no longer part of the ASP.NET Core shared framework](#Entity-Framework-Core-is-no-longer-part-of-the-ASP.NET-Core-shared-framework) | Medium      |
-| [Cascade deletions now happen immediately by default](#Cascade-deletions-now-happen-immediately-by-default) | Medium      |
-| [DeleteBehavior.Restrict has cleaner semantics](#DeleteBehavior.Restrict-has-cleaner-semantics) | Medium      |
-| [Configuration API for owned type relationships has changed](#Configuration-API-for-owned-type-relationships-has-changed) | Medium      |
+| [LINQ queries are no longer evaluated on the client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
+| [The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK](#dotnet-ef) | High      |
+| [FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed](#fromsql) | High      |
+| [Query types are consolidated with entity types](#qt) | High      |
+| [Entity Framework Core is no longer part of the ASP.NET Core shared framework](#no-longer) | Medium      |
+| [Cascade deletions now happen immediately by default](#cascade) | Medium      |
+| [DeleteBehavior.Restrict has cleaner semantics](#deletebehavior) | Medium      |
+| [Configuration API for owned type relationships has changed](#config) | Medium      |
 | [Each property uses independent in-memory integer key generation](#Each-property-uses-independent-in-memory-integer-key-generation) | Medium      |
 | [Metadata API changes](#Metadata-API-changes) | Medium      |
 | [Provider-specific Metadata API changes](#Provider-specific-Metadata-API-changes) | Medium      |
@@ -98,6 +98,7 @@ Besides this, automatic client evaluation can lead to issues in which improving 
 
 If a query can't be fully translated, then either rewrite the query in a form that can be translated, or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
 
+<a name="no-longer"></a>
 ## Entity Framework Core is no longer part of the ASP.NET Core shared framework
 
 [Tracking Issue Announcements#325](https://github.com/aspnet/Announcements/issues/325)
@@ -124,6 +125,7 @@ Developers can also now control exactly when EF Core and EF Core data providers 
 
 To use EF Core in an ASP.NET Core 3.0 application or any other supported application, explicitly add a package reference to the EF Core database provider that your application will use.
 
+<a name="dotnet-ef"></a>
 ## The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK
 
 [Tracking Issue #14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
@@ -152,6 +154,7 @@ To be able to manage migrations or scaffold a `DbContext`, install `dotnet-ef` a
 
 You can also obtain it a local tool when you restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](https://github.com/dotnet/cli/issues/10288).
 
+<a name="fromsql"></a>
 ## FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed
 
 [Tracking Issue #10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
@@ -295,7 +298,7 @@ Or with data annotations:
 [DatabaseGenerated(DatabaseGeneratedOption.None)]
 public string Id { get; set; }
 ```
-
+<a name="cascade"></a>
 ## Cascade deletions now happen immediately by default
 
 [Tracking Issue #10114](https://github.com/aspnet/EntityFrameworkCore/issues/10114)
@@ -324,7 +327,7 @@ For example:
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
-
+<a name="deletebehavior"></a>
 ## DeleteBehavior.Restrict has cleaner semantics
 
 [Tracking Issue #12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
@@ -347,6 +350,7 @@ This change was made to improve the experience for using `DeleteBehavior` in an 
 
 The previous behavior can be restored by using `DeleteBehavior.ClientNoAction`.
 
+<a name="qt"></a>
 ## Query types are consolidated with entity types
 
 [Tracking Issue #14194](https://github.com/aspnet/EntityFrameworkCore/issues/14194)
@@ -377,6 +381,7 @@ This would still not be configured by convention to avoid misconfiguration when 
 * **`DbQuery<>`** - Instead `DbSet<>` should be used.
 * **`DbContext.Query<>()`** - Instead `DbContext.Set<>()` should be used.
 
+<a name="config"></a>
 ## Configuration API for owned type relationships has changed
 
 [Tracking Issue #12444](https://github.com/aspnet/EntityFrameworkCore/issues/12444)
