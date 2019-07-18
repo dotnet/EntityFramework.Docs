@@ -44,7 +44,7 @@ This code tells EF to use the SqlAzureExecutionStrategy when connecting to SQL S
 
 The constructor of SqlAzureExecutionStrategy can accept two parameters, MaxRetryCount and MaxDelay. MaxRetry count is the maximum number of times that the strategy will retry. The MaxDelay is a TimeSpan representing the maximum delay between retries that the execution strategy will use.  
 
-To set the maximum number of retries to 1 and the maximum delay to 30 seconds you would execue the following:  
+To set the maximum number of retries to 1 and the maximum delay to 30 seconds you would execute the following:  
 
 ``` csharp
 public class MyConfiguration : DbConfiguration
@@ -60,7 +60,7 @@ public class MyConfiguration : DbConfiguration
 
 The SqlAzureExecutionStrategy will retry instantly the first time a transient failure occurs, but will delay longer between each retry until either the max retry limit is exceeded or the total time hits the max delay.  
 
-The execution strategies will only retry a limited number of exceptions that are usually tansient, you will still need to handle other errors as well as catching the RetryLimitExceeded exception for the case where an error is not transient or takes too long to resolve itself.  
+The execution strategies will only retry a limited number of exceptions that are usually transient, you will still need to handle other errors as well as catching the RetryLimitExceeded exception for the case where an error is not transient or takes too long to resolve itself.  
 
 There are some known of limitations when using a retrying execution strategy:  
 

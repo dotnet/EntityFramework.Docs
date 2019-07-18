@@ -150,3 +150,16 @@ An implementation of temporal support for EF Core.
 A high-performance second-level query cache for EF Core.
 
 [GitHub repository](https://github.com/SteffenMangold/EntityFrameworkCore.Cacheable)
+
+### Entity Framework Plus
+
+Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more.
+
+[Website](https://entityframework-plus.net/)
+[GitHub repository](https://github.com/zzzprojects/EntityFramework-Plus)
+
+### Entity Framework Extensions
+
+Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more.
+
+[Website](https://entityframework-extensions.net/)

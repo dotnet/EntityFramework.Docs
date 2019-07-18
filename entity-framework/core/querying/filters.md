@@ -25,20 +25,20 @@ First, define the entities:
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Entities)]
 
-Note the declaration of a __tenantId_ field on the _Blog_ entity. This will be used to associate each Blog instance with a specific tenant. Also defined is an _IsDeleted_ property on the _Post_ entity type. This is used to keep track of whether a _Post_ instance has been "soft-deleted". That is, the instance is marked as deleted without physically removing the underlying data.
+Note the declaration of a _tenantId_ field on the _Blog_ entity. This will be used to associate each Blog instance with a specific tenant. Also defined is an _IsDeleted_ property on the _Post_ entity type. This is used to keep track of whether a _Post_ instance has been "soft-deleted". That is, the instance is marked as deleted without physically removing the underlying data.
 
-Next, configure the query filters in _OnModelCreating_ using the ```HasQueryFilter``` API.
+Next, configure the query filters in _OnModelCreating_ using the `HasQueryFilter` API.
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Configuration)]
 
 The predicate expressions passed to the _HasQueryFilter_ calls will now automatically be applied to any LINQ queries for those types.
 
 > [!TIP]
-> Note the use of a DbContext instance level field: ```_tenantId``` used to set the current tenant. Model-level filters will use the value from the correct context instance (that is, the instance that is executing the query).
+> Note the use of a DbContext instance level field: `_tenantId` used to set the current tenant. Model-level filters will use the value from the correct context instance (that is, the instance that is executing the query).
 
 ## Disabling Filters
 
-Filters may be disabled for individual LINQ queries by using the ```IgnoreQueryFilters()``` operator.
+Filters may be disabled for individual LINQ queries by using the `IgnoreQueryFilters()` operator.
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#IgnoreFilters)]
 
