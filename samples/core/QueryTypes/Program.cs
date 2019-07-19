@@ -98,8 +98,10 @@ namespace Samples
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
+        #region DbQuery
         public DbQuery<BlogPostsCount> BlogPostCounts { get; set; }
-
+        #endregion
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
