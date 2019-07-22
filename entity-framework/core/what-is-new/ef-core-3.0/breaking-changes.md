@@ -1135,7 +1135,7 @@ Type mappings are now used for more than just relational database providers.
 This will only break applications that access the type mapping directly as an annotation, which isn't common.
 The most appropriate action to fix is to use API surface to access type mappings rather than using the annotation directly.
 
-## ToTable on a derived type throws an exception 
+### ToTable on a derived type throws an exception 
 
 [Tracking Issue #11811](https://github.com/aspnet/EntityFrameworkCore/issues/11811)
 
@@ -1181,7 +1181,7 @@ This change was made to consolidate the API for indexes with `Include` into one 
 
 Use the new API, as shown above.
 
-## Metadata API changes
+### Metadata API changes
 
 [Tracking Issue #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
 
@@ -1207,7 +1207,7 @@ Use the new extension methods.
 
 <a name="provider"></a>
 
-## Provider-specific Metadata API changes
+### Provider-specific Metadata API changes
 
 [Tracking Issue #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
 
@@ -1256,7 +1256,7 @@ For other cases, foreign keys can be enabled by specifying `Foreign Keys=True` i
 
 <a name="sqlite3"></a>
 
-## Microsoft.EntityFrameworkCore.Sqlite now depends on SQLitePCLRaw.bundle_e_sqlite3
+### Microsoft.EntityFrameworkCore.Sqlite now depends on SQLitePCLRaw.bundle_e_sqlite3
 
 **Old behavior**
 
@@ -1276,7 +1276,7 @@ To use the native SQLite version on iOS, configure `Microsoft.Data.Sqlite` to us
 
 <a name="guid"></a>
 
-## Guid values are now stored as TEXT on SQLite
+### Guid values are now stored as TEXT on SQLite
 
 [Tracking Issue #15078](https://github.com/aspnet/EntityFrameworkCore/issues/15078)
 
@@ -1328,7 +1328,7 @@ Microsoft.Data.Sqlite remains capable of reading Guid values from both BLOB and 
 
 <a name="char"></a>
 
-## Char values are now stored as TEXT on SQLite
+### Char values are now stored as TEXT on SQLite
 
 [Tracking Issue #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
 
@@ -1371,7 +1371,7 @@ Microsoft.Data.Sqlite also remains capable of reading character values from both
 
 <a name="migid"></a>
 
-## Migration IDs are now generated using the invariant culture's calendar
+### Migration IDs are now generated using the invariant culture's calendar
 
 [Tracking Issue #12978](https://github.com/aspnet/EntityFrameworkCore/issues/12978)
 
@@ -1412,7 +1412,7 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 <a name="urn"></a>
 
-## UseRowNumberForPaging has been removed
+### UseRowNumberForPaging has been removed
 
 [Tracking Issue #16400](https://github.com/aspnet/EntityFrameworkCore/issues/16400)
 
@@ -1436,7 +1436,7 @@ We recommend updating to a newer version of SQL Server, or using a higher compat
 
 <a name="xinfo"></a>
 
-## Extension info/metadata has been removed from IDbContextOptionsExtension
+### Extension info/metadata has been removed from IDbContextOptionsExtension
 
 [Tracking Issue #16119](https://github.com/aspnet/EntityFrameworkCore/issues/16119)
 
@@ -1462,7 +1462,7 @@ Examples are found in the many implementations of `IDbContextOptionsExtension` f
 
 <a name="lqpe"></a>
 
-## LogQueryPossibleExceptionWithAggregateOperator has been renamed
+### LogQueryPossibleExceptionWithAggregateOperator has been renamed
 
 [Tracking Issue #10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
 
@@ -1514,7 +1514,7 @@ Use the new name.
 
 <a name="irdc2"></a>
 
-## IRelationalDatabaseCreator.HasTables/HasTablesAsync have been made public
+### IRelationalDatabaseCreator.HasTables/HasTablesAsync have been made public
 
 [Tracking Issue #15997](https://github.com/aspnet/EntityFrameworkCore/issues/15997)
 
@@ -1538,7 +1538,7 @@ Change the accessibility of any overrides.
 
 <a name="dip"></a>
 
-## Microsoft.EntityFrameworkCore.Design is now a DevelopmentDependency package
+### Microsoft.EntityFrameworkCore.Design is now a DevelopmentDependency package
 
 [Tracking Issue #11506](https://github.com/aspnet/EntityFrameworkCore/issues/11506)
 
@@ -1570,7 +1570,7 @@ If you need to reference this package to override EF Core's design-time behavior
 
 <a name="SQLitePCL"></a>
 
-## SQLitePCL.raw updated to version 2.0.0
+### SQLitePCL.raw updated to version 2.0.0
 
 [Tracking Issue #14824](https://github.com/aspnet/EntityFrameworkCore/issues/14824)
 
@@ -1594,7 +1594,7 @@ SQLitePCL.raw version 2.0.0 includes some breaking changes. See the [release not
 
 <a name="NetTopologySuite"></a>
 
-## NetTopologySuite updated to version 2.0.0
+### NetTopologySuite updated to version 2.0.0
 
 [Tracking Issue #14825](https://github.com/aspnet/EntityFrameworkCore/issues/14825)
 
@@ -1618,7 +1618,7 @@ NetTopologySuite version 2.0.0 includes some breaking changes. See the [release 
 
 <a name="mersa"></a>
 
-## Multiple ambiguous self-referencing relationships must be configured 
+### Multiple ambiguous self-referencing relationships must be configured 
 
 [Tracking Issue #13573](https://github.com/aspnet/EntityFrameworkCore/issues/13573)
 
