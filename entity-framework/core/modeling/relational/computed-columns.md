@@ -34,7 +34,7 @@ class MyContext : DbContext
     {
         modelBuilder.Entity<Person>()
             .Property(p => p.DisplayName)
-            .HasComputedColumnSql("[LastName] + ', ' + [FirstName]");
+            .HasComputedColumnSql($"[{nameof(Person.LastName)}] + ', ' + [{nameof(Person.FirstName)}]");
     }
 }
 
