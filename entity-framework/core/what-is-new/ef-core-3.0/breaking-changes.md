@@ -1158,7 +1158,7 @@ This change avoids breaking in the future when it becomes a valid thing to do.
 
 Remove any attempts to map derived types to other tables.
 
-## ForSqlServerHasIndex replaced with HasIndex 
+### ForSqlServerHasIndex replaced with HasIndex 
 
 [Tracking Issue #12366](https://github.com/aspnet/EntityFrameworkCore/issues/12366)
 
@@ -1231,7 +1231,7 @@ Use the new extension methods.
 
 <a name="pragma"></a>
 
-## EF Core no longer sends pragma for SQLite FK enforcement
+### EF Core no longer sends pragma for SQLite FK enforcement
 
 [Tracking Issue #12151](https://github.com/aspnet/EntityFrameworkCore/issues/12151)
 
@@ -1482,7 +1482,7 @@ Use the new name. (Note that the event ID number has not changed.)
 
 <a name="clarify"></a>
 
-## Clarify API for foreign key constraint names
+### Clarify API for foreign key constraint names
 
 [Tracking Issue #10730](https://github.com/aspnet/EntityFrameworkCore/issues/10730)
 
