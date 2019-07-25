@@ -1,12 +1,13 @@
 ---
-title: Getting Started on ASP.NET Core - Existing Database - EF Core
+title: Get started on ASP.NET Core - existing database - EF Core
 author: rowanmiller
+description: Getting started with EF Core on ASP.NET Core with an existing Database
 ms.date: 08/02/2018
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 uid: core/get-started/aspnetcore/existing-db
 ---
 
-# Getting Started with EF Core on ASP.NET Core with an Existing Database
+# Get started with EF Core on ASP.NET Core with an existing database
 
 In this tutorial, you build an ASP.NET Core MVC application that performs basic data access using Entity Framework Core. You reverse engineer an existing database to create an Entity Framework model.
 
