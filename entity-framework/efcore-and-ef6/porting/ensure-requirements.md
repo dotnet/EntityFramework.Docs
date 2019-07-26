@@ -20,7 +20,7 @@ This is a non-exhaustive list of some changes in behavior between EF6 and EF Cor
 
 ### DbSet.Add/Attach and graph behavior
 
-In EF6, calling `DbSet.Add()` on an entity results in a recursive search for all entities referenced in its navigation properties. Any entities that are found, and are not already tracked by the context, are also be marked as added. `DbSet.Attach()` behaves the same, except all entities are marked as unchanged.
+In EF6, calling `DbSet.Add()` on an entity results in a recursive search for all entities referenced in its navigation properties. Any entities that are found, and are not already tracked by the context, are also marked as added. `DbSet.Attach()` behaves the same, except all entities are marked as unchanged.
 
 **EF Core performs a similar recursive search, but with some slightly different rules.**
 
