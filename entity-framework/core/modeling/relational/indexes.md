@@ -33,3 +33,9 @@ You can also specify a filter.
 When using the SQL Server provider EF adds a 'IS NOT NULL' filter for all nullable columns that are part of a unique index. To override this convention you can supply a `null` value.
 
 [!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/IndexNoFilter.cs?name=Model&highlight=10)]
+
+### Include Columns in SQL Server Indexes
+
+You can configure [indexes with included columns](https://docs.microsoft.com/en-us/sql/relational-databases/indexes/create-indexes-with-included-columns?view=sql-server-2017) to significantly improve query performance when all columns in the query are included in the index as key or nonkey columns.
+
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/ForSqlServerHasIndex.cs?name=Model)]
