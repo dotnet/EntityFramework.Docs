@@ -1218,8 +1218,8 @@ This change is introduced in EF Core 3.0-preview 6.
 The provider-specific extension methods will be flattened out:
 
 * `IProperty.Relational().ColumnName` -> `IProperty.GetColumnName()`
-* `IEntityType.SqlServer().IsMemoryOptimized` -> `IEntityType.GetSqlServerIsMemoryOptimized()`
-* `PropertyBuilder.UseSqlServerIdentityColumn()` -> `PropertyBuilder.ForSqlServerUseIdentityColumn()`
+* `IEntityType.SqlServer().IsMemoryOptimized` -> `IEntityType.IsMemoryOptimized()`
+* `PropertyBuilder.UseSqlServerIdentityColumn()` -> `PropertyBuilder.UseIdentityColumn()`
 
 **Why**
 
