@@ -28,7 +28,7 @@ The installation procedure depends on project type and version:
 * `dotnet ef` must be installed as a global or local tool. Most developers will install `dotnet ef` as a global tool with the following command:
 
   ``` console
-    $ dotnet tool install --global dotnet-ef --version 3.0.0-*
+  dotnet tool install --global dotnet-ef --version 3.0.0-*
   ```
 
   You can also use `dotnet ef` as local tool. To use it as a local tool, restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](https://github.com/dotnet/cli/issues/10288).
