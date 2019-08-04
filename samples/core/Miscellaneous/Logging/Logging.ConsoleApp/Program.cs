@@ -35,6 +35,21 @@ namespace EFLogging.ConsoleApp
                     Console.WriteLine(blog.Url);
                 }
             }
+
+            using (var db = new BloggingContextOnlySqlStatements())
+            {
+                db.Database.EnsureCreated();
+                db.Blogs.Add(new Blog { Url = "http://sample.com" });
+                db.SaveChanges();
+            }
+
+            using (var db = new BloggingContextOnlySqlStatements())
+            {
+                foreach (var blog in db.Blogs)
+                {
+                    Console.WriteLine(blog.Url);
+                }
+            }
         }
     }
 }

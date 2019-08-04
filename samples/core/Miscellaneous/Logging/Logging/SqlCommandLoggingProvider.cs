@@ -28,7 +28,7 @@ namespace EFLogging
                 return;
             }
 
-            Trace.WriteLine($@"Executed EF SQL command:
+            Console.WriteLine($@"Executed EF SQL command:
 {state.ToString()}");
         }
 
