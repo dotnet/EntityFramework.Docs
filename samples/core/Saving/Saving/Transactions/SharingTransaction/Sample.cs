@@ -10,7 +10,7 @@ namespace EFSaving.Transactions.SharingTransaction
     {
         public static void Run()
         {
-            var connectionString = @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
+            var connectionString = @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True";
 
             using (var context = new BloggingContext(
                 new DbContextOptionsBuilder<BloggingContext>()

@@ -20,7 +20,7 @@ namespace Samples
         public static long InstanceCount;
 
         public BloggingContext(DbContextOptions options)
-            : base(options) 
+            : base(options)
             => Interlocked.Increment(ref InstanceCount);
 
         public DbSet<Blog> Blogs { get; set; }
@@ -38,7 +38,7 @@ namespace Samples
     public class Startup
     {
         private const string ConnectionString
-            = @"Server=(localdb)\mssqllocaldb;Database=Demo.ContextPooling;Integrated Security=True;ConnectRetryCount=0";
+            = @"Server=(localdb)\mssqllocaldb;Database=Demo.ContextPooling;Integrated Security=True";
 
         public void ConfigureServices(IServiceCollection services)
         {

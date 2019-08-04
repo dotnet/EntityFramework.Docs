@@ -38,7 +38,7 @@ namespace EFGetStarted.AspNetCore.NewDb
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True";
             services.AddDbContext<BloggingContext>
                 (options => options.UseSqlServer(connection));
             // BloggingContext requires
