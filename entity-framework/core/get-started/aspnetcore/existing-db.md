@@ -87,7 +87,7 @@ The reverse engineer process created entity classes (`Blog.cs` & `Post.cs`) and 
  The context represents a session with the database and allows you to query and save instances of the entity classes.
 
 <!-- Static code listing, rather than a linked file, because the tutorial modifies the context file heavily -->
- ``` csharp
+``` csharp
 public partial class BloggingContext : DbContext
 {
     public BloggingContext()
