@@ -54,4 +54,20 @@ In this example, the log is filtered to return only messages:
 
 For EF Core, logger categories are defined in the `DbLoggerCategory` class to make it easy to find categories, but these resolve to simple strings.
 
+
+### Only logging SQL statements
+
+It is often useful to filter log messages so that only SQL statements are logged.
+
+To achieve this a custom `ILoggerProvider` can be used.
+
+Instead of using a `ConsoleLoggerProvider`, as in the above example, use `SqlCommandLoggingProvider`:
+
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/LoggingSqlStatements/BloggingContextWithFiltering.cs#DefineLoggerFactory)]
+
+Then `SqlCommandLoggingProvider` is defined as:
+
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/LoggingSqlStatements/SqlCommandLoggingProvider.cs)]
+
+
 More details on the underlying logging infrastructure can be found in the [ASP.NET Core logging documentation](https://docs.microsoft.com/aspnet/core/fundamentals/logging?tabs=aspnetcore2x).
