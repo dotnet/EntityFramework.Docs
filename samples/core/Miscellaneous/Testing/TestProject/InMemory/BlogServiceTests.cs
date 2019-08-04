@@ -20,6 +20,7 @@ namespace TestProject.InMemory
             {
                 var service = new BlogService(context);
                 service.Add("http://sample.com");
+                context.SaveChanges();
             }
 
             // Use a separate instance of the context to verify correct data was saved to database

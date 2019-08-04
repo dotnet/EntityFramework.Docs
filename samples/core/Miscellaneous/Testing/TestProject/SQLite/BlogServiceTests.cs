@@ -30,9 +30,10 @@ namespace TestProject.SQLite
 
                 // Run the test against one instance of the context
                 using (var context = new BloggingContext(options))
-                { 
+                {
                     var service = new BlogService(context);
                     service.Add("http://sample.com");
+                    context.SaveChanges();
                 }
 
                 // Use a separate instance of the context to verify correct data was saved to database
