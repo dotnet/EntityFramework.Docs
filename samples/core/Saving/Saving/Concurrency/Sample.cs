@@ -81,7 +81,7 @@ namespace EFSaving.Concurrency
             {
                 // Requires NuGet package Microsoft.EntityFrameworkCore.SqlServer
                 optionsBuilder.UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True;ConnectRetryCount=0");
+                    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True");
             }
         }
 
