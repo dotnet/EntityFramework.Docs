@@ -20,6 +20,7 @@ Breaks in new features introduced from one 3.0 preview to another 3.0 preview ar
 | **Breaking change**                                                                                               | **Impact** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
 | [LINQ queries are no longer evaluated on the client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
+| [EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0](#netstandard21) | High      |
 | [The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK](#dotnet-ef) | High      |
 | [FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed](#fromsql) | High      |
 | [Query types are consolidated with entity types](#qt) | High      |
@@ -28,6 +29,7 @@ Breaks in new features introduced from one 3.0 preview to another 3.0 preview ar
 | [DeleteBehavior.Restrict has cleaner semantics](#deletebehavior) | Medium      |
 | [Configuration API for owned type relationships has changed](#config) | Medium      |
 | [Each property uses independent in-memory integer key generation](#each) | Medium      |
+| [No-tracking queries no longer perform identity resolution](#notrackingresolution) | Medium      |
 | [Metadata API changes](#metadata-api-changes) | Medium      |
 | [Provider-specific Metadata API changes](#provider) | Medium      |
 | [UseRowNumberForPaging has been removed](#urn) | Medium      |
@@ -97,6 +99,29 @@ Besides this, automatic client evaluation can lead to issues in which improving 
 **Mitigations**
 
 If a query can't be fully translated, then either rewrite the query in a form that can be translated, or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
+
+<a name="netstandard21"></a>
+### EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0
+
+[Tracking Issue #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
+
+This change is introduced in EF Core 3.0-preview 7.
+
+**Old behavior**
+
+Before 3.0, EF Core targeted .NET Standard 2.0 and would run on all platforms that support that standard, including .NET Framework.
+
+**New behavior**
+
+Starting with 3.0, EF Core targets .NET Standard 2.1 and will run on all platforms that support this standard. This does not include .NET Framework.
+
+**Why**
+
+This is part of a strategic decision across .NET technologies to focus energy on .NET Core and other modern .NET platforms, such as Xamarin.
+
+**Mitigations**
+
+Consider moving to a modern .NET platform. If this is not possible, then continue to use EF Core 2.1 or EF Core 2.2, both of which support .NET Framework.
 
 <a name="no-longer"></a>
 ### Entity Framework Core is no longer part of the ASP.NET Core shared framework
@@ -218,6 +243,34 @@ Specifying `FromSql` anywhere other than on a `DbSet` had no added meaning or ad
 **Mitigations**
 
 `FromSql` invocations should be moved to be directly on the `DbSet` to which they apply.
+
+<a name="notrackingresolution"></a>
+### No-tracking queries no longer perform identity resolution
+
+[Tracking Issue #13518](https://github.com/aspnet/EntityFrameworkCore/issues/13518)
+
+This change is introduced in EF Core 3.0-preview 6.
+
+**Old behavior**
+
+Before EF Core 3.0, the same entity instance would be used for every occurrence of an entity with a given type and ID. This matches the behavior of tracking queries. For example, this query:
+
+```C#
+var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
+```
+would return the same `Category` instance for each `Product` that is associated with the given category.
+
+**New behavior**
+
+Starting with EF Core 3.0, different entity instances will be created when an entity with a given type and ID is encountered at different places in the returned graph. For example, the query above will now return a new `Category` instance for each `Product` even when two products are associated with the same category.
+
+**Why**
+
+Identity resolution (that is, determining that an entity has the same type and ID as a previously encountered entity) adds additional performance and memory overhead. This usually runs counter to why no-tracking queries are used in the first place. Also, while identity resolution can sometimes be useful, it is not needed if the entities are to be serialized and sent to a client, which is common for no-tracking queries.
+
+**Mitigations**
+
+Use a tracking query if identity resolution is required.
 
 <a name="qe"></a>
 
