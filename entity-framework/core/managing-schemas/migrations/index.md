@@ -188,7 +188,7 @@ Apply migrations at runtime
 ---------------------------
 Some apps may want to apply migrations at runtime during startup or first run. Do this using the `Migrate()` method.
 
-This method builds on top of the `IMigrator` service, which can be used for more advanced scenarios. Use `DbContext.GetService<IMigrator>()` to access it.
+This method builds on top of the `IMigrator` service, which can be used for more advanced scenarios. Use `myDbContext.GetInfrastructure().GetService<IMigrator>()` to access it.
 
 ``` csharp
 myDbContext.Database.Migrate();
