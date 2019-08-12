@@ -54,6 +54,15 @@ Entity Framework Core Generator (efg) is a .NET Core CLI tool that can generate 
 
 ## Extensions
 
+### Microsoft.EntityFrameworkCore.DistributedCache
+An extension for caching result of queries into redis cache.
+It implement as async and sync version. 
+Support distributed lock to be able use cache between n-numbers of servers which
+serve application, and domn’t allow any concurrency race. 
+Also you can disable distributed lock if you use only one server
+
+[GitHub repository](https://github.com/grinay/Microsoft.EntityFrameworkCore.DistributedCache/)
+
 ### Microsoft.EntityFrameworkCore.AutoHistory
 
 A plugin library that enables automatically recording the data changes performed by EF Core into a history table.
