@@ -19,7 +19,7 @@ using (var context = new BloggingContext())
                         .Include(b => b.Posts)
                         .ToList();
 
-    // Load one blogs and its related posts
+    // Load one blog and its related posts
     var blog1 = context.Blogs
                        .Where(b => b.Name == "ADO.NET Blog")
                        .Include(b => b.Posts)
