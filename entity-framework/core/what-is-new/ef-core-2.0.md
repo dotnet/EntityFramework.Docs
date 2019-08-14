@@ -27,6 +27,7 @@ modelBuilder.Entity<Product>()
 modelBuilder.Entity<Product>().ToTable("Products");
 modelBuilder.Entity<ProductDetails>().ToTable("Products");
 ```
+Read the [section on table splitting](xref:core/modeling/table-splitting) for more information on this feature.
 
 ### Owned types
 
