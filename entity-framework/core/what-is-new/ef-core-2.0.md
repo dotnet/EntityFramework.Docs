@@ -27,6 +27,7 @@ modelBuilder.Entity<Product>()
 modelBuilder.Entity<Product>().ToTable("Products");
 modelBuilder.Entity<ProductDetails>().ToTable("Products");
 ```
+Read the [section on table splitting](xref:core/modeling/table-splitting) for more information on this feature.
 
 ### Owned types
 
@@ -86,7 +87,7 @@ public class BloggingContext : DbContext
     }
 }
 ```
-We define a model-level filter that implements multi-tenancy and soft-delete for instances of the ```Post``` Entity Type. Note the use of a DbContext instance level property: ```TenantId```. Model-level filters will use the value from the correct context instance (that is, the context instance that is executing the query).
+We define a model-level filter that implements multi-tenancy and soft-delete for instances of the `Post` Entity Type. Note the use of a DbContext instance level property: `TenantId`. Model-level filters will use the value from the correct context instance (that is, the context instance that is executing the query).
 
 Filters may be disabled for individual LINQ queries using the IgnoreQueryFilters() operator.
 
@@ -154,7 +155,7 @@ builder.ApplyConfiguration(new CustomerConfiguration());
 
 The basic pattern for using EF Core in an ASP.NET Core application usually involves registering a custom DbContext type into the dependency injection system and later obtaining instances of that type through constructor parameters in controllers. This means a new instance of the DbContext is created for each requests.
 
-In version 2.0 we are introducing a new way to register custom DbContext types in dependency injection which transparently introduces a pool of reusable DbContext instances. To use DbContext pooling, use the ```AddDbContextPool``` instead of ```AddDbContext``` during service registration:
+In version 2.0 we are introducing a new way to register custom DbContext types in dependency injection which transparently introduces a pool of reusable DbContext instances. To use DbContext pooling, use the `AddDbContextPool` instead of `AddDbContext` during service registration:
 
 ``` csharp
 services.AddDbContextPool<BloggingContext>(
@@ -167,7 +168,7 @@ This is conceptually similar to how connection pooling operates in ADO.NET provi
 
 ### Limitations
 
-The new method introduces a few limitations on what can be done in the ```OnConfiguring()``` method of the DbContext.
+The new method introduces a few limitations on what can be done in the `OnConfiguring()` method of the DbContext.
 
 > [!WARNING]  
 > Avoid using DbContext Pooling if you maintain your own state (for example, private fields) in your derived DbContext class that should not be shared across requests. EF Core will only reset the state that is aware of before adding a DbContext instance to the pool.
@@ -213,7 +214,7 @@ This work improves the SQL that is generated for group joins. Group joins are mo
 
 ### String interpolation in FromSql and ExecuteSqlCommand
 
-C# 6 introduced String Interpolation, a feature that allows C# expressions to be directly embedded in string literals, providing a nice way of building strings at runtime. In EF Core 2.0 we added special support for interpolated strings to our two primary APIs that accept raw SQL strings: ```FromSql``` and ```ExecuteSqlCommand```. This new support allows C# string interpolation to be used in a 'safe' manner. That is, in a way that protects against common SQL injection mistakes that can occur when dynamically constructing SQL at runtime.
+C# 6 introduced String Interpolation, a feature that allows C# expressions to be directly embedded in string literals, providing a nice way of building strings at runtime. In EF Core 2.0 we added special support for interpolated strings to our two primary APIs that accept raw SQL strings: `FromSql` and `ExecuteSqlCommand`. This new support allows C# string interpolation to be used in a 'safe' manner. That is, in a way that protects against common SQL injection mistakes that can occur when dynamically constructing SQL at runtime.
 
 Here is an example:
 
