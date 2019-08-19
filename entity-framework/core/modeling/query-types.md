@@ -70,6 +70,7 @@ We use standard fluent configuration APIs to configure the mapping for the Query
 [!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Configuration)]
 
 Next, we configure the `DbContext` to include the `DbQuery<T>`:
+
 [!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#DbQuery)]
 
 Finally, we can query the database view in the standard way:
