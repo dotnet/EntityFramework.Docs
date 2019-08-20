@@ -60,6 +60,7 @@ public class Order
     public OrderDetails Details { get; set; }
 }
 
+[Owned]
 public class OrderDetails
 {
     public int Id { get; set; }
@@ -67,8 +68,9 @@ public class OrderDetails
 }
 ```
 
-Starting with EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table it will be possible to add an `Order` without an `OrderDetails` and all of the `OrderDetails` properties except the primary key will be mapped to nullable columns.
-When querying EF Core will set `OrderDetails` to `null` if any of its required properties doesn't have a value or if it has no required properties besides the primary key and all properties are `null`.
+Starting with EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table, it will be possible to add an `Order` without an `OrderDetails` and all of the `OrderDetails` properties, except the primary key will be mapped to nullable columns.
+
+When querying, EF Core will set `OrderDetails` to `null` if any of its required properties doesn't have a value, or if it has no required properties besides the primary key and all properties are `null`.
 
 ## C# 8.0 support
 

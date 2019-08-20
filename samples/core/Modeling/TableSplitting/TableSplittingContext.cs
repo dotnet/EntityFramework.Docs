@@ -22,7 +22,7 @@ namespace TableSplitting
             modelBuilder.Entity<Order>()
                 .ToTable("Orders")
                 .HasOne(o => o.DetailedOrder).WithOne()
-                .HasForeignKey<Order>(o => o.Id);
+                .HasForeignKey<DetailedOrder>(o => o.Id);
             #endregion
 
             #region ConcurrencyToken
