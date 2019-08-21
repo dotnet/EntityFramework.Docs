@@ -54,7 +54,7 @@ EF Designer based models use special EF connection strings. For example:
         res://*/BloggingModel.csdl|
         res://*/BloggingModel.ssdl|
         res://*/BloggingModel.msl;
-      provider=System.Data.SqlClient
+      provider=System.Data.SqlClient;
       provider connection string=
         &quot;data source=(localdb)\mssqllocaldb;
         initial catalog=Blogging;
