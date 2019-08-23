@@ -276,7 +276,7 @@ Add the classes that are defined in the model as data sources for this WinForms 
     ![Data Source](~/ef6/media/datasource.png)
 
 -   Click **Finish.**
-    *If the Data Sources window is not showing up, select***View -&gt; Other Windows-&gt; Data Sources**
+    If the Data Sources window is not showing up, select **View -&gt; Other Windows-&gt; Data Sources**
 -   Press the pin icon, so the Data Sources window does not auto hide. You may need to hit the refresh button if the window was already visible.
 
     ![Data Source 2](~/ef6/media/datasource2.png)
