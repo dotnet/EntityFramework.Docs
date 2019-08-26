@@ -11,23 +11,14 @@ namespace EFQuerying.RawSQL
             using (var context = new BloggingContext())
             {
                 var blogs = context.Blogs
-                    .FromSql("SELECT * FROM dbo.Blogs")
+                    .FromSqlRaw("SELECT * FROM dbo.Blogs")
                     .ToList();
             }
 
             using (var context = new BloggingContext())
             {
                 var blogs = context.Blogs
-                    .FromSql("EXECUTE dbo.GetMostPopularBlogs")
-                    .ToList();
-            }
-
-            using (var context = new BloggingContext())
-            {
-                var user = "johndoe";
-
-                var blogs = context.Blogs
-                    .FromSql("EXECUTE dbo.GetMostPopularBlogsForUser {0}", user)
+                    .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogs")
                     .ToList();
             }
 
@@ -36,7 +27,16 @@ namespace EFQuerying.RawSQL
                 var user = "johndoe";
 
                 var blogs = context.Blogs
-                    .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
+                    .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser {0}", user)
+                    .ToList();
+            }
+
+            using (var context = new BloggingContext())
+            {
+                var user = "johndoe";
+
+                var blogs = context.Blogs
+                    .FromSqlInterpolated($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
                     .ToList();
             }
 
@@ -45,7 +45,7 @@ namespace EFQuerying.RawSQL
                 var user = new SqlParameter("user", "johndoe");
 
                 var blogs = context.Blogs
-                    .FromSql("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
+                    .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
                     .ToList();
             }
 
@@ -54,7 +54,7 @@ namespace EFQuerying.RawSQL
                 var searchTerm = ".NET";
 
                 var blogs = context.Blogs
-                    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                    .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
                     .Where(b => b.Rating > 3)
                     .OrderByDescending(b => b.Rating)
                     .ToList();
@@ -65,7 +65,7 @@ namespace EFQuerying.RawSQL
                 var searchTerm = ".NET";
 
                 var blogs = context.Blogs
-                    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                    .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
                     .Include(b => b.Posts)
                     .ToList();
             }
