@@ -36,6 +36,9 @@ The predicate expressions passed to the _HasQueryFilter_ calls will now automati
 > [!TIP]
 > Note the use of a DbContext instance level field: `_tenantId` used to set the current tenant. Model-level filters will use the value from the correct context instance (that is, the instance that is executing the query).
 
+> [!NOTE]
+> It is currently not possible to define multiple query filters on the same entity - only the last one will be applied. However, you can define a single filter with multiple conditions using regular `AND`.
+
 ## Disabling Filters
 
 Filters may be disabled for individual LINQ queries by using the `IgnoreQueryFilters()` operator.
