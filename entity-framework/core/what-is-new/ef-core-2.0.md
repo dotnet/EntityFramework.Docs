@@ -298,7 +298,7 @@ This gives us a more robust solution in Microsoft.Data.Sqlite for distributing n
 ### Only one provider per model
 Significantly augments how providers can interact with the model and simplifies how conventions, annotations and fluent APIs work with different providers.
 
-EF Core 2.0 will now build a different [IModel](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IModel.cs) for each different provider being used. This is usually transparent to the application. This has facilitated a simplification of lower-level metadata APIs such that any access to *common relational metadata concepts* is always made through a call to `.Relational` instead of `.SqlServer`, `.Sqlite`, etc.
+EF Core 2.0 will now build a different [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs) for each different provider being used. This is usually transparent to the application. This has facilitated a simplification of lower-level metadata APIs such that any access to *common relational metadata concepts* is always made through a call to `.Relational` instead of `.SqlServer`, `.Sqlite`, etc.
 
 ### Consolidated Logging and Diagnostics
 
@@ -306,6 +306,6 @@ Logging (based on ILogger) and Diagnostics (based on DiagnosticSource) mechanism
 
 The event IDs for messages sent to an ILogger have changed in 2.0. The event IDs are now unique across EF Core code. These messages now also follow the standard pattern for structured logging used by, for example, MVC.
 
-Logger categories have also changed. There is now a well-known set of categories accessed through [DbLoggerCategory](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/DbLoggerCategory.cs).
+Logger categories have also changed. There is now a well-known set of categories accessed through [DbLoggerCategory](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/DbLoggerCategory.cs).
 
 DiagnosticSource events now use the same event ID names as the corresponding `ILogger` messages.
