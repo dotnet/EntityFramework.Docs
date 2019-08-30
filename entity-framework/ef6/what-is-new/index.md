@@ -23,7 +23,7 @@ It includes improvements for some common pain points:
 - Workaround for SQL Server performance regression when generating models from existing databases [#4](https://github.com/aspnet/entityframework6/issues/4)
 - Support for updating models for larger models on SQL Server [#185](https://github.com/aspnet/EntityFramework6/issues/185)
 
-Another improvement in this this new version of EF Tools is that it installs the EF 6.2 runtime when creating a model in a new project. With older versions of Visual Studio, it is possible to use the EF 6.2 runtime (as well as any past version of EF) by installing the corresponding version of the NuGet package.
+Another improvement in this new version of EF Tools is that it installs the EF 6.2 runtime when creating a model in a new project. With older versions of Visual Studio, it is possible to use the EF 6.2 runtime (as well as any past version of EF) by installing the corresponding version of the NuGet package.
 
 ### EF 6.2 Runtime
 
