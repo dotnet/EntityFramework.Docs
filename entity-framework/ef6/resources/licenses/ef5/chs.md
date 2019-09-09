@@ -1,5 +1,6 @@
 ---
 title: "Entity Framework 5 License (CHS)"
+author: rowanmiller
 ms.date: "10/23/2016"
 ms.assetid: 72b83f2c-d892-4181-bc6a-290688d3d3f2
 ---
