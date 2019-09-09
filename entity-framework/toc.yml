@@ -83,7 +83,7 @@
         href: core/modeling/keys.md
       - name: Generated Values
         href: core/modeling/generated-properties.md
-      - name: Required/optional properties
+      - name: Required and Optional Properties
         href: core/modeling/required-optional.md
       - name: Maximum Length
         href: core/modeling/max-length.md
