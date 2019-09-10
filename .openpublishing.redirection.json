@@ -224,6 +224,21 @@
             "source_path": "entity-framework/core/querying/overview.md",
             "redirect_url": "/ef/core/querying/how-query-works",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/included-types.md",
+            "redirect_url": "/ef/core/modeling/entity-types",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/tables.md",
+            "redirect_url": "/ef/core/modeling/entity-types",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/default-schema.md",
+            "redirect_url": "/ef/core/modeling/entity-types",
+            "redirect_document_id": false
         }
     ]
 }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace EFModeling.Conventions.IncludedTypes
+namespace EFModeling.Conventions.EntityTypes
 {
-    #region IncludedTypes
+    #region EntityTypes
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
