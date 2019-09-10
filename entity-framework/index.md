@@ -157,18 +157,6 @@ uid: index
                                                     <a href="/ef/core/get-started/">Tutorials</a>
                                                 </h3>
                                                 <p>
-                                                    <a href="/ef/core/get-started/full-dotnet/">.NET Framework</a>
-                                                </p>
-                                                <p>
-                                                    <a href="/ef/core/get-started/netcore/">.NET Core</a>
-                                                </p>
-                                                <p>
-                                                    <a href="/ef/core/get-started/aspnetcore/">ASP.NET Core</a>
-                                                </p>
-                                                <p>
-                                                    <a href="/ef/core/get-started/uwp/">UWP</a>
-                                                </p>
-                                                <p>
                                                     <a href="/ef/core/get-started/">more…</a>
                                                 </p>
                                             </div>

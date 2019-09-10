@@ -185,6 +185,5 @@ Using dependency injection, this can be achieved by either registering the conte
 
 ## More reading
 
-* Read [Getting Started on ASP.NET Core](../get-started/aspnetcore/index.md) for more information on using EF with ASP.NET Core.
 * Read [Dependency Injection](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection) to learn more about using DI.
 * Read [Testing](testing/index.md) for more information.

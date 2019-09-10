@@ -27,18 +27,7 @@
 
 ### [Get Started](core/get-started/index.md)
 #### [Installing EF Core](core/get-started/install/index.md)
-#### [.NET Core](core/get-started/netcore/index.md)
-##### [New Database](core/get-started/netcore/new-db-sqlite.md)
-#### [ASP.NET Core](core/get-started/aspnetcore/index.md)
-##### [⤤ Interactive tutorial](/learn/modules/persist-data-ef-core/)
-##### [New Database](core/get-started/aspnetcore/new-db.md)
-##### [Existing Database](core/get-started/aspnetcore/existing-db.md)
-##### [⤤ EF Core and Razor Pages](/aspnet/core/data/ef-rp/intro)
-#### [Universal Windows Platform (UWP)](core/get-started/uwp/index.md)
-##### [New Database](core/get-started/uwp/getting-started.md)
-#### [.NET Framework](core/get-started/full-dotnet/index.md)
-##### [New Database](core/get-started/full-dotnet/new-db.md)
-##### [Existing Database](core/get-started/full-dotnet/existing-db.md)
+#### [⤤ ASP.NET Core Tutorial](/aspnet/core/data/ef-rp/intro)
 
 ### Fundamentals
 #### [Connection Strings](core/miscellaneous/connection-strings.md)
