@@ -18,4 +18,4 @@ Entity Framework Core provides a set of asynchronous extension methods that can 
 > [!IMPORTANT]  
 > The EF Core async extension methods are defined in the `Microsoft.EntityFrameworkCore` namespace. This namespace must be imported for the methods to be available.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/Async/Sample.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Querying/Async/Sample.cs#Sample)]
