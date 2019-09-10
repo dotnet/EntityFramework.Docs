@@ -18,7 +18,7 @@ This page shows a few examples to achieve common tasks with Entity Framework Cor
 
 ## Loading all data
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/Basics/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/Basics/Sample.cs)] -->
 ``` csharp
 using (var context = new BloggingContext())
 {
@@ -28,7 +28,7 @@ using (var context = new BloggingContext())
 
 ## Loading a single entity
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/Basics/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/Basics/Sample.cs)] -->
 ``` csharp
 using (var context = new BloggingContext())
 {
@@ -39,7 +39,7 @@ using (var context = new BloggingContext())
 
 ## Filtering
 
-<!-- [!code-csharp[Main](samples/core/Querying/Querying/Basics/Sample.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Querying/Basics/Sample.cs)] -->
 ``` csharp
 using (var context = new BloggingContext())
 {
