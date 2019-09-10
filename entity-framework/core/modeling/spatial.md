@@ -164,7 +164,7 @@ static class GeometryExtensions
             => _transform = transform;
 
         public bool Done => false;
-        public bool GeometryChanged => false;
+        public bool GeometryChanged => true;
 
         public void Filter(CoordinateSequence seq, int i)
         {
