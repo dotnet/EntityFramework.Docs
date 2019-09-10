@@ -15,7 +15,7 @@ uid: core/get-started/install/index
 
 * You can use EF Core to develop applications that target .NET Framework 4.6.1 or later on Windows, using Visual Studio. The latest version of [Visual Studio](https://visualstudio.microsoft.com/vs) is recommended. If you want to use an older version, like Visual Studio 2015, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads) to work with .NET Standard 2.0 libraries.
 
-* EF Core can run on other .NET implementations like Xamarin and .NET Native. But in practice those implementations have runtime limitations that may affect how well EF Core works on your app. For more information, see [.NET implementations supported by EF Core](xref:core/platforms/index).
+* EF Core can run on other .NET implementations like [Xamarin](https://dotnet.microsoft.com/apps/xamarin) and .NET Native. But in practice those implementations have runtime limitations that may affect how well EF Core works on your app. For more information, see [.NET implementations supported by EF Core](xref:core/platforms/index).
 
 * Finally, different database providers may require specific database engine versions, .NET implementations, or operating systems. Make sure an [EF Core database provider](xref:core/providers/index) is available that supports the right environment for your application.
 
