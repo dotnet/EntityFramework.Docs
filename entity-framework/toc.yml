@@ -79,8 +79,8 @@
       items:
       - name: Overview
         href: core/modeling/index.md
-      - name: "Including & Excluding Types"
-        href: core/modeling/included-types.md
+      - name: Entity Types
+        href: core/modeling/entity-types.md
       - name: "Including & Excluding Properties"
         href: core/modeling/included-properties.md
       - name: Keys (primary)
@@ -125,16 +125,12 @@
         items:
         - name: Overview
           href: core/modeling/relational/index.md
-        - name: Table Mapping
-          href: core/modeling/relational/tables.md
         - name: Column Mapping
           href: core/modeling/relational/columns.md
         - name: Data Types
           href: core/modeling/relational/data-types.md
         - name: Primary Keys
           href: core/modeling/relational/primary-keys.md
-        - name: Default Schema
-          href: core/modeling/relational/default-schema.md
         - name: Computed Columns
           href: core/modeling/relational/computed-columns.md
         - name: Sequences
