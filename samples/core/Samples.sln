@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UWP", "UWP", "{2D7D0958-8722-40E5-9BCB-A96B096E7534}"
 EndProject
@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.NewDb", "GetStar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.ExistingDb", "GetStarted\FullNet\ConsoleApp.ExistingDb\ConsoleApp.ExistingDb.csproj", "{01AEB498-D8A2-4DFA-BE6D-6ED24511ED64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Querying", "Querying\Querying\Querying.csproj", "{7DEB577A-52B8-4475-A109-689FD515AEEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Querying", "Querying\Querying.csproj", "{7DEB577A-52B8-4475-A109-689FD515AEEA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionResiliency", "Miscellaneous\ConnectionResiliency\ConnectionResiliency.csproj", "{73D58479-A7E6-4867-8A73-0E07E96C6117}"
 EndProject
@@ -76,6 +76,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryTypes", "QueryTypes\QueryTypes.csproj", "{BB293879-4741-4D7A-87E8-3B9727B43A19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableSplitting", "Modeling\TableSplitting\TableSplitting.csproj", "{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos", "Cosmos\Cosmos.csproj", "{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -479,6 +481,22 @@ Global
 		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|x64.Build.0 = Release|Any CPU
 		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|x86.ActiveCfg = Release|Any CPU
 		{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}.Release|x86.Build.0 = Release|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Debug|ARM.Build.0 = Debug|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Debug|x64.Build.0 = Debug|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Debug|x86.Build.0 = Debug|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Release|ARM.ActiveCfg = Release|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Release|ARM.Build.0 = Release|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Release|x64.ActiveCfg = Release|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Release|x64.Build.0 = Release|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Release|x86.ActiveCfg = Release|Any CPU
+		{35091DAC-FAE6-4384-B499-CAF2D1EA4FCF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

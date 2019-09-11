@@ -202,6 +202,9 @@ uid: index
                                                     <a href="/ef/core/providers/sqlite/">SQLite</a>
                                                 </p>
                                                 <p>
+                                                    <a href="/ef/core/providers/cosmos/">Cosmos</a>
+                                                </p>
+                                                <p>
                                                     <a href="/ef/core/providers/">more…</a>
                                                 </p>
                                             </div>
