@@ -7,26 +7,54 @@ uid: core/platforms/index
 
 # .NET implementations supported by EF Core
 
-We want EF Core to be available anywhere you can write .NET code, and we're still working towards that goal. While EF Core's support on .NET Core and .NET Framework is covered by automated testing and many applications known to be using it successfully, Mono, Xamarin and UWP have some issues.
+We want EF Core to be available to developers on all modern .NET implementations, and we're still working towards that goal. While EF Core's support on .NET Core is covered by automated testing and many applications known to be using it successfully, Mono, Xamarin and UWP have some issues.
 
 ## Overview
 
 The following table provides guidance for each .NET implementation:
 
-| .NET implementation                                                                                                  | Status                                                             | EF Core 1.x requirements                                                                                | EF Core 2.x requirements <sup>(1)</sup>                                                                 |
-|:---------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------|
-| **.NET Core** ([ASP.NET Core](../get-started/aspnetcore/index.md), [Console](../get-started/netcore/index.md), etc.) | Fully supported and recommended                                    | [.NET Core SDK 1.x](https://www.microsoft.com/net/core/)                                                | [.NET Core SDK 2.x](https://www.microsoft.com/net/core/)                                                |
-| **.NET Framework** (WinForms, WPF, ASP.NET, [Console](../get-started/full-dotnet/index.md), etc.)                    | Fully supported and recommended. EF6 also available <sup>(2)</sup> | .NET Framework 4.5.1                                                                                    | .NET Framework 4.6.1                                                                                    |
-| **Mono & Xamarin**                                                                                                   | In progress <sup>(3)</sup>                                         | Mono 4.6 <br/> Xamarin.iOS 10 <br/> Xamarin.Mac 3 <br/> Xamarin.Android 7                               | Mono 5.4 <br/> Xamarin.iOS 10.14 <br/> Xamarin.Mac 3.8 <br/> Xamarin.Android 7.5                        |
-| [**Universal Windows Platform**](../get-started/uwp/index.md)                                                        | EF Core 2.0.1 recommended <sup>(4)</sup>                           | [.NET Core UWP 5.x package](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) | [.NET Core UWP 6.x package](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/) |
+| EF Core                       | 1.x    | 2.x        | 3.x             |
+|:------------------------------|:-------|:-----------|:----------------|
+| .NET Standard                 | 1.3    | 2.0        | 2.1             |
+| .NET Core                     | 1.0    | 2.0        | 3.0             |
+| .NET Framework<sup>(1)</sup>  | 4.5.1  | 4.7.2      | (not supported) |
+| Mono                          | 4.6    | 5.4        | 6.4             |
+| Xamarin.iOS<sup>(2)</sup>     | 10.0   | 10.14      | 12.16           |
+| Xamarin.Android<sup>(2)</sup> | 7.0    | 8.0        | 10.0            |
+| UWP<sup>(3)</sup>             | 10.0   | 10.0.16299 | TBD             |
+| Unity<sup>(4)</sup>           | 2018.1 | 2018.1     | TBD             |
 
-<sup>(1)</sup> EF Core 2.0 targets and therefore requires .NET implementations that support [.NET Standard 2.0](https://docs.microsoft.com/dotnet/standard/net-standard).
+<sup>(1)</sup> See the [.NET Framework](#net-framework) section below.
 
-<sup>(2)</sup> See [Compare EF Core & EF6](../../efcore-and-ef6/index.md) to choose the right technology.
+<sup>(2)</sup> There are issues and known limitations with Xamarin which may prevent some applications developed using EF Core from working correctly. Check the list of [active issues](https://github.com/aspnet/entityframeworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin) for workarounds.
 
-<sup>(3)</sup> There are issues and known limitations with Xamarin which may prevent some applications developed using EF Core 2.0 from working correctly. Check the list of [active issues](https://github.com/aspnet/entityframeworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin) for workarounds.
+<sup>(3)</sup> EF Core 2.0.1 and newer recommended. Install the [.NET Core UWP 6.x package](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/). See the [Universal Windows Platform](#universal-windows-platform) section of this article.
 
-<sup>(4)</sup> See the [Universal Windows Platform](#universal-windows-platform) section of this article.
+<sup>(4)</sup> There are issues and known limitations with Unity. Check the list of [active issues](https://github.com/aspnet/entityframeworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-unity).
+
+## .NET Framework
+
+Applications that target .NET Framework may need changes to work with .NET Standard libraries:
+
+Edit the project file and make sure the following entry appears in the initial property group:
+
+``` xml
+<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+```
+
+For test projects, also make sure the following entry is present:
+
+``` xml
+<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+```
+
+If you want to use an older version of Visual Studio, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads) to work with .NET Standard 2.0 libraries.
+
+We also recommend migrating from NuGet packages.config to PackageReference if possible. Add the following property to your project file:
+
+``` xml
+<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+```
 
 ## Universal Windows Platform
 

@@ -32,16 +32,6 @@ The following resources will help you get started with this provider.
 
 * SQLite (3.7 onwards)
 
-## Supported Platforms
-
-* .NET Framework (4.5.1 onwards)
-
-* .NET Core
-
-* Mono (4.2.0 onwards)
-
-* Universal Windows Platform
-
 ## Limitations
 
 See [SQLite Limitations](limitations.md) for some important limitations of the SQLite provider.

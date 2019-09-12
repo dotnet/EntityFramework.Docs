@@ -28,14 +28,4 @@ The following resources will help you get started with this provider.
 
 ## Supported Database Engines
 
-* Microsoft SQL Server (2008 onwards)
-
-## Supported Platforms
-
-* .NET Framework (4.5.1 onwards)
-
-* .NET Core
-
-* Mono (4.2.0 onwards)
-
-      Caution: Using this provider on Mono will make use of the Mono SQL Client implementation, which has a number of known issues. For example, it does not support secure connections (SSL).
+* Microsoft SQL Server (2012 onwards)
