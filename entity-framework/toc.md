@@ -143,7 +143,6 @@
 ## [Entity Framework 6](ef6/index.md)
 
 ### [What's New](ef6/what-is-new/index.md)
-#### [Roadmap](ef6/what-is-new/roadmap.md)
 #### [Past Releases](ef6/what-is-new/past-releases.md)
 #### [Upgrading To EF6](ef6/what-is-new/upgrading-to-ef6.md)
 #### [Visual Studio Releases](ef6/what-is-new/visual-studio.md)

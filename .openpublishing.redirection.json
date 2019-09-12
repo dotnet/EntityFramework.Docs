@@ -134,6 +134,11 @@
             "source_path": "entity-framework/core/modeling/query-types.md",
             "redirect_url": "/ef/core/modeling/keyless-entity-types",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/ef6/what-is-new/roadmap.md",
+            "redirect_url": "/ef/ef/what-is-new/index",
+            "redirect_document_id": false
         }
     ]
 }
