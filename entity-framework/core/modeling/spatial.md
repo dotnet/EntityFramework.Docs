@@ -9,7 +9,7 @@ uid: core/modeling/spatial
 # Spatial Data
 
 > [!NOTE]
-> This feature is new in EF Core 2.2.
+> This feature was added in EF Core 2.2.
 
 Spatial data represents the physical location and the shape of objects. Many databases provide support for this type of data so it can be indexed and queried alongside other data. Common scenarios include querying for objects within a given distance from a location, or selecting the object whose border contains a given location. EF Core supports mapping to spatial data types using the [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) spatial library.
 
@@ -40,7 +40,7 @@ optionsBuilder.UseSqlServer(
     x => x.UseNetTopologySuite());
 ```
 
-There are several spatial data types. Which type you use depends on the types of shapes you want to allow. Here is the hierarchy of NTS types that you can use for properties in your model. They're located within the `NetTopologySuite.Geometries` namespace. Corresponding interfaces in the GeoAPI package (`GeoAPI.Geometries` namespace) can also be used.
+There are several spatial data types. Which type you use depends on the types of shapes you want to allow. Here is the hierarchy of NTS types that you can use for properties in your model. They're located within the `NetTopologySuite.Geometries` namespace.
 
 * Geometry
   * Point
@@ -66,7 +66,7 @@ class City
 
     public string CityName { get; set; }
 
-    public IPoint Location { get; set; }
+    public Point Location { get; set; }
 }
 
 [Table("Countries", Schema = "Application"))]
@@ -77,7 +77,7 @@ class Country
     public string CountryName { get; set; }
 
     // Database includes both Polygon and MultiPolygon values
-    public IGeometry Border { get; set; }
+    public Geometry Border { get; set; }
 }
 ```
 
@@ -108,8 +108,7 @@ Here is an example of using ProjNet4GeoAPI to calculate the distance between two
 ``` csharp
 static class GeometryExtensions
 {
-    static readonly IGeometryServices _geometryServices = NtsGeometryServices.Instance;
-    static readonly ICoordinateSystemServices _coordinateSystemServices
+    static readonly CoordinateSystemServices _coordinateSystemServices
         = new CoordinateSystemServices(
             new CoordinateSystemFactory(),
             new CoordinateTransformationFactory(),
@@ -117,7 +116,7 @@ static class GeometryExtensions
             {
                 // Coordinate systems:
 
-                // (3857 and 4326 included automatically)
+                [4326] = GeographicCoordinateSystem.WGS84.WKT,
 
                 // This coordinate system covers the area of our data.
                 // Different data requires a different coordinate system.
@@ -147,15 +146,37 @@ static class GeometryExtensions
                 "
             });
 
-    public static IGeometry ProjectTo(this IGeometry geometry, int srid)
+    public static Geometry ProjectTo(this Geometry geometry, int srid)
     {
-        var geometryFactory = _geometryServices.CreateGeometryFactory(srid);
         var transformation = _coordinateSystemServices.CreateTransformation(geometry.SRID, srid);
 
-        return GeometryTransform.TransformGeometry(
-            geometryFactory,
-            geometry,
-            transformation.MathTransform);
+        var result = geometry.Copy();
+        result.Apply(new MathTransformFilter(transformation.MathTransform));
+
+        return result;
+    }
+
+    class MathTransformFilter : ICoordinateSequenceFilter
+    {
+        readonly MathTransform _transform;
+
+        public MathTransformFilter(MathTransform transform)
+            => _transform = transform;
+
+        public bool Done => false;
+        public bool GeometryChanged => true;
+
+        public void Filter(CoordinateSequence seq, int i)
+        {
+            var result = _transform.Transform(
+                new[]
+                {
+                    seq.GetOrdinate(i, Ordinate.X),
+                    seq.GetOrdinate(i, Ordinate.Y)
+                });
+            seq.SetOrdinate(i, Ordinate.X, result[0]);
+            seq.SetOrdinate(i, Ordinate.Y, result[1]);
+        }
     }
 }
 ```
