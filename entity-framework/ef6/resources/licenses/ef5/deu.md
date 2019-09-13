@@ -1,6 +1,6 @@
 ---
 title: "Entity Framework 5 License (DEU)"
-author: rowanmiller
+author: divega
 ms.date: "10/23/2016"
 ms.assetid: 66089111-e0ab-4c64-af71-b77faff5f499
 ---
