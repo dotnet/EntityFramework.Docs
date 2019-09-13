@@ -1,6 +1,6 @@
 ---
 title: "Entity Framework 6 Runtime License (RUS)"
-author: rowanmiller
+author: divega
 ms.date: "10/23/2016"
 ms.assetid: 6326e9e8-15c6-4ce3-a5b4-6cb6a97c6bf4
 ---
