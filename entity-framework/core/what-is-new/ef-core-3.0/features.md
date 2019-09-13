@@ -8,9 +8,6 @@ uid: core/what-is-new/ef-core-3.0/features
 
 # New features included in EF Core 3.0
 
-> [!IMPORTANT]
-> Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
-
 The following list includes the major new features planned for EF Core 3.0.
 
 EF Core 3.0 is a major release and also contains numerous [breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes), which are API improvements that may have negative impact on existing applications.  
