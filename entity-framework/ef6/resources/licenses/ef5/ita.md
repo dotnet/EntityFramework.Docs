@@ -1,5 +1,6 @@
 ---
 title: "Entity Framework 5 License (ITA)"
+author: divega
 ms.date: "10/23/2016"
 ms.assetid: 9ccb2adc-a631-4cc8-bd77-43abc2e7f812
 ---
