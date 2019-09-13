@@ -68,7 +68,7 @@
 #### [Entity Type Constructors](core/modeling/constructors.md)
 #### [Table Splitting](core/modeling/table-splitting.md)
 #### [Owned Entity Types](core/modeling/owned-entities.md)
-#### [Query Types](core/modeling/query-types.md)
+#### [Keyless Entity Types](core/modeling/keyless-entity-types.md)
 #### [Alternating models with same DbContext](core/modeling/dynamic-model.md)
 #### [Spatial Data (GIS)](core/modeling/spatial.md)
 #### [Relational Database Modeling](core/modeling/relational/index.md)

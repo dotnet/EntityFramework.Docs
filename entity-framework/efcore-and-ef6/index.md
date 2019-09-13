@@ -38,7 +38,7 @@ The EF Core column indicates the product version in which the feature first appe
 | Basic class mapping                                   | Yes      | 1.0                                   |
 | Constructors with parameters                          |          | 2.1                                   |
 | Property value conversions                            |          | 2.1                                   |
-| Mapped types with no keys (query types)               |          | 2.1                                   |
+| Mapped types with no keys                             |          | 2.1                                   |
 | Conventions                                           | Yes      | 1.0                                   |
 | Custom conventions                                    | Yes      | 1.0 (partial)                         |
 | Data annotations                                      | Yes      | 1.0                                   |
@@ -79,7 +79,7 @@ The EF Core column indicates the product version in which the feature first appe
 | Loading related data: Lazy                            | Yes      | 2.1                                   |
 | Loading related data: Explicit                        | Yes      | 1.1                                   |
 | Raw SQL queries: Entity types                         | Yes      | 1.0                                   |
-| Raw SQL queries: Non-entity types (query types)       | Yes      | 2.1                                   |
+| Raw SQL queries: Keyless entity types                 | Yes      | 2.1                                   |
 | Raw SQL queries: Composing with LINQ                  |          | 1.0                                   |
 | Explicitly compiled queries                           | Poor     | 2.0                                   |
 | Text-based query language (Entity SQL)                | Yes      |                                       |

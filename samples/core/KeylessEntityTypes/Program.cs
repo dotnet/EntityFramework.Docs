@@ -78,7 +78,7 @@ namespace Samples
                     db.SaveChanges();
 
                     #region View
-                    db.Database.ExecuteSqlCommand(
+                    db.Database.ExecuteSqlRaw(
                         @"CREATE VIEW View_BlogPostCounts AS 
                             SELECT b.Name, Count(p.PostId) as PostCount 
                             FROM Blogs b
@@ -93,20 +93,20 @@ namespace Samples
     public class BloggingContext : DbContext
     {
         private static readonly ILoggerFactory _loggerFactory
-            = new LoggerFactory().AddConsole((s, l) => l == LogLevel.Information && !s.EndsWith("Connection"));
+            = LoggerFactory.Create(builder => builder.AddConsole().AddFilter((c, l) => l == LogLevel.Information && !c.EndsWith("Connection")));
 
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
-        #region DbQuery
-        public DbQuery<BlogPostsCount> BlogPostCounts { get; set; }
+        #region DbSet
+        public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
         #endregion
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
                 .UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=Sample.QueryTypes;Trusted_Connection=True;ConnectRetryCount=0;")
+                    @"Server=(localdb)\mssqllocaldb;Database=Sample.KeylessEntityTypes;Trusted_Connection=True;ConnectRetryCount=0;")
                 .UseLoggerFactory(_loggerFactory);
         }
 
@@ -114,8 +114,12 @@ namespace Samples
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Query<BlogPostsCount>().ToView("View_BlogPostCounts")
-                .Property(v => v.BlogName).HasColumnName("Name");
+                .Entity<BlogPostsCount>(eb =>
+                {
+                    eb.HasNoKey();
+                    eb.ToView("View_BlogPostCounts");
+                    eb.Property(v => v.BlogName).HasColumnName("Name");
+                });
         }
         #endregion
     }
@@ -138,7 +142,7 @@ namespace Samples
     }
     #endregion
 
-    #region QueryType
+    #region KeylessEntityType
     public class BlogPostsCount
     {
         public string BlogName { get; set; }

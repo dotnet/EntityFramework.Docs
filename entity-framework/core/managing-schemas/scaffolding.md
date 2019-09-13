@@ -117,13 +117,11 @@ Finally, the model is used to generate code. The corresponding entity type class
 
 ## What doesn't work
 
-Not everything about a model can be represented using a database schema. For example, information about **inheritance hierarchies**, **owned types**, and **table splitting** are not present in the database schema. Because of this, these constructs will never be reverse engineered.
+Not everything about a model can be represented using a database schema. For example, information about [**inheritance hierarchies**](../modeling/inheritance.md), [**owned types**](../modeling/owned-entities.md), and [**table splitting**](../modeling/table-splitting.md) are not present in the database schema. Because of this, these constructs will never be reverse engineered.
 
 In addition, **some column types** may not be supported by the EF Core provider. These columns won't be included in the model.
 
-EF Core requires every entity type to have a key. Tables, however, aren't required to specify a primary key. **Tables without a primary key** are currently not reverse engineered.
-
-You can define **concurrency tokens** in an EF Core model to prevent two users from updating the same entity at the same time. Some databases have a special type to represent this type of column (for example, rowversion in SQL Server) in which case we can reverse engineer this information; however, other concurrency tokens will not be reverse engineered.
+You can define [**concurrency tokens**](../modeling/concurrency.md), in an EF Core model to prevent two users from updating the same entity at the same time. Some databases have a special type to represent this type of column (for example, rowversion in SQL Server) in which case we can reverse engineer this information; however, other concurrency tokens will not be reverse engineered.
 
 ## Customizing the model
 

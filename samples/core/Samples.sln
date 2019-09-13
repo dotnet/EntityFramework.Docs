@@ -73,7 +73,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompiledQueries", "Compiled
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbContextPooling", "DbContextPooling\DbContextPooling.csproj", "{EFA3A7DD-F76C-4DA9-A657-D08E78E7E397}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryTypes", "QueryTypes\QueryTypes.csproj", "{BB293879-4741-4D7A-87E8-3B9727B43A19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeylessEntityTypes", "KeylessEntityTypes\KeylessEntityTypes.csproj", "{BB293879-4741-4D7A-87E8-3B9727B43A19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableSplitting", "Modeling\TableSplitting\TableSplitting.csproj", "{63685B9A-1233-4B44-AAC1-8DDD4B16B65D}"
 EndProject

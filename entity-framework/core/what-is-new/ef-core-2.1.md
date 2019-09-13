@@ -76,7 +76,7 @@ An EF Core model can now include query types. Unlike entity types, query types d
 - Mapping to queries defined in the model
 - Serving as the return type for `FromSql()` queries
 
-Read the [section on query types](xref:core/modeling/query-types) for more information about this topic.
+Read the [section on query types](xref:core/modeling/keyless-entity-types) for more information about this topic.
 
 ## Include for derived types
 It will be now possible to specify navigation properties only defined on derived types when writing expressions for the `Include` method. For the strongly typed version of `Include`, we support using either an explicit cast or the `as` operator. We also now support referencing the names of navigation property defined on derived types in the string version of `Include`:

@@ -129,6 +129,11 @@
             "source_path": "entity-framework/core/extensions/llbl-gen-pro.md",
             "redirect_url": "/ef/core/extensions/index",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/query-types.md",
+            "redirect_url": "/ef/core/modeling/keyless-entity-types",
+            "redirect_document_id": false
         }
     ]
 }
