@@ -869,7 +869,7 @@ This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
-Before EF Core 3.0, a property could be specified by a string value and if no property with that name was found on the CLR type then EF Core would try to match it to a field using convention rules.
+Before EF Core 3.0, a property could be specified by a string value and if no property with that name was found on the .NET type then EF Core would try to match it to a field using convention rules.
 ```C#
 private class Blog
 {

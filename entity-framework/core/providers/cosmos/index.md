@@ -129,7 +129,7 @@ Internally EF Core always needs to have unique key values for all tracked entiti
 
 ## Working with Disconnected Entities
 
-Every item needs to have an `id` value that is unique for the given partition key. By default EF Core generates the value by concatenating the discriminator and the primary key values, using '|' as a delimiter. The key values are only generated when an entity enters the `Added` state. This might pose a problem when [attaching entities](../../saving/disconnected-entities.md) if they don't have an `id` property on the CLR type to store the value.
+Every item needs to have an `id` value that is unique for the given partition key. By default EF Core generates the value by concatenating the discriminator and the primary key values, using '|' as a delimiter. The key values are only generated when an entity enters the `Added` state. This might pose a problem when [attaching entities](../../saving/disconnected-entities.md) if they don't have an `id` property on the .NET type to store the value.
 
 To work around this limitation one could create and set the `id` value manually or mark the entity as added first, then changing it to the desired state:
 

@@ -15,6 +15,7 @@ namespace TableSplitting
 
                 context.Add(new Order
                 {
+                    Status = OrderStatus.Pending,
                     DetailedOrder = new DetailedOrder
                     {
                         Status = OrderStatus.Pending,

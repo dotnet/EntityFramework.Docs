@@ -66,7 +66,7 @@ The new interception API in EF Core 3.0 allows programatically observing and mod
 
 ## Reverse engineering of database views
 
-Entity types without keys (previously known as [query types](xref:core/modeling/query-types)) represent data that can be read from the database, but cannot be updated.
+Entity types without keys (previously known as [query types](xref:core/modeling/keyless-entity-types)) represent data that can be read from the database, but cannot be updated.
 This characteristic makes them an excellent fit for mapping database views in most scenarios, so we automated the creation of entity types without keys when reverse engineering database views.
 
 ## Dependent entities sharing the table with the principal are now optional
