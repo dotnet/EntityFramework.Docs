@@ -1,6 +1,6 @@
 ---
 title: "Entity Framework 6 Runtime License (ITA)"
-author: rowanmiller
+author: divega
 ms.date: "10/23/2016"
 ms.assetid: ea0b20c1-7a46-4349-af9d-641051f8cad2
 ---
