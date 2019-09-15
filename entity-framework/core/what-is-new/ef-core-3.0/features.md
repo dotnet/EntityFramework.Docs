@@ -16,7 +16,7 @@ EF Core 3.0 is a major release and also contains numerous [breaking changes](xre
 
 [Tracking Issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
-LINQ enables you to write database queries without leaving your language of choice, taking advantage of rich type information to get IntelliSense and compile-time type checking.
+LINQ enables you to write database queries without leaving your language of choice, taking advantage of rich type information to offer IntelliSense and compile-time type checking.
 But LINQ also enables you to write an unlimited number of complicated queries containing arbitrary expressions (method calls or operations).
 This has always been a significant challenge for LINQ providers.
 In EF Core 3.0, we've rewrote our LINQ implementation to enable translating more expressions into SQL, to generate efficient queries in more cases, to prevent inefficient queries from going undetected, and to make it easier for us to intorduce new query capabilities and performance improvements in the future without breaking existing applications and providers.
