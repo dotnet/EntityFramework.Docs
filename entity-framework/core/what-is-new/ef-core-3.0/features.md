@@ -47,14 +47,14 @@ EF Core 3.0 takes advantage of some of the new features in C# 8.0:
 Asynchronous query results are now exposed using the new standard `IAsyncEnumerable<T>` interface and can be consumed using `await foreach`.
 
 ``` csharp
-var products = 
-  from p in context.Products
-  where p.Name.StartsWith(name)
-  select p;
+var orders = 
+  from o in context.Orders
+  where o.Status == OrderStatus.Pending
+  select o;
 
-await foreach(var p in products)
+await foreach(var o in orders)
 {
-  Display(p);
+  Proccess(o);
 } 
 ```
 
