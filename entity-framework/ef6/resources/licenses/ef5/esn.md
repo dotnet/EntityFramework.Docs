@@ -1,5 +1,6 @@
 ---
 title: "Entity Framework 5 License (ESN)"
+author: divega
 ms.date: "10/23/2016"
 ms.assetid: 637cccbb-5418-4562-8187-02f644f4c091
 ---

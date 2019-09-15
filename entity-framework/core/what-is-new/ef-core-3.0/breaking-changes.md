@@ -904,7 +904,7 @@ This change was made to avoid using the same field for two properties named simi
 **Mitigations**
 
 Field-only properties must be named the same as the field they are mapped to.
-In a later preview of EF Core 3.0, we plan to re-enable explicitly configuring a field name that is different from the property name:
+In a future release of EF Core after 3.0, we plan to re-enable explicitly configuring a field name that is different from the property name (see issue [#15307](https://github.com/aspnet/EntityFrameworkCore/issues/15307)):
 
 ```C#
 modelBuilder
