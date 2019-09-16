@@ -14,8 +14,6 @@ EF Core 3.0 is a major release and also contains numerous [breaking changes](xre
 
 ## LINQ improvements 
 
-[Tracking Issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
-
 LINQ enables you to write database queries without leaving your language of choice, taking advantage of rich type information to offer IntelliSense and compile-time type checking.
 But LINQ also enables you to write an unlimited number of complicated queries containing arbitrary expressions (method calls or operations).
 Handling all those combinations has always been a significant challenge for LINQ providers.
@@ -77,7 +75,7 @@ Starting with EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly m
 
 When querying, EF Core will set `OrderDetails` to `null` if any of its required properties doesn't have a value, or if it has no required properties besides the primary key and all properties are `null`.
 
-```C#
+``` csharp
 public class Order
 {
     public int Id { get; set; }
@@ -101,9 +99,9 @@ There are some limitations, for example:
 - New providers are required to work on .NET Core
 - Spatial support with SQL Server won't be enabled
 
-# Postponed features
+## Postponed features
 
 Some features originally planned for EF Core 3.0 were postponed to future releases: 
 
-- Ability to ingore parts of a model in migrations
-- Property bag entities
+- Ability to ingore parts of a model in migrations, tracked by [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725).
+- Property bag entities, tracked by two separate issues: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) about shared-type entities and [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) about indexed property mapping support.
