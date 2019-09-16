@@ -21,7 +21,7 @@ Migrations includes command-line tools and APIs that help with the following tas
 * [Apply migrations at runtime](#apply-migrations-at-runtime). When design-time updates and running scripts aren't the best options, call the `Migrate()` method.
 
 > [!TIP]
-> If the `DbContext` is in a different assembly than the startup project, you can specify the target and startup projects in the the [PowerShell migrations commands](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell#target-and-startup-project) or in the [`dotnet ef` command-line tool](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet#target-project-and-startup-project).
+> If the `DbContext` is in a different assembly than the startup project, you can explicitly specify the target and startup projects in the the [PowerShell migrations commands](xref://core/miscellaneous/cli/powershell#target-and-startup-project) or in the [`dotnet ef` command-line tool](xref://core/miscellaneous/cli/dotnet#target-project-and-startup-project).
 
 Install the tools
 -----------------
