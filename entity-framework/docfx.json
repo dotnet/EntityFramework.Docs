@@ -63,7 +63,7 @@
       }
     ],
     "globalMetadata": {
-      "breadcrumb_path": "/ef/breadcrumb/toc.json",
+      "breadcrumb_path": "/ef/toc.json",
       "searchScope": [
         "Entity Framework"
       ],

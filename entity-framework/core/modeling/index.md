@@ -1,11 +1,11 @@
 ---
-title: Creating a Model - EF Core
+title: Creating and configuring a model - EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 88253ff3-174e-485c-b3f8-768243d01ee1
 uid: core/modeling/index
 ---
-# Creating and configuring a Model
+# Creating and configuring a model
 
 Entity Framework uses a set of conventions to build a model based on the shape of your entity classes. You can specify additional configuration to supplement and/or override what was discovered by convention.
 

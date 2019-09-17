@@ -1,12 +1,12 @@
 ---
-title: Test components using Entity Framework - EF Core
+title: Test components using EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 1603be0c-69bc-4dd9-9a08-3d0129cdc6c1
 uid: core/miscellaneous/testing/index
 ---
 
-# Testing
+# Testing components using EF Core
 
 You may want to test components using something that approximates connecting to the real database, without the overhead of actual database I/O operations.
 
