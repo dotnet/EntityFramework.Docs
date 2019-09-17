@@ -1,33 +1,32 @@
 - name: Entity Framework
   href: index.md
   items:
-  - name: Compare EF Core & EF6
-    href: efcore-and-ef6/index.md
-    items:
-    - name: EF6 and EF Core in the Same Application
-      href: efcore-and-ef6/side-by-side.md
-    - name: Porting from EF6 to EF Core
-      href: efcore-and-ef6/porting/index.md
+  - name: EF Core & EF6
+    items:  
+    - name: Compare EF Core & EF6
+      href: efcore-and-ef6/index.md
+    - name: Port from EF6 to EF Core
       items:
-      - name: Validate Requirements
-        href: efcore-and-ef6/porting/ensure-requirements.md
-      - name: Porting an EDMX-Based Model
+      - name: Overview
+        href: efcore-and-ef6/porting/index.md
+      - name: Porting an EDMX-based model
         href: efcore-and-ef6/porting/port-edmx.md
-      - name: Porting a Code-Based Model
+      - name: Porting a Code-based model
         href: efcore-and-ef6/porting/port-code.md
+    - name: Use EF6 and EF Core in the same application
+      href: efcore-and-ef6/side-by-side.md
   - name: Entity Framework Core
-    href: core/index.md
     items:
+    - name: Overview
+      href: core/index.md
     - name: "What's New"
-      href: core/what-is-new/index.md
       items:
-      - name: Roadmap
-        href: core/what-is-new/roadmap.md
-      - name: EF Core 3.0 (latest release)
-        href: core/what-is-new/ef-core-3.0/index.md
+      - name: Overview
+        href: core/what-is-new/index.md
+      - name: EF Core 3.0
         items:
         - name: New features
-          href: core/what-is-new/ef-core-3.0/features.md
+          href: core/what-is-new/ef-core-3.0/index.md
         - name: Breaking changes
           href: core/what-is-new/ef-core-3.0/breaking-changes.md
       - name: EF Core 2.2
@@ -49,8 +48,9 @@
         - name: From 1.x to 2.0
           href: core/miscellaneous/1x-2x-upgrade.md
     - name: Get Started
-      href: core/get-started/index.md
       items:
+      - name: EF Core tutorial
+        href: core/get-started/index.md
       - name: Installing EF Core
         href: core/get-started/install/index.md
       - name: "⤤ ASP.NET Core Tutorial"
@@ -64,8 +64,9 @@
       - name: Connection Resiliency
         href: core/miscellaneous/connection-resiliency.md
       - name: Testing
-        href: core/miscellaneous/testing/index.md
         items:
+        - name: Overview
+          href: core/miscellaneous/testing/index.md
         - name: Testing with SQLite
           href: core/miscellaneous/testing/sqlite.md
         - name: Testing with InMemory
@@ -73,8 +74,9 @@
       - name: Configuring a DbContext
         href: core/miscellaneous/configuring-dbcontext.md
     - name: Creating a Model
-      href: core/modeling/index.md
       items:
+      - name: Overview
+        href: core/modeling/index.md
       - name: "Including & Excluding Types"
         href: core/modeling/included-types.md
       - name: "Including & Excluding Properties"
@@ -117,9 +119,10 @@
         href: core/modeling/dynamic-model.md
       - name: Spatial Data (GIS)
         href: core/modeling/spatial.md
-      - name: Relational Database Modeling
-        href: core/modeling/relational/index.md
+      - name: Relational database modeling
         items:
+        - name: Overview
+          href: core/modeling/relational/index.md
         - name: Table Mapping
           href: core/modeling/relational/tables.md
         - name: Column Mapping
@@ -145,11 +148,13 @@
         - name: Inheritance (Relational Database)
           href: core/modeling/relational/inheritance.md
     - name: Managing Database Schemas
-      href: core/managing-schemas/index.md
       items:
+      - name: Overview
+        href: core/managing-schemas/index.md
       - name: Migrations
-        href: core/managing-schemas/migrations/index.md
         items:
+        - name: Overiew
+          href: core/managing-schemas/migrations/index.md
         - name: Team Environments
           href: core/managing-schemas/migrations/teams.md
         - name: Custom Operations
@@ -165,8 +170,9 @@
       - name: Reverse Engineering (Scaffolding)
         href: core/managing-schemas/scaffolding.md
     - name: Querying Data
-      href: core/querying/index.md
       items:
+      - name: Overview
+        href: core/querying/index.md
       - name: Basic Query
         href: core/querying/basic.md
       - name: Loading Related Data
@@ -186,8 +192,9 @@
       - name: Query Tags
         href: core/querying/tags.md
     - name: Saving Data
-      href: core/saving/index.md
       items:
+      - name: Overview
+        href: core/saving/index.md
       - name: Basic Save
         href: core/saving/basic.md
       - name: Related Data
@@ -207,21 +214,25 @@
     - name: Supported .NET Implementations
       href: core/platforms/index.md
     - name: Database Providers
-      href: core/providers/index.md
       items:
+      - name: Overview
+        href: core/providers/index.md
       - name: Microsoft SQL Server
-        href: core/providers/sql-server/index.md
         items:
+        - name: Overview
+          href: core/providers/sql-server/index.md
         - name: Memory-Optimized Tables
           href: core/providers/sql-server/memory-optimized-tables.md
       - name: SQLite
-        href: core/providers/sqlite/index.md
         items:
+        - name: Overview
+          href: core/providers/sqlite/index.md
         - name: SQLite Limitations
           href: core/providers/sqlite/limitations.md
       - name: Cosmos
-        href: core/providers/cosmos/index.md
         items:
+        - name: Overview
+          href: core/providers/cosmos/index.md
         - name: Working with Unstructured Data
           href: core/providers/cosmos/unstructured-data.md
         - name: Cosmos Limitations
@@ -235,8 +246,9 @@
     - name: Tools & Extensions
       href: core/extensions/index.md
     - name: Command-Line Reference
-      href: core/miscellaneous/cli/index.md
       items:
+      - name: Overview
+        href: core/miscellaneous/cli/index.md
       - name: Package Manager Console (Visual Studio)
         href: core/miscellaneous/cli/powershell.md
       - name: .NET Core CLI
@@ -248,11 +260,13 @@
     - name: "⤤ EF Core API Reference"
       href: https://docs.microsoft.com/dotnet/api/?view=efcore-2.1
   - name: Entity Framework 6
-    href: ef6/index.md
     items:
+    - name: Overview
+      href: ef6/index.md
     - name: "What's New"
-      href: ef6/what-is-new/index.md
       items:
+      - name: Overview
+        href: ef6/what-is-new/index.md
       - name: Past Releases
         href: ef6/what-is-new/past-releases.md
       - name: Upgrading To EF6
@@ -262,7 +276,6 @@
     - name: Get Started
       href: ef6/get-started.md
     - name: Fundamentals
-      href: ef6/fundamentals/index.md
       items:
       - name: Get Entity Framework
         href: ef6/fundamentals/install.md
@@ -297,11 +310,13 @@
         - name: WPF
           href: ef6/fundamentals/databinding/wpf.md
       - name: Disconnected Entities
-        href: ef6/fundamentals/disconnected-entities/index.md
         items:
+        - name: Overview
+          href: ef6/fundamentals/disconnected-entities/index.md
         - name: Self Tracking Entities
-          href: ef6/fundamentals/disconnected-entities/self-tracking-entities/index.md
           items:
+          - name: Overview
+            href: ef6/fundamentals/disconnected-entities/self-tracking-entities/index.md
           - name: Walkthrough
             href: ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough.md
       - name: Logging & Interception
@@ -315,8 +330,9 @@
         - name: Using Pre-Generated Views
           href: ef6/fundamentals/performance/pre-generated-views.md
       - name: Providers
-        href: ef6/fundamentals/providers/index.md
         items:
+        - name: Overview
+          href: ef6/fundamentals/providers/index.md
         - name: EF6 Provider Model
           href: ef6/fundamentals/providers/provider-model.md
         - name: Spatial Support in Providers
@@ -332,8 +348,9 @@
         - name: Testability with EF4 (Article)
           href: ef6/fundamentals/testing/testability-article.md
     - name: Creating a model
-      href: ef6/modeling/index.md
       items:
+      - name: Overview
+        href: ef6/modeling/index.md
       - name: Using Code First
         items:
         - name: Workflows
@@ -371,8 +388,9 @@
           - name: Stored Procedure Mapping
             href: ef6/modeling/code-first/fluent/cud-stored-procedures.md
         - name: Migrations
-          href: ef6/modeling/code-first/migrations/index.md
           items:
+          - name: Overview
+            href: ef6/modeling/code-first/migrations/index.md
           - name: Automatic Migrations
             href: ef6/modeling/code-first/migrations/automatic.md
           - name: Working with Existing Databases
@@ -424,8 +442,9 @@
         - name: Selecting Runtime Version
           href: ef6/modeling/designer/select-runtime-version.md
         - name: Code Generation
-          href: ef6/modeling/designer/codegen/index.md
           items:
+          - name: Overview
+            href: ef6/modeling/designer/codegen/index.md
           - name: Legacy ObjectContext 
             href: ef6/modeling/designer/codegen/legacy-objectcontext.md
         - name: Advanced
@@ -447,8 +466,9 @@
         - name: Keyboard Shortcuts
           href: ef6/modeling/designer/keyboard-shortcuts.md
     - name: Querying Data
-      href: ef6/querying/index.md
       items:
+      - name: Overview
+        href: ef6/querying/index.md
       - name: Load Method
         href: ef6/querying/load-method.md
       - name: Local Data
@@ -460,8 +480,9 @@
       - name: Querying Related Data
         href: ef6/querying/related-data.md
     - name: Saving Data
-      href: ef6/saving/index.md
       items:
+      - name: Overview
+        href: ef6/saving/index.md
       - name: Change Tracking
         items:
         - name: Auto Detect Changes
@@ -477,7 +498,6 @@
       - name: Data Validation
         href: ef6/saving/validation.md
     - name: Additional Resources
-      href: ef6/resources/index.md
       items:
       - name: Blogs
         href: ef6/resources/blogs.md
