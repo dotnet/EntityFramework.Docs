@@ -27,13 +27,3 @@ The following resources will help you get started with this provider.
 ## Supported Database Engines
 
 * Built-in in-memory database (designed for testing purposes only)
-
-## Supported Platforms
-
-* .NET Framework (4.5.1 onwards)
-
-* .NET Core
-
-* Mono (4.2.0 onwards)
-
-* Universal Windows Platform

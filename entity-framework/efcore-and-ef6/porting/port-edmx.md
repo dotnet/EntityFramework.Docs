@@ -42,6 +42,3 @@ At this point, it's a matter of addressing compilation errors and reviewing code
 ## Test the port
 
 Just because your application compiles, does not mean it is successfully ported to EF Core. You will need to test all areas of your application to ensure that none of the behavior changes have adversely impacted your application.
-
-> [!TIP]
-> See [Getting Started with EF Core on ASP.NET Core with an Existing Database](xref:core/get-started/aspnetcore/existing-db) for an additional reference on how to work with an existing database, 

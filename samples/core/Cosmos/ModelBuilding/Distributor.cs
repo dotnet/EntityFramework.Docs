@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OwnedEntities
+namespace Cosmos.ModelBuilding
 {
     #region Distributor
     public class Distributor

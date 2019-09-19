@@ -7,7 +7,7 @@ uid: efcore-and-ef6/side-by-side
 ---
 # Using EF Core and EF6 in the Same Application
 
-It is possible to use EF Core and EF6 in the same .NET Framework application or library by installing both NuGet packages.
+It is possible to use EF Core and EF6 in the same application or library by installing both NuGet packages.
 
 Some types have the same names in EF Core and EF6 and differ only by namespace, which may complicate using both EF Core and EF6 in the same code file. The ambiguity can be easily removed using namespace alias directives. For example:
 

@@ -52,7 +52,7 @@ var orders =
 
 await foreach(var o in orders)
 {
-  Proccess(o);
+  Process(o);
 } 
 ```
 
@@ -66,7 +66,7 @@ The new interception API in EF Core 3.0 allows programatically observing and mod
 
 ## Reverse engineering of database views
 
-Entity types without keys (previously known as [query types](xref:core/modeling/query-types)) represent data that can be read from the database, but cannot be updated.
+Entity types without keys (previously known as [query types](xref:core/modeling/keyless-entity-types)) represent data that can be read from the database, but cannot be updated.
 This characteristic makes them an excellent fit for mapping database views in most scenarios, so we automated the creation of entity types without keys when reverse engineering database views.
 
 ## Dependent entities sharing the table with the principal are now optional
@@ -103,5 +103,5 @@ There are some limitations, for example:
 
 Some features originally planned for EF Core 3.0 were postponed to future releases: 
 
-- Ability to ingore parts of a model in migrations, tracked by [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725).
-- Property bag entities, tracked by two separate issues: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) about shared-type entities and [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) about indexed property mapping support.
+- Ability to ingore parts of a model in migrations, tracked as [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725).
+- Property bag entities, tracked as two separate issues: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) about shared-type entities and [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) about indexed property mapping support.

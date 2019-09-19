@@ -416,7 +416,7 @@ This change is introduced in EF Core 3.0-preview 3.
 
 **Old behavior**
 
-Before EF Core 3.0, [query types](xref:core/modeling/query-types) were a means to query data that doesn't define a primary key in a structured way.
+Before EF Core 3.0, [query types](xref:core/modeling/keyless-entity-types) were a means to query data that doesn't define a primary key in a structured way.
 That is, a query type was used for mapping entity types without keys (more likely from a view, but possibly from a table) while a regular entity type was used when a key was available (more likely from a table, but possibly from a view).
 
 **New behavior**
@@ -869,7 +869,7 @@ This change is introduced in EF Core 3.0-preview 4.
 
 **Old behavior**
 
-Before EF Core 3.0, a property could be specified by a string value and if no property with that name was found on the CLR type then EF Core would try to match it to a field using convention rules.
+Before EF Core 3.0, a property could be specified by a string value and if no property with that name was found on the .NET type then EF Core would try to match it to a field using convention rules.
 ```C#
 private class Blog
 {

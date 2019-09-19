@@ -17,30 +17,9 @@ Install the [Microsoft.EntityFrameworkCore.Sqlite NuGet package](https://www.nug
 Install-Package Microsoft.EntityFrameworkCore.Sqlite
 ```
 
-## Get Started
-
-The following resources will help you get started with this provider.
-* [Local SQLite on UWP](../../get-started/uwp/getting-started.md)
-
-* [.NET Core Application to New SQLite Database](../../get-started/netcore/new-db-sqlite.md)
-
-* [Unicorn Clicker Sample Application](https://github.com/rowanmiller/UnicornStore/tree/master/UnicornClicker/UWP)
-
-* [Unicorn Packer Sample Application](https://github.com/rowanmiller/UnicornStore/tree/master/UnicornPacker)
-
 ## Supported Database Engines
 
 * SQLite (3.7 onwards)
-
-## Supported Platforms
-
-* .NET Framework (4.5.1 onwards)
-
-* .NET Core
-
-* Mono (4.2.0 onwards)
-
-* Universal Windows Platform
 
 ## Limitations
 

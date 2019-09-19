@@ -129,6 +129,66 @@
             "source_path": "entity-framework/core/extensions/llbl-gen-pro.md",
             "redirect_url": "/ef/core/extensions/index",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/query-types.md",
+            "redirect_url": "/ef/core/modeling/keyless-entity-types",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/ef6/what-is-new/roadmap.md",
+            "redirect_url": "/ef/ef/what-is-new/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/aspnetcore/existing-db.md",
+            "redirect_url": "/aspnet/core/data/ef-rp/intro",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/aspnetcore/index.md",
+            "redirect_url": "/aspnet/core/data/ef-rp/intro",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/aspnetcore/new-db.md",
+            "redirect_url": "/aspnet/core/data/ef-rp/intro",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/full-dotnet/existing-db.md",
+            "redirect_url": "/ef/core/get-started/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/full-dotnet/index.md",
+            "redirect_url": "/ef/core/get-started/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/full-dotnet/new-db.md",
+            "redirect_url": "/ef/core/get-started/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/netcore/index.md",
+            "redirect_url": "/ef/core/get-started/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/netcore/new-db-sqlite.md",
+            "redirect_url": "/ef/core/get-started/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/uwp/getting-started.md",
+            "redirect_url": "/ef/core/get-started/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/uwp/index.md",
+            "redirect_url": "/ef/core/get-started/index",
+            "redirect_document_id": false
         }
     ]
 }

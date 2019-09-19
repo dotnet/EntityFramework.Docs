@@ -9,11 +9,11 @@ uid: core/get-started/install/index
 
 ## Prerequisites
 
-* EF Core is a [.NET Standard 2.0](/dotnet/standard/net-standard) library. So EF Core requires a .NET implementation that supports .NET Standard 2.0 to run. EF Core can also be referenced by other .NET Standard 2.0 libraries. 
+* EF Core is a [.NET Standard 2.1](/dotnet/standard/net-standard) library. So EF Core requires a .NET implementation that supports .NET Standard 2.1 to run. EF Core can also be referenced by other .NET Standard 2.1 libraries. 
 
 * For example, you can use EF Core to develop apps that target .NET Core. Building .NET Core apps requires the [.NET Core SDK](https://dotnet.microsoft.com/download). Optionally, you can also use a development environment like Visual Studio, Visual Studio for Mac, or Visual Studio Code. For more information, check [Getting Started with .NET Core](/dotnet/core/get-started).
 
-* You can use EF Core to develop applications that target .NET Framework 4.6.1 or later on Windows, using Visual Studio. The latest version of [Visual Studio](https://visualstudio.microsoft.com/vs) is recommended. If you want to use an older version, like Visual Studio 2015, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads) to work with .NET Standard 2.0 libraries.
+* You can use EF Core to develop applications on Windows using Visual Studio. The latest version of [Visual Studio](https://visualstudio.microsoft.com/vs) is recommended.
 
 * EF Core can run on other .NET implementations like [Xamarin](https://dotnet.microsoft.com/apps/xamarin) and .NET Native. But in practice those implementations have runtime limitations that may affect how well EF Core works on your app. For more information, see [.NET implementations supported by EF Core](xref:core/platforms/index).
 
@@ -127,16 +127,3 @@ For ASP.NET Core apps, this package is included automatically.
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
     ```
 
-* Applications that target .NET Framework may need changes to work with .NET Standard 2.0 libraries:
-
-  * Edit the project file and make sure the following entry appears in the initial property group:
-
-    ``` xml
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    ```
-
-  * For test projects, also make sure the following entry is present:
-
-    ``` xml
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    ```

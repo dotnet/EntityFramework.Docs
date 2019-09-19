@@ -34,6 +34,7 @@ namespace OwnedEntities
             #region OwnsOneNested
             modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od =>
             {
+                od.WithOwner(d => d.Order);
                 od.OwnsOne(c => c.BillingAddress);
                 od.OwnsOne(c => c.ShippingAddress);
             });
@@ -42,18 +43,22 @@ namespace OwnedEntities
             #region OwnsOneTable
             modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od =>
             {
-                od.OwnsOne(c => c.BillingAddress);
-                od.OwnsOne(c => c.ShippingAddress);
                 od.ToTable("OrderDetails");
             });
             #endregion
 
+            modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od =>
+            {
+                od.Property<int>("OrderId").ValueGeneratedNever();
+                od.WithOwner(d => d.Order).HasForeignKey("OrderId");
+            });
+
             #region OwnsMany
             modelBuilder.Entity<Distributor>().OwnsMany(p => p.ShippingCenters, a =>
             {
-                a.HasForeignKey("DistributorId");
+                a.WithOwner().HasForeignKey("OwnerId");
                 a.Property<int>("Id");
-                a.HasKey("DistributorId", "Id");
+                a.HasKey("Id");
             });
             #endregion
         }

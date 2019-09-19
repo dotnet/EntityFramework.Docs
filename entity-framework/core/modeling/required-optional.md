@@ -11,10 +11,10 @@ A property is considered optional if it is valid for it to contain `null`. If `n
 
 ## Conventions
 
-By convention, a property whose CLR type can contain null will be configured as optional (`string`, `int?`, `byte[]`, etc.). Properties whose CLR type cannot contain null will be configured as required (`int`, `decimal`, `bool`, etc.).
+By convention, a property whose .NET type can contain null will be configured as optional (`string`, `int?`, `byte[]`, etc.). Properties whose CLR type cannot contain null will be configured as required (`int`, `decimal`, `bool`, etc.).
 
 > [!NOTE]  
-> A property whose CLR type cannot contain null cannot be configured as optional. The property will always be considered required by Entity Framework.
+> A property whose .NET type cannot contain null cannot be configured as optional. The property will always be considered required by Entity Framework.
 
 ## Data Annotations
 
