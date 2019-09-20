@@ -58,7 +58,7 @@ await foreach(var o in orders)
 
 ### Nullable reference types 
 
-When this new feature is enabled in your code, EF Core can reason about the nullability of properties of refrence types (either of primitive types like string or navigation properties) to decide the nullability of columns and relationships in the database.
+When this new feature is enabled in your code, EF Core can reason about the nullability of properties of reference types (either of primitive types like string or navigation properties) to decide the nullability of columns and relationships in the database.
 
 ## Interception
 
@@ -94,7 +94,7 @@ public class OrderDetails
 ## EF 6.3 on .NET Core
 
 We understand that many existing applications use previous versions of EF, and that porting them to EF Core only to take advantage of .NET Core can sometimes require a significant effort.
-For that reason, we have enabled the newewst version of EF 6 to run on .NET Core 3.0.
+For that reason, we have enabled the newest version of EF 6 to run on .NET Core 3.0.
 There are some limitations, for example:
 - New providers are required to work on .NET Core
 - Spatial support with SQL Server won't be enabled
