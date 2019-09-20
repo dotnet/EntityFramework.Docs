@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.Samples.DataSeeding
+namespace EFModeling.DataSeeding
 {
     public class DataSeedingContext : DbContext
     {

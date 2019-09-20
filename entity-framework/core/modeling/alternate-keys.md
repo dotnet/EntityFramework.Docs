@@ -18,7 +18,7 @@ Alternate keys are typically introduced for you when needed and you do not need 
 
 By convention, an alternate key is introduced for you when you identify a property, that is not the primary key, as the target of a relationship.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/AlternateKey.cs?highlight=12)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/AlternateKey.cs?highlight=12)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -62,7 +62,7 @@ Alternate keys can not be configured using Data Annotations.
 
 You can use the Fluent API to configure a single property to be an alternate key.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/AlternateKeySingle.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/AlternateKeySingle.cs?highlight=7,8)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -86,7 +86,7 @@ class Car
 
 You can also use the Fluent API to configure multiple properties to be an alternate key (known as a composite alternate key).
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/AlternateKeyComposite.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/AlternateKeyComposite.cs?highlight=7,8)] -->
 ``` csharp
 class MyContext : DbContext
 {

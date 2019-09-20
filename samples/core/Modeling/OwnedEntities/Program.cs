@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace OwnedEntities
+namespace EFModeling.OwnedEntities
 {
     public static class Program
     {

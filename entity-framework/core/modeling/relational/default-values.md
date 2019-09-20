@@ -24,7 +24,7 @@ You can not set a default value using Data Annotations.
 
 You can use the Fluent API to specify the default value for a property.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DefaultValue.cs?highlight=9)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/DefaultValue.cs?highlight=9)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -48,7 +48,7 @@ public class Blog
 
 You can also specify a SQL fragment that is used to calculate the default value.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/DefaultValueSql.cs?highlight=9)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/DefaultValueSql.cs?highlight=9)] -->
 ``` csharp
 class MyContext : DbContext
 {

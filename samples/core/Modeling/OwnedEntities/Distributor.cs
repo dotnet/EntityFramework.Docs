@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OwnedEntities
+namespace EFModeling.OwnedEntities
 {
     #region Distributor
     public class Distributor

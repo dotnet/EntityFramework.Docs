@@ -3,9 +3,9 @@ using System.Linq;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 
-namespace ConnectionResiliency
+namespace EFConnectionResiliency
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -145,7 +145,7 @@ namespace ConnectionResiliency
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Blog>().Property(b => b.BlogId).ForSqlServerUseSequenceHiLo();
+            modelBuilder.Entity<Blog>().Property(b => b.BlogId).UseHiLo();
         }
     }
 

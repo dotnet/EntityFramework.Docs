@@ -10,7 +10,7 @@ uid: core/saving/concurrency
 > This page documents how concurrency works in EF Core and how to handle concurrency conflicts in your application. See [Concurrency Tokens](xref:core/modeling/concurrency) for details on how to configure concurrency tokens in your model.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Concurrency/) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Concurrency/) on GitHub.
 
 _Database concurrency_ refers to situations in which multiple processes or users access or change the same data in a database at the same time. _Concurrency control_ refers to specific mechanisms used to ensure data consistency in presence of concurrent changes.
 
@@ -65,4 +65,4 @@ The general approach to handle a concurrency conflicts is:
 
 In the following example, `Person.FirstName` and `Person.LastName` are setup as concurrency tokens. There is a `// TODO:` comment in the location where you include application specific logic to choose the value to be saved.
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=34-35)]
+[!code-csharp[Main](../../../samples/core/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=34-35)]

@@ -24,7 +24,7 @@ No relational database specific aspects of a primary key can be configured using
 
 You can use the Fluent API to configure the name of the primary key constraint in the database.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/KeyName.cs?highlight=9)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/KeyName.cs?highlight=9)] -->
 ``` csharp
 class MyContext : DbContext
 {

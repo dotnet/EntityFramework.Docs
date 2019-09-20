@@ -71,7 +71,7 @@ public class Blog
 
 You can also specify a schema that the table belongs to.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/TableAndSchema.cs?highlight=2)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/TableAndSchema.cs?highlight=2)] -->
 ``` csharp
         modelBuilder.Entity<Blog>()
             .ToTable("blogs", schema: "blogging");

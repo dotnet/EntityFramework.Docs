@@ -15,4 +15,4 @@ Asynchronous saving avoids blocking a thread while the changes are written to th
 
 Entity Framework Core provides `DbContext.SaveChangesAsync()` as an asynchronous alternative to `DbContext.SaveChanges()`.
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Async/Sample.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Saving/Async/Sample.cs#Sample)]

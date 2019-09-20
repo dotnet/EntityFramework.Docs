@@ -119,7 +119,15 @@ namespace Samples
     public class BloggingContext : DbContext
     {
         private static readonly ILoggerFactory _loggerFactory
-            = new LoggerFactory().AddConsole((s, l) => l == LogLevel.Information && !s.EndsWith("Connection"));
+            = LoggerFactory.Create(
+                builder =>
+                    {
+                        builder
+                            .AddFilter((category, level) =>
+                                level == LogLevel.Information
+                                && category.EndsWith("Connection", StringComparison.Ordinal))
+                            .AddConsole();
+                    });
 
         private readonly string _tenantId;
 
