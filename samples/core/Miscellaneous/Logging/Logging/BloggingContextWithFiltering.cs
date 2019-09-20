@@ -1,19 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
 namespace EFLogging
 {
     public class BloggingContextWithFiltering : DbContext
     {
         #region DefineLoggerFactory
-        public static readonly LoggerFactory MyLoggerFactory
-            = new LoggerFactory(new[]
-            {
-                new ConsoleLoggerProvider((category, level)
-                    => category == DbLoggerCategory.Database.Command.Name
-                       && level == LogLevel.Information, true)
-            });
+        public static readonly ILoggerFactory MyLoggerFactory
+            = LoggerFactory.Create(builder =>
+                {
+                    builder
+                        .AddFilter((category, level) =>
+                            category == DbLoggerCategory.Database.Command.Name
+                            && level == LogLevel.Information)
+                        .AddConsole();
+                });
         #endregion
 
         public DbSet<Blog> Blogs { get; set; }

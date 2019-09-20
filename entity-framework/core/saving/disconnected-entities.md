@@ -13,7 +13,7 @@ A DbContext instance will automatically track entities returned from the databas
 However, sometimes entities are queried using one context instance and then saved using a different instance. This often happens in "disconnected" scenarios such as a web application where the entities are queried, sent to the client, modified, sent back to the server in a request, and then saved. In this case, the second context instance needs to know whether the entities are new (should be inserted) or existing (should be updated).
 
 > [!TIP]  
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Disconnected/) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/) on GitHub.
 
 > [!TIP]
 > EF Core can only track one instance of any entity with a given primary key value. The best way to avoid this being an issue is to use a short-lived context for each unit-of-work such that the context starts empty, has entities attached to it, saves those entities, and then the context is disposed and discarded.
@@ -32,11 +32,11 @@ The value of an automatically generated key can often be used to determine wheth
 
 It is easy to check for an unset key when the entity type is known:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#IsItNewSimple)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#IsItNewSimple)]
 
 However, EF also has a built-in way to do this for any entity type and key type:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#IsItNewGeneral)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#IsItNewGeneral)]
 
 > [!TIP]  
 > Keys are set as soon as entities are tracked by the context, even if the entity is in the Added state. This helps when traversing a graph of entities and deciding what to do with each, such as when using the TrackGraph API. The key value should only be used in the way shown here _before_ any call is made to track the entity.
@@ -49,7 +49,7 @@ Some other mechanism is needed to identify new entities when key values are not 
 
 To query for the entity, just use the Find method:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#IsItNewQuery)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#IsItNewQuery)]
 
 It is beyond the scope of this document to show the full code for passing a flag from a client. In a web app, it usually means making different requests for different actions, or passing some state in the request then extracting it in the controller.
 
@@ -57,11 +57,11 @@ It is beyond the scope of this document to show the full code for passing a flag
 
 If it is known whether or not an insert or update is needed, then either Add or Update can be used appropriately:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertAndUpdateSingleEntity)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertAndUpdateSingleEntity)]
 
 However, if the entity uses auto-generated key values, then the Update method can be used for both cases:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntity)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntity)]
 
 The Update method normally marks the entity for update, not insert. However, if the entity has a auto-generated key, and no key value has been set, then the entity is instead automatically marked for insert.
 
@@ -70,7 +70,7 @@ The Update method normally marks the entity for update, not insert. However, if 
 
 If the entity is not using auto-generated keys, then the application must decide whether the entity should be inserted or updated: For example:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntityWithFind)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntityWithFind)]
 
 The steps here are:
 * If Find returns null, then the database doesn't already contain the blog with this ID, so we call Add mark it for insertion.
@@ -91,17 +91,17 @@ As noted above, EF Core can only track one instance of any entity with a given p
 
 An example of working with graphs is inserting or updating a blog together with its collection of associated posts. If all the entities in the graph should be inserted, or all should be updated, then the process is the same as described above for single entities. For example, a graph of blogs and posts created like this:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#CreateBlogAndPosts)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#CreateBlogAndPosts)]
 
 can be inserted like this:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertGraph)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertGraph)]
 
 The call to Add will mark the blog and all the posts to be inserted.
 
 Likewise, if all the entities in a graph need to be updated, then Update can be used:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#UpdateGraph)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#UpdateGraph)]
 
 The blog and all its posts will be marked to be updated.
 
@@ -109,13 +109,13 @@ The blog and all its posts will be marked to be updated.
 
 With auto-generated keys, Update can again be used for both inserts and updates, even if the graph contains a mix of entities that require inserting and those that require updating:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertOrUpdateGraph)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateGraph)]
 
 Update will mark any entity in the graph, blog or post, for insertion if it does not have a key value set, while all other entities are marked for update.
 
 As before, when not using auto-generated keys, a query and some processing can be used:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertOrUpdateGraphWithFind)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateGraphWithFind)]
 
 ## Handling deletes
 
@@ -123,12 +123,12 @@ Delete can be tricky to handle since often the absence of an entity means that i
 
 For true deletes, a common pattern is to use an extension of the query pattern to perform what is essentially a graph diff. For example:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertUpdateOrDeleteGraphWithFind)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertUpdateOrDeleteGraphWithFind)]
 
 ## TrackGraph
 
 Internally, Add, Attach, and Update use graph-traversal with a determination made for each entity as to whether it should be marked as Added (to insert), Modified (to update), Unchanged (do nothing), or Deleted (to delete). This mechanism is exposed via the TrackGraph API. For example, let's assume that when the client sends back a graph of entities it sets some flag on each entity indicating how it should be handled. TrackGraph can then be used to process this flag:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#TrackGraph)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#TrackGraph)]
 
 The flags are only shown as part of the entity for simplicity of the example. Typically the flags would be part of a DTO or some other state included in the request.

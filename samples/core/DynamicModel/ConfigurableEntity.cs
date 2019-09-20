@@ -1,4 +1,4 @@
-namespace EFModeling.Samples.DynamicModel
+namespace EFModeling.DynamicModel
 {
     public class ConfigurableEntity
     {

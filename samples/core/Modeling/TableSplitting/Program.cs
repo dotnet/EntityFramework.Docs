@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace TableSplitting
+namespace EFModeling.TableSplitting
 {
     public static class Program
     {

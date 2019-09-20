@@ -2,7 +2,7 @@
 
 namespace Cosmos
 {
-    class Program
+    public class Program
     {
         static async Task Main()
         {

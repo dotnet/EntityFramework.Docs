@@ -20,10 +20,10 @@ By convention, each property will be set up to map to a column with the same nam
 
 You can use Data Annotations to configure the column to which a property is mapped.
 
-[!code-csharp[Main](../../../../samples/core/Modeling/DataAnnotations/Samples/Relational/Column.cs?highlight=13)]
+[!code-csharp[Main](../../../../samples/core/Modeling/DataAnnotations/Relational/Column.cs?highlight=13)]
 
 ## Fluent API
 
 You can use the Fluent API to configure the column to which a property is mapped.
 
-[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/Column.cs?highlight=11-13)]
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/Column.cs?highlight=11-13)]

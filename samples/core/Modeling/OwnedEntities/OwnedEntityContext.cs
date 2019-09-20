@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace OwnedEntities
+namespace EFModeling.OwnedEntities
 {
     public class OwnedEntityContext : DbContext
     {

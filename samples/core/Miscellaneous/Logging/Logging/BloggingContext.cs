@@ -1,14 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
 namespace EFLogging
 {
     public class BloggingContext : DbContext
     {
         #region DefineLoggerFactory
-        public static readonly LoggerFactory MyLoggerFactory
-            = new LoggerFactory(new[] {new ConsoleLoggerProvider((_, __) => true, true)});
+        public static readonly ILoggerFactory MyLoggerFactory
+            = LoggerFactory.Create(builder => { builder.AddConsole(); });
         #endregion
 
         public DbSet<Blog> Blogs { get; set; }

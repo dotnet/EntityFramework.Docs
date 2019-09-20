@@ -20,11 +20,11 @@ By convention, a property whose .NET type can contain null will be configured as
 
 You can use Data Annotations to indicate that a property is required.
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/Required.cs?highlight=14)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Required.cs?highlight=14)]
 
 ## Fluent API
 
 You can use the Fluent API to indicate that a property is required.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Required.cs?highlight=11-13)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Required.cs?highlight=11-13)]
 

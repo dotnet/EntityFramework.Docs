@@ -3,6 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>EFModeling.OwnedEntities</RootNamespace>
+    <AssemblyName>EFModeling.OwnedEntities</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

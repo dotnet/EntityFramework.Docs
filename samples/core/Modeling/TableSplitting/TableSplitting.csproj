@@ -3,6 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>EFModeling.TableSplitting</RootNamespace>
+    <AssemblyName>EFModeling.TableSplitting</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
