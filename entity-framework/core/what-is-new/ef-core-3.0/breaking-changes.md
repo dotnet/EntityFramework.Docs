@@ -1722,7 +1722,7 @@ This change is introduced in EF Core 3.0-preview 7.
 
 **Old behavior**
 
-A DbFunction with value of schema being empty string configured the function to be in no schema and treated it as built-in function. For example following code will map `DatePart` CLR function to `DATEPART` built-in function on SqlServer.
+A DbFunction configured with schema as an empty string was treated as built-in function without a schema. For example following code will map `DatePart` CLR function to `DATEPART` built-in function on SqlServer.
 
 ```C#
 [DbFunction("DATEPART", Schema = "")]
