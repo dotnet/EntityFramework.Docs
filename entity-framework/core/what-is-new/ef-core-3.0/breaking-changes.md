@@ -18,6 +18,7 @@ Breaks from one 3.0 preview to another 3.0 preview aren't documented here.
 | [LINQ queries are no longer evaluated on the client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
 | [EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0](#netstandard21) | High      |
 | [The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK](#dotnet-ef) | High      |
+| [DetectChanges honors store-generated key values](#dc) | High      |
 | [FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed](#fromsql) | High      |
 | [Query types are consolidated with entity types](#qt) | High      |
 | [Entity Framework Core is no longer part of the ASP.NET Core shared framework](#no-longer) | Medium      |
@@ -32,7 +33,6 @@ Breaks from one 3.0 preview to another 3.0 preview aren't documented here.
 | [FromSql methods can only be specified on query roots](#fromsql) | Low      |
 | [~~Query execution is logged at Debug level~~ Reverted](#qe) | Low      |
 | [Temporary key values are no longer set onto entity instances](#tkv) | Low      |
-| [DetectChanges honors store-generated key values](#dc) | Low      |
 | [Dependent entities sharing the table with the principal are now optional](#de) | Low      |
 | [All entities sharing a table with a concurrency token column have to map it to a property](#aes) | Low      |
 | [Inherited properties from unmapped types are now mapped to a single column for all derived types](#ip) | Low      |
