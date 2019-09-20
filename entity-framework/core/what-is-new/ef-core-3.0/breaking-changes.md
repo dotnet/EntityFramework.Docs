@@ -1732,15 +1732,15 @@ public static int? DatePart(string datePartArg, DateTime? date) => throw new Exc
 
 **New behavior**
 
-All DbFunction mappings are considered to be mapped to user defined functions. Hence empty string value would put the function inside default schema for the model. It can be default schema configured explicitly via fluent API `modelBuilder.HasDefaultSchema()` or `dbo`.
+All DbFunction mappings are considered to be mapped to user defined functions. Hence empty string value would put the function inside the default schema for the model. Which could be the schema configured explicitly via fluent API `modelBuilder.HasDefaultSchema()` or `dbo` otherwise.
 
 **Why**
 
-Earlier schema being empty was a way to treat that function is built-in but that logic is only applicable for SqlServer where built-in function does not belong to any schema.
+Previously schema being empty was a way to treat that function is built-in but that logic is only applicable for SqlServer where built-in functions do not belong to any schema.
 
 **Mitigations**
 
-Configure DbFunction's translation manually to map it to built-in function.
+Configure DbFunction's translation manually to map it to a built-in function.
 
 ```C#
 modelBuilder
