@@ -3,6 +3,7 @@ title: "What's New - EF6"
 author: divega
 ms.date: "09/12/2019"
 ms.assetid: 41d1f86b-ce66-4bf2-8963-48514406fb4c
+uid: ef6/what-is-new/index
 ---
 # What's New in EF6
 
