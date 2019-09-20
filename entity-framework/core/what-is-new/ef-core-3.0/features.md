@@ -101,7 +101,7 @@ There are some limitations, for example:
 
 ## Postponed features
 
-Some features originally planned for EF Core 3.0 were postponed to future releases: 
+Some features originally planned for EF Core 3.0 were postponed to future releases:
 
-- Ability to ingore parts of a model in migrations, tracked as [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725).
+- Ability to ignore parts of a model in migrations, tracked as [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725).
 - Property bag entities, tracked as two separate issues: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) about shared-type entities and [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) about indexed property mapping support.
