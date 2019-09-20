@@ -64,6 +64,7 @@ Breaks from one 3.0 preview to another 3.0 preview aren't documented here.
 | [SQLitePCL.raw updated to version 2.0.0](#SQLitePCL) | Low      |
 | [NetTopologySuite updated to version 2.0.0](#NetTopologySuite) | Low      |
 | [Multiple ambiguous self-referencing relationships must be configured](#mersa) | Low      |
+| [DbFunction.Schema being null or empty string configures it to be in model's default schema](#udf-empty-string) | Low      |
 
 ### LINQ queries are no longer evaluated on the client
 
@@ -1710,4 +1711,39 @@ modelBuilder
      .Entity<User>()
      .HasOne(e => e.UpdatedBy)
      .WithMany();
+```
+
+<a name="udf-empty-string"></a>
+### DbFunction.Schema being null or empty string configures it to be in model's default schema
+
+[Tracking Issue #12757](https://github.com/aspnet/EntityFrameworkCore/issues/12757)
+
+This change is introduced in EF Core 3.0-preview 7.
+
+**Old behavior**
+
+A DbFunction with value of schema being empty string configured the function to be in no schema and treated it as built-in function. For example following code will map `DatePart` CLR function to `DATEPART` built-in function on SqlServer.
+
+```C#
+[DbFunction("DATEPART", Schema = "")]
+public static int? DatePart(string datePartArg, DateTime? date) => throw new Exception();
+
+```
+
+**New behavior**
+
+All DbFunction mappings are considered to be mapped to user defined functions. Hence empty string value would put the function inside default schema for the model. It can be default schema configured explicitly via fluent API `modelBuilder.HasDefaultSchema()` or `dbo`.
+
+**Why**
+
+Earlier schema being empty was a way to treat that function is built-in but that logic is only applicable for SqlServer where built-in function does not belong to any schema.
+
+**Mitigations**
+
+Configure DbFunction's translation manually to map it to built-in function.
+
+```C#
+modelBuilder
+    .HasDbFunction(typeof(MyContext).GetMethod(nameof(MyContext.DatePart)))
+    .HasTranslation(args => SqlFunctionExpression.Create("DatePart", args, typeof(int?), null));
 ```
