@@ -100,7 +100,7 @@ See [nullable reference types in the C# documentation](https://docs.microsoft.co
 
 ## Interception of database operations
 
-The new interception API in EF Core 3.0 allows providing custom logic to bet invoked automatically whenever low-level database operations occur as part of the normal operation of EF Core. For example, when opening connections, committing transactions, or executing commands. 
+The new interception API in EF Core 3.0 allows providing custom logic to be invoked automatically whenever low-level database operations occur as part of the normal operation of EF Core. For example, when opening connections, committing transactions, or executing commands. 
 
 Similarly to the interception features that existed in EF 6, interceptors allow you to intercept operations before or after they happen. When you intercept them before they happen, you are allowed to by-pass execution and supply alternate results from the interception logic. 
 
@@ -121,7 +121,7 @@ public class HintCommandInterceptor : DbCommandInterceptor
 }
 ``` 
 
-and register it with your `DbContext`: 
+And register it with your `DbContext`: 
 
 ``` csharp
 services.AddDbContext(b => b
@@ -140,7 +140,7 @@ For example, using the [dotnet ef command-line tool](xref:core/miscellaneous/cli
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
 ```
 
-And the tool will now automaticall scaffold types for views and tables without keys:
+And the tool will now automatically scaffold types for views and tables without keys:
 
 ``` csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
