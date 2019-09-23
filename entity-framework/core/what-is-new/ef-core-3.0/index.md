@@ -25,7 +25,7 @@ The most important design change has to do with how we handle LINQ expressions t
 In the first few versions, EF Core identified what portions of a query could be translated to SQL, and executed the rest of the query on the client.
 This type of client-side execution is desirable in some situations, but in many other cases it can result in inefficient queries.
 
-For example, if EF Core 2.2 couldn't translate a predicate in a `Where()` call, it executed a SQL statement without a filter, read all all the rows from the database, and then filtered them in-memory:
+For example, if EF Core 2.2 couldn't translate a predicate in a `Where()` call, it executed a SQL statement without a filter, read all the rows from the database, and then filtered them in-memory:
 
 ``` csharp
 var specialCustomers = 
