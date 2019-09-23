@@ -12,20 +12,21 @@ The following list includes the major new features in EF Core 3.0.
 
 As a major release, EF Core 3.0 also contains several [breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes), which are API improvements that may have negative impact on existing applications.  
 
-## LINQ improvements 
+## LINQ overhaul 
 
 LINQ enables you to write database queries using your .NET language of choice, taking advantage of rich type information to offer IntelliSense and compile-time type checking.
 But LINQ also enables you to write an unlimited number of complicated queries containing arbitrary expressions (method calls or operations).
 How to handle all those combinations is the main challenge for LINQ providers.
 
-In EF Core 3.0, we've rearchitected our LINQ provider in ways that enable translating more query patterns into SQL, generating efficient queries in more cases, preventing inefficient queries from going undetected, and adding new query capabilities and performance improvements in future releases without breaking existing applications and data providers.
+In EF Core 3.0, we rearchitected our LINQ provider to enable translating more query patterns into SQL, generating efficient queries in more cases, and preventing inefficient queries from going undetected. The new LINQ provider is the foundation over which we'll be able to offer new query capabilities and performance improvements in future releases, without breaking existing applications and data providers.
 
-The most important design change has to do with how we handle LINQ expressions that cannot be converted to parameters or translated to SQL:
+### Restricted client evaluation
+The most important design change has to do with how we handle LINQ expressions that cannot be converted to parameters or translated to SQL.
 
-In the first few versions, EF Core identified what portions of a query could be translated to SQL, and executed the rest of the query on the client.
+In previous versions, EF Core identified what portions of a query could be translated to SQL, and executed the rest of the query on the client.
 This type of client-side execution is desirable in some situations, but in many other cases it can result in inefficient queries.
 
-For example, if EF Core 2.2 couldn't translate a predicate in a `Where()` call, it executed a SQL statement without a filter, read all the rows from the database, and then filtered them in-memory:
+For example, if EF Core 2.2 couldn't translate a predicate in a `Where()` call, it executed an SQL statement without a filter, transferred all the rows from the database, and then filtered them in-memory:
 
 ``` csharp
 var specialCustomers = 
@@ -33,10 +34,10 @@ var specialCustomers =
     .Where(c => c.Name.StartsWith(n) && IsSpecialCustomer(c));
 ```
 
-That may be acceptable if the database contains a small number of rows, but can result in significant performance issues or even application failure if the database contains a large number or rows.
+That may be acceptable if the database contains a small number of rows but can result in significant performance issues or even application failure if the database contains a large number or rows.
 
-In EF Core 3.0 we have restricted client evaluation to only happen on the top-level projection (essentially, the last call to `Select()`).
-When EF Core 3.0 detects expressions that cannot be translated anywhere else in the query, it throws a runtime exception.
+In EF Core 3.0, we've restricted client evaluation to only happen on the top-level projection (essentially, the last call to `Select()`).
+When EF Core 3.0 detects expressions that can't be translated anywhere else in the query, it throws a runtime exception.
 
 To evaluate a predicate condition on the client as in the previous example, developers now need to explicitly switch evaluation of the query to LINQ to Objects: 
 
@@ -50,11 +51,23 @@ var specialCustomers =
 
 See the [breaking changes documentation](xref:core/what-is-new/ef-core-3.0/breaking-changes#linq-queries-are-no-longer-evaluated-on-the-client) for more details about how this can affect existing applications.
 
+### Single SQL statement per LINQ query
+
+Another aspect of the design that changed significantly in 3.0 is that we now always generate a single SQL statement per LINQ query. In previous versions, we used to generate multiple SQL statements in certain cases, like to translate `Include()` calls on collection navigation properties and to translate queries that followed certain patterns with subqueries. Although this was in some cases convenient, and for `Include()` it even helped avoid sending redundant data over the wire, the implementation was complex, it resulted in some extremely inefficient behaviors (N+1 queries), and there was situations in which the data returned across multiple queries could be inconsistent.
+
+Similarly to client evaluation, if EF Core 3.0 can't translate a LINQ query into a single SQL statement, it throws a runtime exception. But we made EF Core capable of translating many of the common patterns that used to generate multiple queries to a single query with JOINs.
+
+### Cosmos DB support {#cosmos-db-support}
+
+The Cosmos DB provider for EF Core enables developers familiar with the EF programing model to easily target Azure Cosmos DB as an application database. The goal is to make some of the advantages of Cosmos DB, like global distribution, "always on" availability, elastic scalability, and low latency, even more accessible to .NET developers. The provider enables most EF Core features, like automatic change tracking, LINQ, and value conversions, against the SQL API in Cosmos DB.
+
+See the [Cosmos DB provider documentation][7] for more details.
+
 ## Cosmos DB support 
 
 The Cosmos DB provider for EF Core enables developers familiar with the EF programing model to easily target Azure Cosmos DB as an application database.
 The goal is to make some of the advantages of Cosmos DB, like global distribution, "always on" availability, elastic scalability, and low latency, even more accessible to .NET developers.
-The provider will enable most EF Core features, like automatic change tracking, LINQ, and value conversions, against the SQL API in Cosmos DB.
+The provider enables most EF Core features, like automatic change tracking, LINQ, and value conversions, against the SQL API in Cosmos DB.
 
 See the [Cosmos DB provider documentation](xref:core/providers/cosmos/index) for more details.
 
@@ -82,8 +95,8 @@ See the [asynchronous streams in the C# documentation](https://docs.microsoft.co
 
 ### Nullable reference types 
 
-When this new feature is enabled in your code, EF Core can reason about the nullability of properties of reference types (either of primitive types like string or navigation properties) to decide the nullability of columns and relationships in the database.
-EF Core 3.0 treats C# 8.0 reference type nullability in the same way it treats the `[Required]` data annotation attribute.  
+When this new feature is enabled in your code, EF Core examines the nullability of reference type properties and applies it to corresponding columns and relationships in the database: properties of non-nullable references types are treated as if they had the `[Required]` data annotation attribute.
+
 For example, in the following class, properties marked as of type `string?` will be configured as optional, whereas `string` will be configured as required:
 
 ``` csharp
@@ -104,7 +117,7 @@ The new interception API in EF Core 3.0 allows providing custom logic to be invo
 
 Similarly to the interception features that existed in EF 6, interceptors allow you to intercept operations before or after they happen. When you intercept them before they happen, you are allowed to by-pass execution and supply alternate results from the interception logic. 
 
-For example, to manipulate command text, you can create an `IDbCommandInterceptor`: 
+For example, to manipulate command text, you can create an `IDbCommandInterceptor`:
 
 ``` csharp 
 public class HintCommandInterceptor : DbCommandInterceptor
@@ -121,7 +134,7 @@ public class HintCommandInterceptor : DbCommandInterceptor
 }
 ``` 
 
-And register it with your `DbContext`: 
+And register it with your `DbContext`:
 
 ``` csharp
 services.AddDbContext(b => b
@@ -131,8 +144,8 @@ services.AddDbContext(b => b
 
 ## Reverse engineering of database views
 
-Entity types without keys (previously known as [query types](xref:core/modeling/keyless-entity-types)) represent data that can be read from the database, but cannot be updated.
-This characteristic makes them an excellent fit for mapping database views in most scenarios, so we automated the creation of entity types without keys when reverse engineering database views.
+Query types, which represent data that can be read from the database but not updated, have been renamed to [keyless entity types](xref:core/modeling/keyless-entity-types). 
+As they are an excellent fit for mapping database views in most scenarios, EF Core now automatically creates keyless entity types when reverse engineering database views.
 
 For example, using the [dotnet ef command-line tool](xref:core/miscellaneous/cli/dotnet) you can type:
 
@@ -182,12 +195,10 @@ public class OrderDetails
 
 ## EF 6.3 on .NET Core
 
-We understand that many existing applications use previous versions of EF, and that porting them to EF Core only to take advantage of .NET Core can sometimes require a significant effort.
-For that reason, we have enabled the newest version of EF 6 to run on .NET Core 3.0.
+This isn't really an EF Core 3.0 feature, but we think it is important to many of our current customers. 
 
-There are certain limitations when using EF 6.3 in .NET Core, for example:
-- New providers are required to work on .NET Core
-- Spatial support with SQL Server won't be enabled
+We understand that many existing applications use previous versions of EF, and that porting them to EF Core only to take advantage of .NET Core can require a significant effort. 
+For that reason, we decided to port the newest version of EF 6 to run on .NET Core 3.0. 
 
 For more details, see [what's new in EF 6](xref:ef6/what-is-new/index).
 
