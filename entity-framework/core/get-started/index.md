@@ -101,7 +101,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
 * Run the following commands:
 
   ``` Console
-  dotnet tool install --global dotnet-ef --version 3.0.0-*
+  dotnet tool install --global dotnet-ef
   dotnet add package Microsoft.EntityFrameworkCore.Design
   dotnet ef migrations add InitialCreate
   dotnet ef database update
