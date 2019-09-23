@@ -143,7 +143,7 @@ The EF Core column indicates the product version in which the feature first appe
 
 Consider using EF Core for a new application if both of the following conditions are true:
 * The app needs the capabilities of .NET Core. For more information, see [Choosing between .NET Core and .NET Framework for server apps](https://docs.microsoft.com/dotnet/standard/choosing-core-framework-server).
-* EF Core supports all of the features that the app requires. If a desired feature is missing, check the [EF Core Roadmap](xref:core/what-is-new/roadmap) to find out if there are plans to support it in the future.
+* EF Core supports all of the features that the app requires. If a desired feature is missing, check the [EF Core Roadmap](xref:core/what-is-new/index) to find out if there are plans to support it in the future. 
 
 Consider using EF6 if both of the following conditions are true:
 * The app will run on Windows and the .NET Framework 4.0 or later.

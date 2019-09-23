@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TableSplitting
+namespace EFModeling.TableSplitting
 {
     public class TableSplittingContext : DbContext
     {

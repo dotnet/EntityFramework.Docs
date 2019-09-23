@@ -8,7 +8,7 @@ uid: core/what-is-new/ef-core-3.0/breaking-changes
 
 # Breaking changes included in EF Core 3.0
 The following API and behavior changes have the potential to break existing applications when upgrading them to 3.0.0.
-Changes that we expect to only impact database providers are documented under [provider changes](../../providers/provider-log.md).
+Changes that we expect to only impact database providers are documented under [provider changes](xref:core/providers/provider-log).
 Breaks from one 3.0 preview to another 3.0 preview aren't documented here.
 
 ## Summary
@@ -18,6 +18,7 @@ Breaks from one 3.0 preview to another 3.0 preview aren't documented here.
 | [LINQ queries are no longer evaluated on the client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
 | [EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0](#netstandard21) | High      |
 | [The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK](#dotnet-ef) | High      |
+| [DetectChanges honors store-generated key values](#dc) | High      |
 | [FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed](#fromsql) | High      |
 | [Query types are consolidated with entity types](#qt) | High      |
 | [Entity Framework Core is no longer part of the ASP.NET Core shared framework](#no-longer) | Medium      |
@@ -32,7 +33,6 @@ Breaks from one 3.0 preview to another 3.0 preview aren't documented here.
 | [FromSql methods can only be specified on query roots](#fromsql) | Low      |
 | [~~Query execution is logged at Debug level~~ Reverted](#qe) | Low      |
 | [Temporary key values are no longer set onto entity instances](#tkv) | Low      |
-| [DetectChanges honors store-generated key values](#dc) | Low      |
 | [Dependent entities sharing the table with the principal are now optional](#de) | Low      |
 | [All entities sharing a table with a concurrency token column have to map it to a property](#aes) | Low      |
 | [Inherited properties from unmapped types are now mapped to a single column for all derived types](#ip) | Low      |
@@ -64,6 +64,7 @@ Breaks from one 3.0 preview to another 3.0 preview aren't documented here.
 | [SQLitePCL.raw updated to version 2.0.0](#SQLitePCL) | Low      |
 | [NetTopologySuite updated to version 2.0.0](#NetTopologySuite) | Low      |
 | [Multiple ambiguous self-referencing relationships must be configured](#mersa) | Low      |
+| [DbFunction.Schema being null or empty string configures it to be in model's default schema](#udf-empty-string) | Low      |
 
 ### LINQ queries are no longer evaluated on the client
 
@@ -170,7 +171,7 @@ This change allows us to distribute and update `dotnet ef` as a regular .NET CLI
 To be able to manage migrations or scaffold a `DbContext`, install `dotnet-ef` as a global tool:
 
   ``` console
-    $ dotnet tool install --global dotnet-ef --version 3.0.0-*
+    $ dotnet tool install --global dotnet-ef
   ```
 
 You can also obtain it a local tool when you restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](https://github.com/dotnet/cli/issues/10288).
@@ -1710,4 +1711,39 @@ modelBuilder
      .Entity<User>()
      .HasOne(e => e.UpdatedBy)
      .WithMany();
+```
+
+<a name="udf-empty-string"></a>
+### DbFunction.Schema being null or empty string configures it to be in model's default schema
+
+[Tracking Issue #12757](https://github.com/aspnet/EntityFrameworkCore/issues/12757)
+
+This change is introduced in EF Core 3.0-preview 7.
+
+**Old behavior**
+
+A DbFunction configured with schema as an empty string was treated as built-in function without a schema. For example following code will map `DatePart` CLR function to `DATEPART` built-in function on SqlServer.
+
+```C#
+[DbFunction("DATEPART", Schema = "")]
+public static int? DatePart(string datePartArg, DateTime? date) => throw new Exception();
+
+```
+
+**New behavior**
+
+All DbFunction mappings are considered to be mapped to user defined functions. Hence empty string value would put the function inside the default schema for the model. Which could be the schema configured explicitly via fluent API `modelBuilder.HasDefaultSchema()` or `dbo` otherwise.
+
+**Why**
+
+Previously schema being empty was a way to treat that function is built-in but that logic is only applicable for SqlServer where built-in functions do not belong to any schema.
+
+**Mitigations**
+
+Configure DbFunction's translation manually to map it to a built-in function.
+
+```C#
+modelBuilder
+    .HasDbFunction(typeof(MyContext).GetMethod(nameof(MyContext.DatePart)))
+    .HasTranslation(args => SqlFunctionExpression.Create("DatePart", args, typeof(int?), null));
 ```

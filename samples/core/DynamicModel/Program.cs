@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 
-namespace EFModeling.Samples.DynamicModel
+namespace EFModeling.DynamicModel
 {
-    class Program
+    public class Program
     {
         static void Main()
         {

@@ -1,4 +1,4 @@
-namespace EFModeling.Samples.DataSeeding
+namespace EFModeling.DataSeeding
 {
     public class Post
     {

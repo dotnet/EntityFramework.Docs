@@ -16,21 +16,32 @@ EF Core integrates automatically with the logging mechanisms of ASP.NET Core whe
 
 ## Other applications
 
-EF Core logging currently requires an ILoggerFactory which is itself configured with one or more ILoggerProvider. Common providers are shipped in the following packages:
+EF Core logging requires an ILoggerFactory which is itself configured with one or more logging providers. Common providers are shipped in the following packages:
 
 * [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/): A simple console logger.
 * [Microsoft.Extensions.Logging.AzureAppServices](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/): Supports Azure App Services 'Diagnostics logs' and 'Log stream' features.
 * [Microsoft.Extensions.Logging.Debug](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/): Logs to a debugger monitor using System.Diagnostics.Debug.WriteLine().
 * [Microsoft.Extensions.Logging.EventLog](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventLog/): Logs to Windows Event Log.
 * [Microsoft.Extensions.Logging.EventSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/): Supports EventSource/EventListener.
-* [Microsoft.Extensions.Logging.TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/): Logs to a trace listener using System.Diagnostics.TraceSource.TraceEvent().
-
-> [!NOTE]
-> The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2. Proper replacements for obsolete logging APIs will be available in version 3.0. In the meantime, it is safe to ignore and suppress the warnings.
+* [Microsoft.Extensions.Logging.TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/): Logs to a trace listener using `System.Diagnostics.TraceSource.TraceEvent()`.
 
 After installing the appropriate package(s), the application should create a singleton/global instance of a LoggerFactory. For example, using the console logger:
 
+# [Version 3.0](#tab/v3)
+
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#DefineLoggerFactory)]
+
+# [Version 2.x](#tab/v2)
+
+> [!NOTE]
+> The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2 and replaced in 3.0. It is safe to ignore and suppress the warnings when using 2.2.
+
+``` csharp
+public static readonly LoggerFactory MyLoggerFactory
+    = new LoggerFactory(new[] { new ConsoleLoggerProvider((_, __) => true, true) });
+```
+
+***
 
 This singleton/global instance should then be registered with EF Core on the `DbContextOptionsBuilder`. For example:
 
@@ -41,14 +52,30 @@ This singleton/global instance should then be registered with EF Core on the `Db
 
 ## Filtering what is logged
 
-> [!NOTE]
-> The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2. Proper replacements for obsolete logging APIs will be available in version 3.0. In the meantime, it is safe to ignore and suppress the warnings.
+The application can control what is logged by configuring a filter on the ILoggerProvider. For example:
 
-The easiest way to filter what is logged is to configure it when registering the ILoggerProvider. For example:
+# [Version 3.0](#tab/v3)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContextWithFiltering.cs#DefineLoggerFactory)]
 
-In this example, the log is filtered to return only messages:
+# [Version 2.x](#tab/v2)
+
+> [!NOTE]
+> The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2 and replaced in 3.0. It is safe to ignore and suppress the warnings when using 2.2.
+
+``` csharp
+public static readonly LoggerFactory MyLoggerFactory
+    = new LoggerFactory(new[]
+    {
+        new ConsoleLoggerProvider((category, level)
+            => category == DbLoggerCategory.Database.Command.Name
+               && level == LogLevel.Information, true)
+    });
+```
+
+***
+
+In this example, the log is filtered to only return messages:
  * in the 'Microsoft.EntityFrameworkCore.Database.Command' category
  * at the 'Information' level
 

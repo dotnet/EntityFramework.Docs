@@ -1,4 +1,4 @@
-﻿namespace TableSplitting
+﻿namespace EFModeling.TableSplitting
 {
     #region Order
     public class Order

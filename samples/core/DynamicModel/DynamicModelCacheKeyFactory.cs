@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace EFModeling.Samples.DynamicModel
+namespace EFModeling.DynamicModel
 {
 
     #region Class

@@ -21,7 +21,7 @@ By convention, the following fields will be discovered as backing fields for a g
 * `m_<camel-cased property name>`
 * `m_<property name>`
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Samples/BackingField.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/BackingField.cs#Sample)]
 
 When a backing field is configured, EF will write directly to that field when materializing entity instances from the database (rather than using the property setter). If EF needs to read or write the value at other times, it will use the property if possible. For example, if EF needs to update the value for a property, it will use the property setter if one is defined. If the property is read-only, then it will write to the field.
 
@@ -33,13 +33,13 @@ Backing fields cannot be configured with data annotations.
 
 You can use the Fluent API to configure a backing field for a property.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/BackingField.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs#Sample)]
 
 ### Controlling when the field is used
 
 You can configure when EF uses the field or property. See the [PropertyAccessMode enum](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) for the supported options.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/BackingFieldAccessMode.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs#Sample)]
 
 ### Fields without a property
 
@@ -47,11 +47,11 @@ You can also create a conceptual property in your model that does not have a cor
 
 You can give EF the name of the field in the `Property(...)` API. If there is no property with the given name, then EF will look for a field.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/BackingFieldNoProperty.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldNoProperty.cs#Sample)]
 
 You can also choose to give the property a name, other than the field name. This name is then used when creating the model, most notably it will be used for the column name that is mapped to in the database.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/BackingFieldConceptualProperty.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldConceptualProperty.cs#Sample)]
 
 When there is no property in the entity class, you can use the `EF.Property(...)` method in a LINQ query to refer to the property that is conceptually part of the model.
 

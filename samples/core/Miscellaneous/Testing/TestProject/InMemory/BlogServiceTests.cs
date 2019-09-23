@@ -1,14 +1,13 @@
 ﻿using BusinessLogic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using Xunit;
 
-namespace TestProject.InMemory
+namespace EFTesting.TestProject.InMemory
 {
-    [TestClass]
     public class BlogServiceTests
     {
-        [TestMethod]
+        [Fact]
         public void Add_writes_to_database()
         {
             var options = new DbContextOptionsBuilder<BloggingContext>()
@@ -26,12 +25,12 @@ namespace TestProject.InMemory
             // Use a separate instance of the context to verify correct data was saved to database
             using (var context = new BloggingContext(options))
             {
-                Assert.AreEqual(1, context.Blogs.Count());
-                Assert.AreEqual("http://sample.com", context.Blogs.Single().Url);
+                Assert.Equal(1, context.Blogs.Count());
+                Assert.Equal("http://sample.com", context.Blogs.Single().Url);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void Find_searches_url()
         {
             var options = new DbContextOptionsBuilder<BloggingContext>()
@@ -52,7 +51,7 @@ namespace TestProject.InMemory
             {
                 var service = new BlogService(context);
                 var result = service.Find("cat");
-                Assert.AreEqual(2, result.Count());
+                Assert.Equal(2, result.Count());
             }
         }
     }

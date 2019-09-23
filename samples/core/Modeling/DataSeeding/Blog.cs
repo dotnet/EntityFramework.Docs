@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace EFModeling.Samples.DataSeeding
+namespace EFModeling.DataSeeding
 {
     public class Blog
     {

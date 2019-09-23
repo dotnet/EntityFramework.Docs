@@ -1,4 +1,4 @@
-﻿namespace OwnedEntities
+﻿namespace EFModeling.OwnedEntities
 {
     #region OrderDetails
     public class OrderDetails

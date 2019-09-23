@@ -137,7 +137,7 @@
         },
         {
             "source_path": "entity-framework/ef6/what-is-new/roadmap.md",
-            "redirect_url": "/ef/ef/what-is-new/index",
+            "redirect_url": "/ef/ef6/what-is-new/index",
             "redirect_document_id": false
         },
         {
@@ -188,6 +188,31 @@
         {
             "source_path": "entity-framework/core/get-started/uwp/index.md",
             "redirect_url": "/ef/core/get-started/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/what-is-new/roadmap.md",
+            "redirect_url": "/ef/core/what-is-new/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/what-is-new/ef-core-3.0/features.md",
+            "redirect_url": "/ef/core/what-is-new/ef-core-3.0/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/ef6/fundamentals/index.md",
+            "redirect_url": "/ef/ef6/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/ef6/resources/index.md",
+            "redirect_url": "/ef/ef6/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/efcore-and-ef6/porting/ensure-requirements.md",
+            "redirect_url": "/ef/efcore-and-ef6/porting/index",
             "redirect_document_id": false
         }
     ]
