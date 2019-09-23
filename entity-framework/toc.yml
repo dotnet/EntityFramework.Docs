@@ -72,6 +72,8 @@
           href: core/miscellaneous/testing/in-memory.md
       - name: Configuring a DbContext
         href: core/miscellaneous/configuring-dbcontext.md
+      - name: Nullable Reference Types
+        href: core/miscellaneous/nullable-reference-types.md
     - name: Creating a Model
       href: core/modeling/index.md
       items:
