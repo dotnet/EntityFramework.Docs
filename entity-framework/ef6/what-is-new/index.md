@@ -22,6 +22,25 @@ The EF 6.3.0 runtime was released to NuGet in September 2019. The main goal of t
 - Improved compatibility with Roslyn and NuGet PackageReference
 - Added `ef6.exe` utility for enabling, adding, scripting, and applying migrations from assemblies. This replaces `migrate.exe`
 
+### EF designer support
+
+There's currently no support for using the EF designer directly on .NET Core or .NET Standard projects. 
+
+You can work around this limitation by adding the EDMX file and the generated classes for the entities and the DbContext as linked files to a .NET Core 3.0 or .NET Standard 2.1 project in the same solution.
+
+The linked files will look like this in the project file:
+
+``` csproj 
+&lt;ItemGroup&gt;
+  &lt;EntityDeploy Include="..\EdmxDesignHost\Entities.edmx" Link="Model\Entities.edmx" /&gt;
+  &lt;Compile Include="..\EdmxDesignHost\Entities.Context.cs" Link="Model\Entities.Context.cs" /&gt;
+  &lt;Compile Include="..\EdmxDesignHost\Thing.cs" Link="Model\Thing.cs" /&gt;
+  &lt;Compile Include="..\EdmxDesignHost\Person.cs" Link="Model\Person.cs" /&gt;
+&lt;/ItemGroup&gt;
+```
+
+Note that the EDMX file is linked with the EntityDeploy build action. This is a special MSBuild task (now included in the EF 6.3 package) that takes care of adding the EF model into the target assembly as embedded resources (or copying it as files in the output folder, depending on the Metadata Artifact Processing setting in the EDMX). For more details on how to get this set up, see our [EDMX .NET Core sample](https://aka.ms/EdmxDotNetCoreSample).
+
 ## Past Releases
 
 The [Past Releases](past-releases.md) page contains an archive of all previous versions of EF and the major features that were introduced on each release.
