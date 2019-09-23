@@ -57,17 +57,9 @@ Another aspect of the design that changed significantly in 3.0 is that we now al
 
 Similarly to client evaluation, if EF Core 3.0 can't translate a LINQ query into a single SQL statement, it throws a runtime exception. But we made EF Core capable of translating many of the common patterns that used to generate multiple queries to a single query with JOINs.
 
-### Cosmos DB support {#cosmos-db-support}
-
-The Cosmos DB provider for EF Core enables developers familiar with the EF programing model to easily target Azure Cosmos DB as an application database. The goal is to make some of the advantages of Cosmos DB, like global distribution, "always on" availability, elastic scalability, and low latency, even more accessible to .NET developers. The provider enables most EF Core features, like automatic change tracking, LINQ, and value conversions, against the SQL API in Cosmos DB.
-
-See the [Cosmos DB provider documentation][7] for more details.
-
 ## Cosmos DB support 
 
-The Cosmos DB provider for EF Core enables developers familiar with the EF programing model to easily target Azure Cosmos DB as an application database.
-The goal is to make some of the advantages of Cosmos DB, like global distribution, "always on" availability, elastic scalability, and low latency, even more accessible to .NET developers.
-The provider enables most EF Core features, like automatic change tracking, LINQ, and value conversions, against the SQL API in Cosmos DB.
+The Cosmos DB provider for EF Core enables developers familiar with the EF programing model to easily target Azure Cosmos DB as an application database. The goal is to make some of the advantages of Cosmos DB, like global distribution, "always on" availability, elastic scalability, and low latency, even more accessible to .NET developers. The provider enables most EF Core features, like automatic change tracking, LINQ, and value conversions, against the SQL API in Cosmos DB.
 
 See the [Cosmos DB provider documentation](xref:core/providers/cosmos/index) for more details.
 
@@ -109,7 +101,7 @@ public class Customer
 }
 ```
 
-See [nullable reference types in the C# documentation](https://docs.microsoft.com/dotnet/csharp/whats-new/csharp-8#nullable-reference-types) for more details.
+See [Working with nullable reference types](xref:core/miscellaneous/nullable-reference-types) in the EF Core documentation for more details.
 
 ## Interception of database operations
 
