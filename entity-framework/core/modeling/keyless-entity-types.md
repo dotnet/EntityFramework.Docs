@@ -8,7 +8,7 @@ uid: core/modeling/keyless-entity-types
 ---
 # Keyless Entity Types
 > [!NOTE]
-> This feature is new in EF Core 3.0. Prior to 3.0 they were known as Query Types
+> This feature was added in EF Core 2.1 under the name of query types. In EF Core 3.0 the concept was renamed to keyless entity types.
 
 In addition to regular entity types, an EF Core model can contain _keyless entity types_, which can be used to carry out database queries against data that doesn't contain key values.
 
