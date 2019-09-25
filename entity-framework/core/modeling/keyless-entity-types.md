@@ -8,7 +8,7 @@ uid: core/modeling/keyless-entity-types
 ---
 # Keyless Entity Types
 > [!NOTE]
-> This feature is new in EF Core 2.1. Prior to 3.0 they were known as Query Types
+> This feature is new in EF Core 3.0. Prior to 3.0 they were known as Query Types
 
 In addition to regular entity types, an EF Core model can contain _keyless entity types_, which can be used to carry out database queries against data that doesn't contain key values.
 
@@ -50,7 +50,7 @@ Mapping a keyless entity type to a database object is achieved using the `ToTabl
 The following example shows how to use keyless entity types to query a database view.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/QueryTypes) on GitHub.
+> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/KeylessEntityTypes) on GitHub.
 
 First, we define a simple Blog and Post model:
 
