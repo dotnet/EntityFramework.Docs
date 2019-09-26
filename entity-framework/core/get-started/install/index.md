@@ -11,7 +11,7 @@ uid: core/get-started/install/index
 
 * EF Core is a [.NET Standard 2.1](/dotnet/standard/net-standard) library. So EF Core requires a .NET implementation that supports .NET Standard 2.1 to run. EF Core can also be referenced by other .NET Standard 2.1 libraries. 
 
-* For example, you can use EF Core to develop apps that target .NET Core. Building .NET Core apps requires the [.NET Core SDK](https://dotnet.microsoft.com/download). Optionally, you can also use a development environment like Visual Studio, Visual Studio for Mac, or Visual Studio Code. For more information, check [Getting Started with .NET Core](/dotnet/core/get-started).
+* For example, you can use EF Core to develop apps that target .NET Core. Building .NET Core apps requires the [.NET Core SDK](https://dotnet.microsoft.com/download). Optionally, you can also use a development environment like [Visual Studio](https://visualstudio.microsoft.com/vs), [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac), or [Visual Studio Code](https://code.visualstudio.com). For more information, check [Getting Started with .NET Core](/dotnet/core/get-started).
 
 * You can use EF Core to develop applications on Windows using Visual Studio. The latest version of [Visual Studio](https://visualstudio.microsoft.com/vs) is recommended.
 
