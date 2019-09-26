@@ -29,6 +29,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 > You can view this article's [sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Cosmos).
 
 Like for other providers the first step is to call `UseCosmos`:
+
 [!code-csharp[Configuration](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=Configuration)]
 
 > [!WARNING]
@@ -41,6 +42,7 @@ In this example `Order` is a simple entity with a reference to the [owned type](
 [!code-csharp[StreetAddress](../../../../samples/core/Cosmos/ModelBuilding/StreetAddress.cs?name=StreetAddress)]
 
 Saving and quering data follows the normal EF pattern:
+
 [!code-csharp[HelloCosmos](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=HelloCosmos)]
 
 > [!IMPORTANT]
