@@ -8,10 +8,6 @@ uid: core/providers/sql-server/memory-optimized-tables
 
 # Memory-Optimized Tables support in SQL Server EF Core Database Provider
 
-> [!NOTE]  
->
-> This feature was introduced in EF Core 1.1.
-
 [Memory-Optimized Tables](https://docs.microsoft.com/sql/relational-databases/in-memory-oltp/memory-optimized-tables) are a feature of SQL Server where the entire table resides in memory. A second copy of the table data is maintained on disk, but only for durability purposes. Data in memory-optimized tables is only read from disk during database recovery. For example, after a server restart.
 
 ## Configuring a memory-optimized table
