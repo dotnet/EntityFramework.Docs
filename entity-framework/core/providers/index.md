@@ -39,27 +39,23 @@ Entity Framework Core can access many different databases through plug-in librar
 | [Devart.Data.SQLite.EFCore](https://www.nuget.org/packages/Devart.Data.SQLite.EFCore/)                               | SQLite 3 onwards           | [DevArt](https://www.devart.com/)                                             | Paid                 | [docs](https://www.devart.com/dotconnect/sqlite/docs/)                                                                                                                                             |
 | [Devart.Data.MySql.EFCore](https://www.nuget.org/packages/Devart.Data.MySql.EFCore/)                                 | MySQL 5 onwards            | [DevArt](https://www.devart.com/)                                             | Paid                 | [docs](https://www.devart.com/dotconnect/mysql/docs/)                                                                                                                                              |
 
-## Future Providers
-
-### Cosmos DB
-
-We have been developing an EF Core provider for the SQL API in Cosmos DB.
-This will be the first complete document-oriented database provider we have produced, and the learnings from this exercise are going to inform improvements in the design of future releases of EF Core and possibly other non-relational providers.
-A preview is available on the [NuGet Gallery](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Cosmos).
-
 ## Adding a database provider to your application
 
-Most database providers for EF Core are distributed as NuGet packages. This means they can be installed using the `dotnet` tool in the command line:
+Most database providers for EF Core are distributed as NuGet packages, and can be installed as follows:
+
+# [.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` console
 dotnet add package provider_package_name
 ```
 
-Or in Visual Studio, using NuGet's Package Manager Console:
+# [Visual Studio](#tab/vs)
 
 ``` powershell
 install-package provider_package_name
 ```
+
+***
 
 Once installed, you will configure the provider in your `DbContext`, either in the `OnConfiguring` method or in the `AddDbContext` method if you are using a dependency injection container.
 For example, the following line configures the SQL Server provider with the passed connection string:

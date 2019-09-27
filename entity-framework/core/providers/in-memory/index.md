@@ -13,17 +13,27 @@ This database provider allows Entity Framework Core to be used with an in-memory
 
 Install the [Microsoft.EntityFrameworkCore.InMemory NuGet package](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory/).
 
+# [.NET Core CLI](#tab/dotnet-core-cli)
+
+``` console
+dotnet add package Microsoft.EntityFrameworkCore.InMemory
+```
+
+# [Visual Studio](#tab/vs)
+
 ``` powershell
 Install-Package Microsoft.EntityFrameworkCore.InMemory
 ```
 
+***
+
 ## Get Started
 
 The following resources will help you get started with this provider.
-* [Testing with InMemory](../../miscellaneous/testing/in-memory.md)
 
+* [Testing with InMemory](../../miscellaneous/testing/in-memory.md)
 * [UnicornStore Sample Application Tests](https://github.com/rowanmiller/UnicornStore/blob/master/UnicornStore/src/UnicornStore.Tests/Controllers/ShippingControllerTests.cs)
 
 ## Supported Database Engines
 
-* Built-in in-memory database (designed for testing purposes only)
+In-process memory database (designed for testing purposes only)
