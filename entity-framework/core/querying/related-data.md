@@ -25,7 +25,6 @@ You can use the `Include` method to specify related data to be included in query
 > [!TIP]  
 > Entity Framework Core will automatically fix-up navigation properties to any other entities that were previously loaded into the context instance. So even if you don't explicitly include the data for a navigation property, the property may still be populated if some or all of the related entities were previously loaded.
 
-
 You can include related data from multiple relationships in a single query.
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleIncludes)]
@@ -35,9 +34,6 @@ You can include related data from multiple relationships in a single query.
 You can drill down through relationships to include multiple levels of related data using the `ThenInclude` method. The following example loads all blogs, their related posts, and the author of each post.
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#SingleThenInclude)]
-
-> [!NOTE]  
-> Current versions of Visual Studio offer incorrect code completion options and can cause correct expressions to be flagged with syntax errors when using the `ThenInclude` method after a collection navigation property. This is a symptom of an IntelliSense bug tracked at https://github.com/dotnet/roslyn/issues/8237. It is safe to ignore these spurious syntax errors as long as the code is correct and can be compiled successfully. 
 
 You can chain multiple calls to `ThenInclude` to continue including further levels of related data.
 
@@ -50,6 +46,9 @@ You can combine all of this to include related data from multiple levels and mul
 You may want to include multiple related entities for one of the entities that is being included. For example, when querying `Blogs`, you include `Posts` and then want to include both the `Author` and `Tags` of the `Posts`. To do this, you need to specify each include path starting at the root. For example, `Blog -> Posts -> Author` and `Blog -> Posts -> Tags`. This does not mean you will get redundant joins; in most cases, EF will consolidate the joins when generating SQL.
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
+
+> [!CAUTION]
+> Since version 3.0.0, each `Include` will cause an additional JOIN to be added to SQL queries produced by relational providers, whereas previous versions generated additional SQL queries. This can significantly change the performance of your queries, for better or worse. In particular, LINQ queries with an exceedingly high number of `Include` operators may need to be broken down into multiple separate LINQ queries in order to avoid the cartesian explosion problem.
 
 ### Include on derived types
 
@@ -106,22 +105,7 @@ Contents of `School` navigation of all People who are Students can be eagerly lo
   context.People.Include("School").ToList()
   ```
 
-### Ignored includes
-
-If you change the query so that it no longer returns instances of the entity type that the query began with, then the include operators are ignored.
-
-In the following example, the include operators are based on the `Blog`, but then the `Select` operator is used to change the query to return an anonymous type. In this case, the include operators have no effect.
-
-[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#IgnoredInclude)]
-
-By default, EF Core will log a warning when include operators are ignored. See [Logging](../miscellaneous/logging.md) for more information on viewing logging output. You can change the behavior when an include operator is ignored to either throw or do nothing. This is done when setting up the options for your context - typically in `DbContext.OnConfiguring`, or in `Startup.cs` if you are using ASP.NET Core.
-
-[!code-csharp[Main](../../../samples/core/Querying/RelatedData/ThrowOnIgnoredInclude/BloggingContext.cs#OnConfiguring)]
-
 ## Explicit loading
-
-> [!NOTE]  
-> This feature was introduced in EF Core 1.1.
 
 You can explicitly load a navigation property via the `DbContext.Entry(...)` API.
 
@@ -143,10 +127,8 @@ You can also filter which related entities are loaded into memory.
 
 ## Lazy loading
 
-> [!NOTE]  
-> This feature was introduced in EF Core 2.1.
-
 The simplest way to use lazy-loading is by installing the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) package and enabling it with a call to `UseLazyLoadingProxies`. For example:
+
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
@@ -154,12 +136,15 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         .UseSqlServer(myConnectionString);
 ```
 Or when using AddDbContext:
+
 ```csharp
 .AddDbContext<BloggingContext>(
     b => b.UseLazyLoadingProxies()
           .UseSqlServer(myConnectionString));
 ```
+
 EF Core will then enable lazy loading for any navigation property that can be overridden--that is, it must be `virtual` and on a class that can be inherited from. For example, in the following entities, the `Post.Blog` and `Blog.Posts` navigation properties will be lazy-loaded.
+
 ```csharp
 public class Blog
 {
@@ -178,9 +163,11 @@ public class Post
     public virtual Blog Blog { get; set; }
 }
 ```
+
 ### Lazy loading without proxies
 
 Lazy-loading proxies work by injecting the `ILazyLoader` service into an entity, as described in [Entity Type Constructors](../modeling/constructors.md). For example:
+
 ```csharp
 public class Blog
 {
@@ -233,7 +220,9 @@ public class Post
     }
 }
 ```
+
 This doesn't require entity types to be inherited from or navigation properties to be virtual, and allows entity instances created with `new` to lazy-load once attached to a context. However, it requires a reference to the `ILazyLoader` service, which is defined in the [Microsoft.EntityFrameworkCore.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/) package. This package contains a minimal set of types so that there is very little impact in depending on it. However, to completely avoid depending on any EF Core packages in the entity types, it is possible to inject the `ILazyLoader.Load` method as a delegate. For example:
+
 ```csharp
 public class Blog
 {
@@ -286,7 +275,9 @@ public class Post
     }
 }
 ```
+
 The code above uses a `Load` extension method to make using the delegate a bit cleaner:
+
 ```csharp
 public static class PocoLoadingExtensions
 {
@@ -303,6 +294,7 @@ public static class PocoLoadingExtensions
     }
 }
 ```
+
 > [!NOTE]  
 > The constructor parameter for the lazy-loading delegate must be called "lazyLoader". Configuration to use a different name than this is planned for a future release.
 
