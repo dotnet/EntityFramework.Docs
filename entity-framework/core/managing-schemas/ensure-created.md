@@ -2,7 +2,7 @@
 title: Create and Drop APIs - EF Core
 author: bricelam
 ms.author: bricelam
-ms.date: 11/7/2018
+ms.date: 11/07/2018
 ---
 # Create and Drop APIs
 
