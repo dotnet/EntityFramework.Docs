@@ -7,7 +7,7 @@ namespace EFQuerying.Async
 {
     public class Sample
     {
-        #region Sample
+        #region ToListAsync
         public async Task<List<Blog>> GetBlogsAsync()
         {
             using (var context = new BloggingContext())

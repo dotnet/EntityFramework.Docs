@@ -3,7 +3,7 @@ title: How Queries Work - EF Core
 author: rowanmiller
 ms.date: 09/26/2018
 ms.assetid: de2e34cd-659b-4cab-b5ed-7a979c6bf120
-uid: core/querying/overview
+uid: core/querying/how-query-works
 ---
 
 # How Queries Work
