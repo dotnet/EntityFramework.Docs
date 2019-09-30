@@ -57,7 +57,6 @@ As an alternative to `FromSqlRaw`, you can use `FromSqlInterpolated` which allow
 > [!NOTE]
 > Prior to version 3.0, `FromSqlRaw` and `FromSqlInterpolated` were two overloads named `FromSql`. See the [previous versions section](#previous-versions) for more details.
 
-
 <!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
 var user = "johndoe";
@@ -166,6 +165,6 @@ There are a few limitations to be aware of when using raw SQL queries:
 
 * Note that SQL Server does not allow composing over stored procedure calls, so any attempt to apply additional query operators to such a call will result in invalid SQL. Query operators may be introduced after `AsEnumerable()` for client evaluation.
 
-# Previous versions
+## Previous versions
 
 EF Core version 2.2 and earlier had two overloads named `FromSql` which behaved in the same way as the newer `FromSqlRaw` and `FromSqlInterpolated`. This made it very easy to accidentally call the raw string method when the intent was to call the interpolated string method, and the other way around. This could result in queries not being parameterized when they should have been.
