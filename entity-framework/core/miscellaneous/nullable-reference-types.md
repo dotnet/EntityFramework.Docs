@@ -1,7 +1,7 @@
 ---
 title: Working with nullable reference types - EF Core
 author: roji
-ms.date: 9/9/2019
+ms.date: 09/09/2019
 ms.assetid: bde4e0ee-fba3-4813-a849-27049323d301
 uid: core/miscellaneous/nullable-reference-types
 ---
