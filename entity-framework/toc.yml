@@ -175,8 +175,6 @@
       items:
       - name: Overview
         href: core/querying/index.md
-      - name: Basic Query
-        href: core/querying/basic.md
       - name: Loading Related Data
         href: core/querying/related-data.md
       - name: Client vs. Server Evaluation
@@ -188,7 +186,7 @@
       - name: Asynchronous Queries
         href: core/querying/async.md
       - name: How Query Works
-        href: core/querying/overview.md
+        href: core/querying/how-query-works.md
       - name: Global Query Filters
         href: core/querying/filters.md
       - name: Query Tags
