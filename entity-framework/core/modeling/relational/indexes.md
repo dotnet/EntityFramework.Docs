@@ -1,11 +1,11 @@
 ---
-title: Indexes - EF Core
+title: Indexes (Relational Database) - EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 4581e7ba-5e7f-452c-9937-0aaf790ba10a
 uid: core/modeling/relational/indexes
 ---
-# Indexes
+# Indexes (Relational Database)
 
 > [!NOTE]  
 > The configuration in this section is applicable to relational databases in general. The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).

@@ -77,7 +77,7 @@ var orders =
   where o.Status == OrderStatus.Pending
   select o;
 
-await foreach(var o in orders)
+await foreach(var o in orders.AsAsyncEnumerable())
 {
   Process(o);
 } 
