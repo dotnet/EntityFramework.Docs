@@ -22,6 +22,7 @@ Changes that we expect to only impact database providers are documented under [p
 | [Query types are consolidated with entity types](#qt) | High      |
 | [Entity Framework Core is no longer part of the ASP.NET Core shared framework](#no-longer) | Medium      |
 | [Cascade deletions now happen immediately by default](#cascade) | Medium      |
+| [Eager loading of related entities now happens in a single query](#eager-loading-single-query) | Medium      |
 | [DeleteBehavior.Restrict has cleaner semantics](#deletebehavior) | Medium      |
 | [Configuration API for owned type relationships has changed](#config) | Medium      |
 | [Each property uses independent in-memory integer key generation](#each) | Medium      |
@@ -362,6 +363,29 @@ For example:
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
+<a name="eager-loading-single-query"></a>
+### Eager loading of related entities now happens in a single query
+
+[Tracking issue #18022](https://github.com/aspnet/EntityFrameworkCore/issues/18022)
+
+**Old behavior**
+
+Before 3.0, eagerly loading collection navigations via `Include` operators caused multiple queries to be generated on relational database, one for each related entity type.
+
+**New behavior**
+
+Starting with 3.0, EF Core generates a single query with JOINs on relational databases.
+
+**Why**
+
+Issuing multiple queries to implement a single LINQ query caused numerous issues, including negative performance as multiple database roundtrips were necessary, and data coherency issues as each query could observe a different state of the database.
+
+**Mitigations**
+
+While technically this is not a breaking change, it could have a considerable effect on application performance when a single query contains a large number of `Include` operator on collection navigations. [See this comment](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-535102526) for more information and for rewriting queries in a more efficient way.
+
+**
+
 <a name="deletebehavior"></a>
 ### DeleteBehavior.Restrict has cleaner semantics
 
