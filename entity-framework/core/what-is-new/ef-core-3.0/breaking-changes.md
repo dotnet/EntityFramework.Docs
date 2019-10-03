@@ -22,6 +22,7 @@ Changes that we expect to only impact database providers are documented under [p
 | [Query types are consolidated with entity types](#qt) | High      |
 | [Entity Framework Core is no longer part of the ASP.NET Core shared framework](#no-longer) | Medium      |
 | [Cascade deletions now happen immediately by default](#cascade) | Medium      |
+| [Eager loading of related entities now happens in a single query](#eager-loading-single-query) | Medium      |
 | [DeleteBehavior.Restrict has cleaner semantics](#deletebehavior) | Medium      |
 | [Configuration API for owned type relationships has changed](#config) | Medium      |
 | [Each property uses independent in-memory integer key generation](#each) | Medium      |
@@ -29,6 +30,7 @@ Changes that we expect to only impact database providers are documented under [p
 | [Metadata API changes](#metadata-api-changes) | Medium      |
 | [Provider-specific Metadata API changes](#provider) | Medium      |
 | [UseRowNumberForPaging has been removed](#urn) | Medium      |
+| [FromSql method when used with stored procedure cannot be composed](#fromsqlsproc) | Medium      |
 | [FromSql methods can only be specified on query roots](#fromsql) | Low      |
 | [~~Query execution is logged at Debug level~~ Reverted](#qe) | Low      |
 | [Temporary key values are no longer set onto entity instances](#tkv) | Low      |
@@ -206,6 +208,35 @@ This could result in queries not being parameterized when they should have been.
 
 Switch to use the new method names.
 
+<a name="fromsqlsproc"></a>
+### FromSql method when used with stored procedure cannot be composed
+
+[Tracking Issue #15392](https://github.com/aspnet/EntityFrameworkCore/issues/15392)
+
+**Old behavior**
+
+Before EF Core 3.0, FromSql method tried to detect if the passed SQL can be composed upon. It did client evaluation when the SQL was non-composable like a stored procedure. The following query worked by running the stored procedure on the server and doing FirstOrDefault on the client side.
+
+```C#
+context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").FirstOrDefault();
+```
+
+**New behavior**
+
+Starting with EF Core 3.0, EF Core will not try to parse the SQL. So if you are composing after FromSqlRaw/FromSqlInterpolated, then EF Core will compose the SQL by causing sub query. So if you are using a stored procedure with composition then you will get an exception for invalid SQL syntax.
+
+**Why**
+
+EF Core 3.0 does not support automatic client evaluation, since it was error prone as explained [here](#linq-queries-are-no-longer-evaluated-on-the-client).
+
+**Mitigation**
+
+If you are using a stored procedure in FromSqlRaw/FromSqlInterpolated, you know that it cannot be composed upon, so you can add __AsEnumerable/AsAsyncEnumerable__ right after the FromSql method call to avoid any composition on server side.
+
+```C#
+context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable().FirstOrDefault();
+```
+
 <a name="fromsql"></a>
 
 ### FromSql methods can only be specified on query roots
@@ -362,6 +393,29 @@ For example:
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
+<a name="eager-loading-single-query"></a>
+### Eager loading of related entities now happens in a single query
+
+[Tracking issue #18022](https://github.com/aspnet/EntityFrameworkCore/issues/18022)
+
+**Old behavior**
+
+Before 3.0, eagerly loading collection navigations via `Include` operators caused multiple queries to be generated on relational database, one for each related entity type.
+
+**New behavior**
+
+Starting with 3.0, EF Core generates a single query with JOINs on relational databases.
+
+**Why**
+
+Issuing multiple queries to implement a single LINQ query caused numerous issues, including negative performance as multiple database roundtrips were necessary, and data coherency issues as each query could observe a different state of the database.
+
+**Mitigations**
+
+While technically this is not a breaking change, it could have a considerable effect on application performance when a single query contains a large number of `Include` operator on collection navigations. [See this comment](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-537219137) for more information and for rewriting queries in a more efficient way.
+
+**
+
 <a name="deletebehavior"></a>
 ### DeleteBehavior.Restrict has cleaner semantics
 
