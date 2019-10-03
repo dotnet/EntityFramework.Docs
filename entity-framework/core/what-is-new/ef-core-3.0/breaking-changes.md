@@ -382,7 +382,7 @@ Issuing multiple queries to implement a single LINQ query caused numerous issues
 
 **Mitigations**
 
-While technically this is not a breaking change, it could have a considerable effect on application performance when a single query contains a large number of `Include` operator on collection navigations. [See this comment](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-535102526) for more information and for rewriting queries in a more efficient way.
+While technically this is not a breaking change, it could have a considerable effect on application performance when a single query contains a large number of `Include` operator on collection navigations. [See this comment](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-537219137) for more information and for rewriting queries in a more efficient way.
 
 **
 
