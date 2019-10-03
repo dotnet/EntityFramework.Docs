@@ -30,6 +30,7 @@ Changes that we expect to only impact database providers are documented under [p
 | [Metadata API changes](#metadata-api-changes) | Medium      |
 | [Provider-specific Metadata API changes](#provider) | Medium      |
 | [UseRowNumberForPaging has been removed](#urn) | Medium      |
+| [FromSql method when used with stored procedure cannot be composed](#fromsqlsproc) | Medium      |
 | [FromSql methods can only be specified on query roots](#fromsql) | Low      |
 | [~~Query execution is logged at Debug level~~ Reverted](#qe) | Low      |
 | [Temporary key values are no longer set onto entity instances](#tkv) | Low      |
@@ -206,6 +207,35 @@ This could result in queries not being parameterized when they should have been.
 **Mitigations**
 
 Switch to use the new method names.
+
+<a name="fromsqlsproc"></a>
+### FromSql method when used with stored procedure cannot be composed
+
+[Tracking Issue #15392](https://github.com/aspnet/EntityFrameworkCore/issues/15392)
+
+**Old behavior**
+
+Before EF Core 3.0, FromSql method tried to detect if the passed SQL can be composed upon. It did client evaluation when the SQL was non-composable like stored procedure. Following query worked by running stored procedure on server and doing FirstOrDefault on client side.
+
+```C#
+context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").FirstOrDefault();
+```
+
+**New behavior**
+
+Starting with EF Core 3.0, EF Core will not try to parse the SQL. So if you are composing after FromSqlRaw/FromSqlInterpolated, then EF Core will compose the SQL by causing sub query. So if you are using stored procedure with composition then you will get exception for invalid SQL syntax.
+
+**Why**
+
+Since EF Core 3.0 does not support client evaluation parsing the SQL, which was error prone, to determine if it is composable provided little value. The query would fail either way.
+
+**Mitigation**
+
+If you are using stored procedure in FromSqlRaw/FromSqlInterpolated, you know that it cannot be composed upon, you can put `AsEnumerable`/`AsAsyncEnumerable` right after FromSql method call to avoid any composition to be done on server side.
+
+```C#
+context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable().FirstOrDefault();
+```
 
 <a name="fromsql"></a>
 
