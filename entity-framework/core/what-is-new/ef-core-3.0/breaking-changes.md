@@ -215,7 +215,7 @@ Switch to use the new method names.
 
 **Old behavior**
 
-Before EF Core 3.0, FromSql method tried to detect if the passed SQL can be composed upon. It did client evaluation when the SQL was non-composable like stored procedure. Following query worked by running stored procedure on server and doing FirstOrDefault on client side.
+Before EF Core 3.0, FromSql method tried to detect if the passed SQL can be composed upon. It did client evaluation when the SQL was non-composable like a stored procedure. The following query worked by running the stored procedure on the server and doing FirstOrDefault on the client side.
 
 ```C#
 context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").FirstOrDefault();
@@ -223,15 +223,15 @@ context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").FirstOrDefaul
 
 **New behavior**
 
-Starting with EF Core 3.0, EF Core will not try to parse the SQL. So if you are composing after FromSqlRaw/FromSqlInterpolated, then EF Core will compose the SQL by causing sub query. So if you are using stored procedure with composition then you will get exception for invalid SQL syntax.
+Starting with EF Core 3.0, EF Core will not try to parse the SQL. So if you are composing after FromSqlRaw/FromSqlInterpolated, then EF Core will compose the SQL by causing sub query. So if you are using a stored procedure with composition then you will get an exception for invalid SQL syntax.
 
 **Why**
 
-Since EF Core 3.0 does not support client evaluation parsing the SQL, which was error prone, to determine if it is composable provided little value. The query would fail either way.
+EF Core 3.0 does not support automatic client evaluation, since it was error prone as explained [here](#linq-queries-are-no-longer-evaluated-on-the-client).
 
 **Mitigation**
 
-If you are using stored procedure in FromSqlRaw/FromSqlInterpolated, you know that it cannot be composed upon, you can put `AsEnumerable`/`AsAsyncEnumerable` right after FromSql method call to avoid any composition to be done on server side.
+If you are using a stored procedure in FromSqlRaw/FromSqlInterpolated, you know that it cannot be composed upon, so you can add __AsEnumerable/AsAsyncEnumerable__ right after the FromSql method call to avoid any composition on server side.
 
 ```C#
 context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable().FirstOrDefault();
