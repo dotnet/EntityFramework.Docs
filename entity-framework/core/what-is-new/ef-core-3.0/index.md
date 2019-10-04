@@ -114,15 +114,15 @@ For example, to manipulate command text, you can create an `IDbCommandIntercepto
 ``` csharp 
 public class HintCommandInterceptor : DbCommandInterceptor
 {
-  public override InterceptionResult ReaderExecuting(
-    DbCommand command, 
-    CommandEventData eventData, 
-    InterceptionResult result)
-  {
-    // Manipulate the command text, etc. here...
-    command.CommandText += " OPTION (OPTIMIZE FOR UNKNOWN)";
-    return result;
-  }
+    public override InterceptionResult<DbDataReader> ReaderExecuting(
+      DbCommand command,
+      CommandEventData eventData,
+      InterceptionResult<DbDataReader> result)
+    {
+        // Manipulate the command text, etc. here...
+        command.CommandText += " OPTION (OPTIMIZE FOR UNKNOWN)";
+        return result;
+    }
 }
 ``` 
 
