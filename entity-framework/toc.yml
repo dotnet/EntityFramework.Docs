@@ -155,7 +155,7 @@
         href: core/managing-schemas/index.md
       - name: Migrations
         items:
-        - name: Overiew
+        - name: Overview
           href: core/managing-schemas/migrations/index.md
         - name: Team Environments
           href: core/managing-schemas/migrations/teams.md
