@@ -134,7 +134,7 @@ The following features apply to Code First only:
 - **Multiple Contexts per Database** removes the previous limitation of one Code First model per database when using Migrations or when Code First automatically created the database for you.
 - **[DbModelBuilder.HasDefaultSchema](~/ef6/modeling/code-first/fluent/types-and-properties.md)** is a new Code First API that allows the default database schema for a Code First model to be configured in one place. Previously the Code First default schema was hard-coded to &quot;dbo&quot; and the only way to configure the schema to which a table belonged was via the ToTable API.
 - **DbModelBuilder.Configurations.AddFromAssembly method** allows you to easily add all configuration classes defined in an assembly when you are using configuration classes with the Code First Fluent API.
-- **[Custom Migrations Operations](http://romiller.com/2013/02/27/ef6-writing-your-own-code-first-migration-operations/)** enabled you to add additional operations to be used in your code-based migrations.
+- **[Custom Migrations Operations](https://romiller.com/2013/02/27/ef6-writing-your-own-code-first-migration-operations/)** enabled you to add additional operations to be used in your code-based migrations.
 - **Default transaction isolation level is changed to READ_COMMITTED_SNAPSHOT** for databases created using Code First, allowing for more scalability and fewer deadlocks.
 - **Entity and complex types can now be nestedinside classes**. |
 

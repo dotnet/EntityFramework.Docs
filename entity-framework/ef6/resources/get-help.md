@@ -7,9 +7,9 @@ ms.assetid: 592cae61-02e1-485a-bbb0-a508ade9c67d
 # Get Help Using Entity Framework
 ## ![StackOverflow](~/ef6/media/stackoverflow.png) Questions About Using EF  
 
-The best way to get help using Entity Framework is to [post a question on Stack Overflow](http://stackoverflow.com/questions/ask) using the **entity-framework** tag.  
+The best way to get help using Entity Framework is to [post a question on Stack Overflow](https://stackoverflow.com/questions/ask) using the **entity-framework** tag.  
 
-If you are not familiar with Stack Overflow, be sure to [read the guidelines on asking questions](http://stackoverflow.com/help/asking). In particular, do not use Stack Overflow to report bugs, ask roadmap questions, or suggest new features.  
+If you are not familiar with Stack Overflow, be sure to [read the guidelines on asking questions](https://stackoverflow.com/help/asking). In particular, do not use Stack Overflow to report bugs, ask roadmap questions, or suggest new features.  
 
 ## ![GitHub Mark](~/ef6/media/github-mark-32px.png) Bug Reports and Feature Requests  
 

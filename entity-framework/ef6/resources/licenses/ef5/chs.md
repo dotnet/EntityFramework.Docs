@@ -43,4 +43,4 @@ c. **分发限制。您不可以**
     -   以源代码形式披露或分发代码；或
     -   其他人有权对其进行修改。
 
-2. **对补充程序的支持服务。**Microsoft 为 www.support.microsoft.com/common/international.aspx 中指明的本软件提供支持服务。
+2. **对补充程序的支持服务。**Microsoft 为 https://www.support.microsoft.com/common/international.aspx 中指明的本软件提供支持服务。

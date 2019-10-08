@@ -193,7 +193,7 @@ One way to make an EF6 provider available is to release it as a NuGet package. U
 *   Additional changes can be made to the config file to set the default connection factory so that connections made by convention will use the registered provider
 *   NuGet handles adding binding redirects so that the EF6 provider should continue to work even after a new EF package is released
 
-An example of this is the EntityFramework.SqlServerCompact package which is included in the [open source codebase](http://github.com/aspnet/entityframework6). This package provides a good template for creating EF provider NuGet packages.
+An example of this is the EntityFramework.SqlServerCompact package which is included in the [open source codebase](https://github.com/aspnet/entityframework6). This package provides a good template for creating EF provider NuGet packages.
 
 ### PowerShell commands
 

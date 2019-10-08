@@ -43,4 +43,4 @@ In den folgenden Lizenzbestimmungen werden zusätzliche Nutzungsbedingungen für
     -   der Code in Quellcodeform offen gelegt oder vertrieben wird
     -   andere das Recht haben, ihn zu ändern.
 
-**2. SUPPORTLEISTUNGEN FÜR SOFTWAREERGÄNZUNG.** Microsoft stellt Supportleistungen für diese Software bereit, die unter www.support.microsoft.com/common/international.aspx beschrieben werden.
+**2. SUPPORTLEISTUNGEN FÜR SOFTWAREERGÄNZUNG.** Microsoft stellt Supportleistungen für diese Software bereit, die unter https://www.support.microsoft.com/common/international.aspx beschrieben werden.

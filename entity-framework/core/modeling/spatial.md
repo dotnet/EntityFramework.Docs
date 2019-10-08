@@ -56,7 +56,7 @@ There are several spatial data types. Which type you use depends on the types of
 
 Using the base Geometry type allows any type of shape to be specified by the property.
 
-The following entity classes could be used to map to tables in the [Wide World Importers sample database](http://go.microsoft.com/fwlink/?LinkID=800630).
+The following entity classes could be used to map to tables in the [Wide World Importers sample database](https://go.microsoft.com/fwlink/?LinkID=800630).
 
 ``` csharp
 [Table("Cities", Schema = "Application"))]
@@ -325,5 +325,5 @@ Polygon.NumInteriorRings | ✔ | ✔ | ✔ | ✔
 
 * [Spatial Data in SQL Server](https://docs.microsoft.com/sql/relational-databases/spatial/spatial-data-sql-server)
 * [SpatiaLite Homepage](https://www.gaia-gis.it/fossil/libspatialite)
-* [Npgsql Spatial Documentation](http://www.npgsql.org/efcore/mapping/nts.html)
-* [PostGIS Documentation](http://postgis.net/documentation/)
+* [Npgsql Spatial Documentation](https://www.npgsql.org/efcore/mapping/nts.html)
+* [PostGIS Documentation](https://postgis.net/documentation/)

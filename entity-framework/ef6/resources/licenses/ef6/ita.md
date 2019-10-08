@@ -55,7 +55,7 @@ forniti da Microsoft e relativi al predetto software, a meno che questi non sian
 
 **4.    DOCUMENTAZIONE.** Qualsiasi persona che disponga di accesso valido al computer o alla rete interna del licenziatario potrà duplicare e utilizzare la documentazione per fini di riferimento interno.
 
-**5.    LIMITAZIONI RELATIVE ALL’ESPORTAZIONE.** Il software è soggetto alle leggi e ai regolamenti in vigore negli Stati Uniti in materia di controllo dell’esportazione. Il licenziatario dovrà attenersi a tutte le leggi e a tutti i regolamenti locali e internazionali applicabili al software in materia di controllo dell’esportazione. Queste leggi includono limitazioni circa le destinazioni, gli utenti finali e l’utilizzo finale. Per ulteriori informazioni, il licenziatario potrà visitare la pagina www.microsoft.com/exporting.
+**5.    LIMITAZIONI RELATIVE ALL’ESPORTAZIONE.** Il software è soggetto alle leggi e ai regolamenti in vigore negli Stati Uniti in materia di controllo dell’esportazione. Il licenziatario dovrà attenersi a tutte le leggi e a tutti i regolamenti locali e internazionali applicabili al software in materia di controllo dell’esportazione. Queste leggi includono limitazioni circa le destinazioni, gli utenti finali e l’utilizzo finale. Per ulteriori informazioni, il licenziatario potrà visitare la pagina https://www.microsoft.com/exporting.
 
 **6.    SERVIZI DI SUPPORTO TECNICO.** Poiché il presente software viene fornito “com’è”, non è prevista l’erogazione di servizi di supporto tecnico da parte di Microsoft.
 

@@ -12,7 +12,7 @@ Entity Framework Core uses Language Integrated Query (LINQ) to query data from t
 > [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
 
-The following snippets shows a few examples of how to achieve common tasks with Entity Framework Core.
+The following snippets show a few examples of how to achieve common tasks with Entity Framework Core.
 
 ## Loading all data
 

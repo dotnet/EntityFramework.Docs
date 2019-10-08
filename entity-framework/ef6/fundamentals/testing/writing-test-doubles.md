@@ -21,7 +21,7 @@ This article will deal with creating your own test double. For information on us
 
 ## Testing with pre-EF6 versions  
 
-The code shown in this article is compatible with EF6. For testing with EF5 and earlier version see [Testing with a Fake Context](http://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/).  
+The code shown in this article is compatible with EF6. For testing with EF5 and earlier version see [Testing with a Fake Context](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/).  
 
 ## Limitations of EF in-memory test doubles  
 

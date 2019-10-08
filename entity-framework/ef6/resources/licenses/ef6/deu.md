@@ -55,7 +55,7 @@ Liegen letztgenannten Elementen eigene Bestimmungen bei, gelten diese eigenen Be
 
 **4.    DOKUMENTATION.** Jede Person, die über einen gültigen Zugriff auf Ihren Computer oder Ihr internes Netzwerk verfügt, ist berechtigt, die Dokumentation zu Ihren internen Referenzzwecken zu kopieren und zu verwenden.
 
-**5.    AUSFUHRBESCHRÄNKUNGEN.** Die Software unterliegt den Exportgesetzen und -regelungen der USA sowie des Landes, aus dem sie ausgeführt wird. Sie sind verpflichtet, alle nationalen und internationalen Exportgesetze und -regelungen einzuhalten, die für die Software gelten. Diese Gesetze enthalten auch Beschränkungen in Bezug auf die Endnutzer und Endnutzung. Weitere Informationen finden Sie unter www.microsoft.com/exporting.
+**5.    AUSFUHRBESCHRÄNKUNGEN.** Die Software unterliegt den Exportgesetzen und -regelungen der USA sowie des Landes, aus dem sie ausgeführt wird. Sie sind verpflichtet, alle nationalen und internationalen Exportgesetze und -regelungen einzuhalten, die für die Software gelten. Diese Gesetze enthalten auch Beschränkungen in Bezug auf die Endnutzer und Endnutzung. Weitere Informationen finden Sie unter https://www.microsoft.com/exporting.
 
 **6.    SUPPORTSERVICES.** Da diese Software „wie besehen“ bereitgestellt wird, stellen wir möglicherweise keine Supportservices für sie bereit.
 

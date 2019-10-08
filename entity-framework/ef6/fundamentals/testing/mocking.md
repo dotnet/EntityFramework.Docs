@@ -19,11 +19,11 @@ There are two different approaches that can be used to create an in-memory versi
 
 This article will deal with using a mocking framework. For creating your own test doubles see [Testing with Your Own Test Doubles](writing-test-doubles.md).  
 
-To demonstrate using EF with a mocking framework we are going to use Moq. The easiest way to get Moq is to install the [Moq package from NuGet](http://nuget.org/packages/Moq/).  
+To demonstrate using EF with a mocking framework we are going to use Moq. The easiest way to get Moq is to install the [Moq package from NuGet](https://nuget.org/packages/Moq/).  
 
 ## Testing with pre-EF6 versions  
 
-The scenario shown in this article is dependent on some changes we made to DbSet in EF6. For testing with EF5 and earlier version see [Testing with a Fake Context](http://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/).  
+The scenario shown in this article is dependent on some changes we made to DbSet in EF6. For testing with EF5 and earlier version see [Testing with a Fake Context](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/).  
 
 ## Limitations of EF in-memory test doubles  
 

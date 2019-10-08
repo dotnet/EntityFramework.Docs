@@ -15,7 +15,7 @@ The screen shots and code listings in this walkthrough are taken from Visual Stu
 
 You need to have Visual Studio 2013, Visual Studio 2012 or Visual Studio 2010 installed to complete this walkthrough.
 
-If you are using Visual Studio 2010, you also have to install NuGet. For more information, see [Installing NuGet](http://docs.nuget.org/docs/start-here/installing-nuget).
+If you are using Visual Studio 2010, you also have to install NuGet. For more information, see [Installing NuGet](https://docs.nuget.org/docs/start-here/installing-nuget).
 
 ## Create the Application
 
