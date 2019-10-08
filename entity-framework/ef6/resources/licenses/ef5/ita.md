@@ -43,4 +43,4 @@ Nelle condizioni di licenza che seguono sono descritte condizioni di utilizzo ag
     -   il codice sia divulgato o distribuito nel formato in codice sorgente;
     -   altri abbiano il diritto di modificarlo.
 
-**2. SERVIZI DI SUPPORTO TECNICO PER IL SUPPLEMENTO.** Microsoft fornisce servizi di supporto tecnico per questo software come descritto all'indirizzo www.support.microsoft.com/common/international.aspx.
+**2. SERVIZI DI SUPPORTO TECNICO PER IL SUPPLEMENTO.** Microsoft fornisce servizi di supporto tecnico per questo software come descritto all'indirizzo https://www.support.microsoft.com/common/international.aspx.

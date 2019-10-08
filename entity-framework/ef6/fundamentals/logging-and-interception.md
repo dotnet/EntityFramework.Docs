@@ -293,7 +293,7 @@ Interceptors can also be registered at the app-domain level using the DbConfigur
 
 ### Example: Logging to NLog  
 
-Let’s put all this together into an example that using IDbCommandInterceptor and [NLog](http://nlog-project.org/) to:  
+Let’s put all this together into an example that using IDbCommandInterceptor and [NLog](https://nlog-project.org/) to:  
 
 - Log a warning for any command that is executed non-asynchronously  
 - Log an error for any command that throws when executed  

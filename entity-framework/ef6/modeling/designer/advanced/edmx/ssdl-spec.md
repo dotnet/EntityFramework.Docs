@@ -15,9 +15,9 @@ Versions of SSDL are differentiated by XML namespaces.
 
 | SSDL Version | XML Namespace                                     |
 |:-------------|:--------------------------------------------------|
-| SSDL v1      | http://schemas.microsoft.com/ado/2006/04/edm/ssdl |
-| SSDL v2      | http://schemas.microsoft.com/ado/2009/02/edm/ssdl |
-| SSDL v3      | http://schemas.microsoft.com/ado/2009/11/edm/ssdl |
+| SSDL v1      | https://schemas.microsoft.com/ado/2006/04/edm/ssdl |
+| SSDL v2      | https://schemas.microsoft.com/ado/2009/02/edm/ssdl |
+| SSDL v3      | https://schemas.microsoft.com/ado/2009/11/edm/ssdl |
 
 ## Association Element (SSDL)
 
@@ -626,7 +626,7 @@ The table below describes the attributes that can be applied to the **Parameter*
 | **MaxLength**  | No          | The maximum length of the parameter.                                                                                                                                                                                            |
 | **Precision**  | No          | The precision of the parameter.                                                                                                                                                                                                 |
 | **Scale**      | No          | The scale of the parameter.                                                                                                                                                                                                     |
-| **SRID**       | No          | Spatial System Reference Identifier. Valid only for parameters of spatial types. For more information, see [SRID](http://en.wikipedia.org/wiki/SRID) and [SRID (SQL Server)](https://msdn.microsoft.com/library/bb964707.aspx). |
+| **SRID**       | No          | Spatial System Reference Identifier. Valid only for parameters of spatial types. For more information, see [SRID](https://en.wikipedia.org/wiki/SRID) and [SRID (SQL Server)](https://msdn.microsoft.com/library/bb964707.aspx). |
 
 > [!NOTE]
 > Any number of annotation attributes (custom XML attributes) may be applied to the **Parameter** element. However, custom attributes may not belong to any XML namespace that is reserved for SSDL. The fully-qualified names for any two custom attributes cannot be the same.
@@ -713,7 +713,7 @@ The following table describes the attributes that can be applied to the **Proper
 | **Scale**                 | No          | The scale of the corresponding column.                                                                                                                                                                                          |
 | **Unicode**               | No          | **True** or **False** depending on whether the corresponding column value will be stored as a Unicode string.                                                                                                                   |
 | **Collation**             | No          | A string that specifies the collating sequence to be used in the data source.                                                                                                                                                   |
-| **SRID**                  | No          | Spatial System Reference Identifier. Valid only for properties of spatial types. For more information, see [SRID](http://en.wikipedia.org/wiki/SRID) and [SRID (SQL Server)](https://msdn.microsoft.com/library/bb964707.aspx). |
+| **SRID**                  | No          | Spatial System Reference Identifier. Valid only for properties of spatial types. For more information, see [SRID](https://en.wikipedia.org/wiki/SRID) and [SRID (SQL Server)](https://msdn.microsoft.com/library/bb964707.aspx). |
 | **StoreGeneratedPattern** | No          | **None**, **Identity** (if the corresponding column value is an identity that is generated in the database), or **Computed** (if the corresponding column value is computed in the database). Not Valid for RowType properties. |
 
 > [!NOTE]
@@ -896,7 +896,7 @@ The **Schema** element may contain zero or more of the following child elements:
 
 The **Schema** element uses the **Namespace** attribute to define the namespace for the entity type and association objects in a storage model. Within a namespace, no two objects can have the same name.
 
-A storage model namespace is different from the XML namespace of the **Schema** element. A storage model namespace (as defined by the **Namespace** attribute) is a logical container for entity types and association types. The XML namespace (indicated by the **xmlns** attribute) of a **Schema** element is the default namespace for child elements and attributes of the **Schema** element. XML namespaces of the form http://schemas.microsoft.com/ado/YYYY/MM/edm/ssdl (where YYYY and MM represent a year and month respectively) are reserved for SSDL. Custom elements and attributes cannot be in namespaces that have this form.
+A storage model namespace is different from the XML namespace of the **Schema** element. A storage model namespace (as defined by the **Namespace** attribute) is a logical container for entity types and association types. The XML namespace (indicated by the **xmlns** attribute) of a **Schema** element is the default namespace for child elements and attributes of the **Schema** element. XML namespaces of the form https://schemas.microsoft.com/ado/YYYY/MM/edm/ssdl (where YYYY and MM represent a year and month respectively) are reserved for SSDL. Custom elements and attributes cannot be in namespaces that have this form.
 
 ### Applicable Attributes
 
@@ -917,7 +917,7 @@ The following example shows a **Schema** element that contains an **EntityContai
  <Schema Namespace="ExampleModel.Store"
        Alias="Self" Provider="System.Data.SqlClient"
        ProviderManifestToken="2008"
-       xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+       xmlns="https://schemas.microsoft.com/ado/2009/11/edm/ssdl">
    <EntityContainer Name="ExampleModelStoreContainer">
      <EntitySet Name="Customers"
                 EntityType="ExampleModel.Store.Customers"

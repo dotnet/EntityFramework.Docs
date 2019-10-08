@@ -19,11 +19,11 @@ If you'd rather watch a screencast than read this article, the following two vid
 
 ### Video One: "Migrations - Under the Hood"
 
-[This screencast](http://channel9.msdn.com/blogs/ef/migrations-under-the-hood) covers how migrations tracks and uses information about the model to detect model changes.
+[This screencast](https://channel9.msdn.com/blogs/ef/migrations-under-the-hood) covers how migrations tracks and uses information about the model to detect model changes.
 
 ### Video Two: "Migrations - Existing Databases"
 
-Building on the concepts from the previous video, [this screencast](http://channel9.msdn.com/blogs/ef/migrations-existing-databases) covers how to enable and use migrations with an existing database.
+Building on the concepts from the previous video, [this screencast](https://channel9.msdn.com/blogs/ef/migrations-existing-databases) covers how to enable and use migrations with an existing database.
 
 ## Step 1: Create a model
 

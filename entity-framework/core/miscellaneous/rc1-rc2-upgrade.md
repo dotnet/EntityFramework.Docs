@@ -11,7 +11,7 @@ This article provides guidance for moving an application built with the RC1 pack
 
 ## Package Names and Versions
 
-Between RC1 and RC2, we changed from "Entity Framework 7" to "Entity Framework Core". You can read more about the reasons for the change in [this post by Scott Hanselman](http://www.hanselman.com/blog/ASPNET5IsDeadIntroducingASPNETCore10AndNETCore10.aspx). Because of this change, our package names changed from `EntityFramework.*` to `Microsoft.EntityFrameworkCore.*` and our versions from `7.0.0-rc1-final` to `1.0.0-rc2-final` (or `1.0.0-preview1-final` for tooling).
+Between RC1 and RC2, we changed from "Entity Framework 7" to "Entity Framework Core". You can read more about the reasons for the change in [this post by Scott Hanselman](https://www.hanselman.com/blog/ASPNET5IsDeadIntroducingASPNETCore10AndNETCore10.aspx). Because of this change, our package names changed from `EntityFramework.*` to `Microsoft.EntityFrameworkCore.*` and our versions from `7.0.0-rc1-final` to `1.0.0-rc2-final` (or `1.0.0-preview1-final` for tooling).
 
 **You will need to completely remove the RC1 packages and then install the RC2 ones.** Here is the mapping for some common packages.
 

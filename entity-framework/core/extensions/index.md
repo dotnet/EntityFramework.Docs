@@ -49,7 +49,7 @@ CatFactory is a scaffolding engine for .NET Core that can automate the generatio
 
 Entity Framework Core Generator (efg) is a .NET Core CLI tool that can generate EF Core models from an existing database, much like `dotnet ef dbcontext scaffold`, but it also supports safe code [regeneration](https://efg.loresoft.com/en/latest/regeneration/) via region replacement or by parsing mapping files. This tool supports generating view models, validation, and object mapper code. 
 
-[Tutorial](http://www.loresoft.com/Generate-ASP-NET-Web-API)
+[Tutorial](https://www.loresoft.com/Generate-ASP-NET-Web-API)
 [Documentation](https://efg.loresoft.com/en/latest/)
 
 ## Extensions
