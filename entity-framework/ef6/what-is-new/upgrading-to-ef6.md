@@ -1,5 +1,5 @@
 ---
-title: "Upgrading to Entity Framework 6"
+title: "Upgrading to Entity Framework 6 - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: 29958ae5-85d3-4585-9ba6-550b8ec9393a

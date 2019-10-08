@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 6 Runtime Beta/RC License"
+title: "Entity Framework 6 Runtime Beta/RC License - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: db123990-8290-41c8-a41f-494d3f2994f7

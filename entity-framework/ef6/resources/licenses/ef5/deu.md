@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 5 License (DEU)"
+title: "Entity Framework 5 License (DEU) - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: 66089111-e0ab-4c64-af71-b77faff5f499

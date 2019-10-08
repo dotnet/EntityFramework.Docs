@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 5 License (JPN)"
+title: "Entity Framework 5 License (JPN) - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: 5d1555a3-f3cf-4b25-84fa-a531fda0df0d

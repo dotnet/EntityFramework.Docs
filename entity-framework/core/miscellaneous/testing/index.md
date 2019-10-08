@@ -1,5 +1,5 @@
 ---
-title: Test components using EF Core
+title: Test components using EF Core - EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 1603be0c-69bc-4dd9-9a08-3d0129cdc6c1

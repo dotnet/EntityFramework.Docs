@@ -1,5 +1,5 @@
 ---
-title: Compare Entity Framework 6 and Entity Framework Core
+title: Compare Entity Framework 6 and Entity Framework Core - EF
 description: Provides guidance on how to choose between Entity Framework 6 and Entity Framework Core.
 author: rowanmiller
 ms.date: 10/27/2016

@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 6 Runtime License (FRA)"
+title: "Entity Framework 6 Runtime License (FRA) - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: b7066d9f-8b86-4218-9463-57665f391aaa
