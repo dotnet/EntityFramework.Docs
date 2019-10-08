@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 5 License (FRA)"
+title: "Entity Framework 5 License (FRA) - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: 4fed93b8-10a4-4ac9-9eb4-8e24816034b0

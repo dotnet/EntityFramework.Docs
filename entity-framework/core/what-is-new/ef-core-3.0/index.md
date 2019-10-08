@@ -1,5 +1,5 @@
 ---
-title: New features in Entity Framework Core 3.0
+title: New features in Entity Framework Core 3.0 - EF Core
 author: divega
 ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
