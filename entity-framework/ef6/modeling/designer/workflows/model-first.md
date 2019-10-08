@@ -159,7 +159,7 @@ class Program
 
 You can now run the application and test it out.
 
-```
+```console
 Enter a name for a new Blog: ADO.NET Blog
 All blogs in the database:
 ADO.NET Blog

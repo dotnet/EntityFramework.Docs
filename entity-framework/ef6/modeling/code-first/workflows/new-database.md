@@ -172,7 +172,7 @@ class Program
 
 You can now run the application and test it out.
 
-```
+```console
 Enter a name for a new Blog: ADO.NET Blog
 All blogs in the database:
 ADO.NET Blog
@@ -290,7 +290,7 @@ public class BloggingContext : DbContext
 -   If we tried to add a migration we’d get an error saying “*EntityType ‘User’ has no key defined. Define the key for this EntityType.”* because EF has no way of knowing that Username should be the primary key for User.
 -   We’re going to use Data Annotations now so we need to add a using statement at the top of Program.cs
 
-```
+```csharp
 using System.ComponentModel.DataAnnotations;
 ```
 

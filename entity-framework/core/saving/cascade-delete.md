@@ -72,7 +72,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.Cascade with required or optional relationship
 
-```
+```console
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -101,7 +101,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with required relationship
 
-```
+```console
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -124,7 +124,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with optional relationship
 
-```
+```console
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -154,7 +154,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.Restrict with required or optional relationship
 
-```
+```console
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -183,7 +183,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.Cascade with required or optional relationship
 
-```
+```console
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -211,7 +211,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with required relationship
 
-```
+```console
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -234,7 +234,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with optional relationship
 
-```
+```console
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -262,7 +262,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.Restrict with required or optional relationship
 
-```
+```console
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.

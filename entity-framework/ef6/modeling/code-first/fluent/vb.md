@@ -405,7 +405,7 @@ End Module
 
 You can now run the application and test it out.
 
-```
+```console
 Enter a name for a new Department: Computing
 All Departments in the database:
 Computing

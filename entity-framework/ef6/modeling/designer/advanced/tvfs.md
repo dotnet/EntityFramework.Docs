@@ -122,7 +122,7 @@ using (var context = new SchoolEntities())
 
 Compile and run the application. The program produces the following output:
 
-```
+```console
 Couse: Microeconomics, Student: Arturo Anand
 Couse: Microeconomics, Student: Carson Bryant
 ```
