@@ -124,7 +124,7 @@ using (var context = new UniversityModelContainer())
 
 Compile and run the application. The program produces the following output:
 
-```
+```console
 The closest University to you is: School of Fine Art.
 ```
 

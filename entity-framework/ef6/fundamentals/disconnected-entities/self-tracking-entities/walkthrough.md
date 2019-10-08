@@ -398,7 +398,7 @@ You can now run the application to see it in action.
 
 You'll see the following output when the application executes.
 
-```
+```console
 Initial Data:
 ADO.NET Blog
 - Intro to EF

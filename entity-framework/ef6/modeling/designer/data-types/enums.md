@@ -131,7 +131,7 @@ using (var context = new EnumTestModelContainer())
 
 Compile and run the application. The program produces the following output:
 
-```
+```console
 DepartmentID: 1 Name: English
 ```
 
