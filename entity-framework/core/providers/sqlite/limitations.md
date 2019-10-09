@@ -19,7 +19,7 @@ The common relational library (shared by Entity Framework relational database pr
 
 ## Query limitations
 
-SQLite doesn't natively support the following data types. EF Core can read and write values of these types, and querying for equality (`where e.Property == value`) is also support. Other operations, however, like comparison and ordering will require evaluation on the client.
+SQLite doesn't natively support the following data types. EF Core can read and write values of these types, and querying for equality (`where e.Property == value`) is also supported. Other operations, however, like comparison and ordering will require evaluation on the client.
 
 * DateTimeOffset
 * Decimal
