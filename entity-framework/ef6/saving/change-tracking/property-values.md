@@ -192,7 +192,7 @@ public class BlogDto
 
 Running the code above will print out:  
 
-```  
+```console
 Current values:
 Property Id has value 1
 Property Name has value My Cool Blog

@@ -34,11 +34,11 @@ If you'd rather watch a screencast than read this article, the following two vid
 
 ### Video One: "Migrations - Under the Hood"
 
-[This screencast](http://channel9.msdn.com/blogs/ef/migrations-under-the-hood) covers how migrations tracks and uses information about the model to detect model changes.
+[This screencast](https://channel9.msdn.com/blogs/ef/migrations-under-the-hood) covers how migrations tracks and uses information about the model to detect model changes.
 
 ### Video Two: "Migrations - Team Environments"
 
-Building on the concepts from the previous video, [this screencast](http://channel9.msdn.com/blogs/ef/migrations-team-environments) covers the issues that arise in a team environment and how to solve them.
+Building on the concepts from the previous video, [this screencast](https://channel9.msdn.com/blogs/ef/migrations-team-environments) covers the issues that arise in a team environment and how to solve them.
 
 ## Understanding how migrations works
 

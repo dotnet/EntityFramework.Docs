@@ -57,7 +57,7 @@ During development the .NET JIT compiler will offer the best overall tradeoff fo
 
 A good place to find the EF runtime assemblies is the NuGet package location for the solution. For example, for an application using EF 6.0.2 with SQL Server and targeting .NET 4.5 or greater you can type the following in a Command Prompt window (remember to open it as an administrator):  
 
-``` console
+```console
 cd <Solution directory>\packages\EntityFramework.6.0.2\lib\net45
 %WINDIR%\Microsoft.NET\Framework\v4.0.30319\ngen install EntityFramework.SqlServer.dll
 %WINDIR%\Microsoft.NET\Framework64\v4.0.30319\ngen install EntityFramework.SqlServer.dll
@@ -68,7 +68,7 @@ cd <Solution directory>\packages\EntityFramework.6.0.2\lib\net45
 
 ## Creating native images during setup  
 
-The WiX Toolkit supports queuing the generation of native images for managed assemblies during setup, as explained in this [how-to guide](http://wixtoolset.org/documentation/manual/v3/howtos/files_and_registry/ngen_managed_assemblies.html). Another alternative is to create a custom setup task that execute the NGen.exe command.  
+The WiX Toolkit supports queuing the generation of native images for managed assemblies during setup, as explained in this [how-to guide](https://wixtoolset.org/documentation/manual/v3/howtos/files_and_registry/ngen_managed_assemblies.html). Another alternative is to create a custom setup task that execute the NGen.exe command.  
 
 ## Verifying that native images are being used for EF  
 

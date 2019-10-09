@@ -18,8 +18,8 @@ Versions of MSL are differentiated by XML namespaces.
 | MSL Version | XML Namespace                                        |
 |:------------|:-----------------------------------------------------|
 | MSL v1      | urn:schemas-microsoft-com:windows:storage:mapping:CS |
-| MSL v2      | http://schemas.microsoft.com/ado/2008/09/mapping/cs  |
-| MSL v3      | http://schemas.microsoft.com/ado/2009/11/mapping/cs  |
+| MSL v2      | https://schemas.microsoft.com/ado/2008/09/mapping/cs |
+| MSL v3      | https://schemas.microsoft.com/ado/2009/11/mapping/cs  |
 
 ## Alias Element (MSL)
 
@@ -42,7 +42,7 @@ The following example shows an **Alias** element that defines an alias, `c`, for
 
 ``` xml
  <Mapping Space="C-S"
-          xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+          xmlns="https://schemas.microsoft.com/ado/2009/11/mapping/cs">
    <Alias Key="c" Value="SchoolModel"/>
    <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer"
                            CdmEntityContainer="SchoolModelEntities">
@@ -976,7 +976,7 @@ The following example is based on the School model and shows the **InsertFunctio
 
 The **Mapping** element in mapping specification language (MSL) contains information for mapping objects that are defined in a conceptual model to a database (as described in a storage model). For more information, see CSDL Specification and SSDL Specification.
 
-The **Mapping** element is the root element for a mapping specification. The XML namespace for mapping specifications is http://schemas.microsoft.com/ado/2009/11/mapping/cs.
+The **Mapping** element is the root element for a mapping specification. The XML namespace for mapping specifications is https://schemas.microsoft.com/ado/2009/11/mapping/cs.
 
 The mapping element can have the following child elements (in the order listed):
 
@@ -999,7 +999,7 @@ The following example shows a **Mapping** element that is based on part of the S
 
 ``` xml
  <Mapping Space="C-S"
-          xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+          xmlns="https://schemas.microsoft.com/ado/2009/11/mapping/cs">
    <Alias Key="c" Value="SchoolModel"/>
    <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer"
                            CdmEntityContainer="SchoolModelEntities">

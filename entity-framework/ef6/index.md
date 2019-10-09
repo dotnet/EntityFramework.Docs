@@ -1,5 +1,5 @@
 ---
-title: Overview of Entity Framework 6
+title: Overview of Entity Framework 6 - EF6
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: 8ae74d63-6bad-4686-b325-bbf9d68f3743

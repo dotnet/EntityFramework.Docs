@@ -214,6 +214,16 @@
             "source_path": "entity-framework/efcore-and-ef6/porting/ensure-requirements.md",
             "redirect_url": "/ef/efcore-and-ef6/porting/index",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/querying/basic.md",
+            "redirect_url": "/ef/core/querying/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/querying/overview.md",
+            "redirect_url": "/ef/core/querying/how-query-works",
+            "redirect_document_id": false
         }
     ]
 }

@@ -16,7 +16,7 @@ Besides the product documentation, these blogs can be a source of useful informa
 ## Current and former EF team bloggers
 
 - [Arthur Vickers](https://blog.oneunicorn.com/tag/entity-framework/)
-- [Brice Lambson](http://www.bricelam.net/)
+- [Brice Lambson](https://www.bricelam.net/)
 - [Diego Vega](https://blogs.msdn.microsoft.com/diego/)
 - [Rowan Miller](https://romiller.com/category/entity-framework/)
 - [Pawel Kadluczka](https://blog.3d-logic.com/category/entity-framework/)
@@ -25,5 +25,5 @@ Besides the product documentation, these blogs can be a source of useful informa
 
 ## EF Community Bloggers
 
-- [Julie Lerman](http://thedatafarm.com/blog/)  
+- [Julie Lerman](https://thedatafarm.com/blog/)  
 - [Shawn Wildermuth](https://wildermuth.com/Tag/%20Entity%20Framework)  

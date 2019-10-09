@@ -47,7 +47,9 @@ This change impacts projects that use ASP.NET Identity and were created from a p
 
 Failure to make this change will result in the following exception when the initial migration is applied to a database.
 
-    System.Data.SqlClient.SqlException (0x80131904): Column 'NormalizedName' in table 'AspNetRoles' is of a type that is invalid for use as a key column in an index.
+```console
+System.Data.SqlClient.SqlException (0x80131904): Column 'NormalizedName' in table 'AspNetRoles' is of a type that is invalid for use as a key column in an index.
+```
 
 ## .NET Core: Remove "imports" in project.json
 
@@ -70,11 +72,13 @@ If you were targeting .NET Core with RC2, you needed to add `imports` to project
 
 Attempting to run EF commands on Universal Windows Platform (UWP) projects results in the following error:
 
-    System.IO.FileLoadException: Could not load file or assembly 'System.IO.FileSystem.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference.
+```console
+System.IO.FileLoadException: Could not load file or assembly 'System.IO.FileSystem.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference.
+```
 
 You need to manually add binding redirects to the UWP project. Create a file named `App.config` in the project root folder and add redirects to the correct assembly versions.
 
-``` xml
+```xml
 <configuration>
  <runtime>
    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">

@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 5 License (RUS)"
+title: "Entity Framework 5 License (RUS) - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: 01c78013-8b66-4bf2-9873-94c4ebdaae19
@@ -43,4 +43,4 @@ ms.assetid: 01c78013-8b66-4bf2-9873-94c4ebdaae19
     -   код раскрывается и распространяется в виде исходного кода;
     -   другие имеют право его модифицировать.
 
-**2. ТЕХНИЧЕСКАЯ ПОДДЕРЖКА ДОПОЛНЕНИЯ.** Корпорация Майкрософт предоставляет техническую поддержку дополнения, как указано на веб-узле www.support.microsoft.com/common/international.aspx.
+**2. ТЕХНИЧЕСКАЯ ПОДДЕРЖКА ДОПОЛНЕНИЯ.** Корпорация Майкрософт предоставляет техническую поддержку дополнения, как указано на веб-узле https://www.support.microsoft.com/common/international.aspx.

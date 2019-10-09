@@ -10,7 +10,7 @@ This video and step-by-step walkthrough provide an introduction to Code First de
 ## Watch the video
 This video provides an introduction to Code First development targeting a new database. This scenario includes targeting a database that doesn’t exist and Code First will create, or an empty database that Code First will add new tables to. Code First allows you to define your model using C# or VB.Net classes. Additional configuration can optionally be performed using attributes on your classes and properties or by using a fluent API.
 
-**Presented By**: [Rowan Miller](http://romiller.com/)
+**Presented By**: [Rowan Miller](https://romiller.com/)
 
 **Video**: [WMV](https://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-winvideo-CodeFirstNewDatabase.wmv) | [MP4](https://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-mp4Video-CodeFirstNewDatabase.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-winvideo-CodeFirstNewDatabase.zip)
 
@@ -172,7 +172,7 @@ class Program
 
 You can now run the application and test it out.
 
-```
+```console
 Enter a name for a new Blog: ADO.NET Blog
 All blogs in the database:
 ADO.NET Blog
@@ -290,7 +290,7 @@ public class BloggingContext : DbContext
 -   If we tried to add a migration we’d get an error saying “*EntityType ‘User’ has no key defined. Define the key for this EntityType.”* because EF has no way of knowing that Username should be the primary key for User.
 -   We’re going to use Data Annotations now so we need to add a using statement at the top of Program.cs
 
-```
+```csharp
 using System.ComponentModel.DataAnnotations;
 ```
 

@@ -29,7 +29,7 @@ Make sure you follow the discussion and watch the video about the difference.
 
   Find out how to get help from the experts and contribute your own answers to the community.
 
-* [Contribute](http://github.com/aspnet/EntityFramework6/)
+* [Contribute](https://github.com/aspnet/EntityFramework6/)
 
   Entity Framework 6 uses an open development model. Find out how you can help make EF even better by visiting our GitHub repository.
 

@@ -16,15 +16,15 @@ The Entity Framework is now being developed under an open-source license and EF6
 Providers we are aware of that have been rebuilt for EF6 include:
 
 *   **Microsoft SQL Server provider**
-    *   Built from the [Entity Framework open source code base](http://github.com/aspnet/EntityFramework6)
-    *   Shipped as part of the [EntityFramework NuGet package](http://nuget.org/packages/EntityFramework)
+    *   Built from the [Entity Framework open source code base](https://github.com/aspnet/EntityFramework6)
+    *   Shipped as part of the [EntityFramework NuGet package](https://nuget.org/packages/EntityFramework)
 *   **Microsoft SQL Server Compact Edition provider**
-    *   Built from the [Entity Framework open source code base](http://github.com/aspnet/EntityFramework6)
-    *   Shipped in the [EntityFramework.SqlServerCompact NuGet package](http://nuget.org/packages/EntityFramework.SqlServerCompact)
-*   [**Devart dotConnect Data Providers**](http://www.devart.com/dotconnect/)
-    *   There are third-party providers from [Devart](http://www.devart.com/) for a variety of databases including Oracle, MySQL, PostgreSQL, SQLite, Salesforce, DB2, and SQL Server
-*   [**CData Software providers**](http://www.cdata.com/ado/)
-    *   There are third-party providers from [CData Software](http://www.cdata.com/ado/) for a variety of data stores including Salesforce, Azure Table Storage, MySql, and many more
+    *   Built from the [Entity Framework open source code base](https://github.com/aspnet/EntityFramework6)
+    *   Shipped in the [EntityFramework.SqlServerCompact NuGet package](https://nuget.org/packages/EntityFramework.SqlServerCompact)
+*   [**Devart dotConnect Data Providers**](https://www.devart.com/dotconnect/)
+    *   There are third-party providers from [Devart](https://www.devart.com/) for a variety of databases including Oracle, MySQL, PostgreSQL, SQLite, Salesforce, DB2, and SQL Server
+*   [**CData Software providers**](https://www.cdata.com/ado/)
+    *   There are third-party providers from [CData Software](https://www.cdata.com/ado/) for a variety of data stores including Salesforce, Azure Table Storage, MySql, and many more
 *   **Firebird provider**
     *   Available as a [NuGet Package](https://www.nuget.org/packages/EntityFramework.Firebird/)
 *   **Visual Fox Pro provider**

@@ -83,7 +83,7 @@ The code calls two stored procedures: **GetStudentGrades** (returns **StudentGra
 
 Compile and run the application. The program produces the following output:
 
-```
+```console
 StudentID: 2
 Student grade: 4.00
 StudentID: 2

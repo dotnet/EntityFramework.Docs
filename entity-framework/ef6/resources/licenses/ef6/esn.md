@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 6 Runtime License (ESN)"
+title: "Entity Framework 6 Runtime License (ESN) - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: 5e8d67b3-5c60-4a12-a86f-c7276bb8d9e7
@@ -55,7 +55,7 @@ Todos ellos deben corresponder a este software, salvo que existan otros término
 
 **4.    DOCUMENTACIÓN.** Toda persona que tenga acceso válido a su equipo o a la red interna puede copiar y utilizar la documentación a efectos internos de consulta.
 
-**5.    RESTRICCIONES EN MATERIA DE EXPORTACIÓN.** El software está sujeto a las leyes y reglamentos en materia de exportación de los Estados Unidos. Debe cumplir con todas las leyes y reglamentos, nacionales e internacionales, en materia de exportación que sean de aplicación al software. Dichas leyes incluyen limitaciones en cuanto a destino, usuarios finales y uso final. Para obtener más información, visite www.microsoft.com/exporting.
+**5.    RESTRICCIONES EN MATERIA DE EXPORTACIÓN.** El software está sujeto a las leyes y reglamentos en materia de exportación de los Estados Unidos. Debe cumplir con todas las leyes y reglamentos, nacionales e internacionales, en materia de exportación que sean de aplicación al software. Dichas leyes incluyen limitaciones en cuanto a destino, usuarios finales y uso final. Para obtener más información, visite https://www.microsoft.com/exporting.
 
 **6.    SERVICIOS DE SOPORTE TÉCNICO.** Debido a que este software se presenta “tal cual”, no podemos prestar servicios de soporte técnico para el mismo.
 

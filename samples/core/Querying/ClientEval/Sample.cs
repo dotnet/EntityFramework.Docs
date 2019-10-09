@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace EFQuerying.ClientEval
 {
     public class Sample
     {
+        #region ClientMethod
         public static string StandardizeUrl(string url)
         {
             url = url.ToLower();
@@ -16,11 +18,13 @@ namespace EFQuerying.ClientEval
 
             return url;
         }
+        #endregion
 
         public static void Run()
         {
             using (var context = new BloggingContext())
             {
+                #region ClientProjection
                 var blogs = context.Blogs
                     .OrderByDescending(blog => blog.Rating)
                     .Select(blog => new
@@ -29,13 +33,33 @@ namespace EFQuerying.ClientEval
                         Url = StandardizeUrl(blog.Url)
                     })
                     .ToList();
+                #endregion
             }
 
             using (var context = new BloggingContext())
             {
+                try
+                {
+                    #region ClientWhere
+                    var blogs = context.Blogs
+                        .Where(blog => StandardizeUrl(blog.Url).Contains("dotnet"))
+                        .ToList();
+                    #endregion
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+
+            using (var context = new BloggingContext())
+            {
+                #region ExplicitClientEval
                 var blogs = context.Blogs
+                    .AsEnumerable()
                     .Where(blog => StandardizeUrl(blog.Url).Contains("dotnet"))
                     .ToList();
+                #endregion
             }
         }
     }

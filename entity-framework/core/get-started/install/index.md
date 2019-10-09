@@ -1,5 +1,5 @@
 ---
-title: Installing Entity Framework Core
+title: Installing Entity Framework Core - EF Core
 author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
@@ -122,8 +122,7 @@ For ASP.NET Core apps, this package is included automatically.
   * Database provider design-time packages such as `Microsoft.EntityFrameworkCore.SqlServer.Design` are no longer required or supported from EF Core 2.0 and later, but aren't automatically removed when upgrading the other packages.
 
   * The .NET CLI tools are included in the .NET SDK since version 2.1, so the reference to that package can be removed from the project file:
-
-    ```
+    ```xml
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
     ```
 

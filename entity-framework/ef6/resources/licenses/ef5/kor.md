@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 5 License (KOR)"
+title: "Entity Framework 5 License (KOR) - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: b105993a-ebb3-466e-af76-a0ec0c651f82
@@ -43,4 +43,4 @@ Microsoft Corporation(또는 거주 지역에 따라 계열사 중 하나)은 �
     -   코드를 소스 코드 형태로 공개하거나 배포합니다.
     -   다른 사람이 배포 가능 코드를 수정할 수 있는 권한을 갖습니다.
 
-**2. 추가 구성 요소에 대한 지원 서비스.** Microsoft는www.support.microsoft.com/common/international.aspx에 기술된 대로 본 소프트웨어에 대한 지원 서비스를 제공합니다.
+**2. 추가 구성 요소에 대한 지원 서비스.** Microsoft는 https://www.support.microsoft.com/common/international.aspx 에 기술된 대로 본 소프트웨어에 대한 지원 서비스를 제공합니다.

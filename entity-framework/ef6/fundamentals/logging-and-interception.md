@@ -165,7 +165,7 @@ SELECT * from ThisTableIsMissing
 
 For async commands where the task is canceled the result could be failure with an exception, since this is what the underlying ADO.NET provider often does when an attempt is made to cancel. If this doesn’t happen and the task is canceled cleanly then the output will look something like this:  
 
-```  
+```console
 update Blogs set Title = 'No' where Id = -1
 -- Executing asynchronously at 5/13/2013 10:21:10 AM
 -- Canceled in 1 ms
@@ -238,7 +238,7 @@ public class MyDbConfiguration : DbConfiguration
 
 This new DatabaseLogFormatter will now be used anytime Database.Log is set. So, running the code from part 1 will now result in the following output:  
 
-```  
+```console
 Context 'BlogContext' is executing command 'SELECT TOP (1) [Extent1].[Id] AS [Id], [Extent1].[Title] AS [Title]FROM [dbo].[Blogs] AS [Extent1]WHERE (N'One Unicorn' = [Extent1].[Title]) AND ([Extent1].[Title] IS NOT NULL)'
 Context 'BlogContext' is executing command 'SELECT [Extent1].[Id] AS [Id], [Extent1].[Title] AS [Title], [Extent1].[BlogId] AS [BlogId]FROM [dbo].[Posts] AS [Extent1]WHERE [Extent1].[BlogId] = @EntityKeyValue1'
 Context 'BlogContext' is executing command 'update [dbo].[Posts]set [Title] = @0where ([Id] = @1)'
@@ -293,7 +293,7 @@ Interceptors can also be registered at the app-domain level using the DbConfigur
 
 ### Example: Logging to NLog  
 
-Let’s put all this together into an example that using IDbCommandInterceptor and [NLog](http://nlog-project.org/) to:  
+Let’s put all this together into an example that using IDbCommandInterceptor and [NLog](https://nlog-project.org/) to:  
 
 - Log a warning for any command that is executed non-asynchronously  
 - Log an error for any command that throws when executed  

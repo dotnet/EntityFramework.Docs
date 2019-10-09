@@ -1,5 +1,5 @@
 ---
-title: "Entity Framework 6 Runtime License"
+title: "Entity Framework 6 Runtime License - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: 5bc55bf3-2404-4811-8d13-d2eed822cdc4
@@ -55,7 +55,7 @@ for this software, unless other terms accompany those items. If so, those terms 
 
 **4.    DOCUMENTATION.** Any person that has valid access to your computer or internal network may copy and use the documentation for your internal, reference purposes.
 
-**5.    EXPORT RESTRICTIONS.** The software is subject to United States export laws and regulations. You must comply with all domestic and international export laws and regulations that apply to the software. These laws include restrictions on destinations, end users and end use. For additional information, see www.microsoft.com/exporting.
+**5.    EXPORT RESTRICTIONS.** The software is subject to United States export laws and regulations. You must comply with all domestic and international export laws and regulations that apply to the software. These laws include restrictions on destinations, end users and end use. For additional information, see https://www.microsoft.com/exporting.
 
 **6.    SUPPORT SERVICES.** Because this software is “as is,” we may not provide support services for it.
 
