@@ -12,10 +12,10 @@ As a general rule, Entity Framework Core attempts to evaluate a query on the ser
 > [!NOTE]
 > Prior to version 3.0, Entity Framework Core supported client evaluation anywhere in the query. For more information, see the [previous versions section](#previous-versions).
 
-## Client evaluation in the top-level projection
-
 > [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
+
+## Client evaluation in the top-level projection
 
 In the following example, a helper method is used to standardize URLs for blogs, which are returned from a SQL Server database. Since the SQL Server provider has no insight into how this method is implemented, it isn't possible to translate it into SQL. All other aspects of the query are evaluated in the database, but passing the returned `URL` through this method is done on the client.
 
