@@ -151,9 +151,9 @@ namespace TestingDemo
         }
     }
 }
-```  
+```
 
-<a name="creating-the-in-memory-test-doubles"/> ## Creating the in-memory test doubles  
+## Creating the in-memory test doubles  
 
 Now that we have the real EF model and the service that can use it, it's time to create the in-memory test double that we can use for testing. We've created a TestContext test double for our context. In test doubles we get to choose the behavior we want in order to support the tests we are going to run. In this example we're just capturing the number of times SaveChanges is called, but you can include whatever logic is needed to verify the scenario you are testing.  
 
