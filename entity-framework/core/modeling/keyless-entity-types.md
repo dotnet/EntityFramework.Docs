@@ -7,6 +7,7 @@ ms.assetid: 9F4450C5-1A3F-4BB6-AC19-9FAC64292AAD
 uid: core/modeling/keyless-entity-types
 ---
 # Keyless Entity Types
+
 > [!NOTE]
 > This feature was added in EF Core 2.1 under the name of query types. In EF Core 3.0 the concept was renamed to keyless entity types.
 
