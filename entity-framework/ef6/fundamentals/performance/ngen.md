@@ -26,11 +26,14 @@ The most basic function of the NGen.exe tool is to “install” (that is, to cr
   ```
 3. Depending on your operating system and the application’s configuration you might need to generate native images for 32 bit architecture, 64 bit architecture or for both.  
 
-    For 32 bit run:  
+   For 32 bit run:
+  
   ``` console
     %WINDIR%\Microsoft.NET\Framework\v4.0.30319\ngen install <Assembly name>  
   ```
-    For 64 bit run:
+  
+   For 64 bit run:
+  
   ``` console
     %WINDIR%\Microsoft.NET\Framework64\v4.0.30319\ngen install <Assembly name>  
   ```
