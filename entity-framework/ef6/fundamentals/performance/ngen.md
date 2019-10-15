@@ -18,22 +18,26 @@ Empirical observations show that native images of the EF runtime assemblies can 
 
 The most basic function of the NGen.exe tool is to “install” (that is, to create and persist to disk) native images for an assembly and all its direct dependencies. Here is how you can achieve that:  
 
-1. Open a Command Prompt window as an administrator  
-2. Change the current working directory to the location of the assemblies you want to generate native images for:  
+1. Open a Command Prompt window as an administrator.
+2. Change the current working directory to the location of the assemblies you want to generate native images for:
 
-  ``` console
-    cd <*Assemblies location*>  
-  ```
-3. Depending on your operating system and the application’s configuration you might need to generate native images for 32 bit architecture, 64 bit architecture or for both.  
+   ``` console
+   cd <*Assemblies location*>  
+   ```
 
-    For 32 bit run:  
-  ``` console
-    %WINDIR%\Microsoft.NET\Framework\v4.0.30319\ngen install <Assembly name>  
-  ```
-    For 64 bit run:
-  ``` console
-    %WINDIR%\Microsoft.NET\Framework64\v4.0.30319\ngen install <Assembly name>  
-  ```
+3. Depending on your operating system and the application’s configuration you might need to generate native images for 32 bit architecture, 64 bit architecture or for both.
+
+   For 32 bit run:
+
+   ``` console
+   %WINDIR%\Microsoft.NET\Framework\v4.0.30319\ngen install <Assembly name>  
+   ```
+
+   For 64 bit run:
+  
+   ``` console
+   %WINDIR%\Microsoft.NET\Framework64\v4.0.30319\ngen install <Assembly name>  
+   ```
 
 > [!TIP]
 > Generating native images for the wrong architecture is a very common mistake. When in doubt you can simply generate native images for all the architectures that apply to the operating system installed in the machine.  
