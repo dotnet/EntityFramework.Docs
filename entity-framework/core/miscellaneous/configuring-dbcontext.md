@@ -41,7 +41,7 @@ If both are used, `OnConfiguring` is applied last and can overwrite options supp
 
 ### Constructor argument
 
-Context code with constructor:
+Your constructor can simply accept a `DbContextOptions` as follows:
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -57,7 +57,7 @@ public class BloggingContext : DbContext
 > [!TIP]  
 > The base constructor of DbContext also accepts the non-generic version of `DbContextOptions`, but using the non-generic version is not recommended for applications with multiple context types.
 
-Application code to initialize from constructor argument:
+Your application can now pass the `DbContextOptions` when instantiating a context, as follows:
 
 ``` csharp
 var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
@@ -71,7 +71,9 @@ using (var context = new BloggingContext(optionsBuilder.Options))
 
 ### OnConfiguring
 
-Context code with `OnConfiguring`:
+You can also initialize the `DbContextOptions` within the context itself. While you can use this technique for basic configuration, you will typically still need to get certain configuration details from the outside, e.g. a database connection string. This can be done with a configuration API or any other means.
+
+To initialize `DbContextOptions` within the context, override the `OnConfiguring` method and call the methods on the provided `DbContextOptionsBuilder`:
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -85,7 +87,7 @@ public class BloggingContext : DbContext
 }
 ```
 
-Application code to initialize a `DbContext` that uses `OnConfiguring`:
+An application can simply instantiate such a context without passing anything to its constructor:
 
 ``` csharp
 using (var context = new BloggingContext())

@@ -9,7 +9,7 @@ uid: core/miscellaneous/nullable-reference-types
 
 C# 8 introduced a new feature called [nullable reference types](/dotnet/csharp/tutorials/nullable-reference-types), allowing reference types to be annotated, indicating whether it is valid for them to contain null or not. If you are new to this feature, it is recommended that make yourself familiar with it by reading the C# docs.
 
-This page introduces EF Core's support fo nullable reference types, and describes best practices for working with them.
+This page introduces EF Core's support for nullable reference types, and describes best practices for working with them.
 
 ## Required and optional properties
 
