@@ -15,7 +15,7 @@ EF6 implements many popular O/RM features:
 - Automatic change tracking
 - Identity resolution and Unit of Work
 - Eager, lazy and explicit loading
-- Translation of strongly-typed queries using LINQ (Language INtegrated Query)
+- Translation of strongly-typed queries using [LINQ (Language INtegrated Query)](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq)
 - Rich mapping capabilities, including support for:
   - One-to-one, one-to-many and many-to-many relationships
   - Inheritance (table per hierarchy, table per type and table per concrete class)
