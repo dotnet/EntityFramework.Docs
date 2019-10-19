@@ -94,6 +94,7 @@ modelBuilder.Entity<Blog>()
 ```
 
 The discriminator can also be mapped to an actual CLR property in your entity. For example:
+
 ```C#
 class MyContext : DbContext
 {
@@ -120,6 +121,7 @@ public class RssBlog : Blog
 ```
 
 Combining these two things together it is possible to both map the discriminator to a real property and configure it:
+
 ```C#
 modelBuilder.Entity<Blog>(b =>
 {
