@@ -20,72 +20,20 @@ With EF Core, data access is performed using a model. A model is made up of enti
 
 You can generate a model from an existing database, hand code a model to match your database, or use [EF Migrations](managing-schemas/migrations/index.md) to create a database from your model, and then evolve it as your model changes over time.
 
-``` csharp
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-
-namespace Intro
-{
-    public class BloggingContext : DbContext
-    {
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=Blogging;Integrated Security=True");
-        }
-    }
-
-    public class Blog
-    {
-        public int BlogId { get; set; }
-        public string Url { get; set; }
-        public int Rating { get; set; }
-        public List<Post> Posts { get; set; }
-    }
-
-    public class Post
-    {
-        public int PostId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-
-        public int BlogId { get; set; }
-        public Blog Blog { get; set; }
-    }
-}
-```
+[!code-csharp[Main](../../samples/core/Intro/Model.cs)]
 
 ## Querying
 
 Instances of your entity classes are retrieved from the database using Language Integrated Query (LINQ). See [Querying Data](querying/index.md) to learn more.
 
-``` csharp
-using (var db = new BloggingContext())
-{
-    var blogs = db.Blogs
-        .Where(b => b.Rating > 3)
-        .OrderBy(b => b.Url)
-        .ToList();
-}
-```
+[!code-csharp[Main](../../samples/core/Intro/Program.cs#Querying)]
 
 ## Saving Data
 
 Data is created, deleted, and modified in the database using instances of your entity classes. See [Saving Data](saving/index.md) to learn more.
 
-``` csharp
-using (var db = new BloggingContext())
-{
-    var blog = new Blog { Url = "http://sample.com" };
-    db.Blogs.Add(blog);
-    db.SaveChanges();
-}
-```
+[!code-csharp[Main](../../samples/core/Intro/Program.cs#SavingData)]
 
 ## Next steps
 
 For introductory tutorials, see [Getting Started with Entity Framework Core](get-started/index.md).
-

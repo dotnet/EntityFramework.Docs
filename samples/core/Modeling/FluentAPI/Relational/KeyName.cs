@@ -2,6 +2,7 @@
 
 namespace EFModeling.FluentAPI.Relational.KeyName
 {
+    #region KeyName
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -19,4 +20,5 @@ namespace EFModeling.FluentAPI.Relational.KeyName
         public int BlogId { get; set; }
         public string Url { get; set; }
     }
+    #endregion
 }
