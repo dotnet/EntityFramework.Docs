@@ -1,7 +1,7 @@
 ---
 title: Tools & Extensions - EF Core
 author: ErikEJ
-ms.date: 19/10/2019
+ms.date: 10/20/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
 ---
@@ -23,7 +23,7 @@ LLBLGen Pro is an entity modeling solution with support for Entity Framework and
 
 ### Devart Entity Developer
 
-Entity Developer is a powerful ORM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation.  For EF Core: 2.
+Entity Developer is a powerful ORM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 2.
 
 [Website](https://www.devart.com/entitydeveloper/)
 
@@ -68,7 +68,7 @@ An extension that enables storing the results of EF Core queries into a second-l
 
 ### Geco
 
-Geco (Generator Console) is a simple code generator based on a console project, that runs on .NET Core and uses C# interpolated strings for code generation. Geco includes a reverse model generator for EF Core with support for pluralization, singularization, and editable templates. It also provides a seed data script generator, a script runner, and a database cleaner. For EF Core: 2
+Geco (Generator Console) is a simple code generator based on a console project, that runs on .NET Core and uses C# interpolated strings for code generation. Geco includes a reverse model generator for EF Core with support for pluralization, singularization, and editable templates. It also provides a seed data script generator, a script runner, and a database cleaner. For EF Core: 2.
 
 [GitHub repository](https://github.com/iQuarc/Geco)
 
@@ -129,13 +129,13 @@ Extension library for Entity Framework Core which allows developers who use SQL 
 
 ### EntityFrameworkCore.Cacheable
 
-A high-performance second-level query cache. For EF Core: 2
+A high-performance second-level query cache. For EF Core: 2.
 
 [GitHub repository](https://github.com/SteffenMangold/EntityFrameworkCore.Cacheable)
 
 ### Entity Framework Plus
 
-Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2, 3 
+Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2, 3.
 
 [Website](https://entityframework-plus.net/)
 [GitHub repository](https://github.com/zzzprojects/EntityFramework-Plus)
