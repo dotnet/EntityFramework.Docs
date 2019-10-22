@@ -175,22 +175,24 @@
       items:
       - name: Overview
         href: core/querying/index.md
-      - name: Loading Related Data
-        href: core/querying/related-data.md
       - name: Client vs. Server Evaluation
         href: core/querying/client-eval.md
       - name: Tracking vs. No-Tracking
         href: core/querying/tracking.md
-      - name: Raw SQL Queries
-        href: core/querying/raw-sql.md
+      - name: Complex Query Operators
+        href: core/querying/complex-query-operators.md
+      - name: Loading Related Data
+        href: core/querying/related-data.md
       - name: Asynchronous Queries
         href: core/querying/async.md
-      - name: How Query Works
-        href: core/querying/how-query-works.md
+      - name: Raw SQL Queries
+        href: core/querying/raw-sql.md
       - name: Global Query Filters
         href: core/querying/filters.md
       - name: Query Tags
         href: core/querying/tags.md
+      - name: How Query Works
+        href: core/querying/how-query-works.md
     - name: Saving Data
       items:
       - name: Overview
