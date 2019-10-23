@@ -11,6 +11,7 @@ uid: core/providers/index
 Entity Framework Core can access many different databases through plug-in libraries called database providers.
 
 ## Current providers
+
 > [!IMPORTANT]  
 > EF Core providers are built by a variety of sources. Not all providers are maintained as part of the [Entity Framework Core Project](https://github.com/aspnet/EntityFrameworkCore). When considering a provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements. Also make sure you review each provider's documentation for detailed version compatibility information.
 
@@ -43,13 +44,13 @@ Entity Framework Core can access many different databases through plug-in librar
 
 Most database providers for EF Core are distributed as NuGet packages, and can be installed as follows:
 
-# [.NET Core CLI](#tab/dotnet-core-cli)
+## [.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` console
 dotnet add package provider_package_name
 ```
 
-# [Visual Studio](#tab/vs)
+## [Visual Studio](#tab/vs)
 
 ``` powershell
 install-package provider_package_name

@@ -11,7 +11,7 @@ uid: core/what-is-new/ef-core-2.2
 ## Spatial data support
 
 Spatial data can be used to represent the physical location and shape of objects.
-Many databases can natively store, index, and query spatial data. 
+Many databases can natively store, index, and query spatial data.
 Common scenarios include querying for objects within a given distance, and testing if a polygon contains a given location.
 EF Core 2.2 now supports working with spatial data from various databases using types from the [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) (NTS) library.
 
@@ -36,7 +36,7 @@ namespace MyApp
     public Point Location { get; set; }
   }
 }
-``` 
+```
 
 You can then persist entities with spatial data:
 
@@ -52,6 +52,7 @@ using (var context = new MyDbContext())
     context.SaveChanges();
 }
 ```
+
 And you can execute database queries based on spatial data and operations:
 
 ``` csharp
@@ -61,7 +62,7 @@ And you can execute database queries based on spatial data and operations:
       select f).Take(5).ToList();
 ```
 
-For more information on this feature, see the [spatial types documentation](xref:core/modeling/spatial). 
+For more information on this feature, see the [spatial types documentation](xref:core/modeling/spatial).
 
 ## Collections of owned entities
 
@@ -70,7 +71,8 @@ EF Core 2.2 extends the ability to express ownership to one-to-many associations
 Ownership helps constrain how entities are used.
 
 For example, owned entities:
-- Can only ever appear on navigation properties of other entity types. 
+
+- Can only ever appear on navigation properties of other entity types.
 - Are automatically loaded, and can only be tracked by a DbContext alongside their owner.
 
 In relational databases, owned collections are mapped to separate tables from the owner, just like regular one-to-many associations.
@@ -108,4 +110,4 @@ FROM [Friends] AS [f]
 ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
 ```
 
-For more information, see the [query tags documentation](xref:core/querying/tags). 
+For more information, see the [query tags documentation](xref:core/querying/tags).

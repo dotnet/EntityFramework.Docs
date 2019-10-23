@@ -25,29 +25,22 @@ In RC2, the column definition in a migration looked like `table.Column<string>(n
 
 Any existing migrations that were scaffolded prior to using RTM will not have the `maxLength` argument specified. This means the maximum length supported by the database will be used (`nvarchar(max)` on SQL Server). This may be fine for some columns, but columns that are part of a key, foreign key, or index need to be updated to include a maximum length. By convention, 450 is the maximum length used for keys, foreign keys, and indexed columns. If you have explicitly configured a length in the model, then you should use that length instead.
 
-**ASP.NET Identity**
+### ASP.NET Identity
 
 This change impacts projects that use ASP.NET Identity and were created from a pre-RTM project template. The project template includes a migration used to create the database. This migration must be edited to specify a maximum length of `256` for the following columns.
 
-*  **AspNetRoles**
-
-    * Name
-
-    * NormalizedName
-
-*  **AspNetUsers**
-
-   * Email
-
-   * NormalizedEmail
-
-   * NormalizedUserName
-
-   * UserName
+* **AspNetRoles**
+  * Name
+  * NormalizedName
+* **AspNetUsers**
+  * Email
+  * NormalizedEmail
+  * NormalizedUserName
+  * UserName
 
 Failure to make this change will result in the following exception when the initial migration is applied to a database.
 
-```console
+``` Console
 System.Data.SqlClient.SqlException (0x80131904): Column 'NormalizedName' in table 'AspNetRoles' is of a type that is invalid for use as a key column in an index.
 ```
 
@@ -72,7 +65,7 @@ If you were targeting .NET Core with RC2, you needed to add `imports` to project
 
 Attempting to run EF commands on Universal Windows Platform (UWP) projects results in the following error:
 
-```console
+```output
 System.IO.FileLoadException: Could not load file or assembly 'System.IO.FileSystem.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference.
 ```
 

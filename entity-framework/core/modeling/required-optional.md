@@ -47,7 +47,7 @@ A property that would be optional by convention can be configured to be required
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Required.cs?highlight=14)]
 
-# [Fluent API](#tab/fluent-api) 
+# [Fluent API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Required.cs?highlight=11-13)]
 

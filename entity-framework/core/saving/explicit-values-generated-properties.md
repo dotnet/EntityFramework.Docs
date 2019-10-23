@@ -28,6 +28,7 @@ The `Employee.EmploymentStarted` property is configured to have values generated
 [!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/EmployeeContext.cs#EmploymentStarted)]
 
 The following code inserts two employees into the database.
+
 * For the first, no value is assigned to `Employee.EmploymentStarted` property, so it remains set to the CLR default value for `DateTime`.
 * For the second, we have set an explicit value of `1-Jan-2000`.
 
@@ -75,6 +76,7 @@ There is also a trigger in the database to generate values for the `LastPayRaise
 [!code-sql[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/employee_UPDATE.sql)]
 
 The following code increases the salary of two employees in the database.
+
 * For the first, no value is assigned to `Employee.LastPayRaise` property, so it remains set to null.
 * For the second, we have set an explicit value of one week ago (back dating the pay raise).
 

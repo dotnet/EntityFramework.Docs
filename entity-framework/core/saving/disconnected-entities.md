@@ -12,11 +12,13 @@ A DbContext instance will automatically track entities returned from the databas
 
 However, sometimes entities are queried using one context instance and then saved using a different instance. This often happens in "disconnected" scenarios such as a web application where the entities are queried, sent to the client, modified, sent back to the server in a request, and then saved. In this case, the second context instance needs to know whether the entities are new (should be inserted) or existing (should be updated).
 
-> [!TIP]  
+<!-- markdownlint-disable MD028 -->
+> [!TIP]
 > You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/) on GitHub.
 
 > [!TIP]
 > EF Core can only track one instance of any entity with a given primary key value. The best way to avoid this being an issue is to use a short-lived context for each unit-of-work such that the context starts empty, has entities attached to it, saves those entities, and then the context is disposed and discarded.
+<!-- markdownlint-enable MD028 -->
 
 ## Identifying new entities
 
@@ -44,8 +46,9 @@ However, EF also has a built-in way to do this for any entity type and key type:
 ### With other keys
 
 Some other mechanism is needed to identify new entities when key values are not generated automatically. There are two general approaches to this:
- * Query for the entity
- * Pass a flag from the client
+
+* Query for the entity
+* Pass a flag from the client
 
 To query for the entity, just use the Find method:
 
@@ -73,6 +76,7 @@ If the entity is not using auto-generated keys, then the application must decide
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntityWithFind)]
 
 The steps here are:
+
 * If Find returns null, then the database doesn't already contain the blog with this ID, so we call Add mark it for insertion.
 * If Find returns an entity, then it exists in the database and the context is now tracking the existing entity
   * We then use SetValues to set the values for all properties on this entity to those that came from the client.
