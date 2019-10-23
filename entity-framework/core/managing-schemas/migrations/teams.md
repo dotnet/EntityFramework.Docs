@@ -3,18 +3,16 @@ title: Migrations in Team Environments - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 10/30/2017
+uid: core/managing-schemas/migrations/teams
 ---
-Migrations in Team Environments
-===============================
-When working with Migrations in team environments, pay extra attention to the model snapshot file. This file can tell
-you if your teammate's migration merges cleanly with yours or if you need to resolve a conflict by re-creating your
+# Migrations in Team Environments
+
+When working with Migrations in team environments, pay extra attention to the model snapshot file. This file can tell you if your teammate's migration merges cleanly with yours or if you need to resolve a conflict by re-creating your
 migration before sharing it.
 
-Merging
--------
-When you merge migrations from your teammates, you may get conflicts in your model snapshot file. If both changes are
-unrelated, the merge is trivial and the two migrations can coexist. For example, you may get a merge conflict in
-the customer entity type configuration that looks like this:
+## Merging
+
+When you merge migrations from your teammates, you may get conflicts in your model snapshot file. If both changes are unrelated, the merge is trivial and the two migrations can coexist. For example, you may get a merge conflict in the customer entity type configuration that looks like this:
 
     <<<<<<< Mine
     b.Property<bool>("Deactivated");
@@ -30,13 +28,11 @@ b.Property<bool>("Deactivated");
 b.Property<int>("LoyaltyPoints");
 ```
 
-In these cases, your migration and your teammate's migration are independent of each other. Since either of them could
-be applied first, you don't need to make any additional changes to your migration before sharing it with your team.
+In these cases, your migration and your teammate's migration are independent of each other. Since either of them could be applied first, you don't need to make any additional changes to your migration before sharing it with your team.
 
-Resolving conflicts
--------------------
-Sometimes you encounter a true conflict when merging the model snapshot model. For example, you and your teammate may
-each have renamed the same property.
+## Resolving conflicts
+
+Sometimes you encounter a true conflict when merging the model snapshot model. For example, you and your teammate may each have renamed the same property.
 
     <<<<<<< Mine
     b.Property<string>("Username");
