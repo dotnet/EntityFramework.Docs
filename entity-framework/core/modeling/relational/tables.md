@@ -22,8 +22,7 @@ You can use Data Annotations to configure the table that a type maps to.
 
 ``` csharp
 using System.ComponentModel.DataAnnotations.Schema;
-```
-``` csharp
+
 [Table("blogs")]
 public class Blog
 {
@@ -49,8 +48,7 @@ You can use the Fluent API to configure the table that a type maps to.
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
-```
-``` csharp
+
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }

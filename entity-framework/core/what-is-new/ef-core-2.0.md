@@ -9,6 +9,7 @@ uid: core/what-is-new/ef-core-2.0
 # New features in EF Core 2.0
 
 ## .NET Standard 2.0
+
 EF Core now targets .NET Standard 2.0, which means it can work with .NET Core 2.0, .NET Framework 4.6.1, and other libraries that implement .NET Standard 2.0.
 See [Supported .NET Implementations](../platforms/index.md) for more details on what is supported.
 
@@ -27,6 +28,7 @@ modelBuilder.Entity<Product>()
 modelBuilder.Entity<Product>().ToTable("Products");
 modelBuilder.Entity<ProductDetails>().ToTable("Products");
 ```
+
 Read the [section on table splitting](xref:core/modeling/table-splitting) for more information on this feature.
 
 ### Owned types
@@ -60,6 +62,7 @@ public class StreetAddress
     public string City { get; set; }
 }
 ```
+
 Read the [section on owned entity types](xref:core/modeling/owned-entities) for more information on this feature.
 
 ### Model-level query filters
@@ -87,6 +90,7 @@ public class BloggingContext : DbContext
     }
 }
 ```
+
 We define a model-level filter that implements multi-tenancy and soft-delete for instances of the `Post` Entity Type. Note the use of a DbContext instance level property: `TenantId`. Model-level filters will use the value from the correct context instance (that is, the context instance that is executing the query).
 
 Filters may be disabled for individual LINQ queries using the IgnoreQueryFilters() operator.
@@ -293,9 +297,11 @@ public class MyPluralizer : IPluralizer
 ## Others
 
 ### Move ADO.NET SQLite provider to SQLitePCL.raw
+
 This gives us a more robust solution in Microsoft.Data.Sqlite for distributing native SQLite binaries on different platforms.
 
 ### Only one provider per model
+
 Significantly augments how providers can interact with the model and simplifies how conventions, annotations and fluent APIs work with different providers.
 
 EF Core 2.0 will now build a different [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs) for each different provider being used. This is usually transparent to the application. This has facilitated a simplification of lower-level metadata APIs such that any access to *common relational metadata concepts* is always made through a call to `.Relational` instead of `.SqlServer`, `.Sqlite`, etc.
