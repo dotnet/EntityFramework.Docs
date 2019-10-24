@@ -53,7 +53,7 @@ See the [breaking changes documentation](xref:core/what-is-new/ef-core-3.0/break
 
 ### Single SQL statement per LINQ query
 
-Another aspect of the design that changed significantly in 3.0 is that we now always generate a single SQL statement per LINQ query. In previous versions, we used to generate multiple SQL statements in certain cases, like to translate `Include()` calls on collection navigation properties and to translate queries that followed certain patterns with subqueries. Although this was in some cases convenient, and for `Include()` it even helped avoid sending redundant data over the wire, the implementation was complex, it resulted in some extremely inefficient behaviors (N+1 queries), and there was situations in which the data returned across multiple queries could be inconsistent.
+Another aspect of the design that changed significantly in 3.0 is that we now always generate a single SQL statement per LINQ query. In previous versions, we used to generate multiple SQL statements in certain cases, translated `Include()` calls on collection navigation properties and translated queries that followed certain patterns with subqueries. Although this was in some cases convenient, and for `Include()` it even helped avoid sending redundant data over the wire, the implementation was complex, and it resulted in some extremely inefficient behaviors (N+1 queries). There were situations in which the data returned across multiple queries was potentially inconsistent.
 
 Similarly to client evaluation, if EF Core 3.0 can't translate a LINQ query into a single SQL statement, it throws a runtime exception. But we made EF Core capable of translating many of the common patterns that used to generate multiple queries to a single query with JOINs.
 
