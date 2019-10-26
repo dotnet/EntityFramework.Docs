@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.FluentAPI.Relationships.Required
 {
+    #region required
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -33,4 +34,5 @@ namespace EFModeling.FluentAPI.Relationships.Required
 
         public Blog Blog { get; set; }
     }
+    #endregion
 }

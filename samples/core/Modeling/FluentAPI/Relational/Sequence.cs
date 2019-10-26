@@ -2,6 +2,7 @@
 
 namespace EFModeling.FluentAPI.Relational.Sequence
 {
+    #region model
     class MyContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
@@ -18,4 +19,5 @@ namespace EFModeling.FluentAPI.Relational.Sequence
         public int OrderNo { get; set; }
         public string Url { get; set; }
     }
+    #endregion
 }

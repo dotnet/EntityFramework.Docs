@@ -2,6 +2,7 @@
 
 namespace EFModeling.FluentAPI.Relational.SequenceConfigured
 {
+    #region sequence
     class MyContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
@@ -12,7 +13,8 @@ namespace EFModeling.FluentAPI.Relational.SequenceConfigured
                 .StartsAt(1000)
                 .IncrementsBy(5);
         }
-    }
+    }   
+    #endregion
 
     public class Order
     {

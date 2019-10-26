@@ -30,31 +30,7 @@ Shadow properties can be created by convention when a relationship is discovered
 
 For example, the following code listing will result in a `BlogId` shadow property being introduced to the `Post` entity.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/ShadowForeignKey.cs)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-    public DbSet<Post> Posts { get; set; }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public List<Post> Posts { get; set; }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-
-    public Blog Blog { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/ShadowForeignKey.cs?name=Conventions)]
 
 ## Data Annotations
 
@@ -66,22 +42,4 @@ You can use the Fluent API to configure shadow properties. Once you have called 
 
 If the name supplied to the `Property` method matches the name of an existing property (a shadow property or one defined on the entity class), then the code will configure that existing property rather than introducing a new shadow property.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/ShadowProperty.cs?highlight=7,8)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .Property<DateTime>("LastUpdated");
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ShadowProperty.cs?name=ShadowProperty&highlight=7,8)]

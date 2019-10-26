@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.FluentAPI.Relationships.CascadeDelete
 {
+    #region CascadeDelete
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -35,4 +36,5 @@ namespace EFModeling.FluentAPI.Relationships.CascadeDelete
         public int? BlogId { get; set; }
         public Blog Blog { get; set; }
     }
+    #endregion
 }

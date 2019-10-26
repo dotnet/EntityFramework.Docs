@@ -24,67 +24,12 @@ You can not configure a sequence using Data Annotations.
 
 You can use the Fluent API to create a sequence in the model.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/Sequence.cs?highlight=7)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Order> Orders { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.HasSequence<int>("OrderNumbers");
-    }
-}
-
-public class Order
-{
-    public int OrderId { get; set; }
-    public int OrderNo { get; set; }
-    public string Url { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/Sequence.cs?name=model&highlight=7)]
 
 You can also configure additional aspect of the sequence, such as its schema, start value, and increment.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/SequenceConfigured.cs?highlight=7,8,9)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Order> Orders { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.HasSequence<int>("OrderNumbers", schema: "shared")
-            .StartsAt(1000)
-            .IncrementsBy(5);
-    }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/SequenceConfigured.cs?name=sequence&highlight=7,8,9)]
 
 Once a sequence is introduced, you can use it to generate values for properties in your model. For example, you can use [Default Values](default-values.md) to insert the next value from the sequence.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/SequenceUsed.cs?highlight=11,12,13)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Order> Orders { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.HasSequence<int>("OrderNumbers", schema: "shared")
-            .StartsAt(1000)
-            .IncrementsBy(5);
-
-        modelBuilder.Entity<Order>()
-            .Property(o => o.OrderNo)
-            .HasDefaultValueSql("NEXT VALUE FOR shared.OrderNumbers");
-    }
-}
-
-public class Order
-{
-    public int OrderId { get; set; }
-    public int OrderNo { get; set; }
-    public string Url { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/SequenceUsed.cs?name=default&highlight=11,12,13)]

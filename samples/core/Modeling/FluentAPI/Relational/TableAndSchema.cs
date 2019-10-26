@@ -8,8 +8,10 @@ namespace EFModeling.FluentAPI.Relational.TableAndSchema
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region table
             modelBuilder.Entity<Blog>()
                 .ToTable("blogs", schema: "blogging");
+            #endregion
         }
     }
 
