@@ -25,7 +25,7 @@ When foreign key columns are not included in the model, the association informat
 
 You can choose to use one or both types of associations in your model. However, if you have a pure many-to-many relationship that is connected by a join table that contains only foreign keys, the EF will use an independent association to manage such many-to-many relationship.   
 
-The following image shows a conceptual model that was created with the Entity Framework Designer. The model contains two entities that participate in one-to-many relationship. Both entities have navigation properties. **Course** is the depend entity and has the **DepartmentID** foreign key property defined.
+The following image shows a conceptual model that was created with the Entity Framework Designer. The model contains two entities that participate in one-to-many relationship. Both entities have navigation properties. **Course** is the dependent entity and has the **DepartmentID** foreign key property defined.
 
 ![Department and Course tables with navigation properties](~/ef6/media/relationshipefdesigner.png)
 
