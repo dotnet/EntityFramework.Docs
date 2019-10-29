@@ -69,4 +69,4 @@ public class Blog
 
 You can also specify a schema that the table belongs to.
 
-[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/TableAndSchema.cs?name=table&highlight=2)]
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/TableAndSchema.cs?name=Table&highlight=2)]

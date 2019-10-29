@@ -25,7 +25,7 @@ You can use the Fluent API to specify an index on a single property. By default,
 
 You can also specify that an index should be unique, meaning that no two entities can have the same value(s) for the given property(s).
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IndexUnique.cs?name=modelBuilder&highlight=3)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IndexUnique.cs?name=ModelBuilder&highlight=3)]
 
 You can also specify an index over more than one column.
 
