@@ -2,7 +2,7 @@
 
 namespace EFModeling.FluentAPI.Relational.SequenceUsed
 {
-    #region default
+    #region Default
     class MyContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }

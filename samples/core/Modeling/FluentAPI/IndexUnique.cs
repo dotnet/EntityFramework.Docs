@@ -8,7 +8,7 @@ namespace EFModeling.FluentAPI.IndexUnique
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region modelBuilder
+            #region ModelBuilder
             modelBuilder.Entity<Blog>()
                 .HasIndex(b => b.Url)
                 .IsUnique();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.FluentAPI.Relationships.Required
 {
-    #region required
+    #region Required
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }

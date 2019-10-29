@@ -32,4 +32,4 @@ You can also configure additional aspect of the sequence, such as its schema, st
 
 Once a sequence is introduced, you can use it to generate values for properties in your model. For example, you can use [Default Values](default-values.md) to insert the next value from the sequence.
 
-[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/SequenceUsed.cs?name=default&highlight=11,12,13)]
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/SequenceUsed.cs?name=default&highlight=13)]

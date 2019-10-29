@@ -9,7 +9,7 @@ namespace EFModeling.Conventions.Relationships.OneToOne
         public DbSet<BlogImage> BlogImages { get; set; }
     }
 
-    #region property
+    #region Property
     public class Blog
     {
         public int BlogId { get; set; }
