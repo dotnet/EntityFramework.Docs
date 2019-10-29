@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.Conventions.IncludedTypes
 {
+    #region IncludedTypes
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -36,4 +37,5 @@ namespace EFModeling.Conventions.IncludedTypes
         public string Username { get; set; }
         public string Action { get; set; }
     }
+    #endregion
 }

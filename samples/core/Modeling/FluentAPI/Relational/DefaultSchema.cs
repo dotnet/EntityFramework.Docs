@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.Relational.DefautlSchema
+namespace EFModeling.FluentAPI.Relational.DefaultSchema
 {
+    #region DefaultSchema
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -11,6 +12,7 @@ namespace EFModeling.FluentAPI.Relational.DefautlSchema
             modelBuilder.HasDefaultSchema("blogging");
         }
     }
+    #endregion
 
     public class Blog
     {

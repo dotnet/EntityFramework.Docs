@@ -15,27 +15,9 @@ One of the following methods can be used to setup/create a primary key.
 
 By convention, a property named `Id` or `<type name>Id` will be configured as the key of an entity.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/KeyId.cs?highlight=3)] -->
-``` csharp
-class Car
-{
-    public string Id { get; set; }
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/KeyId.cs?name=KeyId&highlight=3)]
 
-    public string Make { get; set; }
-    public string Model { get; set; }
-}
-```
-
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/KeyTypeNameId.cs?highlight=3)] -->
-``` csharp
-class Car
-{
-    public string CarId { get; set; }
-
-    public string Make { get; set; }
-    public string Model { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/KeyTypeNameId.cs?name=KeyIdhighlight=3)]
 
 ## Data Annotations
 

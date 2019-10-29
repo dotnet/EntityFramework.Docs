@@ -8,6 +8,7 @@ namespace EFModeling.Conventions.KeyTypeNameId
         public DbSet<Car> Cars { get; set; }
     }
 
+    #region KeyId
     class Car
     {
         public string CarId { get; set; }
@@ -15,4 +16,5 @@ namespace EFModeling.Conventions.KeyTypeNameId
         public string Make { get; set; }
         public string Model { get; set; }
     }
+    #endregion
 }

@@ -1,21 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace EFModeling.Conventions.AlternateKey
+namespace Intro
 {
-    #region AlternateKey
-    class MyContext : DbContext
+    public class BloggingContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            modelBuilder.Entity<Post>()
-                .HasOne(p => p.Blog)
-                .WithMany(b => b.Posts)
-                .HasForeignKey(p => p.BlogUrl)
-                .HasPrincipalKey(b => b.Url);
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=Blogging;Integrated Security=True");
         }
     }
 
@@ -23,7 +19,7 @@ namespace EFModeling.Conventions.AlternateKey
     {
         public int BlogId { get; set; }
         public string Url { get; set; }
-
+        public int Rating { get; set; }
         public List<Post> Posts { get; set; }
     }
 
@@ -33,8 +29,7 @@ namespace EFModeling.Conventions.AlternateKey
         public string Title { get; set; }
         public string Content { get; set; }
 
-        public string BlogUrl { get; set; }
+        public int BlogId { get; set; }
         public Blog Blog { get; set; }
     }
-    #endregion
 }
