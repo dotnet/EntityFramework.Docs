@@ -67,7 +67,7 @@ Read the [section on owned entity types](xref:core/modeling/owned-entities) for 
 
 ### Model-level query filters
 
-EF Core 2.0 includes a new feature we call Model-level query filters. This feature allows LINQ query predicates (a boolean expression typically passed to the LINQ Where query operator) to be defined directly on Entity Types in the metadata model (usually in OnModelCreating). Such filters are automatically applied to any LINQ queries involving those Entity Types, including Entity Types referenced indirectly, such as through the use of Include or direct navigation property references. Some common applications of this feature are:
+EF Core 2.0 includes a new feature we call Model-level query filters. This feature allows LINQ query predicates (a boolean expression typically passed to the LINQ Where query operator) to be defined directly on Entity Types in the metadata model (usually in `OnModelCreating`). Such filters are automatically applied to any LINQ queries involving those Entity Types, including Entity Types referenced indirectly, such as through the use of Include or direct navigation property references. Some common applications of this feature are:
 
 - Soft delete - An Entity Types defines an IsDeleted property.
 - Multi-tenancy - An Entity Type defines a TenantId property.
@@ -86,14 +86,14 @@ public class BloggingContext : DbContext
     {
         modelBuilder.Entity<Post>().HasQueryFilter(
             p => !p.IsDeleted
-            && p.TenantId == this.TenantId );
+            && p.TenantId == this.TenantId);
     }
 }
 ```
 
-We define a model-level filter that implements multi-tenancy and soft-delete for instances of the `Post` Entity Type. Note the use of a DbContext instance level property: `TenantId`. Model-level filters will use the value from the correct context instance (that is, the context instance that is executing the query).
+We define a model-level filter that implements multi-tenancy and soft-delete for instances of the `Post` Entity Type. Note the use of a `DbContext` instance-level property: `TenantId`. Model-level filters will use the value from the correct context instance (that is, the context instance that is executing the query).
 
-Filters may be disabled for individual LINQ queries using the IgnoreQueryFilters() operator.
+Filters may be disabled for individual LINQ queries using the `IgnoreQueryFilters()` operator.
 
 #### Limitations
 
@@ -114,7 +114,7 @@ public class BloggingContext : DbContext
     [DbFunction]
     public static int PostReadCount(int blogId)
     {
-        throw new Exception();
+        throw new NotImplementedException();
     }
 }
 ```
@@ -130,9 +130,9 @@ var query =
 
 A few things to note:
 
-- By convention the name of the method is used as the name of a function (in this case a user defined function) when generating the SQL, but you can override the name and schema during method registration
-- Currently only scalar functions are supported
-- You must create the mapped function in the database. EF Core migrations will not take care of creating it
+- By convention the name of the method is used as the name of a function (in this case a user-defined function) when generating the SQL, but you can override the name and schema during method registration.
+- Currently only scalar functions are supported.
+- You must create the mapped function in the database. EF Core migrations will not take care of creating it.
 
 ### Self-contained type configuration for code first
 
@@ -141,11 +141,11 @@ In EF6 it was possible to encapsulate the code first configuration of a specific
 ``` csharp
 class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {
-  public void Configure(EntityTypeBuilder<Customer> builder)
-  {
-     builder.HasKey(c => c.AlternateKey);
-     builder.Property(c => c.Name).HasMaxLength(200);
-   }
+    public void Configure(EntityTypeBuilder<Customer> builder)
+    {
+        builder.HasKey(c => c.AlternateKey);
+        builder.Property(c => c.Name).HasMaxLength(200);
+    }
 }
 
 ...
@@ -157,7 +157,7 @@ builder.ApplyConfiguration(new CustomerConfiguration());
 
 ### DbContext pooling
 
-The basic pattern for using EF Core in an ASP.NET Core application usually involves registering a custom DbContext type into the dependency injection system and later obtaining instances of that type through constructor parameters in controllers. This means a new instance of the DbContext is created for each requests.
+The basic pattern for using EF Core in an ASP.NET Core application usually involves registering a custom `DbContext` type into the dependency injection system and later obtaining instances of that type through constructor parameters in controllers. This means a new instance of the DbContext is created for each requests.
 
 In version 2.0 we are introducing a new way to register custom DbContext types in dependency injection which transparently introduces a pool of reusable DbContext instances. To use DbContext pooling, use the `AddDbContextPool` instead of `AddDbContext` during service registration:
 
@@ -208,7 +208,7 @@ EF Core supports automatic generation of key values through a variety of mechani
 
 ## Query
 
-### Improved LINQ Translation
+### Improved LINQ translation
 
 Enables more queries to successfully execute, with more logic being evaluated in the database (rather than in-memory) and less data unnecessarily being retrieved from the database.
 
@@ -218,7 +218,7 @@ This work improves the SQL that is generated for group joins. Group joins are mo
 
 ### String interpolation in FromSql and ExecuteSqlCommand
 
-C# 6 introduced String Interpolation, a feature that allows C# expressions to be directly embedded in string literals, providing a nice way of building strings at runtime. In EF Core 2.0 we added special support for interpolated strings to our two primary APIs that accept raw SQL strings: `FromSql` and `ExecuteSqlCommand`. This new support allows C# string interpolation to be used in a 'safe' manner. That is, in a way that protects against common SQL injection mistakes that can occur when dynamically constructing SQL at runtime.
+C# 6 introduced String Interpolation, a feature that allows C# expressions to be directly embedded in string literals, providing a nice way of building strings at runtime. In EF Core 2.0 we added special support for interpolated strings to our two primary APIs that accept raw SQL strings: `FromSql` and `ExecuteSqlCommand`. This new support allows C# string interpolation to be used in a "safe" manner. That is, in a way that protects against common SQL injection mistakes that can occur when dynamically constructing SQL at runtime.
 
 Here is an example:
 
@@ -252,7 +252,7 @@ WHERE ""City"" = @p0
 
 ### EF.Functions.Like()
 
-We have added the EF.Functions property which can be used by EF Core or providers to define methods that map to database functions or operators so that those can be invoked in LINQ queries. The first example of such a method is Like():
+We have added the EF.Functions property which can be used by EF Core or providers to define methods that map to database functions or operators so that those can be invoked in LINQ queries. The first example of such a method is `Like()`:
 
 ``` csharp
 var aCustomers =
@@ -265,7 +265,7 @@ Note that Like() comes with an in-memory implementation, which can be handy when
 
 ## Database management
 
-### Pluralization hook for DbContext Scaffolding
+### Pluralization hook for DbContext scaffolding
 
 EF Core 2.0 introduces a new *IPluralizer* service that is used to singularize entity type names and pluralize DbSet names. The default implementation is a no-op, so this is just a hook where folks can easily plug in their own pluralizer.
 
@@ -306,9 +306,9 @@ Significantly augments how providers can interact with the model and simplifies 
 
 EF Core 2.0 will now build a different [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs) for each different provider being used. This is usually transparent to the application. This has facilitated a simplification of lower-level metadata APIs such that any access to *common relational metadata concepts* is always made through a call to `.Relational` instead of `.SqlServer`, `.Sqlite`, etc.
 
-### Consolidated Logging and Diagnostics
+### Consolidated logging and diagnostics
 
-Logging (based on ILogger) and Diagnostics (based on DiagnosticSource) mechanisms now share more code.
+Logging (based on `ILogger`) and Diagnostics (based on `DiagnosticSource`) mechanisms now share more code.
 
 The event IDs for messages sent to an ILogger have changed in 2.0. The event IDs are now unique across EF Core code. These messages now also follow the standard pattern for structured logging used by, for example, MVC.
 
