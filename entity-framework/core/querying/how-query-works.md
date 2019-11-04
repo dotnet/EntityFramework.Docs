@@ -28,7 +28,7 @@ The following is a high level overview of the process each query goes through.
       * If so, the existing entity is returned <sup>(1)</sup>
       * If not, a new entity is created and returned
 
-<sup>(1)</sup> No tracking queries use weak references to keep track of entities that have already been returned. If a previous result with the same identity goes out of scope, and garbage collection runs, you may get a new entity instance.
+<sup>(1)</sup> No-tracking queries use weak references to keep track of entities that have already been returned. If a previous result with the same identity goes out of scope, and garbage collection runs, you may get a new entity instance.
 
 ## When queries are executed
 
