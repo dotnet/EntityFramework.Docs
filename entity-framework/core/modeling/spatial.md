@@ -265,7 +265,7 @@ Geometry.AsBinary() | ✔ | ✔ | ✔ | ✔
 Geometry.AsText() | ✔ | ✔ | ✔ | ✔
 Geometry.Boundary | ✔ | | ✔ | ✔
 Geometry.Buffer(double) | ✔ | ✔ | ✔ | ✔
-Geometry.Buffer(double, int) | | | ✔
+Geometry.Buffer(double, int) | | | ✔ | ✔
 Geometry.Centroid | ✔ | | ✔ | ✔
 Geometry.Contains(Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry.ConvexHull() | ✔ | ✔ | ✔ | ✔
@@ -281,17 +281,17 @@ Geometry.EqualsExact(Geometry) | | | | ✔
 Geometry.EqualsTopologically(Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry.GeometryType | ✔ | ✔ | ✔ | ✔
 Geometry.GetGeometryN(int) | ✔ | | ✔ | ✔
-Geometry.InteriorPoint | ✔ | | ✔
+Geometry.InteriorPoint | ✔ | | ✔ | ✔
 Geometry.Intersection(Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry.Intersects(Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry.IsEmpty | ✔ | ✔ | ✔ | ✔
 Geometry.IsSimple | ✔ | | ✔ | ✔
 Geometry.IsValid | ✔ | ✔ | ✔ | ✔
-Geometry.IsWithinDistance(Geometry, double) | ✔ | | ✔
+Geometry.IsWithinDistance(Geometry, double) | ✔ | | ✔ | ✔
 Geometry.Length | ✔ | ✔ | ✔ | ✔
 Geometry.NumGeometries | ✔ | ✔ | ✔ | ✔
 Geometry.NumPoints | ✔ | ✔ | ✔ | ✔
-Geometry.OgcGeometryType | ✔ | ✔ | ✔
+Geometry.OgcGeometryType | ✔ | ✔ | ✔ | ✔
 Geometry.Overlaps(Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry.PointOnSurface | ✔ | | ✔ | ✔
 Geometry.Relate(Geometry, string) | ✔ | | ✔ | ✔
@@ -301,7 +301,7 @@ Geometry.SymmetricDifference(Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry.ToBinary() | ✔ | ✔ | ✔ | ✔
 Geometry.ToText() | ✔ | ✔ | ✔ | ✔
 Geometry.Touches(Geometry) | ✔ | | ✔ | ✔
-Geometry.Union() | | | ✔
+Geometry.Union() | | | ✔ | ✔
 Geometry.Union(Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry.Within(Geometry) | ✔ | ✔ | ✔ | ✔
 GeometryCollection.Count | ✔ | ✔ | ✔ | ✔
