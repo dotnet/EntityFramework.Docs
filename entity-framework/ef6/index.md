@@ -36,7 +36,7 @@ Consider using EF Core in new applications if the feature set matches your requi
 
 ## [Get Started](~/ef6/get-started.md)
 
-Add the EntityFramework NuGet package to your project or install the Entity Framework Tools for Visual Studio. Then watch videos, read tutorials, and advanced documentation to help you make the most of EF6.
+Add the EntityFramework NuGet package to your project or install the [Entity Framework Tools for Visual Studio](https://docs.microsoft.com/en-us/visualstudio/data-tools/entity-data-model-tools-in-visual-studio). Then watch videos, read tutorials, and advanced documentation to help you make the most of EF6.
 
 ## Past Entity Framework Versions
 
