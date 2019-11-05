@@ -30,8 +30,7 @@ This type of client-side execution is desirable in some situations, but in many 
 For example, if EF Core 2.2 couldn't translate a predicate in a `Where()` call, it executed an SQL statement without a filter, transferred all the rows from the database, and then filtered them in-memory:
 
 ``` csharp
-var specialCustomers =
-  context.Customers
+var specialCustomers = context.Customers
     .Where(c => c.Name.StartsWith(n) && IsSpecialCustomer(c));
 ```
 
@@ -43,8 +42,7 @@ When EF Core 3.0 detects expressions that can't be translated anywhere else in t
 To evaluate a predicate condition on the client as in the previous example, developers now need to explicitly switch evaluation of the query to LINQ to Objects:
 
 ``` csharp
-var specialCustomers =
-  context.Customers
+var specialCustomers = context.Customers
     .Where(c => c.Name.StartsWith(n))
     .AsEnumerable() // switches to LINQ to Objects
     .Where(c => IsSpecialCustomer(c));
@@ -74,13 +72,13 @@ Asynchronous query results are now exposed using the new standard `IAsyncEnumera
 
 ``` csharp
 var orders =
-  from o in context.Orders
-  where o.Status == OrderStatus.Pending
-  select o;
+    from o in context.Orders
+    where o.Status == OrderStatus.Pending
+    select o;
 
 await foreach(var o in orders.AsAsyncEnumerable())
 {
-  Process(o);
+    Process(o);
 }
 ```
 
@@ -95,10 +93,10 @@ For example, in the following class, properties marked as of type `string?` will
 ``` csharp
 public class Customer
 {
-  public int Id { get; set; }
-  public string FirstName { get; set; }
-  public string LastName { get; set; }
-  public string? MiddleName { get; set; }
+    public int Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string? MiddleName { get; set; }
 }
 ```
 
@@ -115,15 +113,15 @@ For example, to manipulate command text, you can create an `IDbCommandIntercepto
 ``` csharp
 public class HintCommandInterceptor : DbCommandInterceptor
 {
-  public override InterceptionResult ReaderExecuting(
-    DbCommand command,
-    CommandEventData eventData,
-    InterceptionResult result)
-  {
-    // Manipulate the command text, etc. here...
-    command.CommandText += " OPTION (OPTIMIZE FOR UNKNOWN)";
-    return result;
-  }
+    public override InterceptionResult ReaderExecuting(
+        DbCommand command,
+        CommandEventData eventData,
+        InterceptionResult result)
+    {
+        // Manipulate the command text, etc. here...
+        command.CommandText += " OPTION (OPTIMIZE FOR UNKNOWN)";
+        return result;
+    }
 }
 ```
 
@@ -131,8 +129,8 @@ And register it with your `DbContext`:
 
 ``` csharp
 services.AddDbContext(b => b
-  .UseSqlServer(connectionString)
-  .AddInterceptors(new HintCommandInterceptor()));
+    .UseSqlServer(connectionString)
+    .AddInterceptors(new HintCommandInterceptor()));
 ```
 
 ## Reverse engineering of database views
@@ -151,16 +149,16 @@ And the tool will now automatically scaffold types for views and tables without 
 ``` csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
-  modelBuilder.Entity<Names>(entity =>
-  {
-    entity.HasNoKey();
-    entity.ToView("Names");
-  });
+    modelBuilder.Entity<Names>(entity =>
+    {
+        entity.HasNoKey();
+        entity.ToView("Names");
+    });
 
-  modelBuilder.Entity<Things>(entity =>
-  {
-    entity.HasNoKey();
-  });
+    modelBuilder.Entity<Things>(entity =>
+    {
+        entity.HasNoKey();
+    });
 }
 ```
 
