@@ -18,7 +18,7 @@ EF Core 2.2 now supports working with spatial data from various databases using 
 Spatial data support is implemented as a series of provider-specific extension packages.
 Each of these packages contributes mappings for NTS types and methods, and the corresponding spatial types and functions in the database.
 Such provider extensions are now available for [SQL Server](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/), [SQLite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/), and [PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite/) (from the [Npgsql project](https://www.npgsql.org/)).
-Spatial types can be used directly with the [EF Core in-memory provider](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/) without additional extensions.
+Spatial types can be used directly with the [EF Core in-memory provider](xref:core/providers/in-memory/index) without additional extensions.
 
 Once the provider extension is installed, you can add properties of supported types to your entities. For example:
 

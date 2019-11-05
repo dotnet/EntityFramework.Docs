@@ -26,7 +26,7 @@ The Cosmos provider has a number of limitations. Many of these limitations are a
 
 ## Azure Cosmos DB limitations
 
-You can see the full overview of [Azure Cosmos DB supported features](https://docs.microsoft.com/en-us/azure/cosmos-db/modeling-data), these are the most notable differences compared to a relational database:
+You can see the full overview of [Azure Cosmos DB supported features](/azure/cosmos-db/modeling-data), these are the most notable differences compared to a relational database:
 
 - Client-initiated transactions are not supported
 - Some cross-partition queries are either not supported or much slower depending on the operators involved

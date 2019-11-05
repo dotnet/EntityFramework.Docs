@@ -88,4 +88,4 @@ Depending on the constraints of your deployment the initialization code can be e
 * Running the initialization app locally
 * Deploying the initialization app with the main app, invoking the initialization routine and disabling or removing the initialization app.
 
-This can usually be automated by using [publish profiles](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/visual-studio-publish-profiles).
+This can usually be automated by using [publish profiles](/aspnet/core/host-and-deploy/visual-studio-publish-profiles).

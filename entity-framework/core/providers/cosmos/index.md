@@ -13,7 +13,10 @@ uid: core/providers/cosmos/index
 
 This database provider allows Entity Framework Core to be used with Azure Cosmos DB. The provider is maintained as part of the [Entity Framework Core Project](https://github.com/aspnet/EntityFrameworkCore).
 
-It is strongly recommended to familiarize yourself with the [Azure Cosmos DB documentation](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) before reading this section.
+It is strongly recommended to familiarize yourself with the [Azure Cosmos DB documentation](/azure/cosmos-db/introduction) before reading this section.
+
+>[!NOTE]
+> This provider only works with the SQL API of Azure Cosmos DB.
 
 ## Install
 
@@ -33,7 +36,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 
 ***
 
-## Get Started
+## Get started
 
 > [!TIP]  
 > You can view this article's [sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Cosmos).
@@ -43,7 +46,7 @@ Like for other providers the first step is to call `UseCosmos`:
 [!code-csharp[Configuration](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=Configuration)]
 
 > [!WARNING]
-> The endpoint and key are hardcoded here for simplicity, but in a production app these should be [stored securily](https://docs.microsoft.com/aspnet/core/security/app-secrets#secret-manager)
+> The endpoint and key are hardcoded here for simplicity, but in a production app these should be [stored securily](/aspnet/core/security/app-secrets#secret-manager)
 
 In this example `Order` is a simple entity with a reference to the [owned type](../../modeling/owned-entities.md) `StreetAddress`.
 
@@ -56,9 +59,9 @@ Saving and quering data follows the normal EF pattern:
 [!code-csharp[HelloCosmos](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=HelloCosmos)]
 
 > [!IMPORTANT]
-> Calling `EnsureCreated` is necessary to create the required collections and insert the [seed data](../../modeling/data-seeding.md) if present in the model. However `EnsureCreated` should only be called during deployment, not normal operation, as it may cause performance issues.
+> Calling `EnsureCreated` is necessary to create the required containers and insert the [seed data](../../modeling/data-seeding.md) if present in the model. However `EnsureCreated` should only be called during deployment, not normal operation, as it may cause performance issues.
 
-## Cosmos-specific Model Customization
+## Cosmos-specific model customization
 
 By default all entity types are mapped to the same container, named after the derived context (`"OrderContext"` in this case). To change the default container name use `HasDefaultContainer`:
 
@@ -70,7 +73,24 @@ To map an entity type to a different container use `ToContainer`:
 
 To identify the entity type that a given item represent EF Core adds a discriminator value even if there are no derived entity types. The name and value of the discriminator [can be changed](../../modeling/inheritance.md).
 
-## Embedded Entities
+If no other entity type will ever be stored in the same container the discriminator can be removed by calling `HasNoDiscriminator()`:
+
+[!code-csharp[NoDiscriminator](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=NoDiscriminator)]
+
+### Partition keys
+
+By default EF Core will create containers with the partition key set to `"__partitionKey"` without supplying any value for it when inserting items. But to fully leverage the performance capabilities of Azure Cosmos a [carefully selected partition key](/azure/cosmos-db/partition-data) should be used. It can be configured by calling `.HasPartitionKey()`:
+
+[!code-csharp[PartitionKey](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=PartitionKey)]
+
+>[!NOTE]
+>The partition key property can be of any type as long as it is [converted to string](xref:core/modeling/value-conversions).
+
+Once configured the partition key property should always have a non-null value. When issuing a query a condition can be added to make it single-partition.
+
+[!code-csharp[PartitionKey](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=PartitionKey)]
+
+## Embedded entities
 
 For Cosmos owned entities are embedded in the same item as the owner. To change a property name use `ToJsonProperty`:
 
@@ -81,12 +101,11 @@ With this configuration the order from the example above is stored like this:
 ``` json
 {
     "Id": 1,
-    "Discriminator": "Order",
+    "PartitionKey": "1",
     "TrackingNumber": null,
-    "id": "Order|1",
+    "id": "1",
     "Address": {
         "ShipsToCity": "London",
-        "Discriminator": "StreetAddress",
         "ShipsToStreet": "221 B Baker St"
     },
     "_rid": "6QEKAM+BOOABAAAAAAAAAA==",
@@ -115,12 +134,10 @@ They will be persisted in this way:
     "ShippingCenters": [
         {
             "City": "Phoenix",
-            "Discriminator": "StreetAddress",
             "Street": "500 S 48th Street"
         },
         {
             "City": "Anaheim",
-            "Discriminator": "StreetAddress",
             "Street": "5650 Dolly Ave"
         }
     ],
@@ -139,7 +156,7 @@ Internally EF Core always needs to have unique key values for all tracked entiti
 > [!TIP]
 > When necessary the default primary key for the owned entity types can be changed, but then key values should be provided explicitly.
 
-## Working with Disconnected Entities
+## Working with disconnected entities
 
 Every item needs to have an `id` value that is unique for the given partition key. By default EF Core generates the value by concatenating the discriminator and the primary key values, using '|' as a delimiter. The key values are only generated when an entity enters the `Added` state. This might pose a problem when [attaching entities](../../saving/disconnected-entities.md) if they don't have an `id` property on the .NET type to store the value.
 
@@ -152,18 +169,18 @@ This is the resulting JSON:
 ``` json
 {
     "Id": 1,
-    "Discriminator": "Order",
-    "TrackingNumber": null,
-    "id": "Order|1",
-    "Address": {
-        "ShipsToCity": "London",
-        "Discriminator": "StreetAddress",
-        "ShipsToStreet": "3 Abbey Road"
-    },
-    "_rid": "6QEKAM+BOOABAAAAAAAAAA==",
-    "_self": "dbs/6QEKAA==/colls/6QEKAM+BOOA=/docs/6QEKAM+BOOABAAAAAAAAAA==/",
-    "_etag": "\"00000000-0000-0000-683c-8f7ac48f01d5\"",
+    "Discriminator": "Distributor",
+    "id": "Distributor|1",
+    "ShippingCenters": [
+        {
+            "City": "Phoenix",
+            "Street": "500 S 48th Street"
+        }
+    ],
+    "_rid": "JBwtAN8oNYEBAAAAAAAAAA==",
+    "_self": "dbs/JBwtAA==/colls/JBwtAN8oNYE=/docs/JBwtAN8oNYEBAAAAAAAAAA==/",
+    "_etag": "\"00000000-0000-0000-9377-d7a1ae7c01d5\"",
     "_attachments": "attachments/",
-    "_ts": 1568163739
+    "_ts": 1572917100
 }
 ```
