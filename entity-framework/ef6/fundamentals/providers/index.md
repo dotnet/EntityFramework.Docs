@@ -3,6 +3,7 @@ title: "Entity Framework Providers - EF6"
 author: divega
 ms.date: "06/27/2018"
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
+uid: ef6/fundamentals/providers/index
 ---
 
 # Entity Framework 6 Providers
