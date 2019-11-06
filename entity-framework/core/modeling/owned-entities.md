@@ -1,9 +1,9 @@
 ---
 title: Owned Entity Types - EF Core
+description: How to configure owned entity types or aggregates when using Entity Framework Core
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 02/26/2018
-ms.assetid: 2B0BADCE-E23E-4B28-B8EE-537883E16DF3
+ms.date: 11/06/2019
 uid: core/modeling/owned-entities
 ---
 # Owned Entity Types
@@ -13,7 +13,7 @@ uid: core/modeling/owned-entities
 
 EF Core allows you to model entity types that can only ever appear on navigation properties of other entity types. These are called _owned entity types_. The entity containing an owned entity type is its _owner_.
 
-Owned entities are essentially a part of the owner and cannot exist without it, they are conceptually similar to [aggregates](https://martinfowler.com/bliki/DDD_Aggregate.html).
+Owned entities are essentially a part of the owner and cannot exist without it, they are conceptually similar to [aggregates](https://martinfowler.com/bliki/DDD_Aggregate.html). This means that the owned type is by definition on the dependent side of the relationship with the owner.
 
 ## Explicit configuration
 
@@ -68,7 +68,7 @@ To configure a different PK call `HasKey`:
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
 
 > [!NOTE]
-> Before EF Core 3.0 `WithOwner()` method didn't exist so this call should be removed.
+> Before EF Core 3.0 `WithOwner()` method didn't exist so this call should be removed. Also the primary key was not discovered automatically so it always had be specified.
 
 ## Mapping owned types with table splitting
 
@@ -79,6 +79,9 @@ By default, EF Core will name the database columns for the properties of the own
 You can use the `HasColumnName` method to rename those columns:
 
 [!code-csharp[ColumnNames](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=ColumnNames)]
+
+> [!NOTE]
+> Most of the normal entity type configuration methods like [Ignore](/dotnet/api/microsoft.entityframeworkcore.metadata.builders.ownednavigationbuilder.ignore) can be called in the same way.
 
 ## Sharing the same .NET type among multiple owned types
 
@@ -100,6 +103,8 @@ In this example `OrderDetails` owns `BillingAddress` and `ShippingAddress`, whic
 
 [!code-csharp[OrderStatus](../../../samples/core/Modeling/OwnedEntities/OrderStatus.cs?name=OrderStatus)]
 
+Each navigation to an owned type defines a separate entity type with completely independent configuration.
+
 In addition to nested owned types, an owned type can reference a regular entity, it can be either the owner or a different entity as long as the owned entity is on the dependent side. This capability sets owned entity types apart from complex types in EF6.
 
 [!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
@@ -108,7 +113,7 @@ It is possible to chain the `OwnsOne` method in a fluent call to configure this 
 
 [!code-csharp[OwnsOneNested](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneNested)]
 
-Notice the `WithOwner` call used to configure the navigation property pointing back at the owner.
+Notice the `WithOwner` call used to configure the navigation property pointing back at the owner. To configure a navigation to the owner entity type that's not part of the ownership relationship `WithOwner()` should be called without any arguments.
 
 It is possible to achieve the result using `OwnedAttribute` on both `OrderDetails` and `StreetAdress`.
 
@@ -117,6 +122,8 @@ It is possible to achieve the result using `OwnedAttribute` on both `OrderDetail
 Also unlike EF6 complex types, owned types can be stored in a separate table from the owner. In order to override the convention that maps an owned type to the same table as the owner, you can simply call `ToTable` and provide a different table name. The following example will map `OrderDetails` and its two addresses to a separate table from `DetailedOrder`:
 
 [!code-csharp[OwnsOneTable](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneTable)]
+
+It is also possible to use the `TableAttribute` to accomplish this, but note that this would fail if there are multiple navigations to the owned type since in that case multiple entity types would be mapped to the same table.
 
 ## Querying owned types
 
@@ -135,7 +142,7 @@ Some of these limitations are fundamental to how owned entity types work, but so
 
 ### Current shortcomings
 
-- Inheritance hierarchies that include owned entity types are not supported
+- Owned entity types cannot have inheritance hierarchies
 - Reference navigations to owned entity types cannot be null unless they are explicitly mapped to a separate table from the owner
 - Instances of owned entity types cannot be shared by multiple owners (this is a well-known scenario for value objects that cannot be implemented using owned entity types)
 
