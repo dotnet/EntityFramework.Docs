@@ -50,11 +50,9 @@ Resolving a concurrency conflict involves merging the pending changes from the c
 
 **There are three sets of values available to help resolve a concurrency conflict:**
 
-* **Current values** are the values that the application was attempting to write to the database.
-
-* **Original values** are the values that were originally retrieved from the database, before any edits were made.
-
-* **Database values** are the values currently stored in the database.
+- **Current values** are the values that the application was attempting to write to the database.
+- **Original values** are the values that were originally retrieved from the database, before any edits were made.
+- **Database values** are the values currently stored in the database.
 
 The general approach to handle a concurrency conflicts is:
 

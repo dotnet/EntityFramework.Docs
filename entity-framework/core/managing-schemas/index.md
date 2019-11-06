@@ -4,6 +4,7 @@ author: bricelam
 ms.date: 10/30/2017
 ---
 # Managing Database Schemas
+
 EF Core provides two primary ways of keeping your EF Core model and database schema in sync. To choose between the two,
 decide whether your EF Core model or the database schema is the source of truth.
 

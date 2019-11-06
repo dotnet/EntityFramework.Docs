@@ -1,9 +1,9 @@
 ---
 title: Azure Cosmos DB Provider - Limitations - EF Core
+description: The limitations of the Entity Framework Core Azure Cosmos DB provider
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 09/12/2019
-ms.assetid: 9d02a2cd-484e-4687-b8a8-3748ba46dbc9
+ms.date: 11/05/2019
 uid: core/providers/cosmos/limitations
 ---
 # EF Core Azure Cosmos DB Provider Limitations
@@ -26,7 +26,7 @@ The Cosmos provider has a number of limitations. Many of these limitations are a
 
 ## Azure Cosmos DB limitations
 
-You can see the full overview of [Azure Cosmos DB supported features](https://docs.microsoft.com/en-us/azure/cosmos-db/modeling-data), these are the most notable differences compared to a relational database:
+You can see the full overview of [Azure Cosmos DB supported features](/azure/cosmos-db/modeling-data), these are the most notable differences compared to a relational database:
 
 - Client-initiated transactions are not supported
 - Some cross-partition queries are either not supported or much slower depending on the operators involved

@@ -3,6 +3,7 @@ title: "Past Releases of Entity Framework - EF6"
 author: divega
 ms.date: "09/12/2019"
 ms.assetid: 1060bb99-765f-4f32-aaeb-d6635d3dbd3e
+uid: ef6/what-is-new/past-releases
 ---
 # Past Releases of Entity Framework
 
@@ -136,7 +137,7 @@ The following features apply to Code First only:
 - **DbModelBuilder.Configurations.AddFromAssembly method** allows you to easily add all configuration classes defined in an assembly when you are using configuration classes with the Code First Fluent API.
 - **[Custom Migrations Operations](https://romiller.com/2013/02/27/ef6-writing-your-own-code-first-migration-operations/)** enabled you to add additional operations to be used in your code-based migrations.
 - **Default transaction isolation level is changed to READ_COMMITTED_SNAPSHOT** for databases created using Code First, allowing for more scalability and fewer deadlocks.
-- **Entity and complex types can now be nestedinside classes**. |
+- **Entity and complex types can now be nestedinside classes**.
 
 ## EF 5.0
 The EF 5.0.0 runtime was released to NuGet in August of 2012.
@@ -144,7 +145,7 @@ This release introduces some new features including enum support, table-valued f
 
 The Entity Framework Designer in Visual Studio 2012 also introduces support for multiple-diagrams per model, coloring of shapes on the design surface and batch import of stored procedures.
 
-Here is a list of content we put together specifically for the EF 5 release.
+Here is a list of content we put together specifically for the EF 5 release:
 
 -   [EF 5 Release Post](https://blogs.msdn.com/b/adonet/archive/2012/08/15/ef5-released.aspx)
 -   New Features in EF5
@@ -211,7 +212,7 @@ Here is a list of content we put together specifically for the EF 5 release.
 The EF 4.3.1 runtime was released to NuGet in February 2012 shortly after EF 4.3.0.
 This patch release included some bug fixes to the EF 4.3 release and introduced better LocalDB support for customers using EF 4.3 with Visual Studio 2012.
 
-Here is a list of content we put together specifically for the EF 4.3.1 release, most of the content provided for EF 4.1 still applies to EF 4.3 as well.
+Here is a list of content we put together specifically for the EF 4.3.1 release, most of the content provided for EF 4.1 still applies to EF 4.3 as well:
 
 -   [EF 4.3.1 Release Blog  Post](https://blogs.msdn.com/b/adonet/archive/2012/02/29/ef4-3-1-and-ef5-beta-1-available-on-nuget.aspx)
 
@@ -229,7 +230,7 @@ The EF 4.2.0 runtime was released to NuGet in November of 2011.
 This release includes bug fixes to the EF 4.1.1 release.
 Because this release only included bug fixes it could have been the EF 4.1.2 patch release but we opted to move to 4.2 to allow us to move away from the date based patch version numbers we used in the 4.1.x releases and adopt the [Semantic Versionsing](https://semver.org) standard for semantic versioning.
 
-Here is a list of content we put together specifically for the EF 4.2 release, the content provided for EF 4.1 still applies to EF 4.2 as well.
+Here is a list of content we put together specifically for the EF 4.2 release, the content provided for EF 4.1 still applies to EF 4.2 as well:
 
 -   [EF 4.2 Release Post](https://blogs.msdn.com/b/adonet/archive/2011/11/01/ef-4-2-released.aspx)
 -   [Code First Walkthrough](https://blogs.msdn.com/b/adonet/archive/2011/09/28/ef-4-2-code-first-walkthrough.aspx)

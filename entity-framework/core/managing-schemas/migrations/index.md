@@ -33,13 +33,19 @@ Install the [command-line tools](xref:core/miscellaneous/cli/index):
 
 After you've [defined your initial model](xref:core/modeling/index), it's time to create the database. To add an initial migration, run the following command.
 
-``` powershell
-Add-Migration InitialCreate
-```
+## [.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` Console
 dotnet ef migrations add InitialCreate
 ```
+
+## [Visual Studio](#tab/vs)
+
+``` powershell
+Add-Migration InitialCreate
+```
+
+***
 
 Three files are added to your project under the **Migrations** directory:
 
@@ -56,25 +62,37 @@ The timestamp in the filename helps keep them ordered chronologically so you can
 
 Next, apply the migration to the database to create the schema.
 
-``` powershell
-Update-Database
-```
+## [.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` Console
 dotnet ef database update
 ```
 
+## [Visual Studio](#tab/vs)
+
+``` powershell
+Update-Database
+```
+
+***
+
 ## Customize migration code
 
 After making changes to your EF Core model, the database schema might be out of sync. To bring it up to date, add another migration. The migration name can be used like a commit message in a version control system. For example, you might choose a name like *AddProductReviews* if the change is a new entity class for reviews.
+
+## [.NET Core CLI](#tab/dotnet-core-cli)
+
+``` Console
+dotnet ef migrations add AddProductReviews
+```
+
+## [Visual Studio](#tab/vs)
 
 ``` powershell
 Add-Migration AddProductReviews
 ```
 
-``` Console
-dotnet ef migrations add AddProductReviews
-```
+***
 
 Once the migration is scaffolded (code generated for it), review the code for accuracy and add, remove or modify any operations required to apply it correctly.
 
@@ -123,13 +141,19 @@ migrationBuilder.DropColumn(
 
 Apply the migration to the database using the appropriate command.
 
-``` powershell
-Update-Database
-```
+## [.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` Console
 dotnet ef database update
 ```
+
+## [Visual Studio](#tab/vs)
+
+``` powershell
+Update-Database
+```
+
+***
 
 ### Empty migrations
 
@@ -145,13 +169,19 @@ Sometimes it's useful to add a migration without making any model changes. In th
 
 Sometimes you add a migration and realize you need to make additional changes to your EF Core model before applying it. To remove the last migration, use this command.
 
-``` powershell
-Remove-Migration
-```
+## [.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` Console
 dotnet ef migrations remove
 ```
+
+## [Visual Studio](#tab/vs)
+
+``` powershell
+Remove-Migration
+```
+
+***
 
 After removing the migration, you can make the additional model changes and add it again.
 
@@ -159,25 +189,37 @@ After removing the migration, you can make the additional model changes and add 
 
 If you already applied a migration (or several migrations) to the database but need to revert it, you can use the same command to apply migrations, but specify the name of the migration you want to roll back to.
 
-``` powershell
-Update-Database LastGoodMigration
-```
+## [.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` Console
 dotnet ef database update LastGoodMigration
 ```
 
+## [Visual Studio](#tab/vs)
+
+``` powershell
+Update-Database LastGoodMigration
+```
+
+***
+
 ## Generate SQL scripts
 
 When debugging your migrations or deploying them to a production database, it's useful to generate a SQL script. The script can then be further reviewed for accuracy and tuned to fit the needs of a production database. The script can also be used in conjunction with a deployment technology. The basic command is as follows.
+
+## [.NET Core CLI](#tab/dotnet-core-cli)
+
+``` Console
+dotnet ef migrations script
+```
+
+## [Visual Studio](#tab/vs)
 
 ``` powershell
 Script-Migration
 ```
 
-``` Console
-dotnet ef migrations script
-```
+***
 
 There are several options to this command.
 

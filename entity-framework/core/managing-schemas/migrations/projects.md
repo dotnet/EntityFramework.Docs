@@ -40,10 +40,16 @@ To do this...
 
 If you did everything correctly, you should be able to add new migrations to the project.
 
-``` powershell
-Add-Migration NewMigration -Project MyApp.Migrations
-```
+## [.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` Console
 dotnet ef migrations add NewMigration --project MyApp.Migrations
 ```
+
+## [Visual Studio](#tab/vs)
+
+``` powershell
+Add-Migration NewMigration -Project MyApp.Migrations
+```
+
+***

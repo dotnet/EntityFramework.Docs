@@ -12,9 +12,11 @@ Cascade delete is commonly used in database terminology to describe a characteri
 EF Core implements several different delete behaviors and allows for the configuration of the delete behaviors of individual relationships. EF Core also implements conventions that automatically configure useful default delete behaviors for each relationship based on the [requiredness of the relationship](../modeling/relationships.md#required-and-optional-relationships).
 
 ## Delete behaviors
+
 Delete behaviors are defined in the *DeleteBehavior* enumerator type and can be passed to the *OnDelete* fluent API to control whether the deletion of a principal/parent entity or the severing of the relationship to dependent/child entities should have a side effect on the dependent/child entities.
 
 There are three actions EF can take when a principal/parent entity is deleted or the relationship to the child is severed:
+
 * The child/dependent can be deleted
 * The child's foreign key values can be set to null
 * The child remains unchanged
@@ -27,6 +29,7 @@ For the second action above, setting a foreign key value to null is not valid if
 There are four delete behaviors, as listed in the tables below.
 
 ### Optional relationships
+
 For optional relationships (nullable foreign key) it _is_ possible to save a null foreign key value, which results in the following effects:
 
 | Behavior Name               | Effect on dependent/child in memory    | Effect on dependent/child in database  |
@@ -37,6 +40,7 @@ For optional relationships (nullable foreign key) it _is_ possible to save a nul
 | **Restrict**                | None                                   | None                                   |
 
 ### Required relationships
+
 For required relationships (non-nullable foreign key) it is _not_ possible to save a null foreign key value, which results in the following effects:
 
 | Behavior Name         | Effect on dependent/child in memory | Effect on dependent/child in database |
@@ -49,6 +53,7 @@ For required relationships (non-nullable foreign key) it is _not_ possible to sa
 In the tables above, *None* can result in a constraint violation. For example, if a principal/child entity is deleted but no action is taken to change the foreign key of a dependent/child, then the database will likely throw on SaveChanges due to a foreign constraint violation.
 
 At a high level:
+
 * If you have entities that cannot exist without a parent, and you want EF to take care for deleting the children automatically, then use *Cascade*.
   * Entities that cannot exist without a parent usually make use of required relationships, for which *Cascade* is the default.
 * If you have entities that may or may not have a parent, and you want EF to take care of nulling out the foreign key for you, then use *ClientSetNull*
@@ -101,7 +106,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with required relationship
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -124,7 +129,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with optional relationship
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -154,7 +159,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.Restrict with required or optional relationship
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -183,7 +188,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.Cascade with required or optional relationship
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -211,7 +216,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with required relationship
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -234,7 +239,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with optional relationship
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
@@ -262,7 +267,7 @@ Let's walk through each variation to understand what is happening.
 
 ### DeleteBehavior.Restrict with required or optional relationship
 
-```console
+``` output
   After loading entities:
     Blog '1' is in state Unchanged with 2 posts referenced.
       Post '1' is in state Unchanged with FK '1' and reference to blog '1'.

@@ -7,6 +7,7 @@ uid: core/what-is-new/ef-core-3.0/breaking-changes
 ---
 
 # Breaking changes included in EF Core 3.0
+
 The following API and behavior changes have the potential to break existing applications when upgrading them to 3.0.0.
 Changes that we expect to only impact database providers are documented under [provider changes](xref:core/providers/provider-log).
 

@@ -3,6 +3,7 @@ using System;
 
 namespace EFModeling.FluentAPI.ShadowProperty
 {
+    #region ShadowProperty
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -19,4 +20,5 @@ namespace EFModeling.FluentAPI.ShadowProperty
         public int BlogId { get; set; }
         public string Url { get; set; }
     }
+    #endregion
 }

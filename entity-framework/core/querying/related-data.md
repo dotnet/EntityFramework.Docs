@@ -9,6 +9,7 @@ uid: core/querying/related-data
 # Loading Related Data
 
 Entity Framework Core allows you to use the navigation properties in your model to load related entities. There are three common O/RM patterns used to load related data.
+
 * **Eager loading** means that the related data is loaded from the database as part of the initial query.
 * **Explicit loading** means that the related data is explicitly loaded from the database at a later time.
 * **Lazy loading** means that the related data is transparently loaded from the database when the navigation property is accessed.
@@ -52,7 +53,7 @@ You may want to include multiple related entities for one of the entities that i
 
 ### Include on derived types
 
-You can include related data from navigations defined only on a derived type using `Include` and `ThenInclude`. 
+You can include related data from navigations defined only on a derived type using `Include` and `ThenInclude`.
 
 Given the following model:
 
@@ -90,17 +91,20 @@ public class School
 
 Contents of `School` navigation of all People who are Students can be eagerly loaded using a number of patterns:
 
-- using cast
+* using cast
+
   ```csharp
   context.People.Include(person => ((Student)person).School).ToList()
   ```
 
-- using `as` operator
+* using `as` operator
+
   ```csharp
   context.People.Include(person => (person as Student).School).ToList()
   ```
 
-- using overload of `Include` that takes parameter of type `string`
+* using overload of `Include` that takes parameter of type `string`
+
   ```csharp
   context.People.Include("School").ToList()
   ```
@@ -135,6 +139,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         .UseLazyLoadingProxies()
         .UseSqlServer(myConnectionString);
 ```
+
 Or when using AddDbContext:
 
 ```csharp

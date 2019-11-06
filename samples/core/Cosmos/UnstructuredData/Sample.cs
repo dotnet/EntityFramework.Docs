@@ -19,13 +19,14 @@ namespace Cosmos.UnstructuredData
             #region Unmapped
             using (var context = new OrderContext())
             {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
 
                 var order = new Order
                 {
                     Id = 1,
-                    ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" }
+                    ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" },
+                    PartitionKey = "1"
                 };
 
                 context.Add(order);
@@ -37,8 +38,8 @@ namespace Cosmos.UnstructuredData
             {
                 var order = await context.Orders.FirstAsync();
                 var orderEntry = context.Entry(order);
-                var jsonProperty = orderEntry.Property<JObject>("__jObject");
 
+                var jsonProperty = orderEntry.Property<JObject>("__jObject");
                 jsonProperty.CurrentValue["BillingAddress"] = "Clarence House";
 
                 orderEntry.State = EntityState.Modified;

@@ -2,6 +2,7 @@
 
 namespace EFModeling.FluentAPI.AlternateKeySingle
 {
+    #region AlternateKeySingle
     class MyContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
@@ -20,4 +21,5 @@ namespace EFModeling.FluentAPI.AlternateKeySingle
         public string Make { get; set; }
         public string Model { get; set; }
     }
+    #endregion
 }

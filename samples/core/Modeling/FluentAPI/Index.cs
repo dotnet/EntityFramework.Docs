@@ -2,6 +2,7 @@
 
 namespace EFModeling.FluentAPI.Index
 {
+    #region Index
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -18,4 +19,5 @@ namespace EFModeling.FluentAPI.Index
         public int BlogId { get; set; }
         public string Url { get; set; }
     }
+    #endregion
 }

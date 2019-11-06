@@ -5,7 +5,6 @@ ms.author: bricelam
 ms.date: 11/07/2017
 uid: core/managing-schemas/migrations/history-table
 ---
-
 # Custom Migrations History Table
 
 By default, EF Core keeps track of which migrations have been applied to the database by recording them in a table named
@@ -20,41 +19,16 @@ By default, EF Core keeps track of which migrations have been applied to the dat
 You can change the schema and table name using the `MigrationsHistoryTable()` method in `OnConfiguring()` (or
 `ConfigureServices()` on ASP.NET Core). Here is an example using the SQL Server EF Core provider.
 
-``` csharp
-protected override void OnConfiguring(DbContextOptionsBuilder options)
-    => options.UseSqlServer(
-        connectionString,
-        x => x.MigrationsHistoryTable("__MyMigrationsHistory", "mySchema"));
-```
+[!code-csharp[Main](../../../../samples/core/Schemas/Migrations/MigrationTableNameContext.cs#TableNameContext)]
 
 ## Other changes
 
 To configure additional aspects of the table, override and replace the provider-specific
 `IHistoryRepository` service. Here is an example of changing the MigrationId column name to *Id* on SQL Server.
 
-``` csharp
-protected override void OnConfiguring(DbContextOptionsBuilder options)
-    => options
-        .UseSqlServer(connectionString)
-        .ReplaceService<IHistoryRepository, MyHistoryRepository>();
-```
+[!code-csharp[Main](../../../../samples/core/Schemas/Migrations/MyHistoryRepository.cs#HistoryRepositoryContext)]
 
 > [!WARNING]
 > `SqlServerHistoryRepository` is inside an internal namespace and may change in future releases.
 
-``` csharp
-class MyHistoryRepository : SqlServerHistoryRepository
-{
-    public MyHistoryRepository(HistoryRepositoryDependencies dependencies)
-        : base(dependencies)
-    {
-    }
-
-    protected override void ConfigureTable(EntityTypeBuilder<HistoryRow> history)
-    {
-        base.ConfigureTable(history);
-
-        history.Property(h => h.MigrationId).HasColumnName("Id");
-    }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Schemas/Migrations/MyHistoryRepository.cs#HistoryRepository)]

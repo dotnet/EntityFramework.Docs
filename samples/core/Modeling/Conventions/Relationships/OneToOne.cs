@@ -9,6 +9,7 @@ namespace EFModeling.Conventions.Relationships.OneToOne
         public DbSet<BlogImage> BlogImages { get; set; }
     }
 
+    #region Property
     public class Blog
     {
         public int BlogId { get; set; }
@@ -26,4 +27,5 @@ namespace EFModeling.Conventions.Relationships.OneToOne
         public int BlogId { get; set; }
         public Blog Blog { get; set; }
     }
+    #endregion
 }
