@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.Relational.ForSqlServerHasIndex
+namespace EFModeling.FluentAPI.Relational.IndexInclude
 {
     #region Model
     class MyContext : DbContext
