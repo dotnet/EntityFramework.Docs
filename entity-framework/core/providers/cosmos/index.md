@@ -1,9 +1,9 @@
 ---
 title: Azure Cosmos DB Provider - EF Core
+description: Documentation for the database provider that allows Entity Framework Core to be used with the Azure Cosmos DB SQL API
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 09/12/2019
-ms.assetid: 28264681-4486-4891-888c-be5e4ade24f1
+ms.date: 11/05/2019
 uid: core/providers/cosmos/index
 ---
 # EF Core Azure Cosmos DB Provider
@@ -41,7 +41,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 > [!TIP]  
 > You can view this article's [sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Cosmos).
 
-Like for other providers the first step is to call `UseCosmos`:
+Like for other providers the first step is to call [UseCosmos](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosDbContextOptionsExtensions.UseCosmos):
 
 [!code-csharp[Configuration](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=Configuration)]
 
@@ -59,27 +59,27 @@ Saving and quering data follows the normal EF pattern:
 [!code-csharp[HelloCosmos](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=HelloCosmos)]
 
 > [!IMPORTANT]
-> Calling `EnsureCreated` is necessary to create the required containers and insert the [seed data](../../modeling/data-seeding.md) if present in the model. However `EnsureCreated` should only be called during deployment, not normal operation, as it may cause performance issues.
+> Calling [EnsureCreatedAsync](/dotnet/api/Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync) is necessary to create the required containers and insert the [seed data](../../modeling/data-seeding.md) if present in the model. However `EnsureCreatedAsync` should only be called during deployment, not normal operation, as it may cause performance issues.
 
 ## Cosmos-specific model customization
 
-By default all entity types are mapped to the same container, named after the derived context (`"OrderContext"` in this case). To change the default container name use `HasDefaultContainer`:
+By default all entity types are mapped to the same container, named after the derived context (`"OrderContext"` in this case). To change the default container name use [HasDefaultContainer](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasDefaultContainer):
 
 [!code-csharp[DefaultContainer](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=DefaultContainer)]
 
-To map an entity type to a different container use `ToContainer`:
+To map an entity type to a different container use [ToContainer](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.ToContainer):
 
 [!code-csharp[Container](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=Container)]
 
 To identify the entity type that a given item represent EF Core adds a discriminator value even if there are no derived entity types. The name and value of the discriminator [can be changed](../../modeling/inheritance.md).
 
-If no other entity type will ever be stored in the same container the discriminator can be removed by calling `HasNoDiscriminator()`:
+If no other entity type will ever be stored in the same container the discriminator can be removed by calling [HasNoDiscriminator](/dotnet/api/Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.HasNoDiscriminator):
 
 [!code-csharp[NoDiscriminator](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=NoDiscriminator)]
 
 ### Partition keys
 
-By default EF Core will create containers with the partition key set to `"__partitionKey"` without supplying any value for it when inserting items. But to fully leverage the performance capabilities of Azure Cosmos a [carefully selected partition key](/azure/cosmos-db/partition-data) should be used. It can be configured by calling `.HasPartitionKey()`:
+By default EF Core will create containers with the partition key set to `"__partitionKey"` without supplying any value for it when inserting items. But to fully leverage the performance capabilities of Azure Cosmos a [carefully selected partition key](/azure/cosmos-db/partition-data) should be used. It can be configured by calling [HasPartitionKey](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasPartitionKey):
 
 [!code-csharp[PartitionKey](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=PartitionKey)]
 
@@ -92,7 +92,7 @@ Once configured the partition key property should always have a non-null value. 
 
 ## Embedded entities
 
-For Cosmos owned entities are embedded in the same item as the owner. To change a property name use `ToJsonProperty`:
+For Cosmos owned entities are embedded in the same item as the owner. To change a property name use [ToJsonProperty](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.ToJsonProperty):
 
 [!code-csharp[PropertyNames](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=PropertyNames)]
 

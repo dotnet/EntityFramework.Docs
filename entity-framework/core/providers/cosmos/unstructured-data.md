@@ -1,9 +1,9 @@
 ---
 title: Azure Cosmos DB Provider - Working with Unstructured Data - EF Core
+description: How to work with Azure Cosmos DB unstructured data using Entity Framework Core
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 09/12/2019
-ms.assetid: b47d41b6-984f-419a-ab10-2ed3b95e3919
+ms.date: 11/05/2019
 uid: core/providers/cosmos/unstructured-data
 ---
 # Working with Unstructured Data in EF Core Azure Cosmos DB Provider
@@ -43,7 +43,7 @@ It is possible to access the properties that are not tracked by EF Core through 
 
 ## Using CosmosClient
 
-To decouple completely from EF Core get the `CosmosClient` object that is [part of the Azure Cosmos DB SDK](/azure/cosmos-db/sql-api-get-started) from `DbContext`:
+To decouple completely from EF Core get the [CosmosClient](/dotnet/api/Microsoft.Azure.Cosmos.CosmosClient) object that is [part of the Azure Cosmos DB SDK](/azure/cosmos-db/sql-api-get-started) from `DbContext`:
 
 [!code-csharp[CosmosClient](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?highlight=3&name=CosmosClient)]
 
