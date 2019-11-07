@@ -1,8 +1,9 @@
 ---
 title: Inheritance - EF Core
-author: rowanmiller
+description: How to configure entity type inheritance using Entity Framework Core
+author: AndriySvyryd
+ms.author: ansvyryd
 ms.date: 10/27/2016
-ms.assetid: 754be334-dd21-450e-9d22-2591e80012a2
 uid: core/modeling/inheritance
 ---
 # Inheritance
@@ -11,7 +12,7 @@ Inheritance in the EF model is used to control how inheritance in the entity cla
 
 ## Conventions
 
-By convention, it is up to the database provider to determine how inheritance will be represented in the database. See [Inheritance (Relational Database)](relational/inheritance.md) for how this is handled with a relational database provider.
+By default, it is up to the database provider to determine how inheritance will be represented in the database. See [Inheritance (Relational Database)](relational/inheritance.md) for how this is handled with a relational database provider.
 
 EF will only setup inheritance if two or more inherited types are explicitly included in the model. EF will not scan for base or derived types that were not otherwise included in the model. You can include types in the model by exposing a *DbSet\<TEntity>* for each type in the inheritance hierarchy.
 
