@@ -1,8 +1,9 @@
 ---
 title: Inheritance (Relational Database) - EF Core
-author: rowanmiller
-ms.date: 10/27/2016
-ms.assetid: 9a7c5488-aaf4-4b40-b1ff-f435ff30f6ec
+description: How to configure entity type inheritance in a relational database using Entity Framework Core
+author: AndriySvyryd
+ms.author: ansvyryd
+ms.date: 11/06/2019
 uid: core/modeling/relational/inheritance
 ---
 # Inheritance (Relational Database)
@@ -17,7 +18,7 @@ Inheritance in the EF model is used to control how inheritance in the entity cla
 
 ## Conventions
 
-By convention, inheritance will be mapped using the table-per-hierarchy (TPH) pattern. TPH uses a single table to store the data for all types in the hierarchy. A discriminator column is used to identify which type each row represents.
+By default, inheritance will be mapped using the table-per-hierarchy (TPH) pattern. TPH uses a single table to store the data for all types in the hierarchy. A discriminator column is used to identify which type each row represents.
 
 EF Core will only setup inheritance if two or more inherited types are explicitly included in the model (see [Inheritance](../inheritance.md) for more details).
 
@@ -44,48 +45,14 @@ You can use the Fluent API to configure the name and type of the discriminator c
 
 In the examples above, the discriminator is created as a [shadow property](xref:core/modeling/shadow-properties) on the base entity of the hierarchy. Since it is a property in the model, it can be configured just like other properties. For example, to set the max length when the default, by-convention discriminator is being used:
 
-```C#
-modelBuilder.Entity<Blog>()
-    .Property("Discriminator")
-    .HasMaxLength(200);
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/DefaultDiscriminator.cs#DiscriminatorConfiguration)]
 
-The discriminator can also be mapped to an actual CLR property in your entity. For example:
+The discriminator can also be mapped to a .NET property in your entity and configure it. For example:
 
-```C#
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/NonShadowDiscriminator.cs#NonShadowDiscriminator)]
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .HasDiscriminator<string>("BlogType");
-    }
-}
+## Shared columns
 
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-    public string BlogType { get; set; }
-}
+When two sibling entity types have a property with the same name they will be mapped to two separate columns by default. But if they are compatible they can be mapped to the same column:
 
-public class RssBlog : Blog
-{
-    public string RssUrl { get; set; }
-}
-```
-
-Combining these two things together it is possible to both map the discriminator to a real property and configure it:
-
-```C#
-modelBuilder.Entity<Blog>(b =>
-{
-    b.HasDiscriminator<string>("BlogType");
-
-    b.Property(e => e.BlogType)
-        .HasMaxLength(200)
-        .HasColumnName("blog_type");
-});
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/SharedTPHColumns.cs#SharedTPHColumns)]
