@@ -67,7 +67,7 @@ Read the [section on owned entity types](xref:core/modeling/owned-entities) for 
 
 ### Model-level query filters
 
-EF Core 2.0 includes a new feature we call Model-level query filters. This feature allows LINQ query predicates (a boolean expression typically passed to the LINQ Where query operator) to be defined directly on Entity Types in the metadata model (usually in `OnModelCreating`). Such filters are automatically applied to any LINQ queries involving those Entity Types, including Entity Types referenced indirectly, such as through the use of Include or direct navigation property references. Some common applications of this feature are:
+EF Core 2.0 includes a new feature we call Model-level query filters. This feature allows LINQ query predicates (a boolean expression typically passed to the LINQ Where query operator) to be defined directly on Entity Types in the metadata model (usually in OnModelCreating). Such filters are automatically applied to any LINQ queries involving those Entity Types, including Entity Types referenced indirectly, such as through the use of Include or direct navigation property references. Some common applications of this feature are:
 
 - Soft delete - An Entity Types defines an IsDeleted property.
 - Multi-tenancy - An Entity Type defines a TenantId property.
@@ -93,7 +93,7 @@ public class BloggingContext : DbContext
 
 We define a model-level filter that implements multi-tenancy and soft-delete for instances of the `Post` Entity Type. Note the use of a `DbContext` instance-level property: `TenantId`. Model-level filters will use the value from the correct context instance (that is, the context instance that is executing the query).
 
-Filters may be disabled for individual LINQ queries using the `IgnoreQueryFilters()` operator.
+Filters may be disabled for individual LINQ queries using the IgnoreQueryFilters() operator.
 
 #### Limitations
 
@@ -157,7 +157,7 @@ builder.ApplyConfiguration(new CustomerConfiguration());
 
 ### DbContext pooling
 
-The basic pattern for using EF Core in an ASP.NET Core application usually involves registering a custom `DbContext` type into the dependency injection system and later obtaining instances of that type through constructor parameters in controllers. This means a new instance of the DbContext is created for each requests.
+The basic pattern for using EF Core in an ASP.NET Core application usually involves registering a custom DbContext type into the dependency injection system and later obtaining instances of that type through constructor parameters in controllers. This means a new instance of the DbContext is created for each requests.
 
 In version 2.0 we are introducing a new way to register custom DbContext types in dependency injection which transparently introduces a pool of reusable DbContext instances. To use DbContext pooling, use the `AddDbContextPool` instead of `AddDbContext` during service registration:
 
@@ -252,7 +252,7 @@ WHERE ""City"" = @p0
 
 ### EF.Functions.Like()
 
-We have added the EF.Functions property which can be used by EF Core or providers to define methods that map to database functions or operators so that those can be invoked in LINQ queries. The first example of such a method is `Like()`:
+We have added the EF.Functions property which can be used by EF Core or providers to define methods that map to database functions or operators so that those can be invoked in LINQ queries. The first example of such a method is Like():
 
 ``` csharp
 var aCustomers =
@@ -308,7 +308,7 @@ EF Core 2.0 will now build a different [IModel](https://github.com/aspnet/Entity
 
 ### Consolidated logging and diagnostics
 
-Logging (based on `ILogger`) and Diagnostics (based on `DiagnosticSource`) mechanisms now share more code.
+Logging (based on ILogger) and Diagnostics (based on DiagnosticSource) mechanisms now share more code.
 
 The event IDs for messages sent to an ILogger have changed in 2.0. The event IDs are now unique across EF Core code. These messages now also follow the standard pattern for structured logging used by, for example, MVC.
 
