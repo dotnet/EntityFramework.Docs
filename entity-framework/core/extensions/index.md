@@ -80,7 +80,7 @@ Allows customization of classes reverse engineered from an existing database usi
 
 ### NeinLinq.EntityFrameworkCore 
 
-NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core 2, 3.
+NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core: 2, 3.
 
 [GitHub repository](https://github.com/axelheer/nein-linq/)
 
