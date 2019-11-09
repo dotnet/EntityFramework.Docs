@@ -21,6 +21,7 @@ Conversions are defined using two `Func` expression trees: one from `ModelClrTyp
 ## Configuring a value converter
 
 Value conversions are defined on properties in the `OnModelCreating` of your `DbContext`. For example, consider an enum and entity type defined as:
+
 ``` csharp
 public class Rider
 {
@@ -36,7 +37,9 @@ public enum EquineBeast
     Unicorn
 }
 ```
+
 Then conversions can be defined in `OnModelCreating` to store the enum values as strings (for example, "Donkey", "Mule", ...) in the database:
+
 ``` csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
@@ -48,12 +51,14 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             v => (EquineBeast)Enum.Parse(typeof(EquineBeast), v));
 }
 ```
+
 > [!NOTE]  
 > A `null` value will never be passed to a value converter. This makes the implementation of conversions easier and allows them to be shared amongst nullable and non-nullable properties.
 
 ## The ValueConverter class
 
 Calling `HasConversion` as shown above will create a `ValueConverter` instance and set it on the property. The `ValueConverter` can instead be created explicitly. For example:
+
 ``` csharp
 var converter = new ValueConverter<EquineBeast, string>(
     v => v.ToString(),
@@ -64,6 +69,7 @@ modelBuilder
     .Property(e => e.Mount)
     .HasConversion(converter);
 ```
+
 This can be useful when multiple properties use the same conversion.
 
 > [!NOTE]  
@@ -72,6 +78,7 @@ This can be useful when multiple properties use the same conversion.
 ## Built-in converters
 
 EF Core ships with a set of pre-defined `ValueConverter` classes, found in the `Microsoft.EntityFrameworkCore.Storage.ValueConversion` namespace. These are:
+
 * `BoolToZeroOneConverter` - Bool to zero and one
 * `BoolToStringConverter` - Bool to strings such as "Y" and "N"
 * `BoolToTwoValuesConverter` - Bool to any two values
@@ -95,6 +102,7 @@ EF Core ships with a set of pre-defined `ValueConverter` classes, found in the `
 * `TimeSpanToTicksConverter` - TimeSpan to ticks
 
 Notice that `EnumToStringConverter` is included in this list. This means that there is no need to specify the conversion explicitly, as shown above. Instead, just use the built-in converter:
+
 ``` csharp
 var converter = new EnumToStringConverter<EquineBeast>();
 
@@ -103,18 +111,22 @@ modelBuilder
     .Property(e => e.Mount)
     .HasConversion(converter);
 ```
+
 Note that all the built-in converters are stateless and so a single instance can be safely shared by multiple properties.
 
 ## Pre-defined conversions
 
 For common conversions for which a built-in converter exists there is no need to specify the converter explicitly. Instead, just configure which provider type should be used and EF will automatically use the appropriate built-in converter. Enum to string conversions are used as an example above, but EF will actually do this automatically if the provider type is configured:
+
 ``` csharp
 modelBuilder
     .Entity<Rider>()
     .Property(e => e.Mount)
     .HasConversion<string>();
 ```
+
 The same thing can be achieved by explicitly specifying the column type. For example, if the entity type is defined like so:
+
 ``` csharp
 public class Rider
 {
@@ -124,11 +136,13 @@ public class Rider
     public EquineBeast Mount { get; set; }
 }
 ```
+
 Then the enum values will be saved as strings in the database without any further configuration in `OnModelCreating`.
 
 ## Limitations
 
 There are a few known current limitations of the value conversion system:
+
 * As noted above, `null` cannot be converted.
 * There is currently no way to spread a conversion of one property to multiple columns or vice-versa.
 * Use of value conversions may impact the ability of EF Core to translate expressions to SQL. A warning will be logged for such cases.

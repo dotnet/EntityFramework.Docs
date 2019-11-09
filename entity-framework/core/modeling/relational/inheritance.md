@@ -23,25 +23,7 @@ EF Core will only setup inheritance if two or more inherited types are explicitl
 
 Below is an example showing a simple inheritance scenario and the data stored in a relational database table using the TPH pattern. The *Discriminator* column identifies which type of *Blog* is stored in each row.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/Conventions/InheritanceDbSets.cs)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-    public DbSet<RssBlog> RssBlogs { get; set; }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-
-public class RssBlog : Blog
-{
-    public string RssUrl { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs#Model)]
 
 ![image](_static/inheritance-tph-data.png)
 
@@ -56,32 +38,7 @@ You cannot use Data Annotations to configure inheritance.
 
 You can use the Fluent API to configure the name and type of the discriminator column and the values that are used to identify each type in the hierarchy.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/InheritanceTPHDiscriminator.cs?highlight=7,8,9,10)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .HasDiscriminator<string>("blog_type")
-            .HasValue<Blog>("blog_base")
-            .HasValue<RssBlog>("blog_rss");
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-
-public class RssBlog : Blog
-{
-    public string RssUrl { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/InheritanceTPHDiscriminator.cs#Inheritance)]
 
 ## Configuring the discriminator property
 
@@ -94,6 +51,7 @@ modelBuilder.Entity<Blog>()
 ```
 
 The discriminator can also be mapped to an actual CLR property in your entity. For example:
+
 ```C#
 class MyContext : DbContext
 {
@@ -120,6 +78,7 @@ public class RssBlog : Blog
 ```
 
 Combining these two things together it is possible to both map the discriminator to a real property and configure it:
+
 ```C#
 modelBuilder.Entity<Blog>(b =>
 {

@@ -11,6 +11,7 @@ uid: core/modeling/generated-properties
 ## Value Generation Patterns
 
 There are three value generation patterns that can be used for properties:
+
 * No value generation
 * Value generated on add
 * Value generated on add or update
@@ -40,9 +41,9 @@ Like `value generated on add`, if you specify a value for the property on a newl
 
 > [!WARNING]
 > How the value is generated for added and updated entities will depend on the database provider being used. Database providers may automatically setup value generation for some property types, while others will require you to manually setup how the value is generated.
-> 
+>
 > For example, when using SQL Server, `byte[]` properties that are set as generated on add or update and marked as concurrency tokens, will be setup with the `rowversion` data type - so that values will be generated in the database. However, if you specify that a `DateTime` property is generated on add or update, then you must setup a way for the values to be generated. One way to do this, is to configure a default value of `GETDATE()` (see [Default Values](relational/default-values.md)) to generate values for new rows. You could then use a database trigger to generate values during updates (such as the following example trigger).
-> 
+>
 > [!code-sql[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.sql)]
 
 ## Conventions

@@ -7,6 +7,7 @@ uid: core/what-is-new/ef-core-3.0/breaking-changes
 ---
 
 # Breaking changes included in EF Core 3.0
+
 The following API and behavior changes have the potential to break existing applications when upgrading them to 3.0.0.
 Changes that we expect to only impact database providers are documented under [provider changes](xref:core/providers/provider-log).
 
@@ -64,6 +65,7 @@ Changes that we expect to only impact database providers are documented under [p
 | [Microsoft.EntityFrameworkCore.Design is now a DevelopmentDependency package](#dip) | Low      |
 | [SQLitePCL.raw updated to version 2.0.0](#SQLitePCL) | Low      |
 | [NetTopologySuite updated to version 2.0.0](#NetTopologySuite) | Low      |
+| [Microsoft.Data.SqlClient is used instead of System.Data.SqlClient](#SqlClient) | Low      |
 | [Multiple ambiguous self-referencing relationships must be configured](#mersa) | Low      |
 | [DbFunction.Schema being null or empty string configures it to be in model's default schema](#udf-empty-string) | Low      |
 
@@ -1591,7 +1593,7 @@ Microsoft.EntityFrameworkCore.Sqlite previously depended on version 1.1.12 of SQ
 
 **New behavior**
 
-We've update our package to depend on version 2.0.0.
+We've updated our package to depend on version 2.0.0.
 
 **Why**
 
@@ -1622,6 +1624,30 @@ Version 2.0.0 of NetTopologySuite aims to address several usability issues encou
 **Mitigations**
 
 NetTopologySuite version 2.0.0 includes some breaking changes. See the [release notes](https://www.nuget.org/packages/NetTopologySuite/2.0.0-pre001) for details.
+
+<a name="SqlClient"></a>
+
+### Microsoft.Data.SqlClient is used instead of System.Data.SqlClient
+
+[Tracking Issue #15636](https://github.com/aspnet/EntityFrameworkCore/issues/15636)
+
+**Old behavior**
+
+Microsoft.EntityFrameworkCore.SqlServer previously depended on System.Data.SqlClient.
+
+**New behavior**
+
+We've updated our package to depend on Microsoft.Data.SqlClient.
+
+**Why**
+
+Microsoft.Data.SqlClient is the flagship data access driver for SQL Server going forward, and System.Data.SqlClient no longer be the focus of development.
+Some important features, such as Always Encrypted, are only available on Microsoft.Data.SqlClient.
+
+**Mitigations**
+
+If your code takes a direct dependency on System.Data.SqlClient, you must change it to reference Microsoft.Data.SqlClient instead; as the two packages maintain a very high degree
+of API compatibility, this should only be a simple package and namespace change.
 
 <a name="mersa"></a>
 

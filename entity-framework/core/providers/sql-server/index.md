@@ -13,19 +13,22 @@ This database provider allows Entity Framework Core to be used with Microsoft SQ
 
 Install the [Microsoft.EntityFrameworkCore.SqlServer NuGet package](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/).
 
-# [.NET Core CLI](#tab/dotnet-core-cli)
+## [.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` console
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
-# [Visual Studio](#tab/vs)
+## [Visual Studio](#tab/vs)
 
 ``` powershell
 Install-Package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
 ***
+
+> [!NOTE]
+> Since version 3.0.0, the provider references Microsoft.Data.SqlClient (previous versions depended on System.Data.SqlClient). If your project takes a direct dependency on SqlClient, make sure it references the correct package.
 
 ## Supported Database Engines
 

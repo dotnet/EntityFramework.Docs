@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.FluentAPI.Relationships.ManyToMany
 {
+    #region ManyToMany
     class MyContext : DbContext
     {
         public DbSet<Post> Posts { get; set; }
@@ -49,4 +50,5 @@ namespace EFModeling.FluentAPI.Relationships.ManyToMany
         public string TagId { get; set; }
         public Tag Tag { get; set; }
     }
+    #endregion
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.Conventions.AlternateKey
 {
+    #region AlternateKey
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -35,4 +36,5 @@ namespace EFModeling.Conventions.AlternateKey
         public string BlogUrl { get; set; }
         public Blog Blog { get; set; }
     }
+    #endregion
 }

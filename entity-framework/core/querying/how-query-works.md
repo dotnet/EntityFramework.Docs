@@ -28,13 +28,14 @@ The following is a high level overview of the process each query goes through.
       * If so, the existing entity is returned <sup>(1)</sup>
       * If not, a new entity is created and returned
 
-<sup>(1)</sup> No tracking queries use weak references to keep track of entities that have already been returned. If a previous result with the same identity goes out of scope, and garbage collection runs, you may get a new entity instance.
+<sup>(1)</sup> No-tracking queries use weak references to keep track of entities that have already been returned. If a previous result with the same identity goes out of scope, and garbage collection runs, you may get a new entity instance.
 
 ## When queries are executed
 
 When you call LINQ operators, you are simply building up an in-memory representation of the query. The query is only sent to the database when the results are consumed.
 
 The most common operations that result in the query being sent to the database are:
+
 * Iterating the results in a `for` loop
 * Using an operator such as `ToList`, `ToArray`, `Single`, `Count`
 * Databinding the results of a query to a UI

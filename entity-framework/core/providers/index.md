@@ -11,6 +11,7 @@ uid: core/providers/index
 Entity Framework Core can access many different databases through plug-in libraries called database providers.
 
 ## Current providers
+
 > [!IMPORTANT]  
 > EF Core providers are built by a variety of sources. Not all providers are maintained as part of the [Entity Framework Core Project](https://github.com/aspnet/EntityFrameworkCore). When considering a provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements. Also make sure you review each provider's documentation for detailed version compatibility information.
 
@@ -38,18 +39,19 @@ Entity Framework Core can access many different databases through plug-in librar
 | [Devart.Data.PostgreSql.EFCore](https://www.nuget.org/packages/Devart.Data.PostgreSql.EFCore/)                       | PostgreSQL 8.0 onwards     | [DevArt](https://www.devart.com/)                                             | Paid                 | [docs](https://www.devart.com/dotconnect/postgresql/docs/)                                                                                                                                         |
 | [Devart.Data.SQLite.EFCore](https://www.nuget.org/packages/Devart.Data.SQLite.EFCore/)                               | SQLite 3 onwards           | [DevArt](https://www.devart.com/)                                             | Paid                 | [docs](https://www.devart.com/dotconnect/sqlite/docs/)                                                                                                                                             |
 | [Devart.Data.MySql.EFCore](https://www.nuget.org/packages/Devart.Data.MySql.EFCore/)                                 | MySQL 5 onwards            | [DevArt](https://www.devart.com/)                                             | Paid                 | [docs](https://www.devart.com/dotconnect/mysql/docs/)                                                                                                                                              |
+| [FileContextCore](https://www.nuget.org/packages/FileContextCore/)                                 | Stores data in files            | [Morris Janatzek](https://github.com/morrisjdev)                                             | For development purposes                 | [readme](https://github.com/morrisjdev/FileContextCore/blob/master/README.md)                                                                                                                                              |
 
 ## Adding a database provider to your application
 
 Most database providers for EF Core are distributed as NuGet packages, and can be installed as follows:
 
-# [.NET Core CLI](#tab/dotnet-core-cli)
+## [.NET Core CLI](#tab/dotnet-core-cli)
 
 ``` console
 dotnet add package provider_package_name
 ```
 
-# [Visual Studio](#tab/vs)
+## [Visual Studio](#tab/vs)
 
 ``` powershell
 install-package provider_package_name

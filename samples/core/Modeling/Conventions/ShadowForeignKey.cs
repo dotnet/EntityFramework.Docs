@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.Conventions.ShadowForeignKey
 {
+    #region Conventions
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -25,4 +26,5 @@ namespace EFModeling.Conventions.ShadowForeignKey
 
         public Blog Blog { get; set; }
     }
+    #endregion
 }

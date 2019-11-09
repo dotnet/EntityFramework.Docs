@@ -8,7 +8,7 @@ uid: core/modeling/owned-entities
 ---
 # Owned Entity Types
 
->[!NOTE]
+> [!NOTE]
 > This feature is new in EF Core 2.0.
 
 EF Core allows you to model entity types that can only ever appear on navigation properties of other entity types. These are called _owned entity types_. The entity containing an owned entity type is its _owner_.
@@ -35,7 +35,7 @@ If the `ShippingAddress` property is private in the `Order` type, you can use th
 
 [!code-csharp[OwnsOneString](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneString)]
 
-See the [full sample project](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities) for more context. 
+See the [full sample project](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities) for more context.
 
 ## Implicit keys
 
@@ -53,6 +53,7 @@ To configure a collection of owned types use `OwnsMany` in `OnModelCreating`.
 Owned types need a primary key. If there are no good candidates properties on the .NET type, EF Core can try to create one. However, when owned types are defined through a collection, it isn't enough to just create a shadow property to act as both the foreign key into the owner and the primary key of the owned instance, as we do for `OwnsOne`: there can be multiple owned type instances for each owner, and hence the key of the owner isn't enough to provide a unique identity for each owned instance.
 
 The two most straightforward solutions to this are:
+
 - Defining a surrogate primary key on a new property independent of the foreign key that points to the owner. The contained values would need to be unique across all owners (e.g. if Parent {1} has Child {1}, then Parent {2} cannot have Child {1}), so the value doesn't have any inherent meaning. Since the foreign key is not part of the primary key its values can be changed, so you could move a child from one parent to another one, however this usually goes against aggregate semantics.
 - Using the foreign key and an additional property as a composite key. The additional property value now only needs to be unique for a given parent (so if Parent {1} has Child {1,1} then Parent {2} can still have Child {2,1}). By making the foreign key part of the primary key the relationship between the owner and the owned entity becomes immutable and reflects aggregate semantics better. This is what EF Core does by default.
 
@@ -83,7 +84,7 @@ You can use the `HasColumnName` method to rename those columns:
 
 An owned entity type can be of the same .NET type as another owned entity type, therefore the .NET type may not be enough to identify an owned type.
 
-In those cases, the property pointing from the owner to the owned entity becomes the _defining navigation_ of the owned entity type. From the perspective of EF Core, the defining navigation is part of the type's identity alongside the .NET type.   
+In those cases, the property pointing from the owner to the owned entity becomes the _defining navigation_ of the owned entity type. From the perspective of EF Core, the defining navigation is part of the type's identity alongside the .NET type.
 
 For example, in the following class `ShippingAddress` and `BillingAddress` are both of the same .NET type, `StreetAddress`:
 
@@ -128,14 +129,17 @@ When querying the owner the owned types will be included by default. It is not n
 Some of these limitations are fundamental to how owned entity types work, but some others are restrictions that we may be able to remove in future releases:
 
 ### By-design restrictions
+
 - You cannot create a `DbSet<T>` for an owned type
 - You cannot call `Entity<T>()` with an owned type on `ModelBuilder`
 
 ### Current shortcomings
+
 - Inheritance hierarchies that include owned entity types are not supported
 - Reference navigations to owned entity types cannot be null unless they are explicitly mapped to a separate table from the owner
 - Instances of owned entity types cannot be shared by multiple owners (this is a well-known scenario for value objects that cannot be implemented using owned entity types)
 
 ### Shortcomings in previous versions
+
 - In EF Core 2.0, navigations to owned entity types cannot be declared in derived entity types unless the owned entities are explicitly mapped to a separate table from the owner hierarchy. This limitation has been removed in EF Core 2.1
 - In EF Core 2.0 and 2.1 only reference navigations to owned types were supported. This limitation has been removed in EF Core 2.2
