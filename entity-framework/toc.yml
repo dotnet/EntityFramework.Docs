@@ -119,7 +119,8 @@
         href: core/modeling/keyless-entity-types.md
       - name: Alternating models with same DbContext
         href: core/modeling/dynamic-model.md
-      - name: Spatial Data (GIS)
+      - name: Spatial Data
+        displayName: GIS
         href: core/modeling/spatial.md
       - name: Relational database modeling
         items:

@@ -1,3 +1,11 @@
 - name: Docs
   tocHref: /
   topicHref: /
+  items:
+    - name: .NET
+      tocHref: /dotnet/
+      topicHref: /dotnet/index
+      items:
+        - name: Microsoft.Data.Sqlite
+          tocHref: /msdata-sqlite/
+          topicHref: /msdata-sqlite/index
