@@ -211,7 +211,7 @@ uid: index
                                             </div>
                                             <div class="cardText">
                                                 <h3>
-                                                    <a href="https://docs.microsoft.com/dotnet/api/?view=efcore-2.1">⤤ API Reference</a>
+                                                    <a href="https://docs.microsoft.com/dotnet/api/?view=efcore-2.1">API Reference</a>
                                                 </h3>
                                                 <p>
                                                     <a href="https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.dbcontext">DbContext</a>
@@ -272,7 +272,7 @@ uid: index
                                                     </div>
                                                 </div>
                                                 <div class="cardText">
-                                                    <h3>⤤ API Reference</h3>
+                                                    <h3>API Reference</h3>
                                                     <p>Browse the Entity Framework 6 API, organized by namespace.</p>
                                                 </div>
                                             </div>
