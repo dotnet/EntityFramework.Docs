@@ -140,7 +140,7 @@ As they are an excellent fit for mapping database views in most scenarios, EF Co
 
 For example, using the [dotnet ef command-line tool](xref:core/miscellaneous/cli/dotnet) you can type:
 
-``` console
+```dotnetcli
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
 ```
 

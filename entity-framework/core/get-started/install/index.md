@@ -31,7 +31,7 @@ To install or update NuGet packages, you can use the .NET Core command-line inte
 
 * Use the following .NET Core CLI command from the operating system's command line to install or update the EF Core SQL Server provider:
 
-  ``` Console
+  ```dotnetcli
   dotnet add package Microsoft.EntityFrameworkCore.SqlServer
   ```
 
@@ -89,7 +89,7 @@ Although you can also use the `dotnet ef` commands from the Package Manager Cons
 
 The `dotnet ef` commands are included in current versions of the .NET Core SDK, but to enable the commands on a specific project, you have to install the `Microsoft.EntityFrameworkCore.Design` package:
 
-``` Console
+```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Design
 ```
 

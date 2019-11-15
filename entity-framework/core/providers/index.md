@@ -47,7 +47,7 @@ Most database providers for EF Core are distributed as NuGet packages, and can b
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` console
+```dotnetcli
 dotnet add package provider_package_name
 ```
 

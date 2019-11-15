@@ -34,7 +34,7 @@ When adding new migration, specify the context types.
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations add InitialCreate --context MyDbContext --output-dir Migrations/SqlServerMigrations
 dotnet ef migrations add InitialCreate --context MySqliteDbContext --output-dir Migrations/SqliteMigrations
 ```
