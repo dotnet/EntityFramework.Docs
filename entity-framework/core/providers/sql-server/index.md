@@ -16,7 +16,7 @@ Install the [Microsoft.EntityFrameworkCore.SqlServer NuGet package](https://www.
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` console
+```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
