@@ -145,9 +145,3 @@ Extends your DbContext with features such as: Include Filter, Auditing, Caching,
 Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2, 3.
 
 [Website](https://entityframework-extensions.net/)
-
-### Reconciler
-
-Update an entity graph in store to a given one by inserting, updating and removing the respective entities. For EF Core: 2.
-
-[GitHub repository](https://github.com/jtheisen/reconciler)
