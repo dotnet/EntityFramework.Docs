@@ -33,7 +33,7 @@ Install the following software:
 
 ## [.NET Core CLI](#tab/netcore-cli)
 
-``` Console
+```dotnetcli
 dotnet new console -o EFGetStarted
 cd EFGetStarted
 ```
@@ -53,7 +53,7 @@ To install EF Core, you install the package for the EF Core database provider(s)
 
 ## [.NET Core CLI](#tab/netcore-cli)
 
-``` Console
+```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 ```
 
@@ -100,7 +100,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
 
 * Run the following commands:
 
-  ``` Console
+  ```dotnetcli
   dotnet tool install --global dotnet-ef
   dotnet add package Microsoft.EntityFrameworkCore.Design
   dotnet ef migrations add InitialCreate
@@ -133,7 +133,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
 
 ## [.NET Core CLI](#tab/netcore-cli)
 
-``` Console
+```dotnetcli
 dotnet run
 ```
 

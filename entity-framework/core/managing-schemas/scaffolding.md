@@ -26,7 +26,7 @@ How you quote and escape the connection string depends on which shell you are us
 Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer
 ```
 
-``` Console
+```dotnetcli
 dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook" Microsoft.EntityFrameworkCore.SqlServer
 ```
 
@@ -36,7 +36,7 @@ If you have an ASP.NET Core project, you can use the `Name=<connection-string>` 
 
 This works well with the [Secret Manager tool](https://docs.microsoft.com/aspnet/core/security/app-secrets#secret-manager) to keep your database password separate from your codebase.
 
-``` Console
+```dotnetcli
 dotnet user-secrets set ConnectionStrings.Chinook "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook"
 dotnet ef dbcontext scaffold Name=Chinook Microsoft.EntityFrameworkCore.SqlServer
 ```
@@ -61,7 +61,7 @@ Scaffold-DbContext ... -Tables Artist, Album
 
 To include multiple tables in the CLI, specify the option multiple times.
 
-``` Console
+```dotnetcli
 dotnet ef dbcontext scaffold ... --table Artist --table Album
 ```
 
@@ -103,7 +103,7 @@ You can also use `-ContextDir` (PMC) and `--context-dir` (CLI) to scaffold the D
 Scaffold-DbContext ... -ContextDir Data -OutputDir Models
 ```
 
-``` Console
+```dotnetcli
 dotnet ef dbcontext scaffold ... --context-dir Data --output-dir Models
 ```
 

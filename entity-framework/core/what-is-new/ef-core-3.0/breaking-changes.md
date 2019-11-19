@@ -185,7 +185,7 @@ Before EF Core 3.0, these method names were overloaded to work with either a nor
 Starting with EF Core 3.0, use `FromSqlRaw`, `ExecuteSqlRaw`, and `ExecuteSqlRawAsync` to create a parameterized query where the parameters are passed separately from the query string.
 For example:
 
-```C#
+```csharp
 context.Products.FromSqlRaw(
     "SELECT * FROM Products WHERE Name = {0}",
     product.Name);
@@ -194,7 +194,7 @@ context.Products.FromSqlRaw(
 Use `FromSqlInterpolated`, `ExecuteSqlInterpolated`, and `ExecuteSqlInterpolatedAsync` to create a parameterized query where the parameters are passed as part of an interpolated query string.
 For example:
 
-```C#
+```csharp
 context.Products.FromSqlInterpolated(
     $"SELECT * FROM Products WHERE Name = {product.Name}");
 ```
@@ -219,7 +219,7 @@ Switch to use the new method names.
 
 Before EF Core 3.0, FromSql method tried to detect if the passed SQL can be composed upon. It did client evaluation when the SQL was non-composable like a stored procedure. The following query worked by running the stored procedure on the server and doing FirstOrDefault on the client side.
 
-```C#
+```csharp
 context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").FirstOrDefault();
 ```
 
@@ -235,7 +235,7 @@ EF Core 3.0 does not support automatic client evaluation, since it was error pro
 
 If you are using a stored procedure in FromSqlRaw/FromSqlInterpolated, you know that it cannot be composed upon, so you can add __AsEnumerable/AsAsyncEnumerable__ right after the FromSql method call to avoid any composition on server side.
 
-```C#
+```csharp
 context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable().FirstOrDefault();
 ```
 
@@ -270,7 +270,7 @@ Specifying `FromSql` anywhere other than on a `DbSet` had no added meaning or ad
 
 Before EF Core 3.0, the same entity instance would be used for every occurrence of an entity with a given type and ID. This matches the behavior of tracking queries. For example, this query:
 
-```C#
+```csharp
 var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
 ```
 would return the same `Category` instance for each `Product` that is associated with the given category.
@@ -294,7 +294,7 @@ Use a tracking query if identity resolution is required.
 [Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
 
 We reverted this change because new configuration in EF Core 3.0 allows the log level for any event to be specified by the application. For example, to switch logging of SQL to `Debug`, explicitly configure the level in `OnConfiguring` or `AddDbContext`:
-```C#
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
         .UseSqlServer(connectionString)
@@ -355,7 +355,7 @@ This change can break an application if an entity type is configured to use gene
 The fix is to explicitly configure the key properties to not use generated values.
 For example, with the fluent API:
 
-```C#
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property(e => e.Id)
@@ -364,7 +364,7 @@ modelBuilder
 
 Or with data annotations:
 
-```C#
+```csharp
 [DatabaseGenerated(DatabaseGeneratedOption.None)]
 public string Id { get; set; }
 ```
@@ -391,7 +391,7 @@ This change was made to improve the experience for data binding and auditing sce
 The previous behavior can be restored through settings on `context.ChangedTracker`.
 For example:
 
-```C#
+```csharp
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
@@ -484,7 +484,7 @@ Before EF Core 3.0, configuration of the owned relationship was performed direct
 Starting with EF Core 3.0, there is now fluent API to configure a navigation property to the owner using `WithOwner()`.
 For example:
 
-```C#
+```csharp
 modelBuilder.Entity<Order>.OwnsOne(e => e.Details).WithOwner(e => e.Order);
 ```
 
@@ -492,7 +492,7 @@ The configuration related to the relationship between owner and owned should now
 While the configuration for the owned type itself would still be chained after `OwnsOne()/OwnsMany()`.
 For example:
 
-```C#
+```csharp
 modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
     {
         eb.WithOwner()
@@ -534,7 +534,7 @@ Change configuration of owned type relationships to use the new API surface as s
 **Old behavior**
 
 Consider the following model:
-```C#
+```csharp
 public class Order
 {
     public int Id { get; set; }
@@ -569,7 +569,7 @@ If your model has a table sharing dependent with all optional columns, but the n
 **Old behavior**
 
 Consider the following model:
-```C#
+```csharp
 public class Order
 {
     public int Id { get; set; }
@@ -604,7 +604,7 @@ This change was made to avoid a stale concurrency token value when only one of t
 **Mitigations**
 
 All entities sharing the table have to include a property that is mapped to the concurrency token column. It's possible the create one in shadow-state:
-```C#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<OrderDetails>()
@@ -621,7 +621,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 **Old behavior**
 
 Consider the following model:
-```C#
+```csharp
 public abstract class EntityBase
 {
     public int Id { get; set; }
@@ -663,7 +663,7 @@ The old behavoir was unexpected.
 
 The property can still be explicitly mapped to separate column on the derived types:
 
-```C#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Ignore<OrderBase>();
@@ -684,7 +684,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 **Old behavior**
 
 Consider the following model:
-```C#
+```csharp
 public class Customer
 {
     public int CustomerId { get; set; }
@@ -706,7 +706,7 @@ Starting with 3.0, EF Core doesn't try to use properties for foreign keys by con
 Principal type name concatenated with principal property name, and navigation name concatenated with principal property name patterns are still matched.
 For example:
 
-```C#
+```csharp
 public class Customer
 {
     public int Id { get; set; }
@@ -720,7 +720,7 @@ public class Order
 }
 ```
 
-```C#
+```csharp
 public class Customer
 {
     public int Id { get; set; }
@@ -753,7 +753,7 @@ If the property was intended to be the foreign key, and hence part of the primar
 
 Before EF Core 3.0, if the context opens the connection inside a `TransactionScope`, the connection remains open while the current `TransactionScope` is active.
 
-```C#
+```csharp
 using (new TransactionScope())
 {
     using (AdventureWorks context = new AdventureWorks())
@@ -762,7 +762,7 @@ using (new TransactionScope())
         context.SaveChanges();
 
         // Old behavior: Connection is still open at this point
-		
+
         var categories = context.ProductCategories().ToList();
     }
 }
@@ -780,7 +780,7 @@ This change allows to use multiple contexts in the same `TransactionScope`. The 
 
 If the connection needs to remain open explicit call to `OpenConnection()` will ensure that EF Core doesn't close it prematurely:
 
-```C#
+```csharp
 using (new TransactionScope())
 {
     using (AdventureWorks context = new AdventureWorks())
@@ -788,7 +788,7 @@ using (new TransactionScope())
         context.Database.OpenConnection();
         context.ProductCategories.Add(new ProductCategory());
         context.SaveChanges();
-		
+
         var categories = context.ProductCategories().ToList();
         context.Database.CloseConnection();
     }
@@ -842,7 +842,7 @@ This change was made to prevent EF Core from erroneously triggering business log
 The pre-3.0 behavior can be restored through configuration of the property access mode on `ModelBuilder`.
 For example:
 
-```C#
+```csharp
 modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
 ```
 
@@ -868,7 +868,7 @@ This change was made to avoid silently using one field over another when only on
 Properties with ambiguous backing fields must have the field to use specified explicitly.
 For example, using the fluent API:
 
-```C#
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property(e => e.Id)
@@ -880,14 +880,16 @@ modelBuilder
 **Old behavior**
 
 Before EF Core 3.0, a property could be specified by a string value and if no property with that name was found on the .NET type then EF Core would try to match it to a field using convention rules.
-```C#
+
+```csharp
 private class Blog
 {
     private int _id;
     public string Name { get; set; }
 }
 ```
-```C#
+
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property("Id");
@@ -897,7 +899,7 @@ modelBuilder
 
 Starting with EF Core 3.0, a field-only property must match the field name exactly.
 
-```C#
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property("_id");
@@ -912,7 +914,7 @@ This change was made to avoid using the same field for two properties named simi
 Field-only properties must be named the same as the field they are mapped to.
 In a future release of EF Core after 3.0, we plan to re-enable explicitly configuring a field name that is different from the property name (see issue [#15307](https://github.com/aspnet/EntityFrameworkCore/issues/15307)):
 
-```C#
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property("Id")
@@ -991,7 +993,7 @@ This change was made because client-generated `string`/`byte[]` values generally
 The pre-3.0 behavior can be obtained by explicitly specifying that the key properties should use generated values if no other non-null value is set.
 For example, with the fluent API:
 
-```C#
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property(e => e.Id)
@@ -1000,7 +1002,7 @@ modelBuilder
 
 Or with data annotations:
 
-```C#
+```csharp
 [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 public string Id { get; set; }
 ```
@@ -1078,7 +1080,7 @@ The most appropriate cause of action on encountering this error is to understand
 However, the error can be converted back to a warning (or ignored) via configuration on the `DbContextOptionsBuilder`.
 For example:
 
-```C#
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {
     optionsBuilder
@@ -1096,7 +1098,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 Before EF Core 3.0, code calling `HasOne` or `HasMany` with a single string was interpreted in a confusing way.
 For example:
-```C#
+```csharp
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
 
@@ -1119,7 +1121,7 @@ This is not common.
 The previous behavior can be obtained through explicitly passing `null` for the navigation property name.
 For example:
 
-```C#
+```csharp
 modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ```
 
@@ -1509,7 +1511,7 @@ Use the new name. (Note that the event ID number has not changed.)
 
 Before EF Core 3.0, foreign key constraint names were referred to as simply the "name". For example:
 
-```C#
+```csharp
 var constraintName = myForeignKey.Name;
 ```
 
@@ -1517,7 +1519,7 @@ var constraintName = myForeignKey.Name;
 
 Starting with EF Core 3.0, foreign key constraint names are now referred to as the "constraint name". For example:
 
-```C#
+```csharp
 var constraintName = myForeignKey.ConstraintName;
 ```
 
@@ -1659,7 +1661,7 @@ of API compatibility, this should only be a simple package and namespace change.
 
 An entity type with multiple self-referencing uni-directional navigation properties and matching FKs was incorrectly configured as a single relationship. For example:
 
-```C#
+```csharp
 public class User 
 {
         public Guid Id { get; set; }
@@ -1682,7 +1684,7 @@ The resultant model was ambiguous and will likely usually be wrong for this case
 
 Use full configuration of the relationship. For example:
 
-```C#
+```csharp
 modelBuilder
      .Entity<User>()
      .HasOne(e => e.CreatedBy)
@@ -1703,7 +1705,7 @@ modelBuilder
 
 A DbFunction configured with schema as an empty string was treated as built-in function without a schema. For example following code will map `DatePart` CLR function to `DATEPART` built-in function on SqlServer.
 
-```C#
+```csharp
 [DbFunction("DATEPART", Schema = "")]
 public static int? DatePart(string datePartArg, DateTime? date) => throw new Exception();
 
@@ -1721,7 +1723,7 @@ Previously schema being empty was a way to treat that function is built-in but t
 
 Configure DbFunction's translation manually to map it to a built-in function.
 
-```C#
+```csharp
 modelBuilder
     .HasDbFunction(typeof(MyContext).GetMethod(nameof(MyContext.DatePart)))
     .HasTranslation(args => SqlFunctionExpression.Create("DatePart", args, typeof(int?), null));

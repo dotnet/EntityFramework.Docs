@@ -28,7 +28,7 @@ The installation procedure depends on project type and version:
 
 * `dotnet ef` must be installed as a global or local tool. Most developers will install `dotnet ef` as a global tool with the following command:
 
-  ``` console
+  ```dotnetcli
   dotnet tool install --global dotnet-ef
   ```
 
@@ -38,7 +38,7 @@ The installation procedure depends on project type and version:
 
 * Install the latest `Microsoft.EntityFrameworkCore.Design` package.
 
-  ``` Console
+  ```dotnetcli
   dotnet add package Microsoft.EntityFrameworkCore.Design
   ```
 
@@ -56,7 +56,7 @@ The `dotnet ef` commands are included in the .NET Core SDK, but to enable the co
 
 * Install the latest stable `Microsoft.EntityFrameworkCore.Design` package.
 
-  ``` Console
+  ```dotnetcli
   dotnet add package Microsoft.EntityFrameworkCore.Design
   ```
 
@@ -70,7 +70,7 @@ The `dotnet ef` commands are included in the .NET Core SDK, but to enable the co
 
 * Install the latest 1.x version of the `Microsoft.EntityFrameworkCore.Design` package, for example:
 
-  ```console
+  ```dotnetcli
   dotnet add package Microsoft.EntityFrameworkCore.Design -v 1.1.6
   ```
 
@@ -100,7 +100,7 @@ The `dotnet ef` commands are included in the .NET Core SDK, but to enable the co
 
 Run the following commands to verify that EF Core CLI tools are correctly installed:
 
-  ``` Console
+  ```dotnetcli
   dotnet restore
   dotnet ef
   ```
@@ -189,7 +189,7 @@ Arguments:
 
 The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID:
 
-```console
+```dotnetcli
 dotnet ef database update InitialCreate
 dotnet ef database update 20180904195021_InitialCreate
 ```
@@ -228,13 +228,13 @@ Options:
 
 The following example scaffolds all schemas and tables and puts the new files in the *Models* folder.
 
-```console
+```dotnetcli
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models
 ```
 
 The following example scaffolds only selected tables and creates the context in a separate folder with a specified name:
 
-```console
+```dotnetcli
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -t Blog -t Post --context-dir Context -c BlogContext
 ```
 
@@ -288,13 +288,13 @@ Options:
 
 The following example creates a script for the InitialCreate migration:
 
-```console
+```dotnetcli
 dotnet ef migrations script 0 InitialCreate
 ```
 
 The following example creates a script for all migrations after the InitialCreate migration.
 
-```console
+```dotnetcli
 dotnet ef migrations script 20180904195021_InitialCreate
 ```
 

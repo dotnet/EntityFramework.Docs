@@ -42,7 +42,7 @@ If you did everything correctly, you should be able to add new migrations to the
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations add NewMigration --project MyApp.Migrations
 ```
 

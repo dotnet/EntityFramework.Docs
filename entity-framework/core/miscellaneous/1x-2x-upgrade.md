@@ -115,7 +115,7 @@ var tableName = context.Model.FindEntityType(typeof(User)).Relational().TableNam
 
 Instead of using methods like `ForSqlServerToTable`, extension methods are now available to write conditional code based on the current provider in use. For example:
 
-```C#
+```csharp
 modelBuilder.Entity<User>().ToTable(
     Database.IsSqlServer() ? "SqlServerName" : "OtherName");
 ```
