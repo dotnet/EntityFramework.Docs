@@ -115,7 +115,7 @@ It is possible to chain the `OwnsOne` method in a fluent call to configure this 
 
 Notice the `WithOwner` call used to configure the navigation property pointing back at the owner. To configure a navigation to the owner entity type that's not part of the ownership relationship `WithOwner()` should be called without any arguments.
 
-It is possible to achieve the result using `OwnedAttribute` on both `OrderDetails` and `StreetAdress`.
+It is possible to achieve the result using `OwnedAttribute` on both `OrderDetails` and `StreetAddress`.
 
 ## Storing owned types in separate tables
 
