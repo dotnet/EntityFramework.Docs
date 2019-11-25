@@ -76,7 +76,7 @@ Define a context class and entity classes that make up the model.
 
 ## [.NET Core CLI](#tab/netcore-cli)
 
-* In the project directory create **Model.cs** with the following code
+* In the project directory, create **Model.cs** with the following code
 
 ## [Visual Studio](#tab/visual-studio)
 
