@@ -36,6 +36,7 @@ Changes that we expect to only impact database providers are documented under [p
 | [Temporary key values are no longer set onto entity instances](#tkv) | Low      |
 | [Dependent entities sharing the table with the principal are now optional](#de) | Low      |
 | [All entities sharing a table with a concurrency token column have to map it to a property](#aes) | Low      |
+| [Owned entities cannot be queried without the owner using a tracking query](#owned-query) | Low      |
 | [Inherited properties from unmapped types are now mapped to a single column for all derived types](#ip) | Low      |
 | [The foreign key property convention no longer matches same name as the principal property](#fkp) | Low      |
 | [Database connection is now closed if not used anymore before the TransactionScope has been completed](#dbc) | Low      |
@@ -610,6 +611,38 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     modelBuilder.Entity<OrderDetails>()
         .Property<byte[]>("Version").IsRowVersion().HasColumnName("Version");
 }
+```
+
+<a name="owned-query"></a>
+
+### Owned entities cannot be queried without the owner using a tracking query
+
+[Tracking Issue #18876](https://github.com/aspnet/EntityFrameworkCore/issues/18876)
+
+**Old behavior**
+
+Before EF Core 3.0, the owned entities could be queried as any other navigation.
+
+```csharp
+context.People.Select(p => p.Address);
+```
+
+**New behavior**
+
+Starting with 3.0, EF Core will throw if a tracking query projects an owned entity without the owner.
+
+**Why**
+
+Owned entities cannot be manipulated without the owner, so in the vast majority of cases querying them in this way is an error.
+
+**Mitigations**
+
+If the owned entity should be tracked to be modified in any way later then the owner should be included in the query.
+
+Otherwise add an `AsNoTracking()` call:
+
+```csharp
+context.People.Select(p => p.Address).AsNoTracking();
 ```
 
 <a name="ip"></a>
