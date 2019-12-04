@@ -1,6 +1,6 @@
 ---
 title: "Connection resiliency and retry logic - EF6"
-author: ansvyryd
+author: AndriySvyryd
 ms.date: 11/20/2019
 ms.assetid: 47d68ac1-927e-4842-ab8c-ed8c8698dff2
 ---
