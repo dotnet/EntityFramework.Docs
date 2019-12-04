@@ -39,12 +39,23 @@
     "overwrite": [],
     "externalReference": [],
     "globalMetadata": {
-      "breadcrumb_path": "/msdata-sqlite/breadcrumb/toc.json",
-      "extendBreadcrumb": true,
-      "feedback_system": "None"
+      "breadcrumb_path": "/msdata-sqlite/toc.json",
+      "searchScope": [
+        "Microsoft.Data.Sqlite"
+      ],
+      "ms.topic": "conceptual",
+      "audience": "developer",
+      "ms.prod": "entity-framework",
+      "ms.tgt_pltfrm": "dotnet",
+      "ms.devlang": "dotnet",
+      "ms.author": "avickers",
+      "feedback_system": "GitHub",
+      "feedback_github_repo": "aspnet/EntityFramework.Docs",
+      "feedback_product_url": "https://github.com/aspnet/EntityFrameworkCore/issues/new",
+      "uhfHeaderId": "MSDocsHeader-DotNet"
     },
     "fileMetadata": {},
-    "template": [],
+    "template": [ "default" ],
     "dest": "msdata-sqlite",
     "markdownEngineName": "markdig"
   }
