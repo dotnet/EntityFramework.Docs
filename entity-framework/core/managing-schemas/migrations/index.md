@@ -35,7 +35,7 @@ After you've [defined your initial model](xref:core/modeling/index), it's time t
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations add InitialCreate
 ```
 
@@ -64,7 +64,7 @@ Next, apply the migration to the database to create the schema.
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef database update
 ```
 
@@ -82,7 +82,7 @@ After making changes to your EF Core model, the database schema might be out of 
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations add AddProductReviews
 ```
 
@@ -143,7 +143,7 @@ Apply the migration to the database using the appropriate command.
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef database update
 ```
 
@@ -171,7 +171,7 @@ Sometimes you add a migration and realize you need to make additional changes to
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations remove
 ```
 
@@ -191,7 +191,7 @@ If you already applied a migration (or several migrations) to the database but n
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef database update LastGoodMigration
 ```
 
@@ -209,7 +209,7 @@ When debugging your migrations or deploying them to a production database, it's 
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations script
 ```
 

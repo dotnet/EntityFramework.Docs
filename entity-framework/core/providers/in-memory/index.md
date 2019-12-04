@@ -15,7 +15,7 @@ Install the [Microsoft.EntityFrameworkCore.InMemory NuGet package](https://www.n
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` console
+```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.InMemory
 ```
 

@@ -1,7 +1,7 @@
 ---
 title: "Connection resiliency and retry logic - EF6"
-author: divega
-ms.date: "10/23/2016"
+author: AndriySvyryd
+ms.date: 11/20/2019
 ms.assetid: 47d68ac1-927e-4842-ab8c-ed8c8698dff2
 ---
 # Connection resiliency and retry logic
@@ -118,77 +118,14 @@ using (var db = new BloggingContext())
 
 This is not supported when using a retrying execution strategy because EF isn’t aware of any previous operations and how to retry them. For example, if the second SaveChanges failed then EF no longer has the required information to retry the first SaveChanges call.  
 
-### Workaround: Suspend Execution Strategy  
+### Solution: Manually Call Execution Strategy  
 
-One possible workaround is to suspend the retrying execution strategy for the piece of code that needs to use a user initiated transaction. The easiest way to do this is to add a SuspendExecutionStrategy flag to your code based configuration class and change the execution strategy lambda to return the default (non-retying) execution strategy when the flag is set.  
-
-``` csharp
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.SqlServer;
-using System.Runtime.Remoting.Messaging;
-
-namespace Demo
-{
-    public class MyConfiguration : DbConfiguration
-    {
-        public MyConfiguration()
-        {
-            this.SetExecutionStrategy("System.Data.SqlClient", () => SuspendExecutionStrategy
-              ? (IDbExecutionStrategy)new DefaultExecutionStrategy()
-              : new SqlAzureExecutionStrategy());
-        }
-
-        public static bool SuspendExecutionStrategy
-        {
-            get
-            {
-                return (bool?)CallContext.LogicalGetData("SuspendExecutionStrategy") ?? false;
-            }
-            set
-            {
-                CallContext.LogicalSetData("SuspendExecutionStrategy", value);
-            }
-        }
-    }
-}
-```  
-
-Note that we are using CallContext to store the flag value. This provides similar functionality to thread local storage but is safe to use with asynchronous code - including async query and save with Entity Framework.  
-
-We can now suspend the execution strategy for the section of code that uses a user initiated transaction.  
-
-``` csharp
-using (var db = new BloggingContext())
-{
-    MyConfiguration.SuspendExecutionStrategy = true;
-
-    using (var trn = db.Database.BeginTransaction())
-    {
-        db.Blogs.Add(new Blog { Url = "http://msdn.com/data/ef" });
-        db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/adonet" });
-        db.SaveChanges();
-
-        db.Blogs.Add(new Blog { Url = "http://twitter.com/efmagicunicorns" });
-        db.SaveChanges();
-
-        trn.Commit();
-    }
-
-    MyConfiguration.SuspendExecutionStrategy = false;
-}
-```  
-
-### Workaround: Manually Call Execution Strategy  
-
-Another option is to manually use the execution strategy and give it the entire set of logic to be run, so that it can retry everything if one of the operations fails. We still need to suspend the execution strategy - using the technique shown above - so that any contexts used inside the retryable code block do not attempt to retry.  
+The solution is to manually use the execution strategy and give it the entire set of logic to be run, so that it can retry everything if one of the operations fails. When an execution strategy derived from DbExecutionStrategy is running it will suspend the implicit execution strategy used in SaveChanges.  
 
 Note that any contexts should be constructed within the code block to be retried. This ensures that we are starting with a clean state for each retry.  
 
 ``` csharp
 var executionStrategy = new SqlAzureExecutionStrategy();
-
-MyConfiguration.SuspendExecutionStrategy = true;
 
 executionStrategy.Execute(
     () =>
@@ -208,6 +145,4 @@ executionStrategy.Execute(
             }
         }
     });
-
-MyConfiguration.SuspendExecutionStrategy = false;
 ```  

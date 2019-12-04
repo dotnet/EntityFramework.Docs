@@ -38,7 +38,7 @@ The above will display the help page associated with this utility, note that you
 ## Migrate to the latest migration
 
 ``` console
-Migrate.exe MyMvcApplication.dll /startupConfigurationFile=”..\\web.config”
+Migrate.exe MyMvcApplication.dll /startupConfigurationFile="..\\web.config"
 ```
 
 When running migrate.exe the only mandatory parameter is the assembly, which is the assembly that contains the migrations that you are trying to run, but it will use all convention based settings if you do not specify the configuration file.
@@ -46,7 +46,7 @@ When running migrate.exe the only mandatory parameter is the assembly, which is 
 ## Migrate to a specific migration
 
 ``` console
-Migrate.exe MyApp.exe /startupConfigurationFile=”MyApp.exe.config” /targetMigration=”AddTitle”
+Migrate.exe MyApp.exe /startupConfigurationFile="MyApp.exe.config" /targetMigration="AddTitle"
 ```
 
 If you want to run migrations up to a specific migration, then you can specify the name of the migration. This will run all previous migrations as required until getting to the migration specified.
@@ -54,7 +54,7 @@ If you want to run migrations up to a specific migration, then you can specify t
 ## Specify working directory
 
 ``` console
-Migrate.exe MyApp.exe /startupConfigurationFile=”MyApp.exe.config” /startupDirectory=”c:\\MyApp”
+Migrate.exe MyApp.exe /startupConfigurationFile="MyApp.exe.config" /startupDirectory="c:\\MyApp"
 ```
 
 If you assembly has dependencies or reads files relative to the working directory then you will need to set startupDirectory.
@@ -62,7 +62,7 @@ If you assembly has dependencies or reads files relative to the working director
 ## Specify migration configuration to use
 
 ``` console
-Migrate.exe MyAssembly CustomConfig /startupConfigurationFile=”..\\web.config”
+Migrate.exe MyAssembly CustomConfig /startupConfigurationFile="..\\web.config"
 ```
 
 If you have multiple migration configuration classes, classes inheriting from DbMigrationConfiguration, then you need to specify which is to be used for this execution. This is specified by providing the optional second parameter without a switch as above.
@@ -70,7 +70,7 @@ If you have multiple migration configuration classes, classes inheriting from Db
 ## Provide connection string
 
 ``` console
-Migrate.exe BlogDemo.dll /connectionString=”Data Source=localhost;Initial Catalog=BlogDemo;Integrated Security=SSPI” /connectionProviderName=”System.Data.SqlClient”
+Migrate.exe BlogDemo.dll /connectionString="Data Source=localhost;Initial Catalog=BlogDemo;Integrated Security=SSPI" /connectionProviderName="System.Data.SqlClient"
 ```
 
 If you wish to specify a connection string at the command line then you must also provide the provider name. Not specifying the provider name will cause an exception.

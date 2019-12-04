@@ -1,8 +1,9 @@
 ---
 title: Generated Values - EF Core
-author: rowanmiller
-ms.date: 10/27/2016
-ms.assetid: eb082011-11a1-41b4-a108-15daafa03e80
+description: How to configure value generation for properties when using Entity Framework Core
+author: AndriySvyryd
+ms.author: ansvyryd
+ms.date: 11/06/2019
 uid: core/modeling/generated-properties
 ---
 
@@ -48,7 +49,7 @@ Like `value generated on add`, if you specify a value for the property on a newl
 
 ## Conventions
 
-By convention, non-composite primary keys of type short, int, long, or Guid will be setup to have values generated on add. All other properties will be setup with no value generation.
+By default, non-composite primary keys of type short, int, long, or Guid will be setup to have values generated on add. All other properties will be setup with no value generation.
 
 ## Data Annotations
 

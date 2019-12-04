@@ -15,7 +15,7 @@ Install the [Microsoft.EntityFrameworkCore.Sqlite NuGet package](https://www.nug
 
 ## [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` console
+```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 ```
 

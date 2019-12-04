@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.InheritanceTphDiscriminator
+namespace EFModeling.FluentAPI.NonShadowDiscriminator
 {
-    #region Inheritance
+    #region NonShadowDiscriminator
     public class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -10,9 +10,16 @@ namespace EFModeling.FluentAPI.InheritanceTphDiscriminator
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .HasDiscriminator<string>("blog_type")
-                .HasValue<Blog>("blog_base")
-                .HasValue<RssBlog>("blog_rss");
+                .Property("Discriminator")
+                .HasMaxLength(200);
+
+            modelBuilder.Entity<Blog>()
+                .HasDiscriminator(b => b.BlogType);
+
+            modelBuilder.Entity<Blog>()
+                .Property(e => e.BlogType)
+                .HasMaxLength(200)
+                .HasColumnName("blog_type");
         }
     }
 
@@ -20,6 +27,7 @@ namespace EFModeling.FluentAPI.InheritanceTphDiscriminator
     {
         public int BlogId { get; set; }
         public string Url { get; set; }
+        public string BlogType { get; set; }
     }
 
     public class RssBlog : Blog

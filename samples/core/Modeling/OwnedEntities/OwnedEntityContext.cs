@@ -47,12 +47,6 @@ namespace EFModeling.OwnedEntities
             });
             #endregion
 
-            modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od =>
-            {
-                od.Property<int>("OrderId").ValueGeneratedNever();
-                od.WithOwner(d => d.Order).HasForeignKey("OrderId");
-            });
-
             #region OwnsMany
             modelBuilder.Entity<Distributor>().OwnsMany(p => p.ShippingCenters, a =>
             {
