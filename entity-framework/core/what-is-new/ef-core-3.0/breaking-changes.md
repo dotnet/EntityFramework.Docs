@@ -389,7 +389,7 @@ This change was made to improve the experience for data binding and auditing sce
 
 **Mitigations**
 
-The previous behavior can be restored through settings on `context.ChangedTracker`.
+The previous behavior can be restored through settings on `context.ChangeTracker`.
 For example:
 
 ```csharp
