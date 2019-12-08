@@ -120,6 +120,12 @@ An implementation of temporal support. For EF Core: 2.
 
 [GitHub repository](https://github.com/cpoDesign/EFCore.TemporalSupport)
 
+### EfCoreTemporalTable
+
+Easily perform temporal queries on your favourite database. For EF Core: 3.
+
+[GitHub repository](https://github.com/glautrou/EfCoreTemporalTable)
+
 ### EntityFrameworkCore.TemporalTables
 
 Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2.
