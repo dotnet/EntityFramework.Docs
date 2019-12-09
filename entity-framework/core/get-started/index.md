@@ -18,11 +18,11 @@ You can follow the tutorial by using Visual Studio on Windows, or by using the .
 
 Install the following software:
 
-## [.NET Core CLI](#tab/netcore-cli)
+### [.NET Core CLI](#tab/netcore-cli)
 
 * [.NET Core 3.0 SDK](https://www.microsoft.com/net/download/core).
 
-## [Visual Studio](#tab/visual-studio)
+### [Visual Studio](#tab/visual-studio)
 
 * [Visual Studio 2019 version 16.3 or later](https://www.visualstudio.com/downloads/) with this  workload:
   * **.NET Core cross-platform development** (under **Other Toolsets**)
@@ -31,14 +31,14 @@ Install the following software:
 
 ## Create a new project
 
-## [.NET Core CLI](#tab/netcore-cli)
+### [.NET Core CLI](#tab/netcore-cli)
 
 ```dotnetcli
 dotnet new console -o EFGetStarted
 cd EFGetStarted
 ```
 
-## [Visual Studio](#tab/visual-studio)
+### [Visual Studio](#tab/visual-studio)
 
 * Open Visual Studio
 * Click **Create a new project**
@@ -51,13 +51,13 @@ cd EFGetStarted
 
 To install EF Core, you install the package for the EF Core database provider(s) you want to target. This tutorial uses SQLite because it runs on all platforms that .NET Core supports. For a list of available providers, see [Database Providers](../providers/index.md).
 
-## [.NET Core CLI](#tab/netcore-cli)
+### [.NET Core CLI](#tab/netcore-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 ```
 
-## [Visual Studio](#tab/visual-studio)
+### [Visual Studio](#tab/visual-studio)
 
 * **Tools > NuGet Package Manager > Package Manager Console**
 * Run the following commands:
@@ -74,11 +74,11 @@ Tip: You can also install packages by right-clicking on the project and selectin
 
 Define a context class and entity classes that make up the model.
 
-## [.NET Core CLI](#tab/netcore-cli)
+### [.NET Core CLI](#tab/netcore-cli)
 
 * In the project directory, create **Model.cs** with the following code
 
-## [Visual Studio](#tab/visual-studio)
+### [Visual Studio](#tab/visual-studio)
 
 * Right-click on the project and select **Add > Class**
 * Enter **Model.cs** as the name and click **Add**
@@ -96,7 +96,7 @@ Tip: In a real app, you put each class in a separate file and put the [connectio
 
 The following steps use [migrations](xref:core/managing-schemas/migrations/index) to create a database.
 
-## [.NET Core CLI](#tab/netcore-cli)
+### [.NET Core CLI](#tab/netcore-cli)
 
 * Run the following commands:
 
@@ -109,7 +109,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
 
   This installs [dotnet ef](../miscellaneous/cli/dotnet.md) and the design package which is required to run the command on a project. The `migrations` command scaffolds a migration to create the initial set of tables for the model. The `database update` command creates the database and applies the new migration to it.
 
-## [Visual Studio](#tab/visual-studio)
+### [Visual Studio](#tab/visual-studio)
 
 * Run the following commands in **Package Manager Console**
 
@@ -131,13 +131,13 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
 
 ## Run the app
 
-## [.NET Core CLI](#tab/netcore-cli)
+### [.NET Core CLI](#tab/netcore-cli)
 
 ```dotnetcli
 dotnet run
 ```
 
-## [Visual Studio](#tab/visual-studio)
+### [Visual Studio](#tab/visual-studio)
 
 Visual Studio uses an inconsistent working directory when running .NET Core console apps. (see [dotnet/project-system#3619](https://github.com/dotnet/project-system/issues/3619)) This results in an exception being thrown: *no such table: Blogs*. To update the working directory:
 
