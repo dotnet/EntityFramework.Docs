@@ -13,13 +13,13 @@ This database provider allows Entity Framework Core to be used with an in-memory
 
 Install the [Microsoft.EntityFrameworkCore.InMemory NuGet package](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory/).
 
-## [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.InMemory
 ```
 
-## [Visual Studio](#tab/vs)
+### [Visual Studio](#tab/vs)
 
 ``` powershell
 Install-Package Microsoft.EntityFrameworkCore.InMemory

@@ -32,14 +32,14 @@ class MySqliteDbContext : MyDbContext
 
 When adding new migration, specify the context types.
 
-## [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add InitialCreate --context MyDbContext --output-dir Migrations/SqlServerMigrations
 dotnet ef migrations add InitialCreate --context MySqliteDbContext --output-dir Migrations/SqliteMigrations
 ```
 
-## [Visual Studio](#tab/vs)
+### [Visual Studio](#tab/vs)
 
 ``` powershell
 Add-Migration InitialCreate -Context MyDbContext -OutputDir Migrations\SqlServerMigrations
