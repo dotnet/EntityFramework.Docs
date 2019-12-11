@@ -7,11 +7,13 @@ namespace EFModeling.FluentAPI.IgnoreProperty
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region IgnoreProperty
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
                 .Ignore(b => b.LoadedFromDatabase);
         }
+        #endregion
     }
 
     public class Blog

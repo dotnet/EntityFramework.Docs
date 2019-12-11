@@ -1,17 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.Relational.Column
+namespace EFModeling.FluentAPI.Relational.TableNameAndSchema
 {
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region TableNameAndSchema
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .Property(b => b.BlogId)
-                .HasColumnName("blog_id");
+                .ToTable("blogs", schema: "blogging");
         }
+        #endregion
     }
 
     public class Blog

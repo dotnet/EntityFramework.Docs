@@ -8,10 +8,12 @@ namespace EFModeling.DataAnnotations.MaxLength
         public DbSet<Blog> Blogs { get; set; }
     }
 
+    #region MaxLength
     public class Blog
     {
         public int BlogId { get; set; }
         [MaxLength(500)]
         public string Url { get; set; }
     }
+    #endregion
 }

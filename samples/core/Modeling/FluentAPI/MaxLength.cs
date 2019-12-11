@@ -6,12 +6,14 @@ namespace EFModeling.FluentAPI.MaxLength
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region MaxLength
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Url)
                 .HasMaxLength(500);
         }
+        #endregion
     }
 
     public class Blog

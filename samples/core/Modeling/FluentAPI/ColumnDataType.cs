@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.Relational.DataType
 {
-    #region Model
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region ColumnDataType
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>(eb =>
@@ -15,6 +15,7 @@ namespace EFModeling.FluentAPI.Relational.DataType
                 eb.Property(b => b.Rating).HasColumnType("decimal(5, 2)");
             });
         }
+        #endregion
     }
 
     public class Blog
@@ -23,5 +24,4 @@ namespace EFModeling.FluentAPI.Relational.DataType
         public string Url { get; set; }
         public decimal Rating { get; set; }
     }
-    #endregion
 }

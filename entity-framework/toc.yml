@@ -81,16 +81,12 @@
         href: core/modeling/index.md
       - name: Entity Types
         href: core/modeling/entity-types.md
-      - name: "Including & Excluding Properties"
-        href: core/modeling/included-properties.md
+      - name: Entity Properties
+        href: core/modeling/entity-properties.md
       - name: Keys
         href: core/modeling/keys.md
       - name: Generated Values
         href: core/modeling/generated-properties.md
-      - name: Required and Optional Properties
-        href: core/modeling/required-optional.md
-      - name: Maximum Length
-        href: core/modeling/max-length.md
       - name: Concurrency Tokens
         href: core/modeling/concurrency.md
       - name: Shadow Properties
@@ -124,10 +120,6 @@
         items:
         - name: Overview
           href: core/modeling/relational/index.md
-        - name: Column Mapping
-          href: core/modeling/relational/columns.md
-        - name: Data Types
-          href: core/modeling/relational/data-types.md
         - name: Computed Columns
           href: core/modeling/relational/computed-columns.md
         - name: Sequences

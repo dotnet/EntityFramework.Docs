@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EFModeling.DataAnnotations.Relational.TableAndSchema
+namespace EFModeling.DataAnnotations.Relational.TableName
 {
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
     }
 
-    #region Table
-    [Table("blogs", Schema = "blogging")]
+    #region TableName
+    [Table("blogs")]
     public class Blog
     {
         public int BlogId { get; set; }

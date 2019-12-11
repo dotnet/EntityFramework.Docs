@@ -7,10 +7,12 @@ namespace EFModeling.FluentAPI.IgnoreType
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region IgnoreType
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Ignore<BlogMetadata>();
         }
+        #endregion
     }
 
     public class Blog
