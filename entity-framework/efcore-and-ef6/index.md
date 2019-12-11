@@ -25,7 +25,7 @@ EF Core was designed to provide a developer experience similar to EF6. Most of t
 
 ## Feature comparison
 
-EF Core offers new features that won't be implemented in EF6 (such as [alternate keys](xref:core/modeling/alternate-keys), [batch updates](xref:core/what-is-new/ef-core-1.0#relational-batching-of-statements), and [mixed client/database evaluation in LINQ queries](xref:core/querying/client-eval). But because it's a new code base, it also lacks some features that EF6 has.
+EF Core offers new features that won't be implemented in EF6 (such as [alternate keys](xref:core/modeling/keys#alternate-keys), [batch updates](xref:core/what-is-new/ef-core-1.0#relational-batching-of-statements), and [mixed client/database evaluation in LINQ queries](xref:core/querying/client-eval). But because it's a new code base, it also lacks some features that EF6 has.
 
 The following tables compare the features available in EF Core and EF6. It's a high-level comparison and doesn't list every feature or explain differences between the same feature in different EF versions.
 
