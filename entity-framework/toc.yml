@@ -83,7 +83,7 @@
         href: core/modeling/entity-types.md
       - name: "Including & Excluding Properties"
         href: core/modeling/included-properties.md
-      - name: Keys (primary)
+      - name: Keys
         href: core/modeling/keys.md
       - name: Generated Values
         href: core/modeling/generated-properties.md
@@ -99,8 +99,6 @@
         href: core/modeling/relationships.md
       - name: Indexes
         href: core/modeling/indexes.md
-      - name: Alternate Keys
-        href: core/modeling/alternate-keys.md
       - name: Inheritance
         href: core/modeling/inheritance.md
       - name: Backing Fields
@@ -129,8 +127,6 @@
           href: core/modeling/relational/columns.md
         - name: Data Types
           href: core/modeling/relational/data-types.md
-        - name: Primary Keys
-          href: core/modeling/relational/primary-keys.md
         - name: Computed Columns
           href: core/modeling/relational/computed-columns.md
         - name: Sequences

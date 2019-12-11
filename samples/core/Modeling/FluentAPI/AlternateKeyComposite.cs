@@ -2,16 +2,17 @@
 
 namespace EFModeling.FluentAPI.AlternateKeyComposite
 {
-    #region AlternateKeyComposite
     class MyContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
 
+        #region AlternateKeyComposite
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Car>()
                 .HasAlternateKey(c => new { c.State, c.LicensePlate });
         }
+        #endregion
     }
 
     class Car
@@ -22,5 +23,4 @@ namespace EFModeling.FluentAPI.AlternateKeyComposite
         public string Make { get; set; }
         public string Model { get; set; }
     }
-    #endregion
 }

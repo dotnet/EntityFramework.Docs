@@ -6,11 +6,13 @@ namespace EFModeling.FluentAPI.KeyComposite
     {
         public DbSet<Car> Cars { get; set; }
 
+        #region KeyComposite
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Car>()
                 .HasKey(c => new { c.State, c.LicensePlate });
         }
+        #endregion
     }
 
     class Car

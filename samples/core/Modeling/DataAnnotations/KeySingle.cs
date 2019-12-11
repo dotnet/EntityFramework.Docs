@@ -8,6 +8,7 @@ namespace EFModeling.DataAnnotations.KeySingle
         public DbSet<Car> Cars { get; set; }
     }
 
+    #region KeySingle
     class Car
     {
         [Key]
@@ -16,4 +17,5 @@ namespace EFModeling.DataAnnotations.KeySingle
         public string Make { get; set; }
         public string Model { get; set; }
     }
+    #endregion
 }
