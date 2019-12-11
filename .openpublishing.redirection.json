@@ -237,7 +237,32 @@
         },
         {
             "source_path": "entity-framework/core/modeling/relational/default-schema.md",
-            "redirect_url": "/ef/core/modeling/entity-types",
+            "redirect_url": "/ef/core/modeling/entity-types#table-schema",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/included-properties.md",
+            "redirect_url": "/ef/core/modeling/entity-properties",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/max-length.md",
+            "redirect_url": "/ef/core/modeling/entity-properties#maximum-length",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/required-optional.md",
+            "redirect_url": "/ef/core/modeling/entity-properties#required-and-optional-properties",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/columns.md",
+            "redirect_url": "/ef/core/modeling/entity-properties#column-names",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/data-types.md",
+            "redirect_url": "/ef/core/modeling/entity-properties#column-data-types",
             "redirect_document_id": false
         },
         {

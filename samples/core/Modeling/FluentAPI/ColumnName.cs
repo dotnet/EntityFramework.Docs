@@ -1,17 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.Required
+namespace EFModeling.FluentAPI.Relational.ColumnName
 {
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
-        #region Required
+        #region ColumnName
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .Property(b => b.Url)
-                .IsRequired();
+                .Property(b => b.BlogId)
+                .HasColumnName("blog_id");
         }
         #endregion
     }

@@ -1,16 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.Relational.Table
+namespace EFModeling.FluentAPI.Relational.DefaultSchema
 {
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region DefaultSchema
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Blog>()
-                .ToTable("blogs");
+            modelBuilder.HasDefaultSchema("blogging");
         }
+        #endregion
     }
 
     public class Blog

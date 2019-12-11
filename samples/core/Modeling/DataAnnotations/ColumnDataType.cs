@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EFModeling.DataAnnotations.Relational.DataType
+namespace EFModeling.DataAnnotations.Relational.ColumnDataType
 {
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
     }
 
-    #region Entities
+    #region ColumnDataType
     public class Blog
     {
         public int BlogId { get; set; }

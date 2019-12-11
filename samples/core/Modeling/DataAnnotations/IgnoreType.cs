@@ -17,9 +17,11 @@ namespace EFModeling.DataAnnotations.IgnoreType
         public BlogMetadata Metadata { get; set; }
     }
 
+    #region IgnoreType
     [NotMapped]
     public class BlogMetadata
     {
         public DateTime LoadedFromDatabase { get; set; }
     }
+    #endregion
 }

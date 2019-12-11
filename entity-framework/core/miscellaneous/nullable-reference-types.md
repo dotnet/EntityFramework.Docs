@@ -13,7 +13,7 @@ This page introduces EF Core's support for nullable reference types, and describ
 
 ## Required and optional properties
 
-The main documentation on required and optional properties and their interaction with nullable reference types is the [Required and Optional Properties](xref:core/modeling/required-optional) page. It is recommended you start out by reading that page first.
+The main documentation on required and optional properties and their interaction with nullable reference types is the [Required and Optional Properties](xref:core/modeling/entity-properties#required-and-optional-properties) page. It is recommended you start out by reading that page first.
 
 > [!NOTE]
 > Exercise caution when enabling nullable reference types on an existing project: reference type properties which were previously configured as optional will now be configured as required, unless they are explicitly annotated to be nullable. When managing a relational database schema, this may cause migrations to be generated which alter the database column's nullability.
