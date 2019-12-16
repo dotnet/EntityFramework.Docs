@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.Relational.IndexNoFilter
 {
-    #region Model
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region IndexNoFilter
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
@@ -14,6 +14,7 @@ namespace EFModeling.FluentAPI.Relational.IndexNoFilter
                 .IsUnique()
                 .HasFilter(null);
         }
+        #endregion
     }
 
     public class Blog
@@ -21,5 +22,4 @@ namespace EFModeling.FluentAPI.Relational.IndexNoFilter
         public int BlogId { get; set; }
         public string Url { get; set; }
     }
-    #endregion
 }
