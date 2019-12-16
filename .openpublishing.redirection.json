@@ -249,6 +249,11 @@
             "source_path": "entity-framework/core/modeling/relational/primary-keys.md",
             "redirect_url": "/ef/core/modeling/keys",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/indexes.md",
+            "redirect_url": "/ef/core/modeling/indexes",
+            "redirect_document_id": false
         }
     ]
 }

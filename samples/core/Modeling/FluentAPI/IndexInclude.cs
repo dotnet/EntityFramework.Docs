@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.Relational.IndexInclude
 {
-    #region Model
     class MyContext : DbContext
     {
         public DbSet<Post> Posts { get; set; }
 
+        #region IndexInclude
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Post>()
@@ -16,9 +16,9 @@ namespace EFModeling.FluentAPI.Relational.IndexInclude
                 {
                     p.Title,
                     p.PublishedOn
-                })
-                .HasName("Index_Url_Include_Title_PublishedOn");
+                });
         }
+        #endregion
     }
 
     public class Post
@@ -28,5 +28,4 @@ namespace EFModeling.FluentAPI.Relational.IndexInclude
         public string Title { get; set; }
         public DateTime PublishedOn { get; set; }
     }
-    #endregion
 }

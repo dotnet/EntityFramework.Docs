@@ -134,8 +134,6 @@
           href: core/modeling/relational/sequences.md
         - name: Default Values
           href: core/modeling/relational/default-values.md
-        - name: Indexes
-          href: core/modeling/relational/indexes.md
         - name: Foreign Key Constraints
           href: core/modeling/relational/fk-constraints.md
         - name: Alternate Keys (Unique Constraints)
