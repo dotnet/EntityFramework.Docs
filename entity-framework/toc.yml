@@ -122,8 +122,6 @@
         items:
         - name: Overview
           href: core/modeling/relational/index.md
-        - name: Inheritance (Relational Database)
-          href: core/modeling/relational/inheritance.md
     - name: Managing Database Schemas
       items:
       - name: Overview

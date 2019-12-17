@@ -2,17 +2,13 @@
 
 namespace EFModeling.FluentAPI.NonShadowDiscriminator
 {
-    #region NonShadowDiscriminator
     public class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region NonShadowDiscriminator
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Blog>()
-                .Property("Discriminator")
-                .HasMaxLength(200);
-
             modelBuilder.Entity<Blog>()
                 .HasDiscriminator(b => b.BlogType);
 
@@ -21,6 +17,7 @@ namespace EFModeling.FluentAPI.NonShadowDiscriminator
                 .HasMaxLength(200)
                 .HasColumnName("blog_type");
         }
+        #endregion
     }
 
     public class Blog
@@ -34,5 +31,4 @@ namespace EFModeling.FluentAPI.NonShadowDiscriminator
     {
         public string RssUrl { get; set; }
     }
-    #endregion
 }

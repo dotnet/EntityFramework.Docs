@@ -1,19 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.DefaultDiscriminator
+namespace EFModeling.FluentAPI.DiscriminatorConfiguration
 {
     public class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region DiscriminatorConfiguration
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region DiscriminatorConfiguration
             modelBuilder.Entity<Blog>()
-                .Property("Discriminator")
-                .HasMaxLength(200);
-            #endregion
+                .HasDiscriminator<string>("blog_type")
+                .HasValue<Blog>("blog_base")
+                .HasValue<RssBlog>("blog_rss");
         }
+        #endregion
     }
 
     public class Blog
