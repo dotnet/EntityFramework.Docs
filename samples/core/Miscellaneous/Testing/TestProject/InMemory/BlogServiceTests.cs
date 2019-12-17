@@ -18,7 +18,7 @@ namespace EFTesting.TestProject.InMemory
             using (var context = new BloggingContext(options))
             {
                 var service = new BlogService(context);
-                service.Add("http://sample.com");
+                service.Add("https://example.com");
                 context.SaveChanges();
             }
 
@@ -26,7 +26,7 @@ namespace EFTesting.TestProject.InMemory
             using (var context = new BloggingContext(options))
             {
                 Assert.Equal(1, context.Blogs.Count());
-                Assert.Equal("http://sample.com", context.Blogs.Single().Url);
+                Assert.Equal("https://example.com", context.Blogs.Single().Url);
             }
         }
 
@@ -40,9 +40,9 @@ namespace EFTesting.TestProject.InMemory
             // Insert seed data into the database using one instance of the context
             using (var context = new BloggingContext(options))
             {
-                context.Blogs.Add(new Blog { Url = "http://sample.com/cats" });
-                context.Blogs.Add(new Blog { Url = "http://sample.com/catfish" });
-                context.Blogs.Add(new Blog { Url = "http://sample.com/dogs" });
+                context.Blogs.Add(new Blog { Url = "https://example.com/cats" });
+                context.Blogs.Add(new Blog { Url = "https://example.com/catfish" });
+                context.Blogs.Add(new Blog { Url = "https://example.com/dogs" });
                 context.SaveChanges();
             }
 

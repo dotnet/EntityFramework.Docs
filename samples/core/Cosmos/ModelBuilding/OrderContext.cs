@@ -26,9 +26,14 @@ namespace Cosmos.ModelBuilding
                 .ToContainer("Orders");
             #endregion
 
+            #region NoDiscriminator
+            modelBuilder.Entity<Order>()
+                .HasNoDiscriminator();
+            #endregion
+
             #region PartitionKey
-            //modelBuilder.Entity<Order>()
-            //    .HasPartitionKey(o => o.PartitionKey);
+            modelBuilder.Entity<Order>()
+                .HasPartitionKey(o => o.PartitionKey);
             #endregion
 
             #region PropertyNames

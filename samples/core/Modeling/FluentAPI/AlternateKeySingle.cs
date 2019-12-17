@@ -6,11 +6,13 @@ namespace EFModeling.FluentAPI.AlternateKeySingle
     {
         public DbSet<Car> Cars { get; set; }
 
+        #region AlternateKeySingle
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Car>()
                 .HasAlternateKey(c => c.LicensePlate);
         }
+        #endregion
     }
 
     class Car

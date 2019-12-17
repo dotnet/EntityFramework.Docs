@@ -13,7 +13,7 @@ For information about writing an Entity Framework Core database provider, see [S
 > [!NOTE]
 > These posts have not been updated since EF Core 1.1 and there have been significant changes since that time [Issue 681](https://github.com/aspnet/EntityFramework.Docs/issues/681) is tracking updates to this documentation.
 
-The EF Core codebase is open source and contains several database providers that can be used as a reference. You can find the source code at https://github.com/aspnet/EntityFrameworkCore. It may also be helpful to look at the code for commonly used third-party providers, such as [Npgsql](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL), [Pomelo MySQL](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql), and [SQL Server Compact](https://github.com/ErikEJ/EntityFramework.SqlServerCompact). In particular, these projects are setup to extend from and run functional tests that we publish on NuGet. This kind of setup is strongly recommended.
+The EF Core codebase is open source and contains several database providers that can be used as a reference. You can find the source code at <https://github.com/aspnet/EntityFrameworkCore>. It may also be helpful to look at the code for commonly used third-party providers, such as [Npgsql](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL), [Pomelo MySQL](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql), and [SQL Server Compact](https://github.com/ErikEJ/EntityFramework.SqlServerCompact). In particular, these projects are setup to extend from and run functional tests that we publish on NuGet. This kind of setup is strongly recommended.
 
 ## Keeping up-to-date with provider changes
 
@@ -28,6 +28,7 @@ We suggest using the following naming for NuGet packages. This is consistent wit
 `<Optional project/company name>.EntityFrameworkCore.<Database engine name>`
 
 For example:
+
 * `Microsoft.EntityFrameworkCore.SqlServer`
 * `Npgsql.EntityFrameworkCore.PostgreSQL`
 * `EntityFrameworkCore.SqlServerCompact40`

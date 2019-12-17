@@ -23,7 +23,7 @@ LLBLGen Pro is an entity modeling solution with support for Entity Framework and
 
 ### Devart Entity Developer
 
-Entity Developer is a powerful ORM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. 
+Entity Developer is a powerful ORM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation.
 
 [Website](https://www.devart.com/entitydeveloper/)
 
@@ -47,7 +47,7 @@ CatFactory is a scaffolding engine for .NET Core that can automate the generatio
 
 ### LoreSoft's Entity Framework Core Generator
 
-Entity Framework Core Generator (efg) is a .NET Core CLI tool that can generate EF Core models from an existing database, much like `dotnet ef dbcontext scaffold`, but it also supports safe code [regeneration](https://efg.loresoft.com/en/latest/regeneration/) via region replacement or by parsing mapping files. This tool supports generating view models, validation, and object mapper code. 
+Entity Framework Core Generator (efg) is a .NET Core CLI tool that can generate EF Core models from an existing database, much like `dotnet ef dbcontext scaffold`, but it also supports safe code [regeneration](https://efg.loresoft.com/en/latest/regeneration/) via region replacement or by parsing mapping files. This tool supports generating view models, validation, and object mapper code.
 
 [Tutorial](https://www.loresoft.com/Generate-ASP-NET-Web-API)
 [Documentation](https://efg.loresoft.com/en/latest/)
@@ -81,7 +81,7 @@ This library allows retrieving the values of primary key (including composite ke
 
 ### EntityFrameworkCore.TypedOriginalValues
 
-This library enables strongly typed access to the original values of entity properties. 
+This library enables strongly typed access to the original values of entity properties.
 
 [GitHub repository](https://github.com/NickStrupat/EntityFramework.TypedOriginalValues/)
 
@@ -163,9 +163,3 @@ Extends your DbContext with features such as: Include Filter, Auditing, Caching,
 Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more.
 
 [Website](https://entityframework-extensions.net/)
-
-### Reconciler
-
-Update an entity graph in store to a given one by inserting, updating and removing the respective entities.
-
-[GitHub repository](https://github.com/jtheisen/reconciler)

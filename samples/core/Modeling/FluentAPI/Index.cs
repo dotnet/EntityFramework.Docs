@@ -6,11 +6,13 @@ namespace EFModeling.FluentAPI.Index
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region Index
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
                 .HasIndex(b => b.Url);
         }
+        #endregion
     }
 
     public class Blog

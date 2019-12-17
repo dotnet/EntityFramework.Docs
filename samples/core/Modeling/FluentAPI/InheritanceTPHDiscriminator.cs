@@ -2,7 +2,8 @@
 
 namespace EFModeling.FluentAPI.InheritanceTphDiscriminator
 {
-    class MyContext : DbContext
+    #region Inheritance
+    public class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
@@ -25,4 +26,5 @@ namespace EFModeling.FluentAPI.InheritanceTphDiscriminator
     {
         public string RssUrl { get; set; }
     }
+    #endregion
 }

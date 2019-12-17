@@ -79,18 +79,14 @@
       items:
       - name: Overview
         href: core/modeling/index.md
-      - name: "Including & Excluding Types"
-        href: core/modeling/included-types.md
-      - name: "Including & Excluding Properties"
-        href: core/modeling/included-properties.md
-      - name: Keys (primary)
+      - name: Entity Types
+        href: core/modeling/entity-types.md
+      - name: Entity Properties
+        href: core/modeling/entity-properties.md
+      - name: Keys
         href: core/modeling/keys.md
       - name: Generated Values
         href: core/modeling/generated-properties.md
-      - name: Required and Optional Properties
-        href: core/modeling/required-optional.md
-      - name: Maximum Length
-        href: core/modeling/max-length.md
       - name: Concurrency Tokens
         href: core/modeling/concurrency.md
       - name: Shadow Properties
@@ -99,8 +95,6 @@
         href: core/modeling/relationships.md
       - name: Indexes
         href: core/modeling/indexes.md
-      - name: Alternate Keys
-        href: core/modeling/alternate-keys.md
       - name: Inheritance
         href: core/modeling/inheritance.md
       - name: Backing Fields
@@ -119,30 +113,19 @@
         href: core/modeling/keyless-entity-types.md
       - name: Alternating models with same DbContext
         href: core/modeling/dynamic-model.md
-      - name: Spatial Data (GIS)
+      - name: Spatial Data
+        displayName: GIS
         href: core/modeling/spatial.md
       - name: Relational database modeling
         items:
         - name: Overview
           href: core/modeling/relational/index.md
-        - name: Table Mapping
-          href: core/modeling/relational/tables.md
-        - name: Column Mapping
-          href: core/modeling/relational/columns.md
-        - name: Data Types
-          href: core/modeling/relational/data-types.md
-        - name: Primary Keys
-          href: core/modeling/relational/primary-keys.md
-        - name: Default Schema
-          href: core/modeling/relational/default-schema.md
         - name: Computed Columns
           href: core/modeling/relational/computed-columns.md
         - name: Sequences
           href: core/modeling/relational/sequences.md
         - name: Default Values
           href: core/modeling/relational/default-values.md
-        - name: Indexes
-          href: core/modeling/relational/indexes.md
         - name: Foreign Key Constraints
           href: core/modeling/relational/fk-constraints.md
         - name: Alternate Keys (Unique Constraints)
@@ -175,22 +158,24 @@
       items:
       - name: Overview
         href: core/querying/index.md
-      - name: Loading Related Data
-        href: core/querying/related-data.md
       - name: Client vs. Server Evaluation
         href: core/querying/client-eval.md
       - name: Tracking vs. No-Tracking
         href: core/querying/tracking.md
-      - name: Raw SQL Queries
-        href: core/querying/raw-sql.md
+      - name: Complex Query Operators
+        href: core/querying/complex-query-operators.md
+      - name: Loading Related Data
+        href: core/querying/related-data.md
       - name: Asynchronous Queries
         href: core/querying/async.md
-      - name: How Query Works
-        href: core/querying/how-query-works.md
+      - name: Raw SQL Queries
+        href: core/querying/raw-sql.md
       - name: Global Query Filters
         href: core/querying/filters.md
       - name: Query Tags
         href: core/querying/tags.md
+      - name: How Query Works
+        href: core/querying/how-query-works.md
     - name: Saving Data
       items:
       - name: Overview
@@ -223,6 +208,8 @@
           href: core/providers/sql-server/index.md
         - name: Memory-Optimized Tables
           href: core/providers/sql-server/memory-optimized-tables.md
+        - name: Specifying Azure SQL Database Options
+          href: core/providers/sql-server/azure-sql-database.md
       - name: SQLite
         items:
         - name: Overview

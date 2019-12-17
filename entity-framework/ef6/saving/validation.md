@@ -8,7 +8,7 @@ ms.assetid: 77d6a095-c0d0-471e-80b9-8f9aea6108b2
 > [!NOTE]
 > **EF4.1 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 4.1. If you are using an earlier version, some or all of the information does not apply
 
-The content on this page is adapted from an article originally written by Julie Lerman ([https://thedatafarm.com](http://thedatafarm.com)).
+The content on this page is adapted from an article originally written by Julie Lerman ([https://thedatafarm.com](https://thedatafarm.com)).
 
 Entity Framework provides a great variety of validation features that can feed through to a user interface for client-side validation or be used for server-side validation. When using code first, you can specify validations using annotation or fluent API configurations. Additional validations, and more complex, can be specified in code and will work whether your model hails from code first, model first or database first.
 

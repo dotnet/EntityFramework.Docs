@@ -1,0 +1,62 @@
+{
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.md",
+          "**/*.yml"
+        ],
+        "exclude": [
+          "**/obj/**",
+          "**/includes/**",
+          "_themes/**",
+          "_themes.pdf/**",
+          "**/docfx.json",
+          "_repo.en-us/**",
+          "README.md",
+          "LICENSE",
+          "LICENSE-CODE",
+          "ThirdPartyNotices.md"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "**/*.png",
+          "**/*.jpg"
+        ],
+        "exclude": [
+          "**/obj/**",
+          "**/includes/**",
+          "_themes/**",
+          "_themes.pdf/**",
+          "**/docfx.json",
+          "_repo.en-us/**"
+        ]
+      }
+    ],
+    "overwrite": [],
+    "externalReference": [],
+    "globalMetadata": {
+      "breadcrumb_path": "/msdata-sqlite/breadcrumb/toc.json",
+      "searchScope": [
+        "Microsoft.Data.Sqlite"
+      ],
+      "ms.topic": "conceptual",
+      "audience": "developer",
+      "ms.prod": "entity-framework",
+      "ms.tgt_pltfrm": "dotnet",
+      "ms.devlang": "dotnet",
+      "ms.author": "bricelam",
+      "feedback_system": "GitHub",
+      "feedback_github_repo": "aspnet/EntityFramework.Docs",
+      "feedback_product_url": "https://github.com/aspnet/EntityFrameworkCore/issues/new/choose",
+      "uhfHeaderId": "MSDocsHeader-DotNet"
+    },
+    "fileMetadata": {},
+    "template": [ "default" ],
+    "dest": "msdata-sqlite",
+    "markdownEngineName": "markdig"
+  }
+}

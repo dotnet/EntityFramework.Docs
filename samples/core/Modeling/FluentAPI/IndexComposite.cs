@@ -6,11 +6,13 @@ namespace EFModeling.FluentAPI.IndexComposite
     {
         public DbSet<Person> People { get; set; }
 
+        #region Composite
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>()
                 .HasIndex(p => new { p.FirstName, p.LastName });
         }
+        #endregion
     }
 
     public class Person

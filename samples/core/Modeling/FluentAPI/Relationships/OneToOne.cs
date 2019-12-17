@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.FluentAPI.Relationships.OneToOne
 {
+    #region OneToOne
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -11,7 +12,7 @@ namespace EFModeling.FluentAPI.Relationships.OneToOne
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .HasOne(p => p.BlogImage)
+                .HasOne(b => b.BlogImage)
                 .WithOne(i => i.Blog)
                 .HasForeignKey<BlogImage>(b => b.BlogForeignKey);
         }
@@ -34,4 +35,5 @@ namespace EFModeling.FluentAPI.Relationships.OneToOne
         public int BlogForeignKey { get; set; }
         public Blog Blog { get; set; }
     }
+    #endregion
 }

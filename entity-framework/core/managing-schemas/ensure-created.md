@@ -3,6 +3,7 @@ title: Create and Drop APIs - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/07/2018
+uid: core/managing-schemas/ensure-created
 ---
 # Create and Drop APIs
 

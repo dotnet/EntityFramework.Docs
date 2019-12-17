@@ -5,7 +5,6 @@ ms.author: bricelam
 ms.date: 09/18/2018
 uid: core/miscellaneous/cli/powershell
 ---
-
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
 
 The Package Manager Console (PMC) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0), apply migrations, and generate code for a model based on an existing database. The commands run inside of Visual Studio using the [Package Manager Console](/nuget/tools/package-manager-console). These tools work with both .NET Framework and .NET Core projects.
@@ -21,6 +20,7 @@ The procedures for installing and updating the tools differ between ASP.NET Core
 The tools are automatically included in an ASP.NET Core 2.1+ project because the `Microsoft.EntityFrameworkCore.Tools` package is included in the [Microsoft.AspNetCore.App metapackage](/aspnet/core/fundamentals/metapackage-app).
 
 Therefore, you don't have to do anything to install the tools, but you do have to:
+
 * Restore packages before using the tools in a new project.
 * Install a package to update the tools to a newer version.
 
@@ -41,6 +41,7 @@ Update the tools when you get a message like the following example:
 > The EF Core tools version '2.1.1-rtm-30846' is older than that of the runtime '2.1.3-rtm-32065'. Update the tools for the latest features and bug fixes.
 
 To update the tools:
+
 * Install the latest .NET Core SDK.
 * Update Visual Studio to the latest version.
 * Edit the *.csproj* file so that it includes a package reference to the latest tools package, as shown earlier.
@@ -90,6 +91,7 @@ SHORT DESCRIPTION
 ## Using the tools
 
 Before using the tools:
+
 * Understand the difference between target and startup project.
 * Learn how to use the tools with .NET Standard class libraries.
 * For ASP.NET Core projects, set the environment.

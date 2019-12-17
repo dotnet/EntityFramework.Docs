@@ -33,7 +33,7 @@ Install the following software:
 
 ## [.NET Core CLI](#tab/netcore-cli)
 
-``` Console
+```dotnetcli
 dotnet new console -o EFGetStarted
 cd EFGetStarted
 ```
@@ -53,7 +53,7 @@ To install EF Core, you install the package for the EF Core database provider(s)
 
 ## [.NET Core CLI](#tab/netcore-cli)
 
-``` Console
+```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 ```
 
@@ -76,7 +76,7 @@ Define a context class and entity classes that make up the model.
 
 ## [.NET Core CLI](#tab/netcore-cli)
 
-* In the project directory create **Model.cs** with the following code
+* In the project directory, create **Model.cs** with the following code
 
 ## [Visual Studio](#tab/visual-studio)
 
@@ -100,7 +100,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
 
 * Run the following commands:
 
-  ``` Console
+  ```dotnetcli
   dotnet tool install --global dotnet-ef
   dotnet add package Microsoft.EntityFrameworkCore.Design
   dotnet ef migrations add InitialCreate
@@ -133,7 +133,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
 
 ## [.NET Core CLI](#tab/netcore-cli)
 
-``` Console
+```dotnetcli
 dotnet run
 ```
 
@@ -160,5 +160,5 @@ Now you can run the app:
 
 * Follow the [ASP.NET Core Tutorial](/aspnet/core/data/ef-rp/intro) to use EF Core in a web app
 * Learn more about [LINQ query expressions](/dotnet/csharp/programming-guide/concepts/linq/basic-linq-query-operations)
-* [Configure your model](xref:core/modeling/index) to specify things like [required](xref:core/modeling/required-optional) and [maximum length](xref:core/modeling/max-length)
+* [Configure your model](xref:core/modeling/index) to specify things like [required](xref:core/modeling/entity-properties#required-and-optional-properties) and [maximum length](xref:core/modeling/entity-properties#maximum-length)
 * Use [Migrations](xref:core/managing-schemas/migrations/index) to update the database schema after changing your model

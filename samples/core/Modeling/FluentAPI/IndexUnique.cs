@@ -6,12 +6,14 @@ namespace EFModeling.FluentAPI.IndexUnique
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region IndexUnique
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
                 .HasIndex(b => b.Url)
                 .IsUnique();
         }
+        #endregion
     }
 
     public class Blog
