@@ -1,7 +1,7 @@
 ---
 title: Tools & Extensions - EF Core
 author: ErikEJ
-ms.date: 10/20/2019
+ms.date: 12/17/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
 ---
@@ -11,7 +11,7 @@ uid: core/extensions/index
 These tools and extensions provide additional functionality for Entity Framework Core 2.1 and later.
 
 > [!IMPORTANT]  
-> Extensions are built by a variety of sources and aren't maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate its quality, licensing, compatibility, support, etc. to ensure it meets your requirements.
+> Extensions are built by a variety of sources and aren't maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate its quality, licensing, compatibility, support, etc. to ensure it meets your requirements. In particular, an extension built for an older version of EF Core may need updating before it will work with the latest versions.
 
 ## Tools
 
