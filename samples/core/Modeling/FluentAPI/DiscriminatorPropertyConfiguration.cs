@@ -1,18 +1,20 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.Conventions.InheritanceModelBuilder
+namespace EFModeling.FluentAPI.DiscriminatorPropertyConfiguration
 {
-    #region Context
-    class MyContext : DbContext
+    public class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region DiscriminatorPropertyConfiguration
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<RssBlog>().HasBaseType<Blog>();
+            modelBuilder.Entity<Blog>()
+                .Property("Discriminator")
+                .HasMaxLength(200);
         }
+        #endregion
     }
-    #endregion
 
     public class Blog
     {
