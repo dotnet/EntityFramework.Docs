@@ -2,17 +2,18 @@
 
 namespace EFModeling.FluentAPI.Relational.AlternateKeyName
 {
-    #region Model
     class MyContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
 
+        #region AlternateKeyName
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Car>()
                 .HasAlternateKey(c => c.LicensePlate)
                 .HasName("AlternateKey_LicensePlate");
         }
+        #endregion
     }
 
     class Car
@@ -22,5 +23,4 @@ namespace EFModeling.FluentAPI.Relational.AlternateKeyName
         public string Make { get; set; }
         public string Model { get; set; }
     }
-    #endregion
 }

@@ -126,8 +126,6 @@
           href: core/modeling/relational/sequences.md
         - name: Default Values
           href: core/modeling/relational/default-values.md
-        - name: Alternate Keys (Unique Constraints)
-          href: core/modeling/relational/unique-constraints.md
         - name: Inheritance (Relational Database)
           href: core/modeling/relational/inheritance.md
     - name: Managing Database Schemas

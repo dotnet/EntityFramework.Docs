@@ -35,7 +35,7 @@ You can also configure multiple properties to be the key of an entity - this is 
 
 ## Primary key name
 
-By convention, on relational databases primary keys are created with the name `PK_<type name>`. You can use the Fluent API to configure the name of the primary key constraint as follows:
+By convention, on relational databases primary keys are created with the name `PK_<type name>`. You can configure the name of the primary key constraint as follows:
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeyName.cs?name=KeyName&highlight=5)]
 
@@ -59,10 +59,14 @@ Alternate keys are typically introduced for you when needed and you do not need 
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/AlternateKey.cs?name=AlternateKey&highlight=12)]
 
-You can also use the Fluent API to configure a single property to be an alternate key:
+You can also configure a single property to be an alternate key:
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/AlternateKeySingle.cs?name=AlternateKeySingle&highlight=4)]
 
-You can also use the Fluent API to configure multiple properties to be an alternate key (known as a composite alternate key):
+You can also configure multiple properties to be an alternate key (known as a composite alternate key):
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/AlternateKeyComposite.cs?name=AlternateKeyComposite&highlight=4)]
+
+Finally, by convention, the index and constraint that are introduced for an alternate key will be named `AK_<type name>_<property name>` (for composite alternate keys `<property name>` becomes an underscore separated list of property names). You can configure the name of the alternate key's index and unique constraint:
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/AlternateKeyName.cs?name=AlternateKeyName&highlight=5)]
