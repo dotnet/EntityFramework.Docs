@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace EFModeling.FluentAPI.Relationships.Required
 {
-    #region Required
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
+        #region Required
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Post>()
@@ -16,6 +16,7 @@ namespace EFModeling.FluentAPI.Relationships.Required
                 .WithMany(b => b.Posts)
                 .IsRequired();
         }
+        #endregion
     }
 
     public class Blog
@@ -34,5 +35,4 @@ namespace EFModeling.FluentAPI.Relationships.Required
 
         public Blog Blog { get; set; }
     }
-    #endregion
 }

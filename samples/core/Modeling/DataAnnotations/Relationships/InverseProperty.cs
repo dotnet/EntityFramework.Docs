@@ -10,7 +10,7 @@ namespace EFModeling.DataAnnotations.Relationships.InverseProperty
         public DbSet<User> Users { get; set; }
     }
 
-    #region Entities
+    #region InverseProperty
     public class Post
     {
         public int PostId { get; set; }

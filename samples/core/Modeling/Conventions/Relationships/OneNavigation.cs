@@ -9,7 +9,7 @@ namespace EFModeling.Conventions.Relationships.OneNavigation
         public DbSet<Post> Posts { get; set; }
     }
 
-    #region Entities
+    #region OneNavigation
     public class Blog
     {
         public int BlogId { get; set; }
