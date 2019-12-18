@@ -97,6 +97,8 @@
         href: core/modeling/indexes.md
       - name: Inheritance
         href: core/modeling/inheritance.md
+      - name: Sequences
+        href: core/modeling/sequences.md
       - name: Backing Fields
         href: core/modeling/backing-field.md
       - name: Value Conversions
@@ -122,8 +124,6 @@
           href: core/modeling/relational/index.md
         - name: Computed Columns
           href: core/modeling/relational/computed-columns.md
-        - name: Sequences
-          href: core/modeling/relational/sequences.md
         - name: Default Values
           href: core/modeling/relational/default-values.md
         - name: Inheritance (Relational Database)

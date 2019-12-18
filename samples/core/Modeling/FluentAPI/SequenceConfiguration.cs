@@ -1,23 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.Relational.SequenceUsed
+namespace EFModeling.FluentAPI.Relational.SequenceConfiguration
 {
-    #region Default
     class MyContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
 
+        #region SequenceConfiguration
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasSequence<int>("OrderNumbers", schema: "shared")
                 .StartsAt(1000)
                 .IncrementsBy(5);
-
-            modelBuilder.Entity<Order>()
-                .Property(o => o.OrderNo)
-                .HasDefaultValueSql("NEXT VALUE FOR shared.OrderNumbers");
         }
-    }
+        #endregion
+    }   
 
     public class Order
     {
@@ -25,5 +22,4 @@ namespace EFModeling.FluentAPI.Relational.SequenceUsed
         public int OrderNo { get; set; }
         public string Url { get; set; }
     }
-    #endregion
 }
