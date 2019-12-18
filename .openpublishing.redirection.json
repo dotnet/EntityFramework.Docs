@@ -289,6 +289,11 @@
             "source_path": "entity-framework/core/modeling/relational/unique-constraints.md",
             "redirect_url": "/ef/core/modeling/keys",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/sequences.md",
+            "redirect_url": "/ef/core/modeling/sequences",
+            "redirect_document_id": false
         }
     ]
 }

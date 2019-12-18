@@ -2,15 +2,20 @@
 
 namespace EFModeling.FluentAPI.Relational.Sequence
 {
-    #region Model
     class MyContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
 
+        #region Sequence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasSequence<int>("OrderNumbers");
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.OrderNo)
+                .HasDefaultValueSql("NEXT VALUE FOR shared.OrderNumbers");
         }
+        #endregion
     }
 
     public class Order
@@ -19,5 +24,4 @@ namespace EFModeling.FluentAPI.Relational.Sequence
         public int OrderNo { get; set; }
         public string Url { get; set; }
     }
-    #endregion
 }
