@@ -279,6 +279,11 @@
             "source_path": "entity-framework/core/modeling/relational/indexes.md",
             "redirect_url": "/ef/core/modeling/indexes",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/fk-constraints.md",
+            "redirect_url": "/ef/core/modeling/relationships#foreign-key-constraint-name",
+            "redirect_document_id": false
         }
     ]
 }

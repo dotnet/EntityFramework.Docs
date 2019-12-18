@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.FluentAPI.Relationships.OneNavigation
 {
-    #region Model
+    #region OneNavigation
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }

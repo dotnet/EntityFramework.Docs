@@ -9,7 +9,7 @@ namespace EFModeling.Conventions.Relationships.Full
         public DbSet<Post> Posts { get; set; }
     }
 
-    #region Entities
+    #region Full
     public class Blog
     {
         public int BlogId { get; set; }

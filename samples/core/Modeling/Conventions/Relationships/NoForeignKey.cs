@@ -9,7 +9,7 @@ namespace EFModeling.Conventions.Relationships.NoForeignKey
         public DbSet<Post> Posts { get; set; }
     }
 
-    #region Entities
+    #region NoForeignKey
     public class Blog
     {
         public int BlogId { get; set; }

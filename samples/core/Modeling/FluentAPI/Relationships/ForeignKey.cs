@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.Configuring.DataAnnotations.Samples.Relationships.ForeignKey
 {
-    #region Model
+    #region ForeignKey
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }

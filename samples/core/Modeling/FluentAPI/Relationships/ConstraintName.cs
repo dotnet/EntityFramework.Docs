@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace EFModeling.FluentAPI.RelationshipConstraintName
+namespace EFModeling.FluentAPI.ConstraintName
 {
-    #region Constraint
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
+        #region ConstraintName
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Post>()
@@ -17,6 +17,7 @@ namespace EFModeling.FluentAPI.RelationshipConstraintName
                 .HasForeignKey(p => p.BlogId)
                 .HasConstraintName("ForeignKey_Post_Blog");
         }
+        #endregion
     }
 
     public class Blog
@@ -36,5 +37,4 @@ namespace EFModeling.FluentAPI.RelationshipConstraintName
         public int BlogId { get; set; }
         public Blog Blog { get; set; }
     }
-    #endregion
 }
