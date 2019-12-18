@@ -122,9 +122,16 @@ An implementation of temporal support. For EF Core: 2.
 
 ### EfCoreTemporalTable
 
-Easily perform temporal queries on your favourite database. For EF Core: 3.
+Easily perform temporal queries on your favourite database using introduced extension methods: `AsTemporalAll()`, `AsTemporalAsOf(date)`, `AsTemporalFrom(startDate, endDate)`, `AsTemporalBetween(startDate, endDate)`, `AsTemporalContained(startDate, endDate)`. For EF Core: 3.
 
 [GitHub repository](https://github.com/glautrou/EfCoreTemporalTable)
+
+### EFCore.TimeTraveler
+
+Allow full-featured Entity Framework Core queries against SQL Server Temporal History Tables using the EF Core code, entities, and mappings you already have defined.  Travel through time by wrapping your code in `using (TemporalQuery.AsOf(targetDateTime)) {...}`. For EF Core: 3.
+
+[GitHub repository](https://github.com/VantageSoftware/EFCore.TimeTraveler)
+
 
 ### EntityFrameworkCore.TemporalTables
 
