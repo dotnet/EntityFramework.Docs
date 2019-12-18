@@ -128,7 +128,7 @@ Easily perform temporal queries on your favourite database using introduced exte
 
 ### EFCore.TimeTraveler
 
-Allow full-featured Entity Framework Core queries against SQL Server Temporal History Tables using the EF Core code, entities, and mappings you already have defined.  Travel through time by wrapping your code in `using (TemporalQuery.AsOf(targetDateTime)) {...}`. For EF Core: 3.
+Allow full-featured Entity Framework Core queries against [SQL Server Temporal History](https://docs.microsoft.com/en-us/sql/relational-databases/tables/temporal-table-usage-scenarios?view=sql-server-ver15#point-in-time-analysis-time-travel) using the EF Core code, entities, and mappings you already have defined.  Travel through time by wrapping your code in `using (TemporalQuery.AsOf(targetDateTime)) {...}`. For EF Core: 3.
 
 [GitHub repository](https://github.com/VantageSoftware/EFCore.TimeTraveler)
 
