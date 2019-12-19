@@ -2,17 +2,18 @@
 
 namespace EFModeling.FluentAPI.Relational.DefaultValue
 {
-    #region DefaultValue
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region DefaultValue
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Rating)
                 .HasDefaultValue(3);
         }
+        #endregion
     }
 
     public class Blog
@@ -21,5 +22,4 @@ namespace EFModeling.FluentAPI.Relational.DefaultValue
         public string Url { get; set; }
         public int Rating { get; set; }
     }
-    #endregion
 }

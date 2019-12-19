@@ -294,6 +294,16 @@
             "source_path": "entity-framework/core/modeling/relational/sequences.md",
             "redirect_url": "/ef/core/modeling/sequences",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/default-values.md",
+            "redirect_url": "/ef/core/modeling/generated-properties#default-values",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/computed-columns.md",
+            "redirect_url": "/ef/core/modeling/generated-properties#computed-columns",
+            "redirect_document_id": false
         }
     ]
 }

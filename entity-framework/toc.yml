@@ -122,10 +122,6 @@
         items:
         - name: Overview
           href: core/modeling/relational/index.md
-        - name: Computed Columns
-          href: core/modeling/relational/computed-columns.md
-        - name: Default Values
-          href: core/modeling/relational/default-values.md
         - name: Inheritance (Relational Database)
           href: core/modeling/relational/inheritance.md
     - name: Managing Database Schemas

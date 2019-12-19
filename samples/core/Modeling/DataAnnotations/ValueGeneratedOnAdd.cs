@@ -9,7 +9,7 @@ namespace EFModeling.DataAnnotations.ValueGeneratedOnAdd
         public DbSet<Blog> Blogs { get; set; }
     }
 
-    #region Sample
+    #region ValueGeneratedOnAdd
     public class Blog
     {
         public int BlogId { get; set; }

@@ -3,17 +3,18 @@ using System;
 
 namespace EFModeling.FluentAPI.Relational.DefaultValueSql
 {
-    #region DefaultValueSql
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region DefaultValueSql
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Created)
                 .HasDefaultValueSql("getdate()");
         }
+        #endregion
     }
 
     public class Blog
@@ -22,5 +23,4 @@ namespace EFModeling.FluentAPI.Relational.DefaultValueSql
         public string Url { get; set; }
         public DateTime Created { get; set; }
     }
-    #endregion
 }
