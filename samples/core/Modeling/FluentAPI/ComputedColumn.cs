@@ -2,17 +2,18 @@
 
 namespace EFModeling.FluentAPI.Relational.ComputedColumn
 {
-    #region ComputedColumn
     class MyContext : DbContext
     {
         public DbSet<Person> People { get; set; }
 
+        #region ComputedColumn
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>()
                 .Property(p => p.DisplayName)
                 .HasComputedColumnSql("[LastName] + ', ' + [FirstName]");
         }
+        #endregion
     }
 
     public class Person
@@ -22,5 +23,4 @@ namespace EFModeling.FluentAPI.Relational.ComputedColumn
         public string LastName { get; set; }
         public string DisplayName { get; set; }
     }
-    #endregion
 }

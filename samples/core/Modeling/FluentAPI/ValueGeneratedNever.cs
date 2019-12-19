@@ -1,19 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.NoIdentity
+namespace EFModeling.FluentAPI.ValueGeneratedNever
 {
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region ValueGeneratedNever
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region Sample
             modelBuilder.Entity<Blog>()
                 .Property(b => b.BlogId)
                 .ValueGeneratedNever();
-            #endregion
         }
+        #endregion
     }
 
     public class Blog
