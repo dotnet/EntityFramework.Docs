@@ -166,6 +166,8 @@ To specify the environment for ASP.NET Core projects, set the **ASPNETCORE_ENVIR
 |                   | `--no-color`                      | Don't colorize output.                                                                                                                                                                                                                                        |
 |                   | `--prefix-output`                 | Prefix output with level.                                                                                                                                                                                                                                     |
 
+The `--verbose` option can sometimes provide useful information on why a command failed.
+
 ## dotnet ef database drop
 
 Drops the database.
