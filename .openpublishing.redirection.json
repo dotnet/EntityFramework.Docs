@@ -224,6 +224,91 @@
             "source_path": "entity-framework/core/querying/overview.md",
             "redirect_url": "/ef/core/querying/how-query-works",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/included-types.md",
+            "redirect_url": "/ef/core/modeling/entity-types",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/tables.md",
+            "redirect_url": "/ef/core/modeling/entity-types",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/default-schema.md",
+            "redirect_url": "/ef/core/modeling/entity-types#table-schema",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/included-properties.md",
+            "redirect_url": "/ef/core/modeling/entity-properties",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/max-length.md",
+            "redirect_url": "/ef/core/modeling/entity-properties#maximum-length",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/required-optional.md",
+            "redirect_url": "/ef/core/modeling/entity-properties#required-and-optional-properties",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/columns.md",
+            "redirect_url": "/ef/core/modeling/entity-properties#column-names",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/data-types.md",
+            "redirect_url": "/ef/core/modeling/entity-properties#column-data-types",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/alternate-keys.md",
+            "redirect_url": "/ef/core/modeling/keys#alternate-keys",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/primary-keys.md",
+            "redirect_url": "/ef/core/modeling/keys",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/indexes.md",
+            "redirect_url": "/ef/core/modeling/indexes",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/fk-constraints.md",
+            "redirect_url": "/ef/core/modeling/relationships#foreign-key-constraint-name",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/unique-constraints.md",
+            "redirect_url": "/ef/core/modeling/keys",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/sequences.md",
+            "redirect_url": "/ef/core/modeling/sequences",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/default-values.md",
+            "redirect_url": "/ef/core/modeling/generated-properties#default-values",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/computed-columns.md",
+            "redirect_url": "/ef/core/modeling/generated-properties#computed-columns",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/inheritance.md",
+            "redirect_url": "/ef/core/modeling/inheritance",
+            "redirect_document_id": false
         }
     ]
 }

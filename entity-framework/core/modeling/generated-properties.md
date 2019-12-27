@@ -9,7 +9,7 @@ uid: core/modeling/generated-properties
 
 # Generated Values
 
-## Value Generation Patterns
+## Value generation patterns
 
 There are three value generation patterns that can be used for properties:
 
@@ -29,7 +29,7 @@ Depending on the database provider being used, values may be generated client si
 
 If you add an entity to the context that has a value assigned to the property, then EF will attempt to insert that value rather than generating a new one. A property is considered to have a value assigned if it is not assigned the CLR default value (`null` for `string`, `0` for `int`, `Guid.Empty` for `Guid`, etc.). For more information, see [Explicit values for generated properties](../saving/explicit-values-generated-properties.md).
 
-> [!WARNING]  
+> [!WARNING]
 > How the value is generated for added entities will depend on the database provider being used. Database providers may automatically setup value generation for some property types, but others may require you to manually setup how the value is generated.
 >
 > For example, when using SQL Server, values will be automatically generated for `GUID` properties (using the SQL Server sequential GUID algorithm). However, if you specify that a `DateTime` property is generated on add, then you must setup a way for the values to be generated. One way to do this, is to configure a default value of `GETDATE()`, see [Default Values](relational/default-values.md).
@@ -47,48 +47,73 @@ Like `value generated on add`, if you specify a value for the property on a newl
 >
 > [!code-sql[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.sql)]
 
-## Conventions
+## Value generated on add
 
-By default, non-composite primary keys of type short, int, long, or Guid will be setup to have values generated on add. All other properties will be setup with no value generation.
+By convention, non-composite primary keys of type short, int, long, or Guid are set up to have values generated for inserted entities, if a value isn't provided by the application. Your database provider typically takes care of the necessary configuration; for example, a numeric primary key in SQL Server is automatically set up to be an IDENTITY column.
 
-## Data Annotations
+You can configure any property to have its value generated for inserted entities as follows:
 
-### No value generation (Data Annotations)
+### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedNever.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedOnAdd.cs?name=ValueGeneratedOnAdd&highlight=5)]
 
-### Value generated on add (Data Annotations)
+### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedOnAdd.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAdd.cs?name=ValueGeneratedOnAdd&highlight=5)]
 
-> [!WARNING]  
+***
+
+> [!WARNING]
 > This just lets EF know that values are generated for added entities, it does not guarantee that EF will setup the actual mechanism to generate values. See [Value generated on add](#value-generated-on-add) section for more details.
 
-### Value generated on add or update (Data Annotations)
+### Default values
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedOnAddOrUpdate.cs#Sample)]
+On relational databases, a column can be configured with a default value; if a row is inserted without a value for that column, the default value will be used.
 
-> [!WARNING]  
+You can configure a default value on a property:
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DefaultValue.cs?name=DefaultValue&highlight=5)]
+
+You can also specify a SQL fragment that is used to calculate the default value:
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DefaultValueSql.cs?name=DefaultValueSql&highlight=5)]
+
+Specifying a default value will implicitly configure the property as value generated on add.
+
+## Value generated on add or update
+
+### [Data Annotations](#tab/data-annotations)
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedOnAddOrUpdate.cs?name=ValueGeneratedOnAddOrUpdate&highlight=5)]
+
+### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.cs?name=ValueGeneratedOnAddOrUpdate&highlight=5)]
+
+***
+
+> [!WARNING]
 > This just lets EF know that values are generated for added or updated entities, it does not guarantee that EF will setup the actual mechanism to generate values. See [Value generated on add or update](#value-generated-on-add-or-update) section for more details.
 
-## Fluent API
+### Computed columns
 
-You can use the Fluent API to change the value generation pattern for a given property.
+On some relational databases, a column can be configured to have its value computed in the database, typically with an expression referring to other columns:
 
-### No value generation (Fluent API)
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=ComputedColumn&highlight=5)]
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedNever.cs#Sample)]
+> [!NOTE]
+> In some cases the column's value is computed every time it is fetched (sometimes called *virtual* columns), and in others it is computed on every update of the row and stored (sometimes called *stored* or *persisted* columns). This varies across database providers.
 
-### Value generated on add (Fluent API)
+## No value generation
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAdd.cs#Sample)]
+Disabling value generation on a property is typically necessary if a convention configures it for value generation. For example, if you have a primary key of type int, it will be implicitly set configured as value generated on add; you can disable this via the following:
 
-> [!WARNING]  
-> `ValueGeneratedOnAdd()` just lets EF know that values are generated for added entities, it does not guarantee that EF will setup the actual mechanism to generate values.  See [Value generated on add](#value-generated-on-add) section for more details.
+### [Data Annotations](#tab/data-annotations)
 
-### Value generated on add or update (Fluent API)
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedNever.cs?name=ValueGeneratedNever&highlight=3)]
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.cs#Sample)]
+### [Fluent API](#tab/fluent-api)
 
-> [!WARNING]  
-> This just lets EF know that values are generated for added or updated entities, it does not guarantee that EF will setup the actual mechanism to generate values. See [Value generated on add or update](#value-generated-on-add-or-update) section for more details.
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedNever.cs?name=ValueGeneratedNever&highlight=5)]
+
+***

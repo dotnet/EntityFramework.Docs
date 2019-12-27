@@ -207,7 +207,7 @@ If you're using SQL Server, there are some additional things you should be aware
 
 ### Geography or geometry
 
-By default, spatial properties are mapped to `geography` columns in SQL Server. To use `geometry`, [configure the column type](xref:core/modeling/relational/data-types) in your model.
+By default, spatial properties are mapped to `geography` columns in SQL Server. To use `geometry`, [configure the column type](xref:core/modeling/entity-properties#column-data-types) in your model.
 
 ### Geography polygon rings
 

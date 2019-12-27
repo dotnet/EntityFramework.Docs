@@ -9,6 +9,7 @@ namespace EFModeling.DataAnnotations.IgnoreProperty
         public DbSet<Blog> Blogs { get; set; }
     }
 
+    #region IgnoreProperty
     public class Blog
     {
         public int BlogId { get; set; }
@@ -17,4 +18,5 @@ namespace EFModeling.DataAnnotations.IgnoreProperty
         [NotMapped]
         public DateTime LoadedFromDatabase { get; set; }
     }
+    #endregion
 }

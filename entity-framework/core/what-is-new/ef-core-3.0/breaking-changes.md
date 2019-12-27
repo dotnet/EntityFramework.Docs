@@ -389,7 +389,7 @@ This change was made to improve the experience for data binding and auditing sce
 
 **Mitigations**
 
-The previous behavior can be restored through settings on `context.ChangedTracker`.
+The previous behavior can be restored through settings on `context.ChangeTracker`.
 For example:
 
 ```csharp
@@ -1620,7 +1620,7 @@ Before EF Core 3.0, Microsoft.EntityFrameworkCore.Design was a regular NuGet pac
 
 **New behavior**
 
-Starting with EF Core 3.0, it is a DevelopmentDependency package. Which means that the dependency won't flow transitively into other projects, and that you can no longer, by default, reference its assembly.
+Starting with EF Core 3.0, it is a DevelopmentDependency package. This means that the dependency won't flow transitively into other projects, and that you can no longer, by default, reference its assembly.
 
 **Why**
 
@@ -1628,7 +1628,7 @@ This package is only intended to be used at design time. Deployed applications s
 
 **Mitigations**
 
-If you need to reference this package to override EF Core's design-time behavior, you can update update PackageReference item metadata in your project. If the package is being referenced transitively via Microsoft.EntityFrameworkCore.Tools, you will need to add an explicit PackageReference to the package to change its metadata.
+If you need to reference this package to override EF Core's design-time behavior, then you can update PackageReference item metadata in your project.
 
 ``` xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
@@ -1637,6 +1637,8 @@ If you need to reference this package to override EF Core's design-time behavior
   <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
 </PackageReference>
 ```
+
+If the package is being referenced transitively via Microsoft.EntityFrameworkCore.Tools, you will need to add an explicit PackageReference to the package to change its metadata. Such an explicit reference must be added to any project where the types from the package are needed.
 
 <a name="SQLitePCL"></a>
 

@@ -2,5 +2,5 @@
     "default": true,
     "MD013": false,
     "MD025": { "front_matter_title": "" },
-    "MD033": { "allowed_elements": ["sup", "sub", "nobe"] }
+    "MD033": { "allowed_elements": ["sup", "sub", "nobr", "span"] }
 }

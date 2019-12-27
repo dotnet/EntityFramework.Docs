@@ -27,11 +27,11 @@ EF Core logging requires an ILoggerFactory which is itself configured with one o
 
 After installing the appropriate package(s), the application should create a singleton/global instance of a LoggerFactory. For example, using the console logger:
 
-# [Version 3.0](#tab/v3)
+### [Version 3.0](#tab/v3)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#DefineLoggerFactory)]
 
-# [Version 2.x](#tab/v2)
+### [Version 2.x](#tab/v2)
 
 > [!NOTE]
 > The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2 and replaced in 3.0. It is safe to ignore and suppress the warnings when using 2.2.
@@ -54,11 +54,11 @@ This singleton/global instance should then be registered with EF Core on the `Db
 
 The application can control what is logged by configuring a filter on the ILoggerProvider. For example:
 
-# [Version 3.0](#tab/v3)
+### [Version 3.0](#tab/v3)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContextWithFiltering.cs#DefineLoggerFactory)]
 
-# [Version 2.x](#tab/v2)
+### [Version 2.x](#tab/v2)
 
 > [!NOTE]
 > The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2 and replaced in 3.0. It is safe to ignore and suppress the warnings when using 2.2.
@@ -76,8 +76,9 @@ public static readonly LoggerFactory MyLoggerFactory
 ***
 
 In this example, the log is filtered to only return messages:
- * in the 'Microsoft.EntityFrameworkCore.Database.Command' category
- * at the 'Information' level
+
+* in the 'Microsoft.EntityFrameworkCore.Database.Command' category
+* at the 'Information' level
 
 For EF Core, logger categories are defined in the `DbLoggerCategory` class to make it easy to find categories, but these resolve to simple strings.
 

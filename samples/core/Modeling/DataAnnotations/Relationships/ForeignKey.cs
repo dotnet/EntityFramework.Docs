@@ -10,7 +10,7 @@ namespace EFModeling.DataAnnotations.Relationships.ForeignKey
         public DbSet<Post> Posts { get; set; }
     }
 
-    #region Entities
+    #region ForeignKey
     public class Blog
     {
         public int BlogId { get; set; }

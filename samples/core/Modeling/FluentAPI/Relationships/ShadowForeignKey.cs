@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.Configuring.DataAnnotations.Samples.Relationships.ShadowForeignKey
 {
-    #region Sample
+    #region ShadowForeignKey
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }

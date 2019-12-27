@@ -2,16 +2,17 @@
 
 namespace EFModeling.FluentAPI.IndexComposite
 {
-    #region Composite
     class MyContext : DbContext
     {
         public DbSet<Person> People { get; set; }
 
+        #region Composite
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>()
                 .HasIndex(p => new { p.FirstName, p.LastName });
         }
+        #endregion
     }
 
     public class Person
@@ -20,5 +21,4 @@ namespace EFModeling.FluentAPI.IndexComposite
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
-    #endregion
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EFModeling.Configuring.DataAnnotations.Samples.Relationships.CompositeForeignKey
 {
-    #region Model
+    #region CompositeForeignKey
     class MyContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }

@@ -7,14 +7,14 @@ namespace EFModeling.FluentAPI.ValueGeneratedOnAddOrUpdate
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region ValueGeneratedOnAddOrUpdate
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region Sample
             modelBuilder.Entity<Blog>()
                 .Property(b => b.LastUpdated)
                 .ValueGeneratedOnAddOrUpdate();
-            #endregion
         }
+        #endregion
     }
 
     public class Blog

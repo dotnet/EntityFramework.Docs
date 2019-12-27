@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EFModeling.DataAnnotations.NoIdentity
+namespace EFModeling.DataAnnotations.ValueGeneratedNever
 {
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
     }
 
-    #region Sample
+    #region ValueGeneratedNever
     public class Blog
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
