@@ -2,7 +2,7 @@
 
 namespace EFModeling.FluentAPI.Timestamp
 {
-    #region ConfigureTimestampFluent
+    #region Timestamp
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }

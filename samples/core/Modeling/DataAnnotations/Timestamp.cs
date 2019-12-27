@@ -8,7 +8,7 @@ namespace EFModeling.DataAnnotations.Timestamp
         public DbSet<Blog> Blogs { get; set; }
     }
 
-    #region ConfigureTimestampAnnotations
+    #region Timestamp
     public class Blog
     {
         public int BlogId { get; set; }
