@@ -3,33 +3,31 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace EFModeling.DynamicModel
 {
-
-    #region Class
     public class DynamicContext : DbContext
     {
-        public bool? IgnoreIntProperty { get; set; }
+        public bool UseIntProperty { get; set; }
 
         public DbSet<ConfigurableEntity> Entities { get; set; }
 
+        #region OnConfiguring
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                 .UseInMemoryDatabase("DynamicContext")
                 .ReplaceService<IModelCacheKeyFactory, DynamicModelCacheKeyFactory>();
+        #endregion
 
+        #region OnModelCreating
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            if (IgnoreIntProperty.HasValue)
+            if (UseIntProperty)
             {
-                if (IgnoreIntProperty.Value)
-                {
-                    modelBuilder.Entity<ConfigurableEntity>().Ignore(e => e.IntProperty);
-                }
-                else
-                {
-                    modelBuilder.Entity<ConfigurableEntity>().Ignore(e => e.StringProperty);
-                }
+                modelBuilder.Entity<ConfigurableEntity>().Ignore(e => e.StringProperty);
+            }
+            else
+            {
+                modelBuilder.Entity<ConfigurableEntity>().Ignore(e => e.IntProperty);
             }
         }
+        #endregion
     }
-    #endregion
 }
