@@ -24,6 +24,8 @@ namespace EFModeling.Conventions.ShadowForeignKey
         public string Title { get; set; }
         public string Content { get; set; }
 
+        // Since there is no CLR property which holds the foreign
+        // key for this relationship, a shadow property is created.
         public Blog Blog { get; set; }
     }
     #endregion

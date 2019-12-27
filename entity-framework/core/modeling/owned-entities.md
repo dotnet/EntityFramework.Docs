@@ -8,9 +8,6 @@ uid: core/modeling/owned-entities
 ---
 # Owned Entity Types
 
-> [!NOTE]
-> This feature is new in EF Core 2.0.
-
 EF Core allows you to model entity types that can only ever appear on navigation properties of other entity types. These are called _owned entity types_. The entity containing an owned entity type is its _owner_.
 
 Owned entities are essentially a part of the owner and cannot exist without it, they are conceptually similar to [aggregates](https://martinfowler.com/bliki/DDD_Aggregate.html). This means that the owned type is by definition on the dependent side of the relationship with the owner.
