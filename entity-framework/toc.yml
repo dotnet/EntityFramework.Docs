@@ -118,10 +118,6 @@
       - name: Spatial Data
         displayName: GIS
         href: core/modeling/spatial.md
-      - name: Relational database modeling
-        items:
-        - name: Overview
-          href: core/modeling/relational/index.md
     - name: Managing Database Schemas
       items:
       - name: Overview
