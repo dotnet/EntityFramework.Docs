@@ -3,18 +3,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace EFModeling.DynamicModel
 {
-
-    #region Class
+    #region DynamicModel
     public class DynamicModelCacheKeyFactory : IModelCacheKeyFactory
     {
         public object Create(DbContext context)
-        {
-            if (context is DynamicContext dynamicContext)
-            {
-                return (context.GetType(), dynamicContext.IgnoreIntProperty);
-            }
-            return context.GetType();
-        }
+            => context is DynamicContext dynamicContext
+                ? (context.GetType(), dynamicContext.UseIntProperty)
+                : (object)context.GetType();
     }
     #endregion
 }
