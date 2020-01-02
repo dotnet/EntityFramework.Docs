@@ -14,20 +14,6 @@
       },
       "template_folder": "_themes",
       "version": 0
-    },
-    {
-      "docset_name": "msdata-sqlite",
-      "build_source_folder": "msdata-sqlite",
-      "build_output_subfolder": "msdata-sqlite",
-      "locale": "en-us",
-      "monikers": [],
-      "moniker_ranges": [],
-      "open_to_public_contributors": true,
-      "type_mapping": {
-        "Conceptual": "Content"
-      },
-      "build_entry_point": "docs",
-      "template_folder": "_themes"
     }
   ],
   "notification_subscribers": [
