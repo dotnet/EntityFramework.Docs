@@ -231,7 +231,7 @@
       - name: Design-time Services
         href: core/miscellaneous/cli/services.md
     - name: "⤤ EF Core API Reference"
-      href: https://docs.microsoft.com/dotnet/api/?view=efcore-2.1
+      href: /dotnet/api/?view=efcore-3.1
   - name: Entity Framework 6
     items:
     - name: Overview
