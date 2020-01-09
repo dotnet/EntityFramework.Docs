@@ -3,13 +3,10 @@ title: Table Splitting - EF Core
 description: How to configure table splitting using Entity Framework Core
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 04/10/2019
+ms.date: 01/03/2020
 uid: core/modeling/table-splitting
 ---
 # Table Splitting
-
->[!NOTE]
-> This feature is new in EF Core 2.0.
 
 EF Core allows to map two or more entities to a single row. This is called _table splitting_ or _table sharing_.
 
@@ -27,21 +24,28 @@ In this example `Order` represents a subset of `DetailedOrder`.
 
 In addition to the required configuration we call `Property(o => o.Status).HasColumnName("Status")` to map `DetailedOrder.Status` to the same column as `Order.Status`.
 
-[!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting&highlight=3)]
+[!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting)]
 
 > [!TIP]
 > See the [full sample project](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/TableSplitting) for more context.
 
 ## Usage
 
-Saving and querying entities using table splitting is done in the same way as other entities. And starting with EF Core 3.0 the dependent entity reference can be `null`. If all of the columns used by the dependent entity are `NULL` is the database then no instance for it will be created when queried. This would also happen all of the properties are optional and set to `null`, which might not be expected.
+Saving and querying entities using table splitting is done in the same way as other entities:
 
 [!code-csharp[Usage](../../../samples/core/Modeling/TableSplitting/Program.cs?name=Usage)]
 
+## Optional dependent entity
+
+> [!NOTE]
+> This feature was introduced in EF Core 3.0.
+
+If all of the columns used by a dependent entity are `NULL` in the database, then no instance for it will be created when queried. This allows modeling an optional dependent entity, where the relationship property on the principal would be null. Note that This would also happen all of the dependent's properties are optional and set to `null`, which might not be expected.
+
 ## Concurrency tokens
 
-If any of the entity types sharing a table has a concurrency token then it must be included in all other entity types to avoid a stale concurrency token value when only one of the entities mapped to the same table is updated.
+If any of the entity types sharing a table has a concurrency token then it must be included in all other entity types as well. This is necessary in order to avoid a stale concurrency token value when only one of the entities mapped to the same table is updated.
 
-To avoid exposing it to the consuming code it's possible the create one in shadow-state.
+To avoid exposing the concurrency token to the consuming code, it's possible the create one as a [shadow property](xref:core/modeling/shadow-properties):
 
 [!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=ConcurrencyToken&highlight=2)]

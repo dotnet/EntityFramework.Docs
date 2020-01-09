@@ -309,6 +309,11 @@
             "source_path": "entity-framework/core/modeling/relational/inheritance.md",
             "redirect_url": "/ef/core/modeling/inheritance",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/relational/index.md",
+            "redirect_url": "/ef/core/modeling/",
+            "redirect_document_id": false
         }
     ]
 }

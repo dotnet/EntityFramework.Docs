@@ -21,7 +21,7 @@ Some examples of this include:
 
 * InMemory will allow you to save data that would violate referential integrity constraints in a relational database.
 * If you use DefaultValueSql(string) for a property in your model, this is a relational database API and will have no effect when running against InMemory.
-* [Concurrency via Timestamp/row version](xref:core/modeling/concurrency#timestamprow-version) (`[Timestamp]` or `IsRowVersion`) is not supported. No [DbUpdateConcurrencyException](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.dbupdateconcurrencyexception) will be thrown if an update is done using an old concurrency token.
+* [Concurrency via Timestamp/row version](xref:core/modeling/concurrency#timestamprowversion) (`[Timestamp]` or `IsRowVersion`) is not supported. No [DbUpdateConcurrencyException](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.dbupdateconcurrencyexception) will be thrown if an update is done using an old concurrency token.
 
 > [!TIP]  
 > For many test purposes these differences will not matter. However, if you want to test against something that behaves more like a true relational database, then consider using [SQLite in-memory mode](sqlite.md).

@@ -2,7 +2,7 @@
   href: index.md
   items:
   - name: EF Core & EF6
-    items:  
+    items:
     - name: Compare EF Core & EF6
       href: efcore-and-ef6/index.md
     - name: Port from EF6 to EF Core
@@ -53,7 +53,7 @@
         href: core/get-started/index.md
       - name: Installing EF Core
         href: core/get-started/install/index.md
-      - name: "⤤ ASP.NET Core Tutorial"
+      - name: ASP.NET Core Tutorial >>
         href: /aspnet/core/data/ef-rp/intro
     - name: Fundamentals
       items:
@@ -118,10 +118,6 @@
       - name: Spatial Data
         displayName: GIS
         href: core/modeling/spatial.md
-      - name: Relational database modeling
-        items:
-        - name: Overview
-          href: core/modeling/relational/index.md
     - name: Managing Database Schemas
       items:
       - name: Overview
@@ -234,8 +230,8 @@
         href: core/miscellaneous/cli/dbcontext-creation.md
       - name: Design-time Services
         href: core/miscellaneous/cli/services.md
-    - name: "⤤ EF Core API Reference"
-      href: https://docs.microsoft.com/dotnet/api/?view=efcore-2.1
+    - name: EF Core API Reference >>
+      href: /dotnet/api/?view=efcore-3.1
   - name: Entity Framework 6
     items:
     - name: Overview
@@ -356,7 +352,7 @@
             href: ef6/modeling/code-first/conventions/model.md
         - name: Fluent Configuration
           items:
-          - name: Relationships 
+          - name: Relationships
             href: ef6/modeling/code-first/fluent/relationships.md
           - name: Types and Properties
             href: ef6/modeling/code-first/fluent/types-and-properties.md
@@ -402,7 +398,7 @@
             href: ef6/modeling/designer/table-splitting.md
         - name: Inheritance Mappings
           items:
-          - name: Table per Hierarchy 
+          - name: Table per Hierarchy
             href: ef6/modeling/designer/inheritance/tph.md
           - name: Table per Type
             href: ef6/modeling/designer/inheritance/tpt.md
@@ -422,7 +418,7 @@
           items:
           - name: Overview
             href: ef6/modeling/designer/codegen/index.md
-          - name: Legacy ObjectContext 
+          - name: Legacy ObjectContext
             href: ef6/modeling/designer/codegen/legacy-objectcontext.md
         - name: Advanced
           items:
@@ -542,5 +538,5 @@
             href: ef6/resources/licenses/ef6/kor.md
           - name: Russian
             href: ef6/resources/licenses/ef6/rus.md
-    - name: "⤤ EF6 API Reference"
+    - name: EF6 API Reference >>
       href: https://docs.microsoft.com/dotnet/api/?view=entity-framework-6.2.0
