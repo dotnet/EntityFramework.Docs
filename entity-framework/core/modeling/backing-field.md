@@ -41,7 +41,7 @@ See the [PropertyAccessMode enum](https://docs.microsoft.com/dotnet/api/microsof
 
 ## Field-only properties
 
-You can also create a conceptual property in your model that does not have a corresponding CLR property in the entity class, but instead uses a field to store the data in the entity. This is different from [Shadow Properties](shadow-properties.md), where the data is stored in the change tracker, rather than in the entity's CLR type. Field-only properties are typically used when the entity class uses methods to get/set values, instead of properties.
+You can also create a conceptual property in your model that does not have a corresponding CLR property in the entity class, but instead uses a field to store the data in the entity. This is different from [Shadow Properties](shadow-properties.md), where the data is stored in the change tracker, rather than in the entity's CLR type. Field-only properties are commonly used when the entity class uses methods instead of properties to get/set values, or in cases where fields shouldn't be exposed at all in the domain model (e.g. primary keys).
 
 You can configure a field-only property by providing a name in the `Property(...)` API:
 
