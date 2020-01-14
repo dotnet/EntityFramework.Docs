@@ -8,15 +8,15 @@ namespace EFModeling.FluentAPI.BackingFieldAccessMode
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region BackingFieldAccessMode
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region Sample
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Url)
                 .HasField("_validatedUrl")
-                .UsePropertyAccessMode(PropertyAccessMode.Field);
-            #endregion
+                .UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
         }
+        #endregion
     }
 
     public class Blog

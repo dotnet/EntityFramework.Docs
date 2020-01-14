@@ -3,17 +3,18 @@ using System.Net.Http;
 
 namespace EFModeling.FluentAPI.BackingField
 {
-    #region Sample
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
+        #region BackingField
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
                 .Property(b => b.Url)
                 .HasField("_validatedUrl");
         }
+        #endregion
     }
 
     public class Blog
@@ -38,5 +39,4 @@ namespace EFModeling.FluentAPI.BackingField
             _validatedUrl = url;
         }
     }
-    #endregion
 }

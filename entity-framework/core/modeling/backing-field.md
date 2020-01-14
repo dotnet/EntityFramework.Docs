@@ -7,49 +7,49 @@ uid: core/modeling/backing-field
 ---
 # Backing Fields
 
-> [!NOTE]  
-> This feature is new in EF Core 1.1.
-
 Backing fields allow EF to read and/or write to a field rather than a property. This can be useful when encapsulation in the class is being used to restrict the use of and/or enhance the semantics around access to the data by application code, but the value should be read from and/or written to the database without using those restrictions/enhancements.
 
-## Conventions
+## Basic configuration
 
-By convention, the following fields will be discovered as backing fields for a given property (listed in precedence order). Fields are only discovered for properties that are included in the model. For more information on which properties are included in the model, see [Including & Excluding Properties](included-properties.md).
+By convention, the following fields will be discovered as backing fields for a given property (listed in precedence order). 
 
 * `_<camel-cased property name>`
 * `_<property name>`
 * `m_<camel-cased property name>`
 * `m_<property name>`
 
+In the following sample, the `Url` property is configured to have `_url` as its backing field:
+
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/BackingField.cs#Sample)]
 
-When a backing field is configured, EF will write directly to that field when materializing entity instances from the database (rather than using the property setter). If EF needs to read or write the value at other times, it will use the property if possible. For example, if EF needs to update the value for a property, it will use the property setter if one is defined. If the property is read-only, then it will write to the field.
+Note that backing fields are only discovered for properties that are included in the model. For more information on which properties are included in the model, see [Including & Excluding Properties](included-properties.md).
 
-## Data Annotations
+You can also configure backing fields explicitly, e.g. if the field name doesn't correspond to the above conventions:
 
-Backing fields cannot be configured with data annotations.
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs?name=BackingField&highlight=5)]
 
-## Fluent API
+## Field and property access
 
-You can use the Fluent API to configure a backing field for a property.
+By default, EF will always read and write to the backing field - assuming one has been properly configured - and will never use the property. However, EF also supports other access patterns. For example, the following sample instructs EF to write to the backing field only while materializing, and to use the property in all other cases:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs?name=BackingFieldAccessMode&highlight=6)]
 
-### Controlling when the field is used
+See the [PropertyAccessMode enum](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) for the complete set of supported options.
 
-You can configure when EF uses the field or property. See the [PropertyAccessMode enum](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) for the supported options.
+> [!NOTE]
+> With EF Core 3.0, the default property access mode changed from `PreferFieldDuringConstruction` to `PreferField`.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs#Sample)]
+## Field-only properties
 
-### Fields without a property
+You can also create a conceptual property in your model that does not have a corresponding CLR property in the entity class, but instead uses a field to store the data in the entity. This is different from [Shadow Properties](shadow-properties.md), where the data is stored in the change tracker, rather than in the entity's CLR type. Field-only properties are commonly used when the entity class uses methods instead of properties to get/set values, or in cases where fields shouldn't be exposed at all in the domain model (e.g. primary keys).
 
-You can also create a conceptual property in your model that does not have a corresponding CLR property in the entity class, but instead uses a field to store the data in the entity. This is different from [Shadow Properties](shadow-properties.md), where the data is stored in the change tracker. This would typically be used if the entity class uses methods to get/set values.
-
-You can give EF the name of the field in the `Property(...)` API. If there is no property with the given name, then EF will look for a field.
+You can configure a field-only property by providing a name in the `Property(...)` API:
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldNoProperty.cs#Sample)]
 
-When there is no property in the entity class, you can use the `EF.Property(...)` method in a LINQ query to refer to the property that is conceptually part of the model.
+EF will attempt to find a CLR property with the given name, or a field if a property isn't found. If neither a property nor a field are found, a shadow property will be set up instead.
+
+You may need to refer to a field-only property from LINQ queries, but such fields are typically private. You can use the `EF.Property(...)` method in a LINQ query to refer to the field:
 
 ``` csharp
 var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "_validatedUrl"));
