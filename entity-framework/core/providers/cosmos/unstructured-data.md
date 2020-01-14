@@ -49,7 +49,7 @@ To decouple completely from EF Core get the [CosmosClient](/dotnet/api/Microsoft
 
 ## Missing property values
 
-In the previous example we removed the `"TrackingNumber"` property from the order. Because of how indexing works in Cosmos DB, queries that reference the missing property somewhere else than in the projection could return unexpected results. For example:
+In the previous example we removed the `"TrackingNumber"` property from the order. Because of how indexing works in Cosmos DB, queries that reference the missing property somewhere else other than in the projection, it could potentially return unexpected results. For example:
 
 [!code-csharp[MissingProperties](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?name=MissingProperties)]
 
