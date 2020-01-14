@@ -1,77 +1,47 @@
 ---
-title: What's new - EF Core
-author: divega
-ms.date: 02/20/2018
+title: EF Core releases and planning
+author: ajcvickers
+ms.date: 01/14/2020
 ms.assetid: C21F89EE-FB08-4ED9-A2A0-76CB7656E6E4
 uid: core/what-is-new/index
 ---
 
-# What's new in EF Core
+# EF Core releases and planning
 
-## Recent releases
+## Stable releases
 
-- **EF Core 3.0** (latest stable release) 
-  - [New features](xref:core/what-is-new/ef-core-3.0/index) 
-  - [Breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes) that you should be aware of when upgrading
-- [EF Core 2.2](xref:core/what-is-new/ef-core-2.2)
-- [EF Core 2.1](xref:core/what-is-new/ef-core-2.1) (latest long-term support release)
+| Release | Target framework | Supported until | Links
+|:--------|------------------|-----------------|------
+| [EF Core 3.1](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.1.1) | .NET Standard 2.0 | December 3, 2022 (LTS) | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-3-1-and-entity-framework-6-4/)
+| [EF Core 3.0](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.0.1) | .NET Standard 2.1 | March 3, 2020 | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-ef-core-3-0-and-ef-6-3-general-availability/) / [Breaking changes](ef-core-3.0/breaking-changes.md)
+| ~~[EF Core 2.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/2.2.6)~~ | .NET Standard 2.0 | Expired December 23, 2019 | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-2-2/)
+| [EF Core 2.1](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/2.1.14) | .NET Standard 2.0 | August 21, 2021 (LTS) | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-2-1/)
+| ~~[EF Core 2.0](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/2.0.3)~~ | .NET Standard 2.0 | Expired October 1, 2018 | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-2-0/)
+| ~~[EF Core 1.1](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/1.1.6)~~ | .NET Standard 1.3 | Expired June 27 2019 | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-1-1/)
+| ~~[EF Core 1.0](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/1.0.6)~~ | .NET Standard 1.3 | Expired June 27 2019 | [Announcement](https://devblogs.microsoft.com/dotnet/entity-framework-core-1-0-0-available/)
 
-## Product roadmap
+See [supported platforms](../platforms/index.md) for information about the specific platforms supported by each EF Core release.
 
-> [!IMPORTANT]
-> Please note that the feature sets and schedules of future releases are always subject to change, and although we will try to keep this page up to date, it may not reflect our latest plans at all times.
+See the [.NET support policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) for information on support expiration and long-term support (LTS) releases.
 
-### Future releases
+## Guidance on updating to new releases
 
-- **EF Core 3.1**  
-  - Under active development
-  - Will contain [small performance, quality and stability improvements](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.1.0+sort%3Areactions-desc)
-  - Planned as a long-term support (LTS) release
-  - Currently scheduled for December 2019
-- **EF Core "vNext"**   
-  - Next major release of EF Core to ship alongside .NET 5
-  - Planning for this release hasn't started yet and no features have been announced.  
+* Supported releases are patched for security and other critical bugs. Always use the latest patch of a given release. For example, for EF Core 2.1, use 2.1.14.
+* Major version updates (for example, from EF Core 2 to EF Core 3) often have breaking changes. Thorough testing is advised when updating across major versions. Use the breaking changes links above for guidance on dealing with breaking changes.
+* Minor version updates do not typically contain breaking changes. However, thorough testing is still advised since new features can introduce regressions.
 
-### Schedule
+## EF Core 5.0
 
-The release schedule for EF Core is in-sync with the [.NET Core release schedule](https://github.com/dotnet/core/blob/master/roadmap.md).
+EF Core releases align with the [.NET Core shipping schedule](https://github.com/dotnet/core/blob/master/roadmap.md). The next planned stable release is **EF Core 5.0**, scheduled for November 2020.
 
-### Backlog
+A [high-level plan for EF Core 5.0](ef-core-5.0/plan.md) has been created by following the documented [release planning process](release-planning.md).
 
-The [Backlog Milestone](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3ABacklog+sort%3Areactions-%2B1-desc) in our issue tracker contains issues that we either expect to work on someday, or we think someone from the community could tackle.
-Customers are welcome to submit comments and votes on these issues.
-Contributors looking to work on any of these issues are encouraged to first start a discussion on how to approach them.
+Your feedback on planning is important. The best way to indicate the importance of an issue is to vote (thumbs-up) for that issue on GitHub. This data will then feed into the planning process for the next release.
 
-There's never a guarantee that we'll work on any given feature in a specific version of EF Core.
-As in all software projects, priorities, release schedules, and available resources can change at any point.
-But if we intend to resolve an issue in a specific timeframe, we'll assign it to a release milestone instead of the backlog milestone.
-We routinely move issues between the backlog and release milestones as part of our [release planning process](#release-planning-process).
+### Get it now!
 
-We'll likely close an issue if we don't plan to ever address it.
-But we can reconsider an issue that we previously closed if we get new information about it.
+EF Core 5.0 packages are **available now** as [daily builds](https://github.com/aspnet/AspNetCore/blob/master/docs/DailyBuilds.md). 
 
-### Release planning process
+Using the daily builds is a great way to find issues and provide feedback as early as possible. The sooner we get such feedback, the more likely it will be actionable before the next official release. We work hard to keep the daily builds in good shape by running over 55,000 tests per platform for each build.
 
-We often get questions about how we choose specific features to go into a particular release.
-Our backlog certainly doesn't automatically translate into release plans.
-The presence of a feature in EF6 also doesn't automatically mean that the feature needs to be implemented in EF Core.
-
-It's difficult to detail the whole process we follow to plan a release.
-Much of it is discussing the specific features, opportunities and priorities, and the process itself also evolves with every release.
-However, we can summarize the common questions we try to answer when deciding what to work on next:
-
-1. **How many developers we think will use the feature and how much better will it make their applications or experience?** To answer this question, we collect feedback from many sources — Comments and votes on issues is one of those sources.
-
-2. **What are the workarounds people can use if we don't implement this feature yet?** For example, many developers can map a join table to work around lack of native many-to-many support. Obviously, not all developers want to do it, but many can, and that counts as a factor in our decision.
-
-3. **Does implementing this feature evolve the architecture of EF Core such that it moves us closer to implementing other features?** We tend to favor features that act as building blocks for other features. For instance, property bag entities can help us move towards many-to-many support, and entity constructors enabled our lazy loading support.
-
-4. **Is the feature an extensibility point?** We tend to favor extensibility points over normal features because they enable developers to hook their own behaviors and compensate for any missing functionality.
-
-5. **What is the synergy of the feature when used in combination with other products?** We favor features that enable or significantly improve the experience of using EF Core with other products, such as .NET Core, the latest version of Visual Studio, Microsoft Azure, and so on.
-
-6. **What are the skills of the people available to work on a feature, and how to best leverage these resources?** Each member of the EF team and our community contributors has different levels of experience in different areas, so we have to plan accordingly. Even if we wanted to have "all hands on deck" to work on a specific feature like GroupBy translations, or many-to-many, that wouldn't be practical.
-
-As mentioned before, the process evolves on every release.
-In the future, we'll try to add more opportunities for members of the community to provide inputs into our release plans.
-For example, we would like to make it easier to review draft designs of the features and of the release plan itself.
+Preview packages will be shipped to NuGet later in the year.
