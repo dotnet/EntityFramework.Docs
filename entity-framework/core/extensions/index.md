@@ -161,6 +161,6 @@ Extends your DbContext with high-performance bulk operations: BulkSaveChanges, B
 
 ### Expressionify
 
-Add support for calling extension methods in linq lambdas
+Add support for calling extension methods in linq lambdas. For EF Core: 3.1
 
 [GitHub repository](https://github.com/ClaveConsulting/Expressionify)
