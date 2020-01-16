@@ -49,5 +49,4 @@ Filters may be disabled for individual LINQ queries by using the `IgnoreQueryFil
 
 Global query filters have the following limitations:
 
-* Filters cannot contain references to navigation properties.
 * Filters can only be defined for the root Entity Type of an inheritance hierarchy.

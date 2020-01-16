@@ -236,6 +236,22 @@ apt-get install libsqlite3-mod-spatialite
 brew install libspatialite
 ```
 
+Unfortunately, newer versions of PROJ (a dependency of SpatiaLite) are incompatible with EF's default [SQLitePCLRaw bundle](/dotnet/standard/data/sqlite/custom-versions#bundles). You can work around this by either creating a custom [SQLitePCLRaw provider](/dotnet/standard/data/sqlite/custom-versions#sqlitepclraw-providers) that uses the system SQLite library, or you can install a custom build of SpatiaLite disabling PROJ support.
+
+``` sh
+curl https://www.gaia-gis.it/gaia-sins/libspatialite-4.3.0a.tar.gz | tar -xz
+cd libspatialite-4.3.0a
+
+if [[ `uname -s` == Darwin* ]]; then
+    # Mac OS requires some minor patching
+    sed -i "" "s/shrext_cmds='\`test \\.\$module = .yes && echo .so \\|\\| echo \\.dylib\`'/shrext_cmds='.dylib'/g" configure
+fi
+
+./configure --disable-proj
+make
+make install
+```
+
 ### Configuring SRID
 
 In SpatiaLite, columns need to specify an SRID per column. The default SRID is `0`. Specify a different SRID using the ForSqliteHasSrid method.
