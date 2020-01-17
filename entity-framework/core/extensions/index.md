@@ -158,3 +158,9 @@ Extends your DbContext with features such as: Include Filter, Auditing, Caching,
 Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2, 3.
 
 [Website](https://entityframework-extensions.net/)
+
+### Expressionify
+
+Add support for calling extension methods in linq lambdas. For EF Core: 3.1
+
+[GitHub repository](https://github.com/ClaveConsulting/Expressionify)
