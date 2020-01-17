@@ -56,4 +56,4 @@ In the previous example we removed the `"TrackingNumber"` property from the orde
 The sorted query actually returns no results. This means that one should take care to always populate properties mapped by EF Core when working with the store directly.
 
 > [!NOTE]
-> This behavior might change in future versions of Cosmos. For instance, currently if the indexing policy defines the composite index {Id/? ASC, TrackingNumber/? ASC)}, then a query the has 'ORDER BY c.Id ASC, c.Discriminator ASC' __would__ return items that are missing the `"TrackingNumber"` property.
+> This behavior might change in future versions of Cosmos. For instance, currently if the indexing policy defines the composite index {Id/? ASC, TrackingNumber/? ASC)}, then a query that has 'ORDER BY c.Id ASC, c.Discriminator ASC' __would__ return items that are missing the `"TrackingNumber"` property.
