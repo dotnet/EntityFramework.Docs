@@ -27,6 +27,12 @@ Entity Developer is a powerful ORM designer for ADO.NET Entity Framework, NHiber
 
 [Website](https://www.devart.com/entitydeveloper/)
 
+### nHydrate ORM for Entity Framework
+
+An ORM that creates strongly-typed, extendable classes for Entity Framework. The generated code is Entity Framework Core. There is no difference. This is not a replacement for EF or a custom ORM. It is a visual, modeling layer that allows a team to manage complex database schemas. It works well with SCM software like Git, allowing multi-user access to your model with minimal conflicts. The installer tracks model changes and creates upgrade scripts. For EF Core: 3.
+
+[Github site](https://github.com/nHydrate/nHydrate)
+
 ### EF Core Power Tools
 
 EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](https://docs.microsoft.com/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 2, 3.
