@@ -21,7 +21,7 @@
       href: core/index.md
     - name: "Releases and planning"
       items:
-      - name: Overview
+      - name: Current and planned releases
         href: core/what-is-new/index.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
