@@ -104,6 +104,9 @@ If a query can't be fully translated, then either rewrite the query in a form th
 
 [Tracking Issue #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
 
+> [!IMPORTANT] 
+> EF Core 3.1 targets .NET Standard 2.0 again. This brings back support for .NET Framework.
+
 **Old behavior**
 
 Before 3.0, EF Core targeted .NET Standard 2.0 and would run on all platforms that support that standard, including .NET Framework.
@@ -118,7 +121,7 @@ This is part of a strategic decision across .NET technologies to focus energy on
 
 **Mitigations**
 
-Consider moving to a modern .NET platform. If this is not possible, then continue to use EF Core 2.1 or EF Core 2.2, both of which support .NET Framework.
+Use EF Core 3.1.
 
 <a name="no-longer"></a>
 ### Entity Framework Core is no longer part of the ASP.NET Core shared framework
