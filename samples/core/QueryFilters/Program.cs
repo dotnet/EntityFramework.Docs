@@ -150,7 +150,7 @@ namespace Samples
         #region Configuration
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Blog>().Property<string>("TenantId").HasField("_tenantId");
+            modelBuilder.Entity<Blog>().Property<string>("_tenantId").HasColumnName("TenantId");
 
             // Configure entity filters
             modelBuilder.Entity<Blog>().HasQueryFilter(b => EF.Property<string>(b, "TenantId") == _tenantId);
