@@ -20,9 +20,9 @@ There are a number of terms used to describe relationships
 
 * **Principal entity:** This is the entity that contains the primary/alternate key properties. Sometimes referred to as the 'parent' of the relationship.
 
-* **Foreign key:** The properties in the dependent entity that are used to store the principal key values for the related entity.
-
 * **Principal key:** The properties that uniquely identify the principal entity. This may be the primary key or an alternate key.
+
+* **Foreign key:** The properties in the dependent entity that are used to store the principal key values for the related entity.
 
 * **Navigation property:** A property defined on the principal and/or dependent entity that references the related entity.
 
@@ -42,9 +42,9 @@ The following code shows a one-to-many relationship between `Blog` and `Post`
 
 * `Blog` is the principal entity
 
-* `Post.BlogId` is the foreign key
-
 * `Blog.BlogId` is the principal key (in this case it is a primary key rather than an alternate key)
+
+* `Post.BlogId` is the foreign key
 
 * `Post.Blog` is a reference navigation property
 
