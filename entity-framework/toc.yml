@@ -19,9 +19,9 @@
     items:
     - name: Overview
       href: core/index.md
-    - name: "Releases and planning"
+    - name: "Releases and planning (Roadmap)"
       items:
-      - name: Current and planned releases (Roadmap)
+      - name: Current and planned releases
         href: core/what-is-new/index.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
@@ -29,6 +29,8 @@
         items:
         - name: High-level plan
           href: core/what-is-new/ef-core-5.0/plan.md
+        - name: "What's new?"
+          href: core/what-is-new/ef-core-5.0/whatsnew.md
       - name: EF Core 3.0
         items:
         - name: New features
