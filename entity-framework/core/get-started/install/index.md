@@ -93,8 +93,6 @@ The `dotnet ef` commands are included in current versions of the .NET Core SDK, 
 dotnet add package Microsoft.EntityFrameworkCore.Design
 ```
 
-For ASP.NET Core apps, this package is included automatically.
-
 > [!IMPORTANT]
 > Always use the version of the tools package that matches the major version of the runtime packages.
 
