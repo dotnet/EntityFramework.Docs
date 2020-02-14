@@ -23,7 +23,7 @@ namespace Samples
                 foreach (var blog in blogs)
                 {
                     Console.WriteLine(
-                        $"{blog.Url.PadRight(33)} [Tenant: {db.Entry(blog).Property("TenantId").CurrentValue}]");
+                        $"{blog.Url.PadRight(33)} [Tenant: {db.Entry(blog).Property("_tenantId").CurrentValue}]");
 
                     foreach (var post in blog.Posts)
                     {
@@ -43,7 +43,7 @@ namespace Samples
                 foreach (var blog in blogs)
                 {
                     Console.WriteLine(
-                        $"{blog.Url.PadRight(33)} [Tenant: {db.Entry(blog).Property("TenantId").CurrentValue}]");
+                        $"{blog.Url.PadRight(33)} [Tenant: {db.Entry(blog).Property("_tenantId").CurrentValue}]");
 
                     foreach (var post in blog.Posts)
                     {
@@ -153,7 +153,7 @@ namespace Samples
             modelBuilder.Entity<Blog>().Property<string>("_tenantId").HasColumnName("TenantId");
 
             // Configure entity filters
-            modelBuilder.Entity<Blog>().HasQueryFilter(b => EF.Property<string>(b, "TenantId") == _tenantId);
+            modelBuilder.Entity<Blog>().HasQueryFilter(b => EF.Property<string>(b, "_tenantId") == _tenantId);
             modelBuilder.Entity<Post>().HasQueryFilter(p => !p.IsDeleted);
         }
         #endregion
@@ -164,9 +164,9 @@ namespace Samples
 
             foreach (var item in ChangeTracker.Entries().Where(
                 e =>
-                    e.State == EntityState.Added && e.Metadata.GetProperties().Any(p => p.Name == "TenantId")))
+                    e.State == EntityState.Added && e.Metadata.GetProperties().Any(p => p.Name == "_tenantId")))
             {
-                item.CurrentValues["TenantId"] = _tenantId;
+                item.CurrentValues["_tenantId"] = _tenantId;
             }
 
             foreach (var item in ChangeTracker.Entries<Post>().Where(e => e.State == EntityState.Deleted))
