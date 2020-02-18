@@ -1,0 +1,12 @@
+{
+    "markdown.docsetLanguages": [
+        ".NET Core CLI",
+        "C#",
+        "JSON",
+        "PowerShell",
+        "SQL",
+        "VB.NET",
+        "XAML",
+        "XML"
+    ]
+}
