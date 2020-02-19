@@ -36,17 +36,16 @@ We have extracted a few major areas or themes which will form the basis for the 
 
 Lead developers: @smitpatel and @AndriySvyryd
 
-Tracked by [#19003](https://github.com/aspnet/EntityFrameworkCore/issues/19003)
-
 T-shirt size: L
 
 Status: In-progress
 
-Many-to-many is the most requested feature (~407 votes) on the GitHub backlog. Support for many-to-many relationships can be broken down into three major areas:
+Many-to-many is the most requested feature (~407 votes) on the GitHub backlog. Tracked by [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508), discussion at [#1368](https://github.com/aspnet/EntityFrameworkCore/issues/1368)
+Support for many-to-many relationships can be broken down into three major areas:
 
-* Skip navigation properties. These allow the model to be used for queries, etc. without reference to the underlying join table entity.
-* Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type.
-* Sugar for easy configuration of many-to-many relationships.
+* Skip navigation properties. These allow the model to be used for queries, etc. without reference to the underlying join table entity. (planned for 5.0) Tracked by [#19003](https://github.com/aspnet/EntityFrameworkCore/issues/19003) and [#19969](https://github.com/aspnet/EntityFrameworkCore/issues/19969)
+* Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type. (stretch goal for 5.0) Tracked by [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914)
+* Sugar for easy configuration of many-to-many relationships. (stretch goal for 5.0)
 
 We believe that the most significant blocker for those wanting many-to-many support is not being able to use the "natural" relationships, without referring to the join table, in business logic such as queries. The join table entity type may still exist, but it should not get in the way of business logic. This is why we have chosen to tackle skip navigation properties for 5.0.
 
