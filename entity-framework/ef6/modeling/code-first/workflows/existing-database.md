@@ -66,7 +66,7 @@ VALUES ('.NET Framework Blog', 'http://blogs.msdn.com/dotnet/')
 
 ## 2. Create the Application
 
-To keep things simple we’re going to build a basic console application that uses Code First to perform data access:
+To keep things simple we will build a basic console application that uses Code First to do the data access:
 
 -   Open Visual Studio
 -   **File -&gt; New -&gt; Project…**
@@ -78,7 +78,7 @@ To keep things simple we’re going to build a basic console application that us
 
 ## 3. Reverse Engineer Model
 
-We’re going to make use of the Entity Framework Tools for Visual Studio to help us generate some initial code to map to the database. These tools are just generating code that you could also type by hand if you prefer.
+We will use the Entity Framework Tools for Visual Studio to help us generate some initial code to map to the database. These tools are just generating code that you could also type by hand if you prefer.
 
 -   **Project -&gt; Add New Item…**
 -   Select **Data** from the left menu and then **ADO.NET Entity Data Model**
@@ -198,7 +198,7 @@ class Program
 }
 ```
 
-You can now run the application and test it out.
+You can now run the application and test it.
 
 ```console
 Enter a name for a new Blog: ADO.NET Blog

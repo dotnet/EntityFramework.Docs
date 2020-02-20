@@ -74,13 +74,13 @@
       "ms.devlang": "dotnet",
       "ms.author": "avickers",
       "feedback_system": "GitHub",
-      "feedback_github_repo": "aspnet/EntityFramework.Docs",
-      "feedback_product_url": "https://github.com/aspnet/EntityFrameworkCore/issues/new/choose",
+      "feedback_github_repo": "dotnet/EntityFramework.Docs",
+      "feedback_product_url": "https://github.com/dotnet/efcore/issues/new/choose",
       "uhfHeaderId": "MSDocsHeader-DotNet"
     },
     "fileMetadata": {
       "feedback_product_url": {
-        "ef6/**/**.md": "https://github.com/aspnet/EntityFramework6/issues/new"
+        "ef6/**/**.md": "https://github.com/dotnet/ef6/issues/new"
       },
       "ms.technology": {
         "core/**/**.md": "entity-framework-core",

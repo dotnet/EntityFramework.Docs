@@ -17,7 +17,7 @@ namespace EFSaving.Basics
             #region Add
             using (var context = new BloggingContext())
             {
-                var blog = new Blog { Url = "http://sample.com" };
+                var blog = new Blog { Url = "http://example.com" };
                 context.Blogs.Add(blog);
                 context.SaveChanges();
             }
@@ -27,7 +27,7 @@ namespace EFSaving.Basics
             using (var context = new BloggingContext())
             {
                 var blog = context.Blogs.First();
-                blog.Url = "http://sample.com/blog";
+                blog.Url = "http://example.com/blog";
                 context.SaveChanges();
             }
             #endregion
@@ -45,16 +45,16 @@ namespace EFSaving.Basics
             using (var context = new BloggingContext())
             {
                 // seeding database
-                context.Blogs.Add(new Blog { Url = "http://sample.com/blog" });
-                context.Blogs.Add(new Blog { Url = "http://sample.com/another_blog" });
+                context.Blogs.Add(new Blog { Url = "http://example.com/blog" });
+                context.Blogs.Add(new Blog { Url = "http://example.com/another_blog" });
                 context.SaveChanges();
             }
 
             using (var context = new BloggingContext())
             {
                 // add
-                context.Blogs.Add(new Blog { Url = "http://sample.com/blog_one" });
-                context.Blogs.Add(new Blog { Url = "http://sample.com/blog_two" });
+                context.Blogs.Add(new Blog { Url = "http://example.com/blog_one" });
+                context.Blogs.Add(new Blog { Url = "http://example.com/blog_two" });
 
                 // update
                 var firstBlog = context.Blogs.First();
