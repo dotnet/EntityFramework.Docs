@@ -8,7 +8,7 @@ uid: core/miscellaneous/logging
 # Logging
 
 > [!TIP]  
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging) on GitHub.
 
 ## ASP.NET Core applications
 

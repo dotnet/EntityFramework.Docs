@@ -10,8 +10,8 @@ Articles are stored as Markdown files in this repository. To make a simple chang
 
 You'll need a basic understanding of [Git and GitHub.com](https://guides.github.com/activities/hello-world/).
 
-* Open an [issue](https://github.com/aspnet/EntityFramework.Docs/issues/new) describing what you want to do, such as change an existing article or create a new one. Wait for approval from the EF team before you invest much time.
-* Fork the [aspnet/EntityFramework.Docs](https://github.com/aspnet/EntityFramework.Docs/) repo and create a branch for your changes.
+* Open an [issue](https://github.com/dotnet/EntityFramework.Docs/issues/new) describing what you want to do, such as change an existing article or create a new one. Wait for approval from the EF team before you invest much time.
+* Fork the [dotnet/EntityFramework.Docs](https://github.com/dotnet/EntityFramework.Docs/) repo and create a branch for your changes.
 * Submit a pull request (PR) to master with your changes.
 * Respond to PR feedback.
 

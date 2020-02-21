@@ -10,7 +10,7 @@ uid: core/querying/complex-query-operators
 Language Integrated Query (LINQ) contains many complex operators, which combine multiple data sources or does complex processing. Not all LINQ operators have suitable translations on the server side. Sometimes, a query in one form translates to the server but if written in a different form doesn't translate even if the result is the same. This page describes some of the complex operators and their supported variations. In future releases, we may recognize more patterns and add their corresponding translations. It's also important to keep in mind that translation support varies between providers. A particular query, which is translated in SqlServer, may not work for SQLite databases.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
 
 ## Join
 

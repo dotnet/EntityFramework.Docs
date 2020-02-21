@@ -173,7 +173,7 @@ As part of this work we also plan to add ADO.NET/EF Core performance counters an
 
 Lead documenter: @ajcvickers
 
-Tracked by [#1920](https://github.com/aspnet/EntityFramework.Docs/issues/1920)
+Tracked by [#1920](https://github.com/dotnet/EntityFramework.Docs/issues/1920)
 
 T-shirt size: L
 
@@ -189,7 +189,7 @@ The idea here is to make it easier to understand what is going on in the interna
 
 Lead documenter: @bricelam
 
-Tracked by [#1675](https://github.com/aspnet/EntityFramework.Docs/issues/1675)
+Tracked by [#1675](https://github.com/dotnet/EntityFramework.Docs/issues/1675)
 
 T-shirt size: M
 
@@ -201,7 +201,7 @@ The EF Team also owns the Microsoft.Data.Sqlite ADO.NET provider. We plan to ful
 
 Lead documenter: @ajcvickers
 
-Tracked by [issues in the docs repo in the 5.0 milestone](https://github.com/aspnet/EntityFramework.Docs/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+)
+Tracked by [issues in the docs repo in the 5.0 milestone](https://github.com/dotnet/EntityFramework.Docs/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+)
 
 T-shirt size: L
 

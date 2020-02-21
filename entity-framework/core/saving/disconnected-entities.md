@@ -14,7 +14,7 @@ However, sometimes entities are queried using one context instance and then save
 
 <!-- markdownlint-disable MD028 -->
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/) on GitHub.
 
 > [!TIP]
 > EF Core can only track one instance of any entity with a given primary key value. The best way to avoid this being an issue is to use a short-lived context for each unit-of-work such that the context starts empty, has entities attached to it, saves those entities, and then the context is disposed and discarded.

@@ -69,7 +69,7 @@ At a high level:
 
 ## Entity deletion examples
 
-The code below is part of a [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) that can be downloaded and run. The sample shows what happens for each delete behavior for both optional and required relationships when a parent entity is deleted.
+The code below is part of a [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) that can be downloaded and run. The sample shows what happens for each delete behavior for both optional and required relationships when a parent entity is deleted.
 
 [!code-csharp[Main](../../../samples/core/Saving/CascadeDelete/Sample.cs#DeleteBehaviorVariations)]
 
@@ -180,7 +180,7 @@ Let's walk through each variation to understand what is happening.
 
 ## Delete orphans examples
 
-The code below is part of a [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) that can be downloaded and run. The sample shows what happens for each delete behavior for both optional and required relationships when the relationship between a parent/principal and its children/dependents is severed. In this example, the relationship is severed by removing the dependents/children (posts) from the collection navigation property on the principal/parent (blog). However, the behavior is the same if the reference from dependent/child to principal/parent is instead nulled out.
+The code below is part of a [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) that can be downloaded and run. The sample shows what happens for each delete behavior for both optional and required relationships when the relationship between a parent/principal and its children/dependents is severed. In this example, the relationship is severed by removing the dependents/children (posts) from the collection navigation property on the principal/parent (blog). However, the behavior is the same if the reference from dependent/child to principal/parent is instead nulled out.
 
 [!code-csharp[Main](../../../samples/core/Saving/CascadeDelete/Sample.cs#DeleteOrphansVariations)]
 

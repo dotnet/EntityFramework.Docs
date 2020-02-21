@@ -9,4 +9,4 @@ Entity Framework 6 is developed using an open source model on GitHub. Although t
 
 For product contributions, please start at the [Contributing wiki page in our GitHub repository](https://github.com/aspnet/EntityFramework6/wiki/Contributing).
 
-For documentation contributions, please start read the [contribution guidance](https://github.com/aspnet/EntityFramework.Docs/blob/master/CONTRIBUTING.md) in our documentation repository.
+For documentation contributions, please start read the [contribution guidance](https://github.com/dotnet/EntityFramework.Docs/blob/master/CONTRIBUTING.md) in our documentation repository.

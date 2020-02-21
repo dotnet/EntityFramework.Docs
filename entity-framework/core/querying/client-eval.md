@@ -13,7 +13,7 @@ As a general rule, Entity Framework Core attempts to evaluate a query on the ser
 > Prior to version 3.0, Entity Framework Core supported client evaluation anywhere in the query. For more information, see the [previous versions section](#previous-versions).
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
 
 ## Client evaluation in the top-level projection
 
