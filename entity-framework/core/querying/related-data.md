@@ -15,7 +15,7 @@ Entity Framework Core allows you to use the navigation properties in your model 
 * **Lazy loading** means that the related data is transparently loaded from the database when the navigation property is accessed.
 
 > [!TIP]  
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
 
 ## Eager loading
 

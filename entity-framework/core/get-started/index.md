@@ -12,7 +12,7 @@ In this tutorial, you create a .NET Core console app that performs data access a
 
 You can follow the tutorial by using Visual Studio on Windows, or by using the .NET Core CLI on Windows, macOS, or Linux.
 
-[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted).
+[View this article's sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/GetStarted).
 
 ## Prerequisites
 

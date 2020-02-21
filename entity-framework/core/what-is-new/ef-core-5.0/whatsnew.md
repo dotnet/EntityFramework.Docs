@@ -25,7 +25,7 @@ That is, it provides a simple way to get logs from EF Core without the need to c
 
 Preliminary documentation is included in the [EF weekly status for December 5, 2019](https://github.com/dotnet/efcore/issues/15403#issuecomment-562332863).
 
-Additional documentation is tracked by issue [#2085](https://github.com/aspnet/EntityFramework.Docs/issues/2085).
+Additional documentation is tracked by issue [#2085](https://github.com/dotnet/EntityFramework.Docs/issues/2085).
 
 ### Simple way to get generated SQL
 
@@ -33,7 +33,7 @@ EF Core 5.0 introduces the `ToQueryString` extension method which will return th
 
 Preliminary documentation is included in the [EF weekly status for January 9, 2020](https://github.com/dotnet/efcore/issues/19549#issuecomment-572823246).
 
-Additional documentation is tracked by issue [#1331](https://github.com/aspnet/EntityFramework.Docs/issues/1331).
+Additional documentation is tracked by issue [#1331](https://github.com/dotnet/EntityFramework.Docs/issues/1331).
 
 ### Enhanced debug views
 
@@ -43,7 +43,7 @@ For EF Core 5.0, we have made the model view easier to read and added a new debu
 
 Preliminary documentation is included in the [EF weekly status for December 12, 2019](https://github.com/dotnet/efcore/issues/15403#issuecomment-565196206).
 
-Additional documentation is tracked by issue [#2086](https://github.com/aspnet/EntityFramework.Docs/issues/2086).
+Additional documentation is tracked by issue [#2086](https://github.com/dotnet/EntityFramework.Docs/issues/2086).
 
 ### Connection or connection string can be changed on initialized DbContext
 
@@ -51,7 +51,7 @@ It is now easier to create a DbContext instance without any connection or connec
 Also, the connection or connection string can now be mutated on the context instance.
 This allows the same context instance to dynamically connect to different databases.
 
-Documentation is tracked by issue [#2075](https://github.com/aspnet/EntityFramework.Docs/issues/2075).
+Documentation is tracked by issue [#2075](https://github.com/dotnet/EntityFramework.Docs/issues/2075).
 
 ### Change-tracking proxies
 
@@ -59,7 +59,7 @@ EF Core can now generate runtime proxies that automatically implement [INotifyPr
 These then report value changes on entity properties directly to EF Core, avoiding the need to scan for changes.
 However, proxies come with their own set of limitations, so they are not for everyone.
 
-Documentation is tracked by issue [#2076](https://github.com/aspnet/EntityFramework.Docs/issues/2076).
+Documentation is tracked by issue [#2076](https://github.com/dotnet/EntityFramework.Docs/issues/2076).
 
 ### Improved handling of database null semantics
 
@@ -68,14 +68,14 @@ C#, on the other hand, treats null as a defined value which compares equal to an
 EF Core by default translates queries so that they use C# null semantics.
 EF Core 5.0 greatly improves the efficiency of these translations.
 
-Documentation is tracked by issue [#1612](https://github.com/aspnet/EntityFramework.Docs/issues/1612).
+Documentation is tracked by issue [#1612](https://github.com/dotnet/EntityFramework.Docs/issues/1612).
 
 ### Indexer properties
 
 EF Core 5.0 supports mapping of C# indexer properties.
 This allows entities to act as property bags where columns are mapped to named properties in the bag.
 
-Documentation is tracked by issue [#2018](https://github.com/aspnet/EntityFramework.Docs/issues/2018).
+Documentation is tracked by issue [#2018](https://github.com/dotnet/EntityFramework.Docs/issues/2018).
 
 ### Generation of check constraints for enum mappings
 
@@ -86,14 +86,14 @@ For example:
 MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN('Useful', 'Useless', 'Unknown'))
 ```
 
-Documentation is tracked by issue [#2082](https://github.com/aspnet/EntityFramework.Docs/issues/2082).
+Documentation is tracked by issue [#2082](https://github.com/dotnet/EntityFramework.Docs/issues/2082).
 
 ### Query translations for more DateTime constructs
 
 Queries containing new DataTime construction are now translated.
 Also, the SQL Server function DateDiffWeek is now mapped.
 
-Documentation is tracked by issue [#2079](https://github.com/aspnet/EntityFramework.Docs/issues/2079).
+Documentation is tracked by issue [#2079](https://github.com/dotnet/EntityFramework.Docs/issues/2079).
 
 ### Query translations for more byte array constructs
 
@@ -101,7 +101,7 @@ Queries using Contains, Length, SequenceEqual, etc. on byte[] properties are now
 
 Preliminary documentation is included in the [EF weekly status for December 5, 2019](https://github.com/dotnet/efcore/issues/15403#issuecomment-562332863).
 
-Additional documentation is tracked by issue [#2079](https://github.com/aspnet/EntityFramework.Docs/issues/2079).
+Additional documentation is tracked by issue [#2079](https://github.com/dotnet/EntityFramework.Docs/issues/2079).
 
 ### Query translation for Reverse
 
@@ -112,7 +112,7 @@ For example:
 context.Employees.OrderBy(e => e.EmployeeID).Reverse()
 ```
 
-Documentation is tracked by issue [#2079](https://github.com/aspnet/EntityFramework.Docs/issues/2079).
+Documentation is tracked by issue [#2079](https://github.com/dotnet/EntityFramework.Docs/issues/2079).
 
 ### Query translation for bitwise operators
 
@@ -123,10 +123,10 @@ For example:
 context.Orders.Where(o => ~o.OrderID == negatedId)
 ```
 
-Documentation is tracked by issue [#2079](https://github.com/aspnet/EntityFramework.Docs/issues/2079).
+Documentation is tracked by issue [#2079](https://github.com/dotnet/EntityFramework.Docs/issues/2079).
 
 ### Query translation for strings on Cosmos
 
 Queries that use the string methods Contains, StartsWith, and EndsWith are now translated when using the Azure Cosmos DB provider.
 
-Documentation is tracked by issue [#2079](https://github.com/aspnet/EntityFramework.Docs/issues/2079).
+Documentation is tracked by issue [#2079](https://github.com/dotnet/EntityFramework.Docs/issues/2079).
