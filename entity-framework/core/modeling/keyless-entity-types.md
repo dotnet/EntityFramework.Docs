@@ -51,7 +51,7 @@ Mapping a keyless entity type to a database object is achieved using the `ToTabl
 The following example shows how to use keyless entity types to query a database view.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/KeylessEntityTypes) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/KeylessEntityTypes) on GitHub.
 
 First, we define a simple Blog and Post model:
 

@@ -11,7 +11,7 @@ uid: core/miscellaneous/testing/sqlite
 SQLite has an in-memory mode that allows you to use SQLite to write tests against a relational database, without the overhead of actual database operations.
 
 > [!TIP]  
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing) on GitHub
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing) on GitHub
 
 ## Example testing scenario
 

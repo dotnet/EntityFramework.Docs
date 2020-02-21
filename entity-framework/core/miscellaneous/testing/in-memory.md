@@ -11,7 +11,7 @@ uid: core/miscellaneous/testing/in-memory
 The InMemory provider is useful when you want to test components using something that approximates connecting to the real database, without the overhead of actual database operations.
 
 > [!TIP]  
-> You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing) on GitHub.
 
 ## InMemory is not a relational database
 
