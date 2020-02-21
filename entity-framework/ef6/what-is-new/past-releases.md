@@ -13,7 +13,7 @@ Starting with the EF4.1 release it has shipped as the [EntityFramework NuGet Pac
 
 Between versions 4.1 and 5.0, the EntityFramework NuGet package extended the EF libraries that shipped as part of .NET Framework.
 
-Starting with version 6, EF became an open source project and also moved completely out of band form the .NET Framework.
+Starting with version 6, EF became an open source project and also moved completely out of band from the .NET Framework.
 This means that when you add the EntityFramework version 6 NuGet package to an application, you are getting a complete copy of the EF library that does not depend on the EF bits that ship as part of .NET Framework.
 This helped somewhat accelerate the pace of development and delivery of new features.
 
