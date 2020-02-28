@@ -117,7 +117,7 @@ Currently, many developers migrate their databases at application startup time. 
 * Multiple threads/processes/servers may attempt to migrate the database concurrently
 * Applications may try to access inconsistent state while this is happening
 * Usually the database permissions to modify the schema should not be granted for application execution
-* Its hard to revert back to a clean state if something goes wrong
+* It's hard to revert back to a clean state if something goes wrong
 
 We want to deliver a better experience here that allows an easy way to migrate the database at deployment time. This should:
 
@@ -139,7 +139,7 @@ T-shirt size: L
 
 Status: Not started
 
-We have good guidance for using EF Core in traditional MVC-like web applications. Guidance for other platforms and application models is either missing or out-of-date. For EF Core 5.0 we plan to investigate, improve, and document the experience of using EF Core with:
+We have good guidance for using EF Core in traditional MVC-like web applications. Guidance for other platforms and application models is either missing or out-of-date. For EF Core 5.0, we plan to investigate, improve, and document the experience of using EF Core with:
 
 * Blazor
 * Xamarin, including using the AOT/linker story
@@ -165,7 +165,7 @@ T-shirt size: L
 
 Status: In-progress
 
-For EF Core we plan to improve our suite of performance benchmarks and make directed performance improvements to the runtime. In addition, we plan to complete the new ADO.NET batching API which was prototyped during the 3.0 release cycle. Also at the ADO.NET layer, we plan additional performance improvements to the Npgsql provider.
+For EF Core, we plan to improve our suite of performance benchmarks and make directed performance improvements to the runtime. In addition, we plan to complete the new ADO.NET batching API which was prototyped during the 3.0 release cycle. Also at the ADO.NET layer, we plan additional performance improvements to the Npgsql provider.
 
 As part of this work we also plan to add ADO.NET/EF Core performance counters and other diagnostics as appropriate.
 
