@@ -237,13 +237,13 @@ Script-Migration
 #### With From (to implied)
 This will generate a SQL script from this migration to the latest migration.
 ```powershell
-Script-Migration -From 20190725054716_Add_new_tables
+Script-Migration 20190725054716_Add_new_tables
 ```
 
 #### With From and To
 This will generate a SQL script from the `from` migration to the specified `to` migration.
 ```powershell
-Script-Migration -From 20190725054716_Add_new_tables -To 20190829031257_Add_audit_table
+Script-Migration 20190725054716_Add_new_tables 20190829031257_Add_audit_table
 ```
 You can use a `from` that is newer than the `to` in order to generate a rollback script. *Please take note of potential data loss scenarios.*
 
