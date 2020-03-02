@@ -10,7 +10,7 @@ ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
 
 The content on this page is adapted from an article originally written by Julie Lerman (\<http://thedatafarm.com>).
 
-Entity Framework Code First allows you to use your own domain classes to represent the model that EF relies on to perform querying, change tracking, and updating functions. Code First leverages a programming pattern referred to as 'convention over configuration.' Code First will assume that your classes follow the conventions of Entity Framework, and in that case, will automatically work out how to perform it's job. However, if your classes do not follow those conventions, you have the ability to add configurations to your classes to provide EF with the requisite information.
+Entity Framework Code First allows you to use your own domain classes to represent the model that EF relies on to perform querying, change tracking, and updating functions. Code First leverages a programming pattern referred to as 'convention over configuration.' Code First will assume that your classes follow the conventions of Entity Framework, and in that case, will automatically work out how to perform its job. However, if your classes do not follow those conventions, you have the ability to add configurations to your classes to provide EF with the requisite information.
 
 Code First gives you two ways to add these configurations to your classes. One is using simple attributes called DataAnnotations, and the second is using Code First’s Fluent API, which provides you with a way to describe configurations imperatively, in code.
 
