@@ -21,5 +21,4 @@ namespace EFModeling.FluentAPI.Relational.IndexFilter
         public int BlogId { get; set; }
         public string Url { get; set; }
     }
-    #endregion
 }
