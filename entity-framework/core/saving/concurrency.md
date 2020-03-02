@@ -61,6 +61,6 @@ The general approach to handle a concurrency conflicts is:
 3. Refresh the original values of the concurrency token to reflect the current values in the database.
 4. Retry the process until no conflicts occur.
 
-In the following example, `Person.FirstName` and `Person.LastName` are setup as concurrency tokens. There is a `// TODO:` comment in the location where you include application specific logic to choose the value to be saved.
+In the following example, `Person.FirstName` and `Person.LastName` are set up as concurrency tokens. There is a `// TODO:` comment in the location where you include application specific logic to choose the value to be saved.
 
 [!code-csharp[Main](../../../samples/core/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=34-35)]
