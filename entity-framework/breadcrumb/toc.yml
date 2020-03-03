@@ -9,9 +9,62 @@
     - name: EF Core & EF6
       tocHref: /ef/efcore-and-ef6/
       topicHref: /ef/efcore-and-ef6/index
+      items:
+        - name: Port from EF6 to EF Core
+          tocHref: /ef/efcore-and-ef6/porting/
+          topicHref: /ef/efcore-and-ef6/porting/index
+
     - name: Entity Framework Core
       tocHref: /ef/core/
       topicHref: /ef/core/index
+      items:
+        - name: Releases and planning
+          tocHref: /ef/core/what-is-new/
+          topicHref: /ef/core/what-is-new/index
+        - name: Get started
+          tocHref: /ef/core/get-started/
+          topicHref: /ef/core/get-started/index
+        - name: Fundamentals
+          tocHref: /ef/core/miscellaneous/
+          topicHref: /ef/core/miscellaneous/connection-strings
+        - name: Create a model
+          tocHref: /ef/core/modeling/
+          topicHref: /ef/core/modeling/index
+        - name: Manage database schemas
+          tocHref: /ef/core/managing-schemas/
+          topicHref: /ef/core/managing-schemas/index
+        - name: Query data
+          tocHref: /ef/core/querying/
+          topicHref: /ef/core/querying/index
+        - name: Save data
+          tocHref: /ef/core/saving/
+          topicHref: /ef/core/saving/index
+        - name: Database providers
+          tocHref: /ef/core/providers/
+          topicHref: /ef/core/providers/index
+        - name: Command-line reference
+          tocHref: /ef/core/miscellaneous/cli/
+          topicHref: /ef/core/miscellaneous/cli/index
+
     - name: Entity Framework 6
       tocHref: /ef/ef6/
       topicHref: /ef/ef6/index
+      items:
+        - name: What's new
+          tocHref: /ef/ef6/what-is-new/
+          topicHref: /ef/ef6/what-is-new/index
+        - name: Fundamentals
+          tocHref: /ef/ef6/fundamentals/
+          topicHref: /ef/ef6/fundamentals/install
+        - name: Create a model
+          tocHref: /ef/ef6/modeling/
+          topicHref: /ef/ef6/modeling/index
+        - name: Query data
+          tocHref: /ef/ef6/querying/
+          topicHref: /ef/ef6/querying/index
+        - name: Save data
+          tocHref: /ef/ef6/saving/
+          topicHref: /ef/ef6/saving/index
+        - name: Additional resources
+          tocHref: /ef/ef6/resources/
+          topicHref: /ef/ef6/resources/blogs
