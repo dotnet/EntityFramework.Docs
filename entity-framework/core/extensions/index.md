@@ -138,13 +138,11 @@ Allow full-featured Entity Framework Core queries against [SQL Server Temporal H
 
 [GitHub repository](https://github.com/VantageSoftware/EFCore.TimeTraveler)
 
-
 ### EntityFrameworkCore.TemporalTables
 
 Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2.
 
 [GitHub repository](https://github.com/findulov/EntityFrameworkCore.TemporalTables)
-
 
 ### EntityFrameworkCore.Cacheable
 
@@ -170,3 +168,9 @@ Extends your DbContext with high-performance bulk operations: BulkSaveChanges, B
 Add support for calling extension methods in linq lambdas. For EF Core: 3.1
 
 [GitHub repository](https://github.com/ClaveConsulting/Expressionify)
+
+### EFCore.NamingConventions
+
+Makes all your database tables and columns use a naming convention, such as `snake_case` or `UPPERCASE`. Useful especially for PostgreSQL but works on any database.
+
+[GitHub repository](https://github.com/efcore/EFCore.NamingConventions)
