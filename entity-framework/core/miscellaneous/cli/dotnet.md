@@ -34,7 +34,7 @@ The installation procedure depends on project type and version:
 
   You can also use `dotnet ef` as local tool. To use it as a local tool, restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](https://github.com/dotnet/cli/issues/10288).
 
-* Install the [.NET Core SDK 3.0](https://dotnet.microsoft.com/download/dotnet-core/3.0). The SDK has to be installed even if you have the latest version of Visual Studio.
+* Install the [.NET Core SDK](https://www.microsoft.com/net/download/core).
 
 * Install the latest `Microsoft.EntityFrameworkCore.Design` package.
 

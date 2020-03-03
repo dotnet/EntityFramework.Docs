@@ -20,7 +20,7 @@ Install the following software:
 
 ### [.NET Core CLI](#tab/netcore-cli)
 
-* [.NET Core 3.0 SDK](https://www.microsoft.com/net/download/core).
+* [.NET Core SDK](https://www.microsoft.com/net/download/core).
 
 ### [Visual Studio](#tab/visual-studio)
 

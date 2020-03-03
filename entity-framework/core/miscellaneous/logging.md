@@ -27,7 +27,7 @@ EF Core logging requires an ILoggerFactory which is itself configured with one o
 
 After installing the appropriate package(s), the application should create a singleton/global instance of a LoggerFactory. For example, using the console logger:
 
-### [Version 3.0](#tab/v3)
+### [Version 3.x](#tab/v3)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#DefineLoggerFactory)]
 
@@ -54,7 +54,7 @@ This singleton/global instance should then be registered with EF Core on the `Db
 
 The application can control what is logged by configuring a filter on the ILoggerProvider. For example:
 
-### [Version 3.0](#tab/v3)
+### [Version 3.x](#tab/v3)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContextWithFiltering.cs#DefineLoggerFactory)]
 
