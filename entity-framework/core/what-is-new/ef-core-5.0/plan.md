@@ -42,11 +42,13 @@ T-shirt size: L
 
 Status: In-progress
 
-Many-to-many is the most requested feature (~407 votes) on the GitHub backlog. Support for many-to-many relationships can be broken down into three major areas:
+Many-to-many is the [most requested feature](https://github.com/aspnet/EntityFrameworkCore/issues/1368) (~407 votes) on the GitHub backlog.
 
-* Skip navigation properties. These allow the model to be used for queries, etc. without reference to the underlying join table entity.
-* Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type.
-* Sugar for easy configuration of many-to-many relationships.
+Support for many-to-many relationships in their entirety is tracked as [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508). This can be broken down into three major areas:
+
+* Skip navigation properties. These allow the model to be used for queries, etc. without reference to the underlying join table entity. ([#19003](https://github.com/aspnet/EntityFrameworkCore/issues/19003))
+* Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type. (Stretch for 5.0: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914).)
+* Sugar for easy configuration of many-to-many relationships. (Stretch for 5.0.)
 
 We believe that the most significant blocker for those wanting many-to-many support is not being able to use the "natural" relationships, without referring to the join table, in business logic such as queries. The join table entity type may still exist, but it should not get in the way of business logic. This is why we have chosen to tackle skip navigation properties for 5.0.
 
@@ -117,7 +119,7 @@ Currently, many developers migrate their databases at application startup time. 
 * Multiple threads/processes/servers may attempt to migrate the database concurrently
 * Applications may try to access inconsistent state while this is happening
 * Usually the database permissions to modify the schema should not be granted for application execution
-* Its hard to revert back to a clean state if something goes wrong
+* It's hard to revert back to a clean state if something goes wrong
 
 We want to deliver a better experience here that allows an easy way to migrate the database at deployment time. This should:
 
@@ -139,7 +141,7 @@ T-shirt size: L
 
 Status: Not started
 
-We have good guidance for using EF Core in traditional MVC-like web applications. Guidance for other platforms and application models is either missing or out-of-date. For EF Core 5.0 we plan to investigate, improve, and document the experience of using EF Core with:
+We have good guidance for using EF Core in traditional MVC-like web applications. Guidance for other platforms and application models is either missing or out-of-date. For EF Core 5.0, we plan to investigate, improve, and document the experience of using EF Core with:
 
 * Blazor
 * Xamarin, including using the AOT/linker story
@@ -165,7 +167,7 @@ T-shirt size: L
 
 Status: In-progress
 
-For EF Core we plan to improve our suite of performance benchmarks and make directed performance improvements to the runtime. In addition, we plan to complete the new ADO.NET batching API which was prototyped during the 3.0 release cycle. Also at the ADO.NET layer, we plan additional performance improvements to the Npgsql provider.
+For EF Core, we plan to improve our suite of performance benchmarks and make directed performance improvements to the runtime. In addition, we plan to complete the new ADO.NET batching API which was prototyped during the 3.0 release cycle. Also at the ADO.NET layer, we plan additional performance improvements to the Npgsql provider.
 
 As part of this work we also plan to add ADO.NET/EF Core performance counters and other diagnostics as appropriate.
 

@@ -1,7 +1,7 @@
 ---
 title: Supported .NET implementations - EF Core
-author: rowanmiller
-ms.date: 08/30/2017
+author: bricelam
+ms.date: 03/03/2020
 uid: core/platforms/index
 ---
 
@@ -13,16 +13,16 @@ We want EF Core to be available to developers on all modern .NET implementations
 
 The following table provides guidance for each .NET implementation:
 
-| EF Core                       | 2.1        | 3.0             | 3.1        |
-|:------------------------------|:-----------|:----------------|:-----------|
-| .NET Standard                 | 2.0        | 2.1             | 2.0        |
-| .NET Core                     | 2.0        | 3.0             | 2.0        |
-| .NET Framework<sup>(1)</sup>  | 4.7.2      | (not supported) | 4.7.2      |
-| Mono                          | 5.4        | 6.4             | 5.4        |
-| Xamarin.iOS<sup>(2)</sup>     | 10.14      | 12.16           | 10.14      |
-| Xamarin.Android<sup>(2)</sup> | 8.0        | 10.0            | 8.0        |
-| UWP<sup>(3)</sup>             | 10.0.16299 | TBD             | 10.0.16299 |
-| Unity<sup>(4)</sup>           | 2018.1     | TBD             | 2018.1     |
+| EF Core                       | 2.1 and 3.1 |
+|:------------------------------|:------------|
+| .NET Standard                 | 2.0         |
+| .NET Core                     | 2.0         |
+| .NET Framework<sup>(1)</sup>  | 4.7.2       |
+| Mono                          | 5.4         |
+| Xamarin.iOS<sup>(2)</sup>     | 10.14       |
+| Xamarin.Android<sup>(2)</sup> | 8.0         |
+| UWP<sup>(3)</sup>             | 10.0.16299  |
+| Unity<sup>(4)</sup>           | 2018.1      |
 
 <sup>(1)</sup> See the [.NET Framework](#net-framework) section below.
 
@@ -68,4 +68,4 @@ When using EF Core on UWP:
 
 ## Report issues
 
-For any combination that doesnâ€™t work as expected, we encourage creating new issues on the [EF Core issue tracker](https://github.com/aspnet/entityframeworkcore/issues/new). For Xamarin-specific issues use the issue tracker for [Xamarin.Android](https://github.com/xamarin/xamarin-android/issues/new) or [Xamarin.iOS](https://github.com/xamarin/xamarin-macios/issues/new).
+For any combination that doesn’t work as expected, we encourage creating new issues on the [EF Core issue tracker](https://github.com/aspnet/entityframeworkcore/issues/new). For Xamarin-specific issues use the issue tracker for [Xamarin.Android](https://github.com/xamarin/xamarin-android/issues/new) or [Xamarin.iOS](https://github.com/xamarin/xamarin-macios/issues/new).
