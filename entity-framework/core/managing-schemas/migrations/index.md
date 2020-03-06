@@ -209,15 +209,43 @@ When debugging your migrations or deploying them to a production database, it's 
 
 ### [.NET Core CLI](#tab/dotnet-core-cli)
 
+#### Basic Usage
 ```dotnetcli
 dotnet ef migrations script
 ```
 
+#### With From (to implied)
+This will generate a SQL script from this migration to the latest migration.
+```dotnetcli
+dotnet ef migrations script 20190725054716_Add_new_tables
+```
+
+#### With From and To
+This will generate a SQL script from the `from` migration to the specified `to` migration.
+```dotnetcli
+dotnet ef migrations script 20190725054716_Add_new_tables 20190829031257_Add_audit_table
+```
+You can use a `from` that is newer than the `to` in order to generate a rollback script. *Please take note of potential data loss scenarios.*
+
 ### [Visual Studio](#tab/vs)
 
+#### Basic Usage
 ``` powershell
 Script-Migration
 ```
+
+#### With From (to implied)
+This will generate a SQL script from this migration to the latest migration.
+```powershell
+Script-Migration 20190725054716_Add_new_tables
+```
+
+#### With From and To
+This will generate a SQL script from the `from` migration to the specified `to` migration.
+```powershell
+Script-Migration 20190725054716_Add_new_tables 20190829031257_Add_audit_table
+```
+You can use a `from` that is newer than the `to` in order to generate a rollback script. *Please take note of potential data loss scenarios.*
 
 ***
 
