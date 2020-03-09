@@ -42,6 +42,8 @@ The linked files will look like this in the project file:
 
 Note that the EDMX file is linked with the EntityDeploy build action. This is a special MSBuild task (now included in the EF 6.3 package) that takes care of adding the EF model into the target assembly as embedded resources (or copying it as files in the output folder, depending on the Metadata Artifact Processing setting in the EDMX). For more details on how to get this set up, see our [EDMX .NET Core sample](https://aka.ms/EdmxDotNetCoreSample).
 
+Warning: make sure the the project defining the "real" .edmx file comes _before_ the project defining the link inside the .sln file. Otherwise, when you open the .edmx file, you see the error message "The Entity Framework is not available in the target framework currently specified for the project. You can change the target framework of the project or edit the model in the XmlEditor".
+
 ## Past Releases
 
 The [Past Releases](past-releases.md) page contains an archive of all previous versions of EF and the major features that were introduced on each release.
