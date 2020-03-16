@@ -1,7 +1,7 @@
 ---
 title: What's New in EF Core 5.0
 author: ajcvickers
-ms.date: 01/29/2020
+ms.date: 03/15/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew.md
 ---
 
@@ -9,14 +9,13 @@ uid: core/what-is-new/ef-core-5.0/whatsnew.md
 
 EF Core 5.0 is currently in development.
 This page will contain an overview of interesting changes introduced in each preview.
-The first preview of EF Core 5.0 is tentatively expected in in the first quarter of 2020.
 
 This page does not duplicate the [plan for EF Core 5.0](plan.md).
 The plan describes the overall themes for EF Core 5.0, including everything we are planning to include before shipping the final release.
 
 We will add links from here to the official documentation as it is published.
 
-## Preview 1 (Not yet shipped)
+## Preview 1
 
 ### Simple logging
 
@@ -35,15 +34,22 @@ Preliminary documentation is included in the [EF weekly status for January 9, 20
 
 Additional documentation is tracked by issue [#1331](https://github.com/dotnet/EntityFramework.Docs/issues/1331).
 
-### Enhanced debug views
+### Use a C# attribute to indicate that an entity has no key
 
-Debug views are an easy way to look at the internals of EF Core when debugging issues.
-A debug view for the Model was implemented some time ago.
-For EF Core 5.0, we have made the model view easier to read and added a new debug view for tracked entities in the state manager.
+An entity type can now be configured as having no key using the new `KeylessAttribute`.
+For example:
 
-Preliminary documentation is included in the [EF weekly status for December 12, 2019](https://github.com/dotnet/efcore/issues/15403#issuecomment-565196206).
+```CSharp
+[Keyless]
+public class Address
+{
+    public string Street { get; set; }
+    public string City { get; set; }
+    public int Zip { get; set; }
+}
+```
 
-Additional documentation is tracked by issue [#2086](https://github.com/dotnet/EntityFramework.Docs/issues/2086).
+Documentation is tracked by issue [#2186](https://github.com/dotnet/EntityFramework.Docs/issues/2186).
 
 ### Connection or connection string can be changed on initialized DbContext
 
@@ -60,6 +66,16 @@ These then report value changes on entity properties directly to EF Core, avoidi
 However, proxies come with their own set of limitations, so they are not for everyone.
 
 Documentation is tracked by issue [#2076](https://github.com/dotnet/EntityFramework.Docs/issues/2076).
+
+### Enhanced debug views
+
+Debug views are an easy way to look at the internals of EF Core when debugging issues.
+A debug view for the Model was implemented some time ago.
+For EF Core 5.0, we have made the model view easier to read and added a new debug view for tracked entities in the state manager.
+
+Preliminary documentation is included in the [EF weekly status for December 12, 2019](https://github.com/dotnet/efcore/issues/15403#issuecomment-565196206).
+
+Additional documentation is tracked by issue [#2086](https://github.com/dotnet/EntityFramework.Docs/issues/2086).
 
 ### Improved handling of database null semantics
 
@@ -88,10 +104,52 @@ MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN('Useful', 'Useless', 'U
 
 Documentation is tracked by issue [#2082](https://github.com/dotnet/EntityFramework.Docs/issues/2082).
 
+### IsRelational
+
+A new `IsRelational` method has been added in addition to the existing `IsSqlServer`, `IsSqlite`, and `IsInMemory`.
+This can be used to test if the DbContext is using any relational database provider.
+For example:
+
+```CSharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    if (Database.IsRelational())
+    {
+        // Do relational-specific model configuration.
+    }
+}
+```
+
+Documentation is tracked by issue [#2185](https://github.com/dotnet/EntityFramework.Docs/issues/2185).
+
+### Cosmos optimistic concurrency with ETags
+
+The Azure Cosmos DB database provider now supports optimistic concurrency using ETags.
+Use the model builder in OnModelCreating to configure an ETag:
+
+```CSharp
+builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
+```
+
+SaveChanges will then throw an `DbUpdateConcurrencyException` on a concurrency conflict, which [can be handled](https://docs.microsoft.com/ef/core/saving/concurrency) to implement retries, etc.
+
+
+Documentation is tracked by issue [#2099](https://github.com/dotnet/EntityFramework.Docs/issues/2099).
+
 ### Query translations for more DateTime constructs
 
-Queries containing new DataTime construction are now translated.
-Also, the SQL Server function DateDiffWeek is now mapped.
+Queries containing new DateTime construction are now translated.
+
+In addition, the following SQL Server functions are now mapped:
+* DateDiffWeek
+* DateFromParts
+
+For example:
+
+```CSharp
+var count = context.Orders.Count(c => date > EF.Functions.DateFromParts(DateTime.Now.Year, 12, 25));
+
+```
 
 Documentation is tracked by issue [#2079](https://github.com/dotnet/EntityFramework.Docs/issues/2079).
 
