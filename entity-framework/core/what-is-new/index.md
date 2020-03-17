@@ -54,7 +54,7 @@ This data will then feed into the planning process for the next release.
 
 EF Core 5.0 packages are **available now** as
 
-* [Daily builds](https://github.com/aspnet/AspNetCore/blob/master/docs/DailyBuilds.md)
+* [Daily builds](https://github.com/dotnet/aspnetcore/blob/master/docs/DailyBuilds.md)
   * All the latest features and bug fixes. Generally very stable; 57,000+ tests run against each build.
 * [Previews on NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore)
   * Lag behind daily builds, but are tested to work with the corresponding ASP.NET Core and .NET Core previews.
