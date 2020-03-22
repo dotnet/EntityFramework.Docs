@@ -11,6 +11,10 @@ We highly recommend that you use the latest released version of Entity Framework
 However, we realize that you may need to use a previous version, or that you may want to experiment with new improvements in the latest pre-release.
 To install specific versions of EF, see [Get Entity Framework](~/ef6/fundamentals/install.md).
 
+## EF 6.4.0
+
+The EF 6.4.0 runtime was released to NuGet in December  2019. The primary goal of EF 6.4 is to polish the features and scenarios that was delivered in EF 6.3. See [list of important fixes](https://github.com/dotnet/ef6/milestone/14?closed=1) on Github.
+
 ## EF 6.3.0
 
 The EF 6.3.0 runtime was released to NuGet in September 2019. The main goal of this release was to facilitate migrating existing applications that use EF 6 to .NET Core 3.0. The community has also contributed several bug fixes and enhancements. See the issues closed in each 6.3.0 [milestone](https://github.com/aspnet/EntityFramework6/milestones?state=closed) for details. Here are some of the more notable ones:
