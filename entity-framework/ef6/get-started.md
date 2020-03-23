@@ -19,7 +19,7 @@ This guide contains a collection of links to selected documentation articles, wa
 
   Do you prefer to specify your EF model writing code or drawing boxes and lines?
 Are you going to use EF to map your objects to an existing database or would you like EF to create a database tailored for your objects?
-Here your learn about two different approaches to use EF6: EF Designer and Code First.
+Here you learn about two different approaches to use EF6: EF Designer and Code First.
 Make sure you follow the discussion and watch the video about the difference.
 
 * [Working with DbContext](~/ef6/fundamentals/working-with-dbcontext.md)

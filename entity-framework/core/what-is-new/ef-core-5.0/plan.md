@@ -62,7 +62,7 @@ Tracked by [#2266](https://github.com/aspnet/EntityFrameworkCore/issues/2266)
 
 T-shirt size: XL
 
-Status: Not started
+Status: In-progress
 
 We're doing TPT because it is both a highly requested feature (~254 votes; 3rd overall) and because it requires some low-level changes that we feel are appropriate for the foundational nature of the overall .NET 5 plan. We expect this to result in breaking changes for database providers, although these should be much less severe than the changes required for 3.0.
 
@@ -74,7 +74,7 @@ Tracked by [#1833](https://github.com/aspnet/EntityFrameworkCore/issues/1833)
 
 T-shirt size: M
 
-Status: Not started
+Status: In-progress
 
 Filtered Include is a highly-requested feature (~317 votes; 2nd overall) that isn't a huge amount of work, and that we believe will unblock or make easier many scenarios that currently require model-level filters or more complex queries.
 
@@ -86,7 +86,7 @@ Tracked by [#17270](https://github.com/aspnet/EntityFrameworkCore/issues/17270)
 
 T-shirt size: L
 
-Status: Not started
+Status: In-progress
 
 We have made progress in previous releases towards supporting raw SQL, keyless types, and related areas. However, there are both gaps and inconsistencies in the way everything works together as a whole. The goal for 5.0 is to fix these and create a good experience for defining, migrating, and using different types of entities and their associated queries and database artifacts. This may also involve updates to the compiled query API.
 
@@ -179,7 +179,7 @@ Tracked by [#1920](https://github.com/dotnet/EntityFramework.Docs/issues/1920)
 
 T-shirt size: L
 
-Status: Not started
+Status: In-progress
 
 The idea here is to make it easier to understand what is going on in the internals of EF Core. This can be useful to anyone using EF Core, but the primary motivation is to make it easier for external people to:
 
