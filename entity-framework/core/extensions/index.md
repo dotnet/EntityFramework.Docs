@@ -170,3 +170,14 @@ Extends your DbContext with high-performance bulk operations: BulkSaveChanges, B
 Add support for calling extension methods in linq lambdas. For EF Core: 3.1
 
 [GitHub repository](https://github.com/ClaveConsulting/Expressionify)
+
+### XLinq
+
+XLinq is a **L**anguage **IN**tegrated **Q**uery technology for relational databases. It allows you to use C# to write strongly typed queries.
+
+- Full C# support for query creation: multiple statements inside lambda, variables, functions, etc.
+- No semantic gap with SQL. XLinq declares SQL statements (like `SELECT`, `FROM`, `WHERE`) as first class C# methods, combining familiar syntax with intellisense, type safety and refactoring.
+
+As a result SQL becomes just "another" class library exposing its API locally, literally *"Language Integrated SQL"*.
+
+[Website](http://xlinq.live/)
