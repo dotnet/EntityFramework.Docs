@@ -21,7 +21,7 @@ Instead, EF Core is a common set of patterns and concepts that can be used with 
 EF Core database providers then layer database-specific behavior and functionality over this common framework.
 This allows each database system to do what it does best while still maintaining commonality, where appropriate, with other database systems. 
 
-Fundamentally, this means that it is inadvisable to switch out the database provider and expect the application to function in exactly the same way.
+Fundamentally, this means that switching out the database provider will change EF Core behavior and the application can't be expected to function correctly unless it explicitly accounts for all differences in behavior.
 That being said, in many cases doing this will work because there is a high degree of commonality amongst relational databases.
 This is good and bad.
 Good because moving between databases can be relatively easy.
