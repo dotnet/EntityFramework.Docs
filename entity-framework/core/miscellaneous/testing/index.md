@@ -97,7 +97,7 @@ One option is to use a [test double](https://en.wikipedia.org/wiki/Test_double) 
 We use test doubles for internal testing of EF Core.
 However, we never try to mock DbContext or IQueryable.
 Doing so is difficult, cumbersome, and fragile.
-Don't do it.
+**Don't do it.**
 
 Instead we use the in-memory database when unit testing something that uses DbContext.
 In this case using the in-memory database is appropriate because the test is not dependent on database behavior.
