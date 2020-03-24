@@ -1,5 +1,6 @@
 ---
 title: What's New in EF Core 5.0
+description: Overview of new features in EF Core 5.0
 author: ajcvickers
 ms.date: 03/15/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew.md

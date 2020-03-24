@@ -1,8 +1,8 @@
 ---
 title: EF Core releases and planning
+description: Current EF Core releases and schedule/planning details for future releases 
 author: ajcvickers
 ms.date: 03/03/2020
-ms.assetid: C21F89EE-FB08-4ED9-A2A0-76CB7656E6E4
 uid: core/what-is-new/index
 ---
 
@@ -12,7 +12,7 @@ uid: core/what-is-new/index
 
 | Release | Target framework | Supported until | Links
 |:--------|------------------|-----------------|------
-| [EF Core 3.1](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.1.2) | .NET Standard 2.0 | December 3, 2022 (LTS) | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-3-1-and-entity-framework-6-4/)
+| [EF Core 3.1](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.1.3) | .NET Standard 2.0 | December 3, 2022 (LTS) | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-3-1-and-entity-framework-6-4/)
 | ~~[EF Core 3.0](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.0.3)~~ | .NET Standard 2.1 | Expired March 3, 2020 | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-ef-core-3-0-and-ef-6-3-general-availability/) / [Breaking changes](ef-core-3.0/breaking-changes.md)
 | ~~[EF Core 2.2](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/2.2.6)~~ | .NET Standard 2.0 | Expired December 23, 2019 | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-2-2/)
 | [EF Core 2.1](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/2.1.14) | .NET Standard 2.0 | August 21, 2021 (LTS) | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-2-1/)
