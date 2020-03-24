@@ -173,7 +173,7 @@ Add support for calling extension methods in linq lambdas. For EF Core: 3.1
 
 ### XLinq
 
-**L**anguage **IN**tegrated **Q**uery technology for relational databases. It allows you to use C# to write strongly typed queries.
+Language Integrated Query (LINQ) technology for relational databases. It allows you to use C# to write strongly typed queries.
 
 - Full C# support for query creation: multiple statements inside lambda, variables, functions, etc.
 - No semantic gap with SQL. XLinq declares SQL statements (like `SELECT`, `FROM`, `WHERE`) as first class C# methods, combining familiar syntax with intellisense, type safety and refactoring.
