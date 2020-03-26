@@ -90,7 +90,7 @@ Define a context class and entity classes that make up the model.
 
 EF Core can also [reverse engineer](../managing-schemas/scaffolding.md) a model from an existing database.
 
-Tip: In a real app, you put each class in a separate file and put the [connection string](../miscellaneous/connection-strings.md) in a configuration file or environment variable. To keep the tutorial simple, everything is contained in one file.
+Tip: In a real app, you put the [connection string](../miscellaneous/connection-strings.md) in a configuration file or environment variable. To keep the tutorial simple, connetion string is contained in one file.
 
 ## Create the database
 
