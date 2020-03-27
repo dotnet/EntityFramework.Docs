@@ -56,5 +56,8 @@
       "template_folder": "_themes.pdf"
     }
   },
-  "need_generate_intellisense": false
+  "need_generate_intellisense": false,
+  "docs_build_engine": {
+    "name": "docfx_v3"
+  }
 }
