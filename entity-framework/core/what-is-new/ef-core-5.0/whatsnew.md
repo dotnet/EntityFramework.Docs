@@ -2,7 +2,7 @@
 title: What's New in EF Core 5.0
 description: Overview of new features in EF Core 5.0
 author: ajcvickers
-ms.date: 03/15/2020
+ms.date: 03/30/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew.md
 ---
 
@@ -189,3 +189,59 @@ Documentation is tracked by issue [#2079](https://github.com/dotnet/EntityFramew
 Queries that use the string methods Contains, StartsWith, and EndsWith are now translated when using the Azure Cosmos DB provider.
 
 Documentation is tracked by issue [#2079](https://github.com/dotnet/EntityFramework.Docs/issues/2079).
+
+## Preview 2
+
+### Use a C# attribute to specify a property backing field
+
+A C# attribute can now be used to specify the backing field for a property.
+This allows EF Core to still write to and read from the backing field as would normally happen, even when the backing field cannot be found automatically.
+For example:
+
+```CSharp
+public class Blog
+{
+    private string _mainTitle;
+
+    public int Id { get; set; }
+
+    [BackingField(nameof(_mainTitle))]
+    public string Title
+    {
+        get => _mainTitle;
+        set => _mainTitle = value;
+    }
+}
+```
+
+Documentation is tracked by issue [#2230](https://github.com/dotnet/EntityFramework.Docs/issues/2230).
+
+### Complete discriminator mapping
+
+EF Core uses a discriminator column for [TPH mapping of an inheritance hierarchy](/ef/core/modeling/inheritance).
+Some performance enhancements are possible so long as EF Core knows all possible values for the discriminator.
+EF Core 5.0 now implements these enhancements.
+
+For example, previous versions of EF Core would always generate this SQL for a query returning all types in a hierarchy:
+
+```sql
+SELECT [a].[Id], [a].[Discriminator], [a].[Name]
+FROM [Animal] AS [a]
+WHERE [a].[Discriminator] IN (N'Animal', N'Cat', N'Dog', N'Human')
+``` 
+
+EF Core 5.0 will now generate the following when a complete discriminator mapping is configured: 
+```sql
+SELECT [a].[Id], [a].[Discriminator], [a].[Name]
+FROM [Animal] AS [a]
+```
+
+This will be the default behavior starting with preview 3. 
+
+### Performance improvements in Microsoft.Data.Sqlite
+
+We have made two performance improvements for SQLIte:
+* Retrieving binary and string data with GetBytes, GetChars, and GetTextReader is now more efficient by making use of SqliteBlob and streams.
+* Initialization of SqliteConnection is now lazy. 
+
+These improvements are in the ADO.NET Microsoft.Data.Sqlite provider and hence also improve performance outside of EF Core.
