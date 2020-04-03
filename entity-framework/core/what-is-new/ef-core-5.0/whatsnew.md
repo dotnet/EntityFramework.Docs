@@ -1,7 +1,8 @@
 ---
 title: What's New in EF Core 5.0
+description: Overview of new features in EF Core 5.0
 author: ajcvickers
-ms.date: 03/15/2020
+ms.date: 03/30/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew.md
 ---
 
@@ -14,6 +15,64 @@ This page does not duplicate the [plan for EF Core 5.0](plan.md).
 The plan describes the overall themes for EF Core 5.0, including everything we are planning to include before shipping the final release.
 
 We will add links from here to the official documentation as it is published.
+
+## Preview 2
+
+### Use a C# attribute to specify a property backing field
+
+A C# attribute can now be used to specify the backing field for a property.
+This attribute allows EF Core to still write to and read from the backing field as would normally happen, even when the backing field cannot be found automatically.
+For example:
+
+```CSharp
+public class Blog
+{
+    private string _mainTitle;
+
+    public int Id { get; set; }
+
+    [BackingField(nameof(_mainTitle))]
+    public string Title
+    {
+        get => _mainTitle;
+        set => _mainTitle = value;
+    }
+}
+```
+
+Documentation is tracked by issue [#2230](https://github.com/dotnet/EntityFramework.Docs/issues/2230).
+
+### Complete discriminator mapping
+
+EF Core uses a discriminator column for [TPH mapping of an inheritance hierarchy](/ef/core/modeling/inheritance).
+Some performance enhancements are possible so long as EF Core knows all possible values for the discriminator.
+EF Core 5.0 now implements these enhancements.
+
+For example, previous versions of EF Core would always generate this SQL for a query returning all types in a hierarchy:
+
+```sql
+SELECT [a].[Id], [a].[Discriminator], [a].[Name]
+FROM [Animal] AS [a]
+WHERE [a].[Discriminator] IN (N'Animal', N'Cat', N'Dog', N'Human')
+```
+
+EF Core 5.0 will now generate the following when a complete discriminator mapping is configured:
+
+```sql
+SELECT [a].[Id], [a].[Discriminator], [a].[Name]
+FROM [Animal] AS [a]
+```
+
+It will be the default behavior starting with preview 3.
+
+### Performance improvements in Microsoft.Data.Sqlite
+
+We have made two performance improvements for SQLIte:
+
+* Retrieving binary and string data with GetBytes, GetChars, and GetTextReader is now more efficient by making use of SqliteBlob and streams.
+* Initialization of SqliteConnection is now lazy.
+
+These improvements are in the ADO.NET Microsoft.Data.Sqlite provider and hence also improve performance outside of EF Core.
 
 ## Preview 1
 
@@ -28,7 +87,7 @@ Additional documentation is tracked by issue [#2085](https://github.com/dotnet/E
 
 ### Simple way to get generated SQL
 
-EF Core 5.0 introduces the `ToQueryString` extension method which will return the SQL that EF Core will generate when executing a LINQ query.
+EF Core 5.0 introduces the `ToQueryString` extension method, which will return the SQL that EF Core will generate when executing a LINQ query.
 
 Preliminary documentation is included in the [EF weekly status for January 9, 2020](https://github.com/dotnet/efcore/issues/19549#issuecomment-572823246).
 
@@ -55,7 +114,7 @@ Documentation is tracked by issue [#2186](https://github.com/dotnet/EntityFramew
 
 It is now easier to create a DbContext instance without any connection or connection string.
 Also, the connection or connection string can now be mutated on the context instance.
-This allows the same context instance to dynamically connect to different databases.
+This feature allows the same context instance to dynamically connect to different databases.
 
 Documentation is tracked by issue [#2075](https://github.com/dotnet/EntityFramework.Docs/issues/2075).
 
@@ -80,7 +139,7 @@ Additional documentation is tracked by issue [#2086](https://github.com/dotnet/E
 ### Improved handling of database null semantics
 
 Relational databases typically treat NULL as an unknown value and therefore not equal to any other NULL.
-C#, on the other hand, treats null as a defined value which compares equal to any other null.
+While C# treats null as a defined value, which compares equal to any other null.
 EF Core by default translates queries so that they use C# null semantics.
 EF Core 5.0 greatly improves the efficiency of these translations.
 
@@ -89,7 +148,7 @@ Documentation is tracked by issue [#1612](https://github.com/dotnet/EntityFramew
 ### Indexer properties
 
 EF Core 5.0 supports mapping of C# indexer properties.
-This allows entities to act as property bags where columns are mapped to named properties in the bag.
+These properties allow entities to act as property bags where columns are mapped to named properties in the bag.
 
 Documentation is tracked by issue [#2018](https://github.com/dotnet/EntityFramework.Docs/issues/2018).
 
@@ -99,7 +158,7 @@ EF Core 5.0 Migrations can now generate CHECK constraints for enum property mapp
 For example:
 
 ```SQL
-MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN('Useful', 'Useless', 'Unknown'))
+MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN ('Useful', 'Useless', 'Unknown'))
 ```
 
 Documentation is tracked by issue [#2082](https://github.com/dotnet/EntityFramework.Docs/issues/2082).
@@ -107,7 +166,7 @@ Documentation is tracked by issue [#2082](https://github.com/dotnet/EntityFramew
 ### IsRelational
 
 A new `IsRelational` method has been added in addition to the existing `IsSqlServer`, `IsSqlite`, and `IsInMemory`.
-This can be used to test if the DbContext is using any relational database provider.
+This method can be used to test if the DbContext is using any relational database provider.
 For example:
 
 ```CSharp
@@ -133,7 +192,6 @@ builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
 
 SaveChanges will then throw an `DbUpdateConcurrencyException` on a concurrency conflict, which [can be handled](https://docs.microsoft.com/ef/core/saving/concurrency) to implement retries, etc.
 
-
 Documentation is tracked by issue [#2099](https://github.com/dotnet/EntityFramework.Docs/issues/2099).
 
 ### Query translations for more DateTime constructs
@@ -141,6 +199,7 @@ Documentation is tracked by issue [#2099](https://github.com/dotnet/EntityFramew
 Queries containing new DateTime construction are now translated.
 
 In addition, the following SQL Server functions are now mapped:
+
 * DateDiffWeek
 * DateFromParts
 
