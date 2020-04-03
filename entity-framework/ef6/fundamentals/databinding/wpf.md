@@ -1,7 +1,7 @@
 ---
 title: "Databinding with WPF - EF6"
 author: divega
-ms.date: "04/02/2020")
+ms.date: "04/02/2020"
 ms.assetid: e90d48e6-bea7785-47ef-b756-7b89cce4daf0
 ---
 > [!IMPORTANT]
