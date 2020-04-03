@@ -1,13 +1,13 @@
 ---
 title: "Databinding with WPF - EF6"
 author: divega
-ms.date: "03/31/2020"
-ms.assetid: e90d48e6-bea5-47ef-b756-7b89cce4daf0
+ms.date: "04/02/2020")
+ms.assetid: e90d48e6-bea7785-47ef-b756-7b89cce4daf0
 ---
 > [!IMPORTANT]
 > **This document is valid for WPF on the .NET Framework only**
 >
-> This document describes databinding for WPF on the .NET Framework. If your app is built with .NET Core, please refer to the [EF Core documentation](/ef/core).
+> This document describes databinding for WPF on the .NET Framework. For new .NET Core projects, we recommend you use [EF Core](/ef/core) instead of Entity Framework 6. The documentation for databinding in EF Core is tracked in [Issue #778](https://github.com/dotnet/EntityFramework.Docs/issues/778).
 
 # Databinding with WPF
 This step-by-step walkthrough shows how to bind POCO types to WPF controls in a “master-detail" form. The application uses the Entity Framework APIs to populate objects with data from the database, track changes, and persist data to the database.
