@@ -125,7 +125,7 @@ In the following example, there is a many-to-many relationship between Instructo
 
 When you change the relationship of the objects attached to the context by using one of the methods described above, Entity Framework needs to keep foreign keys, references, and collections in sync. Entity Framework automatically manages this synchronization (also known as relationship fix-up) for the POCO entities with proxies. For more information, see [Working with Proxies](~/ef6/fundamentals/proxies.md).
 
-If you are using POCO entities without proxies, you must make sure that the **DetectChanges** method is called to synchronize the related objects in the context. Note, that the following APIs automatically trigger a **DetectChanges** call.
+If you are using POCO entities without proxies, you must make sure that the **DetectChanges** method is called to synchronize the related objects in the context. Note that the following APIs automatically trigger a **DetectChanges** call.
 
 -   `DbSet.Add`
 -   `DbSet.AddRange`
@@ -149,7 +149,7 @@ In Entity Framework you commonly use navigation properties to load entities that
 
 ``` csharp
     // Get the course where currently DepartmentID = 2.
-    Course course2 = context.Courses.First(c=>c.DepartmentID == 2);
+    Course course2 = context.Courses.First(c => c.DepartmentID == 2);
 
     // Use DepartmentID foreign key property
     // to change the association.
