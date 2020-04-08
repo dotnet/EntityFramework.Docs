@@ -51,6 +51,27 @@ You may want to include multiple related entities for one of the entities that i
 > [!CAUTION]
 > Since version 3.0.0, each `Include` will cause an additional JOIN to be added to SQL queries produced by relational providers, whereas previous versions generated additional SQL queries. This can significantly change the performance of your queries, for better or worse. In particular, LINQ queries with an exceedingly high number of `Include` operators may need to be broken down into multiple separate LINQ queries in order to avoid the cartesian explosion problem.
 
+### Filtered include
+
+> [!NOTE]
+> This feature is introduced in EF Core 5.0.
+
+When applying Include to load related data, you can apply certain enumerable operations on the included collection navigation, which allows for filtering and sorting of the results.
+
+Supported operations are: `Where`, `OrderBy`, `OrderByDescending`, `ThenBy`, `ThenByDescending`, `Skip`, and `Take`.
+
+Such operations should be applied on the collection navigation in the lambda passed to the Include method, as shown in example below:
+
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#FilteredInclude)]
+
+Each included navigation allows only one unique set of filter operations. In cases where multiple Include operations are applied for a given collection navigation (`blog.Posts` in the examples below), filter operations can only be specified on one of them: 
+
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludesFiltered1)]
+
+Alternatively, identical operations can be applied for each navigation that is included multiple times:
+
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludesFiltered2)]
+
 ### Include on derived types
 
 You can include related data from navigations defined only on a derived type using `Include` and `ThenInclude`.
