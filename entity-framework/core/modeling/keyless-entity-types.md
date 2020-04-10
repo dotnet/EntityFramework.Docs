@@ -13,6 +13,20 @@ uid: core/modeling/keyless-entity-types
 
 In addition to regular entity types, an EF Core model can contain _keyless entity types_, which can be used to carry out database queries against data that doesn't contain key values.
 
+## Defining Keyless entity types
+
+Keyless entity types can be defined using either the Data Annotation or the Fluent API:
+
+### [Data Annotations](#tab/data-annotations)
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Keyless.cs?Name=Keyless&highlight=1)]
+
+### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Keyless.cs?Name=Keyless&highlight=4)]
+
+***
+
 ## Keyless entity types characteristics
 
 Keyless entity types support many of the same mapping capabilities as regular entity types, like inheritance mapping and navigation properties. On relational stores, they can configure the target database objects and columns via fluent API methods or data annotations.
@@ -27,7 +41,7 @@ However, they are different from regular entity types in that they:
   - They may not have navigations to owned entities
   - They can only contain reference navigation properties pointing to regular entities.
   - Entities cannot contain navigation properties to keyless entity types.
-- Need to be configured with `.HasNoKey()` method call.
+- Need to be configured with a `[Keyless]` data annotation or a `.HasNoKey()` method call.
 - May be mapped to a _defining query_. A defining query is a query declared in the model that acts as a data source for a keyless entity type.
 
 ## Usage scenarios
