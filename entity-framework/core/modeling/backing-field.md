@@ -26,6 +26,12 @@ Note that backing fields are only discovered for properties that are included in
 
 You can also configure backing fields explicitly, e.g. if the field name doesn't correspond to the above conventions:
 
+### [Data Annotations](#tab/data-annotations)
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/BackingField.cs?name=BackingField&highlight=7)]
+
+### [Fluent API](#tab/fluent-api)
+
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs?name=BackingField&highlight=5)]
 
 ## Field and property access
