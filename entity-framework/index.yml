@@ -2,7 +2,7 @@
 
 title: Entity Framework documentation
 summary: Entity Framework Core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations. EF Core works with SQL Server, Azure SQL Database, SQLite, Azure Cosmos.
-brand: entity-framework
+brand: dotnet
 
 metadata:
   title: Entity Framework documentation
@@ -21,7 +21,7 @@ highlightedContent:
     # Card
     - title: "Getting Started with Entity Framework Core"
       itemType: get-started
-      url: core/get-started/
+      url: core/get-started/index.md
     # Card
     - title: "Entity Framework Core overview"
       itemType: overview
@@ -33,15 +33,15 @@ highlightedContent:
     # Card
     - title: "Releases and platforms"
       itemType: whats-new
-      url: core/what-is-new/
+      url: core/what-is-new/index.md
     # Card
     - title: "Supported Databases"
       itemType: overview
-      url: core/providers/
+      url: core/providers/index.md
     # Card
     - title: "Choose a version of EF that is right for you"
       itemType: get-started
-      url: efcore-and-ef6/
+      url: efcore-and-ef6/index.md
     # Card
     - title: "ASP Reference browser"
       itemType: reference
@@ -56,7 +56,7 @@ additionalContent:
       # Card
       - title: Develop your first app
         links:
-          - url: core/get-started/
+          - url: core/get-started/index.md
             text: ".NET Core console app accessing SQLite with EF Core"
           - url: /aspnet/core/data/ef-rp/intro.md
             text: "ASP.NET Core Razor Pages web app accessing  SQL Server LocalDB or SQLite with EF Core"
@@ -71,7 +71,7 @@ additionalContent:
             text: "Logging"
           - url: core/miscellaneous/connection-resiliency.md
             text: "Connection resiliency"
-          - url: core/miscellaneous/testing/
+          - url: core/miscellaneous/testing/index.md
             text: "Testing"
           - url: core/miscellaneous/configuring-dbcontext.md
             text: "Configure a DbContext"
@@ -80,9 +80,9 @@ additionalContent:
       # Card
       - title: Create a Model
         links:
-          - url: core/modeling/
+          - url: core/modeling/index.md
             text: "Overview"
-          - url: ore/modeling/entity-types.md
+          - url: core/modeling/entity-types.md
             text: "Entity types"
           - url: core/modeling/entity-properties.md
             text: "Entity properties"
@@ -92,7 +92,7 @@ additionalContent:
             text: "Generated values"
           - url: core/modeling/relationships.md
             text: "Relationships"
-          - url: core/modeling/data-seeding
+          - url: core/modeling/data-seeding.md
             text: "Data seeding"
           - url: core/modeling/owned-entities.md
             text: "Owned entity types"
@@ -101,7 +101,7 @@ additionalContent:
       # Card
       - title: Query
         links:
-          - url: core/querying/
+          - url: core/querying/index.md
             text: "Overview"
           - url: core/querying/client-eval.md
             text: "Client vs. server evaluation"
@@ -120,9 +120,9 @@ additionalContent:
       # Card
       - title: Manage database schemas
         links:
-          - url: core/managing-schemas/
+          - url: core/managing-schemas/index.md
             text: "Overview"
-          - url: core/managing-schemas/migrations/
+          - url: core/managing-schemas/migrations/index.md
             text: "Migration overview"
           - url: core/managing-schemas/migrations/teams.md
             text: "Migration of team environments"
@@ -134,14 +134,14 @@ additionalContent:
             text: "Migration - multiple providers"
           - url: core/managing-schemas/migrations/history-table.md
             text: "Migration - custom history table"
-          - url: core/managing-schemas/ensure-created
+          - url: core/managing-schemas/ensure-created.md
             text: "Create and drop APIs"
           - url: core/managing-schemas/scaffolding.md
             text: "Reverse engineering (scaffolding)"
       # Card
       - title: Save Data
         links:
-          - url: core/saving/
+          - url: core/saving/index.md
             text: "Overview"
           - url: /core/saving/basic.md
             text: "Basic save"
@@ -160,20 +160,20 @@ additionalContent:
       # Card
       - title: Supported Databases
         links:
-          - url: core/providers/sql-server/
+          - url: core/providers/sql-server/index.md
             text: "SQL Server"
-          - url: core/providers/sqlite/
+          - url: core/providers/sqlite/index.md
             text: "SQL Lite"
-          - url: core/providers/cosmos/
+          - url: core/providers/cosmos/index.md
             text: "Cosmos"
-          - url: core/providers/in-memory/
+          - url: core/providers/in-memory/index.md
             text: "In memory for testing"
-          - url: core/providers/
+          - url: core/providers/index.md
             text: "All current Database Providers"
       # Card
       - title: Command-line Reference
         links:
-          - url: core/miscellaneous/cli/
+          - url: core/miscellaneous/cli/index.md
             text: "Overview"
           - url: core/miscellaneous/cli/powershell.md
             text: "Package Manager Console (Visual Studio)"
