@@ -1,7 +1,7 @@
 ---
 title: Tools & Extensions - EF Core
 author: ErikEJ
-ms.date: 12/17/2019
+ms.date: 04/11/2020
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
 ---
@@ -66,11 +66,11 @@ A plugin library that enables automatically recording the data changes performed
 
 [GitHub repository](https://github.com/Arch/AutoHistory/)
 
-### EFSecondLevelCache.Core
+### EFCoreSecondLevelCacheInterceptor
 
-An extension that enables storing the results of EF Core queries into a second-level cache, so that subsequent executions of the same queries can avoid accessing the database and retrieve the data directly from the cache. For EF Core: 2.
+Second level caching is a query cache. The results of EF commands will be stored in the cache, so that the same EF commands will retrieve their data from the cache rather than executing them against the database again. For EF Core: 3.
 
-[GitHub repository](https://github.com/VahidN/EFSecondLevelCache.Core/)
+[GitHub repository](https://github.com/VahidN/EFCoreSecondLevelCacheInterceptor)
 
 ### Geco
 
@@ -167,13 +167,13 @@ Extends your DbContext with high-performance bulk operations: BulkSaveChanges, B
 
 ### Expressionify
 
-Add support for calling extension methods in linq lambdas. For EF Core: 3.1
+Add support for calling extension methods in LINQ lambdas. For EF Core: 3.
 
 [GitHub repository](https://github.com/ClaveConsulting/Expressionify)
 
 ### XLinq
 
-Language Integrated Query (LINQ) technology for relational databases. It allows you to use C# to write strongly typed queries. For EF Core: 3.1
+Language Integrated Query (LINQ) technology for relational databases. It allows you to use C# to write strongly typed queries. For EF Core: 3.
 
 - Full C# support for query creation: multiple statements inside lambda, variables, functions, etc.
 - No semantic gap with SQL. XLinq declares SQL statements (like `SELECT`, `FROM`, `WHERE`) as first class C# methods, combining familiar syntax with intellisense, type safety and refactoring.
@@ -181,3 +181,27 @@ Language Integrated Query (LINQ) technology for relational databases. It allows 
 As a result SQL becomes just "another" class library exposing its API locally, literally *"Language Integrated SQL"*.
 
 [Website](http://xlinq.live/)
+
+### Ramses
+
+Lifecycle hooks (for SaveChanges). For EF Core: 2, 3.
+
+[GitHub repository](https://github.com/JValck/Ramses)
+
+### EFCore.NamingConventions
+
+This will automatically make all your table and column names have snake_case, all UPPER or all lower case naming. For EF Core: 3.
+
+[GitHub repository](https://github.com/efcore/EFCore.NamingConventions)
+
+### SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime
+
+Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3.
+
+[GitHub repository](https://github.com/StevenRasmussen/EFCore.SqlServer.NodaTime)
+
+### Dabble.EntityFrameworkCore.Temporal.Query
+
+LINQ extensions to Entity Framework Core 3.1 to support Microsoft SQL Server Temporal Table Querying. For EF Core: 3.
+
+[GitHub repository](https://github.com/Adam-Langley/efcore-temporal-query)
