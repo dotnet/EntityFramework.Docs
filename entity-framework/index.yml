@@ -1,0 +1,192 @@
+### YamlMime:Hub
+
+title: Entity Framework documentation
+summary: Entity Framework Core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations. EF Core works with SQL Server, Azure SQL Database, SQLite, Azure Cosmos.
+brand: entity-framework
+
+metadata:
+  title: Entity Framework documentation
+  description: Learn to use Entity Framework Core, a modern object-database mapper for .NET that supports LINQ queries, change tracking, updates, and schema migrations. Browse tutorials, sample code, fundamentals, API reference and more.
+  ms.product: entity-framework
+  ms.topic: hub-page
+  author: WadePickett
+  ms.author: wpickett
+  ms.date: 04/13/2020
+
+# highlightedContent section (optional)
+# Maximum of 8 items
+highlightedContent:
+# itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
+  items:
+    # Card
+    - title: "Getting Started with Entity Framework Core"
+      itemType: get-started
+      url: core/get-started/
+    # Card
+    - title: "Entity Framework Core overview"
+      itemType: overview
+      url: /aspnet/core/data/ef-rp/intro.md
+    # Card
+    - title: "Course – Persist and retrieve relational data with Entity Framework Core"
+      itemType: learn
+      url: /learn/modules/persist-data-ef-core/
+    # Card
+    - title: "Releases and platforms"
+      itemType: whats-new
+      url: core/what-is-new/
+    # Card
+    - title: "Supported Databases"
+      itemType: overview
+      url: core/providers/
+    # Card
+    - title: "Choose a version of EF that is right for you"
+      itemType: get-started
+      url: efcore-and-ef6/
+    # Card
+    - title: "ASP Reference browser"
+      itemType: reference
+      url: https://docs.microsoft.com/dotnet/api/?view=efcore-3.1
+
+# Card with summary style
+additionalContent:
+  # Supports up to 3 sections
+  sections: 
+    - title: Develop with Entity Framework Core # < 60 chars (optional)
+      items:
+      # Card
+      - title: Develop your first app
+        links:
+          - url: core/get-started/
+            text: ".NET Core console app accessing SQLite with EF Core"
+          - url: /aspnet/core/data/ef-rp/intro.md
+            text: "ASP.NET Core Razor Pages web app accessing  SQL Server LocalDB or SQLite with EF Core"
+          - url: /aspnet/core/data/ef-mvc/
+            text: "ASP.NET Core MVC web app accessing SQL Server with EF Core"
+      # Card
+      - title: Fundamentals
+        links:
+          - url: core/miscellaneous/connection-strings.md
+            text: "Connection strings"
+          - url: core/miscellaneous/logging.md
+            text: "Logging"
+          - url: core/miscellaneous/connection-resiliency.md
+            text: "Connection resiliency"
+          - url: core/miscellaneous/testing/
+            text: "Testing"
+          - url: core/miscellaneous/configuring-dbcontext.md
+            text: "Configure a DbContext"
+          - url: core/miscellaneous/nullable-reference-types.md
+            text: "Nullable reference types"
+      # Card
+      - title: Create a Model
+        links:
+          - url: core/modeling/
+            text: "Overview"
+          - url: ore/modeling/entity-types.md
+            text: "Entity types"
+          - url: core/modeling/entity-properties.md
+            text: "Entity properties"
+          - url: core/modeling/keys.md
+            text: "Keys"
+          - url: core/modeling/generated-properties.md
+            text: "Generated values"
+          - url: core/modeling/relationships.md
+            text: "Relationships"
+          - url: core/modeling/data-seeding
+            text: "Data seeding"
+          - url: core/modeling/owned-entities.md
+            text: "Owned entity types"
+          - url: core/modeling/keyless-entity-types.md
+            text: "Keyless entity types"
+      # Card
+      - title: Query
+        links:
+          - url: core/querying/
+            text: "Overview"
+          - url: core/querying/client-eval.md
+            text: "Client vs. server evaluation"
+          - url: core/querying/tracking.md
+            text: "Tracking vs. no-tracking"
+          - url: core/querying/complex-query-operators.md
+            text: "Complex query operators"
+          - url: core/querying/related-data.md
+            text: "Load related data"
+          - url: core/querying/async.md
+            text: "Asynchronous queries"
+          - url: core/querying/raw-sql.md
+            text: "Raw SQL queries"
+          - url: core/querying/filters.md
+            text: "Global query filters"
+      # Card
+      - title: Manage database schemas
+        links:
+          - url: core/managing-schemas/
+            text: "Overview"
+          - url: core/managing-schemas/migrations/
+            text: "Migration overview"
+          - url: core/managing-schemas/migrations/teams.md
+            text: "Migration of team environments"
+          - url: core/managing-schemas/migrations/operations.md
+            text: "Migration - custom  operations"
+          - url: core/managing-schemas/migrations/projects.md
+            text: "Migration - Use a separate project"
+          - url: core/managing-schemas/migrations/providers.md
+            text: "Migration - multiple providers"
+          - url: core/managing-schemas/migrations/history-table.md
+            text: "Migration - custom history table"
+          - url: core/managing-schemas/ensure-created
+            text: "Create and drop APIs"
+          - url: core/managing-schemas/scaffolding.md
+            text: "Reverse engineering (scaffolding)"
+      # Card
+      - title: Save Data
+        links:
+          - url: core/saving/
+            text: "Overview"
+          - url: /core/saving/basic.md
+            text: "Basic save"
+          - url: core/saving/related-data.md
+            text: "Related data"
+          - url: core/saving/cascade-delete.md
+            text: "Cascade delete"
+          - url: core/saving/concurrency.md
+            text: "Concurrency conflicts"
+          - url: core/saving/transactions.md
+            text: "Transactions"
+          - url: core/saving/async.md
+            text: "Asynchronous saving"
+          - url: core/saving/disconnected-entities.md
+            text: "Disconnected entities"
+      # Card
+      - title: Supported Databases
+        links:
+          - url: core/providers/sql-server/
+            text: "SQL Server"
+          - url: core/providers/sqlite/
+            text: "SQL Lite"
+          - url: core/providers/cosmos/
+            text: "Cosmos"
+          - url: core/providers/in-memory/
+            text: "In memory for testing"
+          - url: core/providers/
+            text: "All current Database Providers"
+      # Card
+      - title: Command-line Reference
+        links:
+          - url: core/miscellaneous/cli/
+            text: "Overview"
+          - url: core/miscellaneous/cli/powershell.md
+            text: "Package Manager Console (Visual Studio)"
+          - url: core/miscellaneous/cli/dotnet.md
+            text: ".NET Core CLI"
+          - url: core/miscellaneous/cli/dbcontext-creation.md
+            text: "Design-time DbContext creation"
+          - url: core/miscellaneous/cli/services.md
+            text: "Design-time services"
+      # Card
+      - title: Previous Entity Framework Versions
+        links:
+          - url: ef6/get-started.md
+            text: "Entity Framework 6"
+  # footer (optional)
+  footer: "Contribute to Entity Framework docs. Read our [contributor guide](https://github.com/dotnet/EntityFramework.Docs/blob/master/CONTRIBUTING.md)."
