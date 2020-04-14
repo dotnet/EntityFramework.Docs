@@ -11,7 +11,7 @@ metadata:
   ms.topic: hub-page
   author: WadePickett
   ms.author: wpickett
-  ms.date: 04/13/2020
+  ms.date: 04/14/2020
 
 # highlightedContent section (optional)
 # Maximum of 8 items
@@ -19,11 +19,11 @@ highlightedContent:
 # itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
   items:
     # Card
-    - title: "Getting Started with Entity Framework Core"
+    - title: "Entity Framework Core"
       itemType: get-started
       url: core/get-started/index.md
     # Card
-    - title: "Course – Persist and retrieve relational data with Entity Framework Core"
+    - title: "Persist and retrieve relational data with Entity Framework Core"
       itemType: learn
       url: /learn/modules/persist-data-ef-core/
     # Card
@@ -35,11 +35,11 @@ highlightedContent:
       itemType: overview
       url: core/providers/index.md
     # Card
-    - title: "Choose a version of EF that is right for you"
-      itemType: get-started
+    - title: "Choose a version that is right for you"
+      itemType: overview
       url: efcore-and-ef6/index.md
     # Card
-    - title: "Entity Framework API reference browser"
+    - title: "API reference browser"
       itemType: reference
       url: https://docs.microsoft.com/dotnet/api/?view=efcore-3.1
 
@@ -74,7 +74,7 @@ additionalContent:
           - url: core/miscellaneous/nullable-reference-types.md
             text: "Nullable reference types"
       # Card
-      - title: Create a Model
+      - title: Create a model
         links:
           - url: core/modeling/index.md
             text: "Overview"
@@ -135,7 +135,7 @@ additionalContent:
           - url: core/managing-schemas/scaffolding.md
             text: "Reverse engineering (scaffolding)"
       # Card
-      - title: Save Data
+      - title: Save data
         links:
           - url: core/saving/index.md
             text: "Overview"
@@ -154,7 +154,7 @@ additionalContent:
           - url: core/saving/disconnected-entities.md
             text: "Disconnected entities"
       # Card
-      - title: Supported Databases
+      - title: Supported databases
         links:
           - url: core/providers/sql-server/index.md
             text: "SQL Server"
@@ -167,7 +167,7 @@ additionalContent:
           - url: core/providers/index.md
             text: "All current Database Providers"
       # Card
-      - title: Command-line Reference
+      - title: Command-line reference
         links:
           - url: core/miscellaneous/cli/index.md
             text: "Overview"
@@ -180,7 +180,7 @@ additionalContent:
           - url: core/miscellaneous/cli/services.md
             text: "Design-time services"
       # Card
-      - title: Previous Entity Framework Versions
+      - title: Previous Versions
         links:
           - url: ef6/get-started.md
             text: "Entity Framework 6"
