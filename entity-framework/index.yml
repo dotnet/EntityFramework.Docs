@@ -54,7 +54,7 @@ additionalContent:
         links:
           - url: core/get-started/index.md
             text: ".NET Core console app accessing SQLite with EF Core"
-          - url: /aspnet/core/data/ef-rp/intro.md
+          - url: /aspnet/core/data/ef-rp/
             text: "ASP.NET Core Razor Pages web app accessing  SQL Server LocalDB or SQLite with EF Core"
           - url: /aspnet/core/data/ef-mvc/
             text: "ASP.NET Core MVC web app accessing SQL Server with EF Core"
