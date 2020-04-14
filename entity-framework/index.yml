@@ -139,7 +139,7 @@ additionalContent:
         links:
           - url: core/saving/index.md
             text: "Overview"
-          - url: /core/saving/basic.md
+          - url: core/saving/basic.md
             text: "Basic save"
           - url: core/saving/related-data.md
             text: "Related data"
