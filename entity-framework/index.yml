@@ -23,10 +23,6 @@ highlightedContent:
       itemType: get-started
       url: core/get-started/index.md
     # Card
-    - title: "Entity Framework Core overview"
-      itemType: overview
-      url: /aspnet/core/data/ef-rp/intro.md
-    # Card
     - title: "Course – Persist and retrieve relational data with Entity Framework Core"
       itemType: learn
       url: /learn/modules/persist-data-ef-core/
@@ -43,7 +39,7 @@ highlightedContent:
       itemType: get-started
       url: efcore-and-ef6/index.md
     # Card
-    - title: "ASP Reference browser"
+    - title: "Entity Framework API reference browser"
       itemType: reference
       url: https://docs.microsoft.com/dotnet/api/?view=efcore-3.1
 
