@@ -24,7 +24,13 @@ In the following sample, the `Url` property is configured to have `_url` as its 
 
 Note that backing fields are only discovered for properties that are included in the model. For more information on which properties are included in the model, see [Including & Excluding Properties](included-properties.md).
 
-You can also configure backing fields explicitly, e.g. if the field name doesn't correspond to the above conventions:
+You can also configure backing fields by using a Data Annotation or the Fluent API, e.g. if the field name doesn't correspond to the above conventions:
+
+### [Data Annotations](#tab/data-annotations)
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/BackingField.cs?name=BackingField&highlight=7)]
+
+### [Fluent API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs?name=BackingField&highlight=5)]
 

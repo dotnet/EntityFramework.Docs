@@ -85,7 +85,7 @@ namespace EFQuerying.RelatedData
                     .ToList();
             }
             #endregion
-            
+
             #region Eager
             using (var context = new BloggingContext())
             {
@@ -125,6 +125,42 @@ namespace EFQuerying.RelatedData
                     .Collection(b => b.Posts)
                     .Query()
                     .Where(p => p.Rating > 3)
+                    .ToList();
+            }
+            #endregion
+
+            #region FilteredInclude
+            using (var context = new BloggingContext())
+            {
+                var filteredBlogs = context.Blogs
+                    .Include(blog => blog.Posts
+                        .Where(post => post.BlogId == 1)
+                        .OrderByDescending(post => post.Title)
+                        .Take(5))
+                    .ToList();
+            }
+            #endregion
+
+            #region MultipleLeafIncludesFiltered1
+            using (var context = new BloggingContext())
+            {
+                var filteredBlogs = context.Blogs
+                    .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
+                        .ThenInclude(post => post.Author)
+                    .Include(blog => blog.Posts)
+                        .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
+                    .ToList();
+            }
+            #endregion
+
+            #region MultipleLeafIncludesFiltered2
+            using (var context = new BloggingContext())
+            {
+                var filteredBlogs = context.Blogs
+                    .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
+                        .ThenInclude(post => post.Author)
+                    .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
+                        .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
                     .ToList();
             }
             #endregion

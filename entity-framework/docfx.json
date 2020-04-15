@@ -27,7 +27,7 @@
       {
         "files": [
           "**.md",
-          "**/toc.yml",
+          "**/*.yml",
           "*.md"
         ],
         "exclude": [
