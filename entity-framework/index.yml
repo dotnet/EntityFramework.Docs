@@ -1,7 +1,7 @@
 ### YamlMime:Hub
 
 title: Entity Framework documentation
-summary: Entity Framework Core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations. EF Core works with many databasees, including SQL Database (on-premises and Azure), MySQL, PostgreSQL, and Azure Cosmos DB.
+summary: Entity Framework Core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations. EF Core works with many databasees, including SQL Database (on-premises and Azure), SQLite, MySQL, PostgreSQL, and Azure Cosmos DB.
 brand: dotnet
 
 metadata:
@@ -159,7 +159,7 @@ additionalContent:
           - url: core/providers/sql-server/index.md
             text: "SQL Server"
           - url: core/providers/sqlite/index.md
-            text: "SQL Lite"
+            text: "SQLite"
           - url: http://www.npgsql.org/efcore/index.html
             text: "PostgreSQL"
           - url: https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql
