@@ -165,7 +165,7 @@ additionalContent:
           - url: https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql
             text: "MySQL and MariaDB"
           - url: core/providers/cosmos/index.md
-            text: "Cosmos"
+            text: "Cosmos DB SQL API"
           - url: core/providers/in-memory/index.md
             text: "In memory (testing)"
           - url: core/providers/index.md
