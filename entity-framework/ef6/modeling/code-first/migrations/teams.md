@@ -136,7 +136,8 @@ The following process can be used for this approach, starting from the time you 
 3.  Run **Update-Database** to apply any new migrations that other developers have checked in.
     **_Note:_** *if you don’t get any warnings from the Update-Database command then there were no new migrations from other developers and there is no need to perform any further merging.*
 4.  Run **Add-Migration &lt;pick\_a\_name&gt; –IgnoreChanges** (for example, **Add-Migration Merge –IgnoreChanges**). This generates a migration with all the metadata (including a snapshot of the current model) but will ignore any changes it detects when comparing the current model to the snapshot in the last migrations (meaning you get a blank **Up** and **Down** method).
-5.  Continue developing, or submit to source control (after running your unit tests of course).
+5.  Run **Update-Database** to re-apply the latest migration with the updated metadata.
+6.  Continue developing, or submit to source control (after running your unit tests of course).
 
 Here is the state of Developer \#2’s local code base after using this approach.
 
