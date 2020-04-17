@@ -108,15 +108,15 @@ The new interception API in EF Core 3.0 allows providing custom logic to be invo
 
 Similarly to the interception features that existed in EF 6, interceptors allow you to intercept operations before or after they happen. When you intercept them before they happen, you are allowed to by-pass execution and supply alternate results from the interception logic.
 
-For example, to manipulate command text, you can create an `IDbCommandInterceptor`:
+For example, to manipulate command text, you can create a `DbCommandInterceptor`:
 
 ``` csharp
 public class HintCommandInterceptor : DbCommandInterceptor
 {
-    public override InterceptionResult ReaderExecuting(
+    public override InterceptionResult<DbDataReader> ReaderExecuting(
         DbCommand command,
         CommandEventData eventData,
-        InterceptionResult result)
+        InterceptionResult<DbDataReader> result)
     {
         // Manipulate the command text, etc. here...
         command.CommandText += " OPTION (OPTIMIZE FOR UNKNOWN)";
