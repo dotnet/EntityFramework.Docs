@@ -46,7 +46,7 @@ See the [Include documentation](xref:core/querying/related-data#filtered-include
 ### New ModelBuilder API for navigation properties
 
 Navigation properties are primarily configured when [defining relationships](xref:core/modeling/relationships).
-However, the new new `Navigation` method can be used in the cases where navigation properties need additional configuration.
+However, the new `Navigation` method can be used in the cases where navigation properties need additional configuration.
 For example, to set a backing field for the navigation when the field would not be found by convention:
 
 ```CSharp
