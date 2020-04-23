@@ -16,6 +16,106 @@ The plan describes the overall themes for EF Core 5.0, including everything we a
 
 We will add links from here to the official documentation as it is published.
 
+## Preview 3
+
+### Filtered Include
+
+The Include method now supports filtering of the entities included.
+For example:
+
+```CSharp
+var blogs = context.Blogs
+    .Include(e => e.Posts.Where(p => p.Title.Contains("Cheese")))
+    .ToList();
+```
+
+This query will return blogs together with each associated post, but only when the post title contains "Cheese".
+
+Skip and Take can also be used to reduce the number of included entities.
+For example:
+ 
+```CSharp
+var blogs = context.Blogs
+    .Include(e => e.Posts.OrderByDescending(post => post.Title).Take(5)))
+    .ToList();
+```
+This query will return blogs with at most five posts included on each blog.
+
+See the [Include documentation](xref:core/querying/related-data#filtered-include) for full details.
+
+### New ModelBuilder API for navigation properties
+
+Navigation properties are primarily configured when [defining relationships](xref:core/modeling/relationships).
+However, the new `Navigation` method can be used in the cases where navigation properties need additional configuration.
+For example, to set a backing field for the navigation when the field would not be found by convention:
+
+```CSharp
+modelBuilder.Entity<Blog>().Navigation(e => e.Posts).HasField("_myposts");
+```
+
+Note that the `Navigation` API does not replace relationship configuration.
+Instead it allows additional configuration of navigation properties in already discovered or defined relationships.
+
+Documentation is tracked by issue [#2302](https://github.com/dotnet/EntityFramework.Docs/issues/2302).
+
+### New command-line parameters for namespaces and connection strings 
+
+Migrations and scaffolding now allow namespaces to be specified on the command line.
+For example, to reverse engineer a database putting the context and model classes in different namespaces: 
+
+```
+dotnet ef dbcontext scaffold "connection string" Microsoft.EntityFrameworkCore.SqlServer --context-namespace "My.Context" --namespace "My.Model"
+```
+
+Also, a connection string can now be passed to the `database-update` command:
+
+```
+dotnet ef database update --connection "connection string"
+```
+
+Equivalent parameters have also been added to the PowerShell commands used in the VS Package Manager Console.
+
+Documentation is tracked by issue [#2303](https://github.com/dotnet/EntityFramework.Docs/issues/2303).
+
+### EnableDetailedErrors has returned
+
+For performance reasons, EF doesn't do additional null-checks when reading values from the database.
+This can result in exceptions that are hard to root-cause when an unexpected null is encountered.
+
+Using `EnableDetailedErrors` will add extra null checking to queries such that, for a small performance overhead, these errors are easier to trace back to a root cause.  
+
+For example:
+```CSharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .EnableDetailedErrors()
+        .EnableSensitiveDataLogging() // Often also useful with EnableDetailedErrors 
+        .UseSqlServer(Your.SqlServerConnectionString);
+```
+
+Documentation is tracked by issue [#955](https://github.com/dotnet/EntityFramework.Docs/issues/955).
+
+### Cosmos partition keys
+
+The partition key to use for a given query can now be specified in the query.
+For example:
+
+```CSharp
+await context.Set<Customer>()
+             .WithPartitionKey(myPartitionKey)
+             .FirstAsync();
+```
+
+Documentation is tracked by issue [#2199](https://github.com/dotnet/EntityFramework.Docs/issues/2199).
+
+### Support for the SQL Server DATALENGTH function
+
+This can be accessed using the new `EF.Functions.DataLength` method.
+For example:
+```CSharp
+var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate));
+``` 
+
 ## Preview 2
 
 ### Use a C# attribute to specify a property backing field
