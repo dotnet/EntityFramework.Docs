@@ -205,3 +205,9 @@ Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types
 LINQ extensions to Entity Framework Core 3.1 to support Microsoft SQL Server Temporal Table Querying. For EF Core: 3.
 
 [GitHub repository](https://github.com/Adam-Langley/efcore-temporal-query)
+
+### EntityFrameworkCore.SqlServer.HierarchyId
+
+Adds hierarchyid support to the SQL Server EF Core provider. For EF Core: 3.
+
+[GitHub repository](https://github.com/efcore/EFCore.SqlServer.HierarchyId)
