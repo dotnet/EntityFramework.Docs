@@ -148,7 +148,7 @@ Use EF Core on .NET Core for all new applications unless the app needs something
 
 EF Core is not a drop-in replacement for EF6. Moving from EF6 to EF Core will likely require changes to your application.
 
-When moving an EF6 app to EF Core:
+When moving an EF6 app to .NET Core:
 * Keep using EF6 if the data access code is stable and not likely to evolve or need new features.
 * Port to EF Core if the data access code is evolving or if the app needs new features only available in EF Core.
 * Porting to EF Core is also often done for performance. However, not all scenarios are faster, so do some profiling first.
