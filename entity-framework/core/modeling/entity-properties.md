@@ -124,3 +124,16 @@ A property that would be optional by convention can be configured to be required
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Required.cs?name=Required&highlight=3-5)]
 
 ***
+
+## Column collations
+
+> [!NOTE]
+> This feature is introduced in EF Core 5.0.
+
+A collation can be defined on text columns, determining how they are compared and ordered. For example, the following configures a SQL Server column to be case-insensitive:
+
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Collations/Program.cs?range=42-43)]
+
+If all columns in a database need to use a certain collation, define the collation at the database level instead.
+
+General information about EF Core support for collations can be found in the [collation documentation page](../miscellaneous/collations-and-case-sensitivity.md).
