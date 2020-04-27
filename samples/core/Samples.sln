@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Querying", "Querying\Queryi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectionResiliency", "Miscellaneous\ConnectionResiliency\ConnectionResiliency.csproj", "{73D58479-A7E6-4867-8A73-0E07E96C6117}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicModel", "DynamicModel\DynamicModel.csproj", "{70D00673-084C-40B7-B0F1-67498593F8EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicModel", "Modeling\DynamicModel\DynamicModel.csproj", "{70D00673-084C-40B7-B0F1-67498593F8EE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSeeding", "Modeling\DataSeeding\DataSeeding.csproj", "{FD21B5E9-B1D9-4788-A313-5C0CDA30D1D7}"
 EndProject

@@ -9,7 +9,7 @@ namespace EFModeling.FluentAPI.Keyless
         #region Keyless
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BlogPostCounts>()
+            modelBuilder.Entity<BlogPostsCount>()
                 .HasNoKey();
         }
         #endregion
