@@ -95,7 +95,7 @@ The scaffolded DbContext class name will be the name of the database suffixed wi
 
 ## Directories and namespaces
 
-The entity classes and a DbContext class are scaffolded into the project's root directory and use the project's default namespace. You can specify the directory where classes are scaffolded using `-OutputDir` (PMC) or `--output-dir` (CLI). The namespace will be the root namespace plus the names of any subdirectories under the project's root directory.
+The entity classes and a DbContext class are scaffolded into the project's root directory and use the project's default namespace. You can specify the directory where classes are scaffolded using `-OutputDir` (PMC) or `--output-dir` (CLI).
 
 You can also use `-ContextDir` (PMC) and `--context-dir` (CLI) to scaffold the DbContext class into a separate directory from the entity type classes.
 
@@ -105,6 +105,16 @@ Scaffold-DbContext ... -ContextDir Data -OutputDir Models
 
 ```dotnetcli
 dotnet ef dbcontext scaffold ... --context-dir Data --output-dir Models
+```
+
+ By default, the namespace will be the root namespace plus the names of any subdirectories under the project's root directory. However you can override the namespace for all output classes by using `-Namespace` (PMC) or `--namespace` (CLI). You can also override the namespace for just the DbContext class using `-ContextNamespace` (PMC) or `--context-namespace` (CLI).
+
+``` powershell
+Scaffold-DbContext ... -Namespace Your.Namespace -ContextNamespace Your.DbContext.Namespace
+```
+
+```dotnetcli
+dotnet ef dbcontext scaffold ... --namespace Your.Namespace --context-namespace Your.DbContext.Namespace
 ```
 
 ## How it works

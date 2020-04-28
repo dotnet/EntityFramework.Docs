@@ -146,7 +146,8 @@ Parameters:
 | Parameter                         | Description                                                                                                             |
 |:----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
 | <nobr>-Name \<String><nobr>       | The name of the migration. This is a positional parameter and is required.                                              |
-| <nobr>-OutputDir \<String></nobr> | The directory (and sub-namespace) to use. Paths are relative to the target project directory. Defaults to "Migrations". |
+| <nobr>-OutputDir \<String></nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
+| <nobr>-Namespace \<String></nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. |
 
 ## Drop-Database
 
@@ -183,7 +184,9 @@ Parameters:
 | <nobr>-Connection \<String></nobr> | The connection string to the database. For ASP.NET Core 2.x projects, the value can be *name=\<name of connection string>*. In that case the name comes from the configuration sources that are set up for the project. This is a positional parameter and is required. |
 | <nobr>-Provider \<String></nobr>   | The provider to use. Typically this is the name of the NuGet package, for example: `Microsoft.EntityFrameworkCore.SqlServer`. This is a positional parameter and is required.                                                                                           |
 | -OutputDir \<String>               | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
-| -ContextDir \<String>              | The directory to put the `DbContext` file in. Paths are relative to the project directory.                                                                                                                                                                              |
+| -ContextDir \<String>              | The directory to put the `DbContext` file in. Paths are relative to the project directory.                                                                                                                                                               |
+| -Namespace \<String>               | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory.                                                                                                                                                                                             |
+| -ContextNamespace \<String>        | The namespace to use for the generated `DbContext` class. Note: overrides `-Namespace`.                                                                                                                                                                              |
 | -Context \<String>                 | The name of the `DbContext` class to generate.                                                                                                                                                                                                                          |
 | -Schemas \<String[]>               | The schemas of tables to generate entity types for. If this parameter is omitted, all schemas are included.                                                                                                                                                             |
 | -Tables \<String[]>                | The tables to generate entity types for. If this parameter is omitted, all tables are included.                                                                                                                                                                         |
@@ -197,10 +200,10 @@ Example:
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 ```
 
-Example that scaffolds only selected tables and creates the context in a separate folder with a specified name:
+Example that scaffolds only selected tables and creates the context in a separate folder with a specified name and namespace:
 
 ```powershell
-Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables "Blog","Post" -ContextDir Context -Context BlogContext
+Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables "Blog","Post" -ContextDir Context -Context BlogContext -ContextNamespace New.Namespace
 ```
 
 ## Script-Migration
