@@ -217,11 +217,13 @@ Options:
 
 |                 | Option                                   | Description                                                                                                                                                                    |
 |:----------------|:-----------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr>-d</nobr> | `--data-annotations`                     | Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.                                                                |
+| <nobr>`-d`</nobr> | `--data-annotations`                   | Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.                                                                |
 | `-c`            | `--context <NAME>`                       | The name of the `DbContext` class to generate.                                                                                                                                 |
 |                 | `--context-dir <PATH>`                   | The directory to put the `DbContext` class file in. Paths are relative to the project directory. Namespaces are derived from the folder names.                                 |
+|                 | `--context-namespace <NAMESPACE>`        | The namespace to use for the generated `DbContext` class. Note: overrides `--namespace`.                                 |
 | `-f`            | `--force`                                | Overwrite existing files.                                                                                                                                                      |
 | `-o`            | `--output-dir <PATH>`                    | The directory to put entity class files in. Paths are relative to the project directory.                                                                                       |
+| `-n`            | `--namespace <NAMESPACE>`                | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory.                    |
 |                 | <nobr>`--schema <SCHEMA_NAME>...`</nobr> | The schemas of tables to generate entity types for. To specify multiple schemas, repeat `--schema` for each one. If this option is omitted, all schemas are included.          |
 | `-t`            | `--table <TABLE_NAME>`...                | The tables to generate entity types for. To specify multiple tables, repeat `-t` or `--table` for each one. If this option is omitted, all tables are included.                |
 |                 | `--use-database-names`                   | Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions. |
@@ -232,10 +234,10 @@ The following example scaffolds all schemas and tables and puts the new files in
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models
 ```
 
-The following example scaffolds only selected tables and creates the context in a separate folder with a specified name:
+The following example scaffolds only selected tables and creates the context in a separate folder with a specified name and namespace:
 
 ```dotnetcli
-dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -t Blog -t Post --context-dir Context -c BlogContext
+dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -t Blog -t Post --context-dir Context -c BlogContext --context-namespace New.Namespace
 ```
 
 ## dotnet ef migrations add
@@ -252,7 +254,8 @@ Options:
 
 |                   | Option                             | Description                                                                                                      |
 |:------------------|:-----------------------------------|:-----------------------------------------------------------------------------------------------------------------|
-| <nobr>`-o`</nobr> | <nobr>`--output-dir <PATH>`</nobr> | The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to "Migrations". |
+| <nobr>`-o`</nobr> | <nobr>`--output-dir <PATH>`</nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
+| <nobr>`-n`</nobr> | <nobr>`--namespace <NAMESPACE>`</nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. |
 
 ## dotnet ef migrations list
 
