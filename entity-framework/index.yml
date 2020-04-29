@@ -1,7 +1,7 @@
 ### YamlMime:Hub
 
 title: Entity Framework documentation
-summary: Entity Framework Core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations. EF Core works with many databasees, including SQL Database (on-premises and Azure), SQLite, MySQL, PostgreSQL, and Azure Cosmos DB.
+summary: Entity Framework Core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations. EF Core works with many databases, including SQL Database (on-premises and Azure), SQLite, MySQL, PostgreSQL, and Azure Cosmos DB.
 brand: dotnet
 
 metadata:
@@ -58,6 +58,40 @@ additionalContent:
             text: "ASP.NET Core Razor Pages web app accessing  SQL Server LocalDB or SQLite with EF Core"
           - url: /aspnet/core/data/ef-mvc/
             text: "ASP.NET Core MVC web app accessing SQL Server with EF Core"
+      # Card
+      - title: Supported databases
+        links:
+          - url: core/providers/sql-server/index.md
+            text: "SQL Server"
+          - url: core/providers/sqlite/index.md
+            text: "SQLite"
+          - url: http://www.npgsql.org/efcore/index.html
+            text: "PostgreSQL"
+          - url: https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql
+            text: "MySQL and MariaDB"
+          - url: core/providers/cosmos/index.md
+            text: "Cosmos DB SQL API"
+          - url: core/providers/in-memory/index.md
+            text: "In memory (testing)"
+          - url: core/providers/index.md
+            text: "All current Database Providers"
+      # Card
+      - title: Platforms
+        links:
+          - url: https://docs.microsoft.com/ef/core/platforms/
+            text: "All supported platforms"
+          - url: https://docs.microsoft.com/aspnet/core/data/ef-rp/intro
+            text: "ASP.NET Core Razor Pages"
+          - url: https://docs.microsoft.com/aspnet/core/data/ef-mvc/
+            text: "ASP.NET Core MVC"
+          - url: https://docs.microsoft.com/aspnet/core/blazor/dependency-injection?#use-of-entity-framework-dbcontext-from-di
+            text: "Blazor Server"
+          - url: https://docs.microsoft.com/ef/ef6/fundamentals/databinding/wpf
+            text: "Windows Presentation Foundation (WPF)"
+          - url: https://docs.microsoft.com/ef/ef6/fundamentals/databinding/winforms
+            text: "Windows Forms (WinForms)"
+          - url: https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin
+            text: "Xamarin (partial support)"
       # Card
       - title: Fundamentals
         links:
@@ -153,23 +187,6 @@ additionalContent:
             text: "Asynchronous saving"
           - url: core/saving/disconnected-entities.md
             text: "Disconnected entities"
-      # Card
-      - title: Supported databases
-        links:
-          - url: core/providers/sql-server/index.md
-            text: "SQL Server"
-          - url: core/providers/sqlite/index.md
-            text: "SQLite"
-          - url: http://www.npgsql.org/efcore/index.html
-            text: "PostgreSQL"
-          - url: https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql
-            text: "MySQL and MariaDB"
-          - url: core/providers/cosmos/index.md
-            text: "Cosmos DB SQL API"
-          - url: core/providers/in-memory/index.md
-            text: "In memory (testing)"
-          - url: core/providers/index.md
-            text: "All current Database Providers"
       # Card
       - title: Command-line reference
         links:

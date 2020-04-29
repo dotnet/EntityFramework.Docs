@@ -129,7 +129,7 @@ The following table shows parameters that are common to all of the EF Core comma
 |:--------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | -Context \<String>        | The `DbContext` class to use. Class name only or fully qualified with namespaces.  If this parameter is omitted, EF Core finds the context class. If there are multiple context classes, this parameter is required. |
 | -Project \<String>        | The target project. If this parameter is omitted, the **Default project** for **Package Manager Console** is used as the target project.                                                                             |
-| -StartupProject \<String> | The startup project. If this parameter is omitted, the **Startup project** in **Solution properties** is used as the target project.                                                                                 |
+| <nobr>-StartupProject</nobr> \<String> | The startup project. If this parameter is omitted, the **Startup project** in **Solution properties** is used as the target project.                                                                                 |
 | -Verbose                  | Show verbose output.                                                                                                                                                                                                 |
 
 To show help information about a command, use PowerShell's `Get-Help` command.
@@ -146,7 +146,8 @@ Parameters:
 | Parameter                         | Description                                                                                                             |
 |:----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
 | <nobr>-Name \<String><nobr>       | The name of the migration. This is a positional parameter and is required.                                              |
-| <nobr>-OutputDir \<String></nobr> | The directory (and sub-namespace) to use. Paths are relative to the target project directory. Defaults to "Migrations". |
+| <nobr>-OutputDir \<String></nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
+| <nobr>-Namespace \<String></nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. |
 
 ## Drop-Database
 
@@ -183,7 +184,9 @@ Parameters:
 | <nobr>-Connection \<String></nobr> | The connection string to the database. For ASP.NET Core 2.x projects, the value can be *name=\<name of connection string>*. In that case the name comes from the configuration sources that are set up for the project. This is a positional parameter and is required. |
 | <nobr>-Provider \<String></nobr>   | The provider to use. Typically this is the name of the NuGet package, for example: `Microsoft.EntityFrameworkCore.SqlServer`. This is a positional parameter and is required.                                                                                           |
 | -OutputDir \<String>               | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
-| -ContextDir \<String>              | The directory to put the `DbContext` file in. Paths are relative to the project directory.                                                                                                                                                                              |
+| -ContextDir \<String>              | The directory to put the `DbContext` file in. Paths are relative to the project directory.                                                                                                                                                               |
+| -Namespace \<String>               | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory.                                                                                                                                                                                             |
+| -ContextNamespace \<String>        | The namespace to use for the generated `DbContext` class. Note: overrides `-Namespace`.                                                                                                                                                                              |
 | -Context \<String>                 | The name of the `DbContext` class to generate.                                                                                                                                                                                                                          |
 | -Schemas \<String[]>               | The schemas of tables to generate entity types for. If this parameter is omitted, all schemas are included.                                                                                                                                                             |
 | -Tables \<String[]>                | The tables to generate entity types for. If this parameter is omitted, all tables are included.                                                                                                                                                                         |
@@ -197,10 +200,10 @@ Example:
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 ```
 
-Example that scaffolds only selected tables and creates the context in a separate folder with a specified name:
+Example that scaffolds only selected tables and creates the context in a separate folder with a specified name and namespace:
 
 ```powershell
-Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables "Blog","Post" -ContextDir Context -Context BlogContext
+Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables "Blog","Post" -ContextDir Context -Context BlogContext -ContextNamespace New.Namespace
 ```
 
 ## Script-Migration
@@ -238,6 +241,7 @@ Updates the database to the last migration or to a specified migration.
 | Parameter                           | Description                                                                                                                                                                                                                                                     |
 |:------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <nobr>*-Migration* \<String></nobr> | The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration* and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration. |
+| <nobr>-Connection \<String></nobr>  | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. |
 
 > [!TIP]
 > The Migration parameter supports tab-expansion.
@@ -248,11 +252,11 @@ The following example reverts all migrations.
 Update-Database -Migration 0
 ```
 
-The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID:
+The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID and a specified connection:
 
 ```powershell
 Update-Database -Migration InitialCreate
-Update-Database -Migration 20180904195021_InitialCreate
+Update-Database -Migration 20180904195021_InitialCreate -Connection your_connection_string
 ```
 
 ## Additional resources

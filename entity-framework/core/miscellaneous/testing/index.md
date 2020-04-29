@@ -1,8 +1,8 @@
 ---
-title: Test components using EF Core - EF Core
+title: Testing code that uses EF Core - EF Core
 description: Different approaches to testing applications that use EF Core
 author: ajcvickers
-ms.date: 03/23/2020
+ms.date: 04/22/2020
 uid: core/miscellaneous/testing/index
 ---
 # Testing code that uses EF Core
@@ -14,6 +14,9 @@ Testing code that accesses a database requires either:
 
 This document outlines the trade offs involved in each of these choices and shows how EF Core can be used with each approach.  
 
+> [!TIP]
+> See [EF Core testing sample](xref:core/miscellaneous/testing/testing-sample) for code demonstrating the concepts introduced here. 
+
 ## All database providers are not equal
 
 It is very important to understand that EF Core is not designed to abstract every aspect of the underlying database system.
@@ -21,10 +24,10 @@ Instead, EF Core is a common set of patterns and concepts that can be used with 
 EF Core database providers then layer database-specific behavior and functionality over this common framework.
 This allows each database system to do what it does best while still maintaining commonality, where appropriate, with other database systems. 
 
-Fundamentally, this means that switching out the database provider will change EF Core behavior and the application can't be expected to function correctly unless it explicitly accounts for all differences in behavior.
+Fundamentally, this means that switching out the database provider will change EF Core behavior and the application can't be expected to function correctly unless it explicitly accounts for any differences in behavior.
 That being said, in many cases doing this will work because there is a high degree of commonality amongst relational databases.
 This is good and bad.
-Good because moving between databases can be relatively easy.
+Good because moving between database systems can be relatively easy.
 Bad because it can give a false sense of security if the application is not fully tested against the new database system.  
 
 ## Approach 1: Production database system
@@ -39,20 +42,22 @@ Luckily, in this case the answer is quite easy: use local or on-premises SQL Ser
 SQL Azure and SQL Server are extremely similar, so testing against SQL Server is usually a reasonable trade off.
 That being said, it is still wise to run tests against SQL Azure itself before going into production.
  
-### LocalDb 
+### LocalDB 
 
 All the major database systems have some form of "Developer Edition" for local testing.
-SQL Server also also has a feature called [LocalDb](/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver15).
-The primary advantage of LocalDb is that it spins up the database instance on demand.
+SQL Server also has a feature called [LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver15).
+The primary advantage of LocalDB is that it spins up the database instance on demand.
 This avoids having a database service running on your machine even when you're not running tests.
 
-LocalDb is not without it's issues:
+LocalDB is not without it's issues:
 * It doesn't support everything that [SQL Server Developer Edition](/sql/sql-server/editions-and-components-of-sql-server-2016?view=sql-server-ver15) does.
 * It isn't available on Linux.
 * It can cause lag on first test run as the service is spun up.
 
 Personally, I've never found it a problem having a database service running on my dev machine and I would generally recommend using Developer Edition instead.
-However, it may be appropriate for some people, especially on less powerful dev machines.  
+However, LocalDB may be appropriate for some people, especially on less powerful dev machines.
+
+Running SQL Server (or any other database system) in a Docker container (os similar) is another way to avoid running the database system directly on your development machine.  
 
 ## Approach 2: SQLite
 
@@ -99,8 +104,8 @@ However, we never try to mock DbContext or IQueryable.
 Doing so is difficult, cumbersome, and fragile.
 **Don't do it.**
 
-Instead we use the in-memory database when unit testing something that uses DbContext.
-In this case using the in-memory database is appropriate because the test is not dependent on database behavior.
+Instead we use the EF in-memory database when unit testing something that uses DbContext.
+In this case using the EF in-memory database is appropriate because the test is not dependent on database behavior.
 Just don't do this to test actual database queries or updates.   
 
-See [Testing with the in-memory provider](xref:core/miscellaneous/testing/in-memory) for EF Core specific guidance on using the in-memory database for unit testing.
+The [EF Core testing sample](xref:core/miscellaneous/testing/testing-sample) demonstrates tests using the EF in-memory database, as well as SQL Server and SQLite. 
