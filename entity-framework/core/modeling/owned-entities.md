@@ -102,17 +102,21 @@ In this example `OrderDetails` owns `BillingAddress` and `ShippingAddress`, whic
 
 Each navigation to an owned type defines a separate entity type with completely independent configuration.
 
-In addition to nested owned types, an owned type can reference a regular entity, it can be either the owner or a different entity as long as the owned entity is on the dependent side. This capability sets owned entity types apart from complex types in EF6.
+In addition to nested owned types, an owned type can reference a regular entity which can be either the owner or a different entity as long as the owned entity is on the dependent side. This capability sets owned entity types apart from complex types in EF6.
 
 [!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
+
+## Configuring Owned Types
 
 It is possible to chain the `OwnsOne` method in a fluent call to configure this model:
 
 [!code-csharp[OwnsOneNested](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneNested)]
 
-Notice the `WithOwner` call used to configure the navigation property pointing back at the owner. To configure a navigation to the owner entity type that's not part of the ownership relationship `WithOwner()` should be called without any arguments.
+Notice the `WithOwner` call used to define the navigation property pointing back at the owner. To define a navigation to the owner entity type that's not part of the ownership relationship `WithOwner()` should be called without any arguments.
 
-It is possible to achieve the result using `OwnedAttribute` on both `OrderDetails` and `StreetAddress`.
+It is also possible to achieve this result using `OwnedAttribute` on both `OrderDetails` and `StreetAddress`.
+
+In addition, notice the `Navigation` call. In EFCore 5.0, navigation properties to owned types can be further configured [as for non-owned navigation properties](relationships.md#Configuring-navigation-properties).
 
 ## Storing owned types in separate tables
 

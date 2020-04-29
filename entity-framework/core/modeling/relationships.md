@@ -138,6 +138,16 @@ If you only have one navigation property then there are parameterless overloads 
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneNavigation.cs?name=OneNavigation&highlight=8-10)]
 
+---
+
+### Configuring navigation properties
+
+After the navigation property has been created, you may need to further configure it. In EFCore 5.0 new Fluent API is added to allow you perform that configuration.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
+
+[!NOTE] This call cannot be used to create a navigation property. It is only used to configure a navigation property which has been previously created by defining a relationship.
+
 ### Foreign key
 
 #### [Fluent API (simple key)](#tab/fluent-api-simple-key)
