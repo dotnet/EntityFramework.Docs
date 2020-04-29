@@ -55,21 +55,22 @@ Three files are added to your project under the **Migrations** directory:
 
 The timestamp in the filename helps keep them ordered chronologically so you can see the progression of changes.
 
-> [!TIP]
-> You are free to move Migrations files and change their namespace manually. New migrations are created as siblings of the last migration.
-> 
-> Alternatively you can use `-Namespace` (Package Manager Console) or `--namespace` (.NET Core CLI) to specify the namespace at generation time.
-> ### [.NET Core CLI](#tab/dotnet-core-cli)
-> 
-> ```dotnetcli
-> dotnet ef migrations add InitialCreate --namespace Your.Namespace
-> ```
-> 
-> ### [Visual Studio](#tab/vs)
-> 
-> ``` powershell
-> Add-Migration InitialCreate -Namespace Your.Namespace
-> ```
+### Namespaces
+You are free to move Migrations files and change their namespace manually. New migrations are created as siblings of the last migration.
+
+Alternatively you can use `-Namespace` (Package Manager Console) or `--namespace` (.NET Core CLI) to specify the namespace at generation time.
+
+### [.NET Core CLI](#tab/dotnet-core-cli)
+
+```dotnetcli
+dotnet ef migrations add InitialCreate --namespace Your.Namespace
+```
+
+### [Visual Studio](#tab/vs)
+
+``` powershell
+Add-Migration InitialCreate -Namespace Your.Namespace
+```
 
 ## Update the database
 
