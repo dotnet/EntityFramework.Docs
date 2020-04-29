@@ -67,15 +67,18 @@ For example, to reverse engineer a database putting the context and model classe
 dotnet ef dbcontext scaffold "connection string" Microsoft.EntityFrameworkCore.SqlServer --context-namespace "My.Context" --namespace "My.Model"
 ```
 
+See the [Migrations](xref:core/managing-schemas/migrations/index#namespaces) and [Reverse Engineering](xref:core/managing-schemas/scaffolding#directories-and-namespaces) documentation for full details.
+
+---
 Also, a connection string can now be passed to the `database-update` command:
 
 ```
 dotnet ef database update --connection "connection string"
 ```
 
-Equivalent parameters have also been added to the PowerShell commands used in the VS Package Manager Console.
+See the [Tools documentation](xref:core/miscellaneous/cli/dotnet#dotnet-ef-database-update) for full details.
 
-Documentation is tracked by issue [#2303](https://github.com/dotnet/EntityFramework.Docs/issues/2303).
+Equivalent parameters have also been added to the PowerShell commands used in the VS Package Manager Console.
 
 ### EnableDetailedErrors has returned
 
