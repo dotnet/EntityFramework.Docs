@@ -116,7 +116,7 @@ Notice the `WithOwner` call used to define the navigation property pointing back
 
 It is also possible to achieve this result using `OwnedAttribute` on both `OrderDetails` and `StreetAddress`.
 
-In addition, notice the `Navigation` call. In EFCore 5.0, navigation properties to owned types can be further configured [as for non-owned navigation properties](relationships.md#Configuring-navigation-properties).
+In addition, notice the `Navigation` call. In EFCore 5.0, navigation properties to owned types can be further configured [as for non-owned navigation properties](relationships.md#configuring-navigation-properties).
 
 ## Storing owned types in separate tables
 
