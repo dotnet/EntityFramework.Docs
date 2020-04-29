@@ -60,13 +60,13 @@ You are free to move Migrations files and change their namespace manually. New m
 
 Alternatively you can use `-Namespace` (Package Manager Console) or `--namespace` (.NET Core CLI) to specify the namespace at generation time.
 
-#### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add InitialCreate --namespace Your.Namespace
 ```
 
-#### [Visual Studio](#tab/vs)
+### [Visual Studio](#tab/vs)
 
 ``` powershell
 Add-Migration InitialCreate -Namespace Your.Namespace
