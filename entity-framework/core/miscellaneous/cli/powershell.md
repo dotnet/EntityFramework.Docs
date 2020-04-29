@@ -129,7 +129,7 @@ The following table shows parameters that are common to all of the EF Core comma
 |:--------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | -Context \<String>        | The `DbContext` class to use. Class name only or fully qualified with namespaces.  If this parameter is omitted, EF Core finds the context class. If there are multiple context classes, this parameter is required. |
 | -Project \<String>        | The target project. If this parameter is omitted, the **Default project** for **Package Manager Console** is used as the target project.                                                                             |
-| -StartupProject \<String> | The startup project. If this parameter is omitted, the **Startup project** in **Solution properties** is used as the target project.                                                                                 |
+| <nobr>-StartupProject</nobr> \<String> | The startup project. If this parameter is omitted, the **Startup project** in **Solution properties** is used as the target project.                                                                                 |
 | -Verbose                  | Show verbose output.                                                                                                                                                                                                 |
 
 To show help information about a command, use PowerShell's `Get-Help` command.
@@ -241,6 +241,7 @@ Updates the database to the last migration or to a specified migration.
 | Parameter                           | Description                                                                                                                                                                                                                                                     |
 |:------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <nobr>*-Migration* \<String></nobr> | The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration* and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration. |
+| <nobr>-Connection \<String></nobr>  | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. |
 
 > [!TIP]
 > The Migration parameter supports tab-expansion.
@@ -251,11 +252,11 @@ The following example reverts all migrations.
 Update-Database -Migration 0
 ```
 
-The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID:
+The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID and a specified connection:
 
 ```powershell
 Update-Database -Migration InitialCreate
-Update-Database -Migration 20180904195021_InitialCreate
+Update-Database -Migration 20180904195021_InitialCreate -Connection your_connection_string
 ```
 
 ## Additional resources

@@ -187,11 +187,18 @@ Arguments:
 |:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `<MIGRATION>` | The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration* and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration. |
 
-The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID:
+Options:
+
+|                   | Option                   | Description                                              |
+|:------------------|:-------------------------|:---------------------------------------------------------|
+| <nobr>    </nobr> |  `--connection <CONNECTION>`        | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. |
+
+
+The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID and a specified connection:
 
 ```dotnetcli
 dotnet ef database update InitialCreate
-dotnet ef database update 20180904195021_InitialCreate
+dotnet ef database update 20180904195021_InitialCreate --connection your_connection_string
 ```
 
 ## dotnet ef dbcontext info
