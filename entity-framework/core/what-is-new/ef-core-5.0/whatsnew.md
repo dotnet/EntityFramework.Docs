@@ -56,7 +56,7 @@ modelBuilder.Entity<Blog>().Navigation(e => e.Posts).HasField("_myposts");
 Note that the `Navigation` API does not replace relationship configuration.
 Instead it allows additional configuration of navigation properties in already discovered or defined relationships.
 
-Documentation is tracked by issue [#2302](https://github.com/dotnet/EntityFramework.Docs/issues/2302).
+See the [Configuring Navigation Properties documentation](xref:core/modeling/relationships#Configuring-navigation-properties).
 
 ### New command-line parameters for namespaces and connection strings 
 
