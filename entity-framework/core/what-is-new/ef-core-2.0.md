@@ -157,7 +157,7 @@ builder.ApplyConfiguration(new CustomerConfiguration());
 
 ### DbContext pooling
 
-The basic pattern for using EF Core in an ASP.NET Core application usually involves registering a custom DbContext type into the dependency injection system and later obtaining instances of that type through constructor parameters in controllers. This means a new instance of the DbContext is created for each requests.
+The basic pattern for using EF Core in an ASP.NET Core application usually involves registering a custom DbContext type into the dependency injection system and later obtaining instances of that type through constructor parameters in controllers. This means a new instance of the DbContext is created for each request.
 
 In version 2.0 we are introducing a new way to register custom DbContext types in dependency injection which transparently introduces a pool of reusable DbContext instances. To use DbContext pooling, use the `AddDbContextPool` instead of `AddDbContext` during service registration:
 
@@ -175,7 +175,7 @@ This is conceptually similar to how connection pooling operates in ADO.NET provi
 The new method introduces a few limitations on what can be done in the `OnConfiguring()` method of the DbContext.
 
 > [!WARNING]  
-> Avoid using DbContext Pooling if you maintain your own state (for example, private fields) in your derived DbContext class that should not be shared across requests. EF Core will only reset the state that is aware of before adding a DbContext instance to the pool.
+> Avoid using DbContext Pooling if you maintain your own state (for example, private fields) in your derived DbContext class that should not be shared across requests. EF Core will only reset the state that it is aware of before adding a DbContext instance to the pool.
 
 ### Explicitly compiled queries
 
