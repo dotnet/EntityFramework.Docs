@@ -77,7 +77,7 @@
       "feedback_system": "GitHub",
       "feedback_github_repo": "dotnet/EntityFramework.Docs",
       "feedback_product_url": "https://github.com/dotnet/efcore/issues/new/choose",
-      "uhfHeaderId": "MSDocsHeader-DotNet"
+      "uhfHeaderId": []
     },
     "fileMetadata": {
       "feedback_product_url": {
