@@ -146,7 +146,7 @@ After the navigation property has been created, you may need to further configur
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
 
-[!NOTE] This call cannot be used to create a navigation property. It is only used to configure a navigation property which has been previously created by defining a relationship.
+[!NOTE] This call cannot be used to create a navigation property. It is only used to configure a navigation property which has been previously created by defining a relationship or from a convention.
 
 ### Foreign key
 
