@@ -35,6 +35,7 @@ namespace EFModeling.OwnedEntities
             modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od =>
             {
                 od.WithOwner(d => d.Order);
+                od.Navigation(d => d.Order).UsePropertyAccessMode(PropertyAccessMode.Property);
                 od.OwnsOne(c => c.BillingAddress);
                 od.OwnsOne(c => c.ShippingAddress);
             });
