@@ -107,7 +107,7 @@ Scaffold-DbContext ... -ContextDir Data -OutputDir Models
 dotnet ef dbcontext scaffold ... --context-dir Data --output-dir Models
 ```
 
- By default, the namespace will be the root namespace plus the names of any subdirectories under the project's root directory. However you can override the namespace for all output classes by using `-Namespace` (PMC) or `--namespace` (CLI). You can also override the namespace for just the DbContext class using `-ContextNamespace` (PMC) or `--context-namespace` (CLI).
+ By default, the namespace will be the root namespace plus the names of any subdirectories under the project's root directory. However, in EFCore 5.0, you can override the namespace for all output classes by using `-Namespace` (PMC) or `--namespace` (CLI). You can also override the namespace for just the DbContext class using `-ContextNamespace` (PMC) or `--context-namespace` (CLI).
 
 ``` powershell
 Scaffold-DbContext ... -Namespace Your.Namespace -ContextNamespace Your.DbContext.Namespace
