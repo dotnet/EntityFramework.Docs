@@ -46,7 +46,7 @@ using (var context = new BloggingContext())
 }
 ```  
 
-A good way to simulate a concurrency exception is to set a breakpoint on the SaveChanges call and then modify an entity that is being saved in the database using another tool such as SQL Management Studio. You could also insert a line before SaveChanges to update the database directly using SqlCommand. For example:  
+A good way to simulate a concurrency exception is to set a breakpoint on the SaveChanges call and then modify an entity that is being saved in the database using another tool such as SQL Server Management Studio. You could also insert a line before SaveChanges to update the database directly using SqlCommand. For example:  
 
 ``` csharp
 context.Database.SqlCommand(
