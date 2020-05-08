@@ -27,7 +27,7 @@ namespace EFSaving.ExplicitValuesGenerateProperties
 
             modelBuilder.Entity<Employee>()
                 .Property(b => b.LastPayRaise)
-                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
             #endregion
         }
     }
