@@ -2,7 +2,7 @@
 title: What's New in EF Core 5.0
 description: Overview of new features in EF Core 5.0
 author: ajcvickers
-ms.date: 03/30/2020
+ms.date: 05/11/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew.md
 ---
 
@@ -15,6 +15,38 @@ This page does not duplicate the [plan for EF Core 5.0](plan.md).
 The plan describes the overall themes for EF Core 5.0, including everything we are planning to include before shipping the final release.
 
 We will add links from here to the official documentation as it is published.
+
+## Preview 4
+
+### Configure database precision/scale in model
+
+Precision and scale for a property can now be specified using the model builder.
+For example:
+
+```CSharp
+modelBuilder
+    .Entity<Blog>()
+    .Property(b => b.Numeric)
+    .HasPrecision(16, 4);
+```
+
+Precision and scale can still be set via the full database type, such as "decimal(16,4)". 
+
+Documentation is tracked by issue [#527](https://github.com/dotnet/EntityFramework.Docs/issues/527).
+
+### Specify SQL Server index fill factor
+
+The fill factor can now be specified when creating an index on SQL Server.
+For example:
+
+```CSharp
+modelBuilder
+    .Entity<Customer>()
+    .HasIndex(e => e.Name)
+    .HasFillFactor(90);
+```
+
+Documentation is tracked by issue [#2378](https://github.com/dotnet/EntityFramework.Docs/issues/2378).
 
 ## Preview 3
 
