@@ -27,7 +27,7 @@ The model backing this API has two entity types: Items and Tags.
 
 * Items have a case-sensitive name and a collection of Tags.
 * Each Tag has a label and a count representing the number of times it has been applied to the Item.
-* Each Item should only have one Tag with with a given label.
+* Each Item should only have one Tag with a given label.
   * If an item is tagged with the same label more than once, then the count on the existing tag with that label is incremented instead of a new tag being created. 
 * Deleting an Item should delete all associated Tags.
 
@@ -90,7 +90,7 @@ And a method to delete an Item and all associated Tags:
 
 [!code-csharp[DeleteItem](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/ItemsWebApi/Controllers/ItemsController.cs?name=DeleteItem)]
 
-Most validation and error handling has been removed to reduce clutter.
+Most validation and error handling have been removed to reduce clutter.
 
 ## The Tests
 
@@ -122,7 +122,7 @@ This means that we can setup and configure the database in the test constructor 
 
 > [!TIP]
 > This sample recreates the database for each test.
-> This works well for SQLite and EF in-memory database testing, but can involve significant overhead with other database systems, including SQL Server.
+> This works well for SQLite and EF in-memory database testing but can involve significant overhead with other database systems, including SQL Server.
 > Approaches for reducing this overhead are covered in [Sharing databases across tests](xref:core/miscellaneous/testing/sharing-databases).
 
 When each test is run:
@@ -151,11 +151,11 @@ For example:
 [!code-csharp[CanGetItems](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/ItemsControllerTest.cs?name=CanGetItems)]
 
 Notice that different DbContext instances are used to seed the database and run the tests. 
-This ensures that test is not using (or tripping over) entities tracked by the context when seeding.
+This ensures that the test is not using (or tripping over) entities tracked by the context when seeding.
 It also better matches what happens in web apps and services.
 
 Tests that mutate the database create a second DbContext instance in the test for similar reasons.
-That is, creating a new, clean, context and then reading into it from the database to ensure that the changes really were saved to the database. 
+That is, creating a new, clean, context and then reading into it from the database to ensure that the changes were saved to the database. 
 For example:
 
 [!code-csharp[CanAddItem](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/ItemsControllerTest.cs?name=CanAddItem)]
@@ -172,9 +172,9 @@ Testing with a different database system than is used in the production applicat
 These are covered at the conceptual level in [Testing code that uses EF Core](xref:core/miscellaneous/testing/index).  
 The sections below cover two examples of such issues demonstrated by the tests in this sample.
 
-### Test passes when application is broken
+### Test passes when the application is broken
 
-One of the requirements for our application is that, "Items have a case-sensitive name and a collection of Tags."
+One of the requirements for our application is that "Items have a case-sensitive name and a collection of Tags."
 This is pretty simple to test:
 
 [!code-csharp[CanAddItemCaseInsensitive](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/ItemsControllerTest.cs?name=CanAddItemCaseInsensitive)]
@@ -196,14 +196,14 @@ System.InvalidOperationException : Sequence contains more than one element
 This is because both the EF in-memory database and the SQLite database are case-sensitive by default.
 SQL Server, on the other hand, is case-insensitive! 
 
-EF Core, by design, does not change these behaviors because forcing a change in case-sensitivity can have big performance impact.
+EF Core, by design, does not change these behaviors because forcing a change in case-sensitivity can have a big performance impact.
 
 Once we know this is a problem we can fix the application and compensate in tests.
 However, the point here is that this bug could be missed if only testing with the EF in-memory database or SQLite providers.
 
-### Test fails when application is correct 
+### Test fails when the application is correct 
 
-Another of the requirements for our application is that, "deleting an Item should delete all associated Tags."
+Another of the requirements for our application is that "deleting an Item should delete all associated Tags."
 Again, easy to test:
 
 [!code-csharp[DeleteItem](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/ItemsControllerTest.cs?name=DeleteItem)]
@@ -217,7 +217,7 @@ Actual:   True
    at Tests.ItemsControllerTest.Can_remove_item_and_all_associated_tags()
 ```
 
-In this case the application is working correctly because SQL Server supports [cascade deletes](xref:core/saving/cascade-delete). 
+In this case, the application is working correctly because SQL Server supports [cascade deletes](xref:core/saving/cascade-delete). 
 SQLite also supports cascade deletes, as do most relational databases, so testing this on SQLite works.
 On the other hand, the EF in-memory database [does not support cascade deletes](https://github.com/dotnet/efcore/issues/3924).
 This means that this part of the application cannot be tested with the EF in-memory database provider.
