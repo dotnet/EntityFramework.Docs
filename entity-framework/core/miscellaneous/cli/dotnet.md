@@ -124,7 +124,7 @@ Entity Framework Core .NET Command-line Tools 2.1.3-rtm-32065
 
 ## Updating the tools
 
-Use `dotnet tool update --global dotnet-ef` to update the global tools to the latest available version, if you have the tools installed locally in your project use `dotnet tool update dotnet-ef`. Install a specific version by appending `--version <VERSION>` to your command.
+Use `dotnet tool update --global dotnet-ef` to update the global tools to the latest available version, if you have the tools installed locally in your project use `dotnet tool update dotnet-ef`. Install a specific version by appending `--version <VERSION>` to your command. See the [Update](/dotnet/core/tools/dotnet-tool-update) section of the dotnet tool documentation for more details.
 
 
 ## Using the tools
