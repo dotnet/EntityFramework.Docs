@@ -12,7 +12,7 @@ Testing code that accesses a database requires either:
 * Running queries and updates against some other easier to manage database system.
 * Using test doubles or some other mechanism to avoid using a database at all.
 
-This document outlines the trade offs involved in each of these choices and shows how EF Core can be used with each approach.  
+This document outlines the trade-offs involved in each of these choices and shows how EF Core can be used with each approach.  
 
 > [!TIP]
 > See [EF Core testing sample](xref:core/miscellaneous/testing/testing-sample) for code demonstrating the concepts introduced here. 
@@ -36,10 +36,10 @@ As described in the previous section, the only way to be sure you are testing wh
 For example, if the deployed application uses SQL Azure, then testing should also be done against SQL Azure.
 
 However, having every developer run tests against SQL Azure while actively working on the code would be both slow and expensive.
-This illustrates the main trade off involved throughout these approaches: when is it appropriate to deviate from the production database system so as to improve test efficiency?
+This illustrates the main trade-off involved throughout these approaches: when is it appropriate to deviate from the production database system so as to improve test efficiency?
 
 Luckily, in this case the answer is quite easy: use local or on-premises SQL Server for developer testing.
-SQL Azure and SQL Server are extremely similar, so testing against SQL Server is usually a reasonable trade off.
+SQL Azure and SQL Server are extremely similar, so testing against SQL Server is usually a reasonable trade-off.
 That being said, it is still wise to run tests against SQL Azure itself before going into production.
  
 ### LocalDB 
@@ -49,7 +49,7 @@ SQL Server also has a feature called [LocalDB](/sql/database-engine/configure-wi
 The primary advantage of LocalDB is that it spins up the database instance on demand.
 This avoids having a database service running on your machine even when you're not running tests.
 
-LocalDB is not without it's issues:
+LocalDB is not without its issues:
 * It doesn't support everything that [SQL Server Developer Edition](/sql/sql-server/editions-and-components-of-sql-server-2016?view=sql-server-ver15) does.
 * It isn't available on Linux.
 * It can cause lag on first test run as the service is spun up.
@@ -57,7 +57,7 @@ LocalDB is not without it's issues:
 Personally, I've never found it a problem having a database service running on my dev machine and I would generally recommend using Developer Edition instead.
 However, LocalDB may be appropriate for some people, especially on less powerful dev machines.
 
-Running SQL Server (or any other database system) in a Docker container (os similar) is another way to avoid running the database system directly on your development machine.  
+Running SQL Server (or any other database system) in a Docker container (or similar) is another way to avoid running the database system directly on your development machine.  
 
 ## Approach 2: SQLite
 
@@ -87,9 +87,9 @@ See [Testing with SQLite](xref:core/miscellaneous/testing/sqlite) for EF Core sp
 
 EF Core comes with an in-memory database that we use for internal testing of EF Core itself.
 This database is in general **not suitable as a substitute for testing applications that use EF Core**. Specifically:
-* It is not a relational database
-* It doesn't support transactions
-* It is not optimized for performance
+* It is not a relational database.
+* It doesn't support transactions.
+* It is not optimized for performance.
 
 None of this is very important when testing EF Core internals because we use it specifically where the database is irrelevant to the test.
 On the other hand, these things tend to be very important when testing an application that uses EF Core.

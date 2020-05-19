@@ -11,7 +11,7 @@ Most database providers require some form of connection string to connect to the
 
 ## WinForms & WPF Applications
 
-WinForms, WPF, and ASP.NET 4 applications have a tried and tested connection string pattern. The connection string should be added to your application's App.config file (Web.config if you are using ASP.NET). If your connection string contains sensitive information, such as username and password, you can protect the contents of the configuration file using the [Secret Manager tool](https://docs.microsoft.com/aspnet/core/security/app-secrets#secret-manager).
+WinForms, WPF, and ASP.NET 4 applications have a tried and tested connection string pattern. The connection string should be added to your application's App.config file (Web.config if you are using ASP.NET). If your connection string contains sensitive information, such as username and password, you can protect the contents of the configuration file using the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager).
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -44,7 +44,7 @@ public class BloggingContext : DbContext
 
 ## Universal Windows Platform (UWP)
 
-Connection strings in a UWP application are typically a SQLite connection that just specifies a local filename. They typically do not contain sensitive information, and do not need to be changed as an application is deployed. As such, these connection strings are usually fine to be left in code, as shown below. If you wish to move them out of code then UWP supports the concept of settings, see the [App Settings section of the UWP documentation](https://docs.microsoft.com/windows/uwp/app-settings/store-and-retrieve-app-data) for details.
+Connection strings in a UWP application are typically a SQLite connection that just specifies a local filename. They typically do not contain sensitive information, and do not need to be changed as an application is deployed. As such, these connection strings are usually fine to be left in code, as shown below. If you wish to move them out of code then UWP supports the concept of settings, see the [App Settings section of the UWP documentation](/windows/uwp/app-settings/store-and-retrieve-app-data) for details.
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -61,7 +61,16 @@ public class BloggingContext : DbContext
 
 ## ASP.NET Core
 
-In ASP.NET Core the configuration system is very flexible, and the connection string could be stored in `appsettings.json`, an environment variable, the user secret store, or another configuration source. See the [Configuration section of the ASP.NET Core documentation](https://docs.asp.net/en/latest/fundamentals/configuration.html) for more details. The following example shows the connection string stored in `appsettings.json`.
+In ASP.NET Core the configuration system is very flexible, and the connection string could be stored in `appsettings.json`, an environment variable, the user secret store, or another configuration source. See the [Configuration section of the ASP.NET Core documentation](/aspnet/core/fundamentals/configuration) for more details.
+
+For instance, you can use the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager) to store your database password and then, in scaffolding, use a connection string that simply consists of `Name=<database-alias>`.
+
+```dotnetcli
+dotnet user-secrets set ConnectionStrings.YourDatabaseAlias "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=YourDatabase"
+dotnet ef dbcontext scaffold Name=YourDatabaseAlias Microsoft.EntityFrameworkCore.SqlServer
+```
+
+Or the following example shows the connection string stored in `appsettings.json`.
 
 ``` json
 {
@@ -71,7 +80,7 @@ In ASP.NET Core the configuration system is very flexible, and the connection st
 }
 ```
 
-The context is typically configured in `Startup.cs` with the connection string being read from configuration. Note the `GetConnectionString()` method looks for a configuration value whose key is `ConnectionStrings:<connection string name>`. You need to import the [Microsoft.Extensions.Configuration](https://docs.microsoft.com/dotnet/api/microsoft.extensions.configuration) namespace to use this extension method.
+Then the context is typically configured in `Startup.cs` with the connection string being read from configuration. Note the `GetConnectionString()` method looks for a configuration value whose key is `ConnectionStrings:<connection string name>`. You need to import the [Microsoft.Extensions.Configuration](/dotnet/api/microsoft.extensions.configuration) namespace to use this extension method.
 
 ``` csharp
 public void ConfigureServices(IServiceCollection services)

@@ -35,8 +35,9 @@ You can also tell the tools how to create your DbContext by implementing the `ID
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/CommandLine/BloggingContextFactory.cs)]
 
 > [!NOTE]
-> The `args` parameter is currently unused. There is [an issue][8] tracking the ability to specify design-time arguments
-> from the tools.
+> Prior to EFCore 5.0 the `args` parameter was unused (see [this issue][8]).
+> This is fixed in EFCore 5.0 and any additional design-time arguments
+> are passed into the application through that parameter.
 
 A design-time factory can be especially useful if you need to configure the DbContext differently for design time than at run time, if the `DbContext` constructor takes additional parameters are not registered in DI, if you are not using DI at all, or if for some reason you prefer not to have a `BuildWebHost` method in your ASP.NET Core application's `Main` class.
 

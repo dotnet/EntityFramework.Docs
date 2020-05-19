@@ -22,13 +22,19 @@ The first argument to the command is a connection string to the database. The to
 
 How you quote and escape the connection string depends on which shell you are using to execute the command. Refer to your shell's documentation for specifics. For example, PowerShell requires you to escape the `$` character, but not `\`.
 
-``` powershell
-Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer
-```
+### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook" Microsoft.EntityFrameworkCore.SqlServer
 ```
+
+### [Visual Studio](#tab/vs)
+
+``` powershell
+Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer
+```
+
+***
 
 ### Configuration and User Secrets
 
@@ -49,21 +55,27 @@ The second argument is the provider name. The provider name is typically the sam
 
 All tables in the database schema are reverse engineered into entity types by default. You can limit which tables are reverse engineered by specifying schemas and tables.
 
-The `-Schemas` parameter in PMC and the `--schema` option in the CLI can be used to include every table within a schema.
+### [.NET Core CLI](#tab/dotnet-core-cli)
 
-`-Tables` (PMC) and `--table` (CLI) can be used to include specific tables.
+The `--schema` option can be used to include every table within a schema, while `--table` can be used to include specific tables.
 
-To include multiple tables in PMC, use an array.
+To include multiple tables, specify the option multiple times:
+
+```dotnetcli
+dotnet ef dbcontext scaffold ... --table Artist --table Album
+```
+
+### [Visual Studio](#tab/vs)
+
+The `-Schemas` option can be used to include every table within a schema, while `-Tables` can be used to include specific tables.
+
+To include multiple tables, use an array:
 
 ``` powershell
 Scaffold-DbContext ... -Tables Artist, Album
 ```
 
-To include multiple tables in the CLI, specify the option multiple times.
-
-```dotnetcli
-dotnet ef dbcontext scaffold ... --table Artist --table Album
-```
+***
 
 ## Preserving names
 
@@ -95,27 +107,37 @@ The scaffolded DbContext class name will be the name of the database suffixed wi
 
 ## Directories and namespaces
 
-The entity classes and a DbContext class are scaffolded into the project's root directory and use the project's default namespace. You can specify the directory where classes are scaffolded using `-OutputDir` (PMC) or `--output-dir` (CLI).
+The entity classes and a DbContext class are scaffolded into the project's root directory and use the project's default namespace.
 
-You can also use `-ContextDir` (PMC) and `--context-dir` (CLI) to scaffold the DbContext class into a separate directory from the entity type classes.
+### [.NET Core CLI](#tab/dotnet-core-cli)
 
-``` powershell
-Scaffold-DbContext ... -ContextDir Data -OutputDir Models
-```
+You can specify the directory where classes are scaffolded using `--output-dir`, and `--context-dir` can be used to scaffold the DbContext class into a separate directory from the entity type classes:
 
 ```dotnetcli
 dotnet ef dbcontext scaffold ... --context-dir Data --output-dir Models
 ```
 
- By default, the namespace will be the root namespace plus the names of any subdirectories under the project's root directory. However you can override the namespace for all output classes by using `-Namespace` (PMC) or `--namespace` (CLI). You can also override the namespace for just the DbContext class using `-ContextNamespace` (PMC) or `--context-namespace` (CLI).
+By default, the namespace will be the root namespace plus the names of any subdirectories under the project's root directory. However, from EFCore 5.0 onwards, you can override the namespace for all output classes by using `--namespace`. You can also override the namespace for just the DbContext class using `--context-namespace`:
+
+```dotnetcli
+dotnet ef dbcontext scaffold ... --namespace Your.Namespace --context-namespace Your.DbContext.Namespace
+```
+
+### [Visual Studio](#tab/vs)
+
+You can specify the directory where classes are scaffolded using `-OutputDir`, and `-ContextDir` can be used to scaffold the DbContext class into a separate directory from the entity type classes:
+
+``` powershell
+Scaffold-DbContext ... -ContextDir Data -OutputDir Models
+```
+
+By default, the namespace will be the root namespace plus the names of any subdirectories under the project's root directory. However, from EFCore 5.0 onwards, you can override the namespace for all output classes by using `-Namespace`. You can also override the namespace for just the DbContext class using `-ContextNamespace`.
 
 ``` powershell
 Scaffold-DbContext ... -Namespace Your.Namespace -ContextNamespace Your.DbContext.Namespace
 ```
 
-```dotnetcli
-dotnet ef dbcontext scaffold ... --namespace Your.Namespace --context-namespace Your.DbContext.Namespace
-```
+***
 
 ## How it works
 
