@@ -81,7 +81,7 @@ In the following example, configuring a maximum length of 500 will cause a colum
 
 ### Precision and Scale
 
-Fluent API to configure the precision and scale is available in EFCore 5.0. It tells the database provider how much storage is needed for a given column. It only applies to data types where  the provider allows the precision and scale to vary - usually just `decimal` and `DateTime`.
+Starting with EFCore 5.0, you can use fluent API to configure the precision and scale. It tells the database provider how much storage is needed for a given column. It only applies to data types where the provider allows the precision and scale to vary - usually just `decimal` and `DateTime`.
 
 For `decimal` properties, precision defines the maximum number of digits needed to express any value the column will contain, and scale defines the maximum number of decimal places needed. For `DateTime` properties, precision defines the maximum number of digits needed to express fractions of seconds, and scale is not used.
 
