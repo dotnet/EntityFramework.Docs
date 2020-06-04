@@ -17,13 +17,13 @@ At the moment, EF Core only supports the table-per-hierarchy (TPH) pattern. TPH 
 
 ## Entity type hierarchy mapping
 
-By convention, EF will only set up inheritance if two or more inherited types are explicitly included in the model. EF will not automatically scan for base or derived types that are not otherwise included in the model.
+By convention, EF will not automatically scan for base or derived types; this means that if you want a CLR type in your hierarchy to be mapped, you must explicitly specify that type on your model. For example, specifying only the base type of a hierarchy will not cause EF Core to implicitly include all of its sub-types.
 
-You can include types in the model by exposing a DbSet for each type in the inheritance hierarchy:
+The following sample exposes a DbSet for `Blog` and its subclass `RssBlog`. If `Blog` has any other subclass, it will not be included in the model.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs?name=InheritanceDbSets&highlight=3-4)]
 
-This model be mapped to the following database schema (note the implicitly-created *Discriminator* column, which identifies which type of *Blog* is stored in each row):
+This model is mapped to the following database schema (note the implicitly-created *Discriminator* column, which identifies which type of *Blog* is stored in each row):
 
 ![image](_static/inheritance-tph-data.png)
 
