@@ -2,7 +2,7 @@
 title: What's New in EF Core 5.0
 description: Overview of new features in EF Core 5.0
 author: ajcvickers
-ms.date: 05/11/2020
+ms.date: 06/02/2020
 uid: core/what-is-new/ef-core-5.0/whatsnew.md
 ---
 
@@ -15,6 +15,119 @@ This page does not duplicate the [plan for EF Core 5.0](plan.md).
 The plan describes the overall themes for EF Core 5.0, including everything we are planning to include before shipping the final release.
 
 We will add links from here to the official documentation as it is published.
+
+## Preview 5
+
+### Database collations
+
+The default collation for a database can now be specified in the EF model.
+This will flow through to generated migrations to set the collation when the database is created.
+For example:
+
+```CSharp
+modelBuilder.UseCollation("German_PhoneBook_CI_AS");
+```
+
+Migrations then generates the following to create the database on SQL Server:
+
+```sql
+CREATE DATABASE [Test]
+COLLATE German_PhoneBook_CI_AS;
+```
+
+The collation to use for specific database columns can also be specified.
+For example:
+
+```CSharp
+ modelBuilder
+     .Entity<User>()
+     .Property(e => e.Name)
+     .UseCollation("German_PhoneBook_CI_AS");
+```
+
+For those not using migrations, collations are now reverse-engineered from the database when scaffolding a DbContext.
+
+Finally, the `EF.Functions.Collate()` allows for ad-hoc queries using different collations.
+For example:
+
+```CSharp
+context.Users.Single(e => EF.Functions.Collate(e.Name, "French_CI_AS") == "Jean-Michel Jarre");
+```
+
+This will generate the following query for SQL Server:
+
+```sql
+SELECT TOP(2) [u].[Id], [u].[Name]
+FROM [Users] AS [u]
+WHERE [u].[Name] COLLATE French_CI_AS = N'Jean-Michel Jarre'
+```
+
+Note that ad-hoc collations should be used with care as they can negatively impact database performance.
+
+Documentation is tracked by issue [#2273](https://github.com/dotnet/EntityFramework.Docs/issues/2273).
+
+### Flow arguments into IDesignTimeDbContextFactory
+
+Arguments are now flowed from the command line into the `CreateDbContext` method of [IDesignTimeDbContextFactory](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1). 
+For example, to indicate this is a dev build, a custom argument (e.g. `dev`) can passed on the command line:
+
+```
+dotnet ef migrations add two --verbose --dev
+``` 
+
+This argument will then flow into the factory, where it can be used to control how the context is created and initialized.
+For example:
+
+```CSharp
+public class MyDbContextFactory : IDesignTimeDbContextFactory<SomeDbContext>
+{
+    public SomeDbContext CreateDbContext(string[] args) 
+        => new SomeDbContext(args.Contains("--dev"));
+}
+```
+
+Documentation is tracked by issue [#2419](https://github.com/dotnet/EntityFramework.Docs/issues/2419).
+
+### No-tracking queries with identity resolution
+
+No-tracking queries can now be configured to perform identity resolution.
+For example, the following query will create a new Blog instance for each Post, even if each Blog has the same primary key. 
+
+```CSharp
+context.Posts.AsNoTracking().Include(e => e.Blog).ToList();
+```
+
+However, at the expense of usually being slightly slower and always using more memory, this query can be changed to ensure only a single Blog instance is created:
+
+```CSharp
+context.Posts.AsNoTracking().PerformIdentityResolution().Include(e => e.Blog).ToList();
+```
+
+Note that this is only useful for no-tracking queries since all tracking queries already exhibit this behavior. 
+Also, following API review, the `PerformIdentityResolution` syntax will be changed.
+See [#19877](https://github.com/dotnet/efcore/issues/19877#issuecomment-637371073).
+
+Documentation is tracked by issue [#1895](https://github.com/dotnet/EntityFramework.Docs/issues/1895).
+
+### Stored (persisted) computed columns
+
+Most databases allow computed column values to be stored after computation.
+While this takes up disk space, the computed column is calculated only once on update, instead of each time its value is retrieved.
+This also allows the column to be indexed for some databases.
+
+EF Core 5.0 allows computed columns to be configured as stored.
+For example:
+ 
+```CSharp
+modelBuilder
+    .Entity<User>()
+    .Property(e => e.SomethingComputed)
+    .HasComputedColumnSql("my sql", stored: true);
+```
+
+### SQLite computed columns
+
+EF Core now supports computed columns in SQLite databases.
 
 ## Preview 4
 
@@ -45,8 +158,6 @@ modelBuilder
     .HasIndex(e => e.Name)
     .HasFillFactor(90);
 ```
-
-Documentation is tracked by issue [#2378](https://github.com/dotnet/EntityFramework.Docs/issues/2378).
 
 ## Preview 3
 

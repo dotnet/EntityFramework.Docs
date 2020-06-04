@@ -87,8 +87,10 @@ See [Testing with SQLite](xref:core/miscellaneous/testing/sqlite) for EF Core sp
 
 EF Core comes with an in-memory database that we use for internal testing of EF Core itself.
 This database is in general **not suitable as a substitute for testing applications that use EF Core**. Specifically:
+
 * It is not a relational database.
 * It doesn't support transactions.
+* It cannot run raw SQL queries.
 * It is not optimized for performance.
 
 None of this is very important when testing EF Core internals because we use it specifically where the database is irrelevant to the test.
