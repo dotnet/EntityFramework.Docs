@@ -141,6 +141,10 @@
         items:
         - name: Overview
           href: core/managing-schemas/migrations/index.md
+        - name: Managing migrations
+          href: core/managing-schemas/migrations/managing.md
+        - name: Applying migrations
+          href: core/managing-schemas/migrations/applying.md
         - name: Team environments
           href: core/managing-schemas/migrations/teams.md
         - name: Custom operations
