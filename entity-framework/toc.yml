@@ -32,6 +32,8 @@
           href: core/what-is-new/ef-core-5.0/plan.md
         - name: "What's new?"
           href: core/what-is-new/ef-core-5.0/whatsnew.md
+        - name: Breaking changes
+          href: core/what-is-new/ef-core-5.0/breaking-changes.md
       - name: EF Core 3.0
         items:
         - name: New features
