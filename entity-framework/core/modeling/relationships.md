@@ -146,7 +146,8 @@ After the navigation property has been created, you may need to further configur
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
 
-[!NOTE] This call cannot be used to create a navigation property. It is only used to configure a navigation property which has been previously created by defining a relationship or from a convention.
+> [!NOTE]
+> This call cannot be used to create a navigation property. It is only used to configure a navigation property which has been previously created by defining a relationship or from a convention.
 
 ### Foreign key
 
@@ -172,7 +173,7 @@ You can use the Data Annotations to configure which property should be used as t
 > The `[ForeignKey]` annotation can be placed on either navigation property in the relationship. It does not need to go on the navigation property in the dependent entity class.
 
 > [!NOTE]
-> The property specified using `[ForeignKey]` on a navigation property doesn't need to exist the the dependent type. In this case the specified name will be used to create a shadow foreign key.
+> The property specified using `[ForeignKey]` on a navigation property doesn't need to exist on the dependent type. In this case the specified name will be used to create a shadow foreign key.
 
 ---
 
