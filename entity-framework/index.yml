@@ -107,6 +107,8 @@ additionalContent:
             text: "Configure a DbContext"
           - url: core/miscellaneous/nullable-reference-types.md
             text: "Nullable reference types"
+          - url: core/miscellaneous/collations-and-case-sensitivity.md
+            text: "Collations and case sensitivity"
       # Card
       - title: Create a model
         links:
