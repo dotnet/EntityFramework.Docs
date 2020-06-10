@@ -106,7 +106,7 @@ This then requires setting a `ValueComparer<T>` on the property to force EF Core
 > Instead, the code above calls SetValueComparer on the lower-level IMutableProperty exposed by the builder as 'Metadata'.
 
 The `ValueComparer<T>` constructor accepts three expressions:
-* An expression for checking quality
+* An expression for checking equality
 * An expression for generating a hash code
 * An expression to snapshot a value  
 

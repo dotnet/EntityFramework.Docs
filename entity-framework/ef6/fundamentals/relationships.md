@@ -149,11 +149,11 @@ In Entity Framework you commonly use navigation properties to load entities that
 
 ``` csharp
     // Get the course where currently DepartmentID = 2.
-    Course course2 = context.Courses.First(c => c.DepartmentID == 2);
+    Course course = context.Courses.First(c => c.DepartmentID == 2);
 
     // Use DepartmentID foreign key property
     // to change the association.
-    course2.DepartmentID = 3;
+    course.DepartmentID = 3;
 
     // Load the related Department where DepartmentID = 3
     context.Entry(course).Reference(c => c.Department).Load();

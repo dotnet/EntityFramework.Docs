@@ -211,3 +211,11 @@ LINQ extensions to Entity Framework Core 3.1 to support Microsoft SQL Server Tem
 Adds hierarchyid support to the SQL Server EF Core provider. For EF Core: 3.
 
 [GitHub repository](https://github.com/efcore/EFCore.SqlServer.HierarchyId)
+
+### linq2db.EntityFrameworkCore
+
+Alternative translator of LINQ queries to SQL expressions. For EF Core: 3.
+
+Includes support for advanced SQL features such as CTEs, bulk copy, table hints, windowed functions, temporary tables, and database-side create/update/delete operations.
+
+[GitHub repository](https://github.com/linq2db/linq2db.EntityFrameworkCore)
