@@ -149,14 +149,14 @@ In Entity Framework you commonly use navigation properties to load entities that
 
 ``` csharp
     // Get the course where currently DepartmentID = 2.
-    Course course = context.Courses.First(c => c.DepartmentID == 2);
+    Course course2 = context.Courses.First(c => c.DepartmentID == 2);
 
     // Use DepartmentID foreign key property
     // to change the association.
-    course.DepartmentID = 3;
+    course2.DepartmentID = 3;
 
     // Load the related Department where DepartmentID = 3
-    context.Entry(course).Reference(c => c.Department).Load();
+    context.Entry(course2).Reference(c => c.Department).Load();
 ```
 
 In an independent association, the related end of a dependent object is queried based on the foreign key value that is currently in the database. However, if the relationship was modified, and the reference property on the dependent object points to a different principal object that is loaded in the object context, Entity Framework will try to create a relationship as it is defined on the client.
