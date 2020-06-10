@@ -59,6 +59,7 @@ namespace Samples
         {
             using (var db = new BloggingContext("diego"))
             {
+                db.Database.EnsureDeleted();
                 if (db.Database.EnsureCreated())
                 {
                     db.Blogs.Add(
@@ -198,7 +199,6 @@ namespace Samples
         public string Content { get; set; }
         public bool IsDeleted { get; set; }
 
-        public int BlogId { get; set; }
         public Blog Blog { get; set; }
     }
     #endregion
