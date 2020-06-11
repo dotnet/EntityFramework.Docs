@@ -1,13 +1,13 @@
 ---
 title: Plan for Entity Framework Core 5.0
 author: ajcvickers
-ms.date: 01/14/2020
-uid: core/what-is-new/ef-core-5.0/plan.md
+ms.date: 06/11/2020
+uid: core/what-is-new/ef-core-5.0/plan
 ---
 
 # Plan for Entity Framework Core 5.0
 
-As described in the [planning process](../release-planning.md), we have gathered input from stakeholders into a tentative plan for the EF Core 5.0 release.
+As described in the [planning process](xref:core/what-is-new/release_planning), we have gathered input from stakeholders into a tentative plan for the EF Core 5.0 release.
 
 > [!IMPORTANT] 
 > This plan is still a work-in-progress. Nothing here is a commitment. This plan is a starting point that will evolve as we learn more. Some things not currently planned for 5.0 may get pulled in. Some things currently planned for 5.0 may get punted out.
@@ -24,13 +24,33 @@ EF Core 5.0 will not run on .NET Framework.
 
 ### Breaking changes
 
-EF Core 5.0 will contain some breaking changes, but these will be much less severe than was the case for EF Core 3.0. Our goal is to allow the vast majority of applications to update without breaking.
+EF Core 5.0 will contain some [breaking changes](xref:core/what-is-new/ef-core-5.0/breaking-changes), but these will be much less severe than was the case for EF Core 3.0. Our goal is to allow the vast majority of applications to update without breaking.
 
 It is expected that there will be some breaking changes for database providers, especially around TPT support. However, we expect the work to update a provider for 5.0 will be less than was required to update for 3.0.
 
 ## Themes
 
 We have extracted a few major areas or themes which will form the basis for the large investments in EF Core 5.0.
+
+## Fully transparent many-to-many mapping by convention
+
+Lead developers: @smitpatel, @AndriySvyryd, and @lajones
+
+Tracked by [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508)
+
+T-shirt size: L
+
+Status: In-progress
+
+Many-to-many is the [most requested feature](https://github.com/aspnet/EntityFrameworkCore/issues/1368) (~506 votes) on the GitHub backlog.
+
+Support for many-to-many relationships can be broken down into three major areas:
+
+* Skip navigation properties--covered by the next theme.
+* Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type. Tracked by [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914).
+* Sugar for easy configuration of many-to-many relationships.
+
+In addition to the skip navigation supprt, we are now pulling these other areas of many-to-many into EF Core 5.0 so as to provide a complete experience.
 
 ## Many-to-many navigation properties (a.k.a "skip navigations")
 
@@ -42,17 +62,10 @@ T-shirt size: L
 
 Status: In-progress
 
-Many-to-many is the [most requested feature](https://github.com/aspnet/EntityFrameworkCore/issues/1368) (~407 votes) on the GitHub backlog.
-
-Support for many-to-many relationships in their entirety is tracked as [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508). This can be broken down into three major areas:
-
-* Skip navigation properties. These allow the model to be used for queries, etc. without reference to the underlying join table entity. ([#19003](https://github.com/aspnet/EntityFrameworkCore/issues/19003))
-* Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type. (Stretch for 5.0: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914).)
-* Sugar for easy configuration of many-to-many relationships. (Stretch for 5.0.)
-
-We believe that the most significant blocker for those wanting many-to-many support is not being able to use the "natural" relationships, without referring to the join table, in business logic such as queries. The join table entity type may still exist, but it should not get in the way of business logic. This is why we have chosen to tackle skip navigation properties for 5.0.
-
-At this time the other parts of many-to-many are being pursued as a stretch goal for EF Core 5.0. This means they are not currently in the plan for 5.0, but if things go well we hope to pull them in.
+As described in the first theme, many-to-many support has multiple aspects.
+This theme specifically tracks use of skip navigations.
+We believe that the most significant blocker for those wanting many-to-many support is not being able to use the "natural" relationships, without referring to the join table, in business logic such as queries.
+The join table entity type may still exist, but it should not get in the way of business logic.
 
 ## Table-per-type (TPT) inheritance mapping
 
@@ -64,7 +77,7 @@ T-shirt size: XL
 
 Status: In-progress
 
-We're doing TPT because it is both a highly requested feature (~254 votes; 3rd overall) and because it requires some low-level changes that we feel are appropriate for the foundational nature of the overall .NET 5 plan. We expect this to result in breaking changes for database providers, although these should be much less severe than the changes required for 3.0.
+We're doing TPT because it is both a highly requested feature (~289 votes; 3rd overall) and because it requires some low-level changes that we feel are appropriate for the foundational nature of the overall .NET 5 plan. We expect this to result in breaking changes for database providers, although these should be much less severe than the changes required for 3.0.
 
 ## Filtered Include
 
@@ -76,7 +89,23 @@ T-shirt size: M
 
 Status: In-progress
 
-Filtered Include is a highly-requested feature (~317 votes; 2nd overall) that isn't a huge amount of work, and that we believe will unblock or make easier many scenarios that currently require model-level filters or more complex queries.
+Filtered Include is a highly-requested feature (~376 votes; 2nd overall) that isn't a huge amount of work, and that we believe will unblock or make easier many scenarios that currently require model-level filters or more complex queries.
+
+## Split Include
+
+Lead developer: @smitpatel
+
+Tracked by [#20892](https://github.com/dotnet/efcore/issues/20892)
+
+T-shirt size: L
+
+Status: In-progress
+
+EF Core 3.0 changed the default behavior to create a single SQL query for a given LINQ query.
+This caused large performance regressions for queries that use Include for multiple collections.
+
+In EF Core 5.0, we are retaining the new default behavior.
+However, EF Core 5.0 will now allow generation of multiple Includes where having a single query is not needed. 
 
 ## Rationalize ToTable, ToQuery, ToView, FromSql, etc.
 
@@ -179,13 +208,16 @@ Tracked by [#1920](https://github.com/dotnet/EntityFramework.Docs/issues/1920)
 
 T-shirt size: L
 
-Status: In-progress
+Status: Cut
 
 The idea here is to make it easier to understand what is going on in the internals of EF Core. This can be useful to anyone using EF Core, but the primary motivation is to make it easier for external people to:
 
 * Contribute to the EF Core code
 * Create database providers
 * Build other extensions
+
+Update: Unfortunately, this plan was too ambitious.
+We still believe this is important, but unfortunately it won't land with EF Core 5.0.
 
 ## Microsoft.Data.Sqlite documentation
 
@@ -251,4 +283,4 @@ In addition, we always consider the [most voted issues](https://github.com/dotne
 
 ## Feedback
 
-Your feedback on planning is important. The best way to indicate the importance of an issue is to vote (thumbs-up) for that issue on GitHub. This data will then feed into the [planning process](../release-planning.md) for the next release.
+Your feedback on planning is important. The best way to indicate the importance of an issue is to vote (thumbs-up) for that issue on GitHub. This data will then feed into the [planning process](xref:core/what-is-new/release_planning) for the next release.
