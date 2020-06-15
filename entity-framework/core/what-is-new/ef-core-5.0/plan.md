@@ -105,7 +105,7 @@ EF Core 3.0 changed the default behavior to create a single SQL query for a give
 This caused large performance regressions for queries that use Include for multiple collections.
 
 In EF Core 5.0, we are retaining the new default behavior.
-However, EF Core 5.0 will now allow generation of multiple Includes where having a single query is not needed. 
+However, EF Core 5.0 will now allow generation of multiple queries for collection Includes where having a single query is causing bad performance.. 
 
 ## Rationalize ToTable, ToQuery, ToView, FromSql, etc.
 
