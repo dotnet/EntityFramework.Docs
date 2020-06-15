@@ -87,7 +87,7 @@ You can use constructors to create geometry objects; however, NTS recommends usi
 
 ``` csharp
 var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
-var currentLocation = geometryFactory.CreatePoint(-122.121512, 47.6739882);
+var currentLocation = geometryFactory.CreatePoint(new Coordinate(-122.121512, 47.6739882));
 ```
 
 > [!NOTE]
