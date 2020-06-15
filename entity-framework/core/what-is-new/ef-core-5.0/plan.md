@@ -50,7 +50,7 @@ Support for many-to-many relationships can be broken down into three major areas
 * Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type. Tracked by [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914).
 * Sugar for easy configuration of many-to-many relationships.
 
-In addition to the skip navigation supprt, we are now pulling these other areas of many-to-many into EF Core 5.0 so as to provide a complete experience.
+In addition to the skip navigation support, we are now pulling these other areas of many-to-many into EF Core 5.0 so as to provide a complete experience.
 
 ## Many-to-many navigation properties (a.k.a "skip navigations")
 
