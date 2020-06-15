@@ -29,4 +29,4 @@ The following snippets show a few examples of how to achieve common tasks with E
 ## Further readings
 
 - Learn more about [LINQ query expressions](/dotnet/csharp/programming-guide/concepts/linq/basic-linq-query-operations)
-- For more detailed information on how a query is processed in EF Core, see [How Query Works](xref:core/querying/how-query-works).
+- For more detailed information on how a query is processed in EF Core, see [How queries Work](xref:core/querying/how-query-works).
