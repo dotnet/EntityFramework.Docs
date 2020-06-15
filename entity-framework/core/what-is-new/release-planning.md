@@ -2,7 +2,7 @@
 title: EF Core release planning
 author: ajcvickers
 ms.date: 01/28/2020
-uid: core/what-is-new/release_planning.md
+uid: core/what-is-new/release_planning
 ---
 
 # Release planning process

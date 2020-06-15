@@ -136,4 +136,4 @@ A collation can be defined on text columns, determining how they are compared an
 
 If all columns in a database need to use a certain collation, define the collation at the database level instead.
 
-General information about EF Core support for collations can be found in the [collation documentation page](xref:core/miscellaneous/collations-and-case-sensitivity.md).
+General information about EF Core support for collations can be found in the [collation documentation page](xref:core/miscellaneous/collations-and-case-sensitivity).
