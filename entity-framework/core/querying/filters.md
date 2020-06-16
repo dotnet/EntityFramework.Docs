@@ -46,7 +46,7 @@ Navigations can be used when defining global query filters. They are applied rec
 > [!NOTE]
 > Currently EF Core does not detect cycles in global query filter definitions, so you should be careful when defining them. If specified incorrectly, this could lead to infinite loops during query translation.
 
-## Accessing entity with query filter using reqiured navigation
+## Accessing entity with query filter using required navigation
 
 > [!CAUTION]
 > Using required navigation to access entity which has global query filter defined may lead to unexpected results. 
