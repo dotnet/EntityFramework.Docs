@@ -79,11 +79,11 @@ Scaffold-DbContext ... -Tables Artist, Album
 
 ## Preserving names
 
-Table and column names are fixed up to better match the .NET naming conventions for types and properties by default. Specifying the `-UseDatabaseNames` switch in PMC or the `--use-database-names` option in the CLI will disable this behavior preserving the original database names as much as possible. Invalid .NET identifiers will still be fixed and synthesized names like navigation properties will still conform to .NET naming conventions.
+Table and column names are fixed up to better match the .NET naming conventions for types and properties by default. Specifying the `-UseDatabaseNames` switch in PMC or the `--use-database-names` option in the .NET Core CLI will disable this behavior preserving the original database names as much as possible. Invalid .NET identifiers will still be fixed and synthesized names like navigation properties will still conform to .NET naming conventions.
 
 ## Fluent API or Data Annotations
 
-Entity types are configured using the Fluent API by default. Specify `-DataAnnotations` (PMC) or `--data-annotations` (CLI) to instead use data annotations when possible.
+Entity types are configured using the Fluent API by default. Specify `-DataAnnotations` (PMC) or `--data-annotations` (.NET Core CLI) to instead use data annotations when possible.
 
 For example, using the Fluent API will scaffold this:
 
@@ -103,7 +103,7 @@ public string Title { get; set; }
 
 ## DbContext name
 
-The scaffolded DbContext class name will be the name of the database suffixed with *Context* by default. To specify a different one, use `-Context` in PMC and `--context` in the CLI.
+The scaffolded DbContext class name will be the name of the database suffixed with *Context* by default. To specify a different one, use `-Context` in PMC and `--context` in the .NET Core CLI.
 
 ## Directories and namespaces
 
