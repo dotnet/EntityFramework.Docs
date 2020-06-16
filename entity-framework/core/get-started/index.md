@@ -111,7 +111,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
 
 ### [Visual Studio](#tab/visual-studio)
 
-* Run the following commands in **Package Manager Console**
+* Run the following commands in **Package Manager Console (PMC)**
 
   ``` PowerShell
   Install-Package Microsoft.EntityFrameworkCore.Tools
