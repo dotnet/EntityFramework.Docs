@@ -6,7 +6,7 @@ ms.date: 07/11/2019
 uid: core/miscellaneous/cli/dotnet
 ---
 
-# Entity Framework Core tools reference - .NET CLI
+# Entity Framework Core tools reference - .NET Core CLI
 
 The command-line interface (CLI) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0), apply migrations, and generate code for a model based on an existing database. The commands are an extension to the cross-platform [dotnet](/dotnet/core/tools) command, which is part of the [.NET Core SDK](https://www.microsoft.com/net/core). These tools work with .NET Core projects.
 
@@ -233,13 +233,14 @@ Options:
 | <nobr>`-d`</nobr> | `--data-annotations`                   | Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.                                                                |
 | `-c`            | `--context <NAME>`                       | The name of the `DbContext` class to generate.                                                                                                                                 |
 |                 | `--context-dir <PATH>`                   | The directory to put the `DbContext` class file in. Paths are relative to the project directory. Namespaces are derived from the folder names.                                 |
-|                 | `--context-namespace <NAMESPACE>`        | The namespace to use for the generated `DbContext` class. Note: overrides `--namespace`.                                 |
+|                 | `--context-namespace <NAMESPACE>`        | The namespace to use for the generated `DbContext` class. Note: overrides `--namespace`. (Available from EFCore 5.0.0 onwards.)        |
 | `-f`            | `--force`                                | Overwrite existing files.                                                                                                                                                      |
 | `-o`            | `--output-dir <PATH>`                    | The directory to put entity class files in. Paths are relative to the project directory.                                                                                       |
-| `-n`            | `--namespace <NAMESPACE>`                | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory.                    |
+| `-n`            | `--namespace <NAMESPACE>`                | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. (Available from EFCore 5.0.0 onwards.)        |
 |                 | <nobr>`--schema <SCHEMA_NAME>...`</nobr> | The schemas of tables to generate entity types for. To specify multiple schemas, repeat `--schema` for each one. If this option is omitted, all schemas are included.          |
 | `-t`            | `--table <TABLE_NAME>`...                | The tables to generate entity types for. To specify multiple tables, repeat `-t` or `--table` for each one. If this option is omitted, all tables are included.                |
 |                 | `--use-database-names`                   | Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions. |
+|                 | `--no-onconfiguring`                     | Suppresses generation of the `OnConfiguring` method in the generated `DbContext` class. (Available from EFCore 5.0.0 onwards.)        |
 
 The following example scaffolds all schemas and tables and puts the new files in the *Models* folder.
 
@@ -268,7 +269,7 @@ Options:
 |                   | Option                             | Description                                                                                                      |
 |:------------------|:-----------------------------------|:-----------------------------------------------------------------------------------------------------------------|
 | <nobr>`-o`</nobr> | <nobr>`--output-dir <PATH>`</nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
-| <nobr>`-n`</nobr> | <nobr>`--namespace <NAMESPACE>`</nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. |
+| <nobr>`-n`</nobr> | <nobr>`--namespace <NAMESPACE>`</nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. (Available from EFCore 5.0.0 onwards.) |
 
 ## dotnet ef migrations list
 

@@ -23,7 +23,7 @@ LLBLGen Pro is an entity modeling solution with support for Entity Framework and
 
 ### Devart Entity Developer
 
-Entity Developer is a powerful ORM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 2.
+Entity Developer is a powerful ORM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 1, 2, 3, 5.
 
 [Website](https://www.devart.com/entitydeveloper/)
 

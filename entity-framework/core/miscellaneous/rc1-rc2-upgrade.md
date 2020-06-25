@@ -95,11 +95,11 @@ services.AddEntityFrameworkSqlServer()
 > [!WARNING]  
 > We recommend allowing EF to internally manage its own services, unless you have a reason to combine the internal EF services into your application service provider. The main reason you may want to do this is to use your application service provider to replace services that EF uses internally
 
-## DNX Commands => .NET CLI (ASP.NET Core Projects Only)
+## DNX Commands => .NET Core CLI (ASP.NET Core Projects Only)
 
 If you previously used the `dnx ef` commands for ASP.NET 5 projects, these have now moved to `dotnet ef` commands. The same command syntax still applies. You can use `dotnet ef --help` for syntax information.
 
-The way commands are registered has changed in RC2, due to DNX being replaced by .NET CLI. Commands are now registered in a `tools` section in `project.json`:
+The way commands are registered has changed in RC2, due to DNX being replaced by the .NET Core CLI. Commands are now registered in a `tools` section in `project.json`:
 
 ``` json
 "tools": {

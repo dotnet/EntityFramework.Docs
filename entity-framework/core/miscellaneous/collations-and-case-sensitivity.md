@@ -4,7 +4,7 @@ description: How to configure collations and case-sensitivity in the database an
 author: roji
 ms.date: 04/27/2020
 ms.assetid: bde4e0ee-fba3-4813-a849-27049323d301
-uid: core/miscellaneous/collations-and-case-sensitivity.md
+uid: core/miscellaneous/collations-and-case-sensitivity
 ---
 # Collations and Case Sensitivity
 

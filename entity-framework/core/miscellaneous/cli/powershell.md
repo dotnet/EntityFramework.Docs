@@ -9,7 +9,7 @@ uid: core/miscellaneous/cli/powershell
 
 The Package Manager Console (PMC) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0), apply migrations, and generate code for a model based on an existing database. The commands run inside of Visual Studio using the [Package Manager Console](/nuget/tools/package-manager-console). These tools work with both .NET Framework and .NET Core projects.
 
-If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools](dotnet.md) instead. The CLI tools are cross-platform and run inside a command prompt.
+If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools](dotnet.md) instead. The .NET Core CLI tools are cross-platform and run inside a command prompt.
 
 ## Installing the tools
 
@@ -147,7 +147,7 @@ Parameters:
 |:----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
 | <nobr>-Name \<String><nobr>       | The name of the migration. This is a positional parameter and is required.                                              |
 | <nobr>-OutputDir \<String></nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
-| <nobr>-Namespace \<String></nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. |
+| <nobr>-Namespace \<String></nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. (Available from EFCore 5.0.0 onwards.) |
 
 ## Drop-Database
 
@@ -185,14 +185,15 @@ Parameters:
 | <nobr>-Provider \<String></nobr>   | The provider to use. Typically this is the name of the NuGet package, for example: `Microsoft.EntityFrameworkCore.SqlServer`. This is a positional parameter and is required.                                                                                           |
 | -OutputDir \<String>               | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
 | -ContextDir \<String>              | The directory to put the `DbContext` file in. Paths are relative to the project directory.                                                                                                                                                               |
-| -Namespace \<String>               | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory.                                                                                                                                                                                             |
-| -ContextNamespace \<String>        | The namespace to use for the generated `DbContext` class. Note: overrides `-Namespace`.                                                                                                                                                                              |
+| -Namespace \<String>               | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. (Available from EFCore 5.0.0 onwards.) |
+| -ContextNamespace \<String>        | The namespace to use for the generated `DbContext` class. Note: overrides `-Namespace`. (Available from EFCore 5.0.0 onwards.) |
 | -Context \<String>                 | The name of the `DbContext` class to generate.                                                                                                                                                                                                                          |
 | -Schemas \<String[]>               | The schemas of tables to generate entity types for. If this parameter is omitted, all schemas are included.                                                                                                                                                             |
 | -Tables \<String[]>                | The tables to generate entity types for. If this parameter is omitted, all tables are included.                                                                                                                                                                         |
 | -DataAnnotations                   | Use attributes to configure the model (where possible). If this parameter is omitted, only the fluent API is used.                                                                                                                                                      |
 | -UseDatabaseNames                  | Use table and column names exactly as they appear in the database. If this parameter is omitted, database names are changed to more closely conform to C# name style conventions.                                                                                       |
 | -Force                             | Overwrite existing files.                                                                                                                                                                                                                                               |
+| -NoOnConfiguring                   | Suppresses generation of the `OnConfiguring` method in the generated `DbContext` class. (Available from EFCore 5.0.0 onwards.) |
 
 Example:
 

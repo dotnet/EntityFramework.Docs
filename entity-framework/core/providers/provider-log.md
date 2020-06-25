@@ -16,7 +16,7 @@ We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the 
 
 ## 2.2 ---> 3.0
 
-Note that many of the [application-level breaking changes](../what-is-new/ef-core-3.0/breaking-changes.md) will also impact providers.
+Note that many of the [application-level breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes) will also impact providers.
 
 * <https://github.com/aspnet/EntityFrameworkCore/pull/14022>
   * Removed obsolete APIs and collapsed optional parameter overloads

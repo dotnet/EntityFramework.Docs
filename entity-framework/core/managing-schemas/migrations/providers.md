@@ -65,7 +65,7 @@ Id = table.Column<int>(nullable: false)
     .Annotation("Sqlite:Autoincrement", true),
 ```
 
-If operations can only be applied on one provider (or they're differently between providers), use the `ActiveProvider` property to tell which provider is active.
+If operations can be applied only for one provider, or they're different between providers, use the `ActiveProvider` property to determine which provider is active:
 
 ``` csharp
 if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
