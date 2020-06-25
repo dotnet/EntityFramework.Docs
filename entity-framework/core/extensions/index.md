@@ -154,7 +154,7 @@ A high-performance second-level query cache. For EF Core: 2.
 
 ### EntityFrameworkCore.NCache
 
-NCache Entity Framework Core Provider is a distributed second level cache provider for caching query results. The distributed architecture of NCache makes it more scalable and highly available. 
+NCache Entity Framework Core Provider is a distributed second level cache provider for caching query results. The distributed architecture of NCache makes it more scalable and highly available. For EF Core 2.
 
 [Website](https://www.alachisoft.com/ncache/ef-core-cache.html)
 
