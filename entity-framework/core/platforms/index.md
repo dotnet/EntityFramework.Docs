@@ -1,7 +1,7 @@
 ---
 title: Supported .NET implementations - EF Core
 author: bricelam
-ms.date: 03/03/2020
+ms.date: 06/26/2020
 uid: core/platforms/index
 ---
 
@@ -13,16 +13,17 @@ We want EF Core to be available to developers on all modern .NET implementations
 
 The following table provides guidance for each .NET implementation:
 
-| EF Core                       | 2.1 and 3.1 |
-|:------------------------------|:------------|
-| .NET Standard                 | 2.0         |
-| .NET Core                     | 2.0         |
-| .NET Framework<sup>(1)</sup>  | 4.7.2       |
-| Mono                          | 5.4         |
-| Xamarin.iOS<sup>(2)</sup>     | 10.14       |
-| Xamarin.Android<sup>(2)</sup> | 8.0         |
-| UWP<sup>(3)</sup>             | 10.0.16299  |
-| Unity<sup>(4)</sup>           | 2018.1      |
+| EF Core                       | 2.1 and 3.1 | 5.0             |
+|:------------------------------|:------------|:----------------|
+| .NET Standard                 | 2.0         | 2.1             |
+| .NET Core                     | 2.0         | 3.0             |
+| .NET Framework<sup>(1)</sup>  | 4.7.2       | (not supported) |
+| Mono                          | 5.4         | 6.4             |
+| Xamarin.iOS<sup>(2)</sup>     | 10.14       | 12.16           |
+| Xamarin.Mac<sup>(2)</sup>     | 3.8         | 5.16            |
+| Xamarin.Android<sup>(2)</sup> | 8.0         | 10.0            |
+| UWP<sup>(3)</sup>             | 10.0.16299  | TBD             |
+| Unity<sup>(4)</sup>           | 2018.1      | TBD             |
 
 <sup>(1)</sup> See the [.NET Framework](#net-framework) section below.
 
