@@ -44,7 +44,7 @@ This works well with the [Secret Manager tool](https://docs.microsoft.com/aspnet
 
 ```dotnetcli
 dotnet user-secrets set ConnectionStrings.Chinook "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook"
-dotnet ef dbcontext scaffold Name=Chinook Microsoft.EntityFrameworkCore.SqlServer
+dotnet ef dbcontext scaffold Name=ConnectionStrings.Chinook Microsoft.EntityFrameworkCore.SqlServer
 ```
 
 ## Provider name
