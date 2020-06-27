@@ -104,9 +104,6 @@ dotnet ef migrations add AddNewTables --idempotent
 Add-Migration AddNewTables -Idempotent
 ```
 
-> [!WARNING]
-> Idempotent scripts have some known limitations and will not work in all scenarios. 
-
 ***
 
 ## Command-line tools
