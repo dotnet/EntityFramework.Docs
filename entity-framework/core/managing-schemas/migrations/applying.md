@@ -10,7 +10,7 @@ uid: core/managing-schemas/migrations/applying
 Once your migrations have been added, they need to be deployed and applied to your databases. There are various strategies for doing this, with some being more appropriate for production environments, and others for the development lifecycle.
 
 > [!NOTE]
-> Whatever your deployment strategy, always inspect the generated migrations and test them applying to a production database. A migration may drop a column when the intent was to rename it, or may fail for various reasons when applied to a database.
+> Whatever your deployment strategy, always inspect the generated migrations and test them before applying to a production database. A migration may drop a column when the intent was to rename it, or may fail for various reasons when applied to a database.
 
 ## SQL scripts
 
