@@ -95,13 +95,13 @@ The following generates idempotent migrations:
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef migrations add AddNewTables --idempotent
+dotnet ef migrations script --idempotent
 ```
 
 #### [Visual Studio](#tab/vs)
 
 ``` powershell
-Add-Migration AddNewTables -Idempotent
+Script-Migration -Idempotent
 ```
 
 ***

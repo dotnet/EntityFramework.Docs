@@ -59,12 +59,12 @@ EF Core will create a directory called **Migrations** in your project, and gener
 
 ### Create your database and schema
 
-At this point you can have EF create your database and create your schema from the migration. This is as simple as doing the following:
+At this point you can have EF create your database and create your schema from the migration. This can be done via the following:
 
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef migrations update
+dotnet ef database update
 ```
 #### [Visual Studio](#tab/vs)
 
@@ -114,7 +114,7 @@ You can now apply your migration as before:
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef migrations update
+dotnet ef database update
 ```
 #### [Visual Studio](#tab/vs)
 

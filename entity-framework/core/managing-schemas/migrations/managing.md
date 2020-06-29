@@ -64,7 +64,7 @@ While EF Core generally creates accurate migrations, you should always review th
 
 ### Column renames
 
-One notable examine where customizing migrations is required is when renaming a property. For example, if you rename a property from `Name` to `FullName`, EF Core will generate the following migration:
+One notable example where customizing migrations is required is when renaming a property. For example, if you rename a property from `Name` to `FullName`, EF Core will generate the following migration:
 
 ```c#
 migrationBuilder.DropColumn(
@@ -140,12 +140,11 @@ For example, the following migration creates a SQL Server stored procedure:
 ```c#
 migrationBuilder.Sql(
 @"
-    CREATE PROCEDURE getFullName
+    EXEC ('CREATE PROCEDURE getFullName
         @LastName nvarchar(50),
         @FirstName nvarchar(50)
     AS
-        RETURN @LastName + @FirstName;
-");
+        RETURN @LastName + @FirstName;')");
 ```
 
 This can be used to manage any aspect of your database, including:
@@ -155,6 +154,10 @@ This can be used to manage any aspect of your database, including:
 * Functions
 * Triggers
 * Views
+
+In most cases, EF Core will automatically wrap each migration in its own transaction when applying migrations. Unfortunately, some migrations operations cannot be performed within a transaction in some databases; for these cases, you may opt out of the transaction by passing `suppressTransaction: true` to `migrationBuilder.Sql`.
+
+If the `DbContext` is in a different assembly than the startup project, you can explicitly specify the target and startup projects in either the [Package Manager Console tools](xref:core/miscellaneous/cli/powershell#target-and-startup-project) or the [.NET Core CLI tools](xref:core/miscellaneous/cli/dotnet#target-project-and-startup-project).
 
 ## Remove a migration
 
@@ -177,7 +180,7 @@ Remove-Migration
 After removing the migration, you can make the additional model changes and add it again.
 
 > [!WARNING]
-> Take care not to remove any migrations which are already applied to production databases.
+> Take care not to remove any migrations which are already applied to production databases. Not doing so will prevent you from being able to revert it, and may break the assumptions made by subsequent migrations.
 
 ## Listing migrations
 
