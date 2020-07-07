@@ -7,7 +7,7 @@ uid: core/modeling/shadow-properties
 ---
 # Shadow Properties
 
-Shadow properties are properties that are not defined in your .NET entity class but are defined for that entity type in the EF Core model. The value and state of these properties is maintained purely in the Change Tracker, this means if the entities loaded outside of the change tracker or with `AsNoTracking`, these properties will not have the corresponding values. Shadow properties are useful when there is data in the database that should not be exposed on the mapped entity types.
+Shadow properties are properties that are not defined in your .NET entity class but are defined for that entity type in the EF Core model. The value and state of these properties is maintained purely in the Change Tracker. Shadow properties are useful when there is data in the database that should not be exposed on the mapped entity types.
 
 ## Foreign key shadow properties
 
@@ -41,3 +41,5 @@ Shadow properties can be referenced in LINQ queries via the `EF.Property` static
 var blogs = context.Blogs
     .OrderBy(b => EF.Property<DateTime>(b, "LastUpdated"));
 ```
+
+Shadow properties cannot be accessed after a no-tracking query since the entities returned are not tracked by the change tracker.
