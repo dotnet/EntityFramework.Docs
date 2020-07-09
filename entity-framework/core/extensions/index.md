@@ -228,6 +228,6 @@ Includes support for advanced SQL features such as CTEs, bulk copy, table hints,
 
 ### EFCore.SoftDelete
 
-An implementation for soft deleting entities. For EF Core 3.
+An implementation for soft deleting entities. For EF Core: 3.
 
 [NuGet](https://www.nuget.org/packages/EFCore.SoftDelete)
