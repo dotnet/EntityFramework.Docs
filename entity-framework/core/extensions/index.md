@@ -225,3 +225,9 @@ Alternative translator of LINQ queries to SQL expressions. For EF Core: 3.
 Includes support for advanced SQL features such as CTEs, bulk copy, table hints, windowed functions, temporary tables, and database-side create/update/delete operations.
 
 [GitHub repository](https://github.com/linq2db/linq2db.EntityFrameworkCore)
+
+### EFCore.SoftDelete
+
+An implementation for soft deleting entities. For EF Core: 3.
+
+[NuGet](https://www.nuget.org/packages/EFCore.SoftDelete)
