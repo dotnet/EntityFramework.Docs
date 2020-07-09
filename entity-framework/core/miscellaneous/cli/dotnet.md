@@ -197,7 +197,7 @@ Options:
 
 |                   | Option                   | Description                                              |
 |:------------------|:-------------------------|:---------------------------------------------------------|
-| <nobr>    </nobr> |  `--connection <CONNECTION>`        | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. |
+| <nobr>    </nobr> |  `--connection <CONNECTION>`        | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. (Available from EFCore 5.0.0 onwards.) |
 
 
 The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID and a specified connection:
