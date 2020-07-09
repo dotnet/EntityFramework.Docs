@@ -30,7 +30,7 @@ Specific properties can be excluded as follows:
 
 By convention, when using a relational database, entity properties are mapped to table columns having the same name as the property.
 
-If you prefer to configure your columns with different names, you can do so as following:
+If you prefer to configure your columns with different names, you can do so as following code snippet:
 
 ### [Data Annotations](#tab/data-annotations)
 
@@ -48,7 +48,7 @@ When using a relational database, the database provider selects a data type base
 
 For example, SQL Server maps `DateTime` properties to `datetime2(7)` columns, and `string` properties to `nvarchar(max)` columns (or to `nvarchar(450)` for properties that are used as a key).
 
-You can also configure your columns to specify an exact data type for a column. For example the following code configures `Url` as a non-unicode string with maximum length of `200` and `Rating` as decimal with precision of `5` and scale of `2`:
+You can also configure your columns to specify an exact data type for a column. For example, the following code configures `Url` as a non-unicode string with maximum length of `200` and `Rating` as decimal with precision of `5` and scale of `2`:
 
 ### [Data Annotations](#tab/data-annotations)
 
@@ -81,7 +81,7 @@ In the following example, configuring a maximum length of 500 will cause a colum
 
 ### Precision and Scale
 
-Starting with EFCore 5.0, you can use fluent API to configure the precision and scale. It tells the database provider how much storage is needed for a given column. It only applies to data types where the provider allows the precision and scale to vary - usually just `decimal` and `DateTime`.
+Starting with EFCore 5.0, you can use fluent API to configure the precision and scale. It tells the database provider how much storage is needed for a given column. It only applies to data types where the provider allows the precision and scale to vary - usually `decimal` and `DateTime`.
 
 For `decimal` properties, precision defines the maximum number of digits needed to express any value the column will contain, and scale defines the maximum number of decimal places needed. For `DateTime` properties, precision defines the maximum number of digits needed to express fractions of seconds, and scale is not used.
 
@@ -89,6 +89,10 @@ For `decimal` properties, precision defines the maximum number of digits needed 
 > Entity Framework does not do any validation of precision or scale before passing data to the provider. It is up to the provider or data store to validate as appropriate. For example, when targeting SQL Server, a column of data type `datetime` does not allow the precision to be set, whereas a `datetime2` one can have precision between 0 and 7 inclusive.
 
 In the following example, configuring the `Score` property to have precision 14 and scale 2 will cause a column of type `decimal(14,2)` to be created on SQL Server, and configuring the `LastUpdated` property to have precision 3 will cause a column of type `datetime2(3)`:
+
+#### [Data Annotations](#tab/data-annotations)
+
+Currently not possible to use data annotations to configure.
 
 #### [Fluent API](#tab/fluent-api)
 
@@ -109,8 +113,8 @@ By convention, a property whose .NET type can contain null will be configured as
 
 C# 8 introduced a new feature called [nullable reference types](/dotnet/csharp/tutorials/nullable-reference-types), which allows reference types to be annotated, indicating whether it is valid for them to contain null or not. This feature is disabled by default, and if enabled, it modifies EF Core's behavior in the following way:
 
-* If nullable reference types are disabled (the default), all properties with .NET reference types are configured as optional by convention (e.g. `string`).
-* If nullable reference types are enabled, properties will be configured based on the C# nullability of their .NET type: `string?` will be configured as optional, whereas `string` will be configured as required.
+* If nullable reference types are disabled (the default), all properties with .NET reference types are configured as optional by convention (for example, `string`).
+* If nullable reference types are enabled, properties will be configured based on the C# nullability of their .NET type: `string?` will be configured as optional, but `string` will be configured as required.
 
 The following example shows an entity type with required and optional properties, with the nullable reference feature disabled (the default) and enabled:
 
@@ -150,7 +154,7 @@ A property that would be optional by convention can be configured to be required
 > [!NOTE]
 > This feature is introduced in EF Core 5.0.
 
-A collation can be defined on text columns, determining how they are compared and ordered. For example, the following configures a SQL Server column to be case-insensitive:
+A collation can be defined on text columns, determining how they are compared and ordered. For example, the following code snippet configures a SQL Server column to be case-insensitive:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Collations/Program.cs?range=42-43)]
 

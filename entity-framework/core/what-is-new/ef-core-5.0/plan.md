@@ -9,10 +9,12 @@ uid: core/what-is-new/ef-core-5.0/plan
 
 As described in the [planning process](xref:core/what-is-new/release_planning), we have gathered input from stakeholders into a tentative plan for the EF Core 5.0 release.
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > This plan is still a work-in-progress. Nothing here is a commitment. This plan is a starting point that will evolve as we learn more. Some things not currently planned for 5.0 may get pulled in. Some things currently planned for 5.0 may get punted out.
 
-### Version number and release date.
+## General information
+
+### Version number and release date
 
 EF Core 5.0 is currently scheduled for release at [the same time as .NET 5.0](https://devblogs.microsoft.com/dotnet/introducing-net-5/). The version "5.0" was chosen to align with .NET 5.0.
 
@@ -105,9 +107,9 @@ EF Core 3.0 changed the default behavior to create a single SQL query for a give
 This caused large performance regressions for queries that use Include for multiple collections.
 
 In EF Core 5.0, we are retaining the new default behavior.
-However, EF Core 5.0 will now allow generation of multiple queries for collection Includes where having a single query is causing bad performance.. 
+However, EF Core 5.0 will now allow generation of multiple queries for collection Includes where having a single query is causing bad performance.
 
-## Rationalize ToTable, ToQuery, ToView, FromSql, etc.
+## Rationalize ToTable, ToQuery, ToView, FromSql, etc
 
 Lead developers: @maumar and @smitpatel
 
@@ -160,7 +162,7 @@ We want to deliver a better experience here that allows an easy way to migrate t
 
 The result is likely to be many small improvements in EF Core (for example, better Migrations on SQLite), together with guidance and longer-term collaborations with other teams to improve end-to-end experiences that go beyond just EF.
 
-## EF Core platforms experience 
+## EF Core platforms experience
 
 Lead developers: @roji and @bricelam
 
@@ -242,10 +244,11 @@ T-shirt size: L
 Status: In-progress
 
 We are already in the process of updating documentation for the 3.0 and 3.1 releases. We are also working on:
-  * An overhaul of the getting started docs to make them more approachable/easier to follow
-  * Reorganization of docs to make things easier to find and to add cross-references
-  * Adding more details and clarifications to existing docs
-  * Updating the samples and adding more examples
+
+* An overhaul of the getting started docs to make them more approachable/easier to follow
+* Reorganization of docs to make things easier to find and to add cross-references
+* Adding more details and clarifications to existing docs
+* Updating the samples and adding more examples
 
 ## Fixing bugs
 
@@ -281,6 +284,6 @@ These are bug fixes and enhancements that are **not** currently scheduled for th
 
 In addition, we always consider the [most voted issues](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc) when planning. Cutting any of these issues from a release is always painful, but we do need a realistic plan for the resources we have.
 
-## Feedback
+## Suggestions
 
 Your feedback on planning is important. The best way to indicate the importance of an issue is to vote (thumbs-up) for that issue on GitHub. This data will then feed into the [planning process](xref:core/what-is-new/release_planning) for the next release.
