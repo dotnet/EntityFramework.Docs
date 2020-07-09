@@ -228,6 +228,7 @@ Includes support for advanced SQL features such as CTEs, bulk copy, table hints,
 
 ### EFCore.SoftDelete
 
-An implementation for soft deleting entities for EntityFramework Core.
+An implementation for soft deleting entities for EntityFramework Core. For EF Core 3.1 and later.
 
 [GitHub repository](https://github.com/AshkanAbd/efCoreSoftDeletes)
+[Nuget package](https://www.nuget.org/packages/EFCore.SoftDelete/)
