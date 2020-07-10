@@ -65,7 +65,7 @@ To configure a different PK call `HasKey`:
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
 
 > [!NOTE]
-> Before EF Core 3.0 `WithOwner()` method didn't exist so this call should be removed. Also the primary key was not discovered automatically so it always had be specified.
+> Before EF Core 3.0 `WithOwner()` method didn't exist so this call should be removed. Also the primary key was not discovered automatically so it always had to be specified.
 
 ## Mapping owned types with table splitting
 

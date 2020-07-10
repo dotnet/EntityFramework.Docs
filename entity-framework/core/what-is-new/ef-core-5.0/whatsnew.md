@@ -360,7 +360,7 @@ Documentation is tracked by issue [#2273](https://github.com/dotnet/EntityFramew
 
 ### Flow arguments into IDesignTimeDbContextFactory
 
-Arguments are now flowed from the command line into the `CreateDbContext` method of [IDesignTimeDbContextFactory](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1). For example, to indicate this is a dev build, a custom argument (e.g. `dev`) can passed on the command line:
+Arguments are now flowed from the command line into the `CreateDbContext` method of [IDesignTimeDbContextFactory](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1). For example, to indicate this is a dev build, a custom argument (e.g. `dev`) can be passed on the command line:
 
 ```
 dotnet ef migrations add two --verbose --dev

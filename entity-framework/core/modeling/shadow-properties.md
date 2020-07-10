@@ -41,3 +41,5 @@ Shadow properties can be referenced in LINQ queries via the `EF.Property` static
 var blogs = context.Blogs
     .OrderBy(b => EF.Property<DateTime>(b, "LastUpdated"));
 ```
+
+Shadow properties cannot be accessed after a no-tracking query since the entities returned are not tracked by the change tracker.

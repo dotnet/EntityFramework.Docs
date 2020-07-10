@@ -48,8 +48,53 @@ You may want to include multiple related entities for one of the entities that i
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
 
-> [!CAUTION]
-> Since version 3.0.0, each `Include` will cause an additional JOIN to be added to SQL queries produced by relational providers, whereas previous versions generated additional SQL queries. This can significantly change the performance of your queries, for better or worse. In particular, LINQ queries with an exceedingly high number of `Include` operators may need to be broken down into multiple separate LINQ queries in order to avoid the cartesian explosion problem.
+### Single and split queries
+
+> [!NOTE]
+> This feature is introduced in EF Core 5.0.
+
+In relational databases, all related entities are by default loaded by introducing JOINs:
+
+```sql
+SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url], [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title]
+FROM [Blogs] AS [b]
+LEFT JOIN [Post] AS [p] ON [b].[BlogId] = [p].[BlogId]
+ORDER BY [b].[BlogId], [p].[PostId]
+```
+
+If a typical blog has multiple related posts, rows for these posts will duplicate the blog's information, leading to the so-called "cartesian explosion" problem. As more one-to-many relationships are loaded, the amount of duplicated data may grow and adversely affect the performance of your application.
+
+EF allows you to specify that a given LINQ query should be *split* into multiple SQL queries. Instead of JOINs, split queries perform an additional SQL query for each included one-to-many navigation:
+
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs?name=AsSplitQuery&highlight=5)]
+
+This will produce the following SQL:
+
+```sql
+SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url]
+FROM [Blogs] AS [b]
+ORDER BY [b].[BlogId]
+
+SELECT [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title], [b].[BlogId]
+FROM [Blogs] AS [b]
+INNER JOIN [Post] AS [p] ON [b].[BlogId] = [p].[BlogId]
+ORDER BY [b].[BlogId]
+```
+
+While this avoids the performance issues associated with JOINs and cartesian explosion, it also has some drawbacks:
+
+* While most databases guarantee data consistency for single queries, no such guarantees exist for multiple queries. This means that if the database is being updated concurrently as your queries are being executed, resulting data may not be consistent. This may be mitigated by wrapping the queries in a serializable or snapshot transaction, although this may create performance issues of its own. Consult your database's documentation for more details.
+* Each query currently implies an additional network roundtrip to your database; this can degrade performance, especially where latency to the database is high (e.g. cloud services). EF Core will improve this in the future by batching the queries into a single roundtrip.
+* While some databases allow consuming the results of multiple queries at the same time (SQL Server with MARS, Sqlite), most allow only a single query to be active at any given point. This means that all results from earlier queries must be buffered in your application's memory before executing later queries, increasing your memory requirements in a potentially significant way.
+
+Unfortunately, there isn't one strategy for loading related entities that fits all scenarios. Carefully consider the advantages and disadvantages of single and split queries, and select the one that fits your needs.
+
+> [!NOTE]
+> One-to-one related entities are always loaded via JOINs, as this has no performance impact.
+>
+> At the moment, use of query splitting on SQL Server requires settings `MultipleActiveResultSets=true` in your connection string. This requirement will be removed in a future preview.
+>
+> Future previews of EF Core 5.0 will allow specifying query splitting as the default for your context.
 
 ### Filtered include
 
