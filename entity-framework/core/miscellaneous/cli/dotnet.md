@@ -197,7 +197,7 @@ Options:
 
 |                   | Option                   | Description                                              |
 |:------------------|:-------------------------|:---------------------------------------------------------|
-| <nobr>    </nobr> |  `--connection <CONNECTION>`        | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. (Available from EFCore 5.0.0 onwards.) |
+| <nobr>    </nobr> |  `--connection <CONNECTION>`        | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. (Available from EF Core 5.0.0 onwards.) |
 
 
 The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID and a specified connection:
@@ -233,14 +233,14 @@ Options:
 | <nobr>`-d`</nobr> | `--data-annotations`                   | Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.                                                                |
 | `-c`            | `--context <NAME>`                       | The name of the `DbContext` class to generate.                                                                                                                                 |
 |                 | `--context-dir <PATH>`                   | The directory to put the `DbContext` class file in. Paths are relative to the project directory. Namespaces are derived from the folder names.                                 |
-|                 | `--context-namespace <NAMESPACE>`        | The namespace to use for the generated `DbContext` class. Note: overrides `--namespace`. (Available from EFCore 5.0.0 onwards.)        |
+|                 | `--context-namespace <NAMESPACE>`        | The namespace to use for the generated `DbContext` class. Note: overrides `--namespace`. (Available from EF Core 5.0.0 onwards.)        |
 | `-f`            | `--force`                                | Overwrite existing files.                                                                                                                                                      |
 | `-o`            | `--output-dir <PATH>`                    | The directory to put entity class files in. Paths are relative to the project directory.                                                                                       |
-| `-n`            | `--namespace <NAMESPACE>`                | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. (Available from EFCore 5.0.0 onwards.)        |
+| `-n`            | `--namespace <NAMESPACE>`                | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. (Available from EF Core 5.0.0 onwards.)        |
 |                 | <nobr>`--schema <SCHEMA_NAME>...`</nobr> | The schemas of tables to generate entity types for. To specify multiple schemas, repeat `--schema` for each one. If this option is omitted, all schemas are included.          |
 | `-t`            | `--table <TABLE_NAME>`...                | The tables to generate entity types for. To specify multiple tables, repeat `-t` or `--table` for each one. If this option is omitted, all tables are included.                |
 |                 | `--use-database-names`                   | Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions. |
-|                 | `--no-onconfiguring`                     | Suppresses generation of the `OnConfiguring` method in the generated `DbContext` class. (Available from EFCore 5.0.0 onwards.)        |
+|                 | `--no-onconfiguring`                     | Suppresses generation of the `OnConfiguring` method in the generated `DbContext` class. (Available from EF Core 5.0.0 onwards.)        |
 
 The following example scaffolds all schemas and tables and puts the new files in the *Models* folder.
 
@@ -269,7 +269,7 @@ Options:
 |                   | Option                             | Description                                                                                                      |
 |:------------------|:-----------------------------------|:-----------------------------------------------------------------------------------------------------------------|
 | <nobr>`-o`</nobr> | <nobr>`--output-dir <PATH>`</nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
-| <nobr>`-n`</nobr> | <nobr>`--namespace <NAMESPACE>`</nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. (Available from EFCore 5.0.0 onwards.) |
+| <nobr>`-n`</nobr> | <nobr>`--namespace <NAMESPACE>`</nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. (Available from EF Core 5.0.0 onwards.) |
 
 ## dotnet ef migrations list
 
