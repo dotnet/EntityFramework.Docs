@@ -4,7 +4,8 @@ author: divega
 ms.date: "10/23/2016"
 ms.assetid: 2318e4d3-f561-4720-bbc3-921556806476
 ---
-# Handling Concurrency Conflicts
+# Handling Concurrency Conflicts (EF6)
+
 Optimistic concurrency involves optimistically attempting to save your entity to the database in the hope that the data there has not changed since the entity was loaded. If it turns out that the data has changed then an exception is thrown and you must resolve the conflict before attempting to save again. This topic covers how to handle such exceptions in Entity Framework. The techniques shown in this topic apply equally to models created with Code First and the EF Designer.  
 
 This post is not the appropriate place for a full discussion of optimistic concurrency. The sections below assume some knowledge of concurrency resolution and show patterns for common tasks.  
