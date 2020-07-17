@@ -58,7 +58,7 @@ additionalContent:
             text: "ASP.NET Core Razor Pages web app accessing  SQL Server LocalDB or SQLite with EF Core"
           - url: /aspnet/core/data/ef-mvc/
             text: "ASP.NET Core MVC web app accessing SQL Server with EF Core"
-          - url: core/get-started/xamarin/index.md
+          - url: core/get-started/xamarin/
             text: "Xamarin mobile app accessing SQLite with EF Core"
       # Card
       - title: Supported databases
@@ -92,7 +92,7 @@ additionalContent:
             text: "Windows Presentation Foundation (WPF)"
           - url: https://docs.microsoft.com/ef/ef6/fundamentals/databinding/winforms
             text: "Windows Forms (WinForms)"
-          - url: core/get-started/xamarin/index.md
+          - url: core/get-started/xamarin/
             text: "Xamarin"
       # Card
       - title: Fundamentals
