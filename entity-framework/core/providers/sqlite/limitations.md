@@ -1,7 +1,7 @@
 ---
 title: SQLite Database Provider - Limitations - EF Core
-author: rowanmiller
-ms.date: 04/09/2017
+author: bricelam
+ms.date: 07/16/2020
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations
 ---
@@ -39,34 +39,36 @@ modelBuilder.Entity<MyEntity>()
 
 The SQLite database engine does not support a number of schema operations that are supported by the majority of other relational databases. If you attempt to apply one of the unsupported operations to a SQLite database then a `NotSupportedException` will be thrown.
 
-| Operation            | Supported? | Requires version |
-|:---------------------|:-----------|:-----------------|
-| AddColumn            | ✔          | 1.0              |
-| AddForeignKey        | ✗          |                  |
-| AddPrimaryKey        | ✗          |                  |
-| AddUniqueConstraint  | ✗          |                  |
-| AlterColumn          | ✗          |                  |
-| CreateIndex          | ✔          | 1.0              |
-| CreateTable          | ✔          | 1.0              |
-| DropColumn           | ✗          |                  |
-| DropForeignKey       | ✗          |                  |
-| DropIndex            | ✔          | 1.0              |
-| DropPrimaryKey       | ✗          |                  |
-| DropTable            | ✔          | 1.0              |
-| DropUniqueConstraint | ✗          |                  |
-| RenameColumn         | ✔          | 2.2.2            |
-| RenameIndex          | ✔          | 2.1              |
-| RenameTable          | ✔          | 1.0              |
-| EnsureSchema         | ✔ (no-op)  | 2.0              |
-| DropSchema           | ✔ (no-op)  | 2.0              |
-| Insert               | ✔          | 2.0              |
-| Update               | ✔          | 2.0              |
-| Delete               | ✔          | 2.0              |
+A rebuild will be attempted in order to perform certain operations. Rebuilds are only possible for database artifacts that are part of your EF Core model. If a database artifact isn't part of the model--for example, if it was created manually inside a migration--then a `NotSupportedException` is still thrown.
+
+| Operation            | Supported?  | Requires version |
+|:---------------------|:------------|:-----------------|
+| AddCheckConstraint   | ✔ (rebuild) | 5.0              |
+| AddColumn            | ✔           | 1.0              |
+| AddForeignKey        | ✔ (rebuild) | 5.0              |
+| AddPrimaryKey        | ✔ (rebuild) | 5.0              |
+| AddUniqueConstraint  | ✔ (rebuild) | 5.0              |
+| AlterColumn          | ✔ (rebuild) | 5.0              |
+| CreateIndex          | ✔           | 1.0              |
+| CreateTable          | ✔           | 1.0              |
+| DropCheckConstraint  | ✔ (rebuild) | 5.0              |
+| DropColumn           | ✔ (rebuild) | 5.0              |
+| DropForeignKey       | ✔ (rebuild) | 5.0              |
+| DropIndex            | ✔           | 1.0              |
+| DropPrimaryKey       | ✔ (rebuild) | 5.0              |
+| DropTable            | ✔           | 1.0              |
+| DropUniqueConstraint | ✔ (rebuild) | 5.0              |
+| RenameColumn         | ✔           | 2.2.2            |
+| RenameIndex          | ✔ (rebuild) | 2.1              |
+| RenameTable          | ✔           | 1.0              |
+| EnsureSchema         | ✔ (no-op)   | 2.0              |
+| DropSchema           | ✔ (no-op)   | 2.0              |
+| Insert               | ✔           | 2.0              |
+| Update               | ✔           | 2.0              |
+| Delete               | ✔           | 2.0              |
 
 ## Migrations limitations workaround
 
-You can workaround some of these limitations by manually writing code in your migrations to perform a table rebuild. A table rebuild involves renaming the existing table, creating a new table, copying data to the new table, and dropping the old table. You will need to use the `Sql(string)` method to perform some of these steps.
+You can workaround some of these limitations by manually writing code in your migrations to perform a rebuild. Table rebuilds involve creating a new table, copying data to the new table, dropping the old table, renaming the new table. You will need to use the `Sql(string)` method to perform some of these steps.
 
 See [Making Other Kinds Of Table Schema Changes](https://sqlite.org/lang_altertable.html#otheralter) in the SQLite documentation for more details.
-
-In the future, EF may support some of these operations by using the table rebuild approach under the covers. You can [track this feature on our GitHub project](https://github.com/aspnet/EntityFrameworkCore/issues/329).
