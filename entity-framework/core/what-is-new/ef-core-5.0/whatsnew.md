@@ -142,6 +142,20 @@ Previously when scaffolding a DbContext from an existing database, EF Core will 
 
 In previous releases, this behavior was configurable through registration of a pluralization service. Now in EF Core 5.0, the [Humanizer](https://www.nuget.org/packages/Humanizer.Core/) package is used as a default pluralization service. This means tables `People` and `Addresses` will now be reverse engineered to entity types named `Person` and `Address`.
 
+### Savepoints
+
+EF Core now supports [savepoints](/SQL/t-sql/language-elements/save-transaction-transact-sql?view=sql-server-ver15#remarks) for greater control over transactions that execute multiple operations.
+
+Savepoints can be manually created, released, and rolled back. For example:
+
+```csharp
+context.Database.CreateSavepoint("MySavePoint"); 
+```
+
+In addition, EF Core will now roll back to the last savepoint when executing `SaveChanges` fails. This allows SaveChanges to be re-tried without re-trying the entire transaction.
+
+Documentation is tracked by issue [#2429](https://github.com/dotnet/EntityFramework.Docs/issues/2429).
+
 ## Preview 6
 
 ### Split queries for related collections
