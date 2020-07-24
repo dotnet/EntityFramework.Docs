@@ -54,7 +54,7 @@ This is often correct, but may need to be overridden when mapping more complex t
 
 ### Simple immutable classes
 
-Consider a property the uses a value converter to map a simple, immutable class.
+Consider a property that uses a value converter to map a simple, immutable class.
 
 [!code-csharp[SimpleImmutableClass](../../../samples/core/Modeling/ValueConversions/MappingImmutableClassProperty.cs?name=SimpleImmutableClass)]
 
