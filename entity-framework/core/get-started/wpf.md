@@ -50,7 +50,7 @@ The screen shots and code listings in this walkthrough are taken from Visual Stu
 
 In this walkthrough you will implement a model using "code first." This means that EF Core will create the database tables and schema based on the C# classes you define.
 
-Right-click on the project in **Solution Explorer** and choose **Add &gt; Class...**. Give it the name: `Product.cs` and populate it like this:
+Add a new class. Give it the name: `Product.cs` and populate it like this:
 
 **`Product.cs`**
 
@@ -150,6 +150,20 @@ The code declares a long-running instance of `ProductContext`. The `ProductConte
 Compile and run the application by pressing **F5** or choosing **Debug &gt; Start Debugging**. The database should be automatically created with a file named `products.db`. Enter a category name and hit enter, then add products to the lower grid. Click save and watch the grid refresh with the database provided ids. Highlight a row and hit **Delete** to remove the row. The entity will be deleted when you click **Save**.
 
 ![Running application](_static/wpf-tutorial-app.jpg)
+
+## Property Change Notification
+
+This example relies on four steps to synchronize the entities with the UI. 
+
+1. The initial call `_context.Categories.Load()` loads the categories data.
+1. The lazy-loading proxies load the dependent products data.
+1. EF Core's built-in change tracking makes the necessary modifications to entities, including insertions and deletions, when `_context.SaveChanges()` is called.
+1. The calls to `DataGridView.Items.Refresh()` force a reload with the newly generated ids.
+
+This works for our getting started sample, but you may require additional code for other scenarios. WPF controls render the UI by reading the fields and properties on your entities. When you edit a value in the user interface (UI), that value is passed to your entity. When you change the value of a property directly on your entity, such as loading it from the database, WPF will not immediately reflect the changes in the UI. The rendering engine must be notified of the changes. The project did this by manually calling `Refresh()`. An easy way to automate this notification is by implementing the [INotifyPropertyChanged](dotnet/api/system.componentmodel.inotifypropertychanged) interface. WPF components will automatically detect the interface and register for change events. The entity is responsible for raising these events. 
+
+> [!TIP]
+> To learn more about how to handle changes, read: [How to implement property change notification](/dotnet/framework/wpf/data/how-to-implement-property-change-notification).
 
 ## Next Steps
 
