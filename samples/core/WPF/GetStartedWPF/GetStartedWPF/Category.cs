@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GetStartedWPF
 {
@@ -7,7 +8,7 @@ namespace GetStartedWPF
         public int CategoryId { get; set; }
         public string Name { get; set; }
 
-        public virtual ObservableCollection<Product>
+        public virtual ICollection<Product>
             Products
         { get; private set; } =
             new ObservableCollection<Product>();

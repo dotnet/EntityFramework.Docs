@@ -74,12 +74,12 @@ Add a new `ProductContext.cs` class to the project with the following definition
 
 [!code-csharp[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/ProductContext.cs)]
 
-* The `DbSet` informs EF Core what C# models should be mapped to the database.
-* There are a variety of ways to configure EF Core data contexts. You can read about them in: [Configuring a DbContext](/ef/core/miscellaneous/configuring-dbcontext).
+* The `DbSet` informs EF Core what C# entities should be mapped to the database.
+* There are a variety of ways to configure the EF Core `DbContext`. You can read about them in: [Configuring a DbContext](/ef/core/miscellaneous/configuring-dbcontext).
 * This example uses the `OnConfiguring` override to specify a Sqlite data file.
 * The `UseLazyLoadingProxies` call tells EF Core to implement lazy-loading, so child entities are automatically loaded when accessed from the parent.
 
-Compile the project.
+Press **CTRL+SHIFT+B** or navigate to **Build &gt; Build Solution** to compile the project.
 
 > [!TIP]
 > Learn about the different was to keep your database and EF Core models in sync: [Managing Database Schemas](/ef/core/managing-schemas).
@@ -103,23 +103,23 @@ Add the classes that are defined in the model as data sources for this WPF appli
     [!code-xaml[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/MainWindow.xaml?range=1-13&highlight=9-13)]
 
 1. This sets up source for the "parent" categories, and second source for the "detail" products.
-1. Next, either drag a `DataGrid` onto the design surface and assign the `DataContext` to the `categoryViewSource`, or simply add the following markup to your XAML after the closing `Window.Resources` tag.
+1. Next, add the following markup to your XAML after the closing `Window.Resources` tag.
 
-    [!code-xaml[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/MainWindow.xaml?range=14-25)]
+    [!code-xaml[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/MainWindow.xaml?range=15-26)]
 
 1. Note that the `CategoryId` is set to `ReadOnly` because it is assigned by the database and cannot be changed.
 
 ## Adding a Details Grid
 
-Now that the grid exists to display categories, the child grid can be added to show products.
+Now that the grid exists to display categories, the details grid can be added to show products.
 
 **`MainWindow.xaml`**
 
-[!code-xaml[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/MainWindow.xaml?range=26-35)]
+[!code-xaml[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/MainWindow.xaml?range=27-40)]
 
 Finally, add a `Save` button and wire in the click event to `Button_Click`.
 
-[!code-xaml[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/MainWindow.xaml?range=36)]
+[!code-xaml[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/MainWindow.xaml?range=41-42)]
 
 Your design view should look like this:
 
@@ -147,7 +147,7 @@ The code declares a long-running instance of `ProductContext`. The `ProductConte
 
 ## Test the WPF Application
 
-Compile and run the application. The database should be automatically created with a file named `products.db`. Enter a category name and hit enter, then add products to the lower grid. Click save and watch the grid refresh with the database provided ids. Highlight a row and hit **Delete** to remove the row. The entity will be deleted when you click **Save**.
+Compile and run the application by pressing **F5** or choosing **Debug &gt; Start Debugging**. The database should be automatically created with a file named `products.db`. Enter a category name and hit enter, then add products to the lower grid. Click save and watch the grid refresh with the database provided ids. Highlight a row and hit **Delete** to remove the row. The entity will be deleted when you click **Save**.
 
 ![Running application](_static/wpf-tutorial-app.jpg)
 

@@ -13,13 +13,13 @@ namespace GetStartedWPF
         private readonly ProductContext _context = 
             new ProductContext();
 
-        private CollectionViewSource categoryViewSource =>
-            FindResource(nameof(categoryViewSource))
-            as CollectionViewSource;
+        private CollectionViewSource categoryViewSource;
 
         public MainWindow()
         {
             InitializeComponent();
+            categoryViewSource = 
+                (CollectionViewSource)FindResource(nameof(categoryViewSource));            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
