@@ -40,7 +40,7 @@ By default, EF will always read and write to the backing field - assuming one ha
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs?name=BackingFieldAccessMode&highlight=6)]
 
-See the [PropertyAccessMode enum](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) for the complete set of supported options.
+See the [PropertyAccessMode enum](/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) for the complete set of supported options.
 
 > [!NOTE]
 > With EF Core 3.0, the default property access mode changed from `PreferFieldDuringConstruction` to `PreferField`.
