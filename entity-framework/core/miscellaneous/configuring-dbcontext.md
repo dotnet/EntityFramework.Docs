@@ -178,7 +178,7 @@ Always await EF Core asynchronous methods immediately.
 
 ### Implicitly sharing DbContext instances across multiple threads via dependency injection
 
-The [`AddDbContext`](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext) extension method registers `DbContext` types with a [scoped lifetime](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection#service-lifetimes) by default.
+The [`AddDbContext`](/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext) extension method registers `DbContext` types with a [scoped lifetime](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) by default.
 
 This is safe from concurrent access issues in most ASP.NET Core applications because there is only one thread executing each client request at a given time, and because each request gets a separate dependency injection scope (and therefore a separate `DbContext` instance). For Blazor Server hosting model, one logical request is used for maintaining the Blazor user circuit, and thus only one scoped DbContext instance is available per user circuit if the default injection scope is used.
 
@@ -188,5 +188,5 @@ Using dependency injection, this can be achieved by either registering the conte
 
 ## More reading
 
-- Read [Dependency Injection](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection) to learn more about using DI.
+- Read [Dependency Injection](/aspnet/core/fundamentals/dependency-injection) to learn more about using DI.
 - Read [Testing](testing/index.md) for more information.

@@ -64,7 +64,7 @@ See the [Cosmos DB provider documentation](xref:core/providers/cosmos/index) for
 
 ## C# 8.0 support
 
-EF Core 3.0 takes advantage of a couple of the [new features in C# 8.0](https://docs.microsoft.com/dotnet/csharp/whats-new/csharp-8):
+EF Core 3.0 takes advantage of a couple of the [new features in C# 8.0](/dotnet/csharp/whats-new/csharp-8):
 
 ### Asynchronous streams
 
@@ -82,7 +82,7 @@ await foreach(var o in orders.AsAsyncEnumerable())
 }
 ```
 
-See the [asynchronous streams in the C# documentation](https://docs.microsoft.com/dotnet/csharp/whats-new/csharp-8#asynchronous-streams) for more details.
+See the [asynchronous streams in the C# documentation](/dotnet/csharp/whats-new/csharp-8#asynchronous-streams) for more details.
 
 ### Nullable reference types
 

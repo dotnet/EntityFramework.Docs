@@ -339,7 +339,7 @@ Polygon.NumInteriorRings | ✔ | ✔ | ✔ | ✔
 
 ## Additional resources
 
-* [Spatial Data in SQL Server](https://docs.microsoft.com/sql/relational-databases/spatial/spatial-data-sql-server)
+* [Spatial Data in SQL Server](/sql/relational-databases/spatial/spatial-data-sql-server)
 * [SpatiaLite Homepage](https://www.gaia-gis.it/fossil/libspatialite)
 * [Npgsql Spatial Documentation](https://www.npgsql.org/efcore/mapping/nts.html)
 * [PostGIS Documentation](https://postgis.net/documentation/)

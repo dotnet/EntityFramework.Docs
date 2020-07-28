@@ -502,7 +502,7 @@ Documentation is tracked by issue [#2273](https://github.com/dotnet/EntityFramew
 
 ### Flow arguments into IDesignTimeDbContextFactory
 
-Arguments are now flowed from the command line into the `CreateDbContext` method of [IDesignTimeDbContextFactory](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1). For example, to indicate this is a dev build, a custom argument (e.g. `dev`) can be passed on the command line:
+Arguments are now flowed from the command line into the `CreateDbContext` method of [IDesignTimeDbContextFactory](/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1). For example, to indicate this is a dev build, a custom argument (e.g. `dev`) can be passed on the command line:
 
 ```
 dotnet ef migrations add two --verbose --dev
@@ -773,7 +773,7 @@ Documentation is tracked by issue [#2075](https://github.com/dotnet/EntityFramew
 
 ### Change-tracking proxies
 
-EF Core can now generate runtime proxies that automatically implement [INotifyPropertyChanging](https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging?view=netcore-3.1) and [INotifyPropertyChanged](https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged?view=netcore-3.1). These then report value changes on entity properties directly to EF Core, avoiding the need to scan for changes. However, proxies come with their own set of limitations, so they are not for everyone.
+EF Core can now generate runtime proxies that automatically implement [INotifyPropertyChanging](/dotnet/api/system.componentmodel.inotifypropertychanging?view=netcore-3.1) and [INotifyPropertyChanged](/dotnet/api/system.componentmodel.inotifypropertychanged?view=netcore-3.1). These then report value changes on entity properties directly to EF Core, avoiding the need to scan for changes. However, proxies come with their own set of limitations, so they are not for everyone.
 
 Documentation is tracked by issue [#2076](https://github.com/dotnet/EntityFramework.Docs/issues/2076).
 
@@ -831,7 +831,7 @@ The Azure Cosmos DB database provider now supports optimistic concurrency using 
 builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
 ```
 
-SaveChanges will then throw an `DbUpdateConcurrencyException` on a concurrency conflict, which [can be handled](https://docs.microsoft.com/ef/core/saving/concurrency) to implement retries, etc.
+SaveChanges will then throw an `DbUpdateConcurrencyException` on a concurrency conflict, which [can be handled](/ef/core/saving/concurrency) to implement retries, etc.
 
 Documentation is tracked by issue [#2099](https://github.com/dotnet/EntityFramework.Docs/issues/2099).
 
