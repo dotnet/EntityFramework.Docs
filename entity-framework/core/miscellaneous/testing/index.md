@@ -57,7 +57,7 @@ LocalDB is not without its issues:
 Personally, I've never found it a problem having a database service running on my dev machine and I would generally recommend using Developer Edition instead.
 However, LocalDB may be appropriate for some people, especially on less powerful dev machines.
 
-Running SQL Server (or any other database system) in a Docker container (or similar) is another way to avoid running the database system directly on your development machine.  
+[Running SQL Server](https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15) (or any other database system) in a Docker container (or similar) is another way to avoid running the database system directly on your development machine.  
 
 ## Approach 2: SQLite
 
