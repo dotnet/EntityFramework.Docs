@@ -40,7 +40,7 @@ Saving and querying entities using table splitting is done in the same way as ot
 > [!NOTE]
 > This feature was introduced in EF Core 3.0.
 
-If all of the columns used by a dependent entity are `NULL` in the database, then no instance for it will be created when queried. This allows modeling an optional dependent entity, where the relationship property on the principal would be null. Note that This would also happen all of the dependent's properties are optional and set to `null`, which might not be expected.
+If all of the columns used by a dependent entity are `NULL` in the database, then no instance for it will be created when queried. This allows modeling an optional dependent entity, where the relationship property on the principal would be null. Note that This would also happen if all of the dependent's properties are optional and set to `null`, which might not be expected.
 
 ## Concurrency tokens
 
