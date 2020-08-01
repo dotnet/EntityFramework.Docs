@@ -42,7 +42,7 @@ public class MyController
 DbContext instances can then be created and used as needed. For example:
 
 ```csharp
-public void DoSomehing()
+public void DoSomeThing()
 {
     using (var context = _contextFactory.CreateDbContext())
     {
