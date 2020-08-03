@@ -142,7 +142,7 @@ If you only have one navigation property then there are parameterless overloads 
 
 ### Configuring navigation properties
 
-After the navigation property has been created, you may need to further configure it. In EFCore 5.0 new Fluent API is added to allow you perform that configuration.
+After the navigation property has been created, you may need to further configure it. In EFCore 5.0, new Fluent API is added to allow you to perform that configuration.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
 
