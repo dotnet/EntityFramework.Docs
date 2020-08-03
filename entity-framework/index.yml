@@ -92,7 +92,7 @@ additionalContent:
             text: "Blazor Server"
           - url: core/get-started/wpf.md
             text: "Windows Presentation Foundation (WPF)"
-          - url: /ef/ef6/fundamentals/databinding/winforms.md
+          - url: ef/ef6/fundamentals/databinding/winforms.md
             text: "Windows Forms (WinForms)"
           - url: core/get-started/xamarin.md
             text: "Xamarin"
