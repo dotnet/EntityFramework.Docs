@@ -90,9 +90,9 @@ additionalContent:
             text: "ASP.NET Core MVC"
           - url: https://docs.microsoft.com/aspnet/core/blazor/dependency-injection?#use-of-entity-framework-dbcontext-from-di
             text: "Blazor Server"
-          - url: https://docs.microsoft.com/ef/ef6/fundamentals/databinding/wpf
-            text: "Windows Presentation Foundation (WPF)"
           - url: core/get-started/wpf.md
+            text: "Windows Presentation Foundation (WPF)"
+          - url: https://docs.microsoft.com/ef/ef6/fundamentals/databinding/winforms/
             text: "Windows Forms (WinForms)"
           - url: core/get-started/xamarin.md
             text: "Xamarin"
