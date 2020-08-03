@@ -229,7 +229,7 @@ Tracked by [#1675](https://github.com/dotnet/EntityFramework.Docs/issues/1675)
 
 T-shirt size: M
 
-Status: Completed. The new documentation is [live on the Microsoft docs site](https://docs.microsoft.com/dotnet/standard/data/sqlite/?tabs=netcore-cli).
+Status: Completed. The new documentation is [live on the Microsoft docs site](/dotnet/standard/data/sqlite/?tabs=netcore-cli).
 
 The EF Team also owns the Microsoft.Data.Sqlite ADO.NET provider. We plan to fully document this provider as part of the 5.0 release.
 

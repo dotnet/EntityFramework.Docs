@@ -35,7 +35,7 @@ An ORM that creates strongly-typed, extendable classes for Entity Framework. The
 
 ### EF Core Power Tools
 
-EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](https://docs.microsoft.com/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 2, 3.
+EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 2, 3.
 
 [GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki)
 
