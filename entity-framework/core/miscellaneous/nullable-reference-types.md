@@ -20,9 +20,11 @@ The main documentation on required and optional properties and their interaction
 
 ## DbContext and DbSet
 
-When nullable reference types are enabled, the C# compiler emits warnings for any uninitialized non-nullable property, as these would contain null. As a result, the common practice of having uninitialized DbSet properties on a context type will now generate a warning. To fix this, make your DbSet properties read-only and initialize them as follows:
+When nullable reference types are enabled, the C# compiler emits warnings for any uninitialized non-nullable property, as these would contain null. As a result, the common practice of having uninitialized DbSet properties on a context type will now generate a warning. This can be fixed as follows:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/NullableReferenceTypesContext.cs?name=Context&highlight=3-4)]
+
+Another strategy is to use non-nullable auto-properties, but to initialize them to null, using the null-forgiving operator (!) to silence the compiler warning. The DbContext constructor ensures that all DbSet properties will get initialized, and null will never be observed on them.
 
 ## Non-nullable properties and initialization
 
