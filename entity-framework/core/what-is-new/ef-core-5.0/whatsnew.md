@@ -194,7 +194,7 @@ Documentation is tracked by issue [#2583](https://github.com/dotnet/EntityFramew
 
 This feature was contributed from the community by [@pmiddleton](https://github.com/pmiddleton). Many thanks for the contribution!
 
-EF Core 5.0 includes first-class support for mapping .NET methods table-valued functions (TVFs). These functions can then be used in LINQ queries where additional composition on the results of the function will also be translated to SQL.
+EF Core 5.0 includes first-class support for mapping .NET methods to table-valued functions (TVFs). These functions can then be used in LINQ queries where additional composition on the results of the function will also be translated to SQL.
 
 For example, consider this TVF defined in a SQL Server database:
 
@@ -258,7 +258,7 @@ modelBuilder.Entity<Employee>();
 modelBuilder.Entity(typeof(Report)).HasNoKey();
 ```
 
-Notice that `Report` has no primary key and so much be configured as such.
+Notice that `Report` has no primary key and so must be configured as such.
 
 Finally, a .NET method must be mapped to the TVF in the database. This method can be defined on the DbContext using the new `FromExpression` method:
 
@@ -267,7 +267,7 @@ public IQueryable<Report> GetReports(int managerId)
     => FromExpression(() => GetReports(managerId));
 ```
 
-This method uses a parameter and return type that match the TVF defined above. The is then added to the EF Core model in OnModelCreating:
+This method uses a parameter and return type that match the TVF defined above. The method is then added to the EF Core model in OnModelCreating:
 
 ```c#
 modelBuilder.HasDbFunction(() => GetReports(0));
