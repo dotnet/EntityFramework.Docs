@@ -71,7 +71,7 @@ The join table entity type may still exist, but it should not get in the way of 
 
 ## Table-per-type (TPT) inheritance mapping
 
-Lead developer: @AndriySvyryd
+Lead developer: @AndriySvyryd and @smitpatel
 
 Tracked by [#2266](https://github.com/aspnet/EntityFrameworkCore/issues/2266)
 
@@ -109,9 +109,21 @@ This caused large performance regressions for queries that use Include for multi
 In EF Core 5.0, we are retaining the new default behavior.
 However, EF Core 5.0 will now allow generation of multiple queries for collection Includes where having a single query is causing bad performance.
 
+## Required one-to-one dependents
+
+Lead developers: @AndriySvyryd and @smitpatel
+
+Tracked by [#12100](https://github.com/dotnet/efcore/issues/12100)
+
+T-shirt size: M
+
+Status: Done
+
+In EF Core 3.0, all dependents, including owned types are optional (e.g. Person.Address can be null). In EF Core 5.0, dependents can be configured as required.
+
 ## Rationalize ToTable, ToQuery, ToView, FromSql, etc
 
-Lead developers: @maumar and @smitpatel
+Lead developers: @AndriySvyryd and @smitpatel
 
 Tracked by [#17270](https://github.com/aspnet/EntityFrameworkCore/issues/17270)
 
