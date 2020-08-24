@@ -66,9 +66,9 @@
         href: core/get-started/install/index.md
       - name: ASP.NET Core tutorial >>
         href: /aspnet/core/data/ef-rp/intro
-      - name: Blazor Server with EF Core reference app
+      - name: Blazor Server with EF Core guidance >>
         href: /aspnet/core/blazor/blazor-server-ef-core
-      - name: WPF .NET Core Tutorial
+      - name: WPF .NET Core tutorial
         href: core/get-started/wpf.md
       - name: Xamarin tutorial
         href: core/get-started/xamarin.md

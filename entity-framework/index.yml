@@ -88,7 +88,7 @@ additionalContent:
             text: "ASP.NET Core Razor Pages"
           - url: https://docs.microsoft.com/aspnet/core/data/ef-mvc/
             text: "ASP.NET Core MVC"
-          - url: https://docs.microsoft.com/en-us/aspnet/core/blazor/blazor-server-ef-core
+          - url: https://docs.microsoft.com/aspnet/core/blazor/blazor-server-ef-core
             text: "Blazor Server"
           - url: core/get-started/wpf.md
             text: "Windows Presentation Foundation (WPF)"
