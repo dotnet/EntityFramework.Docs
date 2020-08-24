@@ -68,24 +68,31 @@ CREATE TABLE [Animals] (
     CONSTRAINT [PK_Animals] PRIMARY KEY ([Id])
 );
 
+CREATE TABLE [Pets] (
+    [Id] int NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_Pets] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Pets_Animals_Id] FOREIGN KEY ([Id]) REFERENCES [Animals] ([Id]) ON DELETE NO ACTION
+);
+
 CREATE TABLE [Cats] (
     [Id] int NOT NULL,
     [EdcuationLevel] nvarchar(max) NULL,
-    CONSTRAINT [PK_Cats] PRIMARY KEY ([Id])
+    CONSTRAINT [PK_Cats] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Cats_Animals_Id] FOREIGN KEY ([Id]) REFERENCES [Animals] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Cats_Pets_Id] FOREIGN KEY ([Id]) REFERENCES [Pets] ([Id]) ON DELETE NO ACTION
 );
 
 CREATE TABLE [Dogs] (
     [Id] int NOT NULL,
     [FavoriteToy] nvarchar(max) NULL,
-    CONSTRAINT [PK_Dogs] PRIMARY KEY ([Id])
-);
-
-CREATE TABLE [Pets] (
-    [Id] int NOT NULL,
-    [Name] nvarchar(max) NULL,
-    CONSTRAINT [PK_Pets] PRIMARY KEY ([Id])
+    CONSTRAINT [PK_Dogs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Dogs_Animals_Id] FOREIGN KEY ([Id]) REFERENCES [Animals] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Dogs_Pets_Id] FOREIGN KEY ([Id]) REFERENCES [Pets] ([Id]) ON DELETE NO ACTION
 );
 ```
+
+Note that creation of the foreign key constraints shown above were added after branching the code for preview 8.
 
 Entity types can be mapped to different tables using mapping attributes:
 
@@ -183,12 +190,153 @@ Notice that:
 
 Documentation is tracked by issue [#2583](https://github.com/dotnet/EntityFramework.Docs/issues/2583).
 
-### Flexible type/function mapping
+### Table-valued functions
 
-TODO: https://github.com/dotnet/efcore/issues/21415
-TODO: https://github.com/dotnet/efcore/issues/9810
-TODO: https://github.com/dotnet/efcore/issues/17268
-TODO: https://github.com/dotnet/efcore/issues/20051
+This feature was contributed from the community by [@pmiddleton](https://github.com/pmiddleton). Many thanks for the contribution!
+
+EF Core 5.0 includes first-class support for mapping .NET methods table-valued functions (TVFs). These functions can then be used in LINQ queries where additional composition on the results of the function will also be translated to SQL.
+
+For example, consider this TVF defined in a SQL Server database:
+
+```sql
+create FUNCTION GetReports(@employeeId int)
+RETURNS @reports TABLE
+(
+	Name nvarchar(50) not null,
+	IsDeveloper bit not null
+)
+AS
+begin
+	WITH cteEmployees AS
+	(
+		SELECT id, name, managerId, isDeveloper
+		FROM employees
+		WHERE id = @employeeId
+		UNION ALL
+		SELECT e.id, e.name, e.managerId, e.isDeveloper
+		FROM employees e
+		INNER JOIN cteEmployees cteEmp ON cteEmp.id = e.ManagerId
+	)
+
+	insert into @reports
+	select name, isDeveloper
+	FROM cteEmployees
+	where id != @employeeId
+
+	return
+end
+```
+
+The EF Core model requires two entity types to use this TVF:
+* An `Employee` type that maps to the Employees table in the normal way
+* A `Report` type that matches the shape returned by the TVF
+
+```c#
+public class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public bool IsDeveloper { get; set; }
+
+    public int? ManagerId { get; set; }
+    public virtual Employee Manager { get; set; }
+}
+```
+
+```c#
+public class Report
+{
+    public string Name { get; set; }
+    public bool IsDeveloper { get; set; }
+}
+```
+
+These types must be included in the EF Core model:
+
+```c#
+modelBuilder.Entity<Employee>();
+modelBuilder.Entity(typeof(Report)).HasNoKey();
+```
+
+Notice that `Report` has no primary key and so much be configured as such.
+
+Finally, a .NET method must be mapped to the TVF in the database. This method can be defined on the DbContext using the new `FromExpression` method:
+
+```c#
+public IQueryable<Report> GetReports(int managerId)
+    => FromExpression(() => GetReports(managerId));
+```
+
+This method uses a parameter and return type that match the TVF defined above. The is then added to the EF Core model in OnModelCreating:
+
+```c#
+modelBuilder.HasDbFunction(() => GetReports(0));
+```
+
+(Using a lambda here is an easy way to pass the `MethodInfo` to EF Core. The arguments passed to the method are ignored.)
+
+We can now write queries that call `GetReports` and compose over the results. For example:
+
+```c#
+from e in context.Employees
+from rc in context.GetReports(e.Id)
+where rc.IsDeveloper == true
+select new
+{
+  ManagerName = e.Name,
+  EmployeeName = rc.Name,
+})
+```
+
+On SQL Server, this translates to:
+
+```sql
+SELECT [e].[Name] AS [ManagerName], [g].[Name] AS [EmployeeName]
+FROM [Employees] AS [e]
+CROSS APPLY [dbo].[GetReports]([e].[Id]) AS [g]
+WHERE [g].[IsDeveloper] = CAST(1 AS bit)
+```
+
+Notice that the SQL is rooted in the `Employees` table, calls `GetReports`, and then adds an additional WHERE clause on the results of the function.
+
+### Flexible query/update mapping
+
+EF Core 5.0 allows mapping the same entity type to different database objects. These objects may be tables, views, or functions.
+
+For example, an entity type can be mapped to both a database view and a database table:
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder
+        .Entity<Blog>()
+        .ToTable("Blogs")
+        .ToView("BlogsView");
+}
+```
+
+By default, EF Core will then query from the view and send updates to the table. For example, executing the following code:
+
+```c#
+var blog = context.Set<Blog>().Single(e => e.Name == "One Unicorn");
+
+blog.Name = "1unicorn2";
+
+context.SaveChanges();
+```
+
+Results in a query against the view, and then an update to the table:
+
+```sql
+SELECT TOP(2) [b].[Id], [b].[Name], [b].[Url]
+FROM [BlogsView] AS [b]
+WHERE [b].[Name] = N'One Unicorn'
+
+SET NOCOUNT ON;
+UPDATE [Blogs] SET [Name] = @p0
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT;
+```
 
 ### Context-wide split-query configuration
 
