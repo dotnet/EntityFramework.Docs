@@ -270,7 +270,7 @@ public IQueryable<Report> GetReports(int managerId)
 This method uses a parameter and return type that match the TVF defined above. The method is then added to the EF Core model in OnModelCreating:
 
 ```c#
-modelBuilder.HasDbFunction(() => GetReports(0));
+modelBuilder.HasDbFunction(() => GetReports(default));
 ```
 
 (Using a lambda here is an easy way to pass the `MethodInfo` to EF Core. The arguments passed to the method are ignored.)
