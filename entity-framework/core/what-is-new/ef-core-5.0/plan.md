@@ -1,7 +1,7 @@
 ---
 title: Plan for Entity Framework Core 5.0
 author: ajcvickers
-ms.date: 06/11/2020
+ms.date: 08/22/2020
 uid: core/what-is-new/ef-core-5.0/plan
 ---
 
@@ -20,7 +20,7 @@ EF Core 5.0 is currently scheduled for release at [the same time as .NET 5.0](ht
 
 ### Supported platforms
 
-EF Core 5.0 is planned to run on any .NET 5.0 platform based on the [convergence of these platforms to .NET Core](https://devblogs.microsoft.com/dotnet/introducing-net-5/). What this means in terms of .NET Standard and the actual TFM used is still TBD.
+EF Core 5.0 is planned to run on any .NET Standard 2.1 platform, including .NET 5.0. This is part of the more general .NET wide [convergence of platforms to .NET Core](https://devblogs.microsoft.com/dotnet/introducing-net-5/).
 
 EF Core 5.0 will not run on .NET Framework.
 
@@ -42,7 +42,7 @@ Tracked by [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508)
 
 T-shirt size: L
 
-Status: In-progress
+Status: Done
 
 Many-to-many is the [most requested feature](https://github.com/aspnet/EntityFrameworkCore/issues/1368) (~506 votes) on the GitHub backlog.
 
@@ -62,7 +62,7 @@ Tracked by [#19003](https://github.com/aspnet/EntityFrameworkCore/issues/19003)
 
 T-shirt size: L
 
-Status: In-progress
+Status: Done
 
 As described in the first theme, many-to-many support has multiple aspects.
 This theme specifically tracks use of skip navigations.
@@ -71,13 +71,13 @@ The join table entity type may still exist, but it should not get in the way of 
 
 ## Table-per-type (TPT) inheritance mapping
 
-Lead developer: @AndriySvyryd
+Lead developer: @AndriySvyryd and @smitpatel
 
 Tracked by [#2266](https://github.com/aspnet/EntityFrameworkCore/issues/2266)
 
 T-shirt size: XL
 
-Status: In-progress
+Status: Done
 
 We're doing TPT because it is both a highly requested feature (~289 votes; 3rd overall) and because it requires some low-level changes that we feel are appropriate for the foundational nature of the overall .NET 5 plan. We expect this to result in breaking changes for database providers, although these should be much less severe than the changes required for 3.0.
 
@@ -89,7 +89,7 @@ Tracked by [#1833](https://github.com/aspnet/EntityFrameworkCore/issues/1833)
 
 T-shirt size: M
 
-Status: In-progress
+Status: Done
 
 Filtered Include is a highly-requested feature (~376 votes; 2nd overall) that isn't a huge amount of work, and that we believe will unblock or make easier many scenarios that currently require model-level filters or more complex queries.
 
@@ -101,7 +101,7 @@ Tracked by [#20892](https://github.com/dotnet/efcore/issues/20892)
 
 T-shirt size: L
 
-Status: In-progress
+Status: Done
 
 EF Core 3.0 changed the default behavior to create a single SQL query for a given LINQ query.
 This caused large performance regressions for queries that use Include for multiple collections.
@@ -109,15 +109,27 @@ This caused large performance regressions for queries that use Include for multi
 In EF Core 5.0, we are retaining the new default behavior.
 However, EF Core 5.0 will now allow generation of multiple queries for collection Includes where having a single query is causing bad performance.
 
+## Required one-to-one dependents
+
+Lead developers: @AndriySvyryd and @smitpatel
+
+Tracked by [#12100](https://github.com/dotnet/efcore/issues/12100)
+
+T-shirt size: M
+
+Status: Done
+
+In EF Core 3.0, all dependents, including owned types are optional (e.g. Person.Address can be null). In EF Core 5.0, dependents can be configured as required.
+
 ## Rationalize ToTable, ToQuery, ToView, FromSql, etc
 
-Lead developers: @maumar and @smitpatel
+Lead developers: @AndriySvyryd and @smitpatel
 
 Tracked by [#17270](https://github.com/aspnet/EntityFrameworkCore/issues/17270)
 
 T-shirt size: L
 
-Status: In-progress
+Status: Done
 
 We have made progress in previous releases towards supporting raw SQL, keyless types, and related areas. However, there are both gaps and inconsistencies in the way everything works together as a whole. The goal for 5.0 is to fix these and create a good experience for defining, migrating, and using different types of entities and their associated queries and database artifacts. This may also involve updates to the compiled query API.
 
@@ -131,7 +143,7 @@ Tracked by [issues labeled with `area-query` in the 5.0 milestone](https://githu
 
 T-shirt size: XL
 
-Status: In-progress
+Status: Done
 
 The query translation code was extensively rewritten for EF Core 3.0. The query code is generally in a much more robust state because of this. For 5.0 we aren't planning on making major query changes, outside those needed to support TPT and skip navigation properties. However, there is still significant work needed to fix some technical debt left over from the 3.0 overhaul. We also plan to fix many bugs and implement small enhancements to further improve the overall query experience.
 
@@ -143,7 +155,9 @@ Tracked by [#19587](https://github.com/dotnet/efcore/issues/19587)
 
 T-shirt size: L
 
-Status: In-progress
+Status: Scoped/Done
+
+Scoping: The [migrations bundles feature](https://github.com/dotnet/efcore/issues/19693) has been deferred until after the EF Core 5.0 release. However, several other [targeted improvements related to migrations](https://github.com/dotnet/efcore/issues/19587#issuecomment-668794460) will be included in EF Core 5.0
 
 Currently, many developers migrate their databases at application startup time. This is easy but is not recommended because:
 
@@ -170,7 +184,9 @@ Tracked by [#19588](https://github.com/dotnet/efcore/issues/19588)
 
 T-shirt size: L
 
-Status: Not started
+Status: Scope/Done
+
+Scoping: Platform guidance and samples are published for Blazor, Xamarin, WinForms, and WPF. Xamarin and other AOT/linker work is now planned for EF Core 6.0.
 
 We have good guidance for using EF Core in traditional MVC-like web applications. Guidance for other platforms and application models is either missing or out-of-date. For EF Core 5.0, we plan to investigate, improve, and document the experience of using EF Core with:
 
@@ -196,7 +212,9 @@ Tracked by [issues labeled with `area-perf` in the 5.0 milestone](https://github
 
 T-shirt size: L
 
-Status: In-progress
+Status: Scoped/Done
+
+Scoping: Major performance improvements in the Npgsql provider are complete. Other performance work is now planned for EF Core 6.0.
 
 For EF Core, we plan to improve our suite of performance benchmarks and make directed performance improvements to the runtime. In addition, we plan to complete the new ADO.NET batching API which was prototyped during the 3.0 release cycle. Also at the ADO.NET layer, we plan additional performance improvements to the Npgsql provider.
 
@@ -272,7 +290,7 @@ Developers: @roji, @maumar, @bricelam, @smitpatel, @AndriySvyryd, @ajcvickers
 
 T-shirt size: L
 
-Status: In-progress
+Status: Done
 
 In addition to the bigger features outlined above, we also have many smaller improvements scheduled for 5.0 to fix "paper-cuts". Note that many of these enhancements are also covered by the more general themes outlined above.
 
