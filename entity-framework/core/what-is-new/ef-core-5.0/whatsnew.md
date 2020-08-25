@@ -199,32 +199,31 @@ EF Core 5.0 includes first-class support for mapping .NET methods to table-value
 For example, consider this TVF defined in a SQL Server database:
 
 ```sql
-create FUNCTION GetReports(@employeeId int)
+CREATE FUNCTION GetReports(@employeeId int)
 RETURNS @reports TABLE
 (
-	Name nvarchar(50) not null,
-	IsDeveloper bit not null
+	Name nvarchar(50) NOT NULL,
+	IsDeveloper bit NOT NULL
 )
 AS
-begin
+BEGIN
 	WITH cteEmployees AS
 	(
-		SELECT id, name, managerId, isDeveloper
-		FROM employees
-		WHERE id = @employeeId
+		SELECT Id, Name, ManagerId, IsDeveloper
+		FROM Employees
+		WHERE Id = @employeeId
 		UNION ALL
-		SELECT e.id, e.name, e.managerId, e.isDeveloper
-		FROM employees e
-		INNER JOIN cteEmployees cteEmp ON cteEmp.id = e.ManagerId
+		SELECT e.Id, e.Name, e.ManagerId, e.IsDeveloper
+		FROM Employees e
+		INNER JOIN cteEmployees cteEmp ON cteEmp.Id = e.ManagerId
 	)
-
-	insert into @reports
-	select name, isDeveloper
+	INSERT INTO @reports
+	SELECT Name, IsDeveloper
 	FROM cteEmployees
-	where id != @employeeId
+	WHERE Id != @employeeId
 
-	return
-end
+	RETURN
+END
 ```
 
 The EF Core model requires two entity types to use this TVF:
