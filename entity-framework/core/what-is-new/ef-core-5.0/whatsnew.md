@@ -16,7 +16,7 @@ We will add links from here to the official documentation as it is published.
 
 ## Preview 8
 
-## Table-per-type (TPT) mapping
+### Table-per-type (TPT) mapping
 
 By default, EF Core maps an inheritance hierarchy of .NET types to a single database table. This is known as table-per-hierarchy (TPH) mapping. EF Core 5.0 also allows mapping each .NET type in an inheritance hierarchy to a different database table; known as table-per-type (TPT) mapping.
 
