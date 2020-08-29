@@ -50,6 +50,10 @@ You can also construct a DbParameter and supply it as a parameter value. Since a
 
 [!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlRawStoredProcedureNamedSqlParameter)]
 
+> [!NOTE]
+> **Parameter Ordering**
+> When passing multiple `SqlParameter`s, the ordering in the SQL string must match the order of the parameters in the stored procedure's definition. Failing to do this can result in type conversion exceptions or unexpected behavior when the procedure is executed because Entity Framework Core will apply the order of the `SqlParameter[]` array literally and will not reorder them to match the order defined in the stored procedure's definition. This behavior is not typical of stored procedures when using named parameters and is seemingly specific to `FromSql()`.
+
 ## Composing with LINQ
 
 You can compose on top of the initial raw SQL query using LINQ operators. EF Core will treat it as subquery and compose over it in the database. The following example uses a raw SQL query that selects from a Table-Valued Function (TVF). And then composes on it using LINQ to do filtering and sorting.
