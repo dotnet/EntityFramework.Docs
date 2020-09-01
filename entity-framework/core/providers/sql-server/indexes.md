@@ -12,7 +12,7 @@ This page details index configuration options that are specific to the SQL Serve
 
 ## Clustering
 
-Clustered indexes sort and store the data rows in the table or view based on their key values. Creating the right clustered index for your table can significantly improve the speed of your queries, as data is already laid out in the optimal order. There can be only one clustered index per table, because the data rows themselves can be stored in only one order. For more information, see [the SQL Server documentation on clustered and non-clustered indexes](https://docs.microsoft.com/sql/relational-databases/indexes/clustered-and-nonclustered-indexes-described).
+Clustered indexes sort and store the data rows in the table or view based on their key values. Creating the right clustered index for your table can significantly improve the speed of your queries, as data is already laid out in the optimal order. There can be only one clustered index per table, because the data rows themselves can be stored in only one order. For more information, see [the SQL Server documentation on clustered and non-clustered indexes](/sql/relational-databases/indexes/clustered-and-nonclustered-indexes-described).
 
 By default, the primary key column of a table is implicitly backed by a clustered index, and all other indexes are non-clustered.
 
