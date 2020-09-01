@@ -221,6 +221,8 @@
         items:
         - name: Overview
           href: core/providers/sql-server/index.md
+        - name: Indexes
+          href: core/providers/sql-server/indexes.md
         - name: Memory-optimized tables
           href: core/providers/sql-server/memory-optimized-tables.md
         - name: Specify Azure SQL Database options
