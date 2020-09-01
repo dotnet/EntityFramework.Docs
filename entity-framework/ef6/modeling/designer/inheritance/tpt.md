@@ -1,7 +1,8 @@
 ---
-title: "Designer TPT Inheritance - EF6"
+title: Designer TPT Inheritance - EF6
+description: Designer TPT Inheritance in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: efc78c31-b4ea-4ea3-a0cd-c69eb507020e
 ---
 # Designer TPT Inheritance
@@ -63,7 +64,7 @@ We will now delete the **CourseID** property from **OnlineCourse** and **OnsiteC
 -   Right-click the **CourseID** property of the **OnsiteCourse** entity type, and then select **Delete from Model**
 -   Table-per-type inheritance is now implemented.
 
-![TPT](~/ef6/media/tpt.png)
+![Table Per Type](~/ef6/media/tpt.png)
 
 ## Use the Model
 

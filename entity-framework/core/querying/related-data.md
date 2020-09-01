@@ -1,5 +1,6 @@
 ---
 title: Loading Related Data - EF Core
+description: Different strategies for loading related data with Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19

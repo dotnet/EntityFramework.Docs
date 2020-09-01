@@ -1,7 +1,7 @@
 ---
 title: Testing with the EF In-Memory Database - EF Core
+description: Using the EF in-memory database to test an Entity Framework Core application
 author: ajcvickers
-description: Using the EF in-memory database to test an EF Core application
 ms.date: 10/27/2016
 uid: core/miscellaneous/testing/in-memory
 ---

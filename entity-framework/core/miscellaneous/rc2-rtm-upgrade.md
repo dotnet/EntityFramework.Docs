@@ -1,5 +1,6 @@
 ---
 title: Upgrading from EF Core 1.0 RC2 to RTM - EF Core
+description: Instructions and notes for upgrading from Entity Framework Core 1.0 RC2 to RTM
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: c3c1940b-136d-45d8-aa4f-cb5040f8980a

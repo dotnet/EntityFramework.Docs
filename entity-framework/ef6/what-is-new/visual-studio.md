@@ -1,7 +1,8 @@
 ---
-title: "Visual Studio Releases - EF6"
+title: Visual Studio Releases - EF6
+description: Visual Studio Releases and Entity Framework 6
 author: divega
-ms.date: "07/05/2018"
+ms.date: 07/05/2018
 ms.assetid: 028FF890-4EDB-4F03-AE53-72F9C33EC92F
 ---
 # Visual Studio Releases

@@ -1,7 +1,8 @@
 ---
-title: "Handling Concurrency Conflicts - EF6"
+title: Handling Concurrency Conflicts - EF6
+description: Handling Concurrency Conflicts in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 2318e4d3-f561-4720-bbc3-921556806476
 ---
 # Handling Concurrency Conflicts (EF6)

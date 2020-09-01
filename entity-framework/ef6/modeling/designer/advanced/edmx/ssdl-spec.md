@@ -1,7 +1,8 @@
 ---
-title: "SSDL Specification - EF6"
+title: SSDL Specification - EF6
+description: SSDL Specification in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: a4af4b1a-40f4-48cc-b2e0-fa8f5d9d5419
 ---
 # SSDL Specification

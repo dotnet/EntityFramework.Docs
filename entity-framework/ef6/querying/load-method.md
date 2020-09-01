@@ -1,7 +1,8 @@
 ---
-title: "The Load Method - EF6"
+title: The Load Method - EF6
+description: The Load Method in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 03c5a069-b7b4-455f-a16f-ee3b96cc4e28
 ---
 # The Load Method

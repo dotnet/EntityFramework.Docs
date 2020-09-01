@@ -1,5 +1,6 @@
 ---
 title: Asynchronous Queries - EF Core
+description: Information on working with asynchronous queries in Entity Framework Core
 author: smitpatel
 ms.date: 10/03/2019
 ms.assetid: b6429b14-cba0-4af4-878f-b829777c89cb

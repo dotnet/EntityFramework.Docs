@@ -1,5 +1,6 @@
 ---
 title: Concurrency Tokens - EF Core
+description: Configuring concurrency tokens for optimistic concurrency control in an Entity Framework Core model
 author: AndriySvyryd
 ms.date: 01/03/2020
 ms.assetid: bc8b1cb0-befe-4b67-8004-26e6c5f69385

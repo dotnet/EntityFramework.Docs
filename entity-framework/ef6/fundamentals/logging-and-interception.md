@@ -1,7 +1,8 @@
 ---
-title: "Logging and intercepting database operations - EF6"
+title: Logging and intercepting database operations - EF6
+description: Logging and intercepting database operations in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: b5ee7eb1-88cc-456e-b53c-c67e24c3f8ca
 ---
 # Logging and intercepting database operations

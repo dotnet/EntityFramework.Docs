@@ -1,7 +1,8 @@
 ---
-title: "Working with property values - EF6"
+title: Working with property values - EF6
+description: Working with property values in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: e3278b4b-9378-4fdb-923d-f64d80aaae70
 ---
 # Working with property values

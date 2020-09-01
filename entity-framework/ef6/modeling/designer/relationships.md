@@ -1,7 +1,8 @@
 ---
-title: "Relationships - EF Designer - EF6"
+title: Relationships - EF Designer - EF6
+description: Relationships - EF Designer in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 402fe960-754b-470f-976b-e5de3e9986b5
 ---
 # Relationships - EF Designer

@@ -1,5 +1,6 @@
 ---
 title: Upgrading from EF Core 1.0 RC1 to RC2 - EF Core
+description: Instructions and notes for upgrading from Entity Framework Core 1.0 RC1 to RC2
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 6d75b229-cc79-4d08-88cd-3a1c1b24d88f

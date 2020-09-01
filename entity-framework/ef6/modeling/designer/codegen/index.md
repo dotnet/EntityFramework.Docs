@@ -1,7 +1,8 @@
 ---
-title: "Designer Code Generation Templates - EF6"
+title: Designer Code Generation Templates - EF6
+description: Designer Code Generation Templates in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 56e00fa2-f9f0-48b3-8006-f8266ca7e74b
 ---
 # Designer Code Generation Templates
@@ -150,11 +151,11 @@ To start using a code generation template, right-click an empty spot on the desi
 
 If you've already installed the template you want to use (or it was included in Visual Studio), then it will be available under either the **Code** or **Data** section from the left menu.
 
-![Installed](~/ef6/media/installed.png)
+![Installed Template](~/ef6/media/installed.png)
 
 If you don't already have the template installed, select **Online** from the left menu and search for the template you want.
 
-![Search](~/ef6/media/search.png) 
+![Search Template](~/ef6/media/search.png) 
 
 If you are using Visual Studio 2012, the new .tt files will be nested under the .edmx file.*
 

@@ -1,7 +1,8 @@
 ---
-title: "Working with Transactions - EF6"
+title: Working with Transactions - EF6
+description: Working with Transactions in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 0d0f1824-d781-4cb3-8fda-b7eaefced1cd
 ---
 # Working with Transactions

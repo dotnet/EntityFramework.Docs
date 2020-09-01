@@ -1,7 +1,8 @@
 ---
-title: "Designer Entity Splitting - EF6"
+title: Designer Entity Splitting - EF6
+description: Designer Entity Splitting in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: aa2dd48a-1f0e-49dd-863d-d6b4f5834832
 ---
 # Designer Entity Splitting
@@ -135,4 +136,4 @@ The following T-SQL statements were executed against the database as a result of
     ![Insert 2](~/ef6/media/insert2.png)
 -   The following **SELECT** was executed as a result of enumerating the people in the database. It combines the data from the **Person** and **PersonInfo** table.
 
-    ![Select](~/ef6/media/select.png)
+    ![Select Combining Person and PersonInfo Data](~/ef6/media/select.png)

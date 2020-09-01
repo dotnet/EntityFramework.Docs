@@ -1,7 +1,8 @@
 ---
-title: "Creating a Model - EF6"
+title: Creating a Model - EF6
+description: Creating a Model in Entity Framework 6
 author: divega
-ms.date: "07/05/2018"
+ms.date: 07/05/2018
 ms.assetid: 4890228E-CEA1-4595-B8AD-CA81253F8767
 ---
 # Creating a Model

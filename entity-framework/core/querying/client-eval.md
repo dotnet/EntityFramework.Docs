@@ -1,5 +1,6 @@
 ---
 title: Client vs. Server Evaluation - EF Core
+description: Client and server evaluation of queries with Entity Framework Core
 author: smitpatel
 ms.date: 10/03/2019
 ms.assetid: 8b6697cc-7067-4dc2-8007-85d80503d123

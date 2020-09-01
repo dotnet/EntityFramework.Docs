@@ -1,5 +1,6 @@
 ---
 title: Asynchronous Saving - EF Core
+description: Information on using Entity Framework Core to asynchronously save data
 author: rowanmiller
 ms.date: 01/24/2017
 ms.assetid: b64a606e-ecd9-4807-829a-b6ec05ade33f

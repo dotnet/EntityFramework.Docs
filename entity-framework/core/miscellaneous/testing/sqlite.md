@@ -1,6 +1,6 @@
 ---
 title: Testing with SQLite - EF Core
-description: Using SQLite to test an EF Core application
+description: Using SQLite to test an Entity Framework Core application
 author: ajcvickers
 ms.date: 04/24/2020
 uid: core/miscellaneous/testing/sqlite

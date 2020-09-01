@@ -1,5 +1,6 @@
 ---
 title: Cascade Delete - EF Core
+description: Configuring delete behaviors for related entities when a principal entity is deleted
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e

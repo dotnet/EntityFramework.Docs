@@ -1,7 +1,8 @@
 ---
-title: "Custom Code First Conventions - EF6"
+title: Custom Code First Conventions - EF6
+description: Custom Code First Conventions in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: dd2bdbd9-ae9e-470a-aeb8-d0ba160499b7
 ---
 # Custom Code First Conventions

@@ -1,7 +1,8 @@
 ---
-title: "Pre-generated mapping views - EF6"
+title: Pre-generated mapping views - EF6
+description: Pre-generated mapping views in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 917ba9c8-6ddf-4631-ab8c-c4fb378c2fcd
 ---
 # Pre-generated mapping views

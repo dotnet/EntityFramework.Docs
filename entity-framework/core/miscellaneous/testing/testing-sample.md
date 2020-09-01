@@ -1,6 +1,6 @@
 ---
 title: EF Core testing sample - EF Core
-description: Sample showing how to test applications that use EF Core
+description: Sample showing how to test applications which use Entity Framework Core
 author: ajcvickers
 ms.date: 04/22/2020
 uid: core/miscellaneous/testing/testing-sample

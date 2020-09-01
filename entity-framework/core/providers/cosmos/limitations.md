@@ -1,6 +1,6 @@
 ---
 title: Azure Cosmos DB Provider - Limitations - EF Core
-description: The limitations of the Entity Framework Core Azure Cosmos DB provider
+description: Limitations of the Entity Framework Core Azure Cosmos DB provider as compared to other providers
 author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/05/2019

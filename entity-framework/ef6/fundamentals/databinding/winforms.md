@@ -1,7 +1,8 @@
 ---
-title: "Databinding with WinForms - EF6"
+title: Databinding with WinForms - EF6
+description: Databinding with WinForms in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 80fc5062-2f1c-4dbd-ab6e-b99496784b36
 uid: ef6/fundamentals/databinding/winforms
 ---
@@ -218,7 +219,7 @@ We’re going to make use of Entity Framework Designer, which is included as par
 -   This launches the **Entity Data Model Wizard**
 -   Select **Generate from Database** and click **Next**
 
-    ![ChooseModelContents](~/ef6/media/choosemodelcontents.png)
+    ![Choose Model Contents](~/ef6/media/choosemodelcontents.png)
 
 -   Select the connection to the database you created in the first section, enter **ProductContext** as the name of the connection string and click **Next**
 

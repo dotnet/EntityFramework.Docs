@@ -1,7 +1,8 @@
 ---
-title: "Testing with your own test doubles - EF6"
+title: Testing with your own test doubles - EF6
+description: Testing with your own test doubles in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 16a8b7c0-2d23-47f4-9cc0-e2eb2e738ca3
 ---
 # Testing with your own test doubles

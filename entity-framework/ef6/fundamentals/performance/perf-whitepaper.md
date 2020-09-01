@@ -1,7 +1,8 @@
 ---
-title: "Performance considerations for EF4, EF5, and EF6 - EF6"
+title: Performance considerations for EF4, EF5, and EF6 - EF6
+description: Performance considerations for Entity Framework 4, 5, and 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: d6d5a465-6434-45fa-855d-5eb48c61a2ea
 ---
 # Performance considerations for EF 4, 5, and 6

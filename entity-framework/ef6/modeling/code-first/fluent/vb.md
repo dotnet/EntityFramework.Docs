@@ -1,7 +1,8 @@
 ---
-title: "Fluent API with VB.NET - EF6"
+title: Fluent API with VB.NET - EF6
+description: Fluent API with VB.NET in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 763dc6a2-764a-4600-896c-f6f13abf56ec
 ---
 # Fluent API with VB.NET

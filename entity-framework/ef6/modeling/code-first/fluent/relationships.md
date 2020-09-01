@@ -1,7 +1,8 @@
 ---
-title: "Fluent API - Relationships - EF6"
+title: Fluent API - Relationships - EF6
+description: Fluent API - Relationships in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: fd73b4f8-16d5-40f1-9640-885ceafe67a1
 ---
 # Fluent API - Relationships
