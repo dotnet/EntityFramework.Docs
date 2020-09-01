@@ -33,7 +33,7 @@ You can configure an index's fill factor as follows:
 
 ## Online creation
 
-The ONLINE option allows concurrent user access to the underlying table or clustered index data and any associated nonclustered indexes during index creation, so that users can continue to update and query the underlying data. When you perform data definition language (DDL) operations offline, such as building or rebuilding a clustered index; these operations hold exclusive locks on the underlying data and associated indexes. For more information, see [the SQL Server documentation on the ONLINE index option](https://docs.microsoft.com/sql/relational-databases/indexes/perform-index-operations-online).
+The ONLINE option allows concurrent user access to the underlying table or clustered index data and any associated nonclustered indexes during index creation, so that users can continue to update and query the underlying data. When you perform data definition language (DDL) operations offline, such as building or rebuilding a clustered index; these operations hold exclusive locks on the underlying data and associated indexes. For more information, see [the SQL Server documentation on the ONLINE index option](/sql/relational-databases/indexes/perform-index-operations-online).
 
 You can configure an index with the ONLINE option as follows:
 
