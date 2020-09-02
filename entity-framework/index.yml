@@ -41,7 +41,7 @@ highlightedContent:
     # Card
     - title: "API reference browser"
       itemType: reference
-      url: https://docs.microsoft.com/dotnet/api/?view=efcore-3.1
+      url: /dotnet/api/?view=efcore-3.1
 
 # Card with summary style
 additionalContent:
@@ -82,17 +82,17 @@ additionalContent:
       # Card
       - title: Platforms
         links:
-          - url: https://docs.microsoft.com/ef/core/platforms/
+          - url: core/platforms/index.md
             text: "All supported platforms"
-          - url: https://docs.microsoft.com/aspnet/core/data/ef-rp/intro
+          - url: /aspnet/core/data/ef-rp/intro
             text: "ASP.NET Core Razor Pages"
-          - url: https://docs.microsoft.com/aspnet/core/data/ef-mvc/
+          - url: /aspnet/core/data/ef-mvc/
             text: "ASP.NET Core MVC"
-          - url: https://docs.microsoft.com/aspnet/core/blazor/blazor-server-ef-core
+          - url: /aspnet/core/blazor/blazor-server-ef-core
             text: "Blazor Server"
           - url: core/get-started/wpf.md
             text: "Windows Presentation Foundation (WPF)"
-          - url: https://docs.microsoft.com/ef/ef6/fundamentals/databinding/winforms/
+          - url: ef6/fundamentals/databinding/winforms.md
             text: "Windows Forms (WinForms)"
           - url: core/get-started/xamarin.md
             text: "Xamarin"

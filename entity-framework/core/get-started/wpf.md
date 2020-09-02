@@ -75,14 +75,14 @@ Add a new `ProductContext.cs` class to the project with the following definition
 [!code-csharp[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/ProductContext.cs)]
 
 * The `DbSet` informs EF Core what C# entities should be mapped to the database.
-* There are a variety of ways to configure the EF Core `DbContext`. You can read about them in: [Configuring a DbContext](/ef/core/miscellaneous/configuring-dbcontext).
+* There are a variety of ways to configure the EF Core `DbContext`. You can read about them in: [Configuring a DbContext](xref:core/miscellaneous/configuring-dbcontext).
 * This example uses the `OnConfiguring` override to specify a Sqlite data file.
 * The `UseLazyLoadingProxies` call tells EF Core to implement lazy-loading, so child entities are automatically loaded when accessed from the parent.
 
 Press **CTRL+SHIFT+B** or navigate to **Build &gt; Build Solution** to compile the project.
 
 > [!TIP]
-> Learn about the different was to keep your database and EF Core models in sync: [Managing Database Schemas](/ef/core/managing-schemas).
+> Learn about the different was to keep your database and EF Core models in sync: [Managing Database Schemas](xref:core/managing-schemas/index).
 
 ## Lazy Loading
 
@@ -143,7 +143,7 @@ The code declares a long-running instance of `ProductContext`. The `ProductConte
 [!code-csharp[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/MainWindow.xaml.cs)]
 
 > [!NOTE]
-> The code uses a call to `EnsureCreated()` to build the database on the first run. This is acceptable for demos, but in production apps you should look at [migrations](/ef/core/managing-schemas/migrations/) to manage your schema. The code also executes synchronously because it uses a local SQLite database. For production scenarios that typically involve a remote server, consider using the asynchronous versions of the `Load` and `SaveChanges` methods.
+> The code uses a call to `EnsureCreated()` to build the database on the first run. This is acceptable for demos, but in production apps you should look at [migrations](xref:core/managing-schemas/migrations/index) to manage your schema. The code also executes synchronously because it uses a local SQLite database. For production scenarios that typically involve a remote server, consider using the asynchronous versions of the `Load` and `SaveChanges` methods.
 
 ## Test the WPF Application
 
@@ -153,18 +153,18 @@ Compile and run the application by pressing **F5** or choosing **Debug &gt; Star
 
 ## Property Change Notification
 
-This example relies on four steps to synchronize the entities with the UI. 
+This example relies on four steps to synchronize the entities with the UI.
 
 1. The initial call `_context.Categories.Load()` loads the categories data.
 1. The lazy-loading proxies load the dependent products data.
 1. EF Core's built-in change tracking makes the necessary modifications to entities, including insertions and deletions, when `_context.SaveChanges()` is called.
 1. The calls to `DataGridView.Items.Refresh()` force a reload with the newly generated ids.
 
-This works for our getting started sample, but you may require additional code for other scenarios. WPF controls render the UI by reading the fields and properties on your entities. When you edit a value in the user interface (UI), that value is passed to your entity. When you change the value of a property directly on your entity, such as loading it from the database, WPF will not immediately reflect the changes in the UI. The rendering engine must be notified of the changes. The project did this by manually calling `Refresh()`. An easy way to automate this notification is by implementing the [INotifyPropertyChanged](/dotnet/api/system.componentmodel.inotifypropertychanged) interface. WPF components will automatically detect the interface and register for change events. The entity is responsible for raising these events. 
+This works for our getting started sample, but you may require additional code for other scenarios. WPF controls render the UI by reading the fields and properties on your entities. When you edit a value in the user interface (UI), that value is passed to your entity. When you change the value of a property directly on your entity, such as loading it from the database, WPF will not immediately reflect the changes in the UI. The rendering engine must be notified of the changes. The project did this by manually calling `Refresh()`. An easy way to automate this notification is by implementing the [INotifyPropertyChanged](/dotnet/api/system.componentmodel.inotifypropertychanged) interface. WPF components will automatically detect the interface and register for change events. The entity is responsible for raising these events.
 
 > [!TIP]
 > To learn more about how to handle changes, read: [How to implement property change notification](/dotnet/framework/wpf/data/how-to-implement-property-change-notification).
 
 ## Next Steps
 
-Learn more about [Configuring a DbContext](/ef/core/miscellaneous/configuring-dbcontext).
+Learn more about [Configuring a DbContext](xref:core/miscellaneous/configuring-dbcontext).
