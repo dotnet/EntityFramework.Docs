@@ -1,5 +1,6 @@
 ---
 title: Managing Database Schemas - EF Core
+description: Overview of strategies for managing your database schemas with Entity Framework Core
 author: bricelam
 ms.date: 10/30/2017
 uid: core/managing-schemas/index

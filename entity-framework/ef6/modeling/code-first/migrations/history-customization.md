@@ -1,7 +1,8 @@
 ---
-title: "Customizing the migrations history table - EF6"
+title: Customizing the migrations history table - EF6
+description: Customizing the migrations history table in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: ed5518f0-a9a6-454e-9e98-a4fa7748c8d0
 ---
 # Customizing the migrations history table
@@ -83,4 +84,4 @@ Once your custom HistoryContext is ready you need to make EF aware of it by regi
 
 That’s pretty much it. Now you can go to the Package Manager Console, Enable-Migrations, Add-Migration and finally Update-Database. This should result in adding to the database a migrations history table configured according to the details you specified in your HistoryContext derived class.
 
-![Database](~/ef6/media/database.png)
+![Migrations History Table](~/ef6/media/database.png)

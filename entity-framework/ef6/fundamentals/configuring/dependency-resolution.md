@@ -1,7 +1,8 @@
 ---
-title: "Dependency resolution - EF6"
+title: Dependency resolution - EF6
+description: Dependency resolution in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 32d19ac6-9186-4ae1-8655-64ee49da55d0
 ---
 # Dependency resolution

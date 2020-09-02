@@ -1,7 +1,8 @@
 ---
-title: "Working with proxies - EF6"
+title: Working with proxies - EF6
+description: Working with proxies in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 869ee4dc-06f1-471d-8e0e-0a1a2bc59c30
 ---
 # Working with proxies

@@ -1,7 +1,8 @@
 ---
-title: "Defining Query - EF Designer - EF6"
+title: Defining Query - EF Designer - EF6
+description: Defining Query - EF Designer in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: e52a297e-85aa-42f6-a922-ba960f8a4b22
 ---
 # Defining Query - EF Designer

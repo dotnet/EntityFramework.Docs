@@ -1,5 +1,6 @@
 ---
 title: Installing Entity Framework Core - EF Core
+description: Installation instructions for Entity Framework Core
 author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2

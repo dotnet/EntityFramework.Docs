@@ -1,5 +1,6 @@
 ---
 title: Breaking changes in EF Core 5.0 - EF Core
+description: Complete list of breaking changes introduced in Entity Framework Core 5.0
 author: bricelam
 ms.date: 06/05/2020
 uid: core/what-is-new/ef-core-5.0/breaking-changes

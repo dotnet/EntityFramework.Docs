@@ -1,7 +1,8 @@
 ---
-title: "Querying and Finding Entities - EF6"
+title: Querying and Finding Entities - EF6
+description: Querying and Finding Entities in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 65bb3db2-2226-44af-8864-caa575cf1b46
 ---
 # Querying and Finding Entities

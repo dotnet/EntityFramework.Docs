@@ -1,7 +1,8 @@
 ---
-title: "Table-Valued Functions (TVFs) - EF6"
+title: Table-Valued Functions (TVFs) - EF6
+description: Table-Valued Functions (TVFs) in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: f019c97b-87b0-4e93-98f4-2c539f77b2dc
 ---
 # Table-Valued Functions (TVFs)

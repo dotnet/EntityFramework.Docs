@@ -1,7 +1,8 @@
 ---
-title: "Working with disconnected entities - EF6"
+title: Working with disconnected entities - EF6
+description: Working with disconnected entities in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 12138003-a373-4817-b1b7-724130202f5f
 ---
 # Working with disconnected entities

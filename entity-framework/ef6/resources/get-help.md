@@ -1,11 +1,12 @@
 ---
-title: "Get Help Using Entity Framework - EF6"
+title: Get Help Using Entity Framework - EF6
+description: Get Help Using Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 592cae61-02e1-485a-bbb0-a508ade9c67d
 ---
 # Get Help Using Entity Framework
-## ![StackOverflow](~/ef6/media/stackoverflow.png) Questions About Using EF  
+## ![StackOverflow Questions](~/ef6/media/stackoverflow.png) Questions About Using EF  
 
 The best way to get help using Entity Framework is to [post a question on Stack Overflow](https://stackoverflow.com/questions/ask) using the **entity-framework** tag.  
 

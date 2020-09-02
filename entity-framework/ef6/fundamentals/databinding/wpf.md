@@ -1,7 +1,8 @@
 ---
-title: "Databinding with WPF - EF6"
+title: Databinding with WPF - EF6
+description: Databinding with WPF in Entity Framework 6
 author: divega
-ms.date: "05/19/2020"
+ms.date: 05/19/2020
 ms.assetid: e90d48e6-bea7785-47ef-b756-7b89cce4daf0
 uid: ef6/fundamentals/databinding/wpf
 ---
@@ -292,7 +293,7 @@ Now that we have a grid to display Categories let's add a details grid to displa
 
 The form should look similar to this:
 
-![Designer](~/ef6/media/designer.png)
+![Designer Form](~/ef6/media/designer.png)
 
 ## Add Code that Handles Data Interaction
 

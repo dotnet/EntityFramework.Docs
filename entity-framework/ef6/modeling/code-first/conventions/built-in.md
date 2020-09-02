@@ -1,7 +1,8 @@
 ---
-title: "Code First Conventions - EF6"
+title: Code First Conventions - EF6
+description: Code First Conventions in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: bc644573-c2b2-4ed7-8745-3c37c41058ad
 ---
 # Code First Conventions

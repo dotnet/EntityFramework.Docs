@@ -1,7 +1,8 @@
 ---
-title: "Loading Related Entities - EF6"
+title: Loading Related Entities - EF6
+description: Loading Related Entities in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: c8417e18-a2ee-499c-9ce9-2a48cc5b468a
 ---
 # Loading Related Entities

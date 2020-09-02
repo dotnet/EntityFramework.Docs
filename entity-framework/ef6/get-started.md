@@ -1,7 +1,8 @@
 ---
-title: "Get started with Entity Framework 6 - EF6"
+title: Get started with Entity Framework 6 - EF6
+description: Get started with Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
 uid: ef6/get-started
 ---

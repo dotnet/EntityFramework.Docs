@@ -1,5 +1,6 @@
 ---
 title: Getting Started - EF Core
+description: Getting started tutorial for Entity Framework Core
 author: rick-anderson
 ms.date: 09/17/2019
 ms.assetid: 3c88427c-20c6-42ec-a736-22d3eccd5071

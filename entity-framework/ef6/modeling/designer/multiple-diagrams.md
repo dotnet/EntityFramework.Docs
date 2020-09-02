@@ -1,7 +1,8 @@
 ---
-title: "Multiple Diagrams per Model - EF6"
+title: Multiple Diagrams per Model - EF6
+description: Multiple Diagrams per Model in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: b95db5c8-de8d-43bd-9ccc-5df6a5e25e1b
 ---
 # Multiple Diagrams per Model
@@ -45,11 +46,11 @@ As you add new diagrams, they appear under the Diagrams folder in the Model Brow
 
 The diagram name is displayed next to the .edmx file name, in the Visual Studio editor. For example Model1.edmx\[Diagram1\].
 
-![DiagramName](~/ef6/media/diagramname.png)
+![Diagram Name](~/ef6/media/diagramname.png)
 
 The diagrams content (shape and color of entities and associations) is stored in the .edmx.diagram file. To view this file, select Solution Explorer and unfold the .edmx file. 
 
-![DiagramFiles](~/ef6/media/diagramfiles.png)
+![Diagram Files](~/ef6/media/diagramfiles.png)
 
 You should not edit the .edmx.diagram file manually, the content of this file maybe overwritten by the EF Designer.
  
@@ -69,7 +70,7 @@ In addition to splitting a model into multiple diagrams, you can also change col
 
 To change the color, select an entity (or multiple entities) on the design surface. Then, click the right mouse button and select **Properties**. In the Properties window, select the **Fill Color** property. Specify the color using either a valid color name (for example, Red) or a valid RGB (for example, 255, 128, 128). 
 
-![Color](~/ef6/media/color.png)
+![Change Color](~/ef6/media/color.png)
 
 ## Summary
 

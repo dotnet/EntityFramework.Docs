@@ -1,7 +1,8 @@
 ---
-title: "Defining DbSets - EF6"
+title: Defining DbSets - EF6
+description: Defining DbSets in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 4528a509-ace7-4dfb-8065-1b833f5e03a0
 ---
 # Defining DbSets

@@ -1,7 +1,8 @@
 ---
-title: "Code First Migrations - EF6"
+title: Code First Migrations - EF6
+description: Code First Migrations in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 36591d8f-36e1-4835-8a51-90f34f633d1e
 ---
 # Code First Migrations

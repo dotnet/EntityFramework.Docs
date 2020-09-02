@@ -1,7 +1,8 @@
 ---
-title: "Model First - EF6"
+title: Model First - EF6
+description: Model First in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: e1b9c319-bb8a-4417-ac94-7890f257e7f6
 ---
 # Model First

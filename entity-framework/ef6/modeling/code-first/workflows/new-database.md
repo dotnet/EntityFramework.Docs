@@ -1,7 +1,8 @@
 ---
-title: "Code First to a New Database - EF6"
+title: Code First to a New Database - EF6
+description: Code First to a New Database in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 2df6cb0a-7d8b-4e28-9d05-e2b9a90125af
 ---
 # Code First to a New Database

@@ -1,7 +1,8 @@
 ---
-title: "Testing with a mocking framework - EF6"
+title: Testing with a mocking framework - EF6
+description: Testing with a mocking framework in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: bd66a638-d245-44d4-8e71-b9c6cb335cc7
 ---
 # Testing with a mocking framework

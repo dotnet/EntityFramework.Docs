@@ -1,7 +1,8 @@
 ---
-title: "What's new - EF6"
+title: What's new - EF6
+description: What's new in Entity Framework 6
 author: divega
-ms.date: "09/12/2019"
+ms.date: 09/12/2019
 ms.assetid: 41d1f86b-ce66-4bf2-8963-48514406fb4c
 uid: ef6/what-is-new/index
 ---

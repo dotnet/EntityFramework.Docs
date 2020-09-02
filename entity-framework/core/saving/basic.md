@@ -1,5 +1,6 @@
 ---
 title: Basic Save - EF Core
+description: Basic information on adding, updating and removing data with Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 850d842e-3fad-4ef2-be17-053768e97b9e

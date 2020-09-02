@@ -1,6 +1,6 @@
 ---
 title: Testing code that uses EF Core - EF Core
-description: Different approaches to testing applications that use EF Core
+description: Different approaches to testing applications that use Entity Framework Core
 author: ajcvickers
 ms.date: 04/22/2020
 uid: core/miscellaneous/testing/index
