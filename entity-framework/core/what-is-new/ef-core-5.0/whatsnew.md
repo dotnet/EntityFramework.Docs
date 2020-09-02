@@ -967,7 +967,7 @@ See the [Configuring Navigation Properties documentation](xref:core/modeling/rel
 
 Migrations and scaffolding now allow namespaces to be specified on the command line. For example, to reverse engineer a database putting the context and model classes in different namespaces:
 
-```
+```dotnetcli
 dotnet ef dbcontext scaffold "connection string" Microsoft.EntityFrameworkCore.SqlServer --context-namespace "My.Context" --namespace "My.Model"
 ```
 
@@ -976,7 +976,7 @@ See the [Migrations](xref:core/managing-schemas/migrations/index#namespaces) and
 ---
 Also, a connection string can now be passed to the `database-update` command:
 
-```
+```dotnetcli
 dotnet ef database update --connection "connection string"
 ```
 
@@ -991,6 +991,7 @@ For performance reasons, EF doesn't do additional null-checks when reading value
 Using `EnableDetailedErrors` will add extra null checking to queries such that, for a small performance overhead, these errors are easier to trace back to a root cause.
 
 For example:
+
 ```CSharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
@@ -1016,6 +1017,7 @@ Documentation is tracked by issue [#2199](https://github.com/dotnet/EntityFramew
 ### Support for the SQL Server DATALENGTH function
 
 This can be accessed using the new `EF.Functions.DataLength` method. For example:
+
 ```CSharp
 var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate));
 ```
@@ -1046,7 +1048,7 @@ Documentation is tracked by issue [#2230](https://github.com/dotnet/EntityFramew
 
 ### Complete discriminator mapping
 
-EF Core uses a discriminator column for [TPH mapping of an inheritance hierarchy](/ef/core/modeling/inheritance). Some performance enhancements are possible so long as EF Core knows all possible values for the discriminator. EF Core 5.0 now implements these enhancements.
+EF Core uses a discriminator column for [TPH mapping of an inheritance hierarchy](xref:core/modeling/inheritance). Some performance enhancements are possible so long as EF Core knows all possible values for the discriminator. EF Core 5.0 now implements these enhancements.
 
 For example, previous versions of EF Core would always generate this SQL for a query returning all types in a hierarchy:
 
@@ -1174,7 +1176,7 @@ The Azure Cosmos DB database provider now supports optimistic concurrency using 
 builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
 ```
 
-SaveChanges will then throw an `DbUpdateConcurrencyException` on a concurrency conflict, which [can be handled](/ef/core/saving/concurrency) to implement retries, etc.
+SaveChanges will then throw an `DbUpdateConcurrencyException` on a concurrency conflict, which [can be handled](xref:core/saving/concurrency) to implement retries, etc.
 
 Documentation is tracked by issue [#2099](https://github.com/dotnet/EntityFramework.Docs/issues/2099).
 

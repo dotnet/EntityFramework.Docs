@@ -142,13 +142,14 @@ EF6.4 runs on .NET Core and .NET Framework, through multi-targeting.
 
 ## Guidance for new applications
 
-Use EF Core on .NET Core for all new applications unless the app needs something that is [only supported on .NET Framework](https://docs.microsoft.com/dotnet/standard/choosing-core-framework-server).
+Use EF Core on .NET Core for all new applications unless the app needs something that is [only supported on .NET Framework](/dotnet/standard/choosing-core-framework-server).
 
 ## Guidance for existing EF6 applications
 
 EF Core is not a drop-in replacement for EF6. Moving from EF6 to EF Core will likely require changes to your application.
 
 When moving an EF6 app to .NET Core:
+
 * Keep using EF6 if the data access code is stable and not likely to evolve or need new features.
 * Port to EF Core if the data access code is evolving or if the app needs new features only available in EF Core.
 * Porting to EF Core is also often done for performance. However, not all scenarios are faster, so do some profiling first.

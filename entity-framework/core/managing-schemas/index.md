@@ -2,6 +2,7 @@
 title: Managing Database Schemas - EF Core
 author: bricelam
 ms.date: 10/30/2017
+uid: core/managing-schemas/index
 ---
 # Managing Database Schemas
 
@@ -18,7 +19,6 @@ scaffold a DbContext and the entity type classes by reverse engineering your dat
 > [!NOTE]
 > The [create and drop APIs][3] can also create the database schema from your EF Core model. However, they are primarily
 > for testing, prototyping, and other scenarios where dropping the database is acceptable.
-
 
   [1]: migrations/index.md
   [2]: scaffolding.md

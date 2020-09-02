@@ -3,6 +3,7 @@ title: "Databinding with WinForms - EF6"
 author: divega
 ms.date: "10/23/2016"
 ms.assetid: 80fc5062-2f1c-4dbd-ab6e-b99496784b36
+uid: ef6/fundamentals/databinding/winforms
 ---
 # Databinding with WinForms
 This step-by-step walkthrough shows how to bind POCO types to Window Forms (WinForms) controls in a “master-detail" form. The application uses Entity Framework to populate objects with data from the database, track changes, and persist data to the database.
