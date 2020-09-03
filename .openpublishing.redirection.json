@@ -311,6 +311,16 @@
             "redirect_document_id": false
         },
         {
+            "source_path": "entity-framework/core/querying/async.md",
+            "redirect_url": "/ef/core/miscellaneous/async",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/saving/async.md",
+            "redirect_url": "/ef/core/miscellaneous/async",
+            "redirect_document_id": false
+        },
+        {
             "source_path": "entity-framework/core/modeling/relational/index.md",
             "redirect_url": "/ef/core/modeling/",
             "redirect_document_id": false

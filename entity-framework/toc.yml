@@ -76,6 +76,8 @@
       items:
       - name: Connection strings
         href: core/miscellaneous/connection-strings.md
+      - name: Asynchronous Programming
+        href: core/miscellaneous/async.md
       - name: Logging
         href: core/miscellaneous/logging.md
       - name: Connection resiliency
@@ -181,8 +183,6 @@
         href: core/querying/complex-query-operators.md
       - name: Load related data
         href: core/querying/related-data.md
-      - name: Asynchronous queries
-        href: core/querying/async.md
       - name: Raw SQL queries
         href: core/querying/raw-sql.md
       - name: Global query filters
@@ -205,8 +205,6 @@
         href: core/saving/concurrency.md
       - name: Transactions
         href: core/saving/transactions.md
-      - name: Asynchronous saving
-        href: core/saving/async.md
       - name: Disconnected entities
         href: core/saving/disconnected-entities.md
       - name: Explicit values for generated properties
