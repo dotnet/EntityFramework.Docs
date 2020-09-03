@@ -36,11 +36,4 @@ The async LINQ operators discussed above can only be used on EF queries - you ca
 
 Unfortunately, referencing System.Interactive.Async causes ambiguous invocation compilation errors on LINQ operators applied to EF's DbSets; this makes it hard to use both EF and System.Interactive.Async in the same project. To work around this issue, add AsQueryable to your DbSet:
 
-```c#
-var groupedHighlyRatedBlogs = await context.Blogs
-    .AsQueryable()
-    .Where(b => b.Rating > 3) // server-evaluated
-    .AsAsyncEnumerable()
-    .GroupBy(b => b.Rating) // client-evaluated
-    .ToListAsync();
-```
+[!code-csharp[Main](../../../samples/core/Miscellaneous/AsyncWithSystemInteractive/Program.cs#SystemInteractiveAsync)]
