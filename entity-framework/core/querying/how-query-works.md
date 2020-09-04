@@ -13,28 +13,28 @@ Entity Framework Core uses Language Integrated Query (LINQ) to query data from t
 
 ## The life of a query
 
-The following is a high level overview of the process each query goes through.
+The following description is a high-level overview of the process each query goes through.
 
 1. The LINQ query is processed by Entity Framework Core to build a representation that is ready to be processed by the database provider
    1. The result is cached so that this processing does not need to be done every time the query is executed
 2. The result is passed to the database provider
    1. The database provider identifies which parts of the query can be evaluated in the database
-   2. These parts of the query are translated to database specific query language (for example, SQL for a relational database)
+   2. These parts of the query are translated to database-specific query language (for example, SQL for a relational database)
    3. A query is sent to the database and the result set returned (results are values from the database, not entity instances)
 3. For each item in the result set
-   1. If this is a tracking query, EF checks if the data represents an entity already in the change tracker for the context instance
+   1. If the query is a tracking query, EF checks if the data represents an entity already in the change tracker for the context instance
       * If so, the existing entity is returned
-      * If not, a new entity is created, change tracking is setup, and the new entity is returned
-   2. If this is a no-tracking query, then a new entity is always created and returned
+      * If not, a new entity is created, change tracking is set up, and the new entity is returned
+   2. If the query is a no-tracking query, then a new entity is always created and returned
 
 ## When queries are executed
 
-When you call LINQ operators, you are simply building up an in-memory representation of the query. The query is only sent to the database when the results are consumed.
+When you call LINQ operators, you're simply building up an in-memory representation of the query. The query is only sent to the database when the results are consumed.
 
 The most common operations that result in the query being sent to the database are:
 
 * Iterating the results in a `for` loop
-* Using an operator such as `ToList`, `ToArray`, `Single`, `Count` or the equivalent async overloads
+* Using an operator such as `ToList`, `ToArray`, `Single`, `Count`, or the equivalent async overloads
 
 > [!WARNING]  
 > **Always validate user input:** While EF Core protects against SQL injection attacks by using parameters and escaping literals in queries, it does not validate inputs. Appropriate validation, per the application's requirements, should be performed before values from un-trusted sources are used in LINQ queries, assigned to entity properties, or passed to other EF Core APIs. This includes any user input used to dynamically construct queries. Even when using LINQ, if you are accepting user input to build expressions, you need to make sure that only intended expressions can be constructed.
