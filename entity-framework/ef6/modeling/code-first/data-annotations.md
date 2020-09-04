@@ -4,6 +4,7 @@ description: Code First Data Annotations in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
+uid: ef6/modeling/code-first/data-annotations
 ---
 # Code First Data Annotations
 > [!NOTE]
@@ -386,7 +387,7 @@ Indexes that span multiple columns are specified by using the same name in multi
 ## Relationship Attributes: InverseProperty and ForeignKey
 
 > [!NOTE]
-> This page provides information about setting up relationships in your Code First model using Data Annotations. For general information about relationships in EF and how to access and manipulate data using relationships, see [Relationships & Navigation Properties](~/ef6/fundamentals/relationships.md).*
+> This page provides information about setting up relationships in your Code First model using Data Annotations. For general information about relationships in EF and how to access and manipulate data using relationships, see [Relationships & Navigation Properties](xref:ef6/fundamentals/relationships).*
 
 Code first convention will take care of the most common relationships in your model, but there are some cases where it needs help.
 

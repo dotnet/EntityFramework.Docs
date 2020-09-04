@@ -4,6 +4,7 @@ description: Handling Concurrency Conflicts in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 2318e4d3-f561-4720-bbc3-921556806476
+uid: ef6/saving/concurrency
 ---
 # Handling Concurrency Conflicts (EF6)
 
@@ -11,7 +12,7 @@ Optimistic concurrency involves optimistically attempting to save your entity to
 
 This post is not the appropriate place for a full discussion of optimistic concurrency. The sections below assume some knowledge of concurrency resolution and show patterns for common tasks.  
 
-Many of these patterns make use of the topics discussed in [Working with Property Values](~/ef6/saving/change-tracking/property-values.md).  
+Many of these patterns make use of the topics discussed in [Working with Property Values](xref:ef6/saving/change-tracking/property-values).  
 
 Resolving concurrency issues when you are using independent associations (where the foreign key is not mapped to a property in your entity) is much more difficult than when you are using foreign key associations. Therefore if you are going to do concurrency resolution in your application it is advised that you always map foreign keys into your entities. All the examples below assume that you are using foreign key associations.  
 
@@ -59,7 +60,7 @@ The Entries method on DbUpdateConcurrencyException returns the DbEntityEntry ins
 
 ## Resolving optimistic concurrency exceptions as client wins  
 
-The example above that uses Reload is sometimes called database wins or store wins because the values in the entity are overwritten by values from the database. Sometimes you may wish to do the opposite and overwrite the values in the database with the values currently in the entity. This is sometimes called client wins and can be done by getting the current database values and setting them as the original values for the entity. (See [Working with Property Values](~/ef6/saving/change-tracking/property-values.md) for information on current and original values.) For example:  
+The example above that uses Reload is sometimes called database wins or store wins because the values in the entity are overwritten by values from the database. Sometimes you may wish to do the opposite and overwrite the values in the database with the values currently in the entity. This is sometimes called client wins and can be done by getting the current database values and setting them as the original values for the entity. (See [Working with Property Values](xref:ef6/saving/change-tracking/property-values) for information on current and original values.) For example:  
 
 ``` csharp
 using (var context = new BloggingContext())

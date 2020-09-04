@@ -4,6 +4,7 @@ description: Connection management in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: ecaa5a27-b19e-4bf9-8142-a3fb00642270
+uid: ef6/fundamentals/connection-management
 ---
 # Connection management
 This page describes the behavior of Entity Framework with regard to passing connections to the context and the functionality of the **Database.Connection.Open()** API.  
@@ -123,7 +124,7 @@ Also the contextOwnsConnection flag now controls whether or not the connection i
 Of course it is still possible for the DbContext to take control of the connection (just set contextOwnsConnection to true or use one of the other constructors) if you so wish.  
 
 > [!NOTE]
-> There are some additional considerations when using transactions with this new model. For details see [Working with Transactions](~/ef6/saving/transactions.md).  
+> There are some additional considerations when using transactions with this new model. For details see [Working with Transactions](xref:ef6/saving/transactions).  
 
 ## Database.Connection.Open()  
 

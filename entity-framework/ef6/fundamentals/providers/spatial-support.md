@@ -4,14 +4,15 @@ description: Provider support for spatial types in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 1097cb00-15f5-453d-90ed-bff9403d23e3
+uid: ef6/fundamentals/providers/spatial-support
 ---
 # Provider Support for Spatial Types
 Entity Framework supports working with spatial data through the DbGeography or DbGeometry classes. These classes rely on database-specific functionality offered by the Entity Framework provider. Not all providers support spatial data and those that do may have additional prerequisites such as the installation of spatial type assemblies. More information about provider support for spatial types is provided below.  
 
 Additional information on how to use spatial types in an application can be found in two walkthroughs, one for Code First, the other for Database First or Model First:  
 
-- [Spatial Data Types in Code First](~/ef6/modeling/code-first/data-types/spatial.md)  
-- [Spatial Data Types in EF Designer](~/ef6/modeling/designer/data-types/spatial.md)  
+- [Spatial Data Types in Code First](xref:ef6/modeling/code-first/data-types/spatial)  
+- [Spatial Data Types in EF Designer](xref:ef6/modeling/designer/data-types/spatial)  
 
 ## EF releases that support spatial types  
 

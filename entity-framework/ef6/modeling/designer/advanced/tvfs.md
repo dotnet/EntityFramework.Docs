@@ -4,6 +4,7 @@ description: Table-Valued Functions (TVFs) in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: f019c97b-87b0-4e93-98f4-2c539f77b2dc
+uid: ef6/modeling/designer/advanced/tvfs
 ---
 # Table-Valued Functions (TVFs)
 > [!NOTE]
@@ -27,7 +28,7 @@ TVFs are very similar to stored procedures with one key difference: the result o
 
 To complete this walkthrough, you need to:
 
-- Install the [School database](~/ef6/resources/school-database.md).
+- Install the [School database](xref:ef6/resources/school-database).
 
 - Have a recent version of Visual Studio
 

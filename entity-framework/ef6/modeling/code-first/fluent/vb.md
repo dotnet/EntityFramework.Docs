@@ -4,14 +4,15 @@ description: Fluent API with VB.NET in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 763dc6a2-764a-4600-896c-f6f13abf56ec
+uid: ef6/modeling/code-first/fluent/vb
 ---
 # Fluent API with VB.NET
 Code First allows you to define your model using C\# or VB.NET classes. Additional configuration can optionally be performed using attributes on your classes and properties or by using a fluent API. This walkthrough shows how to perform fluent API configuration using VB.NET.
 
 This page assumes you have a basic understanding of Code First. Check out the following walkthroughs for more information on Code First:
 
--   [Code First to a New Database](~/ef6/modeling/code-first/workflows/new-database.md)
--   [Code First to an Existing Database](~/ef6/modeling/code-first/workflows/existing-database.md)
+-   [Code First to a New Database](xref:ef6/modeling/code-first/workflows/new-database)
+-   [Code First to an Existing Database](xref:ef6/modeling/code-first/workflows/existing-database)
 
 ## Pre-Requisites
 

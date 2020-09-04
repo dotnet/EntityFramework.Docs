@@ -11,13 +11,13 @@ uid: efcore-and-ef6/index
 
 ## EF Core
 
-Entity Framework Core ([EF Core](../core/index.md)) is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations.
+Entity Framework Core ([EF Core](xref:core/index)) is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations.
 
-EF Core works with SQL Server/SQL Azure, SQLite, Azure Cosmos DB, MySQL, PostgreSQL, and many more databases through a [database provider plugin model](../core/providers/index.md).
+EF Core works with SQL Server/SQL Azure, SQLite, Azure Cosmos DB, MySQL, PostgreSQL, and many more databases through a [database provider plugin model](xref:core/providers/index).
 
 ## EF6
 
-Entity Framework 6 ([EF6](../ef6/index.md)) is an object-relational mapper designed for .NET Framework but with support for .NET Core. EF6 is a stable, supported product, but is no longer being actively developed.
+Entity Framework 6 ([EF6](xref:ef6/index)) is an object-relational mapper designed for .NET Framework but with support for .NET Core. EF6 is a stable, supported product, but is no longer being actively developed.
 
 ## Feature comparison
 
@@ -130,13 +130,13 @@ The EF Core column indicates the product version in which the feature first appe
 
 <sup>2</sup> Some EF6 features will not be implemented in EF Core. These features either depend on EF6's underlying Entity Data Model (EDM) and/or are complex features with relatively low return on investment. We always welcome feedback, but while EF Core enables many things not possible in EF6, it is conversely not feasible for EF Core to support all the features of EF6.
 
-<sup>3</sup> EF Core database providers implemented by third-parties may be delayed in updating to new major versions of EF Core. See [Database Providers](../core/providers/index.md) for more information.
+<sup>3</sup> EF Core database providers implemented by third-parties may be delayed in updating to new major versions of EF Core. See [Database Providers](xref:core/providers/index) for more information.
 
 <sup>4</sup> The SQL Server Compact and Jet providers only work on .NET Framework (not on .NET Core).
 
 ### Supported platforms
 
-EF Core 3.1 runs on .NET Core and .NET Framework, through the use of .NET Standard 2.0. However, EF Core 5.0 will not run on .NET Framework. See [Platforms](../core/platforms/index.md) for more details.
+EF Core 3.1 runs on .NET Core and .NET Framework, through the use of .NET Standard 2.0. However, EF Core 5.0 will not run on .NET Framework. See [Platforms](xref:core/platforms/index) for more details.
 
 EF6.4 runs on .NET Core and .NET Framework, through multi-targeting.
 
@@ -154,4 +154,4 @@ When moving an EF6 app to .NET Core:
 * Port to EF Core if the data access code is evolving or if the app needs new features only available in EF Core.
 * Porting to EF Core is also often done for performance. However, not all scenarios are faster, so do some profiling first.
 
-See [Porting from EF6 to EF Core](porting/index.md) for more information.
+See [Porting from EF6 to EF Core](xref:efcore-and-ef6/porting/index) for more information.

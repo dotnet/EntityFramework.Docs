@@ -4,6 +4,7 @@ description: Upgrading to Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 29958ae5-85d3-4585-9ba6-550b8ec9393a
+uid: ef6/what-is-new/upgrading-to-ef6
 ---
 # Upgrading to Entity Framework 6
 
@@ -48,7 +49,7 @@ If you have any models created with the EF Designer, you will need to update the
 2. Add the appropriate EF 6.x code generation template. Open your model in the EF Designer, right-click on the design surface and select **Add Code Generation Item...**
     - If you are using the DbContext API (recommended) then **EF 6.x DbContext Generator** will be available under the **Data** tab.  
       > [!NOTE]
-      > If you are using Visual Studio 2012, you will need to install the EF 6 Tools to have this template. See [Get Entity Framework](~/ef6/fundamentals/install.md) for details.  
+      > If you are using Visual Studio 2012, you will need to install the EF 6 Tools to have this template. See [Get Entity Framework](xref:ef6/fundamentals/install) for details.  
 
     - If you are using the ObjectContext API then you will need to select the **Online** tab and search for **EF 6.x EntityObject Generator**.  
 3. If you applied any customizations to the code generation templates you will need to re-apply them to the updated templates.

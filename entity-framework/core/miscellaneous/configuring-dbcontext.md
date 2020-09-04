@@ -190,4 +190,4 @@ Using dependency injection, this can be achieved by either registering the conte
 ## More reading
 
 - Read [Dependency Injection](/aspnet/core/fundamentals/dependency-injection) to learn more about using DI.
-- Read [Testing](testing/index.md) for more information.
+- Read [Testing](xref:core/miscellaneous/testing/index) for more information.

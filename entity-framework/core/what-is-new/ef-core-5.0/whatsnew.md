@@ -36,7 +36,7 @@ public class Pet : Animal
 
 public class Cat : Pet
 {
-    public string EdcuationLevel { get; set; }
+    public string EducationLevel { get; set; }
 }
 
 public class Dog : Pet
@@ -737,7 +737,7 @@ Or in the Package Manager Console:
 Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer -NoOnConfiguring
 ```
 
-Note that we recommend using [a named connection string and secure storage like User Secrets](/core/managing-schemas/scaffolding?tabs=vs#configuration-and-user-secrets).
+Note that we recommend using [a named connection string and secure storage like User Secrets](xref:core/managing-schemas/scaffolding#configuration-and-user-secrets).
 
 ### Translations for FirstOrDefault on strings
 

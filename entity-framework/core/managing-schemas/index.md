@@ -21,6 +21,6 @@ scaffold a DbContext and the entity type classes by reverse engineering your dat
 > The [create and drop APIs][3] can also create the database schema from your EF Core model. However, they are primarily
 > for testing, prototyping, and other scenarios where dropping the database is acceptable.
 
-  [1]: migrations/index.md
-  [2]: scaffolding.md
-  [3]: ensure-created.md
+  [1]: xref:core/managing-schemas/migrations/index
+  [2]: xref:core/managing-schemas/scaffolding
+  [3]: xref:core/managing-schemas/ensure-created

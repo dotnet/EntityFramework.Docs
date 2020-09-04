@@ -76,5 +76,5 @@ if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer"
 }
 ```
 
-  [1]: ../../miscellaneous/cli/index.md
-  [2]: projects.md
+  [1]: xref:core/miscellaneous/cli/index
+  [2]: xref:core/managing-schemas/migrations/projects

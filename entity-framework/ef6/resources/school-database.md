@@ -4,12 +4,13 @@ description: School Sample Database for Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: e83a6a06-e63b-4530-8656-614bf609b12b
+uid: ef6/resources/school-database
 ---
 # School Sample Database
 This topic contains the schema and data for the School database. The sample School database is used in various places throughout the Entity Framework documentation.  
 
 > [!NOTE]
-> The database server that is installed with Visual Studio is different depending on the version of Visual Studio you use. See [Visual Studio Releases](~/ef6/what-is-new/visual-studio.md) for details on what to use.  
+> The database server that is installed with Visual Studio is different depending on the version of Visual Studio you use. See [Visual Studio Releases](xref:ef6/what-is-new/visual-studio) for details on what to use.  
 
 Here are the steps to create the database:
 

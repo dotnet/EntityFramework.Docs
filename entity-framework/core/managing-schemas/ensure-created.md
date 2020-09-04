@@ -8,7 +8,7 @@ uid: core/managing-schemas/ensure-created
 ---
 # Create and Drop APIs
 
-The EnsureCreated and EnsureDeleted methods provide a lightweight alternative to [Migrations](migrations/index.md) for managing the database schema. These methods are useful in scenarios when the data is transient and can be dropped when the schema changes. For example during prototyping, in tests, or for local caches.
+The EnsureCreated and EnsureDeleted methods provide a lightweight alternative to [Migrations](xref:core/managing-schemas/migrations/index) for managing the database schema. These methods are useful in scenarios when the data is transient and can be dropped when the schema changes. For example during prototyping, in tests, or for local caches.
 
 Some providers (especially non-relational ones) don't support Migrations. For these providers, EnsureCreated is often the easiest way to initialize the database schema.
 

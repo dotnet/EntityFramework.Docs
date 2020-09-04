@@ -4,10 +4,11 @@ description: Code First Migrations in Team Environments in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 4c2d9a95-de6f-4e97-9738-c1f8043eff69
+uid: ef6/modeling/code-first/migrations/teams
 ---
 # Code First Migrations in Team Environments
 > [!NOTE]
-> This article assumes you know how to use Code First Migrations in basic scenarios. If you don’t, then you’ll need to read [Code First Migrations](~/ef6/modeling/code-first/migrations/index.md) before continuing.
+> This article assumes you know how to use Code First Migrations in basic scenarios. If you don’t, then you’ll need to read [Code First Migrations](xref:ef6/modeling/code-first/migrations/index) before continuing.
 
 ## Grab a coffee, you need to read this whole article
 

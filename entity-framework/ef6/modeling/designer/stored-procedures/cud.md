@@ -4,6 +4,7 @@ description: Designer CUD Stored Procedures in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
+uid: ef6/modeling/designer/stored-procedures/cud
 ---
 # Designer CUD Stored Procedures
 
@@ -29,7 +30,7 @@ When mapping the CUD operations to stored procedures, the following consideratio
 To complete this walkthrough, you will need:
 
 - A recent version of Visual Studio.
-- The [School sample database](~/ef6/resources/school-database.md).
+- The [School sample database](xref:ef6/resources/school-database).
 
 ## Set up the Project
 

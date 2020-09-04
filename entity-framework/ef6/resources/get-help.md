@@ -4,6 +4,7 @@ description: Get Help Using Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 592cae61-02e1-485a-bbb0-a508ade9c67d
+uid: ef6/resources/get-help
 ---
 # Get Help Using Entity Framework
 ## ![StackOverflow Questions](~/ef6/media/stackoverflow.png) Questions About Using EF  

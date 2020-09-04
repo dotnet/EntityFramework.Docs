@@ -10,7 +10,7 @@ uid: core/miscellaneous/cli/powershell
 
 The Package Manager Console (PMC) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0), apply migrations, and generate code for a model based on an existing database. The commands run inside of Visual Studio using the [Package Manager Console](/nuget/tools/package-manager-console). These tools work with both .NET Framework and .NET Core projects.
 
-If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools](dotnet.md) instead. The .NET Core CLI tools are cross-platform and run inside a command prompt.
+If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools](xref:core/miscellaneous/cli/dotnet) instead. The .NET Core CLI tools are cross-platform and run inside a command prompt.
 
 ## Installing the tools
 

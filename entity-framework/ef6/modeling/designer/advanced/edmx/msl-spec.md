@@ -4,6 +4,7 @@ description: MSL Specification in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 13ae7bc1-74b4-4ee4-8d73-c337be841467
+uid: ef6/modeling/designer/advanced/edmx/msl-spec
 ---
 # MSL Specification
 Mapping specification language (MSL) is an XML-based language that describes the mapping between the conceptual model and storage model of an Entity Framework application.
@@ -12,7 +13,7 @@ In an Entity Framework application, mapping metadata is loaded from an .msl file
 
 The Entity Framework Designer (EF Designer) stores mapping information in an .edmx file at design time. At build time, the Entity Designer uses information in an .edmx file to create the .msl file that is needed by Entity Framework at runtime
 
-Names of all conceptual or storage model types that are referenced in MSL must be qualified by their respective namespace names. For information about the conceptual model namespace name, see [CSDL Specification](~/ef6/modeling/designer/advanced/edmx/csdl-spec.md). For information about the storage model namespace name, see [SSDL Specification](~/ef6/modeling/designer/advanced/edmx/ssdl-spec.md).
+Names of all conceptual or storage model types that are referenced in MSL must be qualified by their respective namespace names. For information about the conceptual model namespace name, see [CSDL Specification](xref:ef6/modeling/designer/advanced/edmx/csdl-spec). For information about the storage model namespace name, see [SSDL Specification](xref:ef6/modeling/designer/advanced/edmx/ssdl-spec).
 
 Versions of MSL are differentiated by XML namespaces.
 

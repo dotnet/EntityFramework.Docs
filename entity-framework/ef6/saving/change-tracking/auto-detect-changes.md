@@ -4,6 +4,7 @@ description: Automatic detect changes in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: a8d1488d-9a54-4623-a76b-e81329ff2756
+uid: ef6/saving/change-tracking/auto-detect-changes
 ---
 # Automatic detect changes
 When using most POCO entities the determination of how an entity has changed (and therefore which updates need to be sent to the database) is handled by the Detect Changes algorithm. Detect Changes works by detecting the differences between the current property values of the entity and the original property values that are stored in a snapshot when the entity was queried or attached. The techniques shown in this topic apply equally to models created with Code First and the EF Designer.  

@@ -4,6 +4,7 @@ description: SSDL Specification in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: a4af4b1a-40f4-48cc-b2e0-fa8f5d9d5419
+uid: ef6/modeling/designer/advanced/edmx/ssdl-spec
 ---
 # SSDL Specification
 Store schema definition language (SSDL) is an XML-based language that describes the storage model of an Entity Framework application.
@@ -487,7 +488,7 @@ The **Function** element can have the following child elements (in the order lis
 
 A return type for a function must be specified with either the **ReturnType** element or the **ReturnType** attribute (see below), but not both.
 
-Stored procedures that are specified in the storage model can be imported into the conceptual model of an application. For more information, see [Querying with Stored Procedures](~/ef6/modeling/designer/stored-procedures/query.md). The **Function** element can also be used to define custom functions in the storage model.  
+Stored procedures that are specified in the storage model can be imported into the conceptual model of an application. For more information, see [Querying with Stored Procedures](xref:ef6/modeling/designer/stored-procedures/query). The **Function** element can also be used to define custom functions in the storage model.  
 
 ### Applicable Attributes
 

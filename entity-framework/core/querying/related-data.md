@@ -119,14 +119,14 @@ Alternatively, identical operations can be applied for each navigation that is i
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludesFiltered2)]
 
 > [!CAUTION]
-> In case of tracking queries, results of Filtered Include may be unexpected due to [navigation fixup](tracking.md). All relevant entities that have been querried for previously and have been stored in the Change Tracker will be present in the results of Filtered Include query, even if they don't meet the requirements of the filter. Consider using `NoTracking` queries or re-create the DbContext when using Filtered Include in those situations.
+> In case of tracking queries, results of Filtered Include may be unexpected due to [navigation fixup](xref:core/querying/tracking). All relevant entities that have been queried for previously and have been stored in the Change Tracker will be present in the results of Filtered Include query, even if they don't meet the requirements of the filter. Consider using `NoTracking` queries or re-create the DbContext when using Filtered Include in those situations.
 
 Example:
 
 ```csharp
 var orders = context.Orders.Where(o => o.Id > 1000).ToList();
 
-// customer entities will have references to all orders where Id > 1000, rathat than > 5000
+// customer entities will have references to all orders where Id > 1000, rather than > 5000
 var filtered = context.Customers.Include(c => c.Orders.Where(o => o.Id > 5000)).ToList();
 ```
 
@@ -250,7 +250,7 @@ public class Post
 
 ### Lazy loading without proxies
 
-Lazy-loading proxies work by injecting the `ILazyLoader` service into an entity, as described in [Entity Type Constructors](../modeling/constructors.md). For example:
+Lazy-loading proxies work by injecting the `ILazyLoader` service into an entity, as described in [Entity Type Constructors](xref:core/modeling/constructors). For example:
 
 ```csharp
 public class Blog

@@ -4,6 +4,7 @@ description: Relationships, navigation properties, and foreign keys in Entity Fr
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
+uid: ef6/fundamentals/relationships
 ---
 # Relationships, navigation properties, and foreign keys
 
@@ -62,8 +63,8 @@ public class Department
 
 The rest of this page covers how to access and manipulate data using relationships. For information on setting up relationships in your model, see the following pages.
 
--   To configure relationships in Code First, see [Data Annotations](~/ef6/modeling/code-first/data-annotations.md) and [Fluent API – Relationships](~/ef6/modeling/code-first/fluent/relationships.md).
--   To configure relationships using the Entity Framework Designer, see [Relationships with the EF Designer](~/ef6/modeling/designer/relationships.md).
+-   To configure relationships in Code First, see [Data Annotations](xref:ef6/modeling/code-first/data-annotations) and [Fluent API – Relationships](xref:ef6/modeling/code-first/fluent/relationships).
+-   To configure relationships using the Entity Framework Designer, see [Relationships with the EF Designer](xref:ef6/modeling/designer/relationships).
 
 ## Creating and modifying relationships
 
@@ -124,7 +125,7 @@ In the following example, there is a many-to-many relationship between Instructo
 
 ## Synchronizing the changes between the foreign keys and navigation properties
 
-When you change the relationship of the objects attached to the context by using one of the methods described above, Entity Framework needs to keep foreign keys, references, and collections in sync. Entity Framework automatically manages this synchronization (also known as relationship fix-up) for the POCO entities with proxies. For more information, see [Working with Proxies](~/ef6/fundamentals/proxies.md).
+When you change the relationship of the objects attached to the context by using one of the methods described above, Entity Framework needs to keep foreign keys, references, and collections in sync. Entity Framework automatically manages this synchronization (also known as relationship fix-up) for the POCO entities with proxies. For more information, see [Working with Proxies](xref:ef6/fundamentals/proxies).
 
 If you are using POCO entities without proxies, you must make sure that the **DetectChanges** method is called to synchronize the related objects in the context. Note that the following APIs automatically trigger a **DetectChanges** call.
 
@@ -143,7 +144,7 @@ If you are using POCO entities without proxies, you must make sure that the **De
 
 ## Loading related objects
 
-In Entity Framework you commonly use navigation properties to load entities that are related to the returned entity by the defined association. For more information, see [Loading Related Objects](~/ef6/querying/related-data.md).
+In Entity Framework you commonly use navigation properties to load entities that are related to the returned entity by the defined association. For more information, see [Loading Related Objects](xref:ef6/querying/related-data).
 
 > [!NOTE]
 > In a foreign key association, when you load a related end of a dependent object, the related object will be loaded based on the foreign key value of the dependent that is currently in memory:
@@ -168,7 +169,7 @@ In both foreign key and independent associations, concurrency checks are based o
 
 We recommend that you always use the foreign key association when working with entities that participate in concurrency checking and resolution.
 
-For more information, see [Handling Concurrency Conflicts](~/ef6/saving/concurrency.md).
+For more information, see [Handling Concurrency Conflicts](xref:ef6/saving/concurrency).
 
 ## Working with overlapping Keys
 
