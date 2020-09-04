@@ -468,10 +468,12 @@ Likewise, they are often mapped to views, but this is only because views often d
 **Mitigations**
 
 The following parts of the API are now obsolete:
+
 * **`ModelBuilder.Query<>()`** - Instead `ModelBuilder.Entity<>().HasNoKey()` needs to be called to mark an entity type as having no keys.
 This would still not be configured by convention to avoid misconfiguration when a primary key is expected, but doesn't match the convention.
 * **`DbQuery<>`** - Instead `DbSet<>` should be used.
 * **`DbContext.Query<>()`** - Instead `DbContext.Set<>()` should be used.
+* **`IQueryTypeConfiguration<TQuery>`** - Instead `IEntityTypeConfiguration<TEntity>`** should be used.
 
 <a name="config"></a>
 ### Configuration API for owned type relationships has changed
