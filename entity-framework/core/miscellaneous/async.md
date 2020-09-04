@@ -14,10 +14,13 @@ Following the .NET standard, EF Core provides asynchronous counterparts to all s
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Async/Program.cs#SaveChangesAsync)]
 
-For more information,, see [the general C# asynchronous programming docs](/dotnet/csharp/async).
+For more information, see [the general C# asynchronous programming docs](/dotnet/csharp/async).
 
 > [!WARNING]
 > EF Core doesn't support multiple parallel operations being run on the same context instance. You should always wait for an operation to complete before beginning the next operation. This is typically done by using the `await` keyword on each async operation.
+
+> [!NOTE]
+> EF Core passes cancellation tokens down to the underlying database provider in use (e.g. Microsoft.Data.SqlClient). These tokens may or may not be honored - consult your database provider's documentation.  
 
 ## Async LINQ operators
 
