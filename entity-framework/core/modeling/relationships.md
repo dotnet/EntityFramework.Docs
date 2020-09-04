@@ -83,7 +83,7 @@ In this example the highlighted properties will be used to configure the relatio
 
 ### No foreign key property
 
-While it is recommended to have a foreign key property defined in the dependent entity class, it is not required. If no foreign key property is found, a [shadow foreign key property](shadow-properties.md) will be introduced with the name `<navigation property name><principal key property name>` or `<principal entity name><principal key property name>` if no navigation is present on the dependent type.
+While it is recommended to have a foreign key property defined in the dependent entity class, it is not required. If no foreign key property is found, a [shadow foreign key property](xref:core/modeling/shadow-properties) will be introduced with the name `<navigation property name><principal key property name>` or `<principal entity name><principal key property name>` if no navigation is present on the dependent type.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=6,15)]
 
@@ -108,7 +108,7 @@ By convention, cascade delete will be set to *Cascade* for required relationship
 
 See the [Required and Optional Relationships](#required-and-optional-relationships) section for the difference between required and optional relationships.
 
-See [Cascade Delete](../saving/cascade-delete.md) for more details about the different delete behaviors and the defaults used by convention.
+See [Cascade Delete](xref:core/saving/cascade-delete) for more details about the different delete behaviors and the defaults used by convention.
 
 ## Manual configuration
 
@@ -179,7 +179,7 @@ You can use the Data Annotations to configure which property should be used as t
 
 #### Shadow foreign key
 
-You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](shadow-properties.md) for more information). We recommend explicitly adding the shadow property to the model before using it as a foreign key (as shown below).
+You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](xref:core/modeling/shadow-properties) for more information). We recommend explicitly adding the shadow property to the model before using it as a foreign key (as shown below).
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ShadowForeignKey.cs?name=ShadowForeignKey&highlight=10,16)]
 
@@ -199,7 +199,7 @@ You don't necessarily need to provide a navigation property. You can simply prov
 
 ### Principal key
 
-If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be setup as an [alternate key](alternate-keys.md).
+If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be setup as an [alternate key](xref:core/modeling/keys#alternate-keys).
 
 #### [Simple key](#tab/simple-key)
 
@@ -216,7 +216,7 @@ If you want the foreign key to reference a property other than the primary key, 
 
 ### Required and optional relationships
 
-You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see [Required and Optional properties](required-optional.md) for more information).
+You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see [Required and Optional properties](xref:core/modeling/entity-properties#required-and-optional-properties) for more information).
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?name=Required&highlight=6)]
 
@@ -227,7 +227,7 @@ You can use the Fluent API to configure whether the relationship is required or 
 
 You can use the Fluent API to configure the cascade delete behavior for a given relationship explicitly.
 
-See [Cascade Delete](../saving/cascade-delete.md) for a detailed discussion of each option.
+See [Cascade Delete](xref:core/saving/cascade-delete) for a detailed discussion of each option.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CascadeDelete.cs?name=CascadeDelete&highlight=6)]
 

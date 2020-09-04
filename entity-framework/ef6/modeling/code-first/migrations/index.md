@@ -4,6 +4,7 @@ description: Code First Migrations in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 36591d8f-36e1-4835-8a51-90f34f633d1e
+uid: ef6/modeling/code-first/migrations/index
 ---
 # Code First Migrations
 Code First Migrations is the recommended way to evolve your application's database schema if you are using the Code First workflow. Migrations provide a set of tools that allow:

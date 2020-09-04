@@ -9,7 +9,7 @@ uid: core/saving/disconnected-entities
 ---
 # Disconnected entities
 
-A DbContext instance will automatically track entities returned from the database. Changes made to these entities will then be detected when SaveChanges is called and the database will be updated as needed. See [Basic Save](basic.md) and [Related Data](related-data.md) for details.
+A DbContext instance will automatically track entities returned from the database. Changes made to these entities will then be detected when SaveChanges is called and the database will be updated as needed. See [Basic Save](xref:core/saving/basic) and [Related Data](xref:core/saving/related-data) for details.
 
 However, sometimes entities are queried using one context instance and then saved using a different instance. This often happens in "disconnected" scenarios such as a web application where the entities are queried, sent to the client, modified, sent back to the server in a request, and then saved. In this case, the second context instance needs to know whether the entities are new (should be inserted) or existing (should be updated).
 

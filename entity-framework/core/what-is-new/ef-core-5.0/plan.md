@@ -8,7 +8,7 @@ uid: core/what-is-new/ef-core-5.0/plan
 
 # Plan for Entity Framework Core 5.0
 
-As described in the [planning process](xref:core/what-is-new/release_planning), we have gathered input from stakeholders into a tentative plan for the EF Core 5.0 release.
+As described in the [planning process](xref:core/what-is-new/release-planning), we have gathered input from stakeholders into a tentative plan for the EF Core 5.0 release.
 
 > [!IMPORTANT]
 > This plan is still a work-in-progress. Nothing here is a commitment. This plan is a starting point that will evolve as we learn more. Some things not currently planned for 5.0 may get pulled in. Some things currently planned for 5.0 may get punted out.
@@ -305,4 +305,4 @@ In addition, we always consider the [most voted issues](https://github.com/dotne
 
 ## Suggestions
 
-Your feedback on planning is important. The best way to indicate the importance of an issue is to vote (thumbs-up) for that issue on GitHub. This data will then feed into the [planning process](xref:core/what-is-new/release_planning) for the next release.
+Your feedback on planning is important. The best way to indicate the importance of an issue is to vote (thumbs-up) for that issue on GitHub. This data will then feed into the [planning process](xref:core/what-is-new/release-planning) for the next release.

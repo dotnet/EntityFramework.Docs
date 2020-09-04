@@ -28,7 +28,7 @@ SQLite doesn't natively support the following data types. EF Core can read and w
 
 Instead of `DateTimeOffset`, we recommend using DateTime values. When handling multiple time zones, we recommend converting the values to UTC before saving and then converting back to the appropriate time zone.
 
-The `Decimal` type provides a high level of precision. If you don't need that level of precision, however, we recommend using double instead. You can use a [value converter](../../modeling/value-conversions.md) to continue using decimal in your classes.
+The `Decimal` type provides a high level of precision. If you don't need that level of precision, however, we recommend using double instead. You can use a [value converter](xref:core/modeling/value-conversions) to continue using decimal in your classes.
 
 ``` csharp
 modelBuilder.Entity<MyEntity>()

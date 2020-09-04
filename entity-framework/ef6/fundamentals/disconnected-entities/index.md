@@ -4,6 +4,7 @@ description: Working with disconnected entities in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 12138003-a373-4817-b1b7-724130202f5f
+uid: ef6/fundamentals/disconnected-entities/index
 ---
 # Working with disconnected entities
 
@@ -17,13 +18,13 @@ Historically, there have been several other Web services technologies that offer
 
 ## Low-level EF APIs
 
-If you don't want to use an existing n-tier solution, or if you want to customize what happens inside a controller action in a Web API services, Entity Framework provides APIs that allow you to apply changes made on a disconnected tier. For more information, see [Add, Attach, and entity state](~/ef6/saving/change-tracking/entity-state.md).  
+If you don't want to use an existing n-tier solution, or if you want to customize what happens inside a controller action in a Web API services, Entity Framework provides APIs that allow you to apply changes made on a disconnected tier. For more information, see [Add, Attach, and entity state](xref:ef6/saving/change-tracking/entity-state).  
 
 ## Self-Tracking Entities  
 
 Tracking changes on arbitrary graphs of entities while disconnected from the EF context is a hard problem. One of the attempts to solve it was the Self-Tracking Entities code generation template. This template generates entity classes that contain logic to track changes made on a disconnected tier as state in the entities themselves. A set of extension methods is also generated to apply those changes to a context.
 
-This template can be used with models created using the EF Designer, but can not be used with Code First models. For more information, see [Self-Tracking Entities](self-tracking-entities/index.md).  
+This template can be used with models created using the EF Designer, but can not be used with Code First models. For more information, see [Self-Tracking Entities](xref:ef6/fundamentals/disconnected-entities/self-tracking-entities/index).  
 
 > [!IMPORTANT]
 > We no longer recommend using the self-tracking-entities template. It will only continue to be available to support existing applications. If your application requires working with disconnected graphs of entities, consider other alternatives such as [Trackable Entities](https://trackableentities.github.io/), which is a technology similar to Self-Tracking-Entities that is more actively developed by the community, or writing custom code using the low-level change tracking APIs.

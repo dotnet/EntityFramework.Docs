@@ -27,7 +27,7 @@ The EF Designers for Visual Studio 2012 and Visual Studio 2013 generate a contex
 
 When using the DbContext API surface you should use the **Object** option when creating a new Data Source, as shown in this walkthrough.
 
-If needed, you can [revert to ObjectContext based code generation](~/ef6/modeling/designer/codegen/legacy-objectcontext.md) for models created with the EF Designer.
+If needed, you can [revert to ObjectContext based code generation](xref:ef6/modeling/designer/codegen/legacy-objectcontext) for models created with the EF Designer.
 
 ## Pre-Requisites
 

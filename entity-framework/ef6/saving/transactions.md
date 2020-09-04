@@ -4,6 +4,7 @@ description: Working with Transactions in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 0d0f1824-d781-4cb3-8fda-b7eaefced1cd
+uid: ef6/saving/transactions
 ---
 # Working with Transactions
 > [!NOTE]
@@ -30,7 +31,7 @@ However some users require greater control over their transactions – this is c
 Prior to EF6 Entity Framework insisted on opening the database connection itself (it threw an exception if it was passed a connection that was already open). Since a transaction can only be started on an open connection, this meant that the only way a user could wrap several operations into one transaction was either to use a [TransactionScope](https://msdn.microsoft.com/library/system.transactions.transactionscope.aspx) or use the **ObjectContext.Connection** property and start calling **Open()** and **BeginTransaction()** directly on the returned **EntityConnection** object. In addition, API calls which contacted the database would fail if you had started a transaction on the underlying database connection on your own.  
 
 > [!NOTE]
-> The limitation of only accepting closed connections was removed in Entity Framework 6. For details, see [Connection Management](~/ef6/fundamentals/connection-management.md).  
+> The limitation of only accepting closed connections was removed in Entity Framework 6. For details, see [Connection Management](xref:ef6/fundamentals/connection-management).  
 
 Starting with EF6 the framework now provides:  
 
@@ -179,11 +180,11 @@ This section details how the above transactions interact with:
 
 ### Connection Resiliency  
 
-The new Connection Resiliency feature does not work with user-initiated transactions. For details, see [Retrying Execution Strategies](~/ef6/fundamentals/connection-resiliency/retry-logic.md#user-initiated-transactions-are-not-supported).  
+The new Connection Resiliency feature does not work with user-initiated transactions. For details, see [Retrying Execution Strategies](xref:ef6/fundamentals/connection-resiliency/retry-logic#user-initiated-transactions-are-not-supported).  
 
 ### Asynchronous Programming  
 
-The approach outlined in the previous sections needs no further options or settings to work with the [asynchronous query and save methods](~/ef6/fundamentals/async.md
+The approach outlined in the previous sections needs no further options or settings to work with the [asynchronous query and save methods](xref:ef6/fundamentals/async
 ). But be aware that, depending on what you do within the asynchronous methods, this may result in long-running transactions – which can in turn cause deadlocks or blocking which is bad for the performance of the overall application.  
 
 ### TransactionScope Transactions  

@@ -4,6 +4,7 @@ description: Code First to an Existing Database in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: a7e60b74-973d-4480-868f-500a3899932e
+uid: ef6/modeling/code-first/workflows/existing-database
 ---
 # Code First to an Existing Database
 This video and step-by-step walkthrough provide an introduction to Code First development targeting an existing database. Code First allows you to define your model using C\# or VB.Net classes. Optionally additional configuration can be performed using attributes on your classes and properties or by using a fluent API.
@@ -15,7 +16,7 @@ This video is [now available on Channel 9](https://channel9.msdn.com/blogs/ef/co
 
 You will need to have **Visual Studio 2012** or **Visual Studio 2013** installed to complete this walkthrough.
 
-You will also need version **6.1** (or later) of the **Entity Framework Tools for Visual Studio** installed. See [Get Entity Framework](~/ef6/fundamentals/install.md) for information on installing the latest version of the Entity Framework Tools.
+You will also need version **6.1** (or later) of the **Entity Framework Tools for Visual Studio** installed. See [Get Entity Framework](xref:ef6/fundamentals/install) for information on installing the latest version of the Entity Framework Tools.
 
 ## 1. Create an Existing Database
 
@@ -216,7 +217,7 @@ The Code First to Database wizard is designed to generate a starting point set o
 
 ## Using Code First Migrations to an Existing Database
 
-If you want to use Code First Migrations with an existing database, see [Code First Migrations to an existing database](~/ef6/modeling/code-first/migrations/existing-database.md).
+If you want to use Code First Migrations with an existing database, see [Code First Migrations to an existing database](xref:ef6/modeling/code-first/migrations/existing-database).
 
 ## Summary
 

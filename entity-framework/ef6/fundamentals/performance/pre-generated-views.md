@@ -4,9 +4,10 @@ description: Pre-generated mapping views in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 917ba9c8-6ddf-4631-ab8c-c4fb378c2fcd
+uid: ef6/fundamentals/performance/pre-generated-views
 ---
 # Pre-generated mapping views
-Before the Entity Framework can execute a query or save changes to the data source, it must generate a set of mapping views to access the database. These mapping views are a set of Entity SQL statement that represent the database in an abstract way, and are part of the metadata which is cached per application domain. If you create multiple instances of the same context in the same application domain, they will reuse mapping views from the cached metadata rather than regenerating them. Because mapping view generation is a significant part of the overall cost of executing the first query, the Entity Framework enables you to pre-generate mapping views and include them in the compiled project. For more information, see  [Performance Considerations (Entity Framework)](~/ef6/fundamentals/performance/perf-whitepaper.md).
+Before the Entity Framework can execute a query or save changes to the data source, it must generate a set of mapping views to access the database. These mapping views are a set of Entity SQL statement that represent the database in an abstract way, and are part of the metadata which is cached per application domain. If you create multiple instances of the same context in the same application domain, they will reuse mapping views from the cached metadata rather than regenerating them. Because mapping view generation is a significant part of the overall cost of executing the first query, the Entity Framework enables you to pre-generate mapping views and include them in the compiled project. For more information, see  [Performance Considerations (Entity Framework)](xref:ef6/fundamentals/performance/perf-whitepaper).
 
 ## Generating Mapping Views with the EF Power Tools Community Edition
 

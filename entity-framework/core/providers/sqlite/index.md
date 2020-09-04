@@ -34,4 +34,4 @@ Install-Package Microsoft.EntityFrameworkCore.Sqlite
 
 ## Limitations
 
-See [SQLite Limitations](limitations.md) for some important limitations of the SQLite provider.
+See [SQLite Limitations](xref:core/providers/sqlite/limitations) for some important limitations of the SQLite provider.

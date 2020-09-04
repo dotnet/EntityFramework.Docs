@@ -9,7 +9,7 @@ uid: core/saving/explicit-values-generated-properties
 
 # Setting Explicit Values for Generated Properties
 
-A generated property is a property whose value is generated (either by EF or the database) when the entity is added and/or updated. See [Generated Properties](../modeling/generated-properties.md) for more information.
+A generated property is a property whose value is generated (either by EF or the database) when the entity is added and/or updated. See [Generated Properties](xref:core/modeling/generated-properties) for more information.
 
 There may be situations where you want to set an explicit value for a generated property, rather than having one generated.
 

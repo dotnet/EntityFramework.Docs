@@ -4,6 +4,7 @@ description: Multiple Diagrams per Model in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: b95db5c8-de8d-43bd-9ccc-5df6a5e25e1b
+uid: ef6/modeling/designer/multiple-diagrams
 ---
 # Multiple Diagrams per Model
 > [!NOTE]

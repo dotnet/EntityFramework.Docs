@@ -4,6 +4,7 @@ description: Local Data in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 2eda668b-1e5d-487d-9a8c-0e3beef03fcb
+uid: ef6/querying/local-data
 ---
 # Local Data
 Running a LINQ query directly against a DbSet will always send a query to the database, but you can access the data that is currently in-memory using the DbSet.Local property. You can also access the extra information EF is tracking about your entities using the DbContext.Entry and DbContext.ChangeTracker.Entries methods. The techniques shown in this topic apply equally to models created with Code First and the EF Designer.  

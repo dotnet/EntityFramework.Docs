@@ -9,7 +9,7 @@ uid: core/modeling/concurrency
 # Concurrency Tokens
 
 > [!NOTE]
-> This page documents how to configure concurrency tokens. See [Handling Concurrency Conflicts](../saving/concurrency.md) for a detailed explanation of how concurrency control works on EF Core and examples of how to handle concurrency conflicts in your application.
+> This page documents how to configure concurrency tokens. See [Handling Concurrency Conflicts](xref:core/saving/concurrency) for a detailed explanation of how concurrency control works on EF Core and examples of how to handle concurrency conflicts in your application.
 
 Properties configured as concurrency tokens are used to implement optimistic concurrency control.
 

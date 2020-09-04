@@ -19,7 +19,7 @@ The EF Core codebase is open source and contains several database providers that
 
 ## Keeping up-to-date with provider changes
 
-Starting with work after the 2.1 release, we have created a [log of changes](provider-log.md) that may need corresponding changes in provider code. This is intended to help when updating an existing provider to work with a new version of EF Core.
+Starting with work after the 2.1 release, we have created a [log of changes](xref:core/providers/provider-log) that may need corresponding changes in provider code. This is intended to help when updating an existing provider to work with a new version of EF Core.
 
 Prior to 2.1, we used the [`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) and [`providers-fyi`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) labels on our GitHub issues and pull requests for a similar purpose. We will continiue to use these lables on issues to give an indication which work items in a given release may also require work to be done in providers. A `providers-beware` label typically means that the implementation of an work item may break providers, while a `providers-fyi` label typically means that providers will not be broken, but code may need to be changed anyway, for example, to enable new functionality.
 

@@ -10,7 +10,7 @@ uid: ef6/what-is-new/index
 
 We highly recommend that you use the latest released version of Entity Framework to ensure you get the latest features and the highest stability.
 However, we realize that you may need to use a previous version, or that you may want to experiment with new improvements in the latest pre-release.
-To install specific versions of EF, see [Get Entity Framework](~/ef6/fundamentals/install.md).
+To install specific versions of EF, see [Get Entity Framework](xref:ef6/fundamentals/install).
 
 ## EF 6.4.0
 
@@ -51,4 +51,4 @@ Warning: make sure the old style (i.e. non-SDK-style) .NET Framework project def
 
 ## Past Releases
 
-The [Past Releases](past-releases.md) page contains an archive of all previous versions of EF and the major features that were introduced on each release.
+The [Past Releases](xref:ef6/what-is-new/past-releases) page contains an archive of all previous versions of EF and the major features that were introduced on each release.

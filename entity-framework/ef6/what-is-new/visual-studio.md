@@ -4,6 +4,7 @@ description: Visual Studio Releases and Entity Framework 6
 author: divega
 ms.date: 07/05/2018
 ms.assetid: 028FF890-4EDB-4F03-AE53-72F9C33EC92F
+uid: ef6/what-is-new/visual-studio
 ---
 # Visual Studio Releases
 
@@ -15,7 +16,7 @@ It is possible however to use older versions of Visual Studio with different ver
 ## Visual Studio 2017 15.7 and newer
 
 - This version of Visual Studio includes the latest release of Entity Framework tools and the EF 6.2 runtime, and does not require additional setup steps.
-See [What's New](~/ef6/what-is-new/index.md) for more details on these releases.
+See [What's New](xref:ef6/what-is-new/index) for more details on these releases.
 - Adding Entity Framework to new projects using the EF tools will automatically add the EF 6.2 NuGet package.
 You can manually install or upgrade to any EF NuGet package available online.
 - By default, the SQL Server instance available with this version of Visual Studio is a LocalDB instance called MSSQLLocalDB.
@@ -26,7 +27,7 @@ Remember to use a verbatim string prefixed with `@` or double back-slashes "\\\\
 ## Visual Studio 2015 to Visual Studio 2017 15.6
 
 - These versions of Visual Studio include Entity Framework tools and runtime 6.1.3.
-See [Past Releases](~/ef6/what-is-new/past-releases.md#ef-613) for more details on these releases.
+See [Past Releases](xref:ef6/what-is-new/past-releases#ef-613) for more details on these releases.
 - Adding Entity Framework to new projects using the EF tools will automatically add the EF 6.1.3 NuGet package.
 You can manually install or upgrade to any EF NuGet package available online.
 - By default, the SQL Server instance available with this version of Visual Studio is a LocalDB instance called MSSQLLocalDB.
@@ -37,7 +38,7 @@ Remember to use a verbatim string prefixed with `@` or double back-slashes "\\\\
 ## Visual Studio 2013
 - This version of Visual Studio includes and older version of Entity Framework tools and runtime.
 It is recommended that you upgrade to Entity Framework Tools 6.1.3, using [the installer](https://www.microsoft.com/download/details.aspx?id=40762) available in the Microsoft Download Center.
-See [Past Releases](~/ef6/what-is-new/past-releases.md#ef-613) for more details on these releases.
+See [Past Releases](xref:ef6/what-is-new/past-releases#ef-613) for more details on these releases.
 - Adding Entity Framework to new projects using the upgraded EF tools will automatically add the EF 6.1.3 NuGet package.
 You can manually install or upgrade to any EF NuGet package available online.
 - By default, the SQL Server instance available with this version of Visual Studio is a LocalDB instance called MSSQLLocalDB.
@@ -48,7 +49,7 @@ Remember to use a verbatim string prefixed with `@` or double back-slashes "\\\\
 
 - This version of Visual Studio includes and older version of Entity Framework tools and runtime.
 It is recommended that you upgrade to Entity Framework Tools 6.1.3, using [the installer](https://www.microsoft.com/download/details.aspx?id=40762) available in the Microsoft Download Center.
-See [Past Releases](~/ef6/what-is-new/past-releases.md#ef-613) for more details on these releases.
+See [Past Releases](xref:ef6/what-is-new/past-releases#ef-613) for more details on these releases.
 - Adding Entity Framework to new projects using the upgraded EF tools will automatically add the EF 6.1.3 NuGet package.
 You can manually install or upgrade to any EF NuGet package available online.
 - By default, the SQL Server instance available with this version of Visual Studio is a LocalDB instance called v11.0.
