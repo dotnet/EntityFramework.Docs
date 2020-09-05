@@ -1,14 +1,14 @@
 ---
-title: Breaking changes in EF Core 3.0 - EF Core
-description: Complete list of breaking changes introduced in Entity Framework Core 3.0
+title: Breaking changes in EF Core 3.x - EF Core
+description: Complete list of breaking changes introduced in Entity Framework Core 3.x
 author: ajcvickers
-ms.date: 12/03/2019
-uid: core/what-is-new/ef-core-3.0/breaking-changes
+ms.date: 09/05/2020
+uid: core/what-is-new/ef-core-3.x/breaking-changes
 ---
 
-# Breaking changes included in EF Core 3.0
+# Breaking changes included in EF Core 3.x
 
-The following API and behavior changes have the potential to break existing applications when upgrading them to 3.0.0.
+The following API and behavior changes have the potential to break existing applications when upgrading them to 3.x.
 Changes that we expect to only impact database providers are documented under [provider changes](xref:core/providers/provider-log).
 
 ## Summary

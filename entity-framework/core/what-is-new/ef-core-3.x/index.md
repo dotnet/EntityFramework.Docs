@@ -1,17 +1,17 @@
 ---
-title: New features in Entity Framework Core 3.0 - EF Core
-description: Changes and improvements in Entity Framework Core 3.0
+title: New features in Entity Framework Core 3.x - EF Core
+description: Changes and improvements in Entity Framework Core 3.x
 author: divega
-ms.date: 02/19/2019
+ms.date: 09/05/2020
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
-uid: core/what-is-new/ef-core-3.0/index
+uid: core/what-is-new/ef-core-3.x/index
 ---
 
-# New features in Entity Framework Core 3.0
+# New features in Entity Framework Core 3.x
 
-The following list includes the major new features in EF Core 3.0.
+The following list includes the major new features in EF Core 3.x
 
-As a major release, EF Core 3.0 also contains several [breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes), which are API improvements that may have negative impact on existing applications.  
+As a major release, EF Core 3.x also contains several [breaking changes](xref:core/what-is-new/ef-core-3.x/breaking-changes), which are API improvements that may have negative impact on existing applications.
 
 ## LINQ overhaul
 
@@ -19,7 +19,7 @@ LINQ enables you to write database queries using your .NET language of choice, t
 But LINQ also enables you to write an unlimited number of complicated queries containing arbitrary expressions (method calls or operations).
 How to handle all those combinations is the main challenge for LINQ providers.
 
-In EF Core 3.0, we rearchitected our LINQ provider to enable translating more query patterns into SQL, generating efficient queries in more cases, and preventing inefficient queries from going undetected. The new LINQ provider is the foundation over which we'll be able to offer new query capabilities and performance improvements in future releases, without breaking existing applications and data providers.
+In EF Core 3.x, we rearchitected our LINQ provider to enable translating more query patterns into SQL, generating efficient queries in more cases, and preventing inefficient queries from going undetected. The new LINQ provider is the foundation over which we'll be able to offer new query capabilities and performance improvements in future releases, without breaking existing applications and data providers.
 
 ### Restricted client evaluation
 
@@ -37,8 +37,8 @@ var specialCustomers = context.Customers
 
 That may be acceptable if the database contains a small number of rows but can result in significant performance issues or even application failure if the database contains a large number of rows.
 
-In EF Core 3.0, we've restricted client evaluation to only happen on the top-level projection (essentially, the last call to `Select()`).
-When EF Core 3.0 detects expressions that can't be translated anywhere else in the query, it throws a runtime exception.
+In EF Core 3.x, we've restricted client evaluation to only happen on the top-level projection (essentially, the last call to `Select()`).
+When EF Core 3.x detects expressions that can't be translated anywhere else in the query, it throws a runtime exception.
 
 To evaluate a predicate condition on the client as in the previous example, developers now need to explicitly switch evaluation of the query to LINQ to Objects:
 
@@ -49,13 +49,13 @@ var specialCustomers = context.Customers
     .Where(c => IsSpecialCustomer(c));
 ```
 
-See the [breaking changes documentation](xref:core/what-is-new/ef-core-3.0/breaking-changes#linq-queries-are-no-longer-evaluated-on-the-client) for more details about how this can affect existing applications.
+See the [breaking changes documentation](xref:core/what-is-new/ef-core-3.x/breaking-changes#linq-queries-are-no-longer-evaluated-on-the-client) for more details about how this can affect existing applications.
 
 ### Single SQL statement per LINQ query
 
-Another aspect of the design that changed significantly in 3.0 is that we now always generate a single SQL statement per LINQ query. In previous versions, we used to generate multiple SQL statements in certain cases, translated `Include()` calls on collection navigation properties and translated queries that followed certain patterns with subqueries. Although this was in some cases convenient, and for `Include()` it even helped avoid sending redundant data over the wire, the implementation was complex, and it resulted in some extremely inefficient behaviors (N+1 queries). There were situations in which the data returned across multiple queries was potentially inconsistent.
+Another aspect of the design that changed significantly in 3.x is that we now always generate a single SQL statement per LINQ query. In previous versions, we used to generate multiple SQL statements in certain cases, translated `Include()` calls on collection navigation properties and translated queries that followed certain patterns with subqueries. Although this was in some cases convenient, and for `Include()` it even helped avoid sending redundant data over the wire, the implementation was complex, and it resulted in some extremely inefficient behaviors (N+1 queries). There were situations in which the data returned across multiple queries was potentially inconsistent.
 
-Similarly to client evaluation, if EF Core 3.0 can't translate a LINQ query into a single SQL statement, it throws a runtime exception. But we made EF Core capable of translating many of the common patterns that used to generate multiple queries to a single query with JOINs.
+Similarly to client evaluation, if EF Core 3.x can't translate a LINQ query into a single SQL statement, it throws a runtime exception. But we made EF Core capable of translating many of the common patterns that used to generate multiple queries to a single query with JOINs.
 
 ## Cosmos DB support
 
@@ -65,7 +65,7 @@ See the [Cosmos DB provider documentation](xref:core/providers/cosmos/index) for
 
 ## C# 8.0 support
 
-EF Core 3.0 takes advantage of a couple of the [new features in C# 8.0](/dotnet/csharp/whats-new/csharp-8):
+EF Core 3.x takes advantage of a couple of the [new features in C# 8.0](/dotnet/csharp/whats-new/csharp-8):
 
 ### Asynchronous streams
 
@@ -105,7 +105,7 @@ See [Working with nullable reference types](xref:core/miscellaneous/nullable-ref
 
 ## Interception of database operations
 
-The new interception API in EF Core 3.0 allows providing custom logic to be invoked automatically whenever low-level database operations occur as part of the normal operation of EF Core. For example, when opening connections, committing transactions, or executing commands.
+The new interception API in EF Core 3.x allows providing custom logic to be invoked automatically whenever low-level database operations occur as part of the normal operation of EF Core. For example, when opening connections, committing transactions, or executing commands.
 
 Similarly to the interception features that existed in EF 6, interceptors allow you to intercept operations before or after they happen. When you intercept them before they happen, you are allowed to by-pass execution and supply alternate results from the interception logic.
 
@@ -165,7 +165,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## Dependent entities sharing the table with the principal are now optional
 
-Starting with EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table, it will be possible to add an `Order` without an `OrderDetails` and all of the `OrderDetails` properties, except the primary key will be mapped to nullable columns.
+Starting with EF Core 3.x, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table, it will be possible to add an `Order` without an `OrderDetails` and all of the `OrderDetails` properties, except the primary key will be mapped to nullable columns.
 
 When querying, EF Core will set `OrderDetails` to `null` if any of its required properties doesn't have a value, or if it has no required properties besides the primary key and all properties are `null`.
 
@@ -187,16 +187,16 @@ public class OrderDetails
 
 ## EF 6.3 on .NET Core
 
-This isn't really an EF Core 3.0 feature, but we think it is important to many of our current customers.
+This isn't really an EF Core 3.x feature, but we think it is important to many of our current customers.
 
 We understand that many existing applications use previous versions of EF, and that porting them to EF Core only to take advantage of .NET Core can require a significant effort.
-For that reason, we decided to port the newest version of EF 6 to run on .NET Core 3.0.
+For that reason, we decided to port the newest version of EF 6 to run on .NET Core 3.x.
 
 For more details, see [what's new in EF 6](xref:ef6/what-is-new/index).
 
 ## Postponed features
 
-Some features originally planned for EF Core 3.0 were postponed to future releases:
+Some features originally planned for EF Core 3.x were postponed to future releases:
 
 - Ability to ignore parts of a model in migrations, tracked as [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725).
 - Property bag entities, tracked as two separate issues: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) about shared-type entities and [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) about indexed property mapping support.
