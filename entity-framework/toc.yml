@@ -42,7 +42,7 @@
           href: core/what-is-new/ef-core-3.x/breaking-changes.md
       - name: EF Core 2.1
         href: core/what-is-new/ef-core-2.1.md
-      - name: Unsupported versions
+      - name: Out of support
         items:
         - name: EF Core 2.2
           href: core/what-is-new/ef-core-2.2.md
