@@ -339,6 +339,16 @@
             "source_path": "entity-framework/core/miscellaneous/1x-2x-upgrade.md",
             "redirect_url": "/ef/core/what-is-new/ef-core-2.0/upgrade",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/rc1-rc2-upgrade.md",
+            "redirect_url": "/ef/core/what-is-new",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/rc2-rtm-upgrade.md",
+            "redirect_url": "/ef/core/what-is-new",
+            "redirect_document_id": false
         }
     ]
 }
