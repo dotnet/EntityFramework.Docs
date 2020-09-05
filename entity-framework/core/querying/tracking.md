@@ -1,6 +1,6 @@
 ---
 title: Tracking vs. No-Tracking Queries - EF Core
-description: Informationn tracking and no-tracking queries in Entity Framework Core
+description: Information on tracking and no-tracking queries in Entity Framework Core
 author: smitpatel
 ms.date: 10/10/2019
 ms.assetid: e17e060c-929f-4180-8883-40c438fbcc01
