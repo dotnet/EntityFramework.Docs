@@ -15,9 +15,9 @@ This page contains links to pull requests made on the EF Core repo that may requ
 
 We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the [`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) and [`providers-fyi`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) labels on our issues and pull requests.
 
-## 2.2 ---> 3.0
+## 2.2 ---> 3.x
 
-Note that many of the [application-level breaking changes](xref:core/what-is-new/ef-core-3.0/breaking-changes) will also impact providers.
+Note that many of the [application-level breaking changes](xref:core/what-is-new/ef-core-3.x/breaking-changes) will also impact providers.
 
 * <https://github.com/aspnet/EntityFrameworkCore/pull/14022>
   * Removed obsolete APIs and collapsed optional parameter overloads
