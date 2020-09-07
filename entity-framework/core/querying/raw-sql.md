@@ -52,7 +52,7 @@ You can also construct a DbParameter and supply it as a parameter value. Since a
 
 > [!NOTE]
 > **Parameter Ordering**
-> When passing multiple `SqlParameter`s, the ordering in the SQL string must match the order of the parameters in the stored procedure's definition. Failing to do this can result in type conversion exceptions or unexpected behavior when the procedure is executed because Entity Framework Core will apply the order of the `SqlParameter[]` array literally and will not reorder them to match the order defined in the stored procedure's definition. This behavior is not typical of stored procedures when using named parameters and is seemingly specific to `FromSql()`.
+> Entity Framework Core passes parameters based on the order of the `SqlParameter[]` array. When passing multiple `SqlParameter`s, the ordering in the SQL string must match the order of the parameters in the stored procedure's definition. Failure to do this may result in type conversion exceptions and/or unexpected behavior when the procedure is executed.
 
 ## Composing with LINQ
 
