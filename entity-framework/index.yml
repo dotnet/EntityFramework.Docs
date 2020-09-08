@@ -46,7 +46,7 @@ highlightedContent:
 # Card with summary style
 additionalContent:
   # Supports up to 3 sections
-  sections: 
+  sections:
     - title: Develop with Entity Framework Core # < 60 chars (optional)
       items:
       # Card
@@ -145,7 +145,7 @@ additionalContent:
             text: "Tracking vs. no-tracking"
           - url: core/querying/complex-query-operators.md
             text: "Complex query operators"
-          - url: core/querying/related-data.md
+          - url: core/querying/related-data/index.md
             text: "Load related data"
           - url: core/querying/async.md
             text: "Asynchronous queries"

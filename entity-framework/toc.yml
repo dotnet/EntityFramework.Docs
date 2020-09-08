@@ -173,14 +173,24 @@
       items:
       - name: Overview
         href: core/querying/index.md
+      - name: Load related data
+        items:
+          - name: Overview
+            href: core/querying/related-data/index.md
+          - name: Eager loading
+            href: core/querying/related-data/eager.md
+          - name: Explicit loading
+            href: core/querying/related-data/explicit.md
+          - name: Lazy loading
+            href: core/querying/related-data/lazy.md
+          - name: Related data and serialization
+            href: core/querying/related-data/serialization.md
       - name: Client vs. server evaluation
         href: core/querying/client-eval.md
       - name: Tracking vs. no-tracking
         href: core/querying/tracking.md
       - name: Complex query operators
         href: core/querying/complex-query-operators.md
-      - name: Load related data
-        href: core/querying/related-data.md
       - name: Raw SQL queries
         href: core/querying/raw-sql.md
       - name: Global query filters
