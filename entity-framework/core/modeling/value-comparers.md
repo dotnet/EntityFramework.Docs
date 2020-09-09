@@ -19,7 +19,7 @@ uid: core/modeling/value-comparers
 EF Core needs to compare property values when:
 
 * Determining whether a property has been changed as part of [detecting changes for updates](xref:core/saving/basic)
-* Determining whether two key values are the same when resolving relationships 
+* Determining whether two key values are the same when resolving relationships
 
 This is handled automatically for common primitive types such as int, bool, DateTime, etc.
 
@@ -61,6 +61,7 @@ Consider a property that uses a value converter to map a simple, immutable class
 [!code-csharp[ConfigureImmutableClassProperty](../../../samples/core/Modeling/ValueConversions/MappingImmutableClassProperty.cs?name=ConfigureImmutableClassProperty)]
 
 Properties of this type do not need special comparisons or snapshots because:
+
 * Equality is overridden so that different instances will compare correctly
 * The type is immutable, so there is no chance of mutating a snapshot value
 
@@ -85,11 +86,12 @@ It is recommended that you use immutable types (classes or structs) with value c
 This is usually more efficient and has cleaner semantics than using a mutable type.
 
 However, that being said, it is common to use properties of types that the application cannot change.
-For example, mapping a property containing a list of numbers: 
+For example, mapping a property containing a list of numbers:
 
 [!code-csharp[ListProperty](../../../samples/core/Modeling/ValueConversions/MappingListProperty.cs?name=ListProperty)]
 
-The [`List<T>` class](/dotnet/api/system.collections.generic.list-1?view=netstandard-2.1):
+The [`List<T>` class](/dotnet/api/system.collections.generic.list-1):
+
 * Has reference equality; two lists containing the same values are treated as different.
 * Is mutable; values in the list can be added and removed.
 
@@ -106,6 +108,7 @@ This then requires setting a `ValueComparer<T>` on the property to force EF Core
 > Instead, the code above calls SetValueComparer on the lower-level IMutableProperty exposed by the builder as 'Metadata'.
 
 The `ValueComparer<T>` constructor accepts three expressions:
+
 * An expression for checking equality
 * An expression for generating a hash code
 * An expression to snapshot a value  
@@ -118,20 +121,20 @@ Be immutable instead if you can.)
 
 The snapshot is created by cloning the list with ToList.
 Again, this is only needed if the lists are going to be mutated.
-Be immutable instead if you can. 
+Be immutable instead if you can.
 
 > [!NOTE]  
 > Value converters and comparers are constructed using expressions rather than simple delegates.
 > This is because EF inserts these expressions into a much more complex expression tree that is then compiled into an entity shaper delegate.
 > Conceptually, this is similar to compiler inlining.
-> For example, a simple conversion may just be a compiled in cast, rather than a call to another method to do the conversion.    
+> For example, a simple conversion may just be a compiled in cast, rather than a call to another method to do the conversion.
 
 ### Key comparers
 
 The background section covers why key comparisons may require special semantics.
 Make sure to create a comparer that is appropriate for keys when setting it on a primary, principal, or foreign key property.
 
-Use [SetKeyValueComparer](/dotnet/api/microsoft.entityframeworkcore.mutablepropertyextensions.setkeyvaluecomparer?view=efcore-3.1) in the rare cases where different semantics is required on the same property.
+Use [SetKeyValueComparer](/dotnet/api/microsoft.entityframeworkcore.mutablepropertyextensions.setkeyvaluecomparer) in the rare cases where different semantics is required on the same property.
 
 > [!NOTE]  
 > SetStructuralComparer has been obsoleted in EF Core 5.0.
@@ -141,7 +144,7 @@ Use [SetKeyValueComparer](/dotnet/api/microsoft.entityframeworkcore.mutableprope
 
 Sometimes the default comparison used by EF Core may not be appropriate.
 For example, mutation of byte arrays is not, by default, detected in EF Core.
-This can be overridden by setting a different comparer on the property: 
+This can be overridden by setting a different comparer on the property:
 
 [!code-csharp[OverrideComparer](../../../samples/core/Modeling/ValueConversions/OverridingByteArrayComparisons.cs?name=OverrideComparer)]
 

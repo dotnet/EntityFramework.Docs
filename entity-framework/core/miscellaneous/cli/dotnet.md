@@ -9,7 +9,7 @@ uid: core/miscellaneous/cli/dotnet
 
 # Entity Framework Core tools reference - .NET Core CLI
 
-The command-line interface (CLI) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0), apply migrations, and generate code for a model based on an existing database. The commands are an extension to the cross-platform [dotnet](/dotnet/core/tools) command, which is part of the [.NET Core SDK](https://www.microsoft.com/net/core). These tools work with .NET Core projects.
+The command-line interface (CLI) tools for Entity Framework Core perform design-time development tasks. For example, they create [migrations](/aspnet/core/data/ef-mvc/migrations), apply migrations, and generate code for a model based on an existing database. The commands are an extension to the cross-platform [dotnet](/dotnet/core/tools) command, which is part of the [.NET Core SDK](https://www.microsoft.com/net/core). These tools work with .NET Core projects.
 
 If you're using Visual Studio, we recommend the [Package Manager Console tools](xref:core/miscellaneous/cli/powershell) instead:
 
