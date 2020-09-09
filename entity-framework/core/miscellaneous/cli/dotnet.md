@@ -33,7 +33,7 @@ The installation procedure depends on project type and version:
   dotnet tool install --global dotnet-ef
   ```
 
-  You can also use `dotnet ef` as local tool. To use it as a local tool, restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](https://github.com/dotnet/cli/issues/10288).
+  You can also use `dotnet ef` as local tool. To use it as a local tool, restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](/dotnet/core/tools/global-tools#install-a-local-tool).
 
 * Install the [.NET Core SDK](https://www.microsoft.com/net/download/core).
 
