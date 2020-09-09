@@ -1,7 +1,8 @@
 ---
-title: "Entity Framework Providers - EF6"
+title: Entity Framework Providers - EF6
+description: Entity Framework Providers in Entity Framework 6
 author: divega
-ms.date: "06/27/2018"
+ms.date: 06/27/2018
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
 uid: ef6/fundamentals/providers/index
 ---
@@ -82,7 +83,7 @@ In this code “SqlCeProviderServices.ProviderInvariantName” is a convenience 
 
 ## What if the provider I need isn’t available?
 
-If the provider is available for previous versions of EF, then we encourage you to contact the owner of the provider and ask them to create an EF6 version. You should include a reference to the [documentation for the EF6 provider model](~/ef6/fundamentals/providers/provider-model.md).
+If the provider is available for previous versions of EF, then we encourage you to contact the owner of the provider and ask them to create an EF6 version. You should include a reference to the [documentation for the EF6 provider model](xref:ef6/fundamentals/providers/provider-model).
 
 ## Can I write a provider myself?
 

@@ -1,7 +1,8 @@
 ---
-title: "Get started with Entity Framework 6 - EF6"
+title: Get started with Entity Framework 6 - EF6
+description: Get started with Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
 uid: ef6/get-started
 ---
@@ -11,22 +12,22 @@ This guide contains a collection of links to selected documentation articles, wa
 
 ## Fundamentals
 
-* [Get Entity Framework](~/ef6/fundamentals/install.md)
+* [Get Entity Framework](xref:ef6/fundamentals/install)
 
   Here you will learn how to add Entity Framework to your applications and, if you want to use the EF Designer, make sure you get it installed in Visual Studio.
 
-* [Creating a Model: Code First, the EF Designer, and the EF Workflows](~/ef6/modeling/index.md)
+* [Creating a Model: Code First, the EF Designer, and the EF Workflows](xref:ef6/modeling/index)
 
   Do you prefer to specify your EF model writing code or drawing boxes and lines?
 Are you going to use EF to map your objects to an existing database or would you like EF to create a database tailored for your objects?
 Here you learn about two different approaches to use EF6: EF Designer and Code First.
 Make sure you follow the discussion and watch the video about the difference.
 
-* [Working with DbContext](~/ef6/fundamentals/working-with-dbcontext.md)
+* [Working with DbContext](xref:ef6/fundamentals/working-with-dbcontext)
 
   DbContext is the first and most important EF type that you need to learn how to use. It serves as the launchpad for database queries and keeps track of changes you make to objects so that they can be persisted back to the database.
 
-* [Ask a Question](~/ef6/resources/get-help.md)
+* [Ask a Question](xref:ef6/resources/get-help)
 
   Find out how to get help from the experts and contribute your own answers to the community.
 
@@ -36,32 +37,32 @@ Make sure you follow the discussion and watch the video about the difference.
 
 ## Code First resources
 
-  - [Code First to an Existing Database Workflow](~/ef6/modeling/code-first/workflows/existing-database.md)
-  - [Code First to a New Database Workflow](~/ef6/modeling/code-first/workflows/new-database.md)
-  - [Mapping Enums Using Code First](~/ef6/modeling/code-first/data-types/enums.md)
-  - [Mapping Spatial Types Using Code First](~/ef6/modeling/code-first/data-types/spatial.md)
-  - [Writing Custom Code First Conventions](~/ef6/modeling/code-first/conventions/custom.md)
-  - [Using Code First Fluent Configuration with Visual Basic](~/ef6/modeling/code-first/fluent/vb.md)
-  - [Code First Migrations](~/ef6/modeling/code-first/migrations/index.md)
-  - [Code First Migrations in Team Environments](~/ef6/modeling/code-first/migrations/teams.md)
-  - [Automatic Code First Migrations](~/ef6/modeling/code-first/migrations/automatic.md) (This is no longer recommended)
+  - [Code First to an Existing Database Workflow](xref:ef6/modeling/code-first/workflows/existing-database)
+  - [Code First to a New Database Workflow](xref:ef6/modeling/code-first/workflows/new-database)
+  - [Mapping Enums Using Code First](xref:ef6/modeling/code-first/data-types/enums)
+  - [Mapping Spatial Types Using Code First](xref:ef6/modeling/code-first/data-types/spatial)
+  - [Writing Custom Code First Conventions](xref:ef6/modeling/code-first/conventions/custom)
+  - [Using Code First Fluent Configuration with Visual Basic](xref:ef6/modeling/code-first/fluent/vb)
+  - [Code First Migrations](xref:ef6/modeling/code-first/migrations/index)
+  - [Code First Migrations in Team Environments](xref:ef6/modeling/code-first/migrations/teams)
+  - [Automatic Code First Migrations](xref:ef6/modeling/code-first/migrations/automatic) (This is no longer recommended)
 
 ## EF Designer resources
-  - [Database First Workflow](~/ef6/modeling/designer/workflows/database-first.md)
-  - [Model First Workflow](~/ef6/modeling/designer/workflows/model-first.md)
-  - [Mapping Enums](~/ef6/modeling/designer/data-types/enums.md)
-  - [Mapping Spatial Types](~/ef6/modeling/designer/data-types/spatial.md)
-  - [Table-Per Hierarchy Inheritance Mapping](~/ef6/modeling/designer/inheritance/tph.md)
-  - [Table-Per Type Inheritance Mapping](~/ef6/modeling/designer/inheritance/tpt.md)
-  - [Stored Procedure Mapping for Updates](~/ef6/modeling/designer/stored-procedures/cud.md)
-  - [Stored Procedure Mapping for Query](~/ef6/modeling/designer/stored-procedures/query.md)
-  - [Entity Splitting](~/ef6/modeling/designer/entity-splitting.md)
-  - [Table Splitting](~/ef6/modeling/designer/table-splitting.md)
-  - [Defining Query](~/ef6/modeling/designer/advanced/defining-query.md) (Advanced)
-  - [Table-Valued Functions](~/ef6/modeling/designer/advanced/tvfs.md) (Advanced)
+  - [Database First Workflow](xref:ef6/modeling/designer/workflows/database-first)
+  - [Model First Workflow](xref:ef6/modeling/designer/workflows/model-first)
+  - [Mapping Enums](xref:ef6/modeling/designer/data-types/enums)
+  - [Mapping Spatial Types](xref:ef6/modeling/designer/data-types/spatial)
+  - [Table-Per Hierarchy Inheritance Mapping](xref:ef6/modeling/designer/inheritance/tph)
+  - [Table-Per Type Inheritance Mapping](xref:ef6/modeling/designer/inheritance/tpt)
+  - [Stored Procedure Mapping for Updates](xref:ef6/modeling/designer/stored-procedures/cud)
+  - [Stored Procedure Mapping for Query](xref:ef6/modeling/designer/stored-procedures/query)
+  - [Entity Splitting](xref:ef6/modeling/designer/entity-splitting)
+  - [Table Splitting](xref:ef6/modeling/designer/table-splitting)
+  - [Defining Query](xref:ef6/modeling/designer/advanced/defining-query) (Advanced)
+  - [Table-Valued Functions](xref:ef6/modeling/designer/advanced/tvfs) (Advanced)
 
 ## Other resources
-  - [Async Query and Save](~/ef6/fundamentals/async.md)
-  - [Databinding with WinForms](~/ef6/fundamentals/databinding/winforms.md)
-  - [Databinding with WPF](~/ef6/fundamentals/databinding/wpf.md)
-  - [Disconnected scenarios with Self-Tracking Entities](~/ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough.md) (This is no longer recommended)
+  - [Async Query and Save](xref:ef6/fundamentals/async)
+  - [Databinding with WinForms](xref:ef6/fundamentals/databinding/winforms)
+  - [Databinding with WPF](xref:ef6/fundamentals/databinding/wpf)
+  - [Disconnected scenarios with Self-Tracking Entities](xref:ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough) (This is no longer recommended)

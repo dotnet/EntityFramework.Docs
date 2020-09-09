@@ -1,5 +1,6 @@
 ---
 title: SQLite Database Provider - EF Core
+description: Information on the Entity Framework Core SQLite database provider
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 3e2f7698-fec2-4cec-9e2d-2e3e0074120c
@@ -33,4 +34,4 @@ Install-Package Microsoft.EntityFrameworkCore.Sqlite
 
 ## Limitations
 
-See [SQLite Limitations](limitations.md) for some important limitations of the SQLite provider.
+See [SQLite Limitations](xref:core/providers/sqlite/limitations) for some important limitations of the SQLite provider.

@@ -1,8 +1,9 @@
 ---
 title: EF Core release planning
+description: Information on how Entity Framework Core planning and releasing is done
 author: ajcvickers
 ms.date: 01/28/2020
-uid: core/what-is-new/release_planning
+uid: core/what-is-new/release-planning
 ---
 
 # Release planning process

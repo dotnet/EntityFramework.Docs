@@ -1,8 +1,10 @@
 ---
-title: "Designer Table Splitting - EF6"
+title: Designer Table Splitting - EF6
+description: Designer Table Splitting in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 452f17c3-9f26-4de4-9894-8bc036e23b0f
+uid: ef6/modeling/designer/table-splitting
 ---
 # Designer Table Splitting
 This walkthrough shows how to map multiple entity types to a single table by modifying a model with the Entity Framework Designer (EF Designer).
@@ -18,7 +20,7 @@ The following image shows the main windows that are used when working with the E
 To complete this walkthrough, you will need:
 
 - A recent version of Visual Studio.
-- The [School sample database](~/ef6/resources/school-database.md).
+- The [School sample database](xref:ef6/resources/school-database).
 
 ## Set up the Project
 
@@ -67,7 +69,7 @@ The next step requires the **Mapping Details** window. If you cannot see this 
 -   Select **Person** from the **&lt;Add a Table or View&gt;** field drop-down list. The list contains tables or views to which the selected entity can be mapped.
     The appropriate properties should be mapped by default.
 
-    ![Mapping](~/ef6/media/mapping.png)
+    ![Mapping Properties](~/ef6/media/mapping.png)
 
 -   Select the **PersonHireInfo** association on the design surface.
 -   Right-click the association on the design surface and select **Properties**.
@@ -120,7 +122,7 @@ The following T-SQL statements were executed against the **School** database as 
 
 -   The following **INSERT** was executed as a result of executing context.SaveChanges() and combines data from the **Person** and **HireInfo** entities
 
-    ![Insert](~/ef6/media/insert.png)
+    ![Insert Combining Person and HireInfo Data](~/ef6/media/insert.png)
 
 -   The following **SELECT** was executed as a result of executing context.People.FirstOrDefault() and selects just the columns mapped to **Person**
 

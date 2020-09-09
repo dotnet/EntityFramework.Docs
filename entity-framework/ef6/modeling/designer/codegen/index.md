@@ -1,8 +1,10 @@
 ---
-title: "Designer Code Generation Templates - EF6"
+title: Designer Code Generation Templates - EF6
+description: Designer Code Generation Templates in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 56e00fa2-f9f0-48b3-8006-f8266ca7e74b
+uid: ef6/modeling/designer/codegen/index
 ---
 # Designer Code Generation Templates
 When you create a model using the Entity Framework Designer your classes and derived context are automatically generated for you. In addition to the default code generation we also provide a number of templates that can be used to customize the code that gets generated. These templates are provided as T4 Text Templates, allowing you to customize the templates if needed.
@@ -28,7 +30,7 @@ It is also the code generation template you get by default if you are using rece
 When you create a new model this template is used by default and the T4 files (.tt) are nested under your .edmx file.
 
 #### Older versions of Visual Studio
-- **Visual Studio 2012:** To get the **EF 6.x DbContextGenerator** templates you will need to install the latest **Entity Framework Tools for Visual Studio** - see the [Get Entity Framework](~/ef6/fundamentals/install.md) page for more information.
+- **Visual Studio 2012:** To get the **EF 6.x DbContextGenerator** templates you will need to install the latest **Entity Framework Tools for Visual Studio** - see the [Get Entity Framework](xref:ef6/fundamentals/install) page for more information.
 - **Visual Studio 2010:** The **EF 6.x DbContextGenerator** templates are not available for Visual Studio 2010.
 
 #### DbContext Generator for EF 5.x
@@ -81,18 +83,18 @@ If you are using Visual Studio 2012 or 2013 you will need to select the **Online
 - [EF 5.x EntityObject Generator for VB.NET](https://visualstudiogallery.msdn.microsoft.com/92c0129e-40dc-488c-a836-7e30846dfb30)
 - [EF 5.x EntityObject Generator for VB.NET Web Sites](https://visualstudiogallery.msdn.microsoft.com/5dd7f75c-8c98-4eb7-b4bc-06f0d0b03b41)
 
-If you just want ObjectContext code generation without needing to edit the template you can [revert to EntityObject code generation](~/ef6/modeling/designer/codegen/legacy-objectcontext.md).
+If you just want ObjectContext code generation without needing to edit the template you can [revert to EntityObject code generation](xref:ef6/modeling/designer/codegen/legacy-objectcontext).
 
 If you are using Visual Studio 2010 this template is already installed. If you create a new model in Visual Studio 2010 this template is used by default but the .tt files are not included in your project. If you want to customize the template you will need to add it to your project.
 
 ### Self-Tracking Entities (STE) Generator
 
-This template will generate Self-Tracking Entity classes and a context that derives from ObjectContext. In an EF application, a context is responsible for tracking changes in the entities. However, in N-Tier scenarios, the context might not be available on the tier that modifies the entities. Self-tracking entities help you track changes in any tier. For more information, see [Self-Tracking Entities](~/ef6/fundamentals/disconnected-entities/self-tracking-entities/index.md).
+This template will generate Self-Tracking Entity classes and a context that derives from ObjectContext. In an EF application, a context is responsible for tracking changes in the entities. However, in N-Tier scenarios, the context might not be available on the tier that modifies the entities. Self-tracking entities help you track changes in any tier. For more information, see [Self-Tracking Entities](xref:ef6/fundamentals/disconnected-entities/self-tracking-entities/index).
 
 > [!NOTE]
 > STE Template Not Recommended
 
-We no longer recommend using the STE template in new applications, it continues to be available to support existing applications. Visit the [disconnected entities article](~/ef6/fundamentals/disconnected-entities/index.md) for other options we recommend for N-Tier scenarios.
+We no longer recommend using the STE template in new applications, it continues to be available to support existing applications. Visit the [disconnected entities article](xref:ef6/fundamentals/disconnected-entities/index) for other options we recommend for N-Tier scenarios.
 
 > [!NOTE]
 > There is no EF 6.x version of the STE template.
@@ -150,11 +152,11 @@ To start using a code generation template, right-click an empty spot on the desi
 
 If you've already installed the template you want to use (or it was included in Visual Studio), then it will be available under either the **Code** or **Data** section from the left menu.
 
-![Installed](~/ef6/media/installed.png)
+![Installed Template](~/ef6/media/installed.png)
 
 If you don't already have the template installed, select **Online** from the left menu and search for the template you want.
 
-![Search](~/ef6/media/search.png) 
+![Search Template](~/ef6/media/search.png) 
 
 If you are using Visual Studio 2012, the new .tt files will be nested under the .edmx file.*
 

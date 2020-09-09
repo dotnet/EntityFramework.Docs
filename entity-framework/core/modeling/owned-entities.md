@@ -69,7 +69,7 @@ To configure a different PK call `HasKey`:
 
 ## Mapping owned types with table splitting
 
-When using relational databases, by default reference owned types are mapped to the same table as the owner. This requires splitting the table in two: some columns will be used to store the data of the owner, and some columns will be used to store data of the owned entity. This is a common feature known as [table splitting](table-splitting.md).
+When using relational databases, by default reference owned types are mapped to the same table as the owner. This requires splitting the table in two: some columns will be used to store the data of the owner, and some columns will be used to store data of the owned entity. This is a common feature known as [table splitting](xref:core/modeling/table-splitting).
 
 By default, EF Core will name the database columns for the properties of the owned entity type following the pattern _Navigation_OwnedEntityProperty_. Therefore the `StreetAddress` properties will appear in the 'Orders' table with the names 'ShippingAddress_Street' and 'ShippingAddress_City'.
 
@@ -116,7 +116,7 @@ Notice the `WithOwner` call used to define the navigation property pointing back
 
 It is also possible to achieve this result using `OwnedAttribute` on both `OrderDetails` and `StreetAddress`.
 
-In addition, notice the `Navigation` call. In EFCore 5.0, navigation properties to owned types can be further configured [as for non-owned navigation properties](relationships.md#configuring-navigation-properties).
+In addition, notice the `Navigation` call. In EFCore 5.0, navigation properties to owned types can be further configured [as for non-owned navigation properties](xref:core/modeling/relationships#configuring-navigation-properties).
 
 ## Storing owned types in separate tables
 

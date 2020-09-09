@@ -1,8 +1,10 @@
 ---
-title: "Self-Tracking Entities Walkthrough - EF6"
+title: Self-Tracking Entities Walkthrough - EF6
+description: Self-tracking entities walkthrough for Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: b21207c9-1d95-4aa3-ae05-bc5fe300dab0
+uid: ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough
 ---
 # Self-Tracking Entities Walkthrough
 > [!IMPORTANT]
@@ -10,7 +12,7 @@ ms.assetid: b21207c9-1d95-4aa3-ae05-bc5fe300dab0
 
 This walkthrough demonstrates the scenario in which a Windows Communication Foundation (WCF) service exposes an operation that returns an entity graph. Next, a client application manipulates that graph and submits the modifications to a service operation that validates and saves the updates to a database using Entity Framework.
 
-Before completing this walkthrough make sure you read the [Self-Tracking Entities](index.md) page.
+Before completing this walkthrough make sure you read the [Self-Tracking Entities](xref:ef6/fundamentals/disconnected-entities/self-tracking-entities/index) page.
 
 This walkthrough completes the following actions:
 

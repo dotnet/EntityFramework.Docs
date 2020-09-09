@@ -1,8 +1,10 @@
 ---
-title: "Complex Types - EF Designer - EF6"
+title: Complex Types - EF Designer - EF6
+description: Complex Types - EF Designer in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 9a8228ef-acfd-4575-860d-769d2c0e18a1
+uid: ef6/modeling/designer/data-types/complex-types
 ---
 # Complex Types - EF Designer
 This topic shows how to map complex types with the Entity Framework Designer (EF Designer) and how to query for entities that contain properties of complex type.
@@ -33,13 +35,13 @@ If you already have an entity in your conceptual model you may want to refactor 
 
 On the designer surface, select one or more properties (excluding navigation properties) of an entity, then right-click and select **Refactor -&gt; Move to New Complex Type**.
 
-![Refactor](~/ef6/media/refactor.png)
+![Refactor Into New Complex Type](~/ef6/media/refactor.png)
 
 A new complex type with the selected properties is added to the **Model Browser**. The complex type is given a default name.
 
 A complex property of the newly created type replaces the selected properties. All property mappings are preserved.
 
-![Refactor 2](~/ef6/media/refactor2.png)
+![Refactor Into New Complex Type 2](~/ef6/media/refactor2.png)
 
 ## Create a New Complex Type
 

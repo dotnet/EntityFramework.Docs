@@ -1,13 +1,14 @@
 ---
-title: Breaking changes in EF Core 3.0 - EF Core
+title: Breaking changes in EF Core 3.x - EF Core
+description: Complete list of breaking changes introduced in Entity Framework Core 3.x
 author: ajcvickers
-ms.date: 12/03/2019
-uid: core/what-is-new/ef-core-3.0/breaking-changes
+ms.date: 09/05/2020
+uid: core/what-is-new/ef-core-3.x/breaking-changes
 ---
 
-# Breaking changes included in EF Core 3.0
+# Breaking changes included in EF Core 3.x
 
-The following API and behavior changes have the potential to break existing applications when upgrading them to 3.0.0.
+The following API and behavior changes have the potential to break existing applications when upgrading them to 3.x.
 Changes that we expect to only impact database providers are documented under [provider changes](xref:core/providers/provider-log).
 
 ## Summary
@@ -467,10 +468,12 @@ Likewise, they are often mapped to views, but this is only because views often d
 **Mitigations**
 
 The following parts of the API are now obsolete:
+
 * **`ModelBuilder.Query<>()`** - Instead `ModelBuilder.Entity<>().HasNoKey()` needs to be called to mark an entity type as having no keys.
 This would still not be configured by convention to avoid misconfiguration when a primary key is expected, but doesn't match the convention.
 * **`DbQuery<>`** - Instead `DbSet<>` should be used.
 * **`DbContext.Query<>()`** - Instead `DbContext.Set<>()` should be used.
+* **`IQueryTypeConfiguration<TQuery>`** - Instead `IEntityTypeConfiguration<TEntity>`** should be used.
 
 <a name="config"></a>
 ### Configuration API for owned type relationships has changed

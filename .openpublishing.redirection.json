@@ -311,8 +311,43 @@
             "redirect_document_id": false
         },
         {
+            "source_path": "entity-framework/core/querying/async.md",
+            "redirect_url": "/ef/core/miscellaneous/async",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/saving/async.md",
+            "redirect_url": "/ef/core/miscellaneous/async",
+            "redirect_document_id": false
+        },
+        {
             "source_path": "entity-framework/core/modeling/relational/index.md",
             "redirect_url": "/ef/core/modeling/",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/what-is-new/ef-core-3.0/index.md",
+            "redirect_url": "/ef/core/what-is-new/ef-core-3.x",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/what-is-new/ef-core-3.0/breaking-changes.md",
+            "redirect_url": "/ef/core/what-is-new/ef-core-3.x/breaking-changes",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/1x-2x-upgrade.md",
+            "redirect_url": "/ef/core/what-is-new/ef-core-2.0/upgrade",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/rc1-rc2-upgrade.md",
+            "redirect_url": "/ef/core/what-is-new",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/rc2-rtm-upgrade.md",
+            "redirect_url": "/ef/core/what-is-new",
             "redirect_document_id": false
         }
     ]

@@ -1,5 +1,6 @@
 ---
 title: Porting from EF6 to EF Core - Porting a Code-Based Model - EF
+description: Specific information on porting an Entity Framework 6 code-based model application to Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 2dce1a50-7d84-4856-abf6-2763dd9be99d
@@ -11,7 +12,7 @@ If you've read all the caveats and you are ready to port, then here are some gui
 
 ## Install EF Core NuGet packages
 
-To use EF Core, you install the NuGet package for the database provider you want to use. For example, when targeting SQL Server, you would install `Microsoft.EntityFrameworkCore.SqlServer`. See [Database Providers](../../core/providers/index.md) for details.
+To use EF Core, you install the NuGet package for the database provider you want to use. For example, when targeting SQL Server, you would install `Microsoft.EntityFrameworkCore.SqlServer`. See [Database Providers](xref:core/providers/index) for details.
 
 If you are planning to use migrations, then you should also install the `Microsoft.EntityFrameworkCore.Tools` package.
 
@@ -23,7 +24,7 @@ Most APIs that you use in EF6 are in the `System.Data.Entity` namespace (and rel
 
 ## Context configuration (connection etc.)
 
-As described in [Ensure EF Core Will Work for Your Application](ensure-requirements.md), EF Core has less magic around detecting the database to connect to. You will need to override the `OnConfiguring` method on your derived context, and use the database provider specific API to setup the connection to the database.
+As described in [Ensure EF Core Will Work for Your Application](xref:efcore-and-ef6/porting/index), EF Core has less magic around detecting the database to connect to. You will need to override the `OnConfiguring` method on your derived context, and use the database provider specific API to setup the connection to the database.
 
 Most EF6 applications store the connection string in the applications `App/Web.config` file. In EF Core, you read this connection string using the `ConfigurationManager` API. You may need to add a reference to the `System.Configuration` framework assembly to be able to use this API.
 

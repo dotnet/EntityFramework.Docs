@@ -1,8 +1,10 @@
 ---
-title: "Connection resiliency and retry logic - EF6"
+title: Connection resiliency and retry logic - EF6
+description: Connection resiliency and retry logic in Entity Framework 6
 author: AndriySvyryd
 ms.date: 11/20/2019
 ms.assetid: 47d68ac1-927e-4842-ab8c-ed8c8698dff2
+uid: ef6/fundamentals/connection-resiliency/retry-logic
 ---
 # Connection resiliency and retry logic
 > [!NOTE]
@@ -26,7 +28,7 @@ Connection retry is taken care of by an implementation of the IDbExecutionStrate
 
 ## Enabling an Execution Strategy  
 
-The easiest way to tell EF to use an execution strategy is with the SetExecutionStrategy method of the [DbConfiguration](~/ef6/fundamentals/configuring/code-based.md) class:  
+The easiest way to tell EF to use an execution strategy is with the SetExecutionStrategy method of the [DbConfiguration](xref:ef6/fundamentals/configuring/code-based) class:  
 
 ``` csharp
 public class MyConfiguration : DbConfiguration

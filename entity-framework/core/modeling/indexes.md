@@ -1,5 +1,6 @@
 ---
 title: Indexes - EF Core
+description: Configuring indexes in an Entity Framework Core model
 author: roji
 ms.date: 12/16/2019
 ms.assetid: 85b92003-b692-417d-ac1d-76d40dce664b

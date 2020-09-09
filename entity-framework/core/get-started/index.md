@@ -1,5 +1,6 @@
 ---
 title: Getting Started - EF Core
+description: Getting started tutorial for Entity Framework Core
 author: rick-anderson
 ms.date: 09/17/2019
 ms.assetid: 3c88427c-20c6-42ec-a736-22d3eccd5071
@@ -49,7 +50,7 @@ cd EFGetStarted
 
 ## Install Entity Framework Core
 
-To install EF Core, you install the package for the EF Core database provider(s) you want to target. This tutorial uses SQLite because it runs on all platforms that .NET Core supports. For a list of available providers, see [Database Providers](../providers/index.md).
+To install EF Core, you install the package for the EF Core database provider(s) you want to target. This tutorial uses SQLite because it runs on all platforms that .NET Core supports. For a list of available providers, see [Database Providers](xref:core/providers/index).
 
 ### [.NET Core CLI](#tab/netcore-cli)
 
@@ -88,9 +89,9 @@ Define a context class and entity classes that make up the model.
 
 [!code-csharp[Main](../../../samples/core/GetStarted/Model.cs)]
 
-EF Core can also [reverse engineer](../managing-schemas/scaffolding.md) a model from an existing database.
+EF Core can also [reverse engineer](xref:core/managing-schemas/scaffolding) a model from an existing database.
 
-Tip: This application intentionally keeps things simple for clarity. [Connection strings](../miscellaneous/connection-strings.md) should not be stored in the code for production applications. You may also want to split each C# class into its own file.
+Tip: This application intentionally keeps things simple for clarity. [Connection strings](xref:core/miscellaneous/connection-strings) should not be stored in the code for production applications. You may also want to split each C# class into its own file.
 
 ## Create the database
 
@@ -107,7 +108,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
   dotnet ef database update
   ```
 
-  This installs [dotnet ef](../miscellaneous/cli/dotnet.md) and the design package which is required to run the command on a project. The `migrations` command scaffolds a migration to create the initial set of tables for the model. The `database update` command creates the database and applies the new migration to it.
+  This installs [dotnet ef](xref:core/miscellaneous/cli/dotnet) and the design package which is required to run the command on a project. The `migrations` command scaffolds a migration to create the initial set of tables for the model. The `database update` command creates the database and applies the new migration to it.
 
 ### [Visual Studio](#tab/visual-studio)
 
@@ -119,7 +120,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
   Update-Database
   ```
 
-  This installs the [PMC tools for EF Core](../miscellaneous/cli/powershell.md). The `Add-Migration` command scaffolds a migration to create the initial set of tables for the model. The `Update-Database` command creates the database and applies the new migration to it.
+  This installs the [PMC tools for EF Core](xref:core/miscellaneous/cli/powershell). The `Add-Migration` command scaffolds a migration to create the initial set of tables for the model. The `Update-Database` command creates the database and applies the new migration to it.
 
 ---
 

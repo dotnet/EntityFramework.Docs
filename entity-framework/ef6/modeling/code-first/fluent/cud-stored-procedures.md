@@ -1,8 +1,10 @@
 ---
-title: "Code First Insert, Update, and Delete Stored Procedures - EF6"
+title: Code First Insert, Update, and Delete Stored Procedures - EF6
+description: Code First Insert, Update, and Delete Stored Procedures in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 9a7ae7f9-4072-4843-877d-506dd7eef576
+uid: ef6/modeling/code-first/fluent/cud-stored-procedures
 ---
 # Code First Insert, Update, and Delete Stored Procedures
 > [!NOTE]

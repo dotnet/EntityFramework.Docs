@@ -1,5 +1,6 @@
 ---
 title: EF6 and EF Core - Using them in the Same Application
+description: Guidance on using both Entity Framework Core and Entity Framework 6 in the same application
 author: ajcvickers
 ms.date: 01/23/2019
 ms.assetid: a06e3c35-110c-4294-a1e2-32d2c31c90a7

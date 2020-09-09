@@ -1,8 +1,10 @@
 ---
-title: "Get Entity Framework - EF6"
+title: Get Entity Framework - EF6
+description: Get Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 122c38a2-f9e8-4ecc-9c72-a83bc9af7814
+uid: ef6/fundamentals/install
 ---
 # Get Entity Framework
 Entity Framework is made up of the EF Tools for Visual Studio and the EF Runtime.
@@ -11,11 +13,11 @@ Entity Framework is made up of the EF Tools for Visual Studio and the EF Runtime
 
 The Entity Framework Tools for Visual Studio include the EF Designer and the EF Model Wizard and are required for the database first and model first workflows. EF Tools are included in all recent versions of Visual Studio. If you perform a custom install of Visual Studio you will need to ensure that the item "Entity Framework 6 Tools" is selected by either choosing a workload that includes it or by selecting it as an individual component.
 
-For some past versions of Visual Studio, updated EF Tools are available as a download. See [Visual Studio Versions](~/ef6/what-is-new/visual-studio.md) for guidance on how to get the latest version of EF Tools available for your version of Visual Studio.
+For some past versions of Visual Studio, updated EF Tools are available as a download. See [Visual Studio Versions](xref:ef6/what-is-new/visual-studio) for guidance on how to get the latest version of EF Tools available for your version of Visual Studio.
 
 ## EF Runtime
 
-The latest version of Entity Framework is available as the [EntityFramework NuGet package](https://nuget.org/packages/EntityFramework/). If you are not familiar with the NuGet Package Manager, we encourage you to read the [NuGet Overview](https://docs.microsoft.com/nuget/consume-packages/overview-and-workflow).
+The latest version of Entity Framework is available as the [EntityFramework NuGet package](https://nuget.org/packages/EntityFramework/). If you are not familiar with the NuGet Package Manager, we encourage you to read the [NuGet Overview](/nuget/consume-packages/overview-and-workflow).
 
 ### Installing the EF NuGet Package
 

@@ -1,5 +1,6 @@
 ---
 title: Raw SQL Queries - EF Core
+description: Using raw SQL for queries in Entity Framework Core
 author: smitpatel
 ms.date: 10/08/2019
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
@@ -49,6 +50,10 @@ You can also construct a DbParameter and supply it as a parameter value. Since a
 `FromSqlRaw` allows you to use named parameters in the SQL query string, which is useful when a stored procedure has optional parameters:
 
 [!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlRawStoredProcedureNamedSqlParameter)]
+
+> [!NOTE]
+> **Parameter Ordering**
+> Entity Framework Core passes parameters based on the order of the `SqlParameter[]` array. When passing multiple `SqlParameter`s, the ordering in the SQL string must match the order of the parameters in the stored procedure's definition. Failure to do this may result in type conversion exceptions and/or unexpected behavior when the procedure is executed.
 
 ## Composing with LINQ
 

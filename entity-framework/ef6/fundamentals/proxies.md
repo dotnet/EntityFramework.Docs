@@ -1,8 +1,10 @@
 ---
-title: "Working with proxies - EF6"
+title: Working with proxies - EF6
+description: Working with proxies in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 869ee4dc-06f1-471d-8e0e-0a1a2bc59c30
+uid: ef6/fundamentals/proxies
 ---
 # Working with proxies
 When creating instances of POCO entity types, Entity Framework often creates instances of a dynamically generated derived type that acts as a proxy for the entity. This proxy overrides some virtual properties of the entity to insert hooks for performing actions automatically when the property is accessed. For example, this mechanism is used to support lazy loading of relationships. The techniques shown in this topic apply equally to models created with Code First and the EF Designer.  

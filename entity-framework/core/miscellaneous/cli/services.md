@@ -1,5 +1,6 @@
 ---
 title: Design-time services - EF Core
+description: Information on Entity Framework Core design-time services
 author: bricelam
 ms.author: bricelam
 ms.date: 10/26/2017

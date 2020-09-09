@@ -1,8 +1,10 @@
 ---
-title: "Creating a Model - EF6"
+title: Creating a Model - EF6
+description: Creating a Model in Entity Framework 6
 author: divega
-ms.date: "07/05/2018"
+ms.date: 07/05/2018
 ms.assetid: 4890228E-CEA1-4595-B8AD-CA81253F8767
+uid: ef6/modeling/index
 ---
 # Creating a Model
 
@@ -19,8 +21,8 @@ Find out about which one is best for you:
 
 |                                           | I just want to write code...                                                                                                                   | I want to use a designer...                                                                                                                        |
 |:------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|
-| **I am creating a new database**          | [Use **Code First** to define your model in code and then generate a database.](~/ef6/modeling/code-first/workflows/new-database.md)           | [Use **Model First** to define your model using boxes and lines and then generate a database.](~/ef6/modeling/designer/workflows/model-first.md)   |
-| **I need to access an existing database** | [Use **Code First** to create a code based model that maps to an existing database.](~/ef6/modeling/code-first/workflows/existing-database.md) | [Use **Database First** to create a boxes and lines model that maps to an existing database.](~/ef6/modeling/designer/workflows/database-first.md) |
+| **I am creating a new database**          | [Use **Code First** to define your model in code and then generate a database.](xref:ef6/modeling/code-first/workflows/new-database)           | [Use **Model First** to define your model using boxes and lines and then generate a database.](xref:ef6/modeling/designer/workflows/model-first)   |
+| **I need to access an existing database** | [Use **Code First** to create a code based model that maps to an existing database.](xref:ef6/modeling/code-first/workflows/existing-database) | [Use **Database First** to create a boxes and lines model that maps to an existing database.](xref:ef6/modeling/designer/workflows/database-first) |
 
 ### Watch the video: What EF workflow should I use?
 
@@ -39,7 +41,7 @@ Regardless of whether you use Code First or the EF Designer, an EF model always 
 
 - The application's domain objects or entity types themselves. This is often referred to as the object layer
 
-- A conceptual model consisting of domain-specific entity types and relationships, described using the [Entity Data Model](~/ef6/resources/glossary.md#entity-data-model). This layer is often referred to with the letter "C", for _conceptual_.
+- A conceptual model consisting of domain-specific entity types and relationships, described using the [Entity Data Model](xref:ef6/resources/glossary#entity-data-model). This layer is often referred to with the letter "C", for _conceptual_.
 
 - A storage model representing tables, columns and relationships as defined in the database. This layer is often referred to with the later "S", for _storage_.  
 

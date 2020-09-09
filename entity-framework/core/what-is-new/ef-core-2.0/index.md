@@ -1,5 +1,6 @@
 ---
 title: What is new in EF Core 2.0 - EF Core
+description: Changes and improvements in Entity Framework Core 2.0
 author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
@@ -11,7 +12,7 @@ uid: core/what-is-new/ef-core-2.0
 ## .NET Standard 2.0
 
 EF Core now targets .NET Standard 2.0, which means it can work with .NET Core 2.0, .NET Framework 4.6.1, and other libraries that implement .NET Standard 2.0.
-See [Supported .NET Implementations](../platforms/index.md) for more details on what is supported.
+See [Supported .NET Implementations](xref:core/platforms/index) for more details on what is supported.
 
 ## Modeling
 

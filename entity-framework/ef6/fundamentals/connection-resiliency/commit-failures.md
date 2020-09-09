@@ -1,14 +1,17 @@
 ---
-title: "Handling transaction commit failures - EF6"
+title: Handling transaction commit failures - EF6
+description: Handling transaction commit failures in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 5b1f7a7d-1b24-4645-95ec-5608a31ef577
+uid: ef6/fundamentals/connection-resiliency/commit-failures
 ---
 # Handling transaction commit failures
+
 > [!NOTE]
 > **EF6.1 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6.1. If you are using an earlier version, some or all of the information does not apply.  
 
-As part of 6.1 we are introducing a new connection resiliency feature for EF: the ability to detect and recover automatically when transient connection failures affect the acknowledgement of transaction commits. The full details of the scenario are best described in the blog post [SQL Database Connectivity and the Idempotency Issue](https://docs.microsoft.com/archive/blogs/adonet/sql-database-connectivity-and-the-idempotency-issue).  In summary, the scenario is that when an exception is raised during a transaction commit there are two possible causes:  
+As part of 6.1 we are introducing a new connection resiliency feature for EF: the ability to detect and recover automatically when transient connection failures affect the acknowledgement of transaction commits. The full details of the scenario are best described in the blog post [SQL Database Connectivity and the Idempotency Issue](/archive/blogs/adonet/sql-database-connectivity-and-the-idempotency-issue).  In summary, the scenario is that when an exception is raised during a transaction commit there are two possible causes:  
 
 1. The transaction commit failed on the server
 2. The transaction commit succeeded on the server but a connectivity issue prevented the success notification from reaching the client  
@@ -17,7 +20,7 @@ When the first situation happens the application or the user can retry the opera
 
 ## Using the feature  
 
-In order to enable the feature you need include a call to [SetTransactionHandler](https://msdn.microsoft.com/library/system.data.entity.dbconfiguration.setdefaulttransactionhandler.aspx) in the constructor of your **DbConfiguration**. If you are unfamiliar with **DbConfiguration**, see [Code Based Configuration](~/ef6/fundamentals/configuring/code-based.md). This feature can be used in combination with the automatic retries we introduced in EF6, which help in the situation in which the transaction actually failed to commit on the server due to a transient failure:  
+In order to enable the feature you need include a call to [SetTransactionHandler](https://msdn.microsoft.com/library/system.data.entity.dbconfiguration.setdefaulttransactionhandler.aspx) in the constructor of your **DbConfiguration**. If you are unfamiliar with **DbConfiguration**, see [Code Based Configuration](xref:ef6/fundamentals/configuring/code-based). This feature can be used in combination with the automatic retries we introduced in EF6, which help in the situation in which the transaction actually failed to commit on the server due to a transient failure:  
 
 ``` csharp
 using System.Data.Entity;
@@ -59,8 +62,8 @@ Before EF 6.1 there was not mechanism to handle commit failures in the EF produc
   1. Add a non-tracked table to the database used to track the status of the transactions.  
   2. Insert a row into the table at the beginning of each transaction.  
   3. If the connection fails during the commit, check for the presence of the corresponding row in the database.  
-     - If the row is present, continue normally, as the transaction was committed successfully  
-     - If the row is absent, use an execution strategy to retry the current operation.  
+     * If the row is present, continue normally, as the transaction was committed successfully  
+     * If the row is absent, use an execution strategy to retry the current operation.  
   4. If the commit is successful, delete the corresponding row to avoid the growth of the table.  
 
-[This blog post](https://docs.microsoft.com/archive/blogs/adonet/sql-database-connectivity-and-the-idempotency-issue) contains sample code for accomplishing this on SQL Azure.  
+[This blog post](/archive/blogs/adonet/sql-database-connectivity-and-the-idempotency-issue) contains sample code for accomplishing this on SQL Azure.  

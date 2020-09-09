@@ -1,5 +1,6 @@
 ---
 title: Migrations with Multiple Providers - EF Core
+description: Using migrations to manage database schemas when targeting multiple database providers with Entity Framework Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/08/2017
@@ -75,5 +76,5 @@ if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer"
 }
 ```
 
-  [1]: ../../miscellaneous/cli/index.md
-  [2]: projects.md
+  [1]: xref:core/miscellaneous/cli/index
+  [2]: xref:core/managing-schemas/migrations/projects

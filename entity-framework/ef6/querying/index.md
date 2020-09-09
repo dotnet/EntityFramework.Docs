@@ -1,8 +1,10 @@
 ---
-title: "Querying and Finding Entities - EF6"
+title: Querying and Finding Entities - EF6
+description: Querying and Finding Entities in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 65bb3db2-2226-44af-8864-caa575cf1b46
+uid: ef6/querying/index
 ---
 # Querying and Finding Entities
 This topic covers the various ways you can query for data using Entity Framework, including LINQ and the Find method. The techniques shown in this topic apply equally to models created with Code First and the EF Designer.  
@@ -35,7 +37,7 @@ Note that DbSet and IDbSet always create queries against the database and will a
 
 When results are returned from the database, objects that do not exist in the context are attached to the context. If an object is already in the context, the existing object is returned (the current and original values of the object's properties in the entry are **not** overwritten with database values).  
 
-When you perform a query, entities that have been added to the context but have not yet been saved to the database are not returned as part of the result set. To get the data that is in the context, see [Local Data](~/ef6/querying/local-data.md).  
+When you perform a query, entities that have been added to the context but have not yet been saved to the database are not returned as part of the result set. To get the data that is in the context, see [Local Data](xref:ef6/querying/local-data).  
 
 If a query returns no rows from the database, the result will be an empty collection, rather than **null**.  
 

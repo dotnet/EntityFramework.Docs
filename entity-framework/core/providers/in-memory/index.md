@@ -1,5 +1,6 @@
 ---
 title: InMemory Database Provider - EF Core
+description: Information on the Entity Framework Core InMemory database provider
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 9af0cba7-7605-4f8f-9cfa-dd616fcb880c
@@ -31,7 +32,7 @@ Install-Package Microsoft.EntityFrameworkCore.InMemory
 
 The following resources will help you get started with this provider.
 
-* [Testing with InMemory](../../miscellaneous/testing/in-memory.md)
+* [Testing with InMemory](xref:core/miscellaneous/testing/in-memory)
 * [UnicornStore Sample Application Tests](https://github.com/rowanmiller/UnicornStore/blob/master/UnicornStore/src/UnicornStore.Tests/Controllers/ShippingControllerTests.cs)
 
 ## Supported Database Engines

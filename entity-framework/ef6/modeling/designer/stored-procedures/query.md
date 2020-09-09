@@ -1,8 +1,10 @@
 ---
-title: "Designer Query Stored Procedures - EF6"
+title: Designer Query Stored Procedures - EF6
+description: Designer Query Stored Procedures in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 9554ed25-c5c1-43be-acad-5da37739697f
+uid: ef6/modeling/designer/stored-procedures/query
 ---
 # Designer Query Stored Procedures
 This step-by-step walkthrough show how to use the Entity Framework Designer (EF Designer) to import stored procedures into a model and then call the imported stored procedures to retrieve results. 
@@ -17,7 +19,7 @@ var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]")`;
 To complete this walkthrough, you will need:
 
 - A recent version of Visual Studio.
-- The [School sample database](~/ef6/resources/school-database.md).
+- The [School sample database](xref:ef6/resources/school-database).
 
 ## Set up the Project
 
@@ -39,7 +41,7 @@ To complete this walkthrough, you will need:
 -   In the Choose Your Database Objects dialog box, check the **Tables** checkbox to select all the tables.  
     Also, select the following stored procedures under the **Stored Procedures and Functions** node: **GetStudentGrades** and **GetDepartmentName**. 
 
-    ![Import](~/ef6/media/import.jpg)
+    ![Import Stored Procedures](~/ef6/media/import.jpg)
 
     *Starting with Visual Studio 2012 the EF Designer supports bulk import of stored procedures. The **Import selected stored procedures and functions into theentity model** is checked by default.*
 -   Click **Finish**.

@@ -1,18 +1,20 @@
 ---
-title: "The Entity Framework 6 provider model - EF6"
+title: The Entity Framework 6 provider model - EF6
+description: The Entity Framework 6 provider model in Entity Framework 6
 author: divega
-ms.date: "06/27/2018"
+ms.date: 06/27/2018
 ms.assetid: 066832F0-D51B-4655-8BE7-C983C557E0E4
+uid: ef6/fundamentals/providers/provider-model
 ---
 # The Entity Framework 6 provider model
 
-The Entity Framework provider model allows Entity Framework to be used with different types of database server. For example, one provider can be plugged in to allow EF to be used against Microsoft SQL Server, while another provider can be plugged into to allow EF to be used against Microsoft SQL Server Compact Edition. The providers for EF6 that we are aware of can be found on the [Entity Framework providers](~/ef6/fundamentals/providers/index.md) page.
+The Entity Framework provider model allows Entity Framework to be used with different types of database server. For example, one provider can be plugged in to allow EF to be used against Microsoft SQL Server, while another provider can be plugged into to allow EF to be used against Microsoft SQL Server Compact Edition. The providers for EF6 that we are aware of can be found on the [Entity Framework providers](xref:ef6/fundamentals/providers/index) page.
 
 Certain changes were required to the way EF interacts with providers to allow EF to be released under an open source license. These changes require rebuilding of EF providers against the EF6 assemblies together with new mechanisms for registration of the provider.
 
 ## Rebuilding
 
-With EF6 the core code that was previously part of the .NET Framework is now being shipped as out-of-band (OOB) assemblies. Details on how to build applications against EF6 can be found on the [Updating applications for EF6](~/ef6/what-is-new/upgrading-to-ef6.md) page. Providers will also need to be rebuilt using these instructions.
+With EF6 the core code that was previously part of the .NET Framework is now being shipped as out-of-band (OOB) assemblies. Details on how to build applications against EF6 can be found on the [Updating applications for EF6](xref:ef6/what-is-new/upgrading-to-ef6) page. Providers will also need to be rebuilt using these instructions.
 
 ## Provider types overview
 
@@ -96,7 +98,7 @@ public class MyConfiguration : DbConfiguration
 
 ## Resolving additional services
 
-As mentioned above in the _Provider types overview_ section, a DbProviderServices class can also be used to resolve additional services. This is possible because DbProviderServices implements IDbDependencyResolver and each registered DbProviderServices type is added as a “default resolver”. The IDbDpendencyResolver mechanism is described in more detail in [Dependency Resolution](~/ef6/fundamentals/configuring/dependency-resolution.md). However, it is not necessary to understand all the concepts in this specification to resolve additional services in a provider.
+As mentioned above in the _Provider types overview_ section, a DbProviderServices class can also be used to resolve additional services. This is possible because DbProviderServices implements IDbDependencyResolver and each registered DbProviderServices type is added as a “default resolver”. The IDbDpendencyResolver mechanism is described in more detail in [Dependency Resolution](xref:ef6/fundamentals/configuring/dependency-resolution). However, it is not necessary to understand all the concepts in this specification to resolve additional services in a provider.
 
 The most common way for a provider to resolve additional services is to call DbProviderServices.AddDependencyResolver for each service in the constructor of the DbProviderServices class. For example, SqlProviderServices (the EF provider for SQL Server) has code similar to this for initialization:
 

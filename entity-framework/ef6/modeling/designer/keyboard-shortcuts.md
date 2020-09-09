@@ -1,7 +1,8 @@
 ---
-title: "Entity Framework Designer Keyboard Shortcuts - EF6"
+title: Entity Framework Designer Keyboard Shortcuts - EF6
+description: Entity Framework Designer Keyboard Shortcuts in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 3c76cdd5-17c5-4c54-a6a5-cf21b974636b
 ---
 # Entity Framework Designer Keyboard Shortcuts

@@ -1,5 +1,6 @@
 ---
 title: Entity types with constructors - EF Core
+description: Using constructors to bind data with Entity Framework Core model
 author: ajcvickers
 ms.date: 02/23/2018
 ms.assetid: 420AFFE7-B709-4A68-9149-F06F8746FB33
@@ -210,8 +211,8 @@ Things to note:
 EF Core can also inject "services" into an entity type's constructor. For example, the following can be injected:
 
 * `DbContext` - the current context instance, which can also be typed as your derived DbContext type
-* `ILazyLoader` - the lazy-loading service--see the [lazy-loading documentation](../querying/related-data.md) for more details
-* `Action<object, string>` - a lazy-loading delegate--see the [lazy-loading documentation](../querying/related-data.md) for more details
+* `ILazyLoader` - the lazy-loading service--see the [lazy-loading documentation](xref:core/querying/related-data) for more details
+* `Action<object, string>` - a lazy-loading delegate--see the [lazy-loading documentation](xref:core/querying/related-data) for more details
 * `IEntityType` - the EF Core metadata associated with this entity type
 
 > [!NOTE]  

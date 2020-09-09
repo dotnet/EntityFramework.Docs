@@ -1,5 +1,6 @@
 ---
 title: What is new in EF Core 1.1 - EF Core
+description: Changes and improvements in Entity Framework Core 1.1
 author: divega
 ms.date: 10/27/2016
 ms.assetid: C7FE8C85-445A-4F0C-97EC-CC3F7F1D6F5E

@@ -1,8 +1,10 @@
 ---
-title: "Async query and save - EF6"
+title: Async query and save - EF6
+description: Async query and save in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
+uid: ef6/fundamentals/async
 ---
 # Async query and save
 > [!NOTE]
@@ -28,7 +30,7 @@ Here are some more resources to learn about async:
 
 ## Create the model
 
-We’ll be using the [Code First workflow](~/ef6/modeling/code-first/workflows/new-database.md) to create our model and generate the database, however the asynchronous functionality will work with all EF models including those created with the EF Designer.
+We’ll be using the [Code First workflow](xref:ef6/modeling/code-first/workflows/new-database) to create our model and generate the database, however the asynchronous functionality will work with all EF models including those created with the EF Designer.
 
 -   Create a Console Application and call it **AsyncDemo**
 -   Add the EntityFramework NuGet package

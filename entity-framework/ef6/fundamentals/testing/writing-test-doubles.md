@@ -1,8 +1,10 @@
 ---
-title: "Testing with your own test doubles - EF6"
+title: Testing with your own test doubles - EF6
+description: Testing with your own test doubles in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 16a8b7c0-2d23-47f4-9cc0-e2eb2e738ca3
+uid: ef6/fundamentals/testing/writing-test-doubles
 ---
 # Testing with your own test doubles
 > [!NOTE]
@@ -17,7 +19,7 @@ There are two different approaches that can be used to create an in-memory versi
 - **Create your own test doubles** – This approach involves writing your own in-memory implementation of your context and DbSets. This gives you a lot of control over how the classes behave but can involve writing and owning a reasonable amount of code.  
 - **Use a mocking framework to create test doubles** – Using a mocking framework (such as Moq) you can have the in-memory implementations of you context and sets created dynamically at runtime for you.  
 
-This article will deal with creating your own test double. For information on using a mocking framework see [Testing with a Mocking Framework](mocking.md).  
+This article will deal with creating your own test double. For information on using a mocking framework see [Testing with a Mocking Framework](xref:ef6/fundamentals/testing/mocking).  
 
 ## Testing with pre-EF6 versions  
 

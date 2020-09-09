@@ -1,8 +1,10 @@
 ---
-title: "Self-tracking entities - EF6"
+title: Self-tracking entities - EF6
+description: Self-tracking entities in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
+uid: ef6/fundamentals/disconnected-entities/self-tracking-entities/index
 ---
 # Self-tracking entities
 
@@ -20,7 +22,7 @@ This template item generates two .tt (text template) files:
 
 ## Get Started  
 
-To get started, visit the [Self-Tracking Entities Walkthrough](walkthrough.md) page.  
+To get started, visit the [Self-Tracking Entities Walkthrough](xref:ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough) page.  
 
 ## Functional Considerations When Working with Self-Tracking Entities  
 > [!IMPORTANT]

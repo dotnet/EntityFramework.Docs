@@ -34,30 +34,28 @@
           href: core/what-is-new/ef-core-5.0/whatsnew.md
         - name: Breaking changes
           href: core/what-is-new/ef-core-5.0/breaking-changes.md
-      - name: EF Core 3.0
+      - name: EF Core 3.x
         items:
         - name: New features
-          href: core/what-is-new/ef-core-3.0/index.md
+          href: core/what-is-new/ef-core-3.x/index.md
         - name: Breaking changes
-          href: core/what-is-new/ef-core-3.0/breaking-changes.md
-      - name: EF Core 2.2
-        href: core/what-is-new/ef-core-2.2.md
+          href: core/what-is-new/ef-core-3.x/breaking-changes.md
       - name: EF Core 2.1
         href: core/what-is-new/ef-core-2.1.md
-      - name: EF Core 2.0
-        href: core/what-is-new/ef-core-2.0.md
-      - name: EF Core 1.1
-        href: core/what-is-new/ef-core-1.1.md
-      - name: EF Core 1.0
-        href: core/what-is-new/ef-core-1.0.md
-      - name: Upgrade from previous versions
+      - name: Out of support
         items:
-        - name: From 1.0 RC1 to RC2
-          href: core/miscellaneous/rc1-rc2-upgrade.md
-        - name: From 1.0 RC2 to RTM
-          href: core/miscellaneous/rc2-rtm-upgrade.md
-        - name: From 1.x to 2.0
-          href: core/miscellaneous/1x-2x-upgrade.md
+        - name: EF Core 2.2
+          href: core/what-is-new/ef-core-2.2.md
+        - name: EF Core 2.0
+          items:
+            - name: New features
+              href: core/what-is-new/ef-core-2.0/index.md
+            - name: Upgrade from 1.x
+              href: core/what-is-new/ef-core-2.0/upgrade.md
+        - name: EF Core 1.1
+          href: core/what-is-new/ef-core-1.1.md
+        - name: EF Core 1.0
+          href: core/what-is-new/ef-core-1.0.md
     - name: Get started
       items:
       - name: EF Core tutorial
@@ -76,6 +74,8 @@
       items:
       - name: Connection strings
         href: core/miscellaneous/connection-strings.md
+      - name: Asynchronous Programming
+        href: core/miscellaneous/async.md
       - name: Logging
         href: core/miscellaneous/logging.md
       - name: Connection resiliency
@@ -181,8 +181,6 @@
         href: core/querying/complex-query-operators.md
       - name: Load related data
         href: core/querying/related-data.md
-      - name: Asynchronous queries
-        href: core/querying/async.md
       - name: Raw SQL queries
         href: core/querying/raw-sql.md
       - name: Global query filters
@@ -205,8 +203,6 @@
         href: core/saving/concurrency.md
       - name: Transactions
         href: core/saving/transactions.md
-      - name: Asynchronous saving
-        href: core/saving/async.md
       - name: Disconnected entities
         href: core/saving/disconnected-entities.md
       - name: Explicit values for generated properties
@@ -221,6 +217,8 @@
         items:
         - name: Overview
           href: core/providers/sql-server/index.md
+        - name: Indexes
+          href: core/providers/sql-server/indexes.md
         - name: Memory-optimized tables
           href: core/providers/sql-server/memory-optimized-tables.md
         - name: Specify Azure SQL Database options

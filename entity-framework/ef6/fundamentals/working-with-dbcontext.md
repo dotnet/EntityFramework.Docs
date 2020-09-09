@@ -1,12 +1,14 @@
 ---
-title: "Working with DbContext - EF6"
+title: Working with DbContext - EF6
+description: Working with DbContext in Entity Framework 6
 author: divega
-ms.date: "10/23/2016"
+ms.date: 10/23/2016
 ms.assetid: b0e6bddc-8a87-4d51-b1cb-7756df938c23
+uid: ef6/fundamentals/working-with-dbcontext
 ---
 # Working with DbContext
 
-In order to use Entity Framework to query, insert, update, and delete data using .NET objects, you first need to [Create a Model](~/ef6/modeling/index.md) which maps the entities and relationships that are defined in your model to tables in a database.
+In order to use Entity Framework to query, insert, update, and delete data using .NET objects, you first need to [Create a Model](xref:ef6/modeling/index) which maps the entities and relationships that are defined in your model to tables in a database.
 
 Once you have a model, the primary class your application interacts with is `System.Data.Entity.DbContext` (often referred to as the context class). You can use a DbContext associated to a model to:
 - Write and execute queries   

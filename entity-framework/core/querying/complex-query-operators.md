@@ -1,5 +1,6 @@
 ---
 title: Complex Query Operators - EF Core
+description: In-depth information on the more complex LINQ query operators when using Entity Framework Core
 author: smitpatel
 ms.date: 10/03/2019
 ms.assetid: 2e187a2a-4072-4198-9040-aaad68e424fd

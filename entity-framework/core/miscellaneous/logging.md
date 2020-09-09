@@ -1,5 +1,6 @@
 ---
 title: Logging - EF Core
+description: Configuring logging with Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f6e35c6d-45b7-4258-be1d-87c1bb67438d

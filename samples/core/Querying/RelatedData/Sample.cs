@@ -96,6 +96,25 @@ namespace EFQuerying.RelatedData
             }
             #endregion
 
+            #region WithSplitQueryAsDefault
+            using (var context = new SplitQueriesBloggingContext())
+            {
+                var blogs = context.Blogs
+                    .Include(blog => blog.Posts)
+                    .ToList();
+            }
+            #endregion
+
+            #region AsSplitQuery
+            using (var context = new SplitQueriesBloggingContext())
+            {
+                var blogs = context.Blogs
+                    .Include(blog => blog.Posts)
+                    .AsSingleQuery()
+                    .ToList();
+            }
+            #endregion
+
             #region Eager
             using (var context = new BloggingContext())
             {

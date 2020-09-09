@@ -1,5 +1,6 @@
 ---
 title: Concurrency Tokens - EF Core
+description: Configuring concurrency tokens for optimistic concurrency control in an Entity Framework Core model
 author: AndriySvyryd
 ms.date: 01/03/2020
 ms.assetid: bc8b1cb0-befe-4b67-8004-26e6c5f69385
@@ -8,7 +9,7 @@ uid: core/modeling/concurrency
 # Concurrency Tokens
 
 > [!NOTE]
-> This page documents how to configure concurrency tokens. See [Handling Concurrency Conflicts](../saving/concurrency.md) for a detailed explanation of how concurrency control works on EF Core and examples of how to handle concurrency conflicts in your application.
+> This page documents how to configure concurrency tokens. See [Handling Concurrency Conflicts](xref:core/saving/concurrency) for a detailed explanation of how concurrency control works on EF Core and examples of how to handle concurrency conflicts in your application.
 
 Properties configured as concurrency tokens are used to implement optimistic concurrency control.
 

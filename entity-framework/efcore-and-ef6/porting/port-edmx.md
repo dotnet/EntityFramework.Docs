@@ -1,5 +1,6 @@
 ---
 title: Porting from EF6 to EF Core - Porting an EDMX-Based Model - EF
+description: Specific information on porting an Entity Framework 6 EDMX-based model application to Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 63003709-f1ec-4bdc-8083-65a60c4826d2
@@ -17,7 +18,7 @@ Install the `Microsoft.EntityFrameworkCore.Tools` NuGet package.
 
 You can now use the reverse engineer functionality to create a model based on your existing database.
 
-Run the following command in Package Manager Console (Tools –> NuGet Package Manager –> Package Manager Console). See [Package Manager Console (Visual Studio)](../../core/miscellaneous/cli/powershell.md) for command options to scaffold a subset of tables etc.
+Run the following command in Package Manager Console (Tools –> NuGet Package Manager –> Package Manager Console). See [Package Manager Console (Visual Studio)](xref:core/miscellaneous/cli/powershell) for command options to scaffold a subset of tables etc.
 
 ``` powershell
 Scaffold-DbContext "<connection string>" <database provider name>

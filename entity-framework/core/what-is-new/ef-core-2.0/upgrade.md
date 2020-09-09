@@ -1,9 +1,10 @@
 ---
 title: Upgrading from previous versions to EF Core 2 - EF Core
+description: Instructions and notes for upgrading to Entity Framework Core 2.0
 author: divega
 ms.date: 08/13/2017
 ms.assetid: 8BD43C8C-63D9-4F3A-B954-7BC518A1B7DB
-uid: core/miscellaneous/1x-2x-upgrade
+uid: core/what-is-new/ef-core-2.0/upgrade
 ---
 
 # Upgrading applications from previous versions to EF Core 2.0
@@ -124,7 +125,7 @@ Note that this change only applies to APIs/metadata that is defined for _all_ re
 
 ## Don’t take control of the EF service provider
 
-EF Core uses an internal `IServiceProvider` (a dependency injection container) for its internal implementation. Applications should allow EF Core to create and manage this provider except in special cases. Strongly consider removing any calls to `UseInternalServiceProvider`. If an application does need to call `UseInternalServiceProvider`, then please consider [filing an issue](https://github.com/aspnet/EntityFramework/Issues) so we can investigate other ways to handle your scenario.
+EF Core uses an internal `IServiceProvider` (a dependency injection container) for its internal implementation. Applications should allow EF Core to create and manage this provider except in special cases. Strongly consider removing any calls to `UseInternalServiceProvider`. If an application does need to call `UseInternalServiceProvider`, then please consider [filing an issue](https://github.com/dotnet/efcore/Issues) so we can investigate other ways to handle your scenario.
 
 Calling `AddEntityFramework`, `AddEntityFrameworkSqlServer`, etc. is not required by application code unless `UseInternalServiceProvider` is also called. Remove any existing calls to `AddEntityFramework` or `AddEntityFrameworkSqlServer`, etc. `AddDbContext` should still be used in the same way as before.
 
