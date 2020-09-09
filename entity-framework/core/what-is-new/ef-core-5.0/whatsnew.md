@@ -487,7 +487,7 @@ In previous releases, this behavior was configurable through registration of a p
 
 ### Savepoints
 
-EF Core now supports [savepoints](/SQL/t-sql/language-elements/save-transaction-transact-sql?view=sql-server-ver15#remarks) for greater control over transactions that execute multiple operations.
+EF Core now supports [savepoints](/sql/t-sql/language-elements/save-transaction-transact-sql#remarks) for greater control over transactions that execute multiple operations.
 
 Savepoints can be manually created, released, and rolled back. For example:
 
@@ -845,7 +845,7 @@ Documentation is tracked by issue [#2273](https://github.com/dotnet/EntityFramew
 
 ### Flow arguments into IDesignTimeDbContextFactory
 
-Arguments are now flowed from the command line into the `CreateDbContext` method of [IDesignTimeDbContextFactory](/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1?view=efcore-3.1). For example, to indicate this is a dev build, a custom argument (e.g. `dev`) can be passed on the command line:
+Arguments are now flowed from the command line into the `CreateDbContext` method of [IDesignTimeDbContextFactory](/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1). For example, to indicate this is a dev build, a custom argument (e.g. `dev`) can be passed on the command line:
 
 ```
 dotnet ef migrations add two --verbose --dev
@@ -1118,7 +1118,7 @@ Documentation is tracked by issue [#2075](https://github.com/dotnet/EntityFramew
 
 ### Change-tracking proxies
 
-EF Core can now generate runtime proxies that automatically implement [INotifyPropertyChanging](/dotnet/api/system.componentmodel.inotifypropertychanging?view=netcore-3.1) and [INotifyPropertyChanged](/dotnet/api/system.componentmodel.inotifypropertychanged?view=netcore-3.1). These then report value changes on entity properties directly to EF Core, avoiding the need to scan for changes. However, proxies come with their own set of limitations, so they are not for everyone.
+EF Core can now generate runtime proxies that automatically implement [INotifyPropertyChanging](/dotnet/api/system.componentmodel.inotifypropertychanging) and [INotifyPropertyChanged](/dotnet/api/system.componentmodel.inotifypropertychanged). These then report value changes on entity properties directly to EF Core, avoiding the need to scan for changes. However, proxies come with their own set of limitations, so they are not for everyone.
 
 Documentation is tracked by issue [#2076](https://github.com/dotnet/EntityFramework.Docs/issues/2076).
 
