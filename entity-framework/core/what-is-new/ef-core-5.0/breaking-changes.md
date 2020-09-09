@@ -16,6 +16,10 @@ The following API and behavior changes have the potential to break existing appl
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [Required on the navigation from principal to dependent has different semantics](#required-dependent)                                 | Medium     |
 | [Removed HasGeometricDimension method from SQLite NTS extension](#geometric-sqlite)                                                   | Low        |
+| [Cosmos: Partition key is now added to the primary key](#cosmos-partition-key)                                                        | Low        |
+| [Cosmos: `id` property renamed to `__id`](#cosmos-id)                                                                                 | Low        |
+| [Cosmos: byte[] is now stored as a base64 string instead of a number array](#cosmos-byte)                                             | Low        |
+| [Cosmos: GetPropertyName and SetPropertyName were renamed](#cosmos-metadata)                                                          | Low        |
 | [Value generators are called when the entity state is changed from Detached to Unchanged, Updated or Deleted](#non-added-generation)  | Low        |
 | [IMigrationsModelDiffer now uses IRelationalModel](#relational-model)                                                                 | Low        |
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
@@ -91,6 +95,105 @@ modelBuilder.Entity<Blog>()
     .HasForeignKey<BlogImage>(b => b.BlogForeignKey)
     .IsRequired();
 ```
+
+<a name="cosmos-partition-key"></a>
+
+### Cosmos: Partition key is now added to the primary key
+
+[Tracking Issue #15289](https://github.com/aspnet/EntityFrameworkCore/issues/15289)
+
+**Old behavior**
+
+The partition key property was only added to the alternate key that includes `id`.
+
+**New behavior**
+
+The partition key property is now also added to the primary key by convention.
+
+**Why**
+
+This change makes the model better aligned with Azure Cosmos DB semantics and improves the performance of `Find` and some queries.
+
+**Mitigations**
+
+To prevent the partition key property to be added to the primary key, configure it in `OnModelCreating`.
+
+```cs
+modelBuilder.Entity<Blog>()
+    .HasKey(b => b.Id);
+```
+
+<a name="cosmos-id"></a>
+
+### Cosmos: `id` property renamed to `__id`
+
+[Tracking Issue #17751](https://github.com/aspnet/EntityFrameworkCore/issues/17751)
+
+**Old behavior**
+
+The shadow property mapped to the `id` JSON property was also named `id`.
+
+**New behavior**
+
+The shadow property created by convention is now named `__id`.
+
+**Why**
+
+This change makes it less likely that the `id` property clashes with an existing property on the entity type.
+
+**Mitigations**
+
+To go back to the 3.x behavior, configure the `id` property in `OnModelCreating`.
+
+```cs
+modelBuilder.Entity<Blog>()
+    .Property<string>("id")
+    .ToJsonProperty("id");
+```
+
+<a name="cosmos-byte"></a>
+
+### Cosmos: byte[] is now stored as a base64 string instead of a number array
+
+[Tracking Issue #17306](https://github.com/aspnet/EntityFrameworkCore/issues/17306)
+
+**Old behavior**
+
+Properties of type byte[] were stored as a number array.
+
+**New behavior**
+
+Properties of type byte[] are now stored as a base64 string.
+
+**Why**
+
+This aligns better with expectations and is the default behavior of the major JSON serialization libraries.
+
+**Mitigations**
+
+Existing data stored as number arrays will still be queried correctly, but currently there isn't a supported way to change back the insert behavior. If this is blocking your scenario please comment on [this issue](https://github.com/aspnet/EntityFrameworkCore/issues/17306)
+
+<a name="cosmos-metadata"></a>
+
+### Cosmos: GetPropertyName and SetPropertyName were renamed
+
+[Tracking Issue #17874](https://github.com/aspnet/EntityFrameworkCore/issues/17874)
+
+**Old behavior**
+
+Previously the extension methods were called `GetPropertyName` and `SetPropertyName`
+
+**New behavior**
+
+The old API was obsoleted and new methods added: `GetJsonPropertyName`, `SetJsonPropertyName`
+
+**Why**
+
+This removes the ambiguity around what these methods are configuring.
+
+**Mitigations**
+
+Use the new API or temporarily suspend the obsolete warnings.
 
 <a name="non-added-generation"></a>
 ### Value generators are called when the entity state is changed from Detached to Unchanged, Updated or Deleted
