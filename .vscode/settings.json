@@ -8,5 +8,9 @@
         "VB.NET",
         "XAML",
         "XML"
+    ],
+    "cSpell.words": [
+        "mitigations",
+        "navigations"
     ]
 }
