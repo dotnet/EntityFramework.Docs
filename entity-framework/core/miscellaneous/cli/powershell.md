@@ -3,7 +3,7 @@ title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: bricelam
 ms.author: bricelam
-ms.date: 09/18/2018
+ms.date: 09/09/2020
 uid: core/miscellaneous/cli/powershell
 ---
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
@@ -131,6 +131,7 @@ The following table shows parameters that are common to all of the EF Core comma
 | -Context \<String>        | The `DbContext` class to use. Class name only or fully qualified with namespaces.  If this parameter is omitted, EF Core finds the context class. If there are multiple context classes, this parameter is required. |
 | -Project \<String>        | The target project. If this parameter is omitted, the **Default project** for **Package Manager Console** is used as the target project.                                                                             |
 | <nobr>-StartupProject</nobr> \<String> | The startup project. If this parameter is omitted, the **Startup project** in **Solution properties** is used as the target project.                                                                                 |
+| -Args \<String>           | Arguments passed to the application. Added in EF Core 5.0.                                                                                                                                                           |
 | -Verbose                  | Show verbose output.                                                                                                                                                                                                 |
 
 To show help information about a command, use PowerShell's `Get-Help` command.
@@ -148,7 +149,9 @@ Parameters:
 |:----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
 | <nobr>-Name \<String><nobr>       | The name of the migration. This is a positional parameter and is required.                                              |
 | <nobr>-OutputDir \<String></nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
-| <nobr>-Namespace \<String></nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. (Available from EFCore 5.0.0 onwards.) |
+| <nobr>-Namespace \<String></nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. Added in EF Core 5.0.  |
+
+The [common parameters](#common-parameters) are listed above.
 
 ## Drop-Database
 
@@ -160,9 +163,26 @@ Parameters:
 |:----------|:---------------------------------------------------------|
 | -WhatIf   | Show which database would be dropped, but don't drop it. |
 
+The [common parameters](#common-parameters) are listed above.
+
 ## Get-DbContext
 
-Gets information about a `DbContext` type.
+Lists and gets information about available `DbContext` types.
+
+The [common parameters](#common-parameters) are listed above.
+
+## Get-Migration
+
+Lists available migrations. Added in EF Core 5.0.
+
+Parameters:
+
+| Parameter                          | Description                                                                                            |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| <nobr>-Connection \<String></nobr> | The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring. |
+| -NoConnect                         | Don't connect to the database.                                                                         |
+
+The [common parameters](#common-parameters) are listed above.
 
 ## Remove-Migration
 
@@ -173,6 +193,8 @@ Parameters:
 | Parameter | Description                                                                     |
 |:----------|:--------------------------------------------------------------------------------|
 | -Force    | Revert the migration (roll back the changes that were applied to the database). |
+
+The [common parameters](#common-parameters) are listed above.
 
 ## Scaffold-DbContext
 
@@ -186,15 +208,18 @@ Parameters:
 | <nobr>-Provider \<String></nobr>   | The provider to use. Typically this is the name of the NuGet package, for example: `Microsoft.EntityFrameworkCore.SqlServer`. This is a positional parameter and is required.                                                                                           |
 | -OutputDir \<String>               | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
 | -ContextDir \<String>              | The directory to put the `DbContext` file in. Paths are relative to the project directory.                                                                                                                                                               |
-| -Namespace \<String>               | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. (Available from EFCore 5.0.0 onwards.) |
-| -ContextNamespace \<String>        | The namespace to use for the generated `DbContext` class. Note: overrides `-Namespace`. (Available from EFCore 5.0.0 onwards.) |
+| -Namespace \<String>               | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0.                                                                                                                           |
+| -ContextNamespace \<String>        | The namespace to use for the generated `DbContext` class. Note: overrides `-Namespace`. Added in EF Core 5.0.                                                                                                                                                           |
 | -Context \<String>                 | The name of the `DbContext` class to generate.                                                                                                                                                                                                                          |
 | -Schemas \<String[]>               | The schemas of tables to generate entity types for. If this parameter is omitted, all schemas are included.                                                                                                                                                             |
 | -Tables \<String[]>                | The tables to generate entity types for. If this parameter is omitted, all tables are included.                                                                                                                                                                         |
 | -DataAnnotations                   | Use attributes to configure the model (where possible). If this parameter is omitted, only the fluent API is used.                                                                                                                                                      |
 | -UseDatabaseNames                  | Use table and column names exactly as they appear in the database. If this parameter is omitted, database names are changed to more closely conform to C# name style conventions.                                                                                       |
 | -Force                             | Overwrite existing files.                                                                                                                                                                                                                                               |
-| -NoOnConfiguring                   | Suppresses generation of the `OnConfiguring` method in the generated `DbContext` class. (Available from EFCore 5.0.0 onwards.) |
+| -NoOnConfiguring                   | Don't generate `DbContext.OnConfiguring`. Added in EF Core 5.0.                                                                                                                                                                                                         |
+| -NoPluralize                       | Don't use the pluralizer. Added in EF Core 5.0.                                                                                                                                                                                                                         |
+
+The [common parameters](#common-parameters) are listed above.
 
 Example:
 
@@ -208,18 +233,33 @@ Example that scaffolds only selected tables and creates the context in a separat
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables "Blog","Post" -ContextDir Context -Context BlogContext -ContextNamespace New.Namespace
 ```
 
+## Script-DbContext
+
+Generates a SQL script from the DbContext. Bypasses any migrations. Added in EF Core 3.0.
+
+Parameters:
+
+| Parameter                      | Description                      |
+| ------------------------------ | -------------------------------- |
+| <nobr>-Output \<String></nobr> | The file to write the result to. |
+
+The [common parameters](#common-parameters) are listed above.
+
 ## Script-Migration
 
 Generates a SQL script that applies all of the changes from one selected migration to another selected migration.
 
 Parameters:
 
-| Parameter                | Description                                                                                                                                                                                                                |
-|:-------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| *-From* \<String>        | The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration*. Defaults to 0.                                                              |
-| *-To* \<String>          | The ending migration. Defaults to the last migration.                                                                                                                                                                      |
-| <nobr>-Idempotent</nobr> | Generate a script that can be used on a database at any migration.                                                                                                                                                         |
-| -Output \<String>        | The file to write the result to. IF this parameter is omitted, the file is created with a generated name in the same folder as the app's runtime files are created, for example: */obj/Debug/netcoreapp2.1/ghbkztfz.sql/*. |
+| Parameter                    | Description                                                                                                                                                                                                                |
+|:---------------------------- |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| *-From* \<String>            | The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration*. Defaults to 0.                                                              |
+| *-To* \<String>              | The ending migration. Defaults to the last migration.                                                                                                                                                                      |
+| -Idempotent                  | Generate a script that can be used on a database at any migration.                                                                                                                                                         |
+| <nobr>-NoTransactions</nobr> | Don't generate SQL transaction statements. Added in EF Core 5.0.                                                                                                                                                           |
+| -Output \<String>            | The file to write the result to. IF this parameter is omitted, the file is created with a generated name in the same folder as the app's runtime files are created, for example: */obj/Debug/netcoreapp2.1/ghbkztfz.sql/*. |
+
+The [common parameters](#common-parameters) are listed above.
 
 > [!TIP]
 > The To, From, and Output parameters support tab-expansion.
@@ -243,7 +283,9 @@ Updates the database to the last migration or to a specified migration.
 | Parameter                           | Description                                                                                                                                                                                                                                                     |
 |:------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <nobr>*-Migration* \<String></nobr> | The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration* and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration. |
-| <nobr>-Connection \<String></nobr>  | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. |
+| <nobr>-Connection \<String></nobr>  | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. Added in EF Core 5.0.                                                                                                                                |
+
+The [common parameters](#common-parameters) are listed above.
 
 > [!TIP]
 > The Migration parameter supports tab-expansion.

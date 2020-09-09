@@ -3,7 +3,7 @@ title: EF Core tools reference (.NET CLI) - EF Core
 description: Reference guide for the Entity Framework Core .NET Core CLI tools
 author: bricelam
 ms.author: bricelam
-ms.date: 07/11/2019
+ms.date: 09/09/2020
 uid: core/miscellaneous/cli/dotnet
 ---
 
@@ -166,10 +166,13 @@ To specify the environment for ASP.NET Core projects, set the **ASPNETCORE_ENVIR
 | `--framework <FRAMEWORK>`                      |                   | The [Target Framework Moniker](/dotnet/standard/frameworks#supported-target-framework-versions) for the [target framework](/dotnet/standard/frameworks).  Use when the project file specifies multiple target frameworks, and you want to select one of them. |
 | <nobr>`--configuration <CONFIGURATION>`</nobr> |                   | The build configuration, for example: `Debug` or `Release`.                                                                                                                                                                                                   |
 | `--runtime <IDENTIFIER>`                       |                   | The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the [RID catalog](/dotnet/core/rid-catalog).                                                                                                      |
+| `--no-build`                                   |                   | Don't build the project. Intended to be used when the build is up-to-date.                                                                                                                                                                                    |
 | `--help`                                       | `-h`              | Show help information.                                                                                                                                                                                                                                        |
 | `--verbose`                                    | `-v`              | Show verbose output.                                                                                                                                                                                                                                          |
 | `--no-color`                                   |                   | Don't colorize output.                                                                                                                                                                                                                                        |
 | `--prefix-output`                              |                   | Prefix output with level.                                                                                                                                                                                                                                     |
+
+Starting in EF Core 5.0, any additional arguments are passed to the application.
 
 ## dotnet ef database drop
 
@@ -181,6 +184,8 @@ Options:
 |:-------------------------|:------------------|:---------------------------------------------------------|
 | `--force`                | <nobr>`-f`</nobr> | Don't confirm.                                           |
 | <nobr>`--dry-run`</nobr> |                   | Show which database would be dropped, but don't drop it. |
+
+The [common options](#common-options) are listed above.
 
 ## dotnet ef database update
 
@@ -194,9 +199,11 @@ Arguments:
 
 Options:
 
-| Option                                    | Description                                                                                                                                        |
-|:------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|
-|  <nobr>`--connection <CONNECTION>`</nobr> | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. (Available from EF Core 5.0.0 onwards.) |
+| Option                                    | Description                                                                                                                      |
+|:------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------|
+|  <nobr>`--connection <CONNECTION>`</nobr> | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. Added in EF Core 5.0. |
+
+The [common options](#common-options) are listed above.
 
 The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID and a specified connection:
 
@@ -209,9 +216,13 @@ dotnet ef database update 20180904195021_InitialCreate --connection your_connect
 
 Gets information about a `DbContext` type.
 
+The [common options](#common-options) are listed above.
+
 ## dotnet ef dbcontext list
 
 Lists available `DbContext` types.
+
+The [common options](#common-options) are listed above.
 
 ## dotnet ef dbcontext scaffold
 
@@ -231,14 +242,17 @@ Options:
 | `--data-annotations`                     | <nobr>`-d`</nobr> | Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.                                                                |
 | `--context <NAME>`                       | `-c`              | The name of the `DbContext` class to generate.                                                                                                                                 |
 | `--context-dir <PATH>`                   |                   | The directory to put the `DbContext` class file in. Paths are relative to the project directory. Namespaces are derived from the folder names.                                 |
-| `--context-namespace <NAMESPACE>`        |                   | The namespace to use for the generated `DbContext` class. Note: overrides `--namespace`. (Available from EFCore 5.0.0 onwards.)                                                |
+| `--context-namespace <NAMESPACE>`        |                   | The namespace to use for the generated `DbContext` class. Note: overrides `--namespace`. Added in EF Core 5.0.                                                                 |
 | `--force`                                | `-f`              | Overwrite existing files.                                                                                                                                                      |
 | `--output-dir <PATH>`                    | `-o`              | The directory to put entity class files in. Paths are relative to the project directory.                                                                                       |
-| `--namespace <NAMESPACE>`                | `-n`              | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. (Available from EFCore 5.0.0 onwards.)                 |
+| `--namespace <NAMESPACE>`                | `-n`              | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0.                                  |
 | <nobr>`--schema <SCHEMA_NAME>...`</nobr> |                   | The schemas of tables to generate entity types for. To specify multiple schemas, repeat `--schema` for each one. If this option is omitted, all schemas are included.          |
 | `--table <TABLE_NAME>`...                | `-t`              | The tables to generate entity types for. To specify multiple tables, repeat `-t` or `--table` for each one. If this option is omitted, all tables are included.                |
 | `--use-database-names`                   |                   | Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions. |
-| `--no-onconfiguring`                     |                   | Suppresses generation of the `OnConfiguring` method in the generated `DbContext` class. (Available from EFCore 5.0.0 onwards.)                                                 |
+| `--no-onconfiguring`                     |                   | Suppresses generation of the `OnConfiguring` method in the generated `DbContext` class. Added in EF Core 5.0.                                                                  |
+| `--no-pluralize`                         |                   | Don't use the pluralizer. Added in EF Core 5.0                                                                                                                                 |
+
+The [common options](#common-options) are listed above.
 
 The following example scaffolds all schemas and tables and puts the new files in the *Models* folder.
 
@@ -252,6 +266,18 @@ The following example scaffolds only selected tables and creates the context in 
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -t Blog -t Post --context-dir Context -c BlogContext --context-namespace New.Namespace
 ```
 
+## dotnet ef dbcontext script
+
+Generates a SQL script from the DbContext. Bypasses any migrations. Added in EF Core 3.0.
+
+Options:
+
+| Option                         | Short             | Description                      |
+| ------------------------------ | ----------------- | -------------------------------- |
+| <nobr>`--output <FILE>`</nobr> | <nobr>`-o`</nobr> | The file to write the result to. |
+
+The [common options](#common-options) are listed above.
+
 ## dotnet ef migrations add
 
 Adds a new migration.
@@ -264,14 +290,25 @@ Arguments:
 
 Options:
 
-| Option                                 | Short             | Description                                                                                                                             |
-|:---------------------------------------|:------------------|:----------------------------------------------------------------------------------------------------------------------------------------|
-| `--output-dir <PATH>`                  | <nobr>`-o`</nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations".                    |
-| <nobr>`--namespace <NAMESPACE>`</nobr> | `-n`              | The namespace to use for the generated classes. Defaults to generated from the output directory. (Available from EFCore 5.0.0 onwards.) |
+| Option                                 | Short             | Description                                                                                                            |
+|:---------------------------------------|:------------------|:-----------------------------------------------------------------------------------------------------------------------|
+| `--output-dir <PATH>`                  | <nobr>`-o`</nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations".   |
+| <nobr>`--namespace <NAMESPACE>`</nobr> | `-n`              | The namespace to use for the generated classes. Defaults to generated from the output directory. Added in EF Core 5.0. |
+
+The [common options](#common-options) are listed above.
 
 ## dotnet ef migrations list
 
 Lists available migrations.
+
+Options:
+
+| Option                                   | Description                                                                                                                  |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| <nobr>`--connection <CONNECTION>`</nobr> | The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring. Added in EF Core 5.0. |
+| `--no-connect`                           | Don't connect to the database. Added in EF Core 5.0.                                                                         |
+
+The [common options](#common-options) are listed above.
 
 ## dotnet ef migrations remove
 
@@ -282,6 +319,8 @@ Options:
 | Option                 | Short             | Description                                                                     |
 |:-----------------------|:------------------|:--------------------------------------------------------------------------------|
 | <nobr>`--force`</nobr> | <nobr>`-f`</nobr> | Revert the migration (roll back the changes that were applied to the database). |
+
+The [common options](#common-options) are listed above.
 
 ## dotnet ef migrations script
 
@@ -296,10 +335,13 @@ Arguments:
 
 Options:
 
-| Option                         | Short             | Description                                                        |
-|:-------------------------------|:------------------|:-------------------------------------------------------------------|
-| <nobr>`--output <FILE>`</nobr> | <nobr>`-o`</nobr> | The file to write the script to.                                   |
-| `--idempotent`                 | `-i`              | Generate a script that can be used on a database at any migration. |
+| Option                           | Short             | Description                                                        |
+|:---------------------------------|:------------------|:-------------------------------------------------------------------|
+| `--output <FILE>`                | <nobr>`-o`</nobr> | The file to write the script to.                                   |
+| `--idempotent`                   | `-i`              | Generate a script that can be used on a database at any migration. |
+| <nobr>`--no-transactions`</nobr> |                   | Don't generate SQL transaction statements. Added in EF Core 5.0.   |
+
+The [common options](#common-options) are listed above.
 
 The following example creates a script for the InitialCreate migration:
 
