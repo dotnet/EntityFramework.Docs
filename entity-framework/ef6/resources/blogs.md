@@ -3,7 +3,6 @@ title: Entity Framework Blogs - EF6
 description: Entity Framework 6 Blogs
 author: divega
 ms.date: 10/23/2016
-ms.assetid: f8fcfb34-35de-4e82-b419-8f99fd2eb92a
 ---
 # Entity Framework Blogs
 Besides the product documentation, these blogs can be a source of useful information on Entity Framework:

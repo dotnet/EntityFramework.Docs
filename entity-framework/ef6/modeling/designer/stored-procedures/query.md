@@ -3,7 +3,6 @@ title: Designer Query Stored Procedures - EF6
 description: Designer Query Stored Procedures in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 9554ed25-c5c1-43be-acad-5da37739697f
 uid: ef6/modeling/designer/stored-procedures/query
 ---
 # Designer Query Stored Procedures

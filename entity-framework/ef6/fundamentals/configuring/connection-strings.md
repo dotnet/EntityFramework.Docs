@@ -3,7 +3,6 @@ title: Connection strings and models - EF6
 description: Connection strings and models in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 294bb138-978f-4fe2-8491-fdf3cd3c60c4
 uid: ef6/fundamentals/configuring/connection-strings
 ---
 # Connection strings and models

@@ -3,7 +3,6 @@ title: Self-tracking entities - EF6
 description: Self-tracking entities in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
 uid: ef6/fundamentals/disconnected-entities/self-tracking-entities/index
 ---
 # Self-tracking entities

@@ -3,7 +3,6 @@ title: Raw SQL Queries - EF6
 description: Raw SQL Queries in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 9e1ee76e-2499-408c-81e8-9b6c5d1945a0
 uid: ef6/querying/raw-sql
 ---
 # Raw SQL Queries (EF6)

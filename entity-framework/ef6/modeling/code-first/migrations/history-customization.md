@@ -3,7 +3,6 @@ title: Customizing the migrations history table - EF6
 description: Customizing the migrations history table in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: ed5518f0-a9a6-454e-9e98-a4fa7748c8d0
 uid: ef6/modeling/code-first/migrations/history-customization
 ---
 # Customizing the migrations history table

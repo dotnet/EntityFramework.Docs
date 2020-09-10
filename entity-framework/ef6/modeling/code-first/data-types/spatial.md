@@ -3,7 +3,6 @@ title: Spatial - Code First - EF6
 description: Spatial - Code First in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: d617aed1-15f2-48a9-b187-186991c666e3
 uid: ef6/modeling/code-first/data-types/spatial
 ---
 # Spatial - Code First

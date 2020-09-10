@@ -3,7 +3,6 @@ title: New features in Entity Framework Core 3.x - EF Core
 description: Changes and improvements in Entity Framework Core 3.x
 author: divega
 ms.date: 09/05/2020
-ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.x/index
 ---
 

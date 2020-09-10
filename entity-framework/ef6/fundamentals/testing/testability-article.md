@@ -3,7 +3,6 @@ title: Testability and Entity Framework 4.0 - EF6
 description: Testability and Entity Framework 4.0
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 9430e2ab-261c-4e8e-8545-2ebc52d7a247
 ---
 # Testability and Entity Framework 4.0
 Scott Allen

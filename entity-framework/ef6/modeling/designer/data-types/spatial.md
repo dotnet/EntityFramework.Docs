@@ -3,7 +3,6 @@ title: Spatial - EF Designer - EF6
 description: Spatial - EF Designer in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 06baa6e1-d680-4a95-845b-81305c87a962
 uid: ef6/modeling/designer/data-types/spatial
 ---
 # Spatial - EF Designer

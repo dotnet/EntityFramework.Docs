@@ -3,7 +3,6 @@ title: Designer Table Splitting - EF6
 description: Designer Table Splitting in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 452f17c3-9f26-4de4-9894-8bc036e23b0f
 uid: ef6/modeling/designer/table-splitting
 ---
 # Designer Table Splitting

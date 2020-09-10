@@ -3,7 +3,6 @@ title: Working with entity states - EF6
 description: Working with entity states in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: acb27f46-3f3a-4179-874a-d6bea5d7120c
 uid: ef6/saving/change-tracking/entity-state
 ---
 # Working with entity states

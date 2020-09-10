@@ -3,7 +3,6 @@ title: School Sample Database - EF6
 description: School Sample Database for Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: e83a6a06-e63b-4530-8656-614bf609b12b
 uid: ef6/resources/school-database
 ---
 # School Sample Database

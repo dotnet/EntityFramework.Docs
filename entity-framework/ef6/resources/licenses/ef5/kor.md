@@ -3,7 +3,6 @@ title: Entity Framework 5 License (KOR) - EF6
 description: Entity Framework 5 License (KOR)
 author: divega
 ms.date: 10/23/2016
-ms.assetid: b105993a-ebb3-466e-af76-a0ec0c651f82
 ---
 # Entity Framework 5 License (KOR)
 **MICROSOFT 소프트웨어 사용권 조항**

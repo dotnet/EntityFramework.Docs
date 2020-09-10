@@ -3,7 +3,6 @@ title: Entity Framework 6 Runtime License (JPN) - EF6
 description: Entity Framework 6 Runtime License (JPN)
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 8ecaca70-5ba7-4ef8-9540-1a98a57eeb22
 ---
 # Entity Framework 6 Runtime License (JPN)
 **マイクロソフト ソフトウェア ライセンス条項**

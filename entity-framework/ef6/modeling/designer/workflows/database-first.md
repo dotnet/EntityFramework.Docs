@@ -3,7 +3,6 @@ title: Database First - EF6
 description: Database First in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: cc6ffdb3-388d-4e79-a201-01ec2577c949
 uid: ef6/modeling/designer/workflows/database-first
 ---
 # Database First
