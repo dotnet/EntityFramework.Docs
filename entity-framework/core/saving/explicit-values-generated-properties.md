@@ -3,7 +3,6 @@ title: Setting Explicit Values for Generated Properties - EF Core
 description: Information on setting values explicitly for properties configured as generated with Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: 3f1993c2-cdf5-425b-bac2-a2665a20322b
 uid: core/saving/explicit-values-generated-properties
 ---
 

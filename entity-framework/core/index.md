@@ -3,7 +3,6 @@ title: Overview of Entity Framework Core - EF Core
 description: General introductory overiew of Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: bc2a2676-bc46-493f-bf49-e3cc97994d57
 uid: core/index
 ---
 

@@ -3,7 +3,6 @@ title: Compare EF6 and EF Core
 description: Guidance on how to choose between EF6 and EF Core.
 author: ajcvickers
 ms.date: 01/23/2019
-ms.assetid: a6b9cd22-6803-4c6c-a4d4-21147c0a81cb
 uid: efcore-and-ef6/index
 ---
 

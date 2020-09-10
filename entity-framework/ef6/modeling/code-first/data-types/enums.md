@@ -3,7 +3,6 @@ title: Enum Support - Code First - EF6
 description: Enum Support - Code First in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 77a42501-27c9-4f4b-96df-26c128021467
 uid: ef6/modeling/code-first/data-types/enums
 ---
 # Enum Support - Code First

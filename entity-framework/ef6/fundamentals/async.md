@@ -3,7 +3,6 @@ title: Async query and save - EF6
 description: Async query and save in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
 uid: ef6/fundamentals/async
 ---
 # Async query and save

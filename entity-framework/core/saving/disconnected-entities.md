@@ -4,7 +4,6 @@ description: Working with disconnected, untracked entities across multiple conte
 author: ajcvickers
 ms.author: avickers
 ms.date: 10/27/2016
-ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
 uid: core/saving/disconnected-entities
 ---
 # Disconnected entities

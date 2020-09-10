@@ -3,7 +3,6 @@ title: Saving Related Data - EF Core
 description: Information on saving graphs of related entities and managing relationships in Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: 07b6680f-ffcf-412c-9857-f997486b386c
 uid: core/saving/related-data
 ---
 # Saving Related Data

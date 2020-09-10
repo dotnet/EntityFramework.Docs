@@ -3,7 +3,6 @@ title: Raw SQL Queries - EF Core
 description: Using raw SQL for queries in Entity Framework Core
 author: smitpatel
 ms.date: 10/08/2019
-ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
 ---
 # Raw SQL Queries

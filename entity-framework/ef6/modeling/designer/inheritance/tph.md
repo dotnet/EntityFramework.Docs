@@ -3,7 +3,6 @@ title: Designer TPH Inheritance - EF6
 description: Designer TPH Inheritance in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 72d26a8e-20ab-4500-bd13-394a08e73394
 uid: ef6/modeling/designer/inheritance/tph
 ---
 # Designer TPH Inheritance

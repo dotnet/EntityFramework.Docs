@@ -3,7 +3,6 @@ title: Designer TPT Inheritance - EF6
 description: Designer TPT Inheritance in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: efc78c31-b4ea-4ea3-a0cd-c69eb507020e
 uid: ef6/modeling/designer/inheritance/tpt
 ---
 # Designer TPT Inheritance

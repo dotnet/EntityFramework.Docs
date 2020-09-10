@@ -3,7 +3,6 @@ title: Alternating between multiple models with the same DbContext type - EF Cor
 description: Alternating between multiple models with the same DbContext type using Entity Framework Core
 author: AndriySvyryd
 ms.date: 01/03/2020
-ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 uid: core/modeling/dynamic-model
 ---
 # Alternating between multiple models with the same DbContext type

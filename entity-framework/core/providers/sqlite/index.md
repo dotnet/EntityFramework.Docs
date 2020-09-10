@@ -3,7 +3,6 @@ title: SQLite Database Provider - EF Core
 description: Information on the Entity Framework Core SQLite database provider
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: 3e2f7698-fec2-4cec-9e2d-2e3e0074120c
 uid: core/providers/sqlite/index
 ---
 # SQLite EF Core Database Provider

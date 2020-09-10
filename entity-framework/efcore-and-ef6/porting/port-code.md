@@ -3,7 +3,6 @@ title: Porting from EF6 to EF Core - Porting a Code-Based Model - EF
 description: Specific information on porting an Entity Framework 6 code-based model application to Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: 2dce1a50-7d84-4856-abf6-2763dd9be99d
 uid: efcore-and-ef6/porting/port-code
 ---
 # Porting an EF6 Code-Based Model to EF Core

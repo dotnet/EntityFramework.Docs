@@ -3,7 +3,6 @@ title: Entity Framework 5 License (RUS) - EF6
 description: Entity Framework 5 License (RUS)
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 01c78013-8b66-4bf2-9873-94c4ebdaae19
 ---
 # Entity Framework 5 License (RUS)
 **УСЛОВИЯ ДОПОЛНЕНИЯ К ЛИЦЕНЗИИ КОРПОРАЦИИ МАЙКРОСОФТ НА ИСПОЛЬЗОВАНИЕ ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ**
