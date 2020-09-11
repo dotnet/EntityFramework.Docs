@@ -164,7 +164,7 @@ It's possible for the application itself to apply migrations programmatically, t
 * Similarly, if an application is accessing the database while another application migrates it, this can cause severe issues.
 * The application must have elevated access to modify the database schema. It's generally good practice to limit the application's database permissions in production.
 * It's important to be able to roll back an applied migration in case of an issue. The other strategies provide this easily and out of the box.
-* The SQL commands are applied directly by the program, without giving the developer a change to inspect or modify them. This can be dangerous in a production environment.
+* The SQL commands are applied directly by the program, without giving the developer a chance to inspect or modify them. This can be dangerous in a production environment.
 
 To apply migrations programmatically, call `context.Database.Migrate()`. For example, a typical ASP.NET application can do the following:
 
