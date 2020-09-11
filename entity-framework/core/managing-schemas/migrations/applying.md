@@ -111,7 +111,7 @@ Script-Migration -Idempotent
 
 The EF command-line tools can be used to apply migrations to a database. While productive for local development and testing of migrations, this approach isn't ideal for managing production databases:
 
-* The SQL commands are applied directly by the tool, without giving the developer a change to inspect or modify them. This can be dangerous in a production environment.
+* The SQL commands are applied directly by the tool, without giving the developer a chance to inspect or modify them. This can be dangerous in a production environment.
 * The .NET SDK and the EF tool must be installed on production servers.
 
 ### [.NET Core CLI](#tab/dotnet-core-cli)
