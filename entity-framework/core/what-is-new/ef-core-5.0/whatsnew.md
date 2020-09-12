@@ -36,7 +36,7 @@ public class Tag
 }
 ```
 
-Notice that Post contains a collection of Tags, and Tag contains a collection of Posts. EF Core 5.0 recognizes this as a many-to-many relationship by convention. This means no code is required in `OnModelCreating`:
+Notice that `Post` contains a collection of `Tags`, and `Tag` contains a collection of `Posts`. EF Core 5.0 recognizes this as a many-to-many relationship by convention. This means no code is required in `OnModelCreating`:
 
 ```C#
 public class BlogContext : DbContext
@@ -172,7 +172,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-Notice that the `legacy_posts` table does not have a `Category` column, so we instead synthesise a default value for all legacy posts.
+Notice that the `legacy_posts` table does not have a `Category` column, so we instead synthesize a default value for all legacy posts.
 
 This entity type can then be used in the normal way for LINQ queries. For example. the LINQ query:
 
@@ -345,9 +345,9 @@ In contrast, the events can be registered on the DbContext instance at any time.
 
 ### Exclude tables from migrations
 
-It is sometimes useful to have a single entity type mapped in multiple DbContexts. This is especially true when uising [bounded contexts](https://www.martinfowler.com/bliki/BoundedContext.html), for which it is common to have a different DbContext type for each bounded context.
+It is sometimes useful to have a single entity type mapped in multiple DbContexts. This is especially true when using [bounded contexts](https://www.martinfowler.com/bliki/BoundedContext.html), for which it is common to have a different DbContext type for each bounded context.
 
-For example, a `User` type may be needed by both an authorization context and a reporting context. If a change is made to the `User` type, then migrations for both DbContexts will attempt to update the database. To prevent this, the model for one Context can be configured to exclude the table from its migrations.
+For example, a `User` type may be needed by both an authorization context and a reporting context. If a change is made to the `User` type, then migrations for both DbContexts will attempt to update the database. To prevent this, the model for one of the contexts can be configured to exclude the table from its migrations.
 
 In the code below, the `AuthorizationContext` will generate migrations for changes to the `Users` table, but the `ReportingContext` will not, preventing the migrations from clashing.
 
@@ -376,7 +376,7 @@ TODO
 
 EF Core 5.0 introduces greater control over generation of migrations for different purposes. This includes the ability to:
 
-* Know whether the migration is being generated for a script or for immediate execution
+* Know if the migration is being generated for a script or for immediate execution
 * Know if an idempotent script is being generated
 * Know if the script should exclude transaction statements (See _Migrations scripts with transactions_ below.)
 
@@ -431,6 +431,8 @@ GO
 COMMIT;
 ```
 
+As mentioned in the previous section, this use of transactions can be disabled if transactions need to be handled differently.
+
 ### See pending migrations
 
 The `dotnet ef migrations list` command now shows which migrations have not yet been applied to the database. For example:
@@ -445,7 +447,7 @@ Build succeeded.
 ajcvickers@avickers420u:~/AllTogetherNow/Daily$
 ```
 
-In addition, there is now `Get-Migations` command for the Package Manager Console with the same functionality.
+In addition, there is now a `Get-MigrationsMigations` command for the Package Manager Console with the same functionality.
 
 ### ModelBuilder API for value comparers
 
@@ -469,7 +471,7 @@ modelBuilder
 A `TryGetValue` method has been added to `EntityEntry.CurrentValues` and `EntityEntry.OriginalValues`. This allows the value of a property to be requested without first checking if the property is mapped in the EF model. For example:
 
 ```c#
-if (entry.CurrentValues.TryGetValue<string>(propertyName, out var value))
+if (entry.CurrentValues.TryGetValue(propertyName, out var value))
 {
     Console.WriteLine(value);
 }
@@ -479,7 +481,7 @@ This feature was contributed by [@m4ss1m0g](https://github.com/m4ss1m0g). Many t
 
 ### Default max batch size for SQL Server
 
-The default maximum batch size for SaveChanges on SQL Server is now 42. This value was obtained through [analysis of batching performance](https://github.com/dotnet/efcore/issues/9270), and not because we have discovered the Ultimate Question to Live, the Universe, and Everything.
+Starting with EF Core 5.0, the default maximum batch size for SaveChanges on SQL Server is now 42. As is well known, this is also the answer to the Ultimate Question of Life, the Universe, and Everything. However, this is probably a coincidence, since the value was obtained through [analysis of batching performance](https://github.com/dotnet/efcore/issues/9270). We do not believe that we have discovered a form of the Ultimate Question, although it does seem somewhat plausible that the Earth was created to understand why SQL Server works the way it does.
 
 ### Default environment to Development
 
@@ -487,20 +489,20 @@ The EF Core command line tools now automatically configure the `DOTNET_ENVIRONME
 
 ### Better migrations column ordering
 
-The columns for un-mapped base classes are now ordered after other columns for mapped entity types. Note this only impacts newly created tables. The column order for existing tables remains unchanged. See [#11314](https://github.com/dotnet/efcore/issues/11314).
+The columns for unmapped base classes are now ordered after other columns for mapped entity types. Note this only impacts newly created tables. The column order for existing tables remains unchanged. See [#11314](https://github.com/dotnet/efcore/issues/11314).
 
 ### Query improvements
 
 EF Core 5.0 RC1 contains some additional query translation improvements:
 
 * Translation of `is` on Cosmos--see [#16391](https://github.com/dotnet/efcore/issues/16391)
-* User mapped functions can now be annotated to control null propagation--see [#19609](https://github.com/dotnet/efcore/issues/19609)
+* User-mapped functions can now be annotated to control null propagation--see [#19609](https://github.com/dotnet/efcore/issues/19609)
 * Support for translation of GroupBy with conditional aggregates--see [#11711](https://github.com/dotnet/efcore/issues/11711)
 * Translation of Distinct operator over group element before aggregate--see [#17376](https://github.com/dotnet/efcore/issues/17376)
 
 ### Model building for fields
 
-Finally for RC1, EF Core now allows use of the lambda methods in the ModelBuilder for fields as well as properties. For example, if you are adverse to properties for some reason and decide to use public fields, then these can now be mapped using the lambda builders:
+Finally for RC1, EF Core now allows use of the lambda methods in the ModelBuilder for fields as well as properties. For example, if you are averse to properties for some reason and decide to use public fields, then these fields can now be mapped using the lambda builders:
 
 ```c#
 public class Post
@@ -540,7 +542,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-While this is now possible, we are certainly not recommending that you do this. Also, note that this does not add any additional field mapping capabilities to EF Core, it only allows the lambda methods to be used instead of always requiring the string methods. This is rarely useful since fields are rarely public.
+While this is now possible, we are certainly not recommending that you do this. Also, note that this does not add any additional field mapping capabilities to EF Core, it only allows the lambda methods to be used instead of always requiring the string methods. This is seldom useful since fields are rarely public.
 
 ## Preview 8
 
