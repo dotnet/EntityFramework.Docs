@@ -3,7 +3,6 @@ title: Past Releases of Entity Framework - EF6
 description: Past Releases of Entity Framework
 author: divega
 ms.date: 09/12/2019
-ms.assetid: 1060bb99-765f-4f32-aaeb-d6635d3dbd3e
 uid: ef6/what-is-new/past-releases
 ---
 # Past Releases of Entity Framework

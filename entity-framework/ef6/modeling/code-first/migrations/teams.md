@@ -3,7 +3,6 @@ title: Code First Migrations in Team Environments - EF6
 description: Code First Migrations in Team Environments in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 4c2d9a95-de6f-4e97-9738-c1f8043eff69
 uid: ef6/modeling/code-first/migrations/teams
 ---
 # Code First Migrations in Team Environments

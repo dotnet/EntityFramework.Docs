@@ -3,7 +3,6 @@ title: Model-Based Conventions - EF6
 description: Model-Based Conventions in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 0fc4eef8-29b8-4192-9c77-08fd33d3db3a
 uid: ef6/modeling/code-first/conventions/model
 ---
 # Model-Based Conventions

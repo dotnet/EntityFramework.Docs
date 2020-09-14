@@ -3,7 +3,6 @@ title: Porting from EF6 to EF Core - Porting an EDMX-Based Model - EF
 description: Specific information on porting an Entity Framework 6 EDMX-based model application to Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: 63003709-f1ec-4bdc-8083-65a60c4826d2
 uid: efcore-and-ef6/porting/port-edmx
 ---
 # Porting an EF6 EDMX-Based Model to EF Core

@@ -3,7 +3,6 @@ title: Entity Framework 6 Runtime Beta/RC License - EF6
 description: Entity Framework 6 Runtime Beta/RC License
 author: divega
 ms.date: 10/23/2016
-ms.assetid: db123990-8290-41c8-a41f-494d3f2994f7
 ---
 # Entity Framework 6 Runtime Beta/RC License (ENU)
 **MICROSOFT PRE-RELEASE SOFTWARE LICENSE TERMS**

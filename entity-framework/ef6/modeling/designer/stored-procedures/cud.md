@@ -3,7 +3,6 @@ title: Designer CUD Stored Procedures - EF6
 description: Designer CUD Stored Procedures in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
 uid: ef6/modeling/designer/stored-procedures/cud
 ---
 # Designer CUD Stored Procedures

@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 5.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 5.0
 author: bricelam
-ms.date: 09/08/2020
+ms.date: 09/09/2020
 uid: core/what-is-new/ef-core-5.0/breaking-changes
 ---
 
@@ -15,12 +15,18 @@ The following API and behavior changes have the potential to break existing appl
 | **Breaking change**                                                                                                                   | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [Required on the navigation from principal to dependent has different semantics](#required-dependent)                                 | Medium     |
+| [Defining query is replaced with provider-specific methods](#defining-query)                                                          | Medium     |
 | [Removed HasGeometricDimension method from SQLite NTS extension](#geometric-sqlite)                                                   | Low        |
-| [Value generators are called when the entity state is changed from Detached to Unchanged, Updated or Deleted](#non-added-generation)  | Low        |
+| [Cosmos: Partition key is now added to the primary key](#cosmos-partition-key)                                                        | Low        |
+| [Cosmos: `id` property renamed to `__id`](#cosmos-id)                                                                                 | Low        |
+| [Cosmos: byte[] is now stored as a base64 string instead of a number array](#cosmos-byte)                                             | Low        |
+| [Cosmos: GetPropertyName and SetPropertyName were renamed](#cosmos-metadata)                                                          | Low        |
+| [Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted](#non-added-generation) | Low        |
 | [IMigrationsModelDiffer now uses IRelationalModel](#relational-model)                                                                 | Low        |
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
 
 <a name="geometric-sqlite"></a>
+
 ### Removed HasGeometricDimension method from SQLite NTS extension
 
 [Tracking Issue #14257](https://github.com/aspnet/EntityFrameworkCore/issues/14257)
@@ -31,7 +37,7 @@ HasGeometricDimension was used to enable additional dimensions (Z and M) on geom
 
 **New behavior**
 
-To enable inserting and updating geometry values with additional dimensions (Z and M), the dimension needs to be specified as part of the column type name. This more closely matches the underlying behavior of SpatiaLite's AddGeometryColumn function.
+To enable inserting and updating geometry values with additional dimensions (Z and M), the dimension needs to be specified as part of the column type name. This API matches more closely to the underlying behavior of SpatiaLite's AddGeometryColumn function.
 
 **Why**
 
@@ -54,6 +60,7 @@ modelBuilder.Entity<GeoEntity>(
 ```
 
 <a name="required-dependent"></a>
+
 ### Required on the navigation from principal to dependent has different semantics
 
 [Tracking Issue #17286](https://github.com/aspnet/EntityFrameworkCore/issues/17286)
@@ -64,7 +71,7 @@ Only the navigations to principal could be configured as required. Therefore usi
 
 **New behavior**
 
-With the added support for required dependents it is now possible to mark any reference navigation as required, meaning that in the case shown above the foreign key will be defined on the other side of the relationship and the properties won't be marked as required.
+With the added support for required dependents, it is now possible to mark any reference navigation as required, meaning that in the case shown above the foreign key will be defined on the other side of the relationship and the properties won't be marked as required.
 
 Calling `IsRequired` before specifying the dependent end is now ambiguous:
 
@@ -92,8 +99,108 @@ modelBuilder.Entity<Blog>()
     .IsRequired();
 ```
 
+<a name="cosmos-partition-key"></a>
+
+### Cosmos: Partition key is now added to the primary key
+
+[Tracking Issue #15289](https://github.com/aspnet/EntityFrameworkCore/issues/15289)
+
+**Old behavior**
+
+The partition key property was only added to the alternate key that includes `id`.
+
+**New behavior**
+
+The partition key property is now also added to the primary key by convention.
+
+**Why**
+
+This change makes the model better aligned with Azure Cosmos DB semantics and improves the performance of `Find` and some queries.
+
+**Mitigations**
+
+To prevent the partition key property to be added to the primary key, configure it in `OnModelCreating`.
+
+```cs
+modelBuilder.Entity<Blog>()
+    .HasKey(b => b.Id);
+```
+
+<a name="cosmos-id"></a>
+
+### Cosmos: `id` property renamed to `__id`
+
+[Tracking Issue #17751](https://github.com/aspnet/EntityFrameworkCore/issues/17751)
+
+**Old behavior**
+
+The shadow property mapped to the `id` JSON property was also named `id`.
+
+**New behavior**
+
+The shadow property created by convention is now named `__id`.
+
+**Why**
+
+This change makes it less likely that the `id` property clashes with an existing property on the entity type.
+
+**Mitigations**
+
+To go back to the 3.x behavior, configure the `id` property in `OnModelCreating`.
+
+```cs
+modelBuilder.Entity<Blog>()
+    .Property<string>("id")
+    .ToJsonProperty("id");
+```
+
+<a name="cosmos-byte"></a>
+
+### Cosmos: byte[] is now stored as a base64 string instead of a number array
+
+[Tracking Issue #17306](https://github.com/aspnet/EntityFrameworkCore/issues/17306)
+
+**Old behavior**
+
+Properties of type byte[] were stored as a number array.
+
+**New behavior**
+
+Properties of type byte[] are now stored as a base64 string.
+
+**Why**
+
+This representation of byte[] aligns better with expectations and is the default behavior of the major JSON serialization libraries.
+
+**Mitigations**
+
+Existing data stored as number arrays will still be queried correctly, but currently there isn't a supported way to change back the insert behavior. If this limitation is blocking your scenario, comment on [this issue](https://github.com/aspnet/EntityFrameworkCore/issues/17306)
+
+<a name="cosmos-metadata"></a>
+
+### Cosmos: GetPropertyName and SetPropertyName were renamed
+
+[Tracking Issue #17874](https://github.com/aspnet/EntityFrameworkCore/issues/17874)
+
+**Old behavior**
+
+Previously the extension methods were called `GetPropertyName` and `SetPropertyName`
+
+**New behavior**
+
+The old API was obsoleted and new methods added: `GetJsonPropertyName`, `SetJsonPropertyName`
+
+**Why**
+
+This change removes the ambiguity around what these methods are configuring.
+
+**Mitigations**
+
+Use the new API or temporarily suspend the obsolete warnings.
+
 <a name="non-added-generation"></a>
-### Value generators are called when the entity state is changed from Detached to Unchanged, Updated or Deleted
+
+### Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted
 
 [Tracking Issue #15289](https://github.com/aspnet/EntityFrameworkCore/issues/15289)
 
@@ -103,7 +210,7 @@ Value generators were only called when the entity state changed to Added.
 
 **New behavior**
 
-Value generators are now called when the entity state is changed from Detached to Unchanged, Updated or Deleted and the property contains the default values.
+Value generators are now called when the entity state is changed from Detached to Unchanged, Updated, or Deleted and the property contains the default values.
 
 **Why**
 
@@ -111,9 +218,10 @@ This change was necessary to improve the experience with properties that are not
 
 **Mitigations**
 
-To prevent the value generator from being called assign a non-default value to the property before the state is changed.
+To prevent the value generator from being called, assign a non-default value to the property before the state is changed.
 
 <a name="relational-model"></a>
+
 ### IMigrationsModelDiffer now uses IRelationalModel
 
 [Tracking Issue #20305](https://github.com/aspnet/EntityFrameworkCore/issues/20305)
@@ -153,6 +261,7 @@ var hasDifferences = modelDiffer.HasDifferences(
 We are planning to improve this experience in 6.0 ([see #22031](https://github.com/dotnet/efcore/issues/22031))
 
 <a name="read-only-discriminators"></a>
+
 ### Discriminators are read-only
 
 [Tracking Issue #21154](https://github.com/aspnet/EntityFrameworkCore/issues/21154)
@@ -167,14 +276,42 @@ An exception will be throws in the above case.
 
 **Why**
 
-EF doesn't expect the entity type to change while it is still being tracked, so changing the discriminator value leaves the context in an inconsistent state which might result in unexpected behavior.
+EF doesn't expect the entity type to change while it is still being tracked, so changing the discriminator value leaves the context in an inconsistent state, which might result in unexpected behavior.
 
 **Mitigations**
 
-If changing the discriminator value is necessary and the context will be disposed immediately after calling `SaveChanges` the discriminator can be made mutable:
+If changing the discriminator value is necessary and the context will be disposed immediately after calling `SaveChanges`, the discriminator can be made mutable:
 
 ```cs
 modelBuilder.Entity<BaseEntity>()
     .Property<string>("Discriminator")
     .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
 ```
+
+<a name="defining-query"></a>
+
+### Defining query is replaced with provider-specific methods
+
+[Tracking Issue #18903](https://github.com/dotnet/efcore/issues/18903)
+
+**Old behavior**
+
+Entity types were mapped to defining queries at the Core level. Anytime the entity type was used in the query root of the entity type was replaced by the defining query for any provider.
+
+**New behavior**
+
+APIs for defining query are deprecated. New provider-specific APIs were introduced.
+
+**Why**
+
+While defining queries were implemented as replacement query whenever query root is used in the query, it had a few issues:
+
+- If defining query is projecting entity type using `new { ... }` in `Select` method, then identifying that as an entity required additional work and made it inconsistent with how EF Core treats nominal types in the query.
+- For relational providers `FromSql` is still needed to pass the SQL string in LINQ expression form.
+
+Initially defining queries were introduced as client-side views to be used with In-Memory provider for keyless entities (similar to database views in relational databases). Such definition makes it easy to test application against in-memory database. Afterwards they became broadly applicable, which was useful but brought inconsistent and hard to understand behavior. So we decided to simplify the concept. We made LINQ based defining query exclusive to In-Memory provider and treat them differently. For more information, [see this issue](https://github.com/dotnet/efcore/issues/20023).
+
+**Mitigations**
+
+For relational providers, use `ToSqlQuery` method in `OnModelCreating` and pass in a SQL string to use for the entity type.
+For the In-Memory provider, use `ToInMemoryQuery` method in `OnModelCreating` and pass in a LINQ query to use for the entity type.

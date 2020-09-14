@@ -3,7 +3,6 @@ title: Automatic Code First Migrations - EF6
 description: Automatic Code First Migrations in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 0eb86787-2161-4cb4-9cb8-67c5d6e95650
 uid: ef6/modeling/code-first/migrations/automatic
 ---
 # Automatic Code First Migrations

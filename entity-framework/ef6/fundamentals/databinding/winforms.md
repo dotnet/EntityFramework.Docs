@@ -3,7 +3,6 @@ title: Databinding with WinForms - EF6
 description: Databinding with WinForms in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 80fc5062-2f1c-4dbd-ab6e-b99496784b36
 uid: ef6/fundamentals/databinding/winforms
 ---
 # Databinding with WinForms

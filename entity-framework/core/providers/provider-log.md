@@ -4,7 +4,6 @@ description: A log of changes in Entity Framework Core which impact providers
 author: ajcvickers
 ms.author: avickers
 ms.date: 08/08/2018
-ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
 ---

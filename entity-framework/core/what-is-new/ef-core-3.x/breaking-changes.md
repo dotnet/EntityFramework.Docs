@@ -174,7 +174,7 @@ To be able to manage migrations or scaffold a `DbContext`, install `dotnet-ef` a
     $ dotnet tool install --global dotnet-ef
   ```
 
-You can also obtain it a local tool when you restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](https://github.com/dotnet/cli/issues/10288).
+You can also obtain it a local tool when you restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](/dotnet/core/tools/global-tools#install-a-local-tool).
 
 <a name="fromsql"></a>
 ### FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed
@@ -474,6 +474,9 @@ This would still not be configured by convention to avoid misconfiguration when 
 * **`DbQuery<>`** - Instead `DbSet<>` should be used.
 * **`DbContext.Query<>()`** - Instead `DbContext.Set<>()` should be used.
 * **`IQueryTypeConfiguration<TQuery>`** - Instead `IEntityTypeConfiguration<TEntity>`** should be used.
+
+> [!NOTE]
+> Due to [an issue in 3.x](https://github.com/dotnet/efcore/issues/19537) when querying keyless entities that have all properties set to `null` a `null` will be returned instead of an entity, if this issue is applicable to your scenario also add logic to handle `null` in results.
 
 <a name="config"></a>
 ### Configuration API for owned type relationships has changed

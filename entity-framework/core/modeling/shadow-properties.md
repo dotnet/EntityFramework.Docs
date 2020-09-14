@@ -3,7 +3,6 @@ title: Shadow Properties - EF Core
 description: Configuring shadow properties in an Entity Framework Core model
 author: AndriySvyryd
 ms.date: 01/03/2020
-ms.assetid: 75369266-d2b9-4416-b118-ed238f81f599
 uid: core/modeling/shadow-properties
 ---
 # Shadow Properties

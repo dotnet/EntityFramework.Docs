@@ -3,7 +3,6 @@ title: Saving Data - EF Core
 description: Overview of saving data with Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
-ms.assetid: ef044629-feca-4fd1-a48f-d208daedaf92
 uid: core/saving/index
 ---
 # Saving Data

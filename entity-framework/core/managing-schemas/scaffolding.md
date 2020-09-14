@@ -4,7 +4,6 @@ description: Reverse engineering a model from an existing database using Entity 
 author: bricelam
 ms.author: bricelam
 ms.date: 11/13/2018
-ms.assetid: 6263EF7D-4989-42E6-BDEE-45DA770342FB
 uid: core/managing-schemas/scaffolding
 ---
 # Reverse Engineering

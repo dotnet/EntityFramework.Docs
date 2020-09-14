@@ -3,7 +3,6 @@ title: Handling transaction commit failures - EF6
 description: Handling transaction commit failures in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 5b1f7a7d-1b24-4645-95ec-5608a31ef577
 uid: ef6/fundamentals/connection-resiliency/commit-failures
 ---
 # Handling transaction commit failures

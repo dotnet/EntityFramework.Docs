@@ -3,7 +3,6 @@ title: Sequences - EF Core
 description: Configuring sequences in an Entity Framework Core model
 author: roji
 ms.date: 12/18/2019
-ms.assetid: 94f81a92-3c72-4e14-912a-f99310374e42
 uid: core/modeling/sequences
 ---
 # Sequences

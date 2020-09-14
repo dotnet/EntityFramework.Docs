@@ -3,7 +3,6 @@ title: Using migrate.exe - EF6
 description: Using migrate.exe in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 989ea862-e936-4c85-926a-8cfbef5df5b8
 uid: ef6/modeling/code-first/migrations/migrate-exe
 ---
 # Using migrate.exe

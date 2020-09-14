@@ -3,7 +3,6 @@ title: Configuration File Settings - EF6
 description: Configuration file settings in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: 000044c6-1d32-4cf7-ae1f-ea21d86ebf8f
 uid: ef6/fundamentals/configuring/config-file
 ---
 # Configuration File Settings

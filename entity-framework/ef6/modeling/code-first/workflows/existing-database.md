@@ -3,7 +3,6 @@ title: Code First to an Existing Database - EF6
 description: Code First to an Existing Database in Entity Framework 6
 author: divega
 ms.date: 10/23/2016
-ms.assetid: a7e60b74-973d-4480-868f-500a3899932e
 uid: ef6/modeling/code-first/workflows/existing-database
 ---
 # Code First to an Existing Database

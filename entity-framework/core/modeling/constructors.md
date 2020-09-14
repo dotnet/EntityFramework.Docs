@@ -3,7 +3,6 @@ title: Entity types with constructors - EF Core
 description: Using constructors to bind data with Entity Framework Core model
 author: ajcvickers
 ms.date: 02/23/2018
-ms.assetid: 420AFFE7-B709-4A68-9149-F06F8746FB33
 uid: core/modeling/constructors
 ---
 # Entity types with constructors
