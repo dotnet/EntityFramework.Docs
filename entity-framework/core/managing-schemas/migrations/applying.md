@@ -187,5 +187,5 @@ Note that `Migrate()` builds on top of the `IMigrator` service, which can be use
 
 > [!WARNING]
 >
-> * Carefully consider before using this approach in production. Experience has shown that the simplicity of this deployment strategy is outweighed by the issues it creates. Consider using SQL scripts instead.
+> * Carefully consider before using this approach in production. Experience has shown that the simplicity of this deployment strategy is outweighed by the issues it creates. Consider generating SQL scripts from migrations instead.
 > * Don't call `EnsureCreated()` before `Migrate()`. `EnsureCreated()` bypasses Migrations to create the schema, which causes `Migrate()` to fail.
