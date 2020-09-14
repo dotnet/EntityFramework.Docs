@@ -559,7 +559,7 @@ Build succeeded.
 ajcvickers@avickers420u:~/AllTogetherNow/Daily$
 ```
 
-In addition, there is now a `Get-Migrations` command for the Package Manager Console with the same functionality.
+In addition, there is now a `Get-Migration` command for the Package Manager Console with the same functionality.
 
 ### ModelBuilder API for value comparers
 
