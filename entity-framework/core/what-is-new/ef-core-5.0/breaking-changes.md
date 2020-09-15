@@ -189,7 +189,7 @@ Previously the extension methods were called `GetPropertyName` and `SetPropertyN
 
 **New behavior**
 
-The old API was obsoleted and new methods added: `GetJsonPropertyName`, `SetJsonPropertyName`
+The old API was removed and new methods added: `GetJsonPropertyName`, `SetJsonPropertyName`
 
 **Why**
 
@@ -197,7 +197,7 @@ This change removes the ambiguity around what these methods are configuring.
 
 **Mitigations**
 
-Use the new API or temporarily suspend the obsolete warnings.
+Use the new API.
 
 <a name="non-added-generation"></a>
 

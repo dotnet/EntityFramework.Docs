@@ -2,8 +2,7 @@
 title: Azure Cosmos DB Provider - EF Core
 description: Documentation for the database provider that allows Entity Framework Core to be used with the Azure Cosmos DB SQL API
 author: AndriySvyryd
-ms.author: ansvyryd
-ms.date: 11/05/2019
+ms.date: 09/14/2020
 uid: core/providers/cosmos/index
 ---
 # EF Core Azure Cosmos DB Provider
@@ -60,6 +59,18 @@ Saving and querying data follows the normal EF pattern:
 
 > [!IMPORTANT]
 > Calling [EnsureCreatedAsync](/dotnet/api/Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync) is necessary to create the required containers and insert the [seed data](xref:core/modeling/data-seeding) if present in the model. However `EnsureCreatedAsync` should only be called during deployment, not normal operation, as it may cause performance issues.
+
+## Cosmos options
+
+It is also possible to configure the Cosmos DB provider with a single connection string and to specify other options to customize the connection:
+
+[!code-csharp[Configuration](../../../../samples/core/Cosmos/ModelBuilding/OptionsContext.cs?name=Configuration)]
+
+> [!NOTE]
+> Most of these options are new in EF Core Cosmos 5.0.
+
+> [!TIP]
+> See the [Azure Cosmos DB Options documentation](/dotnet/api/microsoft.azure.cosmos.cosmosclientoptions) for a detailed description of the effect of each option mentioned above.
 
 ## Cosmos-specific model customization
 
