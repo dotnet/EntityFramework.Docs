@@ -19,7 +19,7 @@ You can also explicitly load a navigation property by executing a separate query
 
 You can also get a LINQ query that represents the contents of a navigation property.
 
-It allows you to apply additional operators over the query. Foe example applying an aggregate operator over the related entities without loading them into memory.
+It allows you to apply additional operators over the query. For example applying an aggregate operator over the related entities without loading them into memory.
 
 [!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Sample.cs#NavQueryAggregate)]
 
