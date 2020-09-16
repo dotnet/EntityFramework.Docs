@@ -102,3 +102,7 @@ If you need to use store-generated keys or need a generic way of handling commit
 
 > [!NOTE]
 > Make sure that the context used for the verification has an execution strategy defined as the connection is likely to fail again during verification if it failed during transaction commit.
+
+## Additional resources
+
+* [Troubleshoot transient connection errors in SQL Database and SQL Managed Instance](/azure/azure-sql/database/troubleshoot-common-connectivity-issues)
