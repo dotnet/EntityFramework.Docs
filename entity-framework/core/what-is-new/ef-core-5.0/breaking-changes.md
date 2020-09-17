@@ -333,7 +333,7 @@ Provider-specific methods have been updated to throw an exception in their metho
 
 **Why**
 
-Provider-specific methods map to a database function in the database. The computation done by the mapped database function can't always be replicated on the client side to execute it in LINQ. This causes an issue that results from the server may differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database function, they don't need to be evaluated on client side. Because the InMemory provider is a different database, these methods aren't available for InMemory provider. Trying to execute them for InMemory provider, or any other provider where these methods aren't defined, throws and exception.
+Provider-specific methods map to a database function in the database. The computation done by the mapped database function can't always be replicated on the client side to execute it in LINQ. This causes an issue that results from the server may differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database function, they don't need to be evaluated on client side. Because the InMemory provider is a different database, these methods aren't available for the InMemory provider. Trying to execute them for InMemory provider, or any other provider where these methods aren't defined, throws an exception.
 
 **Mitigations**
 
