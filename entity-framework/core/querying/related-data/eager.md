@@ -86,7 +86,7 @@ You can also configure split queries as the default for your application's conte
 
 When split queries are configured as the default, it is still possible to configure specific queries to execute as single queries:
 
-[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Sample.cs?name=AsSplitQuery&highlight=5)]
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Sample.cs?name=AsSingleQuery&highlight=5)]
 
 If the query splitting mode isn't explicitly specified - neither globally nor on the query - and EF Core detects that a single query loads multiple collection includes, a warning is emitted to draw attention to the potential resulting performance issues. Setting the query mode to SingleQuery will cause the warning not to be generated.
 
