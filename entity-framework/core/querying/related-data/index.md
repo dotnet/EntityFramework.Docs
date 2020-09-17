@@ -14,5 +14,7 @@ Entity Framework Core allows you to use the navigation properties in your model 
 * **[Explicit loading](xref:core/querying/related-data/explicit)** means that the related data is explicitly loaded from the database at a later time.
 * **[Lazy loading](xref:core/querying/related-data/lazy)** means that the related data is transparently loaded from the database when the navigation property is accessed.
 
+For more information on each of these loading approaches, see [Eager, explicit, and lazy loading](/aspnet/core/data/ef-rp/read-related-data).
+
 > [!TIP]
 > You can view the [samples](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying) under this section on GitHub.
