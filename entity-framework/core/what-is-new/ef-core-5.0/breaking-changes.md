@@ -325,16 +325,16 @@ For the In-Memory provider, use `ToInMemoryQuery` method in `OnModelCreating` an
 
 **Old behavior**
 
-Provider-specific EF.Functions methods (for example, `EF.Functions.DateDiffDay`) had method body for client execution, which allowed them to be executed on InMemory provider.
+Provider-specific EF.Functions methods had a method body for client execution, which allowed them to be executed on the InMemory provider. For example, `EF.Functions.DateDiffDay` is a Provider-specific method.
 
 **New behavior**
 
-Such methods have been updated to throw exception in their method body to block evaluating them on client side.
+Provider-specific methods have been updated to throw an exception in their method body to block evaluating them on client side.
 
 **Why**
 
-Provider-specific methods map to a database function in the database. The computation done by the mapped database function can't always be replicated in client side to execute it in LINQ. So it causes issue that result from server may differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database function, they don't need to be evaluated on client side. As InMemory provider is a different database, these methods aren't available for InMemory provider. Trying to execute them for InMemory provider (or any other provider where these methods aren't defined) would throw error.
+Provider-specific methods map to a database function in the database. The computation done by the mapped database function can't always be replicated on the client side to execute it in LINQ. This causes an issue that results from the server may differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database function, they don't need to be evaluated on client side. Because the InMemory provider is a different database, these methods aren't available for InMemory provider. Trying to execute them for InMemory provider, or any other provider where these methods aren't defined, throws and exception.
 
 **Mitigations**
 
-Since there's no way to mimic behavior of database functions, testing queries, which uses them should be done against same kind of database.
+Because there's no way to mimic the behavior of database functions, testing queries, which use them should be done against same kind of database.
