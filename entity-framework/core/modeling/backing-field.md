@@ -60,3 +60,7 @@ You may need to refer to a field-only property from LINQ queries, but such field
 ``` csharp
 var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "_validatedUrl"));
 ```
+
+### Write-only properties
+
+For an example of a write-only model property, see [this GitHub issue](https://github.com/dotnet/EntityFramework.Docs/issues/1077).
