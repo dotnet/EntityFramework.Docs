@@ -172,10 +172,14 @@ This is conceptually similar to how connection pooling operates in ADO.NET provi
 
 ### Limitations
 
-The new method introduces a few limitations on what can be done in the `OnConfiguring()` method of the DbContext.
+The new method introduces a few limitations on what can be done in the `OnConfiguring` method of the DbContext.
 
 > [!WARNING]  
-> Avoid using DbContext Pooling if you maintain your own state (for example, private fields) in your derived DbContext class that should not be shared across requests. EF Core will only reset the state that it is aware of before adding a DbContext instance to the pool.
+> Avoid using DbContext Pooling if you maintain state. For example, private fields, in the derived `DbContext` class that should not be shared across requests. EF Core only resets the state that it is aware of before adding a DbContext instance to the pool.
+
+Context pooling works by reusing the same context instance across requests. This means that it is effectively registered as a singleton in terms of the instance itself so that it's able to persist.
+
+Context pooling is intended for scenarios where the context configuration, which includes services resolved, is fixed between requests. For cases where this needs to be changed, don't use pooling. Note that the performance gain from pooling is usually negligible accept in super-optimized scenarios. If you find that not to be the case, please create a sample and an issue on the [EF Core GitHub repo](https://github.com/dotnet/efcore).
 
 ### Explicitly compiled queries
 
