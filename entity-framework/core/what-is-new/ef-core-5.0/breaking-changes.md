@@ -24,6 +24,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted](#non-added-generation) | Low        |
 | [IMigrationsModelDiffer now uses IRelationalModel](#relational-model)                                                                 | Low        |
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
+| [Provider-specific EF.Functions methods throw for InMemory provider](#no-client-methods)                                              | Low        |
 
 <a name="geometric-sqlite"></a>
 
@@ -315,3 +316,25 @@ Initially defining queries were introduced as client-side views to be used with 
 
 For relational providers, use `ToSqlQuery` method in `OnModelCreating` and pass in a SQL string to use for the entity type.
 For the In-Memory provider, use `ToInMemoryQuery` method in `OnModelCreating` and pass in a LINQ query to use for the entity type.
+
+<a name="no-client-methods"></a>
+
+### Provider-specific EF.Functions methods throw for InMemory provider
+
+[Tracking Issue #20294](https://github.com/dotnet/efcore/issues/20294)
+
+**Old behavior**
+
+Provider-specific EF.Functions methods (for example, `EF.Functions.DateDiffDay`) had method body for client execution, which allowed them to be executed on InMemory provider.
+
+**New behavior**
+
+Such methods have been updated to throw exception in their method body to block evaluating them on client side.
+
+**Why**
+
+Provider-specific methods map to a database function in the database. The computation done by the mapped database function can't always be replicated in client side to execute it in LINQ. So it causes issue that result from server may differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database function, they don't need to be evaluated on client side. As InMemory provider is a different database, these methods aren't available for InMemory provider. Trying to execute them for InMemory provider (or any other provider where these methods aren't defined) would throw error.
+
+**Mitigations**
+
+Since there's no way to mimic behavior of database functions, testing queries, which uses them should be done against same kind of database.
