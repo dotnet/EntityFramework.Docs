@@ -105,4 +105,4 @@ If you need to use store-generated keys or need a generic way of handling commit
 
 ## Additional resources
 
-* [Troubleshoot transient connection errors in SQL Database and SQL Managed Instance](/azure/azure-sql/database/troubleshoot-common-connectivity-issues)
+* [Troubleshoot transient connection errors in Azure SQL Database and SQL Managed Instance](/azure/azure-sql/database/troubleshoot-common-connectivity-issues)
