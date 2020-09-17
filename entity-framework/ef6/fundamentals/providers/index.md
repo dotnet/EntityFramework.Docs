@@ -36,6 +36,8 @@ Providers we are aware of that have been rebuilt for EF6 include:
     *   Npgsql is available as a [NuGet package](https://www.nuget.org/packages/EntityFramework6.Npgsql/)
 *   **Oracle**
     *   ODP.NET is available as a [NuGet package](https://www.nuget.org/packages/Oracle.ManagedDataAccess.EntityFramework/)
+*   **SQLite**
+    *   System.Data.SQLite is available as a [NuGet package](https://www.nuget.org/packages/System.Data.SQLite/)
 
 Note that inclusion in this list does not indicate the level of functionality or support for a given provider, only that a build for EF6 has been made available.
 
