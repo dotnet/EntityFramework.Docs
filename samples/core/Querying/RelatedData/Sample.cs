@@ -105,7 +105,7 @@ namespace EFQuerying.RelatedData
             }
             #endregion
 
-            #region AsSplitQuery
+            #region AsSingleQuery
             using (var context = new SplitQueriesBloggingContext())
             {
                 var blogs = context.Blogs
