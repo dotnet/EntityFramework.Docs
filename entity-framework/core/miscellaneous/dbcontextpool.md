@@ -1,6 +1,6 @@
 ---
-title: Logging - EF Core
-description: Configuring logging with Entity Framework Core
+title: Connection pooling
+description: Connection pooling in Entity Framework Core
 author: rick-anderson
 ms.author: riande
 ms.date: 9/19/2020
@@ -8,7 +8,9 @@ uid: core/miscellaneous/dbcontextpool
 ---
 # Connection pooling
 
-The typical pattern for using EF Core in an ASP.NET Core app usually involves registering a custom <xref:Microsoft.EntityFrameworkCore.DbContext> type into the [dependency injection](/aspnet/core/fundamentals/dependency-injection) system and later obtaining instances of that type through constructor parameters in controllers or Razor Pages. Using constructor injection, a new instance of the `DbContext` is created for each request.
+<xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A>  enables `DbContext` pooling. Context pooling can increase throughput in high-scale scenarios such as web servers by re-using `DbContext` instances, rather than creating new instances for each request.
+
+The typical pattern in an ASP.NET Core app using EF Core involves registering a custom <xref:Microsoft.EntityFrameworkCore.DbContext> type into the [dependency injection](/aspnet/core/fundamentals/dependency-injection) container and obtaining instances of that type through constructor parameters in controllers or Razor Pages. Using constructor injection, a new instance of the `DbContext` is created for each request.
 
 <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> provides a way to provide a pool of reusable `DbContext` instances. To use `DbContext` pooling, use the `AddDbContextPool` instead of `AddDbContext` during service registration:
 
@@ -29,6 +31,6 @@ This is conceptually similar to how connection pooling operates in ADO.NET provi
 > Avoid using `DbContext` Pooling in apps that maintain state. For example, private fields, in the derived `DbContext` class that shouldn't be shared across requests. EF Core only resets the state that it is aware of before adding a `DbContext` instance to the pool.
 
 Context pooling works by reusing the same context instance across requests. This means that it's effectively registered as a [Singleton](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) in terms of the instance itself so that it's able to persist.
-<!-- Review, so what's able tto persist  -->
+<!-- Review, so what's able to persist  -->
 
-Context pooling is intended for scenarios where the context configuration, which includes services resolved, is fixed between requests. For cases where configuration needs to be changed, don't use pooling. Note that the performance gain from pooling is usually negligible except in highly-optimized scenarios. <!-- If you find that not to be the case, please create a sample and an issue on the [EF Core GitHub repo](https://github.com/dotnet/efcore). Review: let me know if you want to add this sentence -->
+Context pooling is intended for scenarios where the context configuration, which includes services resolved, is fixed between requests. For cases where [Scoped](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) services are required, or configuration needs to be changed, don't use pooling. Note that the performance gain from pooling is usually negligible except in highly-optimized scenarios.
