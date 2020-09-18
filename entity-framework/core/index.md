@@ -1,6 +1,6 @@
 ---
 title: Overview of Entity Framework Core - EF Core
-description: General introductory overiew of Entity Framework Core
+description: General introductory overview of Entity Framework Core
 author: rowanmiller
 ms.date: 10/27/2016
 uid: core/index
@@ -41,8 +41,6 @@ Data is created, deleted, and modified in the database using instances of your e
 
 [!code-csharp[Main](../../samples/core/Intro/Program.cs#SavingData)]
 
-<a name="consider"></a>
-
 ### EF ORM considerations
 
 While EF Core is good at abstracting many programming details, there are some  aspects of EF Core that need to be handled for production apps to avoid common pitfalls:
@@ -50,8 +48,8 @@ While EF Core is good at abstracting many programming details, there are some  a
  - **Intermediate-level knowledge of the underlying database server** is essential to debug and understand problems, performance issues, etc.
 - **Functional and integration testing**. It's important to replicate the production environment as close as possible to:
   - Find issues in the app.
-  - Catch breaking changes when upgrading EF Core and other dependencies. For example, adding or upgrading frameworks like ASP.NET Core, Application Insights, Serilog or Automapper. These dependencies can affect EF Core in unexpected ways.
-- **Performance and stress testing** with representative loads. The naive usage of some features doesn't scale well. For example, multiple collection Includes, heavy use of lazy loading, conditional queries on non-indexed columns, massive updates and inserts with store-generated values, lack of concurrency handling, large models, inadequate cache policy.
+  - Catch breaking changes when upgrading EF Core and other dependencies. For example, adding or upgrading frameworks like ASP.NET Core, Application Insights, Serilog, or Automapper. These dependencies can affect EF Core in unexpected ways.
+- **Performance and stress testing** with representative loads. The naive usage of some features doesn't scale well. For example, multiple collections Includes, heavy use of lazy loading, conditional queries on non-indexed columns, massive updates, and inserts with store-generated values, lack of concurrency handling, large models, inadequate cache policy.
 - **Security**: For example, handling of connection strings, database permissions for non-deployment operation, input validation for raw SQL, encryption for sensitive data.
 - Make sure **logging and diagnostics** are sufficient and usable. For example, appropriate logging configuration, query tags, and Application Insights.
 - **Error recovery**. Prepare contingencies for common failure scenarios such as version rollback, fallback servers, scale-out and load balancing, DoS mitigation, and data backups.
