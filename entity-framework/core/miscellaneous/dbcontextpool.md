@@ -8,7 +8,7 @@ uid: core/miscellaneous/dbcontextpool
 ---
 # Connection pooling
 
-<xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A>  enables `DbContext` pooling. Context pooling can increase throughput in high-scale scenarios such as web servers by re-using `DbContext` instances, rather than creating new instances for each request.
+`AddDbContextPool` enables `DbContext` pooling. Context pooling can increase throughput in high-scale scenarios such as web servers by re-using `DbContext` instances, rather than creating new instances for each request.
 
 The typical pattern in an ASP.NET Core app using EF Core involves registering a custom <xref:Microsoft.EntityFrameworkCore.DbContext> type into the [dependency injection](/aspnet/core/fundamentals/dependency-injection) container and obtaining instances of that type through constructor parameters in controllers or Razor Pages. Using constructor injection, a new instance of the `DbContext` is created for each request.
 
