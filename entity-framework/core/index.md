@@ -45,7 +45,7 @@ Data is created, deleted, and modified in the database using instances of your e
 
 While EF Core is good at abstracting many programming details, there are some  aspects of EF Core that need to be handled for production apps to avoid common pitfalls:
 
- - Intermediate-level knowledge or higher of the underlying database server is essential to debug and understand problems, performance issues, etc. For example, knowledge of primary and foreign keys, constraints, indexes, normalization, DML and DDL statements, data types, profiling, etc.
+ - Intermediate-level knowledge or higher of the underlying database server is essential to debug, profile, and migrate data. For example, knowledge of primary and foreign keys, constraints, indexes, normalization, DML and DDL statements, data types, profiling, etc.
 - Functional and integration testing:  It's important to replicate the production environment as close as possible to:
   - Find issues in the app.
   - Catch breaking changes when upgrading EF Core and other dependencies. For example, adding or upgrading frameworks like ASP.NET Core, Application Insights, Serilog, or Automapper. These dependencies can affect EF Core in unexpected ways.
