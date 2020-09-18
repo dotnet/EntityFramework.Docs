@@ -54,8 +54,7 @@ While EF Core is good at abstracting many programming details, there are some  a
 - Make sure **logging and diagnostics** are sufficient and usable. For example, appropriate logging configuration, query tags, and Application Insights.
 - **Error recovery**. Prepare contingencies for common failure scenarios such as version rollback, fallback servers, scale-out and load balancing, DoS mitigation, and data backups.
 - Application **deployment and migration**. <!-- review I need some content to replace the following link. Links just provided as a handy ref. --> See https://github.com/dotnet/EntityFramework.Docs/issues/1879 and https://github.com/dotnet/EntityFramework.Docs/issues/814.
-- Detailed **examination and testing of generated migrations**. The shape of the schema and the column types cannot be easily changed once the tables contain production data. For example, on SqlServer, `nvarchar(max)` and `decimal(18, 2)` are rarely the best types for columns mapped to string and decimal properties.  <!-- review I need some content to replace the following link. Links just provided as a handy ref. --> See https://github.com/dotnet/efcore/issues/20159
-
+- Detailed **examination and testing of generated migrations**. Migrations should be thoroughly tested before being applied to production data. The shape of the schema and the column types cannot be easily changed once the tables contain production data. For example, on SqlServer, `nvarchar(max)` and `decimal(18, 2)` are rarely the best types for columns mapped to string and decimal properties.  <!-- review I need some content to replace the following link. Links just provided as a handy ref. --> See https://github.com/dotnet/efcore/issues/20159
 
 ## Next steps
 
