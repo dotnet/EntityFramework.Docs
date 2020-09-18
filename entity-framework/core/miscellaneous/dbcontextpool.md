@@ -19,11 +19,11 @@ services.AddDbContextPool<BloggingContext>(
     options => options.UseSqlServer(connectionString));
 ```
 
-When `AddDbContextPool` is called, at the time a `DbContext` instance is requested, EF first checks if there is an instance available in the pool. Once the request processing finalizes, any state on the instance is reset and the instance is itself returned to the pool.
+When `AddDbContextPool` is used, at the time a `DbContext` instance is requested, EF first checks if there is an instance available in the pool. Once the request processing finalizes, any state on the instance is reset and the instance is itself returned to the pool.
 
 This is conceptually similar to how connection pooling operates in ADO.NET providers and has the advantage of saving some of the cost of initialization of the `DbContext` instance.
 
-The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> sets the maximum number of instances retained by the pool. Once `poolSize` is exceeded, new `DbContext` instances are not cashed and  EF falls back to the non-pooling behavior of creating instances on demand.
+The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> sets the maximum number of instances retained by the pool. Once `poolSize` is exceeded, new `DbContext` instances are not cached and  EF falls back to the non-pooling behavior of creating instances on demand.
 
 ## Limitations
 
