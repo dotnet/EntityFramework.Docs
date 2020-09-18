@@ -41,7 +41,7 @@ Data is created, deleted, and modified in the database using instances of your e
 
 [!code-csharp[Main](../../samples/core/Intro/Program.cs#SavingData)]
 
-### EF ORM considerations
+## EF ORM considerations
 
 While EF Core is good at abstracting many programming details, there are some  aspects of EF Core that need to be handled for production apps to avoid common pitfalls:
 
