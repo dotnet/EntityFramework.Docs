@@ -1,8 +1,8 @@
 ---
 title: Overview of Entity Framework Core - EF Core
 description: General introductory overview of Entity Framework Core
-author: rowanmiller
-ms.date: 10/27/2016
+author: ajcvickers
+ms.date: 9/20/2020
 uid: core/index
 ---
 
@@ -17,7 +17,7 @@ EF Core can serve as an object-relational mapper (O/RM), which:
 
 EF Core supports many database engines, see [Database Providers](xref:core/providers/index) for details.
 
-## The Model
+## The model
 
 With EF Core, data access is performed using a model. A model is made up of entity classes and a context object that represents a session with the database. The context object allows querying and saving data. For more information, see [Creating a Model](xref:core/modeling/index).
 
@@ -31,11 +31,11 @@ EF supports the following model development approaches:
 
 ## Querying
 
-Instances of your entity classes are retrieved from the database using Language Integrated Query (LINQ). For more information, see [Querying Data](xref:core/querying/index).
+Instances of your entity classes are retrieved from the database using Language [Integrated Query (LINQ)](/dotnet/csharp/programming-guide/concepts/linq/). For more information, see [Querying Data](xref:core/querying/index).
 
 [!code-csharp[Main](../../samples/core/Intro/Program.cs#Querying)]
 
-## Saving Data
+## Saving data
 
 Data is created, deleted, and modified in the database using instances of your entity classes. See [Saving Data](xref:core/saving/index) to learn more.
 
