@@ -25,7 +25,7 @@ EF supports the following model development approaches:
 
 * Generate a model from an existing database.
 * Hand code a model to match the database.
-* Use [EF Migrations](xref:core/managing-schemas/migrations/index) to create a database from a model. Migrations allow evolving the database as the model changes.
+* Once a model is created, use [EF Migrations](xref:core/managing-schemas/migrations/index) to create a database from the model. Migrations allow evolving the database as the model changes.
 
 [!code-csharp[Main](../../samples/core/Intro/Model.cs)]
 
@@ -48,7 +48,7 @@ While EF Core is good at abstracting many programming details, there are some be
  - Intermediate-level knowledge or higher of the underlying database server is essential to architect, debug, profile, and migrate data in high performance production apps. For example, knowledge of primary and foreign keys, constraints, indexes, normalization, DML and DDL statements, data types, profiling, etc.
 - Functional and integration testing:  It's important to replicate the production environment as close as possible to:
   - Find issues in the app that only show up when using a specific versions or edition of the database server .
-  - Catch breaking changes when upgrading EF Core and other dependencies. For example, adding or upgrading frameworks like ASP.NET Core, Application Insights, Serilog, or Automapper. These dependencies can affect EF Core in unexpected ways.
+  - Catch breaking changes when upgrading EF Core and other dependencies. For example, adding or upgrading frameworks like ASP.NET Core, OData, or Automapper. These dependencies can affect EF Core in unexpected ways.
 - Performance and stress testing with representative loads. The naïve usage of some features doesn't scale well. For example, multiple collections Includes, heavy use of lazy loading, conditional queries on non-indexed columns, massive updates and inserts with store-generated values, lack of concurrency handling, large models, inadequate cache policy.
 - Security review: For example, handling of connection strings and other secrets, database permissions for non-deployment operation, input validation for raw SQL, encryption for sensitive data.
 - Make sure logging and diagnostics are sufficient and usable. For example, appropriate logging configuration, query tags, and Application Insights.
