@@ -79,7 +79,7 @@
       - name: Logging
         href: core/miscellaneous/logging.md
       - name: Connection pooling
-        href: core/miscellaneous/dbcontextpool.md
+        href: core/miscellaneous/context-pooling.md
       - name: Connection resiliency
         href: core/miscellaneous/connection-resiliency.md
       - name: Testing
