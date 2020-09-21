@@ -26,7 +26,6 @@ EF supports the following model development approaches:
 * Generate a model from an existing database.
 * Hand code a model to match the database.
 * Once a model is created, use [EF Migrations](xref:core/managing-schemas/migrations/index) to create a database from the model. Migrations allow evolving the database as the model changes.
-* Once a model is created, use [EF Migrations](xref:core/managing-schemas/migrations/index) to create a database from the model. Migrations allow evolving the database as the model changes.
 
 [!code-csharp[Main](../../samples/core/Intro/Model.cs)]
 
