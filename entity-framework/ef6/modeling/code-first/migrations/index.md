@@ -12,7 +12,7 @@ Code First Migrations is the recommended way to evolve your application's databa
 2. Generating migrations to keep track of changes you make to your EF model
 2. Keep your database up to date with those changes
 
-The following walkthrough will provide an overview Code First Migrations in Entity Framework. You can either complete the entire walkthrough or skip to the topic you are interested in. The following topics are covered:
+The following walkthrough will provide an overview of Code First Migrations in Entity Framework. You can either complete the entire walkthrough or skip to the topic you are interested in. The following topics are covered:
 
 ## Building an Initial Model & Database
 
