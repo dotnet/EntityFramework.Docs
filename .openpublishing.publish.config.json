@@ -7,6 +7,11 @@
       "build_output_subfolder": "ef",
       "locale": "en-us",
       "open_to_public_contributors": true,
+      "xref_query_tags": [
+        "/dotnet",
+        "/ef",
+        "/aspnet"
+      ],
       "type_mapping": {
         "Conceptual": "Content",
         "ManagedReference": "Content",
