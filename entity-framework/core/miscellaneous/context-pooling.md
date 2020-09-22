@@ -12,7 +12,7 @@ uid: core/miscellaneous/dbcontextpool
 
 The typical pattern in an ASP.NET Core app using EF Core involves registering a custom <xref:Microsoft.EntityFrameworkCore.DbContext> type into the [dependency injection](/aspnet/core/fundamentals/dependency-injection) container and obtaining instances of that type through constructor parameters in controllers or Razor Pages. Using constructor injection, a new context instance is created for each request.
 
-<xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> enables a pool of reusable `DbContext` instances. To use `DbContext` pooling, use the `AddDbContextPool` instead of `AddDbContext` during service registration:
+<xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> enables a pool of reusable context instances. To use context pooling, use the `AddDbContextPool` method instead of `AddDbContext` during service registration:
 
 ``` csharp
 services.AddDbContextPool<BloggingContext>(
