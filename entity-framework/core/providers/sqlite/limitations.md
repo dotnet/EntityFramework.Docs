@@ -2,7 +2,7 @@
 title: SQLite Database Provider - Limitations - EF Core
 description: Limitations of the Entity Framework Core SQLite database provider as compared to other providers
 author: bricelam
-ms.date: 07/16/2020
+ms.date: 09/24/2020
 uid: core/providers/sqlite/limitations
 ---
 # SQLite EF Core Database Provider Limitations
@@ -67,8 +67,24 @@ A rebuild will be attempted in order to perform certain operations. Rebuilds are
 | Update               | ✔           | 2.0              |
 | Delete               | ✔           | 2.0              |
 
-## Migrations limitations workaround
+### Migrations limitations workaround
 
 You can workaround some of these limitations by manually writing code in your migrations to perform a rebuild. Table rebuilds involve creating a new table, copying data to the new table, dropping the old table, renaming the new table. You will need to use the `Sql(string)` method to perform some of these steps.
 
 See [Making Other Kinds Of Table Schema Changes](https://sqlite.org/lang_altertable.html#otheralter) in the SQLite documentation for more details.
+
+### Idempotent script limitations
+
+Unlike other databases, SQLite doesn't include a procedural language. Because of this, there is no way to generate the if-then logic required by the idempotent migration scripts.
+
+If you know the last migration applied to a database, you can generate a script from that migration to the latest migration.
+
+```dotnetcli
+dotnet ef migrations script CurrentMigration
+```
+
+Otherwise, we recommend using `dotnet ef database update` to apply migrations. Starting in EF Core 5.0, you can specify the database file when running the command.
+
+```dotnetcli
+dotnet ef database update --connection "Data Source=My.db"
+```
