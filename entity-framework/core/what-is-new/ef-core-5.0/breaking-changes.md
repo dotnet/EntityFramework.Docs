@@ -24,6 +24,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted](#non-added-generation) | Low        |
 | [IMigrationsModelDiffer now uses IRelationalModel](#relational-model)                                                                 | Low        |
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
+| [Provider-specific EF.Functions methods throw for InMemory provider](#no-client-methods)                                              | Low        |
 
 <a name="geometric-sqlite"></a>
 
@@ -188,7 +189,7 @@ Previously the extension methods were called `GetPropertyName` and `SetPropertyN
 
 **New behavior**
 
-The old API was obsoleted and new methods added: `GetJsonPropertyName`, `SetJsonPropertyName`
+The old API was removed and new methods added: `GetJsonPropertyName`, `SetJsonPropertyName`
 
 **Why**
 
@@ -196,7 +197,7 @@ This change removes the ambiguity around what these methods are configuring.
 
 **Mitigations**
 
-Use the new API or temporarily suspend the obsolete warnings.
+Use the new API.
 
 <a name="non-added-generation"></a>
 
@@ -315,3 +316,25 @@ Initially defining queries were introduced as client-side views to be used with 
 
 For relational providers, use `ToSqlQuery` method in `OnModelCreating` and pass in a SQL string to use for the entity type.
 For the In-Memory provider, use `ToInMemoryQuery` method in `OnModelCreating` and pass in a LINQ query to use for the entity type.
+
+<a name="no-client-methods"></a>
+
+### Provider-specific EF.Functions methods throw for InMemory provider
+
+[Tracking Issue #20294](https://github.com/dotnet/efcore/issues/20294)
+
+**Old behavior**
+
+Provider-specific EF.Functions methods contained implementation for client execution, which allowed them to be executed on the InMemory provider. For example, `EF.Functions.DateDiffDay` is a Sql Server specific method, which worked on InMemory provider.
+
+**New behavior**
+
+Provider-specific methods have been updated to throw an exception in their method body to block evaluating them on client side.
+
+**Why**
+
+Provider-specific methods map to a database function. The computation done by the mapped database function can't always be replicated on the client side in LINQ. It may cause the result from the server to differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database functions, they don't need to be evaluated on client side. As InMemory provider is a different *database*, these methods aren't available for this provider. Trying to execute them for InMemory provider, or any other provider that doesn't translate these methods, throws an exception.
+
+**Mitigations**
+
+Since there's no way to mimic behavior of database functions accurately, you should test the queries containing them against same kind of database as in production.
