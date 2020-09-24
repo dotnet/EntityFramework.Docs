@@ -26,6 +26,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
 | [Provider-specific EF.Functions methods throw for InMemory provider](#no-client-methods)                                              | Low        |
 | [IndexBuilder.HasName is now obsolete](#index-obsolete)                                                                               | Low        |
+| [A pluarlizer is now included for scaffolding reverse engineered models](#pluralizer)                                                 | Low        |
 
 <a name="geometric-sqlite"></a>
 
@@ -363,3 +364,25 @@ In the future, we'd like to enable both ascending and descending indexes or inde
 Any code that was previously calling IndexBuilder.HasName should be updated to call HasDatabaseName instead.
 
 If your project includes migrations generated prior to EF Core version 2.0.0, you can safely ignore the warning in those files and suppress it by adding `#pragma warning disable 612, 618`.
+
+<a name="pluralizer"></a>
+
+### A pluarlizer is now included for scaffolding reverse engineered models
+
+[Tracking Issue #11160](https://github.com/dotnet/efcore/issues/11160)
+
+**Old behavior**
+
+Previously, you had to install a separate pluralizer package in order to pluralize DbSet and collection navigation names and singularize table names when scaffoding a DbContext and entity types by reverse engineering a database schema.
+
+**New behavior**
+
+EF Core now includes a pluralizer that uses the [Humanizer](https://github.com/Humanizr/Humanizer) library. This is the same library Visual Studio uses to recommend variable names.
+
+**Why**
+
+Using plural forms of words for collection properties and singular forms for types and reference properties is idiomatic in .NET.
+
+**Mitigations**
+
+To disable the pluralizer, use the `--no-pluralize` option on `dotnet ef dbcontext scaffold` or the `-NoPluralize` switch on `Scaffold-DbContext`.
