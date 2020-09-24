@@ -25,6 +25,7 @@ The following API and behavior changes have the potential to break existing appl
 | [IMigrationsModelDiffer now uses IRelationalModel](#relational-model)                                                                 | Low        |
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
 | [Provider-specific EF.Functions methods throw for InMemory provider](#no-client-methods)                                              | Low        |
+| [IndexBuilder.HasName is now obsolete](#index-obsolete)                                                                               | Low        |
 
 <a name="geometric-sqlite"></a>
 
@@ -338,3 +339,27 @@ Provider-specific methods map to a database function. The computation done by th
 **Mitigations**
 
 Since there's no way to mimic behavior of database functions accurately, you should test the queries containing them against same kind of database as in production.
+
+<a name="index-obsolete"></a>
+
+### IndexBuilder.HasName is now obsolete
+
+[Tracking Issue #21089](https://github.com/dotnet/efcore/issues/21089)
+
+**Old behavior**
+
+Previously, only one index could be defined over a given set of properties. The database name of an index was configured using IndexBuilder.HasName.
+
+**New behavior**
+
+Multiple indexes are now allowed on the same set or properties. These indexes are now distinguished by a name in the model. By convention, the model name is used as the database name; however it can also be configured independently using HasDatabaseName.
+
+**Why**
+
+In the future, we'd like to enable both ascending and descending indexes or indexes with different collations on the same set of properties. This change moves us another step in that direction.
+
+**Mitigations**
+
+Any code that was previously calling IndexBuilder.HasName should be updated to call HasDatabaseName instead.
+
+If your project includes migrations generated prior to EF Core version 2.0.0, you can safely ignore the warning in those files and suppress it by adding `#pragma warning disable 612, 618`.
