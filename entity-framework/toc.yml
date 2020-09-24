@@ -78,7 +78,7 @@
         href: core/miscellaneous/async.md
       - name: Logging
         href: core/miscellaneous/logging.md
-      - name: Connection pooling
+      - name: Context pooling
         href: core/miscellaneous/context-pooling.md
       - name: Connection resiliency
         href: core/miscellaneous/connection-resiliency.md
