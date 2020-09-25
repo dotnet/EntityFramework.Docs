@@ -187,6 +187,23 @@ using (var blogContext = new BloggingContext())
 }
 ```
 
+## iPhone Configuration
+
+Entity Framework Core sometimes generates dynamic code for performance reasons. This is not supported on the iOS platform and may cause the application to crash. The Xamarin team built an interpretor to handle these scenarios. It should be configured in your `.csproj` file in a `PropertyGroup`. Use a `Condition` to ensure the group is only valid for iPhone release builds:
+
+```xml
+<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+</PropertyGroup>
+```
+
+Then add the `--interpreter` flag as an extra argument inside the group:
+
+```xml
+<CodesignExtraArgs>--interpreter</CodesignExtraArgs>
+```
+
+More information is available in the [interpreter repository](https://github.com/spouliot/interpreter).
+
 ## Next steps
 
 In this getting started you have learned how to use a Xamarin.Forms application to access a SQLite database using Entity Framework Core.
