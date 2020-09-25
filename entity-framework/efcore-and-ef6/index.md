@@ -12,7 +12,7 @@ uid: efcore-and-ef6/index
 
 Entity Framework Core ([EF Core](xref:core/index)) is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations.
 
-EF Core works with SQL Server/SQL Azure, SQLite, Azure Cosmos DB, MySQL, PostgreSQL, and many more databases through a [database provider plugin model](xref:core/providers/index).
+EF Core works with SQL Server/SQL Azure, SQLite, [Azure Cosmos DB](https://azure.microsoft.com/en-in/services/cosmos-db/), MySQL, PostgreSQL, and many more databases through a [database provider plugin model](xref:core/providers/index).
 
 ## EF6
 
