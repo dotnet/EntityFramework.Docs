@@ -11,7 +11,7 @@ namespace EFModeling.FluentAPI.Relational.IndexName
         {
             modelBuilder.Entity<Blog>()
                 .HasIndex(b => b.Url)
-                .HasName("Index_Url");
+                .HasDatabaseName("Index_Url");
         }
         #endregion
     }

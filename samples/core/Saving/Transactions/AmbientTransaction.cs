@@ -1,55 +1,54 @@
+using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 
-namespace EFSaving.Transactions.CommitableTransaction
+namespace EFSaving.Transactions
 {
-    public class Sample
+    public class AmbientTransaction
     {
-        public static void Run()
+        public static async Task RunAsync()
         {
             var connectionString = @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
 
-            using (var context = new BloggingContext(
+            await using (var context = new BloggingContext(
                 new DbContextOptionsBuilder<BloggingContext>()
                     .UseSqlServer(connectionString)
                     .Options))
             {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.EnsureCreatedAsync();
             }
 
             #region Transaction
-            using (var transaction = new CommittableTransaction(
+            using (var scope = new TransactionScope(
+                TransactionScopeOption.Required,
                 new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
             {
-                var connection = new SqlConnection(connectionString);
+                await using var connection = new SqlConnection(connectionString);
+                await connection.OpenAsync();
 
                 try
                 {
+                    // Run raw ADO.NET command in the transaction
+                    var command = connection.CreateCommand();
+                    command.CommandText = "DELETE FROM dbo.Blogs";
+                    await command.ExecuteNonQueryAsync();
+
+                    // Run an EF Core command in the transaction
                     var options = new DbContextOptionsBuilder<BloggingContext>()
                         .UseSqlServer(connection)
                         .Options;
 
-                    using (var context = new BloggingContext(options))
+                    await using (var context = new BloggingContext(options))
                     {
-                        context.Database.OpenConnection();
-                        context.Database.EnlistTransaction(transaction);
-
-                        // Run raw ADO.NET command in the transaction
-                        var command = connection.CreateCommand();
-                        command.CommandText = "DELETE FROM dbo.Blogs";
-                        command.ExecuteNonQuery();
-
-                        // Run an EF Core command in the transaction
                         context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                        context.SaveChanges();
-                        context.Database.CloseConnection();
+                        await context.SaveChangesAsync();
                     }
 
                     // Commit transaction if all commands succeed, transaction will auto-rollback
                     // when disposed if either commands fails
-                    transaction.Commit();
+                    scope.Complete();
                 }
                 catch (System.Exception)
                 {
