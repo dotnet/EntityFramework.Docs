@@ -8,7 +8,7 @@ uid: efcore-and-ef6/porting/index
 # Porting from EF6 to EF Core
 
 Because of the fundamental changes in EF Core we do not recommend attempting to move an EF6 application to EF Core unless you have a compelling reason to make the change.
-You should view the move from EF6 to EF Core as a port rather than an upgrade.
+You should view the move from [EF6](https://docs.microsoft.com/en-us/ef/ef6/) to [EF Core](https://docs.microsoft.com/en-us/ef/core/) as a port rather than an upgrade.
 
 > [!IMPORTANT]
 > Before you start the porting process it is important to validate that EF Core meets the data access requirements for your application.
