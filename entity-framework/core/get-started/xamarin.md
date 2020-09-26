@@ -68,6 +68,9 @@ The following sections will walk you through the code in the sample project that
 
 It is assumed that you are familiar with the Xamarin.Forms topics of [displaying data](/xamarin/xamarin-forms/app-fundamentals/data-binding/) and [navigating between pages](/xamarin/xamarin-forms/app-fundamentals/navigation/).
 
+> [!IMPORTANT]
+> The linker behavior on Xamarin.iOS must be set to **Don't Link** in order to run applications with Entity Framework Core. [This article explains more about the linker](/xamarin/ios/deploy-test/linker) including how to set the behavior on Xamarin.iOS.
+
 ## Entity Framework Core NuGet packages
 
 To create Xamarin.Forms apps with EF Core, you install the package for the EF Core database provider(s) you want to target into all of the projects in the Xamarin.Forms solution. This tutorial uses the SQLite provider.
