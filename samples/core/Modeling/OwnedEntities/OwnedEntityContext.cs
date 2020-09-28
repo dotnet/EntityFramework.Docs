@@ -31,6 +31,22 @@ namespace EFModeling.OwnedEntities
                 });
             #endregion
 
+            #region Required
+            modelBuilder.Entity<Order>(ob =>
+            {
+                ob.OwnsOne(
+                    o => o.ShippingAddress,
+                    sa =>
+                    {
+                        sa.Property(p => p.Street).IsRequired();
+                        sa.Property(p => p.City).IsRequired();
+                    });
+
+                ob.Navigation(o => o.ShippingAddress)
+                    .IsRequired();
+            });
+            #endregion
+
             #region OwnsOneNested
             modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od =>
             {

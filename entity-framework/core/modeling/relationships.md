@@ -142,7 +142,10 @@ If you only have one navigation property then there are parameterless overloads 
 
 ### Configuring navigation properties
 
-After the navigation property has been created, you may need to further configure it. In EFCore 5.0, new Fluent API is added to allow you to perform that configuration.
+> [!NOTE]
+> This feature was added in EF Core 5.0.
+
+After the navigation property has been created, you may need to further configure it.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
 
@@ -218,6 +221,8 @@ If you want the foreign key to reference a property other than the primary key, 
 
 You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see [Required and Optional properties](xref:core/modeling/entity-properties#required-and-optional-properties) for more information).
 
+The foreign key properties are located on the dependent entity type, so if they are configured as required it means that every dependent entity is required to have a corresponding principal entity.
+
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?name=Required&highlight=6)]
 
 > [!NOTE]
@@ -247,6 +252,18 @@ When configuring the relationship with the Fluent API, you use the `HasOne` and 
 When configuring the foreign key you need to specify the dependent entity type - notice the generic parameter provided to `HasForeignKey` in the listing below. In a one-to-many relationship it is clear that the entity with the reference navigation is the dependent and the one with the collection is the principal. But this is not so in a one-to-one relationship - hence the need to explicitly define it.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneToOne.cs?name=OneToOne&highlight=11)]
+
+The dependent side is considered optional by default, but can be configured as required. However EF will not validate whether a dependent entity was provided, so this configuration will only make a difference when the database mapping allows it to be enforced. A common scenario for this are reference owned types that use table splitting by default.
+
+[!code-csharp[Main](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=Required&highlight=11-12)]
+
+With this configuration the columns corresponding to `ShippingAddress` will be marked as non-nullable in the database.
+
+> [!NOTE]
+> If you are using [non-nullable reference types](/dotnet/csharp/nullable-references) calling `IsRequired` is not necessary.
+
+> [!NOTE]
+> The ability to configure whether the dependent is required was added in EF Core 5.0.
 
 ### Many-to-many
 

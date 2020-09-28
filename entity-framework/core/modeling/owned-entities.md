@@ -34,6 +34,9 @@ If the `ShippingAddress` property is private in the `Order` type, you can use th
 
 See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities) for more context.
 
+> [!TIP]
+> The owned entity type can be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships#one-to-one) for more information.
+
 ## Implicit keys
 
 Owned types configured with `OwnsOne` or discovered through a reference navigation always have a one-to-one relationship with the owner, therefore they don't need their own key values as the foreign key values are unique. In the previous example, the `StreetAddress` type does not need to define a key property.  
@@ -41,9 +44,6 @@ Owned types configured with `OwnsOne` or discovered through a reference navigati
 In order to understand how EF Core tracks these objects, it is useful to know that a primary key is created as a [shadow property](xref:core/modeling/shadow-properties) for the owned type. The value of the key of an instance of the owned type will be the same as the value of the key of the owner instance.
 
 ## Collections of owned types
-
-> [!NOTE]
-> This feature is new in EF Core 2.2.
 
 To configure a collection of owned types use `OwnsMany` in `OnModelCreating`.
 
@@ -54,18 +54,15 @@ The two most straightforward solutions to this are:
 - Defining a surrogate primary key on a new property independent of the foreign key that points to the owner. The contained values would need to be unique across all owners (e.g. if Parent {1} has Child {1}, then Parent {2} cannot have Child {1}), so the value doesn't have any inherent meaning. Since the foreign key is not part of the primary key its values can be changed, so you could move a child from one parent to another one, however this usually goes against aggregate semantics.
 - Using the foreign key and an additional property as a composite key. The additional property value now only needs to be unique for a given parent (so if Parent {1} has Child {1,1} then Parent {2} can still have Child {2,1}). By making the foreign key part of the primary key the relationship between the owner and the owned entity becomes immutable and reflects aggregate semantics better. This is what EF Core does by default.
 
-In this example we'll use the `Distributor` class:
+In this example we'll use the `Distributor` class.
 
 [!code-csharp[Distributor](../../../samples/core/Modeling/OwnedEntities/Distributor.cs?name=Distributor)]
 
 By default the primary key used for the owned type referenced through the `ShippingCenters` navigation property will be `("DistributorId", "Id")` where `"DistributorId"` is the FK and `"Id"` is a unique `int` value.
 
-To configure a different PK call `HasKey`:
+To configure a different primary key call `HasKey`.
 
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
-
-> [!NOTE]
-> Before EF Core 3.0 `WithOwner()` method didn't exist so this call should be removed. Also the primary key was not discovered automatically so it always had to be specified.
 
 ## Mapping owned types with table splitting
 
@@ -73,7 +70,7 @@ When using relational databases, by default reference owned types are mapped to 
 
 By default, EF Core will name the database columns for the properties of the owned entity type following the pattern _Navigation_OwnedEntityProperty_. Therefore the `StreetAddress` properties will appear in the 'Orders' table with the names 'ShippingAddress_Street' and 'ShippingAddress_City'.
 
-You can use the `HasColumnName` method to rename those columns:
+You can use the `HasColumnName` method to rename those columns.
 
 [!code-csharp[ColumnNames](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=ColumnNames)]
 
@@ -86,7 +83,7 @@ An owned entity type can be of the same .NET type as another owned entity type, 
 
 In those cases, the property pointing from the owner to the owned entity becomes the _defining navigation_ of the owned entity type. From the perspective of EF Core, the defining navigation is part of the type's identity alongside the .NET type.
 
-For example, in the following class `ShippingAddress` and `BillingAddress` are both of the same .NET type, `StreetAddress`:
+For example, in the following class `ShippingAddress` and `BillingAddress` are both of the same .NET type, `StreetAddress`.
 
 [!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
 
@@ -138,16 +135,15 @@ Some of these limitations are fundamental to how owned entity types work, but so
 
 ### By-design restrictions
 
-- You cannot create a `DbSet<T>` for an owned type
-- You cannot call `Entity<T>()` with an owned type on `ModelBuilder`
+- You cannot create a `DbSet<T>` for an owned type.
+- You cannot call `Entity<T>()` with an owned type on `ModelBuilder`.
+- Instances of owned entity types cannot be shared by multiple owners (this is a well-known scenario for value objects that cannot be implemented using owned entity types).
 
 ### Current shortcomings
 
 - Owned entity types cannot have inheritance hierarchies
-- Reference navigations to owned entity types cannot be null unless they are explicitly mapped to a separate table from the owner
-- Instances of owned entity types cannot be shared by multiple owners (this is a well-known scenario for value objects that cannot be implemented using owned entity types)
 
 ### Shortcomings in previous versions
 
-- In EF Core 2.0, navigations to owned entity types cannot be declared in derived entity types unless the owned entities are explicitly mapped to a separate table from the owner hierarchy. This limitation has been removed in EF Core 2.1
-- In EF Core 2.0 and 2.1 only reference navigations to owned types were supported. This limitation has been removed in EF Core 2.2
+- In EF Core 2.x reference navigations to owned entity types cannot be null unless they are explicitly mapped to a separate table from the owner.
+- In EF Core 3.x the columns for owned entity types mapped to the same table as the owner are always marked as nullable.
