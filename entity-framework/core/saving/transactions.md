@@ -9,7 +9,7 @@ uid: core/saving/transactions
 
 Transactions allow several database operations to be processed in an atomic manner. If the transaction is committed, all of the operations are successfully applied to the database. If the transaction is rolled back, none of the operations are applied to the database.
 
-> [!TIP]  
+> [!TIP]
 > You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/Transactions/) on GitHub.
 
 ## Default transaction behavior
@@ -28,7 +28,7 @@ While all relational database providers support transactions, other providers ty
 
 ## Savepoints
 
-When `SaveChanges` is invoked and a transaction is already in progress on the context, EF will automatically create a *savepoint* before saving any data. Savepoints are points within a database transaction which may be later be rolled back to, if an error occurs or for any other reason. If `SaveChanges` encounters any error, it will automatically roll the transaction back to the savepoint, leaving the transaction in the same state as if it had never started. This allows you to possibly correct issues and retry saving, in particular when [optimistic concurrency](xref:core/saving/concurrency) issues occur.
+When `SaveChanges` is invoked and a transaction is already in progress on the context, EF automatically creates a *savepoint* before saving any data. Savepoints are points within a database transaction which may later be rolled back to, if an error occurs or for any other reason. If `SaveChanges` encounters any error, it automatically rolls the transaction back to the savepoint, leaving the transaction in the same state as if it had never started. This allows you to possibly correct issues and retry saving, in particular when [optimistic concurrency](xref:core/saving/concurrency) issues occur.
 
 It's also possible to manually manage savepoints, just as it is with transactions. The following example creates a savepoint within a transaction, and rolls back to it on failure:
 
@@ -46,7 +46,7 @@ Sharing a `DbConnection` requires the ability to pass a connection into a contex
 
 The easiest way to allow `DbConnection` to be externally provided, is to stop using the `DbContext.OnConfiguring` method to configure the context and externally create `DbContextOptions` and pass them to the context constructor.
 
-> [!TIP]  
+> [!TIP]
 > `DbContextOptionsBuilder` is the API you used in `DbContext.OnConfiguring` to configure the context, you are now going to use it externally to create `DbContextOptions`.
 
 [!code-csharp[Main](../../../samples/core/Saving/Transactions/SharingTransaction.cs?name=Context&highlight=3,4,5)]
@@ -96,11 +96,11 @@ It is also possible to enlist in an explicit transaction.
 
 [!code-csharp[Main](../../../samples/core/Saving/Transactions/CommitableTransaction.cs?name=Transaction&highlight=1-2,15,28-30)]
 
-### Limitations of System.Transactions  
+### Limitations of System.Transactions
 
-1. EF Core relies on database providers to implement support for System.Transactions. Although support is quite common among ADO.NET providers for .NET Framework, the API has only been recently added to .NET Core and hence support is not as widespread. If a provider does not implement support for System.Transactions, it is possible that calls to these APIs will be completely ignored. SqlClient for .NET Core does support it from 2.1 onwards. SqlClient for .NET Core 2.0 will throw an exception if you attempt to use the feature.
+1. EF Core relies on database providers to implement support for System.Transactions. Although support is quite common among ADO.NET providers for .NET Framework, the API has only been recently added to .NET Core and hence support is not as widespread. If a provider does not implement support for System.Transactions, it is possible that calls to these APIs will be completely ignored. SqlClient for .NET Core does support it from 2.1 onwards. SqlClient for .NET Core 2.0 throws an exception if you attempt to use the feature.
 
-   > [!IMPORTANT]  
+   > [!IMPORTANT]
    > It is recommended that you test that the API behaves correctly with your provider before you rely on it for managing transactions. You are encouraged to contact the maintainer of the database provider if it does not.
 
 2. As of version 2.1, the System.Transactions implementation in .NET Core does not include support for distributed transactions, therefore you cannot use `TransactionScope` or `CommittableTransaction` to coordinate transactions across multiple resource managers.
