@@ -200,4 +200,7 @@ It's also possible to reset all migrations and create a single one without losin
 * Delete your **Migrations** folder
 * Create a new migration and generate a SQL script for it
 * In your database, delete all rows from the migrations history table
-* Insert a single row into the migrations history, to record that the first migration has already been applied, since your tables are already there. The insert SEQL is the last operation in the SQL script generated above.
+* Insert a single row into the migrations history, to record that the first migration has already been applied, since your tables are already there. The insert SQL is the last operation in the SQL script generated above.
+
+> [!WARNING]
+> Any [custom migration code](#customize-migration-code) will be lost when the **Migrations** folder is deleted.  Any customizations must be applied to the new initial migration manually in order to be preserved.
