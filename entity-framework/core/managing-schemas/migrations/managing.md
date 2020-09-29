@@ -203,4 +203,4 @@ It's also possible to reset all migrations and create a single one without losin
 * Insert a single row into the migrations history, to record that the first migration has already been applied, since your tables are already there. The insert SQL is the last operation in the SQL script generated above.
 
 > [!WARNING]
-> Any [custom operations](xref:core/managing-schemas/migrations/operations) will be lost when the **Migrations** folder is deleted.  Any customizations must be moved to the new initial migration manually in order to be preserved.
+> Any [custom migration code](#customize-migration-code) will be lost when the **Migrations** folder is deleted.  Any customizations must be applied to the new initial migration manually in order to be preserved.
