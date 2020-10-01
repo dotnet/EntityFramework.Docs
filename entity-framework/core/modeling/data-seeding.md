@@ -18,9 +18,6 @@ There are several ways this can be accomplished in EF Core:
 
 ## Model seed data
 
-> [!NOTE]
-> This feature is new in EF Core 2.1.
-
 Unlike in EF6, in EF Core, seeding data can be associated with an entity type as part of the model configuration. Then EF Core [migrations](xref:core/managing-schemas/migrations/index) can automatically compute what insert, update or delete operations need to be applied when upgrading the database to a new version of the model.
 
 > [!NOTE]

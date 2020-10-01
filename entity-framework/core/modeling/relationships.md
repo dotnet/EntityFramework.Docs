@@ -267,6 +267,55 @@ With this configuration the columns corresponding to `ShippingAddress` will be m
 
 ### Many-to-many
 
-Many-to-many relationships without an entity class to represent the join table are not yet supported. However, you can represent a many-to-many relationship by including an entity class for the join table and mapping two separate one-to-many relationships.
+Many to many relationships require a collection navigation property on both sides. They will be discovered by convention like other types of relationships.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=ManyToManyShared)]
+
+The way this relationship is implemented in the database is by a join table that contains foreign keys to both `Post` and `Tag`. For example this is what EF will create in a relational database for the above model.
+
+```sql
+CREATE TABLE [Posts] (
+    [PostId] int NOT NULL IDENTITY,
+    [Title] nvarchar(max) NULL,
+    [Content] nvarchar(max) NULL,
+    CONSTRAINT [PK_Posts] PRIMARY KEY ([PostId])
+);
+
+CREATE TABLE [Tags] (
+    [TagId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_Tags] PRIMARY KEY ([TagId])
+);
+
+CREATE TABLE [PostTag] (
+    [PostId] int NOT NULL,
+    [TagId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostId], [TagId]),
+    CONSTRAINT [FK_PostTag_Posts_PostId] FOREIGN KEY ([PostId]) REFERENCES [Posts] ([PostId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PostTag_Tags_TagId] FOREIGN KEY ([TagId]) REFERENCES [Tags] ([TagId]) ON DELETE CASCADE
+);
+```
+
+Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. There is no specific CLR type that can be used for this, so `Dictionary<string, object>` is used. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
+
+The many to many navigations are called skip navigations as they effectively skip over the join entity type. If you are employing bulk configuration all skip navigations can be obtained from `GetSkipNavigations`.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Metadata)]
+
+It is common to apply configuration to the join entity type. This action can be accomplished via `UsingEntity`.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=SharedConfiguration)]
+
+[Model seed data](xref:core/modeling/data-seeding) can be provided for the join entity type by using anonymous types. You can examine the model debug view to determine the property names created by convention.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Seeding)]
+
+Additional data can be stored in the join entity type, but for this it's best to create a bespoke CLR type. When configuring the relationship with a custom join entity type both foreign keys need to be specified explicitly.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyPayload.cs?name=ManyToManyPayload)]
+
+> [!NOTE]
+> The ability to configure many-to-many relationships was added in EF Core 5.0, for previous version use the following approach.
+
+You can also represent a many-to-many relationship by just adding the join entity type and mapping two separate one-to-many relationships.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11-14,16-19,39-46)]

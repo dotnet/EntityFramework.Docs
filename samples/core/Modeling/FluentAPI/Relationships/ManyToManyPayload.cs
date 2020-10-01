@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace EFModeling.FluentAPI.Relationships.ManyToMany
+namespace EFModeling.FluentAPI.Relationships.ManyToManyPayload
 {
-    #region ManyToMany
-    public class MyContext : DbContext
+    #region ManyToManyPayload
+    class MyContext : DbContext
     {
         public MyContext(DbContextOptions<MyContext> options)
             : base(options)
@@ -17,18 +17,23 @@ namespace EFModeling.FluentAPI.Relationships.ManyToMany
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PostTag>()
-                .HasKey(t => new { t.PostId, t.TagId });
-
-            modelBuilder.Entity<PostTag>()
-                .HasOne(pt => pt.Post)
-                .WithMany(p => p.PostTags)
-                .HasForeignKey(pt => pt.PostId);
-
-            modelBuilder.Entity<PostTag>()
-                .HasOne(pt => pt.Tag)
-                .WithMany(t => t.PostTags)
-                .HasForeignKey(pt => pt.TagId);
+            modelBuilder.Entity<Post>()
+                .HasMany(p => p.Tags)
+                .WithMany(p => p.Posts)
+                .UsingEntity<PostTag>(
+                    j => j
+                        .HasOne(pt => pt.Tag)
+                        .WithMany(t => t.PostTags)
+                        .HasForeignKey(pt => pt.TagId),
+                    j => j
+                        .HasOne(pt => pt.Post)
+                        .WithMany(p => p.PostTags)
+                        .HasForeignKey(pt => pt.PostId),
+                    j =>
+                    {
+                        j.Property(pt => pt.PublicationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        j.HasKey(t => new { t.PostId, t.TagId });
+                    });
         }
     }
 
@@ -38,6 +43,7 @@ namespace EFModeling.FluentAPI.Relationships.ManyToMany
         public string Title { get; set; }
         public string Content { get; set; }
 
+        public ICollection<Tag> Tags { get; set; }
         public List<PostTag> PostTags { get; set; }
     }
 
@@ -45,6 +51,7 @@ namespace EFModeling.FluentAPI.Relationships.ManyToMany
     {
         public string TagId { get; set; }
 
+        public ICollection<Post> Posts { get; set; }
         public List<PostTag> PostTags { get; set; }
     }
 
