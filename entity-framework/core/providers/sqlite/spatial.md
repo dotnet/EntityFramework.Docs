@@ -62,7 +62,7 @@ modelBuilder.Entity<City>().Property(c => c.Location)
     .HasColumnType("POINTZ");
 ```
 
-## Translated Operations
+## Spatial function mappings
 
 This table shows which [NetTopologySuite](https://nettopologysuite.github.io/NetTopologySuite/) (NTS) members are translated into which SQL functions.
 
