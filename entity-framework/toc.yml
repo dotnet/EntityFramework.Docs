@@ -74,7 +74,7 @@
       items:
       - name: Connection strings
         href: core/miscellaneous/connection-strings.md
-      - name: Asynchronous Programming
+      - name: Asynchronous programming
         href: core/miscellaneous/async.md
       - name: Logging
         href: core/miscellaneous/logging.md

@@ -2,138 +2,134 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EFSaving.CascadeDelete
 {
     public class Sample
     {
-        public static void Run()
+        public static async Task RunAsync()
         {
-            DeleteBehaviorSample(DeleteBehavior.Cascade, true);
-            DeleteBehaviorSample(DeleteBehavior.ClientSetNull, true);
-            DeleteBehaviorSample(DeleteBehavior.SetNull, true);
-            DeleteBehaviorSample(DeleteBehavior.Restrict, true);
+            await DeleteBehaviorSampleAsync(DeleteBehavior.Cascade, true);
+            await DeleteBehaviorSampleAsync(DeleteBehavior.ClientSetNull, true);
+            await DeleteBehaviorSampleAsync(DeleteBehavior.SetNull, true);
+            await DeleteBehaviorSampleAsync(DeleteBehavior.Restrict, true);
 
-            DeleteBehaviorSample(DeleteBehavior.Cascade, false);
-            DeleteBehaviorSample(DeleteBehavior.ClientSetNull, false);
-            DeleteBehaviorSample(DeleteBehavior.SetNull, false);
-            DeleteBehaviorSample(DeleteBehavior.Restrict, false);
+            await DeleteBehaviorSampleAsync(DeleteBehavior.Cascade, false);
+            await DeleteBehaviorSampleAsync(DeleteBehavior.ClientSetNull, false);
+            await DeleteBehaviorSampleAsync(DeleteBehavior.SetNull, false);
+            await DeleteBehaviorSampleAsync(DeleteBehavior.Restrict, false);
 
-            DeleteOrphansSample(DeleteBehavior.Cascade, true);
-            DeleteOrphansSample(DeleteBehavior.ClientSetNull, true);
-            DeleteOrphansSample(DeleteBehavior.SetNull, true);
-            DeleteOrphansSample(DeleteBehavior.Restrict, true);
+            await DeleteOrphansSampleAsync(DeleteBehavior.Cascade, true);
+            await DeleteOrphansSampleAsync(DeleteBehavior.ClientSetNull, true);
+            await DeleteOrphansSampleAsync(DeleteBehavior.SetNull, true);
+            await DeleteOrphansSampleAsync(DeleteBehavior.Restrict, true);
 
-            DeleteOrphansSample(DeleteBehavior.Cascade, false);
-            DeleteOrphansSample(DeleteBehavior.ClientSetNull, false);
-            DeleteOrphansSample(DeleteBehavior.SetNull, false);
-            DeleteOrphansSample(DeleteBehavior.Restrict, false);
-
+            await DeleteOrphansSampleAsync(DeleteBehavior.Cascade, false);
+            await DeleteOrphansSampleAsync(DeleteBehavior.ClientSetNull, false);
+            await DeleteOrphansSampleAsync(DeleteBehavior.SetNull, false);
+            await DeleteOrphansSampleAsync(DeleteBehavior.Restrict, false);
         }
 
-        private static void DeleteBehaviorSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
+        private static async Task DeleteBehaviorSampleAsync(DeleteBehavior deleteBehavior, bool requiredRelationship)
         {
             Console.WriteLine($"Test using DeleteBehavior.{deleteBehavior} with {(requiredRelationship ? "required" : "optional")} relationship:");
 
-            InitializeDatabase(requiredRelationship);
+            await InitializeDatabaseAsync(requiredRelationship);
 
-            using (var context = new BloggingContext(deleteBehavior, requiredRelationship))
+            await using var context = new BloggingContext(deleteBehavior, requiredRelationship);
+
+            #region DeleteBehaviorVariations
+            var blog = await context.Blogs.Include(b => b.Posts).FirstAsync();
+            var posts = await blog.Posts.AsQueryable().ToListAsync();
+
+            DumpEntities("  After loading entities:", context, blog, posts);
+
+            context.Remove(blog);
+
+            DumpEntities($"  After deleting blog '{blog.BlogId}':", context, blog, posts);
+
+            try
             {
-                #region DeleteBehaviorVariations
-                var blog = context.Blogs.Include(b => b.Posts).First();
-                var posts = blog.Posts.ToList();
+                Console.WriteLine();
+                Console.WriteLine("  Saving changes:");
 
-                DumpEntities("  After loading entities:", context, blog, posts);
+                await context.SaveChangesAsync();
 
-                context.Remove(blog);
+                DumpSql();
 
-                DumpEntities($"  After deleting blog '{blog.BlogId}':", context, blog, posts);
-
-                try
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("  Saving changes:");
-
-                    context.SaveChanges();
-
-                    DumpSql();
-
-                    DumpEntities("  After SaveChanges:", context, blog, posts);
-                }
-                catch (Exception e)
-                {
-                    DumpSql();
-
-                    Console.WriteLine();
-                    Console.WriteLine($"  SaveChanges threw {e.GetType().Name}: {(e is DbUpdateException ? e.InnerException.Message : e.Message)}");
-                }
-                #endregion
+                DumpEntities("  After SaveChanges:", context, blog, posts);
             }
+            catch (Exception e)
+            {
+                DumpSql();
+
+                Console.WriteLine();
+                Console.WriteLine($"  SaveChanges threw {e.GetType().Name}: {(e is DbUpdateException ? e.InnerException.Message : e.Message)}");
+            }
+            #endregion
 
             Console.WriteLine();
         }
 
-        private static void DeleteOrphansSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
+        private static async Task DeleteOrphansSampleAsync(DeleteBehavior deleteBehavior, bool requiredRelationship)
         {
             Console.WriteLine($"Test deleting orphans with DeleteBehavior.{deleteBehavior} and {(requiredRelationship ? "a required" : "an optional")} relationship:");
 
-            InitializeDatabase(requiredRelationship);
+            await InitializeDatabaseAsync(requiredRelationship);
 
-            using (var context = new BloggingContext(deleteBehavior, requiredRelationship))
+            await using var context = new BloggingContext(deleteBehavior, requiredRelationship);
+
+            #region DeleteOrphansVariations
+            var blog = await context.Blogs.Include(b => b.Posts).FirstAsync();
+            var posts = await blog.Posts.AsQueryable().ToListAsync();
+
+            DumpEntities("  After loading entities:", context, blog, posts);
+
+            blog.Posts.Clear();
+
+            DumpEntities("  After making posts orphans:", context, blog, posts);
+
+            try
             {
-                #region DeleteOrphansVariations
-                var blog = context.Blogs.Include(b => b.Posts).First();
-                var posts = blog.Posts.ToList();
+                Console.WriteLine();
+                Console.WriteLine("  Saving changes:");
 
-                DumpEntities("  After loading entities:", context, blog, posts);
+                await context.SaveChangesAsync();
 
-                blog.Posts.Clear();
+                DumpSql();
 
-                DumpEntities("  After making posts orphans:", context, blog, posts);
-
-                try
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("  Saving changes:");
-
-                    context.SaveChanges();
-
-                    DumpSql();
-
-                    DumpEntities("  After SaveChanges:", context, blog, posts);
-                }
-                catch (Exception e)
-                {
-                    DumpSql();
-
-                    Console.WriteLine();
-                    Console.WriteLine($"  SaveChanges threw {e.GetType().Name}: {(e is DbUpdateException ? e.InnerException.Message : e.Message)}");
-                }
-                #endregion
+                DumpEntities("  After SaveChanges:", context, blog, posts);
             }
+            catch (Exception e)
+            {
+                DumpSql();
+
+                Console.WriteLine();
+                Console.WriteLine($"  SaveChanges threw {e.GetType().Name}: {(e is DbUpdateException ? e.InnerException.Message : e.Message)}");
+            }
+            #endregion
 
             Console.WriteLine();
         }
 
-        private static void InitializeDatabase(bool requiredRelationship)
+        private static async Task InitializeDatabaseAsync(bool requiredRelationship)
         {
-            using (var context = new BloggingContext(DeleteBehavior.ClientSetNull, requiredRelationship))
+            await using var context = new BloggingContext(DeleteBehavior.ClientSetNull, requiredRelationship);
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
+
+            context.Blogs.Add(new Blog
             {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-
-                context.Blogs.Add(new Blog
+                Url = "http://sample.com",
+                Posts = new List<Post>
                 {
-                    Url = "http://sample.com",
-                    Posts = new List<Post>
-                    {
-                        new Post {Title = "Saving Data with EF"},
-                        new Post {Title = "Cascade Delete with EF"}
-                    }
-                });
+                    new Post {Title = "Saving Data with EF"},
+                    new Post {Title = "Cascade Delete with EF"}
+                }
+            });
 
-                context.SaveChanges();
-            }
+            await context.SaveChangesAsync();
         }
 
         private static void DumpEntities(string message, BloggingContext context, Blog blog, IList<Post> posts)
@@ -150,7 +146,7 @@ namespace EFSaving.CascadeDelete
                 var postEntry = context.Entry(post);
 
                 Console.WriteLine(
-                    $"      Post '{post.PostId}' is in state {postEntry.State} " + 
+                    $"      Post '{post.PostId}' is in state {postEntry.State} " +
                     $"with FK '{post.BlogId?.ToString() ?? "null"}' and {(post.Blog == null ? "no reference to a blog." : $"reference to blog '{post.BlogId}'." )}");
             }
         }

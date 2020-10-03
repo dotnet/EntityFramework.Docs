@@ -1,76 +1,75 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Concurrency
 {
     public class Sample
     {
-        public static void Run()
+        public static async Task RunAsync()
         {
             // Ensure database is created and has a person in it
-            using (var context = new PersonContext())
+            await using (var setupContext = new PersonContext())
             {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                await setupContext.Database.EnsureDeletedAsync();
+                await setupContext.Database.EnsureCreatedAsync();
 
-                context.People.Add(new Person { FirstName = "John", LastName = "Doe" });
-                context.SaveChanges();
+                setupContext.People.Add(new Person { FirstName = "John", LastName = "Doe" });
+                await setupContext.SaveChangesAsync();
             }
 
-            # region ConcurrencyHandlingCode
-            using (var context = new PersonContext())
+            #region ConcurrencyHandlingCode
+            await using var context = new PersonContext();
+            // Fetch a person from database and change phone number
+            var person = context.People.Single(p => p.PersonId == 1);
+            person.PhoneNumber = "555-555-5555";
+
+            // Change the person's name in the database to simulate a concurrency conflict
+            await context.Database.ExecuteSqlRawAsync(
+                "UPDATE dbo.People SET FirstName = 'Jane' WHERE PersonId = 1");
+
+            var saved = false;
+            while (!saved)
             {
-                // Fetch a person from database and change phone number
-                var person = context.People.Single(p => p.PersonId == 1);
-                person.PhoneNumber = "555-555-5555";
-
-                // Change the person's name in the database to simulate a concurrency conflict
-                context.Database.ExecuteSqlRaw(
-                    "UPDATE dbo.People SET FirstName = 'Jane' WHERE PersonId = 1");
-
-                var saved = false;
-                while (!saved)
+                try
                 {
-                    try
+                    // Attempt to save changes to the database
+                    await context.SaveChangesAsync();
+                    saved = true;
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    foreach (var entry in ex.Entries)
                     {
-                        // Attempt to save changes to the database
-                        context.SaveChanges();
-                        saved = true;
-                    }
-                    catch (DbUpdateConcurrencyException ex)
-                    {
-                        foreach (var entry in ex.Entries)
+                        if (entry.Entity is Person)
                         {
-                            if (entry.Entity is Person)
+                            var proposedValues = entry.CurrentValues;
+                            var databaseValues = await entry.GetDatabaseValuesAsync();
+
+                            foreach (var property in proposedValues.Properties)
                             {
-                                var proposedValues = entry.CurrentValues;
-                                var databaseValues = entry.GetDatabaseValues();
+                                var proposedValue = proposedValues[property];
+                                var databaseValue = databaseValues[property];
 
-                                foreach (var property in proposedValues.Properties)
-                                {
-                                    var proposedValue = proposedValues[property];
-                                    var databaseValue = databaseValues[property];
-
-                                    // TODO: decide which value should be written to database
-                                    // proposedValues[property] = <value to be saved>;
-                                }
-
-                                // Refresh original values to bypass next concurrency check
-                                entry.OriginalValues.SetValues(databaseValues);
+                                // TODO: decide which value should be written to database
+                                // proposedValues[property] = <value to be saved>;
                             }
-                            else
-                            {
-                                throw new NotSupportedException(
-                                    "Don't know how to handle concurrency conflicts for "
-                                    + entry.Metadata.Name);
-                            }
+
+                            // Refresh original values to bypass next concurrency check
+                            entry.OriginalValues.SetValues(databaseValues);
+                        }
+                        else
+                        {
+                            throw new NotSupportedException(
+                                "Don't know how to handle concurrency conflicts for "
+                                + entry.Metadata.Name);
                         }
                     }
                 }
             }
-            # endregion
+            #endregion
         }
 
         public class PersonContext : DbContext
