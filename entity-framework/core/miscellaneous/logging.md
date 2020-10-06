@@ -21,7 +21,7 @@ EF Core generates log messages for operations such as executing a query or savin
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.LogTo(Console.WriteLine);
 -->
-[!code-csharp[LogToConsole](../../../samples/core/Miscellaneous/Collations/Program.cs?name=LogToConsole)]
+[!code-csharp[LogToConsole](../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=LogToConsole)]
 
 This is a similar concept to [DbContext.Database.Log](/dotnet/api/system.data.entity.database.log) in EF6.
 
