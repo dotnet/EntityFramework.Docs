@@ -72,3 +72,14 @@ Rather than specifying the schema for each table, you can also define the defaul
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DefaultSchema.cs?name=DefaultSchema&highlight=3)]
 
 Note that setting the default schema will also affect other database objects, such as sequences.
+
+## View mapping
+
+Entity types can be mapped to database views using the Fluent API.
+
+> [!Note]
+> EF will assume that the referenced view already exists in the database, it will not create it automatically in a migration.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ViewNameAndSchema.cs?name=ViewNameAndSchema&highlight=1)]
+
+ Mapping to a view will remove the default table mapping, but the entity type can also be mapped to a table explicitly. In this case the query mapping will be used for queries and the table mapping will be used for updates.
