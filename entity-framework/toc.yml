@@ -249,6 +249,8 @@
         - name: Spatial data
           displayName: GIS
           href: core/providers/sqlite/spatial.md
+        - name: Microsoft.Data.Sqlite >>
+          href: /dotnet/standard/data/sqlite/
       - name: Cosmos
         items:
         - name: Overview

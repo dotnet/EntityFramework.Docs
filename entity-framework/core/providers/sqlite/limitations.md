@@ -88,3 +88,8 @@ Otherwise, we recommend using `dotnet ef database update` to apply migrations. S
 ```dotnetcli
 dotnet ef database update --connection "Data Source=My.db"
 ```
+
+## See also
+
+* [Microsoft.Data.Sqlite Async Limitations](/dotnet/standard/data/sqlite/async)
+* [Microsoft.Data.Sqlite ADO.NET Limitations](/dotnet/standard/data/sqlite/adonet-limitations)
