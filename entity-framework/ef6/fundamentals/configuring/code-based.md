@@ -1,7 +1,7 @@
 ---
 title: Code-based configuration - EF6
 description: Code-based configuration in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/configuring/code-based
 ---

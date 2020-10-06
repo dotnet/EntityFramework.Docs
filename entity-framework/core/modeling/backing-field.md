@@ -1,7 +1,7 @@
 ---
 title: Backing Fields - EF Core
 description: Configuring backing fields for properties in an Entity Framework Core model
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: core/modeling/backing-field
 ---

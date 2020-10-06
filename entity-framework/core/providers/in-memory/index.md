@@ -1,7 +1,7 @@
 ---
 title: InMemory Database Provider - EF Core
 description: Information on the Entity Framework Core InMemory database provider
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: core/providers/in-memory/index
 ---

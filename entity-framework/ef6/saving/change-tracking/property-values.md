@@ -1,7 +1,7 @@
 ---
 title: Working with property values - EF6
 description: Working with property values in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/saving/change-tracking/property-values
 ---

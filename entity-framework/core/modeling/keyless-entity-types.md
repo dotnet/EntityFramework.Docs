@@ -2,7 +2,6 @@
 title: Keyless Entity Types - EF Core
 description: How to configure keyless entity types using Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 9/13/2019
 uid: core/modeling/keyless-entity-types
 ---

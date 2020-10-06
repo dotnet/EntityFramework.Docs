@@ -1,7 +1,7 @@
 ---
 title: Handling Concurrency Conflicts - EF Core
 description: Managing conflicts when the same data is updated concurrently with Entity Framework Core
-author: rowanmiller
+author: ajcvickers
 ms.date: 03/03/2018
 uid: core/saving/concurrency
 ---

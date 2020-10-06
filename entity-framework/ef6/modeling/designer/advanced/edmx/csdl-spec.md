@@ -1,7 +1,7 @@
 ---
 title: CSDL Specification - EF6
 description: CSDL Specification in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/advanced/edmx/csdl-spec
 ---

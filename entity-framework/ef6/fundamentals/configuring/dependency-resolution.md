@@ -1,7 +1,7 @@
 ---
 title: Dependency resolution - EF6
 description: Dependency resolution in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/configuring/dependency-resolution
 ---

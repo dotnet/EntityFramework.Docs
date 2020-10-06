@@ -1,7 +1,7 @@
 ---
 title: Configuring a DbContext - EF Core
 description: Strategies for configuring DbContexts with Entity Framework Core
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: core/miscellaneous/configuring-dbcontext
 ---

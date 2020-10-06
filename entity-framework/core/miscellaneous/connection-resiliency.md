@@ -1,7 +1,7 @@
 ---
 title: Connection Resiliency - EF Core
 description: Using connection resiliency to automatically retry failed commands with Entity Framework Core
-author: rowanmiller
+author: AndriySvyryd
 ms.date: 11/15/2016
 uid: core/miscellaneous/connection-resiliency
 ---

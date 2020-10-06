@@ -2,7 +2,6 @@
 title: Data Seeding - EF Core
 description: Using data seeding to populate a database with an initial set of data using Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/02/2018
 uid: core/modeling/data-seeding
 ---

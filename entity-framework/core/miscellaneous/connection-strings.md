@@ -1,7 +1,7 @@
 ---
 title: Connection Strings - EF Core
 description: Managing connection strings under different environments with Entity Framework Core
-author: rowanmiller
+author: bricelam
 ms.date: 10/27/2016
 uid: core/miscellaneous/connection-strings
 ---

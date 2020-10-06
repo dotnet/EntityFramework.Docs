@@ -1,7 +1,7 @@
 ---
 title: Entity Properties - EF Core
 description: How to configure and map entity properties using Entity Framework Core
-author: lajones
+author: roji
 ms.date: 05/27/2020
 uid: core/modeling/entity-properties
 ---

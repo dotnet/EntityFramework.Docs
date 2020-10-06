@@ -1,7 +1,7 @@
 ---
 title: Loading Related Entities - EF6
 description: Loading Related Entities in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/querying/related-data
 ---

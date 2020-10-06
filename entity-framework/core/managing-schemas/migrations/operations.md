@@ -2,7 +2,6 @@
 title: Custom Migrations Operations - EF Core
 description: Managing custom and raw SQL migrations for database schema management with Entity Framework Core
 author: bricelam
-ms.author: bricelam
 ms.date: 11/07/2017
 uid: core/managing-schemas/migrations/operations
 ---

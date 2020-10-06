@@ -2,7 +2,6 @@
 title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: bricelam
-ms.author: bricelam
 ms.date: 09/09/2020
 uid: core/miscellaneous/cli/powershell
 ---

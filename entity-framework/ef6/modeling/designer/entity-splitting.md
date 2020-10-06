@@ -1,7 +1,7 @@
 ---
 title: Designer Entity Splitting - EF6
 description: Designer Entity Splitting in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/entity-splitting
 ---

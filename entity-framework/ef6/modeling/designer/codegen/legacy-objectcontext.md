@@ -1,7 +1,7 @@
 ---
 title: Reverting to ObjectContext in Entity Framework Designer - EF6
 description: Reverting to ObjectContext in Entity Framework Designer in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/designer/codegen/legacy-objectcontext
 ---

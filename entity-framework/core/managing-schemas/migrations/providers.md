@@ -2,7 +2,6 @@
 title: Migrations with Multiple Providers - EF Core
 description: Using migrations to manage database schemas when targeting multiple database providers with Entity Framework Core
 author: bricelam
-ms.author: bricelam
 ms.date: 11/08/2017
 uid: core/managing-schemas/migrations/providers
 ---

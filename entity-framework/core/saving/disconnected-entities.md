@@ -2,7 +2,6 @@
 title: Disconnected Entities - EF Core
 description: Working with disconnected, untracked entities across multiple context instances in Entity Framework Core
 author: ajcvickers
-ms.author: avickers
 ms.date: 10/27/2016
 uid: core/saving/disconnected-entities
 ---

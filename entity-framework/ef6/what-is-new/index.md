@@ -1,7 +1,7 @@
 ---
 title: What's new - EF6
 description: What's new in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 09/12/2019
 uid: ef6/what-is-new/index
 ---

@@ -1,7 +1,7 @@
 ---
 title: Porting from EF6 to EF Core - EF
 description: General information on porting an application from Entity Framework 6 to Entity Framework Core
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: efcore-and-ef6/porting/index
 ---

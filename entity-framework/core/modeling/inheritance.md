@@ -2,7 +2,6 @@
 title: Inheritance - EF Core
 description: How to configure entity type inheritance using Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 10/27/2016
 uid: core/modeling/inheritance
 ---

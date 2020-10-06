@@ -2,7 +2,6 @@
 title: Entity Framework Core tools reference - EF Core
 description: Reference guide for the Entity Framework Core CLI tool and the Visual Studio Package Manager Console
 author: bricelam
-ms.author: bricelam
 ms.date: 09/19/2018
 uid: core/miscellaneous/cli/index
 ---

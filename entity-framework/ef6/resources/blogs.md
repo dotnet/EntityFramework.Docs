@@ -1,7 +1,7 @@
 ---
 title: Entity Framework Blogs - EF6
 description: Entity Framework 6 Blogs
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 ---
 # Entity Framework Blogs

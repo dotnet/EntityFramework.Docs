@@ -1,7 +1,7 @@
 ---
 title: The Entity Framework 6 provider model - EF6
 description: The Entity Framework 6 provider model in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 06/27/2018
 uid: ef6/fundamentals/providers/provider-model
 ---

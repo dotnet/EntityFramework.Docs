@@ -1,7 +1,7 @@
 ---
 title: What is new in EF Core 2.2 - EF Core
 description: Changes and improvements in Entity Framework Core 2.2
-author: divega
+author: ajcvickers
 ms.date: 11/14/2018
 uid: core/what-is-new/ef-core-2.2
 ---

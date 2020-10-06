@@ -2,7 +2,6 @@
 title: Keys - EF Core
 description: How to configure keys for entity types when using Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/keys
 ---

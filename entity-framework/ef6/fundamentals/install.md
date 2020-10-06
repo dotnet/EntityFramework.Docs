@@ -1,7 +1,7 @@
 ---
 title: Get Entity Framework - EF6
 description: Get Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/install
 ---

@@ -2,7 +2,6 @@
 title: Using a Separate Migrations Project - EF Core
 description: Using a separate migration project for managing database schemas with Entity Framework Core
 author: bricelam
-ms.author: bricelam
 ms.date: 10/30/2017
 uid: core/managing-schemas/migrations/projects
 ---

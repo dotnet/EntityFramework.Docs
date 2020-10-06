@@ -2,7 +2,6 @@
 title: Microsoft SQL Server Database Provider - EF Core
 description: Documentation for the database provider that allows Entity Framework Core to be used with Microsoft SQL Server
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/sql-server/index
 ---

@@ -1,7 +1,7 @@
 ---
 title: Query Tags - EF Core
 description: Using query tags to help identify specific queries in log messages emitted by Entity Framework Core
-author: divega
+author: roji
 ms.date: 11/14/2018
 uid: core/querying/tags
 ---

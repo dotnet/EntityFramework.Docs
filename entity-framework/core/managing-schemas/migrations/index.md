@@ -2,7 +2,6 @@
 title: Migrations Overview - EF Core
 description: Overview of using migrations to manage database schemas with Entity Framework Core
 author: bricelam
-ms.author: bricelam
 ms.date: 05/06/2020
 uid: core/managing-schemas/migrations/index
 ---

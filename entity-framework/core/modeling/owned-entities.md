@@ -2,7 +2,6 @@
 title: Owned Entity Types - EF Core
 description: How to configure owned entity types or aggregates when using Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/owned-entities
 ---

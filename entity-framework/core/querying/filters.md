@@ -1,7 +1,7 @@
 ---
 title: Global Query Filters - EF Core
 description: Using global query filters to filter results with Entity Framework Core
-author: anpete
+author: maumar
 ms.date: 11/03/2017
 uid: core/querying/filters
 ---

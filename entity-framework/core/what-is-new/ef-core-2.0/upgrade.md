@@ -1,7 +1,7 @@
 ---
 title: Upgrading from previous versions to EF Core 2 - EF Core
 description: Instructions and notes for upgrading to Entity Framework Core 2.0
-author: divega
+author: ajcvickers
 ms.date: 08/13/2017
 uid: core/what-is-new/ef-core-2.0/upgrade
 ---

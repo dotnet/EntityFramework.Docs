@@ -2,7 +2,6 @@
 title: EF Core tools reference (.NET CLI) - EF Core
 description: Reference guide for the Entity Framework Core .NET Core CLI tools
 author: bricelam
-ms.author: bricelam
 ms.date: 09/17/2020
 uid: core/miscellaneous/cli/dotnet
 ---
