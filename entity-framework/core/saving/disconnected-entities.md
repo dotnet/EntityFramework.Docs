@@ -67,9 +67,6 @@ However, if the entity uses auto-generated key values, then the Update method ca
 
 The Update method normally marks the entity for update, not insert. However, if the entity has a auto-generated key, and no key value has been set, then the entity is instead automatically marked for insert.
 
-> [!TIP]  
-> This behavior was introduced in EF Core 2.0. For earlier releases it is always necessary to explicitly choose either Add or Update.
-
 If the entity is not using auto-generated keys, then the application must decide whether the entity should be inserted or updated: For example:
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntityWithFind)]

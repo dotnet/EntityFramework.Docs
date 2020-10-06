@@ -7,13 +7,10 @@ uid: core/modeling/constructors
 ---
 # Entity types with constructors
 
-> [!NOTE]  
-> This feature is new in EF Core 2.1.
-
-Starting with EF Core 2.1, it is now possible to define a constructor with parameters and have EF Core call this constructor when creating an instance of the entity. The constructor parameters can be bound to mapped properties, or to various kinds of services to facilitate behaviors like lazy-loading.
+It's possible to define a constructor with parameters and have EF Core call this constructor when creating an instance of the entity. The constructor parameters can be bound to mapped properties, or to various kinds of services to facilitate behaviors like lazy-loading.
 
 > [!NOTE]  
-> As of EF Core 2.1, all constructor binding is by convention. Configuration of specific constructors to use is planned for a future release.
+> Currently, all constructor binding is by convention. Configuration of specific constructors to use is planned for a future release.
 
 ## Binding to mapped properties
 
@@ -215,7 +212,7 @@ EF Core can also inject "services" into an entity type's constructor. For exampl
 * `IEntityType` - the EF Core metadata associated with this entity type
 
 > [!NOTE]  
-> As of EF Core 2.1, only services known by EF Core can be injected. Support for injecting application services is being considered for a future release.
+> Currently, only services known by EF Core can be injected. Support for injecting application services is being considered for a future release.
 
 For example, an injected DbContext can be used to selectively access the database to obtain information about related entities without loading them all. In the example below this is used to obtain the number of posts in a blog without loading the posts:
 

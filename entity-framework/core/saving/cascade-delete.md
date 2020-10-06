@@ -64,9 +64,6 @@ At a high level:
 > [!NOTE]
 > In EF Core, unlike EF6, cascading effects do not happen immediately, but instead only when SaveChanges is called.
 
-> [!NOTE]  
-> **Changes in EF Core 2.0:** In previous releases, *Restrict* would cause optional foreign key properties in tracked dependent entities to be set to null, and was the default delete behavior for optional relationships. In EF Core 2.0, the *ClientSetNull* was introduced to represent that behavior and became the default for optional relationships. The behavior of *Restrict* was adjusted to never have any side effects on dependent entities.
-
 ## Entity deletion examples
 
 The code below is part of a [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) that can be downloaded and run. The sample shows what happens for each delete behavior for both optional and required relationships when a parent entity is deleted.

@@ -122,16 +122,6 @@ For ASP.NET Core apps, this package is included automatically.
 
 * EF Core, together with the SQL Server and the in-memory providers are included in current versions of ASP.NET Core. To upgrade an existing ASP.NET Core application to a newer version of EF Core, always upgrade the version of ASP.NET Core.
 
-* If you need to update an application that is using a third-party database provider, always check for an update of the provider that is compatible with the version of EF Core you want to use. For example, database providers for previous versions are not compatible with version 2.0 of the EF Core runtime.
+* If you need to update an application that is using a third-party database provider, always check for an update of the provider that is compatible with the version of EF Core you want to use. For example, database providers for version 1.0 are not compatible with version 2.0 of the EF Core runtime.
 
 * Third-party providers for EF Core usually don't release patch versions alongside the EF Core runtime. To upgrade an application that uses a third-party provider to a patch version of EF Core, you may need to add a direct reference to individual EF Core runtime components, such as Microsoft.EntityFrameworkCore, and Microsoft.EntityFrameworkCore.Relational.
-
-* If you're upgrading an existing application to the latest version of EF Core, some references to older EF Core packages may need to be removed manually:
-
-  * Database provider design-time packages such as `Microsoft.EntityFrameworkCore.SqlServer.Design` are no longer required or supported from EF Core 2.0 and later, but aren't automatically removed when upgrading the other packages.
-
-  * The .NET CLI tools are included in the .NET SDK since version 2.1, so the reference to that package can be removed from the project file:
-
-    ``` xml
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
-    ```

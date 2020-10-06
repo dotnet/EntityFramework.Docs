@@ -44,28 +44,28 @@ A rebuild will be attempted in order to perform certain operations. Rebuilds are
 | Operation            | Supported?  | Requires version |
 |:---------------------|:------------|:-----------------|
 | AddCheckConstraint   | ✔ (rebuild) | 5.0              |
-| AddColumn            | ✔           | 1.0              |
+| AddColumn            | ✔           |                  |
 | AddForeignKey        | ✔ (rebuild) | 5.0              |
 | AddPrimaryKey        | ✔ (rebuild) | 5.0              |
 | AddUniqueConstraint  | ✔ (rebuild) | 5.0              |
 | AlterColumn          | ✔ (rebuild) | 5.0              |
-| CreateIndex          | ✔           | 1.0              |
-| CreateTable          | ✔           | 1.0              |
+| CreateIndex          | ✔           |                  |
+| CreateTable          | ✔           |                  |
 | DropCheckConstraint  | ✔ (rebuild) | 5.0              |
 | DropColumn           | ✔ (rebuild) | 5.0              |
 | DropForeignKey       | ✔ (rebuild) | 5.0              |
-| DropIndex            | ✔           | 1.0              |
+| DropIndex            | ✔           |                  |
 | DropPrimaryKey       | ✔ (rebuild) | 5.0              |
-| DropTable            | ✔           | 1.0              |
+| DropTable            | ✔           |                  |
 | DropUniqueConstraint | ✔ (rebuild) | 5.0              |
-| RenameColumn         | ✔           | 2.2.2            |
-| RenameIndex          | ✔ (rebuild) | 2.1              |
-| RenameTable          | ✔           | 1.0              |
-| EnsureSchema         | ✔ (no-op)   | 2.0              |
-| DropSchema           | ✔ (no-op)   | 2.0              |
-| Insert               | ✔           | 2.0              |
-| Update               | ✔           | 2.0              |
-| Delete               | ✔           | 2.0              |
+| RenameColumn         | ✔           | 2.2              |
+| RenameIndex          | ✔ (rebuild) |                  |
+| RenameTable          | ✔           |                  |
+| EnsureSchema         | ✔ (no-op)   |                  |
+| DropSchema           | ✔ (no-op)   |                  |
+| Insert               | ✔           |                  |
+| Update               | ✔           |                  |
+| Delete               | ✔           |                  |
 
 ### Migrations limitations workaround
 

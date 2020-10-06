@@ -13,9 +13,9 @@ If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools]
 
 ## Installing the tools
 
-The procedures for installing and updating the tools differ between ASP.NET Core 2.1+ and earlier versions or other project types.
+The procedures for installing and updating the tools differ between ASP.NET Core and other project types.
 
-### ASP.NET Core version 2.1 and later
+### ASP.NET Core projects
 
 The tools are automatically included in an ASP.NET Core 2.1+ project because the `Microsoft.EntityFrameworkCore.Tools` package is included in the [Microsoft.AspNetCore.App metapackage](/aspnet/core/fundamentals/metapackage-app).
 
@@ -46,7 +46,7 @@ To update the tools:
 * Update Visual Studio to the latest version.
 * Edit the *.csproj* file so that it includes a package reference to the latest tools package, as shown earlier.
 
-### Other versions and project types
+### Other project types
 
 Install the Package Manager Console tools by running the following command in **Package Manager Console**:
 
