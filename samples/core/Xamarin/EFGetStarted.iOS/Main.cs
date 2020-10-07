@@ -5,6 +5,8 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
+
+
 namespace EFGetStarted.iOS
 {
     public class Application
@@ -15,6 +17,7 @@ namespace EFGetStarted.iOS
             // if you want to use a different Application Delegate class from "AppDelegate"
             // you can specify it here.
             UIApplication.Main(args, null, "AppDelegate");
+            
         }
     }
 }
