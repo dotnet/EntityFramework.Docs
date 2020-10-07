@@ -229,6 +229,8 @@
         items:
         - name: Overview
           href: core/providers/sql-server/index.md
+        - name: Function mappings
+          href: core/providers/sql-server/functions.md
         - name: Indexes
           href: core/providers/sql-server/indexes.md
         - name: Memory-optimized tables

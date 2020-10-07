@@ -11,10 +11,11 @@ This page shows which .NET members are translated into which SQL functions when 
 
 ## Binary functions
 
-.NET                  | SQL                             | Added in
---------------------- | ------------------------------- | --------
-bytes.Contains(value) | instr(@bytes, char(@value)) > 0 | EF Core 5.0
-bytes.Length          | length(@bytes)                  | EF Core 5.0
+.NET                        | SQL                             | Added in
+--------------------------- | ------------------------------- | --------
+bytes.Contains(value)       | instr(@bytes, char(@value)) > 0 | EF Core 5.0
+bytes.Length                | length(@bytes)                  | EF Core 5.0
+bytes.SequenceEqual(second) | @bytes = @second                | EF Core 5.0
 
 ## Date and time functions
 
@@ -74,29 +75,45 @@ Math.Round(d, digits) | round(@d, @digits)
 
 ## String functions
 
-.NET                                      | SQL                                            | Added in
------------------------------------------ | ---------------------------------------------- | --------
-string.IsNullOrWhiteSpace(value)          | @value IS NULL OR trim(@value) = ''
-stringValue.Contains(value)               | instr(@stringValue, @value) > 0
-stringValue.EndsWith(value)               | @stringValue LIKE '%' \|\| @value
-stringValue.FirstOrDefault()              | substr(@stringValue, 1, 1)                     | EF Core 5.0
-stringValue.IndexOf(value)                | instr(@stringValue, @value) - 1
-stringValue.LastOrDefault()               | substr(@stringValue, length(@stringValue), 1)  | EF Core 5.0
-stringValue.Length                        | length(@stringValue)
-stringValue.Replace(oldValue, newValue)   | replace(@stringValue, @oldValue, @newValue)
-stringValue.StartsWith(value)             | @stringValue LIKE @value \|\| '%'
-stringValue.Substring(startIndex, length) | substr(@stringValue, @startIndex + 1, @length)
-stringValue.ToLower()                     | lower(@stringValue)
-stringValue.ToUpper()                     | upper(@stringValue)
-stringValue.Trim()                        | trim(@stringValue)
-stringValue.Trim(trimChar)                | trim(@stringValue, @trimChar)
-stringValue.TrimEnd()                     | rtrim(@stringValue)
-stringValue.TrimEnd(trimChar)             | rtrim(@stringValue, @trimChar)
-stringValue.TrimStart()                   | ltrim(@stringValue)
-stringValue.TrimStart(trimChar)           | ltrim(@stringValue, @trimChar)
+.NET                                                         | SQL                                                    | Added in
+------------------------------------------------------------ | ------------------------------------------------------ | --------
+EF.Functions.Collate(operand, collation)                     | @operand COLLATE @collation                            | EF Core 5.0
+EF.Functions.Like(matchExpression, pattern)                  | @matchExpression LIKE @pattern
+EF.Functions.Like(matchExpression, pattern, escapeCharacter) | @matchExpression LIKE @pattern ESCAPE @escapeCharacter
+string.Compare(strA, strB)                                   | CASE WHEN @strA = @strB THEN 0 ... END
+string.Concat(str0, str1)                                    | @str0 \|\| @str1
+string.IsNullOrEmpty(value)                                  | @value IS NULL OR @value = ''
+string.IsNullOrWhiteSpace(value)                             | @value IS NULL OR trim(@value) = ''
+stringValue.CompareTo(strB)                                  | CASE WHEN @stringValue = @strB THEN 0 ... END
+stringValue.Contains(value)                                  | instr(@stringValue, @value) > 0
+stringValue.EndsWith(value)                                  | @stringValue LIKE '%' \|\| @value
+stringValue.FirstOrDefault()                                 | substr(@stringValue, 1, 1)                             | EF Core 5.0
+stringValue.IndexOf(value)                                   | instr(@stringValue, @value) - 1
+stringValue.LastOrDefault()                                  | substr(@stringValue, length(@stringValue), 1)          | EF Core 5.0
+stringValue.Length                                           | length(@stringValue)
+stringValue.Replace(oldValue, newValue)                      | replace(@stringValue, @oldValue, @newValue)
+stringValue.StartsWith(value)                                | @stringValue LIKE @value \|\| '%'
+stringValue.Substring(startIndex, length)                    | substr(@stringValue, @startIndex + 1, @length)
+stringValue.ToLower()                                        | lower(@stringValue)
+stringValue.ToUpper()                                        | upper(@stringValue)
+stringValue.Trim()                                           | trim(@stringValue)
+stringValue.Trim(trimChar)                                   | trim(@stringValue, @trimChar)
+stringValue.TrimEnd()                                        | rtrim(@stringValue)
+stringValue.TrimEnd(trimChar)                                | rtrim(@stringValue, @trimChar)
+stringValue.TrimStart()                                      | ltrim(@stringValue)
+stringValue.TrimStart(trimChar)                              | ltrim(@stringValue, @trimChar)
 
 > [!NOTE]
 > Some SQL has been simplified for illustration purposes. The actual SQL is more complex to handle a wider range of values.
+
+## Miscellaneous functions
+
+.NET                                     | SQL                                | Added in
+---------------------------------------- | ---------------------------------- | --------
+collection.Contains(item)                | @item IN @collection               | EF Core 3.0
+enumValue.HasFlag(flag)                  | @enumValue & @flag = @flag
+nullable.GetValueOrDefault()             | coalesce(@nullable, 0)
+nullable.GetValueOrDefault(defaultValue) | coalesce(@nullable, @defaultValue)
 
 ## See also
 

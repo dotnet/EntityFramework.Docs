@@ -31,7 +31,7 @@ As mentioned in the main [Spatial Data](xref:core/modeling/spatial) documentatio
 > [!WARNING]
 > CircularString, CompoundCurve, and CurePolygon aren't supported by NTS.
 
-## Translated Operations
+## Spatial function mappings
 
 This table shows which NTS members are translated into which SQL functions. Note that the translations vary depending on whether the column is of type geography or geometry.
 
