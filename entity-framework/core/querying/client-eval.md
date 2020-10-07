@@ -13,21 +13,21 @@ As a general rule, Entity Framework Core attempts to evaluate a query on the ser
 > Prior to version 3.0, Entity Framework Core supported client evaluation anywhere in the query. For more information, see the [previous versions section](#previous-versions).
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying/ClientEvaluation) on GitHub.
 
 ## Client evaluation in the top-level projection
 
 In the following example, a helper method is used to standardize URLs for blogs, which are returned from a SQL Server database. Since the SQL Server provider has no insight into how this method is implemented, it isn't possible to translate it into SQL. All other aspects of the query are evaluated in the database, but passing the returned `URL` through this method is done on the client.
 
-[!code-csharp[Main](../../../samples/core/Querying/ClientEval/Sample.cs#ClientProjection)]
+[!code-csharp[Main](../../../samples/core/Querying/ClientEvaluation/Program.cs#ClientProjection)]
 
-[!code-csharp[Main](../../../samples/core/Querying/ClientEval/Sample.cs#ClientMethod)]
+[!code-csharp[Main](../../../samples/core/Querying/ClientEvaluation/Program.cs#ClientMethod)]
 
 ## Unsupported client evaluation
 
 While client evaluation is useful, it can result in poor performance sometimes. Consider the following query, in which the helper method is now used in a where filter. Because the filter can't be applied in the database, all the data needs to be pulled into memory to apply the filter on the client. Based on the filter and the amount of data on the server, client evaluation could result in poor performance. So Entity Framework Core blocks such client evaluation and throws a runtime exception.
 
-[!code-csharp[Main](../../../samples/core/Querying/ClientEval/Sample.cs#ClientWhere)]
+[!code-csharp[Main](../../../samples/core/Querying/ClientEvaluation/Program.cs#ClientWhere)]
 
 ## Explicit client evaluation
 
@@ -38,7 +38,7 @@ You may need to force into client evaluation explicitly in certain cases like fo
 
 In such cases, you can explicitly opt into client evaluation by calling methods like `AsEnumerable` or `ToList` (`AsAsyncEnumerable` or `ToListAsync` for async). By using `AsEnumerable` you would be streaming the results, but using `ToList` would cause buffering by creating a list, which also takes additional memory. Though if you're enumerating multiple times, then storing results in a list helps more since there's only one query to the database. Depending on the particular usage, you should evaluate which method is more useful for the case.
 
-[!code-csharp[Main](../../../samples/core/Querying/ClientEval/Sample.cs#ExplicitClientEval)]
+[!code-csharp[Main](../../../samples/core/Querying/ClientEvaluation/Program.cs#ExplicitClientEvaluation)]
 
 ## Potential memory leak in client evaluation
 

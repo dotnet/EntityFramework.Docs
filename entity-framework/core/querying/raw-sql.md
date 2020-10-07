@@ -10,17 +10,17 @@ uid: core/querying/raw-sql
 Entity Framework Core allows you to drop down to raw SQL queries when working with a relational database. Raw SQL queries are useful if the query you want can't be expressed using LINQ. Raw SQL queries are also used if using a LINQ query is resulting in an inefficient SQL query. Raw SQL queries can return regular entity types or [keyless entity types](xref:core/modeling/keyless-entity-types) that are part of your model.
 
 > [!TIP]  
-> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying/) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying/RawSQL) on GitHub.
 
 ## Basic raw SQL queries
 
 You can use the `FromSqlRaw` extension method to begin a LINQ query based on a raw SQL query. `FromSqlRaw` can only be used on query roots, that is directly on the `DbSet<>`.
 
-[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlRaw)]
+[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlRaw)]
 
 Raw SQL queries can be used to execute a stored procedure.
 
-[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlRawStoredProcedure)]
+[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlRawStoredProcedure)]
 
 ## Passing parameters
 
@@ -33,22 +33,22 @@ Raw SQL queries can be used to execute a stored procedure.
 
 The following example passes a single parameter to a stored procedure by including a parameter placeholder in the SQL query string and providing an additional argument. While this syntax may look like `String.Format` syntax, the supplied value is wrapped in a `DbParameter` and the generated parameter name inserted where the `{0}` placeholder was specified.
 
-[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlRawStoredProcedureParameter)]
+[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlRawStoredProcedureParameter)]
 
 `FromSqlInterpolated` is similar to `FromSqlRaw` but allows you to use string interpolation syntax. Just like `FromSqlRaw`, `FromSqlInterpolated` can only be used on query roots. As with the previous example, the value is converted to a `DbParameter` and isn't vulnerable to SQL injection.
 
 > [!NOTE]
 > Prior to version 3.0, `FromSqlRaw` and `FromSqlInterpolated` were two overloads named `FromSql`. For more information, see the [previous versions section](#previous-versions).
 
-[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlInterpolatedStoredProcedureParameter)]
+[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlInterpolatedStoredProcedureParameter)]
 
 You can also construct a DbParameter and supply it as a parameter value. Since a regular SQL parameter placeholder is used, rather than a string placeholder, `FromSqlRaw` can be safely used:
 
-[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlRawStoredProcedureSqlParameter)]
+[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlRawStoredProcedureSqlParameter)]
 
 `FromSqlRaw` allows you to use named parameters in the SQL query string, which is useful when a stored procedure has optional parameters:
 
-[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlRawStoredProcedureNamedSqlParameter)]
+[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlRawStoredProcedureNamedSqlParameter)]
 
 > [!NOTE]
 > **Parameter Ordering**
@@ -58,7 +58,7 @@ You can also construct a DbParameter and supply it as a parameter value. Since a
 
 You can compose on top of the initial raw SQL query using LINQ operators. EF Core will treat it as subquery and compose over it in the database. The following example uses a raw SQL query that selects from a Table-Valued Function (TVF). And then composes on it using LINQ to do filtering and sorting.
 
-[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlInterpolatedComposed)]
+[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlInterpolatedComposed)]
 
 Above query generates following SQL:
 
@@ -75,7 +75,7 @@ ORDER BY [b].[Rating] DESC
 
 The `Include` method can be used to include related data, just like with any other LINQ query:
 
-[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlInterpolatedInclude)]
+[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlInterpolatedInclude)]
 
 Composing with LINQ requires your raw SQL query to be composable since EF Core will treat the supplied SQL as a subquery. SQL queries that can be composed on begin with the `SELECT` keyword. Further, SQL passed shouldn't contain any characters or options that aren't valid on a subquery, such as:
 
@@ -91,7 +91,7 @@ Queries that use the `FromSqlRaw` or `FromSqlInterpolated` methods follow the ex
 
 The following example uses a raw SQL query that selects from a Table-Valued Function (TVF), then disables change tracking with the call to `AsNoTracking`:
 
-[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Sample.cs#FromSqlInterpolatedAsNoTracking)]
+[!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlInterpolatedAsNoTracking)]
 
 ## Limitations
 

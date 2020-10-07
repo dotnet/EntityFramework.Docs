@@ -10,9 +10,13 @@
         "XML"
     ],
     "cSpell.words": [
+        "LINQ",
         "mitigations",
         "navigations",
+        "parameterizable",
+        "queryable",
         "savepoint",
-        "savepoints"
+        "savepoints",
+        "subquery"
     ]
 }
