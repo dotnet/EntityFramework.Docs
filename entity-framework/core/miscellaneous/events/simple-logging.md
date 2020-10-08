@@ -195,7 +195,7 @@ The default content from `LogTo` is formatted across multiple lines. The first l
 
 For example:
 
-```bash
+```output
 info: 10/6/2020 10:52:45.581 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
       Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
       CREATE TABLE "Blogs" (
@@ -228,7 +228,7 @@ By default, timestamnps are designed for local consumption while debugging. Use 
 
 This example results in the following log formatting:
 
-```bash
+```output
 info: 2020-10-06T17:55:39.0333701Z RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
       Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
       CREATE TABLE "Blogs" (
@@ -256,7 +256,7 @@ Sometimes it is useful to get exactly one line per log message. This can be enab
 
 This example results in the following log formatting:
 
-```bash
+```output
 info: 10/6/2020 10:52:45.723 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) -> Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']CREATE TABLE "Blogs" (    "Id" INTEGER NOT NULL CONSTRAINT "PK_Blogs" PRIMARY KEY AUTOINCREMENT,    "Name" INTEGER NOT NULL);
 dbug: 10/6/2020 10:52:45.723 RelationalEventId.TransactionCommitting[20210] (Microsoft.EntityFrameworkCore.Database.Transaction) -> Committing transaction.
 dbug: 10/6/2020 10:52:45.725 RelationalEventId.TransactionCommitted[20202] (Microsoft.EntityFrameworkCore.Database.Transaction) -> Committed transaction.
@@ -277,7 +277,7 @@ This example results in the following log formatting:
 -->
 [!code-csharp[TerseLogs](../../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=TerseLogs)]
 
-```bash
+```output
 2020-10-06T17:52:45.7320362Z -> Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']CREATE TABLE "Blogs" (    "Id" INTEGER NOT NULL CONSTRAINT "PK_Blogs" PRIMARY KEY AUTOINCREMENT,    "Name" INTEGER NOT NULL);
 2020-10-06T17:52:45.7320531Z -> Committing transaction.
 2020-10-06T17:52:45.7339441Z -> Committed transaction.
@@ -285,7 +285,7 @@ This example results in the following log formatting:
 
 ## Moving from EF6
 
-EF core simple logging differs from <xref:System.Data.Entity.Database.Log?displayProperty=nameWithType> in EF6 in two important ways:
+EF Core simple logging differs from <xref:System.Data.Entity.Database.Log?displayProperty=nameWithType> in EF6 in two important ways:
 
 * Log messages are not limited to only database interactions
 * The logging must be configured at context initialization time
