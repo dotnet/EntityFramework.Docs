@@ -20,7 +20,7 @@ EF Core simple logging can be used to easily obtain logs while developing and de
 
 ## Configuration
 
-EF Core logs can be accessed from any application type through use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseLoggerFactory%2A> when when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This is commonly performed in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
+EF Core logs can be accessed from any application type through use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> when when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This is commonly performed in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,7 +28,7 @@ EF Core logs can be accessed from any application type through use of <xref:Micr
 -->
 [!code-csharp[LogToConsole](../../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=LogToConsole)]
 
-Alternately, `LogTo` can be called as part of [AddDbContext](/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext) or when creating a <xref:Microsoft.EntityFrameworkCore.DbContextOptions> instance to pass to the `DbContext` constructor.
+Alternately, `LogTo` can be called as part of [AddDbContext] <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> or when creating a <xref:Microsoft.EntityFrameworkCore.DbContextOptions> instance to pass to the `DbContext` constructor.
 
 > [!TIP]
 > OnConfiguring is still called when AddDbContext is used or a DbContextOptions instance is passed to the DbContext constructor. This makes it the ideal place to apply context configuration regardless of how the DbContext is constructed.
@@ -53,7 +53,7 @@ The <xref:System.Console.WriteLine%2A?displayProperty=nameWithType> method is of
 
 ### Logging to a file
 
-Writing to a file requires creating a <xref:System.IO.StreamWriter> or similar for the file. The [WriteLine](/dotnet/api/system.io.streamwriter.writeline) method can then be used as in the other examples above. Remember to ensure the file is closed cleanly by disposing the writer when the context is disposed. For example:
+Writing to a file requires creating a <xref:System.IO.StreamWriter> or similar for the file. The <xref:System.IO.StreamWriter.WriteLine%2A> method can then be used as in the other examples above. Remember to ensure the file is closed cleanly by disposing the writer when the context is disposed. For example:
 
 <!--
     private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true); 
@@ -84,7 +84,7 @@ Writing to a file requires creating a <xref:System.IO.StreamWriter> or similar f
 
 By default, EF Core will not include the values of any data in exception messages. This is because such data may be confidential, and could be revealed in production use if an exception is not handled.
 
-However, knowing data values, especially for keys, can be very helpful when debugging. This can be enabled in EF Core by calling [EnableSensitiveDataLogging](/dotnet/api/microsoft.entityframeworkcore.dbcontextoptionsbuilder.enablesensitivedatalogging). For example:
+However, knowing data values, especially for keys, can be very helpful when debugging. This can be enabled in EF Core by calling <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging>. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -98,7 +98,7 @@ However, knowing data values, especially for keys, can be very helpful when debu
 
 For performance reasons, EF Core does not wrap each call to read a value from the database provider in a try-catch block. However, this sometimes results in exceptions that are hard to diagnose, especially when the database returns a NULL when not allowed by the model.
 
-Turning on [EnableDetailedErrors](/dotnet/api/microsoft.entityframeworkcore.dbcontextoptionsbuilder-1.enabledetailederrors) will cause EF to introduce these try-catch blocks and thereby provide more detailed errors. For example:
+Turning on <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors%2A> will cause EF to introduce these try-catch blocks and thereby provide more detailed errors. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -285,7 +285,7 @@ This example results in the following log formatting:
 
 ## Moving from EF6
 
-EF core simple logging differs from [DbContext.Database.Log](/dotnet/api/system.data.entity.database.log) in EF6 in two important ways:
+EF core simple logging differs from <xref:System.Data.Entity.Database.Log?displayProperty=nameWithType> in EF6 in two important ways:
 
 * Log messages are not limited to only database interactions
 * The logging must be configured at context initialization time
