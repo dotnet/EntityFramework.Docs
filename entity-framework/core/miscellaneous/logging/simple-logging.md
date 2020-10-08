@@ -20,7 +20,7 @@ EF Core simple logging can be used to easily obtain logs while developing and de
 
 ## Configuration
 
-EF Core logs can be accessed from any application type through use of [LogTo](/dotnet/api/microsoft.entityframeworkcore.dbcontextoptionsbuilder.logto) when when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This is commonly performed in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring?displayProperty=None>. For example:
+EF Core logs can be accessed from any application type through use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseLoggerFactory%2A> when when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This is commonly performed in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -37,13 +37,13 @@ Alternately, `LogTo` can be called as part of [AddDbContext](/dotnet/api/microso
 
 ### Logging to the console
 
-`LogTo` accepts an [`Action<string>`](/dotnet/api/system.action-1) delegate. EF Core will call this delegate with a string for each log message generated. It is then up to the delegate to do something with the given message.
+`LogTo` requires an <xref:System.Action%601> delegate that accepts a string. EF Core will call this delegate with a string for each log message generated. It is then up to the delegate to do something with the given message.
 
-The [Console.WriteLine](/dotnet/api/system.console.writeline) method is often used for this delegate, as shown above. This results in each log message being written to the console.
+The <xref:System.Console.WriteLine%2A?displayProperty=nameWithType> method is often used for this delegate, as shown above. This results in each log message being written to the console.
 
 ### Logging to the debug window
 
-[Debug.WriteLine](/dotnet/api/system.diagnostics.debug.writeline) can be used to send output to the Debug window in Visual Studio or other IDEs. [Lambda syntax](/dotnet/csharp/language-reference/operators/lambda-expressions) must be used in this case because the `Debug` class is compiled out of release builds. For example:
+<xref:System.Diagnostics.Debug.WriteLine%2A?displayProperty=nameWithType> can be used to send output to the Debug window in Visual Studio or other IDEs. [Lambda syntax](/dotnet/csharp/language-reference/operators/lambda-expressions) must be used in this case because the `Debug` class is compiled out of release builds. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
