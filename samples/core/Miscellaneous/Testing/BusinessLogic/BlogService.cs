@@ -26,5 +26,12 @@ namespace BusinessLogic
                 .OrderBy(b => b.Url)
                 .ToList();
         }
+
+        public IEnumerable<UrlResource> GetAllResources()
+        {
+            return _context.Resources
+                .OrderBy(b => b.Url)
+                .ToList();
+        }
     }
 }
