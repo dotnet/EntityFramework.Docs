@@ -3,7 +3,7 @@ title: Simple Logging - EF Core
 description: Logging from an EFCore DbContext using LogTo  
 author: ajcvickers
 ms.date: 10/03/2020
-uid: core/miscellaneous/logging/simple-logging
+uid: core/miscellaneous/events/simple-logging
 ---
 # Simple logging
 
@@ -13,14 +13,14 @@ uid: core/miscellaneous/logging/simple-logging
 > [!TIP]  
 > You can [view and download this article's sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/SimpleLogging) on GitHub.
 
-EF Core simple logging can be used to easily obtain logs while developing and debugging applications. This form of logging requires minimal configuration and no additional NuGet packages.
+Entity Framework Core (EF Core) simple logging can be used to easily obtain logs while developing and debugging applications. This form of logging requires minimal configuration and no additional NuGet packages.
 
 > [!TIP]
 > EF Core also integrates with [Microsoft.Extensions.Logging](/aspnet/core/fundamentals/logging), which requires more configuration, but is often more suitable for logging in production applications.
 
 ## Configuration
 
-EF Core logs can be accessed from any application type through use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> when when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This is commonly performed in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
+EF Core logs can be accessed from any type of application through use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -182,7 +182,7 @@ Since categories are hierarchical, this example using the `Database` category wi
 [!code-csharp[CustomFilter](../../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=CustomFilter)]
 
 > [!TIP]
-> Filtering like this or using any of the other options shown here is more efficient than filtering in the LogTo delegate. This is because if the filter determines the message should not be logged, then the log message is not even created.
+> Filtering using custom filters or using any of the other options shown here is more efficient than filtering in the LogTo delegate. This is because if the filter determines the message should not be logged, then the log message is not even created.
 
 ## Message contents and formatting
 
