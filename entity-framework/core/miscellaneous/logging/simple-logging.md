@@ -20,7 +20,7 @@ EF Core simple logging can be used to easily obtain logs while developing and de
 
 ## Configuration
 
-EF Core logs can be accessed from any application type through use of [LogTo](/dotnet/api/microsoft.entityframeworkcore.dbcontextoptionsbuilder.logto) when when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This is commonly performed in an override of [DbContext.OnConfiguring](/dotnet/api/microsoft.entityframeworkcore.dbcontext.onconfiguring). For example:
+EF Core logs can be accessed from any application type through use of [LogTo](/dotnet/api/microsoft.entityframeworkcore.dbcontextoptionsbuilder.logto) when when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This is commonly performed in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring?displayProperty=None>. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
