@@ -50,13 +50,13 @@ To update the tools:
 
 Install the Package Manager Console tools by running the following command in **Package Manager Console**:
 
-``` powershell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.Tools
 ```
 
 Update the tools by running the following command in **Package Manager Console**.
 
-``` powershell
+```powershell
 Update-Package Microsoft.EntityFrameworkCore.Tools
 ```
 
@@ -64,13 +64,13 @@ Update-Package Microsoft.EntityFrameworkCore.Tools
 
 Verify that the tools are installed by running this command:
 
-``` powershell
+```powershell
 Get-Help about_EntityFrameworkCore
 ```
 
 The output looks like this (it doesn't tell you which version of the tools you're using):
 
-```console
+```output
 
                      _/\__
                ---==/    \\

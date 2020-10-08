@@ -19,13 +19,13 @@ You can now use the reverse engineer functionality to create a model based on yo
 
 Run the following command in Package Manager Console (Tools –> NuGet Package Manager –> Package Manager Console). See [Package Manager Console (Visual Studio)](xref:core/miscellaneous/cli/powershell) for command options to scaffold a subset of tables etc.
 
-``` powershell
+```powershell
 Scaffold-DbContext "<connection string>" <database provider name>
 ```
 
 For example, here is the command to scaffold a model from the Blogging database on your SQL Server LocalDB instance.
 
-``` powershell
+```powershell
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
 ```
 

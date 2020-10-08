@@ -55,7 +55,7 @@ For more information, see [NuGet Package Manager Dialog](/nuget/tools/package-ma
 
 * To install the SQL Server provider, run the following command in the Package Manager Console:
 
-  ``` PowerShell
+  ```powershell
   Install-Package Microsoft.EntityFrameworkCore.SqlServer
   ```
 
@@ -110,7 +110,7 @@ Although you can also use the `dotnet ef` commands from the Package Manager Cons
 
 To get the Package Manager Console tools for EF Core, install the `Microsoft.EntityFrameworkCore.Tools` package. For example, from Visual Studio:
 
-``` PowerShell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.Tools
 ```
 

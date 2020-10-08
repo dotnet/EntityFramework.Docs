@@ -20,7 +20,7 @@ EF Core 5.0 supports many-to-many relationships without explicitly mapping the j
 
 For example, consider these entity types:
 
-```C#
+```csharp
 public class Post
 {
     public int Id { get; set; }
@@ -38,7 +38,7 @@ public class Tag
 
 Notice that `Post` contains a collection of `Tags`, and `Tag` contains a collection of `Posts`. EF Core 5.0 recognizes this as a many-to-many relationship by convention. This means no code is required in `OnModelCreating`:
 
-```C#
+```csharp
 public class BlogContext : DbContext
 {
     public DbSet<Post> Posts { get; set; }
@@ -74,7 +74,7 @@ CREATE INDEX [IX_PostTag_TagsId] ON [PostTag] ([TagsId]);
 
 Creating and associating `Blog` and `Post` entities results in join table updates happening automatically. For example:
 
-```C#
+```csharp
 var beginnerTag = new Tag {Text = "Beginner"};
 var advancedTag = new Tag {Text = "Advanced"};
 var efCoreTag = new Tag {Text = "EF Core"};
@@ -102,7 +102,7 @@ VALUES (@p6, @p7),
 
 For queries, Include and other query operations work just like for any other relationship. For example:
 
-```C#
+```csharp
 foreach (var post in context.Posts.Include(e => e.Tags))
 {
     Console.Write($"Post \"{post.Name}\" has tags");
@@ -129,7 +129,7 @@ ORDER BY [p].[Id], [t0].[PostsId], [t0].[TagsId], [t0].[Id]
 
 Unlike EF6, EF Core allows full customization of the join table. For example, the code below configures a many-to-many relationship that also has navigations to the join entity, and in which the join entity contains a payload property:
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder
@@ -159,7 +159,7 @@ Entity types are commonly mapped to tables or views such that EF Core will pull 
 
 For example, consider two tables; one with modern posts; the other with legacy posts. The modern posts table has some additional columns, but for the purpose of our application we want both modern and legacy posts tp be combined and mapped to an entity type with all necessary properties:
 
-```c#
+```csharp
 public class Post
 {
     public int Id { get; set; }
@@ -172,7 +172,7 @@ public class Post
 
 In EF Core 5.0, `ToSqlQuery` can be used to map this entity type to a query that pulls and combines rows from both tables:
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Post>().ToSqlQuery(
@@ -186,7 +186,7 @@ Notice that the `legacy_posts` table does not have a `Category` column, so we in
 
 This entity type can then be used in the normal way for LINQ queries. For example. the LINQ query:
 
-```c#
+```csharp
 var posts = context.Posts.Where(e => e.Blog.Name.Contains("Unicorn")).ToList();
 ```
 
@@ -235,7 +235,7 @@ EF Core 5.0 allows the same CLR type to be mapped to multiple different entity t
 
 For example, the DbContext below configures the BCL type `Dictionary<string, object>` as a shared-type entity type for both products and categories.
 
-```c#
+```csharp
 public class ProductsContext : DbContext
 {
     public DbSet<Dictionary<string, object>> Products => Set<Dictionary<string, object>>("Product");
@@ -266,7 +266,7 @@ public class ProductsContext : DbContext
 
 Dictionary objects ("property bags") can now be added to the context as entity instances and saved. For example:
 
-```c#
+```csharp
 var beverages = new Dictionary<string, object>
 {
     ["Name"] = "Beverages",
@@ -280,7 +280,7 @@ context.SaveChanges();
 
 These entities can then be queried and updated in the normal way:
 
-```c#
+```csharp
 var foods = context.Categories.Single(e => e["Name"] == "Foods");
 var marmite = context.Products.Single(e => e["Name"] == "Marmite");
 
@@ -296,7 +296,7 @@ EF Core 5.0 introduces both .NET events and an EF Core interceptor triggered whe
 
 The events are simple to use; for example:
 
-```c#
+```csharp
 context.SavingChanges += (sender, args) =>
 {
     Console.WriteLine($"Saving changes for {((DbContext)sender).Database.GetConnectionString()}");
@@ -314,7 +314,7 @@ Notice that:
 
 The interceptor is defined by `ISaveChangesInterceptor`, but it is often convienient to inherit from `SaveChangesInterceptor` to avoid implementing every method. For example:
 
-```c#
+```csharp
 public class MySaveChangesInterceptor : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(
@@ -344,11 +344,11 @@ Notice that:
 
 The downside of interceptors is that they must be registered on the DbContext when it is being constructed. For example:
 
-```c#
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
-            .AddInterceptors(new MySaveChangesInterceptor())
-            .UseSqlite("Data Source = test.db");
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .AddInterceptors(new MySaveChangesInterceptor())
+        .UseSqlite("Data Source = test.db");
 ```
 
 In contrast, the events can be registered on the DbContext instance at any time.
@@ -361,7 +361,7 @@ For example, a `User` type may be needed by both an authorization context and a 
 
 In the code below, the `AuthorizationContext` will generate migrations for changes to the `Users` table, but the `ReportingContext` will not, preventing the migrations from clashing.
 
-```C#
+```csharp
 public class AuthorizationContext : DbContext
 {
     public DbSet<User> Users { get; set; }
@@ -382,7 +382,7 @@ public class ReportingContext : DbContext
 
 In EF Core 3.1, the dependent end of a one-to-one relationship was always considered optional. This was most apparent when using owned entities. For example, consider the following model and configuration:
 
-```c#
+```csharp
 public class Person
 {
     public int Id { get; set; }
@@ -403,7 +403,7 @@ public class Address
 }
 ```
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Person>(b =>
@@ -447,7 +447,7 @@ Notice that all the columns are nullable, even though some of the `HomeAddress` 
 
 In EF Core 5.0, the `HomeAddress` navigation can now be configured as as a required dependent. For example:
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Person>(b =>
@@ -575,7 +575,7 @@ In addition, there is now a `Get-Migration` command for the Package Manager Cons
 
 EF Core properties for custom mutable types [require a value comparer](xref:core/modeling/value-comparers) for property changes to be detected correctly. This can now be specified as part of configuring the value conversion for the type. For example:
 
-```c#
+```csharp
 modelBuilder
     .Entity<EntityType>()
     .Property(e => e.MyProperty)
@@ -594,7 +594,7 @@ This feature was contributed from the community by [@m4ss1m0g](https://github.co
 
 A `TryGetValue` method has been added to `EntityEntry.CurrentValues` and `EntityEntry.OriginalValues`. This allows the value of a property to be requested without first checking if the property is mapped in the EF model. For example:
 
-```c#
+```csharp
 if (entry.CurrentValues.TryGetValue(propertyName, out var value))
 {
     Console.WriteLine(value);
@@ -626,7 +626,7 @@ EF Core 5.0 RC1 contains some additional query translation improvements:
 
 Finally for RC1, EF Core now allows use of the lambda methods in the ModelBuilder for fields as well as properties. For example, if you are averse to properties for some reason and decide to use public fields, then these fields can now be mapped using the lambda builders:
 
-```c#
+```csharp
 public class Post
 {
     public int Id;
@@ -644,7 +644,7 @@ public class Blog
 }
 ```
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Blog>(b =>
@@ -674,7 +674,7 @@ By default, EF Core maps an inheritance hierarchy of .NET types to a single data
 
 For example, consider this model with a mapped hierarchy:
 
-```c#
+```csharp
 public class Animal
 {
     public int Id { get; set; }
@@ -748,7 +748,7 @@ Note that creation of the foreign key constraints shown above were added after b
 
 Entity types can be mapped to different tables using mapping attributes:
 
-```c#
+```csharp
 [Table("Animals")]
 public class Animal
 {
@@ -777,7 +777,7 @@ public class Dog : Pet
 
 Or using `ModelBuilder` configuration:
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Animal>().ToTable("Animals");
@@ -795,7 +795,7 @@ Compared to other database, SQLite is relatively limited in its schema manipulat
 
 For example, imagine we have a `Unicorns` table created for a `Unicorn` entity type:
 
-```c#
+```csharp
 public class Unicorn
 {
     public int Id { get; set; }
@@ -882,7 +882,7 @@ The EF Core model requires two entity types to use this TVF:
 * An `Employee` type that maps to the Employees table in the normal way
 * A `Report` type that matches the shape returned by the TVF
 
-```c#
+```csharp
 public class Employee
 {
     public int Id { get; set; }
@@ -894,7 +894,7 @@ public class Employee
 }
 ```
 
-```c#
+```csharp
 public class Report
 {
     public string Name { get; set; }
@@ -904,7 +904,7 @@ public class Report
 
 These types must be included in the EF Core model:
 
-```c#
+```csharp
 modelBuilder.Entity<Employee>();
 modelBuilder.Entity(typeof(Report)).HasNoKey();
 ```
@@ -913,14 +913,14 @@ Notice that `Report` has no primary key and so must be configured as such.
 
 Finally, a .NET method must be mapped to the TVF in the database. This method can be defined on the DbContext using the new `FromExpression` method:
 
-```c#
+```csharp
 public IQueryable<Report> GetReports(int managerId)
     => FromExpression(() => GetReports(managerId));
 ```
 
 This method uses a parameter and return type that match the TVF defined above. The method is then added to the EF Core model in OnModelCreating:
 
-```c#
+```csharp
 modelBuilder.HasDbFunction(() => GetReports(default));
 ```
 
@@ -928,7 +928,7 @@ modelBuilder.HasDbFunction(() => GetReports(default));
 
 We can now write queries that call `GetReports` and compose over the results. For example:
 
-```c#
+```csharp
 from e in context.Employees
 from rc in context.GetReports(e.Id)
 where rc.IsDeveloper == true
@@ -956,7 +956,7 @@ EF Core 5.0 allows mapping the same entity type to different database objects. T
 
 For example, an entity type can be mapped to both a database view and a database table:
 
-```c#
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder
@@ -968,7 +968,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 By default, EF Core will then query from the view and send updates to the table. For example, executing the following code:
 
-```c#
+```csharp
 var blog = context.Set<Blog>().Single(e => e.Name == "One Unicorn");
 
 blog.Name = "1unicorn2";
@@ -993,7 +993,7 @@ SELECT @@ROWCOUNT;
 
 Split queries (see below) can now be configured as the default for any query executed by the DbContext. This configuration is only available for relational providers, and so must be specified as part of the `UseProvider` configuration. For example:
 
-```c#
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
         .UseSqlServer(
@@ -1163,7 +1163,7 @@ EF Core 5.0 now allows a single LINQ query including related collections to be s
 
 For example, consider a query that pulls in two levels of related collections using `Include`:
 
-```CSharp
+```csharp
 var artists = context.Artists
     .Include(e => e.Albums).ThenInclude(e => e.Tags)
     .ToList();
@@ -1184,7 +1184,7 @@ ORDER BY "a"."Id", "t0"."Id", "t0"."Id0"
 
 The new `AsSplitQuery` API can be used to change this behavior. For example:
 
-```CSharp
+```csharp
 var artists = context.Artists
     .AsSplitQuery()
     .Include(e => e.Albums).ThenInclude(e => e.Tags)
@@ -1218,7 +1218,7 @@ Note that filtered Includes with OrderBy/Skip/Take are not supported in preview 
 
 `AsSplitQuery` can also be used when collections are loaded in projections. For example:
 
-```CSharp
+```csharp
 context.Artists
     .AsSplitQuery()
     .Select(e => new
@@ -1247,7 +1247,7 @@ Note that only materialization of the collection is supported. Any composition a
 
 The new IndexAttribute can be placed on an entity type to specify an index for a single column. For example:
 
-```CSharp
+```csharp
 [Index(nameof(FullName), IsUnique = true)]
 public class User
 {
@@ -1268,7 +1268,7 @@ CREATE UNIQUE INDEX [IX_Users_FullName]
 
 IndexAttribute can also be used to specify an index spanning multiple columns. For example:
 
-```CSharp
+```csharp
 [Index(nameof(FirstName), nameof(LastName), IsUnique = true)]
 public class User
 {
@@ -1296,7 +1296,7 @@ Documentation is tracked by issue [#2407](https://github.com/dotnet/EntityFramew
 
 We are continuing to improve the exception messages generated when query translation fails. For example, this query uses the unmapped property `IsSigned`:
 
-```CSharp
+```csharp
 var artists = context.Artists.Where(e => e.IsSigned).ToList();
 ```
 
@@ -1307,7 +1307,7 @@ EF Core will throw the following exception indicating that translation failed be
 
 Similarly, better exception messages are now generated when attempting to translate string comparisons with culture-dependent semantics. For example, this query attempts to use `StringComparison.CurrentCulture`:
 
-```CSharp
+```csharp
 var artists = context.Artists
     .Where(e => e.Name.Equals("The Unicorns", StringComparison.CurrentCulture))
     .ToList();
@@ -1326,7 +1326,7 @@ This feature was contributed from the community by [@Marusyk](https://github.com
 
 EF Core exposes a transaction ID for correlation of transactions across calls. This ID typically set by EF Core when a transaction is started. If the application starts the transaction instead, then this feature allows the application to explicitly set the transaction ID so it is correlated correctly everywhere it is used. For example:
 
-```CSharp
+```csharp
 using (context.Database.UseTransaction(myTransaction, myId))
 {
    ...
@@ -1339,7 +1339,7 @@ This feature was contributed from the community by [@ralmsdeveloper](https://git
 
 The standard .NET [IPAddress class](/dotnet/api/system.net.ipaddress) is now automatically mapped to a string column for databases that do not already have native support. For example, consider mapping this entity type:
 
-```CSharp
+```csharp
 public class Host
 {
     public int Id { get; set; }
@@ -1358,7 +1358,7 @@ CREATE TABLE [Host] (
 
 Entities can then be added in the normal way:
 
-```CSharp
+```csharp
 context.AddRange(
     new Host { Address = IPAddress.Parse("127.0.0.1")},
     new Host { Address = IPAddress.Parse("0000:0000:0000:0000:0000:0000:0000:0001")});
@@ -1397,7 +1397,7 @@ This feature was contributed from the community by [@dvoreckyaa](https://github.
 
 FirstOrDefault and similar operators for characters in strings are now translated. For example, this LINQ query:
 
-```CSharp
+```csharp
 context.Customers.Where(c => c.ContactName.FirstOrDefault() == 'A').ToList();
 ```
 
@@ -1413,7 +1413,7 @@ WHERE SUBSTRING([c].[ContactName], 1, 1) = N'A'
 
 EF Core now generates better queries with CASE blocks. For example, this LINQ query:
 
-```CSharp
+```csharp
 context.Weapons
     .OrderBy(w => w.Name.CompareTo("Marcus' Lancer") == 0)
     .ThenBy(w => w.Id)
@@ -1455,7 +1455,7 @@ END, [w].[Id]");
 
 The default collation for a database can now be specified in the EF model. This will flow through to generated migrations to set the collation when the database is created. For example:
 
-```CSharp
+```csharp
 modelBuilder.UseCollation("German_PhoneBook_CI_AS");
 ```
 
@@ -1468,18 +1468,18 @@ COLLATE German_PhoneBook_CI_AS;
 
 The collation to use for specific database columns can also be specified. For example:
 
-```CSharp
- modelBuilder
-     .Entity<User>()
-     .Property(e => e.Name)
-     .UseCollation("German_PhoneBook_CI_AS");
+```csharp
+modelBuilder
+    .Entity<User>()
+    .Property(e => e.Name)
+    .UseCollation("German_PhoneBook_CI_AS");
 ```
 
 For those not using migrations, collations are now reverse-engineered from the database when scaffolding a DbContext.
 
 Finally, the `EF.Functions.Collate()` allows for ad-hoc queries using different collations. For example:
 
-```CSharp
+```csharp
 context.Users.Single(e => EF.Functions.Collate(e.Name, "French_CI_AS") == "Jean-Michel Jarre");
 ```
 
@@ -1505,7 +1505,7 @@ dotnet ef migrations add two --verbose --dev
 
 This argument will then flow into the factory, where it can be used to control how the context is created and initialized. For example:
 
-```CSharp
+```csharp
 public class MyDbContextFactory : IDesignTimeDbContextFactory<SomeDbContext>
 {
     public SomeDbContext CreateDbContext(string[] args)
@@ -1519,13 +1519,13 @@ Documentation is tracked by issue [#2419](https://github.com/dotnet/EntityFramew
 
 No-tracking queries can now be configured to perform identity resolution. For example, the following query will create a new Blog instance for each Post, even if each Blog has the same primary key.
 
-```CSharp
+```csharp
 context.Posts.AsNoTracking().Include(e => e.Blog).ToList();
 ```
 
 However, at the expense of usually being slightly slower and always using more memory, this query can be changed to ensure only a single Blog instance is created:
 
-```CSharp
+```csharp
 context.Posts.AsNoTracking().PerformIdentityResolution().Include(e => e.Blog).ToList();
 ```
 
@@ -1539,7 +1539,7 @@ Most databases allow computed column values to be stored after computation. Whil
 
 EF Core 5.0 allows computed columns to be configured as stored. For example:
 
-```CSharp
+```csharp
 modelBuilder
     .Entity<User>()
     .Property(e => e.SomethingComputed)
@@ -1556,7 +1556,7 @@ EF Core now supports computed columns in SQLite databases.
 
 Precision and scale for a property can now be specified using the model builder. For example:
 
-```CSharp
+```csharp
 modelBuilder
     .Entity<Blog>()
     .Property(b => b.Numeric)
@@ -1571,7 +1571,7 @@ Documentation is tracked by issue [#527](https://github.com/dotnet/EntityFramewo
 
 The fill factor can now be specified when creating an index on SQL Server. For example:
 
-```CSharp
+```csharp
 modelBuilder
     .Entity<Customer>()
     .HasIndex(e => e.Name)
@@ -1584,7 +1584,7 @@ modelBuilder
 
 The Include method now supports filtering of the entities included. For example:
 
-```CSharp
+```csharp
 var blogs = context.Blogs
     .Include(e => e.Posts.Where(p => p.Title.Contains("Cheese")))
     .ToList();
@@ -1594,7 +1594,7 @@ This query will return blogs together with each associated post, but only when t
 
 Skip and Take can also be used to reduce the number of included entities. For example:
 
-```CSharp
+```csharp
 var blogs = context.Blogs
     .Include(e => e.Posts.OrderByDescending(post => post.Title).Take(5)))
     .ToList();
@@ -1607,7 +1607,7 @@ See the [Include documentation](xref:core/querying/related-data#filtered-include
 
 Navigation properties are primarily configured when [defining relationships](xref:core/modeling/relationships). However, the new `Navigation` method can be used in the cases where navigation properties need additional configuration. For example, to set a backing field for the navigation when the field would not be found by convention:
 
-```CSharp
+```csharp
 modelBuilder.Entity<Blog>().Navigation(e => e.Posts).HasField("_myposts");
 ```
 
@@ -1644,7 +1644,7 @@ Using `EnableDetailedErrors` will add extra null checking to queries such that, 
 
 For example:
 
-```CSharp
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
         .EnableDetailedErrors()
@@ -1658,7 +1658,7 @@ Documentation is tracked by issue [#955](https://github.com/dotnet/EntityFramewo
 
 The partition key to use for a given query can now be specified in the query. For example:
 
-```CSharp
+```csharp
 await context.Set<Customer>()
              .WithPartitionKey(myPartitionKey)
              .FirstAsync();
@@ -1670,7 +1670,7 @@ Documentation is tracked by issue [#2199](https://github.com/dotnet/EntityFramew
 
 This can be accessed using the new `EF.Functions.DataLength` method. For example:
 
-```CSharp
+```csharp
 var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate));
 ```
 
@@ -1680,7 +1680,7 @@ var count = context.Orders.Count(c => 100 < EF.Functions.DataLength(c.OrderDate)
 
 A C# attribute can now be used to specify the backing field for a property. This attribute allows EF Core to still write to and read from the backing field as would normally happen, even when the backing field cannot be found automatically. For example:
 
-```CSharp
+```csharp
 public class Blog
 {
     private string _mainTitle;
@@ -1750,7 +1750,7 @@ Additional documentation is tracked by issue [#1331](https://github.com/dotnet/E
 
 An entity type can now be configured as having no key using the new `KeylessAttribute`. For example:
 
-```CSharp
+```csharp
 [Keyless]
 public class Address
 {
@@ -1798,7 +1798,7 @@ Documentation is tracked by issue [#2018](https://github.com/dotnet/EntityFramew
 
 EF Core 5.0 Migrations can now generate CHECK constraints for enum property mappings. For example:
 
-```SQL
+```sql
 MyEnumColumn VARCHAR(10) NOT NULL CHECK (MyEnumColumn IN ('Useful', 'Useless', 'Unknown'))
 ```
 
@@ -1808,7 +1808,7 @@ Documentation is tracked by issue [#2082](https://github.com/dotnet/EntityFramew
 
 A new `IsRelational` method has been added in addition to the existing `IsSqlServer`, `IsSqlite`, and `IsInMemory`. This method can be used to test if the DbContext is using any relational database provider. For example:
 
-```CSharp
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     if (Database.IsRelational())
@@ -1824,7 +1824,7 @@ Documentation is tracked by issue [#2185](https://github.com/dotnet/EntityFramew
 
 The Azure Cosmos DB database provider now supports optimistic concurrency using ETags. Use the model builder in OnModelCreating to configure an ETag:
 
-```CSharp
+```csharp
 builder.Entity<Customer>().Property(c => c.ETag).IsEtagConcurrency();
 ```
 
@@ -1843,7 +1843,7 @@ In addition, the following SQL Server functions are now mapped:
 
 For example:
 
-```CSharp
+```csharp
 var count = context.Orders.Count(c => date > EF.Functions.DateFromParts(DateTime.Now.Year, 12, 25));
 
 ```
@@ -1862,7 +1862,7 @@ Additional documentation is tracked by issue [#2079](https://github.com/dotnet/E
 
 Queries using `Reverse` are now translated. For example:
 
-```CSharp
+```csharp
 context.Employees.OrderBy(e => e.EmployeeID).Reverse()
 ```
 
@@ -1872,7 +1872,7 @@ Documentation is tracked by issue [#2079](https://github.com/dotnet/EntityFramew
 
 Queries using bitwise operators are now translated in more cases For example:
 
-```CSharp
+```csharp
 context.Orders.Where(o => ~o.OrderID == negatedId)
 ```
 

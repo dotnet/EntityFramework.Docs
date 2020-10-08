@@ -70,7 +70,7 @@ Run the following commands to verify that EF Core CLI tools are correctly instal
 
 The output from the command identifies the version of the tools in use:
 
-```console
+```output
 
                      _/\__
                ---==/    \\

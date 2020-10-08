@@ -29,7 +29,7 @@ Instead of `DateTimeOffset`, we recommend using DateTime values. When handling m
 
 The `Decimal` type provides a high level of precision. If you don't need that level of precision, however, we recommend using double instead. You can use a [value converter](xref:core/modeling/value-conversions) to continue using decimal in your classes.
 
-``` csharp
+```csharp
 modelBuilder.Entity<MyEntity>()
     .Property(e => e.DecimalProperty)
     .HasConversion<double>();

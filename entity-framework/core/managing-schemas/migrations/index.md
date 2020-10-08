@@ -20,7 +20,7 @@ The rest of this page is a step-by-step beginner's guide for using migrations. C
 
 Let's assume you've just completed your first EF Core application, which contains the following simple model:
 
-```c#
+```csharp
 public class Blog
 {
     public int Id { get; set; }
@@ -49,7 +49,7 @@ dotnet ef migrations add InitialCreate
 
 #### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Add-Migration InitialCreate
 ```
 
@@ -68,7 +68,7 @@ dotnet ef database update
 ```
 #### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Update-Database
 ```
 
@@ -80,7 +80,7 @@ That's all there is to it - your application is ready to run on your new databas
 
 A few days have passed, and you're asked to add a creation timestamp to your blogs. You've done the necessary changes to your application, and your model now looks like this:
 
-```c#
+```csharp
 public class Blog
 {
     public int Id { get; set; }
@@ -99,7 +99,7 @@ dotnet ef migrations add AddBlogCreatedTimestamp
 
 #### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Add-Migration AddBlogCreatedTimestamp
 ```
 
@@ -118,7 +118,7 @@ dotnet ef database update
 ```
 #### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Update-Database
 ```
 

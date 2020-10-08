@@ -15,7 +15,7 @@ It is possible to access the properties that are not tracked by EF Core through 
 
 [!code-csharp[Unmapped](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?highlight=23,24&name=Unmapped)]
 
-``` json
+```json
 {
     "Id": 1,
     "PartitionKey": "1",

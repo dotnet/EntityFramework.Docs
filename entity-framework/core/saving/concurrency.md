@@ -34,7 +34,7 @@ If no rows are affected, a concurrency conflict is detected, and EF Core throws 
 
 For example, we may want to configure `LastName` on `Person` to be a concurrency token. Then any update operation on Person will include the concurrency check in the `WHERE` clause:
 
-``` sql
+```sql
 UPDATE [Person] SET [FirstName] = @p1
 WHERE [PersonId] = @p0 AND [LastName] = @p2;
 ```

@@ -7,7 +7,7 @@ uid: core/miscellaneous/logging
 ---
 # Logging
 
-> [!TIP]  
+> [!TIP]
 > You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging) on GitHub.
 
 ## ASP.NET Core applications
@@ -36,7 +36,7 @@ After installing the appropriate package(s), the application should create a sin
 > [!NOTE]
 > The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2 and replaced in 3.0. It is safe to ignore and suppress the warnings when using 2.2.
 
-``` csharp
+```csharp
 public static readonly LoggerFactory MyLoggerFactory
     = new LoggerFactory(new[] { new ConsoleLoggerProvider((_, __) => true, true) });
 ```
@@ -63,7 +63,7 @@ The application can control what is logged by configuring a filter on the ILogge
 > [!NOTE]
 > The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2 and replaced in 3.0. It is safe to ignore and suppress the warnings when using 2.2.
 
-``` csharp
+```csharp
 public static readonly LoggerFactory MyLoggerFactory
     = new LoggerFactory(new[]
     {

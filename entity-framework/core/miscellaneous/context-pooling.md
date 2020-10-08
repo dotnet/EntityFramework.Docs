@@ -14,7 +14,7 @@ The typical pattern in an ASP.NET Core app using EF Core involves registering a 
 
 <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> enables a pool of reusable context instances. To use context pooling, use the `AddDbContextPool` method instead of `AddDbContext` during service registration:
 
-``` csharp
+```csharp
 services.AddDbContextPool<BloggingContext>(
     options => options.UseSqlServer(connectionString));
 ```
@@ -31,7 +31,7 @@ Apps should be profiled and tested to show that context initialization is a sign
 
 `AddDbContextPool` has a few limitations on what can be done in the `OnConfiguring` method of the context.
 
-> [!WARNING]  
+> [!WARNING]
 > Avoid using context pooling in apps that maintain state. For example, private fields in the context that shouldn't be shared across requests. EF Core only resets the state that it is aware of before adding a context instance to the pool.
 
 Context pooling works by reusing the same context instance across requests. This means that it's effectively registered as a [Singleton](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) in terms of the instance itself so that it's able to persist.

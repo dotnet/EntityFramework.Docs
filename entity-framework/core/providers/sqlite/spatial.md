@@ -13,7 +13,7 @@ This page includes additional information about using spatial data with the SQLi
 
 On Windows, the native mod_spatialite library is distributed as a NuGet package dependency. Other platforms need to install it separately. This is typically done using a software package manager. For example, you can use APT on Debian and Ubuntu; and Homebrew on MacOS.
 
-``` sh
+```bash
 # Debian/Ubuntu
 apt-get install libsqlite3-mod-spatialite
 
@@ -36,7 +36,7 @@ Unfortunately, newer versions of PROJ (a dependency of SpatiaLite) are incompati
 
 On **macOS**, you'll also need set an environment variable before running your app so it uses Homebrew's version of SQLite. In Visual Studio for Mac, you can set this under **Project > Project Options > Run > Configurations > Default**
 
-```sh
+```bash
 DYLD_LIBRARY_PATH=/usr/local/opt/sqlite/lib
 ```
 
@@ -44,7 +44,7 @@ DYLD_LIBRARY_PATH=/usr/local/opt/sqlite/lib
 
 In SpatiaLite, columns need to specify an SRID per column. The default SRID is `0`. Specify a different SRID using the ForSqliteHasSrid method.
 
-``` csharp
+```csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
     .ForSqliteHasSrid(4326);
 ```
@@ -56,7 +56,7 @@ modelBuilder.Entity<City>().Property(c => c.Location)
 
 The default dimension (or ordinates) of a column is X and Y. To enable additional ordinates like Z or M, configure the column type.
 
-``` csharp
+```csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
     .HasColumnType("POINTZ");
 ```

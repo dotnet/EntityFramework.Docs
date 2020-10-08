@@ -18,7 +18,7 @@ One way to do this is to put each migration set [in a separate assembly][2] and 
 
 Another approach that makes working with the tools easier is to create a new type that derives from your DbContext and overrides the active provider. This type is used at design time when adding or applying migrations.
 
-``` csharp
+```csharp
 class MySqliteDbContext : MyDbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -41,7 +41,7 @@ dotnet ef migrations add InitialCreate --context MySqliteDbContext --output-dir 
 
 ### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Add-Migration InitialCreate -Context MyDbContext -OutputDir Migrations\SqlServerMigrations
 Add-Migration InitialCreate -Context MySqliteDbContext -OutputDir Migrations\SqliteMigrations
 ```
@@ -58,7 +58,7 @@ If you don't like having two sets of migrations, you can manually combine them i
 
 Annotations can coexist since a provider ignores any annotations that it doesn't understand. For example, a primary key column that works with both Microsoft SQL Server and SQLite might look like this.
 
-``` csharp
+```csharp
 Id = table.Column<int>(nullable: false)
     .Annotation("SqlServer:ValueGenerationStrategy",
         SqlServerValueGenerationStrategy.IdentityColumn)
@@ -67,7 +67,7 @@ Id = table.Column<int>(nullable: false)
 
 If operations can be applied only for one provider, or they're different between providers, use the `ActiveProvider` property to determine which provider is active:
 
-``` csharp
+```csharp
 if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
 {
     migrationBuilder.CreateSequence(

@@ -29,7 +29,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Cosmos
 
 ### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.Cosmos
 ```
 
@@ -37,7 +37,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 
 ## Get started
 
-> [!TIP]  
+> [!TIP]
 > You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Cosmos).
 
 As for other providers the first step is to call [UseCosmos](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosDbContextOptionsExtensions.UseCosmos):
@@ -109,7 +109,7 @@ For Cosmos, owned entities are embedded in the same item as the owner. To change
 
 With this configuration the order from the example above is stored like this:
 
-``` json
+```json
 {
     "Id": 1,
     "PartitionKey": "1",
@@ -137,7 +137,7 @@ The owned entities don't need to provide explicit key values to be stored:
 
 They will be persisted in this way:
 
-``` json
+```json
 {
     "Id": 1,
     "Discriminator": "Distributor",
@@ -177,7 +177,7 @@ To work around this limitation one could create and set the `id` value manually 
 
 This is the resulting JSON:
 
-``` json
+```json
 {
     "Id": 1,
     "Discriminator": "Distributor",

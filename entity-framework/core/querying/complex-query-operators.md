@@ -18,7 +18,7 @@ The LINQ Join operator allows you to connect two data sources based on the key s
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Program.cs#Join)]
 
-```SQL
+```sql
 SELECT [p].[PersonId], [p].[Name], [p].[PhotoId], [p0].[PersonPhotoId], [p0].[Caption], [p0].[Photo]
 FROM [PersonPhoto] AS [p0]
 INNER JOIN [Person] AS [p] ON [p0].[PersonPhotoId] = [p].[PhotoId]
@@ -42,7 +42,7 @@ When the collection selector isn't referencing anything from the outer source, t
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Program.cs#SelectManyConvertedToCrossJoin)]
 
-```SQL
+```sql
 SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url], [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title]
 FROM [Blogs] AS [b]
 CROSS JOIN [Posts] AS [p]
@@ -54,7 +54,7 @@ When the collection selector has a where clause, which references the outer elem
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Program.cs#SelectManyConvertedToJoin)]
 
-```SQL
+```sql
 SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url], [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title]
 FROM [Blogs] AS [b]
 INNER JOIN [Posts] AS [p] ON [b].[BlogId] = [p].[BlogId]
@@ -70,7 +70,7 @@ When the collection selector references the outer element, which isn't in a wher
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Program.cs#SelectManyConvertedToApply)]
 
-```SQL
+```sql
 SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url], ([b].[Url] + N'=>') + [p].[Title] AS [p]
 FROM [Blogs] AS [b]
 CROSS APPLY [Posts] AS [p]
@@ -86,7 +86,7 @@ LINQ GroupBy operators create a result of type `IGrouping<TKey, TElement>` where
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Program.cs#GroupBy)]
 
-```SQL
+```sql
 SELECT [p].[AuthorId] AS [Key], COUNT(*) AS [Count]
 FROM [Posts] AS [p]
 GROUP BY [p].[AuthorId]
@@ -96,7 +96,7 @@ EF Core also translates queries where an aggregate operator on the grouping appe
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Program.cs#GroupByFilter)]
 
-```SQL
+```sql
 SELECT [p].[AuthorId] AS [Key], COUNT(*) AS [Count]
 FROM [Posts] AS [p]
 GROUP BY [p].[AuthorId]
@@ -119,7 +119,7 @@ While Left Join isn't a LINQ operator, relational databases have the concept of 
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Program.cs#LeftJoin)]
 
-```SQL
+```sql
 SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url], [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title]
 FROM [Blogs] AS [b]
 LEFT JOIN [Posts] AS [p] ON [b].[BlogId] = [p].[BlogId]

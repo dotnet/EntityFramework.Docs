@@ -65,7 +65,7 @@ The problem can be observed when executing two queries:
 
 With above setup, the first query returns all 6 `Post`s, however the second query only returns 3. This mismatch happens because `Include` method in the second query loads the related `Blog` entities. Since the navigation between `Blog` and `Post` is required, EF Core uses `INNER JOIN` when constructing the query:
 
-```SQL
+```sql
 SELECT [p].[PostId], [p].[BlogId], [p].[Content], [p].[IsDeleted], [p].[Title], [t].[BlogId], [t].[Name], [t].[Url]
 FROM [Posts] AS [p]
 INNER JOIN (

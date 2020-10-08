@@ -29,7 +29,7 @@ This type of client-side execution is desirable in some situations, but in many 
 
 For example, if EF Core 2.2 couldn't translate a predicate in a `Where()` call, it executed an SQL statement without a filter, transferred all the rows from the database, and then filtered them in-memory:
 
-``` csharp
+```csharp
 var specialCustomers = context.Customers
     .Where(c => c.Name.StartsWith(n) && IsSpecialCustomer(c));
 ```
@@ -41,7 +41,7 @@ When EF Core 3.x detects expressions that can't be translated anywhere else in t
 
 To evaluate a predicate condition on the client as in the previous example, developers now need to explicitly switch evaluation of the query to LINQ to Objects:
 
-``` csharp
+```csharp
 var specialCustomers = context.Customers
     .Where(c => c.Name.StartsWith(n))
     .AsEnumerable() // switches to LINQ to Objects
@@ -70,7 +70,7 @@ EF Core 3.x takes advantage of a couple of the [new features in C# 8.0](/dotnet/
 
 Asynchronous query results are now exposed using the new standard `IAsyncEnumerable<T>` interface and can be consumed using `await foreach`.
 
-``` csharp
+```csharp
 var orders =
     from o in context.Orders
     where o.Status == OrderStatus.Pending
@@ -90,7 +90,7 @@ When this new feature is enabled in your code, EF Core examines the nullability 
 
 For example, in the following class, properties marked as of type `string?` will be configured as optional, whereas `string` will be configured as required:
 
-``` csharp
+```csharp
 public class Customer
 {
     public int Id { get; set; }
@@ -110,7 +110,7 @@ Similarly to the interception features that existed in EF 6, interceptors allow 
 
 For example, to manipulate command text, you can create a `DbCommandInterceptor`:
 
-``` csharp
+```csharp
 public class HintCommandInterceptor : DbCommandInterceptor
 {
     public override InterceptionResult<DbDataReader> ReaderExecuting(
@@ -127,7 +127,7 @@ public class HintCommandInterceptor : DbCommandInterceptor
 
 And register it with your `DbContext`:
 
-``` csharp
+```csharp
 services.AddDbContext(b => b
     .UseSqlServer(connectionString)
     .AddInterceptors(new HintCommandInterceptor()));
@@ -146,7 +146,7 @@ dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Tr
 
 And the tool will now automatically scaffold types for views and tables without keys:
 
-``` csharp
+```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Names>(entity =>
@@ -168,7 +168,7 @@ Starting with EF Core 3.x, if `OrderDetails` is owned by `Order` or explicitly m
 
 When querying, EF Core will set `OrderDetails` to `null` if any of its required properties doesn't have a value, or if it has no required properties besides the primary key and all properties are `null`.
 
-``` csharp
+```csharp
 public class Order
 {
     public int Id { get; set; }

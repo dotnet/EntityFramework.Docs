@@ -50,7 +50,7 @@ Using HasGeometricDimension after specifying the dimension in the column type is
 
 Use `HasColumnType` to specify the dimension:
 
-```cs
+```csharp
 modelBuilder.Entity<GeoEntity>(
     x =>
     {
@@ -78,7 +78,7 @@ With the added support for required dependents, it is now possible to mark any r
 
 Calling `IsRequired` before specifying the dependent end is now ambiguous:
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .HasOne(b => b.BlogImage)
     .WithOne(i => i.Blog)
@@ -94,7 +94,7 @@ The new behavior is necessary to enable support for required dependents ([see #1
 
 Remove `RequiredAttribute` from the navigation to the dependent and place it instead on the navigation to the principal or configure the relationship in `OnModelCreating`:
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .HasOne(b => b.BlogImage)
     .WithOne(i => i.Blog)
@@ -124,7 +124,7 @@ This change makes the model better aligned with Azure Cosmos DB semantics and im
 
 To prevent the partition key property to be added to the primary key, configure it in `OnModelCreating`.
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .HasKey(b => b.Id);
 ```
@@ -151,7 +151,7 @@ This change makes it less likely that the `id` property clashes with an existing
 
 To go back to the 3.x behavior, configure the `id` property in `OnModelCreating`.
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .Property<string>("id")
     .ToJsonProperty("id");
@@ -245,7 +245,7 @@ To prevent the value generator from being called, assign a non-default value to 
 
 Use the following code to compare the model from `snapshot` with the model from `context`:
 
-```cs
+```csharp
 var dependencies = context.GetService<ProviderConventionSetBuilderDependencies>();
 var relationalDependencies = context.GetService<RelationalConventionSetBuilderDependencies>();
 
@@ -285,7 +285,7 @@ EF doesn't expect the entity type to change while it is still being tracked, so 
 
 If changing the discriminator value is necessary and the context will be disposed immediately after calling `SaveChanges`, the discriminator can be made mutable:
 
-```cs
+```csharp
 modelBuilder.Entity<BaseEntity>()
     .Property<string>("Discriminator")
     .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);

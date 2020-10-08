@@ -29,7 +29,7 @@ dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog
 
 ### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer
 ```
 
@@ -70,7 +70,7 @@ The `-Schemas` option can be used to include every table within a schema, while 
 
 To include multiple tables, use an array:
 
-``` powershell
+```powershell
 Scaffold-DbContext ... -Tables Artist, Album
 ```
 
@@ -86,7 +86,7 @@ Entity types are configured using the Fluent API by default. Specify `-DataAnnot
 
 For example, using the Fluent API will scaffold this:
 
-``` csharp
+```csharp
 entity.Property(e => e.Title)
     .IsRequired()
     .HasMaxLength(160);
@@ -94,7 +94,7 @@ entity.Property(e => e.Title)
 
 While using Data Annotations will scaffold this:
 
-``` csharp
+```csharp
 [Required]
 [StringLength(160)]
 public string Title { get; set; }
@@ -126,13 +126,13 @@ dotnet ef dbcontext scaffold ... --namespace Your.Namespace --context-namespace 
 
 You can specify the directory where classes are scaffolded using `-OutputDir`, and `-ContextDir` can be used to scaffold the DbContext class into a separate directory from the entity type classes:
 
-``` powershell
+```powershell
 Scaffold-DbContext ... -ContextDir Data -OutputDir Models
 ```
 
 By default, the namespace will be the root namespace plus the names of any subdirectories under the project's root directory. However, from EFCore 5.0 onwards, you can override the namespace for all output classes by using `-Namespace`. You can also override the namespace for just the DbContext class using `-ContextNamespace`.
 
-``` powershell
+```powershell
 Scaffold-DbContext ... -Namespace Your.Namespace -ContextNamespace Your.DbContext.Namespace
 ```
 
