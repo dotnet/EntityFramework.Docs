@@ -19,6 +19,9 @@ public class Program
         TestCode<EventIdsContext>();
         TestCode<DatabaseCategoryContext>();
         TestCode<CustomFilterContext>();
+        TestCode<ChangeLogLevelContext>();
+        TestCode<SuppressMessageContext>();
+        TestCode<ThrowForEventContext>();
         TestCode<UtcContext>();
         TestCode<SingleLineContext>();
         TestCode<TerseLogsContext>();
@@ -49,7 +52,7 @@ public class Program
 public class Blog
 {
     public int Id { get; set; }
-    public int Name { get; set; }
+    public string Name { get; set; }
 }
 
 public abstract class BlogsContext : DbContext
@@ -202,3 +205,34 @@ public class DatabaseLogContext : BlogsContext
     #endregion
 }
 
+public class ChangeLogLevelContext : BlogsContext
+{
+    #region ChangeLogLevel
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Log(
+                (RelationalEventId.ConnectionOpened, LogLevel.Information),
+                (RelationalEventId.ConnectionClosed, LogLevel.Information)))
+            .LogTo(Console.WriteLine, LogLevel.Information);
+    #endregion
+}
+
+public class SuppressMessageContext : BlogsContext
+{
+    #region SuppressMessage
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Ignore(CoreEventId.DetachedLazyLoadingWarning))
+            .LogTo(Console.WriteLine);
+    #endregion
+}
+
+public class ThrowForEventContext : BlogsContext
+{
+    #region ThrowForEvent
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
+            .LogTo(Console.WriteLine);
+    #endregion
+}

@@ -1,22 +1,23 @@
 ---
-title: Simple Logging - EF Core
-description: Logging from an EFCore DbContext using LogTo  
+title: Simple logging - EF Core
+description: Logging from an EF Core DbContext using LogTo  
 author: ajcvickers
 ms.date: 10/03/2020
 uid: core/logging-events-diagnostics/simple-logging
 ---
+
 # Simple logging
 
 > [!NOTE]
 > This feature was added in EF Core 5.0.
 
 > [!TIP]  
-> You can [view and download this article's sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/SimpleLogging) on GitHub.
+> You can [download this article's sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/SimpleLogging) from GitHub.
 
 Entity Framework Core (EF Core) simple logging can be used to easily obtain logs while developing and debugging applications. This form of logging requires minimal configuration and no additional NuGet packages.
 
 > [!TIP]
-> EF Core also integrates with [Microsoft.Extensions.Logging](/aspnet/core/fundamentals/logging), which requires more configuration, but is often more suitable for logging in production applications.
+> EF Core also integrates with [Microsoft.Extensions.Logging](xref:core/miscellaneous/events/extensions-logging), which requires more configuration, but is often more suitable for logging in production applications.
 
 ## Configuration
 
@@ -184,6 +185,52 @@ Since categories are hierarchical, this example using the `Database` category wi
 > [!TIP]
 > Filtering using custom filters or using any of the other options shown here is more efficient than filtering in the LogTo delegate. This is because if the filter determines the message should not be logged, then the log message is not even created.
 
+## Configuration for specific messages
+
+The EF Core <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings%2A> API allows applications to change what happens when a specific event is encountered. This can be used to:
+
+* Change the log level at which the event is logged
+* Skip logging the event altogether
+* Throw an exception when the event occurs
+
+### Changing the log level for an event
+
+The previous example used a custom filter to log every message at `LogLevel.Information` as well as two events defined for `LogLevel.Debug`. The same can be achieved by changing the log level of the two `Debug` events to `Information`:
+
+<!--
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Log(
+                (RelationalEventId.ConnectionOpened, LogLevel.Information),
+                (RelationalEventId.ConnectionClosed, LogLevel.Information)))
+            .LogTo(Console.WriteLine, LogLevel.Information);
+-->
+[!code-csharp[ChangeLogLevel](../../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=ChangeLogLevel)]
+
+### Suppress logging an event
+
+In a similar way, an individual event can be suppressed from logging. This is particularly useful for ignoring a warning that has been reviewed and understood. For example:
+
+<!--
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Ignore(CoreEventId.DetachedLazyLoadingWarning))
+            .LogTo(Console.WriteLine);
+-->
+[!code-csharp[SuppressMessage](../../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=SuppressMessage)]
+
+### Throw for an event
+
+Finally, EF Core can be configured to throw for a given event. This is particularly useful for changing a warning into an error. (Indeed, this was the original purpose of `ConfigureWarnings` method, hence the name.) For example:
+
+<!--
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
+            .LogTo(Console.WriteLine);
+-->
+[!code-csharp[ThrowForEvent](../../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=ThrowForEvent)]
+
 ## Message contents and formatting
 
 The default content from `LogTo` is formatted across multiple lines. The first line contains message metadata:
@@ -266,8 +313,6 @@ dbug: 10/6/2020 10:52:45.725 RelationalEventId.TransactionCommitted[20202] (Micr
 
 Other flags in [DbContextLoggerOptions](https://github.com/dotnet/efcore/blob/ec3df8fd7e4ea4ebeebfa747619cef37b23ab2c6/src/EFCore/Diagnostics/DbContextLoggerOptions.cs#L15) <!-- Issue #2748 <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbContextLoggerOptions> --> can be used to trim down the amount of metadata included in the log. This is can be useful in conjunction with single-line logging. For example:
 
-This example results in the following log formatting:
-
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.LogTo(
@@ -276,6 +321,8 @@ This example results in the following log formatting:
             DbContextLoggerOptions.UtcTime | DbContextLoggerOptions.SingleLine);
 -->
 [!code-csharp[TerseLogs](../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=TerseLogs)]
+
+This example results in the following log formatting:
 
 ```output
 2020-10-06T17:52:45.7320362Z -> Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']CREATE TABLE "Blogs" (    "Id" INTEGER NOT NULL CONSTRAINT "PK_Blogs" PRIMARY KEY AUTOINCREMENT,    "Name" INTEGER NOT NULL);
