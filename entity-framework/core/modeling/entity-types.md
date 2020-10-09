@@ -35,6 +35,19 @@ If you don't want a type to be included in the model, you can exclude it:
 
 ***
 
+### Excluding from migrations
+
+> [!NOTE]
+> The ability to exclude tables from migrations was added in EF Core 5.0.
+
+It is sometimes useful to have the same entity type mapped in multiple `DbContext` types. This is especially true when using [bounded contexts](https://www.martinfowler.com/bliki/BoundedContext.html), for which it is common to have a different `DbContext` type for each bounded context.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TableExcludeFromMigrations.cs?name=TableExcludeFromMigrations&highlight=4)]
+
+With this configuration migrations will not create the `blogs` table, but `Blog` is still included in the model and can be used normally.
+
+If you need to start managing the table using migrations again then a new migration should be created where `blogs` is not excluded. The next migration will now contain any changes made to the table.
+
 ## Table name
 
 By convention, each entity type will be set up to map to a database table with the same name as the DbSet property that exposes the entity. If no DbSet exists for the given entity, the class name is used.
