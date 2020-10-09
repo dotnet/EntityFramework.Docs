@@ -20,7 +20,7 @@ Entity Framework Core (EF Core) simple logging can be used to easily obtain logs
 
 ## Configuration
 
-EF Core logs can be accessed from any type of application through use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
+EF Core logs can be accessed from any type of application through use of [LogTo](https://github.com/dotnet/efcore/blob/ec3df8fd7e4ea4ebeebfa747619cef37b23ab2c6/src/EFCore/DbContextOptionsBuilder.cs#L135) <!-- Issue #2748 <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> --> when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -208,7 +208,7 @@ dbug: 10/6/2020 10:52:45.585 RelationalEventId.TransactionCommitted[20202] (Micr
       Committed transaction.
 ```
 
-This content can be customized by passing values from <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbContextLoggerOptions>, as shown in the following sections.
+This content can be customized by passing values from [DbContextLoggerOptions](https://github.com/dotnet/efcore/blob/ec3df8fd7e4ea4ebeebfa747619cef37b23ab2c6/src/EFCore/Diagnostics/DbContextLoggerOptions.cs#L15) <!-- Issue #2748 <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbContextLoggerOptions> -->, as shown in the following sections.
 
 > [!TIP]
 > Consider using [Microsoft.Extensions.Logging](/aspnet/core/fundamentals/logging) for more control over log formatting.
@@ -264,7 +264,7 @@ dbug: 10/6/2020 10:52:45.725 RelationalEventId.TransactionCommitted[20202] (Micr
 
 ### Other content options
 
-Other flags in <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbContextLoggerOptions> can be used to trim down the amount of metadata included in the log. This is can be useful in conjunction with single-line logging. For example:
+Other flags in [DbContextLoggerOptions](https://github.com/dotnet/efcore/blob/ec3df8fd7e4ea4ebeebfa747619cef37b23ab2c6/src/EFCore/Diagnostics/DbContextLoggerOptions.cs#L15) <!-- Issue #2748 <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbContextLoggerOptions> --> can be used to trim down the amount of metadata included in the log. This is can be useful in conjunction with single-line logging. For example:
 
 This example results in the following log formatting:
 

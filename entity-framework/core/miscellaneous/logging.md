@@ -15,7 +15,7 @@ uid: core/miscellaneous/logging
 > [!NOTE]
 > This feature was added in EF Core 5.0.
 
-Entity Framework Core (EF Core) generates log messages for operations such as executing a query or saving changes to the database. These can be accessed from any type of application through use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
+Entity Framework Core (EF Core) generates log messages for operations such as executing a query or saving changes to the database. These can be accessed from any type of application through use of [LogTo](https://github.com/dotnet/efcore/blob/ec3df8fd7e4ea4ebeebfa747619cef37b23ab2c6/src/EFCore/DbContextOptionsBuilder.cs#L135) <!-- Issue #2748 <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> --> when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
