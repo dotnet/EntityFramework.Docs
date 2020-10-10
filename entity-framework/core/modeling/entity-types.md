@@ -2,7 +2,7 @@
 title: Entity Types - EF Core
 description: How to configure and map entity types using Entity Framework Core
 author: roji
-ms.date: 12/03/2019
+ms.date: 10/06/2020
 uid: core/modeling/entity-types
 ---
 # Entity Types

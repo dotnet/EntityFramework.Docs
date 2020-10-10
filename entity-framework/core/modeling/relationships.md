@@ -2,7 +2,7 @@
 title: Relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
 author: AndriySvyryd
-ms.date: 11/21/2019
+ms.date: 10/01/2020
 uid: core/modeling/relationships
 ---
 # Relationships
