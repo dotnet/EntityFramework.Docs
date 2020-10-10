@@ -2,7 +2,7 @@
 title: Azure Cosmos DB Provider - EF Core
 description: Documentation for the database provider that allows Entity Framework Core to be used with the Azure Cosmos DB SQL API
 author: AndriySvyryd
-ms.date: 09/14/2020
+ms.date: 10/09/2020
 uid: core/providers/cosmos/index
 ---
 # EF Core Azure Cosmos DB Provider
@@ -195,3 +195,16 @@ This is the resulting JSON:
     "_ts": 1572917100
 }
 ```
+
+## Optimistic concurrency with eTags
+
+> [!NOTE]
+> Support for eTag concurrency was added in EF Core 5.0.
+
+To configure an entity type to use [optimistic concurrency](xref:core/modeling/concurrency) call `UseETagConcurrency`. This call will create an `_etag` property in [shadow state](xref:core/modeling/shadow-properties) and set it as the concurrency token.
+
+[!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETag)]
+
+To make it easier to resolve concurrency errors you can map the eTag to a CLR property using `IsETagConcurrency`.
+
+[!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETagProperty)]
