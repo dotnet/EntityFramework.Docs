@@ -11,7 +11,7 @@ Backing fields allow EF to read and/or write to a field rather than a property. 
 
 ## Basic configuration
 
-By convention, the following fields will be discovered as backing fields for a given property (listed in precedence order). 
+By convention, the following fields will be discovered as backing fields for a given property (listed in precedence order).
 
 * `_<camel-cased property name>`
 * `_<property name>`
@@ -57,6 +57,6 @@ EF will attempt to find a CLR property with the given name, or a field if a prop
 
 You may need to refer to a field-only property from LINQ queries, but such fields are typically private. You can use the `EF.Property(...)` method in a LINQ query to refer to the field:
 
-``` csharp
+```csharp
 var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "_validatedUrl"));
 ```

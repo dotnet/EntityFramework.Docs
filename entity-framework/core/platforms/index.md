@@ -40,13 +40,13 @@ Applications that target .NET Framework may need changes to work with .NET Stand
 
 Edit the project file and make sure the following entry appears in the initial property group:
 
-``` xml
+```xml
 <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 ```
 
 For test projects, also make sure the following entry is present:
 
-``` xml
+```xml
 <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
 ```
 
@@ -54,7 +54,7 @@ If you want to use an older version of Visual Studio, make sure you [upgrade the
 
 We also recommend migrating from NuGet packages.config to PackageReference if possible. Add the following property to your project file:
 
-``` xml
+```xml
 <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
 ```
 

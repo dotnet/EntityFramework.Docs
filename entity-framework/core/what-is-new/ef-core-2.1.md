@@ -30,7 +30,7 @@ Until now, EF Core could only map properties of types natively supported by the 
 - Mapping unsigned integers with SQL Server
 - Automatic encryption and decryption of property values
 
-Read the [section on value conversions](xref:core/modeling/value-conversions) for more information about this topic.  
+Read the [section on value conversions](xref:core/modeling/value-conversions) for more information about this topic.
 
 ## LINQ GroupBy translation
 
@@ -38,7 +38,7 @@ Before version 2.1, in EF Core the GroupBy LINQ operator would always be evaluat
 
 This example shows a query with GroupBy used to compute various aggregate functions:
 
-``` csharp
+```csharp
 var query = context.Orders
     .GroupBy(o => new { o.CustomerId, o.EmployeeId })
     .Select(g => new
@@ -54,7 +54,7 @@ var query = context.Orders
 
 The corresponding SQL translation looks like this:
 
-``` SQL
+```sql
 SELECT [o].[CustomerId], [o].[EmployeeId],
     SUM([o].[Amount]), MIN([o].[Amount]), MAX([o].[Amount]), AVG([o].[Amount])
 FROM [Orders] AS [o]
@@ -67,11 +67,11 @@ With the new release it will be possible to provide initial data to populate a d
 
 As an example, you can use this to configure seed data for a Post in `OnModelCreating`:
 
-``` csharp
+```csharp
 modelBuilder.Entity<Post>().HasData(new Post{ Id = 1, Text = "Hello World!" });
 ```
 
-Read the [section on data seeding](xref:core/modeling/data-seeding) for more information about this topic.  
+Read the [section on data seeding](xref:core/modeling/data-seeding) for more information about this topic.
 
 ## Query types
 
@@ -88,7 +88,7 @@ Read the [section on query types](xref:core/modeling/keyless-entity-types) for m
 
 It will be now possible to specify navigation properties only defined on derived types when writing expressions for the `Include` method. For the strongly typed version of `Include`, we support using either an explicit cast or the `as` operator. We also now support referencing the names of navigation property defined on derived types in the string version of `Include`:
 
-``` csharp
+```csharp
 var option1 = context.People.Include(p => ((Student)p).School);
 var option2 = context.People.Include(p => (p as Student).School);
 var option3 = context.People.Include("School");
@@ -112,14 +112,14 @@ We have improved our query translation to avoid executing "N + 1" SQL queries in
 
 As an example, the following query normally gets translated into one query for Customers, plus N (where "N" is the number of customers returned) separate queries for Orders:
 
-``` csharp
+```csharp
 var query = context.Customers.Select(
     c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount));
 ```
 
 By including `ToList()` in the right place, you indicate that buffering is appropriate for the Orders, which enable the optimization:
 
-``` csharp
+```csharp
 var query = context.Customers.Select(
     c => c.Orders.Where(o => o.Amount  > 100).Select(o => o.Amount).ToList());
 ```
@@ -130,7 +130,7 @@ Note that this query will be translated to only two SQL queries: One for Custome
 
 It is now possible to configure [owned entity types](xref:core/modeling/owned-entities) by simply annotating the type with `[Owned]` and then making sure the owner entity is added to the model:
 
-``` csharp
+```csharp
 [Owned]
 public class StreetAddress
 {
@@ -163,7 +163,7 @@ New `Tracked` And `StateChanged` events on `ChangeTracker` can be used to write 
 
 A new code analyzer is included with EF Core that detects potentially unsafe usages of our raw-SQL APIs, like `FromSql` or `ExecuteSqlCommand`. For example, for the following query, you will see a warning because _minAge_ is not parameterized:
 
-``` csharp
+```csharp
 var sql = $"SELECT * FROM People WHERE Age > {minAge}";
 var query = context.People.FromSql(sql);
 ```

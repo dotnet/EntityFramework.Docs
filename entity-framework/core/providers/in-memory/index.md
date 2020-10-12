@@ -21,7 +21,7 @@ dotnet add package Microsoft.EntityFrameworkCore.InMemory
 
 ### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.InMemory
 ```
 

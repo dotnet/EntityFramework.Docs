@@ -14,7 +14,7 @@ migration before sharing it.
 
 When you merge migrations from your teammates, you may get conflicts in your model snapshot file. If both changes are unrelated, the merge is trivial and the two migrations can coexist. For example, you may get a merge conflict in the customer entity type configuration that looks like this:
 
-``` output
+```output
 <<<<<<< Mine
 b.Property<bool>("Deactivated");
 =======
@@ -25,7 +25,7 @@ b.Property<int>("LoyaltyPoints");
 Since both of these properties need to exist in the final model, complete the merge by adding both properties. In many
 cases, your version control system may automatically merge such changes for you.
 
-``` csharp
+```csharp
 b.Property<bool>("Deactivated");
 b.Property<int>("LoyaltyPoints");
 ```
@@ -36,7 +36,7 @@ In these cases, your migration and your teammate's migration are independent of 
 
 Sometimes you encounter a true conflict when merging the model snapshot model. For example, you and your teammate may each have renamed the same property.
 
-``` output
+```output
 <<<<<<< Mine
 b.Property<string>("Username");
 =======

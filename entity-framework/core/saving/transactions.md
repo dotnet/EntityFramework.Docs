@@ -53,7 +53,7 @@ The easiest way to allow `DbConnection` to be externally provided, is to stop us
 
 An alternative is to keep using `DbContext.OnConfiguring`, but accept a `DbConnection` that is saved and then used in `DbContext.OnConfiguring`.
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     private DbConnection _connection;

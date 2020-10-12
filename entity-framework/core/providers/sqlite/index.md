@@ -21,7 +21,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 
 ### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.Sqlite
 ```
 

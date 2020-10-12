@@ -31,13 +31,13 @@ If the name supplied to the `Property` method matches the name of an existing pr
 
 Shadow property values can be obtained and changed through the `ChangeTracker` API:
 
-``` csharp
+```csharp
 context.Entry(myBlog).Property("LastUpdated").CurrentValue = DateTime.Now;
 ```
 
 Shadow properties can be referenced in LINQ queries via the `EF.Property` static method:
 
-``` csharp
+```csharp
 var blogs = context.Blogs
     .OrderBy(b => EF.Property<DateTime>(b, "LastUpdated"));
 ```

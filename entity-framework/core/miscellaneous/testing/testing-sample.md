@@ -172,7 +172,7 @@ Two slightly more involved tests cover the business logic around adding tags.
 ## Issues using different database providers
 
 Testing with a different database system than is used in the production application can lead to problems.
-These are covered at the conceptual level in [Testing code that uses EF Core](xref:core/miscellaneous/testing/index).  
+These are covered at the conceptual level in [Testing code that uses EF Core](xref:core/miscellaneous/testing/index).
 The sections below cover two examples of such issues demonstrated by the tests in this sample.
 
 ### Test passes when the application is broken
@@ -186,7 +186,7 @@ Running this test against the EF in-memory database indicates that everything is
 Everything still looks fine when using SQLite.
 But the test fails when run against SQL Server!
 
-```console
+```output
 System.InvalidOperationException : Sequence contains more than one element
    at System.Linq.ThrowHelper.ThrowMoreThanOneElementException()
    at System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
@@ -213,7 +213,7 @@ Again, easy to test:
 
 This test passes on SQL Server and SQLite, but fails with the EF in-memory database!
 
-```console
+```output
 Assert.False() Failure
 Expected: False
 Actual:   True
