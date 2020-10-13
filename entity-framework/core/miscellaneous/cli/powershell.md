@@ -2,7 +2,7 @@
 title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: bricelam
-ms.date: 09/09/2020
+ms.date: 10/13/2020
 uid: core/miscellaneous/cli/powershell
 ---
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
@@ -12,41 +12,6 @@ The Package Manager Console (PMC) tools for Entity Framework Core perform design
 If you aren't using Visual Studio, we recommend the [EF Core Command-line Tools](xref:core/miscellaneous/cli/dotnet) instead. The .NET Core CLI tools are cross-platform and run inside a command prompt.
 
 ## Installing the tools
-
-The procedures for installing and updating the tools differ between ASP.NET Core and other project types.
-
-### ASP.NET Core projects
-
-The tools are automatically included in an ASP.NET Core 2.1+ project because the `Microsoft.EntityFrameworkCore.Tools` package is included in the [Microsoft.AspNetCore.App metapackage](/aspnet/core/fundamentals/metapackage-app).
-
-Therefore, you don't have to do anything to install the tools, but you do have to:
-
-* Restore packages before using the tools in a new project.
-* Install a package to update the tools to a newer version.
-
-To make sure that you're getting the latest version of the tools, we recommend that you also do the following step:
-
-* Edit your *.csproj* file and add a line specifying the latest version of the [Microsoft.EntityFrameworkCore.Tools](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/) package. For example, the *.csproj* file might include an `ItemGroup` that looks like this:
-
-  ```xml
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
-  </ItemGroup>
-  ```
-
-Update the tools when you get a message like the following example:
-
-> The EF Core tools version '2.1.1-rtm-30846' is older than that of the runtime '2.1.3-rtm-32065'. Update the tools for the latest features and bug fixes.
-
-To update the tools:
-
-* Install the latest .NET Core SDK.
-* Update Visual Studio to the latest version.
-* Edit the *.csproj* file so that it includes a package reference to the latest tools package, as shown earlier.
-
-### Other project types
 
 Install the Package Manager Console tools by running the following command in **Package Manager Console**:
 
