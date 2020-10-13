@@ -157,7 +157,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 Entity types are commonly mapped to tables or views such that EF Core will pull back the contents of the table or view when querying for that type. EF Core 5.0 allows an entity type to mapped to a "defining query". (This was partially supported in previous versions, but is much improved and has different syntax in EF Core 5.0.)
 
-For example, consider two tables; one with modern posts; the other with legacy posts. The modern posts table has some additional columns, but for the purpose of our application we want both modern and legacy posts tp be combined and mapped to an entity type with all necessary properties:
+For example, consider two tables; one with modern posts; the other with legacy posts. The modern posts table has some additional columns, but for the purpose of our application we want both modern and legacy posts to be combined and mapped to an entity type with all necessary properties:
 
 ```csharp
 public class Post
