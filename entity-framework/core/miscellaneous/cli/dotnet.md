@@ -116,7 +116,7 @@ Starting in EF Core 5.0, any additional arguments are passed to the application.
 
 ## dotnet ef database drop
 
-Drops the database.
+Deletes the database.
 
 Options:
 
