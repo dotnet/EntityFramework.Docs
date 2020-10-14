@@ -73,7 +73,7 @@ It is assumed that you are familiar with the Xamarin.Forms topics of [displaying
 > 
 > * The first is to add `--linkskip System.Core` to the **Additional mtouch arguments** in the **iOS Build** options.
 > * Alternatively set the Xamarin.iOS **Linker behavior** to `Don't Link` in the **iOS Build** options.
-> [This article explains more about the Xamarin.iOS linker](/xamarin/ios/deploy-test/linker) including how to set the behavior on Xamarin.iOS. (This approach is not ideal as it may result in rejection from the store).
+> [This article explains more about the Xamarin.iOS linker](/xamarin/ios/deploy-test/linker) including how to set the behavior on Xamarin.iOS. (This approach isn't ideal as it may result in rejection from the store).
 > 
 
 ## Entity Framework Core NuGet packages
