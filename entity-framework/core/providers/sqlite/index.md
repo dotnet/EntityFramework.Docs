@@ -1,7 +1,7 @@
 ---
 title: SQLite Database Provider - EF Core
 description: Information on the Entity Framework Core SQLite database provider
-author: rowanmiller
+author: bricelam
 ms.date: 10/27/2016
 uid: core/providers/sqlite/index
 ---
@@ -21,7 +21,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 
 ### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.Sqlite
 ```
 

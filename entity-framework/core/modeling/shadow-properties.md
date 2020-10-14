@@ -1,11 +1,11 @@
 ---
-title: Shadow Properties - EF Core
-description: Configuring shadow properties in an Entity Framework Core model
+title: Shadow and Indexer Properties - EF Core
+description: Configuring shadow and indexer properties in an Entity Framework Core model
 author: AndriySvyryd
-ms.date: 01/03/2020
+ms.date: 10/09/2020
 uid: core/modeling/shadow-properties
 ---
-# Shadow Properties
+# Shadow and Indexer Properties
 
 Shadow properties are properties that are not defined in your .NET entity class but are defined for that entity type in the EF Core model. The value and state of these properties is maintained purely in the Change Tracker. Shadow properties are useful when there is data in the database that should not be exposed on the mapped entity types.
 
@@ -31,15 +31,24 @@ If the name supplied to the `Property` method matches the name of an existing pr
 
 Shadow property values can be obtained and changed through the `ChangeTracker` API:
 
-``` csharp
+```csharp
 context.Entry(myBlog).Property("LastUpdated").CurrentValue = DateTime.Now;
 ```
 
 Shadow properties can be referenced in LINQ queries via the `EF.Property` static method:
 
-``` csharp
+```csharp
 var blogs = context.Blogs
     .OrderBy(b => EF.Property<DateTime>(b, "LastUpdated"));
 ```
 
 Shadow properties cannot be accessed after a no-tracking query since the entities returned are not tracked by the change tracker.
+
+## Property bag entity types
+
+> [!NOTE]
+> Support for Property bag entity types was added in EF Core 5.0.
+
+Entity types that contain only indexer properties are known as property bag entity types. These entity types don't have shadow properties. Currently only `Dictionary<string, object>` is supported as a property bag entity type. This means that it must be configured as a shared entity type with a unique name and the corresponding `DbSet` property must be implemented using a `Set` call.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/SharedType.cs?name=SharedType&highlight=3,7)]

@@ -1,7 +1,7 @@
 ---
 title: What is new in EF Core 2.0 - EF Core
 description: Changes and improvements in Entity Framework Core 2.0
-author: divega
+author: ajcvickers
 ms.date: 02/20/2018
 uid: core/what-is-new/ef-core-2.0
 ---
@@ -21,7 +21,7 @@ It is now possible to map two or more entity types to the same table where the p
 
 To use table splitting an identifying relationship (where foreign key properties form the primary key) must be configured between all of the entity types sharing the table:
 
-``` csharp
+```csharp
 modelBuilder.Entity<Product>()
     .HasOne(e => e.Details).WithOne(e => e.Product)
     .HasForeignKey<ProductDetails>(e => e.Id);
@@ -37,7 +37,7 @@ An owned entity type can share the same .NET type with another owned entity type
 
 By convention a shadow primary key will be created for the owned type and it will be mapped to the same table as the owner by using table splitting. This allows to use owned types similarly to how complex types are used in EF6:
 
-``` csharp
+```csharp
 modelBuilder.Entity<Order>().OwnsOne(p => p.OrderDetails, cb =>
     {
         cb.OwnsOne(c => c.BillingAddress);
@@ -74,7 +74,7 @@ EF Core 2.0 includes a new feature we call Model-level query filters. This featu
 
 Here is a simple example demonstrating the feature for the two scenarios listed above:
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -108,7 +108,7 @@ Here is a brief description of how the feature can be used:
 
 Declare a static method on your `DbContext` and annotate it with `DbFunctionAttribute`:
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     [DbFunction]
@@ -121,7 +121,7 @@ public class BloggingContext : DbContext
 
 Methods like this are automatically registered. Once registered, calls to the method in a LINQ query can be translated to function calls in SQL:
 
-``` csharp
+```csharp
 var query =
     from p in context.Posts
     where BloggingContext.PostReadCount(p.Id) > 5
@@ -138,7 +138,7 @@ A few things to note:
 
 In EF6 it was possible to encapsulate the code first configuration of a specific entity type by deriving from *EntityTypeConfiguration*. In EF Core 2.0 we are bringing this pattern back:
 
-``` csharp
+```csharp
 class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
@@ -161,7 +161,7 @@ The basic pattern for using EF Core in an ASP.NET Core application usually invol
 
 In version 2.0 we are introducing a new way to register custom DbContext types in dependency injection which transparently introduces a pool of reusable DbContext instances. To use DbContext pooling, use the `AddDbContextPool` instead of `AddDbContext` during service registration:
 
-``` csharp
+```csharp
 services.AddDbContextPool<BloggingContext>(
     options => options.UseSqlServer(connectionString));
 ```
@@ -174,7 +174,7 @@ This is conceptually similar to how connection pooling operates in ADO.NET provi
 
 The new method introduces a few limitations on what can be done in the `OnConfiguring()` method of the DbContext.
 
-> [!WARNING]  
+> [!WARNING]
 > Avoid using DbContext Pooling if you maintain your own state (for example, private fields) in your derived DbContext class that should not be shared across requests. EF Core will only reset the state that it is aware of before adding a DbContext instance to the pool.
 
 ### Explicitly compiled queries
@@ -185,7 +185,7 @@ Manual or explicitly compiled query APIs have been available in previous version
 
 Although in general EF Core can automatically compile and cache queries based on a hashed representation of the query expressions, this mechanism can be used to obtain a small performance gain by bypassing the computation of the hash and the cache lookup, allowing the application to use an already compiled query through the invocation of a delegate.
 
-``` csharp
+```csharp
 // Create an explicitly compiled query
 private static Func<CustomerContext, int, Customer> _customerById =
     EF.CompileQuery((CustomerContext db, int id) =>
@@ -222,7 +222,7 @@ C# 6 introduced String Interpolation, a feature that allows C# expressions to be
 
 Here is an example:
 
-``` csharp
+```csharp
 var city = "London";
 var contactTitle = "Sales Representative";
 
@@ -254,7 +254,7 @@ WHERE ""City"" = @p0
 
 We have added the EF.Functions property which can be used by EF Core or providers to define methods that map to database functions or operators so that those can be invoked in LINQ queries. The first example of such a method is Like():
 
-``` csharp
+```csharp
 var aCustomers =
     from c in context.Customers
     where EF.Functions.Like(c.Name, "a%")
@@ -271,7 +271,7 @@ EF Core 2.0 introduces a new *IPluralizer* service that is used to singularize e
 
 Here is what it looks like for a developer to hook in their own pluralizer:
 
-``` csharp
+```csharp
 public class MyDesignTimeServices : IDesignTimeServices
 {
     public void ConfigureDesignTimeServices(IServiceCollection services)

@@ -1,7 +1,7 @@
 ---
 title: Fluent API - Relationships - EF6
 description: Fluent API - Relationships in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/modeling/code-first/fluent/relationships
 ---

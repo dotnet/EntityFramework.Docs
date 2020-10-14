@@ -1,7 +1,7 @@
 ---
 title: Creating and configuring a model - EF Core
 description: Overview of creating and configuring a model with Entity Framework Core
-author: rowanmiller
+author: AndriySvyryd
 ms.date: 11/05/2019
 uid: core/modeling/index
 ---

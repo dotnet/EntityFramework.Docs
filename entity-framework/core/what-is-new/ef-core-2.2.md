@@ -1,7 +1,7 @@
 ---
 title: What is new in EF Core 2.2 - EF Core
 description: Changes and improvements in Entity Framework Core 2.2
-author: divega
+author: ajcvickers
 ms.date: 11/14/2018
 uid: core/what-is-new/ef-core-2.2
 ---
@@ -22,7 +22,7 @@ Spatial types can be used directly with the [EF Core in-memory provider](xref:co
 
 Once the provider extension is installed, you can add properties of supported types to your entities. For example:
 
-``` csharp
+```csharp
 using NetTopologySuite.Geometries;
 
 namespace MyApp
@@ -31,7 +31,7 @@ namespace MyApp
   {
     [Key]
     public string Name { get; set; }
-  
+
     [Required]
     public Point Location { get; set; }
   }
@@ -40,7 +40,7 @@ namespace MyApp
 
 You can then persist entities with spatial data:
 
-``` csharp
+```csharp
 using (var context = new MyDbContext())
 {
     context.Add(
@@ -55,11 +55,11 @@ using (var context = new MyDbContext())
 
 And you can execute database queries based on spatial data and operations:
 
-``` csharp
-  var nearestFriends =
-      (from f in context.Friends
-      orderby f.Location.Distance(myLocation) descending
-      select f).Take(5).ToList();
+```csharp
+var nearestFriends =
+    (from f in context.Friends
+    orderby f.Location.Distance(myLocation) descending
+    select f).Take(5).ToList();
 ```
 
 For more information on this feature, see the [spatial types documentation](xref:core/modeling/spatial).
@@ -80,7 +80,7 @@ But in document-oriented databases, we plan to nest owned entities (in owned col
 
 You can use the feature by calling the new OwnsMany() API:
 
-``` csharp
+```csharp
 modelBuilder.Entity<Customer>().OwnsMany(c => c.Addresses);
 ```
 
@@ -93,16 +93,16 @@ This feature simplifies the correlation of LINQ queries in code with generated S
 To take advantage of query tags, you annotate a LINQ query using the new TagWith() method.
 Using the spatial query from a previous example:
 
-``` csharp
-  var nearestFriends =
-      (from f in context.Friends.TagWith(@"This is my spatial query!")
-      orderby f.Location.Distance(myLocation) descending
-      select f).Take(5).ToList();
+```csharp
+var nearestFriends =
+    (from f in context.Friends.TagWith(@"This is my spatial query!")
+    orderby f.Location.Distance(myLocation) descending
+    select f).Take(5).ToList();
 ```
 
 This LINQ query will produce the following SQL output:
 
-``` sql
+```sql
 -- This is my spatial query!
 
 SELECT TOP(@__p_1) [f].[Name], [f].[Location]

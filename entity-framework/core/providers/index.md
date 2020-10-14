@@ -1,6 +1,6 @@
 ---
 title: Database Providers - EF Core
-description: Information about specific supported Entity Framework Core providers and about providers in general 
+description: Information about specific supported Entity Framework Core providers and about providers in general
 author: ajcvickers
 ms.date: 12/17/2019
 uid: core/providers/index
@@ -12,11 +12,11 @@ Entity Framework Core can access many different databases through plug-in librar
 
 ## Current providers
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > EF Core providers are built by a variety of sources. Not all providers are maintained as part of the [Entity Framework Core Project](https://github.com/aspnet/EntityFrameworkCore). When considering a provider, be sure to evaluate quality, licensing, support, etc. to ensure they meet your requirements. Also make sure you review each provider's documentation for detailed version compatibility information.
 
-> [!IMPORTANT]  
-> EF Core providers typically work across minor versions, but not across major versions. For example, a provider released for EF Core 2.1 should work with EF Core 2.2, but will not work with EF Core 3.0. 
+> [!IMPORTANT]
+> EF Core providers typically work across minor versions, but not across major versions. For example, a provider released for EF Core 2.1 should work with EF Core 2.2, but will not work with EF Core 3.0.
 
 | NuGet Package                                                                                                                                                                         | Supported database engines | Maintainer / Vendor                                                           | Notes / Requirements     | Built for version | Useful links                                                                                                                                                                                       |
 |:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------|:------------------------------------------------------------------------------|:-------------------------|:------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -43,7 +43,6 @@ Entity Framework Core can access many different databases through plug-in librar
 | [Teradata.EntityFrameworkCore](https://www.nuget.org/packages/Teradata.EntityFrameworkCore/)                                                                                          | Teradata Database 16.10 onwards | [Teradata](https://downloads.teradata.com/download/connectivity/net-data-provider-for-teradata) |   | 2.2               |[website](https://www.nuget.org/packages/Teradata.EntityFrameworkCore/)                                                                                                                            |
 | [EntityFrameworkCore.FirebirdSql](https://www.nuget.org/packages/EntityFrameworkCore.FirebirdSql/)                                                                                    | Firebird 2.5 and 3.x       | [Rafael Almeida](https://github.com/ralmsdeveloper)                           |                          | 2.1               | [wiki](https://github.com/ralmsdeveloper/EntityFrameworkCore.FirebirdSQL/wiki)                                                                                                                     |
 | [EntityFrameworkCore.OpenEdge](https://www.nuget.org/packages/EntityFrameworkCore.OpenEdge/)                                                                                          | Progress OpenEdge          | [Alex Wiese](https://github.com/alexwiese)                                    |                          | 2.1               | [readme](https://github.com/alexwiese/EntityFrameworkCore.OpenEdge/blob/master/README.md)                                                                                                          |
-| [Pomelo.EntityFrameworkCore.MyCat](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MyCat)                                                                                   | MyCAT Server               | [Pomelo Foundation Project](https://github.com/PomeloFoundation)              | Prerelease only          | 1.1               | [readme](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MyCat/blob/master/README.md)                                                                                               |
 
 ## Adding a database provider to your application
 
@@ -57,7 +56,7 @@ dotnet add package provider_package_name
 
 ## [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 install-package provider_package_name
 ```
 
@@ -66,10 +65,10 @@ install-package provider_package_name
 Once installed, you will configure the provider in your `DbContext`, either in the `OnConfiguring` method or in the `AddDbContext` method if you are using a dependency injection container.
 For example, the following line configures the SQL Server provider with the passed connection string:
 
-``` csharp
+```csharp
 optionsBuilder.UseSqlServer(
     "Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
-```  
+```
 
 Database providers can extend EF Core to enable functionality unique to specific databases.
 Some concepts are common to most databases, and are included in the primary EF Core components.
@@ -80,7 +79,7 @@ Other concepts are specific to a class of providers.
 For example, EF Core providers for relational databases build on the common `Microsoft.EntityFrameworkCore.Relational` library, which provides APIs for configuring table and column mappings, foreign key constraints, etc.
 Providers are usually distributed as NuGet packages.
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > When a new patch version of EF Core is released, it often includes updates to the `Microsoft.EntityFrameworkCore.Relational` package.
 > When you add a relational database provider, this package becomes a transitive dependency of your application.
 > But many providers are released independently from EF Core and may not be updated to depend on the newer patch version of that package.

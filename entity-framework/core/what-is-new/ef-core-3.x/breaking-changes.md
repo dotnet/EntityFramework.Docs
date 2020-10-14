@@ -105,7 +105,7 @@ If a query can't be fully translated, then either rewrite the query in a form th
 
 [Tracking Issue #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > EF Core 3.1 targets .NET Standard 2.0 again. This brings back support for .NET Framework.
 
 **Old behavior**
@@ -139,7 +139,7 @@ Starting in 3.0, the ASP.NET Core shared framework doesn't include EF Core or an
 
 **Why**
 
-Before this change, getting EF Core required different steps depending on whether the application targeted ASP.NET Core and SQL Server or not. 
+Before this change, getting EF Core required different steps depending on whether the application targeted ASP.NET Core and SQL Server or not.
 Also, upgrading ASP.NET Core forced the upgrade of EF Core and the SQL Server provider, which isn't always desirable.
 
 With this change, the experience of getting EF Core is the same across all providers, supported .NET implementations and application types.
@@ -156,11 +156,11 @@ To use EF Core in an ASP.NET Core 3.0 application or any other supported applica
 
 **Old behavior**
 
-Before 3.0, the `dotnet ef` tool was included in the .NET Core SDK and was readily available to use from the command line from any project without requiring extra steps. 
+Before 3.0, the `dotnet ef` tool was included in the .NET Core SDK and was readily available to use from the command line from any project without requiring extra steps.
 
 **New behavior**
 
-Starting in 3.0, the .NET SDK does not include the `dotnet ef` tool, so before you can use it you have to explicitly install it as a local or global tool. 
+Starting in 3.0, the .NET SDK does not include the `dotnet ef` tool, so before you can use it you have to explicitly install it as a local or global tool.
 
 **Why**
 
@@ -170,8 +170,8 @@ This change allows us to distribute and update `dotnet ef` as a regular .NET CLI
 
 To be able to manage migrations or scaffold a `DbContext`, install `dotnet-ef` as a global tool:
 
-  ``` console
-    $ dotnet tool install --global dotnet-ef
+  ```dotnetcli
+  dotnet tool install --global dotnet-ef
   ```
 
 You can also obtain it a local tool when you restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](/dotnet/core/tools/global-tools#install-a-local-tool).
@@ -323,7 +323,7 @@ Starting with 3.0, EF Core stores the temporary key value as part of the entity'
 
 **Why**
 
-This change was made to prevent temporary key values from erroneously becoming permanent when an entity that has been previously tracked by some `DbContext` instance is moved to a different `DbContext` instance. 
+This change was made to prevent temporary key values from erroneously becoming permanent when an entity that has been previously tracked by some `DbContext` instance is moved to a different `DbContext` instance.
 
 **Mitigations**
 
@@ -487,7 +487,7 @@ This would still not be configured by convention to avoid misconfiguration when 
 
 **Old behavior**
 
-Before EF Core 3.0, configuration of the owned relationship was performed directly after the `OwnsOne` or `OwnsMany` call. 
+Before EF Core 3.0, configuration of the owned relationship was performed directly after the `OwnsOne` or `OwnsMany` call.
 
 **New behavior**
 
@@ -508,7 +508,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
         eb.WithOwner()
             .HasForeignKey(e => e.AlternateId)
             .HasConstraintName("FK_OrderDetails");
-            
+
         eb.ToTable("OrderDetails");
         eb.HasKey(e => e.AlternateId);
         eb.HasIndex(e => e.Id);
@@ -1132,7 +1132,7 @@ Before EF Core 3.0, a warning would be logged for an application creating a path
 
 **New behavior**
 
-Starting with EF Core 3.0, this warning is now considered and error and an exception is thrown. 
+Starting with EF Core 3.0, this warning is now considered and error and an exception is thrown.
 
 **Why**
 
@@ -1242,13 +1242,13 @@ Type mappings are now used for more than just relational database providers.
 This will only break applications that access the type mapping directly as an annotation, which isn't common.
 The most appropriate action to fix is to use API surface to access type mappings rather than using the annotation directly.
 
-### ToTable on a derived type throws an exception 
+### ToTable on a derived type throws an exception
 
 [Tracking Issue #11811](https://github.com/aspnet/EntityFrameworkCore/issues/11811)
 
 **Old behavior**
 
-Before EF Core 3.0, `ToTable()` called on a derived type would be ignored since only inheritance mapping strategy was TPH where this isn't valid. 
+Before EF Core 3.0, `ToTable()` called on a derived type would be ignored since only inheritance mapping strategy was TPH where this isn't valid.
 
 **New behavior**
 
@@ -1263,7 +1263,7 @@ This change avoids breaking in the future when it becomes a valid thing to do.
 
 Remove any attempts to map derived types to other tables.
 
-### ForSqlServerHasIndex replaced with HasIndex 
+### ForSqlServerHasIndex replaced with HasIndex
 
 [Tracking Issue #12366](https://github.com/aspnet/EntityFrameworkCore/issues/12366)
 
@@ -1393,7 +1393,7 @@ The binary format of Guids is not standardized. Storing the values as TEXT makes
 
 You can migrate existing databases to the new format by executing SQL like the following.
 
-``` sql
+```sql
 UPDATE MyTable
 SET GuidColumn = hex(substr(GuidColumn, 4, 1)) ||
                  hex(substr(GuidColumn, 3, 1)) ||
@@ -1410,7 +1410,7 @@ WHERE typeof(GuidColumn) == 'blob';
 
 In EF Core, you could also continue using the previous behavior by configuring a value converter on these properties.
 
-``` csharp
+```csharp
 modelBuilder
     .Entity<MyEntity>()
     .Property(e => e.GuidProperty)
@@ -1443,7 +1443,7 @@ Storing the values as TEXT is more natural and makes the database more compatibl
 
 You can migrate existing databases to the new format by executing SQL like the following.
 
-``` sql
+```sql
 UPDATE MyTable
 SET CharColumn = char(CharColumn)
 WHERE typeof(CharColumn) = 'integer';
@@ -1451,7 +1451,7 @@ WHERE typeof(CharColumn) = 'integer';
 
 In EF Core, you could also continue using the previous behavior by configuring a value converter on these properties.
 
-``` csharp
+```csharp
 modelBuilder
     .Entity<MyEntity>()
     .Property(e => e.CharProperty)
@@ -1486,7 +1486,7 @@ This change affects anyone using a non-Gregorian calendar where the year is grea
 
 The migration ID can be found in the Migration attribute in the migrations' designer files.
 
-``` diff
+```diff
  [DbContext(typeof(MyDbContext))]
 -[Migration("25620318122820_MyMigration")]
 +[Migration("20190318122820_MyMigration")]
@@ -1496,7 +1496,7 @@ The migration ID can be found in the Migration attribute in the migrations' desi
 
 The Migrations history table also needs to be updated.
 
-``` sql
+```sql
 UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
@@ -1513,7 +1513,7 @@ Before EF Core 3.0, `UseRowNumberForPaging` could be used to generate SQL for pa
 
 **New behavior**
 
-Starting with EF Core 3.0, EF will only generate SQL for paging that is only compatible with later SQL Server versions. 
+Starting with EF Core 3.0, EF will only generate SQL for paging that is only compatible with later SQL Server versions.
 
 **Why**
 
@@ -1639,7 +1639,7 @@ This package is only intended to be used at design time. Deployed applications s
 
 If you need to reference this package to override EF Core's design-time behavior, then you can update PackageReference item metadata in your project.
 
-``` xml
+```xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
   <PrivateAssets>all</PrivateAssets>
   <!-- Remove IncludeAssets to allow compiling against the assembly -->
@@ -1719,7 +1719,7 @@ of API compatibility, this should only be a simple package and namespace change.
 
 <a name="mersa"></a>
 
-### Multiple ambiguous self-referencing relationships must be configured 
+### Multiple ambiguous self-referencing relationships must be configured
 
 [Tracking Issue #13573](https://github.com/aspnet/EntityFrameworkCore/issues/13573)
 
@@ -1728,7 +1728,7 @@ of API compatibility, this should only be a simple package and namespace change.
 An entity type with multiple self-referencing uni-directional navigation properties and matching FKs was incorrectly configured as a single relationship. For example:
 
 ```csharp
-public class User 
+public class User
 {
         public Guid Id { get; set; }
         public User CreatedBy { get; set; }
@@ -1755,7 +1755,7 @@ modelBuilder
      .Entity<User>()
      .HasOne(e => e.CreatedBy)
      .WithMany();
- 
+
  modelBuilder
      .Entity<User>()
      .HasOne(e => e.UpdatedBy)

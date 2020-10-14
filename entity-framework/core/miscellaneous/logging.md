@@ -1,14 +1,31 @@
 ---
 title: Logging - EF Core
 description: Configuring logging with Entity Framework Core
-author: rowanmiller
-ms.date: 10/27/2016
+author: ajcvickers
+ms.date: 10/06/2020
 uid: core/miscellaneous/logging
 ---
 # Logging
 
-> [!TIP]  
+> [!TIP]
 > You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging) on GitHub.
+
+## Simple logging
+
+> [!NOTE]
+> This feature was added in EF Core 5.0.
+
+Entity Framework Core (EF Core) generates log messages for operations such as executing a query or saving changes to the database. These can be accessed from any type of application through use of [LogTo](https://github.com/dotnet/efcore/blob/ec3df8fd7e4ea4ebeebfa747619cef37b23ab2c6/src/EFCore/DbContextOptionsBuilder.cs#L135) <!-- Issue #2748 <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> --> when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
+
+<!--
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.LogTo(Console.WriteLine);
+-->
+[!code-csharp[LogToConsole](../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=LogToConsole)]
+
+This concept is similar to <xref:System.Data.Entity.Database.Log?displayProperty=nameWithType> in EF6.
+
+See [Simple Logging](xref:core/miscellaneous/events/simple-logging) for more information.
 
 ## ASP.NET Core applications
 
@@ -36,7 +53,7 @@ After installing the appropriate package(s), the application should create a sin
 > [!NOTE]
 > The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2 and replaced in 3.0. It is safe to ignore and suppress the warnings when using 2.2.
 
-``` csharp
+```csharp
 public static readonly LoggerFactory MyLoggerFactory
     = new LoggerFactory(new[] { new ConsoleLoggerProvider((_, __) => true, true) });
 ```
@@ -63,7 +80,7 @@ The application can control what is logged by configuring a filter on the ILogge
 > [!NOTE]
 > The following code sample uses a `ConsoleLoggerProvider` constructor that has been obsoleted in version 2.2 and replaced in 3.0. It is safe to ignore and suppress the warnings when using 2.2.
 
-``` csharp
+```csharp
 public static readonly LoggerFactory MyLoggerFactory
     = new LoggerFactory(new[]
     {

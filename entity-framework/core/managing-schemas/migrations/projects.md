@@ -2,7 +2,6 @@
 title: Using a Separate Migrations Project - EF Core
 description: Using a separate migration project for managing database schemas with Entity Framework Core
 author: bricelam
-ms.author: bricelam
 ms.date: 10/30/2017
 uid: core/managing-schemas/migrations/projects
 ---
@@ -24,7 +23,7 @@ To do this...
 
 4. Configure the migrations assembly:
 
-   ``` csharp
+   ```csharp
    options.UseSqlServer(
        connectionString,
        x => x.MigrationsAssembly("MyApp.Migrations"));
@@ -33,7 +32,7 @@ To do this...
 5. Add a reference to your migrations assembly from the startup assembly.
    * If this causes a circular dependency, update the output path of the class library:
 
-     ``` xml
+     ```xml
      <PropertyGroup>
        <OutputPath>..\MyStartupProject\bin\$(Configuration)\</OutputPath>
      </PropertyGroup>
@@ -49,7 +48,7 @@ dotnet ef migrations add NewMigration --project MyApp.Migrations
 
 ## [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Add-Migration NewMigration -Project MyApp.Migrations
 ```
 

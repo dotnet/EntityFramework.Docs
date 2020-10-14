@@ -2,7 +2,6 @@
 title: Table Splitting - EF Core
 description: How to configure table splitting using Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 01/03/2020
 uid: core/modeling/table-splitting
 ---

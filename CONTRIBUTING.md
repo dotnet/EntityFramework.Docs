@@ -33,13 +33,13 @@ Here are some examples of [DFM code snippet syntax](http://dotnet.github.io/docf
 
 To render an entire code file as a snippet:
 
-``` none
+```none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs)]
 ```
 
 To render a portion of a file as a snippet by using line numbers:
 
-``` none
+```none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs?range=1-10]
 ```
 
@@ -47,13 +47,13 @@ For C# snippets, you can reference a [C# region](https://msdn.microsoft.com/libr
 
 To render a C# region named "snippet_Example":
 
-``` none
+```none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs?name=snippet_Example)]
 ```
 
 To highlight selected lines in a rendered snippet (usually renders as yellow background color):
 
-``` none
+```none
 [!code-csharp[Main](../../../samples/core/saving/Program.cs?name=snippet_Example&highlight=1-3,10,20-25)]
 ```
 
@@ -69,7 +69,7 @@ DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS.
 * Add DocFX to your PATH.
 * In a command-line window, navigate to the cloned repository (which contains the *docfx.json* file) and run the following command:
 
-   ``` console
+   ```console
    docfx -t default --serve
    ```
 
@@ -82,7 +82,7 @@ DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS.
 * Extract to `\bin\docfx`.
 * Create an alias for **docfx**:
 
-  ``` console
+  ```console
   function docfx {
     mono $HOME/bin/docfx/docfx.exe
   }

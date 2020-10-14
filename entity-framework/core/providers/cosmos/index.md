@@ -2,7 +2,7 @@
 title: Azure Cosmos DB Provider - EF Core
 description: Documentation for the database provider that allows Entity Framework Core to be used with the Azure Cosmos DB SQL API
 author: AndriySvyryd
-ms.date: 09/14/2020
+ms.date: 10/09/2020
 uid: core/providers/cosmos/index
 ---
 # EF Core Azure Cosmos DB Provider
@@ -29,7 +29,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Cosmos
 
 ### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Install-Package Microsoft.EntityFrameworkCore.Cosmos
 ```
 
@@ -37,7 +37,7 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 
 ## Get started
 
-> [!TIP]  
+> [!TIP]
 > You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Cosmos).
 
 As for other providers the first step is to call [UseCosmos](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosDbContextOptionsExtensions.UseCosmos):
@@ -109,7 +109,7 @@ For Cosmos, owned entities are embedded in the same item as the owner. To change
 
 With this configuration the order from the example above is stored like this:
 
-``` json
+```json
 {
     "Id": 1,
     "PartitionKey": "1",
@@ -137,7 +137,7 @@ The owned entities don't need to provide explicit key values to be stored:
 
 They will be persisted in this way:
 
-``` json
+```json
 {
     "Id": 1,
     "Discriminator": "Distributor",
@@ -177,7 +177,7 @@ To work around this limitation one could create and set the `id` value manually 
 
 This is the resulting JSON:
 
-``` json
+```json
 {
     "Id": 1,
     "Discriminator": "Distributor",
@@ -195,3 +195,16 @@ This is the resulting JSON:
     "_ts": 1572917100
 }
 ```
+
+## Optimistic concurrency with eTags
+
+> [!NOTE]
+> Support for eTag concurrency was added in EF Core 5.0.
+
+To configure an entity type to use [optimistic concurrency](xref:core/modeling/concurrency) call `UseETagConcurrency`. This call will create an `_etag` property in [shadow state](xref:core/modeling/shadow-properties) and set it as the concurrency token.
+
+[!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETag)]
+
+To make it easier to resolve concurrency errors you can map the eTag to a CLR property using `IsETagConcurrency`.
+
+[!code-csharp[Main](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=ETagProperty)]

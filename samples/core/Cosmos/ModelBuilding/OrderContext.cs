@@ -36,6 +36,11 @@ namespace Cosmos.ModelBuilding
                 .HasPartitionKey(o => o.PartitionKey);
             #endregion
 
+            #region ETag
+            modelBuilder.Entity<Order>()
+                .UseETagConcurrency();
+            #endregion
+
             #region PropertyNames
             modelBuilder.Entity<Order>().OwnsOne(
                 o => o.ShippingAddress,
@@ -49,6 +54,12 @@ namespace Cosmos.ModelBuilding
 
             #region OwnsMany
             modelBuilder.Entity<Distributor>().OwnsMany(p => p.ShippingCenters);
+            #endregion
+
+            #region ETagProperty
+            modelBuilder.Entity<Distributor>()
+                .Property(d => d.ETag)
+                .IsETagConcurrency();
             #endregion
         }
     }

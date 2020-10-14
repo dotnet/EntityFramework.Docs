@@ -74,7 +74,7 @@
       items:
       - name: Connection strings
         href: core/miscellaneous/connection-strings.md
-      - name: Asynchronous Programming
+      - name: Asynchronous programming
         href: core/miscellaneous/async.md
       - name: Logging
         href: core/miscellaneous/logging.md
@@ -114,7 +114,7 @@
         href: core/modeling/generated-properties.md
       - name: Concurrency tokens
         href: core/modeling/concurrency.md
-      - name: Shadow properties
+      - name: Shadow and indexer properties
         href: core/modeling/shadow-properties.md
       - name: Relationships
         href: core/modeling/relationships.md
@@ -229,10 +229,15 @@
         items:
         - name: Overview
           href: core/providers/sql-server/index.md
+        - name: Function mappings
+          href: core/providers/sql-server/functions.md
         - name: Indexes
           href: core/providers/sql-server/indexes.md
         - name: Memory-optimized tables
           href: core/providers/sql-server/memory-optimized-tables.md
+        - name: Spatial data
+          displayName: GIS
+          href: core/providers/sql-server/spatial.md
         - name: Specify Azure SQL Database options
           href: core/providers/sql-server/azure-sql-database.md
       - name: SQLite
@@ -241,6 +246,13 @@
           href: core/providers/sqlite/index.md
         - name: SQLite limitations
           href: core/providers/sqlite/limitations.md
+        - name: Function mappings
+          href: core/providers/sqlite/functions.md
+        - name: Spatial data
+          displayName: GIS
+          href: core/providers/sqlite/spatial.md
+        - name: Microsoft.Data.Sqlite >>
+          href: /dotnet/standard/data/sqlite/
       - name: Cosmos
         items:
         - name: Overview
@@ -249,6 +261,8 @@
           href: core/providers/cosmos/unstructured-data.md
         - name: Cosmos limitations
           href: core/providers/cosmos/limitations.md
+        - name: Function mappings
+          href: core/providers/cosmos/functions.md
       - name: InMemory (for testing)
         href: core/providers/in-memory/index.md
       - name: Write a database provider

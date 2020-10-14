@@ -2,7 +2,7 @@
 title: Relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
 author: AndriySvyryd
-ms.date: 11/21/2019
+ms.date: 10/01/2020
 uid: core/modeling/relationships
 ---
 # Relationships
@@ -142,7 +142,10 @@ If you only have one navigation property then there are parameterless overloads 
 
 ### Configuring navigation properties
 
-After the navigation property has been created, you may need to further configure it. In EFCore 5.0, new Fluent API is added to allow you to perform that configuration.
+> [!NOTE]
+> This feature was added in EF Core 5.0.
+
+After the navigation property has been created, you may need to further configure it.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
 
@@ -218,6 +221,8 @@ If you want the foreign key to reference a property other than the primary key, 
 
 You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see [Required and Optional properties](xref:core/modeling/entity-properties#required-and-optional-properties) for more information).
 
+The foreign key properties are located on the dependent entity type, so if they are configured as required it means that every dependent entity is required to have a corresponding principal entity.
+
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?name=Required&highlight=6)]
 
 > [!NOTE]
@@ -248,8 +253,69 @@ When configuring the foreign key you need to specify the dependent entity type -
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneToOne.cs?name=OneToOne&highlight=11)]
 
+The dependent side is considered optional by default, but can be configured as required. However EF will not validate whether a dependent entity was provided, so this configuration will only make a difference when the database mapping allows it to be enforced. A common scenario for this are reference owned types that use table splitting by default.
+
+[!code-csharp[Main](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=Required&highlight=11-12)]
+
+With this configuration the columns corresponding to `ShippingAddress` will be marked as non-nullable in the database.
+
+> [!NOTE]
+> If you are using [non-nullable reference types](/dotnet/csharp/nullable-references) calling `IsRequired` is not necessary.
+
+> [!NOTE]
+> The ability to configure whether the dependent is required was added in EF Core 5.0.
+
 ### Many-to-many
 
-Many-to-many relationships without an entity class to represent the join table are not yet supported. However, you can represent a many-to-many relationship by including an entity class for the join table and mapping two separate one-to-many relationships.
+Many to many relationships require a collection navigation property on both sides. They will be discovered by convention like other types of relationships.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=ManyToManyShared)]
+
+The way this relationship is implemented in the database is by a join table that contains foreign keys to both `Post` and `Tag`. For example this is what EF will create in a relational database for the above model.
+
+```sql
+CREATE TABLE [Posts] (
+    [PostId] int NOT NULL IDENTITY,
+    [Title] nvarchar(max) NULL,
+    [Content] nvarchar(max) NULL,
+    CONSTRAINT [PK_Posts] PRIMARY KEY ([PostId])
+);
+
+CREATE TABLE [Tags] (
+    [TagId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_Tags] PRIMARY KEY ([TagId])
+);
+
+CREATE TABLE [PostTag] (
+    [PostId] int NOT NULL,
+    [TagId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostId], [TagId]),
+    CONSTRAINT [FK_PostTag_Posts_PostId] FOREIGN KEY ([PostId]) REFERENCES [Posts] ([PostId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PostTag_Tags_TagId] FOREIGN KEY ([TagId]) REFERENCES [Tags] ([TagId]) ON DELETE CASCADE
+);
+```
+
+Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. There is no specific CLR type that can be used for this, so `Dictionary<string, object>` is used. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
+
+The many to many navigations are called skip navigations as they effectively skip over the join entity type. If you are employing bulk configuration all skip navigations can be obtained from `GetSkipNavigations`.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Metadata)]
+
+It is common to apply configuration to the join entity type. This action can be accomplished via `UsingEntity`.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=SharedConfiguration)]
+
+[Model seed data](xref:core/modeling/data-seeding) can be provided for the join entity type by using anonymous types. You can examine the model debug view to determine the property names created by convention.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Seeding)]
+
+Additional data can be stored in the join entity type, but for this it's best to create a bespoke CLR type. When configuring the relationship with a custom join entity type both foreign keys need to be specified explicitly.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyPayload.cs?name=ManyToManyPayload)]
+
+> [!NOTE]
+> The ability to configure many-to-many relationships was added in EF Core 5.0, for previous version use the following approach.
+
+You can also represent a many-to-many relationship by just adding the join entity type and mapping two separate one-to-many relationships.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11-14,16-19,39-46)]

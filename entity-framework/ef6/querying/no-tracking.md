@@ -1,7 +1,7 @@
 ---
 title: No-Tracking Queries - EF6
 description: No-Tracking Queries in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/querying/no-tracking
 ---

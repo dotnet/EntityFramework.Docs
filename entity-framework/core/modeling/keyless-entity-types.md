@@ -2,14 +2,13 @@
 title: Keyless Entity Types - EF Core
 description: How to configure keyless entity types using Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 9/13/2019
 uid: core/modeling/keyless-entity-types
 ---
 # Keyless Entity Types
 
 > [!NOTE]
-> This feature was added in EF Core 2.1 under the name of query types. In EF Core 3.0 the concept was renamed to keyless entity types. The `[Keyless]` Data Annotation became available in EFCore 5.0.
+> This feature was added under the name of query types. In EF Core 3.0 the concept was renamed to keyless entity types. The `[Keyless]` Data Annotation became available in EFCore 5.0.
 
 In addition to regular entity types, an EF Core model can contain _keyless entity types_, which can be used to carry out database queries against data that doesn't contain key values.
 

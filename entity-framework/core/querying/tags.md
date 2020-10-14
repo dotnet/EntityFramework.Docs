@@ -1,90 +1,71 @@
 ---
 title: Query Tags - EF Core
 description: Using query tags to help identify specific queries in log messages emitted by Entity Framework Core
-author: divega
+author: smitpatel
 ms.date: 11/14/2018
 uid: core/querying/tags
 ---
 
 # Query tags
 
-> [!NOTE]
-> This feature is new in EF Core 2.2.
-
-This feature helps correlate LINQ queries in code with generated SQL queries captured in logs.
+Query tags help correlate LINQ queries in code with generated SQL queries captured in logs.
 You annotate a LINQ query using the new `TagWith()` method:
 
-``` csharp
-  var nearestFriends =
-      (from f in context.Friends.TagWith("This is my spatial query!")
-      orderby f.Location.Distance(myLocation) descending
-      select f).Take(5).ToList();
-```
+> [!TIP]
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying/Tags) on GitHub.
+
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#BasicQueryTag)]
 
 This LINQ query is translated to the following SQL statement:
 
-``` sql
+```sql
 -- This is my spatial query!
 
-SELECT TOP(@__p_1) [f].[Name], [f].[Location]
-FROM [Friends] AS [f]
-ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
+SELECT TOP(@__p_1) [p].[Id], [p].[Location]
+FROM [People] AS [p]
+ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 ```
 
 It's possible to call `TagWith()` many times on the same query.
 Query tags are cumulative.
 For example, given the following methods:
 
-``` csharp
-IQueryable<Friend> GetNearestFriends(Point myLocation) =>
-    from f in context.Friends.TagWith("GetNearestFriends")
-    orderby f.Location.Distance(myLocation) descending
-    select f;
-
-IQueryable<T> Limit<T>(IQueryable<T> source, int limit) =>
-    source.TagWith("Limit").Take(limit);
-```
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#QueryableMethods)]
 
 The following query:
 
-``` csharp
-var results = Limit(GetNearestFriends(myLocation), 25).ToList();
-```
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#ChainedQueryTags)]
 
 Translates to:
 
-``` sql
--- GetNearestFriends
+```sql
+-- GetNearestPeople
 
 -- Limit
 
-SELECT TOP(@__p_1) [f].[Name], [f].[Location]
-FROM [Friends] AS [f]
-ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
+SELECT TOP(@__p_1) [p].[Id], [p].[Location]
+FROM [People] AS [p]
+ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 ```
 
 It's also possible to use multi-line strings as query tags.
 For example:
 
-``` csharp
-var results = Limit(GetNearestFriends(myLocation), 25).TagWith(
-@"This is a multi-line
-string").ToList();
-```
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#MultilineQueryTag)]
 
 Produces the following SQL:
 
-``` sql
--- GetNearestFriends
+```sql
+-- GetNearestPeople
 
 -- Limit
 
 -- This is a multi-line
 -- string
 
-SELECT TOP(@__p_1) [f].[Name], [f].[Location]
-FROM [Friends] AS [f]
-ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
+SELECT TOP(@__p_1) [p].[Id], [p].[Location]
+FROM [People] AS [p]
+ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 ```
 
 ## Known limitations

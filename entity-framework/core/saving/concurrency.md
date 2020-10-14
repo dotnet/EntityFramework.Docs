@@ -1,7 +1,7 @@
 ---
 title: Handling Concurrency Conflicts - EF Core
 description: Managing conflicts when the same data is updated concurrently with Entity Framework Core
-author: rowanmiller
+author: ajcvickers
 ms.date: 03/03/2018
 uid: core/saving/concurrency
 ---
@@ -34,7 +34,7 @@ If no rows are affected, a concurrency conflict is detected, and EF Core throws 
 
 For example, we may want to configure `LastName` on `Person` to be a concurrency token. Then any update operation on Person will include the concurrency check in the `WHERE` clause:
 
-``` sql
+```sql
 UPDATE [Person] SET [FirstName] = @p1
 WHERE [PersonId] = @p0 AND [LastName] = @p2;
 ```
@@ -64,4 +64,4 @@ The general approach to handle a concurrency conflicts is:
 
 In the following example, `Person.FirstName` and `Person.LastName` are set up as concurrency tokens. There is a `// TODO:` comment in the location where you include application specific logic to choose the value to be saved.
 
-[!code-csharp[Main](../../../samples/core/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=34-35)]
+[!code-csharp[Main](../../../samples/core/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=33-34)]

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.Relational.IndexName
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
@@ -11,10 +12,11 @@ namespace EFModeling.FluentAPI.Relational.IndexName
         {
             modelBuilder.Entity<Blog>()
                 .HasIndex(b => b.Url)
-                .HasName("Index_Url");
+                .HasDatabaseName("Index_Url");
         }
         #endregion
     }
+#pragma warning restore CS0618 // Type or member is obsolete
 
     public class Blog
     {

@@ -1,7 +1,7 @@
 ---
 title: Working with proxies - EF6
 description: Working with proxies in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/proxies
 ---

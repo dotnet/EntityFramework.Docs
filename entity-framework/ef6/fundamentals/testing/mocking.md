@@ -1,7 +1,7 @@
 ---
 title: Testing with a mocking framework - EF6
 description: Testing with a mocking framework in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/testing/mocking
 ---

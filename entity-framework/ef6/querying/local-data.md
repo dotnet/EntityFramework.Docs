@@ -1,7 +1,7 @@
 ---
 title: Local Data - EF6
 description: Local Data in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/querying/local-data
 ---

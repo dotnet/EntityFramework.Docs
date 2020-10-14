@@ -1,7 +1,7 @@
 ---
 title: Upgrading from previous versions to EF Core 2 - EF Core
 description: Instructions and notes for upgrading to Entity Framework Core 2.0
-author: divega
+author: ajcvickers
 ms.date: 08/13/2017
 uid: core/what-is-new/ef-core-2.0/upgrade
 ---
@@ -32,7 +32,7 @@ The recommended pattern for ASP.NET Core web applications has been updated for 2
 
 A new design-time hook has been added in ASP.NET Core 2.0's default template. The static `Program.BuildWebHost` method enables EF Core to access the application's service provider at design time. If you are upgrading an ASP.NET Core 1.x application, you will need to update the `Program` class to resemble the following.
 
-``` csharp
+```csharp
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
@@ -103,13 +103,13 @@ IDs have also moved from Microsoft.EntityFrameworkCore.Infrastructure to the new
 
 EF Core 2.0 will now build a different [IModel](/dotnet/api/microsoft.entityframeworkcore.metadata.imodel) for each different provider being used. This is usually transparent to the application. This has facilitated a simplification of lower-level metadata APIs such that any access to _common relational metadata concepts_ is always made through a call to `.Relational` instead of `.SqlServer`, `.Sqlite`, etc. For example, 1.1.x code like this:
 
-``` csharp
+```csharp
 var tableName = context.Model.FindEntityType(typeof(User)).SqlServer().TableName;
 ```
 
 Should now be written like this:
 
-``` csharp
+```csharp
 var tableName = context.Model.FindEntityType(typeof(User)).Relational().TableName;
 ```
 
@@ -132,7 +132,7 @@ Calling `AddEntityFramework`, `AddEntityFrameworkSqlServer`, etc. is not require
 
 The global unnamed in-memory database has been removed and instead all in-memory databases must be named. For example:
 
-``` csharp
+```csharp
 optionsBuilder.UseInMemoryDatabase("MyDatabase");
 ```
 
@@ -156,7 +156,7 @@ This propagates into the provider design-time packages. Those packages (`Microso
 
 To enable `Scaffold-DbContext` or `dotnet ef dbcontext scaffold` in EF Core 2.0, you only need to reference the single provider package:
 
-``` xml
+```xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"
     Version="2.0.0" />
 <PackageReference Include="Microsoft.EntityFrameworkCore.Tools"

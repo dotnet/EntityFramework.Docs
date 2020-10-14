@@ -1,7 +1,7 @@
 ---
 title: Validation - EF6
 description: Validation in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 ---
 # Data Validation

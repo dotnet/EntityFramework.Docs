@@ -2,9 +2,7 @@
 title: Log of provider-impacting changes - EF Core
 description: A log of changes in Entity Framework Core which impact providers
 author: ajcvickers
-ms.author: avickers
 ms.date: 08/08/2018
-ms.technology: entity-framework-core
 uid: core/providers/provider-log
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Past Releases of Entity Framework - EF6
 description: Past Releases of Entity Framework
-author: divega
+author: ajcvickers
 ms.date: 09/12/2019
 uid: ef6/what-is-new/past-releases
 ---

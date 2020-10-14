@@ -2,7 +2,6 @@
 title: Applying Migrations - EF Core
 description: Strategies for applying schema migrations to production and development databases using Entity Framework Core
 author: bricelam
-ms.author: bricelam
 ms.date: 05/06/2020
 uid: core/managing-schemas/migrations/applying
 ---
@@ -59,7 +58,7 @@ You can use a `from` that is newer than the `to` in order to generate a rollback
 
 The following generates a SQL script from a blank database to the latest migration:
 
-``` powershell
+```powershell
 Script-Migration
 ```
 
@@ -101,7 +100,7 @@ dotnet ef migrations script --idempotent
 
 #### [Visual Studio](#tab/vs)
 
-``` powershell
+```powershell
 Script-Migration -Idempotent
 ```
 
@@ -137,13 +136,13 @@ Note that this can be used to roll back to an earlier migration as well.
 
 The following updates your database to the latest migration:
 
-``` powershell
+```powershell
 Update-Database
 ```
 
 The following updates your database to a given migration:
 
-``` powershell
+```powershell
 Update-Database AddNewTables
 ```
 
@@ -168,7 +167,7 @@ It's possible for the application itself to apply migrations programmatically, t
 
 To apply migrations programmatically, call `context.Database.Migrate()`. For example, a typical ASP.NET application can do the following:
 
-```c#
+```csharp
 public static void Main(string[] args)
 {
     var host = CreateHostBuilder(args).Build();

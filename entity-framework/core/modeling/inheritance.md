@@ -2,18 +2,12 @@
 title: Inheritance - EF Core
 description: How to configure entity type inheritance using Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
-ms.date: 10/27/2016
+ms.date: 10/01/2020
 uid: core/modeling/inheritance
 ---
 # Inheritance
 
 EF can map a .NET type hierarchy to a database. This allows you to write your .NET entities in code as usual, using base and derived types, and have EF seamlessly create the appropriate database schema, issue queries, etc. The actual details of how a type hierarchy is mapped are provider-dependent; this page describes inheritance support in the context of a relational database.
-
-At the moment, EF Core only supports the table-per-hierarchy (TPH) pattern. TPH uses a single table to store the data for all types in the hierarchy, and a discriminator column is used to identify which type each row represents.
-
-> [!NOTE]
-> The table-per-type (TPT) and table-per-concrete-type (TPC), which are supported by EF6, are not yet supported by EF Core. TPT is a major feature planned for EF Core 5.0.
 
 ## Entity type hierarchy mapping
 
@@ -23,19 +17,21 @@ The following sample exposes a DbSet for `Blog` and its subclass `RssBlog`. If `
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs?name=InheritanceDbSets&highlight=3-4)]
 
-This model is mapped to the following database schema (note the implicitly-created *Discriminator* column, which identifies which type of *Blog* is stored in each row):
+> [!NOTE]
+> Database columns are automatically made nullable as necessary when using TPH mapping. For example, the `RssUrl` column is nullable because regular `Blog` instances do not have that property.
 
-![image](_static/inheritance-tph-data.png)
-
->[!NOTE]
-> Database columns are automatically made nullable as necessary when using TPH mapping. For example, the *RssUrl* column is nullable because regular *Blog* instances do not have that property.
-
-If you don't want to expose a DbSet for one or more entities in the hierarchy, you can also use the Fluent API to ensure they are included in the model.
+If you don't want to expose a `DbSet` for one or more entities in the hierarchy, you can also use the Fluent API to ensure they are included in the model.
 
 > [!TIP]
 > If you don't rely on conventions, you can specify the base type explicitly using `HasBaseType`. You can also use `.HasBaseType((Type)null)` to remove an entity type from the hierarchy.
 
-## Discriminator configuration
+## Table-per-hierarchy and discriminator configuration
+
+By default, EF maps the inheritance using the *table-per-hierarchy* (TPH) pattern. TPH uses a single table to store the data for all types in the hierarchy, and a discriminator column is used to identify which type each row represents.
+
+The model above is mapped to the following database schema (note the implicitly-created `Discriminator` column, which identifies which type of `Blog` is stored in each row).
+
+![image](_static/inheritance-tph-data.png)
 
 You can configure the name and type of the discriminator column and the values that are used to identify each type in the hierarchy:
 
@@ -49,8 +45,41 @@ Finally, the discriminator can also be mapped to a regular .NET property in your
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/NonShadowDiscriminator.cs?name=NonShadowDiscriminator&highlight=4)]
 
-## Shared columns
+### Shared columns
 
 By default, when two sibling entity types in the hierarchy have a property with the same name, they will be mapped to two separate columns. However, if their type is identical they can be mapped to the same database column:
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/SharedTPHColumns.cs?name=SharedTPHColumns&highlight=9,13)]
+
+## Table-per-type configuration
+
+> [!NOTE]
+> The table-per-type (TPT) is a new feature in EF Core 5.0. Table-per-concrete-type (TPC) is supported by EF6, but is not yet supported by EF Core.
+
+In the TPT mapping pattern, all the types are mapped to individual tables. Properties that belong solely to a base type or derived type are stored in a table that maps to that type. Tables that map to derived types also store a foreign key that joins the derived table with the base table.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TPTConfiguration.cs?name=TPTConfiguration)]
+
+EF will create the following database schema for the model above.
+
+```sql
+CREATE TABLE [Blogs] (
+    [BlogId] int NOT NULL IDENTITY,
+    [Url] nvarchar(max) NULL,
+    CONSTRAINT [PK_Blogs] PRIMARY KEY ([BlogId])
+);
+
+CREATE TABLE [RssBlogs] (
+    [BlogId] int NOT NULL,
+    [RssUrl] nvarchar(max) NULL,
+    CONSTRAINT [PK_RssBlogs] PRIMARY KEY ([BlogId]),
+    CONSTRAINT [FK_RssBlogs_Blogs_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [Blogs] ([BlogId]) ON DELETE NO ACTION
+);
+```
+
+> [!NOTE]
+> If the primary key constraint is renamed the new name will be applied to all the tables mapped to the hierarchy, future EF versions will allow renaming the constraint only for a particular table when [issue 19970](https://github.com/dotnet/efcore/issues/19970) is fixed.
+
+If you are employing bulk configuration you can retrieve the column name for a specific table by calling <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnName%2A>.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TPTConfiguration.cs?name=Metadata&highlight=10)]

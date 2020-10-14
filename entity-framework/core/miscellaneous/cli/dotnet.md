@@ -2,8 +2,7 @@
 title: EF Core tools reference (.NET CLI) - EF Core
 description: Reference guide for the Entity Framework Core .NET Core CLI tools
 author: bricelam
-ms.author: bricelam
-ms.date: 09/17/2020
+ms.date: 10/13/2020
 uid: core/miscellaneous/cli/dotnet
 ---
 
@@ -19,59 +18,37 @@ When using Visual Studio, consider using the [Package Manager Console tools](xre
 
 ## Installing the tools
 
-The installation procedure depends on project type and version:
+`dotnet ef` can be installed as either a global or local tool. Most developers prefer installing `dotnet ef` as a global tool using the following command:
 
-* EF Core 3.x and 5.x
-* ASP.NET Core version 2.1 and later
-* EF Core 2.x
+```dotnetcli
+dotnet tool install --global dotnet-ef
+```
 
-### EF Core 3.x and 5.x
+To use it as a local tool, restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](/dotnet/core/tools/global-tools#install-a-local-tool).
 
-* `dotnet ef` must be installed as a global or local tool. Most developers prefer installing `dotnet ef` as a global tool using the following command:
+Update the tool tool using the following command:
 
-  ```dotnetcli
-  dotnet tool install --global dotnet-ef
-  ```
+```dotnetcli
+dotnet tool update --global dotnet-ef
+```
 
-  `dotnet ef` can also be used as a local tool. To use it as a local tool, restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](/dotnet/core/tools/global-tools#install-a-local-tool).
+Before you can use the tools on a specific project, you'll need to add the `Microsoft.EntityFrameworkCore.Design` package to it.
 
-* Install the [.NET Core SDK](https://www.microsoft.com/net/download/core).
-* Install the latest `Microsoft.EntityFrameworkCore.Design` package.
-
-  ```dotnetcli
-  dotnet add package Microsoft.EntityFrameworkCore.Design
-  ```
-
-### ASP.NET Core 2.1+
-
-* Install the current [.NET Core SDK](https://www.microsoft.com/net/download/core). The SDK has to be installed even if you have the latest version of Visual Studio.
-
-  This is all that is needed for ASP.NET Core 2.1+ because the `Microsoft.EntityFrameworkCore.Design` package is included in the [Microsoft.AspNetCore.App metapackage](/aspnet/core/fundamentals/metapackage-app).
-
-### EF Core 2.x (not ASP.NET Core)
-
-The `dotnet ef` commands are included in the .NET Core SDK, but to enable the commands you have to install the `Microsoft.EntityFrameworkCore.Design` package.
-
-* Install the current [.NET Core SDK](https://www.microsoft.com/net/download/core). The SDK has to be installed even if you have the latest version of Visual Studio.
-
-* Install the latest stable `Microsoft.EntityFrameworkCore.Design` package.
-
-  ```dotnetcli
-  dotnet add package Microsoft.EntityFrameworkCore.Design
-  ```
+```dotnetcli
+dotnet add package Microsoft.EntityFrameworkCore.Design
+```
 
 ### Verify installation
 
 Run the following commands to verify that EF Core CLI tools are correctly installed:
 
   ```dotnetcli
-  dotnet restore
   dotnet ef
   ```
 
 The output from the command identifies the version of the tools in use:
 
-```console
+```output
 
                      _/\__
                ---==/    \\

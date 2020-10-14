@@ -3,7 +3,6 @@ title: Loading Related Data - EF Core
 description: Different strategies for loading related data with Entity Framework Core
 author: roji
 ms.date: 9/11/2020
-ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 uid: core/querying/related-data
 ---
 # Loading Related Data
@@ -15,4 +14,4 @@ Entity Framework Core allows you to use the navigation properties in your model 
 * **[Lazy loading](xref:core/querying/related-data/lazy)** means that the related data is transparently loaded from the database when the navigation property is accessed.
 
 > [!TIP]
-> You can view the [samples](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying) under this section on GitHub.
+> You can view the [samples](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying/RelatedData) under this section on GitHub.

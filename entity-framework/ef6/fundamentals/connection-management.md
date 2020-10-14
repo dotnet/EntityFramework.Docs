@@ -1,7 +1,7 @@
 ---
 title: Connection management - EF6
 description: Connection management in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/connection-management
 ---

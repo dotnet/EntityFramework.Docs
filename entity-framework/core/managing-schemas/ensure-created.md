@@ -2,7 +2,6 @@
 title: Create and Drop APIs - EF Core
 description: APIs for creating and dropping databases with Entity Framework Core
 author: bricelam
-ms.author: bricelam
 ms.date: 11/07/2018
 uid: core/managing-schemas/ensure-created
 ---
@@ -21,7 +20,7 @@ Transitioning from EnsureCreated to Migrations is not a seamless experience. The
 
 The EnsureDeleted method will drop the database if it exists. If you don't have the appropriate permissions, an exception is thrown.
 
-``` csharp
+```csharp
 // Drop the database if it exists
 dbContext.Database.EnsureDeleted();
 ```
@@ -30,7 +29,7 @@ dbContext.Database.EnsureDeleted();
 
 EnsureCreated will create the database if it doesn't exist and initialize the database schema. If any tables exist (including tables for another DbContext class), the schema won't be initialized.
 
-``` csharp
+```csharp
 // Create the database if it doesn't exist
 dbContext.Database.EnsureCreated();
 ```
@@ -42,7 +41,7 @@ dbContext.Database.EnsureCreated();
 
 To get the SQL used by EnsureCreated, you can use the GenerateCreateScript method.
 
-``` csharp
+```csharp
 var sql = dbContext.Database.GenerateCreateScript();
 ```
 
@@ -50,7 +49,7 @@ var sql = dbContext.Database.GenerateCreateScript();
 
 EnsureCreated only works when no tables are present in the database. If needed, you can write your own check to see if the schema needs to be initialized, and use the underlying IRelationalDatabaseCreator service to initialize the schema.
 
-``` csharp
+```csharp
 // TODO: Check whether the schema needs to be initialized
 
 // Initialize the schema for this DbContext

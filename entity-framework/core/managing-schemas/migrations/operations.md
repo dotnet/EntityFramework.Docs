@@ -2,7 +2,6 @@
 title: Custom Migrations Operations - EF Core
 description: Managing custom and raw SQL migrations for database schema management with Entity Framework Core
 author: bricelam
-ms.author: bricelam
 ms.date: 11/07/2017
 uid: core/managing-schemas/migrations/operations
 ---
@@ -12,7 +11,7 @@ The MigrationBuilder API allows you to perform many different kinds of operation
 
 To illustrate, let's look at implementing an operation that creates a database user using each approach. In our migrations, we want to enable writing the following code:
 
-``` csharp
+```csharp
 migrationBuilder.CreateUser("SQLUser1", "Password");
 ```
 
@@ -20,7 +19,7 @@ migrationBuilder.CreateUser("SQLUser1", "Password");
 
 The easiest way to implement a custom operation is to define an extension method that calls `MigrationBuilder.Sql()`. Here is an example that generates the appropriate Transact-SQL.
 
-``` csharp
+```csharp
 static MigrationBuilder CreateUser(
     this MigrationBuilder migrationBuilder,
     string name,
@@ -30,7 +29,7 @@ static MigrationBuilder CreateUser(
 
 If your migrations need to support multiple database providers, you can use the `MigrationBuilder.ActiveProvider` property. Here's an example supporting both Microsoft SQL Server and PostgreSQL.
 
-``` csharp
+```csharp
 static MigrationBuilder CreateUser(
     this MigrationBuilder migrationBuilder,
     string name,
@@ -57,7 +56,7 @@ This approach only works if you know every provider where your custom operation 
 
 To decouple the custom operation from the SQL, you can define your own `MigrationOperation` to represent it. The operation is then passed to the provider so it can determine the appropriate SQL to generate.
 
-``` csharp
+```csharp
 class CreateUserOperation : MigrationOperation
 {
     public string Name { get; set; }
@@ -67,7 +66,7 @@ class CreateUserOperation : MigrationOperation
 
 With this approach, the extension method just needs to add one of these operations to `MigrationBuilder.Operations`.
 
-``` csharp
+```csharp
 static MigrationBuilder CreateUser(
     this MigrationBuilder migrationBuilder,
     string name,
@@ -86,7 +85,7 @@ static MigrationBuilder CreateUser(
 
 This approach requires each provider to know how to generate SQL for this operation in their `IMigrationsSqlGenerator` service. Here is an example overriding the SQL Server's generator to handle the new operation.
 
-``` csharp
+```csharp
 class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 {
     public MyMigrationsSqlGenerator(
@@ -131,7 +130,7 @@ class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 
 Replace the default migrations sql generator service with the updated one.
 
-``` csharp
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder options)
     => options
         .UseSqlServer(connectionString)

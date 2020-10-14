@@ -1,7 +1,7 @@
 ---
 title: Entity Framework 6 Runtime License (KOR) - EF6
 description: Entity Framework 6 Runtime License (KOR)
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 ---
 # Entity Framework 6 Runtime License (KOR)

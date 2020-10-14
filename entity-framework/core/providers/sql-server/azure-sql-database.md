@@ -2,7 +2,6 @@
 title: Microsoft SQL Server Database Provider - Azure SQL Database Options - EF Core
 description: How to specify the service tier and performance level for Azure SQL Database with the SQL Server Entity Framework Core Database Provider
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/sql-server/azure-sql-database
 ---

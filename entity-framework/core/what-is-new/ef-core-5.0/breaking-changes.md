@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 5.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 5.0
 author: bricelam
-ms.date: 09/09/2020
+ms.date: 09/24/2020
 uid: core/what-is-new/ef-core-5.0/breaking-changes
 ---
 
@@ -25,6 +25,8 @@ The following API and behavior changes have the potential to break existing appl
 | [IMigrationsModelDiffer now uses IRelationalModel](#relational-model)                                                                 | Low        |
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
 | [Provider-specific EF.Functions methods throw for InMemory provider](#no-client-methods)                                              | Low        |
+| [IndexBuilder.HasName is now obsolete](#index-obsolete)                                                                               | Low        |
+| [A pluarlizer is now included for scaffolding reverse engineered models](#pluralizer)                                                 | Low        |
 
 <a name="geometric-sqlite"></a>
 
@@ -48,7 +50,7 @@ Using HasGeometricDimension after specifying the dimension in the column type is
 
 Use `HasColumnType` to specify the dimension:
 
-```cs
+```csharp
 modelBuilder.Entity<GeoEntity>(
     x =>
     {
@@ -76,7 +78,7 @@ With the added support for required dependents, it is now possible to mark any r
 
 Calling `IsRequired` before specifying the dependent end is now ambiguous:
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .HasOne(b => b.BlogImage)
     .WithOne(i => i.Blog)
@@ -92,7 +94,7 @@ The new behavior is necessary to enable support for required dependents ([see #1
 
 Remove `RequiredAttribute` from the navigation to the dependent and place it instead on the navigation to the principal or configure the relationship in `OnModelCreating`:
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .HasOne(b => b.BlogImage)
     .WithOne(i => i.Blog)
@@ -122,7 +124,7 @@ This change makes the model better aligned with Azure Cosmos DB semantics and im
 
 To prevent the partition key property to be added to the primary key, configure it in `OnModelCreating`.
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .HasKey(b => b.Id);
 ```
@@ -149,7 +151,7 @@ This change makes it less likely that the `id` property clashes with an existing
 
 To go back to the 3.x behavior, configure the `id` property in `OnModelCreating`.
 
-```cs
+```csharp
 modelBuilder.Entity<Blog>()
     .Property<string>("id")
     .ToJsonProperty("id");
@@ -243,7 +245,7 @@ To prevent the value generator from being called, assign a non-default value to 
 
 Use the following code to compare the model from `snapshot` with the model from `context`:
 
-```cs
+```csharp
 var dependencies = context.GetService<ProviderConventionSetBuilderDependencies>();
 var relationalDependencies = context.GetService<RelationalConventionSetBuilderDependencies>();
 
@@ -283,7 +285,7 @@ EF doesn't expect the entity type to change while it is still being tracked, so 
 
 If changing the discriminator value is necessary and the context will be disposed immediately after calling `SaveChanges`, the discriminator can be made mutable:
 
-```cs
+```csharp
 modelBuilder.Entity<BaseEntity>()
     .Property<string>("Discriminator")
     .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
@@ -338,3 +340,49 @@ Provider-specific methods map to a database function. The computation done by th
 **Mitigations**
 
 Since there's no way to mimic behavior of database functions accurately, you should test the queries containing them against same kind of database as in production.
+
+<a name="index-obsolete"></a>
+
+### IndexBuilder.HasName is now obsolete
+
+[Tracking Issue #21089](https://github.com/dotnet/efcore/issues/21089)
+
+**Old behavior**
+
+Previously, only one index could be defined over a given set of properties. The database name of an index was configured using IndexBuilder.HasName.
+
+**New behavior**
+
+Multiple indexes are now allowed on the same set or properties. These indexes are now distinguished by a name in the model. By convention, the model name is used as the database name; however it can also be configured independently using HasDatabaseName.
+
+**Why**
+
+In the future, we'd like to enable both ascending and descending indexes or indexes with different collations on the same set of properties. This change moves us another step in that direction.
+
+**Mitigations**
+
+Any code that was previously calling IndexBuilder.HasName should be updated to call HasDatabaseName instead.
+
+If your project includes migrations generated prior to EF Core version 2.0.0, you can safely ignore the warning in those files and suppress it by adding `#pragma warning disable 612, 618`.
+
+<a name="pluralizer"></a>
+
+### A pluarlizer is now included for scaffolding reverse engineered models
+
+[Tracking Issue #11160](https://github.com/dotnet/efcore/issues/11160)
+
+**Old behavior**
+
+Previously, you had to install a separate pluralizer package in order to pluralize DbSet and collection navigation names and singularize table names when scaffoding a DbContext and entity types by reverse engineering a database schema.
+
+**New behavior**
+
+EF Core now includes a pluralizer that uses the [Humanizer](https://github.com/Humanizr/Humanizer) library. This is the same library Visual Studio uses to recommend variable names.
+
+**Why**
+
+Using plural forms of words for collection properties and singular forms for types and reference properties is idiomatic in .NET.
+
+**Mitigations**
+
+To disable the pluralizer, use the `--no-pluralize` option on `dotnet ef dbcontext scaffold` or the `-NoPluralize` switch on `Scaffold-DbContext`.

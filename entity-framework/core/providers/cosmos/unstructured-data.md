@@ -2,7 +2,6 @@
 title: Azure Cosmos DB Provider - Working with Unstructured Data - EF Core
 description: How to work with Azure Cosmos DB unstructured data using Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/cosmos/unstructured-data
 ---
@@ -16,7 +15,7 @@ It is possible to access the properties that are not tracked by EF Core through 
 
 [!code-csharp[Unmapped](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?highlight=23,24&name=Unmapped)]
 
-``` json
+```json
 {
     "Id": 1,
     "PartitionKey": "1",

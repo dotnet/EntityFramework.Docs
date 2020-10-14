@@ -1,7 +1,7 @@
 ---
 title: Connection Resiliency - EF Core
 description: Using connection resiliency to automatically retry failed commands with Entity Framework Core
-author: rowanmiller
+author: AndriySvyryd
 ms.date: 11/15/2016
 uid: core/miscellaneous/connection-resiliency
 ---
@@ -18,7 +18,7 @@ An execution strategy is specified when configuring the options for your context
 
 or in `Startup.cs` for an ASP.NET Core application:
 
-``` csharp
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddDbContext<PicnicContext>(
@@ -32,7 +32,7 @@ public void ConfigureServices(IServiceCollection services)
 
 There is a mechanism to register a custom execution strategy of your own if you wish to change any of the defaults.
 
-``` csharp
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {
     optionsBuilder
@@ -60,7 +60,7 @@ This approach can also be used with ambient transactions.
 
 ## Transaction commit failure and the idempotency issue
 
-In general, when there is a connection failure the current transaction is rolled back. However, if the connection is dropped while the transaction is being committed the resulting state of the transaction is unknown. 
+In general, when there is a connection failure the current transaction is rolled back. However, if the connection is dropped while the transaction is being committed the resulting state of the transaction is unknown.
 
 By default, the execution strategy will retry the operation as if the transaction was rolled back, but if it's not the case this will result in an exception if the new database state is incompatible or could lead to **data corruption** if the operation does not rely on a particular state, for example when inserting a new row with auto-generated key values.
 

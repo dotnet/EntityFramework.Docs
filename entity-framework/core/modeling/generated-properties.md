@@ -2,7 +2,6 @@
 title: Generated Values - EF Core
 description: How to configure value generation for properties when using Entity Framework Core
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/generated-properties
 ---

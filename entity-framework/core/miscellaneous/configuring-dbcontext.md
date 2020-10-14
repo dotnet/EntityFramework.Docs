@@ -1,7 +1,7 @@
 ---
 title: Configuring a DbContext - EF Core
 description: Strategies for configuring DbContexts with Entity Framework Core
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: core/miscellaneous/configuring-dbcontext
 ---
@@ -26,13 +26,13 @@ While any pattern that provides the necessary configuration information to the `
 
 The following example configures the `DbContextOptions` to use the SQL Server provider, a connection contained in the `connectionString` variable, a provider-level command timeout, and an EF Core behavior selector that makes all queries executed in the `DbContext` [no-tracking](xref:core/querying/tracking#no-tracking-queries) by default:
 
-``` csharp
+```csharp
 optionsBuilder
     .UseSqlServer(connectionString, providerOptions=>providerOptions.CommandTimeout(60))
     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 ```
 
-> [!NOTE]  
+> [!NOTE]
 > Provider selector methods and other behavior selector methods mentioned above are extension methods on `DbContextOptions` or provider-specific option classes. In order to have access to these extension methods you may need to have a namespace (typically `Microsoft.EntityFrameworkCore`) in scope and include additional package dependencies in the project.
 
 The `DbContextOptions` can be supplied to the `DbContext` by overriding the `OnConfiguring` method or externally via a constructor argument.
@@ -43,7 +43,7 @@ If both are used, `OnConfiguring` is applied last and can overwrite options supp
 
 Your constructor can simply accept a `DbContextOptions` as follows:
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     public BloggingContext(DbContextOptions<BloggingContext> options)
@@ -54,12 +54,12 @@ public class BloggingContext : DbContext
 }
 ```
 
-> [!TIP]  
+> [!TIP]
 > The base constructor of DbContext also accepts the non-generic version of `DbContextOptions`, but using the non-generic version is not recommended for applications with multiple context types.
 
 Your application can now pass the `DbContextOptions` when instantiating a context, as follows:
 
-``` csharp
+```csharp
 var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
 optionsBuilder.UseSqlite("Data Source=blog.db");
 
@@ -75,7 +75,7 @@ You can also initialize the `DbContextOptions` within the context itself. While 
 
 To initialize `DbContextOptions` within the context, override the `OnConfiguring` method and call the methods on the provided `DbContextOptionsBuilder`:
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -89,7 +89,7 @@ public class BloggingContext : DbContext
 
 An application can simply instantiate such a context without passing anything to its constructor:
 
-``` csharp
+```csharp
 using (var context = new BloggingContext())
 {
   // do stuff
@@ -109,7 +109,7 @@ See [more reading](#more-reading) below for additional information on dependency
 
 Adding the `DbContext` to dependency injection:
 
-``` csharp
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddDbContext<BloggingContext>(options => options.UseSqlite("Data Source=blog.db"));
@@ -120,7 +120,7 @@ This requires adding a [constructor argument](#constructor-argument) to your DbC
 
 Context code:
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     public BloggingContext(DbContextOptions<BloggingContext> options)
@@ -133,7 +133,7 @@ public class BloggingContext : DbContext
 
 Application code (in ASP.NET Core):
 
-``` csharp
+```csharp
 public class MyController
 {
     private readonly BloggingContext _context;
@@ -149,7 +149,7 @@ public class MyController
 
 Application code (using ServiceProvider directly, less common):
 
-``` csharp
+```csharp
 using (var context = serviceProvider.GetService<BloggingContext>())
 {
   // do stuff
@@ -174,7 +174,7 @@ There are common mistakes that can inadvertently cause concurrent access on the 
 
 Asynchronous methods enable EF Core to initiate operations that access the database in a non-blocking way. But if a caller does not await the completion of one of these methods, and proceeds to perform other operations on the `DbContext`, the state of the `DbContext` can be, (and very likely will be) corrupted.
 
-Always await EF Core asynchronous methods immediately.  
+Always await EF Core asynchronous methods immediately.
 
 ### Implicitly sharing DbContext instances across multiple threads via dependency injection
 

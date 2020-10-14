@@ -11,7 +11,7 @@ It is possible to use EF Core and EF6 in the same application or library by inst
 
 Some types have the same names in EF Core and EF6 and differ only by namespace, which may complicate using both EF Core and EF6 in the same code file. The ambiguity can be easily removed using namespace alias directives. For example:
 
-``` csharp
+```csharp
 using Microsoft.EntityFrameworkCore; // use DbContext for EF Core
 using EF6 = System.Data.Entity; // use EF6.DbContext for the EF6 version
 ```

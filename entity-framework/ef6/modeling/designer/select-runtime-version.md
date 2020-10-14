@@ -1,7 +1,7 @@
 ---
 title: Selecting Entity Framework Runtime Version for EF Designer Models - EF6
 description: Selecting Entity Framework Runtime Version for EF Designer Models in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 ---
 # Selecting Entity Framework Runtime Version for EF Designer Models

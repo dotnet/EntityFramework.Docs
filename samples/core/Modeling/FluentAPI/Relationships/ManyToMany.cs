@@ -1,11 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace EFModeling.FluentAPI.Relationships.ManyToMany
 {
     #region ManyToMany
-    class MyContext : DbContext
+    public class MyContext : DbContext
     {
+        public MyContext(DbContextOptions<MyContext> options)
+            : base(options)
+        {
+        }
+
         public DbSet<Post> Posts { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
@@ -44,6 +50,8 @@ namespace EFModeling.FluentAPI.Relationships.ManyToMany
 
     public class PostTag
     {
+        public DateTime PublicationDate { get; set; }
+
         public int PostId { get; set; }
         public Post Post { get; set; }
 

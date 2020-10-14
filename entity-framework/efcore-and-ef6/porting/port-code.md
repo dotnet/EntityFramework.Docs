@@ -1,7 +1,7 @@
 ---
 title: Porting from EF6 to EF Core - Porting a Code-Based Model - EF
 description: Specific information on porting an Entity Framework 6 code-based model application to Entity Framework Core
-author: rowanmiller
+author: ajcvickers
 ms.date: 10/27/2016
 uid: efcore-and-ef6/porting/port-code
 ---
@@ -27,7 +27,7 @@ As described in [Ensure EF Core Will Work for Your Application](xref:efcore-and-
 
 Most EF6 applications store the connection string in the applications `App/Web.config` file. In EF Core, you read this connection string using the `ConfigurationManager` API. You may need to add a reference to the `System.Configuration` framework assembly to be able to use this API.
 
-``` csharp
+```csharp
 public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }

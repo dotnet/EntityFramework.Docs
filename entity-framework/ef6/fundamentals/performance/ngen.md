@@ -1,7 +1,7 @@
 ---
 title: Improving startup performance with NGen - EF6
 description: Improving startup performance with NGen in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/performance/ngen
 ---

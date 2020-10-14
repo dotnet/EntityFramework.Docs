@@ -2,7 +2,6 @@
 title: Microsoft SQL Server Database Provider - Memory-Optimized Tables - EF Core
 description: How to use Memory-Optimized Tables with the SQL Server Entity Framework Core Database Provider
 author: AndriySvyryd
-ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/sql-server/memory-optimized-tables
 ---

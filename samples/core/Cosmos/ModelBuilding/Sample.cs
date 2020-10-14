@@ -109,7 +109,7 @@ namespace Cosmos.ModelBuilding
                 Console.WriteLine($"Number of shipping centers is now: {firstDistributor.ShippingCenters.Count}");
 
                 var distributorEntry = context.Entry(firstDistributor);
-                var idProperty = distributorEntry.Property<string>("id");
+                var idProperty = distributorEntry.Property<string>("__id");
                 Console.WriteLine($"The distributor 'id' is: {idProperty.CurrentValue}");
             }
             #endregion

@@ -2,7 +2,7 @@
 title: SQLite Database Provider - Limitations - EF Core
 description: Limitations of the Entity Framework Core SQLite database provider as compared to other providers
 author: bricelam
-ms.date: 07/16/2020
+ms.date: 09/24/2020
 uid: core/providers/sqlite/limitations
 ---
 # SQLite EF Core Database Provider Limitations
@@ -29,7 +29,7 @@ Instead of `DateTimeOffset`, we recommend using DateTime values. When handling m
 
 The `Decimal` type provides a high level of precision. If you don't need that level of precision, however, we recommend using double instead. You can use a [value converter](xref:core/modeling/value-conversions) to continue using decimal in your classes.
 
-``` csharp
+```csharp
 modelBuilder.Entity<MyEntity>()
     .Property(e => e.DecimalProperty)
     .HasConversion<double>();
@@ -44,31 +44,52 @@ A rebuild will be attempted in order to perform certain operations. Rebuilds are
 | Operation            | Supported?  | Requires version |
 |:---------------------|:------------|:-----------------|
 | AddCheckConstraint   | ✔ (rebuild) | 5.0              |
-| AddColumn            | ✔           | 1.0              |
+| AddColumn            | ✔           |                  |
 | AddForeignKey        | ✔ (rebuild) | 5.0              |
 | AddPrimaryKey        | ✔ (rebuild) | 5.0              |
 | AddUniqueConstraint  | ✔ (rebuild) | 5.0              |
 | AlterColumn          | ✔ (rebuild) | 5.0              |
-| CreateIndex          | ✔           | 1.0              |
-| CreateTable          | ✔           | 1.0              |
+| CreateIndex          | ✔           |                  |
+| CreateTable          | ✔           |                  |
 | DropCheckConstraint  | ✔ (rebuild) | 5.0              |
 | DropColumn           | ✔ (rebuild) | 5.0              |
 | DropForeignKey       | ✔ (rebuild) | 5.0              |
-| DropIndex            | ✔           | 1.0              |
+| DropIndex            | ✔           |                  |
 | DropPrimaryKey       | ✔ (rebuild) | 5.0              |
-| DropTable            | ✔           | 1.0              |
+| DropTable            | ✔           |                  |
 | DropUniqueConstraint | ✔ (rebuild) | 5.0              |
-| RenameColumn         | ✔           | 2.2.2            |
-| RenameIndex          | ✔ (rebuild) | 2.1              |
-| RenameTable          | ✔           | 1.0              |
-| EnsureSchema         | ✔ (no-op)   | 2.0              |
-| DropSchema           | ✔ (no-op)   | 2.0              |
-| Insert               | ✔           | 2.0              |
-| Update               | ✔           | 2.0              |
-| Delete               | ✔           | 2.0              |
+| RenameColumn         | ✔           | 2.2              |
+| RenameIndex          | ✔ (rebuild) |                  |
+| RenameTable          | ✔           |                  |
+| EnsureSchema         | ✔ (no-op)   |                  |
+| DropSchema           | ✔ (no-op)   |                  |
+| Insert               | ✔           |                  |
+| Update               | ✔           |                  |
+| Delete               | ✔           |                  |
 
-## Migrations limitations workaround
+### Migrations limitations workaround
 
 You can workaround some of these limitations by manually writing code in your migrations to perform a rebuild. Table rebuilds involve creating a new table, copying data to the new table, dropping the old table, renaming the new table. You will need to use the `Sql(string)` method to perform some of these steps.
 
 See [Making Other Kinds Of Table Schema Changes](https://sqlite.org/lang_altertable.html#otheralter) in the SQLite documentation for more details.
+
+### Idempotent script limitations
+
+Unlike other databases, SQLite doesn't include a procedural language. Because of this, there is no way to generate the if-then logic required by the idempotent migration scripts.
+
+If you know the last migration applied to a database, you can generate a script from that migration to the latest migration.
+
+```dotnetcli
+dotnet ef migrations script CurrentMigration
+```
+
+Otherwise, we recommend using `dotnet ef database update` to apply migrations. Starting in EF Core 5.0, you can specify the database file when running the command.
+
+```dotnetcli
+dotnet ef database update --connection "Data Source=My.db"
+```
+
+## See also
+
+* [Microsoft.Data.Sqlite Async Limitations](/dotnet/standard/data/sqlite/async)
+* [Microsoft.Data.Sqlite ADO.NET Limitations](/dotnet/standard/data/sqlite/adonet-limitations)

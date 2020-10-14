@@ -2,7 +2,7 @@
 title: Entity Types - EF Core
 description: How to configure and map entity types using Entity Framework Core
 author: roji
-ms.date: 12/03/2019
+ms.date: 10/06/2020
 uid: core/modeling/entity-types
 ---
 # Entity Types
@@ -34,6 +34,19 @@ If you don't want a type to be included in the model, you can exclude it:
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IgnoreType.cs?name=IgnoreType&highlight=3)]
 
 ***
+
+### Excluding from migrations
+
+> [!NOTE]
+> The ability to exclude tables from migrations was added in EF Core 5.0.
+
+It is sometimes useful to have the same entity type mapped in multiple `DbContext` types. This is especially true when using [bounded contexts](https://www.martinfowler.com/bliki/BoundedContext.html), for which it is common to have a different `DbContext` type for each bounded context.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TableExcludeFromMigrations.cs?name=TableExcludeFromMigrations&highlight=4)]
+
+With this configuration migrations will not create the `blogs` table, but `Blog` is still included in the model and can be used normally.
+
+If you need to start managing the table using migrations again then a new migration should be created where `blogs` is not excluded. The next migration will now contain any changes made to the table.
 
 ## Table name
 
@@ -72,3 +85,14 @@ Rather than specifying the schema for each table, you can also define the defaul
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DefaultSchema.cs?name=DefaultSchema&highlight=3)]
 
 Note that setting the default schema will also affect other database objects, such as sequences.
+
+## View mapping
+
+Entity types can be mapped to database views using the Fluent API.
+
+> [!Note]
+> EF will assume that the referenced view already exists in the database, it will not create it automatically in a migration.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ViewNameAndSchema.cs?name=ViewNameAndSchema&highlight=1)]
+
+ Mapping to a view will remove the default table mapping, but the entity type can also be mapped to a table explicitly. In this case the query mapping will be used for queries and the table mapping will be used for updates.

@@ -1,7 +1,7 @@
 ---
 title: Working with DbContext - EF6
 description: Working with DbContext in Entity Framework 6
-author: divega
+author: ajcvickers
 ms.date: 10/23/2016
 uid: ef6/fundamentals/working-with-dbcontext
 ---

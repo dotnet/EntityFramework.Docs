@@ -62,7 +62,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 * **Tools > NuGet Package Manager > Package Manager Console**
 * Run the following commands:
 
-  ``` PowerShell
+  ```powershell
   Install-Package Microsoft.EntityFrameworkCore.Sqlite
   ```
 
@@ -113,7 +113,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
 
 * Run the following commands in **Package Manager Console (PMC)**
 
-  ``` PowerShell
+  ```powershell
   Install-Package Microsoft.EntityFrameworkCore.Tools
   Add-Migration InitialCreate
   Update-Database
@@ -144,7 +144,7 @@ Visual Studio uses an inconsistent working directory when running .NET Core cons
 * Right-click on the project and select **Edit Project File**
 * Just below the *TargetFramework* property, add the following:
 
-  ``` XML
+  ```xml
   <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
   ```
 
