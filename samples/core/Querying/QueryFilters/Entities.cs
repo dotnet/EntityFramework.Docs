@@ -5,9 +5,9 @@ namespace EFQuerying.QueryFilters
     #region Entities
     public class Blog
     {
-#pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable IDE0051, CS0169 // Remove unused private members
         private string _tenantId;
-#pragma warning restore IDE0051 // Remove unused private members
+#pragma warning restore IDE0051, CS0169 // Remove unused private members
 
         public int BlogId { get; set; }
         public string Name { get; set; }
