@@ -349,6 +349,16 @@
             "source_path": "entity-framework/core/miscellaneous/rc2-rtm-upgrade.md",
             "redirect_url": "/ef/core/what-is-new",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/connection-strings.md",
+            "redirect_url": "/ef/core/get-started/connection-strings",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/configuring-dbcontext.md",
+            "redirect_url": "/ef/core/get-started/configuring-dbcontext",
+            "redirect_document_id": false
         }
     ]
 }
