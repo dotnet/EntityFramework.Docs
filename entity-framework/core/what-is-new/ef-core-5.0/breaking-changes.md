@@ -30,23 +30,23 @@ The following API and behavior changes have the potential to break existing appl
 
 <a name="geometric-sqlite"></a>
 
-### Removed HasGeometricDimension method from SQLite NTS extension
+## Removed HasGeometricDimension method from SQLite NTS extension
 
 [Tracking Issue #14257](https://github.com/aspnet/EntityFrameworkCore/issues/14257)
 
-#### Old behavior
+### Old behavior
 
 HasGeometricDimension was used to enable additional dimensions (Z and M) on geometry columns. However, it only ever affected database creation. It was unnecessary to specify it to query values with additional dimensions. It also didn't work correctly when inserting or updating values with additional dimensions ([see #14257](https://github.com/aspnet/EntityFrameworkCore/issues/14257)).
 
-#### New behavior
+### New behavior
 
 To enable inserting and updating geometry values with additional dimensions (Z and M), the dimension needs to be specified as part of the column type name. This API matches more closely to the underlying behavior of SpatiaLite's AddGeometryColumn function.
 
-#### Why
+### Why
 
 Using HasGeometricDimension after specifying the dimension in the column type is unnecessary and redundant, so we removed HasGeometricDimension entirely.
 
-#### Mitigations
+### Mitigations
 
 Use `HasColumnType` to specify the dimension:
 
@@ -64,15 +64,15 @@ modelBuilder.Entity<GeoEntity>(
 
 <a name="required-dependent"></a>
 
-### Required on the navigation from principal to dependent has different semantics
+## Required on the navigation from principal to dependent has different semantics
 
 [Tracking Issue #17286](https://github.com/aspnet/EntityFrameworkCore/issues/17286)
 
-#### Old behavior
+### Old behavior
 
 Only the navigations to principal could be configured as required. Therefore using `RequiredAttribute` on the navigation to the dependent (the entity containing the foreign key) would instead create the foreign key on the defining entity type.
 
-#### New behavior
+### New behavior
 
 With the added support for required dependents, it is now possible to mark any reference navigation as required, meaning that in the case shown above the foreign key will be defined on the other side of the relationship and the properties won't be marked as required.
 
@@ -86,11 +86,11 @@ modelBuilder.Entity<Blog>()
     .HasForeignKey<BlogImage>(b => b.BlogForeignKey);
 ```
 
-#### Why
+### Why
 
 The new behavior is necessary to enable support for required dependents ([see #12100](https://github.com/dotnet/efcore/issues/12100)).
 
-#### Mitigations
+### Mitigations
 
 Remove `RequiredAttribute` from the navigation to the dependent and place it instead on the navigation to the principal or configure the relationship in `OnModelCreating`:
 
@@ -104,23 +104,23 @@ modelBuilder.Entity<Blog>()
 
 <a name="cosmos-partition-key"></a>
 
-### Cosmos: Partition key is now added to the primary key
+## Cosmos: Partition key is now added to the primary key
 
 [Tracking Issue #15289](https://github.com/aspnet/EntityFrameworkCore/issues/15289)
 
-#### Old behavior
+### Old behavior
 
 The partition key property was only added to the alternate key that includes `id`.
 
-#### New behavior
+### New behavior
 
 The partition key property is now also added to the primary key by convention.
 
-#### Why
+### Why
 
 This change makes the model better aligned with Azure Cosmos DB semantics and improves the performance of `Find` and some queries.
 
-#### Mitigations
+### Mitigations
 
 To prevent the partition key property to be added to the primary key, configure it in `OnModelCreating`.
 
@@ -131,23 +131,23 @@ modelBuilder.Entity<Blog>()
 
 <a name="cosmos-id"></a>
 
-### Cosmos: `id` property renamed to `__id`
+## Cosmos: `id` property renamed to `__id`
 
 [Tracking Issue #17751](https://github.com/aspnet/EntityFrameworkCore/issues/17751)
 
-#### Old behavior
+### Old behavior
 
 The shadow property mapped to the `id` JSON property was also named `id`.
 
-#### New behavior
+### New behavior
 
 The shadow property created by convention is now named `__id`.
 
-#### Why
+### Why
 
 This change makes it less likely that the `id` property clashes with an existing property on the entity type.
 
-#### Mitigations
+### Mitigations
 
 To go back to the 3.x behavior, configure the `id` property in `OnModelCreating`.
 
@@ -159,89 +159,89 @@ modelBuilder.Entity<Blog>()
 
 <a name="cosmos-byte"></a>
 
-### Cosmos: byte[] is now stored as a base64 string instead of a number array
+## Cosmos: byte[] is now stored as a base64 string instead of a number array
 
 [Tracking Issue #17306](https://github.com/aspnet/EntityFrameworkCore/issues/17306)
 
-#### Old behavior
+### Old behavior
 
 Properties of type byte[] were stored as a number array.
 
-#### New behavior
+### New behavior
 
 Properties of type byte[] are now stored as a base64 string.
 
-#### Why
+### Why
 
 This representation of byte[] aligns better with expectations and is the default behavior of the major JSON serialization libraries.
 
-#### Mitigations
+### Mitigations
 
 Existing data stored as number arrays will still be queried correctly, but currently there isn't a supported way to change back the insert behavior. If this limitation is blocking your scenario, comment on [this issue](https://github.com/aspnet/EntityFrameworkCore/issues/17306)
 
 <a name="cosmos-metadata"></a>
 
-### Cosmos: GetPropertyName and SetPropertyName were renamed
+## Cosmos: GetPropertyName and SetPropertyName were renamed
 
 [Tracking Issue #17874](https://github.com/aspnet/EntityFrameworkCore/issues/17874)
 
-#### Old behavior
+### Old behavior
 
 Previously the extension methods were called `GetPropertyName` and `SetPropertyName`
 
-#### New behavior
+### New behavior
 
 The old API was removed and new methods added: `GetJsonPropertyName`, `SetJsonPropertyName`
 
-#### Why
+### Why
 
 This change removes the ambiguity around what these methods are configuring.
 
-#### Mitigations
+### Mitigations
 
 Use the new API.
 
 <a name="non-added-generation"></a>
 
-### Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted
+## Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted
 
 [Tracking Issue #15289](https://github.com/aspnet/EntityFrameworkCore/issues/15289)
 
-#### Old behavior
+### Old behavior
 
 Value generators were only called when the entity state changed to Added.
 
-#### New behavior
+### New behavior
 
 Value generators are now called when the entity state is changed from Detached to Unchanged, Updated, or Deleted and the property contains the default values.
 
-#### Why
+### Why
 
 This change was necessary to improve the experience with properties that are not persisted to the data store and have their value generated always on the client.
 
-#### Mitigations
+### Mitigations
 
 To prevent the value generator from being called, assign a non-default value to the property before the state is changed.
 
 <a name="relational-model"></a>
 
-### IMigrationsModelDiffer now uses IRelationalModel
+## IMigrationsModelDiffer now uses IRelationalModel
 
 [Tracking Issue #20305](https://github.com/aspnet/EntityFrameworkCore/issues/20305)
 
-#### Old behavior
+### Old behavior
 
 `IMigrationsModelDiffer` API was defined using `IModel`.
 
-#### New behavior
+### New behavior
 
 `IMigrationsModelDiffer` API now uses `IRelationalModel`. However the model snapshot still contains only `IModel` as this code is part of the application and Entity Framework can't change it without making a bigger breaking change.
 
-#### Why
+### Why
 
 `IRelationalModel` is a newly added representation of the database schema. Using it to find differences is faster and more accurate.
 
-#### Mitigations
+### Mitigations
 
 Use the following code to compare the model from `snapshot` with the model from `context`:
 
@@ -265,23 +265,23 @@ We are planning to improve this experience in 6.0 ([see #22031](https://github.c
 
 <a name="read-only-discriminators"></a>
 
-### Discriminators are read-only
+## Discriminators are read-only
 
 [Tracking Issue #21154](https://github.com/aspnet/EntityFrameworkCore/issues/21154)
 
-#### Old behavior
+### Old behavior
 
 It was possible to change the discriminator value before calling `SaveChanges`
 
-#### New behavior
+### New behavior
 
 An exception will be throws in the above case.
 
-#### Why
+### Why
 
 EF doesn't expect the entity type to change while it is still being tracked, so changing the discriminator value leaves the context in an inconsistent state, which might result in unexpected behavior.
 
-#### Mitigations
+### Mitigations
 
 If changing the discriminator value is necessary and the context will be disposed immediately after calling `SaveChanges`, the discriminator can be made mutable:
 
@@ -293,19 +293,19 @@ modelBuilder.Entity<BaseEntity>()
 
 <a name="defining-query"></a>
 
-### Defining query is replaced with provider-specific methods
+## Defining query is replaced with provider-specific methods
 
 [Tracking Issue #18903](https://github.com/dotnet/efcore/issues/18903)
 
-#### Old behavior
+### Old behavior
 
 Entity types were mapped to defining queries at the Core level. Anytime the entity type was used in the query root of the entity type was replaced by the defining query for any provider.
 
-#### New behavior
+### New behavior
 
 APIs for defining query are deprecated. New provider-specific APIs were introduced.
 
-#### Why
+### Why
 
 While defining queries were implemented as replacement query whenever query root is used in the query, it had a few issues:
 
@@ -314,52 +314,52 @@ While defining queries were implemented as replacement query whenever query root
 
 Initially defining queries were introduced as client-side views to be used with In-Memory provider for keyless entities (similar to database views in relational databases). Such definition makes it easy to test application against in-memory database. Afterwards they became broadly applicable, which was useful but brought inconsistent and hard to understand behavior. So we decided to simplify the concept. We made LINQ based defining query exclusive to In-Memory provider and treat them differently. For more information, [see this issue](https://github.com/dotnet/efcore/issues/20023).
 
-#### Mitigations
+### Mitigations
 
 For relational providers, use `ToSqlQuery` method in `OnModelCreating` and pass in a SQL string to use for the entity type.
 For the In-Memory provider, use `ToInMemoryQuery` method in `OnModelCreating` and pass in a LINQ query to use for the entity type.
 
 <a name="no-client-methods"></a>
 
-### Provider-specific EF.Functions methods throw for InMemory provider
+## Provider-specific EF.Functions methods throw for InMemory provider
 
 [Tracking Issue #20294](https://github.com/dotnet/efcore/issues/20294)
 
-#### Old behavior
+### Old behavior
 
 Provider-specific EF.Functions methods contained implementation for client execution, which allowed them to be executed on the InMemory provider. For example, `EF.Functions.DateDiffDay` is a Sql Server specific method, which worked on InMemory provider.
 
-#### New behavior
+### New behavior
 
 Provider-specific methods have been updated to throw an exception in their method body to block evaluating them on client side.
 
-#### Why
+### Why
 
 Provider-specific methods map to a database function. The computation done by the mapped database function can't always be replicated on the client side in LINQ. It may cause the result from the server to differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database functions, they don't need to be evaluated on client side. As InMemory provider is a different *database*, these methods aren't available for this provider. Trying to execute them for InMemory provider, or any other provider that doesn't translate these methods, throws an exception.
 
-#### Mitigations
+### Mitigations
 
 Since there's no way to mimic behavior of database functions accurately, you should test the queries containing them against same kind of database as in production.
 
 <a name="index-obsolete"></a>
 
-### IndexBuilder.HasName is now obsolete
+## IndexBuilder.HasName is now obsolete
 
 [Tracking Issue #21089](https://github.com/dotnet/efcore/issues/21089)
 
-#### Old behavior
+### Old behavior
 
 Previously, only one index could be defined over a given set of properties. The database name of an index was configured using IndexBuilder.HasName.
 
-#### New behavior
+### New behavior
 
 Multiple indexes are now allowed on the same set or properties. These indexes are now distinguished by a name in the model. By convention, the model name is used as the database name; however it can also be configured independently using HasDatabaseName.
 
-#### Why
+### Why
 
 In the future, we'd like to enable both ascending and descending indexes or indexes with different collations on the same set of properties. This change moves us another step in that direction.
 
-#### Mitigations
+### Mitigations
 
 Any code that was previously calling IndexBuilder.HasName should be updated to call HasDatabaseName instead.
 
@@ -367,22 +367,22 @@ If your project includes migrations generated prior to EF Core version 2.0.0, yo
 
 <a name="pluralizer"></a>
 
-### A pluarlizer is now included for scaffolding reverse engineered models
+## A pluarlizer is now included for scaffolding reverse engineered models
 
 [Tracking Issue #11160](https://github.com/dotnet/efcore/issues/11160)
 
-#### Old behavior
+### Old behavior
 
 Previously, you had to install a separate pluralizer package in order to pluralize DbSet and collection navigation names and singularize table names when scaffoding a DbContext and entity types by reverse engineering a database schema.
 
-#### New behavior
+### New behavior
 
 EF Core now includes a pluralizer that uses the [Humanizer](https://github.com/Humanizr/Humanizer) library. This is the same library Visual Studio uses to recommend variable names.
 
-#### Why
+### Why
 
 Using plural forms of words for collection properties and singular forms for types and reference properties is idiomatic in .NET.
 
-#### Mitigations
+### Mitigations
 
 To disable the pluralizer, use the `--no-pluralize` option on `dotnet ef dbcontext scaffold` or the `-NoPluralize` switch on `Scaffold-DbContext`.
