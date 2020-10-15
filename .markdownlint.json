@@ -5,6 +5,5 @@
     "MD025": { "front_matter_title": "" },
     "MD027": false,
     "MD028": false,
-    "MD033": { "allowed_elements": ["sup", "sub", "nobr", "span", "a"] },
-    "MD036": false
+    "MD033": { "allowed_elements": ["sup", "sub", "nobr", "span", "a"] }
 }
