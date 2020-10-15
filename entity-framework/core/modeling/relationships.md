@@ -188,7 +188,7 @@ You can use the string overload of `HasForeignKey(...)` to configure a shadow pr
 
 #### Foreign key constraint name
 
-By convention, when targeting a relational database, foreign key constraints are named FK\_\<dependent type name>\_\<principal type name>\_\<foreign key property name>`. For composite foreign keys, \<foreign key property name> becomes an underscore separated list of foreign key property names.
+By convention, when targeting a relational database, foreign key constraints are named FK\_\<dependent type name>\_\<principal type name>\_\<foreign key property name>. For composite foreign keys, \<foreign key property name> becomes an underscore separated list of foreign key property names.
 
 You can also configure the constraint name as follows:
 
