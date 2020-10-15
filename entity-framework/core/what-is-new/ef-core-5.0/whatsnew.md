@@ -1306,8 +1306,10 @@ var artists = context.Artists.Where(e => e.IsSigned).ToList();
 
 EF Core will throw the following exception indicating that translation failed because `IsSigned` is not mapped:
 
-> Unhandled exception. System.InvalidOperationException: The LINQ expression 'DbSet\<Artist>()
->    .Where(a => a.IsSigned)' could not be translated. Additional information: Translation of member 'IsSigned' on entity type 'Artist' failed. Possibly the specified member is not mapped. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See <https://go.microsoft.com/fwlink/?linkid=2101038> for more information.
+```exception
+Unhandled exception. System.InvalidOperationException: The LINQ expression 'DbSet<Artist>()
+   .Where(a => a.IsSigned)' could not be translated. Additional information: Translation of member 'IsSigned' on entity type 'Artist' failed. Possibly the specified member is not mapped. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See <https://go.microsoft.com/fwlink/?linkid=2101038> for more information.
+```
 
 Similarly, better exception messages are now generated when attempting to translate string comparisons with culture-dependent semantics. For example, this query attempts to use `StringComparison.CurrentCulture`:
 
@@ -1319,10 +1321,12 @@ var artists = context.Artists
 
 EF Core will now throw the following exception:
 
-> Unhandled exception. System.InvalidOperationException: The LINQ expression 'DbSet\<Artist>()
->      .Where(a => a.Name.Equals(
->          value: "The Unicorns",
->          comparisonType: CurrentCulture))' could not be translated. Additional information: Translation of 'string.Equals' method which takes 'StringComparison' argument is not supported. See <https://go.microsoft.com/fwlink/?linkid=2129535> for more information. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See <https://go.microsoft.com/fwlink/?linkid=2101038> for more information.
+```exception
+Unhandled exception. System.InvalidOperationException: The LINQ expression 'DbSet<Artist>()
+     .Where(a => a.Name.Equals(
+         value: "The Unicorns",
+         comparisonType: CurrentCulture))' could not be translated. Additional information: Translation of 'string.Equals' method which takes 'StringComparison' argument is not supported. See <https://go.microsoft.com/fwlink/?linkid=2129535> for more information. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See <https://go.microsoft.com/fwlink/?linkid=2101038> for more information.
+```
 
 ### Specify transaction ID
 
