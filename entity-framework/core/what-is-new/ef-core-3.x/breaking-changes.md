@@ -101,6 +101,7 @@ Besides this, automatic client evaluation can lead to issues in which improving 
 If a query can't be fully translated, then either rewrite the query in a form that can be translated, or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
 
 <a name="netstandard21"></a>
+
 ### EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0
 
 [Tracking Issue #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
@@ -125,6 +126,7 @@ This is part of a strategic decision across .NET technologies to focus energy on
 Use EF Core 3.1.
 
 <a name="no-longer"></a>
+
 ### Entity Framework Core is no longer part of the ASP.NET Core shared framework
 
 [Tracking Issue Announcements#325](https://github.com/aspnet/Announcements/issues/325)
@@ -150,6 +152,7 @@ Developers can also now control exactly when EF Core and EF Core data providers 
 To use EF Core in an ASP.NET Core 3.0 application or any other supported application, explicitly add a package reference to the EF Core database provider that your application will use.
 
 <a name="dotnet-ef"></a>
+
 ### The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK
 
 [Tracking Issue #14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
@@ -170,13 +173,14 @@ This change allows us to distribute and update `dotnet ef` as a regular .NET CLI
 
 To be able to manage migrations or scaffold a `DbContext`, install `dotnet-ef` as a global tool:
 
-  ```dotnetcli
-  dotnet tool install --global dotnet-ef
-  ```
+```dotnetcli
+dotnet tool install --global dotnet-ef
+```
 
 You can also obtain it a local tool when you restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](/dotnet/core/tools/global-tools#install-a-local-tool).
 
 <a name="fromsql"></a>
+
 ### FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed
 
 [Tracking Issue #10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
@@ -216,6 +220,7 @@ This could result in queries not being parameterized when they should have been.
 Switch to use the new method names.
 
 <a name="fromsqlsproc"></a>
+
 ### FromSql method when used with stored procedure cannot be composed
 
 [Tracking Issue #15392](https://github.com/aspnet/EntityFrameworkCore/issues/15392)
@@ -267,6 +272,7 @@ Specifying `FromSql` anywhere other than on a `DbSet` had no added meaning or ad
 `FromSql` invocations should be moved to be directly on the `DbSet` to which they apply.
 
 <a name="notrackingresolution"></a>
+
 ### No-tracking queries no longer perform identity resolution
 
 [Tracking Issue #13518](https://github.com/aspnet/EntityFrameworkCore/issues/13518)
@@ -278,6 +284,7 @@ Before EF Core 3.0, the same entity instance would be used for every occurrence 
 ```csharp
 var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
 ```
+
 would return the same `Category` instance for each `Product` that is associated with the given category.
 
 **New behavior**
@@ -299,6 +306,7 @@ Use a tracking query if identity resolution is required.
 [Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
 
 We reverted this change because new configuration in EF Core 3.0 allows the log level for any event to be specified by the application. For example, to switch logging of SQL to `Debug`, explicitly configure the level in `OnConfiguring` or `AddDbContext`:
+
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
@@ -329,6 +337,7 @@ This change was made to prevent temporary key values from erroneously becoming p
 
 Applications that assign primary key values onto foreign keys to form associations between entities may depend on the old behavior if the primary keys are store-generated and belong to entities in the `Added` state.
 This can be avoided by:
+
 * Not using store-generated keys.
 * Setting navigation properties to form relationships instead of setting foreign key values.
 * Obtain the actual temporary key values from the entity's tracking information.
@@ -373,7 +382,9 @@ Or with data annotations:
 [DatabaseGenerated(DatabaseGeneratedOption.None)]
 public string Id { get; set; }
 ```
+
 <a name="cascade"></a>
+
 ### Cascade deletions now happen immediately by default
 
 [Tracking Issue #10114](https://github.com/aspnet/EntityFrameworkCore/issues/10114)
@@ -400,7 +411,9 @@ For example:
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
+
 <a name="eager-loading-single-query"></a>
+
 ### Eager loading of related entities now happens in a single query
 
 [Tracking issue #18022](https://github.com/aspnet/EntityFrameworkCore/issues/18022)
@@ -424,6 +437,7 @@ While technically this is not a breaking change, it could have a considerable ef
 **
 
 <a name="deletebehavior"></a>
+
 ### DeleteBehavior.Restrict has cleaner semantics
 
 [Tracking Issue #12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
@@ -445,6 +459,7 @@ This change was made to improve the experience for using `DeleteBehavior` in an 
 The previous behavior can be restored by using `DeleteBehavior.ClientNoAction`.
 
 <a name="qt"></a>
+
 ### Query types are consolidated with entity types
 
 [Tracking Issue #14194](https://github.com/aspnet/EntityFrameworkCore/issues/14194)
@@ -479,6 +494,7 @@ This would still not be configured by convention to avoid misconfiguration when 
 > Due to [an issue in 3.x](https://github.com/dotnet/efcore/issues/19537) when querying keyless entities that have all properties set to `null` a `null` will be returned instead of an entity, if this issue is applicable to your scenario also add logic to handle `null` in results.
 
 <a name="config"></a>
+
 ### Configuration API for owned type relationships has changed
 
 [Tracking Issue #12444](https://github.com/aspnet/EntityFrameworkCore/issues/12444)
@@ -544,6 +560,7 @@ Change configuration of owned type relationships to use the new API surface as s
 **Old behavior**
 
 Consider the following model:
+
 ```csharp
 public class Order
 {
@@ -558,8 +575,8 @@ public class OrderDetails
     public string ShippingAddress { get; set; }
 }
 ```
-Before EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table then an `OrderDetails` instance was always required when adding a new `Order`.
 
+Before EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table then an `OrderDetails` instance was always required when adding a new `Order`.
 
 **New behavior**
 
@@ -579,6 +596,7 @@ If your model has a table sharing dependent with all optional columns, but the n
 **Old behavior**
 
 Consider the following model:
+
 ```csharp
 public class Order
 {
@@ -600,8 +618,8 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         .Property(o => o.Version).IsRowVersion().HasColumnName("Version");
 }
 ```
-Before EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table then updating just `OrderDetails` will not update `Version` value on client and the next update will fail.
 
+Before EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table then updating just `OrderDetails` will not update `Version` value on client and the next update will fail.
 
 **New behavior**
 
@@ -614,6 +632,7 @@ This change was made to avoid a stale concurrency token value when only one of t
 **Mitigations**
 
 All entities sharing the table have to include a property that is mapped to the concurrency token column. It's possible the create one in shadow-state:
+
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
@@ -663,6 +682,7 @@ context.People.Select(p => p.Address).AsNoTracking();
 **Old behavior**
 
 Consider the following model:
+
 ```csharp
 public abstract class EntityBase
 {
@@ -726,6 +746,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 **Old behavior**
 
 Consider the following model:
+
 ```csharp
 public class Customer
 {
@@ -739,6 +760,7 @@ public class Order
     public int CustomerId { get; set; }
 }
 ```
+
 Before EF Core 3.0, the `CustomerId` property would be used for the foreign key by convention.
 However, if `Order` is an owned type, then this would also make `CustomerId` the primary key and this isn't usually the expectation.
 
@@ -1162,6 +1184,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 Before EF Core 3.0, code calling `HasOne` or `HasMany` with a single string was interpreted in a confusing way.
 For example:
+
 ```csharp
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
@@ -1763,6 +1786,7 @@ modelBuilder
 ```
 
 <a name="udf-empty-string"></a>
+
 ### DbFunction.Schema being null or empty string configures it to be in model's default schema
 
 [Tracking Issue #12757](https://github.com/aspnet/EntityFrameworkCore/issues/12757)

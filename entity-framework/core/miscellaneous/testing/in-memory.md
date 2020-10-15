@@ -15,9 +15,10 @@ uid: core/miscellaneous/testing/in-memory
 > [!TIP]
 > SQLite is a relational provider and can also use in-memory databases.
 > Consider using this for testing to more closely match common relational database behaviors.
-> This is covered in [Using SQLite to test an EF Core application](xref:core/miscellaneous/testing/sqlite).   
+> This is covered in [Using SQLite to test an EF Core application](xref:core/miscellaneous/testing/sqlite).
 
 The information on this page now lives in other locations:
+
 * See [Testing code that uses EF Core](xref:core/miscellaneous/testing/index) for general information on testing with the EF in-memory database.
 * See [Sample showing how to test applications that use EF Core](xref:core/miscellaneous/testing/testing-sample) for a sample using the EF in-memory database.
 * See [The EF in-memory database provider](xref:core/providers/in-memory/index) for general information about the EF in-memory database.

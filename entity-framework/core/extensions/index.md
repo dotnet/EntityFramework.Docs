@@ -78,13 +78,13 @@ Geco (Generator Console) is a simple code generator based on a console project, 
 
 [GitHub repository](https://github.com/iQuarc/Geco)
 
-### EntityFrameworkCore.Scaffolding.Handlebars 
+### EntityFrameworkCore.Scaffolding.Handlebars
 
 Allows customization of classes reverse engineered from an existing database using the Entity Framework Core toolchain with Handlebars templates. For EF Core: 2, 3.
 
 [GitHub repository](https://github.com/TrackableEntities/EntityFrameworkCore.Scaffolding.Handlebars)
 
-### NeinLinq.EntityFrameworkCore 
+### NeinLinq.EntityFrameworkCore
 
 NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core: 2, 3.
 
@@ -138,13 +138,11 @@ Allow full-featured Entity Framework Core queries against [SQL Server Temporal H
 
 [GitHub repository](https://github.com/VantageSoftware/EFCore.TimeTraveler)
 
-
 ### EntityFrameworkCore.TemporalTables
 
 Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2.
 
 [GitHub repository](https://github.com/findulov/EntityFrameworkCore.TemporalTables)
-
 
 ### EntityFrameworkCore.Cacheable
 

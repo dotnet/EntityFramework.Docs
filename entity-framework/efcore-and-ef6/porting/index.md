@@ -27,17 +27,12 @@ In EF6, calling `DbSet.Add()` on an entity results in a recursive search for all
 
 **EF Core performs a similar recursive search, but with some slightly different rules.**
 
-*  The root entity is always in the requested state (added for `DbSet.Add` and unchanged for `DbSet.Attach`).
-
-*  **For entities that are found during the recursive search of navigation properties:**
-
-    *  **If the primary key of the entity is store generated**
-
-        * If the primary key is not set to a value, the state is set to added. The primary key value is considered "not set" if it is assigned the CLR default value for the property type (for example, `0` for `int`, `null` for `string`, etc.).
-
-        * If the primary key is set to a value, the state is set to unchanged.
-
-    *  If the primary key is not database generated, the entity is put in the same state as the root.
+* The root entity is always in the requested state (added for `DbSet.Add` and unchanged for `DbSet.Attach`).
+* **For entities that are found during the recursive search of navigation properties:**
+  * **If the primary key of the entity is store generated**
+    * If the primary key is not set to a value, the state is set to added. The primary key value is considered "not set" if it is assigned the CLR default value for the property type (for example, `0` for `int`, `null` for `string`, etc.).
+    * If the primary key is set to a value, the state is set to unchanged.
+  * If the primary key is not database generated, the entity is put in the same state as the root.
 
 ### Code First database initialization
 
