@@ -70,11 +70,11 @@ It is assumed that you are familiar with the Xamarin.Forms topics of [displaying
 
 > [!IMPORTANT]
 > Entity Framework Core uses reflection to invoke functions which the Xamarin.iOS linker may strip out while in **Release** mode configurations. You can avoid that in one of two ways.
-> 
+>
 > * The first is to add `--linkskip System.Core` to the **Additional mtouch arguments** in the **iOS Build** options.
 > * Alternatively set the Xamarin.iOS **Linker behavior** to `Don't Link` in the **iOS Build** options.
 > [This article explains more about the Xamarin.iOS linker](/xamarin/ios/deploy-test/linker) including how to set the behavior on Xamarin.iOS.
-> 
+>
 
 ## Entity Framework Core NuGet packages
 

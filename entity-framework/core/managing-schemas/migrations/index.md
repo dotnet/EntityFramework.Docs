@@ -66,6 +66,7 @@ At this point you can have EF create your database and create your schema from t
 ```dotnetcli
 dotnet ef database update
 ```
+
 #### [Visual Studio](#tab/vs)
 
 ```powershell
@@ -116,6 +117,7 @@ You can now apply your migration as before:
 ```dotnetcli
 dotnet ef database update
 ```
+
 #### [Visual Studio](#tab/vs)
 
 ```powershell

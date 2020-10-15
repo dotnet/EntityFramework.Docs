@@ -21,6 +21,7 @@ This allows a single SQL Server database to be created and seeded only once for 
 It's not difficult to write multiple tests against the same database.
 The trick is doing it in a way that the tests don't trip over each other as they run.
 This requires understanding:
+
 * How to safely share objects between tests
 * When the test framework runs tests in parallel
 * How to keep the database in a clean state for every test  
@@ -39,8 +40,9 @@ Here's what it looks like:
 [!code-csharp[SharedDatabaseFixture](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/SharedDatabaseTests/SharedDatabaseFixture.cs?name=SharedDatabaseFixture)]
 
 For now, notice how the constructor:
+
 * Creates a single database connection for the lifetime of the fixture
-* Creates and seeds that database by calling the `Seed` method 
+* Creates and seeds that database by calling the `Seed` method
 
 Ignore the locking for now; we will come back to it later.
 
@@ -86,7 +88,7 @@ For example:
 Notice that the transaction is created as the test starts and disposed when it is finished.
 Disposing the transaction causes it to be rolled back, so none of the changes will be seen by other tests.
 
-The helper method for creating a context (see the fixture code above) accepts this transaction and opts the DbContext into using it. 
+The helper method for creating a context (see the fixture code above) accepts this transaction and opts the DbContext into using it.
 
 ## Sharing the fixture
 

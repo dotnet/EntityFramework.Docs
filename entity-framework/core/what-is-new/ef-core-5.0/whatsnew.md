@@ -209,13 +209,13 @@ Notice that the query configured for the entity type is used as a starting for c
 
 [.NET event counters](https://devblogs.microsoft.com/dotnet/introducing-diagnostics-improvements-in-net-core-3-0/) are a way to efficiently expose performance metrics from an application. EF Core 5.0 includes event counters under the `Microsoft.EntityFrameworkCore` category. For example:
 
-```
+```console
 dotnet counters monitor Microsoft.EntityFrameworkCore -p 49496
 ```
 
 This tells dotnet counters to start collecting EF Core events for process 49496. This generates output like this in the console:
 
-```
+```console
 [Microsoft.EntityFrameworkCore]
     Active DbContexts                                               1
     Execution Strategy Operation Failures (Count / 1 sec)           0
@@ -309,6 +309,7 @@ context.SavedChanges += (sender, args) =>
 ```
 
 Notice that:
+
 * The event sender is the `DbContext` instance
 * The args for the `SavedChanges` event contains the number of entities saved to the database
 
@@ -339,6 +340,7 @@ public class MySaveChangesInterceptor : SaveChangesInterceptor
 ```
 
 Notice that:
+
 * The interceptor has both sync and async methods. This can be useful if you need to perform async I/O, such as writing to an audit server.
 * The interceptor allows SaveChanges to be skipped using the `InterceptionResult` mechanism common to all interceptors.
 
@@ -559,7 +561,7 @@ This feature was contributed from the community by [@Psypher9](https://github.co
 
 The `dotnet ef migrations list` command now shows which migrations have not yet been applied to the database. For example:
 
-```
+```console
 ajcvickers@avickers420u:~/AllTogetherNow/Daily$ dotnet ef migrations list
 Build started...
 Build succeeded.
@@ -834,6 +836,7 @@ PRAGMA foreign_keys = 1;
 ```
 
 Notice that:
+
 * A temporary table is created with the desired schema for the new table
 * Data is copied from the current table into the temporary table
 * Foreign key enforcement is switched off
@@ -854,31 +857,32 @@ For example, consider this TVF defined in a SQL Server database:
 CREATE FUNCTION GetReports(@employeeId int)
 RETURNS @reports TABLE
 (
-	Name nvarchar(50) NOT NULL,
-	IsDeveloper bit NOT NULL
+    Name nvarchar(50) NOT NULL,
+    IsDeveloper bit NOT NULL
 )
 AS
 BEGIN
-	WITH cteEmployees AS
-	(
-		SELECT Id, Name, ManagerId, IsDeveloper
-		FROM Employees
-		WHERE Id = @employeeId
-		UNION ALL
-		SELECT e.Id, e.Name, e.ManagerId, e.IsDeveloper
-		FROM Employees e
-		INNER JOIN cteEmployees cteEmp ON cteEmp.Id = e.ManagerId
-	)
-	INSERT INTO @reports
-	SELECT Name, IsDeveloper
-	FROM cteEmployees
-	WHERE Id != @employeeId
+    WITH cteEmployees AS
+    (
+        SELECT Id, Name, ManagerId, IsDeveloper
+        FROM Employees
+        WHERE Id = @employeeId
+        UNION ALL
+        SELECT e.Id, e.Name, e.ManagerId, e.IsDeveloper
+        FROM Employees e
+        INNER JOIN cteEmployees cteEmp ON cteEmp.Id = e.ManagerId
+    )
+    INSERT INTO @reports
+    SELECT Name, IsDeveloper
+    FROM cteEmployees
+    WHERE Id != @employeeId
 
-	RETURN
+    RETURN
 END
 ```
 
 The EF Core model requires two entity types to use this TVF:
+
 * An `Employee` type that maps to the Employees table in the normal way
 * A `Report` type that matches the shape returned by the TVF
 
@@ -1302,8 +1306,8 @@ var artists = context.Artists.Where(e => e.IsSigned).ToList();
 
 EF Core will throw the following exception indicating that translation failed because `IsSigned` is not mapped:
 
-> Unhandled exception. System.InvalidOperationException: The LINQ expression 'DbSet<Artist>()
->    .Where(a => a.IsSigned)' could not be translated. Additional information: Translation of member 'IsSigned' on entity type 'Artist' failed. Possibly the specified member is not mapped. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+> Unhandled exception. System.InvalidOperationException: The LINQ expression 'DbSet\<Artist>()
+>    .Where(a => a.IsSigned)' could not be translated. Additional information: Translation of member 'IsSigned' on entity type 'Artist' failed. Possibly the specified member is not mapped. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See <https://go.microsoft.com/fwlink/?linkid=2101038> for more information.
 
 Similarly, better exception messages are now generated when attempting to translate string comparisons with culture-dependent semantics. For example, this query attempts to use `StringComparison.CurrentCulture`:
 
@@ -1315,10 +1319,10 @@ var artists = context.Artists
 
 EF Core will now throw the following exception:
 
-> Unhandled exception. System.InvalidOperationException: The LINQ expression 'DbSet<Artist>()
+> Unhandled exception. System.InvalidOperationException: The LINQ expression 'DbSet\<Artist>()
 >      .Where(a => a.Name.Equals(
 >          value: "The Unicorns",
->          comparisonType: CurrentCulture))' could not be translated. Additional information: Translation of 'string.Equals' method which takes 'StringComparison' argument is not supported. See https://go.microsoft.com/fwlink/?linkid=2129535 for more information. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+>          comparisonType: CurrentCulture))' could not be translated. Additional information: Translation of 'string.Equals' method which takes 'StringComparison' argument is not supported. See <https://go.microsoft.com/fwlink/?linkid=2129535> for more information. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See <https://go.microsoft.com/fwlink/?linkid=2101038> for more information.
 
 ### Specify transaction ID
 
@@ -1379,13 +1383,13 @@ When a DbContext is scaffolded from an existing database, EF Core by default cre
 
 To address this, the scaffolding commands can now be instructed to omit generation of OnConfiguring. For example:
 
-```
+```console
 dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook" Microsoft.EntityFrameworkCore.SqlServer --no-onconfiguring
 ```
 
 Or in the Package Manager Console:
 
-```
+```console
 Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer -NoOnConfiguring
 ```
 
@@ -1499,7 +1503,7 @@ Documentation is tracked by issue [#2273](https://github.com/dotnet/EntityFramew
 
 Arguments are now flowed from the command line into the `CreateDbContext` method of [IDesignTimeDbContextFactory](/dotnet/api/microsoft.entityframeworkcore.design.idesigntimedbcontextfactory-1). For example, to indicate this is a dev build, a custom argument (e.g. `dev`) can be passed on the command line:
 
-```
+```console
 dotnet ef migrations add two --verbose --dev
 ```
 
@@ -1599,6 +1603,7 @@ var blogs = context.Blogs
     .Include(e => e.Posts.OrderByDescending(post => post.Title).Take(5)))
     .ToList();
 ```
+
 This query will return blogs with at most five posts included on each blog.
 
 See the [Include documentation](xref:core/querying/related-data#filtered-include) for full details.

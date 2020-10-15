@@ -50,7 +50,7 @@ Your feedback on planning is important.
 The best way to indicate the importance of an issue is to vote (thumbs-up 👍) for that issue on GitHub.
 This data will then feed into the planning process for the next release.
 
-### Get it now!
+### Get it now
 
 EF Core 5.0 packages are **available now** as
 

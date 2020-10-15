@@ -77,6 +77,7 @@ The following generates a SQL script from the specified `from` migration to the 
 ```powershell
 Script-Migration AddNewTables AddAuditTable
 ```
+
 You can use a `from` that is newer than the `to` in order to generate a rollback script. *Please take note of potential data loss scenarios.*
 
 ***
@@ -92,13 +93,13 @@ The SQL scripts generated above can only be applied to change your schema from o
 
 The following generates idempotent migrations:
 
-#### [.NET Core CLI](#tab/dotnet-core-cli)
+### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations script --idempotent
 ```
 
-#### [Visual Studio](#tab/vs)
+### [Visual Studio](#tab/vs)
 
 ```powershell
 Script-Migration -Idempotent
