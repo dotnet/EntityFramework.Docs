@@ -7,9 +7,6 @@ uid: core/providers/sql-server/azure-sql-database
 ---
 # Specifying Azure SQL Database Options
 
->[!NOTE]
-> This API is new in EF Core 3.1.
-
 Azure SQL Database provides [a variety of pricing options](https://azure.microsoft.com/pricing/details/sql-database/single/) that are usually configured through the Azure Portal. However if you are managing the schema using [EF Core migrations](xref:core/managing-schemas/migrations/index) you can specify the desired options in the model itself.
 
 You can specify the service tier of the database (EDITION) using [HasServiceTier](/dotnet/api/Microsoft.EntityFrameworkCore.SqlServerModelBuilderExtensions.HasServiceTier):

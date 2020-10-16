@@ -7,9 +7,6 @@ uid: core/providers/cosmos/index
 ---
 # EF Core Azure Cosmos DB Provider
 
-> [!NOTE]
-> This provider is new in EF Core 3.0.
-
 This database provider allows Entity Framework Core to be used with Azure Cosmos DB. The provider is maintained as part of the [Entity Framework Core Project](https://github.com/aspnet/EntityFrameworkCore).
 
 It is strongly recommended to familiarize yourself with the [Azure Cosmos DB documentation](/azure/cosmos-db/introduction) before reading this section.
