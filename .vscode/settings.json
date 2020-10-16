@@ -11,9 +11,11 @@
     ],
     "cSpell.words": [
         "LINQ",
+        "dbcontext",
         "mitigations",
         "navigations",
         "parameterizable",
+        "pluralizer",
         "queryable",
         "savepoint",
         "savepoints",

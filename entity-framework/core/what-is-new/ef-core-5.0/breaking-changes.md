@@ -28,39 +28,7 @@ The following API and behavior changes have the potential to break existing appl
 | [IndexBuilder.HasName is now obsolete](#index-obsolete)                                                                               | Low        |
 | [A pluarlizer is now included for scaffolding reverse engineered models](#pluralizer)                                                 | Low        |
 
-<a name="geometric-sqlite"></a>
-
-### Removed HasGeometricDimension method from SQLite NTS extension
-
-[Tracking Issue #14257](https://github.com/aspnet/EntityFrameworkCore/issues/14257)
-
-#### Old behavior
-
-HasGeometricDimension was used to enable additional dimensions (Z and M) on geometry columns. However, it only ever affected database creation. It was unnecessary to specify it to query values with additional dimensions. It also didn't work correctly when inserting or updating values with additional dimensions ([see #14257](https://github.com/aspnet/EntityFrameworkCore/issues/14257)).
-
-#### New behavior
-
-To enable inserting and updating geometry values with additional dimensions (Z and M), the dimension needs to be specified as part of the column type name. This API matches more closely to the underlying behavior of SpatiaLite's AddGeometryColumn function.
-
-#### Why
-
-Using HasGeometricDimension after specifying the dimension in the column type is unnecessary and redundant, so we removed HasGeometricDimension entirely.
-
-#### Mitigations
-
-Use `HasColumnType` to specify the dimension:
-
-```csharp
-modelBuilder.Entity<GeoEntity>(
-    x =>
-    {
-        // Allow any GEOMETRY value with optional Z and M values
-        x.Property(e => e.Geometry).HasColumnType("GEOMETRYZM");
-
-        // Allow only POINT values with an optional Z value
-        x.Property(e => e.Point).HasColumnType("POINTZ");
-    });
-```
+## Medium-impact changes
 
 <a name="required-dependent"></a>
 
@@ -100,6 +68,70 @@ modelBuilder.Entity<Blog>()
     .WithOne(i => i.Blog)
     .HasForeignKey<BlogImage>(b => b.BlogForeignKey)
     .IsRequired();
+```
+
+<a name="defining-query"></a>
+
+### Defining query is replaced with provider-specific methods
+
+[Tracking Issue #18903](https://github.com/dotnet/efcore/issues/18903)
+
+#### Old behavior
+
+Entity types were mapped to defining queries at the Core level. Anytime the entity type was used in the query root of the entity type was replaced by the defining query for any provider.
+
+#### New behavior
+
+APIs for defining query are deprecated. New provider-specific APIs were introduced.
+
+#### Why
+
+While defining queries were implemented as replacement query whenever query root is used in the query, it had a few issues:
+
+- If defining query is projecting entity type using `new { ... }` in `Select` method, then identifying that as an entity required additional work and made it inconsistent with how EF Core treats nominal types in the query.
+- For relational providers `FromSql` is still needed to pass the SQL string in LINQ expression form.
+
+Initially defining queries were introduced as client-side views to be used with In-Memory provider for keyless entities (similar to database views in relational databases). Such definition makes it easy to test application against in-memory database. Afterwards they became broadly applicable, which was useful but brought inconsistent and hard to understand behavior. So we decided to simplify the concept. We made LINQ based defining query exclusive to In-Memory provider and treat them differently. For more information, [see this issue](https://github.com/dotnet/efcore/issues/20023).
+
+#### Mitigations
+
+For relational providers, use `ToSqlQuery` method in `OnModelCreating` and pass in a SQL string to use for the entity type.
+For the In-Memory provider, use `ToInMemoryQuery` method in `OnModelCreating` and pass in a LINQ query to use for the entity type.
+
+## Low-impact changes
+
+<a name="geometric-sqlite"></a>
+
+### Removed HasGeometricDimension method from SQLite NTS extension
+
+[Tracking Issue #14257](https://github.com/aspnet/EntityFrameworkCore/issues/14257)
+
+#### Old behavior
+
+HasGeometricDimension was used to enable additional dimensions (Z and M) on geometry columns. However, it only ever affected database creation. It was unnecessary to specify it to query values with additional dimensions. It also didn't work correctly when inserting or updating values with additional dimensions ([see #14257](https://github.com/aspnet/EntityFrameworkCore/issues/14257)).
+
+#### New behavior
+
+To enable inserting and updating geometry values with additional dimensions (Z and M), the dimension needs to be specified as part of the column type name. This API matches more closely to the underlying behavior of SpatiaLite's AddGeometryColumn function.
+
+#### Why
+
+Using HasGeometricDimension after specifying the dimension in the column type is unnecessary and redundant, so we removed HasGeometricDimension entirely.
+
+#### Mitigations
+
+Use `HasColumnType` to specify the dimension:
+
+```csharp
+modelBuilder.Entity<GeoEntity>(
+    x =>
+    {
+        // Allow any GEOMETRY value with optional Z and M values
+        x.Property(e => e.Geometry).HasColumnType("GEOMETRYZM");
+
+        // Allow only POINT values with an optional Z value
+        x.Property(e => e.Point).HasColumnType("POINTZ");
+    });
 ```
 
 <a name="cosmos-partition-key"></a>
@@ -291,34 +323,6 @@ modelBuilder.Entity<BaseEntity>()
     .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
 ```
 
-<a name="defining-query"></a>
-
-### Defining query is replaced with provider-specific methods
-
-[Tracking Issue #18903](https://github.com/dotnet/efcore/issues/18903)
-
-#### Old behavior
-
-Entity types were mapped to defining queries at the Core level. Anytime the entity type was used in the query root of the entity type was replaced by the defining query for any provider.
-
-#### New behavior
-
-APIs for defining query are deprecated. New provider-specific APIs were introduced.
-
-#### Why
-
-While defining queries were implemented as replacement query whenever query root is used in the query, it had a few issues:
-
-- If defining query is projecting entity type using `new { ... }` in `Select` method, then identifying that as an entity required additional work and made it inconsistent with how EF Core treats nominal types in the query.
-- For relational providers `FromSql` is still needed to pass the SQL string in LINQ expression form.
-
-Initially defining queries were introduced as client-side views to be used with In-Memory provider for keyless entities (similar to database views in relational databases). Such definition makes it easy to test application against in-memory database. Afterwards they became broadly applicable, which was useful but brought inconsistent and hard to understand behavior. So we decided to simplify the concept. We made LINQ based defining query exclusive to In-Memory provider and treat them differently. For more information, [see this issue](https://github.com/dotnet/efcore/issues/20023).
-
-#### Mitigations
-
-For relational providers, use `ToSqlQuery` method in `OnModelCreating` and pass in a SQL string to use for the entity type.
-For the In-Memory provider, use `ToInMemoryQuery` method in `OnModelCreating` and pass in a LINQ query to use for the entity type.
-
 <a name="no-client-methods"></a>
 
 ### Provider-specific EF.Functions methods throw for InMemory provider
@@ -367,13 +371,13 @@ If your project includes migrations generated prior to EF Core version 2.0.0, yo
 
 <a name="pluralizer"></a>
 
-### A pluarlizer is now included for scaffolding reverse engineered models
+### A pluralizer is now included for scaffolding reverse engineered models
 
 [Tracking Issue #11160](https://github.com/dotnet/efcore/issues/11160)
 
 #### Old behavior
 
-Previously, you had to install a separate pluralizer package in order to pluralize DbSet and collection navigation names and singularize table names when scaffoding a DbContext and entity types by reverse engineering a database schema.
+Previously, you had to install a separate pluralizer package in order to pluralize DbSet and collection navigation names and singularize table names when scaffolding a DbContext and entity types by reverse engineering a database schema.
 
 #### New behavior
 

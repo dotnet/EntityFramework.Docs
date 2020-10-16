@@ -71,6 +71,8 @@ Changes that we expect to only impact database providers are documented under [p
 | [Multiple ambiguous self-referencing relationships must be configured](#mersa) | Low      |
 | [DbFunction.Schema being null or empty string configures it to be in model's default schema](#udf-empty-string) | Low      |
 
+## High-impact changes
+
 ### LINQ queries are no longer evaluated on the client
 
 [Tracking Issue #14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
@@ -127,6 +129,8 @@ Use EF Core 3.1.
 
 <a name="no-longer"></a>
 
+## Medium-impact changes
+
 ### Entity Framework Core is no longer part of the ASP.NET Core shared framework
 
 [Tracking Issue Announcements#325](https://github.com/aspnet/Announcements/issues/325)
@@ -178,6 +182,8 @@ dotnet tool install --global dotnet-ef
 ```
 
 You can also obtain it a local tool when you restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](/dotnet/core/tools/global-tools#install-a-local-tool).
+
+## Low-impact changes
 
 <a name="fromsql"></a>
 
