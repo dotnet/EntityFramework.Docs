@@ -31,7 +31,7 @@ By default, EF maps the inheritance using the *table-per-hierarchy* (TPH) patter
 
 The model above is mapped to the following database schema (note the implicitly-created `Discriminator` column, which identifies which type of `Blog` is stored in each row).
 
-![image](_static/inheritance-tph-data.png)
+![Screenshot of the results of querying the Blog entity hierarchy using table-per-hierarchy pattern](_static/inheritance-tph-data.png)
 
 You can configure the name and type of the discriminator column and the values that are used to identify each type in the hierarchy:
 

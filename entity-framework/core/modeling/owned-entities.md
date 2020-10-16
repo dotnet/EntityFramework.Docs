@@ -31,6 +31,10 @@ If the `ShippingAddress` property is private in the `Order` type, you can use th
 
 [!code-csharp[OwnsOneString](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneString)]
 
+The model above is mapped to the following database schema:
+
+![Sceenshot of the database model for entity containing owned reference](_static/owned-entities-ownsone.png)
+
 See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities) for more context.
 
 > [!TIP]
@@ -62,6 +66,10 @@ By default the primary key used for the owned type referenced through the `Shipp
 To configure a different primary key call `HasKey`.
 
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
+
+The model above is mapped to the following database schema:
+
+![Sceenshot of the database model for entity containing owned collection](_static/owned-entities-ownsmany.png)
 
 ## Mapping owned types with table splitting
 
@@ -113,6 +121,10 @@ Notice the `WithOwner` call used to define the navigation property pointing back
 It is also possible to achieve this result using `OwnedAttribute` on both `OrderDetails` and `StreetAddress`.
 
 In addition, notice the `Navigation` call. In EFCore 5.0, navigation properties to owned types can be further configured [as for non-owned navigation properties](xref:core/modeling/relationships#configuring-navigation-properties).
+
+The model above is mapped to the following database schema:
+
+![Sceenshot of the database model for entity containing nested owned references](_static/owned-entities-nested.png)
 
 ## Storing owned types in separate tables
 
