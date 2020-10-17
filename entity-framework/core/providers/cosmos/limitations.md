@@ -11,8 +11,6 @@ The Cosmos provider has a number of limitations. Many of these limitations are a
 
 ## Temporary limitations
 
-- Even if there is only one entity type without inheritance mapped to a container it still has a discriminator property.
-- Entity types with partition keys don't work correctly in some scenarios
 - `Include` calls are not supported
 - `Join` calls are not supported
 
