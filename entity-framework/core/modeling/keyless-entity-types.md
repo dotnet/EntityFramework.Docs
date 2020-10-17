@@ -93,3 +93,6 @@ Finally, we can query the database view in the standard way:
 
 > [!TIP]
 > Note we have also defined a context level query property (DbSet) to act as a root for queries against this type.
+
+> [!TIP]
+> To test keyless entity types mapped to views using the in-memory provider map them to a query via `ToInMemoryQuery`. See a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing/ItemsWebApi/) using this technique for more details.
