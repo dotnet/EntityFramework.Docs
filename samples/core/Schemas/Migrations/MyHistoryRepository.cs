@@ -1,14 +1,20 @@
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.SqlServer.Migrations.Internal;
+
+#pragma warning disable EF1001
 
 namespace Migrations
 {
     public class MyHistoryRepositoryContext : DbContext
     {
+        readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
+
         #region HistoryRepositoryContext
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options
-                .UseSqlServer(connectionString)
+                .UseSqlServer(_connectionString)
                 .ReplaceService<IHistoryRepository, MyHistoryRepository>();
         #endregion
     }
