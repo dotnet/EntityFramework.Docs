@@ -34,6 +34,8 @@ You can also configure backing fields by using a Data Annotation (available in E
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs?name=BackingField&highlight=5)]
 
+***
+
 ## Field and property access
 
 By default, EF will always read and write to the backing field - assuming one has been properly configured - and will never use the property. However, EF also supports other access patterns. For example, the following sample instructs EF to write to the backing field only while materializing, and to use the property in all other cases:
