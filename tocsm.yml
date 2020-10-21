@@ -3,10 +3,13 @@
     - name: "Releases and planning (roadmap)"
     - name: Get started
     - name: Fundamentals
+    - name: Using DbContext
     - name: Create a model
     - name: Manage database schemas
     - name: Query data
     - name: Save data
+    - name: Logging, events, and diagnostics
+    - name: Testing
     - name: Supported .NET implementations
     - name: Database providers
     - name: Tools & extensions
@@ -43,19 +46,18 @@
       - name: Blazor Server with EF Core guidance >>
       - name: WPF .NET Core tutorial
       - name: Xamarin tutorial
-    - name: Fundamentals
+    - name: Using DbContext
+      - name: The basics!
+      - name: Configureation and initialization
       - name: Connection strings
-      - name: Asynchronous programming
-      - name: Logging
+      - name: Change tracking
+      - name: Change tracking proxies
       - name: Context pooling
+      - name: Using dependeny injection
       - name: Connection resiliency
-      - name: Testing
-        - name: Testing code that uses EF Core
-        - name: EF Core testing sample
-        - name: Sharing databases between tests
-        - name: Test with SQLite
-        - name: Test with InMemory
-      - name: Configure a DbContext
+      - name: Find and local queries
+    - name: Fundamentals
+      - name: Asynchronous programming
       - name: Nullable reference types
       - name: Collations and case sensitivity
     - name: Create a model
@@ -66,6 +68,7 @@
       - name: Generated values
       - name: Concurrency tokens
       - name: Shadow and indexer properties
+      - name: Property bags
       - name: Relationships
       - name: Indexes
       - name: Inheritance
@@ -80,6 +83,7 @@
       - name: Keyless entity types
       - name: Alternating models with same DbContext
       - name: Spatial data
+      - name: Conventions
     - name: Manage database schemas
       - name: Overview
       - name: Migrations
@@ -117,6 +121,22 @@
       - name: Transactions
       - name: Disconnected entities
       - name: Explicit values for generated properties
+    - name: Logging, events, and diagnostics
+      - name: Overview
+      - name: Simple logging
+      - name: Microsoft.Extensions.Logging
+      - name: ToQueryString
+      - name: Events
+      - name: Interceptors
+      - name: Diagnostic listeners
+      - name: Debug views
+      - name: Event counters
+    - name: Testing
+      - name: Testing code that uses EF Core
+      - name: EF Core testing sample
+      - name: Sharing databases between tests
+      - name: Test with SQLite
+      - name: Test with InMemory
     - name: Supported .NET implementations
     - name: Database providers
       - name: Overview
