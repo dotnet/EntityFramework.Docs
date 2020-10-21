@@ -1,16 +1,15 @@
   - name: Entity Framework Core
-    - name: Overview
+    - name: Welcome!
+    - name: Getting started
     - name: "Releases and planning (roadmap)"
-    - name: Get started
-    - name: Fundamentals
-    - name: Using DbContext
     - name: Create a model
     - name: Manage database schemas
     - name: Query data
     - name: Save data
+    - name: Change tracking
     - name: Logging, events, and diagnostics
     - name: Testing
-    - name: Supported .NET implementations
+    - name: Miscellaneous
     - name: Database providers
     - name: Tools & extensions
     - name: Command-line reference
@@ -20,7 +19,17 @@
 
 
   - name: Entity Framework Core
-    - name: Overview
+    - name: Welcome!
+    - name: Getting started
+      - name: EF Core Overview
+        - name: What is EF Core?
+        - name: Getting EF Core
+        - name: Your first EF Core app
+      - name: ASP.NET Core tutorial >>
+      - name: Blazor Server with EF Core guidance >>
+      - name: WPF .NET Core tutorial
+      - name: Windows Forms tutorial
+      - name: Xamarin tutorial
     - name: "Releases and planning (roadmap)"
       - name: Current and planned releases
       - name: Release planning process
@@ -28,38 +37,18 @@
         - name: High-level plan
         - name: "What's new?"
         - name: Breaking changes
-      - name: EF Core 3.x
+      - name: EF Core 3.1
         - name: New features
         - name: Breaking changes
       - name: EF Core 2.1
       - name: Out of support
         - name: EF Core 2.2
+        - name: EF Core 3.0 (Redirect to 3.1 for new features, breaking changes)
         - name: EF Core 2.0
             - name: New features
             - name: Upgrade from 1.x
         - name: EF Core 1.1
         - name: EF Core 1.0
-    - name: Get started
-      - name: EF Core tutorial
-      - name: Install EF Core
-      - name: ASP.NET Core tutorial >>
-      - name: Blazor Server with EF Core guidance >>
-      - name: WPF .NET Core tutorial
-      - name: Xamarin tutorial
-    - name: Using DbContext
-      - name: The basics!
-      - name: Configureation and initialization
-      - name: Connection strings
-      - name: Change tracking
-      - name: Change tracking proxies
-      - name: Context pooling
-      - name: Using dependeny injection
-      - name: Connection resiliency
-      - name: Find and local queries
-    - name: Fundamentals
-      - name: Asynchronous programming
-      - name: Nullable reference types
-      - name: Collations and case sensitivity
     - name: Create a model
       - name: Overview
       - name: Entity types
@@ -121,6 +110,14 @@
       - name: Transactions
       - name: Disconnected entities
       - name: Explicit values for generated properties
+    - name: Change tracking
+      - name: Overview
+      - name: Property changes
+      - name: Relationship changes
+      - name: Find and local queries
+      - name: Accessing entity state
+      - name: Notification entities
+      - name: Change tracking proxies
     - name: Logging, events, and diagnostics
       - name: Overview
       - name: Simple logging
@@ -137,7 +134,16 @@
       - name: Sharing databases between tests
       - name: Test with SQLite
       - name: Test with InMemory
-    - name: Supported .NET implementations
+    - name: Miscellaneous
+      - name: Supported .NET implementations
+      - name: Asynchronous programming
+      - name: Nullable reference types
+      - name: Using dependeny injection
+      - name: Collations and case sensitivity
+      - name: Connection resiliency
+      - name: Configuration and initialization
+      - name: Connection strings
+      - name: Context pooling
     - name: Database providers
       - name: Overview
       - name: Microsoft SQL Server
