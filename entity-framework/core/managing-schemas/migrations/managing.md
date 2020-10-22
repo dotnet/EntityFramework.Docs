@@ -44,21 +44,17 @@ The timestamp in the filename helps keep them ordered chronologically so you can
 
 You are free to move Migrations files and change their namespace manually. New migrations are created as siblings of the last migration. Alternatively, you can specify the namespace at generation time as follows:
 
-<!--markdownlint-disable MD024-->
-
-### [.NET Core CLI](#tab/dotnet-core-cli)
+#### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add InitialCreate --namespace Your.Namespace
 ```
 
-### [Visual Studio](#tab/vs)
+#### [Visual Studio](#tab/vs)
 
 ```powershell
 Add-Migration InitialCreate -Namespace Your.Namespace
 ```
-
-<!--markdownlint-enable MD024-->
 
 ***
 
