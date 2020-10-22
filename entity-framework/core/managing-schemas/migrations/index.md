@@ -112,6 +112,8 @@ Since this isn't the project's first migration, EF Core now compares your update
 
 You can now apply your migration as before:
 
+<!--markdownlint-disable MD024-->
+
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
@@ -123,6 +125,8 @@ dotnet ef database update
 ```powershell
 Update-Database
 ```
+
+<!--markdownlint-enable MD024-->
 
 ***
 
