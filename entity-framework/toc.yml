@@ -191,6 +191,8 @@
         href: core/querying/client-eval.md
       - name: Tracking vs. no-tracking
         href: core/querying/tracking.md
+      - name: Single vs. split queries
+        href: core/querying/single-split-queries.md
       - name: Complex query operators
         href: core/querying/complex-query-operators.md
       - name: Raw SQL queries
