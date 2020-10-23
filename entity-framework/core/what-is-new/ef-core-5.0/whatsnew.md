@@ -42,7 +42,7 @@ Notice that `Post` contains a collection of `Tags`, and `Tag` contains a collect
 public class BlogContext : DbContext
 {
     public DbSet<Post> Posts { get; set; }
-    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Tag> Tags { get; set; }
 }
 ```
 
@@ -72,7 +72,7 @@ CREATE TABLE [PostTag] (
 CREATE INDEX [IX_PostTag_TagsId] ON [PostTag] ([TagsId]);
 ```
 
-Creating and associating `Blog` and `Post` entities results in join table updates happening automatically. For example:
+Creating and associating `Tag` and `Post` entities results in join table updates happening automatically. For example:
 
 ```csharp
 var beginnerTag = new Tag {Text = "Beginner"};
