@@ -96,12 +96,16 @@ Specifying a default value will implicitly configure the property as value gener
 
 ### Computed columns
 
-On some relational databases, a column can be configured to have its value computed in the database, typically with an expression referring to other columns:
+On most relational databases, a column can be configured to have its value computed in the database, typically with an expression referring to other columns:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=ComputedColumn&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=DefaultComputedColumn)]
+
+The above creates a *virtual* computed column, whose value is computed every time it is fetched from the database. You may also specify that a computed column be *stored* (sometimes called *persisted*), meaning that it is computed on every update of the row, and is stored on disk alongside regular columns:
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=StoredComputedColumn)]
 
 > [!NOTE]
-> In some cases the column's value is computed every time it is fetched (sometimes called *virtual* columns), and in others it is computed on every update of the row and stored (sometimes called *stored* or *persisted* columns). This varies across database providers.
+> Support for creating stored computed columns was added in EF Core 5.0.
 
 ## No value generation
 
