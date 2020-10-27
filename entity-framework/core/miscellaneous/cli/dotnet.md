@@ -2,7 +2,7 @@
 title: EF Core tools reference (.NET CLI) - EF Core
 description: Reference guide for the Entity Framework Core .NET Core CLI tools
 author: bricelam
-ms.date: 10/13/2020
+ms.date: 10/27/2020
 uid: core/miscellaneous/cli/dotnet
 ---
 
@@ -93,7 +93,16 @@ Why is a dummy project required? As mentioned earlier, the tools have to execute
 
 ### ASP.NET Core environment
 
-To specify the environment for ASP.NET Core projects, set the **ASPNETCORE_ENVIRONMENT** environment variable before running commands.
+To specify [the environment](/aspnet/core/fundamentals/environments) for ASP.NET Core projects, set the **ASPNETCORE_ENVIRONMENT** environment variable before running commands.
+
+Starting in EF Core 5.0, additional arguments can also be passed into Program.CreateHostBuilder allowing you to specify the environment on the command-line:
+
+```dotnetcli
+dotnet ef database update -- --environment Production
+```
+
+> [!TIP]
+> The `--` token directs `dotnet ef` to treat everything that follows as an argument and not try to parse them as options. Any extra arguments not used by `dotnet ef` are forwarded to the app.
 
 ## Common options
 
@@ -204,6 +213,13 @@ The following example scaffolds only selected tables and creates the context in 
 
 ```dotnetcli
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -t Blog -t Post --context-dir Context -c BlogContext --context-namespace New.Namespace
+```
+
+The following example reads the connection string from the project's configuration set using the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager).
+
+```dotnetcli
+dotnet user-secrets set ConnectionStrings.Blogging "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Blogging"
+dotnet ef dbcontext scaffold Name=ConnectionStrings.Blogging Microsoft.EntityFrameworkCore.SqlServer
 ```
 
 ## dotnet ef dbcontext script

@@ -2,7 +2,7 @@
 title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: bricelam
-ms.date: 10/13/2020
+ms.date: 10/27/2020
 uid: core/miscellaneous/cli/powershell
 ---
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
@@ -84,7 +84,13 @@ Why is a dummy project required? As mentioned earlier, the tools have to execute
 
 ### ASP.NET Core environment
 
-To specify the environment for ASP.NET Core projects, set **env:ASPNETCORE_ENVIRONMENT** before running commands.
+To specify [the environment](/aspnet/core/fundamentals/environments) for ASP.NET Core projects, set **env:ASPNETCORE_ENVIRONMENT** before running commands.
+
+Starting in EF Core 5.0, additional arguments can also be passed into Program.CreateHostBuilder allowing you to specify the environment on the command-line:
+
+```powershell
+Update-Database -Args '--environment Production'
+```
 
 ## Common parameters
 
@@ -197,6 +203,12 @@ Example that scaffolds only selected tables and creates the context in a separat
 Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables "Blog","Post" -ContextDir Context -Context BlogContext -ContextNamespace New.Namespace
 ```
 
+The following example reads the connection string from the project's configuration possibly set using the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager).
+
+```powershell
+Scaffold-DbContext "Name=ConnectionStrings.Blogging" Microsoft.EntityFrameworkCore.SqlServer
+```
+
 ## Script-DbContext
 
 Generates a SQL script from the DbContext. Bypasses any migrations. Added in EF Core 3.0.
@@ -228,16 +240,16 @@ The [common parameters](#common-parameters) are listed above.
 > [!TIP]
 > The To, From, and Output parameters support tab-expansion.
 
-The following example creates a script for the InitialCreate migration, using the migration name.
+The following example creates a script for the InitialCreate migration (from a database without any migrations), using the migration name.
 
 ```powershell
-Script-Migration -To InitialCreate
+Script-Migration 0 InitialCreate
 ```
 
 The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
 
 ```powershell
-Script-Migration -From 20180904195021_InitialCreate
+Script-Migration 20180904195021_InitialCreate
 ```
 
 ## Update-Database
@@ -257,14 +269,14 @@ The [common parameters](#common-parameters) are listed above.
 The following example reverts all migrations.
 
 ```powershell
-Update-Database -Migration 0
+Update-Database 0
 ```
 
 The following examples update the database to a specified migration. The first uses the migration name and the second uses the migration ID and a specified connection:
 
 ```powershell
-Update-Database -Migration InitialCreate
-Update-Database -Migration 20180904195021_InitialCreate -Connection your_connection_string
+Update-Database InitialCreate
+Update-Database 20180904195021_InitialCreate -Connection your_connection_string
 ```
 
 ## Additional resources

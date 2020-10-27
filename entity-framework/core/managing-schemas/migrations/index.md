@@ -2,7 +2,7 @@
 title: Migrations Overview - EF Core
 description: Overview of using migrations to manage database schemas with Entity Framework Core
 author: bricelam
-ms.date: 05/06/2020
+ms.date: 10/28/2020
 uid: core/managing-schemas/migrations/index
 ---
 # Migrations Overview
@@ -131,6 +131,15 @@ Update-Database
 ***
 
 Note that this time, EF detects that the database already exists. In addition, when our first migration was applied above, this fact was recorded in a special migrations history table in your database; this allows EF to automatically apply only the new migration.
+
+### Excluding parts of your model
+
+> [!NOTE]
+> This feature was added in EF Core 5.0.
+
+Sometimes you may want to reference types from another DbContext. This can lead to migration conflicts. To prevent this, exclude the type from the migrations of one of the DbContexts.
+
+[!code-csharp[](../../../../samples/core/Modeling/FluentAPI/TableExcludeFromMigrations.cs#TableExcludeFromMigrations)]
 
 ### Next steps
 

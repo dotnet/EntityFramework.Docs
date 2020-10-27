@@ -44,9 +44,9 @@ It is sometimes useful to have the same entity type mapped in multiple `DbContex
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TableExcludeFromMigrations.cs?name=TableExcludeFromMigrations&highlight=4)]
 
-With this configuration migrations will not create the `blogs` table, but `Blog` is still included in the model and can be used normally.
+With this configuration migrations will not create the `AspNetUsers` table, but `IdentityUser` is still included in the model and can be used normally.
 
-If you need to start managing the table using migrations again then a new migration should be created where `blogs` is not excluded. The next migration will now contain any changes made to the table.
+If you need to start managing the table using migrations again then a new migration should be created where `AspNetUsers` is not excluded. The next migration will now contain any changes made to the table.
 
 ## Table name
 

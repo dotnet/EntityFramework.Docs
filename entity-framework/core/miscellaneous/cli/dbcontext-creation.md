@@ -2,7 +2,7 @@
 title: Design-time DbContext Creation - EF Core
 description: Strategies for creating a design-time DbContext with Entity Framework Core
 author: bricelam
-ms.date: 09/16/2019
+ms.date: 10/27/2020
 uid: core/miscellaneous/cli/dbcontext-creation
 ---
 # Design-time DbContext Creation
@@ -39,7 +39,29 @@ You can also tell the tools how to create your DbContext by implementing the `ID
 > This is fixed in EFCore 5.0 and any additional design-time arguments
 > are passed into the application through that parameter.
 
-A design-time factory can be especially useful if you need to configure the DbContext differently for design time than at run time, if the `DbContext` constructor takes additional parameters are not registered in DI, if you are not using DI at all, or if for some reason you prefer not to have a `BuildWebHost` method in your ASP.NET Core application's `Main` class.
+A design-time factory can be especially useful if you need to configure the DbContext differently for design time than at run time, if the `DbContext` constructor takes additional parameters are not registered in DI, if you are not using DI at all, or if for some reason you prefer not to have a `CreateHostBuilder` method in your ASP.NET Core application's `Main` class.
+
+## Args
+
+Both IDesignTimeDbContextFactory.CreateDbContext and Program.CreateHostBuilder accept command line arguments.
+
+Starting in EF Core 5.0, you can specify these arguments from the tools:
+
+### [.NET Core CLI](#tab/dotnet-core-cli)
+
+```dotnetcli
+dotnet ef database update -- --environment Production
+```
+
+The `--` token directs `dotnet ef` to treat everything that follows as an argument and not try to parse them as options. Any extra arguments not used by `dotnet ef` are forwarded to the app.
+
+### [Visual Studio](#tab/vs)
+
+```powershell
+Update-Database -Args '--environment Production'
+```
+
+***
 
   [1]: xref:core/managing-schemas/migrations/index
   [2]: xref:core/miscellaneous/configuring-dbcontext

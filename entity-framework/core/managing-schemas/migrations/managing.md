@@ -2,7 +2,7 @@
 title: Managing Migrations - EF Core
 description: Adding, removing and otherwise managing database schema migrations with Entity Framework Core
 author: bricelam
-ms.date: 05/06/2020
+ms.date: 10/27/2020
 uid: core/managing-schemas/migrations/managing
 ---
 # Managing Migrations
@@ -42,19 +42,25 @@ The timestamp in the filename helps keep them ordered chronologically so you can
 
 ### Namespaces
 
-You are free to move Migrations files and change their namespace manually. New migrations are created as siblings of the last migration. Alternatively, you can specify the namespace at generation time as follows:
+You are free to move Migrations files and change their namespace manually. New migrations are created as siblings of the last migration. Alternatively, you can specify the directory at generation time as follows:
 
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef migrations add InitialCreate --namespace Your.Namespace
+dotnet ef migrations add InitialCreate --output-dir Your/Directory
 ```
+
+> [!NOTE]
+> In EF Core 5.0, you can also change the namespace independently of the directory using `--namespace`.
 
 #### [Visual Studio](#tab/vs)
 
 ```powershell
-Add-Migration InitialCreate -Namespace Your.Namespace
+Add-Migration InitialCreate -OutputDir Your\Directory
 ```
+
+> [!NOTE]
+> In EF Core 5.0, you can also change the namespace independently of the directory using `-Namespace`.
 
 ***
 
@@ -147,6 +153,9 @@ migrationBuilder.Sql(
         RETURN @LastName + @FirstName;')");
 ```
 
+> [!TIP]
+> `EXEC` is used when a statement must be the first or only one in a SQL batch. It can also be used to work around parser errors in idempotent migration scripts that can occur when referenced columns don't currently exist on a table.
+
 This can be used to manage any aspect of your database, including:
 
 * Stored procedures
@@ -186,9 +195,22 @@ After removing the migration, you can make the additional model changes and add 
 
 You can list all existing migrations as follows:
 
+### [.NET Core CLI](#tab/dotnet-core-cli)
+
 ```dotnetcli
 dotnet ef migrations list
 ```
+
+### [Visual Studio](#tab/vs)
+
+> [!NOTE]
+> This command was added in EF Core 5.0.
+
+```powershell
+Get-Migration
+```
+
+***
 
 ## Resetting all migrations
 
