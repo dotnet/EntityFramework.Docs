@@ -17,9 +17,11 @@ namespace EFModeling.DataAnnotations.Relationships.InverseProperty
         public string Title { get; set; }
         public string Content { get; set; }
 
+        [ForeignKey]
         public int AuthorUserId { get; set; }
         public User Author { get; set; }
 
+        [ForeignKey]
         public int ContributorUserId { get; set; }
         public User Contributor { get; set; }
     }
