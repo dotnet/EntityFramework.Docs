@@ -229,3 +229,9 @@ Includes support for advanced SQL features such as CTEs, bulk copy, table hints,
 An implementation for soft deleting entities. For EF Core: 3.
 
 [NuGet](https://www.nuget.org/packages/EFCore.SoftDelete)
+
+### EntityFrameworkCore.ConfigurationManager
+
+Extends EF Core to resolve connection strings from App.config. For EF Core: 3.
+
+[GitHub repository](https://github.com/efcore/EFCore.ConfigurationManager)
