@@ -222,6 +222,12 @@ dotnet user-secrets set ConnectionStrings:Blogging "Data Source=(localdb)\MSSQLL
 dotnet ef dbcontext scaffold Name=ConnectionStrings:Blogging Microsoft.EntityFrameworkCore.SqlServer
 ```
 
+The following example skips scaffolding an `OnConfiguring` method. This can be useful for ensuring a development connection string or one with a username and password does not get written into the DbContext that is scaffolded. Added in EF Core 5.0.
+
+```dotnetcli
+dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;User Id=myUsername;Password=myPassword;" Microsoft.EntityFrameworkCore.SqlServer --no-onconfiguring
+```
+
 ## `dotnet ef dbcontext script`
 
 Generates a SQL script from the DbContext. Bypasses any migrations. Added in EF Core 3.0.
