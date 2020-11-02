@@ -16,7 +16,6 @@ Changes that we expect to only impact database providers are documented under [p
 | **Breaking change**                                                                                               | **Impact** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
 | [LINQ queries are no longer evaluated on the client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
-| [EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0](#netstandard21) | High      |
 | [The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK](#dotnet-ef) | High      |
 | [DetectChanges honors store-generated key values](#dc) | High      |
 | [FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed](#fromsql) | High      |
@@ -33,7 +32,6 @@ Changes that we expect to only impact database providers are documented under [p
 | [UseRowNumberForPaging has been removed](#urn) | Medium      |
 | [FromSql method when used with stored procedure cannot be composed](#fromsqlsproc) | Medium      |
 | [FromSql methods can only be specified on query roots](#fromsql) | Low      |
-| [~~Query execution is logged at Debug level~~ Reverted](#qe) | Low      |
 | [Temporary key values are no longer set onto entity instances](#tkv) | Low      |
 | [Dependent entities sharing the table with the principal are now optional](#de) | Low      |
 | [All entities sharing a table with a concurrency token column have to map it to a property](#aes) | Low      |
@@ -70,6 +68,8 @@ Changes that we expect to only impact database providers are documented under [p
 | [Microsoft.Data.SqlClient is used instead of System.Data.SqlClient](#SqlClient) | Low      |
 | [Multiple ambiguous self-referencing relationships must be configured](#mersa) | Low      |
 | [DbFunction.Schema being null or empty string configures it to be in model's default schema](#udf-empty-string) | Low      |
+| [~~EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0~~ Reverted](#netstandard21) | |
+| [~~Query execution is logged at Debug level~~ Reverted](#qe) | |
 
 ## High-impact changes
 
@@ -101,31 +101,6 @@ Besides this, automatic client evaluation can lead to issues in which improving 
 #### Mitigations
 
 If a query can't be fully translated, then either rewrite the query in a form that can be translated, or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
-
-<a name="netstandard21"></a>
-
-### EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0
-
-[Tracking Issue #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
-
-> [!IMPORTANT]
-> EF Core 3.1 targets .NET Standard 2.0 again. This brings back support for .NET Framework.
-
-#### Old behavior
-
-Before 3.0, EF Core targeted .NET Standard 2.0 and would run on all platforms that support that standard, including .NET Framework.
-
-#### New behavior
-
-Starting with 3.0, EF Core targets .NET Standard 2.1 and will run on all platforms that support this standard. This does not include .NET Framework.
-
-#### Why
-
-This is part of a strategic decision across .NET technologies to focus energy on .NET Core and other modern .NET platforms, such as Xamarin.
-
-#### Mitigations
-
-Use EF Core 3.1.
 
 <a name="no-longer"></a>
 
@@ -304,21 +279,6 @@ Identity resolution (that is, determining that an entity has the same type and I
 #### Mitigations
 
 Use a tracking query if identity resolution is required.
-
-<a name="qe"></a>
-
-### ~~Query execution is logged at Debug level~~ Reverted
-
-[Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
-
-We reverted this change because new configuration in EF Core 3.0 allows the log level for any event to be specified by the application. For example, to switch logging of SQL to `Debug`, explicitly configure the level in `OnConfiguring` or `AddDbContext`:
-
-```csharp
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder
-        .UseSqlServer(connectionString)
-        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Debug)));
-```
 
 <a name="tkv"></a>
 
@@ -1823,4 +1783,27 @@ Configure DbFunction's translation manually to map it to a built-in function.
 modelBuilder
     .HasDbFunction(typeof(MyContext).GetMethod(nameof(MyContext.DatePart)))
     .HasTranslation(args => SqlFunctionExpression.Create("DatePart", args, typeof(int?), null));
+```
+
+<a name="netstandard21"></a>
+
+### ~~EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0~~ Reverted
+
+[Tracking Issue #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
+
+EF Core 3.0 targets .NET Standard 2.1, which is a breaking change which excludes .NET Framework applications. EF Core 3.1 reverted this and targets .NET Standard 2.0 again.
+
+<a name="qe"></a>
+
+### ~~Query execution is logged at Debug level~~ Reverted
+
+[Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
+
+We reverted this change because new configuration in EF Core 3.0 allows the log level for any event to be specified by the application. For example, to switch logging of SQL to `Debug`, explicitly configure the level in `OnConfiguring` or `AddDbContext`:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer(connectionString)
+        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Debug)));
 ```
