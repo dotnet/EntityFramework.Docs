@@ -144,3 +144,7 @@ Sometimes you may want to reference types from another DbContext. This can lead 
 ### Next steps
 
 The above was only a brief introduction to migrations. Please consult the other documentation pages to learn more about [managing migrations](xref:core/managing-schemas/migrations/managing), [applying them](xref:core/managing-schemas/migrations/applying), and other aspects. The [.NET Core CLI tool reference](xref:core/miscellaneous/cli/index) also contains useful information on the different commands
+
+## Additional resources
+
+* [EF Core Community Standup session](https://www.youtube.com/watch?v=mSsGERmrhnE&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=20) going over new migration features in EF Core 5.0.
