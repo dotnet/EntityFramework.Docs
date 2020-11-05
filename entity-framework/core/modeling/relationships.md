@@ -319,3 +319,7 @@ Additional data can be stored in the join entity type, but for this it's best to
 You can also represent a many-to-many relationship by just adding the join entity type and mapping two separate one-to-many relationships.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11-14,16-19,39-46)]
+
+## Additional resources
+
+* [EF Core Community Standup session](https://www.youtube.com/watch?v=W1sxepfIMRM&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=32), with a deep dive into Many-to-many and the infrastructure underpinning it.
