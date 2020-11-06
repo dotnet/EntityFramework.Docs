@@ -44,7 +44,7 @@ highlightedContent:
       url: /dotnet/api/?view=efcore-3.1
     # Card
     - title: "Take the EF Core 6 survey"
-      itemType: tutorial
+      itemType: reference
       url: https://www.surveymonkey.com/r/XRL3JBL
 
 # Card with summary style
