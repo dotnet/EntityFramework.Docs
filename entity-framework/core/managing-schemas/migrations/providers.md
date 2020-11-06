@@ -47,6 +47,9 @@ Add-Migration InitialCreate -Context SqliteBlogContext -OutputDir Migrations\Sql
 
 It's also possible to use one DbContext type. This currently requires moving the migrations into a separate assembly. Please refer to [Using a Separate Migrations Project](xref:core/managing-schemas/migrations/projects) for instructions on setting up your projects.
 
+> [!TIP]
+> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Schemas/TwoProjectMigrations).
+
 Starting in EF Core 5.0, you can pass arguments into the app from the tools. This can enable a more streamlined workflow that avoids having to make manual changes to the project when running the tools.
 
 Here's one pattern that works well when using a [Generic Host](/dotnet/core/extensions/generic-host).
