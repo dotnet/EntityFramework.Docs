@@ -20,7 +20,7 @@
     items:
     - name: Overview
       href: core/index.md
-    - name: Take the EF Core 6 survey
+    - name: Take the EF Core 6 survey >>
       href: https://www.surveymonkey.com/r/XRL3JBL
     - name: "Releases and planning (roadmap)"
       items:
