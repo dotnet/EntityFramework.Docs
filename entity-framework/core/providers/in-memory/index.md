@@ -7,7 +7,7 @@ uid: core/providers/in-memory/index
 ---
 # EF Core In-Memory Database Provider
 
-This database provider allows Entity Framework Core to be used with an in-memory database. The in-memory database can be useful for testing, although the SQLite provider in in-memory mode may be a more appropriate test replacement for relational databases. The in-memory database is designed for testing only. The provider is maintained as part of the [Entity Framework Core Project](https://github.com/aspnet/EntityFrameworkCore).
+This database provider allows Entity Framework Core to be used with an in-memory database. The in-memory database can be useful for testing, although the SQLite provider in in-memory mode may be a more appropriate test replacement for relational databases. The in-memory database is designed for testing only. The provider is maintained as part of the [Entity Framework Core Project](https://github.com/dotnet/efcore).
 
 ## Install
 

@@ -34,7 +34,7 @@ The following API and behavior changes have the potential to break existing appl
 
 ### Required on the navigation from principal to dependent has different semantics
 
-[Tracking Issue #17286](https://github.com/aspnet/EntityFrameworkCore/issues/17286)
+[Tracking Issue #17286](https://github.com/dotnet/efcore/issues/17286)
 
 #### Old behavior
 
@@ -104,11 +104,11 @@ For the In-Memory provider, use `ToInMemoryQuery` method in `OnModelCreating` an
 
 ### Removed HasGeometricDimension method from SQLite NTS extension
 
-[Tracking Issue #14257](https://github.com/aspnet/EntityFrameworkCore/issues/14257)
+[Tracking Issue #14257](https://github.com/dotnet/efcore/issues/14257)
 
 #### Old behavior
 
-HasGeometricDimension was used to enable additional dimensions (Z and M) on geometry columns. However, it only ever affected database creation. It was unnecessary to specify it to query values with additional dimensions. It also didn't work correctly when inserting or updating values with additional dimensions ([see #14257](https://github.com/aspnet/EntityFrameworkCore/issues/14257)).
+HasGeometricDimension was used to enable additional dimensions (Z and M) on geometry columns. However, it only ever affected database creation. It was unnecessary to specify it to query values with additional dimensions. It also didn't work correctly when inserting or updating values with additional dimensions ([see #14257](https://github.com/dotnet/efcore/issues/14257)).
 
 #### New behavior
 
@@ -138,7 +138,7 @@ modelBuilder.Entity<GeoEntity>(
 
 ### Cosmos: Partition key is now added to the primary key
 
-[Tracking Issue #15289](https://github.com/aspnet/EntityFrameworkCore/issues/15289)
+[Tracking Issue #15289](https://github.com/dotnet/efcore/issues/15289)
 
 #### Old behavior
 
@@ -165,7 +165,7 @@ modelBuilder.Entity<Blog>()
 
 ### Cosmos: `id` property renamed to `__id`
 
-[Tracking Issue #17751](https://github.com/aspnet/EntityFrameworkCore/issues/17751)
+[Tracking Issue #17751](https://github.com/dotnet/efcore/issues/17751)
 
 #### Old behavior
 
@@ -193,7 +193,7 @@ modelBuilder.Entity<Blog>()
 
 ### Cosmos: byte[] is now stored as a base64 string instead of a number array
 
-[Tracking Issue #17306](https://github.com/aspnet/EntityFrameworkCore/issues/17306)
+[Tracking Issue #17306](https://github.com/dotnet/efcore/issues/17306)
 
 #### Old behavior
 
@@ -209,13 +209,13 @@ This representation of byte[] aligns better with expectations and is the default
 
 #### Mitigations
 
-Existing data stored as number arrays will still be queried correctly, but currently there isn't a supported way to change back the insert behavior. If this limitation is blocking your scenario, comment on [this issue](https://github.com/aspnet/EntityFrameworkCore/issues/17306)
+Existing data stored as number arrays will still be queried correctly, but currently there isn't a supported way to change back the insert behavior. If this limitation is blocking your scenario, comment on [this issue](https://github.com/dotnet/efcore/issues/17306)
 
 <a name="cosmos-metadata"></a>
 
 ### Cosmos: GetPropertyName and SetPropertyName were renamed
 
-[Tracking Issue #17874](https://github.com/aspnet/EntityFrameworkCore/issues/17874)
+[Tracking Issue #17874](https://github.com/dotnet/efcore/issues/17874)
 
 #### Old behavior
 
@@ -237,7 +237,7 @@ Use the new API.
 
 ### Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted
 
-[Tracking Issue #15289](https://github.com/aspnet/EntityFrameworkCore/issues/15289)
+[Tracking Issue #15289](https://github.com/dotnet/efcore/issues/15289)
 
 #### Old behavior
 
@@ -259,7 +259,7 @@ To prevent the value generator from being called, assign a non-default value to 
 
 ### IMigrationsModelDiffer now uses IRelationalModel
 
-[Tracking Issue #20305](https://github.com/aspnet/EntityFrameworkCore/issues/20305)
+[Tracking Issue #20305](https://github.com/dotnet/efcore/issues/20305)
 
 #### Old behavior
 
@@ -299,7 +299,7 @@ We are planning to improve this experience in 6.0 ([see #22031](https://github.c
 
 ### Discriminators are read-only
 
-[Tracking Issue #21154](https://github.com/aspnet/EntityFrameworkCore/issues/21154)
+[Tracking Issue #21154](https://github.com/dotnet/efcore/issues/21154)
 
 #### Old behavior
 

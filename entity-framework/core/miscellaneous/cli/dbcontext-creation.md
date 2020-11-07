@@ -70,4 +70,4 @@ Update-Database -Args '--environment Production'
   [5]: xref:core/miscellaneous/configuring-dbcontext#constructor-argument
   [6]: xref:core/miscellaneous/configuring-dbcontext#using-dbcontext-with-dependency-injection
   [7]: xref:core/miscellaneous/configuring-dbcontext#onconfiguring
-  [8]: https://github.com/aspnet/EntityFrameworkCore/issues/8332
+  [8]: https://github.com/dotnet/efcore/issues/8332
