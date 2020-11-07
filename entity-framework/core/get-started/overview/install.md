@@ -3,7 +3,7 @@ title: Installing Entity Framework Core - EF Core
 description: Installation instructions for Entity Framework Core
 author: bricelam
 ms.date: 08/06/2017
-uid: core/get-started/install/index
+uid: core/get-started/overview/install
 ---
 # Installing Entity Framework Core
 
@@ -15,7 +15,7 @@ uid: core/get-started/install/index
 
 * You can use EF Core to develop applications on Windows using Visual Studio. The latest version of [Visual Studio](https://visualstudio.microsoft.com/vs) is recommended.
 
-* EF Core can run on other .NET implementations like [Xamarin](https://dotnet.microsoft.com/apps/xamarin) and .NET Native. But in practice those implementations have runtime limitations that may affect how well EF Core works on your app. For more information, see [.NET implementations supported by EF Core](xref:core/platforms/index).
+* EF Core can run on other .NET implementations like [Xamarin](https://dotnet.microsoft.com/apps/xamarin) and .NET Native. But in practice those implementations have runtime limitations that may affect how well EF Core works on your app. For more information, see [.NET implementations supported by EF Core](xref:core/miscellaneous/platforms).
 
 * Finally, different database providers may require specific database engine versions, .NET implementations, or operating systems. Make sure an [EF Core database provider](xref:core/providers/index) is available that supports the right environment for your application.
 
@@ -71,9 +71,9 @@ You can install tools to carry out EF Core-related tasks in your project, like c
 
 Two sets of tools are available:
 
-* The [.NET Core command-line interface (CLI) tools](xref:core/miscellaneous/cli/dotnet) can be used on Windows, Linux, or macOS. These commands begin with `dotnet ef`.
+* The [.NET Core command-line interface (CLI) tools](xref:core/cli/dotnet) can be used on Windows, Linux, or macOS. These commands begin with `dotnet ef`.
 
-* The [Package Manager Console (PMC) tools](xref:core/miscellaneous/cli/powershell) run in Visual Studio on Windows. These commands start with a verb, for example `Add-Migration`, `Update-Database`.
+* The [Package Manager Console (PMC) tools](xref:core/cli/powershell) run in Visual Studio on Windows. These commands start with a verb, for example `Add-Migration`, `Update-Database`.
 
 Although you can also use the `dotnet ef` commands from the Package Manager Console, it's recommended to use the Package Manager Console tools when you're using Visual Studio:
 

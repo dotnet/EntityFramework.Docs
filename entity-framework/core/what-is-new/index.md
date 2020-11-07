@@ -20,7 +20,7 @@ uid: core/what-is-new/index
 | ~~[EF Core 1.1](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/1.1.6)~~ | .NET Standard 1.3 | Expired June 27 2019 | [Announcement](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-1-1/)
 | ~~[EF Core 1.0](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/1.0.6)~~ | .NET Standard 1.3 | Expired June 27 2019 | [Announcement](https://devblogs.microsoft.com/dotnet/entity-framework-core-1-0-0-available/)
 
-See [supported platforms](xref:core/platforms/index) for information about the specific platforms supported by each EF Core release.
+See [supported platforms](xref:core/miscellaneous/platforms) for information about the specific platforms supported by each EF Core release.
 
 See the [.NET support policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) for information on support expiration and long-term support (LTS) releases.
 

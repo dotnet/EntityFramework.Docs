@@ -58,4 +58,4 @@ While EF Core is good at abstracting many programming details, there are some be
 
 ## Next steps
 
-For introductory tutorials, see [Getting Started with Entity Framework Core](xref:core/get-started/index).
+For introductory tutorials, see [Getting Started with Entity Framework Core](xref:core/get-started/overview/first-app).

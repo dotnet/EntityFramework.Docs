@@ -17,7 +17,7 @@ Install the `Microsoft.EntityFrameworkCore.Tools` NuGet package.
 
 You can now use the reverse engineer functionality to create a model based on your existing database.
 
-Run the following command in Package Manager Console (Tools –> NuGet Package Manager –> Package Manager Console). See [Package Manager Console (Visual Studio)](xref:core/miscellaneous/cli/powershell) for command options to scaffold a subset of tables etc.
+Run the following command in Package Manager Console (Tools –> NuGet Package Manager –> Package Manager Console). See [Package Manager Console (Visual Studio)](xref:core/cli/powershell) for command options to scaffold a subset of tables etc.
 
 ```powershell
 Scaffold-DbContext "<connection string>" <database provider name>

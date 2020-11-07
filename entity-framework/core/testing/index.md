@@ -3,7 +3,7 @@ title: Testing code that uses EF Core - EF Core
 description: Different approaches to testing applications that use Entity Framework Core
 author: ajcvickers
 ms.date: 04/22/2020
-uid: core/miscellaneous/testing/index
+uid: core/testing/index
 ---
 # Testing code that uses EF Core
 
@@ -16,7 +16,7 @@ Testing code that accesses a database requires either:
 This document outlines the trade-offs involved in each of these choices and shows how EF Core can be used with each approach.  
 
 > [!TIP]
-> See [EF Core testing sample](xref:core/miscellaneous/testing/testing-sample) for code demonstrating the concepts introduced here.
+> See [EF Core testing sample](xref:core/testing/testing-sample) for code demonstrating the concepts introduced here.
 
 ## All database providers are not equal
 
@@ -85,7 +85,7 @@ However, remember that:
 
 So if you do use SQLite for some testing, make sure to also test against your real database system.
 
-See [Testing with SQLite](xref:core/miscellaneous/testing/sqlite) for EF Core specific guidance.
+See [Testing with SQLite](xref:core/testing/sqlite) for EF Core specific guidance.
 
 ## Approach 3: The EF Core in-memory database
 
@@ -114,4 +114,4 @@ Instead we use the EF in-memory database when unit testing something that uses D
 In this case using the EF in-memory database is appropriate because the test is not dependent on database behavior.
 Just don't do this to test actual database queries or updates.
 
-The [EF Core testing sample](xref:core/miscellaneous/testing/testing-sample) demonstrates tests using the EF in-memory database, as well as SQL Server and SQLite.
+The [EF Core testing sample](xref:core/testing/testing-sample) demonstrates tests using the EF in-memory database, as well as SQL Server and SQLite.

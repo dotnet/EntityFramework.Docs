@@ -11,7 +11,7 @@ Reverse engineering is the process of scaffolding entity type classes and a DbCo
 
 ## Installing
 
-Before reverse engineering, you'll need to install either the [PMC tools](xref:core/miscellaneous/cli/powershell) (Visual Studio only) or the [CLI tools](xref:core/miscellaneous/cli/dotnet). See links for details.
+Before reverse engineering, you'll need to install either the [PMC tools](xref:core/cli/powershell) (Visual Studio only) or the [CLI tools](xref:core/cli/dotnet). See links for details.
 
 You'll also need to install an appropriate [database provider](xref:core/providers/index) for the database schema you want to reverse engineer.
 

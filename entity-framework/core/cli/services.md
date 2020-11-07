@@ -3,13 +3,13 @@ title: Design-time services - EF Core
 description: Information on Entity Framework Core design-time services
 author: bricelam
 ms.date: 10/22/2020
-uid: core/miscellaneous/cli/services
+uid: core/cli/services
 ---
 # Design-time services
 
 Some services used by the tools are only used at design time. These services are managed separately from EF Core's runtime services to prevent them from being deployed with your app. To override one of these services (for example the service to generate migration files), add an implementation of `IDesignTimeServices` to your startup project.
 
-[!code-csharp[Main](../../../../samples/core/Miscellaneous/CommandLine/DesignTimeServices.cs#DesignTimeServices)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/CommandLine/DesignTimeServices.cs#DesignTimeServices)]
 
 ## Referencing Microsoft.EntityFrameworkCore.Design
 
@@ -49,4 +49,4 @@ These services can also be useful for creating your own tools. For example, when
 
 You can build a service provider containing these services using the AddEntityFrameworkDesignTimeServices and AddDbContextDesignTimeServices extension methods.
 
-[!code-csharp[](../../../../samples/core/Miscellaneous/CommandLine/CustomTools.cs#CustomTools)]
+[!code-csharp[](../../../samples/core/Miscellaneous/CommandLine/CustomTools.cs#CustomTools)]

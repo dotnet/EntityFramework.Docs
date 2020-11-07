@@ -138,7 +138,7 @@ services.AddDbContext(b => b
 Query types, which represent data that can be read from the database but not updated, have been renamed to [keyless entity types](xref:core/modeling/keyless-entity-types).
 As they are an excellent fit for mapping database views in most scenarios, EF Core now automatically creates keyless entity types when reverse engineering database views.
 
-For example, using the [dotnet ef command-line tool](xref:core/miscellaneous/cli/dotnet) you can type:
+For example, using the [dotnet ef command-line tool](xref:core/cli/dotnet) you can type:
 
 ```dotnetcli
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer

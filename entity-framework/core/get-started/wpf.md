@@ -74,7 +74,7 @@ Add a new `ProductContext.cs` class to the project with the following definition
 [!code-csharp[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/ProductContext.cs)]
 
 * The `DbSet` informs EF Core what C# entities should be mapped to the database.
-* There are a variety of ways to configure the EF Core `DbContext`. You can read about them in: [Configuring a DbContext](xref:core/miscellaneous/configuring-dbcontext).
+* There are a variety of ways to configure the EF Core `DbContext`. You can read about them in: [Configuring a DbContext](xref:core/dbcontext-configuration/index).
 * This example uses the `OnConfiguring` override to specify a Sqlite data file.
 * The `UseLazyLoadingProxies` call tells EF Core to implement lazy-loading, so child entities are automatically loaded when accessed from the parent.
 
@@ -166,4 +166,4 @@ This works for our getting started sample, but you may require additional code f
 
 ## Next Steps
 
-Learn more about [Configuring a DbContext](xref:core/miscellaneous/configuring-dbcontext).
+Learn more about [Configuring a DbContext](xref:core/dbcontext-configuration/index).
