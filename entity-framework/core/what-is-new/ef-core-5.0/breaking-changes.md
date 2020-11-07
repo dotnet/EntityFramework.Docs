@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 5.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 5.0
 author: bricelam
-ms.date: 09/24/2020
+ms.date: 11/07/2020
 uid: core/what-is-new/ef-core-5.0/breaking-changes
 ---
 
@@ -16,6 +16,7 @@ The following API and behavior changes have the potential to break existing appl
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [Required on the navigation from principal to dependent has different semantics](#required-dependent)                                 | Medium     |
 | [Defining query is replaced with provider-specific methods](#defining-query)                                                          | Medium     |
+| [Non-null reference navigations are not overwritten by queries](#nonnullreferences)                                                   | Medium     |
 | [Removed HasGeometricDimension method from SQLite NTS extension](#geometric-sqlite)                                                   | Low        |
 | [Cosmos: Partition key is now added to the primary key](#cosmos-partition-key)                                                        | Low        |
 | [Cosmos: `id` property renamed to `__id`](#cosmos-id)                                                                                 | Low        |
@@ -27,6 +28,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Provider-specific EF.Functions methods throw for InMemory provider](#no-client-methods)                                              | Low        |
 | [IndexBuilder.HasName is now obsolete](#index-obsolete)                                                                               | Low        |
 | [A pluarlizer is now included for scaffolding reverse engineered models](#pluralizer)                                                 | Low        |
+| [INavigationBase replaces INavigation in some APIs to support skip navigations](#inavigationbase)                                     | Low        |
 
 ## Medium-impact changes
 
@@ -97,6 +99,42 @@ Initially defining queries were introduced as client-side views to be used with 
 
 For relational providers, use `ToSqlQuery` method in `OnModelCreating` and pass in a SQL string to use for the entity type.
 For the In-Memory provider, use `ToInMemoryQuery` method in `OnModelCreating` and pass in a LINQ query to use for the entity type.
+
+<a name="nonnullreferences"></a>
+
+### Non-null reference navigations are not overwritten by queries
+
+[Tracking Issue #2693](https://github.com/dotnet/EntityFramework.Docs/issues/2693)
+
+#### Old behavior
+
+In EF Core 3.1, reference navigations eagerly initialized to non-null values would sometimes be overwritten by entity instances from the database, regardless of whether or not key values matched. However, in other cases, EF Core 3.1 would do the opposite and leave the existing non-null value.
+
+#### New behavior
+
+Starting with EF Core 5.0, non-null reference navigations are never overwritten by instances returned from a query.
+
+Note that eager initialization of a _collection_ navigation to an empty collection is still supported.
+
+#### Why
+
+Initialization of a reference navigation property to an "empty" entity instance results in an ambiguous state. For example:
+
+```csharp
+public class Blog
+{
+     public int Id { get; set; }
+     public Author Author { get; set; ) = new Author();
+}
+```
+
+Normally a query for Blogs and Authors will first create `Blog` instances and then set the appropriate `Author` instances based on the data returned from the database. However, in this case every `Blog.Author` property is already initialized to an empty `Author`. Except EF Core has no way to know that this instance is "empty". So overwriting this instance could potentially silently throw away a valid `Author`. Therefore, EF Core 5.0 now consistently does not overwrite a navigation that is already initialized.
+
+This new behavior also aligns with the behavior of EF6 in most cases, although upon investigation we also found some cases of inconsistency in EF6.  
+
+#### Mitigations
+
+If this break is encountered, then the fix is to stop eagerly initializing reference navigation properties.
 
 ## Low-impact changes
 
@@ -390,3 +428,25 @@ Using plural forms of words for collection properties and singular forms for typ
 #### Mitigations
 
 To disable the pluralizer, use the `--no-pluralize` option on `dotnet ef dbcontext scaffold` or the `-NoPluralize` switch on `Scaffold-DbContext`.
+
+<a name="inavigationbase"></a>
+
+### INavigationBase replaces INavigation in some APIs to support skip navigations
+
+[Tracking Issue #2568](https://github.com/dotnet/EntityFramework.Docs/issues/2568)
+
+#### Old behavior
+
+EF Core prior to 5.0 supported only one form of navigation property, represented by the `INavigation` interface.
+
+#### New behavior
+
+EF Core 5.0 introduces many-to-many relationships which use "skip navigations". These are represented by the `ISkipNavigation` interface, and most of the functionality of `INavigation` has been pushed down to a common base interface: `INavigationBase`.
+
+#### Why
+
+Most of the functionality between normal and skip navigations is the same. However, skip navigations have a different relationship to foreign keys than normal navigations, since the FKs involved are not directly on either end of the relationship, but rather in the join entity.
+
+#### Mitigations
+
+In many cases applications can switch to using the new base interface with no other changes. However, in cases where the navigation is used to access foreign key properties, application code should either be constrained to only normal navigations, or updated to do the appropriate thing for both normal and skip navigations.
