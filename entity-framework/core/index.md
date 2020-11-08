@@ -41,9 +41,9 @@ Data is created, deleted, and modified in the database using instances of your e
 
 [!code-csharp[Main](../../samples/core/Intro/Program.cs#SavingData)]
 
-## EF ORM considerations
+## EF O/RM considerations
 
-While EF Core is good at abstracting many programming details, there are some best practices applicable to any ORM that help to avoid common pitfalls in production apps:
+While EF Core is good at abstracting many programming details, there are some best practices applicable to any O/RM that help to avoid common pitfalls in production apps:
 
 * Intermediate-level knowledge or higher of the underlying database server is essential to architect, debug, profile, and migrate data in high performance production apps. For example, knowledge of primary and foreign keys, constraints, indexes, normalization, DML and DDL statements, data types, profiling, etc.
 * Functional and integration testing:  It's important to replicate the production environment as closely as possible to:
