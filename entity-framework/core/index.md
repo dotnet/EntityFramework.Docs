@@ -31,7 +31,7 @@ EF supports the following model development approaches:
 
 ## Querying
 
-Instances of your entity classes are retrieved from the database using Language [Integrated Query (LINQ)](/dotnet/csharp/programming-guide/concepts/linq/). For more information, see [Querying Data](xref:core/querying/index).
+Instances of your entity classes are retrieved from the database using [Language Integrated Query (LINQ)](/dotnet/csharp/programming-guide/concepts/linq/). For more information, see [Querying Data](xref:core/querying/index).
 
 [!code-csharp[Main](../../samples/core/Intro/Program.cs#Querying)]
 
