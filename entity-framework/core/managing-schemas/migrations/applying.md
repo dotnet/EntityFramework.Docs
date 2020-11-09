@@ -154,7 +154,7 @@ Note that this can be used to roll back to an earlier migration as well.
 
 ***
 
-For more information on applying migrations via the command-line tools, see the [EF Core tools reference](xref:core/miscellaneous/cli/index).
+For more information on applying migrations via the command-line tools, see the [EF Core tools reference](xref:core/cli/index).
 
 ## Apply migrations at runtime
 

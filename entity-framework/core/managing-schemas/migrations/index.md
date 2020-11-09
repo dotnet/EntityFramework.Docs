@@ -32,10 +32,10 @@ During development, you may have used the [Create and Drop APIs](xref:core/manag
 
 ### Install the tools
 
-First, you'll have to install the [EF Core command-line tools](xref:core/miscellaneous/cli/index):
+First, you'll have to install the [EF Core command-line tools](xref:core/cli/index):
 
-* We generally recommend using the [.NET Core CLI tools](xref:core/miscellaneous/cli/dotnet), which work on all platforms.
-* If you're more comfortable working inside Visual Studio or have experience with EF6 migrations, you can also use the [Package Manager Console tools](xref:core/miscellaneous/cli/powershell).
+* We generally recommend using the [.NET Core CLI tools](xref:core/cli/dotnet), which work on all platforms.
+* If you're more comfortable working inside Visual Studio or have experience with EF6 migrations, you can also use the [Package Manager Console tools](xref:core/cli/powershell).
 
 ### Create your first migration
 
@@ -143,7 +143,7 @@ Sometimes you may want to reference types from another DbContext. This can lead 
 
 ### Next steps
 
-The above was only a brief introduction to migrations. Please consult the other documentation pages to learn more about [managing migrations](xref:core/managing-schemas/migrations/managing), [applying them](xref:core/managing-schemas/migrations/applying), and other aspects. The [.NET Core CLI tool reference](xref:core/miscellaneous/cli/index) also contains useful information on the different commands
+The above was only a brief introduction to migrations. Please consult the other documentation pages to learn more about [managing migrations](xref:core/managing-schemas/migrations/managing), [applying them](xref:core/managing-schemas/migrations/applying), and other aspects. The [.NET Core CLI tool reference](xref:core/cli/index) also contains useful information on the different commands
 
 ## Additional resources
 

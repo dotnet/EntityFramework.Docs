@@ -7,7 +7,7 @@ uid: core/managing-schemas/migrations/providers
 ---
 # Migrations with Multiple Providers
 
-The [EF Core Tools](xref:core/miscellaneous/cli/index) only scaffold migrations for the active provider. Sometimes, however, you may want to use more than one provider (for example Microsoft SQL Server and SQLite) with your DbContext. Handle this by maintaining multiple sets of migrations--one for each provider--and adding a migration to each for every model change.
+The [EF Core Tools](xref:core/cli/index) only scaffold migrations for the active provider. Sometimes, however, you may want to use more than one provider (for example Microsoft SQL Server and SQLite) with your DbContext. Handle this by maintaining multiple sets of migrations--one for each provider--and adding a migration to each for every model change.
 
 ## Using multiple context types
 
@@ -46,6 +46,9 @@ Add-Migration InitialCreate -Context SqliteBlogContext -OutputDir Migrations\Sql
 ## Using one context type
 
 It's also possible to use one DbContext type. This currently requires moving the migrations into a separate assembly. Please refer to [Using a Separate Migrations Project](xref:core/managing-schemas/migrations/projects) for instructions on setting up your projects.
+
+> [!TIP]
+> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Schemas/TwoProjectMigrations).
 
 Starting in EF Core 5.0, you can pass arguments into the app from the tools. This can enable a more streamlined workflow that avoids having to make manual changes to the project when running the tools.
 

@@ -1641,7 +1641,7 @@ Also, a connection string can now be passed to the `database-update` command:
 dotnet ef database update --connection "connection string"
 ```
 
-See the [Tools documentation](xref:core/miscellaneous/cli/dotnet#dotnet-ef-database-update) for full details.
+See the [Tools documentation](xref:core/cli/dotnet#dotnet-ef-database-update) for full details.
 
 Equivalent parameters have also been added to the PowerShell commands used in the VS Package Manager Console.
 

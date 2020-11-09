@@ -8,7 +8,7 @@ uid: core/index
 
 # Entity Framework Core
 
-Entity Framework (EF) Core is a lightweight, extensible, [open source](https://github.com/aspnet/EntityFrameworkCore) and cross-platform version of the popular Entity Framework data access technology.
+Entity Framework (EF) Core is a lightweight, extensible, [open source](https://github.com/dotnet/efcore) and cross-platform version of the popular Entity Framework data access technology.
 
 EF Core can serve as an object-relational mapper (O/RM), which:
 
@@ -31,7 +31,7 @@ EF supports the following model development approaches:
 
 ## Querying
 
-Instances of your entity classes are retrieved from the database using Language [Integrated Query (LINQ)](/dotnet/csharp/programming-guide/concepts/linq/). For more information, see [Querying Data](xref:core/querying/index).
+Instances of your entity classes are retrieved from the database using [Language Integrated Query (LINQ)](/dotnet/csharp/programming-guide/concepts/linq/). For more information, see [Querying Data](xref:core/querying/index).
 
 [!code-csharp[Main](../../samples/core/Intro/Program.cs#Querying)]
 
@@ -58,4 +58,4 @@ While EF Core is good at abstracting many programming details, there are some be
 
 ## Next steps
 
-For introductory tutorials, see [Getting Started with Entity Framework Core](xref:core/get-started/index).
+For introductory tutorials, see [Getting Started with Entity Framework Core](xref:core/get-started/overview/first-app).

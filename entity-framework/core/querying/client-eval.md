@@ -52,7 +52,7 @@ Since query translation and compilation are expensive, EF Core caches the compil
 
 The following section applies to EF Core versions before 3.0.
 
-Older EF Core versions supported client evaluation in any part of the query--not just the top-level projection. That's why queries similar to one posted under the [Unsupported client evaluation](#unsupported-client-evaluation) section worked correctly. Since this behavior could cause unnoticed performance issues, EF Core logged a client evaluation warning. For more information on viewing logging output, see [Logging](xref:core/miscellaneous/logging).
+Older EF Core versions supported client evaluation in any part of the query--not just the top-level projection. That's why queries similar to one posted under the [Unsupported client evaluation](#unsupported-client-evaluation) section worked correctly. Since this behavior could cause unnoticed performance issues, EF Core logged a client evaluation warning. For more information on viewing logging output, see [Logging](xref:core/logging-events-diagnostics/index).
 
 Optionally EF Core allowed you to change the default behavior to either throw an exception or do nothing when doing client evaluation (except for in the projection). The exception throwing behavior would make it similar to the behavior in 3.0. To change the behavior, you need to configure warnings while setting up the options for your context - typically in `DbContext.OnConfiguring`, or in `Startup.cs` if you're using ASP.NET Core.
 

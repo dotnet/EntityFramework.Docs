@@ -7,7 +7,7 @@ uid: core/providers/sqlite/index
 ---
 # SQLite EF Core Database Provider
 
-This database provider allows Entity Framework Core to be used with SQLite. The provider is maintained as part of the [Entity Framework Core project](https://github.com/aspnet/EntityFrameworkCore).
+This database provider allows Entity Framework Core to be used with SQLite. The provider is maintained as part of the [Entity Framework Core project](https://github.com/dotnet/efcore).
 
 ## Install
 

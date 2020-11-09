@@ -39,18 +39,18 @@ We have extracted a few major areas or themes which will form the basis for the 
 
 Lead developers: @smitpatel, @AndriySvyryd, and @lajones
 
-Tracked by [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508)
+Tracked by [#10508](https://github.com/dotnet/efcore/issues/10508)
 
 T-shirt size: L
 
 Status: Done
 
-Many-to-many is the [most requested feature](https://github.com/aspnet/EntityFrameworkCore/issues/1368) (~506 votes) on the GitHub backlog.
+Many-to-many is the [most requested feature](https://github.com/dotnet/efcore/issues/1368) (~506 votes) on the GitHub backlog.
 
 Support for many-to-many relationships can be broken down into three major areas:
 
 * Skip navigation properties--covered by the next theme.
-* Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type. Tracked by [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914).
+* Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type. Tracked by [#9914](https://github.com/dotnet/efcore/issues/9914).
 * Sugar for easy configuration of many-to-many relationships.
 
 In addition to the skip navigation support, we are now pulling these other areas of many-to-many into EF Core 5.0 so as to provide a complete experience.
@@ -59,7 +59,7 @@ In addition to the skip navigation support, we are now pulling these other areas
 
 Lead developers: @smitpatel and @AndriySvyryd
 
-Tracked by [#19003](https://github.com/aspnet/EntityFrameworkCore/issues/19003)
+Tracked by [#19003](https://github.com/dotnet/efcore/issues/19003)
 
 T-shirt size: L
 
@@ -74,7 +74,7 @@ The join table entity type may still exist, but it should not get in the way of 
 
 Lead developer: @AndriySvyryd and @smitpatel
 
-Tracked by [#2266](https://github.com/aspnet/EntityFrameworkCore/issues/2266)
+Tracked by [#2266](https://github.com/dotnet/efcore/issues/2266)
 
 T-shirt size: XL
 
@@ -86,7 +86,7 @@ We're doing TPT because it is both a highly requested feature (~289 votes; 3rd o
 
 Lead developer: @maumar
 
-Tracked by [#1833](https://github.com/aspnet/EntityFrameworkCore/issues/1833)
+Tracked by [#1833](https://github.com/dotnet/efcore/issues/1833)
 
 T-shirt size: M
 
@@ -126,7 +126,7 @@ In EF Core 3.0, all dependents, including owned types are optional (e.g. Person.
 
 Lead developers: @AndriySvyryd and @smitpatel
 
-Tracked by [#17270](https://github.com/aspnet/EntityFrameworkCore/issues/17270)
+Tracked by [#17270](https://github.com/dotnet/efcore/issues/17270)
 
 T-shirt size: L
 
@@ -297,7 +297,7 @@ In addition to the bigger features outlined above, we also have many smaller imp
 
 ## Below-the-line
 
-Tracked by [issues labeled with `consider-for-next-release`](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+label%3Aconsider-for-next-release)
+Tracked by [issues labeled with `consider-for-next-release`](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aconsider-for-next-release)
 
 These are bug fixes and enhancements that are **not** currently scheduled for the 5.0 release, but we will look at as stretch goals depending on the progress made on the work above.
 
