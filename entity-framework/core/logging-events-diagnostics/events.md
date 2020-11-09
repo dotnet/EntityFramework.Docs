@@ -43,7 +43,7 @@ public interface IHasTimestamps
     DateTime? Modified { get; set; }
 }
 -->
-[!code-csharp[IHasTimestamps](../../../../samples/core/Miscellaneous/Events/Program.cs?name=IHasTimestamps)]
+[!code-csharp[IHasTimestamps](../../../samples/core/Miscellaneous/Events/Program.cs?name=IHasTimestamps)]
 
 A method on the application's DbContext can then set timestamps for any entity that implements this interface:
 
@@ -70,7 +70,7 @@ A method on the application's DbContext can then set timestamps for any entity t
         }
     }
 -->
-[!code-csharp[UpdateTimestamps](../../../../samples/core/Miscellaneous/Events/Program.cs?name=UpdateTimestamps)]
+[!code-csharp[UpdateTimestamps](../../../samples/core/Miscellaneous/Events/Program.cs?name=UpdateTimestamps)]
 
 This method has the appropriate signature to use as an event handler for both the `Tracked` and `StateChanged` events. The handler is registered for both events in the DbContext constructor. Note that events can be attached to a DbContext at any time; it is not required that this happen in the context constructor.
 
@@ -81,7 +81,7 @@ This method has the appropriate signature to use as an event handler for both th
         ChangeTracker.Tracked += UpdateTimestamps;
     }
 -->
-[!code-csharp[ContextConstructor](../../../../samples/core/Miscellaneous/Events/Program.cs?name=ContextConstructor)]
+[!code-csharp[ContextConstructor](../../../samples/core/Miscellaneous/Events/Program.cs?name=ContextConstructor)]
 
 Both events are needed because new entities fire `Tracked` events when they are first tracked. `StateChanged` events are only fired for entities that change state while they are _already_ being tracked.
 
@@ -119,7 +119,7 @@ The [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/
             context.SaveChanges();
         }
 -->
-[!code-csharp[Demonstration](../../../../samples/core/Miscellaneous/Events/Program.cs?name=Demonstration)]
+[!code-csharp[Demonstration](../../../samples/core/Miscellaneous/Events/Program.cs?name=Demonstration)]
 
 The output from this code shows the state changes happening and the timestamps being applied:
 

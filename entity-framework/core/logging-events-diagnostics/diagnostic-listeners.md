@@ -39,7 +39,7 @@ public class DiagnosticObserver : IObserver<DiagnosticListener>
     }
 }
 -->
-[!code-csharp[DiagnosticObserver](../../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=DiagnosticObserver)]
+[!code-csharp[DiagnosticObserver](../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=DiagnosticObserver)]
 
 The `OnNext` method looks for the DiagnosticListener that comes from EF Core. This listener has the name "Microsoft.EntityFrameworkCore", which can be obtained from the <xref:Microsoft.EntityFrameworkCore.DbLoggerCategory> class as shown.
 
@@ -48,7 +48,7 @@ This observer must then be registered globally, for example in the application's
 <!--
         DiagnosticListener.AllListeners.Subscribe(new DiagnosticObserver());
 -->
-[!code-csharp[RegisterDiagnosticListener](../../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=RegisterDiagnosticListener)]
+[!code-csharp[RegisterDiagnosticListener](../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=RegisterDiagnosticListener)]
 
 Second, once the EF Core DiagnosticListener is found, a new key-value observer it is created to subscribe to the actual EF Core events. For example:
 
@@ -77,7 +77,7 @@ public class KeyValueObserver : IObserver<KeyValuePair<string, object>>
     }
 }
 -->
-[!code-csharp[KeyValueObserver](../../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=KeyValueObserver)]
+[!code-csharp[KeyValueObserver](../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=KeyValueObserver)]
 
 The `OnNext` method is this time called with a key/value pair for each EF Core event. The key is the name of the event, which can be obtained from one of:
 
@@ -133,7 +133,7 @@ The [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/
         #endregion
     }
 -->
-[!code-csharp[Program](../../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=Program)]
+[!code-csharp[Program](../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=Program)]
 
 The output from this code shows the events detected:
 

@@ -30,7 +30,7 @@ Other application types can use the [GenericHost](/dotnet/core/extensions/generi
         public static readonly ILoggerFactory MyLoggerFactory
             = LoggerFactory.Create(builder => { builder.AddConsole(); });
 -->
-[!code-csharp[Main](../../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#DefineLoggerFactory)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#DefineLoggerFactory)]
 
 ### [EF Core 2.1](#tab/v2)
 
@@ -52,7 +52,7 @@ This singleton/global instance should then be registered with EF Core on the <xr
                 .UseLoggerFactory(MyLoggerFactory)
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFLogging;ConnectRetryCount=0");
 -->
-[!code-csharp[Main](../../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#RegisterLoggerFactory)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#RegisterLoggerFactory)]
 
 ## Getting detailed messages
 
@@ -69,7 +69,7 @@ However, knowing data values, especially for keys, can be very helpful when debu
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.EnableSensitiveDataLogging();
 -->
-[!code-csharp[EnableSensitiveDataLogging](../../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs?name=EnableSensitiveDataLogging)]
+[!code-csharp[EnableSensitiveDataLogging](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs?name=EnableSensitiveDataLogging)]
 
 ### Detailed query exceptions
 
@@ -81,7 +81,7 @@ Turning on <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDet
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.EnableDetailedErrors();
 -->
-[!code-csharp[EnableDetailedErrors](../../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs?name=EnableDetailedErrors)]
+[!code-csharp[EnableDetailedErrors](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs?name=EnableDetailedErrors)]
 
 ## Configuration for specific messages
 
@@ -102,7 +102,7 @@ Sometimes it can be useful to change the pre-defined log level for an event. For
                     (RelationalEventId.ConnectionOpened, LogLevel.Information),
                     (RelationalEventId.ConnectionClosed, LogLevel.Information)));
 -->
-[!code-csharp[ChangeLogLevel](../../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs?name=ChangeLogLevel)]
+[!code-csharp[ChangeLogLevel](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs?name=ChangeLogLevel)]
 
 ### Suppress logging an event
 
@@ -113,7 +113,7 @@ In a similar way, an individual event can be suppressed from logging. This is pa
             => optionsBuilder
                 .ConfigureWarnings(b => b.Ignore(CoreEventId.DetachedLazyLoadingWarning));
 -->
-[!code-csharp[SuppressMessage](../../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs?name=SuppressMessage)]
+[!code-csharp[SuppressMessage](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs?name=SuppressMessage)]
 
 ### Throw for an event
 
@@ -124,7 +124,7 @@ Finally, EF Core can be configured to throw for a given event. This is particula
             => optionsBuilder
                 .ConfigureWarnings(b => b.Throw(RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning));
 -->
-[!code-csharp[ThrowForEvent](../../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs?name=ThrowForEvent)]
+[!code-csharp[ThrowForEvent](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs?name=ThrowForEvent)]
 
 ## Filtering and other configuration
 

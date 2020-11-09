@@ -205,7 +205,7 @@ The previous example used a custom filter to log every message at `LogLevel.Info
                 (RelationalEventId.ConnectionClosed, LogLevel.Information)))
             .LogTo(Console.WriteLine, LogLevel.Information);
 -->
-[!code-csharp[ChangeLogLevel](../../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=ChangeLogLevel)]
+[!code-csharp[ChangeLogLevel](../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=ChangeLogLevel)]
 
 ### Suppress logging an event
 
@@ -217,7 +217,7 @@ In a similar way, an individual event can be suppressed from logging. This is pa
             .ConfigureWarnings(b => b.Ignore(CoreEventId.DetachedLazyLoadingWarning))
             .LogTo(Console.WriteLine);
 -->
-[!code-csharp[SuppressMessage](../../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=SuppressMessage)]
+[!code-csharp[SuppressMessage](../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=SuppressMessage)]
 
 ### Throw for an event
 
@@ -229,7 +229,7 @@ Finally, EF Core can be configured to throw for a given event. This is particula
             .ConfigureWarnings(b => b.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
             .LogTo(Console.WriteLine);
 -->
-[!code-csharp[ThrowForEvent](../../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=ThrowForEvent)]
+[!code-csharp[ThrowForEvent](../../../samples/core/Miscellaneous/Logging/SimpleLogging/Program.cs?name=ThrowForEvent)]
 
 ## Message contents and formatting
 

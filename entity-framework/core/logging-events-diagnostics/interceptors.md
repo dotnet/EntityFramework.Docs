@@ -25,7 +25,7 @@ public class ExampleContext : BlogsContext
         => optionsBuilder.AddInterceptors(new TaggedQueryCommandInterceptor());
 }
 -->
-[!code-csharp[RegisterInterceptor](../../../../samples/core/Miscellaneous/CommandInterception/Program.cs?name=RegisterInterceptor)]
+[!code-csharp[RegisterInterceptor](../../../samples/core/Miscellaneous/CommandInterception/Program.cs?name=RegisterInterceptor)]
 
 Alternately, `AddInterceptors` can be called as part of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> or when creating a <xref:Microsoft.EntityFrameworkCore.DbContextOptions> instance to pass to the DbContext constructor.
 
@@ -44,7 +44,7 @@ public class TaggedQueryCommandInterceptorContext : BlogsContext
         => optionsBuilder.AddInterceptors(_interceptor);
 }
 -->
-[!code-csharp[RegisterStatelessInterceptor](../../../../samples/core/Miscellaneous/CommandInterception/Program.cs?name=RegisterStatelessInterceptor)]
+[!code-csharp[RegisterStatelessInterceptor](../../../samples/core/Miscellaneous/CommandInterception/Program.cs?name=RegisterStatelessInterceptor)]
 
 Every interceptor instance must implement one or more interface derived from <xref:Microsoft.EntityFrameworkCore.Diagnostics.IInterceptor>. Each instance should only be registered once even if it implements multiple interception interfaces; EF Core will route events for each interface as appropriate.
 
@@ -80,7 +80,7 @@ Often, the trickiest part of the interception is determining when the command co
 <!--
             var blogs1 = context.Blogs.TagWith("Use hint: robust plan").ToList();
 -->
-[!code-csharp[TaggedQuery](../../../../samples/core/Miscellaneous/CommandInterception/Program.cs?name=TaggedQuery)]
+[!code-csharp[TaggedQuery](../../../samples/core/Miscellaneous/CommandInterception/Program.cs?name=TaggedQuery)]
 
 This tag can then be detected in the interceptor as it will always be included as a comment in the first line of the command text. On detecting the tag, the query SQL is modified to add the appropriate hint:
 
@@ -117,7 +117,7 @@ public class TaggedQueryCommandInterceptor : DbCommandInterceptor
     }
 }
 -->
-[!code-csharp[TaggedQueryCommandInterceptor](../../../../samples/core/Miscellaneous/CommandInterception/TaggedQueryCommandInterceptor.cs?name=TaggedQueryCommandInterceptor)]
+[!code-csharp[TaggedQueryCommandInterceptor](../../../samples/core/Miscellaneous/CommandInterception/TaggedQueryCommandInterceptor.cs?name=TaggedQueryCommandInterceptor)]
 
 Notice:
 
@@ -172,7 +172,7 @@ public class AadAuthenticationInterceptor : DbConnectionInterceptor
     }
 }
 -->
-[!code-csharp[AadAuthenticationInterceptor](../../../../samples/core/Miscellaneous/ConnectionInterception/AadAuthenticationInterceptor.cs?name=AadAuthenticationInterceptor)]
+[!code-csharp[AadAuthenticationInterceptor](../../../samples/core/Miscellaneous/ConnectionInterception/AadAuthenticationInterceptor.cs?name=AadAuthenticationInterceptor)]
 
 > [!TIP]
 > [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) now supports AAD authentication via connection string. See <xref:Microsoft.Data.SqlClient.SqlAuthenticationMethod> for more information.
@@ -201,7 +201,7 @@ In this example, the application frequently executes a query to obtain the most 
         async Task<string> GetDailyMessage(DailyMessageContext context)
             => (await context.DailyMessages.TagWith("Get_Daily_Message").OrderBy(e => e.Id).LastAsync()).Message;
 -->
-[!code-csharp[GetDailyMessage](../../../../samples/core/Miscellaneous/CachingInterception/Program.cs?name=GetDailyMessage)]
+[!code-csharp[GetDailyMessage](../../../samples/core/Miscellaneous/CachingInterception/Program.cs?name=GetDailyMessage)]
 
 This query is [tagged](xref:core/querying/tags) so that it can be easily detected in the interceptor. The idea is to only query the database for a new message once every day. At other times the application will use a cached result. (The sample uses delay of 10 seconds in the sample to simulate a new day.)
 
@@ -215,7 +215,7 @@ This interceptor is stateful: it stores the ID and message text of the most rece
     private string _message;
     private DateTime _queriedAt;
 -->
-[!code-csharp[InterceptorState](../../../../samples/core/Miscellaneous/CachingInterception/CachingCommandInterceptor.cs?name=InterceptorState)]
+[!code-csharp[InterceptorState](../../../samples/core/Miscellaneous/CachingInterception/CachingCommandInterceptor.cs?name=InterceptorState)]
 
 #### Before execution
 
@@ -244,7 +244,7 @@ In the `Executing` method (i.e. before making a database call), the interceptor 
         return new ValueTask<InterceptionResult<DbDataReader>>(result);
     }
 -->
-[!code-csharp[ReaderExecutingAsync](../../../../samples/core/Miscellaneous/CachingInterception/CachingCommandInterceptor.cs?name=ReaderExecutingAsync)]
+[!code-csharp[ReaderExecutingAsync](../../../samples/core/Miscellaneous/CachingInterception/CachingCommandInterceptor.cs?name=ReaderExecutingAsync)]
 
 Notice how the code calls <xref:Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult%601.SuppressWithResult%2A?displayProperty=nameWithType> and passes a replacement <xref:System.Data.Common.DbDataReader> containing the cached data. This InterceptionResult is then returned, causing suppression of query execution. The replacement reader is instead used by EF Core as the results of the query.
 
@@ -285,7 +285,7 @@ If no cached message is available, or if it has expired, then the code above doe
         return result;
     }
 -->
-[!code-csharp[ReaderExecutedAsync](../../../../samples/core/Miscellaneous/CachingInterception/CachingCommandInterceptor.cs?name=ReaderExecutedAsync)]
+[!code-csharp[ReaderExecutedAsync](../../../samples/core/Miscellaneous/CachingInterception/CachingCommandInterceptor.cs?name=ReaderExecutedAsync)]
 
 #### Demonstration
 
@@ -339,7 +339,7 @@ The [caching interceptor sample](https://github.com/dotnet/EntityFramework.Docs/
             => (await context.DailyMessages.TagWith("Get_Daily_Message").OrderBy(e => e.Id).LastAsync()).Message;
         #endregion
 -->
-[!code-csharp[Main](../../../../samples/core/Miscellaneous/CachingInterception/Program.cs?name=Main)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/CachingInterception/Program.cs?name=Main)]
 
 This results in the following output:
 
@@ -436,7 +436,7 @@ public class Post
     public Blog Blog { get; set; }
 }
 -->
-[!code-csharp[BlogsContext](../../../../samples/core/Miscellaneous/SaveChangesInterception/BlogsContext.cs?name=BlogsContext)]
+[!code-csharp[BlogsContext](../../../samples/core/Miscellaneous/SaveChangesInterception/BlogsContext.cs?name=BlogsContext)]
 
 Notice that a new instance of the interceptor is registered for each DbContext instance. This is because the auditing interceptor contains state linked to the current context instance.
 
@@ -481,7 +481,7 @@ public class EntityAudit
     public SaveChangesAudit SaveChangesAudit { get; set; }
 }
 -->
-[!code-csharp[AuditContext](../../../../samples/core/Miscellaneous/SaveChangesInterception/AuditContext.cs?name=AuditContext)]
+[!code-csharp[AuditContext](../../../samples/core/Miscellaneous/SaveChangesInterception/AuditContext.cs?name=AuditContext)]
 
 #### The interceptor
 
@@ -526,7 +526,7 @@ The first stage is handled before any changes are sent to the database using ove
         return result;
     }
 -->
-[!code-csharp[SavingChanges](../../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=SavingChanges)]
+[!code-csharp[SavingChanges](../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=SavingChanges)]
 
 Overriding both sync and async methods ensures that auditing will happen regardless of whether SaveChanges or SaveChangesAsync are called. Notice also that the async overload is itself able to perform non-blocking async I/O to the auditing database. You may wish to throw from the sync SavingChanges method to ensure that all database I/O is async. This then requires that the application always calls SaveChangesAsync and never SaveChanges.
 
@@ -579,7 +579,7 @@ Every interceptor method has an `eventData` parameter providing contextual infor
                 (auditString, property) => auditString + $"{property.Metadata.Name}: '{property.CurrentValue}' ");
     }
 -->
-[!code-csharp[CreateAudit](../../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=CreateAudit)]
+[!code-csharp[CreateAudit](../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=CreateAudit)]
 
 The result is a `SaveChangesAudit` entity with a collection of `EntityAudit` entities, one for each insert, update, or delete. The interceptor then inserts these entities into the audit database.
 
@@ -622,7 +622,7 @@ The audit entity is stored on the interceptor so that it can be accessed again o
         return result;
     }
 -->
-[!code-csharp[SavedChanges](../../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=SavedChanges)]
+[!code-csharp[SavedChanges](../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=SavedChanges)]
 
 The audit entity is attached to the audit context, since it already exists in the database and needs to be updated. We then set `Succeeded` and `EndTime`, which marks these properties as modified so SaveChanges will send an update to the audit database.
 
@@ -659,7 +659,7 @@ Failure is handled in much the same way as success, but in the `ISaveChangesInte
         }
     }
 -->
-[!code-csharp[SaveChangesFailed](../../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=SaveChangesFailed)]
+[!code-csharp[SaveChangesFailed](../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=SaveChangesFailed)]
 
 #### Demonstration
 
@@ -731,7 +731,7 @@ The [auditing sample](https://github.com/dotnet/EntityFramework.Docs/tree/master
             }
         }
 -->
-[!code-csharp[Program](../../../../samples/core/Miscellaneous/SaveChangesInterception/Program.cs?name=Program)]
+[!code-csharp[Program](../../../samples/core/Miscellaneous/SaveChangesInterception/Program.cs?name=Program)]
 
 The result shows the contents of the auditing database:
 

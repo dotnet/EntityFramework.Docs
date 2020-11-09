@@ -233,7 +233,7 @@
       - name: Events
         href: core/logging-events-diagnostics/events.md
       - name: Interceptors
-        href: core/logging-events-diagnostics/interceptos.md
+        href: core/logging-events-diagnostics/interceptors.md
       - name: Diagnostic listeners
         href: core/logging-events-diagnostics/diagnostic-listeners.md
       #- name: Debug views
