@@ -201,6 +201,6 @@ In this getting started you have learned how to use a Xamarin.Forms application 
 
 Other Entity Framework Core topics of interest to Xamarin developers:
 
-* [Configuring a `DbContext`](xref:core/miscellaneous/configuring-dbcontext)
+* [Configuring a `DbContext`](xref:core/dbcontext-configuration/index)
 * Learn more about [LINQ query expressions](/dotnet/csharp/programming-guide/concepts/linq/basic-linq-query-operations)
 * [Configure your model](xref:core/modeling/index) to specify things like [required](xref:core/modeling/entity-properties#required-and-optional-properties) and [maximum length](xref:core/modeling/entity-properties#maximum-length)

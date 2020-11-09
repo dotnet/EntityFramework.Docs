@@ -157,37 +157,37 @@
         },
         {
             "source_path": "entity-framework/core/get-started/full-dotnet/existing-db.md",
-            "redirect_url": "/ef/core/get-started/index",
+            "redirect_url": "/ef/core/get-started/overview/first-app",
             "redirect_document_id": false
         },
         {
             "source_path": "entity-framework/core/get-started/full-dotnet/index.md",
-            "redirect_url": "/ef/core/get-started/index",
+            "redirect_url": "/ef/core/get-started/overview/first-app",
             "redirect_document_id": false
         },
         {
             "source_path": "entity-framework/core/get-started/full-dotnet/new-db.md",
-            "redirect_url": "/ef/core/get-started/index",
+            "redirect_url": "/ef/core/get-started/overview/first-app",
             "redirect_document_id": false
         },
         {
             "source_path": "entity-framework/core/get-started/netcore/index.md",
-            "redirect_url": "/ef/core/get-started/index",
+            "redirect_url": "/ef/core/get-started/overview/first-app",
             "redirect_document_id": false
         },
         {
             "source_path": "entity-framework/core/get-started/netcore/new-db-sqlite.md",
-            "redirect_url": "/ef/core/get-started/index",
+            "redirect_url": "/ef/core/get-started/overview/first-app",
             "redirect_document_id": false
         },
         {
             "source_path": "entity-framework/core/get-started/uwp/getting-started.md",
-            "redirect_url": "/ef/core/get-started/index",
+            "redirect_url": "/ef/core/get-started/overview/first-app",
             "redirect_document_id": false
         },
         {
             "source_path": "entity-framework/core/get-started/uwp/index.md",
-            "redirect_url": "/ef/core/get-started/index",
+            "redirect_url": "/ef/core/get-started/overview/first-app",
             "redirect_document_id": false
         },
         {
@@ -348,6 +348,86 @@
         {
             "source_path": "entity-framework/core/miscellaneous/rc2-rtm-upgrade.md",
             "redirect_url": "/ef/core/what-is-new",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/cli/dbcontext-creation.md",
+            "redirect_url": "/ef/core/cli/dbcontext-creation",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/cli/dotnet.md",
+            "redirect_url": "/ef/core/cli/dotnet",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/cli/index.md",
+            "redirect_url": "/ef/core/cli/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/cli/powershell.md",
+            "redirect_url": "/ef/core/cli/powershell",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/cli/services.md",
+            "redirect_url": "/ef/core/cli/services",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/get-started/index.md",
+            "redirect_url": "/ef/core/get-started/overview/first-app",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/events/index.md",
+            "redirect_url": "/ef/core/logging-events-diagnostics/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/logging.md",
+            "redirect_url": "/ef/core/logging-events-diagnostics/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/events/simple-logging.md",
+            "redirect_url": "/ef/core/logging-events-diagnostics/simple-logging",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/platforms/index.md",
+            "redirect_url": "/ef/core/miscellaneous/platforms",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/testing/in-memory.md",
+            "redirect_url": "/ef/core/testing/in-memory",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/testing/index.md",
+            "redirect_url": "/ef/core/testing/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/testing/sharing-databases.md",
+            "redirect_url": "/ef/core/testing/sharing-databases",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/testing/sqlite.md",
+            "redirect_url": "/ef/core/testing/sqlite",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/testing/testing-sample.md",
+            "redirect_url": "/ef/core/testing/testing-sample",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/configuring-dbcontext.md",
+            "redirect_url": "/ef/core/dbcontext-configuration/index",
             "redirect_document_id": false
         }
     ]

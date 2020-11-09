@@ -7,7 +7,7 @@ uid: core/managing-schemas/migrations/providers
 ---
 # Migrations with Multiple Providers
 
-The [EF Core Tools](xref:core/miscellaneous/cli/index) only scaffold migrations for the active provider. Sometimes, however, you may want to use more than one provider (for example Microsoft SQL Server and SQLite) with your DbContext. Handle this by maintaining multiple sets of migrations--one for each provider--and adding a migration to each for every model change.
+The [EF Core Tools](xref:core/cli/index) only scaffold migrations for the active provider. Sometimes, however, you may want to use more than one provider (for example Microsoft SQL Server and SQLite) with your DbContext. Handle this by maintaining multiple sets of migrations--one for each provider--and adding a migration to each for every model change.
 
 ## Using multiple context types
 

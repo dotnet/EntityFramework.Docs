@@ -3,7 +3,7 @@ title: Configuring a DbContext - EF Core
 description: Strategies for configuring DbContexts with Entity Framework Core
 author: ajcvickers
 ms.date: 10/27/2016
-uid: core/miscellaneous/configuring-dbcontext
+uid: core/dbcontext-configuration/index
 ---
 # Configuring a DbContext
 
@@ -13,7 +13,7 @@ This article shows basic patterns for configuring a `DbContext` via a `DbContext
 
 EF Core design-time tools such as [migrations](xref:core/managing-schemas/migrations/index) need to be able to discover and create a working instance of a `DbContext` type in order to gather details about the application's entity types and how they map to a database schema. This process can be automatic as long as the tool can easily create the `DbContext` in such a way that it will be configured similarly to how it would be configured at run-time.
 
-While any pattern that provides the necessary configuration information to the `DbContext` can work at run-time, tools that require using a `DbContext` at design-time can only work with a limited number of patterns. These are covered in more detail in the [Design-Time Context Creation](xref:core/miscellaneous/cli/dbcontext-creation) section.
+While any pattern that provides the necessary configuration information to the `DbContext` can work at run-time, tools that require using a `DbContext` at design-time can only work with a limited number of patterns. These are covered in more detail in the [Design-Time Context Creation](xref:core/cli/dbcontext-creation) section.
 
 ## Configuring DbContextOptions
 
@@ -189,4 +189,4 @@ Using dependency injection, this can be achieved by either registering the conte
 ## More reading
 
 - Read [Dependency Injection](/aspnet/core/fundamentals/dependency-injection) to learn more about using DI.
-- Read [Testing](xref:core/miscellaneous/testing/index) for more information.
+- Read [Testing](xref:core/testing/index) for more information.

@@ -3,7 +3,7 @@ title: Testing with SQLite - EF Core
 description: Using SQLite to test an Entity Framework Core application
 author: ajcvickers
 ms.date: 04/24/2020
-uid: core/miscellaneous/testing/sqlite
+uid: core/testing/sqlite
 ---
 
 # Using SQLite to test an EF Core application
@@ -11,9 +11,9 @@ uid: core/miscellaneous/testing/sqlite
 > [!WARNING]
 > Using SQLite can be an effective way to test an EF Core application.
 > However, problems can arise where SQLite behaves differently from other database systems.
-> See [Testing code that uses EF Core](xref:core/miscellaneous/testing/index) for a discussion of the issues and trade-offs.  
+> See [Testing code that uses EF Core](xref:core/testing/index) for a discussion of the issues and trade-offs.  
 
-This document builds uses on the concepts introduced in [Sample showing how to test applications that use EF Core](xref:core/miscellaneous/testing/testing-sample).
+This document builds uses on the concepts introduced in [Sample showing how to test applications that use EF Core](xref:core/testing/testing-sample).
 The code examples shown here come from this sample.
 
 ## Using SQLite in-memory databases
@@ -30,9 +30,9 @@ This is easy to use with EF Core as long as you understand the in-memory databas
 EF Core will use an already open connection when given one, and will never attempt to close it.
 So the key to using EF Core with an in-memory SQLite database is to open the connection before passing it to EF.  
 
-The [sample](xref:core/miscellaneous/testing/testing-sample) achieves this with the following code:
+The [sample](xref:core/testing/testing-sample) achieves this with the following code:
 
-[!code-csharp[SqliteInMemory](../../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/SqliteInMemoryItemsControllerTest.cs?name=SqliteInMemory)]
+[!code-csharp[SqliteInMemory](../../../samples/core/Miscellaneous/Testing/ItemsWebApi/Tests/SqliteInMemoryItemsControllerTest.cs?name=SqliteInMemory)]
 
 Notice:
 

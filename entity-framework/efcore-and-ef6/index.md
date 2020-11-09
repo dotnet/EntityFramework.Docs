@@ -135,7 +135,7 @@ The EF Core column indicates the product version in which the feature first appe
 
 ### Supported platforms
 
-EF Core 3.1 runs on .NET Core and .NET Framework, through the use of .NET Standard 2.0. However, EF Core 5.0 will not run on .NET Framework. See [Platforms](xref:core/platforms/index) for more details.
+EF Core 3.1 runs on .NET Core and .NET Framework, through the use of .NET Standard 2.0. However, EF Core 5.0 will not run on .NET Framework. See [Platforms](xref:core/miscellaneous/platforms) for more details.
 
 EF6.4 runs on .NET Core and .NET Framework, through multi-targeting.
 

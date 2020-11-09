@@ -3,7 +3,7 @@ title: Design-time DbContext Creation - EF Core
 description: Strategies for creating a design-time DbContext with Entity Framework Core
 author: bricelam
 ms.date: 10/27/2020
-uid: core/miscellaneous/cli/dbcontext-creation
+uid: core/cli/dbcontext-creation
 ---
 # Design-time DbContext Creation
 
@@ -17,7 +17,7 @@ If your startup project uses the [ASP.NET Core Web Host][3] or [.NET Core Generi
 
 The tools first try to obtain the service provider by invoking `Program.CreateHostBuilder()`, calling `Build()`, then accessing the `Services` property.
 
-[!code-csharp[Main](../../../../samples/core/Miscellaneous/CommandLine/ApplicationService.cs#ApplicationService)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/CommandLine/ApplicationService.cs#ApplicationService)]
 
 > [!NOTE]
 > When you create a new ASP.NET Core application, this hook is included by default.
@@ -32,7 +32,7 @@ If the DbContext can't be obtained from the application service provider, the to
 
 You can also tell the tools how to create your DbContext by implementing the `IDesignTimeDbContextFactory<TContext>` interface: If a class implementing this interface is found in either the same project as the derived `DbContext` or in the application's startup project, the tools bypass the other ways of creating the DbContext and use the design-time factory instead.
 
-[!code-csharp[Main](../../../../samples/core/Miscellaneous/CommandLine/BloggingContextFactory.cs#BloggingContextFactory)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/CommandLine/BloggingContextFactory.cs#BloggingContextFactory)]
 
 > [!NOTE]
 > Prior to EFCore 5.0 the `args` parameter was unused (see [this issue][8]).
@@ -64,10 +64,10 @@ Update-Database -Args '--environment Production'
 ***
 
   [1]: xref:core/managing-schemas/migrations/index
-  [2]: xref:core/miscellaneous/configuring-dbcontext
+  [2]: xref:core/dbcontext-configuration/index
   [3]: /aspnet/core/fundamentals/host/web-host
   [4]: /aspnet/core/fundamentals/host/generic-host
-  [5]: xref:core/miscellaneous/configuring-dbcontext#constructor-argument
-  [6]: xref:core/miscellaneous/configuring-dbcontext#using-dbcontext-with-dependency-injection
-  [7]: xref:core/miscellaneous/configuring-dbcontext#onconfiguring
+  [5]: xref:core/dbcontext-configuration/index#constructor-argument
+  [6]: xref:core/dbcontext-configuration/index#using-dbcontext-with-dependency-injection
+  [7]: xref:core/dbcontext-configuration/index#onconfiguring
   [8]: https://github.com/dotnet/efcore/issues/8332
