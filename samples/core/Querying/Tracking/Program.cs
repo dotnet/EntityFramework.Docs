@@ -45,6 +45,15 @@ namespace EFQuerying.Tracking
 
             using (var context = new BloggingContext())
             {
+                #region NoTrackingWithIdentityResolution
+                var blogs = context.Blogs
+                    .AsNoTrackingWithIdentityResolution()
+                    .ToList();
+                #endregion
+            }
+
+            using (var context = new BloggingContext())
+            {
                 #region ContextDefaultTrackingBehavior
                 context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 

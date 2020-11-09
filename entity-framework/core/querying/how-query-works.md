@@ -10,6 +10,9 @@ uid: core/querying/how-query-works
 
 Entity Framework Core uses Language Integrated Query (LINQ) to query data from the database. LINQ allows you to use C# (or your .NET language of choice) to write strongly typed queries based on your derived context and entity classes.
 
+> [!NOTE]
+> This article is out of date and some parts of it needs to be updated to account for changes happened in design of query pipeline. If you have any doubts about any behavior mentioned here, please [ask a question](https://github.com/dotnet/efcore/issues/new/choose).
+
 ## The life of a query
 
 The following description is a high-level overview of the process each query goes through.

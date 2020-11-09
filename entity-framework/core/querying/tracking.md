@@ -2,7 +2,7 @@
 title: Tracking vs. No-Tracking Queries - EF Core
 description: Information on tracking and no-tracking queries in Entity Framework Core
 author: smitpatel
-ms.date: 10/10/2019
+ms.date: 11/09/2020
 uid: core/querying/tracking
 ---
 # Tracking vs. No-Tracking Queries
@@ -36,6 +36,10 @@ You can also change the default tracking behavior at the context instance level:
 ## Identity resolution
 
 Since a tracking query uses the change tracker, EF Core will do identity resolution in a tracking query. When materializing an entity, EF Core will return the same entity instance from the change tracker if it's already being tracked. If the result contains same entity multiple times, you get back same instance for each occurrence. No-tracking queries don't use the change tracker and don't do identity resolution. So you get back new instance of entity even when the same entity is contained in the result multiple times. This behavior was different in versions before EF Core 3.0, see [previous versions](#previous-versions).
+
+Starting with EF Core 5.0, you can combine both of the above behaviors in same query. That is, you can have a no tracking query, which will do identity resolution in the results. Just like `AsNoTracking()` queryable operator, we've added another operator `AsNoTrackingWithIdentityResolution()`. There's also associated entry added in <xref:Microsoft.EntityFrameworkCore.QueryTrackingBehavior> enum. When you configure the query to use identity resolution with no tracking, we use a stand-alone change tracker in the background when generating query results so each instance is materialized only once. Since this change tracker is different from the one in the context, the results are not tracked by the context. After the query is enumerated fully, the change tracker goes out of scope and garbage collected as required.
+
+[!code-csharp[Main](../../../samples/core/Querying/Tracking/Program.cs#NoTrackingWithIdentityResolution)]
 
 ## Tracking and custom projections
 
