@@ -8,7 +8,7 @@ uid: core/logging-events-diagnostics/interceptors
 
 # Interceptors
 
-Entity Framework Core (EF Core) interceptors enable interception, modification, and/or suppression of EF Core events. This includes low-level database operations such as executing a command, as well as higher-level events, such as calls to SaveChanges.
+Entity Framework Core (EF Core) interceptors enable interception, modification, and/or suppression of EF Core operations. This includes low-level database operations such as executing a command, as well as higher-level operations, such as calls to SaveChanges.
 
 Interceptors are different from logging and diagnostics in that they allow modification or suppression of the operation being intercepted. [Simple logging](xref:core/logging-events-diagnostics/simple-logging) or [Microsoft.Extensions.Logging](xref:core/logging-events-diagnostics/extensions-logging) are better choices for logging.
 
@@ -16,7 +16,7 @@ Interceptors are registered per DbContext instance when the context is configure
 
 ## Registering interceptors
 
-Interceptors are registered using <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors%2A> when [configuring a DbContext instance](xref:core/miscellaneous/configuring-dbcontext). This is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
+Interceptors are registered using <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors%2A> when [configuring a DbContext instance](xref:core/dbcontext-configuration/index). This is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
 
 <!--
 public class ExampleContext : BlogsContext
@@ -58,13 +58,13 @@ Low-level database interception is split into the three interfaces shown in the 
 
 | Interceptor                                                            | Database operations intercepted
 |:-----------------------------------------------------------------------|-------------------------------------------------
-| <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbCommandInterceptor> | Creating commands</br>Executing commands</br>Command failures</br>Disposing the command DataReader
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbCommandInterceptor> | Creating commands</br>Executing commands</br>Command failures</br>Disposing the command's DbDataReader
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor> | Opening and closing connections</br>Connection failures
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbTransactionInterceptor> | Creating transactions</br>Using existing transactions</br>Committing transactions</br>Rolling back transactions</br>Creating and using savepoints</br>Transaction failures
 
 The base classes <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor>, <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbConnectionInterceptor>, and <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbTransactionInterceptor> contain no-op implementations for each method in the corresponding interface. Use the base classes to avoid the need to implement unused interception methods.
 
-The methods on each interceptor type come in pairs; one called before the database operation is started; the other called after the operation has completed. For example, <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor.ReaderExecuting%2A?displayProperty=nameWithType> is called before a query is executed, and <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor.ReaderExecuted%2A?displayProperty=nameWithType> is called after query has been sent to the database.
+The methods on each interceptor type come in pairs, with the first being called before the database operation is started, and the second after the operation has completed. For example. For example, <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor.ReaderExecuting%2A?displayProperty=nameWithType> is called before a query is executed, and <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbCommandInterceptor.ReaderExecuted%2A?displayProperty=nameWithType> is called after query has been sent to the database.
 
 Each pair of methods have both sync and async variations. This allows for asynchronous I/O, such as requesting an access token, to happen as part of intercepting an async database operation.
 
@@ -166,6 +166,8 @@ public class AadAuthenticationInterceptor : DbConnectionInterceptor
         var sqlConnection = (SqlConnection)connection;
 
         var provider = new AzureServiceTokenProvider();
+        // Note: in some situations the access token may not be cached automatically the Azure Token Provider.
+        // Depending on the kind of token requested, you may need to implement your own caching here.
         sqlConnection.AccessToken = await provider.GetAccessTokenAsync("https://database.windows.net/", null, cancellationToken);
 
         return result;
@@ -179,6 +181,9 @@ public class AadAuthenticationInterceptor : DbConnectionInterceptor
 
 > [!WARNING]
 > Notice that the interceptor throws if a sync call is made to open the connection. This is because there is no non-async method to obtain the access token and there is [no universal and simple way to call an async method from non-async context without risking deadlock](https://devblogs.microsoft.com/dotnet/configureawait-faq/).
+
+> [!WARNING]
+> in some situations the access token may not be cached automatically the Azure Token Provider. Depending on the kind of token requested, you may need to implement your own caching here.
 
 ### Example: Advanced command interception for caching
 

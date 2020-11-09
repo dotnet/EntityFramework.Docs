@@ -6,7 +6,7 @@ ms.date: 10/15/2020
 uid: core/logging-events-diagnostics/events
 ---
 
-# .NET events in EF Core
+# .NET Events in EF Core
 
 > [!TIP]  
 > You can [download the events sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Events) from GitHub.

@@ -50,7 +50,7 @@ This observer must then be registered globally, for example in the application's
 -->
 [!code-csharp[RegisterDiagnosticListener](../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=RegisterDiagnosticListener)]
 
-Second, once the EF Core DiagnosticListener is found, a new key-value observer it is created to subscribe to the actual EF Core events. For example:
+Second, once the EF Core DiagnosticListener is found, a new key-value observer is created to subscribe to the actual EF Core events. For example:
 
 <!--
 public class KeyValueObserver : IObserver<KeyValuePair<string, object>>

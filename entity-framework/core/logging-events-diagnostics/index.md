@@ -6,9 +6,9 @@ ms.date: 10/01/2020
 uid: core/logging-events-diagnostics/index
 ---
 
-# Overview of logging and interception
+# Overview of Logging and Interception
 
-Entity Framework Core (EF Core) contains several mechanisms for generating logs, responding to events, and obtaining diagnostics. Each of these are tailored to different situations, and it is important to select the best mechanism for the task in hand, even when multiple mechanisms could work. For example, a database interceptor could be used to log SQL, but this is better handled by one of the mechanisms tailored to logging. This page presents an overview of each of these mechanisms and describes when each should be used.
+Entity Framework Core (EF Core) contains several mechanisms for generating logs, responding to events, and obtaining diagnostics. Each of these is tailored to different situations, and it is important to select the best mechanism for the task in hand, even when multiple mechanisms could work. For example, a database interceptor could be used to log SQL, but this is better handled by one of the mechanisms tailored to logging. This page presents an overview of each of these mechanisms and describes when each should be used.
 
 ## Quick reference
 
@@ -22,14 +22,14 @@ The table below provides a quick reference for the differences between the mecha
 | Interceptors | Yes | Per context | Context configuration | Manipulating EF operations
 | Diagnostics listeners | No | Process | Globally | Application diagnostics
 
-*Typically `Microsoft.Extensions.Logging` is configured per-application in D.I. However, at the EF level, each context _can_ be configured with a different logger if needed.
+*Typically `Microsoft.Extensions.Logging` is configured per-application via dependency injection However, at the EF level, each context _can_ be configured with a different logger if needed.
 
 ## Simple logging
 
 > [!NOTE]
 > This feature was added in EF Core 5.0.
 
-EF Core logs can be accessed from any type of application through use of [LogTo](https://github.com/dotnet/efcore/blob/ec3df8fd7e4ea4ebeebfa747619cef37b23ab2c6/src/EFCore/DbContextOptionsBuilder.cs#L135) <!-- Issue #2748 <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> --> when [configuring a DbContext instance](xref:core/dbcontext-configuration/index). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
+EF Core logs can be accessed from any type of application through the use of [LogTo](https://github.com/dotnet/efcore/blob/ec3df8fd7e4ea4ebeebfa747619cef37b23ab2c6/src/EFCore/DbContextOptionsBuilder.cs#L135) <!-- Issue #2748 <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> --> when [configuring a DbContext instance](xref:core/dbcontext-configuration/index). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -43,9 +43,7 @@ See [Simple Logging](xref:core/logging-events-diagnostics/simple-logging) for mo
 
 ## Microsoft.Extensions.Logging
 
-[Microsoft.Extensions.Logging](/dotnet/core/extensions/logging) is an extensible logging mechanism with plug-in providers for many common logging systems.
-
-EF Core fully integrates with `Microsoft.Extensions.Logging` and this form of logging is used by default for ASP.NET Core applications.
+[Microsoft.Extensions.Logging](/dotnet/core/extensions/logging) is an extensible logging mechanism with plug-in providers for many common logging systems. EF Core fully integrates with `Microsoft.Extensions.Logging` and this form of logging is used by default for ASP.NET Core applications.
 
 See [Using Microsoft.Extensions.Logging in EF Core](xref:core/logging-events-diagnostics/extensions-logging) for more information.
 
@@ -65,7 +63,7 @@ See [.NET Events in EF Core](xref:core/logging-events-diagnostics/events) for mo
 > [!NOTE]
 > This feature was added in EF Core 3.0. Additional interceptors were added in EF Core 5.0.
 
-EF Core interceptors enable interception, modification, and/or suppression of EF Core events. This includes low-level database operations such as executing a command, as well as higher-level events, such as calls to SaveChanges.
+EF Core interceptors enable interception, modification, and/or suppression of EF Core operations. This includes low-level database operations such as executing a command, as well as higher-level operations, such as calls to SaveChanges.
 
 Interceptors are different from logging and diagnostics in that they allow modification or suppression of the operation being intercepted. [Simple logging](xref:core/logging-events-diagnostics/simple-logging) or [Microsoft.Extensions.Logging](xref:core/logging-events-diagnostics/extensions-logging) are better choices for logging.
 

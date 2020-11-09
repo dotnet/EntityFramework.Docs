@@ -24,6 +24,8 @@ public class AadAuthenticationInterceptor : DbConnectionInterceptor
         var sqlConnection = (SqlConnection)connection;
 
         var provider = new AzureServiceTokenProvider();
+        // Note: in some situations the access token may not be cached automatically the Azure Token Provider.
+        // Depending on the kind of token requested, you may need to implement your own caching here.
         sqlConnection.AccessToken = await provider.GetAccessTokenAsync("https://database.windows.net/", null, cancellationToken);
 
         return result;
