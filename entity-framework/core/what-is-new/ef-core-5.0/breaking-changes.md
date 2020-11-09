@@ -29,6 +29,8 @@ The following API and behavior changes have the potential to break existing appl
 | [IndexBuilder.HasName is now obsolete](#index-obsolete)                                                                               | Low        |
 | [A pluarlizer is now included for scaffolding reverse engineered models](#pluralizer)                                                 | Low        |
 | [INavigationBase replaces INavigation in some APIs to support skip navigations](#inavigationbase)                                     | Low        |
+| [Some queries with correlated collection that also use `Distinct` or `GroupBy` are no longer supported](#collection-distinct-groupby) | Low        |
+| [Using a collection of Queryable type in projection is not supported](#queryable-projection)                                          | Low        |
 
 ## Medium-impact changes
 
@@ -450,3 +452,90 @@ Most of the functionality between normal and skip navigations is the same. Howev
 #### Mitigations
 
 In many cases applications can switch to using the new base interface with no other changes. However, in cases where the navigation is used to access foreign key properties, application code should either be constrained to only normal navigations, or updated to do the appropriate thing for both normal and skip navigations.
+
+<a name="collection-distinct-groupby"></a>
+
+### Some queries with correlated collection that also use `Distinct` or `GroupBy` are no longer supported
+
+[Tracking Issue #15873](https://github.com/dotnet/efcore/issues/15873)
+
+**Old behavior**
+
+Previously, queries involving correlated collections followed by `GroupBy`, as well as some queries using `Distinct` we allowed to execute.
+
+GroupBy example:
+
+```csharp
+context.Parents
+    .Select(p => p.Children
+        .GroupBy(c => c.School)
+        .Select(g => g.Key))
+```
+
+`Distinct` example - specifically `Distinct` queries where inner collection projection doesn't contain the primary key:
+
+```csharp
+context.Parents
+    .Select(p => p.Children
+        .Select(c => c.School)
+        .Distinct())
+```
+
+These queries could return incorrect results if the inner collection contained any duplicates, but worked correctly if all the elements in the inner collection were unique.
+
+**New behavior**
+
+These queries are no loger suppored. Exception is thrown indicating that we don't have enough information to correctly build the results.
+
+**Why**
+
+For correlated collection scenarios we need to know entity's primary key in order to assign collection entities to the correct parent. When inner collection doesn't use `GroupBy` or `Distinct`, the missing primary key can simply be added to the projection. However in case of `GroupBy` and `Distinct` it can't be done because it would change the result of `GroupBy` or `Distinct` operation.
+
+**Mitigations**
+
+Rewrite the query to not use `GroupBy` or `Distinct` operations on the inner collection, and perform these operations on the client instead.
+
+```csharp
+context.Parents
+    .Select(p => p.Children.Select(c => c.School))
+    .ToList()
+    .Select(x => x.GroupBy(c => c).Select(g => g.Key))
+```
+
+```csharp
+context.Parents
+    .Select(p => p.Children.Select(c => c.School))
+    .ToList()
+    .Select(x => x.Distinct())
+```
+
+<a name="queryable-projection"></a>
+
+### Using a collection of Queryable type in projection is not supported
+
+[Tracking Issue #16314](https://github.com/dotnet/efcore/issues/16314)
+
+**Old behavior**
+
+Previously, it was possible to use collection of a Queryable type inside the projection in some cases, for example as an argument to a `List<T>` constructor:
+
+```csharp
+context.Blogs
+    .Select(b => new List<Post>(context.Posts.Where(p => p.BlogId == b.Id)))
+```
+
+**New behavior**
+
+These queries are no loger suppored. Exception is thrown indicating that we can't create an object of Queryable type and suggesting how this could be fixed.
+
+**Why**
+
+We can't materialize an object of a Queryable type, so they would automatically be created using `List<T>` type instead. This would often cause an exception due to type mismatch which was not very clear and could be surprising to some users. We decided to recognize the pattern and throw a more meaningful exception.
+
+**Mitigations**
+
+Add `ToList()` call after the Queryable object in the projection:
+
+```csharp
+context.Blogs.Select(b => context.Posts.Where(p => p.BlogId == b.Id).ToList())
+```
