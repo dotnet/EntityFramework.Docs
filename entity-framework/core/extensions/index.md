@@ -27,7 +27,7 @@ Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibe
 
 [Website](https://www.devart.com/entitydeveloper/)
 
-### nHydrate O/RM for Entity Framework
+### nHydrate ORM for Entity Framework
 
 An O/RM that creates strongly-typed, extendable classes for Entity Framework. The generated code is Entity Framework Core. There is no difference. This is not a replacement for EF or a custom O/RM. It is a visual, modeling layer that allows a team to manage complex database schemas. It works well with SCM software like Git, allowing multi-user access to your model with minimal conflicts. The installer tracks model changes and creates upgrade scripts. For EF Core: 3.
 
