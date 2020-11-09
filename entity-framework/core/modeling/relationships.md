@@ -79,7 +79,7 @@ In this example the highlighted properties will be used to configure the relatio
 > If the property is the primary key or is of a type not compatible with the principal key then it won't be configured as the foreign key.
 
 > [!NOTE]
-> Before EF Core 3.0 the property named exactly the same as the principal key property [was also matched as the foreign key](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
+> Before EF Core 3.0 the property named exactly the same as the principal key property [was also matched as the foreign key](https://github.com/dotnet/efcore/issues/13274)
 
 ### No foreign key property
 

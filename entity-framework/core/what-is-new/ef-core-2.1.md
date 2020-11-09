@@ -173,4 +173,4 @@ var query = context.People.FromSql(sql);
 It is recommended that you use EF Core 2.1 with providers that have been updated or at least tested to work with EF Core 2.1.
 
 > [!TIP]
-> If you find any unexpected incompatibility or any issue in the new features, or if you have feedback on them, please report it using [our issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues/new).
+> If you find any unexpected incompatibility or any issue in the new features, or if you have feedback on them, please report it using [our issue tracker](https://github.com/dotnet/efcore/issues/new).

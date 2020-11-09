@@ -75,8 +75,8 @@ Changes that we expect to only impact database providers are documented under [p
 
 ### LINQ queries are no longer evaluated on the client
 
-[Tracking Issue #14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
-[Also see issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
+[Tracking Issue #14935](https://github.com/dotnet/efcore/issues/14935)
+[Also see issue #12795](https://github.com/dotnet/efcore/issues/12795)
 
 #### Old behavior
 
@@ -134,7 +134,7 @@ To use EF Core in an ASP.NET Core 3.0 application or any other supported applica
 
 ### The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK
 
-[Tracking Issue #14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
+[Tracking Issue #14016](https://github.com/dotnet/efcore/issues/14016)
 
 #### Old behavior
 
@@ -164,7 +164,7 @@ You can also obtain it a local tool when you restore the dependencies of a proje
 
 ### FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed
 
-[Tracking Issue #10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
+[Tracking Issue #10996](https://github.com/dotnet/efcore/issues/10996)
 
 #### Old behavior
 
@@ -204,7 +204,7 @@ Switch to use the new method names.
 
 ### FromSql method when used with stored procedure cannot be composed
 
-[Tracking Issue #15392](https://github.com/aspnet/EntityFrameworkCore/issues/15392)
+[Tracking Issue #15392](https://github.com/dotnet/efcore/issues/15392)
 
 #### Old behavior
 
@@ -234,7 +234,7 @@ context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable(
 
 ### FromSql methods can only be specified on query roots
 
-[Tracking Issue #15704](https://github.com/aspnet/EntityFrameworkCore/issues/15704)
+[Tracking Issue #15704](https://github.com/dotnet/efcore/issues/15704)
 
 #### Old behavior
 
@@ -256,7 +256,7 @@ Specifying `FromSql` anywhere other than on a `DbSet` had no added meaning or ad
 
 ### No-tracking queries no longer perform identity resolution
 
-[Tracking Issue #13518](https://github.com/aspnet/EntityFrameworkCore/issues/13518)
+[Tracking Issue #13518](https://github.com/dotnet/efcore/issues/13518)
 
 #### Old behavior
 
@@ -284,7 +284,7 @@ Use a tracking query if identity resolution is required.
 
 ### Temporary key values are no longer set onto entity instances
 
-[Tracking Issue #12378](https://github.com/aspnet/EntityFrameworkCore/issues/12378)
+[Tracking Issue #12378](https://github.com/dotnet/efcore/issues/12378)
 
 #### Old behavior
 
@@ -313,7 +313,7 @@ For example, `context.Entry(blog).Property(e => e.Id).CurrentValue` will return 
 
 ### DetectChanges honors store-generated key values
 
-[Tracking Issue #14616](https://github.com/aspnet/EntityFrameworkCore/issues/14616)
+[Tracking Issue #14616](https://github.com/dotnet/efcore/issues/14616)
 
 #### Old behavior
 
@@ -353,7 +353,7 @@ public string Id { get; set; }
 
 ### Cascade deletions now happen immediately by default
 
-[Tracking Issue #10114](https://github.com/aspnet/EntityFrameworkCore/issues/10114)
+[Tracking Issue #10114](https://github.com/dotnet/efcore/issues/10114)
 
 #### Old behavior
 
@@ -382,7 +382,7 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 
 ### Eager loading of related entities now happens in a single query
 
-[Tracking issue #18022](https://github.com/aspnet/EntityFrameworkCore/issues/18022)
+[Tracking issue #18022](https://github.com/dotnet/efcore/issues/18022)
 
 #### Old behavior
 
@@ -398,7 +398,7 @@ Issuing multiple queries to implement a single LINQ query caused numerous issues
 
 #### Mitigations
 
-While technically this is not a breaking change, it could have a considerable effect on application performance when a single query contains a large number of `Include` operator on collection navigations. [See this comment](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-542397085) for more information and for rewriting queries in a more efficient way.
+While technically this is not a breaking change, it could have a considerable effect on application performance when a single query contains a large number of `Include` operator on collection navigations. [See this comment](https://github.com/dotnet/efcore/issues/18022#issuecomment-542397085) for more information and for rewriting queries in a more efficient way.
 
 **
 
@@ -406,7 +406,7 @@ While technically this is not a breaking change, it could have a considerable ef
 
 ### DeleteBehavior.Restrict has cleaner semantics
 
-[Tracking Issue #12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
+[Tracking Issue #12661](https://github.com/dotnet/efcore/issues/12661)
 
 #### Old behavior
 
@@ -428,7 +428,7 @@ The previous behavior can be restored by using `DeleteBehavior.ClientNoAction`.
 
 ### Query types are consolidated with entity types
 
-[Tracking Issue #14194](https://github.com/aspnet/EntityFrameworkCore/issues/14194)
+[Tracking Issue #14194](https://github.com/dotnet/efcore/issues/14194)
 
 #### Old behavior
 
@@ -463,9 +463,9 @@ This would still not be configured by convention to avoid misconfiguration when 
 
 ### Configuration API for owned type relationships has changed
 
-[Tracking Issue #12444](https://github.com/aspnet/EntityFrameworkCore/issues/12444)
-[Tracking Issue #9148](https://github.com/aspnet/EntityFrameworkCore/issues/9148)
-[Tracking Issue #14153](https://github.com/aspnet/EntityFrameworkCore/issues/14153)
+[Tracking Issue #12444](https://github.com/dotnet/efcore/issues/12444)
+[Tracking Issue #9148](https://github.com/dotnet/efcore/issues/9148)
+[Tracking Issue #14153](https://github.com/dotnet/efcore/issues/14153)
 
 #### Old behavior
 
@@ -521,7 +521,7 @@ Change configuration of owned type relationships to use the new API surface as s
 
 ### Dependent entities sharing the table with the principal are now optional
 
-[Tracking Issue #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
+[Tracking Issue #9005](https://github.com/dotnet/efcore/issues/9005)
 
 #### Old behavior
 
@@ -557,7 +557,7 @@ If your model has a table sharing dependent with all optional columns, but the n
 
 ### All entities sharing a table with a concurrency token column have to map it to a property
 
-[Tracking Issue #14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
+[Tracking Issue #14154](https://github.com/dotnet/efcore/issues/14154)
 
 #### Old behavior
 
@@ -611,7 +611,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ### Owned entities cannot be queried without the owner using a tracking query
 
-[Tracking Issue #18876](https://github.com/aspnet/EntityFrameworkCore/issues/18876)
+[Tracking Issue #18876](https://github.com/dotnet/efcore/issues/18876)
 
 #### Old behavior
 
@@ -643,7 +643,7 @@ context.People.Select(p => p.Address).AsNoTracking();
 
 ### Inherited properties from unmapped types are now mapped to a single column for all derived types
 
-[Tracking Issue #13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
+[Tracking Issue #13998](https://github.com/dotnet/efcore/issues/13998)
 
 #### Old behavior
 
@@ -707,7 +707,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ### The foreign key property convention no longer matches same name as the principal property
 
-[Tracking Issue #13274](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
+[Tracking Issue #13274](https://github.com/dotnet/efcore/issues/13274)
 
 #### Old behavior
 
@@ -777,7 +777,7 @@ If the property was intended to be the foreign key, and hence part of the primar
 
 ### Database connection is now closed if not used anymore before the TransactionScope has been completed
 
-[Tracking Issue #14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
+[Tracking Issue #14218](https://github.com/dotnet/efcore/issues/14218)
 
 #### Old behavior
 
@@ -829,7 +829,7 @@ using (new TransactionScope())
 
 ### Each property uses independent in-memory integer key generation
 
-[Tracking Issue #6872](https://github.com/aspnet/EntityFrameworkCore/issues/6872)
+[Tracking Issue #6872](https://github.com/dotnet/efcore/issues/6872)
 
 #### Old behavior
 
@@ -851,7 +851,7 @@ Consider instead not relying on specific key values, or updating to match the ne
 
 ### Backing fields are used by default
 
-[Tracking Issue #12430](https://github.com/aspnet/EntityFrameworkCore/issues/12430)
+[Tracking Issue #12430](https://github.com/dotnet/efcore/issues/12430)
 
 #### Old behavior
 
@@ -878,7 +878,7 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 
 ### Throw if multiple compatible backing fields are found
 
-[Tracking Issue #12523](https://github.com/aspnet/EntityFrameworkCore/issues/12523)
+[Tracking Issue #12523](https://github.com/dotnet/efcore/issues/12523)
 
 #### Old behavior
 
@@ -942,7 +942,7 @@ This change was made to avoid using the same field for two properties named simi
 #### Mitigations
 
 Field-only properties must be named the same as the field they are mapped to.
-In a future release of EF Core after 3.0, we plan to re-enable explicitly configuring a field name that is different from the property name (see issue [#15307](https://github.com/aspnet/EntityFrameworkCore/issues/15307)):
+In a future release of EF Core after 3.0, we plan to re-enable explicitly configuring a field name that is different from the property name (see issue [#15307](https://github.com/dotnet/efcore/issues/15307)):
 
 ```csharp
 modelBuilder
@@ -955,7 +955,7 @@ modelBuilder
 
 ### AddDbContext/AddDbContextPool no longer call AddLogging and AddMemoryCache
 
-[Tracking Issue #14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
+[Tracking Issue #14756](https://github.com/dotnet/efcore/issues/14756)
 
 #### Old behavior
 
@@ -975,7 +975,7 @@ If your application needs these services, then register them explicitly with the
 
 ### AddEntityFramework* adds IMemoryCache with a size limit
 
-[Tracking Issue #12905](https://github.com/aspnet/EntityFrameworkCore/issues/12905)
+[Tracking Issue #12905](https://github.com/dotnet/efcore/issues/12905)
 
 #### Old behavior
 
@@ -999,7 +999,7 @@ If your application needs these services, then register a IMemoryCache implement
 
 ### DbContext.Entry now performs a local DetectChanges
 
-[Tracking Issue #13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
+[Tracking Issue #13552](https://github.com/dotnet/efcore/issues/13552)
 
 #### Old behavior
 
@@ -1025,7 +1025,7 @@ Call `ChangeTracker.DetectChanges()` explicitly before calling `Entry` to ensure
 
 ### String and byte array keys are not client-generated by default
 
-[Tracking Issue #14617](https://github.com/aspnet/EntityFrameworkCore/issues/14617)
+[Tracking Issue #14617](https://github.com/dotnet/efcore/issues/14617)
 
 #### Old behavior
 
@@ -1063,7 +1063,7 @@ public string Id { get; set; }
 
 ### ILoggerFactory is now a scoped service
 
-[Tracking Issue #14698](https://github.com/aspnet/EntityFrameworkCore/issues/14698)
+[Tracking Issue #14698](https://github.com/dotnet/efcore/issues/14698)
 
 #### Old behavior
 
@@ -1083,11 +1083,11 @@ This change should not impact application code unless it is registering and usin
 This isn't common.
 In these cases, most things will still work, but any singleton service that was depending on `ILoggerFactory` will need to be changed to obtain the `ILoggerFactory` in a different way.
 
-If you run into situations like this, please file an issue at on the [EF Core GitHub issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues) to let us know how you are using `ILoggerFactory` such that we can better understand how not to break this again in the future.
+If you run into situations like this, please file an issue at on the [EF Core GitHub issue tracker](https://github.com/dotnet/efcore/issues) to let us know how you are using `ILoggerFactory` such that we can better understand how not to break this again in the future.
 
 ### Lazy-loading proxies no longer assume navigation properties are fully loaded
 
-[Tracking Issue #12780](https://github.com/aspnet/EntityFrameworkCore/issues/12780)
+[Tracking Issue #12780](https://github.com/dotnet/efcore/issues/12780)
 
 #### Old behavior
 
@@ -1112,7 +1112,7 @@ Update application code to not attempt lazy-loading with a disposed context, or 
 
 ### Excessive creation of internal service providers is now an error by default
 
-[Tracking Issue #10236](https://github.com/aspnet/EntityFrameworkCore/issues/10236)
+[Tracking Issue #10236](https://github.com/dotnet/efcore/issues/10236)
 
 #### Old behavior
 
@@ -1144,7 +1144,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 ### New behavior for HasOne/HasMany called with a single string
 
-[Tracking Issue #9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
+[Tracking Issue #9171](https://github.com/dotnet/efcore/issues/9171)
 
 #### Old behavior
 
@@ -1182,7 +1182,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 ### The return type for several async methods has been changed from Task to ValueTask
 
-[Tracking Issue #15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
+[Tracking Issue #15184](https://github.com/dotnet/efcore/issues/15184)
 
 #### Old behavior
 
@@ -1212,7 +1212,7 @@ Note that this negates the allocation reduction that this change brings.
 
 ### The Relational:TypeMapping annotation is now just TypeMapping
 
-[Tracking Issue #9913](https://github.com/aspnet/EntityFrameworkCore/issues/9913)
+[Tracking Issue #9913](https://github.com/dotnet/efcore/issues/9913)
 
 #### Old behavior
 
@@ -1233,7 +1233,7 @@ The most appropriate action to fix is to use API surface to access type mappings
 
 ### ToTable on a derived type throws an exception
 
-[Tracking Issue #11811](https://github.com/aspnet/EntityFrameworkCore/issues/11811)
+[Tracking Issue #11811](https://github.com/dotnet/efcore/issues/11811)
 
 #### Old behavior
 
@@ -1254,7 +1254,7 @@ Remove any attempts to map derived types to other tables.
 
 ### ForSqlServerHasIndex replaced with HasIndex
 
-[Tracking Issue #12366](https://github.com/aspnet/EntityFrameworkCore/issues/12366)
+[Tracking Issue #12366](https://github.com/dotnet/efcore/issues/12366)
 
 #### Old behavior
 
@@ -1275,7 +1275,7 @@ Use the new API, as shown above.
 
 ### Metadata API changes
 
-[Tracking Issue #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
+[Tracking Issue #214](https://github.com/dotnet/efcore/issues/214)
 
 #### New behavior
 
@@ -1299,7 +1299,7 @@ Use the new extension methods.
 
 ### Provider-specific Metadata API changes
 
-[Tracking Issue #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
+[Tracking Issue #214](https://github.com/dotnet/efcore/issues/214)
 
 #### New behavior
 
@@ -1321,7 +1321,7 @@ Use the new extension methods.
 
 ### EF Core no longer sends pragma for SQLite FK enforcement
 
-[Tracking Issue #12151](https://github.com/aspnet/EntityFrameworkCore/issues/12151)
+[Tracking Issue #12151](https://github.com/dotnet/efcore/issues/12151)
 
 #### Old behavior
 
@@ -1364,7 +1364,7 @@ To use the native SQLite version on iOS, configure `Microsoft.Data.Sqlite` to us
 
 ### Guid values are now stored as TEXT on SQLite
 
-[Tracking Issue #15078](https://github.com/aspnet/EntityFrameworkCore/issues/15078)
+[Tracking Issue #15078](https://github.com/dotnet/efcore/issues/15078)
 
 #### Old behavior
 
@@ -1414,7 +1414,7 @@ Microsoft.Data.Sqlite remains capable of reading Guid values from both BLOB and 
 
 ### Char values are now stored as TEXT on SQLite
 
-[Tracking Issue #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
+[Tracking Issue #15020](https://github.com/dotnet/efcore/issues/15020)
 
 #### Old behavior
 
@@ -1455,7 +1455,7 @@ Microsoft.Data.Sqlite also remains capable of reading character values from both
 
 ### Migration IDs are now generated using the invariant culture's calendar
 
-[Tracking Issue #12978](https://github.com/aspnet/EntityFrameworkCore/issues/12978)
+[Tracking Issue #12978](https://github.com/dotnet/efcore/issues/12978)
 
 #### Old behavior
 
@@ -1494,7 +1494,7 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 ### UseRowNumberForPaging has been removed
 
-[Tracking Issue #16400](https://github.com/aspnet/EntityFrameworkCore/issues/16400)
+[Tracking Issue #16400](https://github.com/dotnet/efcore/issues/16400)
 
 #### Old behavior
 
@@ -1510,13 +1510,13 @@ We are making this change because [SQL Server 2008 is no longer a supported prod
 
 #### Mitigations
 
-We recommend updating to a newer version of SQL Server, or using a higher compatibility level, so that the generated SQL is supported. That being said, if you are unable to do this, then please [comment on the tracking issue](https://github.com/aspnet/EntityFrameworkCore/issues/16400) with details. We may revisit this decision based on feedback.
+We recommend updating to a newer version of SQL Server, or using a higher compatibility level, so that the generated SQL is supported. That being said, if you are unable to do this, then please [comment on the tracking issue](https://github.com/dotnet/efcore/issues/16400) with details. We may revisit this decision based on feedback.
 
 <a name="xinfo"></a>
 
 ### Extension info/metadata has been removed from IDbContextOptionsExtension
 
-[Tracking Issue #16119](https://github.com/aspnet/EntityFrameworkCore/issues/16119)
+[Tracking Issue #16119](https://github.com/dotnet/efcore/issues/16119)
 
 #### Old behavior
 
@@ -1540,7 +1540,7 @@ Examples are found in the many implementations of `IDbContextOptionsExtension` f
 
 ### LogQueryPossibleExceptionWithAggregateOperator has been renamed
 
-[Tracking Issue #10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
+[Tracking Issue #10985](https://github.com/dotnet/efcore/issues/10985)
 
 #### Change
 
@@ -1558,7 +1558,7 @@ Use the new name. (Note that the event ID number has not changed.)
 
 ### Clarify API for foreign key constraint names
 
-[Tracking Issue #10730](https://github.com/aspnet/EntityFrameworkCore/issues/10730)
+[Tracking Issue #10730](https://github.com/dotnet/efcore/issues/10730)
 
 #### Old behavior
 
@@ -1588,7 +1588,7 @@ Use the new name.
 
 ### IRelationalDatabaseCreator.HasTables/HasTablesAsync have been made public
 
-[Tracking Issue #15997](https://github.com/aspnet/EntityFrameworkCore/issues/15997)
+[Tracking Issue #15997](https://github.com/dotnet/efcore/issues/15997)
 
 #### Old behavior
 
@@ -1610,7 +1610,7 @@ Change the accessibility of any overrides.
 
 ### Microsoft.EntityFrameworkCore.Design is now a DevelopmentDependency package
 
-[Tracking Issue #11506](https://github.com/aspnet/EntityFrameworkCore/issues/11506)
+[Tracking Issue #11506](https://github.com/dotnet/efcore/issues/11506)
 
 #### Old behavior
 
@@ -1642,7 +1642,7 @@ If the package is being referenced transitively via Microsoft.EntityFrameworkCor
 
 ### SQLitePCL.raw updated to version 2.0.0
 
-[Tracking Issue #14824](https://github.com/aspnet/EntityFrameworkCore/issues/14824)
+[Tracking Issue #14824](https://github.com/dotnet/efcore/issues/14824)
 
 #### Old behavior
 
@@ -1664,7 +1664,7 @@ SQLitePCL.raw version 2.0.0 includes some breaking changes. See the [release not
 
 ### NetTopologySuite updated to version 2.0.0
 
-[Tracking Issue #14825](https://github.com/aspnet/EntityFrameworkCore/issues/14825)
+[Tracking Issue #14825](https://github.com/dotnet/efcore/issues/14825)
 
 #### Old behavior
 
@@ -1686,7 +1686,7 @@ NetTopologySuite version 2.0.0 includes some breaking changes. See the [release 
 
 ### Microsoft.Data.SqlClient is used instead of System.Data.SqlClient
 
-[Tracking Issue #15636](https://github.com/aspnet/EntityFrameworkCore/issues/15636)
+[Tracking Issue #15636](https://github.com/dotnet/efcore/issues/15636)
 
 #### Old behavior
 
@@ -1710,7 +1710,7 @@ of API compatibility, this should only be a simple package and namespace change.
 
 ### Multiple ambiguous self-referencing relationships must be configured
 
-[Tracking Issue #13573](https://github.com/aspnet/EntityFrameworkCore/issues/13573)
+[Tracking Issue #13573](https://github.com/dotnet/efcore/issues/13573)
 
 #### Old behavior
 
@@ -1755,7 +1755,7 @@ modelBuilder
 
 ### DbFunction.Schema being null or empty string configures it to be in model's default schema
 
-[Tracking Issue #12757](https://github.com/aspnet/EntityFrameworkCore/issues/12757)
+[Tracking Issue #12757](https://github.com/dotnet/efcore/issues/12757)
 
 #### Old behavior
 
@@ -1789,7 +1789,7 @@ modelBuilder
 
 ### ~~EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0~~ Reverted
 
-[Tracking Issue #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
+[Tracking Issue #15498](https://github.com/dotnet/efcore/issues/15498)
 
 EF Core 3.0 targets .NET Standard 2.1, which is a breaking change which excludes .NET Framework applications. EF Core 3.1 reverted this and targets .NET Standard 2.0 again.
 
@@ -1797,7 +1797,7 @@ EF Core 3.0 targets .NET Standard 2.1, which is a breaking change which excludes
 
 ### ~~Query execution is logged at Debug level~~ Reverted
 
-[Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
+[Tracking Issue #14523](https://github.com/dotnet/efcore/issues/14523)
 
 We reverted this change because new configuration in EF Core 3.0 allows the log level for any event to be specified by the application. For example, to switch logging of SQL to `Debug`, explicitly configure the level in `OnConfiguring` or `AddDbContext`:
 

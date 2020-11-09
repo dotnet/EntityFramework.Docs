@@ -197,5 +197,5 @@ For more details, see [what's new in EF 6](xref:ef6/what-is-new/index).
 
 Some features originally planned for EF Core 3.x were postponed to future releases:
 
-- Ability to ignore parts of a model in migrations, tracked as [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725).
-- Property bag entities, tracked as two separate issues: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) about shared-type entities and [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) about indexed property mapping support.
+- Ability to ignore parts of a model in migrations, tracked as [#2725](https://github.com/dotnet/efcore/issues/2725).
+- Property bag entities, tracked as two separate issues: [#9914](https://github.com/dotnet/efcore/issues/9914) about shared-type entities and [#13610](https://github.com/dotnet/efcore/issues/13610) about indexed property mapping support.

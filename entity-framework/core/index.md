@@ -8,7 +8,7 @@ uid: core/index
 
 # Entity Framework Core
 
-Entity Framework (EF) Core is a lightweight, extensible, [open source](https://github.com/aspnet/EntityFrameworkCore) and cross-platform version of the popular Entity Framework data access technology.
+Entity Framework (EF) Core is a lightweight, extensible, [open source](https://github.com/dotnet/efcore) and cross-platform version of the popular Entity Framework data access technology.
 
 EF Core can serve as an object-relational mapper (O/RM), which:
 
