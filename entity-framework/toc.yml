@@ -227,11 +227,15 @@
         href: core/logging-events-diagnostics/index.md
       - name: Simple logging
         href: core/logging-events-diagnostics/simple-logging.md
-      #- name: Microsoft.Extensions.Logging
+      - name: Microsoft.Extensions.Logging
+        href: core/logging-events-diagnostics/extensions-logging.md
       #- name: ToQueryString
-      #- name: Events
-      #- name: Interceptors
-      #- name: Diagnostic listeners
+      - name: Events
+        href: core/logging-events-diagnostics/events.md
+      - name: Interceptors
+        href: core/logging-events-diagnostics/interceptos.md
+      - name: Diagnostic listeners
+        href: core/logging-events-diagnostics/diagnostic-listeners.md
       #- name: Debug views
       #- name: Event counters
 

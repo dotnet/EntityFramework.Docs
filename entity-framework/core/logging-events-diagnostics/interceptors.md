@@ -3,16 +3,16 @@ title: Interceptors - EF Core
 description: Interception for database operations and other events
 author: ajcvickers
 ms.date: 10/08/2020
-uid: core/miscellaneous/events/interception
+uid: core/logging-events-diagnostics/interceptors
 ---
 
 # Interceptors
 
 Entity Framework Core (EF Core) interceptors enable interception, modification, and/or suppression of EF Core events. This includes low-level database operations such as executing a command, as well as higher-level events, such as calls to SaveChanges.
 
-Interceptors are different from logging and diagnostics in that they allow modification or suppression of the operation being intercepted. [Simple logging](xref:core/miscellaneous/events/simple-logging) or [Microsoft.Extensions.Logging](xref:core/miscellaneous/events/extensions-logging) are better choices for logging.
+Interceptors are different from logging and diagnostics in that they allow modification or suppression of the operation being intercepted. [Simple logging](xref:core/logging-events-diagnostics/simple-logging) or [Microsoft.Extensions.Logging](xref:core/logging-events-diagnostics/extensions-logging) are better choices for logging.
 
-Interceptors are registered per DbContext instance when the context is configured. Use a [diagnostic listener](xref:core/miscellaneous/events/diagnostics) to get the same information but for all DbContext instances in the process.
+Interceptors are registered per DbContext instance when the context is configured. Use a [diagnostic listener](xref:core/logging-events-diagnostics/diagnostic-listeners) to get the same information but for all DbContext instances in the process.
 
 ## Registering interceptors
 
@@ -394,7 +394,7 @@ Notice from the log output that the application continues to use the cached mess
 <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> interception points are defined by the `ISaveChangesInterceptor` <!-- Issue #2748 --> interface. As for other interceptors, the `SaveChangesInterceptor` <!-- Issue #2748 --> base class with no-op methods is provided as a convenience.
 
 > [!TIP]
-> Interceptors are powerful. However, in many cases it may be easier to override the SaveChanges method or use the [.NET events for SaveChanges](xref:core/miscellaneous/events/dotnet-events) exposed on DbContext.
+> Interceptors are powerful. However, in many cases it may be easier to override the SaveChanges method or use the [.NET events for SaveChanges](xref:core/logging-events-diagnostics/events) exposed on DbContext.
 
 ### Example: SaveChanges interception for auditing
 

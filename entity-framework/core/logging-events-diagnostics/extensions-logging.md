@@ -3,14 +3,14 @@ title: Using Microsoft.Extensions.Logging - EF Core
 description: Logging from EF Core using Microsoft.Extensions.Logging in ASP.NET Core and other application types
 author: ajcvickers
 ms.date: 10/15/2020
-uid: core/miscellaneous/events/extensions-logging
+uid: core/logging-events-diagnostics/extensions-logging
 ---
 
 # Using Microsoft.Extensions.Logging in EF Core
 
 [Microsoft.Extensions.Logging](/dotnet/core/extensions/logging) is an extensible logging mechanism with plug-in providers for many common logging systems. Both Microsoft-supplied plug-ins (e.g [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/)) and third-party plug-ins (e.g. [Serilog.Extensions.Logging](https://www.nuget.org/packages/Serilog.Extensions.Logging/)) are available as NuGet packages.
 
-Entity Framework Core (EF Core) fully integrates with `Microsoft.Extensions.Logging`. However, consider using [simple logging](xref:core/miscellaneous/events/simple-logging) for a simpler way to log, especially for applications that don't use dependency injection.
+Entity Framework Core (EF Core) fully integrates with `Microsoft.Extensions.Logging`. However, consider using [simple logging](xref:core/logging-events-diagnostics/simple-logging) for a simpler way to log, especially for applications that don't use dependency injection.
 
 ## ASP.NET Core applications
 
@@ -20,7 +20,7 @@ Entity Framework Core (EF Core) fully integrates with `Microsoft.Extensions.Logg
 
 Other application types can use the [GenericHost](/dotnet/core/extensions/generic-host) to get the same dependency injection patterns as are used in ASP.NET Core. AddDbContext or AddDbContextPool can then be used just like in ASP.NET Core applications.
 
-`Microsoft.Extensions.Logging` can also be used for applications that don't use dependency injection, although [simple logging](xref:core/miscellaneous/events/simple-logging) can be easier to set up.
+`Microsoft.Extensions.Logging` can also be used for applications that don't use dependency injection, although [simple logging](xref:core/logging-events-diagnostics/simple-logging) can be easier to set up.
 
 `Microsoft.Extensions.Logging` requires creation of a <xref:Microsoft.Extensions.Logging.LoggerFactory>. This factory should be stored as a static/global instance somewhere and used each time a DbContext is created. For example, it is common to store the logger factory as a static property on the DbContext.
 

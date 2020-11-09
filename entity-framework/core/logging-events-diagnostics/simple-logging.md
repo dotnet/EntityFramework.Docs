@@ -17,7 +17,7 @@ uid: core/logging-events-diagnostics/simple-logging
 Entity Framework Core (EF Core) simple logging can be used to easily obtain logs while developing and debugging applications. This form of logging requires minimal configuration and no additional NuGet packages.
 
 > [!TIP]
-> EF Core also integrates with [Microsoft.Extensions.Logging](xref:core/miscellaneous/events/extensions-logging), which requires more configuration, but is often more suitable for logging in production applications.
+> EF Core also integrates with [Microsoft.Extensions.Logging](xref:core/logging-events-diagnostics/extensions-logging), which requires more configuration, but is often more suitable for logging in production applications.
 
 ## Configuration
 

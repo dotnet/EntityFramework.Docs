@@ -3,7 +3,7 @@ title: .NET events - EF Core
 description: .NET events defined by EF Core  
 author: ajcvickers
 ms.date: 10/15/2020
-uid: core/miscellaneous/events/dotnet-events
+uid: core/logging-events-diagnostics/events
 ---
 
 # .NET events in EF Core
@@ -11,9 +11,9 @@ uid: core/miscellaneous/events/dotnet-events
 > [!TIP]  
 > You can [download the events sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Events) from GitHub.
 
-Entity Framework Core (EF Core) exposes [.NET events](/dotnet/standard/events/) to act as callbacks when certain things happen in the EF Core code. Events are simpler than [interceptors](xref:core/miscellaneous/events/interception) and allow more flexible registration. However, they are sync only and so cannot perform non-blocking async I/O.
+Entity Framework Core (EF Core) exposes [.NET events](/dotnet/standard/events/) to act as callbacks when certain things happen in the EF Core code. Events are simpler than [interceptors](xref:core/logging-events-diagnostics/interceptors) and allow more flexible registration. However, they are sync only and so cannot perform non-blocking async I/O.
 
-Events are registered per `DbContext` instance. Use a [diagnostic listener](xref:core/miscellaneous/events/diagnostics) to get the same information but for all DbContext instances in the process.
+Events are registered per `DbContext` instance. Use a [diagnostic listener](xref:core/logging-events-diagnostics/diagnostic-listeners) to get the same information but for all DbContext instances in the process.
 
 ## Events raised by EF Core
 

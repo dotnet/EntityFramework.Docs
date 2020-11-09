@@ -47,7 +47,7 @@ See [Simple Logging](xref:core/logging-events-diagnostics/simple-logging) for mo
 
 EF Core fully integrates with `Microsoft.Extensions.Logging` and this form of logging is used by default for ASP.NET Core applications.
 
-See [Using Microsoft.Extensions.Logging in EF Core](xref:core/miscellaneous/events/extensions-logging) for more information.
+See [Using Microsoft.Extensions.Logging in EF Core](xref:core/logging-events-diagnostics/extensions-logging) for more information.
 
 ## Events
 
@@ -56,9 +56,9 @@ See [Using Microsoft.Extensions.Logging in EF Core](xref:core/miscellaneous/even
 
 EF Core exposes [.NET events](/dotnet/standard/events/) to act as callbacks when certain things happen in the EF Core code. Events are simpler than interceptors and allow more flexible registration. However, they are sync only and so cannot perform non-blocking async I/O.
 
-Events are registered per DbContext instance and this registration can be done at any time. Use a [diagnostic listener](xref:core/miscellaneous/events/diagnostics) to get the same information but for all DbContext instances in the process.
+Events are registered per DbContext instance and this registration can be done at any time. Use a [diagnostic listener](xref:core/logging-events-diagnostics/diagnostic-Listeners) to get the same information but for all DbContext instances in the process.
 
-See [.NET Events in EF Core](xref:core/miscellaneous/events/dotnet-events) for more information.
+See [.NET Events in EF Core](xref:core/logging-events-diagnostics/events) for more information.
 
 ## Interception
 
@@ -67,11 +67,11 @@ See [.NET Events in EF Core](xref:core/miscellaneous/events/dotnet-events) for m
 
 EF Core interceptors enable interception, modification, and/or suppression of EF Core events. This includes low-level database operations such as executing a command, as well as higher-level events, such as calls to SaveChanges.
 
-Interceptors are different from logging and diagnostics in that they allow modification or suppression of the operation being intercepted. [Simple logging](xref:core/miscellaneous/events/simple-logging) or [Microsoft.Extensions.Logging](xref:core/miscellaneous/events/extensions-logging) are better choices for logging.
+Interceptors are different from logging and diagnostics in that they allow modification or suppression of the operation being intercepted. [Simple logging](xref:core/logging-events-diagnostics/simple-logging) or [Microsoft.Extensions.Logging](xref:core/logging-events-diagnostics/extensions-logging) are better choices for logging.
 
-Interceptors are registered per DbContext instance when the context is configured. Use a [diagnostic listener](xref:core/miscellaneous/events/diagnostics) to get the same information but for all DbContext instances in the process.
+Interceptors are registered per DbContext instance when the context is configured. Use a [diagnostic listener](xref:core/logging-events-diagnostics/diagnostic-Listeners) to get the same information but for all DbContext instances in the process.
 
-See [Interception](xref:core/miscellaneous/events/interception) for more information.
+See [Interception](xref:core/logging-events-diagnostics/interception) for more information.
 
 ## Diagnostic listeners
 
@@ -79,6 +79,6 @@ Diagnostic listeners allow listening for any EF Core event that occurs in the cu
 
 Diagnostic listeners are not suitable for getting events from a single DbContext instance. EF Core interceptors provide access to the same events with per-context registration.
 
-Diagnostic listeners are not designed for logging. [Simple logging](xref:core/miscellaneous/events/simple-logging) or [Microsoft.Extensions.Logging](xref:core/miscellaneous/events/extensions-logging) are better choices for logging.
+Diagnostic listeners are not designed for logging. [Simple logging](xref:core/logging-events-diagnostics/simple-logging) or [Microsoft.Extensions.Logging](xref:core/logging-events-diagnostics/extensions-logging) are better choices for logging.
 
-See [Using diagnostic listeners in EF Core](xref:core/miscellaneous/events/diagnostics) for more information.
+See [Using diagnostic listeners in EF Core](xref:core/logging-events-diagnostics/diagnostic-Listeners) for more information.
