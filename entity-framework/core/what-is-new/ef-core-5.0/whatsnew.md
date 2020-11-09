@@ -153,6 +153,9 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
+> [!NOTE]
+> Support for scaffolding many-to-many relationships from the database is not yet added. See [tracking issue](https://github.com/dotnet/efcore/issues/22475).
+
 ### Map entity types to queries
 
 Entity types are commonly mapped to tables or views such that EF Core will pull back the contents of the table or view when querying for that type. EF Core 5.0 allows an entity type to mapped to a "defining query". (This was partially supported in previous versions, but is much improved and has different syntax in EF Core 5.0.)
