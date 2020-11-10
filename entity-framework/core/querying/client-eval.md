@@ -2,7 +2,7 @@
 title: Client vs. Server Evaluation - EF Core
 description: Client and server evaluation of queries with Entity Framework Core
 author: smitpatel
-ms.date: 10/03/2019
+ms.date: 11/09/2020
 uid: core/querying/client-eval
 ---
 # Client vs. Server Evaluation
@@ -39,6 +39,9 @@ You may need to force into client evaluation explicitly in certain cases like fo
 In such cases, you can explicitly opt into client evaluation by calling methods like `AsEnumerable` or `ToList` (`AsAsyncEnumerable` or `ToListAsync` for async). By using `AsEnumerable` you would be streaming the results, but using `ToList` would cause buffering by creating a list, which also takes additional memory. Though if you're enumerating multiple times, then storing results in a list helps more since there's only one query to the database. Depending on the particular usage, you should evaluate which method is more useful for the case.
 
 [!code-csharp[Main](../../../samples/core/Querying/ClientEvaluation/Program.cs#ExplicitClientEvaluation)]
+
+> [!TIP]
+> If you are using `AsAsyncEnumerable` and want to compose the query further on client side then you can use [System.Interactive.Async](https://www.nuget.org/packages/System.Interactive.Async/) library which defines operators for async enumerables. For more information, see [client side linq operators](xref:core/miscellaneous/async#client-side-async-linq-operators).
 
 ## Potential memory leak in client evaluation
 
