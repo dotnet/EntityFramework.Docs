@@ -485,7 +485,7 @@ These queries could return incorrect results if the inner collection contained a
 
 **New behavior**
 
-These queries are no loger suppored. Exception is thrown indicating that we don't have enough information to correctly build the results.
+These queries are no longer supported. Exception is thrown indicating that we don't have enough information to correctly build the results.
 
 **Why**
 
@@ -526,7 +526,7 @@ context.Blogs
 
 **New behavior**
 
-These queries are no loger suppored. Exception is thrown indicating that we can't create an object of Queryable type and suggesting how this could be fixed.
+These queries are no longer supported. Exception is thrown indicating that we can't create an object of Queryable type and suggesting how this could be fixed.
 
 **Why**
 
