@@ -10,7 +10,7 @@ uid: core/providers/cosmos/index
 > [!NOTE]
 > This provider is new in EF Core 3.0.
 
-This database provider allows Entity Framework Core to be used with Azure Cosmos DB. The provider is maintained as part of the [Entity Framework Core Project](https://github.com/aspnet/EntityFrameworkCore).
+This database provider allows Entity Framework Core to be used with Azure Cosmos DB. The provider is maintained as part of the [Entity Framework Core Project](https://github.com/dotnet/efcore).
 
 It is strongly recommended to familiarize yourself with the [Azure Cosmos DB documentation](/azure/cosmos-db/introduction) before reading this section.
 
@@ -97,9 +97,14 @@ By default EF Core will create containers with the partition key set to `"__part
 > [!NOTE]
 >The partition key property can be of any type as long as it is [converted to string](xref:core/modeling/value-conversions).
 
-Once configured the partition key property should always have a non-null value. When issuing a query a condition can be added to make it single-partition.
+Once configured the partition key property should always have a non-null value. A query can be made single-partition by adding a `WithPartitionKey` call.
 
-[!code-csharp[PartitionKey](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=PartitionKey)]
+[!code-csharp[PartitionKey](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=PartitionKey&highlight=15)]
+
+> [!NOTE]
+> `WithPartitionKey` was added in EF Core 5.0.
+
+It is generally recommended to add the partition key to the primary key as that best reflects the server semantics and allows some optimizations, for example in `FindAsync`.
 
 ## Embedded entities
 

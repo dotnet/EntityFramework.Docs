@@ -41,6 +41,23 @@ The predicate expressions passed to the `HasQueryFilter` calls will now automati
 
 You can also use navigations in defining global query filters. Using navigations in query filter will cause query filters to be applied recursively. When EF Core expands navigations used in query filters, it will also apply query filters defined on referenced entities.
 
+To illustrate this configure query filters in `OnModelCreating` in the following way:
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/FilteredBloggingContextRequired.cs#NavigationInFilter)]
+
+Next, query for all `Blog` entities:
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/FilteredBloggingContextRequired.cs#QueriesNavigation)]
+
+This query produces the following SQL, which applies query filters defined for both `Blog` and `Post` entities:
+
+```sql
+SELECT [b].[BlogId], [b].[Name], [b].[Url]
+FROM [Blogs] AS [b]
+WHERE (
+    SELECT COUNT(*)
+    FROM [Posts] AS [p]
+    WHERE ([p].[Title] LIKE N'%fish%') AND ([b].[BlogId] = [p].[BlogId])) > 0
+```
+
 > [!NOTE]
 > Currently EF Core does not detect cycles in global query filter definitions, so you should be careful when defining them. If specified incorrectly, cycles could lead to infinite loops during query translation.
 

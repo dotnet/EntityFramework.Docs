@@ -79,7 +79,7 @@ In this example the highlighted properties will be used to configure the relatio
 > If the property is the primary key or is of a type not compatible with the principal key then it won't be configured as the foreign key.
 
 > [!NOTE]
-> Before EF Core 3.0 the property named exactly the same as the principal key property [was also matched as the foreign key](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
+> Before EF Core 3.0 the property named exactly the same as the principal key property [was also matched as the foreign key](https://github.com/dotnet/efcore/issues/13274)
 
 ### No foreign key property
 
@@ -188,7 +188,7 @@ You can use the string overload of `HasForeignKey(...)` to configure a shadow pr
 
 #### Foreign key constraint name
 
-By convention, when targeting a relational database, foreign key constraints are named FK_<dependent type name>_<principal type name>_<foreign key property name>. For composite foreign keys <foreign key property name> becomes an underscore separated list of foreign key property names.
+By convention, when targeting a relational database, foreign key constraints are named FK\_\<dependent type name>\_\<principal type name>\_\<foreign key property name>. For composite foreign keys, \<foreign key property name> becomes an underscore separated list of foreign key property names.
 
 You can also configure the constraint name as follows:
 
@@ -319,3 +319,10 @@ Additional data can be stored in the join entity type, but for this it's best to
 You can also represent a many-to-many relationship by just adding the join entity type and mapping two separate one-to-many relationships.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11-14,16-19,39-46)]
+
+> [!NOTE]
+> Support for scaffolding many-to-many relationships from the database is not yet added. See [tracking issue](https://github.com/dotnet/efcore/issues/22475).
+
+## Additional resources
+
+* [EF Core Community Standup session](https://www.youtube.com/watch?v=W1sxepfIMRM&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=32), with a deep dive into Many-to-many and the infrastructure underpinning it.

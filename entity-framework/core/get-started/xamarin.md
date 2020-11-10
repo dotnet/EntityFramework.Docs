@@ -70,11 +70,11 @@ It is assumed that you are familiar with the Xamarin.Forms topics of [displaying
 
 > [!IMPORTANT]
 > Entity Framework Core uses reflection to invoke functions which the Xamarin.iOS linker may strip out while in **Release** mode configurations. You can avoid that in one of two ways.
-> 
+>
 > * The first is to add `--linkskip System.Core` to the **Additional mtouch arguments** in the **iOS Build** options.
 > * Alternatively set the Xamarin.iOS **Linker behavior** to `Don't Link` in the **iOS Build** options.
 > [This article explains more about the Xamarin.iOS linker](/xamarin/ios/deploy-test/linker) including how to set the behavior on Xamarin.iOS.
-> 
+>
 
 ## Entity Framework Core NuGet packages
 
@@ -201,6 +201,6 @@ In this getting started you have learned how to use a Xamarin.Forms application 
 
 Other Entity Framework Core topics of interest to Xamarin developers:
 
-* [Configuring a `DbContext`](xref:core/miscellaneous/configuring-dbcontext)
+* [Configuring a `DbContext`](xref:core/dbcontext-configuration/index)
 * Learn more about [LINQ query expressions](/dotnet/csharp/programming-guide/concepts/linq/basic-linq-query-operations)
 * [Configure your model](xref:core/modeling/index) to specify things like [required](xref:core/modeling/entity-properties#required-and-optional-properties) and [maximum length](xref:core/modeling/entity-properties#maximum-length)

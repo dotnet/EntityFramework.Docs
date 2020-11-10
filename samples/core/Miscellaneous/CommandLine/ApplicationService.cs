@@ -1,3 +1,9 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+#region ApplicationService
 public class Program
 {
     public static void Main(string[] args)
@@ -23,3 +29,4 @@ public class ApplicationDbContext : DbContext
     {
     }
 }
+#endregion

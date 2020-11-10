@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace MyProject
 {
+    #region BloggingContextFactory
     public class BloggingContextFactory : IDesignTimeDbContextFactory<BloggingContext>
     {
         public BloggingContext CreateDbContext(string[] args)
@@ -12,6 +12,15 @@ namespace MyProject
             optionsBuilder.UseSqlite("Data Source=blog.db");
 
             return new BloggingContext(optionsBuilder.Options);
+        }
+    }
+    #endregion
+
+    public class BloggingContext : DbContext
+    {
+        public BloggingContext(DbContextOptions<BloggingContext> options)
+            : base(options)
+        {
         }
     }
 }

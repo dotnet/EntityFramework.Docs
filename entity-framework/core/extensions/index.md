@@ -23,13 +23,13 @@ LLBLGen Pro is an entity modeling solution with support for Entity Framework and
 
 ### Devart Entity Developer
 
-Entity Developer is a powerful ORM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 1, 2, 3, 5.
+Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 1, 2, 3, 5.
 
 [Website](https://www.devart.com/entitydeveloper/)
 
 ### nHydrate ORM for Entity Framework
 
-An ORM that creates strongly-typed, extendable classes for Entity Framework. The generated code is Entity Framework Core. There is no difference. This is not a replacement for EF or a custom ORM. It is a visual, modeling layer that allows a team to manage complex database schemas. It works well with SCM software like Git, allowing multi-user access to your model with minimal conflicts. The installer tracks model changes and creates upgrade scripts. For EF Core: 3.
+An O/RM that creates strongly-typed, extendable classes for Entity Framework. The generated code is Entity Framework Core. There is no difference. This is not a replacement for EF or a custom O/RM. It is a visual, modeling layer that allows a team to manage complex database schemas. It works well with SCM software like Git, allowing multi-user access to your model with minimal conflicts. The installer tracks model changes and creates upgrade scripts. For EF Core: 3.
 
 [Github site](https://github.com/nHydrate/nHydrate)
 
@@ -41,7 +41,7 @@ EF Core Power Tools is a Visual Studio extension that exposes various EF Core de
 
 ### Entity Framework Visual Editor
 
-Entity Framework Visual Editor is a Visual Studio extension that adds an ORM designer for visual design of EF 6, and EF Core classes. Code is generated using T4 templates so can be customized to suit any needs. It supports inheritance, unidirectional and bidirectional associations, enumerations, and the ability to color-code your classes and add text blocks to explain potentially arcane parts of your design. For EF Core: 2.
+Entity Framework Visual Editor is a Visual Studio extension that adds an O/RM designer for visual design of EF 6, and EF Core classes. Code is generated using T4 templates so can be customized to suit any needs. It supports inheritance, unidirectional and bidirectional associations, enumerations, and the ability to color-code your classes and add text blocks to explain potentially arcane parts of your design. For EF Core: 2.
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner)
 
@@ -78,13 +78,13 @@ Geco (Generator Console) is a simple code generator based on a console project, 
 
 [GitHub repository](https://github.com/iQuarc/Geco)
 
-### EntityFrameworkCore.Scaffolding.Handlebars 
+### EntityFrameworkCore.Scaffolding.Handlebars
 
 Allows customization of classes reverse engineered from an existing database using the Entity Framework Core toolchain with Handlebars templates. For EF Core: 2, 3.
 
 [GitHub repository](https://github.com/TrackableEntities/EntityFrameworkCore.Scaffolding.Handlebars)
 
-### NeinLinq.EntityFrameworkCore 
+### NeinLinq.EntityFrameworkCore
 
 NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core: 2, 3.
 
@@ -138,13 +138,11 @@ Allow full-featured Entity Framework Core queries against [SQL Server Temporal H
 
 [GitHub repository](https://github.com/VantageSoftware/EFCore.TimeTraveler)
 
-
 ### EntityFrameworkCore.TemporalTables
 
 Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2.
 
 [GitHub repository](https://github.com/findulov/EntityFrameworkCore.TemporalTables)
-
 
 ### EntityFrameworkCore.Cacheable
 
@@ -231,3 +229,9 @@ Includes support for advanced SQL features such as CTEs, bulk copy, table hints,
 An implementation for soft deleting entities. For EF Core: 3.
 
 [NuGet](https://www.nuget.org/packages/EFCore.SoftDelete)
+
+### EntityFrameworkCore.ConfigurationManager
+
+Extends EF Core to resolve connection strings from App.config. For EF Core: 3.
+
+[GitHub repository](https://github.com/efcore/EFCore.ConfigurationManager)

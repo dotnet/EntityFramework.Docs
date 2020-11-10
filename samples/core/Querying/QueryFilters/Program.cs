@@ -12,6 +12,7 @@ namespace EFQuerying.QueryFilters
             QueryFiltersBasicExample();
             QueryFiltersWithNavigationsExample();
             QueryFiltersWithRequiredNavigationExample();
+            QueryFiltersUsingNavigationExample();
         }
 
         static void QueryFiltersBasicExample()
@@ -257,6 +258,68 @@ namespace EFQuerying.QueryFilters
                     Console.WriteLine("Unexpected discrepancy due to query filters and required navigations interaction.");
                     Console.WriteLine($"All posts count: {allPosts.Count}.");
                     Console.WriteLine($"All posts with blogs included count: {allPostsWithBlogsIncluded.Count}.");
+                }
+            }
+        }
+
+        private static void QueryFiltersUsingNavigationExample()
+        {
+            using (var db = new FilteredBloggingContextRequired())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+
+                #region SeedDataNavigation
+                db.Blogs.Add(
+                    new Blog
+                    {
+                        Url = "http://sample.com/blogs/fish",
+                        Posts = new List<Post>
+                        {
+                            new Post { Title = "Fish care 101" },
+                            new Post { Title = "Caring for tropical fish" },
+                            new Post { Title = "Types of ornamental fish" }
+                        }
+                    });
+
+                db.Blogs.Add(
+                    new Blog
+                    {
+                        Url = "http://sample.com/blogs/cats",
+                        Posts = new List<Post>
+                        {
+                            new Post { Title = "Cat care 101" },
+                            new Post { Title = "Caring for tropical cats" },
+                            new Post { Title = "Types of ornamental cats" }
+                        }
+                    });
+
+                db.Blogs.Add(
+                    new Blog
+                    {
+                        Url = "http://sample.com/blogs/catfish",
+                        Posts = new List<Post>
+                        {
+                            new Post { Title = "Catfish care 101" },
+                            new Post { Title = "History of the catfish name" }
+                        }
+                    });
+                #endregion
+
+                db.SaveChanges();
+            }
+
+            Console.WriteLine("Query filters using navigations demo");
+            using (var db = new FilteredBloggingContextRequired())
+            {
+                #region QueriesNavigation
+                var filteredBlogs = db.Blogs.ToList();
+                #endregion
+                var filteredBlogsInclude = db.Blogs.Include(b => b.Posts).ToList();
+                if (filteredBlogs.Count == 2 && filteredBlogsInclude.Count == 2)
+                {
+                    Console.WriteLine("Blogs without any Posts are also filtered out. Posts must contain 'fish' in title.");
+                    Console.WriteLine("Filters are applied recursively, so Blogs that do have Posts, but those Posts don't contain 'fish' in the title will also be filtered out.");
                 }
             }
         }

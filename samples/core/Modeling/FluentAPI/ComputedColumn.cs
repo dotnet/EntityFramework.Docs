@@ -6,14 +6,20 @@ namespace EFModeling.FluentAPI.Relational.ComputedColumn
     {
         public DbSet<Person> People { get; set; }
 
-        #region ComputedColumn
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region DefaultComputedColumn
             modelBuilder.Entity<Person>()
                 .Property(p => p.DisplayName)
                 .HasComputedColumnSql("[LastName] + ', ' + [FirstName]");
+            #endregion
+
+            #region StoredComputedColumn
+            modelBuilder.Entity<Person>()
+                .Property(p => p.NameLength)
+                .HasComputedColumnSql("LEN([LastName]) + LEN([FirstName])", stored: true);
+            #endregion
         }
-        #endregion
     }
 
     public class Person
@@ -22,5 +28,6 @@ namespace EFModeling.FluentAPI.Relational.ComputedColumn
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DisplayName { get; set; }
+        public int NameLength { get; set; }
     }
 }

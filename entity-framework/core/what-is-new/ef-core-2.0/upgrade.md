@@ -12,11 +12,11 @@ We have taken the opportunity to significantly refine our existing APIs and beha
 
 Updating an existing application to EF Core 2.0 may require:
 
-1. Upgrading the target .NET implementation of the application to one that supports .NET Standard 2.0. See [Supported .NET Implementations](xref:core/platforms/index) for more details.
+1. Upgrading the target .NET implementation of the application to one that supports .NET Standard 2.0. See [Supported .NET Implementations](xref:core/miscellaneous/platforms) for more details.
 
 2. Identify a provider for the target database which is compatible with EF Core 2.0. See [EF Core 2.0 requires a 2.0 database provider](#ef-core-20-requires-a-20-database-provider) below.
 
-3. Upgrading all the EF Core packages (runtime and tooling) to 2.0. Refer to [Installing EF Core](xref:core/get-started/install/index) for more details.
+3. Upgrading all the EF Core packages (runtime and tooling) to 2.0. Refer to [Installing EF Core](xref:core/get-started/overview/install) for more details.
 
 4. Make any necessary code changes to compensate for the breaking changes described in the rest of this document.
 
@@ -53,7 +53,7 @@ namespace AspNetCoreDotNetCore2._0App
 }
 ```
 
-The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement *IDesignTimeDbContextFactory\<TContext>*](xref:core/miscellaneous/cli/dbcontext-creation#from-a-design-time-factory).
+The adoption of this new pattern when updating applications to 2.0 is highly recommended and is required in order for product features like Entity Framework Core Migrations to work. The other common alternative is to [implement *IDesignTimeDbContextFactory\<TContext>*](xref:core/cli/dbcontext-creation#from-a-design-time-factory).
 
 ## IDbContextFactory renamed
 
@@ -91,7 +91,7 @@ Note: these changes should not impact most application code.
 
 The event IDs for messages sent to an [ILogger](/dotnet/api/microsoft.extensions.logging.ilogger) have changed in 2.0. The event IDs are now unique across EF Core code. These messages now also follow the standard pattern for structured logging used by, for example, MVC.
 
-Logger categories have also changed. There is now a well-known set of categories accessed through [DbLoggerCategory](https://github.com/aspnet/EntityFrameworkCore/blob/rel/2.0.0/src/EFCore/DbLoggerCategory.cs).
+Logger categories have also changed. There is now a well-known set of categories accessed through [DbLoggerCategory](https://github.com/dotnet/efcore/blob/rel/2.0.0/src/EFCore/DbLoggerCategory.cs).
 
 [DiagnosticSource](https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md) events now use the same event ID names as the corresponding `ILogger` messages. The event payloads are all nominal types derived from [EventData](/dotnet/api/microsoft.entityframeworkcore.diagnostics.eventdata).
 

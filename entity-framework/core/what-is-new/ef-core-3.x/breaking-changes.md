@@ -16,7 +16,6 @@ Changes that we expect to only impact database providers are documented under [p
 | **Breaking change**                                                                                               | **Impact** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
 | [LINQ queries are no longer evaluated on the client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
-| [EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0](#netstandard21) | High      |
 | [The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK](#dotnet-ef) | High      |
 | [DetectChanges honors store-generated key values](#dc) | High      |
 | [FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed](#fromsql) | High      |
@@ -33,7 +32,6 @@ Changes that we expect to only impact database providers are documented under [p
 | [UseRowNumberForPaging has been removed](#urn) | Medium      |
 | [FromSql method when used with stored procedure cannot be composed](#fromsqlsproc) | Medium      |
 | [FromSql methods can only be specified on query roots](#fromsql) | Low      |
-| [~~Query execution is logged at Debug level~~ Reverted](#qe) | Low      |
 | [Temporary key values are no longer set onto entity instances](#tkv) | Low      |
 | [Dependent entities sharing the table with the principal are now optional](#de) | Low      |
 | [All entities sharing a table with a concurrency token column have to map it to a property](#aes) | Low      |
@@ -70,23 +68,27 @@ Changes that we expect to only impact database providers are documented under [p
 | [Microsoft.Data.SqlClient is used instead of System.Data.SqlClient](#SqlClient) | Low      |
 | [Multiple ambiguous self-referencing relationships must be configured](#mersa) | Low      |
 | [DbFunction.Schema being null or empty string configures it to be in model's default schema](#udf-empty-string) | Low      |
+| [~~EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0~~ Reverted](#netstandard21) | |
+| [~~Query execution is logged at Debug level~~ Reverted](#qe) | |
+
+## High-impact changes
 
 ### LINQ queries are no longer evaluated on the client
 
-[Tracking Issue #14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
-[Also see issue #12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
+[Tracking Issue #14935](https://github.com/dotnet/efcore/issues/14935)
+[Also see issue #12795](https://github.com/dotnet/efcore/issues/12795)
 
-**Old behavior**
+#### Old behavior
 
 Before 3.0, when EF Core couldn't convert an expression that was part of a query to either SQL or a parameter, it automatically evaluated the expression on the client.
 By default, client evaluation of potentially expensive expressions only triggered a warning.
 
-**New behavior**
+#### New behavior
 
 Starting with 3.0, EF Core only allows expressions in the top-level projection (the last `Select()` call in the query) to be evaluated on the client.
 When expressions in any other part of the query can't be converted to either SQL or a parameter, an exception is thrown.
 
-**Why**
+#### Why
 
 Automatic client evaluation of queries allows many queries to be executed even if important parts of them can't be translated.
 This behavior can result in unexpected and potentially damaging behavior that may only become evident in production.
@@ -96,48 +98,27 @@ Client evaluation warnings also proved too easy to ignore during development.
 
 Besides this, automatic client evaluation can lead to issues in which improving query translation for specific expressions caused unintended breaking changes between releases.
 
-**Mitigations**
+#### Mitigations
 
 If a query can't be fully translated, then either rewrite the query in a form that can be translated, or use `AsEnumerable()`, `ToList()`, or similar to explicitly bring data back to the client where it can then be further processed using LINQ-to-Objects.
 
-<a name="netstandard21"></a>
-### EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0
-
-[Tracking Issue #15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
-
-> [!IMPORTANT]
-> EF Core 3.1 targets .NET Standard 2.0 again. This brings back support for .NET Framework.
-
-**Old behavior**
-
-Before 3.0, EF Core targeted .NET Standard 2.0 and would run on all platforms that support that standard, including .NET Framework.
-
-**New behavior**
-
-Starting with 3.0, EF Core targets .NET Standard 2.1 and will run on all platforms that support this standard. This does not include .NET Framework.
-
-**Why**
-
-This is part of a strategic decision across .NET technologies to focus energy on .NET Core and other modern .NET platforms, such as Xamarin.
-
-**Mitigations**
-
-Use EF Core 3.1.
-
 <a name="no-longer"></a>
+
+## Medium-impact changes
+
 ### Entity Framework Core is no longer part of the ASP.NET Core shared framework
 
 [Tracking Issue Announcements#325](https://github.com/aspnet/Announcements/issues/325)
 
-**Old behavior**
+#### Old behavior
 
 Before ASP.NET Core 3.0, when you added a package reference to `Microsoft.AspNetCore.App` or `Microsoft.AspNetCore.All`, it would include EF Core and some of the EF Core data providers like the SQL Server provider.
 
-**New behavior**
+#### New behavior
 
 Starting in 3.0, the ASP.NET Core shared framework doesn't include EF Core or any EF Core data providers.
 
-**Why**
+#### Why
 
 Before this change, getting EF Core required different steps depending on whether the application targeted ASP.NET Core and SQL Server or not.
 Also, upgrading ASP.NET Core forced the upgrade of EF Core and the SQL Server provider, which isn't always desirable.
@@ -145,47 +126,51 @@ Also, upgrading ASP.NET Core forced the upgrade of EF Core and the SQL Server pr
 With this change, the experience of getting EF Core is the same across all providers, supported .NET implementations and application types.
 Developers can also now control exactly when EF Core and EF Core data providers are upgraded.
 
-**Mitigations**
+#### Mitigations
 
 To use EF Core in an ASP.NET Core 3.0 application or any other supported application, explicitly add a package reference to the EF Core database provider that your application will use.
 
 <a name="dotnet-ef"></a>
+
 ### The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK
 
-[Tracking Issue #14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
+[Tracking Issue #14016](https://github.com/dotnet/efcore/issues/14016)
 
-**Old behavior**
+#### Old behavior
 
 Before 3.0, the `dotnet ef` tool was included in the .NET Core SDK and was readily available to use from the command line from any project without requiring extra steps.
 
-**New behavior**
+#### New behavior
 
 Starting in 3.0, the .NET SDK does not include the `dotnet ef` tool, so before you can use it you have to explicitly install it as a local or global tool.
 
-**Why**
+#### Why
 
 This change allows us to distribute and update `dotnet ef` as a regular .NET CLI tool on NuGet, consistent with the fact that the EF Core 3.0 is also always distributed as a NuGet package.
 
-**Mitigations**
+#### Mitigations
 
 To be able to manage migrations or scaffold a `DbContext`, install `dotnet-ef` as a global tool:
 
-  ```dotnetcli
-  dotnet tool install --global dotnet-ef
-  ```
+```dotnetcli
+dotnet tool install --global dotnet-ef
+```
 
 You can also obtain it a local tool when you restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](/dotnet/core/tools/global-tools#install-a-local-tool).
 
+## Low-impact changes
+
 <a name="fromsql"></a>
+
 ### FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed
 
-[Tracking Issue #10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
+[Tracking Issue #10996](https://github.com/dotnet/efcore/issues/10996)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, these method names were overloaded to work with either a normal string or a string that should be interpolated into SQL and parameters.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, use `FromSqlRaw`, `ExecuteSqlRaw`, and `ExecuteSqlRawAsync` to create a parameterized query where the parameters are passed separately from the query string.
 For example:
@@ -206,21 +191,22 @@ context.Products.FromSqlInterpolated(
 
 Note that both of the queries above will produce the same parameterized SQL with the same SQL parameters.
 
-**Why**
+#### Why
 
 Method overloads like this make it very easy to accidentally call the raw string method when the intent was to call the interpolated string method, and the other way around.
 This could result in queries not being parameterized when they should have been.
 
-**Mitigations**
+#### Mitigations
 
 Switch to use the new method names.
 
 <a name="fromsqlsproc"></a>
+
 ### FromSql method when used with stored procedure cannot be composed
 
-[Tracking Issue #15392](https://github.com/aspnet/EntityFrameworkCore/issues/15392)
+[Tracking Issue #15392](https://github.com/dotnet/efcore/issues/15392)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, FromSql method tried to detect if the passed SQL can be composed upon. It did client evaluation when the SQL was non-composable like a stored procedure. The following query worked by running the stored procedure on the server and doing FirstOrDefault on the client side.
 
@@ -228,15 +214,15 @@ Before EF Core 3.0, FromSql method tried to detect if the passed SQL can be comp
 context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").FirstOrDefault();
 ```
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, EF Core will not try to parse the SQL. So if you are composing after FromSqlRaw/FromSqlInterpolated, then EF Core will compose the SQL by causing sub query. So if you are using a stored procedure with composition then you will get an exception for invalid SQL syntax.
 
-**Why**
+#### Why
 
 EF Core 3.0 does not support automatic client evaluation, since it was error prone as explained [here](#linq-queries-are-no-longer-evaluated-on-the-client).
 
-**Mitigation**
+#### Mitigations
 
 If you are using a stored procedure in FromSqlRaw/FromSqlInterpolated, you know that it cannot be composed upon, so you can add __AsEnumerable/AsAsyncEnumerable__ right after the FromSql method call to avoid any composition on server side.
 
@@ -248,87 +234,76 @@ context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable(
 
 ### FromSql methods can only be specified on query roots
 
-[Tracking Issue #15704](https://github.com/aspnet/EntityFrameworkCore/issues/15704)
+[Tracking Issue #15704](https://github.com/dotnet/efcore/issues/15704)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, the `FromSql` method could be specified anywhere in the query.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, the new `FromSqlRaw` and `FromSqlInterpolated` methods (which replace `FromSql`) can only be specified on query roots, i.e. directly on the `DbSet<>`. Attempting to specify them anywhere else will result in a compilation error.
 
-**Why**
+#### Why
 
 Specifying `FromSql` anywhere other than on a `DbSet` had no added meaning or added value, and could cause ambiguity in certain scenarios.
 
-**Mitigations**
+#### Mitigations
 
 `FromSql` invocations should be moved to be directly on the `DbSet` to which they apply.
 
 <a name="notrackingresolution"></a>
+
 ### No-tracking queries no longer perform identity resolution
 
-[Tracking Issue #13518](https://github.com/aspnet/EntityFrameworkCore/issues/13518)
+[Tracking Issue #13518](https://github.com/dotnet/efcore/issues/13518)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, the same entity instance would be used for every occurrence of an entity with a given type and ID. This matches the behavior of tracking queries. For example, this query:
 
 ```csharp
 var results = context.Products.Include(e => e.Category).AsNoTracking().ToList();
 ```
+
 would return the same `Category` instance for each `Product` that is associated with the given category.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, different entity instances will be created when an entity with a given type and ID is encountered at different places in the returned graph. For example, the query above will now return a new `Category` instance for each `Product` even when two products are associated with the same category.
 
-**Why**
+#### Why
 
 Identity resolution (that is, determining that an entity has the same type and ID as a previously encountered entity) adds additional performance and memory overhead. This usually runs counter to why no-tracking queries are used in the first place. Also, while identity resolution can sometimes be useful, it is not needed if the entities are to be serialized and sent to a client, which is common for no-tracking queries.
 
-**Mitigations**
+#### Mitigations
 
 Use a tracking query if identity resolution is required.
-
-<a name="qe"></a>
-
-### ~~Query execution is logged at Debug level~~ Reverted
-
-[Tracking Issue #14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
-
-We reverted this change because new configuration in EF Core 3.0 allows the log level for any event to be specified by the application. For example, to switch logging of SQL to `Debug`, explicitly configure the level in `OnConfiguring` or `AddDbContext`:
-```csharp
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder
-        .UseSqlServer(connectionString)
-        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Debug)));
-```
 
 <a name="tkv"></a>
 
 ### Temporary key values are no longer set onto entity instances
 
-[Tracking Issue #12378](https://github.com/aspnet/EntityFrameworkCore/issues/12378)
+[Tracking Issue #12378](https://github.com/dotnet/efcore/issues/12378)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, temporary values were assigned to all key properties that would later have a real value generated by the database.
 Usually these temporary values were large negative numbers.
 
-**New behavior**
+#### New behavior
 
 Starting with 3.0, EF Core stores the temporary key value as part of the entity's tracking information, and leaves the key property itself unchanged.
 
-**Why**
+#### Why
 
 This change was made to prevent temporary key values from erroneously becoming permanent when an entity that has been previously tracked by some `DbContext` instance is moved to a different `DbContext` instance.
 
-**Mitigations**
+#### Mitigations
 
 Applications that assign primary key values onto foreign keys to form associations between entities may depend on the old behavior if the primary keys are store-generated and belong to entities in the `Added` state.
 This can be avoided by:
+
 * Not using store-generated keys.
 * Setting navigation properties to form relationships instead of setting foreign key values.
 * Obtain the actual temporary key values from the entity's tracking information.
@@ -338,23 +313,23 @@ For example, `context.Entry(blog).Property(e => e.Id).CurrentValue` will return 
 
 ### DetectChanges honors store-generated key values
 
-[Tracking Issue #14616](https://github.com/aspnet/EntityFrameworkCore/issues/14616)
+[Tracking Issue #14616](https://github.com/dotnet/efcore/issues/14616)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, an untracked entity found by `DetectChanges` would be tracked in the `Added` state and inserted as a new row when `SaveChanges` is called.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, if an entity is using generated key values and some key value is set, then the entity will be tracked in the `Modified` state.
 This means that a row for the entity is assumed to exist and it will be updated when `SaveChanges` is called.
 If the key value isn't set, or if the entity type isn't using generated keys, then the new entity will still be tracked as `Added` as in previous versions.
 
-**Why**
+#### Why
 
 This change was made to make it easier and more consistent to work with disconnected entity graphs while using store-generated keys.
 
-**Mitigations**
+#### Mitigations
 
 This change can break an application if an entity type is configured to use generated keys but key values are explicitly set for new instances.
 The fix is to explicitly configure the key properties to not use generated values.
@@ -373,25 +348,27 @@ Or with data annotations:
 [DatabaseGenerated(DatabaseGeneratedOption.None)]
 public string Id { get; set; }
 ```
+
 <a name="cascade"></a>
+
 ### Cascade deletions now happen immediately by default
 
-[Tracking Issue #10114](https://github.com/aspnet/EntityFrameworkCore/issues/10114)
+[Tracking Issue #10114](https://github.com/dotnet/efcore/issues/10114)
 
-**Old behavior**
+#### Old behavior
 
 Before 3.0, EF Core applied cascading actions (deleting dependent entities when a required principal is deleted or when the relationship to a required principal is severed) did not happen until SaveChanges was called.
 
-**New behavior**
+#### New behavior
 
 Starting with 3.0, EF Core applies cascading actions as soon as the triggering condition is detected.
 For example, calling `context.Remove()` to delete a principal entity will result in all tracked related required dependents also being set to `Deleted` immediately.
 
-**Why**
+#### Why
 
 This change was made to improve the experience for data binding and auditing scenarios where it is important to understand which entities will be deleted _before_ `SaveChanges` is called.
 
-**Mitigations**
+#### Mitigations
 
 The previous behavior can be restored through settings on `context.ChangeTracker`.
 For example:
@@ -400,72 +377,76 @@ For example:
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
+
 <a name="eager-loading-single-query"></a>
+
 ### Eager loading of related entities now happens in a single query
 
-[Tracking issue #18022](https://github.com/aspnet/EntityFrameworkCore/issues/18022)
+[Tracking issue #18022](https://github.com/dotnet/efcore/issues/18022)
 
-**Old behavior**
+#### Old behavior
 
 Before 3.0, eagerly loading collection navigations via `Include` operators caused multiple queries to be generated on relational database, one for each related entity type.
 
-**New behavior**
+#### New behavior
 
 Starting with 3.0, EF Core generates a single query with JOINs on relational databases.
 
-**Why**
+#### Why
 
 Issuing multiple queries to implement a single LINQ query caused numerous issues, including negative performance as multiple database roundtrips were necessary, and data coherency issues as each query could observe a different state of the database.
 
-**Mitigations**
+#### Mitigations
 
-While technically this is not a breaking change, it could have a considerable effect on application performance when a single query contains a large number of `Include` operator on collection navigations. [See this comment](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-542397085) for more information and for rewriting queries in a more efficient way.
+While technically this is not a breaking change, it could have a considerable effect on application performance when a single query contains a large number of `Include` operator on collection navigations. [See this comment](https://github.com/dotnet/efcore/issues/18022#issuecomment-542397085) for more information and for rewriting queries in a more efficient way.
 
 **
 
 <a name="deletebehavior"></a>
+
 ### DeleteBehavior.Restrict has cleaner semantics
 
-[Tracking Issue #12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
+[Tracking Issue #12661](https://github.com/dotnet/efcore/issues/12661)
 
-**Old behavior**
+#### Old behavior
 
 Before 3.0, `DeleteBehavior.Restrict` created foreign keys in the database with `Restrict` semantics, but also changed internal fixup in a non-obvious way.
 
-**New behavior**
+#### New behavior
 
 Starting with 3.0, `DeleteBehavior.Restrict` ensures that foreign keys are created with `Restrict` semantics--that is, no cascades; throw on constraint violation--without also impacting EF internal fixup.
 
-**Why**
+#### Why
 
 This change was made to improve the experience for using `DeleteBehavior` in an intuitive manner, without unexpected side-effects.
 
-**Mitigations**
+#### Mitigations
 
 The previous behavior can be restored by using `DeleteBehavior.ClientNoAction`.
 
 <a name="qt"></a>
+
 ### Query types are consolidated with entity types
 
-[Tracking Issue #14194](https://github.com/aspnet/EntityFrameworkCore/issues/14194)
+[Tracking Issue #14194](https://github.com/dotnet/efcore/issues/14194)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, [query types](xref:core/modeling/keyless-entity-types) were a means to query data that doesn't define a primary key in a structured way.
 That is, a query type was used for mapping entity types without keys (more likely from a view, but possibly from a table) while a regular entity type was used when a key was available (more likely from a table, but possibly from a view).
 
-**New behavior**
+#### New behavior
 
 A query type now becomes just an entity type without a primary key.
 Keyless entity types have the same functionality as query types in previous versions.
 
-**Why**
+#### Why
 
 This change was made to reduce the confusion around the purpose of query types.
 Specifically, they are keyless entity types and they are inherently read-only because of this, but they should not be used just because an entity type needs to be read-only.
 Likewise, they are often mapped to views, but this is only because views often don't define keys.
 
-**Mitigations**
+#### Mitigations
 
 The following parts of the API are now obsolete:
 
@@ -473,23 +454,24 @@ The following parts of the API are now obsolete:
 This would still not be configured by convention to avoid misconfiguration when a primary key is expected, but doesn't match the convention.
 * **`DbQuery<>`** - Instead `DbSet<>` should be used.
 * **`DbContext.Query<>()`** - Instead `DbContext.Set<>()` should be used.
-* **`IQueryTypeConfiguration<TQuery>`** - Instead `IEntityTypeConfiguration<TEntity>`** should be used.
+* **`IQueryTypeConfiguration<TQuery>`** - Instead `IEntityTypeConfiguration<TEntity>` should be used.
 
 > [!NOTE]
 > Due to [an issue in 3.x](https://github.com/dotnet/efcore/issues/19537) when querying keyless entities that have all properties set to `null` a `null` will be returned instead of an entity, if this issue is applicable to your scenario also add logic to handle `null` in results.
 
 <a name="config"></a>
+
 ### Configuration API for owned type relationships has changed
 
-[Tracking Issue #12444](https://github.com/aspnet/EntityFrameworkCore/issues/12444)
-[Tracking Issue #9148](https://github.com/aspnet/EntityFrameworkCore/issues/9148)
-[Tracking Issue #14153](https://github.com/aspnet/EntityFrameworkCore/issues/14153)
+[Tracking Issue #12444](https://github.com/dotnet/efcore/issues/12444)
+[Tracking Issue #9148](https://github.com/dotnet/efcore/issues/9148)
+[Tracking Issue #14153](https://github.com/dotnet/efcore/issues/14153)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, configuration of the owned relationship was performed directly after the `OwnsOne` or `OwnsMany` call.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, there is now fluent API to configure a navigation property to the owner using `WithOwner()`.
 For example:
@@ -526,12 +508,12 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
 
 Additionally calling `Entity()`, `HasOne()`, or `Set()` with an owned type target will now throw an exception.
 
-**Why**
+#### Why
 
 This change was made to create a cleaner separation between configuring the owned type itself and the _relationship to_ the owned type.
 This in turn removes ambiguity and confusion around methods like `HasForeignKey`.
 
-**Mitigations**
+#### Mitigations
 
 Change configuration of owned type relationships to use the new API surface as shown in the example above.
 
@@ -539,11 +521,12 @@ Change configuration of owned type relationships to use the new API surface as s
 
 ### Dependent entities sharing the table with the principal are now optional
 
-[Tracking Issue #9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
+[Tracking Issue #9005](https://github.com/dotnet/efcore/issues/9005)
 
-**Old behavior**
+#### Old behavior
 
 Consider the following model:
+
 ```csharp
 public class Order
 {
@@ -558,15 +541,15 @@ public class OrderDetails
     public string ShippingAddress { get; set; }
 }
 ```
+
 Before EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table then an `OrderDetails` instance was always required when adding a new `Order`.
 
-
-**New behavior**
+#### New behavior
 
 Starting with 3.0, EF Core allows to add an `Order` without an `OrderDetails` and maps all of the `OrderDetails` properties except the primary key to nullable columns.
 When querying EF Core sets `OrderDetails` to `null` if any of its required properties doesn't have a value or if it has no required properties besides the primary key and all properties are `null`.
 
-**Mitigations**
+#### Mitigations
 
 If your model has a table sharing dependent with all optional columns, but the navigation pointing to it is not expected to be `null` then the application should be modified to handle cases when the navigation is `null`. If this is not possible a required property should be added to the entity type or at least one property should have a non-`null` value assigned to it.
 
@@ -574,11 +557,12 @@ If your model has a table sharing dependent with all optional columns, but the n
 
 ### All entities sharing a table with a concurrency token column have to map it to a property
 
-[Tracking Issue #14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
+[Tracking Issue #14154](https://github.com/dotnet/efcore/issues/14154)
 
-**Old behavior**
+#### Old behavior
 
 Consider the following model:
+
 ```csharp
 public class Order
 {
@@ -600,20 +584,21 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         .Property(o => o.Version).IsRowVersion().HasColumnName("Version");
 }
 ```
+
 Before EF Core 3.0, if `OrderDetails` is owned by `Order` or explicitly mapped to the same table then updating just `OrderDetails` will not update `Version` value on client and the next update will fail.
 
-
-**New behavior**
+#### New behavior
 
 Starting with 3.0, EF Core propagates the new `Version` value to `Order` if it owns `OrderDetails`. Otherwise an exception is thrown during model validation.
 
-**Why**
+#### Why
 
 This change was made to avoid a stale concurrency token value when only one of the entities mapped to the same table is updated.
 
-**Mitigations**
+#### Mitigations
 
 All entities sharing the table have to include a property that is mapped to the concurrency token column. It's possible the create one in shadow-state:
+
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
@@ -626,9 +611,9 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ### Owned entities cannot be queried without the owner using a tracking query
 
-[Tracking Issue #18876](https://github.com/aspnet/EntityFrameworkCore/issues/18876)
+[Tracking Issue #18876](https://github.com/dotnet/efcore/issues/18876)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, the owned entities could be queried as any other navigation.
 
@@ -636,15 +621,15 @@ Before EF Core 3.0, the owned entities could be queried as any other navigation.
 context.People.Select(p => p.Address);
 ```
 
-**New behavior**
+#### New behavior
 
 Starting with 3.0, EF Core will throw if a tracking query projects an owned entity without the owner.
 
-**Why**
+#### Why
 
 Owned entities cannot be manipulated without the owner, so in the vast majority of cases querying them in this way is an error.
 
-**Mitigations**
+#### Mitigations
 
 If the owned entity should be tracked to be modified in any way later then the owner should be included in the query.
 
@@ -658,11 +643,12 @@ context.People.Select(p => p.Address).AsNoTracking();
 
 ### Inherited properties from unmapped types are now mapped to a single column for all derived types
 
-[Tracking Issue #13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
+[Tracking Issue #13998](https://github.com/dotnet/efcore/issues/13998)
 
-**Old behavior**
+#### Old behavior
 
 Consider the following model:
+
 ```csharp
 public abstract class EntityBase
 {
@@ -693,15 +679,15 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 Before EF Core 3.0, the `ShippingAddress` property would be mapped to separate columns for `BulkOrder` and `Order` by default.
 
-**New behavior**
+#### New behavior
 
 Starting with 3.0, EF Core only creates one column for `ShippingAddress`.
 
-**Why**
+#### Why
 
 The old behavoir was unexpected.
 
-**Mitigations**
+#### Mitigations
 
 The property can still be explicitly mapped to separate column on the derived types:
 
@@ -721,11 +707,12 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ### The foreign key property convention no longer matches same name as the principal property
 
-[Tracking Issue #13274](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
+[Tracking Issue #13274](https://github.com/dotnet/efcore/issues/13274)
 
-**Old behavior**
+#### Old behavior
 
 Consider the following model:
+
 ```csharp
 public class Customer
 {
@@ -739,10 +726,11 @@ public class Order
     public int CustomerId { get; set; }
 }
 ```
+
 Before EF Core 3.0, the `CustomerId` property would be used for the foreign key by convention.
 However, if `Order` is an owned type, then this would also make `CustomerId` the primary key and this isn't usually the expectation.
 
-**New behavior**
+#### New behavior
 
 Starting with 3.0, EF Core doesn't try to use properties for foreign keys by convention if they have the same name as the principal property.
 Principal type name concatenated with principal property name, and navigation name concatenated with principal property name patterns are still matched.
@@ -777,11 +765,11 @@ public class Order
 }
 ```
 
-**Why**
+#### Why
 
 This change was made to avoid erroneously defining a primary key property on the owned type.
 
-**Mitigations**
+#### Mitigations
 
 If the property was intended to be the foreign key, and hence part of the primary key, then explicitly configure it as such.
 
@@ -789,9 +777,9 @@ If the property was intended to be the foreign key, and hence part of the primar
 
 ### Database connection is now closed if not used anymore before the TransactionScope has been completed
 
-[Tracking Issue #14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
+[Tracking Issue #14218](https://github.com/dotnet/efcore/issues/14218)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, if the context opens the connection inside a `TransactionScope`, the connection remains open while the current `TransactionScope` is active.
 
@@ -810,15 +798,15 @@ using (new TransactionScope())
 }
 ```
 
-**New behavior**
+#### New behavior
 
 Starting with 3.0, EF Core closes the connection as soon as it's done using it.
 
-**Why**
+#### Why
 
 This change allows to use multiple contexts in the same `TransactionScope`. The new behavior also matches EF6.
 
-**Mitigations**
+#### Mitigations
 
 If the connection needs to remain open explicit call to `OpenConnection()` will ensure that EF Core doesn't close it prematurely:
 
@@ -841,45 +829,45 @@ using (new TransactionScope())
 
 ### Each property uses independent in-memory integer key generation
 
-[Tracking Issue #6872](https://github.com/aspnet/EntityFrameworkCore/issues/6872)
+[Tracking Issue #6872](https://github.com/dotnet/efcore/issues/6872)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, one shared value generator was used for all in-memory integer key properties.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, each integer key property gets its own value generator when using the in-memory database.
 Also, if the database is deleted, then key generation is reset for all tables.
 
-**Why**
+#### Why
 
 This change was made to align in-memory key generation more closely to real database key generation and to improve the ability to isolate tests from each other when using the in-memory database.
 
-**Mitigations**
+#### Mitigations
 
 This can break an application that is relying on specific in-memory key values to be set.
 Consider instead not relying on specific key values, or updating to match the new behavior.
 
 ### Backing fields are used by default
 
-[Tracking Issue #12430](https://github.com/aspnet/EntityFrameworkCore/issues/12430)
+[Tracking Issue #12430](https://github.com/dotnet/efcore/issues/12430)
 
-**Old behavior**
+#### Old behavior
 
 Before 3.0, even if the backing field for a property was known, EF Core would still by default read and write the property value using the property getter and setter methods.
 The exception to this was query execution, where the backing field would be set directly if known.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, if the backing field for a property is known, then EF Core will always read and write that property using the backing field.
 This could cause an application break if the application is relying on additional behavior coded into the getter or setter methods.
 
-**Why**
+#### Why
 
 This change was made to prevent EF Core from erroneously triggering business logic by default when performing database operations involving the entities.
 
-**Mitigations**
+#### Mitigations
 
 The pre-3.0 behavior can be restored through configuration of the property access mode on `ModelBuilder`.
 For example:
@@ -890,22 +878,22 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 
 ### Throw if multiple compatible backing fields are found
 
-[Tracking Issue #12523](https://github.com/aspnet/EntityFrameworkCore/issues/12523)
+[Tracking Issue #12523](https://github.com/dotnet/efcore/issues/12523)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, if multiple fields matched the rules for finding the backing field of a property, then one field would be chosen based on some precedence order.
 This could cause the wrong field to be used in ambiguous cases.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, if multiple fields are matched to the same property, then an exception is thrown.
 
-**Why**
+#### Why
 
 This change was made to avoid silently using one field over another when only one can be correct.
 
-**Mitigations**
+#### Mitigations
 
 Properties with ambiguous backing fields must have the field to use specified explicitly.
 For example, using the fluent API:
@@ -919,7 +907,7 @@ modelBuilder
 
 ### Field-only property names should match the field name
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, a property could be specified by a string value and if no property with that name was found on the .NET type then EF Core would try to match it to a field using convention rules.
 
@@ -937,7 +925,7 @@ modelBuilder
     .Property("Id");
 ```
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, a field-only property must match the field name exactly.
 
@@ -947,14 +935,14 @@ modelBuilder
     .Property("_id");
 ```
 
-**Why**
+#### Why
 
 This change was made to avoid using the same field for two properties named similarly, it also makes the matching rules for field-only properties the same as for properties mapped to CLR properties.
 
-**Mitigations**
+#### Mitigations
 
 Field-only properties must be named the same as the field they are mapped to.
-In a future release of EF Core after 3.0, we plan to re-enable explicitly configuring a field name that is different from the property name (see issue [#15307](https://github.com/aspnet/EntityFrameworkCore/issues/15307)):
+In a future release of EF Core after 3.0, we plan to re-enable explicitly configuring a field name that is different from the property name (see issue [#15307](https://github.com/dotnet/efcore/issues/15307)):
 
 ```csharp
 modelBuilder
@@ -967,41 +955,41 @@ modelBuilder
 
 ### AddDbContext/AddDbContextPool no longer call AddLogging and AddMemoryCache
 
-[Tracking Issue #14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
+[Tracking Issue #14756](https://github.com/dotnet/efcore/issues/14756)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, calling `AddDbContext` or `AddDbContextPool` would also register logging and memory caching services with DI through calls to [AddLogging](/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) and [AddMemoryCache](/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, `AddDbContext` and `AddDbContextPool` will no longer register these services with Dependency Injection (DI).
 
-**Why**
+#### Why
 
 EF Core 3.0 does not require that these services are in the application's DI container. However, if `ILoggerFactory` is registered in the application's DI container, then it will still be used by EF Core.
 
-**Mitigations**
+#### Mitigations
 
 If your application needs these services, then register them explicitly with the DI container using  [AddLogging](/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) or [AddMemoryCache](/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
 
 ### AddEntityFramework* adds IMemoryCache with a size limit
 
-[Tracking Issue #12905](https://github.com/aspnet/EntityFrameworkCore/issues/12905)
+[Tracking Issue #12905](https://github.com/dotnet/efcore/issues/12905)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, calling `AddEntityFramework*` methods would also register memory caching services with DI without a size limit.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, `AddEntityFramework*` will register an IMemoryCache service with a size limit. If any other services added afterwards depend on IMemoryCache they can quickly reach the default limit causing exceptions or degraded performance.
 
-**Why**
+#### Why
 
 Using IMemoryCache without a limit could result in uncontrolled memory usage if there is a bug in query caching logic or the queries are generated dynamically. Having a default limit mitigates a potential DoS attack.
 
-**Mitigations**
+#### Mitigations
 
 In most cases calling `AddEntityFramework*` is not necessary if `AddDbContext` or `AddDbContextPool` is called as well. Therefore, the best mitigation is to remove the `AddEntityFramework*` call.
 
@@ -1011,14 +999,14 @@ If your application needs these services, then register a IMemoryCache implement
 
 ### DbContext.Entry now performs a local DetectChanges
 
-[Tracking Issue #13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
+[Tracking Issue #13552](https://github.com/dotnet/efcore/issues/13552)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, calling `DbContext.Entry` would cause changes to be detected for all tracked entities.
 This ensured that the state exposed in the `EntityEntry` was up-to-date.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, calling `DbContext.Entry` will now only attempt to detect changes in the given entity and any tracked principal entities related to it.
 This means that changes elsewhere may not have been detected by calling this method, which could have implications on application state.
@@ -1027,32 +1015,32 @@ Note that if `ChangeTracker.AutoDetectChangesEnabled` is set to `false` then eve
 
 Other methods that cause change detection--for example `ChangeTracker.Entries` and `SaveChanges`--still cause a full `DetectChanges` of all tracked entities.
 
-**Why**
+#### Why
 
 This change was made to improve the default performance of using `context.Entry`.
 
-**Mitigations**
+#### Mitigations
 
 Call `ChangeTracker.DetectChanges()` explicitly before calling `Entry` to ensure the pre-3.0 behavior.
 
 ### String and byte array keys are not client-generated by default
 
-[Tracking Issue #14617](https://github.com/aspnet/EntityFrameworkCore/issues/14617)
+[Tracking Issue #14617](https://github.com/dotnet/efcore/issues/14617)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, `string` and `byte[]` key properties could be used without explicitly setting a non-null value.
 In such a case, the key value would be generated on the client as a GUID, serialized to bytes for `byte[]`.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0 an exception will be thrown indicating that no key value has been set.
 
-**Why**
+#### Why
 
 This change was made because client-generated `string`/`byte[]` values generally aren't useful, and the default behavior made it hard to reason about generated key values in a common way.
 
-**Mitigations**
+#### Mitigations
 
 The pre-3.0 behavior can be obtained by explicitly specifying that the key properties should use generated values if no other non-null value is set.
 For example, with the fluent API:
@@ -1075,70 +1063,70 @@ public string Id { get; set; }
 
 ### ILoggerFactory is now a scoped service
 
-[Tracking Issue #14698](https://github.com/aspnet/EntityFrameworkCore/issues/14698)
+[Tracking Issue #14698](https://github.com/dotnet/efcore/issues/14698)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, `ILoggerFactory` was registered as a singleton service.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, `ILoggerFactory` is now registered as scoped.
 
-**Why**
+#### Why
 
 This change was made to allow association of a logger with a `DbContext` instance, which enables other functionality and removes some cases of pathological behavior such as an explosion of internal service providers.
 
-**Mitigations**
+#### Mitigations
 
 This change should not impact application code unless it is registering and using custom services on the EF Core internal service provider.
 This isn't common.
 In these cases, most things will still work, but any singleton service that was depending on `ILoggerFactory` will need to be changed to obtain the `ILoggerFactory` in a different way.
 
-If you run into situations like this, please file an issue at on the [EF Core GitHub issue tracker](https://github.com/aspnet/EntityFrameworkCore/issues) to let us know how you are using `ILoggerFactory` such that we can better understand how not to break this again in the future.
+If you run into situations like this, please file an issue at on the [EF Core GitHub issue tracker](https://github.com/dotnet/efcore/issues) to let us know how you are using `ILoggerFactory` such that we can better understand how not to break this again in the future.
 
 ### Lazy-loading proxies no longer assume navigation properties are fully loaded
 
-[Tracking Issue #12780](https://github.com/aspnet/EntityFrameworkCore/issues/12780)
+[Tracking Issue #12780](https://github.com/dotnet/efcore/issues/12780)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, once a `DbContext` was disposed there was no way of knowing if a given navigation property on an entity obtained from that context was fully loaded or not.
 Proxies would instead assume that a reference navigation is loaded if it has a non-null value, and that a collection navigation is loaded if it isn't empty.
 In these cases, attempting to lazy-load would be a no-op.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, proxies keep track of whether or not a navigation property is loaded.
 This means attempting to access a navigation property that is loaded after the context has been disposed will always be a no-op, even when the loaded navigation is empty or null.
 Conversely, attempting to access a navigation property that isn't loaded will throw an exception if the context is disposed even if the navigation property is a non-empty collection.
 If this situation arises, it means the application code is attempting to use lazy-loading at an invalid time, and the application should be changed to not do this.
 
-**Why**
+#### Why
 
 This change was made to make the behavior consistent and correct when attempting to lazy-load on a disposed `DbContext` instance.
 
-**Mitigations**
+#### Mitigations
 
 Update application code to not attempt lazy-loading with a disposed context, or configure this to be a no-op as described in the exception message.
 
 ### Excessive creation of internal service providers is now an error by default
 
-[Tracking Issue #10236](https://github.com/aspnet/EntityFrameworkCore/issues/10236)
+[Tracking Issue #10236](https://github.com/dotnet/efcore/issues/10236)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, a warning would be logged for an application creating a pathological number of internal service providers.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, this warning is now considered and error and an exception is thrown.
 
-**Why**
+#### Why
 
 This change was made to drive better application code through exposing this pathological case more explicitly.
 
-**Mitigations**
+#### Mitigations
 
 The most appropriate cause of action on encountering this error is to understand the root cause and stop creating so many internal service providers.
 However, the error can be converted back to a warning (or ignored) via configuration on the `DbContextOptionsBuilder`.
@@ -1156,12 +1144,13 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 ### New behavior for HasOne/HasMany called with a single string
 
-[Tracking Issue #9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
+[Tracking Issue #9171](https://github.com/dotnet/efcore/issues/9171)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, code calling `HasOne` or `HasMany` with a single string was interpreted in a confusing way.
 For example:
+
 ```csharp
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
@@ -1170,15 +1159,15 @@ The code looks like it is relating `Samurai` to some other entity type using the
 
 In reality, this code attempts to create a relationship to some entity type called `Entrance` with no navigation property.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, the code above now does what it looked like it should have been doing before.
 
-**Why**
+#### Why
 
 The old behavior was very confusing, especially when reading the configuration code and looking for errors.
 
-**Mitigations**
+#### Mitigations
 
 This will only break applications that are explicitly configuring relationships using strings for type names and without specifying the navigation property explicitly.
 This is not common.
@@ -1193,9 +1182,9 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 ### The return type for several async methods has been changed from Task to ValueTask
 
-[Tracking Issue #15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
+[Tracking Issue #15184](https://github.com/dotnet/efcore/issues/15184)
 
-**Old behavior**
+#### Old behavior
 
 The following async methods previously returned a `Task<T>`:
 
@@ -1205,15 +1194,15 @@ The following async methods previously returned a `Task<T>`:
 * `DbSet.AddAsync()`
 * `ValueGenerator.NextValueAsync()` (and deriving classes)
 
-**New behavior**
+#### New behavior
 
 The aforementioned methods now return a `ValueTask<T>` over the same `T` as before.
 
-**Why**
+#### Why
 
 This change reduces the number of heap allocations incurred when invoking these methods, improving general performance.
 
-**Mitigations**
+#### Mitigations
 
 Applications simply awaiting the above APIs only need to be recompiled - no source changes are necessary.
 A more complex usage (e.g. passing the returned `Task` to `Task.WhenAny()`) typically require that the returned `ValueTask<T>` be converted to a `Task<T>` by calling `AsTask()` on it.
@@ -1223,72 +1212,72 @@ Note that this negates the allocation reduction that this change brings.
 
 ### The Relational:TypeMapping annotation is now just TypeMapping
 
-[Tracking Issue #9913](https://github.com/aspnet/EntityFrameworkCore/issues/9913)
+[Tracking Issue #9913](https://github.com/dotnet/efcore/issues/9913)
 
-**Old behavior**
+#### Old behavior
 
 The annotation name for type mapping annotations was "Relational:TypeMapping".
 
-**New behavior**
+#### New behavior
 
 The annotation name for type mapping annotations is now "TypeMapping".
 
-**Why**
+#### Why
 
 Type mappings are now used for more than just relational database providers.
 
-**Mitigations**
+#### Mitigations
 
 This will only break applications that access the type mapping directly as an annotation, which isn't common.
 The most appropriate action to fix is to use API surface to access type mappings rather than using the annotation directly.
 
 ### ToTable on a derived type throws an exception
 
-[Tracking Issue #11811](https://github.com/aspnet/EntityFrameworkCore/issues/11811)
+[Tracking Issue #11811](https://github.com/dotnet/efcore/issues/11811)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, `ToTable()` called on a derived type would be ignored since only inheritance mapping strategy was TPH where this isn't valid.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0 and in preparation for adding TPT and TPC support in a later release, `ToTable()` called on a derived type will now throw an exception to avoid an unexpected mapping change in the future.
 
-**Why**
+#### Why
 
 Currently it isn't valid to map a derived type to a different table.
 This change avoids breaking in the future when it becomes a valid thing to do.
 
-**Mitigations**
+#### Mitigations
 
 Remove any attempts to map derived types to other tables.
 
 ### ForSqlServerHasIndex replaced with HasIndex
 
-[Tracking Issue #12366](https://github.com/aspnet/EntityFrameworkCore/issues/12366)
+[Tracking Issue #12366](https://github.com/dotnet/efcore/issues/12366)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, `ForSqlServerHasIndex().ForSqlServerInclude()` provided a way to configure columns used with `INCLUDE`.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, using `Include` on an index is now supported at the relational level.
 Use `HasIndex().ForSqlServerInclude()`.
 
-**Why**
+#### Why
 
 This change was made to consolidate the API for indexes with `Include` into one place for all database providers.
 
-**Mitigations**
+#### Mitigations
 
 Use the new API, as shown above.
 
 ### Metadata API changes
 
-[Tracking Issue #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
+[Tracking Issue #214](https://github.com/dotnet/efcore/issues/214)
 
-**New behavior**
+#### New behavior
 
 The following properties were converted to extension methods:
 
@@ -1298,11 +1287,11 @@ The following properties were converted to extension methods:
 * `IProperty.BeforeSaveBehavior` -> `GetBeforeSaveBehavior()`
 * `IProperty.AfterSaveBehavior` -> `GetAfterSaveBehavior()`
 
-**Why**
+#### Why
 
 This change simplifies the implementation of the aforementioned interfaces.
 
-**Mitigations**
+#### Mitigations
 
 Use the new extension methods.
 
@@ -1310,9 +1299,9 @@ Use the new extension methods.
 
 ### Provider-specific Metadata API changes
 
-[Tracking Issue #214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
+[Tracking Issue #214](https://github.com/dotnet/efcore/issues/214)
 
-**New behavior**
+#### New behavior
 
 The provider-specific extension methods will be flattened out:
 
@@ -1320,11 +1309,11 @@ The provider-specific extension methods will be flattened out:
 * `IEntityType.SqlServer().IsMemoryOptimized` -> `IEntityType.IsMemoryOptimized()`
 * `PropertyBuilder.UseSqlServerIdentityColumn()` -> `PropertyBuilder.UseIdentityColumn()`
 
-**Why**
+#### Why
 
 This change simplifies the implementation of the aforementioned extension methods.
 
-**Mitigations**
+#### Mitigations
 
 Use the new extension methods.
 
@@ -1332,21 +1321,21 @@ Use the new extension methods.
 
 ### EF Core no longer sends pragma for SQLite FK enforcement
 
-[Tracking Issue #12151](https://github.com/aspnet/EntityFrameworkCore/issues/12151)
+[Tracking Issue #12151](https://github.com/dotnet/efcore/issues/12151)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, EF Core would send `PRAGMA foreign_keys = 1` when a connection to SQLite is opened.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, EF Core no longer sends `PRAGMA foreign_keys = 1` when a connection to SQLite is opened.
 
-**Why**
+#### Why
 
 This change was made because EF Core uses `SQLitePCLRaw.bundle_e_sqlite3` by default, which in turn means that FK enforcement is switched on by default and doesn't need to be explicitly enabled each time a connection is opened.
 
-**Mitigations**
+#### Mitigations
 
 Foreign keys are enabled by default in SQLitePCLRaw.bundle_e_sqlite3, which is used by default for EF Core.
 For other cases, foreign keys can be enabled by specifying `Foreign Keys=True` in your connection string.
@@ -1355,19 +1344,19 @@ For other cases, foreign keys can be enabled by specifying `Foreign Keys=True` i
 
 ### Microsoft.EntityFrameworkCore.Sqlite now depends on SQLitePCLRaw.bundle_e_sqlite3
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, EF Core used `SQLitePCLRaw.bundle_green`.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, EF Core uses `SQLitePCLRaw.bundle_e_sqlite3`.
 
-**Why**
+#### Why
 
 This change was made so that the version of SQLite used on iOS consistent with other platforms.
 
-**Mitigations**
+#### Mitigations
 
 To use the native SQLite version on iOS, configure `Microsoft.Data.Sqlite` to use a different `SQLitePCLRaw` bundle.
 
@@ -1375,21 +1364,21 @@ To use the native SQLite version on iOS, configure `Microsoft.Data.Sqlite` to us
 
 ### Guid values are now stored as TEXT on SQLite
 
-[Tracking Issue #15078](https://github.com/aspnet/EntityFrameworkCore/issues/15078)
+[Tracking Issue #15078](https://github.com/dotnet/efcore/issues/15078)
 
-**Old behavior**
+#### Old behavior
 
 Guid values were previously stored as BLOB values on SQLite.
 
-**New behavior**
+#### New behavior
 
 Guid values are now stored as TEXT.
 
-**Why**
+#### Why
 
 The binary format of Guids is not standardized. Storing the values as TEXT makes the database more compatible with other technologies.
 
-**Mitigations**
+#### Mitigations
 
 You can migrate existing databases to the new format by executing SQL like the following.
 
@@ -1425,21 +1414,21 @@ Microsoft.Data.Sqlite remains capable of reading Guid values from both BLOB and 
 
 ### Char values are now stored as TEXT on SQLite
 
-[Tracking Issue #15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
+[Tracking Issue #15020](https://github.com/dotnet/efcore/issues/15020)
 
-**Old behavior**
+#### Old behavior
 
 Char values were previously sored as INTEGER values on SQLite. For example, a char value of *A* was stored as the integer value 65.
 
-**New behavior**
+#### New behavior
 
 Char values are now stored as TEXT.
 
-**Why**
+#### Why
 
 Storing the values as TEXT is more natural and makes the database more compatible with other technologies.
 
-**Mitigations**
+#### Mitigations
 
 You can migrate existing databases to the new format by executing SQL like the following.
 
@@ -1466,21 +1455,21 @@ Microsoft.Data.Sqlite also remains capable of reading character values from both
 
 ### Migration IDs are now generated using the invariant culture's calendar
 
-[Tracking Issue #12978](https://github.com/aspnet/EntityFrameworkCore/issues/12978)
+[Tracking Issue #12978](https://github.com/dotnet/efcore/issues/12978)
 
-**Old behavior**
+#### Old behavior
 
 Migration IDs were inadvertently generated using the current culture's calendar.
 
-**New behavior**
+#### New behavior
 
 Migration IDs are now always generated using the invariant culture's calendar (Gregorian).
 
-**Why**
+#### Why
 
 The order of migrations is important when updating the database or resolving merge conflicts. Using the invariant calendar avoids ordering issues that can result from team members having different system calendars.
 
-**Mitigations**
+#### Mitigations
 
 This change affects anyone using a non-Gregorian calendar where the year is greater than the Gregorian calendar (like the Thai Buddhist calendar). Existing migration IDs will need to be updated so that new migrations are ordered after existing migrations.
 
@@ -1505,44 +1494,44 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 ### UseRowNumberForPaging has been removed
 
-[Tracking Issue #16400](https://github.com/aspnet/EntityFrameworkCore/issues/16400)
+[Tracking Issue #16400](https://github.com/dotnet/efcore/issues/16400)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, `UseRowNumberForPaging` could be used to generate SQL for paging that is compatible with SQL Server 2008.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, EF will only generate SQL for paging that is only compatible with later SQL Server versions.
 
-**Why**
+#### Why
 
 We are making this change because [SQL Server 2008 is no longer a supported product](https://blogs.msdn.microsoft.com/sqlreleaseservices/end-of-mainstream-support-for-sql-server-2008-and-sql-server-2008-r2/) and updating this feature to work with the query changes made in EF Core 3.0 is significant work.
 
-**Mitigations**
+#### Mitigations
 
-We recommend updating to a newer version of SQL Server, or using a higher compatibility level, so that the generated SQL is supported. That being said, if you are unable to do this, then please [comment on the tracking issue](https://github.com/aspnet/EntityFrameworkCore/issues/16400) with details. We may revisit this decision based on feedback.
+We recommend updating to a newer version of SQL Server, or using a higher compatibility level, so that the generated SQL is supported. That being said, if you are unable to do this, then please [comment on the tracking issue](https://github.com/dotnet/efcore/issues/16400) with details. We may revisit this decision based on feedback.
 
 <a name="xinfo"></a>
 
 ### Extension info/metadata has been removed from IDbContextOptionsExtension
 
-[Tracking Issue #16119](https://github.com/aspnet/EntityFrameworkCore/issues/16119)
+[Tracking Issue #16119](https://github.com/dotnet/efcore/issues/16119)
 
-**Old behavior**
+#### Old behavior
 
 `IDbContextOptionsExtension` contained methods for providing metadata about the extension.
 
-**New behavior**
+#### New behavior
 
 These methods have been moved onto a new `DbContextOptionsExtensionInfo` abstract base class, which is returned from a new `IDbContextOptionsExtension.Info` property.
 
-**Why**
+#### Why
 
 Over the releases from 2.0 to 3.0 we needed to add to or change these methods several times.
 Breaking them out into a new abstract base class will make it easier to make these kind of changes without breaking existing extensions.
 
-**Mitigations**
+#### Mitigations
 
 Update extensions to follow the new pattern.
 Examples are found in the many implementations of `IDbContextOptionsExtension` for different kinds of extensions in the EF Core source code.
@@ -1551,17 +1540,17 @@ Examples are found in the many implementations of `IDbContextOptionsExtension` f
 
 ### LogQueryPossibleExceptionWithAggregateOperator has been renamed
 
-[Tracking Issue #10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
+[Tracking Issue #10985](https://github.com/dotnet/efcore/issues/10985)
 
-**Change**
+#### Change
 
 `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperator` has been renamed to `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperatorWarning`.
 
-**Why**
+#### Why
 
 Aligns the naming of this warning event with all other warning events.
 
-**Mitigations**
+#### Mitigations
 
 Use the new name. (Note that the event ID number has not changed.)
 
@@ -1569,9 +1558,9 @@ Use the new name. (Note that the event ID number has not changed.)
 
 ### Clarify API for foreign key constraint names
 
-[Tracking Issue #10730](https://github.com/aspnet/EntityFrameworkCore/issues/10730)
+[Tracking Issue #10730](https://github.com/dotnet/efcore/issues/10730)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, foreign key constraint names were referred to as simply the "name". For example:
 
@@ -1579,7 +1568,7 @@ Before EF Core 3.0, foreign key constraint names were referred to as simply the 
 var constraintName = myForeignKey.Name;
 ```
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, foreign key constraint names are now referred to as the "constraint name". For example:
 
@@ -1587,11 +1576,11 @@ Starting with EF Core 3.0, foreign key constraint names are now referred to as t
 var constraintName = myForeignKey.ConstraintName;
 ```
 
-**Why**
+#### Why
 
 This change brings consistency to naming in this area, and also clarifies that this is the name of the foreign key constraint, and not the column or property name that the foreign key is defined on.
 
-**Mitigations**
+#### Mitigations
 
 Use the new name.
 
@@ -1599,21 +1588,21 @@ Use the new name.
 
 ### IRelationalDatabaseCreator.HasTables/HasTablesAsync have been made public
 
-[Tracking Issue #15997](https://github.com/aspnet/EntityFrameworkCore/issues/15997)
+[Tracking Issue #15997](https://github.com/dotnet/efcore/issues/15997)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, these methods were protected.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, these methods are public.
 
-**Why**
+#### Why
 
 These methods are used by EF to determine if a database is created but empty. This can also be useful from outside EF when determining whether or not to apply migrations.
 
-**Mitigations**
+#### Mitigations
 
 Change the accessibility of any overrides.
 
@@ -1621,21 +1610,21 @@ Change the accessibility of any overrides.
 
 ### Microsoft.EntityFrameworkCore.Design is now a DevelopmentDependency package
 
-[Tracking Issue #11506](https://github.com/aspnet/EntityFrameworkCore/issues/11506)
+[Tracking Issue #11506](https://github.com/dotnet/efcore/issues/11506)
 
-**Old behavior**
+#### Old behavior
 
 Before EF Core 3.0, Microsoft.EntityFrameworkCore.Design was a regular NuGet package whose assembly could be referenced by projects that depended on it.
 
-**New behavior**
+#### New behavior
 
 Starting with EF Core 3.0, it is a DevelopmentDependency package. This means that the dependency won't flow transitively into other projects, and that you can no longer, by default, reference its assembly.
 
-**Why**
+#### Why
 
 This package is only intended to be used at design time. Deployed applications shouldn't reference it. Making the package a DevelopmentDependency reinforces this recommendation.
 
-**Mitigations**
+#### Mitigations
 
 If you need to reference this package to override EF Core's design-time behavior, then you can update PackageReference item metadata in your project.
 
@@ -1653,21 +1642,21 @@ If the package is being referenced transitively via Microsoft.EntityFrameworkCor
 
 ### SQLitePCL.raw updated to version 2.0.0
 
-[Tracking Issue #14824](https://github.com/aspnet/EntityFrameworkCore/issues/14824)
+[Tracking Issue #14824](https://github.com/dotnet/efcore/issues/14824)
 
-**Old behavior**
+#### Old behavior
 
 Microsoft.EntityFrameworkCore.Sqlite previously depended on version 1.1.12 of SQLitePCL.raw.
 
-**New behavior**
+#### New behavior
 
 We've updated our package to depend on version 2.0.0.
 
-**Why**
+#### Why
 
 Version 2.0.0 of SQLitePCL.raw targets .NET Standard 2.0. It previously targeted .NET Standard 1.1 which required a large closure of transitive packages to work.
 
-**Mitigations**
+#### Mitigations
 
 SQLitePCL.raw version 2.0.0 includes some breaking changes. See the [release notes](https://github.com/ericsink/SQLitePCL.raw/blob/v2/v2.md) for details.
 
@@ -1675,21 +1664,21 @@ SQLitePCL.raw version 2.0.0 includes some breaking changes. See the [release not
 
 ### NetTopologySuite updated to version 2.0.0
 
-[Tracking Issue #14825](https://github.com/aspnet/EntityFrameworkCore/issues/14825)
+[Tracking Issue #14825](https://github.com/dotnet/efcore/issues/14825)
 
-**Old behavior**
+#### Old behavior
 
 The spatial packages previously depended on version 1.15.1 of NetTopologySuite.
 
-**New behavior**
+#### New behavior
 
 We've update our package to depend on version 2.0.0.
 
-**Why**
+#### Why
 
 Version 2.0.0 of NetTopologySuite aims to address several usability issues encountered by EF Core users.
 
-**Mitigations**
+#### Mitigations
 
 NetTopologySuite version 2.0.0 includes some breaking changes. See the [release notes](https://www.nuget.org/packages/NetTopologySuite/2.0.0-pre001) for details.
 
@@ -1697,22 +1686,22 @@ NetTopologySuite version 2.0.0 includes some breaking changes. See the [release 
 
 ### Microsoft.Data.SqlClient is used instead of System.Data.SqlClient
 
-[Tracking Issue #15636](https://github.com/aspnet/EntityFrameworkCore/issues/15636)
+[Tracking Issue #15636](https://github.com/dotnet/efcore/issues/15636)
 
-**Old behavior**
+#### Old behavior
 
 Microsoft.EntityFrameworkCore.SqlServer previously depended on System.Data.SqlClient.
 
-**New behavior**
+#### New behavior
 
 We've updated our package to depend on Microsoft.Data.SqlClient.
 
-**Why**
+#### Why
 
 Microsoft.Data.SqlClient is the flagship data access driver for SQL Server going forward, and System.Data.SqlClient no longer be the focus of development.
 Some important features, such as Always Encrypted, are only available on Microsoft.Data.SqlClient.
 
-**Mitigations**
+#### Mitigations
 
 If your code takes a direct dependency on System.Data.SqlClient, you must change it to reference Microsoft.Data.SqlClient instead; as the two packages maintain a very high degree
 of API compatibility, this should only be a simple package and namespace change.
@@ -1721,9 +1710,9 @@ of API compatibility, this should only be a simple package and namespace change.
 
 ### Multiple ambiguous self-referencing relationships must be configured
 
-[Tracking Issue #13573](https://github.com/aspnet/EntityFrameworkCore/issues/13573)
+[Tracking Issue #13573](https://github.com/dotnet/efcore/issues/13573)
 
-**Old behavior**
+#### Old behavior
 
 An entity type with multiple self-referencing uni-directional navigation properties and matching FKs was incorrectly configured as a single relationship. For example:
 
@@ -1738,15 +1727,15 @@ public class User
 }
 ```
 
-**New behavior**
+#### New behavior
 
 This scenario is now detected in model building and an exception is thrown indicating that the model is ambiguous.
 
-**Why**
+#### Why
 
 The resultant model was ambiguous and will likely usually be wrong for this case.
 
-**Mitigations**
+#### Mitigations
 
 Use full configuration of the relationship. For example:
 
@@ -1763,11 +1752,12 @@ modelBuilder
 ```
 
 <a name="udf-empty-string"></a>
+
 ### DbFunction.Schema being null or empty string configures it to be in model's default schema
 
-[Tracking Issue #12757](https://github.com/aspnet/EntityFrameworkCore/issues/12757)
+[Tracking Issue #12757](https://github.com/dotnet/efcore/issues/12757)
 
-**Old behavior**
+#### Old behavior
 
 A DbFunction configured with schema as an empty string was treated as built-in function without a schema. For example following code will map `DatePart` CLR function to `DATEPART` built-in function on SqlServer.
 
@@ -1777,15 +1767,15 @@ public static int? DatePart(string datePartArg, DateTime? date) => throw new Exc
 
 ```
 
-**New behavior**
+#### New behavior
 
 All DbFunction mappings are considered to be mapped to user defined functions. Hence empty string value would put the function inside the default schema for the model. Which could be the schema configured explicitly via fluent API `modelBuilder.HasDefaultSchema()` or `dbo` otherwise.
 
-**Why**
+#### Why
 
 Previously schema being empty was a way to treat that function is built-in but that logic is only applicable for SqlServer where built-in functions do not belong to any schema.
 
-**Mitigations**
+#### Mitigations
 
 Configure DbFunction's translation manually to map it to a built-in function.
 
@@ -1793,4 +1783,27 @@ Configure DbFunction's translation manually to map it to a built-in function.
 modelBuilder
     .HasDbFunction(typeof(MyContext).GetMethod(nameof(MyContext.DatePart)))
     .HasTranslation(args => SqlFunctionExpression.Create("DatePart", args, typeof(int?), null));
+```
+
+<a name="netstandard21"></a>
+
+### ~~EF Core 3.0 targets .NET Standard 2.1 rather than .NET Standard 2.0~~ Reverted
+
+[Tracking Issue #15498](https://github.com/dotnet/efcore/issues/15498)
+
+EF Core 3.0 targets .NET Standard 2.1, which is a breaking change which excludes .NET Framework applications. EF Core 3.1 reverted this and targets .NET Standard 2.0 again.
+
+<a name="qe"></a>
+
+### ~~Query execution is logged at Debug level~~ Reverted
+
+[Tracking Issue #14523](https://github.com/dotnet/efcore/issues/14523)
+
+We reverted this change because new configuration in EF Core 3.0 allows the log level for any event to be specified by the application. For example, to switch logging of SQL to `Debug`, explicitly configure the level in `OnConfiguring` or `AddDbContext`:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer(connectionString)
+        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Debug)));
 ```

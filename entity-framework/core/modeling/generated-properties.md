@@ -29,9 +29,9 @@ Depending on the database provider being used, values may be generated client si
 If you add an entity to the context that has a value assigned to the property, then EF will attempt to insert that value rather than generating a new one. A property is considered to have a value assigned if it is not assigned the CLR default value (`null` for `string`, `0` for `int`, `Guid.Empty` for `Guid`, etc.). For more information, see [Explicit values for generated properties](xref:core/saving/explicit-values-generated-properties).
 
 > [!WARNING]
-> How the value is generated for added entities will depend on the database provider being used. Database providers may automatically setup value generation for some property types, but others may require you to manually setup how the value is generated.
+> How the value is generated for added entities will depend on the database provider being used. Database providers may automatically set up value generation for some property types, but others may require you to manually set up how the value is generated.
 >
-> For example, when using SQL Server, values will be automatically generated for `GUID` properties (using the SQL Server sequential GUID algorithm). However, if you specify that a `DateTime` property is generated on add, then you must setup a way for the values to be generated. One way to do this, is to configure a default value of `GETDATE()`, see [Default Values](#default-values).
+> For example, when using SQL Server, values will be automatically generated for `GUID` properties (using the SQL Server sequential GUID algorithm). However, if you specify that a `DateTime` property is generated on add, then you must set up a way for the values to be generated. One way to do this, is to configure a default value of `GETDATE()`, see [Default Values](#default-values).
 
 ### Value generated on add or update
 
@@ -40,9 +40,9 @@ Value generated on add or update means that a new value is generated every time 
 Like `value generated on add`, if you specify a value for the property on a newly added instance of an entity, that value will be inserted rather than a value being generated. It is also possible to set an explicit value when updating. For more information, see [Explicit values for generated properties](xref:core/saving/explicit-values-generated-properties).
 
 > [!WARNING]
-> How the value is generated for added and updated entities will depend on the database provider being used. Database providers may automatically setup value generation for some property types, while others will require you to manually setup how the value is generated.
+> How the value is generated for added and updated entities will depend on the database provider being used. Database providers may automatically set up value generation for some property types, while others will require you to manually set up how the value is generated.
 >
-> For example, when using SQL Server, `byte[]` properties that are set as generated on add or update and marked as concurrency tokens, will be setup with the `rowversion` data type - so that values will be generated in the database. However, if you specify that a `DateTime` property is generated on add or update, then you must setup a way for the values to be generated. One way to do this, is to configure a default value of `GETDATE()` (see [Default Values](#default-values)) to generate values for new rows. You could then use a database trigger to generate values during updates (such as the following example trigger).
+> For example, when using SQL Server, `byte[]` properties that are set as generated on add or update and marked as concurrency tokens, will be set up with the `rowversion` data type - so that values will be generated in the database. However, if you specify that a `DateTime` property is generated on add or update, then you must set up a way for the values to be generated. One way to do this, is to configure a default value of `GETDATE()` (see [Default Values](#default-values)) to generate values for new rows. You could then use a database trigger to generate values during updates (such as the following example trigger).
 >
 > [!code-sql[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.sql)]
 
@@ -63,7 +63,7 @@ You can configure any property to have its value generated for inserted entities
 ***
 
 > [!WARNING]
-> This just lets EF know that values are generated for added entities, it does not guarantee that EF will setup the actual mechanism to generate values. See [Value generated on add](#value-generated-on-add) section for more details.
+> This just lets EF know that values are generated for added entities, it does not guarantee that EF will set up the actual mechanism to generate values. See [Value generated on add](#value-generated-on-add) section for more details.
 
 ### Default values
 
@@ -92,16 +92,20 @@ Specifying a default value will implicitly configure the property as value gener
 ***
 
 > [!WARNING]
-> This just lets EF know that values are generated for added or updated entities, it does not guarantee that EF will setup the actual mechanism to generate values. See [Value generated on add or update](#value-generated-on-add-or-update) section for more details.
+> This just lets EF know that values are generated for added or updated entities, it does not guarantee that EF will set up the actual mechanism to generate values. See [Value generated on add or update](#value-generated-on-add-or-update) section for more details.
 
 ### Computed columns
 
-On some relational databases, a column can be configured to have its value computed in the database, typically with an expression referring to other columns:
+On most relational databases, a column can be configured to have its value computed in the database, typically with an expression referring to other columns:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=ComputedColumn&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=DefaultComputedColumn)]
+
+The above creates a *virtual* computed column, whose value is computed every time it is fetched from the database. You may also specify that a computed column be *stored* (sometimes called *persisted*), meaning that it is computed on every update of the row, and is stored on disk alongside regular columns:
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=StoredComputedColumn)]
 
 > [!NOTE]
-> In some cases the column's value is computed every time it is fetched (sometimes called *virtual* columns), and in others it is computed on every update of the row and stored (sometimes called *stored* or *persisted* columns). This varies across database providers.
+> Support for creating stored computed columns was added in EF Core 5.0.
 
 ## No value generation
 

@@ -1,12 +1,12 @@
-## Entity Framework Docs
+# Entity Framework Docs
 
-This project contains the source for EF Core and EF6 documentation located at [docs.microsoft.com/ef](https://docs.microsoft.com/ef/). 
+This project contains the source for EF Core and EF6 documentation located at [docs.microsoft.com/ef](https://docs.microsoft.com/ef/).
 
 Documentation issues for both EF Core and EF6 should be filed in this repo. Product issues (bugs) should be filed in the [EF Core repo](https://github.com/dotnet/efcore) or the [EF6 repo](https://github.com/dotnet/ef6) as appropriate.
 
 **We accept pull requests!**
 
-## Fixing typos/spelling/grammar/etc.
+## Fixing typos/spelling/grammar/etc
 
 Consider sending a pull request rather than filing an issue. This can be done entirely from the web:
 
