@@ -6,7 +6,7 @@
     },
     "MD025": { "front_matter_title": "" },
     "MD028": false,
-    "MD033": { "allowed_elements": ["sup", "sub", "nobr", "span", "a"] },
+    "MD033": false,
     "MD036": false,
     "MD046": {
         "style": "fenced"
