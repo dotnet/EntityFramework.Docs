@@ -287,11 +287,11 @@ CREATE TABLE [Tags] (
 );
 
 CREATE TABLE [PostTag] (
-    [PostId] int NOT NULL,
-    [TagId] nvarchar(450) NOT NULL,
-    CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostId], [TagId]),
-    CONSTRAINT [FK_PostTag_Posts_PostId] FOREIGN KEY ([PostId]) REFERENCES [Posts] ([PostId]) ON DELETE CASCADE,
-    CONSTRAINT [FK_PostTag_Tags_TagId] FOREIGN KEY ([TagId]) REFERENCES [Tags] ([TagId]) ON DELETE CASCADE
+    [PostsId] int NOT NULL,
+    [TagsId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostsId], [TagsId]),
+    CONSTRAINT [FK_PostTag_Posts_PostsId] FOREIGN KEY ([PostsId]) REFERENCES [Posts] ([PostId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PostTag_Tags_TagsId] FOREIGN KEY ([TagsId]) REFERENCES [Tags] ([TagId]) ON DELETE CASCADE
 );
 ```
 
