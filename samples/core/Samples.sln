@@ -149,6 +149,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdditionalChangeTrackingFea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeTrackerDebugging", "ChangeTracking\ChangeTrackerDebugging\ChangeTrackerDebugging.csproj", "{D1AB173F-582D-43C3-9EC0-20CE9FECFEB6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NullSemantics", "Querying\NullSemantics\NullSemantics.csproj", "{A241ED91-DE41-4310-B7CD-802F4304F27D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -407,6 +409,10 @@ Global
 		{D1AB173F-582D-43C3-9EC0-20CE9FECFEB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1AB173F-582D-43C3-9EC0-20CE9FECFEB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1AB173F-582D-43C3-9EC0-20CE9FECFEB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A241ED91-DE41-4310-B7CD-802F4304F27D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A241ED91-DE41-4310-B7CD-802F4304F27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A241ED91-DE41-4310-B7CD-802F4304F27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A241ED91-DE41-4310-B7CD-802F4304F27D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -469,6 +475,7 @@ Global
 		{6BC461D1-C015-4350-9DA8-F2468D71F718} = {F55D545B-2B45-47A5-8C55-39F972528400}
 		{B696F0AC-5282-4E95-9043-A177E3A9C5C0} = {F55D545B-2B45-47A5-8C55-39F972528400}
 		{D1AB173F-582D-43C3-9EC0-20CE9FECFEB6} = {F55D545B-2B45-47A5-8C55-39F972528400}
+		{A241ED91-DE41-4310-B7CD-802F4304F27D} = {1AD64707-0BE0-48B0-A803-916FF96DCB4F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C98D35-54EF-46A6-8F3B-1855C1AE4F70}

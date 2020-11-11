@@ -130,7 +130,7 @@ info: Microsoft.EntityFrameworkCore.Database.Command[20101]
 
 What's going on here? Why are all these queries being sent for the simple loops above? With lazy loading, a Blog's Posts are only (lazily) loaded when its Posts property is accessed; as a result, each iteration in the inner foreach triggers an additional database query, in its own roundtrip. As a result, after the initial query loading all the blogs, we then have another query *per blog*, loading all its posts; this is sometimes called the *N+1* problem, and it can cause very significant performance issues.
 
-Assuming we're going to need all of the blogs' posts, it makes sense to use eager loading here instead. We can use the [Include](xref:core/querying/related-data/eager#eager-loading) operator to perform the loading, but since we only need the Blogs' URLs (and we should only [load what's needed](xref:core/performance/efficient-updating#project-only-properties-you-need)). So we'll use a projection instead:
+Assuming we're going to need all of the blogs' posts, it makes sense to use eager loading here instead. We can use the [Include](xref:core/querying/related-data/eager#eager-loading) operator to perform the loading, but since we only need the Blogs' URLs (and we should only [load what's needed](xref:core/performance/efficient-querying#project-only-properties-you-need)). So we'll use a projection instead:
 
 [!code-csharp[Main](../../../samples/core/Performance/Program.cs#EagerlyLoadRelatedAndProject)]
 
@@ -202,3 +202,7 @@ For more information, see the page on [async programming](xref:core/miscellaneou
 
 > [!WARNING]
 > Avoid mixing synchronous and asynchronous code in the same application - it's very easy to inadvertently trigger subtle thread-pool starvation issues.
+
+## Additional resources
+
+See the [performance section](xref:core/querying/null-comparisons#writing-performant-queries) of the null comparison documentation page for some best practices when comparing nullable values.

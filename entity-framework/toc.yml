@@ -193,6 +193,8 @@
         href: core/querying/filters.md
       - name: Query tags
         href: core/querying/tags.md
+      - name: Comparisons with null values in queries
+        href: core/querying/null-comparisons.md
       - name: How queries work
         href: core/querying/how-query-works.md
 

@@ -155,6 +155,8 @@ additionalContent:
             text: "User-defined function mapping"
           - url: core/querying/filters.md
             text: "Global query filters"
+          - url: core/querying/null-comparisons.md
+            text: "Comparisons with null values in queries"
       # Card
       - title: Manage database schemas
         links:
