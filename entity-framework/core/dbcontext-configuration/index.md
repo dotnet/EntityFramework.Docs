@@ -12,7 +12,7 @@ This article shows basic patterns for initialization and configuration of a <xre
 
 ## The DbContext lifetime
 
-The lifetime of a `DbContext` begins when the instance is created and ends when the instance is [disposed](https://docs.microsoft.com/dotnet/standard/garbage-collection/unmanaged). A `DbContext` instance is designed to be used for a _single_ [unit-of-work](https://www.martinfowler.com/eaaCatalog/unitOfWork.html). This means that the lifetime of a `DbContext` instance is usually very short.
+The lifetime of a `DbContext` begins when the instance is created and ends when the instance is [disposed](/dotnet/standard/garbage-collection/unmanaged). A `DbContext` instance is designed to be used for a _single_ [unit-of-work](https://www.martinfowler.com/eaaCatalog/unitOfWork.html). This means that the lifetime of a `DbContext` instance is usually very short.
 
 > [!TIP]
 > To quote Martin Fowler from the link above, "A Unit of Work keeps track of everything you do during a business transaction that can affect the database. When you're done, it figures out everything that needs to be done to alter the database as a result of your work."
@@ -21,7 +21,7 @@ A typical unit-of-work when using Entity Framework Core (EF Core) involves:
 
 - Creation of a `DbContext` instance
 - Tracking of entity instances by the context. Entities become tracked by
-  - Being [returned from a query](xref:core/saving/basic)
+  - Being [returned from a query](xref:core/querying/tracking)
   - Being [added or attached to the context](xref:core/saving/disconnected-entities)
 - Changes are made to the tracked entities as needed to implement the business rule
 - <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> or <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> is called. EF Core detects the changes made and writes them to the database.
@@ -29,15 +29,15 @@ A typical unit-of-work when using Entity Framework Core (EF Core) involves:
 
 > [!IMPORTANT]
 >
-> - It is very important to dispose the `DbContext` after use. This ensures both that any unmanaged resources are freed, and that any events or other hooks are unregistered so as to prevent memory leaks.
-> - `DbContext` is **not thread-safe**. Do not share contexts between threads. Make sure to `await` all async calls before continuing to use the context instance.
-> - An `InvalidOperationException` thrown by EF Core code can put the context into an unrecoverable state. Such exceptions indicate a program error and are not designed to be recovered from.
+> - It is very important to dispose the <xref:Microsoft.EntityFrameworkCore.DbContext> after use. This ensures both that any unmanaged resources are freed, and that any events or other hooks are unregistered so as to prevent memory leaks in case the instance remains referenced.
+> - [DbContext is **not thread-safe**](#avoiding-dbcontext-threading-issues). Do not share contexts between threads. Make sure to [await](/dotnet/csharp/language-reference/operators/await) all async calls before continuing to use the context instance.
+> - An <xref:System.InvalidOperationException> thrown by EF Core code can put the context into an unrecoverable state. Such exceptions indicate a program error and are not designed to be recovered from.
 
 ## DbContext in dependency injection for ASP.NET Core
 
 In many web applications, each HTTP request corresponds to a single unit-of-work. This makes tying the context lifetime to that of the request a good default for web applications.
 
-ASP.NET Core applications are [configured using dependency injection](https://docs.microsoft.com/aspnet/core/fundamentals/startup).  EF Core can be added to this configuration using <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> in the [`ConfigurureServices`](https://docs.microsoft.com/aspnet/core/fundamentals/startup#the-configureservices-method) method of `Startup.cs`. For example:
+ASP.NET Core applications are [configured using dependency injection](/aspnet/core/fundamentals/startup). EF Core can be added to this configuration using <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A> in the [`ConfigurureServices`](/aspnet/core/fundamentals/startup#the-configureservices-method) method of `Startup.cs`. For example:
 
 <!--
         public void ConfigureServices(IServiceCollection services)
@@ -82,9 +82,9 @@ The `ApplicationDbContext` class must expose a public constructor with a `DbCont
 
 The final result is an `ApplicationDbContext` instance created for each request and passed to the controller to perform a unit-of-work before being disposed when the request ends.
 
-Read further in this article to learn more about configuration options. In addition, see [App startup in ASP.NET Core](https://docs.microsoft.com/aspnet/core/fundamentals/startup) and [Dependency injection in ASP.NET Core](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection) for more information on configuration and dependency injection in ASP.NET Core.
+Read further in this article to learn more about configuration options. In addition, see [App startup in ASP.NET Core](/aspnet/core/fundamentals/startup) and [Dependency injection in ASP.NET Core](/aspnet/core/fundamentals/dependency-injection) for more information on configuration and dependency injection in ASP.NET Core.
 
-<!-- See also [_Using dependency injection_](TODO) for advanced dependency injection configuration with EF Core. -->
+<!-- See also [Using Dependency Injection](TODO) for advanced dependency injection configuration with EF Core. -->
 
 ## Simple DbContext initialization with 'new'
 
@@ -147,9 +147,9 @@ The `DbContextOptions` can be created and the constructor can be called explicit
 
 ## Using a DbContext factory (e.g. for Blazor)
 
-Some application types (e.g. [ASP.NET Core Blazor](https://docs.microsoft.com/aspnet/core/blazor/)) use dependency injection but do not create a service scope that aligns with the desired `DbContext` lifetime. Even where such an alignment does exist, the application may need to perform multiple units-of-work within this scope--for example, multiple units-of-work within a single HTTP request.
+Some application types (e.g. [ASP.NET Core Blazor](/aspnet/core/blazor/)) use dependency injection but do not create a service scope that aligns with the desired `DbContext` lifetime. Even where such an alignment does exist, the application may need to perform multiple units-of-work within this scope. For example, multiple units-of-work within a single HTTP request.
 
-In these cases, `AddDbContextFactory<TContext>` <!-- Issue #2748 --> can be used to register a factory for creation of `DbContext` instances. For example:
+In these cases, <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextFactory%2A> can be used to register a factory for creation of `DbContext` instances. For example:
 
 <!--
         public void ConfigureServices(IServiceCollection services)
@@ -200,7 +200,7 @@ The injected factory can then be used to construct DbContext instances in the se
 
 Notice that the `DbContext` instances created in this way are **not** managed by the application's service provider and therefore must be disposed by the application.
 
-See [_ASP.NET Core Blazor Server with Entity Framework Core_](https://docs.microsoft.com/aspnet/core/blazor/blazor-server-ef-core) for more information on using EF Core with Blazor.
+See [ASP.NET Core Blazor Server with Entity Framework Core](/aspnet/core/blazor/blazor-server-ef-core) for more information on using EF Core with Blazor.
 
 ## DbContextOptions
 
@@ -214,7 +214,7 @@ Examples of each of these are shown in the preceding sections. The same configur
 
 ### Configuring the database provider
 
-Each `DbContext` instance must be configured to use one and only one database provider. (Different instances of a `DbContext` subtype can be used with different database providers, but a single instance must only use one.) A database provider is configured using a specific "UseProvider" call. For example, to use the SQL Server database provider:
+Each `DbContext` instance must be configured to use one and only one database provider. (Different instances of a `DbContext` subtype can be used with different database providers, but a single instance must only use one.) A database provider is configured using a specific `Use*`" call. For example, to use the SQL Server database provider:
 
 <!--
     public class ApplicationDbContext : DbContext
@@ -227,10 +227,10 @@ Each `DbContext` instance must be configured to use one and only one database pr
 -->
 [!code-csharp[ApplicationDbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/WithNew/ApplicationDbContext.cs?name=ApplicationDbContext)]
 
-These "UseProvider" methods are extension methods implemented by the database provider. This means that the database provider NuGet package must be installed before the extension method can be used.
+These `Use*`" methods are extension methods implemented by the database provider. This means that the database provider NuGet package must be installed before the extension method can be used.
 
 > [!TIP]
-> EF Core database providers make extensive use of [extension methods](https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/extension-methods). If the compiler indicates that a method cannot be found, then make sure that the provider's NuGet package is installed and that you have `using Microsoft.EntityFrameworkCore;` in your code.
+> EF Core database providers make extensive use of [extension methods](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods). If the compiler indicates that a method cannot be found, then make sure that the provider's NuGet package is installed and that you have `using Microsoft.EntityFrameworkCore;` in your code.
 
 The following table contains examples for common database providers.
 
@@ -244,12 +244,12 @@ The following table contains examples for common database providers.
 | MySQL/MariaDB*               | `.UseMySql((connectionString)`                | [Pomelo.EntityFrameworkCore.MySql](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql/)
 | Oracle*                      | `.UseOracle(connectionString)`                | [Oracle.EntityFrameworkCore](https://www.nuget.org/packages/Oracle.EntityFrameworkCore/)
 
-*These database providers are not shipped by Microsoft. See [_Database Providers_](xref:core/providers/index) for more information about database providers.
+*These database providers are not shipped by Microsoft. See [Database Providers](xref:core/providers/index) for more information about database providers.
 
 > [!WARNING]
-> The EF Core in-memory database is not designed for production use. In addition, it may not be the best choice even for testing. See [_Testing code that uses EF Core_](xref:core/testing/index) for more information.
+> The EF Core in-memory database is not designed for production use. In addition, it may not be the best choice even for testing. See [Testing Code That Uses EF Core](xref:core/testing/index) for more information.
 
-See [_Connection Strings_](xref:core/miscellaneous/connection-strings) for more information on using connection strings with EF Core.
+See [Connection Strings](xref:core/miscellaneous/connection-strings) for more information on using connection strings with EF Core.
 
 Optional configuration specific to the database provider is performed in an additional provider-specific builder. For example, using <xref:Microsoft.EntityFrameworkCore.Infrastructure.SqlServerDbContextOptionsBuilder.EnableRetryOnFailure%2A> to configure retries for connection resiliency when connecting to Azure SQL:
 
@@ -273,11 +273,11 @@ Optional configuration specific to the database provider is performed in an addi
 > [!TIP]
 > The same database provider is used for SQL Server and Azure SQL. However, it is recommended that [connection resiliency](xref:core/miscellaneous/connection-resiliency) be used when connecting to SQL Azure.
 
-See [_Database Providers_](xref:core/providers/index) for more information on provider-specific configuration.
+See [Database Providers](xref:core/providers/index) for more information on provider-specific configuration.
 
 ### Other DbContext configuration
 
-Other `DbContext` configuration can be chained either before or after (it makes no difference which) the "UseProvider" call. For example, to turn on sensitive-data logging:
+Other `DbContext` configuration can be chained either before or after (it makes no difference which) the `Use*` call. For example, to turn on sensitive-data logging:
 
 <!--
     public class ApplicationDbContext : DbContext
@@ -296,22 +296,22 @@ The following table contains examples of common methods called on `DbContextOpti
 
 | DbContextOptionsBuilder method                                                             | What it does                                                | Learn more
 |:-------------------------------------------------------------------------------------------|-------------------------------------------------------------|--------------
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseQueryTrackingBehavior%2A>   | Sets the default tracking behavior for queries              | [_Query Tracking Behavior_](xref:core/querying/tracking)
-| `LogTo()` <!-- Issue #2748 -->                                                               | A simple way to get EF Core logs (EF Core 5.0 and later)    | [_Logging, Events, and Diagnostics_](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseLoggerFactory%2A>           | Registers an `Micrsofot.Extensions.Logging` factory         | [_Logging, Events, and Diagnostics_](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging%2A> | Includes application data in exceptions and logging         | [_Logging, Events, and Diagnostics_](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors%2A>       | More detailed query errors (at the expense of performance)  | [_Logging, Events, and Diagnostics_](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings%2A>          | Ignore or throw for warnings and other events               | [_Logging, Events, and Diagnostics_](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors%2A>            | Registers EF Core interceptors                              | [_Logging, Events, and Diagnostics_](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies%2A>            | Use dynamic proxies for lazy-loading                        | [_Lazy Loading_)](xref:core/querying/related-data/lazy)
-| `UseChangeTrackingProxies()` <!-- Issue #2748 -->                                          | Use dynamic proxies for change-tracking                     | Coming soon...
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseQueryTrackingBehavior%2A>   | Sets the default tracking behavior for queries              | [Query Tracking Behavior](xref:core/querying/tracking)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A>                      | A simple way to get EF Core logs (EF Core 5.0 and later)    | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseLoggerFactory%2A>           | Registers an `Micrsofot.Extensions.Logging` factory         | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging%2A> | Includes application data in exceptions and logging         | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors%2A>       | More detailed query errors (at the expense of performance)  | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings%2A>          | Ignore or throw for warnings and other events               | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.AddInterceptors%2A>            | Registers EF Core interceptors                              | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies%2A>            | Use dynamic proxies for lazy-loading                        | [Lazy Loading](xref:core/querying/related-data/lazy)
+| <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies%2A>         | Use dynamic proxies for change-tracking                     | Coming soon...
 
 > [!NOTE]
-> <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies%2A> and `UseChangeTrackingProxies()` <!-- Issue #2748 --> are extension methods from the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) NuGet package. This kind of ".UseSomething()" call is the recommended way to configure and/or use EF Core extensions contained in other packages.
+> <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies%2A> and <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies%2A> are extension methods from the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) NuGet package. This kind of ".UseSomething()" call is the recommended way to configure and/or use EF Core extensions contained in other packages.
 
 ### `DbContextOptions` verses `DbContextOptions<TContext>`
 
-Most `DbContext` subclasses that accept a `DbContextOptions` should use the [generic](https://docs.microsoft.com/dotnet/csharp/programming-guide/generics/) `DbContextOptions<TContext>` variation. For example:
+Most `DbContext` subclasses that accept a `DbContextOptions` should use the [generic](/dotnet/csharp/programming-guide/generics/) `DbContextOptions<TContext>` variation. For example:
 
 <!--
     public sealed class SealedApplicationDbContext : DbContext
@@ -327,7 +327,7 @@ Most `DbContext` subclasses that accept a `DbContextOptions` should use the [gen
 This ensures that the correct options for the specific `DbContext` subtype are resolved from dependency injection, even when multiple `DbContext` subtypes are registered.
 
 > [!TIP]
-> Your `DbContext` does not need to be sealed, but sealing is best practice to do so for classes not designed to be inherited from.
+> Your DbContext does not need to be sealed, but sealing is best practice to do so for classes not designed to be inherited from.
 
 However, if the `DbContext` subtype is itself intended to be inherited from, then it should expose a protected constructor taking a non-generic `DbContextOptions`. For example:
 
@@ -401,13 +401,13 @@ When concurrent access goes undetected, it can result in undefined behavior, app
 
 There are common mistakes that can inadvertently cause concurrent access on the same `DbContext` instance:
 
-### Forgetting to await the completion of an asynchronous operation before starting any other operation on the same DbContext
+### Asynchronous operation pitfalls
 
 Asynchronous methods enable EF Core to initiate operations that access the database in a non-blocking way. But if a caller does not await the completion of one of these methods, and proceeds to perform other operations on the `DbContext`, the state of the `DbContext` can be, (and very likely will be) corrupted.
 
 Always await EF Core asynchronous methods immediately.
 
-### Implicitly sharing DbContext instances across multiple threads via dependency injection
+### Implicitly sharing DbContext instances via dependency injection
 
 The [`AddDbContext`](/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext) extension method registers `DbContext` types with a [scoped lifetime](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) by default.
 
