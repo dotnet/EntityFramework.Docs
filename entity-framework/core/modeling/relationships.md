@@ -143,7 +143,7 @@ If you only have one navigation property then there are parameterless overloads 
 ### Configuring navigation properties
 
 > [!NOTE]
-> This feature was added in EF Core 5.0.
+> This feature was introduced in EF Core 5.0.
 
 After the navigation property has been created, you may need to further configure it.
 
@@ -263,7 +263,7 @@ With this configuration the columns corresponding to `ShippingAddress` will be m
 > If you are using [non-nullable reference types](/dotnet/csharp/nullable-references) calling `IsRequired` is not necessary.
 
 > [!NOTE]
-> The ability to configure whether the dependent is required was added in EF Core 5.0.
+> The ability to configure whether the dependent is required was introduced in EF Core 5.0.
 
 ### Many-to-many
 
@@ -314,7 +314,7 @@ Additional data can be stored in the join entity type, but for this it's best to
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyPayload.cs?name=ManyToManyPayload)]
 
 > [!NOTE]
-> The ability to configure many-to-many relationships was added in EF Core 5.0, for previous version use the following approach.
+> The ability to configure many-to-many relationships was introduced in EF Core 5.0, for previous version use the following approach.
 
 You can also represent a many-to-many relationship by just adding the join entity type and mapping two separate one-to-many relationships.
 

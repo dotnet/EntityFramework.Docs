@@ -38,7 +38,7 @@ If you don't want a type to be included in the model, you can exclude it:
 ### Excluding from migrations
 
 > [!NOTE]
-> The ability to exclude tables from migrations was added in EF Core 5.0.
+> The ability to exclude tables from migrations was introduced in EF Core 5.0.
 
 It is sometimes useful to have the same entity type mapped in multiple `DbContext` types. This is especially true when using [bounded contexts](https://www.martinfowler.com/bliki/BoundedContext.html), for which it is common to have a different `DbContext` type for each bounded context.
 
