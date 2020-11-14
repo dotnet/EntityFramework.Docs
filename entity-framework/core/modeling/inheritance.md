@@ -58,7 +58,7 @@ By default, when two sibling entity types in the hierarchy have a property with 
 ## Table-per-type configuration
 
 > [!NOTE]
-> The table-per-type (TPT) is a new feature in EF Core 5.0. Table-per-concrete-type (TPC) is supported by EF6, but is not yet supported by EF Core.
+> The table-per-type (TPT) feature was introduced in EF Core 5.0. Table-per-concrete-type (TPC) is supported by EF6, but is not yet supported by EF Core.
 
 In the TPT mapping pattern, all the types are mapped to individual tables. Properties that belong solely to a base type or derived type are stored in a table that maps to that type. Tables that map to derived types also store a foreign key that joins the derived table with the base table.
 

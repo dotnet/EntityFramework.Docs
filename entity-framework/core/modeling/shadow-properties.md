@@ -57,7 +57,7 @@ If the name supplied to the `IndexerProperty` method matches the name of an exis
 ## Property bag entity types
 
 > [!NOTE]
-> Support for Property bag entity types was added in EF Core 5.0.
+> Support for Property bag entity types was introduced in EF Core 5.0.
 
 Entity types that contain only indexer properties are known as property bag entity types. These entity types don't have shadow properties, instead EF will create indexer properties. Currently only `Dictionary<string, object>` is supported as a property bag entity type. It must be configured as a shared entity type with a unique name and the corresponding `DbSet` property must be implemented using a `Set` call.
 

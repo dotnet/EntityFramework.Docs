@@ -8,7 +8,7 @@ uid: core/modeling/spatial
 # Spatial Data
 
 > [!NOTE]
-> This feature was added in EF Core 2.2.
+> This feature was introduced in EF Core 2.2.
 
 Spatial data represents the physical location and the shape of objects. Many databases provide support for this type of data so it can be indexed and queried alongside other data. Common scenarios include querying for objects within a given distance from a location, or selecting the object whose border contains a given location. EF Core supports mapping to spatial data types using the NetTopologySuite spatial library.
 

@@ -23,7 +23,7 @@ If a typical blog has multiple related posts, rows for these posts will duplicat
 ## Split queries
 
 > [!NOTE]
-> This feature is introduced in EF Core 5.0. It only works when using `Include`. [This issue](https://github.com/dotnet/efcore/issues/21234) is tracking support for split query when loading related data in projection without `Include`.
+> This feature was introduced in EF Core 5.0. It only works when using `Include`. [This issue](https://github.com/dotnet/efcore/issues/21234) is tracking support for split query when loading related data in projection without `Include`.
 
 EF allows you to specify that a given LINQ query should be *split* into multiple SQL queries. Instead of JOINs, split queries generate an additional SQL query for each included collection navigation:
 
