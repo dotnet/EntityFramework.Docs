@@ -41,6 +41,11 @@ You may want to include multiple related entities for one of the entities that i
 
 [!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#MultipleLeafIncludes)]
 
+> [!TIP]
+> You can also load multiple navigations using a single `Include` method. This is possible for navigation "chains" that are all references, or when they end with a single collection.
+
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#IncludeMultipleNavigationsWithSingleInclude)]
+
 ## Filtered include
 
 > [!NOTE]
