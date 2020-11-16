@@ -113,19 +113,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1.Migrations"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "Schemas\ThreeProjectMigrations\WebApplication1\WebApplication1.csproj", "{A15F08F8-966D-4A38-A9FF-F0B3FB3335BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionInterception", "Miscellaneous\ConnectionInterception\ConnectionInterception.csproj", "{1CE06110-E69A-44BD-ACBE-D7F96B02288B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectionInterception", "Miscellaneous\ConnectionInterception\ConnectionInterception.csproj", "{1CE06110-E69A-44BD-ACBE-D7F96B02288B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaveChangesInterception", "Miscellaneous\SaveChangesInterception\SaveChangesInterception.csproj", "{8F5C3F05-BD4B-4ED3-BCE4-45CA738C2AD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaveChangesInterception", "Miscellaneous\SaveChangesInterception\SaveChangesInterception.csproj", "{8F5C3F05-BD4B-4ED3-BCE4-45CA738C2AD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CachingInterception", "Miscellaneous\CachingInterception\CachingInterception.csproj", "{DCF56A96-123F-48A6-A848-2BAE19B58C79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CachingInterception", "Miscellaneous\CachingInterception\CachingInterception.csproj", "{DCF56A96-123F-48A6-A848-2BAE19B58C79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandInterception", "Miscellaneous\CommandInterception\CommandInterception.csproj", "{97BECA9A-A72B-4C77-ADDB-DCC84966570F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandInterception", "Miscellaneous\CommandInterception\CommandInterception.csproj", "{97BECA9A-A72B-4C77-ADDB-DCC84966570F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "Miscellaneous\Events\Events.csproj", "{8138D0F5-D1A7-4908-8A52-08196FF46B69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Events", "Miscellaneous\Events\Events.csproj", "{8138D0F5-D1A7-4908-8A52-08196FF46B69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiagnosticListeners", "Miscellaneous\DiagnosticListeners\DiagnosticListeners.csproj", "{AF719729-AED8-4DEB-B895-61D8EBB50A01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagnosticListeners", "Miscellaneous\DiagnosticListeners\DiagnosticListeners.csproj", "{AF719729-AED8-4DEB-B895-61D8EBB50A01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfiguringDbContext", "Miscellaneous\ConfiguringDbContext\ConfiguringDbContext.csproj", "{73503DF2-CD85-4710-BE94-B83B87054709}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfiguringDbContext", "Miscellaneous\ConfiguringDbContext\ConfiguringDbContext.csproj", "{73503DF2-CD85-4710-BE94-B83B87054709}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserDefinedFunctionMapping", "Querying\UserDefinedFunctionMapping\UserDefinedFunctionMapping.csproj", "{11AB574E-5DA9-4C37-A342-41B3DB5D7C0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -345,6 +347,10 @@ Global
 		{73503DF2-CD85-4710-BE94-B83B87054709}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73503DF2-CD85-4710-BE94-B83B87054709}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73503DF2-CD85-4710-BE94-B83B87054709}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11AB574E-5DA9-4C37-A342-41B3DB5D7C0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11AB574E-5DA9-4C37-A342-41B3DB5D7C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11AB574E-5DA9-4C37-A342-41B3DB5D7C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11AB574E-5DA9-4C37-A342-41B3DB5D7C0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -399,6 +405,7 @@ Global
 		{8138D0F5-D1A7-4908-8A52-08196FF46B69} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 		{AF719729-AED8-4DEB-B895-61D8EBB50A01} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 		{73503DF2-CD85-4710-BE94-B83B87054709} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
+		{11AB574E-5DA9-4C37-A342-41B3DB5D7C0D} = {1AD64707-0BE0-48B0-A803-916FF96DCB4F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C98D35-54EF-46A6-8F3B-1855C1AE4F70}

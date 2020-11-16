@@ -185,8 +185,8 @@
         href: core/querying/raw-sql.md
       - name: Database functions
         href: core/querying/database-functions.md
-      #- name: User defined functions
-      #  href: core/querying/user-defined-functions.md
+      - name: User-defined function mapping
+        href: core/querying/user-defined-function-mapping.md
       - name: Global query filters
         href: core/querying/filters.md
       - name: Query tags

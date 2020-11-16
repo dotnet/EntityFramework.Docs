@@ -100,6 +100,49 @@ Entity types can be mapped to database views using the Fluent API.
 > [!TIP]
 > To test entity types mapped to views using the in-memory provider map them to a query via `ToInMemoryQuery`. See a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing/ItemsWebApi/) using this technique for more details.
 
+## Table-valued function mapping
+
+It's possible to map an entity type to a table-valued function (TVF) instead of a table in the database. To illustrate this, let's define another entity that represents blog with multiple posts. In the example, the entity is [keyless](xref:core/modeling/keyless-entity-types), but it doesn't have to be.
+
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/EntityTypes.cs#BlogWithMultiplePostsEntity)]
+
+Next, create the following table-valued function in the database, which returns only blogs with multiple posts as well as the number of posts associated with each of these blogs:
+
+```sql
+CREATE FUNCTION dbo.BlogsWithMultiplePosts()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT b.Url, COUNT(p.BlogId) AS PostCount
+    FROM Blogs AS b
+    JOIN Posts AS p ON b.BlogId = p.BlogId
+    GROUP BY b.BlogId, b.Url
+    HAVING COUNT(p.BlogId) > 1
+)
+```
+
+Now, the entity `BlogWithMultiplePost` can be mapped to this function in a following way:
+
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/EntityTypes.cs#QueryableFunctionConfigurationToFunction)]
+
+> [!NOTE]
+> In order to map an entity to a table-valued function the function must be parameterless.
+
+Conventionally the entity properties will be mapped to matching columns returned by the TVF. If the columns returned by TVF has different name than entity property then it can be configured using `HasColumnName` method, just like when mapping to a regular table.
+
+When the entity type is mapped to a table-valued function, the query:
+
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Program.cs#ToFunctionQuery)]
+
+Produces the following SQL:
+
+```sql
+SELECT [b].[Url], [b].[PostCount]
+FROM [dbo].[BlogsWithMultiplePosts]() AS [b]
+WHERE [b].[PostCount] > 3
+```
+
 ## Table comments
 
 You can set an arbitrary text comment that gets set on the database table, allowing you to document your schema in the database:

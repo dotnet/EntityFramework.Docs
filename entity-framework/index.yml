@@ -151,6 +151,8 @@ additionalContent:
             text: "Asynchronous queries"
           - url: core/querying/raw-sql.md
             text: "Raw SQL queries"
+          - url: core/querying/user-defined-function-mapping.md
+            text: "User-defined function mapping"
           - url: core/querying/filters.md
             text: "Global query filters"
       # Card
