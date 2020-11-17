@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace EFSaving
+﻿namespace EFSaving
 {
     class Program
     {
