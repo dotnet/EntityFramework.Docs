@@ -235,3 +235,11 @@ An implementation for soft deleting entities. For EF Core: 3.
 Extends EF Core to resolve connection strings from App.config. For EF Core: 3.
 
 [GitHub repository](https://github.com/efcore/EFCore.ConfigurationManager)
+
+### Detached
+
+A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff), for EF Core 3.1+.
+[NuGet](https://www.nuget.org/packages/Detached.Mappers.EntityFramework)
+[GitHub repository](https://github.com/leonardoporro/Detached-Mapper)
+
+
