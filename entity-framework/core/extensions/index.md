@@ -238,7 +238,7 @@ Extends EF Core to resolve connection strings from App.config. For EF Core: 3.
 
 ### Detached
 
-A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff), for EF Core 3.1+.
+A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff). For EF Core: 3
 
 [NuGet](https://www.nuget.org/packages/Detached.Mappers.EntityFramework)
 
