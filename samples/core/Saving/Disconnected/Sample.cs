@@ -1,37 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Disconnected
 {
     public class Sample
     {
-        public static async Task RunAsync()
+        public static void Run()
         {
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                await context.Database.EnsureDeletedAsync();
-                await context.Database.EnsureCreatedAsync();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
             }
 
-            await IsItNewAsync();
-            await InsertAndUpdateSingleEntityAsync();
-            await InsertOrUpdateSingleEntityStoreGeneratedAsync();
-            await InsertOrUpdateSingleEntityFindAsync();
-            await InsertAndUpdateGraphAsync();
-            await InsertOrUpdateGraphStoreGeneratedAsync();
-            await InsertOrUpdateGraphFindAsync();
-            await InsertUpdateOrDeleteGraphFindAsync();
-            await InsertUpdateOrDeleteTrackGraphAsync();
+            IsItNew();
+            InsertAndUpdateSingleEntity();
+            InsertOrUpdateSingleEntityStoreGenerated();
+            InsertOrUpdateSingleEntityFind();
+            InsertAndUpdateGraph();
+            InsertOrUpdateGraphStoreGenerated();
+            InsertOrUpdateGraphFind();
+            InsertUpdateOrDeleteGraphFind();
+            InsertUpdateOrDeleteTrackGraph();
         }
 
-        private static async Task IsItNewAsync()
+        private static void IsItNew()
         {
             Console.WriteLine();
             Console.WriteLine("Show entity-specific check for key set:");
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 var blog = new Blog {Url = "http://sample.com"};
 
@@ -39,7 +38,7 @@ namespace EFSaving.Disconnected
                 Console.WriteLine($"  Blog entity is {(IsItNew(blog) ? "new" : "existing")}.");
 
                 context.Add(blog);
-                await context.SaveChangesAsync();
+                context.SaveChanges();
 
                 // Key is now set
                 Console.WriteLine($"  Blog entity is {(IsItNew(blog) ? "new" : "existing")}.");
@@ -47,7 +46,7 @@ namespace EFSaving.Disconnected
 
             Console.WriteLine();
             Console.WriteLine("Show general IsKeySet:");
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 var blog = new Blog {Url = "http://sample.com"};
 
@@ -55,7 +54,7 @@ namespace EFSaving.Disconnected
                 Console.WriteLine($"  Blog entity is {(IsItNew(context, (object)blog) ? "new" : "existing")}.");
 
                 context.Add(blog);
-                await context.SaveChangesAsync();
+                context.SaveChanges();
 
                 // Key is now set
                 Console.WriteLine($"  Blog entity is {(IsItNew(context, (object)blog) ? "new" : "existing")}.");
@@ -63,7 +62,7 @@ namespace EFSaving.Disconnected
 
             Console.WriteLine();
             Console.WriteLine("Show key set on Add:");
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 var blog = new Blog {Url = "http://sample.com"};
 
@@ -78,163 +77,163 @@ namespace EFSaving.Disconnected
 
             Console.WriteLine();
             Console.WriteLine("Show using query to check for new entity:");
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 var blog = new Blog {Url = "http://sample.com"};
 
-                Console.WriteLine($"  Blog entity is {(IsItNewAsync(context, blog) ? "new" : "existing")}.");
+                Console.WriteLine($"  Blog entity is {(IsItNew(context, blog) ? "new" : "existing")}.");
 
                 context.Add(blog);
-                await context.SaveChangesAsync();
+                context.SaveChanges();
 
-                Console.WriteLine($"  Blog entity is {(IsItNewAsync(context, blog) ? "new" : "existing")}.");
+                Console.WriteLine($"  Blog entity is {(IsItNew(context, blog) ? "new" : "existing")}.");
             }
         }
 
-        private static async Task InsertAndUpdateSingleEntityAsync()
+        private static void InsertAndUpdateSingleEntity()
         {
             Console.WriteLine();
             Console.WriteLine("Save single entity with explicit insert or update:");
             var blog = new Blog { Url = "http://sample.com" };
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Inserting with URL {blog.Url}");
-                await InsertAsync(context, blog);
+                Insert(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Found with URL {context.Blogs.Single(b => b.BlogId == blog.BlogId).Url}");
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 blog.Url = "https://sample.com";
                 Console.WriteLine($"  Updating with URL {blog.Url}");
-                await UpdateAsync(context, blog);
+                Update(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                Console.WriteLine($"  Found with URL {(await context.Blogs.SingleAsync(b => b.BlogId == blog.BlogId)).Url}");
+                Console.WriteLine($"  Found with URL {(context.Blogs.Single(b => b.BlogId == blog.BlogId)).Url}");
             }
         }
 
-        private static async Task InsertOrUpdateSingleEntityStoreGeneratedAsync()
+        private static void InsertOrUpdateSingleEntityStoreGenerated()
         {
             Console.WriteLine();
             Console.WriteLine("Save single entity with auto-generated key:");
             var blog = new Blog { Url = "http://sample.com" };
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Inserting with URL {blog.Url}");
-                await InsertOrUpdateAsync(context, (object)blog);
+                InsertOrUpdate(context, (object)blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Found with URL {context.Blogs.Single(b => b.BlogId == blog.BlogId).Url}");
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 blog.Url = "https://sample.com";
                 Console.WriteLine($"  Updating with URL {blog.Url}");
-                await InsertOrUpdateAsync(context, (object)blog);
+                InsertOrUpdate(context, (object)blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                Console.WriteLine($"  Found with URL {(await context.Blogs.SingleAsync(b => b.BlogId == blog.BlogId)).Url}");
+                Console.WriteLine($"  Found with URL {(context.Blogs.Single(b => b.BlogId == blog.BlogId)).Url}");
             }
         }
 
-        private static async Task InsertOrUpdateSingleEntityFindAsync()
+        private static void InsertOrUpdateSingleEntityFind()
         {
             Console.WriteLine();
             Console.WriteLine("Save single entity with any kind of key:");
             var blog = new Blog { Url = "http://sample.com" };
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Inserting with URL {blog.Url}");
-                await InsertOrUpdateAsync(context, blog);
+                InsertOrUpdate(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Found with URL {context.Blogs.Single(b => b.BlogId == blog.BlogId).Url}");
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 blog.Url = "https://sample.com";
                 Console.WriteLine($"  Updating with URL {blog.Url}");
-                await InsertOrUpdateAsync(context, blog);
+                InsertOrUpdate(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Found with URL {context.Blogs.Single(b => b.BlogId == blog.BlogId).Url}");
             }
         }
 
-        private static async Task InsertAndUpdateGraphAsync()
+        private static void InsertAndUpdateGraph()
         {
             Console.WriteLine();
             Console.WriteLine("Save graph with explicit insert or update:");
             var blog = CreateBlogAndPosts();
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Inserting with URL {blog.Url} and {blog.Posts[0].Title}, {blog.Posts[1].Title}");
-                await InsertGraphAsync(context, blog);
+                InsertGraph(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var read = await context.Blogs.Include(b => b.Posts).SingleAsync(b => b.BlogId == blog.BlogId);
+                var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
                 Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 blog.Url = "https://sample.com";
                 blog.Posts[0].Title = "Post A";
                 blog.Posts[1].Title = "Post B";
 
                 Console.WriteLine($"  Updating with URL {blog.Url}");
-                await UpdateGraphAsync(context, blog);
+                UpdateGraph(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var read = await context.Blogs.Include(b => b.Posts).SingleAsync(b => b.BlogId == blog.BlogId);
+                var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
                 Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
             }
         }
 
-        private static async Task InsertOrUpdateGraphStoreGeneratedAsync()
+        private static void InsertOrUpdateGraphStoreGenerated()
         {
             Console.WriteLine();
             Console.WriteLine("Save graph with auto-generated key:");
             var blog = CreateBlogAndPosts();
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Inserting with URL {blog.Url} and {blog.Posts[0].Title}, {blog.Posts[1].Title}");
-                await InsertOrUpdateGraphAsync(context, (object)blog);
+                InsertOrUpdateGraph(context, (object)blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var read = await context.Blogs.Include(b => b.Posts).SingleAsync(b => b.BlogId == blog.BlogId);
+                var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
                 Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 blog.Url = "https://sample.com";
                 blog.Posts[0].Title = "Post A";
@@ -242,35 +241,35 @@ namespace EFSaving.Disconnected
                 blog.Posts.Add(new Post { Title = "New Post" });
 
                 Console.WriteLine($"  Updating with URL {blog.Url}");
-                await InsertOrUpdateGraphAsync(context, (object)blog);
+                InsertOrUpdateGraph(context, (object)blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var read = await context.Blogs.Include(b => b.Posts).SingleAsync(b => b.BlogId == blog.BlogId);
+                var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
                 Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}, {read.Posts[2].Title}");
             }
         }
 
-        private static async Task InsertOrUpdateGraphFindAsync()
+        private static void InsertOrUpdateGraphFind()
         {
             Console.WriteLine();
             Console.WriteLine("Save graph with any kind of key:");
             var blog = CreateBlogAndPosts();
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Inserting with URL {blog.Url} and {blog.Posts[0].Title}, {blog.Posts[1].Title}");
-                await InsertOrUpdateGraphAsync(context, blog);
+                InsertOrUpdateGraph(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var read = await context.Blogs.Include(b => b.Posts).SingleAsync(b => b.BlogId == blog.BlogId);
+                var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
                 Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 blog.Url = "https://sample.com";
                 blog.Posts[0].Title = "Post A";
@@ -278,35 +277,35 @@ namespace EFSaving.Disconnected
                 blog.Posts.Add(new Post { Title = "New Post" });
 
                 Console.WriteLine($"  Updating with URL {blog.Url}");
-                await InsertOrUpdateGraphAsync(context, blog);
+                InsertOrUpdateGraph(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var read = await context.Blogs.Include(b => b.Posts).SingleAsync(b => b.BlogId == blog.BlogId);
+                var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
                 Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}, {read.Posts[2].Title}");
             }
         }
 
-        private static async Task InsertUpdateOrDeleteGraphFindAsync()
+        private static void InsertUpdateOrDeleteGraphFind()
         {
             Console.WriteLine();
             Console.WriteLine("Save graph with deletes and any kind of key:");
             var blog = CreateBlogAndPosts();
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Inserting with URL {blog.Url} and {blog.Posts[0].Title}, {blog.Posts[1].Title}");
-                await InsertUpdateOrDeleteGraphAsync(context, blog);
+                InsertUpdateOrDeleteGraph(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var read = await context.Blogs.Include(b => b.Posts).SingleAsync(b => b.BlogId == blog.BlogId);
+                var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
                 Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 blog.Url = "https://sample.com";
                 blog.Posts[0].Title = "Post A";
@@ -314,17 +313,17 @@ namespace EFSaving.Disconnected
                 blog.Posts.Add(new Post { Title = "New Post" });
 
                 Console.WriteLine($"  Updating with URL {blog.Url}");
-                await InsertUpdateOrDeleteGraphAsync(context, blog);
+                InsertUpdateOrDeleteGraph(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var read = await context.Blogs.Include(b => b.Posts).SingleAsync(b => b.BlogId == blog.BlogId);
+                var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
                 Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
             }
         }
 
-        private static async Task InsertUpdateOrDeleteTrackGraphAsync()
+        private static void InsertUpdateOrDeleteTrackGraph()
         {
             Console.WriteLine();
             Console.WriteLine("Save graph using TrackGraph:");
@@ -333,15 +332,15 @@ namespace EFSaving.Disconnected
             blog.Posts[0].IsNew = true;
             blog.Posts[1].IsNew = true;
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 Console.WriteLine($"  Inserting with URL {blog.Url} and {blog.Posts[0].Title}, {blog.Posts[1].Title}");
-                await SaveAnnotatedGraphAsync(context, blog);
+                SaveAnnotatedGraph(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var read = await context.Blogs.Include(b => b.Posts).SingleAsync(b => b.BlogId == blog.BlogId);
+                var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
                 Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
             }
 
@@ -349,7 +348,7 @@ namespace EFSaving.Disconnected
             blog.Posts[0].IsNew = false;
             blog.Posts[1].IsNew = false;
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 blog.Url = "https://sample.com";
                 blog.IsChanged = true;
@@ -359,12 +358,12 @@ namespace EFSaving.Disconnected
                 blog.Posts.Add(new Post { Title = "New Post", IsNew = true });
 
                 Console.WriteLine($"  Updating with URL {blog.Url}");
-                await SaveAnnotatedGraphAsync(context, blog);
+                SaveAnnotatedGraph(context, blog);
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var read = await context.Blogs.Include(b => b.Posts).SingleAsync(b => b.BlogId == blog.BlogId);
+                var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
                 Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
             }
         }
@@ -380,36 +379,36 @@ namespace EFSaving.Disconnected
         #endregion
 
         #region IsItNewQuery
-        public static bool IsItNewAsync(BloggingContext context, Blog blog)
+        public static bool IsItNew(BloggingContext context, Blog blog)
             => context.Blogs.Find(blog.BlogId) == null;
         #endregion
 
         #region InsertAndUpdateSingleEntity
-        public static async Task InsertAsync(DbContext context, object entity)
+        public static void Insert(DbContext context, object entity)
         {
             context.Add(entity);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
 
-        public static async Task UpdateAsync(DbContext context, object entity)
+        public static void Update(DbContext context, object entity)
         {
             context.Update(entity);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
         #endregion
 
         #region InsertOrUpdateSingleEntity
-        public static async Task InsertOrUpdateAsync(DbContext context, object entity)
+        public static void InsertOrUpdate(DbContext context, object entity)
         {
             context.Update(entity);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
         #endregion
 
         #region InsertOrUpdateSingleEntityWithFind
-        public static async Task InsertOrUpdateAsync(BloggingContext context, Blog blog)
+        public static void InsertOrUpdate(BloggingContext context, Blog blog)
         {
-            var existingBlog = await context.Blogs.FindAsync(blog.BlogId);
+            var existingBlog = context.Blogs.Find(blog.BlogId);
             if (existingBlog == null)
             {
                 context.Add(blog);
@@ -419,7 +418,7 @@ namespace EFSaving.Disconnected
                 context.Entry(existingBlog).CurrentValues.SetValues(blog);
             }
 
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
         #endregion
 
@@ -441,70 +440,35 @@ namespace EFSaving.Disconnected
         }
 
         #region InsertGraph
-        public static async Task InsertGraphAsync(DbContext context, object rootEntity)
+        public static void InsertGraph(DbContext context, object rootEntity)
         {
             context.Add(rootEntity);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
         #endregion
 
         #region UpdateGraph
-        public static async Task UpdateGraphAsync(DbContext context, object rootEntity)
+        public static void UpdateGraph(DbContext context, object rootEntity)
         {
             context.Update(rootEntity);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
         #endregion
 
         #region InsertOrUpdateGraph
-        public static async Task InsertOrUpdateGraphAsync(DbContext context, object rootEntity)
+        public static void InsertOrUpdateGraph(DbContext context, object rootEntity)
         {
             context.Update(rootEntity);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
         #endregion
 
         #region InsertOrUpdateGraphWithFind
-        public static async Task InsertOrUpdateGraphAsync(BloggingContext context, Blog blog)
+        public static void InsertOrUpdateGraph(BloggingContext context, Blog blog)
         {
-            var existingBlog = await context.Blogs
+            var existingBlog = context.Blogs
                 .Include(b => b.Posts)
-                .FirstOrDefaultAsync(b => b.BlogId == blog.BlogId);
-
-            if (existingBlog == null)
-            {
-                context.Add(blog);
-            }
-            else
-            {
-                context.Entry(existingBlog).CurrentValues.SetValues(blog);
-                foreach (var post in blog.Posts)
-                {
-                    var existingPost = await existingBlog.Posts
-                        .AsQueryable()
-                        .FirstOrDefaultAsync(p => p.PostId == post.PostId);
-
-                    if (existingPost == null)
-                    {
-                        existingBlog.Posts.Add(post);
-                    }
-                    else
-                    {
-                        context.Entry(existingPost).CurrentValues.SetValues(post);
-                    }
-                }
-            }
-
-            await context.SaveChangesAsync();
-        }
-        #endregion
-
-        #region InsertUpdateOrDeleteGraphWithFind
-        public static async Task InsertUpdateOrDeleteGraphAsync(BloggingContext context, Blog blog)
-        {
-            var existingBlog = await context.Blogs
-                .Include(b => b.Posts)
-                .FirstOrDefaultAsync(b => b.BlogId == blog.BlogId);
+                .FirstOrDefault(b => b.BlogId == blog.BlogId);
 
             if (existingBlog == null)
             {
@@ -517,7 +481,42 @@ namespace EFSaving.Disconnected
                 {
                     var existingPost = existingBlog.Posts
                         .AsQueryable()
-                        .FirstOrDefaultAsync(p => p.PostId == post.PostId);
+                        .FirstOrDefault(p => p.PostId == post.PostId);
+
+                    if (existingPost == null)
+                    {
+                        existingBlog.Posts.Add(post);
+                    }
+                    else
+                    {
+                        context.Entry(existingPost).CurrentValues.SetValues(post);
+                    }
+                }
+            }
+
+            context.SaveChanges();
+        }
+        #endregion
+
+        #region InsertUpdateOrDeleteGraphWithFind
+        public static void InsertUpdateOrDeleteGraph(BloggingContext context, Blog blog)
+        {
+            var existingBlog = context.Blogs
+                .Include(b => b.Posts)
+                .FirstOrDefault(b => b.BlogId == blog.BlogId);
+
+            if (existingBlog == null)
+            {
+                context.Add(blog);
+            }
+            else
+            {
+                context.Entry(existingBlog).CurrentValues.SetValues(blog);
+                foreach (var post in blog.Posts)
+                {
+                    var existingPost = existingBlog.Posts
+                        .AsQueryable()
+                        .FirstOrDefault(p => p.PostId == post.PostId);
 
                     if (existingPost == null)
                     {
@@ -538,12 +537,12 @@ namespace EFSaving.Disconnected
                 }
             }
 
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
         #endregion
 
         #region TrackGraph
-        public static async Task SaveAnnotatedGraphAsync(DbContext context, object rootEntity)
+        public static void SaveAnnotatedGraph(DbContext context, object rootEntity)
         {
             context.ChangeTracker.TrackGraph(
                 rootEntity,
@@ -559,7 +558,7 @@ namespace EFSaving.Disconnected
                                 : EntityState.Unchanged;
                 });
 
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
         #endregion
     }
