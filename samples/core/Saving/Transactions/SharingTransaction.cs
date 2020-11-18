@@ -22,8 +22,9 @@ namespace EFSaving.Transactions
             }
 
             #region Transaction
+            using var connection = new SqlConnection(connectionString);
             var options = new DbContextOptionsBuilder<BloggingContext>()
-                .UseSqlServer(new SqlConnection(connectionString))
+                .UseSqlServer(connection)
                 .Options;
 
             using var context1 = new BloggingContext(options);
