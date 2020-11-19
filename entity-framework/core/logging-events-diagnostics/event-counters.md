@@ -77,7 +77,7 @@ Execution Strategy Operation Failures | The number of times a database operation
 Optimistic Concurrency Failures       | The number of times `SaveChanges` failed because of an optimistic concurrency error, because data in the data store was changed since your code loaded it. This corresponds to a <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException> being thrown.
 Queries                               | The number of queries executed.
 Query Cache Hit Rate (%)              | The ratio of query cache hits to misses. The first time a given LINQ query is executed by EF Core (excluding parameters), it must be compiled in what is a relatively heavy process. In a normal application, all queries are reused, and the query cache hit rate should be stable at 100% after an initial warmup period. If this number is less than 100% over time, you may experience degraded perf due to repeated compilations, which could be a result of suboptimal dynamic query generation.
-SaveChanges                           | The number of times 'SaveChanges' has been called. Note that 'SaveChanges' saves multiple changes in a single batch, so this doesn't necessarily represent each individual update done on a single entity.
+SaveChanges                           | The number of times `SaveChanges` has been called. Note that `SaveChanges` saves multiple changes in a single batch, so this doesn't necessarily represent each individual update done on a single entity.
 
 ## Additional resources
 
