@@ -131,12 +131,12 @@ Now that we have an EF model, let's write some code that uses it to perform some
     }
 ```
 
-This code calls the **PerformDatabaseOperations** method which saves a new **Blog** to the database and then retrieves all **Blogs** from the database and prints them to the **Console**. After this, the program writes a quote of the day to the **Console**.
+This code calls the `PerformDatabaseOperations` method which saves a new **Blog** to the database and then retrieves all **Blogs** from the database and prints them to the **Console**. After this, the program writes a quote of the day to the **Console**.
 
 Since the code is synchronous, we can observe the following execution flow when we run the program:
 
-1.  **SaveChanges** begins to push the new **Blog** to the database
-2.  **SaveChanges** completes
+1.  `SaveChanges` begins to push the new **Blog** to the database
+2.  `SaveChanges` completes
 3.  Query for all **Blogs** is sent to the database
 4.  Query returns and results are written to **Console**
 5.  Quote of the day is written to **Console**
@@ -149,14 +149,14 @@ Since the code is synchronous, we can observe the following execution flow when 
 
 Now that we have our program up and running, we can begin making use of the new async and await keywords. We've made the following changes to Program.cs
 
-1.  Line 2: The using statement for the **System.Data.Entity** namespace gives us access to the EF async extension methods.
-2.  Line 4: The using statement for the **System.Threading.Tasks** namespace allows us to use the **Task** type.
-3.  Line 12 & 18: We are capturing as task that monitors the progress of **PerformSomeDatabaseOperations** (line 12) and then blocking program execution for this task to complete once all the work for the program is done (line 18).
-4.  Line 25: We've update **PerformSomeDatabaseOperations** to be marked as **async** and return a **Task**.
-5.  Line 35: We're now calling the Async version of SaveChanges and awaiting it's completion.
-6.  Line 42: We're now calling the Async version of ToList and awaiting on the result.
+1.  Line 2: The using statement for the `System.Data.Entity` namespace gives us access to the EF async extension methods.
+2.  Line 4: The using statement for the `System.Threading.Tasks` namespace allows us to use the `Task` type.
+3.  Line 12 & 18: We are capturing as task that monitors the progress of `PerformSomeDatabaseOperations` (line 12) and then blocking program execution for this task to complete once all the work for the program is done (line 18).
+4.  Line 25: We've update `PerformSomeDatabaseOperations` to be marked as `async` and return a `Task`.
+5.  Line 35: We're now calling the Async version of `SaveChanges` and awaiting it's completion.
+6.  Line 42: We're now calling the Async version of `ToList` and awaiting on the result.
 
-For a comprehensive list of available extension methods in the System.Data.Entity namespace, refer to the QueryableExtensions class. *You’ll also need to add “using System.Data.Entity” to your using statements.*
+For a comprehensive list of available extension methods in the `System.Data.Entity` namespace, refer to the `QueryableExtensions` class. *You’ll also need to add `using System.Data.Entity` to your using statements.*
 
 ``` csharp
     using System;
@@ -216,11 +216,11 @@ For a comprehensive list of available extension methods in the System.Data.Entit
 
 Now that the code is asynchronous, we can observe a different execution flow when we run the program:
 
-1. **SaveChanges** begins to push the new **Blog** to the database  
-    *Once the command is sent to the database no more compute time is needed on the current managed thread. The **PerformDatabaseOperations** method returns (even though it hasn't finished executing) and program flow in the Main method continues.*
+1. `SaveChanges` begins to push the new **Blog** to the database  
+    *Once the command is sent to the database no more compute time is needed on the current managed thread. The `PerformDatabaseOperations` method returns (even though it hasn't finished executing) and program flow in the Main method continues.*
 2. **Quote of the day is written to Console**  
-    *Since there is no more work to do in the Main method, the managed thread is blocked on the Wait call until the database operation completes. Once it completes, the remainder of our **PerformDatabaseOperations** will be executed.*
-3.  **SaveChanges** completes  
+    *Since there is no more work to do in the Main method, the managed thread is blocked on the `Wait` call until the database operation completes. Once it completes, the remainder of our `PerformDatabaseOperations` will be executed.*
+3.  `SaveChanges` completes  
 4.  Query for all **Blogs** is sent to the database  
     *Again, the managed thread is free to do other work while the query is processed in the database. Since all other execution has completed, the thread will just halt on the Wait call though.*
 5.  Query returns and results are written to **Console**  
