@@ -29,7 +29,7 @@ Next, find the process ID (PID) of the .NET process running your EF Core applica
 
 ### [Windows](#tab/windows)
 
-1. Open the Windows Task Manager by right-clicking on the task bar and selecting "Task Manager.
+1. Open the Windows Task Manager by right-clicking on the task bar and selecting "Task Manager".
 2. Make sure that the "More details" option is selected at the bottom of the window.
 3. In the Processes tab, right-click a column and make sure that the PID column is enabled.
 4. Locate your application in the process list, and get its process ID from the PID column.
