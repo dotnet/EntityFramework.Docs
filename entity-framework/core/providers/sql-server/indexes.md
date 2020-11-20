@@ -22,7 +22,7 @@ You can configure an index or key to be clustered as follows:
 ## Fill factor
 
 > [!NOTE]
-> This feature is introduced in EF Core 5.0.
+> This feature was introduced in EF Core 5.0.
 
 The index fill-factor option is provided for fine-tuning index data storage and performance. For more information, see [the SQL Server documentation on fill factor](/sql/relational-databases/indexes/specify-fill-factor-for-an-index).
 

@@ -204,7 +204,7 @@ dotnet ef migrations list
 ### [Visual Studio](#tab/vs)
 
 > [!NOTE]
-> This command was added in EF Core 5.0.
+> This command was introduced in EF Core 5.0.
 
 ```powershell
 Get-Migration

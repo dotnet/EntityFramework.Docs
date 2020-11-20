@@ -4,7 +4,7 @@ namespace Items
 {
     public class ItemsContext : DbContext
     {
-        public ItemsContext(DbContextOptions options) 
+        public ItemsContext(DbContextOptions<ItemsContext> options) 
             : base(options)
         {
         }

@@ -20,8 +20,6 @@
     items:
     - name: Welcome!
       href: core/index.md
-    - name: Take the EF Core 6 survey >>
-      href: https://www.surveymonkey.com/r/XRL3JBL
     - name: Getting started
       items:
       - name: EF Core Overview
@@ -241,7 +239,8 @@
       - name: Diagnostic listeners
         href: core/logging-events-diagnostics/diagnostic-listeners.md
       #- name: Debug views
-      #- name: Event counters
+      - name: Event counters
+        href: core/logging-events-diagnostics/event-counters.md
 
     - name: Testing
       items:

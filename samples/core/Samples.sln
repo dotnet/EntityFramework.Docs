@@ -125,6 +125,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "Miscellaneous\Eve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiagnosticListeners", "Miscellaneous\DiagnosticListeners\DiagnosticListeners.csproj", "{AF719729-AED8-4DEB-B895-61D8EBB50A01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfiguringDbContext", "Miscellaneous\ConfiguringDbContext\ConfiguringDbContext.csproj", "{73503DF2-CD85-4710-BE94-B83B87054709}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -339,6 +341,10 @@ Global
 		{AF719729-AED8-4DEB-B895-61D8EBB50A01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF719729-AED8-4DEB-B895-61D8EBB50A01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF719729-AED8-4DEB-B895-61D8EBB50A01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73503DF2-CD85-4710-BE94-B83B87054709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73503DF2-CD85-4710-BE94-B83B87054709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73503DF2-CD85-4710-BE94-B83B87054709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73503DF2-CD85-4710-BE94-B83B87054709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -392,6 +398,7 @@ Global
 		{97BECA9A-A72B-4C77-ADDB-DCC84966570F} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 		{8138D0F5-D1A7-4908-8A52-08196FF46B69} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 		{AF719729-AED8-4DEB-B895-61D8EBB50A01} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
+		{73503DF2-CD85-4710-BE94-B83B87054709} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C98D35-54EF-46A6-8F3B-1855C1AE4F70}

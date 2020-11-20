@@ -9,7 +9,7 @@ uid: core/logging-events-diagnostics/simple-logging
 # Simple Logging
 
 > [!NOTE]
-> This feature was added in EF Core 5.0.
+> This feature was introduced in EF Core 5.0.
 
 > [!TIP]  
 > You can [download this article's sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/SimpleLogging) from GitHub.

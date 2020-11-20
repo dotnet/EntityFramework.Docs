@@ -65,6 +65,19 @@ namespace EFQuerying.RelatedData
             }
             #endregion
 
+            #region IncludeTree
+            using (var context = new BloggingContext())
+            {
+                var blogs = context.Blogs
+                    .Include(blog => blog.Posts)
+                        .ThenInclude(post => post.Author)
+                            .ThenInclude(author => author.Photo)
+                    .Include(blog => blog.Owner)
+                        .ThenInclude(owner => owner.Photo)
+                    .ToList();
+            }
+            #endregion
+
             #region MultipleLeafIncludes
             using (var context = new BloggingContext())
             {
@@ -77,15 +90,12 @@ namespace EFQuerying.RelatedData
             }
             #endregion
 
-            #region IncludeTree
+            #region IncludeMultipleNavigationsWithSingleInclude
             using (var context = new BloggingContext())
             {
                 var blogs = context.Blogs
-                    .Include(blog => blog.Posts)
-                        .ThenInclude(post => post.Author)
-                            .ThenInclude(author => author.Photo)
-                    .Include(blog => blog.Owner)
-                        .ThenInclude(owner => owner.Photo)
+                    .Include(blog => blog.Owner.AuthoredPosts)
+                        .ThenInclude(post => post.Blog.Owner.Photo)
                     .ToList();
             }
             #endregion

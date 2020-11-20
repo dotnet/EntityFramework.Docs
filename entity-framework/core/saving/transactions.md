@@ -28,7 +28,13 @@ While all relational database providers support transactions, other providers ty
 
 ## Savepoints
 
+> [!NOTE]
+> This feature was introduced in EF Core 5.0.
+
 When `SaveChanges` is invoked and a transaction is already in progress on the context, EF automatically creates a *savepoint* before saving any data. Savepoints are points within a database transaction which may later be rolled back to, if an error occurs or for any other reason. If `SaveChanges` encounters any error, it automatically rolls the transaction back to the savepoint, leaving the transaction in the same state as if it had never started. This allows you to possibly correct issues and retry saving, in particular when [optimistic concurrency](xref:core/saving/concurrency) issues occur.
+
+> [!WARNING]
+> Savepoints are incompatible with SQL Server's Multiple Active Result Sets, and are not used. If an error occurs during `SaveChanges`, the transaction may be left in an unknown state.
 
 It's also possible to manually manage savepoints, just as it is with transactions. The following example creates a savepoint within a transaction, and rolls back to it on failure:
 
