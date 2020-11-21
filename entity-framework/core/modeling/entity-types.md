@@ -99,3 +99,20 @@ Entity types can be mapped to database views using the Fluent API.
 
 > [!TIP]
 > To test entity types mapped to views using the in-memory provider map them to a query via `ToInMemoryQuery`. See a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing/ItemsWebApi/) using this technique for more details.
+
+## Table comments
+
+You can set an arbitrary text comment that gets set on the database table, allowing you to document your schema in the database:
+
+### [Data Annotations](#tab/data-annotations)
+
+> [!NOTE]
+> Setting comments via data annotations was introduced in EF Core 5.0.
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/TableComment.cs?name=TableComment&highlight=1)]
+
+### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TableComment.cs?name=TableComment&highlight=4)]
+
+***
