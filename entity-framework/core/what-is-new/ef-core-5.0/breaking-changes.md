@@ -27,7 +27,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
 | [Provider-specific EF.Functions methods throw for InMemory provider](#no-client-methods)                                              | Low        |
 | [IndexBuilder.HasName is now obsolete](#index-obsolete)                                                                               | Low        |
-| [A pluarlizer is now included for scaffolding reverse engineered models](#pluralizer)                                                 | Low        |
+| [A pluralizer is now included for scaffolding reverse engineered models](#pluralizer)                                                 | Low        |
 | [INavigationBase replaces INavigation in some APIs to support skip navigations](#inavigationbase)                                     | Low        |
 | [Some queries with correlated collection that also use `Distinct` or `GroupBy` are no longer supported](#collection-distinct-groupby) | Low        |
 | [Using a collection of Queryable type in projection is not supported](#queryable-projection)                                          | Low        |
