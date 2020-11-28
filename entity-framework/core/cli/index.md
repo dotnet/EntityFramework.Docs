@@ -16,8 +16,6 @@ Either of the following tools can be installed, as both tools expose the same fu
 
 * The [EF Core .NET command-line interface (CLI) tools](xref:core/cli/dotnet) are an extension to the cross-platform [.NET Core CLI tools](/dotnet/core/tools/). These tools require a .NET Core SDK project (one with `Sdk="Microsoft.NET.Sdk"` or similar in the project file).
 
- 
-
 ## Next steps
 
 * [EF Core Package Manager Console tools reference](xref:core/cli/powershell)
