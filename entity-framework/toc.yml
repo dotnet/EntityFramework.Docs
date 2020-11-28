@@ -339,7 +339,7 @@
         href: core/cli/services.md
 
     - name: EF Core API reference >>
-      href: /dotnet/api/?view=efcore-3.1
+      href: /dotnet/api/?view=efcore-5.0
 
   - name: Entity Framework 6
     items:
