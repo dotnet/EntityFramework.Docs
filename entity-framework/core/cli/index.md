@@ -10,8 +10,7 @@ uid: core/cli/index
 
 The Entity Framework Core tools help with design-time development tasks. They're primarily used to manage Migrations and to scaffold a `DbContext` and entity types by reverse engineering the schema of a database.
 
-Either of the following tools can be installed, as both tools expose the same functionality: 
-
+Either of the following tools can be installed, as both tools expose the same functionality:
 
 * The [EF Core Package Manager Console tools](xref:core/cli/powershell) run in the [Package Manager Console](/nuget/tools/package-manager-console) in Visual Studio. We recommend using these tools if you are developing in Visual Studio as they provide a more integrated experience.
 
