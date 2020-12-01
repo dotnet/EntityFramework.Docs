@@ -152,7 +152,7 @@ NCache Entity Framework Core Provider is a distributed second level cache provid
 
 ### EntityFrameworkCore.Triggered
 
-Triggers for EF Core. Respond to changes in your DbContext before and after they are committed to the database. Triggers are fully asynchronous and support dependency injection, inheritance, cascading and more. For EF Core: 3.1, 5.
+Triggers for EF Core. Respond to changes in your DbContext before and after they are committed to the database. Triggers are fully asynchronous and support dependency injection, inheritance, cascading and more. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/koenbeuk/EntityFrameworkCore.Triggered)
 
