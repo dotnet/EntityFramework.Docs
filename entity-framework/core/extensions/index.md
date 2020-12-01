@@ -150,6 +150,12 @@ NCache Entity Framework Core Provider is a distributed second level cache provid
 
 [Website](https://www.alachisoft.com/ncache/ef-core-cache.html)
 
+### EntityFrameworkCore.Triggered
+
+Triggers for EF Core. Respond to changes in your DbContext before and after they are committed to the database. Triggers are fully asynchronous and support dependency injection, inheritance, cascading and more. For EF Core: 3.1, 5.
+
+[GitHub repository](https://github.com/koenbeuk/EntityFrameworkCore.Triggered)
+
 ### Entity Framework Plus
 
 Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2, 3, 5.
