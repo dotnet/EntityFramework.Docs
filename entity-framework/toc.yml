@@ -255,6 +255,21 @@
       - name: Test with InMemory
         href: core/testing/in-memory.md
 
+    - name: Performance
+      items:
+      - name: Introduction
+        href: core/performance/index.md
+      - name: Performance diagnosis
+        href: core/performance/performance-diagnosis.md
+      - name: Efficient querying
+        href: core/performance/efficient-querying.md
+      - name: Efficient updating
+        href: core/performance/efficient-updating.md
+      - name: Modeling for performance
+        href: core/performance/modeling-for-performance.md
+      - name: Advanced performance topics
+        href: core/performance/advanced-performance-topics.md
+
     - name: Miscellaneous
       items:
       - name: Supported .NET implementations

@@ -72,7 +72,7 @@ Press p to pause, r to resume, q to quit.
 
 Counter name                          | Description
 ------------------------------------- | ----
-Active DbContexts                     | The number of active, undisposed DbContext instances currently in your application. If this number grows continuously, you may have a leak because DbContext instances aren't being properly disposed. Note that if [context pooling](xref:core/miscellaneous/context-pooling) is enabled, this number includes pooled DbContext instances not currently in use.
+Active DbContexts                     | The number of active, undisposed DbContext instances currently in your application. If this number grows continuously, you may have a leak because DbContext instances aren't being properly disposed. Note that if [context pooling](xref:core/performance/advanced-performance-topics#dbcontext-pooling) is enabled, this number includes pooled DbContext instances not currently in use.
 Execution Strategy Operation Failures | The number of times a database operation failed to execute. If a retrying execution strategy is enabled, this includes each individual failure within multiple attempts on the same operation. This can be used to detect transient issues with your infrastructure.
 Optimistic Concurrency Failures       | The number of times `SaveChanges` failed because of an optimistic concurrency error, because data in the data store was changed since your code loaded it. This corresponds to a <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException> being thrown.
 Queries                               | The number of queries executed.
