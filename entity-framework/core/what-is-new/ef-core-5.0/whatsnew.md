@@ -710,7 +710,7 @@ CREATE TABLE [Animals] (
     [Species] nvarchar(max) NULL,
     [Discriminator] nvarchar(max) NOT NULL,
     [Name] nvarchar(max) NULL,
-    [EdcuationLevel] nvarchar(max) NULL,
+    [EducationLevel] nvarchar(max) NULL,
     [FavoriteToy] nvarchar(max) NULL,
     CONSTRAINT [PK_Animals] PRIMARY KEY ([Id])
 );
@@ -734,7 +734,7 @@ CREATE TABLE [Pets] (
 
 CREATE TABLE [Cats] (
     [Id] int NOT NULL,
-    [EdcuationLevel] nvarchar(max) NULL,
+    [EducationLevel] nvarchar(max) NULL,
     CONSTRAINT [PK_Cats] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_Cats_Animals_Id] FOREIGN KEY ([Id]) REFERENCES [Animals] ([Id]) ON DELETE NO ACTION,
     CONSTRAINT [FK_Cats_Pets_Id] FOREIGN KEY ([Id]) REFERENCES [Pets] ([Id]) ON DELETE NO ACTION
@@ -770,7 +770,7 @@ public class Pet : Animal
 [Table("Cats")]
 public class Cat : Pet
 {
-    public string EdcuationLevel { get; set; }
+    public string EducationLevel { get; set; }
 }
 
 [Table("Dogs")]
