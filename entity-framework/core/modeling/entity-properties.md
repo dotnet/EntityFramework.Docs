@@ -160,3 +160,20 @@ A collation can be defined on text columns, determining how they are compared an
 If all columns in a database need to use a certain collation, define the collation at the database level instead.
 
 General information about EF Core support for collations can be found in the [collation documentation page](xref:core/miscellaneous/collations-and-case-sensitivity).
+
+## Column comments
+
+You can set an arbitrary text comment that gets set on the database column, allowing you to document your schema in the database:
+
+### [Data Annotations](#tab/data-annotations)
+
+> [!NOTE]
+> Setting comments via data annotations was introduced in EF Core 5.0.
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnComment.cs?name=ColumnComment&highlight=4)]
+
+### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnComment.cs?name=ColumnComment&highlight=5)]
+
+***
