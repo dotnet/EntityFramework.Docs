@@ -1,22 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace EFSaving.RelatedData
 {
     public class Sample
     {
-        public static async Task RunAsync()
+        public static void Run()
         {
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                await context.Database.EnsureDeletedAsync();
-                await context.Database.EnsureCreatedAsync();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
             }
 
             #region AddingGraphOfEntities
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 var blog = new Blog
                 {
@@ -30,40 +29,40 @@ namespace EFSaving.RelatedData
                 };
 
                 context.Blogs.Add(blog);
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
             #endregion
 
             #region AddingRelatedEntity
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var blog = await context.Blogs.Include(b => b.Posts).FirstAsync();
+                var blog = context.Blogs.Include(b => b.Posts).First();
                 var post = new Post { Title = "Intro to EF Core" };
 
                 blog.Posts.Add(post);
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
             #endregion
 
             #region ChangingRelationships
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio" };
-                var post = await context.Posts.FirstAsync();
+                var post = context.Posts.First();
 
                 post.Blog = blog;
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
             #endregion
 
             #region RemovingRelationships
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var blog = await context.Blogs.Include(b => b.Posts).FirstAsync();
-                var post = await blog.Posts.AsQueryable().FirstAsync();
+                var blog = context.Blogs.Include(b => b.Posts).First();
+                var post = blog.Posts.AsQueryable().First();
 
                 blog.Posts.Remove(post);
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
             #endregion
         }

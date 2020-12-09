@@ -1,41 +1,39 @@
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EFSaving.Transactions
 {
     public class ManagingSavepoints
     {
-        public static async Task RunAsync()
+        public static void Run()
         {
-            await using (var setupContext = new BloggingContext())
+            using (var setupContext = new BloggingContext())
             {
-                await setupContext.Database.EnsureDeletedAsync();
-                await setupContext.Database.EnsureCreatedAsync();
+                setupContext.Database.EnsureDeleted();
+                setupContext.Database.EnsureCreated();
             }
 
             #region Savepoints
-            await using var context = new BloggingContext();
-            await using var transaction = await context.Database.BeginTransactionAsync();
+            using var context = new BloggingContext();
+            using var transaction = context.Database.BeginTransaction();
 
             try
             {
                 context.Blogs.Add(new Blog { Url = "https://devblogs.microsoft.com/dotnet/" });
-                await context.SaveChangesAsync();
+                context.SaveChanges();
 
-                await transaction.CreateSavepointAsync("BeforeMoreBlogs");
+                transaction.CreateSavepoint("BeforeMoreBlogs");
 
                 context.Blogs.Add(new Blog { Url = "https://devblogs.microsoft.com/visualstudio/" });
                 context.Blogs.Add(new Blog { Url = "https://devblogs.microsoft.com/aspnet/" });
-                await context.SaveChangesAsync();
+                context.SaveChanges();
 
-                await transaction.CommitAsync();
+                transaction.Commit();
             }
             catch (Exception)
             {
                 // If a failure occurred, we rollback to the savepoint and can continue the transaction
-                await transaction.RollbackToSavepointAsync("BeforeMoreBlogs");
+                transaction.RollbackToSavepoint("BeforeMoreBlogs");
 
                 // TODO: Handle failure, possibly retry inserting blogs
             }

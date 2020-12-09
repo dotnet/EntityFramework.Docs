@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
@@ -7,17 +6,17 @@ namespace EFSaving.Transactions
 {
     public class CommitableTransaction
     {
-        public static async Task RunAsync()
+        public static void Run()
         {
             var connectionString = @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
 
-            await using (var context = new BloggingContext(
+            using (var context = new BloggingContext(
                 new DbContextOptionsBuilder<BloggingContext>()
                     .UseSqlServer(connectionString)
                     .Options))
             {
-                await context.Database.EnsureDeletedAsync();
-                await context.Database.EnsureCreatedAsync();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
             }
 
             #region Transaction
@@ -32,20 +31,20 @@ namespace EFSaving.Transactions
                         .UseSqlServer(connection)
                         .Options;
 
-                    await using (var context = new BloggingContext(options))
+                    using (var context = new BloggingContext(options))
                     {
-                        await context.Database.OpenConnectionAsync();
+                        context.Database.OpenConnection();
                         context.Database.EnlistTransaction(transaction);
 
                         // Run raw ADO.NET command in the transaction
                         var command = connection.CreateCommand();
                         command.CommandText = "DELETE FROM dbo.Blogs";
-                        await command.ExecuteNonQueryAsync();
+                        command.ExecuteNonQuery();
 
                         // Run an EF Core command in the transaction
                         context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                        await context.SaveChangesAsync();
-                        await context.Database.CloseConnectionAsync();
+                        context.SaveChanges();
+                        context.Database.CloseConnection();
                     }
 
                     // Commit transaction if all commands succeed, transaction will auto-rollback
