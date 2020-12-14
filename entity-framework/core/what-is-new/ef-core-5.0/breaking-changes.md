@@ -458,7 +458,7 @@ Since there's no way to mimic behavior of database functions accurately, you sho
 
 #### New behavior
 
-`GetColumnName()` still returns of a column that a property is mapped to, but this behavior is now ambiguous since EF Core 5 supports TPT and simultaneous mapping to a view or a function where these mappings could use different column names for the same property.
+`GetColumnName()` still returns the name of a column that a property is mapped to, but this behavior is now ambiguous since EF Core 5 supports TPT and simultaneous mapping to a view or a function where these mappings could use different column names for the same property.
 
 #### Why
 
