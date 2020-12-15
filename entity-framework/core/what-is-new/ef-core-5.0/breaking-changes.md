@@ -462,7 +462,7 @@ Since there's no way to mimic behavior of database functions accurately, you sho
 
 #### Why
 
-We marked this method as obsolete to guide users to a more accurate overload - `IProperty.GetColumnName(StoreObjectIdentifier)`.
+We marked this method as obsolete to guide users to a more accurate overload - <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnName(Microsoft.EntityFrameworkCore.Metadata.IProperty,Microsoft.EntityFrameworkCore.Metadata.StoreObjectIdentifier@)>.
 
 #### Mitigations
 
