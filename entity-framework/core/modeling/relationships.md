@@ -295,11 +295,13 @@ CREATE TABLE [PostTag] (
 );
 ```
 
-Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. There is no specific CLR type that can be used for this, so `Dictionary<string, object>` is used. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
+Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. `Dictionary<string, object>` is used for it to handle any combination of foreign key properties, see [property bag entity types](shadow-properties.md#property-bag-entity-types) for more information. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
 
 The many to many navigations are called skip navigations as they effectively skip over the join entity type. If you are employing bulk configuration all skip navigations can be obtained from `GetSkipNavigations`.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Metadata)]
+
+#### Join entity type configuration
 
 It is common to apply configuration to the join entity type. This action can be accomplished via `UsingEntity`.
 
@@ -313,8 +315,16 @@ Additional data can be stored in the join entity type, but for this it's best to
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyPayload.cs?name=ManyToManyPayload)]
 
+#### Joining relationships configuration
+
+EF uses two one-to-many relationships on the join entity type to represent the many-to-many relationship. You can configure these relationships in the `UsingEntity` arguments.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Components)]
+
 > [!NOTE]
 > The ability to configure many-to-many relationships was introduced in EF Core 5.0, for previous version use the following approach.
+
+#### Indirect many-to-many relationships
 
 You can also represent a many-to-many relationship by just adding the join entity type and mapping two separate one-to-many relationships.
 
