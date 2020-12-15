@@ -2,7 +2,7 @@
 title: Tools & Extensions - EF Core
 description: External tools and extensions for Entity Framework Core
 author: ErikEJ
-ms.date: 22/11/2020
+ms.date: 11/22/2020
 uid: core/extensions/index
 ---
 
