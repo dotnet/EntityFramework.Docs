@@ -9,10 +9,11 @@ uid: core/providers/cosmos/limitations
 
 The Cosmos provider has a number of limitations. Many of these limitations are a result of limitations in the underlying Cosmos database engine and are not specific to EF. But most simply [haven't been implemented yet](https://github.com/dotnet/efcore/issues?page=1&q=is%3Aissue+is%3Aopen+Cosmos+in%3Atitle+label%3Atype-enhancement+sort%3Areactions-%2B1-desc).
 
-## Temporary limitations
+These are some of the commonly requested features:
 
-- `Include` calls are not supported
-- `Join` calls are not supported
+- [`Include` support](https://github.com/dotnet/efcore/issues/16920)
+- [`Join` support](https://github.com/dotnet/efcore/issues/17314)
+- [Collections of primitive types support](https://github.com/dotnet/efcore/issues/14762)
 
 ## Azure Cosmos DB SDK limitations
 
