@@ -316,7 +316,7 @@ Notice that:
 * The event sender is the `DbContext` instance
 * The args for the `SavedChanges` event contains the number of entities saved to the database
 
-The interceptor is defined by `ISaveChangesInterceptor`, but it is often convienient to inherit from `SaveChangesInterceptor` to avoid implementing every method. For example:
+The interceptor is defined by `ISaveChangesInterceptor`, but it is often convenient to inherit from `SaveChangesInterceptor` to avoid implementing every method. For example:
 
 ```csharp
 public class MySaveChangesInterceptor : SaveChangesInterceptor

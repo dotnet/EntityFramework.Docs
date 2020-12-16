@@ -396,7 +396,7 @@ Notice from the log output that the application continues to use the cached mess
 > [!TIP]  
 > You can [download the SaveChanges interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/SaveChangesInterception) from GitHub.
 
-<xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> interception points are defined by the `ISaveChangesInterceptor` <!-- Issue #2748 --> interface. As for other interceptors, the `SaveChangesInterceptor` <!-- Issue #2748 --> base class with no-op methods is provided as a convenience.
+<xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> interception points are defined by the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor> interface. As for other interceptors, the <xref:Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesInterceptor> base class with no-op methods is provided as a convenience.
 
 > [!TIP]
 > Interceptors are powerful. However, in many cases it may be easier to override the SaveChanges method or use the [.NET events for SaveChanges](xref:core/logging-events-diagnostics/events) exposed on DbContext.
@@ -497,7 +497,7 @@ The general idea for auditing with the interceptor is:
 * If SaveChanges succeeds, then the audit message is updated to indicate success
 * If SaveChanges fails, then the audit message is updated to indicate the failure
 
-The first stage is handled before any changes are sent to the database using overrides of `ISaveChangesInterceptor.SavingChanges` <!-- Issue #2748 --> and `ISaveChangesInterceptor.SavingChangesAsync`<!-- Issue #2748 -->.
+The first stage is handled before any changes are sent to the database using overrides of <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavingChanges%2A?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavingChangesAsync%2A?displayProperty=nameWithType>.
 
 <!--
     public async ValueTask<InterceptionResult<int>> SavingChangesAsync(
@@ -533,7 +533,7 @@ The first stage is handled before any changes are sent to the database using ove
 -->
 [!code-csharp[SavingChanges](../../../samples/core/Miscellaneous/SaveChangesInterception/AuditingInterceptor.cs?name=SavingChanges)]
 
-Overriding both sync and async methods ensures that auditing will happen regardless of whether SaveChanges or SaveChangesAsync are called. Notice also that the async overload is itself able to perform non-blocking async I/O to the auditing database. You may wish to throw from the sync SavingChanges method to ensure that all database I/O is async. This then requires that the application always calls SaveChangesAsync and never SaveChanges.
+Overriding both sync and async methods ensures that auditing will happen regardless of whether `SaveChanges` or `SaveChangesAsync` are called. Notice also that the async overload is itself able to perform non-blocking async I/O to the auditing database. You may wish to throw from the sync `SavingChanges` method to ensure that all database I/O is async. This then requires that the application always calls `SaveChangesAsync` and never `SaveChanges`.
 
 #### The audit message
 
@@ -593,7 +593,7 @@ The result is a `SaveChangesAudit` entity with a collection of `EntityAudit` ent
 
 #### Detecting success
 
-The audit entity is stored on the interceptor so that it can be accessed again once SaveChanges either succeeds or fails. For success, `ISaveChangesInterceptor.SavedChanges` <!-- Issue #2748 --> or `ISaveChangesInterceptor.SavedChangesAsync` <!-- Issue #2748 --> is called.
+The audit entity is stored on the interceptor so that it can be accessed again once SaveChanges either succeeds or fails. For success, <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavedChanges%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SavedChangesAsync%2A?displayProperty=nameWithType> is called.
 
 <!--
     public int SavedChanges(SaveChangesCompletedEventData eventData, int result)
@@ -633,7 +633,7 @@ The audit entity is attached to the audit context, since it already exists in th
 
 #### Detecting failure
 
-Failure is handled in much the same way as success, but in the `ISaveChangesInterceptor.SaveChangesFailed` <!-- Issue #2748 --> or `ISaveChangesInterceptor.SaveChangesFailedAsync` <!-- Issue #2748 --> method. The event data contains the exception that was thrown.
+Failure is handled in much the same way as success, but in the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesFailed%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor.SaveChangesFailedAsync%2A?displayProperty=nameWithType> method. The event data contains the exception that was thrown.
 
 <!--
     public void SaveChangesFailed(DbContextErrorEventData eventData)
