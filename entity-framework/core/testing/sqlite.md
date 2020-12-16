@@ -39,6 +39,7 @@ Notice:
 * The `CreateInMemoryDatabase` method creates a SQLite in-memory database and opens the connection to it.
 * The created `DbConnection` is extracted from the `ContextOptions` and saved.
 * The connection is disposed when the test is disposed so that resources are not leaked.
+* Don't forget to call `DbContext.Database.EnsureCreated()` and `DbContext.Database.Migrate()` once per connection to avoid exceptions (SqliteException : SQLite Error 1: 'no such table: XXX') related to empty database or schema mismatch.
 
 > [!NOTE]
 > [Issue #16103](https://github.com/dotnet/efcore/issues/16103) is tracking ways to make this connection management easier.
