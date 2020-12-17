@@ -28,6 +28,9 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
+> [!NOTE]
+> Enabling retry on failure causes EF to internally buffer the resultset, which may significantly increase memory requirements for queries returning large resultsets. See [buffering and streaming](xref:core/performance/efficient-querying#buffering-and-streaming) for more details.
+
 ## Custom execution strategy
 
 There is a mechanism to register a custom execution strategy of your own if you wish to change any of the defaults.

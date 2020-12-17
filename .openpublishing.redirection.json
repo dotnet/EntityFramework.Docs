@@ -429,6 +429,11 @@
             "source_path": "entity-framework/core/miscellaneous/configuring-dbcontext.md",
             "redirect_url": "/ef/core/dbcontext-configuration/index",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/miscellaneous/context-pooling.md",
+            "redirect_url": "/ef/core/performance/advanced-performance-topics#dbcontext-pooling",
+            "redirect_document_id": false
         }
     ]
 }

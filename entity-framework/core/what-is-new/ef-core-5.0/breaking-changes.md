@@ -24,10 +24,13 @@ The following API and behavior changes have the potential to break existing appl
 | [Cosmos: GetPropertyName and SetPropertyName were renamed](#cosmos-metadata)                                                          | Low        |
 | [Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted](#non-added-generation) | Low        |
 | [IMigrationsModelDiffer now uses IRelationalModel](#relational-model)                                                                 | Low        |
+| [ToView() is treated differently by migrations](#toview)                                                                              | Low        |
+| [ToTable(null) marks the entity type as not mapped to a table](#totable)                                                              | Low        |
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
 | [Provider-specific EF.Functions methods throw for InMemory provider](#no-client-methods)                                              | Low        |
+| [IProperty.GetColumnName() is now obsolete](#getcolumnname-obsolete)                                                                  | Low        |
 | [IndexBuilder.HasName is now obsolete](#index-obsolete)                                                                               | Low        |
-| [A pluarlizer is now included for scaffolding reverse engineered models](#pluralizer)                                                 | Low        |
+| [A pluralizer is now included for scaffolding reverse engineered models](#pluralizer)                                                 | Low        |
 | [INavigationBase replaces INavigation in some APIs to support skip navigations](#inavigationbase)                                     | Low        |
 | [Some queries with correlated collection that also use `Distinct` or `GroupBy` are no longer supported](#collection-distinct-groupby) | Low        |
 | [Using a collection of Queryable type in projection is not supported](#queryable-projection)                                          | Low        |
@@ -335,6 +338,64 @@ var hasDifferences = modelDiffer.HasDifferences(
 
 We are planning to improve this experience in 6.0 ([see #22031](https://github.com/dotnet/efcore/issues/22031))
 
+<a name="toview"></a>
+
+### ToView() is treated differently by migrations
+
+[Tracking Issue #2725](https://github.com/dotnet/efcore/issues/2725)
+
+#### Old behavior
+
+Calling `ToView(string)` made the migrations ignore the entity type in addition to mapping it to a view.
+
+#### New behavior
+
+Now `ToView(string)` marks the entity type as not mapped to a table in addition to mapping it to a view. This results in the first migration after upgrading to EF Core 5 to try to drop the default table for this entity type as it's not longer ignored.
+
+#### Why
+
+EF Core now allows an entity type to be mapped to both a table and a view simultaneously, so `ToView` is no longer a valid indicator that it should be ignored by migrations.
+
+#### Mitigations
+
+Use the following code to mark the mapped table as excluded from migrations:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<User>().ToTable("UserView", t => t.ExcludeFromMigrations());
+}
+```
+
+<a name="totable"></a>
+
+### ToTable(null) marks the entity type as not mapped to a table
+
+[Tracking Issue #21172](https://github.com/dotnet/efcore/issues/21172)
+
+#### Old behavior
+
+`ToTable(null)` would reset the table name to the default.
+
+#### New behavior
+
+`ToTable(null)` now marks the entity type as not mapped to any table.
+
+#### Why
+
+EF Core now allows an entity type to be mapped to both a table and a view simultaneously, so `ToTable(null)` is used to indicate that it isn't mapped to any table.
+
+#### Mitigations
+
+Use the following code to reset the table name to the default if it's not mapped to a view or a DbFunction:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<User>().Metadata.RemoveAnnotation(RelationalAnnotationNames.TableName);
+}
+```
+
 <a name="read-only-discriminators"></a>
 
 ### Discriminators are read-only
@@ -384,6 +445,32 @@ Provider-specific methods map to a database function. The computation done by th
 #### Mitigations
 
 Since there's no way to mimic behavior of database functions accurately, you should test the queries containing them against same kind of database as in production.
+
+<a name="getcolumnname-obsolete"></a>
+
+### IProperty.GetColumnName() is now obsolete
+
+[Tracking Issue #2266](https://github.com/dotnet/efcore/issues/2266)
+
+#### Old behavior
+
+`GetColumnName()` returned the name of the column that a property is mapped to.
+
+#### New behavior
+
+`GetColumnName()` still returns the name of a column that a property is mapped to, but this behavior is now ambiguous since EF Core 5 supports TPT and simultaneous mapping to a view or a function where these mappings could use different column names for the same property.
+
+#### Why
+
+We marked this method as obsolete to guide users to a more accurate overload - <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnName(Microsoft.EntityFrameworkCore.Metadata.IProperty,Microsoft.EntityFrameworkCore.Metadata.StoreObjectIdentifier@)>.
+
+#### Mitigations
+
+Use the following code to get the column name for a specific table:
+
+```csharp
+var columnName = property.GetColumnName(StoreObjectIdentifier.Table("Users", null)));
+```
 
 <a name="index-obsolete"></a>
 

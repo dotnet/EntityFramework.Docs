@@ -47,6 +47,9 @@ public class Post
 }
 ```
 
+> [!WARNING]
+> Lazy loading can cause unneeded extra database roundtrips to occur (the so-called N+1 problem), and care should be taken to avoid this. See the [performance section](xref:core/performance/efficient-querying#beware-of-lazy-loading) for more details.
+
 ## Lazy loading without proxies
 
 Lazy-loading proxies work by injecting the `ILazyLoader` service into an entity, as described in [Entity Type Constructors](xref:core/modeling/constructors). For example:

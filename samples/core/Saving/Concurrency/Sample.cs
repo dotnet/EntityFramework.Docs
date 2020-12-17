@@ -1,33 +1,32 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Concurrency
 {
     public class Sample
     {
-        public static async Task RunAsync()
+        public static void Run()
         {
             // Ensure database is created and has a person in it
-            await using (var setupContext = new PersonContext())
+            using (var setupContext = new PersonContext())
             {
-                await setupContext.Database.EnsureDeletedAsync();
-                await setupContext.Database.EnsureCreatedAsync();
+                setupContext.Database.EnsureDeleted();
+                setupContext.Database.EnsureCreated();
 
                 setupContext.People.Add(new Person { FirstName = "John", LastName = "Doe" });
-                await setupContext.SaveChangesAsync();
+                setupContext.SaveChanges();
             }
 
             #region ConcurrencyHandlingCode
-            await using var context = new PersonContext();
+            using var context = new PersonContext();
             // Fetch a person from database and change phone number
             var person = context.People.Single(p => p.PersonId == 1);
             person.PhoneNumber = "555-555-5555";
 
             // Change the person's name in the database to simulate a concurrency conflict
-            await context.Database.ExecuteSqlRawAsync(
+            context.Database.ExecuteSqlRaw(
                 "UPDATE dbo.People SET FirstName = 'Jane' WHERE PersonId = 1");
 
             var saved = false;
@@ -36,7 +35,7 @@ namespace EFSaving.Concurrency
                 try
                 {
                     // Attempt to save changes to the database
-                    await context.SaveChangesAsync();
+                    context.SaveChanges();
                     saved = true;
                 }
                 catch (DbUpdateConcurrencyException ex)
@@ -46,7 +45,7 @@ namespace EFSaving.Concurrency
                         if (entry.Entity is Person)
                         {
                             var proposedValues = entry.CurrentValues;
-                            var databaseValues = await entry.GetDatabaseValuesAsync();
+                            var databaseValues = entry.GetDatabaseValues();
 
                             foreach (var property in proposedValues.Properties)
                             {

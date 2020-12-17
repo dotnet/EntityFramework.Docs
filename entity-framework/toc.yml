@@ -185,8 +185,8 @@
         href: core/querying/raw-sql.md
       - name: Database functions
         href: core/querying/database-functions.md
-      #- name: User defined functions
-      #  href: core/querying/user-defined-functions.md
+      - name: User-defined function mapping
+        href: core/querying/user-defined-function-mapping.md
       - name: Global query filters
         href: core/querying/filters.md
       - name: Query tags
@@ -254,6 +254,21 @@
         href: core/testing/sqlite.md
       - name: Test with InMemory
         href: core/testing/in-memory.md
+
+    - name: Performance
+      items:
+      - name: Introduction
+        href: core/performance/index.md
+      - name: Performance diagnosis
+        href: core/performance/performance-diagnosis.md
+      - name: Efficient querying
+        href: core/performance/efficient-querying.md
+      - name: Efficient updating
+        href: core/performance/efficient-updating.md
+      - name: Modeling for performance
+        href: core/performance/modeling-for-performance.md
+      - name: Advanced performance topics
+        href: core/performance/advanced-performance-topics.md
 
     - name: Miscellaneous
       items:
@@ -339,7 +354,7 @@
         href: core/cli/services.md
 
     - name: EF Core API reference >>
-      href: /dotnet/api/?view=efcore-3.1
+      href: /dotnet/api/?view=efcore-5.0
 
   - name: Entity Framework 6
     items:

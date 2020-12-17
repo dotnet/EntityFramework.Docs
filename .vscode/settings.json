@@ -12,11 +12,16 @@
     "cSpell.words": [
         "LINQ",
         "dbcontext",
+        "denormalization",
+        "idempotency",
         "mitigations",
         "navigations",
         "parameterizable",
         "pluralizer",
         "queryable",
+        "resultset",
+        "resultsets",
+        "roundtrips",
         "savepoint",
         "savepoints",
         "subquery"
