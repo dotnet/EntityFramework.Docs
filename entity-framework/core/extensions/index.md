@@ -122,7 +122,7 @@ Extends [Verify](https://github.com/VerifyTests/Verify) to allow snapshot testin
 
 ### LocalDb
 
-Provides a wrapper around [SqlLocalDB](https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb) to simplify running tests against Entity Framework. For EF Core: 3, 5.
+Provides a wrapper around [SQL Server Express LocalDB](https://docs.microsoft.com/sql/database-engine/configure-windows/sql-server-express-localdb) to simplify running tests against Entity Framework. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/SimonCropp/LocalDb)
 
