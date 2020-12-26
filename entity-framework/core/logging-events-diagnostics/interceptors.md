@@ -84,39 +84,6 @@ Often, the trickiest part of the interception is determining when the command co
 
 This tag can then be detected in the interceptor as it will always be included as a comment in the first line of the command text. On detecting the tag, the query SQL is modified to add the appropriate hint:
 
-<!--
-public class TaggedQueryCommandInterceptor : DbCommandInterceptor
-{
-    public override InterceptionResult<DbDataReader> ReaderExecuting(
-        DbCommand command,
-        CommandEventData eventData,
-        InterceptionResult<DbDataReader> result)
-    {
-        ManipulateCommand(command);
-
-        return result;
-    }
-
-    public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync(
-        DbCommand command,
-        CommandEventData eventData,
-        InterceptionResult<DbDataReader> result,
-        CancellationToken cancellationToken = default)
-    {
-        ManipulateCommand(command);
-
-        return new ValueTask<InterceptionResult<DbDataReader>>(result);
-    }
-
-    private static void ManipulateCommand(DbCommand command)
-    {
-        if (command.CommandText.StartsWith("-- Use hint: robust plan", StringComparison.Ordinal))
-        {
-            command.CommandText += " OPTION (ROBUST PLAN)";
-        }
-    }
-}
--->
 [!code-csharp[TaggedQueryCommandInterceptor](../../../samples/core/Miscellaneous/CommandInterception/TaggedQueryCommandInterceptor.cs?name=TaggedQueryCommandInterceptor)]
 
 Notice:
@@ -148,32 +115,6 @@ FROM [Blogs] AS [b]
 
 An <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor> can be used to manipulate the <xref:System.Data.Common.DbConnection> before it is used to connect to the database. This can be used to obtain an Azure Active Directory (AAD) access token. For example:
 
-<!--
-public class AadAuthenticationInterceptor : DbConnectionInterceptor
-{
-    public override InterceptionResult ConnectionOpening(
-        DbConnection connection,
-        ConnectionEventData eventData,
-        InterceptionResult result)
-        => throw new InvalidOperationException("Open connections asynchronously when using AAD authentication.");
-
-    public override async ValueTask<InterceptionResult> ConnectionOpeningAsync(
-        DbConnection connection,
-        ConnectionEventData eventData,
-        InterceptionResult result,
-        CancellationToken cancellationToken = default)
-    {
-        var sqlConnection = (SqlConnection)connection;
-
-        var provider = new AzureServiceTokenProvider();
-        // Note: in some situations the access token may not be cached automatically the Azure Token Provider.
-        // Depending on the kind of token requested, you may need to implement your own caching here.
-        sqlConnection.AccessToken = await provider.GetAccessTokenAsync("https://database.windows.net/", null, cancellationToken);
-
-        return result;
-    }
-}
--->
 [!code-csharp[AadAuthenticationInterceptor](../../../samples/core/Miscellaneous/ConnectionInterception/AadAuthenticationInterceptor.cs?name=AadAuthenticationInterceptor)]
 
 > [!TIP]
@@ -226,29 +167,6 @@ This interceptor is stateful: it stores the ID and message text of the most rece
 
 In the `Executing` method (i.e. before making a database call), the interceptor detects the tagged query and then checks if there is a cached result. If such a result is found, then the query is suppressed and cached results are used instead.
 
-<!--
-    public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync(
-        DbCommand command,
-        CommandEventData eventData,
-        InterceptionResult<DbDataReader> result,
-        CancellationToken cancellationToken = default)
-    {
-        if (command.CommandText.StartsWith("-- Get_Daily_Message", StringComparison.Ordinal))
-        {
-            lock (_lock)
-            {
-                if (_message != null
-                    && DateTime.UtcNow < _queriedAt + new TimeSpan(0, 0, 10))
-                {
-                    command.CommandText = "-- Get_Daily_Message: Skipping DB call; using cache.";
-                    result = InterceptionResult<DbDataReader>.SuppressWithResult(new CachedDailyMessageDataReader(_id, _message));
-                }
-            }
-        }
-
-        return new ValueTask<InterceptionResult<DbDataReader>>(result);
-    }
--->
 [!code-csharp[ReaderExecutingAsync](../../../samples/core/Miscellaneous/CachingInterception/CachingCommandInterceptor.cs?name=ReaderExecutingAsync)]
 
 Notice how the code calls <xref:Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult%601.SuppressWithResult%2A?displayProperty=nameWithType> and passes a replacement <xref:System.Data.Common.DbDataReader> containing the cached data. This InterceptionResult is then returned, causing suppression of query execution. The replacement reader is instead used by EF Core as the results of the query.
@@ -259,91 +177,12 @@ This interceptor also manipulates the command text. This manipulation is not req
 
 If no cached message is available, or if it has expired, then the code above does not suppress the result. EF Core will therefore execute the query as normal. It will then return to the interceptor's `Executed` method after execution. At this point if the result is not already a cached reader, then the new message ID and string is exacted from the real reader and cached ready for the next use of this query.
 
-<!--
-    public override async ValueTask<DbDataReader> ReaderExecutedAsync(
-        DbCommand command,
-        CommandExecutedEventData eventData,
-        DbDataReader result,
-        CancellationToken cancellationToken = default)
-    {
-        if (command.CommandText.StartsWith("-- Get_Daily_Message", StringComparison.Ordinal)
-            && !(result is CachedDailyMessageDataReader))
-        {
-            try
-            {
-                await result.ReadAsync(cancellationToken);
-
-                lock (_lock)
-                {
-                    _id = result.GetInt32(0);
-                    _message = result.GetString(1);
-                    _queriedAt = DateTime.UtcNow;
-                    return new CachedDailyMessageDataReader(_id, message);
-                }
-            }
-            finally
-            {
-                await result.DisposeAsync();
-            }
-        }
-
-        return result;
-    }
--->
 [!code-csharp[ReaderExecutedAsync](../../../samples/core/Miscellaneous/CachingInterception/CachingCommandInterceptor.cs?name=ReaderExecutedAsync)]
 
 #### Demonstration
 
 The [caching interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/CachingInterception) contains a simple console application that queries for daily messages to test the caching:
 
-<!--
-        // 1. Initialize the database with some daily messages.
-        using (var context = new DailyMessageContext())
-        {
-            await context.Database.EnsureDeletedAsync();
-            await context.Database.EnsureCreatedAsync();
-
-            context.AddRange(
-                new DailyMessage { Message = "Remember: All builds are GA; no builds are RTM." },
-                new DailyMessage { Message = "Keep calm and drink tea" });
-
-            await context.SaveChangesAsync();
-        }
-
-        // 2. Query for the most recent daily message. It will be cached for 10 seconds.
-        using (var context = new DailyMessageContext())
-        {
-            Console.WriteLine(await GetDailyMessage(context));
-        }
-
-        // 3. Insert a new daily message.
-        using (var context = new DailyMessageContext())
-        {
-            context.Add(new DailyMessage { Message = "Free beer for unicorns" });
-
-            await context.SaveChangesAsync();
-        }
-
-        // 4. Cached message is used until cache expires.
-        using (var context = new DailyMessageContext())
-        {
-            Console.WriteLine(await GetDailyMessage(context));
-        }
-
-        // 5. Pretend it's the next day.
-        Thread.Sleep(10000);
-
-        // 6. Cache is expired, so the last message will noe be queried again.
-        using (var context = new DailyMessageContext())
-        {
-            Console.WriteLine(await GetDailyMessage(context));
-        }
-        
-        #region GetDailyMessage
-        async Task<string> GetDailyMessage(DailyMessageContext context)
-            => (await context.DailyMessages.TagWith("Get_Daily_Message").OrderBy(e => e.Id).LastAsync()).Message;
-        #endregion
--->
 [!code-csharp[Main](../../../samples/core/Miscellaneous/CachingInterception/Program.cs?name=Main)]
 
 This results in the following output:
