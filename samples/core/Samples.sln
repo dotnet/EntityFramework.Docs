@@ -129,9 +129,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfiguringDbContext", "Mis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserDefinedFunctionMapping", "Querying\UserDefinedFunctionMapping\UserDefinedFunctionMapping.csproj", "{11AB574E-5DA9-4C37-A342-41B3DB5D7C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{7CC1CD44-6C02-4736-9A6D-B3F2E987CBCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{7CC1CD44-6C02-4736-9A6D-B3F2E987CBCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Performance", "Performance\Performance.csproj", "{A870AAA4-EAF1-4F7D-A71E-83B20219EF6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Performance", "Performance\Performance.csproj", "{A870AAA4-EAF1-4F7D-A71E-83B20219EF6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchSql", "BenchSql\BenchSql.csproj", "{564B36A5-02BD-4A6E-920E-1F31A8C023EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchCommon", "BenchCommon\BenchCommon.csproj", "{63095C39-B5AF-4481-9B59-A8FF14AFEDDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -363,6 +367,14 @@ Global
 		{A870AAA4-EAF1-4F7D-A71E-83B20219EF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A870AAA4-EAF1-4F7D-A71E-83B20219EF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A870AAA4-EAF1-4F7D-A71E-83B20219EF6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{564B36A5-02BD-4A6E-920E-1F31A8C023EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{564B36A5-02BD-4A6E-920E-1F31A8C023EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{564B36A5-02BD-4A6E-920E-1F31A8C023EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{564B36A5-02BD-4A6E-920E-1F31A8C023EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63095C39-B5AF-4481-9B59-A8FF14AFEDDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63095C39-B5AF-4481-9B59-A8FF14AFEDDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63095C39-B5AF-4481-9B59-A8FF14AFEDDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63095C39-B5AF-4481-9B59-A8FF14AFEDDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
