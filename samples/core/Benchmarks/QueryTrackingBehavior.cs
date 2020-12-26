@@ -25,12 +25,12 @@ namespace Benchmarks
             using var context = new BloggingContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            context.SeedData(NumBlogs, NumPostsPerBlog);
+            BloggingContext.SeedData(NumBlogs, NumPostsPerBlog);
             Console.WriteLine("Setup complete.");
         }
 
         [Benchmark(Baseline = true)]
-        public List<Post> AsTracking()
+        public static List<Post> AsTracking()
         {
             using var context = new BloggingContext();
 
@@ -38,7 +38,7 @@ namespace Benchmarks
         }
 
         [Benchmark]
-        public List<Post> AsNoTracking()
+        public static List<Post> AsNoTracking()
         {
             using var context = new BloggingContext();
 
@@ -53,7 +53,7 @@ namespace Benchmarks
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Integrated Security=True");
 
-            public void SeedData(int numBlogs, int numPostsPerBlog)
+            public static void SeedData(int numBlogs, int numPostsPerBlog)
             {
                 using var context = new BloggingContext();
                 context.AddRange(
