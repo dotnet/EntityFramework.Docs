@@ -6,12 +6,23 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\BenchCommon\BenchCommon.csproj" />
-        <ProjectReference Include="..\Benchmarks\Benchmarks.csproj" />
+      <Compile Remove="Benchmark2Context.cs" />
+      <Compile Remove="Blogs.cs" />
+      <Compile Remove="People.cs" />
+      <Compile Remove="Posts.cs" />
     </ItemGroup>
+
     <ItemGroup>
+      <None Remove="efpt.config.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.1" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\BenchCommon\BenchCommon.csproj" />
     </ItemGroup>
 
 </Project>
