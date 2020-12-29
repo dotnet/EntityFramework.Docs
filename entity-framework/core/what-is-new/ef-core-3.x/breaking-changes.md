@@ -166,6 +166,9 @@ You can also obtain it a local tool when you restore the dependencies of a proje
 
 [Tracking Issue #10996](https://github.com/dotnet/efcore/issues/10996)
 
+> [!IMPORTANT]
+> `ExecuteSqlCommand` and `ExecuteSqlCommandAsync` are deprecated. Use these methods instead.
+
 #### Old behavior
 
 Before EF Core 3.0, these method names were overloaded to work with either a normal string or a string that should be interpolated into SQL and parameters.
