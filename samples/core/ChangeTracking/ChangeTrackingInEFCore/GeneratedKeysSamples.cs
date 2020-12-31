@@ -87,7 +87,6 @@ namespace GeneratedKeys
             });
             
             // Mark an existing Post as Deleted
-
             var postToDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
             context.Remove(postToDelete);
             

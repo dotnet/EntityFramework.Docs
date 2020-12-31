@@ -475,27 +475,26 @@ The `IsAuthorized` property can be set to "true" or "false" explicitly before in
 The output from SaveChanges when using SQLite shows that the database default is used for Mac, while explicit values are set for Alice and Baxter:
 
 ```sql
-info: 12/30/2020 11:05:55.337 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='Mac' (Size = 3)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "User" ("Name")
-      VALUES (@p0);
-      SELECT "Id", "IsAuthorized"
-      FROM "User"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
-info: 12/30/2020 11:05:55.339 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='True' (DbType = String), @p1='Alice' (Size = 5)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "User" ("IsAuthorized", "Name")
-      VALUES (@p0, @p1);
-      SELECT "Id"
-      FROM "User"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
-info: 12/30/2020 11:05:55.339 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='False' (DbType = String), @p1='Baxter' (Size = 6)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "User" ("IsAuthorized", "Name")
-      VALUES (@p0, @p1);
-      SELECT "Id"
-      FROM "User"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+-- Executed DbCommand (0ms) [Parameters=[@p0='Mac' (Size = 3)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "User" ("Name")
+VALUES (@p0);
+SELECT "Id", "IsAuthorized"
+FROM "User"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+
+-- Executed DbCommand (0ms) [Parameters=[@p0='True' (DbType = String), @p1='Alice' (Size = 5)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "User" ("IsAuthorized", "Name")
+VALUES (@p0, @p1);
+SELECT "Id"
+FROM "User"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+
+-- Executed DbCommand (0ms) [Parameters=[@p0='False' (DbType = String), @p1='Baxter' (Size = 6)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "User" ("IsAuthorized", "Name")
+VALUES (@p0, @p1);
+SELECT "Id"
+FROM "User"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
 ```
 
 ### Schema defaults only

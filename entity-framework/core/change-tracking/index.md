@@ -8,12 +8,15 @@ uid: core/change-tracking/index
 
 # Change Tracking in EF Core
 
-Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made to entities. These tracked entities in turn drive the changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> or <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> is called.
+Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made to entities. These tracked entities in turn drive the changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>is called.
 
 This document presents an overview of Entity Framework Core (EF Core) change tracking and how it relates to queries and updates.
 
 > [!TIP]  
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/ChangeTrackingInEFCore).
+
+> [!TIP]
+> For simplicity, this document uses and references synchronous methods such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> rather their async equivalents such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A>. Calling and awaiting the async method can be substituted unless otherwise noted.
 
 ## How to track entities
 
@@ -50,7 +53,7 @@ Every entity is is associated with a given <xref:Microsoft.EntityFrameworkCore.E
 - `Modified` entities have been changed since they were queried from the database. This means they will be updated when SaveChanges is called.
 - `Deleted` entities exist in the database, but are marked to be deleted when SaveChanges is called.
 
-EF Core tracks changes at the property level. For example, if only a single property value is modified, then a database update will change only that value. However, properties can only be marked as modified when the entity itself is in the Modified state. (Or, from an alternate perspective, the Modified state means that at least one property value has been changed.)
+EF Core tracks changes at the property level. For example, if only a single property value is modified, then a database update will change only that value. However, properties can only be marked as modified when the entity itself is in the Modified state. (Or, from an alternate perspective, the Modified state means that at least one property value has been marked as modified.)
 
 The following table summarizes the different states:
 
@@ -69,9 +72,9 @@ The following table summarizes the different states:
 
 EF Core change tracking works best when the same <xref:Microsoft.EntityFrameworkCore.DbContext> instance is used to both query for entities and update them by calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>. This is because EF Core automatically tracks the state of queried entities and then detects any changes made to these entities when SaveChanges is called.
 
-This approach has several advantages over explicit tracking[xref:core/change-tracking/explicit-tracking]:
+This approach has several advantages over [explicitly tracking entity instances](xref:core/change-tracking/explicit-tracking):
 
-- It is simple. Entity states rarely need to be manipulated explicitly; EF Core takes care of state changes.
+- It is simple. Entity states rarely need to be manipulated explicitly--EF Core takes care of state changes.
 - Updates are limited to only those values that have actually changed.
 - The values of [shadow properties](xref:core/modeling/shadow-properties) are preserved and used as needed. This is especially relevant when foreign keys are stored in shadow state.
 - The original values of properties are preserved automatically and used for efficient updates.
@@ -124,16 +127,15 @@ We can use this model to query for blogs and posts and then make some updates to
 Calling SaveChanges results in the following database updates, using SQLite as an example database:
 
 ```sql
-info: 12/21/2020 14:39:21.132 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0='.NET Blog (Updated!)' (Size = 20)], CommandType='Text', CommandTimeout='30']
-      UPDATE "Blogs" SET "Name" = @p0
-      WHERE "Id" = @p1;
-      SELECT changes();
-info: 12/21/2020 14:39:21.132 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed DbCommand (0ms) [Parameters=[@p1='2' (DbType = String), @p0='Announcing F# 5.0' (Size = 17)], CommandType='Text', CommandTimeout='30']
-      UPDATE "Posts" SET "Title" = @p0
-      WHERE "Id" = @p1;
-      SELECT changes();
+-- Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0='.NET Blog (Updated!)' (Size = 20)], CommandType='Text', CommandTimeout='30']
+UPDATE "Blogs" SET "Name" = @p0
+WHERE "Id" = @p1;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p1='2' (DbType = String), @p0='Announcing F# 5.0' (Size = 17)], CommandType='Text', CommandTimeout='30']
+UPDATE "Posts" SET "Title" = @p0
+WHERE "Id" = @p1;
+SELECT changes();
 ```
 
 The [change tracker debug view](xref:core/change-tracking/debug-views) is a great way visualize which entities are being tracked and what their states are. For example, inserting the following code into the sample above before calling SaveChanges:
@@ -170,7 +172,7 @@ Notice specifically:
 - The `Blog.Name` property is marked as modified (`Name: '.NET Blog (Updated!)' Modified Originally '.NET Blog'`), and this results in the blog being in the `Modified` state.
 - The `Post.Title` property of post 2 is marked as modified (`Title: 'Announcing F# 5.0' Modified Originally 'Announcing F# 5'`), and this results in this post being in the `Modified` state.
 - The other property values of post 2 have not changed and are therefore not marked as modified. This is why these values are not included in the database update.
-- The other post was not modified in any way. This is why it is still in the `Unchanged` state and are not included in the database update.
+- The other post was not modified in any way. This is why it is still in the `Unchanged` state and is not included in the database update.
 
 ## Query then insert, update, and delete
 
@@ -192,7 +194,6 @@ Updates like those in the previous example can be combined with inserts and dele
             });
             
             // Mark an existing Post as Deleted
-
             var postToDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
             context.Remove(postToDelete);
             
@@ -205,10 +206,10 @@ Updates like those in the previous example can be combined with inserts and dele
 
 In this example:
 
-- A blog and related posts are queried from the database and tracked.
-- The `Blog.Name` property is changed.
-- A new post is added to the collection of existing posts for the blog.
-- An existing post is marked for deletion by calling <xref:Microsoft.EntityFrameworkCore.DbContext.Remove%2A?displayProperty=nameWithType>.
+- A blog and related posts are queried from the database and tracked
+- The `Blog.Name` property is changed
+- A new post is added to the collection of existing posts for the blog
+- An existing post is marked for deletion by calling <xref:Microsoft.EntityFrameworkCore.DbContext.Remove%2A?displayProperty=nameWithType>
 
 Looking again at the [change tracker debug view](xref:core/change-tracking/debug-views) before calling SaveChanges shows how EF Core is tracking these changes:
 
@@ -246,26 +247,25 @@ Notice that:
 This results in the following database commands (using SQLite) when SaveChanges is called:
 
 ```sql
-info: 12/28/2020 10:08:02.434 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0='.NET Blog (Updated!)' (Size = 20)], CommandType='Text', CommandTimeout='30']
-      UPDATE "Blogs" SET "Name" = @p0
-      WHERE "Id" = @p1;
-      SELECT changes();
-info: 12/28/2020 10:08:02.435 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String)], CommandType='Text', CommandTimeout='30']
-      DELETE FROM "Posts"
-      WHERE "Id" = @p0;
-      SELECT changes();
-info: 12/28/2020 10:08:02.436 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='.NET 5.0 was released recently and has come with many...' (Size = 56), @p2='What's next for System.Text.Json?' (Size = 33)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Posts" ("BlogId", "Content", "Title")
-      VALUES (@p0, @p1, @p2);
-      SELECT "Id"
-      FROM "Posts"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+-- Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0='.NET Blog (Updated!)' (Size = 20)], CommandType='Text', CommandTimeout='30']
+UPDATE "Blogs" SET "Name" = @p0
+WHERE "Id" = @p1;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String)], CommandType='Text', CommandTimeout='30']
+DELETE FROM "Posts"
+WHERE "Id" = @p0;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='.NET 5.0 was released recently and has come with many...' (Size = 56), @p2='What's next for System.Text.Json?' (Size = 33)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Posts" ("BlogId", "Content", "Title")
+VALUES (@p0, @p1, @p2);
+SELECT "Id"
+FROM "Posts"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
 ```
 
-See [Explicitly tracking entities](xref:core/change-tracking/explicit-tracking) for more information on inserting and deleting entities. See [Change Detection and Notifications](xref:core/change-tracking/change-detection) for more information on how EF Core automatically detects changes like this.
+See [Explicitly Tracking Entities](xref:core/change-tracking/explicit-tracking) for more information on inserting and deleting entities. See [Change Detection and Notifications](xref:core/change-tracking/change-detection) for more information on how EF Core automatically detects changes like this.
 
 > [!TIP]
 > Call <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.HasChanges?displayProperty=nameWithType> to determine whether any changes have been made that will cause SaveChanges to make updates to the database. If HasChanges return false, then SaveChanges will be a no-op.

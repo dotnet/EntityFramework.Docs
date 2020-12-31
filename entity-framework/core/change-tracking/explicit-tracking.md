@@ -8,7 +8,7 @@ uid: core/change-tracking/explicit-tracking
 
 # Explicitly Tracking Entities
 
-Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made to entities. These tracked entities in turn drive the changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> or <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> is called.
+Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made to entities. These tracked entities in turn drive the changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called.
 
 EF Core change tracking works best when the same <xref:Microsoft.EntityFrameworkCore.DbContext> instance is used to both query for entities and update them by calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>. This is because EF Core automatically tracks the state of queried entities and then detects any changes made to these entities when SaveChanges is called. This approach is covered in [Change Tracking in EF Core](xref:core/change-tracking/index).
 
@@ -17,6 +17,9 @@ EF Core change tracking works best when the same <xref:Microsoft.EntityFramework
 
 > [!TIP]  
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/ChangeTrackingInEFCore).
+
+> [!TIP]
+> For simplicity, this document uses and references synchronous methods such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> rather their async equivalents such as <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A>. Calling and awaiting the async method can be substituted unless otherwise noted.
 
 ## Introduction
 
@@ -32,11 +35,11 @@ The second is only needed by applications that change entities or their relation
 The web application must now re-attach these entities so that they are again tracked and indicate the changes that have been made such that <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> can make appropriate updates to the database. This is primarily handled by the <xref:Microsoft.EntityFrameworkCore.DbContext.Attach%2A?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbContext.Update%2A?displayProperty=nameWithType> methods.
 
 > [!TIP]
-> Attaching entities to the _same DbContext instance_ that they were queried from should not normally be needed. Do not routinely perform a no-tracking query and then attach the returned entities to the context. This will be both slower and harder to get right than using a tracking query.
+> Attaching entities to the _same DbContext instance_ that they were queried from should not normally be needed. Do not routinely perform a no-tracking query and then attach the returned entities to the same context. This will be both slower and harder to get right than using a tracking query.
 
-### Generated vs explicit key values
+### Generated verses explicit key values
 
-By default, integer and GUID [key properties](xref:core/modeling/keys) are configured to use [automatically generated key values](xref:core/modeling/generated-properties). This has a **major advantage for change tracking: an unset key value indicates that the entity is "new"**. That is, it has not yet been inserted into the database.
+By default, integer and GUID [key properties](xref:core/modeling/keys) are configured to use [automatically generated key values](xref:core/modeling/generated-properties). This has a **major advantage for change tracking: an unset key value indicates that the entity is "new"**. That By "new", we mean that it has not yet been inserted into the database.
 
 Two models are used in the following sections. The first is configured to **not** use generated key values:
 
@@ -96,7 +99,7 @@ Notice that the key properties need no additional configuration here since using
 
 ### Explicit key values
 
-For an entity must be tracked in the `Added` state to be inserted by <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>, as described earlier. Entities are typically put in the Added state by calling one of <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddRange%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddAsync%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddRangeAsync%2A?displayProperty=nameWithType>, or equivalent methods on <xref:Microsoft.EntityFrameworkCore.DbSet%601>.
+An entity must be tracked in the `Added` state to be inserted by <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>. Entities are typically put in the Added state by calling one of <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddRange%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddAsync%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddRangeAsync%2A?displayProperty=nameWithType>, or equivalent methods on <xref:Microsoft.EntityFrameworkCore.DbSet%601>.
 
 > [!TIP]
 > In the context of change tracking, all these methods work in the same way. See [Additional Change Tracking Features](xref:core/change-tracking/miscellaneous) for more information.
@@ -173,18 +176,17 @@ Post {Id: 2} Added
 Notice that explicit values have been set for the `Id` key properties in the examples above. This is because the model here has been configured to use explicitly set key values, rather than automatically generated key values. When not using generated keys, the key properties must be explicitly in this way _before_ calling `Add`. These key values are then inserted when SaveChanges is called. For example, when using SQLite:
 
 ```sql
-info: 12/28/2020 10:53:54.530 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Blogs" ("Id", "Name")
-      VALUES (@p0, @p1);
-info: 12/28/2020 10:53:54.530 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p2='1' (DbType = String), @p3='1' (DbType = String), @p4='Announcing the release of EF Core 5.0, a full featured cross-platform...' (Size = 72), @p5='Announcing the Release of EF Core 5.0' (Size = 37)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Posts" ("Id", "BlogId", "Content", "Title")
-      VALUES (@p2, @p3, @p4, @p5);
-info: 12/28/2020 10:53:54.531 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String), @p1='1' (DbType = String), @p2='F# 5 is the latest version of F#, the functional programming language...' (Size = 72), @p3='Announcing F# 5' (Size = 15)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Posts" ("Id", "BlogId", "Content", "Title")
-      VALUES (@p0, @p1, @p2, @p3);
+-- Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Blogs" ("Id", "Name")
+VALUES (@p0, @p1);
+
+-- Executed DbCommand (0ms) [Parameters=[@p2='1' (DbType = String), @p3='1' (DbType = String), @p4='Announcing the release of EF Core 5.0, a full featured cross-platform...' (Size = 72), @p5='Announcing the Release of EF Core 5.0' (Size = 37)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Posts" ("Id", "BlogId", "Content", "Title")
+VALUES (@p2, @p3, @p4, @p5);
+
+-- Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String), @p1='1' (DbType = String), @p2='F# 5 is the latest version of F#, the functional programming language...' (Size = 72), @p3='Announcing F# 5' (Size = 15)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Posts" ("Id", "BlogId", "Content", "Title")
+VALUES (@p0, @p1, @p2, @p3);
 ```
 
 All of these entities are tracked in the `Unchanged` after SaveChanges completes, since these entities now exist in the database:
@@ -258,27 +260,26 @@ Post {Id: -2147482636} Added
 Notice in this case that [temporary key values](xref:core/change-tracking/miscellaneous) have been generated for each entity. These values are used by EF Core until SaveChanges is called, at which point real key values are read back from the database. For example, when using SQLite:
 
 ```sql
-info: 12/28/2020 11:00:01.991 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Blogs" ("Name")
-      VALUES (@p0);
-      SELECT "Id"
-      FROM "Blogs"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
-info: 12/28/2020 11:00:01.991 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p2='Announcing the release of EF Core 5.0, a full featured cross-platform...' (Size = 72), @p3='Announcing the Release of EF Core 5.0' (Size = 37)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Posts" ("BlogId", "Content", "Title")
-      VALUES (@p1, @p2, @p3);
-      SELECT "Id"
-      FROM "Posts"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
-info: 12/28/2020 11:00:01.992 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='F# 5 is the latest version of F#, the functional programming language...' (Size = 72), @p2='Announcing F# 5' (Size = 15)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Posts" ("BlogId", "Content", "Title")
-      VALUES (@p0, @p1, @p2);
-      SELECT "Id"
-      FROM "Posts"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+-- Executed DbCommand (0ms) [Parameters=[@p0='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Blogs" ("Name")
+VALUES (@p0);
+SELECT "Id"
+FROM "Blogs"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+
+-- Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p2='Announcing the release of EF Core 5.0, a full featured cross-platform...' (Size = 72), @p3='Announcing the Release of EF Core 5.0' (Size = 37)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Posts" ("BlogId", "Content", "Title")
+VALUES (@p1, @p2, @p3);
+SELECT "Id"
+FROM "Posts"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+
+-- Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='F# 5 is the latest version of F#, the functional programming language...' (Size = 72), @p2='Announcing F# 5' (Size = 15)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Posts" ("BlogId", "Content", "Title")
+VALUES (@p0, @p1, @p2);
+SELECT "Id"
+FROM "Posts"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
 ```
 
 After SaveChanges completes, all of the entities have been updated with their real key values and are tracked in the `Unchanged` state since they now match the state in the database:
@@ -476,13 +477,12 @@ Post {Id: 2} Unchanged
 Calling SaveChanges at this point does nothing with the `Unchanged` entities, but inserts the new entity into the database. For example, when using SQLite:
 
 ```sql
-info: 12/28/2020 11:27:57.807 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='.NET 5.0 includes many enhancements, including single file applications, more...' (Size = 80), @p2='Announcing .NET 5.0' (Size = 19)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Posts" ("BlogId", "Content", "Title")
-      VALUES (@p0, @p1, @p2);
-      SELECT "Id"
-      FROM "Posts"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+-- Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='.NET 5.0 includes many enhancements, including single file applications, more...' (Size = 80), @p2='Announcing .NET 5.0' (Size = 19)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Posts" ("BlogId", "Content", "Title")
+VALUES (@p0, @p1, @p2);
+SELECT "Id"
+FROM "Posts"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
 ```
 
 The important point to notice here is that, with generated key values, EF Core is able to **automatically distinguish new from existing entities in a disconnected graph**. In a nutshell, when using generated keys, EF Core will always insert an entity when that entity has no key value set.
@@ -563,21 +563,20 @@ Post {Id: 2} Modified
 Calling SaveChanges at this point will cause updates to be sent to the database for all these entities. For example, when using SQLite:
 
 ```sql
-info: 12/28/2020 11:35:17.916 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
-      UPDATE "Blogs" SET "Name" = @p0
-      WHERE "Id" = @p1;
-      SELECT changes();
-info: 12/28/2020 11:35:17.916 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p3='1' (DbType = String), @p0='1' (DbType = String), @p1='Announcing the release of EF Core 5.0, a full featured cross-platform...' (Size = 72), @p2='Announcing the Release of EF Core 5.0' (Size = 37)], CommandType='Text', CommandTimeout='30']
-      UPDATE "Posts" SET "BlogId" = @p0, "Content" = @p1, "Title" = @p2
-      WHERE "Id" = @p3;
-      SELECT changes();
-info: 12/28/2020 11:35:17.916 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p3='2' (DbType = String), @p0='1' (DbType = String), @p1='F# 5 is the latest version of F#, the functional programming language...' (Size = 72), @p2='Announcing F# 5' (Size = 15)], CommandType='Text', CommandTimeout='30']
-      UPDATE "Posts" SET "BlogId" = @p0, "Content" = @p1, "Title" = @p2
-      WHERE "Id" = @p3;
-      SELECT changes();
+-- Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
+UPDATE "Blogs" SET "Name" = @p0
+WHERE "Id" = @p1;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p3='1' (DbType = String), @p0='1' (DbType = String), @p1='Announcing the release of EF Core 5.0, a full featured cross-platform...' (Size = 72), @p2='Announcing the Release of EF Core 5.0' (Size = 37)], CommandType='Text', CommandTimeout='30']
+UPDATE "Posts" SET "BlogId" = @p0, "Content" = @p1, "Title" = @p2
+WHERE "Id" = @p3;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p3='2' (DbType = String), @p0='1' (DbType = String), @p1='F# 5 is the latest version of F#, the functional programming language...' (Size = 72), @p2='Announcing F# 5' (Size = 15)], CommandType='Text', CommandTimeout='30']
+UPDATE "Posts" SET "BlogId" = @p0, "Content" = @p1, "Title" = @p2
+WHERE "Id" = @p3;
+SELECT changes();
 ```
 
 ### Generated key values
@@ -639,28 +638,27 @@ Post {Id: 2} Modified
 Calling `SaveChanges` at this point will cause updates to be sent to the database for all the existing entities, while the new entity is inserted. For example, when using SQLite:
 
 ```sql
-info: 12/28/2020 11:44:37.839 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
-      UPDATE "Blogs" SET "Name" = @p0
-      WHERE "Id" = @p1;
-      SELECT changes();
-info: 12/28/2020 11:44:37.840 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p3='1' (DbType = String), @p0='1' (DbType = String), @p1='Announcing the release of EF Core 5.0, a full featured cross-platform...' (Size = 72), @p2='Announcing the Release of EF Core 5.0' (Size = 37)], CommandType='Text', CommandTimeout='30']
-      UPDATE "Posts" SET "BlogId" = @p0, "Content" = @p1, "Title" = @p2
-      WHERE "Id" = @p3;
-      SELECT changes();
-info: 12/28/2020 11:44:37.840 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p3='2' (DbType = String), @p0='1' (DbType = String), @p1='F# 5 is the latest version of F#, the functional programming language...' (Size = 72), @p2='Announcing F# 5' (Size = 15)], CommandType='Text', CommandTimeout='30']
-      UPDATE "Posts" SET "BlogId" = @p0, "Content" = @p1, "Title" = @p2
-      WHERE "Id" = @p3;
-      SELECT changes();
-info: 12/28/2020 11:44:37.840 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='.NET 5.0 includes many enhancements, including single file applications, more...' (Size = 80), @p2='Announcing .NET 5.0' (Size = 19)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Posts" ("BlogId", "Content", "Title")
-      VALUES (@p0, @p1, @p2);
-      SELECT "Id"
-      FROM "Posts"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+-- Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
+UPDATE "Blogs" SET "Name" = @p0
+WHERE "Id" = @p1;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p3='1' (DbType = String), @p0='1' (DbType = String), @p1='Announcing the release of EF Core 5.0, a full featured cross-platform...' (Size = 72), @p2='Announcing the Release of EF Core 5.0' (Size = 37)], CommandType='Text', CommandTimeout='30']
+UPDATE "Posts" SET "BlogId" = @p0, "Content" = @p1, "Title" = @p2
+WHERE "Id" = @p3;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p3='2' (DbType = String), @p0='1' (DbType = String), @p1='F# 5 is the latest version of F#, the functional programming language...' (Size = 72), @p2='Announcing F# 5' (Size = 15)], CommandType='Text', CommandTimeout='30']
+UPDATE "Posts" SET "BlogId" = @p0, "Content" = @p1, "Title" = @p2
+WHERE "Id" = @p3;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='.NET 5.0 includes many enhancements, including single file applications, more...' (Size = 80), @p2='Announcing .NET 5.0' (Size = 19)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Posts" ("BlogId", "Content", "Title")
+VALUES (@p0, @p1, @p2);
+SELECT "Id"
+FROM "Posts"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
 ```
 
 This is a very easy way to generate updates and inserts from a disconnected graph. However, it results in updates or inserts being sent to the database for every property of every tracked entity, even when some property values may not have been changed. Don't be too scared by this; for many applications with small graphs, this can be an easy and pragmatic way of generating updates. That being said, other more complex patterns can sometimes result in more efficient updates, as described in [Identity Resolution in EF Core](xref:core/change-tracking/identity-resolution).
@@ -695,11 +693,10 @@ Post {Id: 2} Deleted
 This entity will be deleted when SaveChanges is called. For example, when using SQLite:
 
 ```sql
-info: 12/28/2020 12:05:20.313 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String)], CommandType='Text', CommandTimeout='30']
-      DELETE FROM "Posts"
-      WHERE "Id" = @p0;
-      SELECT changes();
+-- Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String)], CommandType='Text', CommandTimeout='30']
+DELETE FROM "Posts"
+WHERE "Id" = @p0;
+SELECT changes();
 ```
 
 After SaveChanges completes, the deleted entity is detached from the DbContext since it no longer exists in the database. The debug view is therefore empty because no entities are being tracked.
@@ -758,11 +755,10 @@ Post {Id: 2} Deleted
 This entity will be deleted when SaveChanges is called. For example, when using SQLite:
 
 ```sql
-info: 12/28/2020 12:27:10.873 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String)], CommandType='Text', CommandTimeout='30']
-      DELETE FROM "Posts"
-      WHERE "Id" = @p0;
-      SELECT changes();
+-- Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String)], CommandType='Text', CommandTimeout='30']
+DELETE FROM "Posts"
+WHERE "Id" = @p0;
+SELECT changes();
 ```
 
 After SaveChanges completes, the deleted entity is detached from the DbContext since it no longer exists in the database. Other entities remain in the `Unchanged` state:
@@ -830,21 +826,20 @@ Post {Id: 2} Modified
 More interestingly, all the related posts are now marked as `Modified`. This is because the foreign key property in each entity has been set to null. Calling SaveChanges updates the foreign key value for each post to null in the database, before then deleting the blog:
 
 ```sql
-info: 12/28/2020 12:51:15.011 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0=NULL], CommandType='Text', CommandTimeout='30']
-      UPDATE "Posts" SET "BlogId" = @p0
-      WHERE "Id" = @p1;
-      SELECT changes();
-info: 12/28/2020 12:51:15.011 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p1='2' (DbType = String), @p0=NULL], CommandType='Text', CommandTimeout='30']
-      UPDATE "Posts" SET "BlogId" = @p0
-      WHERE "Id" = @p1;
-      SELECT changes();
-info: 12/28/2020 12:51:15.012 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p2='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
-      DELETE FROM "Blogs"
-      WHERE "Id" = @p2;
-      SELECT changes();
+-- Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0=NULL], CommandType='Text', CommandTimeout='30']
+UPDATE "Posts" SET "BlogId" = @p0
+WHERE "Id" = @p1;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p1='2' (DbType = String), @p0=NULL], CommandType='Text', CommandTimeout='30']
+UPDATE "Posts" SET "BlogId" = @p0
+WHERE "Id" = @p1;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p2='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
+DELETE FROM "Blogs"
+WHERE "Id" = @p2;
+SELECT changes();
 ```
 
 After SaveChanges completes, the deleted entity is detached from the DbContext since it no longer exists in the database. Other entities are now marked as `Unchanged` with null foreign key values, which matches the state of the database:
@@ -901,20 +896,19 @@ Post {Id: 2} Deleted
 More interestingly in this case is that all related posts have also been marked as `Deleted`. Calling SaveChanges causes the blog and all related posts to be deleted from the database:
 
 ```sql
-info: 12/28/2020 12:58:04.111 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
-      DELETE FROM "Posts"
-      WHERE "Id" = @p0;
-      SELECT changes();
-info: 12/28/2020 12:58:04.112 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String)], CommandType='Text', CommandTimeout='30']
-      DELETE FROM "Posts"
-      WHERE "Id" = @p0;
-      SELECT changes();
-info: 12/28/2020 12:58:04.112 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
-      DELETE FROM "Blogs"
-      WHERE "Id" = @p1;
+-- Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
+DELETE FROM "Posts"
+WHERE "Id" = @p0;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String)], CommandType='Text', CommandTimeout='30']
+DELETE FROM "Posts"
+WHERE "Id" = @p0;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
+DELETE FROM "Blogs"
+WHERE "Id" = @p1;
 ```
 
 After SaveChanges completes, all the deleted entities are detached from the DbContext since they no longer exist in the database. Output from the debug view is therefore empty.

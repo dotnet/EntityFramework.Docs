@@ -358,11 +358,10 @@ The `Blog.Posts` navigation on the .NET Blog now has three posts (`Posts: [{Id: 
 More interestingly, even though the code did not explicitly change the `Post.Blog` navigation, it has been fixed-up to point to the Visual Studio blog (`Blog: {Id: 1}`). Also, the `Post.BlogId` foreign key value has been updated to match the primary key value of the .NET blog. This change to the FK value in then persisted to the database when SaveChanges is called:
 
 ```sql
-info: 12/29/2020 09:48:05.316 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p1='3' (DbType = String), @p0='1' (Nullable = true) (DbType = String)], CommandType='Text', CommandTimeout='30']
-      UPDATE "Posts" SET "BlogId" = @p0
-      WHERE "Id" = @p1;
-      SELECT changes();
+-- Executed DbCommand (0ms) [Parameters=[@p1='3' (DbType = String), @p0='1' (Nullable = true) (DbType = String)], CommandType='Text', CommandTimeout='30']
+UPDATE "Posts" SET "BlogId" = @p0
+WHERE "Id" = @p1;
+SELECT changes();
 ```
 
 ### Changing reference navigations
@@ -513,11 +512,10 @@ Notice that the `Post.BlogId` remains unchanged since for a required relationshi
 Calling SaveChanges results in the orphaned post being deleted:
 
 ```sql
-info: 12/29/2020 10:22:54.312 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String)], CommandType='Text', CommandTimeout='30']
-      DELETE FROM "Posts"
-      WHERE "Id" = @p0;
-      SELECT changes();
+-- Executed DbCommand (0ms) [Parameters=[@p0='2' (DbType = String)], CommandType='Text', CommandTimeout='30']
+DELETE FROM "Posts"
+WHERE "Id" = @p0;
+SELECT changes();
 ```
 
 #### Delete orphans timing and re-parenting
@@ -632,18 +630,17 @@ BlogAssets {Id: 1} Modified
 This results in an update and an insert when SaveChanges is called:
 
 ```sql
-info: 12/29/2020 10:43:13.822 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0=NULL], CommandType='Text', CommandTimeout='30']
-      UPDATE "Assets" SET "BlogId" = @p0
-      WHERE "Id" = @p1;
-      SELECT changes();
-info: 12/29/2020 10:43:13.822 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p2=NULL, @p3='1' (Nullable = true) (DbType = String)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Assets" ("Banner", "BlogId")
-      VALUES (@p2, @p3);
-      SELECT "Id"
-      FROM "Assets"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+-- Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0=NULL], CommandType='Text', CommandTimeout='30']
+UPDATE "Assets" SET "BlogId" = @p0
+WHERE "Id" = @p1;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p2=NULL, @p3='1' (Nullable = true) (DbType = String)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Assets" ("Banner", "BlogId")
+VALUES (@p2, @p3);
+SELECT "Id"
+FROM "Assets"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
 ```
 
 #### Required one-to-one relationships
@@ -671,18 +668,17 @@ BlogAssets {Id: 1} Deleted
 This then results in an delete an and insert when SaveChanges is called:
 
 ```sql
-info: 12/29/2020 10:48:57.631 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
-      DELETE FROM "Assets"
-      WHERE "Id" = @p0;
-      SELECT changes();
-info: 12/29/2020 10:48:57.632 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p1=NULL, @p2='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
-      INSERT INTO "Assets" ("Banner", "BlogId")
-      VALUES (@p1, @p2);
-      SELECT "Id"
-      FROM "Assets"
-      WHERE changes() = 1 AND "rowid" = last_insert_rowid();
+-- Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
+DELETE FROM "Assets"
+WHERE "Id" = @p0;
+SELECT changes();
+
+-- Executed DbCommand (0ms) [Parameters=[@p1=NULL, @p2='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
+INSERT INTO "Assets" ("Banner", "BlogId")
+VALUES (@p1, @p2);
+SELECT "Id"
+FROM "Assets"
+WHERE changes() = 1 AND "rowid" = last_insert_rowid();
 ```
 
 The timing of marking orphans as deleted can be changed in the same way as shown for collection navigations and has the same effects.
