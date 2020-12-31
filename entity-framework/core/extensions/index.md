@@ -114,11 +114,23 @@ Revival of [Index] attribute (with extension for model building). For EF Core: 2
 
 [GitHub repository](https://github.com/jsakamoto/EntityFrameworkCore.IndexAttribute)
 
-### EfCore.InMemoryHelpers
+### Verify.EntityFramework
 
-Provides a wrapper around the EF Core In-Memory Database Provider. Makes it act more like a relational provider. For EF Core: 2.
+Extends [Verify](https://github.com/VerifyTests/Verify) to allow snapshot testing with EntityFramework. For EF Core: 3, 5.
 
-[GitHub repository](https://github.com/SimonCropp/EfCore.InMemoryHelpers)
+[GitHub repository](https://github.com/VerifyTests/Verify.EntityFramework)
+
+### LocalDb
+
+Provides a wrapper around [SQL Server Express LocalDB](https://docs.microsoft.com/sql/database-engine/configure-windows/sql-server-express-localdb) to simplify running tests against Entity Framework. For EF Core: 3, 5.
+
+[GitHub repository](https://github.com/SimonCropp/LocalDb)
+
+### EfFluentValidation
+
+Adds [FluentValidation](https://fluentvalidation.net/) support to Entity Framework. For EF Core: 3, 5.
+
+[GitHub repository](https://github.com/SimonCropp/EfFluentValidation)
 
 ### EFCore.TemporalSupport
 
