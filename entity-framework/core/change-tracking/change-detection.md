@@ -414,3 +414,10 @@ EF Core creates proxy instances automatically when querying the database, so thi
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 -->
 [!code-csharp[Change_tracking_proxies_1](../../../samples/core/ChangeTracking/ChangeDetectionAndNotifications/ChangeTrackingProxiesSamples.cs?name=Change_tracking_proxies_1)]
+
+## Change tracking events
+
+EF Core fires the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Tracked?displayProperty=nameWithType> event when an entity is tracked for the first time. Future entity state changes result in an <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.StateChanged?displayProperty=nameWithType> event. See [.NET Events in EF Core](xref:core/logging-events-diagnostics/events) for more information.
+
+> [!NOTE]
+> The `StateChanged` event is not fired when an entity is first tracked, even though the state changes from `Detached` to something else when this happens. Make sure to listen for both `StateChanged` and `Tracked` events to get all relevant notifications.

@@ -659,3 +659,7 @@ This comparer can then be used when creating collection navigations. For example
             = new HashSet<Order>(ReferenceEqualityComparer.Instance); 
 -->
 [!code-csharp[OrdersCollection](../../../samples/core/ChangeTracking/IdentityResolutionInEFCore/IdentityResolutionSamples.cs?name=OrdersCollection)]
+
+### Comparing key properties
+
+In addition to equality comparisons, key values also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key properties must implement <xref:System.IComparable%601> and <xref:System.IEquatable%601>. All types normally used as keys (int, Guid, string, etc.) already support these interfaces.

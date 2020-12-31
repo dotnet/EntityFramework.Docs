@@ -31,5 +31,7 @@ public class Program
         ExplicitKeysSamples.Deleting_dependent_child_entities_2();
         ExplicitKeysSamples.Deleting_principal_parent_entities_1();
         ExplicitKeysRequiredSamples.Deleting_principal_parent_entities_1();
+        
+        GeneratedKeysSamples.Custom_tracking_with_TrackGraph_1();
     }
 }

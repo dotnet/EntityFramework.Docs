@@ -238,6 +238,69 @@ namespace GeneratedKeys
             
             Console.WriteLine();
         }
+        
+        public static void Custom_tracking_with_TrackGraph_1()
+        {
+            Console.WriteLine($">>>> Sample: {nameof(Custom_tracking_with_TrackGraph_1)}");
+            Console.WriteLine();
+            
+            Helpers.RecreateCleanDatabase();
+            Helpers.PopulateDatabase();
+
+            using var context = new BlogsContext();
+
+            var blog = context.Blogs.AsNoTracking().Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+
+            #region Custom_tracking_with_TrackGraph_1a
+            blog.Posts.Add(
+                new Post
+                {
+                    Title = "Announcing .NET 5.0",
+                    Content = ".NET 5.0 includes many enhancements, including single file applications, more..."
+                }
+            );
+
+            var toDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
+            toDelete.Id = -toDelete.Id;
+            #endregion
+
+            UpdateBlog(blog);
+
+            Console.WriteLine();
+        }
+
+        #region Custom_tracking_with_TrackGraph_1b
+        public static void UpdateBlog(Blog blog)
+        {
+            using var context = new BlogsContext();
+
+            context.ChangeTracker.TrackGraph(
+                blog, node =>
+                    {
+                        var propertyEntry = node.Entry.Property("Id");
+                        var keyValue = (int)propertyEntry.CurrentValue;
+
+                        if (keyValue == 0)
+                        {
+                            node.Entry.State = EntityState.Added;
+                        }
+                        else if (keyValue < 0)
+                        {
+                            propertyEntry.CurrentValue = -keyValue;
+                            node.Entry.State = EntityState.Deleted;
+                        }
+                        else
+                        {
+                            node.Entry.State = EntityState.Modified;
+                        }
+                        
+                        Console.WriteLine($"Tracking {node.Entry.Metadata.DisplayName()} with key value {keyValue} as {node.Entry.State}");
+
+                    });
+
+            context.SaveChanges();
+        }
+        #endregion
     }
 
     public static class Helpers

@@ -216,13 +216,13 @@ namespace Graphs
 
                             if (existingEntity == null)
                             {
-                                Console.WriteLine($"Tracking {entityType} entity with key value {keyValue}");
+                                Console.WriteLine($"Tracking {entityType.DisplayName()} entity with key value {keyValue}");
 
                                 node.Entry.State = EntityState.Modified;
                             }
                             else
                             {
-                                Console.WriteLine($"Discarding duplicate {entityType} entity with key value {keyValue}");
+                                Console.WriteLine($"Discarding duplicate {entityType.DisplayName()} entity with key value {keyValue}");
                             }
                         });
             }
