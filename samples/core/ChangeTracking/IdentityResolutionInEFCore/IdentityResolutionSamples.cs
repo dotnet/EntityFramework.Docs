@@ -220,6 +220,7 @@ namespace Updates
             Console.WriteLine();
         }
 
+        #region Updating_an_entity_6
         public static void UpdateFromHttpPost6(Blog blog, Dictionary<string, object> originalValues)
         {
             using var context = new BlogsContext();
@@ -229,6 +230,7 @@ namespace Updates
 
             context.SaveChanges();
         }
+        #endregion
 
         public static void Failing_to_set_key_values_1()
         {

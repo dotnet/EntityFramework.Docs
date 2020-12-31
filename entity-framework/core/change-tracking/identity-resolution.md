@@ -8,10 +8,10 @@ uid: core/change-tracking/identity-resolution
 
 # Identity Resolution in EF Core
 
-A <xref:Microsoft.EntityFrameworkCore.DbContext> can only track one entity instance with any given primary key value. This means multiple instances of an entity with the same key value must be resolved to a single instance. This is called "identity resolution". Identity resolution ensures EF Core is tracking a consistent graph with no ambiguities about the relationships or property values of the entities.
+A <xref:Microsoft.EntityFrameworkCore.DbContext> can only track one entity instance with any given primary key value. This means multiple instances of an entity with the same key value must be resolved to a single instance. This is called "identity resolution". Identity resolution ensures Entity Framework Core (EF Core) is tracking a consistent graph with no ambiguities about the relationships or property values of the entities.
 
 > [!TIP]
-> This document assumes that entity states and the basics of EF core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
+> This document assumes that entity states and the basics of EF Core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
 
 > [!TIP]  
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/IdentityResolutionInEFCore).
@@ -175,7 +175,7 @@ So far each approach has either executed a query before making the update, or up
 -->
 [!code-csharp[Updating_an_entity_6](../../../samples/core/ChangeTracking/IdentityResolutionInEFCore/IdentityResolutionSamples.cs?name=Updating_an_entity_6)]
 
-In this code the entity with modified values is first attached. This causes EF to track the entity in the `Unchanged` state; that is, with no property values marked as modified. The dictionary of original values is then applied to this tracked entity. This will mark as modified properties with different current and original values. Properties that have the same current and original values will not be marked as modified.
+In this code the entity with modified values is first attached. This causes EF Core to track the entity in the `Unchanged` state; that is, with no property values marked as modified. The dictionary of original values is then applied to this tracked entity. This will mark as modified properties with different current and original values. Properties that have the same current and original values will not be marked as modified.
 
 In this case:
 
@@ -191,7 +191,7 @@ As with the examples in the previous section, the original values do not have to
 
 ## Attaching a serialized graph
 
-EF Core works with graphs of entities connected via foreign keys and navigation properties, as described in [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes). If these graphs are created outside of EF using, for example, a JSON serializer, then they can have multiple instances of the same entity. These need to be resolved into single instances before the graph can be tracked.
+EF Core works with graphs of entities connected via foreign keys and navigation properties, as described in [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes). If these graphs are created outside of EF Core using, for example, from a JSON file, then they can have multiple instances of the same entity. These duplicates need to be resolved into single instances before the graph can be tracked.
 
 ### Graphs with no duplicates
 
@@ -394,7 +394,7 @@ Notice that the graph now includes multiple Blog instances with the same key val
 We can fix this in two ways:
 
 - Use JSON serialization options that preserve references
-- Perform identity resolution before or while EF Core is tracking the graph
+- Perform identity resolution while the graph is being tracked
 
 #### Preserve references
 
@@ -485,7 +485,7 @@ The resulting JSON now looks like this:
 
 Notice that this JSON has replaced duplicates with references like `"$ref": "5"` to each single instance. This graph can again be tracked using the simple calls to `Update`, as shown above.
 
-The System.Text.JSON serialization support in the .NET base class libraries (BCL) has a similar option which produces the same result. For example:
+The <xref:System.Text.Json> support in the .NET base class libraries (BCL) has a similar option which produces the same result. For example:
 
 <!--
             var serialized = System.Text.Json.JsonSerializer.Serialize(posts, new System.Text.Json.JsonSerializerOptions
@@ -579,7 +579,7 @@ Entity types are often configured to use [automatically generated key values](xr
 -->
 [!code-csharp[Pet](../../../samples/core/ChangeTracking/IdentityResolutionInEFCore/IdentityResolutionSamples.cs?name=Pet)]
 
-Now consider code that attempts to tracker two new entity instances without setting key values:
+Consider code that attempts to tracker two new entity instances without setting key values:
 
 <!--
             using var context = new BlogsContext();
@@ -608,7 +608,7 @@ The fix for this is to either to set key values explicitly or configure the key 
 <xref:Microsoft.EntityFrameworkCore.DbContext> is designed to represent a short-lived unit-of-work, as described in [DbContext Initialization and Configuration](xref:core/dbcontext-configuration/index), and elaborated on in [Change Tracking in EF Core](xref:core/change-tracking/index). Not following this guidance makes it is easy to run into situations where an attempt is made to track multiple instances of the same entity. Common examples are:
 
 - Using the same DbContext instance to both setup test state and then execute the test. This often results in the DbContext still tracking one entity instance from test setup, while then attempting to attach a new instance in the test proper. Instead, use a different DbContext instance for setting up test state and the test code proper.
-- Using a shared DbContext instance in a repository or similar code. Instead, make sure your repository using a single DbContext instance for each unit-of-work.
+- Using a shared DbContext instance in a repository or similar code. Instead, make sure your repository uses a single DbContext instance for each unit-of-work.
 
 ## Identity resolution and queries
 
@@ -622,11 +622,11 @@ Identity resolution happens automatically when entities are tracked from a query
 In contrast to tracking queries, no-tracking queries do not perform identity resolution. This means that no-tracking queries can return duplicates just like in the JSON serialization case described earlier. This is usually not an issue if the query results are going to be serialized and sent to the client.
 
 > [!TIP]
-> Do not routinely perform a no-tracking query and then attach the returned entities to the context. This will be both slower and harder to get right than using a tracking query.
+> Do not routinely perform a no-tracking query and then attach the returned entities to the same context. This will be both slower and harder to get right than using a tracking query.
 
 No-tracking queries do not perform identity resolution because doing so impacts the performance of streaming a large number of entities from a query. This is because identity resolution requires keeping track of each instance returned so that it can be used instead of later creating a duplicate.
 
-Starting with EF Core 5.0, no-tracking queries can be forced to perform identity resolution by using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution%60%601(System.Linq.IQueryable{%60%600})>. The query will then keep track of returned instances (without tracking them in the normal way) and ensure no duplicates are created.
+Starting with EF Core 5.0, no-tracking queries can be forced to perform identity resolution by using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution%60%601(System.Linq.IQueryable{%60%600})>. The query will then keep track of returned instances (without tracking them in the normal way) and ensure no duplicates are created in the query results.
 
 ## Overriding object equality
 
@@ -662,4 +662,4 @@ This comparer can then be used when creating collection navigations. For example
 
 ### Comparing key properties
 
-In addition to equality comparisons, key values also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key properties must implement <xref:System.IComparable%601> and <xref:System.IEquatable%601>. All types normally used as keys (int, Guid, string, etc.) already support these interfaces.
+In addition to equality comparisons, key values also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key properties must implement <xref:System.IComparable%601> and <xref:System.IEquatable%601>. Types normally used as keys (int, Guid, string, etc.) already support these interfaces. Custom key types may to add these interfaces.

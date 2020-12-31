@@ -8,7 +8,7 @@ uid: core/change-tracking/change-detection
 
 # Change Detection and Notifications
 
-Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made to entities. These tracked entities in turn drive the changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called. This is covered in [Change Tracking in EF Core](xref:core/change-tracking/index), and this document assumes that entity states and the basics of EF core change tracking are understood.
+Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made to entities. These tracked entities in turn drive the changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called. This is covered in [Change Tracking in EF Core](xref:core/change-tracking/index), and this document assumes that entity states and the basics of Entity Framework Core (EF Core) change tracking are understood.
 
 Tracking property and relationship changes requires that the DbContext is able to detect these changes. This document covers how this detection happens, as well as how to use property notifications or change-tracking proxies to force immediate detection of changes.
 

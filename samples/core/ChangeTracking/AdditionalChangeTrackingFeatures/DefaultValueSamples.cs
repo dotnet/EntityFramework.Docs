@@ -86,7 +86,7 @@ namespace DefaultValues
 
             Helpers.RecreateCleanDatabase();
 
-            #region Working_with_default_values_3
+            #region Working_with_default_values_4
             using var context = new BlogsContext();
 
             var fooA = new Foo3 { Count = 10 };

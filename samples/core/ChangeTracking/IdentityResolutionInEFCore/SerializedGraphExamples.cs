@@ -63,7 +63,7 @@ namespace Graphs
             Helpers.RecreateCleanDatabase();
             Helpers.PopulateDatabase();
 
-            #region Attaching_a_serialized_graph_2a
+            #region Attaching_a_serialized_graph_2
             using var context = new BlogsContext();
 
             var posts = context.Posts.Include(e => e.Blog).ToList();

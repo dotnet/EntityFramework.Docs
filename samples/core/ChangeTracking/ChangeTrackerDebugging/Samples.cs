@@ -183,7 +183,7 @@ public class Blog
 
 public class BlogAssets
 {
-    public Guid Id { get; set; } // Primary key
+    public Guid Id { get; set; } // Primary key and foreign key
     public byte[] Banner { get; set; }
 
     public Blog Blog { get; set; } // Reference navigation
@@ -198,7 +198,7 @@ public class Post
     public int BlogId { get; set; } // Foreign key
     public Blog Blog { get; set; } // Reference navigation
 
-    public IList<Tag> Tags { get; } = new List<Tag>(); // Collection navigation
+    public IList<Tag> Tags { get; } = new List<Tag>(); // Skip collection navigation
 }
 
 public class Tag
@@ -206,7 +206,7 @@ public class Tag
     public int Id { get; set; } // Primary key
     public string Text { get; set; }
 
-    public IList<Post> Posts { get; } = new List<Post>(); // Collection navigation
+    public IList<Post> Posts { get; } = new List<Post>(); // Skip collection navigation
 }
 #endregion
 

@@ -10,14 +10,14 @@ uid: core/change-tracking/relationship-changes
 
 ## Overview of foreign keys and navigations
 
-Relationships in an EF model are represented using foreign keys (FKs). An FK consists of one or more properties on the dependent or child entity in the relationship. This dependent/child entity is associated with a given principal/parent entity when the values of the foreign key properties on the dependent/child match the values of the alternate or primary key (PK) properties on the principal/parent.
+Relationships in an Entity Framework Core (EF Core) model are represented using foreign keys (FKs). An FK consists of one or more properties on the dependent or child entity in the relationship. This dependent/child entity is associated with a given principal/parent entity when the values of the foreign key properties on the dependent/child match the values of the alternate or primary key (PK) properties on the principal/parent.
 
-Foreign keys are a good way to store and manipulate relationships in the database, but are not very friendly when working with multiple related entities in application code. Therefore, most EF models also layer "navigations" over the FK representation. Navigations form C#/.NET references between entity instances that reflect the associations found by matching foreign key values to primary or alternate key values.
+Foreign keys are a good way to store and manipulate relationships in the database, but are not very friendly when working with multiple related entities in application code. Therefore, most EF Core models also layer "navigations" over the FK representation. Navigations form C#/.NET references between entity instances that reflect the associations found by matching foreign key values to primary or alternate key values.
 
 Navigations can be used on both sides of the relationship, on one side only, or not at all, leaving only the FK property. The FK property can be hidden by making it a [shadow property](xref:core/modeling/shadow-properties). See [Relationships](xref:core/modeling/relationships) for more information on modelling relationships.
 
 > [!TIP]
-> This document assumes that entity states and the basics of EF core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
+> This document assumes that entity states and the basics of EF Core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
 
 > [!TIP]  
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/ChangingFKsAndNavigations).
@@ -92,7 +92,7 @@ EF Core keeps navigations in alignment with foreign key values and vice versa. T
 
 ### Fixup by query
 
-Fixup first occurs when entities are queried from the database. The database has only foreign key values, so when EF creates an entity instance from the database it uses the foreign key values to set reference navigations and add entities to collection navigations as appropriate. For example, consider a query for blogs and its associated posts and assets:
+Fixup first occurs when entities are queried from the database. The database has only foreign key values, so when EF Core creates an entity instance from the database it uses the foreign key values to set reference navigations and add entities to collection navigations as appropriate. For example, consider a query for blogs and its associated posts and assets:
 
 <!--
         using var context = new BlogsContext();
@@ -106,7 +106,7 @@ Fixup first occurs when entities are queried from the database. The database has
 -->
 [!code-csharp[Relationship_fixup_1](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/OptionalRelationshipsSamples.cs?name=Relationship_fixup_1)]
 
-For each blog, EF will first create a `Blog` instance. Then, as each post is loaded from the database its `Post.Blog` reference navigation is set to point to the associated blog. Likewise, the post is added to the `Blog.Posts` collection navigation. The same thing happens with `BlogAssets`, except in this case both navigations are references. The `Blog.Assets` navigation is set to point to the assets instance, and the `BlogAsserts.Blog` navigation is set to point to the blog instance.
+For each blog, EF Core will first create a `Blog` instance. Then, as each post is loaded from the database its `Post.Blog` reference navigation is set to point to the associated blog. Likewise, the post is added to the `Blog.Posts` collection navigation. The same thing happens with `BlogAssets`, except in this case both navigations are references. The `Blog.Assets` navigation is set to point to the assets instance, and the `BlogAsserts.Blog` navigation is set to point to the blog instance.
 
 Looking at the [change tracker debug view](xref:core/change-tracking/debug-views) after this query shows two blogs, each with one assets and two posts being tracked:
 
@@ -378,7 +378,7 @@ In the previous example a post was moved from one blog to another by manipulatin
 -->
 [!code-csharp[Changing_relationships_using_navigations_2](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/OptionalRelationshipsSamples.cs?name=Changing_relationships_using_navigations_2)]
 
-The debug view after this change is _exactly the same_ as it was in the previous example. This because EF detected the reference navigation change and then fixed up the collection navigations and FK value to match.
+The debug view after this change is _exactly the same_ as it was in the previous example. This because EF Core detected the reference navigation change and then fixed up the collection navigations and FK value to match.
 
 ## Changing relationships using foreign key values
 
@@ -544,7 +544,7 @@ By default, marking orphans as `Deleted` happens as soon as the relationship cha
 -->
 [!code-csharp[Fixup_for_added_or_deleted_entities_5](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/RequiredRelationshipsSamples.cs?name=Fixup_for_added_or_deleted_entities_5)]
 
-After removing the post from the first collection the object is not marked as `Deleted` as it was in the previous example. Instead, EF is tracking that the relationship is severed _even though this is a required relationship_. (The FK value is considered null by EF Core even though it cannot really be null because the type is not nullable. This is known as a "conceptual null".)
+After removing the post from the first collection the object is not marked as `Deleted` as it was in the previous example. Instead, EF Core is tracking that the relationship is severed _even though this is a required relationship_. (The FK value is considered null by EF Core even though it cannot really be null because the type is not nullable. This is known as a "conceptual null".)
 
 ```output
 Post {Id: 3} Modified

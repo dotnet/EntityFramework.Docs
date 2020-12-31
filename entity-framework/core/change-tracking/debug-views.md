@@ -10,29 +10,29 @@ uid: core/change-tracking/debug-views
 
 The Entity Framework Core (EF Core) change tracker generates two kinds of output to help with debugging:
 
-- The <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DebugView%2A?displayProperty=nameWithType> allows access to a human-readable view of all entities being tracked
+- The <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DebugView%2A?displayProperty=nameWithType> provides a human-readable view of all entities being tracked
 - Debug-level log messages are generated when the change tracker detects state and fixes up relationships
 
 > [!TIP]
-> This document assumes that entity states and the basics of EF core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
+> This document assumes that entity states and the basics of EF Core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
 
 > [!TIP]  
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/ChangeTrackerDebugging).
 
 ## Change tracker debug view
 
-The change tracker debug view can be accessed in the debugger of your IDE, such as Visual Studio. For example:
+The change tracker debug view can be accessed in the debugger of your IDE. For example, with Visual Studio:
 
 ![Accessing the change tracker debug view from the Visual Studio debugger](_static/debug-view.png)
 
-It can also be accessed directly from code, for example to print the debug view in the console window:
+It can also be accessed directly from code, for example to send the debug view to the console:
 
 <!--
         Console.WriteLine(context.ChangeTracker.DebugView.ShortView);
 -->
 [!code-csharp[Change_tracker_debug_view_1b](../../../samples/core/ChangeTracking/ChangeTrackerDebugging/Samples.cs?name=Change_tracker_debug_view_1b)]
 
-The debug view has a short form and a long form. The short view shows tracked entities, their state, and key values. The long view also includes all property and navigation values and state.
+The debug view has a short form and a long form. The short form shows tracked entities, their state, and key values. The long form also includes all property and navigation values and state.
 
 ### The short view
 
@@ -91,7 +91,7 @@ Notice:
 - Each tracked entity is listed with its primary key (PK) value. For example, `Blog {Id: 1}`.
 - If the entity is a shared-type entity type, then it's CLR type is also shown. For example, `PostTag (Dictionary<string, object>)`.
 - The <xref:Microsoft.EntityFrameworkCore.EntityState> is shown next. This will be one of `Unchanged`, `Added`, `Modified`, or `Deleted`.
-- Values for any alternate keys (AK)s are shown next. For example, `AK {AssetsId: ed727978-1ffe-4709-baee-73913e8e44a0}`.
+- Values for any alternate keys (AKs) are shown next. For example, `AK {AssetsId: ed727978-1ffe-4709-baee-73913e8e44a0}`.
 - Finally, values for an foreign keys (FKs) are shown. For example, `FK {PostsId: 4} FK {TagsId: 2}`.
 
 ### The long view
@@ -194,7 +194,7 @@ Each tracked entity and its state is shown as before. However, the long view als
 
 #### Property values
 
-For each property, the long view shows whether or not the property is park of a primary key (PK), alternate key (AK), or foreign key (FK). For example:
+For each property, the long view shows whether or not the property is part of a primary key (PK), alternate key (AK), or foreign key (FK). For example:
 
 - `Blog.Id` is a primary key property: `Id: 1 PK`
 - `Blog.AssetsId` is an alternate key property: `AssetsId: 'ed727978-1ffe-4709-baee-73913e8e44a0' AK`
@@ -205,11 +205,11 @@ Property values that have been modified are marked as such, and the original val
 
 Finally, `Added` entities with temporary key values indicate that the value is temporary. For example, `Id: -2147482643 PK Temporary`.
 
-#### Navigations
+#### Navigation values
 
 Navigation values are displayed using the primary key values of the entities that the navigations reference. For example, in the output above, post 3 is related to blog 2. This means that the `Post.Blog` navigation points to the `Blog` instance with ID 2. This is shown as `Blog: {Id: 2}`.
 
-The same thing happens for collection navigations, except that in this case there can be multiple related entities. For example, the collection navigation `Blog.Posts` contains three entities. This is shown as `[{Id: 1}, {Id: 2}, {Id: -2147482643}]`.
+The same thing happens for collection navigations, except that in this case there can be multiple related entities. For example, the collection navigation `Blog.Posts` contains three entities, with key values 1, 2, and -2147482643 respectively. This is shown as `[{Id: 1}, {Id: 2}, {Id: -2147482643}]`.
 
 ## Change tracker logging
 
@@ -248,15 +248,13 @@ dbug: 12/30/2020 13:52:44.831 CoreEventId.DetectChangesCompleted[10801] (Microso
 
 The following table summaries the change tracker logging messages:
 
-<xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.DetectChangesStarting?displayProperty=nameWithType>
-
 | Event ID                                                                                                               | Description
 |:-----------------------------------------------------------------------------------------------------------------------|----
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.DetectChangesStarting?displayProperty=nameWithType>        | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges> is starting
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.DetectChangesCompleted?displayProperty=nameWithType>       | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges> has completed
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.PropertyChangeDetected?displayProperty=nameWithType>       | A normal property value has changed
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.ForeignKeyChangeDetected?displayProperty=nameWithType>     | A foreign key property value has changed
-| <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.CollectionChangeDetected?displayProperty=nameWithType>     | A collection navigation has had related entities added or removed
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.CollectionChangeDetected?displayProperty=nameWithType>     | A non-skip collection navigation has had related entities added or removed.
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.ReferenceChangeDetected?displayProperty=nameWithType>      | A reference navigation has been changed to point to another entity, or set to null
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.StartedTracking?displayProperty=nameWithType>              | EF Core started tracking an entity
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.StateChanged?displayProperty=nameWithType>                 | The <xref:Microsoft.EntityFrameworkCore.EntityState> of an entity has changed
@@ -280,7 +278,7 @@ public class Blog
 
 public class BlogAssets
 {
-    public Guid Id { get; set; } // Primary key
+    public Guid Id { get; set; } // Primary key and foreign key
     public byte[] Banner { get; set; }
 
     public Blog Blog { get; set; } // Reference navigation
@@ -295,7 +293,7 @@ public class Post
     public int BlogId { get; set; } // Foreign key
     public Blog Blog { get; set; } // Reference navigation
 
-    public IList<Tag> Tags { get; } = new List<Tag>(); // Collection navigation
+    public IList<Tag> Tags { get; } = new List<Tag>(); // Skip collection navigation
 }
 
 public class Tag
@@ -303,7 +301,7 @@ public class Tag
     public int Id { get; set; } // Primary key
     public string Text { get; set; }
 
-    public IList<Post> Posts { get; } = new List<Post>(); // Collection navigation
+    public IList<Post> Posts { get; } = new List<Post>(); // Skip collection navigation
 }
 -->
 [!code-csharp[Model](../../../samples/core/ChangeTracking/ChangeTrackerDebugging/Samples.cs?name=Model)]

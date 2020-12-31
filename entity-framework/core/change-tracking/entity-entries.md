@@ -18,21 +18,21 @@ There are four main APIs for accessing entities tracked by a <xref:Microsoft.Ent
 Each of these is described in more detail in the sections below.
 
 > [!TIP]
-> This document assumes that entity states and the basics of EF core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
+> This document assumes that entity states and the basics of EF Core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
 
 > [!TIP]  
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/AccessingTrackedEntities).
 
 ## Using DbContext.Entry and EntityEntry instances
 
-For each tracked entity, EF Core keeps track of:
+For each tracked entity, Entity Framework Core (EF Core) keeps track of:
 
 - The overall state of the entity. This is one of `Unchanged`, `Modified`, `Added`, or `Deleted`; see [Change Tracking in EF Core](xref:core/change-tracking/index) for more information.
 - The relationships between tracked entities. For example, the blog to which a post belongs.
 - The "current values" of properties.
 - The "original values" of properties, when this information is available. Original values are the property values that existed when entity was queried from the database.
 - Which property values have been modified since they were queried.
-- Other information about property values, such as whether or not the value is [temporary](xref:core/change-tracking/miscellaneous).
+- Other information about property values, such as whether or not the value is [temporary](xref:core/change-tracking/miscellaneous#temporary-values).
 
 Passing an entity instance to <xref:System.Data.Entity.DbContext.Entry%2A?displayProperty=nameWithType> results in an <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601> providing access to this information for the given entity. For example:
 
@@ -136,7 +136,7 @@ The following table summarizes property information exposed by PropertyEntry:
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry%602.EntityEntry?displayProperty=nameWithType>   | A back reference to the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601> for the entity.
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.Metadata?displayProperty=nameWithType>          | <xref:Microsoft.EntityFrameworkCore.Metadata.IProperty> metadata for the property.
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsModified?displayProperty=nameWithType>        | Indicates whether this property is marked as modified, and allows this state to be changed.
-| <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsTemporary?displayProperty=nameWithType>       | Indicates whether this property is marked as [temporary](xref:core/change-tracking/miscellaneous), and allows this state to be changed.
+| <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsTemporary?displayProperty=nameWithType>       | Indicates whether this property is marked as [temporary](xref:core/change-tracking/miscellaneous#temporary-values#temporary-values), and allows this state to be changed.
 
 Notes:
 
@@ -181,7 +181,7 @@ The following table summarizes ways to use <xref:Microsoft.EntityFrameworkCore.C
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.NavigationEntry.Metadata?displayProperty=nameWithType> | <xref:Microsoft.EntityFrameworkCore.Metadata.INavigationBase> metadata for the navigation.
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.NavigationEntry.IsLoaded?displayProperty=nameWithType> | Gets or sets a value indicating whether the related entity or collection has been fully loaded from the database.
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.NavigationEntry.Load?displayProperty=nameWithType>     | Loads the related entity or collection from the database; see [Explicit Loading of Related Data](xref:core/querying/related-data/explicit).
-| <xref:Microsoft.EntityFrameworkCore.ChangeTracking.NavigationEntry.Query?displayProperty=nameWithType>    | The query EF would use to load this navigation as an `IQueryable` that can be further composed; see [Explicit Loading of Related Data](xref:core/querying/related-data/explicit).
+| <xref:Microsoft.EntityFrameworkCore.ChangeTracking.NavigationEntry.Query?displayProperty=nameWithType>    | The query EF Core would use to load this navigation as an `IQueryable` that can be further composed; see [Explicit Loading of Related Data](xref:core/querying/related-data/explicit).
 
 ### Working with all properties of an entity
 
@@ -331,7 +331,7 @@ Member Posts is of type IList<Post> and has value System.Collections.Generic.Lis
 -->
 [!code-csharp[Find_and_FindAsync_1](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Find_and_FindAsync_1)]
 
-The output from this code (including EF logging) when using SQLite is:
+The output from this code (including EF Core logging) when using SQLite is:
 
 ```output
 First call to Find...
@@ -478,8 +478,8 @@ Notice that, unlike <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTra
 
 <xref:Microsoft.EntityFrameworkCore.DbSet%601.Local?displayProperty=nameWithType> returns a view of locally tracked entities that reflects the current <xref:Microsoft.EntityFrameworkCore.EntityState> of those entities. Specifically, this means that:
 
-- `Added` entities are included. Note that this is not the case for normal EF queries, since `Added` entities do not yet exist in the database and so are therefore never returned by a database query.
-- `Deleted` entities are excluded. Note that this is again not the case for normal EF queries, since `Deleted` entities still exist in the database and so _are_ returned by database queries.
+- `Added` entities are included. Note that this is not the case for normal EF Core queries, since `Added` entities do not yet exist in the database and so are therefore never returned by a database query.
+- `Deleted` entities are excluded. Note that this is again not the case for normal EF Core queries, since `Deleted` entities still exist in the database and so _are_ returned by database queries.
 
 All of this means that `DbSet.Local` is view over the data that reflects the current conceptual state of the entity graph, with `Added` entities included and `Deleted` entities excluded. This matches what database state is expected to be after SaveChanges is called.
 
