@@ -141,7 +141,7 @@ This will make EF Core fetch all the Blogs - along with their Posts - in a singl
 
 ## Buffering and streaming
 
-Buffering refers to loading all your query results into memory, whereas streaming means that that EF hands the application a single result each time, never containing the entire resultset in memory. In principle, the memory requirements of a streaming query are fixed - they are the same whether the query returns 1 row or 1000; a buffering query, on the other hand, requires more memory the more rows are returned. For queries that result large resultsets, this can be an important performance factor.
+Buffering refers to loading all your query results into memory, whereas streaming means that EF hands the application a single result each time, never containing the entire resultset in memory. In principle, the memory requirements of a streaming query are fixed - they are the same whether the query returns 1 row or 1000; a buffering query, on the other hand, requires more memory the more rows are returned. For queries that result large resultsets, this can be an important performance factor.
 
 Whether a query buffers or streams depends on how it is evaluated:
 
