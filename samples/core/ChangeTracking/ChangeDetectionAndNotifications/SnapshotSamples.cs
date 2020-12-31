@@ -19,25 +19,26 @@ namespace Snapshot
             #region Snapshot_change_tracking_1
             using var context = new BlogsContext();
             var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
-        
+
             // Change a property value
             blog.Name = ".NET Blog (Updated!)";
-        
+
             // Add a new entity to a navigation
-            blog.Posts.Add(new Post
-            {
-                Title = "What’s next for System.Text.Json?",
-                Content = ".NET 5.0 was released recently and has come with many..."
-            });
-        
+            blog.Posts.Add(
+                new Post
+                {
+                    Title = "What’s next for System.Text.Json?",
+                    Content = ".NET 5.0 was released recently and has come with many..."
+                });
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
-            
+
             Console.WriteLine();
         }
-        
+
         public static void Snapshot_change_tracking_2()
         {
             Console.WriteLine($">>>> Sample: {nameof(Snapshot_change_tracking_2)}");
@@ -49,10 +50,10 @@ namespace Snapshot
             #region Snapshot_change_tracking_2
             using var context = new BlogsContext();
             var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
-        
+
             // Change a property value
             context.Entry(blog).Property(e => e.Name).CurrentValue = ".NET Blog (Updated!)";
-        
+
             // Add a new entity to the DbContext
             context.Add(
                 new Post
@@ -61,10 +62,10 @@ namespace Snapshot
                     Title = "What’s next for System.Text.Json?",
                     Content = ".NET 5.0 was released recently and has come with many..."
                 });
-        
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
-            
+
             Console.WriteLine();
         }
     }
@@ -74,15 +75,15 @@ namespace Snapshot
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.AddRange(
                 new Blog
                 {
@@ -122,7 +123,7 @@ namespace Snapshot
             context.SaveChanges();
         }
     }
-    
+
     public class Blog
     {
         public int Id { get; set; }
@@ -145,7 +146,7 @@ namespace Snapshot
     {
         public int PostId { get; set; }
         public int TagId { get; set; }
-        
+
         public DateTime TaggedOn { get; set; }
         public string TaggedBy { get; set; }
     }
@@ -204,4 +205,3 @@ namespace Snapshot
         #endregion
     }
 }
-

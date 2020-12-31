@@ -14,7 +14,7 @@ Relationships in an EF model are represented using foreign keys (FKs). An FK con
 
 Foreign keys are a good way to store and manipulate relationships in the database, but are not very friendly when working with multiple related entities in application code. Therefore, most EF models also layer "navigations" over the FK representation. Navigations form C#/.NET references between entity instances that reflect the associations found by matching foreign key values to primary or alternate key values.
 
-Navigations can be used on both sides of the relationship, on one side only, or not at all, leaving on the FK property. The FK property can be hidden by making it a [shadow property](xref:core/modeling/shadow-properties).
+Navigations can be used on both sides of the relationship, on one side only, or not at all, leaving only the FK property. The FK property can be hidden by making it a [shadow property](xref:core/modeling/shadow-properties). See [Relationships](xref:core/modeling/relationships) for more information on modelling relationships.
 
 > [!TIP]
 > This document assumes that entity states and the basics of EF core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
@@ -71,12 +71,12 @@ The three relationships in this model are:
 
 - Each blog can have many posts (one-to-many):
   - `Blog` is the principal/parent.
-  - `Post` is the dependent/child. It contains the FK property `Post.BlogId`, the value of which match the `Blog.Id` PK value of the related blog.
+  - `Post` is the dependent/child. It contains the FK property `Post.BlogId`, the value of which must match the `Blog.Id` PK value of the related blog.
   - `Post.Blog` is a reference navigation from a post to the associated blog. `Post.Blog` is the inverse navigation for `Blog.Posts`.
   - `Blog.Posts` is a collection navigation from a blog to all the associated posts. `Blog.Posts` is the inverse navigation for `Post.Blog`.
 - Each blog can have one assets (one-to-one):
   - `Blog` is the principal/parent.
-  - `BlogAssets` is the dependent/child. It contains the FK property `BlogAssets.BlogId`, the value of which match the `Blog.Id` PK value of the related blog.
+  - `BlogAssets` is the dependent/child. It contains the FK property `BlogAssets.BlogId`, the value of which must match the `Blog.Id` PK value of the related blog.
   - `BlogAssets.Blog` is a reference navigation from the assets to the associated blog. `BlogAssets.Blog` is the inverse navigation for `Blog.Assets`.
   - `Blog.Assets` is a reference navigation from the blog to the associated assets. `Blog.Assets` is the inverse navigation for `BlogAssets.Blog`.
 - Each post can have many tags and each tag can have many posts (many-to-many):
@@ -90,7 +90,9 @@ See [Relationships](xref:core/modeling/relationships) for more information on ho
 
 EF Core keeps navigations in alignment with foreign key values and vice versa. That is, if a foreign key value changes such that it now refers to a different principal/parent entity, then the navigations are updated to reflect this change. Likewise, if a navigation is changed, then the foreign key values of the entities involved are updated to reflect this change. This is called "relationship fixup".
 
-Fixup first occurs when entities are queried from the database. The database has only foreign key values, so when EF creates an entity instance from the database it uses the foreign key values found to set reference navigations and add entities to collection navigations as appropriate. For example, consider a query for blogs and its associated posts and assets:
+### Fixup by query
+
+Fixup first occurs when entities are queried from the database. The database has only foreign key values, so when EF creates an entity instance from the database it uses the foreign key values to set reference navigations and add entities to collection navigations as appropriate. For example, consider a query for blogs and its associated posts and assets:
 
 <!--
         using var context = new BlogsContext();
@@ -160,6 +162,8 @@ Post {Id: 4} Unchanged
 ```
 
 The debug view shows both key values and navigations. Navigations are shown using the primary key values of the related entities. For example, `Posts: [{Id: 1}, {Id: 2}]` in the output above indicates that the `Blog.Posts` collection navigation contains two related posts with primary keys 1 and 2 respectively. Similarly, for each post associated with the first blog, the `Blog: {Id: 1}` line indicates that the `Post.Blog` navigation references the Blog with primary key 1.
+
+### Fixup to locally tracked entities
 
 Relationship fixup also happens between entities returned from a tracking query and entities already tracked by the DbContext. For example, consider executing three separate queries for blogs, posts, and assets:
 
@@ -275,11 +279,11 @@ Post {Id: 4} Unchanged
 This is the same end-state as was achieved with the original single query, since EF Core fixed up navigations as entities were tracked, even when coming from multiple different queries.
 
 > [!NOTE]
-> Fixup never causes more data to be returned from the database. It only connects entities that are part of the query or already tracked by the DbContext.
+> Fixup never causes more data to be returned from the database. It only connects entities that are already returned by the query or already tracked by the DbContext. See [Identity Resolution in EF Core](xref:core/change-tracking/identity-resolution) for information about handling duplicates when serializing entities.
 
 ## Changing relationships using navigations
 
-The easiest way to change the relationships between is by manipulating a navigation, while leaving EF Core to fixup the inverse navigation and FK values appropriately. This can be done by:
+The easiest way to change the relationship between two entities is by manipulating a navigation, while leaving EF Core to fixup the inverse navigation and FK values appropriately. This can be done by:
 
 - Adding or removing an entity from a collection navigation.
 - Changing a reference navigation to point to a different entity, or setting it to null.
@@ -353,7 +357,7 @@ Post {Id: 4} Unchanged
   Tags: []
 ```
 
-The `Blog.Posts` navigation on the .NET Blog now has three posts (`Posts: [{Id: 1}, {Id: 2}, {Id: 3}]`). Conversely, the `Blog.Posts` navigation on the Visual Studio blog only has one post (`Posts: [{Id: 4}]`). This is to be expected since the code explicitly changes these collections.
+The `Blog.Posts` navigation on the .NET Blog now has three posts (`Posts: [{Id: 1}, {Id: 2}, {Id: 3}]`). Likewise, the `Blog.Posts` navigation on the Visual Studio blog only has one post (`Posts: [{Id: 4}]`). This is to be expected since the code explicitly changed these collections.
 
 More interestingly, even though the code did not explicitly change the `Post.Blog` navigation, it has been fixed-up to point to the Visual Studio blog (`Blog: {Id: 1}`). Also, the `Post.BlogId` foreign key value has been updated to match the primary key value of the .NET blog. This change to the FK value in then persisted to the database when SaveChanges is called:
 
@@ -391,13 +395,13 @@ Notice how this is very similar to changing the reference navigation, as shown i
 The debug view after this change is again _exactly the same_ as was the case for the previous two examples. This because EF Core detected the FK value change and then fixed up both the reference and collection navigations to match.
 
 > [!TIP]
-> Do not write code to manipulate all navigations and FK values each time a relationship changes. Such code is more complicated and must ensure consistent changes to foreign keys and navigations in every case. If possible, just manipulate a single navigation. If needed, just manipulate FK values. Avoid manipulating both navigations and FK values.
+> Do not write code to manipulate all navigations and FK values each time a relationship changes. Such code is more complicated and must ensure consistent changes to foreign keys and navigations in every case. If possible, just manipulate a single navigation, or maybe both navigations. If needed, just manipulate FK values. Avoid manipulating both navigations and FK values.
 
 ## Fixup for added or deleted entities
 
 ### Adding to a collection navigation
 
-EF performs the following actions when it detects that a new dependent/child entity has been added to a collection navigation:
+EF Core performs the following actions when it [detects](xref:core/change-tracking/change-detection) that a new dependent/child entity has been added to a collection navigation:
 
 - If the entity is not tracked, then it is tracked. (The entity will usually be in the `Added` state. However, if the entity type is configured to use generated keys and the primary key value is set, then the entity is tracked in the `Unchanged` state.)
 - If the entity is associated with a different principal/parent, then that relationship is severed.
@@ -469,7 +473,7 @@ Notice that the post is _not_ marked as `Deleted`. It is marked as `Modified` so
 
 #### Required relationships
 
-Setting the FK value to null is not allowed (and is usually not possible) for required relationships. Severing a required relationship means that the dependent/child entity must be either re-parented to a new principal/parent, or removed from the database when SaveChanges is called to avoid a referential constraint violation. This is known as "deleting orphans", and is the default behavior in EF Core for required relationships.
+Setting the FK value to null is not allowed (and is usually not possible) for required relationships. Therefore, severing a required relationship means that the dependent/child entity must be either re-parented to a new principal/parent, or removed from the database when SaveChanges is called to avoid a referential constraint violation. This is known as "deleting orphans", and is the default behavior in EF Core for required relationships.
 
 For example, let's change the relationship between blog and posts to be required and then run the same code as in the previous example:
 
@@ -782,11 +786,11 @@ By default, cascade delete happens as soon as the parent/principal is marked as 
 Cascade deletes, as well as deleting orphans, can be forced at any time by calling <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.CascadeChanges?displayProperty=nameWithType>. Combining this with setting the cascade delete timing to `Never` will ensure cascade deletes never happen unless EF Core is explicitly instructed to do so.
 
 > [!TIP]
-> Cascade delete and deleting orphans are closely related. Both result in deleting dependent/child entities when the relationship to their required principal/parent is severed. For cascade delete, this severing happens because the principal/parent is itself deleted. For orphans, the principal/parent entity still exists, but is no longer related to the dependent/principal entities.  
+> Cascade delete and deleting orphans are closely related. Both result in deleting dependent/child entities when the relationship to their required principal/parent is severed. For cascade delete, this severing happens because the principal/parent is itself deleted. For orphans, the principal/parent entity still exists, but is no longer related to the dependent/child entities.  
 
 ## Many-to-many relationships
 
-Many-to-many relationships in EF Core are implemented using a join entity. Each side the many-to-many relationship is related to this join entity with a one-to-many relationship. Before EF Core 5.0, this join entity had to explicitly defined. Starting with EF Core 5.0, it can be created implicitly and hidden. However, in both cases the underlying behavior is the same. We will look at this underlying behavior first to understand how tracking of many-to-many relationships works.
+Many-to-many relationships in EF Core are implemented using a join entity. Each side the many-to-many relationship is related to this join entity with a one-to-many relationship. Before EF Core 5.0, this join entity had to explicitly defined and mapped. Starting with EF Core 5.0, it can be created implicitly and hidden. However, in both cases the underlying behavior is the same. We will look at this underlying behavior first to understand how tracking of many-to-many relationships works.
 
 ### How many-to-many relationships work
 
@@ -984,7 +988,7 @@ This will still result in the skip navigations being fixed up correctly, resulti
 
 ### Skip navigations only
 
-In the previous section we added skip navigations _in addition to_ fully defining the two underlying one-to-many relationships. This is useful to illustrate what happens to FK values, but is often unnecessary. Instead, the many-to-many relationship can be defined using _only skip navigations_. This is how the many-to-many relationship is defined in the model at the very top of this document. Using this model, we can again associate a Post and a Tag using by adding a post to the `Tag.Posts` skip navigation (or adding a tag to the `Post.Tags` skip navigation):
+In the previous section we added skip navigations _in addition to_ fully defining the two underlying one-to-many relationships. This is useful to illustrate what happens to FK values, but is often unnecessary. Instead, the many-to-many relationship can be defined using _only skip navigations_. This is how the many-to-many relationship is defined in the model at the very top of this document. Using this model, we can again associate a Post and a Tag by adding a post to the `Tag.Posts` skip navigation (or, alternately, adding a tag to the `Post.Tags` skip navigation):
 
 <!--
             using var context = new BlogsContext();
@@ -1020,13 +1024,16 @@ PostTag (Dictionary<string, object>) {PostsId: 3, TagsId: 1} Added
 
 See [Relationships](xref:core/modeling/relationships) for more information about implicit join entities and the use of `Dictionary<string, object>` entity types.
 
+> [!IMPORTANT]
+> The CLR type used for join entity types by convention may change in future releases to improve performance. Do not depend on the join type being `Dictionary<string, object>` unless this has been explicitly configured.
+
 ### Join entities with payloads
 
-So far all the examples have used a join entity type (whether explicit or implicit) that contains only the two foreign key properties needed for the many-to-many relationship. Neither of these properties need to be explicitly set by the application when manipulating relationships using navigations. Instead, these values are populated from the primary key values of the related entities. This allows EF Core to create instances of the join entity without missing data.
+So far all the examples have used a join entity type (whether explicit or implicit) that contains only the two foreign key properties needed for the many-to-many relationship. Neither of these FK values need to be explicitly set by the application when manipulating relationships because their values come from the primary key properties of the related entities. This allows EF Core to create instances of the join entity without missing data.
 
 #### Payloads with generated values
 
-It is also possible to add additional properties to the join entity type. This is known as giving the join entity a "payload". For example, let's add `TaggedOn` property to the `PostTag` join entity:
+EF Core supports adding additional properties to the join entity type. This is known as giving the join entity a "payload". For example, let's add `TaggedOn` property to the `PostTag` join entity:
 
 <!--
     public class PostTag
@@ -1039,7 +1046,7 @@ It is also possible to add additional properties to the join entity type. This i
 -->
 [!code-csharp[Model](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/ExplicitJoinEntityWithPayloadSamples.cs?name=Model)]
 
-The payload property will not be set when When EF Core creates a an instance of this entity using known key values. The most common way to deal with this is to use payload properties with automatically generated values. For example, the `TaggedOn` property can be configured to use a store-generated timestamp when each new entity is inserted:
+This payload property will not be set when EF Core creates a join entity instance. The most common way to deal with this is to use payload properties with automatically generated values. For example, the `TaggedOn` property can be configured to use a store-generated timestamp when each new entity is inserted:
 
 <!--
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1071,7 +1078,7 @@ A post can now be tagged in the same way as before:
 -->
 [!code-csharp[Many_to_many_relationships_7](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/ExplicitJoinEntityWithPayloadSamples.cs?name=Many_to_many_relationships_7)]
 
-Looking at the [change tracker debug view] after calling SaveChanges shows that the payload property has been set appropriately:
+Looking at the [change tracker debug view](xref:core/change-tracking/debug-views) after calling SaveChanges shows that the payload property has been set appropriately:
 
 ```output
 Post {Id: 3} Unchanged
@@ -1101,13 +1108,13 @@ Following on from the previous example, let's add a payload property that does n
         public int PostId { get; set; } // First part of composite PK; FK to Post
         public int TagId { get; set; } // Second part of composite PK; FK to Tag
         
-        public DateTime TaggedOn { get; set; } // Payload
-        public string TaggedBy { get; set; } // Payload
+        public DateTime TaggedOn { get; set; } // Auto-generated payload property
+        public string TaggedBy { get; set; } // Not-generated payload property
     }
 -->
 [!code-csharp[Model](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/ExplicitJoinEntityWithStringPayloadSamples.cs?name=Model)]
 
-A post can now be tagged in the same way as before, and the join entity will still be created automatically. This entity can then be accessed using one of the mechanisms described in [Accessing Tracked Entities](xref:core/change-tracking/entity-entries). For example, the code below uses <xref:Microsoft.EntityFrameworkCore.DbSet%601.Find%2A?displayProperty=nameWithType> to access the join table instance:
+A post can now be tagged in the same way as before, and the join entity will still be created automatically. This entity can then be accessed using one of the mechanisms described in [Accessing Tracked Entities](xref:core/change-tracking/entity-entries). For example, the code below uses <xref:Microsoft.EntityFrameworkCore.DbSet%601.Find%2A?displayProperty=nameWithType> to access the join entity instance:
 
 <!--
             using var context = new BlogsContext();
@@ -1118,6 +1125,7 @@ A post can now be tagged in the same way as before, and the join entity will sti
             post.Tags.Add(tag);
 
             context.ChangeTracker.DetectChanges();
+
             var joinEntity = context.Set<PostTag>().Find(post.Id, tag.Id);
 
             joinEntity.TaggedBy = "ajcvickers";

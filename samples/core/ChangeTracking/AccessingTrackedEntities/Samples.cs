@@ -15,17 +15,17 @@ public static class Samples
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_DbContext_Entry_and_EntityEntry_instances_1)}");
         Console.WriteLine();
-            
+
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
-            
+
         #region Using_DbContext_Entry_and_EntityEntry_instances_1
         using var context = new BlogsContext();
 
         var blog = context.Blogs.Single(e => e.Id == 1);
         var entityEntry = context.Entry(blog);
         #endregion
-            
+
         Console.WriteLine();
     }
 
@@ -33,14 +33,14 @@ public static class Samples
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_the_entity_1)}");
         Console.WriteLine();
-            
+
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
-            
+
         using var context = new BlogsContext();
 
         var blog = context.Blogs.Single(e => e.Id == 1);
-        
+
         #region Work_with_the_entity_1
         var currentState = context.Entry(blog).State;
         if (currentState == EntityState.Unchanged)
@@ -49,7 +49,6 @@ public static class Samples
         }
         #endregion
 
-            
         Console.WriteLine();
     }
 
@@ -57,10 +56,10 @@ public static class Samples
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_the_entity_2)}");
         Console.WriteLine();
-            
+
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
-            
+
         using var context = new BlogsContext();
 
         #region Work_with_the_entity_2
@@ -71,18 +70,17 @@ public static class Samples
         Debug.Assert(context.Entry(newBlog).State == EntityState.Added);
         #endregion
 
-            
         Console.WriteLine();
     }
-    
+
     public static void Work_with_a_single_property_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_a_single_property_1)}");
         Console.WriteLine();
-            
+
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
-            
+
         using var context = new BlogsContext();
 
         {
@@ -95,7 +93,7 @@ public static class Samples
 
         {
             var blog = context.Blogs.Single(e => e.Id == 1);
-            
+
             #region Work_with_a_single_property_1b
             PropertyEntry<Blog, string> propertyEntry = context.Entry(blog).Property<string>("Name");
             #endregion
@@ -103,7 +101,7 @@ public static class Samples
 
         {
             var blog = context.Blogs.Single(e => e.Id == 1);
-            
+
             #region Work_with_a_single_property_1c
             PropertyEntry propertyEntry = context.Entry(blog).Property("Name");
             #endregion
@@ -111,7 +109,7 @@ public static class Samples
 
         {
             var blog = context.Blogs.Single(e => e.Id == 1);
-            
+
             #region Work_with_a_single_property_1d
             string currentValue = context.Entry(blog).Property(e => e.Name).CurrentValue;
             context.Entry(blog).Property(e => e.Name).CurrentValue = "1unicorn2";
@@ -121,7 +119,7 @@ public static class Samples
         {
             #region Work_with_a_single_property_1e
             object blog = context.Blogs.Single(e => e.Id == 1);
-            
+
             object currentValue = context.Entry(blog).Property("Name").CurrentValue;
             context.Entry(blog).Property("Name").CurrentValue = "1unicorn2";
             #endregion
@@ -129,19 +127,19 @@ public static class Samples
 
         Console.WriteLine();
     }
-    
+
     public static void Work_with_a_single_navigation_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_a_single_navigation_1)}");
         Console.WriteLine();
-            
+
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
-            
+
         using var context = new BlogsContext();
 
         var post = context.Posts.Include(e => e.Blog).Single(e => e.Id == 1);
-        
+
         #region Work_with_a_single_navigation_1
         ReferenceEntry<Post, Blog> referenceEntry1 = context.Entry(post).Reference(e => e.Blog);
         ReferenceEntry<Post, Blog> referenceEntry2 = context.Entry(post).Reference<Blog>("Blog");
@@ -155,10 +153,10 @@ public static class Samples
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_a_single_navigation_2)}");
         Console.WriteLine();
-            
+
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
-            
+
         using var context = new BlogsContext();
 
         var blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
@@ -172,18 +170,18 @@ public static class Samples
         #region Work_with_a_single_navigation_2b
         NavigationEntry navigationEntry = context.Entry(blog).Navigation("Posts");
         #endregion
-        
+
         Console.WriteLine();
     }
-    
+
     public static void Work_with_all_properties_of_an_entity_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_all_properties_of_an_entity_1)}");
         Console.WriteLine();
-            
+
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
-            
+
         using var context = new BlogsContext();
 
         var blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
@@ -200,15 +198,15 @@ public static class Samples
 
         Console.WriteLine();
     }
-    
+
     public static void Work_with_all_properties_of_an_entity_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_all_properties_of_an_entity_2)}");
         Console.WriteLine();
-            
+
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
-            
+
         using var context = new BlogsContext();
 
         var blog = context.Blogs.Include(e => e.Posts).Single(e => e.Id == 1);
@@ -241,7 +239,7 @@ public static class Samples
             #region Work_with_all_properties_of_an_entity_2d
             var blogDictionary = new Dictionary<string, object>
             {
-                ["Id"] = 1, 
+                ["Id"] = 1,
                 ["Name"] = "1unicorn2"
             };
 
@@ -271,17 +269,15 @@ public static class Samples
         var blog = context.Blogs.Single(e => e.Id == 1);
 
         #region Work_with_all_navigations_of_an_entity_1
-
         foreach (var navigationEntry in context.Entry(blog).Navigations)
         {
             navigationEntry.Load();
         }
-
         #endregion
 
         Console.WriteLine();
     }
-    
+
     public static void Work_with_all_members_of_an_entity_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Work_with_all_members_of_an_entity_1)}");
@@ -304,7 +300,7 @@ public static class Samples
 
         Console.WriteLine();
     }
-    
+
     public static void Find_and_FindAsync_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Find_and_FindAsync_1)}");
@@ -320,18 +316,18 @@ public static class Samples
         var blog1 = context.Blogs.Find(1);
 
         Console.WriteLine($"...found blog {blog1.Name}");
-        
+
         Console.WriteLine();
         Console.WriteLine("Second call to Find...");
         var blog2 = context.Blogs.Find(1);
         Debug.Assert(blog1 == blog2);
-        
+
         Console.WriteLine("...returned the same instance without executing a query.");
         #endregion
 
         Console.WriteLine();
     }
-    
+
     public static void Find_and_FindAsync_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Find_and_FindAsync_2)}");
@@ -350,7 +346,7 @@ public static class Samples
 
         Console.WriteLine();
     }
-    
+
     public static void Using_ChangeTracker_Entries_to_access_all_tracked_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_ChangeTracker_Entries_to_access_all_tracked_entities_1)}");
@@ -368,9 +364,9 @@ public static class Samples
             Console.WriteLine($"Found {entityEntry.Metadata.Name} entity with ID {entityEntry.Property("Id").CurrentValue}");
         }
         #endregion
-        
+
         Console.WriteLine();
-        
+
         #region Using_ChangeTracker_Entries_to_access_all_tracked_entities_1b
         foreach (var entityEntry in context.ChangeTracker.Entries<Post>())
         {
@@ -380,8 +376,18 @@ public static class Samples
         #endregion
 
         Console.WriteLine();
+
+        #region Using_ChangeTracker_Entries_to_access_all_tracked_entities_1c
+        foreach (var entityEntry in context.ChangeTracker.Entries<IEntityWithKey>())
+        {
+            Console.WriteLine(
+                $"Found {entityEntry.Metadata.Name} entity with ID {entityEntry.Property(e => e.Id).CurrentValue}");
+        }
+        #endregion
+
+        Console.WriteLine();
     }
-    
+
     public static void Using_DbSet_Local_to_query_tracked_entities_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_DbSet_Local_to_query_tracked_entities_1)}");
@@ -392,7 +398,7 @@ public static class Samples
 
         #region Using_DbSet_Local_to_query_tracked_entities_1
         using var context = new BlogsContext();
-        
+
         context.Blogs.Include(e => e.Posts).Load();
 
         foreach (var blog in context.Blogs.Local)
@@ -405,10 +411,10 @@ public static class Samples
             Console.WriteLine($"Post: {post.Title}");
         }
         #endregion
-        
+
         Console.WriteLine();
     }
-    
+
     public static void Using_DbSet_Local_to_query_tracked_entities_2()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_DbSet_Local_to_query_tracked_entities_2)}");
@@ -430,13 +436,14 @@ public static class Samples
         }
 
         context.Remove(posts[1]);
-        
-        context.Add(new Post
-        {
-            Title = "What’s next for System.Text.Json?",
-            Content = ".NET 5.0 was released recently and has come with many...",
-            Blog = posts[0].Blog
-        });
+
+        context.Add(
+            new Post
+            {
+                Title = "What’s next for System.Text.Json?",
+                Content = ".NET 5.0 was released recently and has come with many...",
+                Blog = posts[0].Blog
+            });
 
         Console.WriteLine("Local view after adding and deleting posts:");
 
@@ -445,10 +452,10 @@ public static class Samples
             Console.WriteLine($"  Post: {post.Title}");
         }
         #endregion
-        
+
         Console.WriteLine();
     }
-    
+
     public static void Using_DbSet_Local_to_query_tracked_entities_3()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_DbSet_Local_to_query_tracked_entities_3)}");
@@ -471,12 +478,13 @@ public static class Samples
 
         context.Posts.Local.Remove(posts[1]);
 
-        context.Posts.Local.Add(new Post
-        {
-            Title = "What’s next for System.Text.Json?",
-            Content = ".NET 5.0 was released recently and has come with many...",
-            Blog = posts[0].Blog
-        });
+        context.Posts.Local.Add(
+            new Post
+            {
+                Title = "What’s next for System.Text.Json?",
+                Content = ".NET 5.0 was released recently and has come with many...",
+                Blog = posts[0].Blog
+            });
 
         Console.WriteLine("Local view after adding and deleting posts:");
 
@@ -485,10 +493,10 @@ public static class Samples
             Console.WriteLine($"  Post: {post.Title}");
         }
         #endregion
-        
+
         Console.WriteLine();
     }
-    
+
     public static void Using_DbSet_Local_to_query_tracked_entities_4()
     {
         Console.WriteLine($">>>> Sample: {nameof(Using_DbSet_Local_to_query_tracked_entities_4)}");
@@ -505,7 +513,7 @@ public static class Samples
         ObservableCollection<Post> observableCollection = context.Posts.Local.ToObservableCollection();
         BindingList<Post> bindingList = context.Posts.Local.ToBindingList();
         #endregion
-        
+
         Console.WriteLine();
     }
 }
@@ -552,7 +560,7 @@ public class OrderLine
 {
     public int OrderId { get; set; }
     public int ProductId { get; set; }
-    
+
     //...
 }
 #endregion
@@ -565,7 +573,7 @@ public class BlogDto
 }
 #endregion
 
-public class Blog
+public class Blog : IEntityWithKey
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -573,7 +581,7 @@ public class Blog
     public IList<Post> Posts { get; } = new List<Post>();
 }
 
-public class Post
+public class Post : IEntityWithKey
 {
     public int Id { get; set; }
     public string Title { get; set; }
@@ -582,6 +590,13 @@ public class Post
     public int? BlogId { get; set; }
     public Blog Blog { get; set; }
 }
+
+#region IEntityWithKey
+public interface IEntityWithKey
+{
+    int Id { get; set; }
+}
+#endregion
 
 public class BlogsContext : DbContext
 {

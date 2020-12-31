@@ -37,7 +37,7 @@ namespace Optional
 
             Console.WriteLine();
         }
-        
+
         public static void Temporary_values_1()
         {
             Console.WriteLine($">>>> Sample: {nameof(Temporary_values_1)}");
@@ -50,7 +50,7 @@ namespace Optional
             using var context = new BlogsContext();
 
             var blog = new Blog { Name = ".NET Blog" };
-        
+
             context.Add(blog);
 
             Console.WriteLine($"Blog.Id set on entity is {blog.Id}");
@@ -74,7 +74,7 @@ namespace Optional
                 new Blog { Id = -2, Name = "Visual Studio Blog" }
             };
 
-            var posts = new List<Post>()
+            var posts = new List<Post>
             {
                 new Post
                 {
@@ -93,7 +93,7 @@ namespace Optional
             };
 
             using var context = new BlogsContext();
-            
+
             foreach (var blog in blogs)
             {
                 context.Add(blog).Property(e => e.Id).IsTemporary = true;
@@ -120,15 +120,15 @@ namespace Optional
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.AddRange(
                 new Blog
                 {
@@ -180,11 +180,11 @@ namespace Optional
             context.SaveChanges();
         }
     }
-    
+
     #region Model
     public class Blog
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public IList<Post> Posts { get; } = new List<Post>();
@@ -247,7 +247,7 @@ namespace Optional
                             b.IndexerProperty<int>("TagId");
                             b.IndexerProperty<int>("PostId");
                         });
-            
+
             modelBuilder.Entity<Post>()
                 .HasMany(p => p.Tags)
                 .WithMany(p => p.Posts)

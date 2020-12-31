@@ -35,7 +35,7 @@ namespace Required
 
             Console.WriteLine();
         }
-        
+
         public static void Fixup_for_added_or_deleted_entities_5()
         {
             Console.WriteLine($">>>> Sample: {nameof(Fixup_for_added_or_deleted_entities_5)}");
@@ -51,13 +51,13 @@ namespace Required
 
             #region Fixup_for_added_or_deleted_entities_5
             context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
-        
+
             var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
             vsBlog.Posts.Remove(post);
 
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-        
+
             dotNetBlog.Posts.Add(post);
 
             context.ChangeTracker.DetectChanges();
@@ -68,7 +68,7 @@ namespace Required
 
             Console.WriteLine();
         }
-        
+
         public static void Fixup_for_added_or_deleted_entities_6()
         {
             Console.WriteLine($">>>> Sample: {nameof(Fixup_for_added_or_deleted_entities_6)}");
@@ -155,15 +155,15 @@ namespace Required
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.AddRange(
                 new Blog
                 {
@@ -217,7 +217,7 @@ namespace Required
             context.SaveChanges();
         }
     }
-    
+
     #region Model
     public class Blog
     {
@@ -289,4 +289,3 @@ namespace Required
         }
     }
 }
-

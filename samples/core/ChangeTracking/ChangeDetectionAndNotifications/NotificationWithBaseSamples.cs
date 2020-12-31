@@ -22,20 +22,21 @@ namespace NotificationWithBase
             #region Notification_entities_2
             using var context = new BlogsContext();
             var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
-        
+
             // Change a property value
             blog.Name = ".NET Blog (Updated!)";
-        
+
             // Add a new entity to a navigation
-            blog.Posts.Add(new Post
-            {
-                Title = "What’s next for System.Text.Json?",
-                Content = ".NET 5.0 was released recently and has come with many..."
-            });
-        
+            blog.Posts.Add(
+                new Post
+                {
+                    Title = "What’s next for System.Text.Json?",
+                    Content = ".NET 5.0 was released recently and has come with many..."
+                });
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
-            
+
             Console.WriteLine();
         }
     }
@@ -45,15 +46,15 @@ namespace NotificationWithBase
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.AddRange(
                 new Blog
                 {
@@ -93,7 +94,7 @@ namespace NotificationWithBase
             context.SaveChanges();
         }
     }
-    
+
     public class Post : NotifyingEntity
     {
         private int _id;
@@ -137,6 +138,7 @@ namespace NotificationWithBase
     public class Blog : NotifyingEntity
     {
         private int _id;
+
         public int Id
         {
             get => _id;
@@ -144,6 +146,7 @@ namespace NotificationWithBase
         }
 
         private string _name;
+
         public string Name
         {
             get => _name;
@@ -205,4 +208,3 @@ namespace NotificationWithBase
         #endregion
     }
 }
-

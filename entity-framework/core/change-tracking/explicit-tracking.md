@@ -99,7 +99,7 @@ Notice that the key properties need no additional configuration here since using
 
 ### Explicit key values
 
-An entity must be tracked in the `Added` state to be inserted by <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>. Entities are typically put in the Added state by calling one of <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddRange%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddAsync%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddRangeAsync%2A?displayProperty=nameWithType>, or equivalent methods on <xref:Microsoft.EntityFrameworkCore.DbSet%601>.
+An entity must be tracked in the `Added` state to be inserted by <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>. Entities are typically put in the Added state by calling one of <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddRange%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddAsync%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddRangeAsync%2A?displayProperty=nameWithType>, or the equivalent methods on <xref:Microsoft.EntityFrameworkCore.DbSet%601>.
 
 > [!TIP]
 > In the context of change tracking, all these methods work in the same way. See [Additional Change Tracking Features](xref:core/change-tracking/miscellaneous) for more information.
@@ -665,7 +665,7 @@ This is a very easy way to generate updates and inserts from a disconnected grap
 
 ## Deleting existing entities
 
-For an entity to be deleted by SaveChanges it must be tracked in the `Deleted` state, as described earlier. Entities are typically put in the `Deleted` state by calling one of <xref:Microsoft.EntityFrameworkCore.DbContext.Remove%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.RemoveRange%2A?displayProperty=nameWithType>, or the equivalent methods <xref:Microsoft.EntityFrameworkCore.DbSet%601>. For example, to mark an existing post as `Deleted`:
+For an entity to be deleted by SaveChanges it must be tracked in the `Deleted` state. Entities are typically put in the `Deleted` state by calling one of <xref:Microsoft.EntityFrameworkCore.DbContext.Remove%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.RemoveRange%2A?displayProperty=nameWithType>, or the equivalent methods on <xref:Microsoft.EntityFrameworkCore.DbSet%601>. For example, to mark an existing post as `Deleted`:
 
 <!--
             context.Remove(
@@ -675,9 +675,6 @@ For an entity to be deleted by SaveChanges it must be tracked in the `Deleted` s
                 });
 -->
 [!code-csharp[Deleting_existing_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Deleting_existing_entities_1)]
-
-> [!NOTE]
-> The examples here are creating entities explicitly with `new` for simplicity. Normally the entity instances will have come from another source, such as being deserialized from a client, or being created from data in an HTTP Post.
 
 Inspecting the [change tracker debug view](xref:core/change-tracking/debug-views) following this call shows that the context is tracking the entity in the `Deleted` state:
 
@@ -705,10 +702,10 @@ After SaveChanges completes, the deleted entity is detached from the DbContext s
 
 Deleting dependent/child entities from a graph is more straightforward than deleting principal/parent entities. See the next section and [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes) for more information.
 
-As mentioned above, it is unusual to call `Remove` on an entity created with `new`. Further, unlike `Add`, `Attach` and `Update`, it is uncommon to call `Remove` on an entity that isn't already tracked in the `Unchanged` or `Modified` state. Instead it is typical to track a single entity or graph of related entities, and then call `Remove` on the entities that should be deleted. This graph of tracked entities is typically created by either:
+It is unusual to call `Remove` on an entity created with `new`. Further, unlike `Add`, `Attach` and `Update`, it is uncommon to call `Remove` on an entity that isn't already tracked in the `Unchanged` or `Modified` state. Instead it is typical to track a single entity or graph of related entities, and then call `Remove` on the entities that should be deleted. This graph of tracked entities is typically created by either:
 
 1. Running a query for the entities
-2. Or using the `Attach` or `Update` methods on a graph of disconnected entities, as described in the preceding sections.
+2. Using the `Attach` or `Update` methods on a graph of disconnected entities, as described in the preceding sections.
 
 For example, the code in the previous section is more likely obtain a post from a client and then do something like this:
 
@@ -778,7 +775,7 @@ Post {Id: 1} Unchanged
 
 ## Deleting principal/parent entities
 
-Each relationship that connects two entity types has a principal or parent end, and a dependent or child end. For the purpose of this discussion, the dependent/child entity is the one with the foreign key property. In a one-to-many relationship, the principal/parent is on the "one" side, and the dependent/child is on the "many" side. See [Relationships](xref:core/modeling/relationships) for more information.
+Each relationship that connects two entity types has a principal or parent end, and a dependent or child end. The dependent/child entity is the one with the foreign key property. In a one-to-many relationship, the principal/parent is on the "one" side, and the dependent/child is on the "many" side. See [Relationships](xref:core/modeling/relationships) for more information.
 
 In the preceding examples we were deleting a post, which is a dependent/child entity in the blog-posts one-to-many relationship. This is relatively straightforward since removal of a dependent/child entity does not have any impact on other entities. On the other hand, deleting a principal/parent entity must also impact any dependent/child entities. Not doing so would leave a foreign key value referencing a primary key value that no longer exists. This is an invalid model state and results in a referential constraint error in most databases.
 
@@ -973,7 +970,7 @@ This disconnected graph can then be tracked using TrackGraph:
 -->
 [!code-csharp[Custom_tracking_with_TrackGraph_1b](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/GeneratedKeysSamples.cs?name=Custom_tracking_with_TrackGraph_1b)]
 
-For each entity in the graph, the code above checks the primary key value _before tracking the entity_. For unset (zero) key values, the code does what EF Core would normally do. That is, if the key is not set, then the entity as marked as `Added`. If the key is set and the value is non-negative, then the entity is marked as `Modified`. However, if a negative key value is found, then its real, non-negative value is restored and the entity is tracked as `Deleted`.
+For each entity in the graph, the code above checks the primary key value _before tracking the entity_. For unset (zero) key values, the code does what EF Core would normally do. That is, if the key is not set, then the entity is marked as `Added`. If the key is set and the value is non-negative, then the entity is marked as `Modified`. However, if a negative key value is found, then its real, non-negative value is restored and the entity is tracked as `Deleted`.
 
 The output from running this code is:
 
@@ -991,4 +988,4 @@ TrackGraph has two overloads. In the simple overload used above, EF Core determi
 
 The advanced overload, <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.TrackGraph%60%601(System.Object,%60%600,System.Func{Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntryGraphNode{%60%600},System.Boolean})?displayProperty=nameWithType>, has a callback that returns a bool. If the callback returns false, then graph traversal stops, otherwise it continues. Care must be taken to avoid infinite loops when using this overload.
 
-The advanced overload also allows state to be associated with each callback.
+The advanced overload also allows state to be supplied to TrackGraph and this state is then passed to each callback.

@@ -15,12 +15,12 @@ public class Program
 
         OptionalRelationshipsSamples.Relationship_fixup_1();
         OptionalRelationshipsSamples.Relationship_fixup_2();
-        
+
         OptionalRelationshipsSamples.Changing_relationships_using_navigations_1();
         OptionalRelationshipsSamples.Changing_relationships_using_navigations_2();
-        
+
         OptionalRelationshipsSamples.Changing_relationships_using_foreign_key_values_1();
-        
+
         OptionalRelationshipsSamples.Fixup_for_added_or_deleted_entities_1();
         OptionalRelationshipsSamples.Fixup_for_added_or_deleted_entities_2();
         OptionalRelationshipsSamples.Fixup_for_added_or_deleted_entities_3();
@@ -29,7 +29,7 @@ public class Program
         RequiredRelationshipsSamples.Fixup_for_added_or_deleted_entities_6();
         OptionalRelationshipsSamples.Fixup_for_added_or_deleted_entities_7();
         RequiredRelationshipsSamples.Fixup_for_added_or_deleted_entities_8();
-        
+
         OptionalRelationshipsSamples.Deleting_an_entity_1();
         RequiredRelationshipsSamples.Deleting_an_entity_2();
 

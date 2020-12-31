@@ -17,7 +17,6 @@ namespace Optional
             Helpers.PopulateDatabase();
 
             #region Relationship_fixup_1
-
             using var context = new BlogsContext();
 
             var blogs = context.Blogs
@@ -26,7 +25,6 @@ namespace Optional
                 .ToList();
 
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-
             #endregion
 
             Console.WriteLine();
@@ -41,7 +39,6 @@ namespace Optional
             Helpers.PopulateDatabase();
 
             #region Relationship_fixup_2
-
             using var context = new BlogsContext();
 
             var blogs = context.Blogs.ToList();
@@ -52,7 +49,6 @@ namespace Optional
 
             var posts = context.Posts.ToList();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-
             #endregion
 
             Console.WriteLine();
@@ -67,7 +63,6 @@ namespace Optional
             Helpers.PopulateDatabase();
 
             #region Changing_relationships_using_navigations_1
-
             using var context = new BlogsContext();
 
             var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
@@ -83,7 +78,6 @@ namespace Optional
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
             context.SaveChanges();
-
             #endregion
 
             Console.WriteLine();
@@ -105,10 +99,8 @@ namespace Optional
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
             #region Changing_relationships_using_navigations_2
-
             var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
             post.Blog = dotNetBlog;
-
             #endregion
 
             context.ChangeTracker.DetectChanges();
@@ -135,10 +127,8 @@ namespace Optional
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
             #region Changing_relationships_using_foreign_key_values_1
-
             var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
             post.BlogId = dotNetBlog.Id;
-
             #endregion
 
             context.ChangeTracker.DetectChanges();
@@ -281,7 +271,7 @@ namespace Optional
 
             Console.WriteLine();
         }
-        
+
         public static void Many_to_many_relationships_6()
         {
             Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_6)}");
@@ -297,14 +287,13 @@ namespace Optional
             var tag = context.Tags.Single(e => e.Id == 1);
 
             post.Tags.Add(tag);
-            
+
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
-            
+
             Console.WriteLine();
         }
-
     }
 
     public static class Helpers
@@ -312,15 +301,15 @@ namespace Optional
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.AddRange(
                 new Blog
                 {
@@ -374,7 +363,7 @@ namespace Optional
             context.SaveChanges();
         }
     }
-    
+
     #region Model
     public class Blog
     {
@@ -403,7 +392,7 @@ namespace Optional
         public int? BlogId { get; set; } // Foreign key
         public Blog Blog { get; set; } // Reference navigation
 
-        public IList<Tag> Tags { get; } = new List<Tag>(); // Collection navigation
+        public IList<Tag> Tags { get; } = new List<Tag>(); // Skip collection navigation
     }
 
     public class Tag
@@ -411,7 +400,7 @@ namespace Optional
         public int Id { get; set; } // Primary key
         public string Text { get; set; }
 
-        public IList<Post> Posts { get; } = new List<Post>(); // Collection navigation
+        public IList<Post> Posts { get; } = new List<Post>(); // Skip collection navigation
     }
     #endregion
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Graphs
 {
@@ -33,10 +35,10 @@ namespace Graphs
 
             Console.WriteLine(serialized);
             #endregion
-            
+
             UpdateBlogsFromJson(serialized);
         }
-        
+
         #region Attaching_a_serialized_graph_1b
         public static void UpdateBlogsFromJson(string json)
         {
@@ -52,7 +54,7 @@ namespace Graphs
             context.SaveChanges();
         }
         #endregion
-        
+
         public static void Attaching_a_serialized_graph_2()
         {
             Console.WriteLine($">>>> Sample: {nameof(Attaching_a_serialized_graph_2)}");
@@ -76,10 +78,10 @@ namespace Graphs
 
             Console.WriteLine(serialized);
             #endregion
-            
+
             UpdatePostsFromJsonBad(serialized);
         }
-        
+
         public static void UpdatePostsFromJsonBad(string json)
         {
             using var context = new BlogsContext();
@@ -100,7 +102,7 @@ namespace Graphs
                 Console.WriteLine($"{e.GetType().FullName}: {e.Message}");
             }
         }
-        
+
         public static void Attaching_a_serialized_graph_3()
         {
             Console.WriteLine($">>>> Sample: {nameof(Attaching_a_serialized_graph_3)}");
@@ -124,7 +126,7 @@ namespace Graphs
             #endregion
 
             Console.WriteLine(serialized);
-            
+
             UpdatePostsFromJson(serialized);
         }
 
@@ -141,7 +143,7 @@ namespace Graphs
 
             context.SaveChanges();
         }
-        
+
         public static void Attaching_a_serialized_graph_4()
         {
             Console.WriteLine($">>>> Sample: {nameof(Attaching_a_serialized_graph_4)}");
@@ -155,18 +157,19 @@ namespace Graphs
             var posts = context.Posts.Include(e => e.Blog).ToList();
 
             #region Attaching_a_serialized_graph_4
-            var serialized = System.Text.Json.JsonSerializer.Serialize(posts, new System.Text.Json.JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true
-            });
+            var serialized = JsonSerializer.Serialize(
+                posts, new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    WriteIndented = true
+                });
             #endregion
 
             Console.WriteLine(serialized);
-            
+
             UpdatePostsFromJson(serialized);
         }
-        
+
         public static void Attaching_a_serialized_graph_5()
         {
             Console.WriteLine($">>>> Sample: {nameof(Attaching_a_serialized_graph_4)}");
@@ -188,7 +191,7 @@ namespace Graphs
                 });
 
             Console.WriteLine(serialized);
-            
+
             Console.WriteLine()
                 ;
             UpdatePostsFromJsonWithIdentityResolution(serialized);

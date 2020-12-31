@@ -28,7 +28,7 @@ namespace JoinEntityWithPayload
 
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
-            
+
             Console.WriteLine();
         }
     }
@@ -38,15 +38,15 @@ namespace JoinEntityWithPayload
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.AddRange(
                 new Blog
                 {
@@ -98,7 +98,7 @@ namespace JoinEntityWithPayload
             context.SaveChanges();
         }
     }
-    
+
     public class Blog
     {
         public int Id { get; set; }
@@ -132,7 +132,7 @@ namespace JoinEntityWithPayload
     {
         public int PostId { get; set; } // First part of composite PK; FK to Post
         public int TagId { get; set; } // Second part of composite PK; FK to Tag
-        
+
         public DateTime TaggedOn { get; set; } // Payload
     }
     #endregion
@@ -176,4 +176,3 @@ namespace JoinEntityWithPayload
         #endregion
     }
 }
-

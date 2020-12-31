@@ -23,7 +23,7 @@ namespace JoinEntity
             var tag = context.Tags.Single(e => e.Id == 1);
 
             context.Add(new PostTag { PostId = post.Id, TagId = tag.Id });
-            
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
 
@@ -31,7 +31,7 @@ namespace JoinEntity
 
             Console.WriteLine();
         }
-        
+
         public static void Many_to_many_relationships_2()
         {
             Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_2)}");
@@ -48,11 +48,11 @@ namespace JoinEntity
             #region Many_to_many_relationships_2
             context.Add(new PostTag { Post = post, Tag = tag });
             #endregion
-            
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
             context.SaveChanges();
-            
+
             Console.WriteLine();
         }
     }
@@ -62,15 +62,15 @@ namespace JoinEntity
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.AddRange(
                 new Blog
                 {
@@ -122,7 +122,7 @@ namespace JoinEntity
             context.SaveChanges();
         }
     }
-    
+
     public class Blog
     {
         public int Id { get; set; }
@@ -156,7 +156,7 @@ namespace JoinEntity
     {
         public int PostId { get; set; } // First part of composite PK; FK to Post
         public int TagId { get; set; } // Second part of composite PK; FK to Tag
-        
+
         public Post Post { get; set; } // Reference navigation
         public Tag Tag { get; set; } // Reference navigation
     }
@@ -193,4 +193,3 @@ namespace JoinEntity
         }
     }
 }
-

@@ -12,7 +12,7 @@ public class Program
         Samples.DbContext_verses_DbSet_methods_1();
         Samples.Temporary_values_1();
         Samples.Temporary_values_2();
-        
+
         DefaultValueSamples.Working_with_default_values_1();
         DefaultValueSamples.Working_with_default_values_2();
         DefaultValueSamples.Working_with_default_values_3();

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -21,10 +19,10 @@ namespace DefaultValues
 
             context.AddRange(
                 new Token { Name = "A" },
-                new Token { Name = "B", ValidFrom = new DateTime(1111, 11, 11, 11, 11, 11)});
+                new Token { Name = "B", ValidFrom = new DateTime(1111, 11, 11, 11, 11, 11) });
 
             context.SaveChanges();
-        
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
 
@@ -43,11 +41,11 @@ namespace DefaultValues
 
             var fooA = new Foo1 { Count = 10 };
             var fooB = new Foo1 { Count = 0 };
-            var fooC = new Foo1 { };
+            var fooC = new Foo1();
 
             context.AddRange(fooA, fooB, fooC);
             context.SaveChanges();
-        
+
             Debug.Assert(fooA.Count == 10);
             Debug.Assert(fooB.Count == -1); // Not what we want!
             Debug.Assert(fooC.Count == -1);
@@ -55,7 +53,7 @@ namespace DefaultValues
 
             Console.WriteLine();
         }
-        
+
         public static void Working_with_default_values_3()
         {
             Console.WriteLine($">>>> Sample: {nameof(Working_with_default_values_3)}");
@@ -68,11 +66,11 @@ namespace DefaultValues
 
             var fooA = new Foo2 { Count = 10 };
             var fooB = new Foo2 { Count = 0 };
-            var fooC = new Foo2 { };
+            var fooC = new Foo2();
 
             context.AddRange(fooA, fooB, fooC);
             context.SaveChanges();
-        
+
             Debug.Assert(fooA.Count == 10);
             Debug.Assert(fooB.Count == 0);
             Debug.Assert(fooC.Count == -1);
@@ -80,7 +78,7 @@ namespace DefaultValues
 
             Console.WriteLine();
         }
-        
+
         public static void Working_with_default_values_4()
         {
             Console.WriteLine($">>>> Sample: {nameof(Working_with_default_values_4)}");
@@ -93,11 +91,11 @@ namespace DefaultValues
 
             var fooA = new Foo3 { Count = 10 };
             var fooB = new Foo3 { Count = 0 };
-            var fooC = new Foo3 { };
+            var fooC = new Foo3();
 
             context.AddRange(fooA, fooB, fooC);
             context.SaveChanges();
-        
+
             Debug.Assert(fooA.Count == 10);
             Debug.Assert(fooB.Count == 0);
             Debug.Assert(fooC.Count == -1);
@@ -105,7 +103,7 @@ namespace DefaultValues
 
             Console.WriteLine();
         }
-        
+
         public static void Working_with_default_values_5()
         {
             Console.WriteLine($">>>> Sample: {nameof(Working_with_default_values_5)}");
@@ -134,7 +132,7 @@ namespace DefaultValues
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
@@ -171,6 +169,7 @@ namespace DefaultValues
         public int Id { get; set; }
 
         private int? _count;
+
         public int Count
         {
             get => _count ?? -1;
@@ -194,6 +193,7 @@ namespace DefaultValues
         public string Name { get; set; }
 
         private bool? _isAuthorized;
+
         public bool IsAuthorized
         {
             get => _isAuthorized ?? true;
@@ -231,35 +231,35 @@ namespace DefaultValues
                 .Property(e => e.ValidFrom)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
             #endregion
-        
+
             #region OnModelCreating_Foo1
             modelBuilder
                 .Entity<Foo1>()
                 .Property(e => e.Count)
                 .HasDefaultValue(-1);
             #endregion
-        
+
             #region OnModelCreating_Foo2
             modelBuilder
                 .Entity<Foo2>()
                 .Property(e => e.Count)
                 .HasDefaultValue(-1);
             #endregion
-        
+
             #region OnModelCreating_Foo3
             modelBuilder
                 .Entity<Foo3>()
                 .Property(e => e.Count)
                 .HasDefaultValue(-1);
             #endregion
-        
+
             #region OnModelCreating_User
             modelBuilder
                 .Entity<User>()
                 .Property(e => e.IsAuthorized)
                 .HasDefaultValue(true);
             #endregion
-        
+
             #region OnModelCreating_Bar
             modelBuilder
                 .Entity<Bar>()

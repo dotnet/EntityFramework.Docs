@@ -36,7 +36,7 @@ public class Samples
 
         // Make something Modified
         blogs[0].Name = ".NET Blog (All new!)";
-        
+
         context.ChangeTracker.DetectChanges();
         #endregion
 
@@ -47,14 +47,14 @@ public class Samples
         #endregion
 
         Console.WriteLine();
-        
+
         #region Change_tracker_debug_view_1c
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         #endregion
 
         Console.WriteLine();
     }
-    
+
     public static void Change_tracker_logging_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Change_tracker_logging_1)}");
@@ -83,7 +83,7 @@ public class Samples
 
         // Make something Modified
         blogs[0].Name = ".NET Blog (All new!)";
-        
+
         context.ChangeTracker.DetectChanges();
 
         Console.WriteLine();
@@ -240,7 +240,7 @@ public class BlogsContext : DbContext
             .Entity<Blog>()
             .Property(e => e.AssetsId)
             .ValueGeneratedOnAdd();
-        
+
         modelBuilder
             .Entity<BlogAssets>()
             .HasOne(e => e.Blog)

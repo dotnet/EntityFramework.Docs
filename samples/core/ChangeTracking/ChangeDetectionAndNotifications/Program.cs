@@ -13,10 +13,10 @@ public class Program
 
         SnapshotSamples.Snapshot_change_tracking_1();
         SnapshotSamples.Snapshot_change_tracking_2();
-        
+
         NotificationEntitiesSamples.Notification_entities_1();
         NotificationWithBaseSamples.Notification_entities_2();
-        
+
         ChangeTrackingProxiesSamples.Change_tracking_proxies_1();
     }
 }

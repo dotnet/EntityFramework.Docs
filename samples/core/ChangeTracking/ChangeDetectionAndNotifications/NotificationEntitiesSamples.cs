@@ -21,20 +21,21 @@ namespace Notification
             #region Notification_entities_1
             using var context = new BlogsContext();
             var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
-        
+
             // Change a property value
             blog.Name = ".NET Blog (Updated!)";
-        
+
             // Add a new entity to a navigation
-            blog.Posts.Add(new Post
-            {
-                Title = "What’s next for System.Text.Json?",
-                Content = ".NET 5.0 was released recently and has come with many..."
-            });
-        
+            blog.Posts.Add(
+                new Post
+                {
+                    Title = "What’s next for System.Text.Json?",
+                    Content = ".NET 5.0 was released recently and has come with many..."
+                });
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
-            
+
             Console.WriteLine();
         }
     }
@@ -44,15 +45,15 @@ namespace Notification
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.AddRange(
                 new Blog
                 {
@@ -92,7 +93,7 @@ namespace Notification
             context.SaveChanges();
         }
     }
-    
+
     #region Model
     public class Blog : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -100,6 +101,7 @@ namespace Notification
         public event PropertyChangedEventHandler PropertyChanged;
 
         private int _id;
+
         public int Id
         {
             get => _id;
@@ -112,6 +114,7 @@ namespace Notification
         }
 
         private string _name;
+
         public string Name
         {
             get => _name;
@@ -133,6 +136,7 @@ namespace Notification
         public event PropertyChangedEventHandler PropertyChanged;
 
         private int _id;
+
         public int Id
         {
             get => _id;
@@ -145,6 +149,7 @@ namespace Notification
         }
 
         private string _title;
+
         public string Title
         {
             get => _title;
@@ -157,6 +162,7 @@ namespace Notification
         }
 
         private string _content;
+
         public string Content
         {
             get => _content;
@@ -169,6 +175,7 @@ namespace Notification
         }
 
         private int? _blogId;
+
         public int? BlogId
         {
             get => _blogId;
@@ -181,6 +188,7 @@ namespace Notification
         }
 
         private Blog _blog;
+
         public Blog Blog
         {
             get => _blog;
@@ -223,4 +231,3 @@ namespace Notification
         }
     }
 }
-

@@ -12,13 +12,13 @@ namespace GeneratedKeys
         {
             Console.WriteLine($">>>> Sample: {nameof(Simple_query_and_update_1)}");
             Console.WriteLine();
-            
+
             Helpers.RecreateCleanDatabase();
             Helpers.PopulateDatabase();
-            
+
             #region Simple_query_and_update_1
             using var context = new BlogsContext();
-            
+
             var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
 
             blog.Name = ".NET Blog (Updated!)";
@@ -30,7 +30,7 @@ namespace GeneratedKeys
 
             context.SaveChanges();
             #endregion
-            
+
             Console.WriteLine();
         }
 
@@ -38,12 +38,12 @@ namespace GeneratedKeys
         {
             Console.WriteLine($">>>> Sample: {nameof(Simple_query_and_update_2)}");
             Console.WriteLine();
-            
+
             Helpers.RecreateCleanDatabase();
             Helpers.PopulateDatabase();
 
             using var context = new BlogsContext();
-            
+
             var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
 
             blog.Name = ".NET Blog (Updated!)";
@@ -57,9 +57,9 @@ namespace GeneratedKeys
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
-                
+
             context.SaveChanges();
-                
+
             Console.WriteLine();
         }
 
@@ -67,45 +67,46 @@ namespace GeneratedKeys
         {
             Console.WriteLine($">>>> Sample: {nameof(Query_then_insert_update_and_delete_1)}");
             Console.WriteLine();
-            
+
             Helpers.RecreateCleanDatabase();
             Helpers.PopulateDatabase();
 
             #region Query_then_insert_update_and_delete_1
             using var context = new BlogsContext();
-            
+
             var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
 
             // Modify property values
             blog.Name = ".NET Blog (Updated!)";
 
             // Insert a new Post
-            blog.Posts.Add(new Post
-            {
-                Title = "What’s next for System.Text.Json?",
-                Content = ".NET 5.0 was released recently and has come with many..."
-            });
-            
+            blog.Posts.Add(
+                new Post
+                {
+                    Title = "What’s next for System.Text.Json?",
+                    Content = ".NET 5.0 was released recently and has come with many..."
+                });
+
             // Mark an existing Post as Deleted
             var postToDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
-            context.Remove(postToDelete);
-            
+            context.Remove((object)postToDelete);
+
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
             context.SaveChanges();
             #endregion
         }
-        
+
         public static void Inserting_new_entities_3()
         {
             Console.WriteLine($">>>> Sample: {nameof(Inserting_new_entities_3)}");
             Console.WriteLine();
-            
+
             Helpers.RecreateCleanDatabase();
-            
+
             using var context = new BlogsContext();
-            
+
             #region Inserting_new_entities_3
             context.Add(
                 new Blog
@@ -134,20 +135,20 @@ namespace GeneratedKeys
 
             Console.WriteLine("After SaveChanges:");
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-            
+
             Console.WriteLine();
         }
-        
+
         public static void Attaching_existing_entities_3()
         {
             Console.WriteLine($">>>> Sample: {nameof(Attaching_existing_entities_3)}");
             Console.WriteLine();
-            
+
             Helpers.RecreateCleanDatabase();
             Helpers.PopulateDatabase();
 
             using var context = new BlogsContext();
-            
+
             #region Attaching_existing_entities_3
             context.Attach(
                 new Blog
@@ -184,20 +185,20 @@ namespace GeneratedKeys
 
             Console.WriteLine("After SaveChanges:");
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-            
+
             Console.WriteLine();
         }
-        
+
         public static void Updating_existing_entities_3()
         {
             Console.WriteLine($">>>> Sample: {nameof(Updating_existing_entities_3)}");
             Console.WriteLine();
-            
+
             Helpers.RecreateCleanDatabase();
             Helpers.PopulateDatabase();
 
             using var context = new BlogsContext();
-            
+
             #region Updating_existing_entities_3
             context.Update(
                 new Blog
@@ -234,15 +235,15 @@ namespace GeneratedKeys
 
             Console.WriteLine("After SaveChanges:");
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-            
+
             Console.WriteLine();
         }
-        
+
         public static void Custom_tracking_with_TrackGraph_1()
         {
             Console.WriteLine($">>>> Sample: {nameof(Custom_tracking_with_TrackGraph_1)}");
             Console.WriteLine();
-            
+
             Helpers.RecreateCleanDatabase();
             Helpers.PopulateDatabase();
 
@@ -292,9 +293,8 @@ namespace GeneratedKeys
                         {
                             node.Entry.State = EntityState.Modified;
                         }
-                        
-                        Console.WriteLine($"Tracking {node.Entry.Metadata.DisplayName()} with key value {keyValue} as {node.Entry.State}");
 
+                        Console.WriteLine($"Tracking {node.Entry.Metadata.DisplayName()} with key value {keyValue} as {node.Entry.State}");
                     });
 
             context.SaveChanges();
@@ -307,15 +307,15 @@ namespace GeneratedKeys
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Add(
                 new Blog
                 {

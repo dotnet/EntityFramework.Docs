@@ -23,11 +23,11 @@ namespace JoinEntityWithSkips
             var tag = context.Tags.Single(e => e.Id == 1);
 
             post.Tags.Add(tag);
-            
+
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
-            
+
             Console.WriteLine();
         }
 
@@ -47,10 +47,10 @@ namespace JoinEntityWithSkips
             #region Many_to_many_relationships_4
             context.Add(new PostTag { Post = post, Tag = tag });
             #endregion
-            
+
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-            
+
             Console.WriteLine();
         }
 
@@ -70,10 +70,10 @@ namespace JoinEntityWithSkips
             #region Many_to_many_relationships_5
             context.Add(new PostTag { PostId = post.Id, TagId = tag.Id });
             #endregion
-            
+
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-            
+
             Console.WriteLine();
         }
     }
@@ -83,15 +83,15 @@ namespace JoinEntityWithSkips
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.AddRange(
                 new Blog
                 {
@@ -143,7 +143,7 @@ namespace JoinEntityWithSkips
             context.SaveChanges();
         }
     }
-    
+
     public class Blog
     {
         public int Id { get; set; }
@@ -179,7 +179,7 @@ namespace JoinEntityWithSkips
     {
         public int PostId { get; set; } // First part of composite PK; FK to Post
         public int TagId { get; set; } // Second part of composite PK; FK to Tag
-        
+
         public Post Post { get; set; } // Reference navigation
         public Tag Tag { get; set; } // Reference navigation
     }
@@ -223,4 +223,3 @@ namespace JoinEntityWithSkips
         #endregion
     }
 }
-

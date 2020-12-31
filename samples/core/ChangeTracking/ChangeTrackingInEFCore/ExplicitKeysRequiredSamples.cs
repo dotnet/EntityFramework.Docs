@@ -13,18 +13,18 @@ namespace ExplicitKeysRequired
         {
             Console.WriteLine($">>>> Sample: {nameof(Deleting_principal_parent_entities_1)}");
             Console.WriteLine();
-            
+
             Helpers.RecreateCleanDatabase();
             Helpers.PopulateDatabase();
 
             using var context = new BlogsContext();
-            
+
             var blog = GetDisconnectedBlogAndPosts();
 
             #region Deleting_principal_parent_entities_1
             // Attach a blog and associated posts
             context.Attach(blog);
-            
+
             // Mark the blog as deleted
             context.Remove(blog);
             #endregion
@@ -36,7 +36,7 @@ namespace ExplicitKeysRequired
 
             Console.WriteLine("After SaveChanges:");
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-            
+
             Console.WriteLine();
 
             Blog GetDisconnectedBlogAndPosts()
@@ -52,15 +52,15 @@ namespace ExplicitKeysRequired
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Add(
                 new Blog
                 {
@@ -92,7 +92,7 @@ namespace ExplicitKeysRequired
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        
+
         public string Name { get; set; }
 
         public IList<Post> Posts { get; } = new List<Post>();

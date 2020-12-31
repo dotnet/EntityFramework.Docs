@@ -8,7 +8,7 @@ uid: core/change-tracking/identity-resolution
 
 # Identity Resolution in EF Core
 
-A <xref:Microsoft.EntityFrameworkCore.DbContext> can only track one entity instance with a given primary key value. This means multiple instances of an entity with the same key value must be resolved to a single instance. This is called "identity resolution". Identity resolution ensures EF Core is tracking a consistent graph of entities with no ambiguities for <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> or other database operations.
+A <xref:Microsoft.EntityFrameworkCore.DbContext> can only track one entity instance with any given primary key value. This means multiple instances of an entity with the same key value must be resolved to a single instance. This is called "identity resolution". Identity resolution ensures EF Core is tracking a consistent graph with no ambiguities about the relationships or property values of the entities.
 
 > [!TIP]
 > This document assumes that entity states and the basics of EF core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
@@ -57,7 +57,7 @@ Each of these situations is discussed in the following sections.
 
 ## Updating an entity
 
-There are several different approaches to update an entity with new values, as covered in [Change Tracking in EF Core](xref:core/change-tracking/index). These approaches are outlined below in the context of identity resolution. An important point to notice is that each of the approaches use either a query or a call to one of `Update` or `Attach`, but **_never both_**.
+There are several different approaches to update an entity with new values, as covered in [Change Tracking in EF Core](xref:core/change-tracking/index) and [Explicitly Tracking Entities](xref:core/change-tracking/explicit-tracking). These approaches are outlined below in the context of identity resolution. An important point to notice is that each of the approaches use either a query or a call to one of `Update` or `Attach`, but **_never both_**.
 
 ### Call Update
 

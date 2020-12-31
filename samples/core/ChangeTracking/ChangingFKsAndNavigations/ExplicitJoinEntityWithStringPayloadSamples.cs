@@ -25,15 +25,16 @@ namespace JoinEntityWithStringPayload
             post.Tags.Add(tag);
 
             context.ChangeTracker.DetectChanges();
+            
             var joinEntity = context.Set<PostTag>().Find(post.Id, tag.Id);
 
             joinEntity.TaggedBy = "ajcvickers";
-            
+
             context.SaveChanges();
 
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
-            
+
             Console.WriteLine();
         }
 
@@ -51,18 +52,19 @@ namespace JoinEntityWithStringPayload
             var post = context.Posts.Single(e => e.Id == 3);
             var tag = context.Tags.Single(e => e.Id == 1);
 
-            context.Add(new PostTag()
-            {
-                PostId = post.Id,
-                TagId = tag.Id,
-                TaggedBy = "ajcvickers"
-            });
-            
+            context.Add(
+                new PostTag
+                {
+                    PostId = post.Id,
+                    TagId = tag.Id,
+                    TaggedBy = "ajcvickers"
+                });
+
             context.SaveChanges();
 
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
-            
+
             Console.WriteLine();
         }
     }
@@ -72,15 +74,15 @@ namespace JoinEntityWithStringPayload
         public static void RecreateCleanDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         public static void PopulateDatabase()
         {
             using var context = new BlogsContext(quiet: true);
-        
+
             context.AddRange(
                 new Blog
                 {
@@ -132,7 +134,7 @@ namespace JoinEntityWithStringPayload
             context.SaveChanges();
         }
     }
-    
+
     public class Blog
     {
         public int Id { get; set; }
@@ -166,9 +168,9 @@ namespace JoinEntityWithStringPayload
     {
         public int PostId { get; set; } // First part of composite PK; FK to Post
         public int TagId { get; set; } // Second part of composite PK; FK to Tag
-        
-        public DateTime TaggedOn { get; set; } // Payload
-        public string TaggedBy { get; set; } // Payload
+
+        public DateTime TaggedOn { get; set; } // Auto-generated payload property
+        public string TaggedBy { get; set; } // Not-generated payload property
     }
     #endregion
 
@@ -220,10 +222,9 @@ namespace JoinEntityWithStringPayload
                     entityEntry.Entity.TaggedBy = "ajcvickers";
                 }
             }
-            
+
             return base.SaveChanges();
         }
         #endregion
     }
 }
-

@@ -55,7 +55,7 @@ namespace Updates
             Console.WriteLine();
         }
 
-        #region Updating_an_entity_1()
+        #region Updating_an_entity_1
         public static void UpdateFromHttpPost1(Blog blog)
         {
             using var context = new BlogsContext();
@@ -85,7 +85,7 @@ namespace Updates
             Console.WriteLine();
         }
 
-        #region Updating_an_entity_2()
+        #region Updating_an_entity_2
         public static void UpdateFromHttpPost2(Blog blog)
         {
             using var context = new BlogsContext();
@@ -118,7 +118,7 @@ namespace Updates
             Console.WriteLine();
         }
 
-        #region Updating_an_entity_3()
+        #region Updating_an_entity_3
         public static void UpdateFromHttpPost3(Blog blog)
         {
             using var context = new BlogsContext();
@@ -150,7 +150,7 @@ namespace Updates
             Console.WriteLine();
         }
 
-        #region Updating_an_entity_4()
+        #region Updating_an_entity_4
         public static void UpdateFromHttpPost4(BlogDto dto)
         {
             using var context = new BlogsContext();
@@ -182,7 +182,7 @@ namespace Updates
             Console.WriteLine();
         }
 
-        #region Updating_an_entity_5()
+        #region Updating_an_entity_5
         public static void UpdateFromHttpPost5(Dictionary<string, object> propertyValues)
         {
             using var context = new BlogsContext();
@@ -229,7 +229,7 @@ namespace Updates
 
             context.SaveChanges();
         }
-        
+
         public static void Failing_to_set_key_values_1()
         {
             Console.WriteLine($">>>> Sample: {nameof(Failing_to_set_key_values_1)}");
@@ -303,14 +303,14 @@ namespace Updates
     {
         #region OrdersCollection
         public ICollection<Order> Orders { get; set; }
-            = new HashSet<Order>(ReferenceEqualityComparer.Instance); 
+            = new HashSet<Order>(ReferenceEqualityComparer.Instance);
         #endregion
     }
 
     public class Order
     {
     }
-    
+
     public class BlogDto
     {
         public int Id { get; set; }

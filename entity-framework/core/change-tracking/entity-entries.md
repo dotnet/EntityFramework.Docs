@@ -11,7 +11,7 @@ uid: core/change-tracking/entity-entries
 There are four main APIs for accessing entities tracked by a <xref:Microsoft.EntityFrameworkCore.DbContext>:
 
 - <xref:System.Data.Entity.DbContext.Entry%2A?displayProperty=nameWithType> returns an <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601> instance for a given entity instance.
-- <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Entries%2A?displayProperty=nameWithType> returns <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601> instances for all tracked entities, or all tracked entities of a given type.
+- <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Entries%2A?displayProperty=nameWithType> returns <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601> instances for all tracked entities, or for all tracked entities of a given type.
 - <xref:Microsoft.EntityFrameworkCore.DbContext.Find%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.FindAsync%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbSet%601.Find%2A?displayProperty=nameWithType>, and <xref:Microsoft.EntityFrameworkCore.DbSet%601.FindAsync%2A?displayProperty=nameWithType> find a single entity by primary key, first looking in tracked entities, and then querying the database if needed.
 - <xref:Microsoft.EntityFrameworkCore.DbSet%601.Local?displayProperty=nameWithType> returns actual entities (not EntityEntry instances) for entities of the entity type represented by the DbSet.
 
@@ -47,7 +47,7 @@ Passing an entity instance to <xref:System.Data.Entity.DbContext.Entry%2A?displa
 
 The following sections show how to use an EntityEntry to access and manipulate entity state, as well as the state of the entity's properties and navigations.
 
-### Work with the entity
+### Working with the entity
 
 The most common use of <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601> is to access the current <xref:Microsoft.EntityFrameworkCore.EntityState> of an entity. For example:
 
@@ -60,7 +60,7 @@ The most common use of <xref:Microsoft.EntityFrameworkCore.ChangeTracking.Entity
 -->
 [!code-csharp[Work_with_the_entity_1](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Work_with_the_entity_1)]
 
-The Entry method can also be used on entities that are not yet tracked. This _does not start tracking the entity_; the state of the entity is still `Detatched`. However, the returned EntityEntry can now be used to change the entity state, at which point the entity will become tracked in the given state. For example, the following code will start tracking a Blog instance as `Added`:
+The Entry method can also be used on entities that are not yet tracked. This _does not start tracking the entity_; the state of the entity is still `Detatched`. However, the returned EntityEntry can then be used to change the entity state, at which point the entity will become tracked in the given state. For example, the following code will start tracking a Blog instance as `Added`:
 
 <!--
         var newBlog = new Blog();
@@ -86,7 +86,7 @@ The following table summarizes ways to use an EntityEntry to work with an entire
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.Reload?displayProperty=nameWithType>        | Overwrites property values with values read from the database.
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.DetectChanges?displayProperty=nameWithType> | Forces detection of changes for this entity only; see [Change Detection and Notifications](xref:core/change-tracking/change-detection).
 
-### Work with a single property
+### Working with a single property
 
 Several overloads of <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601.Property%2A?displayProperty=nameWithType> allow access to information about an individual property of an entity. For example, using a strongly-typed, fluent-like API:
 
@@ -135,8 +135,8 @@ The following table summarizes property information exposed by PropertyEntry:
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry%602.OriginalValue?displayProperty=nameWithType> | Gets and sets the original value of the property, if available.
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry%602.EntityEntry?displayProperty=nameWithType>   | A back reference to the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601> for the entity.
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.Metadata?displayProperty=nameWithType>          | <xref:Microsoft.EntityFrameworkCore.Metadata.IProperty> metadata for the property.
-| <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsModified?displayProperty=nameWithType>        | Indicates whether this property is marked as modified.
-| <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsTemporary?displayProperty=nameWithType>       | Indicates whether this property is marked as [temporary](xref:core/change-tracking/miscellaneous).
+| <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsModified?displayProperty=nameWithType>        | Indicates whether this property is marked as modified, and allows this state to be changed.
+| <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsTemporary?displayProperty=nameWithType>       | Indicates whether this property is marked as [temporary](xref:core/change-tracking/miscellaneous), and allows this state to be changed.
 
 Notes:
 
@@ -144,7 +144,7 @@ Notes:
 - <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> will only update properties marked as modified. Set <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsModified> to true to force EF Core to update a given property value, or set it to false to prevent EF Core from updating the property value.
 - [Temporary values](xref:core/change-tracking/miscellaneous) are typically generated by EF Core [value generators](xref:core/modeling/generated-properties). Setting the current value of a property will replace the temporary value with the given value and mark the property as not temporary. Set <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsTemporary> to true to force a value to be temporary even after it has been explicitly set.
 
-### Work with a single navigation
+### Working with a single navigation
 
 Several overloads of <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601.Reference%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601.Collection%2A?displayProperty=nameWithType>, and <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.Navigation%2A?displayProperty=nameWithType> allow access to information about an individual navigation.
 
@@ -157,7 +157,7 @@ Reference navigations to a single related entity are accessed through the <xref:
 -->
 [!code-csharp[Work_with_a_single_navigation_1](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Work_with_a_single_navigation_1)]
 
-Navigations can also be collections of related entities when used for the "many" sides of one-to-many and man=y-to-many relationships. The <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601.Collection%2A> methods are used to access collection navigations. For example:
+Navigations can also be collections of related entities when used for the "many" sides of one-to-many and many-to-many relationships. The <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601.Collection%2A> methods are used to access collection navigations. For example:
 
 <!--
         CollectionEntry<Blog, Post> collectionEntry1 = context.Entry(blog).Collection(e => e.Posts);
@@ -173,8 +173,6 @@ Some operations are common for all navigations. These can be accessed for both r
 -->
 [!code-csharp[Work_with_a_single_navigation_2b](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Work_with_a_single_navigation_2b)]
 
-The following table summarizes property information exposed by PropertyEntry:
-
 The following table summarizes ways to use <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ReferenceEntry%602>, <xref:Microsoft.EntityFrameworkCore.ChangeTracking.CollectionEntry%602>, and <xref:Microsoft.EntityFrameworkCore.ChangeTracking.NavigationEntry>:
 
 | NavigationEntry member                                                                                    | Description
@@ -185,7 +183,7 @@ The following table summarizes ways to use <xref:Microsoft.EntityFrameworkCore.C
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.NavigationEntry.Load?displayProperty=nameWithType>     | Loads the related entity or collection from the database; see [Explicit Loading of Related Data](xref:core/querying/related-data/explicit).
 | <xref:Microsoft.EntityFrameworkCore.ChangeTracking.NavigationEntry.Query?displayProperty=nameWithType>    | The query EF would use to load this navigation as an `IQueryable` that can be further composed; see [Explicit Loading of Related Data](xref:core/querying/related-data/explicit).
 
-### Work with all properties of an entity
+### Working with all properties of an entity
 
 <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.Properties?displayProperty=nameWithType> returns an <xref:System.Collections.Generic.IEnumerable%601> of <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry> for every property of the entity. This can be used to perform an action for every property of the entity. For example, to set any DateTime property to `DateTime.Now`:
 
@@ -213,7 +211,7 @@ These PropertyValues objects are not very useful on their own. However, they can
 
 #### Setting current or original values from an entity or DTO
 
-The current or original values of an entity can be updated by copying values from another object. For example, consider a blog data transfer objects (DTO) with the same properties as the entity type:
+The current or original values of an entity can be updated by copying values from another object. For example, consider a `BlogDto` data transfer object (DTO) with the same properties as the entity type:
 
 <!--
 public class BlogDto
@@ -233,13 +231,13 @@ This can then be used to set the current values of a tracked entity using <xref:
 -->
 [!code-csharp[Work_with_all_properties_of_an_entity_2b](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Work_with_all_properties_of_an_entity_2b)]
 
-This technique is sometimes used when updating an entity with values obtained from a service call or a client in an n-tier application. Note that the object used does not have to be of the same type as the entity so long as it has properties whose names match those of the entity. In the example above, an instance of the DTO BlogDto is used to set the current values of a tracked Blog entity.
+This technique is sometimes used when updating an entity with values obtained from a service call or a client in an n-tier application. Note that the object used does not have to be of the same type as the entity so long as it has properties whose names match those of the entity. In the example above, an instance of the DTO `BlogDto` is used to set the current values of a tracked `Blog` entity.
 
-Note that only properties that are set to different values when copied from the other object will be marked as modified.
+Note that properties will only be marked as modified if the value set differs from the current value.
 
 #### Setting current or original values from a dictionary
 
-The previous example sey values from an entity or DTO instance. The same behavior is available when property values are stored as name/value pairs in a dictionary. For example:
+The previous example set values from an entity or DTO instance. The same behavior is available when property values are stored as name/value pairs in a dictionary. For example:
 
 <!--
         var blogDictionary = new Dictionary<string, object>
@@ -254,7 +252,7 @@ The previous example sey values from an entity or DTO instance. The same behavio
 
 #### Setting current or original values from the database
 
-The current or original values of aN entity can be updated with the latest values from the database by calling <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.GetDatabaseValues> or <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.GetDatabaseValuesAsync%2A> and using the returned object to set current or original values, or both. For example:
+The current or original values of an entity can be updated with the latest values from the database by calling <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.GetDatabaseValues> or <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.GetDatabaseValuesAsync%2A> and using the returned object to set current or original values, or both. For example:
 
 <!--
         var databaseValues = context.Entry(blog).GetDatabaseValues();
@@ -265,18 +263,18 @@ The current or original values of aN entity can be updated with the latest value
 
 #### Creating a cloned object containing current, original, or database values
 
-The PropertyValues object returned from CurrentValues, OriginalValues, or GetDatabaseValues can be used to create a clone of the entity. For example:
+The PropertyValues object returned from CurrentValues, OriginalValues, or GetDatabaseValues can be used to create a clone of the entity using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyValues.ToObject?displayProperty=nameWithType>. For example:
 
 <!--
 var clonedBlog = context.Entry(blog).GetDatabaseValues().ToObject();
 -->
 [!code-csharp[Work_with_all_properties_of_an_entity_2e](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Work_with_all_properties_of_an_entity_2e)]
 
-Note that <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyValues.ToObject?displayProperty=nameWithType> returns a new instance that is not tracked by the DbContext. The returned object also does not have any relationships set to other entities.
+Note that `ToObject` returns a new instance that is not tracked by the DbContext. The returned object also does not have any relationships set to other entities.
 
 The cloned object can be useful for resolving issues related to concurrent updates to the database, especially when data binding to objects of a certain type. See [optimistic concurrency](xref:core/saving/concurrency) for more information.
 
-### Work with a all navigations of an entity
+### Working with all navigations of an entity
 
 <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.Navigations?displayProperty=nameWithType> returns an <xref:System.Collections.Generic.IEnumerable%601> of <xref:Microsoft.EntityFrameworkCore.ChangeTracking.NavigationEntry> for every navigation of the entity. <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.References?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.Collections?displayProperty=nameWithType> do the same thing, but restricted to reference or collection navigations respectively. This can be used to perform an action for every navigation of the entity. For example, to force loading of all related entities:
 
@@ -288,7 +286,7 @@ The cloned object can be useful for resolving issues related to concurrent updat
 -->
 [!code-csharp[Work_with_all_navigations_of_an_entity_1](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Work_with_all_navigations_of_an_entity_1)]
 
-### Work with a all members of an entity
+### Working with all members of an entity
 
 Regular properties and navigation properties have different state and behavior. It is therefore common to process navigations and non-navigations separately, as shown in the sections above. However, sometimes it can be useful to do something with any member of the entity, regardless of whether it is a regular property or navigation. <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.Member%2A?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.Members?displayProperty=nameWithType> are provided for this purpose. For example:
 
@@ -410,7 +408,7 @@ Found Post entity with ID 1
 Found Post entity with ID 2
 ```
 
-Notice that entries for both blogs and posts are returned. This can instead be filtered to a specific entity type using the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Entries%60%601?displayProperty=nameWithType> generic overload:
+Notice that entries for both blogs and posts are returned. The results can instead be filtered to a specific entity type using the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Entries%60%601?displayProperty=nameWithType> generic overload:
 
 <!--
         foreach (var entityEntry in context.ChangeTracker.Entries<Post>())
@@ -428,13 +426,34 @@ Found Post entity with ID 1
 Found Post entity with ID 2
 ```
 
-Also, using the generic overload returns generic <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601> instances. This is what allows that fluent-like access to the `Id` property in this example. The generic type used to filter does not have to be a mapped entity type; an unmapped base type of interface can also be used.
+Also, using the generic overload returns generic <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry%601> instances. This is what allows that fluent-like access to the `Id` property in this example.
+
+The generic type used for filtering does not have to be a mapped entity type; an unmapped base type or interface can be used instead. For example, if all the entity types in the model implement an interface defining their key property:
+
+<!--
+public interface IEntityWithKey
+{
+    int Id { get; set; }
+}
+-->
+[!code-csharp[IEntityWithKey](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=IEntityWithKey)]
+
+Then this interface can be used to work with the key of any tracked entity in a strongly-typed manner. For example:
+
+<!--
+        foreach (var entityEntry in context.ChangeTracker.Entries<IEntityWithKey>())
+        {
+            Console.WriteLine(
+                $"Found {entityEntry.Metadata.Name} entity with ID {entityEntry.Property(e => e.Id).CurrentValue}");
+        }
+-->
+[!code-csharp[Using_ChangeTracker_Entries_to_access_all_tracked_entities_1c](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Using_ChangeTracker_Entries_to_access_all_tracked_entities_1c)]
 
 ## Using DbSet.Local to query tracked entities
 
-Normal EF Core queries are always executed on the database, and only return entities that have been saved to the database. <xref:Microsoft.EntityFrameworkCore.DbSet%601.Local?displayProperty=nameWithType> provides a mechanism to query the DbContext for local, tracked entities.
+EF Core queries are always executed on the database, and only return entities that have been saved to the database. <xref:Microsoft.EntityFrameworkCore.DbSet%601.Local?displayProperty=nameWithType> provides a mechanism to query the DbContext for local, tracked entities.
 
-Since `DbSet.Local` is used to query tracked entities, it is typical to load entities into the DbContext and then work with those loaded entities. This is especially true for data binding, but can also be useful in other situations. For example, in the following code the database is first queried for all blogs and posts. The <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.Load%2A> and <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.LoadAsync%2A> extension methods are used to execute this query with the results tracked by the context without being returned directly from the query. (Using `ToList` or similar has the same effect but with the overhead of creating the returned list, which is not needed here.) The example then uses `DbSet.Local` to access the locally tracked entities:
+Since `DbSet.Local` is used to query tracked entities, it is typical to load entities into the DbContext and then work with those loaded entities. This is especially true for data binding, but can also be useful in other situations. For example, in the following code the database is first queried for all blogs and posts. The <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.Load%2A> extension method is used to execute this query with the results tracked by the context without being returned directly to the application. (Using `ToList` or similar has the same effect but with the overhead of creating the returned list, which is not needed here.) The example then uses `DbSet.Local` to access the locally tracked entities:
 
 <!--
         using var context = new BlogsContext();
@@ -453,18 +472,18 @@ Since `DbSet.Local` is used to query tracked entities, it is typical to load ent
 -->
 [!code-csharp[Using_DbSet_Local_to_query_tracked_entities_1](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Using_DbSet_Local_to_query_tracked_entities_1)]
 
-Notice that, unlike the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Entries?displayProperty=nameWithType> method, `DbSet.Local` returns entity instances directly, not entities wrapped in EntityEntry instances. An EntityEntry can, of course, always be obtained for the returned entity by calling <xref:System.Data.Entity.DbContext.Entry%2A?displayProperty=nameWithType>.
+Notice that, unlike <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Entries?displayProperty=nameWithType>, `DbSet.Local` returns entity instances directly. An EntityEntry can, of course, always be obtained for the returned entity by calling <xref:System.Data.Entity.DbContext.Entry%2A?displayProperty=nameWithType>.
 
 ### The local view
 
-<xref:Microsoft.EntityFrameworkCore.DbSet%601.Local?displayProperty=nameWithType> provides a view of locally tracked entities that reflects the current <xref:Microsoft.EntityFrameworkCore.EntityState> of those entities. Specifically, this means that:
+<xref:Microsoft.EntityFrameworkCore.DbSet%601.Local?displayProperty=nameWithType> returns a view of locally tracked entities that reflects the current <xref:Microsoft.EntityFrameworkCore.EntityState> of those entities. Specifically, this means that:
 
-- `Added` entities are included. Note that this is not the case for normal EF queries, since `Added` entities do not yet exist in the database and so are never returned by a database query.
-- `Deleted` entities are excluded. Note that this is again not the case for normal EF queries, since `Deleted` entities still exist in the database and so _are_ returned by a database query.
+- `Added` entities are included. Note that this is not the case for normal EF queries, since `Added` entities do not yet exist in the database and so are therefore never returned by a database query.
+- `Deleted` entities are excluded. Note that this is again not the case for normal EF queries, since `Deleted` entities still exist in the database and so _are_ returned by database queries.
 
-The result of this is that `DbSet.Local` provides a view over the data that reflects the current conceptual state of the entity graph, with `Added` entities included and `Deleted` entities excluded. This matches what database will be after SaveChanges is called.
+All of this means that `DbSet.Local` is view over the data that reflects the current conceptual state of the entity graph, with `Added` entities included and `Deleted` entities excluded. This matches what database state is expected to be after SaveChanges is called.
 
-This is typically the ideal view for data binding, since it presents to the user the data as they understand it based on the changes made by the application. For example, once the application has marked an entity as `Deleted` then it is removed from the view even though that change has not yet been persisted to the database.
+This is typically the ideal view for data binding, since it presents to the user the data as they understand it based on the changes made by the application.
 
 The following code demonstrates this my marking one post as `Deleted` and then adding a new post, marking it as `Added`:
 
@@ -515,9 +534,11 @@ Notice that the deleted post is removed from the local view, and the added post 
 
 ### Using Local to add and remove entities
 
-<xref:Microsoft.EntityFrameworkCore.DbSet%601.Local?displayProperty=nameWithType> returns an instance of <xref:Microsoft.EntityFrameworkCore.ChangeTracking.LocalView%601>  This is an implementation of <xref:System.Collections.Generic.ICollection%601> that generates and responds to notifications when entities are added and removed from the collection. (This is the same concept as <xref:System.Collections.ObjectModel.ObservableCollection%601>, but implemented as a projection of EF local data, rather than as an independent collection.) The local view's notifications are hooked into DbContext change tracking such that the local view stays in sync with the DbContext. Specifically:
+<xref:Microsoft.EntityFrameworkCore.DbSet%601.Local?displayProperty=nameWithType> returns an instance of <xref:Microsoft.EntityFrameworkCore.ChangeTracking.LocalView%601>. This is an implementation of <xref:System.Collections.Generic.ICollection%601> that generates and responds to notifications when entities are added and removed from the collection. (This is the same concept as <xref:System.Collections.ObjectModel.ObservableCollection%601>, but implemented as a projection over existing EF Core change tracking entries, rather than as an independent collection.)
 
-- Adding a new entity to `DbSet.Local` causes it to be tracked by the DbContext, typically in the `Added` state. (If the entity already has a generated key value, then it is marked as `Unchanged` instead.)
+The local view's notifications are hooked into DbContext change tracking such that the local view stays in sync with the DbContext. Specifically:
+
+- Adding a new entity to `DbSet.Local` causes it to be tracked by the DbContext, typically in the `Added` state. (If the entity already has a generated key value, then it is tracked as `Unchanged` instead.)
 - Removing an entity from `DbSet.Local` causes it to be marked as `Deleted`.
 - An entity that becomes tracked by the DbContext will automatically appear in the `DbSet.Local` collection. For example, executing a query to bring in more entities automatically causes the local view to be updated.
 - An entity that is marked as `Deleted` will be removed from the local collection automatically.
@@ -558,7 +579,7 @@ The output remains unchanged from the previous example because changes made to t
 
 ### Using the local view for Windows Forms or WPF data binding
 
-<xref:Microsoft.EntityFrameworkCore.DbSet%601.Local?displayProperty=nameWithType> forms the basis for data binding to EF Core entities. However, both Windows Forms and WPF work best when used with the a specific type of notifying collection. The local view supports creating these specific collection types:
+<xref:Microsoft.EntityFrameworkCore.DbSet%601.Local?displayProperty=nameWithType> forms the basis for data binding to EF Core entities. However, both Windows Forms and WPF work best when used with the specific type of notifying collection that they expect. The local view supports creating these specific collection types:
 
 - <xref:Microsoft.EntityFrameworkCore.ChangeTracking.LocalView%601.ToObservableCollection?displayProperty=nameWithType> returns an <xref:System.Collections.ObjectModel.ObservableCollection%601> for WPF data binding.
 - <xref:Microsoft.EntityFrameworkCore.ChangeTracking.LocalView%601.ToBindingList?displayProperty=nameWithType> returns a <xref:System.ComponentModel.BindingList%601> for Windows Forms data binding.
