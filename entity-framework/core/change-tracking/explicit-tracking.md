@@ -503,7 +503,6 @@ The important point to notice here is that, with generated key values, EF Core i
 -->
 [!code-csharp[Updating_existing_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Updating_existing_entities_1)]
 
-
 Inspecting the [change tracker debug view](xref:core/change-tracking/debug-views) following this call shows that the context is tracking this entity in the `Modified` state:
 
 ```output
