@@ -312,7 +312,7 @@ This is exactly the same end-state as the previous example that used explicit ke
 
 ### Explicit key values
 
-Entities returned from queries are tracked in the `Unchanged` state. As described earlier, the `Unchanged` state means that the entity has not been modified since it was queried. A disconnected entity, perhaps returned from a web client in an HTTP request, can be put into this state using either <xref:Microsoft.EntityFrameworkCore.DbContext.Attach%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AttachRange%2A?displayProperty=nameWithType>, or the equivalent methods on <xref:Microsoft.EntityFrameworkCore.DbSet%601>. For example, to start tracking an existing blog:
+Entities returned from queries are tracked in the `Unchanged` state. The `Unchanged` state means that the entity has not been modified since it was queried. A disconnected entity, perhaps returned from a web client in an HTTP request, can be put into this state using either <xref:Microsoft.EntityFrameworkCore.DbContext.Attach%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AttachRange%2A?displayProperty=nameWithType>, or the equivalent methods on <xref:Microsoft.EntityFrameworkCore.DbSet%601>. For example, to start tracking an existing blog:
 
 <!--
             context.Attach(
@@ -501,7 +501,8 @@ The important point to notice here is that, with generated key values, EF Core i
                     Name = ".NET Blog",
                 });
 -->
-[!code-csharp[Updating_existing_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Updating_existing_entities_1]
+[!code-csharp[Updating_existing_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Updating_existing_entities_1)]
+
 
 Inspecting the [change tracker debug view](xref:core/change-tracking/debug-views) following this call shows that the context is tracking this entity in the `Modified` state:
 
@@ -537,7 +538,7 @@ Just like with `Add` and `Attach`, `Update` actually marks an _entire graph_ of 
                     }
                 });
 -->
-[!code-csharp[Updating_existing_entities_2](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Updating_existing_entities_2]
+[!code-csharp[Updating_existing_entities_2](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Updating_existing_entities_2)]
 
 The context is now tracking all these entities as `Modified`:
 
@@ -606,7 +607,7 @@ As with `Attach`, generated key values have the same major benefit for `Update`:
                     }
                 });
 -->
-[!code-csharp[Updating_existing_entities_3](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/GeneratedKeysSamples.cs?name=Updating_existing_entities_3]
+[!code-csharp[Updating_existing_entities_3](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/GeneratedKeysSamples.cs?name=Updating_existing_entities_3)]
 
 As with the `Attach` example, the post with no key value set is detected as new and set to the `Added` state. The other entities are marked as `Modified`:  
 
@@ -674,7 +675,7 @@ For an entity to be deleted by SaveChanges it must be tracked in the `Deleted` s
                     Id = 2
                 });
 -->
-[!code-csharp[Deleting_existing_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Deleting_existing_entities_1]
+[!code-csharp[Deleting_existing_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Deleting_existing_entities_1)]
 
 > [!NOTE]
 > The examples here are creating entities explicitly with `new` for simplicity. Normally the entity instances will have come from another source, such as being deserialized from a client, or being created from data in an HTTP Post.
@@ -716,7 +717,7 @@ For example, the code in the previous section is more likely obtain a post from 
             context.Attach(post);
             context.Remove(post);
 -->
-[!code-csharp[Deleting_dependent_child_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Deleting_dependent_child_entities_1]
+[!code-csharp[Deleting_dependent_child_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Deleting_dependent_child_entities_1)]
 
 This behaves exactly the same way as the previous example, since calling `Remove` on an un-tracked entity causes it to first be attached and then marked as `Deleted`.
 
@@ -729,7 +730,7 @@ In more realistic examples, a graph of entities is first attached, and then some
             // Mark one post as Deleted
             context.Remove(blog.Posts[1]);
 -->
-[!code-csharp[Deleting_dependent_child_entities_2](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Deleting_dependent_child_entities_2]
+[!code-csharp[Deleting_dependent_child_entities_2](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Deleting_dependent_child_entities_2)]
 
 All entities are marked as `Unchanged`, except the one on which `Remove` was called:
 
@@ -800,7 +801,7 @@ The `Post.BlogId` foreign key property is nullable in the model we have been usi
             // Mark one post as Deleted
             context.Remove(blog.Posts[1]);
 -->
-[!code-csharp[Deleting_principal_parent_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Deleting_principal_parent_entities_1]
+[!code-csharp[Deleting_principal_parent_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysSamples.cs?name=Deleting_principal_parent_entities_1)]
 
 Inspecting the [change tracker debug view](xref:core/change-tracking/debug-views) following the call to `Remove` shows that, as expected, the blog is now marked as `Deleted`:
 
@@ -870,7 +871,7 @@ If the `Post.BlogId` foreign key property is non-nullable, then the relationship
             // Mark one post as Deleted
             context.Remove(blog.Posts[1]);
 -->
-[!code-csharp[Deleting_principal_parent_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysRequiredSamples.cs?name=Deleting_principal_parent_entities_1]
+[!code-csharp[Deleting_principal_parent_entities_1](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/ExplicitKeysRequiredSamples.cs?name=Deleting_principal_parent_entities_1)]
 
 Inspecting the [change tracker debug view](xref:core/change-tracking/debug-views) following the call to `Remove` shows that, as expected, the blog is again marked as `Deleted`:
 
@@ -935,7 +936,7 @@ For example, consider the rule EF Core uses when tracking entities with generate
             var toDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
             toDelete.Id = -toDelete.Id;
 -->
-[!code-csharp[Custom_tracking_with_TrackGraph_1a](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/GeneratedKeysSamples.cs?name=Custom_tracking_with_TrackGraph_1a]
+[!code-csharp[Custom_tracking_with_TrackGraph_1a](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/GeneratedKeysSamples.cs?name=Custom_tracking_with_TrackGraph_1a)]
 
 This disconnected graph can then be tracked using TrackGraph:
 
@@ -971,7 +972,7 @@ This disconnected graph can then be tracked using TrackGraph:
             context.SaveChanges();
         }
 -->
-[!code-csharp[Custom_tracking_with_TrackGraph_1b](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/GeneratedKeysSamples.cs?name=Custom_tracking_with_TrackGraph_1b]
+[!code-csharp[Custom_tracking_with_TrackGraph_1b](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/GeneratedKeysSamples.cs?name=Custom_tracking_with_TrackGraph_1b)]
 
 For each entity in the graph, the code above checks the primary key value _before tracking the entity_. For unset (zero) key values, the code does what EF Core would normally do. That is, if the key is not set, then the entity as marked as `Added`. If the key is set and the value is non-negative, then the entity is marked as `Modified`. However, if a negative key value is found, then its real, non-negative value is restored and the entity is tracked as `Deleted`.
 
