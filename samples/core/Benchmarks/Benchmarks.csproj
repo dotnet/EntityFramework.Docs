@@ -4,10 +4,28 @@
         <TargetFramework>net5.0</TargetFramework>
         <Optimize>true</Optimize>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <DefineConstants>TRACE</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <DefineConstants>TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     </ItemGroup>
 </Project>

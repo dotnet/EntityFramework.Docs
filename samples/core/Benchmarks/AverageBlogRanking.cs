@@ -14,7 +14,7 @@ namespace Benchmarks
         public const int NumBlogs = 1000;
 
         [GlobalSetup]
-        public static void Setup()
+        public static void Setup(string connectionstring)
         {
             using var context = new BloggingContext();
             context.Database.EnsureDeleted();

@@ -133,11 +133,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "Benchmarks\Be
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Performance", "Performance\Performance.csproj", "{A870AAA4-EAF1-4F7D-A71E-83B20219EF6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchSql", "BenchSql\BenchSql.csproj", "{564B36A5-02BD-4A6E-920E-1F31A8C023EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchSql", "BenchSql\BenchSql.csproj", "{564B36A5-02BD-4A6E-920E-1F31A8C023EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchCommon", "BenchCommon\BenchCommon.csproj", "{63095C39-B5AF-4481-9B59-A8FF14AFEDDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchCommon", "BenchCommon\BenchCommon.csproj", "{63095C39-B5AF-4481-9B59-A8FF14AFEDDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark2", "Benchmark2\Benchmark2.csproj", "{A0778218-4E76-46D7-BC28-57471F3AEEE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark2", "Benchmark2\Benchmark2.csproj", "{A0778218-4E76-46D7-BC28-57471F3AEEE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C99104CD-CE5E-4C52-8DA7-003364812032}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

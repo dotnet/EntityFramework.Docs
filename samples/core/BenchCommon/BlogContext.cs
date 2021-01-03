@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace BenchCommon
 {
@@ -39,11 +38,11 @@ namespace BenchCommon
             Blogs.AddRange(
                 Enumerable.Range(0, NumBlogs).Select(i => new Blog
                 {
-                    BlogId = i + 1,
+                    BlogId = i,
                     //Title = "",
                     Name = $"Blog{i}",
                     Url = $"blog{i}.blogs.net",
-                    CreationTime = new DateTime(2020,1,2),
+                    CreationTime = new DateTime(2020, 1, 2),
                     Rating = i % 5
                 }));
             SaveChanges();
