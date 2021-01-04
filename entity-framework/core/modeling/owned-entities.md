@@ -110,7 +110,7 @@ In addition to nested owned types, an owned type can reference a regular entity 
 
 [!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
 
-## Configuring Owned Types
+## Configuring owned types
 
 It is possible to chain the `OwnsOne` method in a fluent call to configure this model:
 
@@ -124,7 +124,7 @@ In addition, notice the `Navigation` call. In EFCore 5.0, navigation properties 
 
 The model above is mapped to the following database schema:
 
-![Sceenshot of the database model for entity containing nested owned references](_static/owned-entities-nested.png)
+![Screenshot of the database model for entity containing nested owned references](_static/owned-entities-nested.png)
 
 ## Storing owned types in separate tables
 
