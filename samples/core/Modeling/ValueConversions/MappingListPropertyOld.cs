@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EFModeling.ValueConversions
 {
-    public class MappingListProperty : Program
+    public class MappingListPropertyOld : Program
     {
         public void Run()
         {
@@ -58,11 +58,18 @@ namespace EFModeling.ValueConversions
                     .Property(e => e.MyListProperty)
                     .HasConversion(
                         v => JsonSerializer.Serialize(v, null),
-                        v => JsonSerializer.Deserialize<List<int>>(v, null),
-                        new ValueComparer<List<int>>(
-                            (c1, c2) => c1.SequenceEqual(c2),
-                            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                            c => c.ToList()));
+                        v => JsonSerializer.Deserialize<List<int>>(v, null));
+
+                var valueComparer = new ValueComparer<List<int>>(
+                    (c1, c2) => c1.SequenceEqual(c2),
+                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                    c => c.ToList());
+
+                modelBuilder
+                    .Entity<EntityType>()
+                    .Property(e => e.MyListProperty)
+                    .Metadata
+                    .SetValueComparer(valueComparer);
                 #endregion
             }
 

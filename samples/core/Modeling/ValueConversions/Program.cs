@@ -13,6 +13,7 @@ namespace EFModeling.ValueConversions
             new MappingImmutableClassProperty().Run();
             new MappingImmutableStructProperty().Run();
             new MappingListProperty().Run();
+            new MappingListPropertyOld().Run();
             new OverridingByteArrayComparisons().Run();
         }
 
