@@ -5,20 +5,14 @@ namespace EFModeling.FluentAPI.Relational.IndexName
     class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
-
-        #region IndexName
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Blog>()
-                .HasIndex(b => b.Url)
-                .HasDatabaseName("Index_Url");
-        }
-        #endregion
     }
 
+    #region IndexName
+    [Index(nameof(Url), Name = "Index_Url")]
     public class Blog
     {
         public int BlogId { get; set; }
         public string Url { get; set; }
     }
+    #endregion
 }
