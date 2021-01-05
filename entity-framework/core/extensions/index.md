@@ -256,6 +256,6 @@ A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff)
 
 ### EntityFrameworkCore.Sqlite.NodaTime
 
-Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](https://sqlite.org) with Entity Framework Core.
+Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](https://sqlite.org). For EF Core: 5.
 
 [GitHub repository](https://github.com/khellang/EFCore.Sqlite.NodaTime)
