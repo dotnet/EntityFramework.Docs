@@ -253,3 +253,9 @@ Extends EF Core to resolve connection strings from App.config. For EF Core: 3.
 A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff). For EF Core: 3, 5.
 
 [NuGet](https://www.nuget.org/packages/Detached.Mappers.EntityFramework)
+
+### EntityFrameworkCore.Sqlite.NodaTime
+
+Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](https://sqlite.org) with Entity Framework Core.
+
+[GitHub repository](https://github.com/khellang/EFCore.Sqlite.NodaTime)
