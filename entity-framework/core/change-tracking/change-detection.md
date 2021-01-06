@@ -121,7 +121,7 @@ Contrast this to the following code which modifies the entities in the same way,
 -->
 [!code-csharp[Snapshot_change_tracking_2](../../../samples/core/ChangeTracking/ChangeDetectionAndNotifications/SnapshotSamples.cs?name=Snapshot_change_tracking_2)]
 
-In this case the change tracker debug view shows that all entity states and property modifications are known, even though detection of changes has not happened. This is because <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.CurrentValue?displayProperty=nameWithType> is an EF Core method, which means that EF Core immediately knows about the change. Likewise, calling <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType> allows EF Core to immediately know about the new entity and track it appropriately.
+In this case the change tracker debug view shows that all entity states and property modifications are known, even though detection of changes has not happened. This is because <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.CurrentValue?displayProperty=nameWithType> is an EF Core method, which means that EF Core immediately knows about the change made by this method. Likewise, calling <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType> allows EF Core to immediately know about the new entity and track it appropriately.
 
 > [!TIP]
 > Don't attempt to avoid detecting changes by always using EF Core methods to make entity changes. Doing so is often more cumbersome and performs less well than making changes to entities in the normal way. The intention of this document is to inform as to when detecting changes is needed and when it is not. The intention is not to encourage avoidance of change detection.
@@ -140,16 +140,16 @@ There are also some places where detection of changes happens on only a single e
 
 - When using <xref:System.Data.Entity.DbContext.Entry%2A?displayProperty=nameWithType>, to ensure that the entity's state and modified properties are up-to-date.
 - When using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry> methods such as `Property`, `Collection`, `Reference` or `Member` to ensure property modifications, current values, etc. are up-to-date.
-- When an dependent/child entity is going to be deleted because a required relationship has been severed. This detects when an entity should not be deleted because it has been re-parented.
+- When a dependent/child entity is going to be deleted because a required relationship has been severed. This detects when an entity should not be deleted because it has been re-parented.
 
 Local detection of changes for a single entity can be triggered explicitly by calling <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.DetectChanges?displayProperty=nameWithType>.
 
 > [!NOTE]
-> Local detect changes can miss some changes that a full detection would fine. This happens when cascading actions resulting from undetected changes to other entities have an impact on the entity in question. In such situations the application may need to force a full scan of all entities by explicitly calling <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges?displayProperty=nameWithType>.
+> Local detect changes can miss some changes that a full detection would find. This happens when cascading actions resulting from undetected changes to other entities have an impact on the entity in question. In such situations the application may need to force a full scan of all entities by explicitly calling <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges?displayProperty=nameWithType>.
 
 ### Disabling automatic change detection
 
-The performance of detecting changes is not a bottleneck for most applications. However, detecting changes can become a performance problem for some applications that track thousands of entities. For this reason the automatic detection of changes can be disabled using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AutoDetectChangesEnabled?displayProperty=nameWithType>. For example, consider processing join entities in a many-to-many relationship with payloads:
+The performance of detecting changes is not a bottleneck for most applications. However, detecting changes can become a performance problem for some applications that track thousands of entities. (The exact number will dependent on many things, such as the number of properties in the entity.) For this reason the automatic detection of changes can be disabled using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AutoDetectChangesEnabled?displayProperty=nameWithType>. For example, consider processing join entities in a many-to-many relationship with payloads:
 
 <!--
         public override int SaveChanges()
@@ -197,7 +197,7 @@ Snapshot change tracking is recommended for most applications. However, applicat
 
 ### Implementing notification entities
 
-Notification entities make use of the <xref:System.ComponentModel.INotifyPropertyChanging> and <xref:System.ComponentModel.INotifyPropertyChanged> interfaces, which are part of the .NET basic class library (BCL). These interfaces define events that must be fired before and after changing a property value. For example:
+Notification entities make use of the <xref:System.ComponentModel.INotifyPropertyChanging> and <xref:System.ComponentModel.INotifyPropertyChanged> interfaces, which are part of the .NET base class library (BCL). These interfaces define events that must be fired before and after changing a property value. For example:
 
 <!--
     public class Blog : INotifyPropertyChanging, INotifyPropertyChanged
@@ -234,7 +234,7 @@ Notification entities make use of the <xref:System.ComponentModel.INotifyPropert
 -->
 [!code-csharp[Model](../../../samples/core/ChangeTracking/ChangeDetectionAndNotifications/NotificationEntitiesSamples.cs?name=Model)]
 
-In addition, any collection navigations must implement `INotifyCollectionChanged`. In the example above this satisfied by using an <xref:System.Collections.ObjectModel.ObservableCollection%601> of posts. EF Core also ships with an <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ObservableHashSet%601> implementation that has more efficient lookups at the expense of stable ordering.
+In addition, any collection navigations must implement `INotifyCollectionChanged`; in the example above this satisfied by using an <xref:System.Collections.ObjectModel.ObservableCollection%601> of posts. EF Core also ships with an <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ObservableHashSet%601> implementation that has more efficient lookups at the expense of stable ordering.
 
 Most of this notification code is typically moved into an unmapped base class. For example:
 
@@ -301,10 +301,10 @@ The different <xref:Microsoft.EntityFrameworkCore.ChangeTrackingStrategy> values
 
 | ChangeTrackingStrategy                              | Interfaces needed                                      | Needs DetectChanges | Snapshots original values
 |:----------------------------------------------------|--------------------------------------------------------|---------------------|--------------------------
-| `Snapshot`                                          | None                                                   | Yes                 | Yes
-| `ChangedNotifications`                              | `INotifyPropertyChanged`                               | No                  | Yes
-| `ChangingAndChangedNotifications`                   | `INotifyPropertyChanged` and `INotifyPropertyChanging` | No                  | No
-| `ChangingAndChangedNotificationsWithOriginalValues` | `INotifyPropertyChanged` and `INotifyPropertyChanging` | No                  | Yes
+| Snapshot                                            | None                                                   | Yes                 | Yes
+| ChangedNotifications                                | INotifyPropertyChanged                                 | No                  | Yes
+| ChangingAndChangedNotifications                     | INotifyPropertyChanged and INotifyPropertyChanging     | No                  | No
+| ChangingAndChangedNotificationsWithOriginalValues   | INotifyPropertyChanged and INotifyPropertyChanging     | No                  | Yes
 
 ### Using notification entities
 
@@ -360,7 +360,7 @@ Post {Id: 2} Unchanged
 > [!NOTE]
 > Change-tracking proxies were introduced in EF Core 5.0.
 
-EF Core can dynamically generate proxy types that implement <xref:System.ComponentModel.INotifyPropertyChanging> and <xref:System.ComponentModel.INotifyPropertyChanged> automatically. This requires installing the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) NuGet package, and enabling change-tracking proxies using <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies%2A> For example:
+EF Core can dynamically generate proxy types that implement <xref:System.ComponentModel.INotifyPropertyChanging> and <xref:System.ComponentModel.INotifyPropertyChanged>. This requires installing the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) NuGet package, and enabling change-tracking proxies with <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies%2A> For example:
 
 <!--
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
@@ -391,7 +391,7 @@ Creating a dynamic proxy involves creating a new, dynamic .NET type (using the [
 -->
 [!code-csharp[Model](../../../samples/core/ChangeTracking/ChangeDetectionAndNotifications/ChangeTrackingProxiesSamples.cs?name=Model)]
 
-One significant downside change-tracking proxies is that EF Core must always track instances of the proxies, never instances of the underlying entity type. This is because instances of the underlying entity type will not generate notifications, which means changes made to these entities will be missed.
+One significant downside to change-tracking proxies is that EF Core must always track instances of the proxy, never instances of the underlying entity type. This is because instances of the underlying entity type will not generate notifications, which means changes made to these entities will be missed.
 
 EF Core creates proxy instances automatically when querying the database, so this downside is generally limited to tracking new entity instances. These instances must be created using the <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.CreateProxy%2A> extension methods, and **not** in the normal way using `new`. This means the code from the previous examples must now make use of `CreateProxy`:
 

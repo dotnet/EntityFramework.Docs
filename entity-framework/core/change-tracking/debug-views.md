@@ -92,7 +92,7 @@ Notice:
 - If the entity is a shared-type entity type, then it's CLR type is also shown. For example, `PostTag (Dictionary<string, object>)`.
 - The <xref:Microsoft.EntityFrameworkCore.EntityState> is shown next. This will be one of `Unchanged`, `Added`, `Modified`, or `Deleted`.
 - Values for any alternate keys (AKs) are shown next. For example, `AK {AssetsId: ed727978-1ffe-4709-baee-73913e8e44a0}`.
-- Finally, values for an foreign keys (FKs) are shown. For example, `FK {PostsId: 4} FK {TagsId: 2}`.
+- Finally, values for any foreign keys (FKs) are shown. For example, `FK {PostsId: 4} FK {TagsId: 2}`.
 
 ### The long view
 

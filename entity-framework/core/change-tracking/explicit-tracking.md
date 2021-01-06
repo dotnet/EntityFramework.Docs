@@ -35,11 +35,11 @@ The second is only needed by applications that change entities or their relation
 The web application must now re-attach these entities so that they are again tracked and indicate the changes that have been made such that <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> can make appropriate updates to the database. This is primarily handled by the <xref:Microsoft.EntityFrameworkCore.DbContext.Attach%2A?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbContext.Update%2A?displayProperty=nameWithType> methods.
 
 > [!TIP]
-> Attaching entities to the _same DbContext instance_ that they were queried from should not normally be needed. Do not routinely perform a no-tracking query and then attach the returned entities to the same context. This will be both slower and harder to get right than using a tracking query.
+> Attaching entities to the _same DbContext instance_ that they were queried from should not normally be needed. Do not routinely perform a no-tracking query and then attach the returned entities to the same context. This will be slower than using a tracking query, and may also result in issues such as missing shadow property values, making it harder to get right.
 
 ### Generated verses explicit key values
 
-By default, integer and GUID [key properties](xref:core/modeling/keys) are configured to use [automatically generated key values](xref:core/modeling/generated-properties). This has a **major advantage for change tracking: an unset key value indicates that the entity is "new"**. That By "new", we mean that it has not yet been inserted into the database.
+By default, integer and GUID [key properties](xref:core/modeling/keys) are configured to use [automatically generated key values](xref:core/modeling/generated-properties). This has a **major advantage for change tracking: an unset key value indicates that the entity is "new"**. By "new", we mean that it has not yet been inserted into the database.
 
 Two models are used in the following sections. The first is configured to **not** use generated key values:
 
@@ -93,7 +93,7 @@ public class Post
 -->
 [!code-csharp[Model](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/GeneratedKeysSamples.cs?name=Model)]
 
-Notice that the key properties need no additional configuration here since using generated key values is the [default for simple integer keys](xref:core/modeling/generated-properties).
+Notice that the key properties in this model need no additional configuration here since using generated key values is the [default for simple integer keys](xref:core/modeling/generated-properties).
 
 ## Inserting new entities
 
@@ -102,7 +102,7 @@ Notice that the key properties need no additional configuration here since using
 An entity must be tracked in the `Added` state to be inserted by <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>. Entities are typically put in the Added state by calling one of <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddRange%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddAsync%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.AddRangeAsync%2A?displayProperty=nameWithType>, or the equivalent methods on <xref:Microsoft.EntityFrameworkCore.DbSet%601>.
 
 > [!TIP]
-> In the context of change tracking, all these methods work in the same way. See [Additional Change Tracking Features](xref:core/change-tracking/miscellaneous) for more information.
+> These methods all work in the same way in the context of change tracking. See [Additional Change Tracking Features](xref:core/change-tracking/miscellaneous) for more information.
 
 For example, to start tracking a new blog:
 
@@ -173,7 +173,7 @@ Post {Id: 2} Added
   Blog: {Id: 1}
 ```
 
-Notice that explicit values have been set for the `Id` key properties in the examples above. This is because the model here has been configured to use explicitly set key values, rather than automatically generated key values. When not using generated keys, the key properties must be explicitly in this way _before_ calling `Add`. These key values are then inserted when SaveChanges is called. For example, when using SQLite:
+Notice that explicit values have been set for the `Id` key properties in the examples above. This is because the model here has been configured to use explicitly set key values, rather than automatically generated key values. When not using generated keys, the key properties must be explicitly set _before_ calling `Add`. These key values are then inserted when SaveChanges is called. For example, when using SQLite:
 
 ```sql
 -- Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
@@ -189,7 +189,7 @@ INSERT INTO "Posts" ("Id", "BlogId", "Content", "Title")
 VALUES (@p0, @p1, @p2, @p3);
 ```
 
-All of these entities are tracked in the `Unchanged` after SaveChanges completes, since these entities now exist in the database:
+All of these entities are tracked in the `Unchanged` state after SaveChanges completes, since these entities now exist in the database:
 
 ```output
 Blog {Id: 1} Unchanged
@@ -608,7 +608,7 @@ As with `Attach`, generated key values have the same major benefit for `Update`:
 -->
 [!code-csharp[Updating_existing_entities_3](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/GeneratedKeysSamples.cs?name=Updating_existing_entities_3)]
 
-As with the `Attach` example, the post with no key value set is detected as new and set to the `Added` state. The other entities are marked as `Modified`:  
+As with the `Attach` example, the post with no key value is detected as new and set to the `Added` state. The other entities are marked as `Modified`:  
 
 ```output
 Blog {Id: 1} Modified
@@ -911,8 +911,7 @@ WHERE "Id" = @p1;
 After SaveChanges completes, all the deleted entities are detached from the DbContext since they no longer exist in the database. Output from the debug view is therefore empty.
 
 > [!NOTE]
-> This document only scratches the surface on working with relationships in EF Core. See
-See [Relationships](xref:core/modeling/relationships) for more information on modeling relationships, and [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes) for more information on updating/deleting dependent/child entities when calling SaveChanges.  
+> This document only scratches the surface on working with relationships in EF Core. See [Relationships](xref:core/modeling/relationships) for more information on modeling relationships, and [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes) for more information on updating/deleting dependent/child entities when calling SaveChanges.  
 
 ## Custom tracking with TrackGraph
 

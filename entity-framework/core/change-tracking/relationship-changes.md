@@ -370,7 +370,7 @@ SELECT changes();
 
 ### Changing reference navigations
 
-In the previous example a post was moved from one blog to another by manipulating the collection navigation of posts on each blog. The same thing can be achieved by instead changing the `Post.Blog` reference navigation to point to the new blog. For example:
+In the previous example, a post was moved from one blog to another by manipulating the collection navigation of posts on each blog. The same thing can be achieved by instead changing the `Post.Blog` reference navigation to point to the new blog. For example:
 
 <!--
         var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
@@ -1100,7 +1100,7 @@ Tag {Id: 1} Unchanged
 
 #### Explicitly setting payload values
 
-Following on from the previous example, let's add a payload property that does not use automatically generated values:
+Following on from the previous example, let's add a payload property that does not use an automatically generated value:
 
 <!--
     public class PostTag

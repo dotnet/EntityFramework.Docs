@@ -8,7 +8,7 @@ uid: core/change-tracking/index
 
 # Change Tracking in EF Core
 
-Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made to entities. These tracked entities in turn drive the changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>is called.
+Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made to entities. These tracked entities in turn drive the changes to the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called.
 
 This document presents an overview of Entity Framework Core (EF Core) change tracking and how it relates to queries and updates.
 

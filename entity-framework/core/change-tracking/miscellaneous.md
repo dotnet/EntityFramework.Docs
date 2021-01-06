@@ -18,7 +18,7 @@ This document covers miscellaneous features and scenarios involving change track
 
 ## Add verses AddAsync
 
-Entity Framework Core (EF Core) provides async methods whenever using that method may result in a database interaction. Synchronous methods are also provided in such cases to avoid overhead when using databases that do not support high performance asynchronous access.
+Entity Framework Core (EF Core) provides async methods whenever using that method may result in a database interaction. Synchronous methods are also provided to avoid overhead when using databases that do not support high performance asynchronous access.
 
 <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbSet%601.Add%2A?displayProperty=nameWithType> do not normally access the database, since these methods inherently just start tracking entities. However, some forms of value generation _may_ access the database in order to generate a key value. The only value generator that does this and ships with EF Core is <xref:Microsoft.EntityFrameworkCore.ValueGeneration.HiLoValueGenerator%601>. Using this generator is uncommon; it is never configured by default. This means that the vast majority of applications should use `Add`, and not `AddAsync`.
 
@@ -28,7 +28,7 @@ Other similar methods like `Update`, `Attach`, and `Remove` do not have async ov
 
 <xref:Microsoft.EntityFrameworkCore.DbSet%601> and <xref:Microsoft.EntityFrameworkCore.DbContext> provide alternate versions of `Add`, `Update`, `Attach`, and `Remove` that accept multiple instances in a single call. These methods are called `AddRange`, `UpdateRange`, `AttachRange`, and `RemoveRange` respectively.
 
-These methods are provided as a convenience. Using a "range" method has the same functionality as multiple calls to the equivalent non-range method. There is no significant performance different between the two approaches.
+These methods are provided as a convenience. Using a "range" method has the same functionality as multiple calls to the equivalent non-range method. There is no significant performance difference between the two approaches.
 
 > [!NOTE]
 > This is different from EF6, where AddRange and Add both automatically called DetectChanges, but calling Add multiple times caused DetectChanges to be called multiple times instead of once. This made AddRange more efficient in EF6. In EF Core, neither of these methods automatically call DetectChanges.
@@ -106,7 +106,7 @@ Property access modes `Field` and `PreferField` will cause EF Core to access the
 
 If `Field` or `Property` are used and EF Core cannot access the value through the field or property getter/setter respectively, then EF Core will throw an exception. This ensures EF Core is always using field/property access when you think it is.
 
-On the other hand, the `PreferField` and `PreferProperty` modes will fall back to using the property or backing field respectively if the it it not possible to use the preferred access. `PreferField` is the default from EF Core 3.0 onwards. This means EF Core will use fields whenever it can, but will not fail if a property must be accessed through its getter or setter.
+On the other hand, the `PreferField` and `PreferProperty` modes will fall back to using the property or backing field respectively if it is not possible to use the preferred access. `PreferField` is the default from EF Core 3.0 onwards. This means EF Core will use fields whenever it can, but will not fail if a property must be accessed through its getter or setter instead.
 
 `FieldDuringConstruction` and `PreferFieldDuringConstruction` configure EF Core to use of backing fields _only when creating entity instances_. This allows queries to be executed without getter and setter side effects, while later property changes by EF Core will cause these side effects. `PreferFieldDuringConstruction` was the default prior to EF Core 3.0.
 
@@ -260,7 +260,7 @@ Post {Id: 2} Unchanged
 
 ## Working with default values
 
-EF Core allows a property to get its default value from the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called. Like with generated key values, EF will only use a default from the database if no value has been explicitly set. For example, consider the following entity type:
+EF Core allows a property to get its default value from the database when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called. Like with generated key values, EF Core will only use a default from the database if no value has been explicitly set. For example, consider the following entity type:
 
 <!--
     public class Token

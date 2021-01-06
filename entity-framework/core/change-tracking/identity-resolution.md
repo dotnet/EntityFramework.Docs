@@ -200,7 +200,7 @@ Before going any further it is important to recognize that:
 - Serializers often have options for handling loops and duplicate instances in the graph.
 - The choice of object used as the graph root can often help reduce or remove duplicates.
 
-If possible, use serialization options and choose roots that do not result in duplicates. For example, the following code uses [Json.NET](https://www.nuget.org/packages/Newtonsoft.Json/) to serializes a list of blogs each with its associated posts:
+If possible, use serialization options and choose roots that do not result in duplicates. For example, the following code uses [Json.NET](https://www.nuget.org/packages/Newtonsoft.Json/) to serialize a list of blogs each with its associated posts:
 
 <!--
             using var context = new BlogsContext();
@@ -483,7 +483,7 @@ The resulting JSON now looks like this:
 }
 ```
 
-Notice that this JSON has replaced duplicates with references like `"$ref": "5"` to each single instance. This graph can again be tracked using the simple calls to `Update`, as shown above.
+Notice that this JSON has replaced duplicates with references like `"$ref": "5"` that refer to the already existing instance in the graph. This graph can again be tracked using the simple calls to `Update`, as shown above.
 
 The <xref:System.Text.Json> support in the .NET base class libraries (BCL) has a similar option which produces the same result. For example:
 
@@ -612,12 +612,12 @@ The fix for this is to either to set key values explicitly or configure the key 
 
 ## Identity resolution and queries
 
-Identity resolution happens automatically when entities are tracked from a query. This means that if an entity instance with a given key value is already tracked, then this existing tracked instance is used instead of creating a new instance. This has an important consequence: if the data has changed in the database, then this will not be reflected in the results of the query. This is an important reason to use a new DbContext instance for each unit-of-work, as described in [DbContext Initialization and Configuration](xref:core/dbcontext-configuration/index), and elaborated on in [Change Tracking in EF Core](xref:core/change-tracking/index).
+Identity resolution happens automatically when entities are tracked from a query. This means that if an entity instance with a given key value is already tracked, then this existing tracked instance is used instead of creating a new instance. This has an important consequence: if the data has changed in the database, then this will not be reflected in the results of the query. This is angood reason to use a new DbContext instance for each unit-of-work, as described in [DbContext Initialization and Configuration](xref:core/dbcontext-configuration/index), and elaborated on in [Change Tracking in EF Core](xref:core/change-tracking/index).
 
 > [!IMPORTANT]
 > It is important to understand that EF Core always executes a LINQ query on a DbSet against the database and only returns results based on what is in the database. However, for a tracking query, if the entities returned are already tracked, then the tracked instances are used instead of creating a instances from the data in the database.
 
-<xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.Reload> or <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.GetDatabaseValues>can be used when tracked entities need to be refreshed with the latest data from the database. See [Accessing Tracked Entities](xref:core/change-tracking/entity-entries) for more information.
+<xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.Reload> or <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.GetDatabaseValues> can be used when tracked entities need to be refreshed with the latest data from the database. See [Accessing Tracked Entities](xref:core/change-tracking/entity-entries) for more information.
 
 In contrast to tracking queries, no-tracking queries do not perform identity resolution. This means that no-tracking queries can return duplicates just like in the JSON serialization case described earlier. This is usually not an issue if the query results are going to be serialized and sent to the client.
 
@@ -662,4 +662,4 @@ This comparer can then be used when creating collection navigations. For example
 
 ### Comparing key properties
 
-In addition to equality comparisons, key values also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key properties must implement <xref:System.IComparable%601> and <xref:System.IEquatable%601>. Types normally used as keys (int, Guid, string, etc.) already support these interfaces. Custom key types may to add these interfaces.
+In addition to equality comparisons, key values also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key properties, as well as those used for unique indexes, must implement <xref:System.IComparable%601> and <xref:System.IEquatable%601>. Types normally used as keys (int, Guid, string, etc.) already support these interfaces. Custom key types may to add these interfaces.
