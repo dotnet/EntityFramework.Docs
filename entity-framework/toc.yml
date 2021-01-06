@@ -215,15 +215,24 @@
       - name: Explicit values for generated properties
         href: core/saving/explicit-values-generated-properties.md
 
-    #- name: Change tracking
-    #  items:
-    #  - name: Overview
-    #  - name: Property changes
-    #  - name: Relationship changes
-    #  - name: Find and local queries
-    #  - name: Accessing entity state
-    #  - name: Notification entities
-    #  - name: Change tracking proxies
+    - name: Change tracking
+      items:
+      - name: Overview
+        href: core/change-tracking/index.md
+      - name: Explicitly tracking entities
+        href: core/change-tracking/explicit-tracking.md
+      - name: Accessing tracked entities
+        href: core/change-tracking/entity-entries.md
+      - name: Changing foreign keys and navigations
+        href: core/change-tracking/relationship-changes.md
+      - name: Change detection and notifications
+        href: core/change-tracking/change-detection.md
+      - name: Identity resolution
+        href: core/change-tracking/identity-resolution.md
+      - name: Additional change tracking features
+        href: core/change-tracking/miscellaneous.md
+      - name: Change tracker debugging
+        href: core/change-tracking/debug-views.md
 
     - name: Logging, events, and diagnostics
       items:
