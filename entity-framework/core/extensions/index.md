@@ -2,7 +2,7 @@
 title: Tools & Extensions - EF Core
 description: External tools and extensions for Entity Framework Core
 author: ErikEJ
-ms.date: 11/22/2020
+ms.date: 01/06/2021
 uid: core/extensions/index
 ---
 
@@ -31,7 +31,7 @@ Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibe
 
 An O/RM that creates strongly-typed, extendable classes for Entity Framework. The generated code is Entity Framework Core. There is no difference. This is not a replacement for EF or a custom O/RM. It is a visual, modeling layer that allows a team to manage complex database schemas. It works well with SCM software like Git, allowing multi-user access to your model with minimal conflicts. The installer tracks model changes and creates upgrade scripts. For EF Core: 3.
 
-[Github site](https://github.com/nHydrate/nHydrate)
+[Github repository](https://github.com/nHydrate/nHydrate)
 
 ### EF Core Power Tools
 
@@ -177,7 +177,7 @@ Extends your DbContext with features such as: Include Filter, Auditing, Caching,
 
 ### Entity Framework Extensions
 
-Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2, 3.
+Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2, 3, 5.
 
 [Website](https://entityframework-extensions.net/)
 
@@ -259,3 +259,15 @@ A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff)
 Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](https://sqlite.org). For EF Core: 5.
 
 [GitHub repository](https://github.com/khellang/EFCore.Sqlite.NodaTime)
+
+### ErikEJ.EntityFrameworkCore.SqlServer.Dacpac
+
+Enables reverse engineering an EF Core model from a SQL Server data-tier application package (.dacpac). For EF Core: 3, 5.
+
+[GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac)
+
+### ErikEJ.EntityFrameworkCore.DgmlBuilder
+
+Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() extension method to the DbContext class. For EF Core: 3, 5.
+
+[GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki/Inspect-your-DbContext-model)
