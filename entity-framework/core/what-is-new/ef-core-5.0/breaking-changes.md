@@ -15,7 +15,7 @@ The following API and behavior changes have the potential to break existing appl
 | **Breaking change**                                                                                                                   | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [IProperty.GetColumnName() is now obsolete](#getcolumnname-obsolete)                                                                  | Medium     |
-| [IProperty.GetColumnName() is now obsolete](#getcolumnname-obsolete)                                                                  | Medium     |
+| [Precision and scale are required for decimals](#decimals)                                                                            | Medium     |
 | [Required on the navigation from principal to dependent has different semantics](#required-dependent)                                 | Medium     |
 | [Defining query is replaced with provider-specific methods](#defining-query)                                                          | Medium     |
 | [Non-null reference navigations are not overwritten by queries](#nonnullreferences)                                                   | Medium     |
