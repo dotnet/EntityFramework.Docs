@@ -14,6 +14,7 @@ The following API and behavior changes have the potential to break existing appl
 
 | **Breaking change**                                                                                                                   | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
+| [EF Core 5.0 does not support .NET Framework](#netstandard21)                                                                  | Medium     |
 | [IProperty.GetColumnName() is now obsolete](#getcolumnname-obsolete)                                                                  | Medium     |
 | [Precision and scale are required for decimals](#decimals)                                                                            | Medium     |
 | [Required on the navigation from principal to dependent has different semantics](#required-dependent)                                 | Medium     |
@@ -37,6 +38,28 @@ The following API and behavior changes have the potential to break existing appl
 | [Using a collection of Queryable type in projection is not supported](#queryable-projection)                                          | Low        |
 
 ## Medium-impact changes
+
+<a name="netstandard21"></a>
+
+### EF Core 5.0 does not support .NET Framework
+
+[Tracking Issue #15498](https://github.com/dotnet/efcore/issues/15498)
+
+#### Old behavior
+
+EF Core 3.1 targets .NET Standard 2.0, which is supported by .NET Framework.
+
+#### New behavior
+
+EF Core 5.0 targets .NET Standard 2.1, which is not supported by .NET Framework. This means EF Core 5.0 cannot be used with .NET Framework applications.
+
+#### Why
+
+This is part of the wider movement across .NET teams aimed at unification to a single .NET target framework. For more information see [the future of .NET Standard](https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/).
+
+#### Mitigations
+
+.NET Framework applications can continue to use EF Core 3.1, which is a [long-term support (LTS) release](https://dotnet.microsoft.com/platform/support/policy/dotnet-core). Alternately, applications can be updated to use .NET Core 2.1, .NET Core 3.1, or .NET 5, all of which support .NET Standard 2.1.
 
 <a name="getcolumnname-obsolete"></a>
 
