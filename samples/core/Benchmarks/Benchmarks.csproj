@@ -10,6 +10,10 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
       <DefineConstants>TRACE</DefineConstants>
     </PropertyGroup>
+    <ItemGroup>
+      <None Remove="C:\Users\DickB\.nuget\packages\microsoft.diagnostics.tracing.traceevent\2.0.49\build\..\lib\netstandard1.6\Dia2Lib.dll" />
+      <None Remove="C:\Users\DickB\.nuget\packages\microsoft.diagnostics.tracing.traceevent\2.0.49\build\..\lib\netstandard1.6\OSExtensions.dll" />
+    </ItemGroup>
 
     <ItemGroup>
       <Content Include="appsettings.json">

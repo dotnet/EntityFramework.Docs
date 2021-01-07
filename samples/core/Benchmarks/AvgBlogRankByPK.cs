@@ -23,10 +23,10 @@ namespace Benchmarks
     /// </remarks>
     public class AvgBlogRankByPK
     {
-        [Params(1000, 5000)]
+        [Params(500, 2000)]
         public int NumBlogs = 1000;       // number of records to write [once], and read [each pass]
 
-        [Params(1, 3)]
+        [Params(1, 2)]
         public int NumPasses = 1;         // number of read passes [>1 means may re-read previously-read warm data]
 
         private readonly string _sqlConnString;
@@ -97,7 +97,7 @@ namespace Benchmarks
         }
 
         #region LoadEntitiesNoTracking
-        [Benchmark(Description = "sequential stream as per AverageBlogRanking.LoadEntitiesNoTracking")]
+        [Benchmark(Description = "LoadEntitiesNoTracking {req=P,row=P*N,col=all,keep=F}")]
         public double LoadEntitiesNoTracking()
         {
             var rslt = -1d;
@@ -117,8 +117,43 @@ namespace Benchmarks
         }
         #endregion
 
+        #region ProjectOnlyRanking
+        [Benchmark(Description = "ProjectOnlyRanking {req=P,row=P*N,col=1,keep=F}")]
+        public double ProjectOnlyRanking()
+        {
+            var rslt = -1d;
+            using var ctx = new BloggingContext(_sqlConnString);
+            for (var p = 0; p < NumPasses; p++)
+            {
+                var sum = 0;
+                var count = 0;
+                foreach (var rating in ctx.Blogs.Select(b => b.Rating))     // stream Rating field only [order is idempotent so no PK]
+                {
+                    sum += rating;
+                    count++;
+                }
+                rslt = (double)sum / count;
+            }
+            return rslt;
+        }
+        #endregion
+
+        #region CalculateInDatabase
+        [Benchmark(Description = "CalculateInDatabase {req=P,row=P,col=1,keep=F}", Baseline = true)]
+        public double CalculateInDatabase()
+        {
+            var rslt = -1d;
+            using var ctx = new BloggingContext(_sqlConnString);
+            for (var p = 0; p < NumPasses; p++)
+            {
+                rslt = ctx.Blogs.Average(b => b.Rating);
+            }
+            return rslt;
+        }
+        #endregion
+
         #region ADOwhole
-        [Benchmark(Description = "sequential stream using ADO [instead of EF] but hauling down entire record")]
+        [Benchmark(Description = "ADOwhole {req=P,row=P*N,col=all,keep=F}")]
         public double ADOwhole()
         {
             var rslt = -1d;
@@ -148,7 +183,7 @@ namespace Benchmarks
         #endregion
 
         #region ADORatingOnly
-        [Benchmark(Description = "sequential stream using ADO [instead of EF] efficiently with Ranking only")]
+        [Benchmark(Description = "ADORatingOnly {{req=P,row=P*N,col=1,keep=F}")]
         public double ADORatingOnly()
         {
             var rslt = -1d;
@@ -171,8 +206,22 @@ namespace Benchmarks
         }
         #endregion
 
+        #region ADOCalcByDb
+        [Benchmark(Description = "ADOCalcByDb {req=P,row=P,col=1,keep=F} - SQL computes avg")]
+        public double ADOCalcByDb()
+        {
+            var rslt = -1d;
+            var SqlCmd = new SqlCommand("SELECT Avg(convert(float,Rating)) FROM Blogs", sqlCon);   // result only [one record, no ugly payload]
+            for (var p = 0; p < NumPasses; p++)
+            {
+                rslt = (double)SqlCmd.ExecuteScalar();          // [order is idempotent so no PK]
+            }
+            return rslt;
+        }
+        #endregion
+
         #region ADORatingSequential
-        [Benchmark(Description = "one-by-one data set by ascending BlogId returning Ranking only")]
+        [Benchmark(Description = "ADORatingSequential {req=P,row=P*N,col=1,keep=F}")]
         public double ADORatingSequential()
         {
             var rslt = -1d;
@@ -185,45 +234,10 @@ namespace Benchmarks
                 for (var PK = Blog.baseID; PK < NumBlogs + Blog.baseID; PK++)
                 {
                     p1.Value = PK;                                  // specify key we require
-                    sum += (int)SqlCmd.ExecuteScalar();     // stream single field {rows=all,cols=1} [order is idempotent so no PK]
-                    count++;
-                    rslt = sum / count;
-                }
-            }
-            return rslt;
-        }
-        #endregion
-
-        #region ProjectOnlyRanking
-        [Benchmark(Description = "sequential projection stream as per AverageBlogRanking.ProjectOnlyRanking")]
-        public double ProjectOnlyRanking()
-        {
-            var rslt = -1d;
-            using var ctx = new BloggingContext(_sqlConnString);
-            for (var p = 0; p < NumPasses; p++)
-            {
-                var sum = 0;
-                var count = 0;
-                foreach (var rating in ctx.Blogs.Select(b => b.Rating))     // stream Rating field only [order is idempotent so no PK]
-                {
-                    sum += rating;
+                    sum += (int)SqlCmd.ExecuteScalar();             // stream single field {rows=all,cols=1}
                     count++;
                 }
                 rslt = (double)sum / count;
-            }
-            return rslt;
-        }
-        #endregion
-
-        #region CalculateInDatabase
-        [Benchmark(Description = "make the database calculate the rating averages", Baseline = true)]
-        public double CalculateInDatabase()
-        {
-            var rslt = -1d;
-            using var ctx = new BloggingContext(_sqlConnString);
-            for (var p = 0; p < NumPasses; p++)
-            {
-                rslt = ctx.Blogs.Average(b => b.Rating);
             }
             return rslt;
         }
@@ -240,7 +254,7 @@ namespace Benchmarks
         /// 3   EF will roundtrip to db each single record {cols=all,rows=1} ("rbar"!), and merge into Local [also AsNoTracking n/a]
         /// 4   pass p>0 repeats operation so step #1 succeeds with cache-hit so no further network+Local RAM overhead
         /// </remarks>
-        [Benchmark(Description = "rbar (ascending key) - typical reporting/DW aggregation workload")]
+        [Benchmark(Description = "ColdFindSequential {seq=P*N,row=P*N,col=all,keep=T}")]
         public double ColdFindSequential()
         {
             var rslt = -1d;
@@ -264,7 +278,7 @@ namespace Benchmarks
         #endregion
 
         #region WarmFindSequential
-        [Benchmark(Description = "rbar (read-ahead, cache) - whole using DbSet.Local cache")]
+        [Benchmark(Description = "WarmFindSequential {req=1,row=N,col=all,keep=F}")]
         public double WarmFindSequential()
         {
             var rslt = -1d;
@@ -288,8 +302,8 @@ namespace Benchmarks
         #endregion
 
         #region ColdFirstSequential
-        [Benchmark(Description = "rbar (read-ahead, EF cache) - whole using DbSet.Local cache")]
-        public double ColdFirstSequential()
+        [Benchmark(Description = "ColdFirstSequential {seq=N,row=N,col=all,keep=F}")]
+        public double ColdFirstSequential()         // WarmFirstSequential omitted as First never searches Local but always goes to db
         {
             var rslt = -1d;
             using var ctx = new BloggingContext(_sqlConnString);
@@ -303,32 +317,8 @@ namespace Benchmarks
                     sum += ctx.Blogs
                             //.AsNoTracking()               // projections always skip EF Local and CT effort
                             .Where(b => b.BlogId == PK)     // use EF to find particular record [O(n)]
-                            .Select(b => b.Rating)         // NB reading all domain records
-                            .First();
-                    count++;
-                }
-                rslt = (double)sum / count;
-            }
-            return rslt;
-        }
-        #endregion
-
-        #region WarmFirstSequential
-        [Benchmark(Description = "rbar (read-ahead, EF cache) - whole using DbSet.Local cache")]
-        public double WarmFirstSequential()
-        {
-            var rslt = -1d;
-            using var ctx = new BloggingContext(_sqlConnString);
-            // removed .AsNoTracking() as this disables EF cache (not just the CT functionality)
-            _ = ctx.Blogs.ToList();               // pull down all records, keep all fields in EF (i.e. warm)
-                                                  // First will always roundtrip for projection, cache starts warm but ignored by First
-            for (var p = 0; p < NumPasses; p++)     // always roundtrip, so same perf each pass
-            {
-                var sum = 0;
-                var count = 0;
-                for (var PK = Blog.baseID; PK < NumBlogs + Blog.baseID; PK++)
-                {
-                    sum += ctx.Blogs.First(b => b.BlogId == PK).Rating;   // roundtrip to ensure always get latest data
+                            .Select(b => b.Rating)          // project only the fields we need (i.e. minimise LAN traffic)
+                            .First();                       // roundtrip to ensure always get latest data
                     count++;
                 }
                 rslt = (double)sum / count;
@@ -338,19 +328,22 @@ namespace Benchmarks
         #endregion
 
         #region WarmObjSequential
-        [Benchmark(Description = "rbar (read-ahead, cache via List)")]
+        [Benchmark(Description = "WarmObjSequential {req=N,row=N,col=2,keep=T}")]
         public double WarmObjSequential()
         {
             var rslt = -1d;
             using var ctx = new BloggingContext(_sqlConnString);
-            var appcache = ctx.Blogs.AsNoTracking().ToList();       // pull down {cols=all,rows=all}, but only in appcache (not Local)
-            for (var p = 0; p < NumPasses; p++)     // always re-use appcache, so same perf each pass
+            var appcache = ctx.Blogs
+                            //.AsNoTracking()                           // projections always skip EF Local and CT effort
+                            .Select(b => new { b.BlogId, b.Rating })    // pull down {cols=2,rows=all}
+                            .ToList();                                  //  but just stash {key, value} in appcache (not Local)
+            for (var p = 0; p < NumPasses; p++)                         // always re-use appcache, so same perf each pass
             {
                 var sum = 0;
                 var count = 0;
                 for (var PK = Blog.baseID; PK < Blog.baseID + NumBlogs; PK++)
                 {
-                    sum += appcache.First(b => b.BlogId == PK).Rating;    // repeatable-read from appcache [possible staler than db]
+                    sum += appcache.First(b => b.BlogId == PK).Rating;  // repeatable-read from appcache [possible staler than db] is O(n)
                     count++;
                 }
                 rslt = (double)sum / count;
@@ -359,12 +352,13 @@ namespace Benchmarks
         }
         #endregion
 
-        #region WarmLocalSequential
-        [Benchmark(Description = "rbar (read-ahead, Local hybrid cache)")]
-        public double WarmLocalSequential()
+        #region WarmHybridSequential
+        [Benchmark(Description = "WarmHybridSequential {req=N,row=N,col=all,keep=T}")]
+        public double WarmHybridSequential()
         {
             var rslt = -1d;
             using var ctx = new BloggingContext(_sqlConnString);
+            // comment-out next line if you want to metric ColdLocalSequential
             _ = ctx.Blogs.ToList();                 // pull down {cols=all,rows=all}, into Local
             for (var p = 0; p < NumPasses; p++)     // always re-use appcache, so same perf each pass
             {
@@ -373,7 +367,7 @@ namespace Benchmarks
                 for (var PK = Blog.baseID; PK < Blog.baseID + NumBlogs; PK++)
                 {
                     var blog = ctx.Blogs.Local.First(b => b.BlogId == PK)       // try client-side Local cache first [stale] ..
-                                ?? ctx.Blogs.First(b => b.BlogId == PK);        // .. otherwise pop [latest] from db
+                                ?? ctx.Blogs.First(b => b.BlogId == PK);        // .. otherwise pop [latest] from db [NB all Blog fields]
                     sum += blog.Rating;             // repeatable-read from Local [possible staler than db]
                     count++;
                 }
@@ -384,21 +378,22 @@ namespace Benchmarks
         #endregion
 
         #region WarmDictSequential
-        [Benchmark(Description = "rbar (read-ahead, cache via Dictionary)")]
+        [Benchmark(Description = "WarmDictSequential {req=N,row=N,col=2,keep=T}")]
         public double WarmDictSequential()
         {
             var rslt = -1d;
             using var ctx = new BloggingContext(_sqlConnString);
             var appDict = ctx.Blogs
-                            .Select(b => new { b.BlogId, b.Rating })           // pull down subset [i.e. "projection"] record {rows=all,cols=2}
-                            .ToDictionary(b => b.BlogId, b => b.Rating);    // but only in appDict (not Local)
-            for (var p = 0; p < NumPasses; p++)             // always re-use appDict, so same perf each pass
+                            //.AsNoTracking()                               // projections always skip EF Local and CT effort
+                            .Select(b => new { b.BlogId, b.Rating })        // pull down {cols=2,rows=all}
+                            .ToDictionary(b => b.BlogId, b => b.Rating);    // but just stash {key, value} in appDict (not Local)
+            for (var p = 0; p < NumPasses; p++)                             // always re-use appDict, so same perf each pass
             {
                 var sum = 0;
                 var count = 0;
                 for (var PK = Blog.baseID; PK < Blog.baseID + NumBlogs; PK++)
                 {
-                    sum += appDict[PK];                     // lookup value by PK efficiently [= "O(1)" operation]
+                    sum += appDict[PK];                                     // lookup value by PK efficiently [= "O(1)" operation]
                     count++;
                 }
                 rslt = (double)sum / count;
@@ -408,7 +403,7 @@ namespace Benchmarks
         #endregion
 
         #region ADORatingRandom
-        [Benchmark(Description = "one-by-one data set by randomised BlogId returning Ranking only")]
+        [Benchmark(Description = "ADORatingRandom {rand=P*N,row=P*N,col=1,keep=F}")]
         public double ADORatingRandom()
         {
             var rslt = -1d;
@@ -421,7 +416,7 @@ namespace Benchmarks
                 foreach (var PK in keysplat)
                 {
                     p1.Value = PK;                              // specify key we require [always cold, no local warm cache]
-                    sum += (int)SqlCmd.ExecuteScalar();         // stream single field {rows=all,cols=1}
+                    sum += (int)SqlCmd.ExecuteScalar();         // roundtrip single field
                     count++;
                 }
                 rslt = (double)sum / count;
@@ -441,7 +436,7 @@ namespace Benchmarks
         /// 3   EF will roundtrip to db each single record {cols=all,rows=1} ("rbar"!), and merge into Local [also AsNoTracking n/a]
         /// 4   pass p>0 repeats operation so step #1 succeeds with cache-hit so no further network+Local RAM overhead
         /// </remarks>
-        [Benchmark(Description = "rbar (ascending key) - typical reporting/DW aggregation workload")]
+        [Benchmark(Description = "ColdFindRandom {rand=N,row=N,col=all,keep=T}")]
         public double ColdFindRandom()
         {
             var rslt = -1d;
@@ -465,21 +460,21 @@ namespace Benchmarks
         #endregion
 
         #region WarmFindRandom
-        [Benchmark(Description = "rbar (read-ahead, cache) - whole using DbSet.Local cache")]
+        [Benchmark(Description = "WarmFindRandom {req=1, row=N, col=all, keep=T}")]
         public double WarmFindRandom()
         {
             var rslt = -1d;
             using var ctx = new BloggingContext(_sqlConnString);
             // removed .AsNoTracking() as this would disable Local EF cache (not just the CT functionality)
-            _ = ctx.Blogs.ToList();               // pull down all records, keep all fields in EF (i.e. start warm)
-                                                  // Find will pull&pop if needed (aka on-demand), cache starts warm so Find will not roundtrip each time (unlike First)
-            for (var p = 0; p < NumPasses; p++)     // ctx already pre-populated, so each pass will re-use content
+            _ = ctx.Blogs.ToList();                         // Find will pull down all records AOT, keeping all fields in EF (i.e. start warm)
+                                                            //  cache starts warm so Find will not roundtrip each time (unlike First)
+            for (var p = 0; p < NumPasses; p++)             // ctx already pre-populated, so each pass will re-use content
             {
                 var sum = 0;
                 var count = 0;
                 foreach (var PK in keysplat)                // OLTP will often need to retrieve by [synthetic] key
                 {
-                    sum += ctx.Blogs.Find(PK).Rating;
+                    sum += ctx.Blogs.Find(PK).Rating;       // Find will search Local first, and would go to db if unfound
                     count++;
                 }
                 rslt = (double)sum / count;
@@ -489,46 +484,23 @@ namespace Benchmarks
         #endregion
 
         #region ColdFirstRandom
-        [Benchmark(Description = "rbar (random-access) - typical OLTP workload")]
+        [Benchmark(Description = "ColdFirstRandom {rand=1, row=N, col=all, keep=T}")]
         public double ColdFirstRandom()
         {
             var rslt = -1d;
             using var ctx = new BloggingContext(_sqlConnString);
-            // First will always roundtrip, cache cold throughout and ignored by First
+            // First will always roundtrip, cache cold throughout and ignored by First [hence no WarmFirstRandom example]
             for (var p = 0; p < NumPasses; p++)     // always roundtrip, so same perf each pass
             {
                 var sum = 0;
                 var count = 0;
                 foreach (var PK in keysplat)                // OLTP will often need to retrieve by [synthetic] key
                 {
-                    sum += ctx.Blogs
-                            .AsNoTracking()                 // as test is R/O, skip EF Local and CT effort
-                            .First(b => b.BlogId == PK)     // use EF L2E to find particular record [O(n)]
-                            .Rating;
-                    count++;
-                }
-                rslt = (double)sum / count;
-            }
-            return rslt;
-        }
-        #endregion
-
-        #region WarmFirstRandom
-        [Benchmark(Description = "rbar (read-ahead, EF cache) - whole using DbSet.Local cache")]
-        public double WarmFirstRandom()
-        {
-            var rslt = -1d;
-            using var ctx = new BloggingContext(_sqlConnString);
-            // removed .AsNoTracking() as this disables EF cache (not just the CT functionality)
-            _ = ctx.Blogs.ToList();               // pull down all records, keep all fields in EF (i.e. warm)
-                                                  // First will always roundtrip for projection, cache starts warm but ignored by First
-            for (var p = 0; p < NumPasses; p++)     // always roundtrip, so same perf each pass
-            {
-                var sum = 0;
-                var count = 0;
-                foreach (var PK in keysplat)                // OLTP will often need to retrieve by [synthetic] key
-                {
-                    sum += ctx.Blogs.First(b => b.BlogId == PK).Rating;   // roundtrip to ensure always get latest data
+                    sum += ctx.Blogs                        // First will never search Local first, but will always roundtrip to db
+                                                            //.AsNoTracking()               // projections always skip EF Local and CT effort
+                            .Where(b => b.BlogId == PK)     // use EF to find particular record [O(n)]
+                            .Select(b => b.Rating)          // project only the fields we need (i.e. minimise LAN traffic)
+                            .First();                       // roundtrip to ensure always get latest data
                     count++;
                 }
                 rslt = (double)sum / count;
@@ -538,19 +510,23 @@ namespace Benchmarks
         #endregion
 
         #region WarmObjRandom
-        [Benchmark(Description = "rbar (read-ahead, cache via List)")]
+        [Benchmark(Description = "WarmObjRandom {req=1, row=N, col=2, keep=T}")]
         public double WarmObjRandom()
         {
             var rslt = -1d;
             using var ctx = new BloggingContext(_sqlConnString);
-            var appcache = ctx.Blogs.AsNoTracking().ToList();       // pull down {cols=all,rows=all}, but only in appcache (not Local)
-            for (var p = 0; p < NumPasses; p++)     // always re-use appcache, so same perf each pass
+
+            var appcache = ctx.Blogs
+                            //.AsNoTracking()                           // projections always skip EF Local and CT effort
+                            .Select(b => new { b.BlogId, b.Rating })    // pull down {cols=2,rows=all}
+                            .ToList();                                  //  but just stash {key, value} in appcache (not Local)
+            for (var p = 0; p < NumPasses; p++)                         // always re-use appcache, so same perf each pass
             {
                 var sum = 0;
                 var count = 0;
-                foreach (var PK in keysplat)                // OLTP will often need to retrieve by [synthetic] key
+                foreach (var PK in keysplat)                            // OLTP will often need to retrieve by [synthetic] key
                 {
-                    sum += appcache.First(b => b.BlogId == PK).Rating;    // repeatable-read from appcache [possible staler than db]
+                    sum += appcache.First(b => b.BlogId == PK).Rating;  // repeatable-read from appcache [possible staler than db] is O(n)
                     count++;
                 }
                 rslt = (double)sum / count;
@@ -559,9 +535,9 @@ namespace Benchmarks
         }
         #endregion
 
-        #region WarmLocalRandom
-        [Benchmark(Description = "rbar (read-ahead, Local hybrid cache)")]
-        public double WarmLocalRandom()
+        #region WarmHybridRandom
+        [Benchmark(Description = "WarmHybridRandom  {req=N,row=N,col=all,keep=T}")]
+        public double WarmHybridRandom()
         {
             var rslt = -1d;
             using var ctx = new BloggingContext(_sqlConnString);
@@ -570,7 +546,7 @@ namespace Benchmarks
             {
                 var sum = 0;
                 var count = 0;
-                foreach (var PK in keysplat)                // OLTP will often need to retrieve by [synthetic] key
+                foreach (var PK in keysplat)        // OLTP will often need to retrieve by [synthetic] key
                 {
                     var blog = ctx.Blogs.Local.First(b => b.BlogId == PK)       // try client-side Local cache first [stale] ..
                                 ?? ctx.Blogs.First(b => b.BlogId == PK);        // .. otherwise pop [latest] from db
@@ -584,21 +560,22 @@ namespace Benchmarks
         #endregion
 
         #region WarmDictRandom
-        [Benchmark(Description = "rbar (read-ahead, cache via Dictionary)")]
+        [Benchmark(Description = "WarmDictRandom {req=N,row=N,col=2,keep=T}")]
         public double WarmDictRandom()
         {
             var rslt = -1d;
             using var ctx = new BloggingContext(_sqlConnString);
             var appDict = ctx.Blogs
-                            .Select(b => new { b.BlogId, b.Rating })        // pull down subset [i.e. "projection"] record {rows=all,cols=2}
-                            .ToDictionary(b => b.BlogId, b => b.Rating);    // but only in appDict (not Local)
-            for (var p = 0; p < NumPasses; p++)             // always re-use appDict, so same perf each pass
+                            //.AsNoTracking()                               // projections always skip EF Local and CT effort
+                            .Select(b => new { b.BlogId, b.Rating })        // pull down {cols=2,rows=all}
+                            .ToDictionary(b => b.BlogId, b => b.Rating);    // but just stash {key, value} in appDict (not Local)
+            for (var p = 0; p < NumPasses; p++)                             // always re-use appDict, so same perf each pass
             {
                 var sum = 0;
                 var count = 0;
-                foreach (var PK in keysplat)                // OLTP will often need to retrieve by [synthetic] key
+                foreach (var PK in keysplat)                                // OLTP will often need to retrieve by [synthetic] key
                 {
-                    sum += appDict[PK];                     // lookup value by PK efficiently [= "O(1)" operation]
+                    sum += appDict[PK];                                     // lookup value by PK efficiently [= "O(1)" operation]
                     count++;
                 }
                 rslt = (double)sum / count;
