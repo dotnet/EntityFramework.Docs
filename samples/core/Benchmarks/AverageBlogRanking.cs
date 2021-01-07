@@ -9,22 +9,23 @@ using Microsoft.EntityFrameworkCore;
 namespace Benchmarks
 {
     [MemoryDiagnoser]
-    public static class AverageBlogRanking
+    public class AverageBlogRanking
     {
-        public const int NumBlogs = 1000;
+        [Params(1000)]
+        public int NumBlogs;            // number of records to write [once], and read [each pass]
 
         [GlobalSetup]
-        public static void Setup()
+        public void Setup()
         {
             using var context = new BloggingContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            context.SeedData();
+            context.SeedData(NumBlogs);
         }
 
         #region LoadEntities
         [Benchmark]
-        public static double LoadEntities()
+        public double LoadEntities()
         {
             var sum = 0;
             var count = 0;
@@ -41,7 +42,7 @@ namespace Benchmarks
 
         #region LoadEntitiesNoTracking
         [Benchmark]
-        public static double LoadEntitiesNoTracking()
+        public double LoadEntitiesNoTracking()
         {
             var sum = 0;
             var count = 0;
@@ -58,7 +59,7 @@ namespace Benchmarks
 
         #region ProjectOnlyRanking
         [Benchmark]
-        public static double ProjectOnlyRanking()
+        public double ProjectOnlyRanking()
         {
             var sum = 0;
             var count = 0;
@@ -75,7 +76,7 @@ namespace Benchmarks
 
         #region CalculateInDatabase
         [Benchmark(Baseline = true)]
-        public static double CalculateInDatabase()
+        public double CalculateInDatabase()
         {
             using var ctx = new BloggingContext();
             return ctx.Blogs.Average(b => b.Rating);
@@ -89,10 +90,10 @@ namespace Benchmarks
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Integrated Security=True");
 
-            public void SeedData()
+            public void SeedData(int numblogs)
             {
                 Blogs.AddRange(
-                    Enumerable.Range(0, NumBlogs).Select(i => new Blog
+                    Enumerable.Range(0, numblogs).Select(i => new Blog
                     {
                         Name = $"Blog{i}",
                         Url = $"blog{i}.blogs.net",

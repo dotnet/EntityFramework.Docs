@@ -1,0 +1,57 @@
+// * Summary *
+
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.18363.1256 (1909/November2018Update/19H2)
+Intel Core i7-4500U CPU 1.80GHz (Haswell), 1 CPU, 4 logical and 2 physical cores
+.NET Core SDK=5.0.101
+  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+
+
+|                 Method | NumBlogs |      Mean |    Error |   StdDev |    Median | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 |  Allocated |
+|----------------------- |--------- |----------:|---------:|---------:|----------:|------:|--------:|------:|------:|------:|-----------:|
+|           LoadEntities |     1000 | 16.350 ms | 2.915 ms | 8.315 ms | 12.799 ms |  1.50 |    0.71 |     - |     - |     - | 1312.17 KB |
+| LoadEntitiesNoTracking |     1000 |  9.758 ms | 2.154 ms | 5.560 ms |  8.015 ms |  0.82 |    0.52 |     - |     - |     - |  542.98 KB |
+|     ProjectOnlyRanking |     1000 | 10.976 ms | 2.091 ms | 6.001 ms |  9.027 ms |  0.99 |    0.45 |     - |     - |     - |  255.33 KB |
+|    CalculateInDatabase |     1000 | 12.173 ms | 1.866 ms | 5.170 ms | 12.418 ms |  1.00 |    0.00 |     - |     - |     - |   36.65 KB |
+
+// * Warnings *
+MinIterationTime
+  AverageBlogRanking.LoadEntities: Default           -> The minimum observed iteration time is 7.9599 ms which is very small. It's recommended to increase it to at least 100.0000 ms using more operations.
+  AverageBlogRanking.LoadEntitiesNoTracking: Default -> The minimum observed iteration time is 6.0718 ms which is very small. It's recommended to increase it to at least 100.0000 ms using more operations.
+  AverageBlogRanking.ProjectOnlyRanking: Default     -> The minimum observed iteration time is 4.5018 ms which is very small. It's recommended to increase it to at least 100.0000 ms using more operations.
+  AverageBlogRanking.CalculateInDatabase: Default    -> The minimum observed iteration time is 4.1085 ms which is very small. It's recommended to increase it to at least 100.0000 ms using more operations.
+MultimodalDistribution
+  AverageBlogRanking.CalculateInDatabase: Default -> It seems that the distribution is bimodal (mValue = 4.16)
+
+// * Hints *
+Outliers
+  AverageBlogRanking.LoadEntities: Default           -> 6 outliers were removed (61.44 ms..133.55 ms)
+  AverageBlogRanking.LoadEntitiesNoTracking: Default -> 22 outliers were removed (43.34 ms..224.97 ms)
+  AverageBlogRanking.ProjectOnlyRanking: Default     -> 5 outliers were removed (34.52 ms..183.49 ms)
+  AverageBlogRanking.CalculateInDatabase: Default    -> 11 outliers were removed (29.91 ms..386.81 ms)
+
+// * Legends *
+  NumBlogs  : Value of the 'NumBlogs' parameter
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Median    : Value separating the higher half of all measurements (50th percentile)
+  Ratio     : Mean of the ratio distribution ([Current]/[Baseline])
+  RatioSD   : Standard deviation of the ratio distribution ([Current]/[Baseline])
+  Gen 0     : GC Generation 0 collects per 1000 operations
+  Gen 1     : GC Generation 1 collects per 1000 operations
+  Gen 2     : GC Generation 2 collects per 1000 operations
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 ms      : 1 Millisecond (0.001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+// ** Remained 0 benchmark(s) to run **
+Run time: 00:00:48 (48.12 sec), executed benchmarks: 4
+
+Global total time: 00:00:59 (59.01 sec), executed benchmarks: 4
+// * Artifacts cleanup *
+
+C:\temp\shay2934\samples\core\Benchmarks\bin\Release\net5.0>
