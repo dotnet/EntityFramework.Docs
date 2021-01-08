@@ -15,7 +15,7 @@ namespace Benchmarks
         [Params(5000)]
         public int RowsPerEntityType { get; set; }
 
-        [GlobalSetup(Target=nameof(TPH))]
+        [GlobalSetup(Target = nameof(TPH))]
         public void SetupTPH()
         {
             Console.WriteLine("Setting up database...");
@@ -26,7 +26,7 @@ namespace Benchmarks
             Console.WriteLine("Setup complete.");
         }
 
-        [GlobalSetup(Target=nameof(TPT))]
+        [GlobalSetup(Target = nameof(TPT))]
         public void SetupTPT()
         {
             Console.WriteLine("Setting up database...");
@@ -38,7 +38,7 @@ namespace Benchmarks
         }
 
         [Benchmark]
-        public List<Root> TPH()
+        public static List<Root> TPH()
         {
             using var context = new TPHContext();
 
@@ -46,7 +46,7 @@ namespace Benchmarks
         }
 
         [Benchmark]
-        public List<Root> TPT()
+        public static List<Root> TPT()
         {
             using var context = new TPTContext();
 
