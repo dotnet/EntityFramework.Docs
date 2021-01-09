@@ -57,7 +57,7 @@ The <xref:System.Console.WriteLine%2A?displayProperty=nameWithType> method is of
 Writing to a file requires creating a <xref:System.IO.StreamWriter> or similar for the file. The <xref:System.IO.StreamWriter.WriteLine%2A> method can then be used as in the other examples above. Remember to ensure the file is closed cleanly by disposing the writer when the context is disposed. For example:
 
 <!--
-    private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true); 
+    private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true);
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.LogTo(_logStream.WriteLine);
@@ -67,7 +67,7 @@ Writing to a file requires creating a <xref:System.IO.StreamWriter> or similar f
         base.Dispose();
         _logStream.Dispose();
     }
-    
+
     public override async ValueTask DisposeAsync()
     {
         await base.DisposeAsync();

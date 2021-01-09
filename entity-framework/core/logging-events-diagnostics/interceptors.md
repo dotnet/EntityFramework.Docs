@@ -21,7 +21,7 @@ Interceptors are registered using <xref:Microsoft.EntityFrameworkCore.DbContextO
 <!--
 public class ExampleContext : BlogsContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.AddInterceptors(new TaggedQueryCommandInterceptor());
 }
 -->
@@ -37,10 +37,10 @@ Interceptors are often stateless, which means that a single interceptor instance
 <!--
 public class TaggedQueryCommandInterceptorContext : BlogsContext
 {
-    private static readonly TaggedQueryCommandInterceptor _interceptor 
+    private static readonly TaggedQueryCommandInterceptor _interceptor
         = new TaggedQueryCommandInterceptor();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.AddInterceptors(_interceptor);
 }
 -->
@@ -338,7 +338,7 @@ The [caching interceptor sample](https://github.com/dotnet/EntityFramework.Docs/
         {
             Console.WriteLine(await GetDailyMessage(context));
         }
-        
+
         #region GetDailyMessage
         async Task<string> GetDailyMessage(DailyMessageContext context)
             => (await context.DailyMessages.TagWith("Get_Daily_Message").OrderBy(e => e.Id).LastAsync()).Message;

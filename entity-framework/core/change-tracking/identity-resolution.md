@@ -67,7 +67,7 @@ Often the entity to update does not come from a query on the DbContext that we a
     public static void UpdateFromHttpPost1(Blog blog)
     {
         using var context = new BlogsContext();
-            
+
         context.Update(blog);
 
         context.SaveChanges();
@@ -90,7 +90,7 @@ Usually it is not known which property values have actually been changed when an
     public static void UpdateFromHttpPost2(Blog blog)
     {
         using var context = new BlogsContext();
-            
+
         var trackedBlog = context.Blogs.Find(blog.Id);
 
         trackedBlog.Name = blog.Name;
@@ -114,7 +114,7 @@ EF Core has some helpers for transferring property values like this. For example
     public static void UpdateFromHttpPost3(Blog blog)
     {
         using var context = new BlogsContext();
-            
+
         var trackedBlog = context.Blogs.Find(blog.Id);
 
         context.Entry(trackedBlog).CurrentValues.SetValues(blog);
@@ -130,11 +130,11 @@ EF Core has some helpers for transferring property values like this. For example
     public static void UpdateFromHttpPost4(BlogDto dto)
     {
         using var context = new BlogsContext();
-            
+
         var trackedBlog = context.Blogs.Find(dto.Id);
 
         context.Entry(trackedBlog).CurrentValues.SetValues(dto);
-            
+
         context.SaveChanges();
     }
 -->
@@ -146,11 +146,11 @@ Or a dictionary with name/value entries for the property values:
     public static void UpdateFromHttpPost5(Dictionary<string, object> propertyValues)
     {
         using var context = new BlogsContext();
-            
+
         var trackedBlog = context.Blogs.Find(propertyValues["Id"]);
 
         context.Entry(trackedBlog).CurrentValues.SetValues(propertyValues);
-            
+
         context.SaveChanges();
     }
 -->
@@ -169,7 +169,7 @@ So far each approach has either executed a query before making the update, or up
 
         context.Attach(blog);
         context.Entry(blog).OriginalValues.SetValues(originalValues);
-            
+
         context.SaveChanges();
     }
 -->
@@ -573,7 +573,7 @@ Entity types are often configured to use [automatically generated key values](xr
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        
+
         public string Name { get; set; }
     }
 -->
@@ -656,7 +656,7 @@ This comparer can then be used when creating collection navigations. For example
 
 <!--
         public ICollection<Order> Orders { get; set; }
-            = new HashSet<Order>(ReferenceEqualityComparer.Instance); 
+            = new HashSet<Order>(ReferenceEqualityComparer.Instance);
 -->
 [!code-csharp[OrdersCollection](../../../samples/core/ChangeTracking/IdentityResolutionInEFCore/IdentityResolutionSamples.cs?name=OrdersCollection)]
 

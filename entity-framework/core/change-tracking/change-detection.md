@@ -28,17 +28,17 @@ Detection of changes is needed when a property or navigation has been changed _w
 <!--
         using var context = new BlogsContext();
         var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
-        
+
         // Change a property value
         blog.Name = ".NET Blog (Updated!)";
-        
+
         // Add a new entity to a navigation
         blog.Posts.Add(new Post
         {
             Title = "What’s next for System.Text.Json?",
             Content = ".NET 5.0 was released recently and has come with many..."
         });
-        
+
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -104,10 +104,10 @@ Contrast this to the following code which modifies the entities in the same way,
 <!--
         using var context = new BlogsContext();
         var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
-        
+
         // Change a property value
         context.Entry(blog).Property(e => e.Name).CurrentValue = ".NET Blog (Updated!)";
-        
+
         // Add a new entity to the DbContext
         context.Add(
             new Post
@@ -116,7 +116,7 @@ Contrast this to the following code which modifies the entities in the same way,
                 Title = "What’s next for System.Text.Json?",
                 Content = ".NET 5.0 was released recently and has come with many..."
             });
-        
+
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 -->
 [!code-csharp[Snapshot_change_tracking_2](../../../samples/core/ChangeTracking/ChangeDetectionAndNotifications/SnapshotSamples.cs?name=Snapshot_change_tracking_2)]
@@ -313,17 +313,17 @@ Notification entities behave like any other entities, except that making changes
 <!--
             using var context = new BlogsContext();
             var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
-        
+
             // Change a property value
             blog.Name = ".NET Blog (Updated!)";
-        
+
             // Add a new entity to a navigation
             blog.Posts.Add(new Post
             {
                 Title = "What’s next for System.Text.Json?",
                 Content = ".NET 5.0 was released recently and has come with many..."
             });
-        
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 -->
 [!code-csharp[Notification_entities_2](../../../samples/core/ChangeTracking/ChangeDetectionAndNotifications/NotificationWithBaseSamples.cs?name=Notification_entities_2)]
@@ -363,7 +363,7 @@ Post {Id: 2} Unchanged
 EF Core can dynamically generate proxy types that implement <xref:System.ComponentModel.INotifyPropertyChanging> and <xref:System.ComponentModel.INotifyPropertyChanged>. This requires installing the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) NuGet package, and enabling change-tracking proxies with <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies%2A> For example:
 
 <!--
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseChangeTrackingProxies();
 -->
 [!code-csharp[OnConfiguring](../../../samples/core/ChangeTracking/ChangeDetectionAndNotifications/ChangeTrackingProxiesSamples.cs?name=OnConfiguring)]
@@ -398,10 +398,10 @@ EF Core creates proxy instances automatically when querying the database, so thi
 <!--
             using var context = new BlogsContext();
             var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
-        
+
             // Change a property value
             blog.Name = ".NET Blog (Updated!)";
-        
+
             // Add a new entity to a navigation
             blog.Posts.Add(
                 context.CreateProxy<Post>(
@@ -410,7 +410,7 @@ EF Core creates proxy instances automatically when querying the database, so thi
                             p.Title = "What’s next for System.Text.Json?";
                             p.Content = ".NET 5.0 was released recently and has come with many...";
                         }));
-        
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 -->
 [!code-csharp[Change_tracking_proxies_1](../../../samples/core/ChangeTracking/ChangeDetectionAndNotifications/ChangeTrackingProxiesSamples.cs?name=Change_tracking_proxies_1)]

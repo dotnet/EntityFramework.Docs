@@ -92,7 +92,7 @@ The [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            
+
             context.Add(
                 new Blog
                 {

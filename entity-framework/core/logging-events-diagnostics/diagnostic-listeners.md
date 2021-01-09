@@ -24,10 +24,10 @@ Resolving EF Core events is a two-step process. First, an [observer](/dotnet/sta
 <!--
 public class DiagnosticObserver : IObserver<DiagnosticListener>
 {
-    public void OnCompleted() 
+    public void OnCompleted()
         => throw new NotImplementedException();
-    
-    public void OnError(Exception error) 
+
+    public void OnError(Exception error)
         => throw new NotImplementedException();
 
     public void OnNext(DiagnosticListener value)
@@ -55,10 +55,10 @@ Second, once the EF Core DiagnosticListener is found, a new key-value observer i
 <!--
 public class KeyValueObserver : IObserver<KeyValuePair<string, object>>
 {
-    public void OnCompleted() 
+    public void OnCompleted()
         => throw new NotImplementedException();
-    
-    public void OnError(Exception error) 
+
+    public void OnError(Exception error)
         => throw new NotImplementedException();
 
     public void OnNext(KeyValuePair<string, object> value)
@@ -100,12 +100,12 @@ The [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/
         #region RegisterDiagnosticListener
         DiagnosticListener.AllListeners.Subscribe(new DiagnosticObserver());
         #endregion
-        
+
         using (var context = new BlogsContext())
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            
+
             context.Add(
                 new Blog
                 {

@@ -43,7 +43,7 @@ ASP.NET Core applications are [configured using dependency injection](/aspnet/co
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
+
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
         }

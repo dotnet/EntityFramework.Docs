@@ -52,7 +52,7 @@ Shared-type entity types are used by default for the join entities in many-to-ma
                             b.IndexerProperty<int>("TagId");
                             b.IndexerProperty<int>("PostId");
                         });
-            
+
             modelBuilder.Entity<Post>()
                 .HasMany(p => p.Tags)
                 .WithMany(p => p.Posts)
@@ -133,7 +133,7 @@ Starting with EF Core 3.0, temporary values are stored in the change tracker and
         using var context = new BlogsContext();
 
         var blog = new Blog { Name = ".NET Blog" };
-        
+
         context.Add(blog);
 
         Console.WriteLine($"Blog.Id set on entity is {blog.Id}");
@@ -180,7 +180,7 @@ It is sometimes useful to explicitly work with temporary values. For example, a 
             };
 
             using var context = new BlogsContext();
-            
+
             foreach (var blog in blogs)
             {
                 context.Add(blog).Property(e => e.Id).IsTemporary = true;
@@ -292,7 +292,7 @@ When inserting an entity of this type, EF Core will let the database generate th
                 new Token { Name = "B", ValidFrom = new DateTime(1111, 11, 11, 11, 11, 11)});
 
             context.SaveChanges();
-        
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 -->
 [!code-csharp[Working_with_default_values_1](../../../samples/core/ChangeTracking/AdditionalChangeTrackingFeatures/DefaultValueSamples.cs?name=Working_with_default_values_1)]
@@ -347,7 +347,7 @@ The intention is that the default of -1 will be used whenever an explicit value 
 
         context.AddRange(fooA, fooB, fooC);
         context.SaveChanges();
-        
+
         Debug.Assert(fooA.Count == 10);
         Debug.Assert(fooB.Count == -1); // Not what we want!
         Debug.Assert(fooC.Count == -1);
@@ -376,7 +376,7 @@ This makes the CLR default null, instead of 0, which means 0 will now be inserte
 
         context.AddRange(fooA, fooB, fooC);
         context.SaveChanges();
-        
+
         Debug.Assert(fooA.Count == 10);
         Debug.Assert(fooB.Count == 0);
         Debug.Assert(fooC.Count == -1);
@@ -418,7 +418,7 @@ This allows the CLR default (0) to be inserted if the property is explicitly set
 
             context.AddRange(fooA, fooB, fooC);
             context.SaveChanges();
-        
+
             Debug.Assert(fooA.Count == 10);
             Debug.Assert(fooB.Count == 0);
             Debug.Assert(fooC.Count == -1);

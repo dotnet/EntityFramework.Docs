@@ -48,7 +48,7 @@ Two models are used in the following sections. The first is configured to **not*
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        
+
         public string Name { get; set; }
 
         public IList<Post> Posts { get; } = new List<Post>();
@@ -83,10 +83,10 @@ public class Blog
 public class Post
 {
     public int Id { get; set; }
-    
+
     public string Title { get; set; }
     public string Content { get; set; }
-    
+
     public int? BlogId { get; set; }
     public Blog Blog { get; set; }
 }
@@ -722,7 +722,7 @@ In more realistic examples, a graph of entities is first attached, and then some
 <!--
             // Attach a blog and associated posts
             context.Attach(blog);
-            
+
             // Mark one post as Deleted
             context.Remove(blog.Posts[1]);
 -->
@@ -793,7 +793,7 @@ The `Post.BlogId` foreign key property is nullable in the model we have been usi
 <!--
             // Attach a blog and associated posts
             context.Attach(blog);
-            
+
             // Mark one post as Deleted
             context.Remove(blog.Posts[1]);
 -->
@@ -863,7 +863,7 @@ If the `Post.BlogId` foreign key property is non-nullable, then the relationship
 <!--
             // Attach a blog and associated posts
             context.Attach(blog);
-            
+
             // Mark one post as Deleted
             context.Remove(blog.Posts[1]);
 -->
@@ -959,7 +959,7 @@ This disconnected graph can then be tracked using TrackGraph:
                         {
                             node.Entry.State = EntityState.Modified;
                         }
-                        
+
                         Console.WriteLine($"Tracking {node.Entry.Metadata.DisplayName()} with key value {keyValue} as {node.Entry.State}");
 
                     });
