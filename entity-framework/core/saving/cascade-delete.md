@@ -205,6 +205,12 @@ This will result in an exception if the foreign key constraint in the database i
 > [!NOTE]
 > Databases don't typically have any way to automatically delete orphans. This is because while EF Core represents relationships using navigations as well of foreign keys, databases have only foreign keys and no navigations. This means that it is usually not possible to sever a relationship without loading both sides into the DbContext.
 
+> [!NOTE]
+> The EF Core in-memory database does not currently support cascade deletes in the database.
+
+> [!NOTE]
+> Do not configure cascade delete in the database when soft-deleting entities. This may cause entities to be accidentally really deleted instead of soft-deleted.
+
 ### Database cascade limitations
 
 Some databases, most notably SQL Server, have limitations on the cascade behaviors that form cycles. For example, consider the following model:
