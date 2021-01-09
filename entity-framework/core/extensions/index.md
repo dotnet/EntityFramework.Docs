@@ -10,7 +10,7 @@ uid: core/extensions/index
 
 These tools and extensions provide additional functionality for Entity Framework Core 2.1 and later.
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Extensions are built by a variety of sources and aren't maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate its quality, licensing, compatibility, support, etc. to ensure it meets your requirements. In particular, an extension built for an older version of EF Core may need updating before it will work with the latest versions.
 
 ## Tools

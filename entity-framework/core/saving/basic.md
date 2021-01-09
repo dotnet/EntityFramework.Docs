@@ -9,7 +9,7 @@ uid: core/saving/basic
 
 Learn how to add, modify, and remove data using your context and entity classes.
 
-> [!TIP]  
+> [!TIP]
 > You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/Basics/) on GitHub.
 
 ## Adding Data
@@ -18,7 +18,7 @@ Use the *DbSet.Add* method to add new instances of your entity classes. The data
 
 [!code-csharp[Main](../../../samples/core/Saving/Basics/Sample.cs#Add)]
 
-> [!TIP]  
+> [!TIP]
 > The Add, Attach, and Update methods all work on the full graph of entities passed to them, as described in the [Related Data](xref:core/saving/related-data) section. Alternately, the EntityEntry.State property can be used to set the state of just a single entity. For example, `context.Entry(blog).State = EntityState.Modified`.
 
 ## Updating Data
@@ -41,7 +41,7 @@ If the entity already exists in the database, it will be deleted during *SaveCha
 
 You can combine multiple Add/Update/Remove operations into a single call to *SaveChanges*.
 
-> [!NOTE]  
+> [!NOTE]
 > For most database providers, *SaveChanges* is transactional. This means  all the operations will either succeed or fail and the operations will never be left partially applied.
 
 [!code-csharp[Main](../../../samples/core/Saving/Basics/Sample.cs#MultipleOperations)]

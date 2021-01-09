@@ -11,7 +11,7 @@ uid: core/logging-events-diagnostics/simple-logging
 > [!NOTE]
 > This feature was introduced in EF Core 5.0.
 
-> [!TIP]  
+> [!TIP]
 > You can [download this article's sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging/SimpleLogging) from GitHub.
 
 Entity Framework Core (EF Core) simple logging can be used to easily obtain logs while developing and debugging applications. This form of logging requires minimal configuration and no additional NuGet packages.
@@ -125,7 +125,7 @@ Every EF Core log message is assigned to a level defined by the <xref:Microsoft.
 
 Every log message is assigned an <xref:Microsoft.Extensions.Logging.EventId>. These IDs can be accessed from the <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId> class or the <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId> class for relational-specific messages. A database provider may also have provider-specific IDs in a similar class. For example, <xref:Microsoft.EntityFrameworkCore.Diagnostics.SqlServerEventId> for the SQL Server provider.
 
-`LogTo` can be configured to only log the messages associated with one or more event IDs. For example, to log only messages for the context being initialized or disposed:  
+`LogTo` can be configured to only log the messages associated with one or more event IDs. For example, to log only messages for the context being initialized or disposed:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

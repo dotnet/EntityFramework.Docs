@@ -13,7 +13,7 @@ Testing code that accesses a database requires either:
 * Running queries and updates against some other easier to manage database system.
 * Using test doubles or some other mechanism to avoid using a database at all.
 
-This document outlines the trade-offs involved in each of these choices and shows how EF Core can be used with each approach.  
+This document outlines the trade-offs involved in each of these choices and shows how EF Core can be used with each approach.
 
 > [!TIP]
 > See [EF Core testing sample](xref:core/testing/testing-sample) for code demonstrating the concepts introduced here.
@@ -29,7 +29,7 @@ Fundamentally, this means that switching out the database provider will change E
 That being said, in many cases doing this will work because there is a high degree of commonality amongst relational databases.
 This is good and bad.
 Good because moving between database systems can be relatively easy.
-Bad because it can give a false sense of security if the application is not fully tested against the new database system.  
+Bad because it can give a false sense of security if the application is not fully tested against the new database system.
 
 ## Approach 1: Production database system
 
@@ -59,7 +59,7 @@ LocalDB is not without its issues:
 Personally, I've never found it a problem having a database service running on my dev machine and I would generally recommend using Developer Edition instead.
 However, LocalDB may be appropriate for some people, especially on less powerful dev machines.
 
-[Running SQL Server](/sql/linux/quickstart-install-connect-docker) (or any other database system) in a Docker container (or similar) is another way to avoid running the database system directly on your development machine.  
+[Running SQL Server](/sql/linux/quickstart-install-connect-docker) (or any other database system) in a Docker container (or similar) is another way to avoid running the database system directly on your development machine.
 
 ## Approach 2: SQLite
 

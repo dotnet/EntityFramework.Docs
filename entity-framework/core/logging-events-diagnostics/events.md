@@ -8,7 +8,7 @@ uid: core/logging-events-diagnostics/events
 
 # .NET Events in EF Core
 
-> [!TIP]  
+> [!TIP]
 > You can [download the events sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Events) from GitHub.
 
 Entity Framework Core (EF Core) exposes [.NET events](/dotnet/standard/events/) to act as callbacks when certain things happen in the EF Core code. Events are simpler than [interceptors](xref:core/logging-events-diagnostics/interceptors) and allow more flexible registration. However, they are sync only and so cannot perform non-blocking async I/O.

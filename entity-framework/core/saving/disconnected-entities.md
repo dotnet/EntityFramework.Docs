@@ -39,7 +39,7 @@ However, EF also has a built-in way to do this for any entity type and key type:
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#IsItNewGeneral)]
 
-> [!TIP]  
+> [!TIP]
 > Keys are set as soon as entities are tracked by the context, even if the entity is in the Added state. This helps when traversing a graph of entities and deciding what to do with each, such as when using the TrackGraph API. The key value should only be used in the way shown here _before_ any call is made to track the entity.
 
 ### With other keys
@@ -78,7 +78,7 @@ The steps here are:
   * We then use SetValues to set the values for all properties on this entity to those that came from the client.
   * The SetValues call will mark the entity to be updated as needed.
 
-> [!TIP]  
+> [!TIP]
 > SetValues will only mark as modified the properties that have different values to those in the tracked entity. This means that when the update is sent, only those columns that have actually changed will be updated. (And if nothing has changed, then no update will be sent at all.)
 
 ## Working with graphs
