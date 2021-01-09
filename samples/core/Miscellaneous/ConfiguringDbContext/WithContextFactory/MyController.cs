@@ -14,7 +14,7 @@ namespace WithContextFactory
             _contextFactory = contextFactory;
         }
         #endregion
-        
+
         #region DoSomething
         public void DoSomething()
         {

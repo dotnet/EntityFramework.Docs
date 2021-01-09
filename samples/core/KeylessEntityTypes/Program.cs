@@ -79,8 +79,8 @@ namespace Samples
 
                     #region View
                     db.Database.ExecuteSqlRaw(
-                        @"CREATE VIEW View_BlogPostCounts AS 
-                            SELECT b.Name, Count(p.PostId) as PostCount 
+                        @"CREATE VIEW View_BlogPostCounts AS
+                            SELECT b.Name, Count(p.PostId) as PostCount
                             FROM Blogs b
                             JOIN Posts p on p.BlogId = b.BlogId
                             GROUP BY b.Name");
@@ -101,7 +101,7 @@ namespace Samples
         #region DbSet
         public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
         #endregion
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder

@@ -14,7 +14,7 @@ public class Program
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            
+
             context.Add(
                 new Blog
                 {
@@ -59,7 +59,7 @@ public class BlogsContext : DbContext
         => optionsBuilder.UseSqlite("DataSource=blogs.db");
 
     public DbSet<Blog> Blogs { get; set; }
-    
+
     #region UpdateTimestamps
     private static void UpdateTimestamps(object sender, EntityEntryEventArgs e)
     {
@@ -91,7 +91,7 @@ public static class HasTimestampsExtensions
     {
         return $"{GetStamp("Added", entity.Added)}{GetStamp("Modified", entity.Modified)}{GetStamp("Deleted", entity.Deleted)}";
 
-        string GetStamp(string state, DateTime? dateTime) 
+        string GetStamp(string state, DateTime? dateTime)
             => dateTime == null ? "" : $" {state} on: {dateTime}";
     }
 }
@@ -113,12 +113,12 @@ public class Blog : IHasTimestamps
     public string Name { get; set; }
 
     public ICollection<Post> Posts { get; } = new List<Post>();
-    
+
     public DateTime? Added { get; set; }
     public DateTime? Deleted { get; set; }
     public DateTime? Modified { get; set; }
 
-    public override string ToString() 
+    public override string ToString()
         => $"Blog {Id}{this.ToStampString()}";
 }
 
@@ -130,12 +130,12 @@ public class Post : IHasTimestamps
     public string Title { get; set; }
 
     public Blog Blog { get; set; }
-    
+
     public DateTime? Added { get; set; }
     public DateTime? Deleted { get; set; }
     public DateTime? Modified { get; set; }
 
-    public override string ToString() 
+    public override string ToString()
         => $"Post {Id}{this.ToStampString()}";
 }
 #endregion

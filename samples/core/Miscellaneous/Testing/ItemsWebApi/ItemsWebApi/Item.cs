@@ -30,14 +30,14 @@ namespace Items
                 tag = new Tag(label);
                 _tags.Add(tag);
             }
-            
+
             tag.Count++;
 
             return tag;
         }
 
         public string Name { get; }
-        
+
         public IReadOnlyList<Tag> Tags => _tags;
     }
     #endregion

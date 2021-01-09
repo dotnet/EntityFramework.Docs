@@ -40,7 +40,7 @@ namespace EFModeling.ValueConversions
 
             ConsoleWriteLines("Sample finished.");
         }
-        
+
         public class SampleDbContext : DbContext
         {
             private static readonly ILoggerFactory

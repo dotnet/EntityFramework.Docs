@@ -5,7 +5,7 @@ namespace Cosmos.ModelBuilding
     public class OrderContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Distributor> Distributors { get; set; }        
+        public DbSet<Distributor> Distributors { get; set; }
 
         #region Configuration
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -14,7 +14,7 @@ namespace EFModeling.FluentAPI.Relational.SequenceConfiguration
                 .IncrementsBy(5);
         }
         #endregion
-    }   
+    }
 
     public class Order
     {

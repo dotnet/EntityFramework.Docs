@@ -22,7 +22,7 @@ namespace EFQuerying.ComplexQuery
                 #region JoinComposite
                 var query = from photo in context.Set<PersonPhoto>()
                             join person in context.Set<Person>()
-                                on new { Id = (int?)photo.PersonPhotoId, Caption = photo.Caption } 
+                                on new { Id = (int?)photo.PersonPhotoId, Caption = photo.Caption }
                                 equals new { Id = person.PhotoId, Caption = "SN" }
                             select new { person, photo };
                 #endregion

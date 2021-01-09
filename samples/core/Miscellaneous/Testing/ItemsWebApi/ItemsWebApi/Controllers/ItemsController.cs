@@ -12,17 +12,17 @@ namespace Items.Controllers
         #region Constructor
         private readonly ItemsContext _context;
 
-        public ItemsController(ItemsContext context) 
+        public ItemsController(ItemsContext context)
             => _context = context;
         #endregion
 
         #region Get
         [HttpGet]
-        public IEnumerable<Item> Get() 
+        public IEnumerable<Item> Get()
             => _context.Set<Item>().Include(e => e.Tags).OrderBy(e => e.Name);
 
         [HttpGet]
-        public Item Get(string itemName) 
+        public Item Get(string itemName)
             => _context.Set<Item>().Include(e => e.Tags).FirstOrDefault(e => e.Name == itemName);
         #endregion
 
@@ -33,7 +33,7 @@ namespace Items.Controllers
             var item = _context.Add(new Item(itemName)).Entity;
 
             _context.SaveChanges();
-            
+
             return item;
         }
         #endregion
@@ -49,11 +49,11 @@ namespace Items.Controllers
                 .AddTag(tagLabel);
 
             _context.SaveChanges();
-            
+
             return tag;
         }
         #endregion
-        
+
         #region DeleteItem
         [HttpDelete("{itemName}")]
         public ActionResult<Item> DeleteItem(string itemName)

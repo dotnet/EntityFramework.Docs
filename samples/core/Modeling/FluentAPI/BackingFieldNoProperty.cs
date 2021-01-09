@@ -23,7 +23,7 @@ namespace EFModeling.FluentAPI.BackingFieldNoProperty
 
         public string GetUrl()
         {
-            return _validatedUrl; 
+            return _validatedUrl;
         }
 
         public void SetUrl(string url)
