@@ -61,7 +61,7 @@ namespace IntroOptional
             Helpers.RecreateCleanDatabase();
             Helpers.PopulateDatabase();
 
-            #region Severing_a_relationship_1b
+            #region Severing_a_relationship_2b
             using var context = new BlogsContext();
 
             var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
