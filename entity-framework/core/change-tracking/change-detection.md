@@ -1,6 +1,6 @@
 ---
 title: Change Detection and Notifications - EF Core
-description: Detecting property and relationship changes using DetectChanges or notifications  
+description: Detecting property and relationship changes using DetectChanges or notifications
 author: ajcvickers
 ms.date: 12/30/2020
 uid: core/change-tracking/change-detection

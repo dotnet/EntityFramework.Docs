@@ -1,6 +1,6 @@
 ---
 title: Change Tracking - EF Core
-description: Overview of change tracking for EF Core  
+description: Overview of change tracking for EF Core
 author: ajcvickers
 ms.date: 12/30/2020
 uid: core/change-tracking/index

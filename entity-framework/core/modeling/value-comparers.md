@@ -1,6 +1,6 @@
 ---
 title: Value Comparers - EF Core
-description: Using value comparers to control how EF Core compares property values 
+description: Using value comparers to control how EF Core compares property values
 author: ajcvickers
 ms.date: 03/20/2020
 uid: core/modeling/value-comparers

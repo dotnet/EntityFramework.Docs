@@ -1,6 +1,6 @@
 ---
 title: Changing Foreign Keys and Navigations - EF Core
-description: How to change relationships between entities by manipulating foreign keys and navigations  
+description: How to change relationships between entities by manipulating foreign keys and navigations
 author: ajcvickers
 ms.date: 12/30/2020
 uid: core/change-tracking/relationship-changes
