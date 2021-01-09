@@ -29,13 +29,13 @@ The EF 6.3.0 runtime was released to NuGet in September 2019. The main goal of t
 
 ### EF designer support
 
-There's currently no support for using the EF designer directly on .NET Core or .NET Standard projects or on an SDK-style .NET Framework project. 
+There's currently no support for using the EF designer directly on .NET Core or .NET Standard projects or on an SDK-style .NET Framework project.
 
 You can work around this limitation by adding the EDMX file and the generated classes for the entities and the DbContext as linked files to a .NET Core 3.0 or .NET Standard 2.1 project in the same solution.
 
 The linked files will look like this in the project file:
 
-``` csproj 
+``` csproj
 <ItemGroup>
   <EntityDeploy Include="..\EdmxDesignHost\Entities.edmx" Link="Model\Entities.edmx" />
   <Compile Include="..\EdmxDesignHost\Entities.Context.cs" Link="Model\Entities.Context.cs" />
