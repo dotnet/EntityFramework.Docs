@@ -12,7 +12,6 @@
             Transactions.ManagingSavepoints.Run();
             Transactions.SharingTransaction.Run();
             Transactions.ExternalDbTransaction.Run();
-            ExplicitValuesGenerateProperties.Sample.Run();
             Disconnected.Sample.Run();
         }
     }

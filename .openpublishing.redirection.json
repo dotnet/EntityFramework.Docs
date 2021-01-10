@@ -434,6 +434,11 @@
             "source_path": "entity-framework/core/miscellaneous/context-pooling.md",
             "redirect_url": "/ef/core/performance/advanced-performance-topics#dbcontext-pooling",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "core/saving/explicit-values-generated-properties.md",
+            "redirect_url": "/ef/core/modeling/generated-properties#overriding-values",
+            "redirect_document_id": false
         }
     ]
 }

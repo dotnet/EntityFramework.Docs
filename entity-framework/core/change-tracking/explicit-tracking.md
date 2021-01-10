@@ -306,7 +306,7 @@ Post {Id: 2} Unchanged
 This is exactly the same end-state as the previous example that used explicit key values.
 
 > [!TIP]
-> An explicit key value can still be set even when using generated key values. EF Core will then attempt to insert using this key value. Some database configurations, including SQL Server with Identity columns, do not support such inserts and will throw.
+> An explicit key value can still be set even when using generated key values. EF Core will then attempt to insert using this key value. Some database configurations, including SQL Server with Identity columns, do not support such inserts and will throw ([see these docs for a workaround](xref:core/providers/sql-server/value-generation#inserting-explicit-values-into-identity-columns)).
 
 ## Attaching existing entities
 
