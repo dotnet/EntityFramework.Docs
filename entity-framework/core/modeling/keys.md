@@ -2,12 +2,14 @@
 title: Keys - EF Core
 description: How to configure keys for entity types when using Entity Framework Core
 author: AndriySvyryd
-ms.date: 11/06/2019
+ms.date: 1/10/2021
 uid: core/modeling/keys
 ---
 # Keys
 
 A key serves as a unique identifier for each entity instance. Most entities in EF have a single key, which maps to the concept of a *primary key* in relational databases (for entities without keys, see [Keyless entities](xref:core/modeling/keyless-entity-types)). Entities can have additional keys beyond the primary key (see [Alternate Keys](#alternate-keys) for more information).
+
+## Configuring a primary key
 
 By convention, a property named `Id` or `<type name>Id` will be configured as the primary key of an entity.
 
@@ -18,11 +20,11 @@ By convention, a property named `Id` or `<type name>Id` will be configured as th
 
 You can configure a single property to be the primary key of an entity as follows:
 
-## [Data Annotations](#tab/data-annotations)
+### [Data Annotations](#tab/data-annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/KeySingle.cs?name=KeySingle&highlight=3)]
 
-## [Fluent API](#tab/fluent-api)
+### [Fluent API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeySingle.cs?name=KeySingle&highlight=4)]
 
@@ -31,6 +33,10 @@ You can configure a single property to be the primary key of an entity as follow
 You can also configure multiple properties to be the key of an entity - this is known as a composite key. Composite keys can only be configured using the Fluent API; conventions will never set up a composite key, and you can not use Data Annotations to configure one.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeyComposite.cs?name=KeyComposite&highlight=4)]
+
+## Value generation
+
+For non-composite numeric and Guid primary keys, EF Core sets up value generation for you by convention. For example, a numeric primary key in SQL Server is automatically set up to be an IDENTITY column. For more information, see [the documentation on value generation](xref:core/modeling/generated-properties).
 
 ## Primary key name
 
