@@ -15,7 +15,7 @@ Entity Framework Core (EF Core) change tracking works best when the same <xref:M
 > [!TIP]
 > This document assumes that entity states and the basics of EF Core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
 
-> [!TIP]  
+> [!TIP]
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/ChangeTrackingInEFCore).
 
 > [!TIP]
@@ -48,7 +48,7 @@ Two models are used in the following sections. The first is configured to **not*
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        
+
         public string Name { get; set; }
 
         public IList<Post> Posts { get; } = new List<Post>();
@@ -83,10 +83,10 @@ public class Blog
 public class Post
 {
     public int Id { get; set; }
-    
+
     public string Title { get; set; }
     public string Content { get; set; }
-    
+
     public int? BlogId { get; set; }
     public Blog Blog { get; set; }
 }
@@ -608,7 +608,7 @@ As with `Attach`, generated key values have the same major benefit for `Update`:
 -->
 [!code-csharp[Updating_existing_entities_3](../../../samples/core/ChangeTracking/ChangeTrackingInEFCore/GeneratedKeysSamples.cs?name=Updating_existing_entities_3)]
 
-As with the `Attach` example, the post with no key value is detected as new and set to the `Added` state. The other entities are marked as `Modified`:  
+As with the `Attach` example, the post with no key value is detected as new and set to the `Added` state. The other entities are marked as `Modified`:
 
 ```output
 Blog {Id: 1} Modified
@@ -722,7 +722,7 @@ In more realistic examples, a graph of entities is first attached, and then some
 <!--
             // Attach a blog and associated posts
             context.Attach(blog);
-            
+
             // Mark one post as Deleted
             context.Remove(blog.Posts[1]);
 -->
@@ -793,7 +793,7 @@ The `Post.BlogId` foreign key property is nullable in the model we have been usi
 <!--
             // Attach a blog and associated posts
             context.Attach(blog);
-            
+
             // Mark one post as Deleted
             context.Remove(blog.Posts[1]);
 -->
@@ -863,7 +863,7 @@ If the `Post.BlogId` foreign key property is non-nullable, then the relationship
 <!--
             // Attach a blog and associated posts
             context.Attach(blog);
-            
+
             // Mark one post as Deleted
             context.Remove(blog.Posts[1]);
 -->
@@ -911,7 +911,7 @@ WHERE "Id" = @p1;
 After SaveChanges completes, all the deleted entities are detached from the DbContext since they no longer exist in the database. Output from the debug view is therefore empty.
 
 > [!NOTE]
-> This document only scratches the surface on working with relationships in EF Core. See [Relationships](xref:core/modeling/relationships) for more information on modeling relationships, and [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes) for more information on updating/deleting dependent/child entities when calling SaveChanges.  
+> This document only scratches the surface on working with relationships in EF Core. See [Relationships](xref:core/modeling/relationships) for more information on modeling relationships, and [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes) for more information on updating/deleting dependent/child entities when calling SaveChanges.
 
 ## Custom tracking with TrackGraph
 
@@ -959,7 +959,7 @@ This disconnected graph can then be tracked using TrackGraph:
                         {
                             node.Entry.State = EntityState.Modified;
                         }
-                        
+
                         Console.WriteLine($"Tracking {node.Entry.Metadata.DisplayName()} with key value {keyValue} as {node.Entry.State}");
 
                     });

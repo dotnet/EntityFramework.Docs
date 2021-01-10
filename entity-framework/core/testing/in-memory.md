@@ -10,7 +10,7 @@ uid: core/testing/in-memory
 
 > [!WARNING]
 > The EF in-memory database often behaves differently than relational databases.
-> Only use the EF in-memory database after fully understanding the issues and trade-offs involved, as discussed in [Testing code that uses EF Core](xref:core/testing/index).  
+> Only use the EF in-memory database after fully understanding the issues and trade-offs involved, as discussed in [Testing code that uses EF Core](xref:core/testing/index).
 
 > [!TIP]
 > SQLite is a relational provider and can also use in-memory databases.

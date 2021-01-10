@@ -12,7 +12,7 @@ namespace EFGetStarted
     {
         public BlogsPage()
         {
-            InitializeComponent();                                 
+            InitializeComponent();
         }
 
         protected async override void OnAppearing()
@@ -24,7 +24,7 @@ namespace EFGetStarted
                 await InsertStartData(blogContext);
 
                 var theBlogs = blogContext.Blogs.ToList();
-                
+
                 blobCollectionView.ItemsSource = theBlogs;
             }
         }
@@ -59,11 +59,11 @@ namespace EFGetStarted
         async void DeleteAll_Clicked(object sender, EventArgs e)
         {
             using (var blogContext = new BloggingContext())
-            {                
+            {
                 blogContext.RemoveRange(blogContext.Blogs);
 
                 await blogContext.SaveChangesAsync();
-                
+
                 blobCollectionView.ItemsSource = blogContext.Blogs.ToList();
             }
         }

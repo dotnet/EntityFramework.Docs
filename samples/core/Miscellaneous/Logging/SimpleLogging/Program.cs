@@ -26,7 +26,7 @@ public class Program
         TestCode<SingleLineContext>();
         TestCode<TerseLogsContext>();
         TestDatabaseLog();
-        
+
         static void TestCode<TContext>()
             where TContext : BlogsContext, new()
         {
@@ -35,7 +35,7 @@ public class Program
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         static void TestDatabaseLog()
         {
             using var context = new DatabaseLogContext();
@@ -43,7 +43,7 @@ public class Program
             context.Database.EnsureDeleted();
 
             context.Log = Console.WriteLine;
-            
+
             context.Database.EnsureCreated();
         }
     }
@@ -84,7 +84,7 @@ public class LogToDebugContext : BlogsContext
 public class LogToFileContext : BlogsContext
 {
     #region LogToFile
-    private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true); 
+    private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true);
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.LogTo(_logStream.WriteLine);
@@ -94,7 +94,7 @@ public class LogToFileContext : BlogsContext
         base.Dispose();
         _logStream.Dispose();
     }
-    
+
     public override async ValueTask DisposeAsync()
     {
         await base.DisposeAsync();

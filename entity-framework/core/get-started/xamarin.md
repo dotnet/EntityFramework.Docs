@@ -160,7 +160,7 @@ using (var blogContext = new BloggingContext())
 
 * Update an existing record.
   * The `Save_Clicked` function of `AddPostPage.xaml.cs` updates an existing `Blog` object with a new `Post`.
-  
+
 ```csharp
 var newPost = new Post
 {

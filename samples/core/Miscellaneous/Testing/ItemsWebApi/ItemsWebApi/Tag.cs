@@ -14,7 +14,7 @@ namespace Items
         public Tag(string label) => Label = label;
 
         public string Label { get; }
-        
+
         public int Count { get; set; }
     }
     #endregion

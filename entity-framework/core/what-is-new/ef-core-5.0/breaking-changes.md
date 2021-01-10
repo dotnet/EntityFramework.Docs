@@ -226,7 +226,7 @@ public class Blog
 
 Normally a query for Blogs and Authors will first create `Blog` instances and then set the appropriate `Author` instances based on the data returned from the database. However, in this case every `Blog.Author` property is already initialized to an empty `Author`. Except EF Core has no way to know that this instance is "empty". So overwriting this instance could potentially silently throw away a valid `Author`. Therefore, EF Core 5.0 now consistently does not overwrite a navigation that is already initialized.
 
-This new behavior also aligns with the behavior of EF6 in most cases, although upon investigation we also found some cases of inconsistency in EF6.  
+This new behavior also aligns with the behavior of EF6 in most cases, although upon investigation we also found some cases of inconsistency in EF6.
 
 #### Mitigations
 

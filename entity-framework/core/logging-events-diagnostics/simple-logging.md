@@ -1,6 +1,6 @@
 ---
 title: Simple logging - EF Core
-description: Logging from an EF Core DbContext using LogTo  
+description: Logging from an EF Core DbContext using LogTo
 author: ajcvickers
 ms.date: 10/03/2020
 uid: core/logging-events-diagnostics/simple-logging
@@ -11,7 +11,7 @@ uid: core/logging-events-diagnostics/simple-logging
 > [!NOTE]
 > This feature was introduced in EF Core 5.0.
 
-> [!TIP]  
+> [!TIP]
 > You can [download this article's sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Logging/SimpleLogging) from GitHub.
 
 Entity Framework Core (EF Core) simple logging can be used to easily obtain logs while developing and debugging applications. This form of logging requires minimal configuration and no additional NuGet packages.
@@ -57,7 +57,7 @@ The <xref:System.Console.WriteLine%2A?displayProperty=nameWithType> method is of
 Writing to a file requires creating a <xref:System.IO.StreamWriter> or similar for the file. The <xref:System.IO.StreamWriter.WriteLine%2A> method can then be used as in the other examples above. Remember to ensure the file is closed cleanly by disposing the writer when the context is disposed. For example:
 
 <!--
-    private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true); 
+    private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true);
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.LogTo(_logStream.WriteLine);
@@ -67,7 +67,7 @@ Writing to a file requires creating a <xref:System.IO.StreamWriter> or similar f
         base.Dispose();
         _logStream.Dispose();
     }
-    
+
     public override async ValueTask DisposeAsync()
     {
         await base.DisposeAsync();
@@ -125,7 +125,7 @@ Every EF Core log message is assigned to a level defined by the <xref:Microsoft.
 
 Every log message is assigned an <xref:Microsoft.Extensions.Logging.EventId>. These IDs can be accessed from the <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId> class or the <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId> class for relational-specific messages. A database provider may also have provider-specific IDs in a similar class. For example, <xref:Microsoft.EntityFrameworkCore.Diagnostics.SqlServerEventId> for the SQL Server provider.
 
-`LogTo` can be configured to only log the messages associated with one or more event IDs. For example, to log only messages for the context being initialized or disposed:  
+`LogTo` can be configured to only log the messages associated with one or more event IDs. For example, to log only messages for the context being initialized or disposed:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

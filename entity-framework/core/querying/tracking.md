@@ -12,7 +12,7 @@ Tracking behavior controls if Entity Framework Core will keep information about 
 > [!NOTE]
 > [Keyless entity types](xref:core/modeling/keyless-entity-types) are never tracked. Wherever this article mentions entity types, it refers to entity types which have a key defined.
 
-> [!TIP]  
+> [!TIP]
 > You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying/Tracking) on GitHub.
 
 ## Tracking queries

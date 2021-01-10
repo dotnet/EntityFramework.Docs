@@ -21,7 +21,7 @@ namespace EFLogging
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFLogging;ConnectRetryCount=0");
         #endregion
     }
-    
+
     public class EnableSensitiveDataLoggingContext : BloggingContext
     {
         #region EnableSensitiveDataLogging
@@ -37,7 +37,7 @@ namespace EFLogging
             => optionsBuilder.EnableDetailedErrors();
         #endregion
     }
-    
+
     public class ChangeLogLevelContext : BloggingContext
     {
         #region ChangeLogLevel

@@ -1,6 +1,6 @@
 ---
 title: Change Tracking - EF Core
-description: Overview of change tracking for EF Core  
+description: Overview of change tracking for EF Core
 author: ajcvickers
 ms.date: 12/30/2020
 uid: core/change-tracking/index
@@ -12,7 +12,7 @@ Each <xref:Microsoft.EntityFrameworkCore.DbContext> instance tracks changes made
 
 This document presents an overview of Entity Framework Core (EF Core) change tracking and how it relates to queries and updates.
 
-> [!TIP]  
+> [!TIP]
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/ChangeTrackingInEFCore).
 
 > [!TIP]
@@ -96,10 +96,10 @@ public class Blog
 public class Post
 {
     public int Id { get; set; }
-    
+
     public string Title { get; set; }
     public string Content { get; set; }
-    
+
     public int? BlogId { get; set; }
     public Blog Blog { get; set; }
 }
@@ -180,7 +180,7 @@ Updates like those in the previous example can be combined with inserts and dele
 
 <!--
             using var context = new BlogsContext();
-            
+
             var blog = context.Blogs.Include(e => e.Posts).First(e => e.Name == ".NET Blog");
 
             // Modify property values
@@ -192,11 +192,11 @@ Updates like those in the previous example can be combined with inserts and dele
                 Title = "What’s next for System.Text.Json?",
                 Content = ".NET 5.0 was released recently and has come with many..."
             });
-            
+
             // Mark an existing Post as Deleted
             var postToDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
             context.Remove(postToDelete);
-            
+
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 

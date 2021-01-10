@@ -1,6 +1,6 @@
 ---
 title: Changing Foreign Keys and Navigations - EF Core
-description: How to change relationships between entities by manipulating foreign keys and navigations  
+description: How to change relationships between entities by manipulating foreign keys and navigations
 author: ajcvickers
 ms.date: 12/30/2020
 uid: core/change-tracking/relationship-changes
@@ -19,7 +19,7 @@ Navigations can be used on both sides of the relationship, on one side only, or 
 > [!TIP]
 > This document assumes that entity states and the basics of EF Core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
 
-> [!TIP]  
+> [!TIP]
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/ChangingFKsAndNavigations).
 
 ### Example model
@@ -40,7 +40,7 @@ public class BlogAssets
 {
     public int Id { get; set; } // Primary key
     public byte[] Banner { get; set; }
-    
+
     public int BlogId { get; set; } // Foreign key
     public Blog Blog { get; set; } // Reference navigation
 }
@@ -50,10 +50,10 @@ public class Post
     public int Id { get; set; } // Primary key
     public string Title { get; set; }
     public string Content { get; set; }
-    
+
     public int? BlogId { get; set; } // Foreign key
     public Blog Blog { get; set; } // Reference navigation
-    
+
     public IList<Tag> Tags { get; } = new List<Tag>(); // Skip collection navigation
 }
 
@@ -61,7 +61,7 @@ public class Tag
 {
     public int Id { get; set; } // Primary key
     public string Text { get; set; }
-    
+
     public IList<Post> Posts { get; } = new List<Post>(); // Skip collection navigation
 }
 -->
@@ -101,7 +101,7 @@ Fixup first occurs when entities are queried from the database. The database has
             .Include(e => e.Posts)
             .Include(e => e.Assets)
             .ToList();
-        
+
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 -->
 [!code-csharp[Relationship_fixup_1](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/OptionalRelationshipsSamples.cs?name=Relationship_fixup_1)]
@@ -179,8 +179,8 @@ Relationship fixup also happens between entities returned from a tracking query 
         var posts = context.Posts.ToList();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 -->
-[!code-csharp[Relationship_fixup_2](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/OptionalRelationshipsSamples.cs?name=Relationship_fixup_2)]
-
+[!code-csharp[Relationship_fixup_2](../../../ samples / core / ChangeTracking / ChangingFKsAndNavigations / OptionalRelationshipsSamples.cs ? name = Relationship_fixup_2
+) ]
 Looking again at the debug views, after the first query only the two blogs are tracked:
 
 ```output
@@ -528,13 +528,13 @@ By default, marking orphans as `Deleted` happens as soon as the relationship cha
 
 <!--
         context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
-        
+
         var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
         vsBlog.Posts.Remove(post);
 
         context.ChangeTracker.DetectChanges();
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-        
+
         dotNetBlog.Posts.Add(post);
 
         context.ChangeTracker.DetectChanges();
@@ -786,7 +786,7 @@ By default, cascade delete happens as soon as the parent/principal is marked as 
 Cascade deletes, as well as deleting orphans, can be forced at any time by calling <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.CascadeChanges?displayProperty=nameWithType>. Combining this with setting the cascade delete timing to `Never` will ensure cascade deletes never happen unless EF Core is explicitly instructed to do so.
 
 > [!TIP]
-> Cascade delete and deleting orphans are closely related. Both result in deleting dependent/child entities when the relationship to their required principal/parent is severed. For cascade delete, this severing happens because the principal/parent is itself deleted. For orphans, the principal/parent entity still exists, but is no longer related to the dependent/child entities.  
+> Cascade delete and deleting orphans are closely related. Both result in deleting dependent/child entities when the relationship to their required principal/parent is severed. For cascade delete, this severing happens because the principal/parent is itself deleted. For orphans, the principal/parent entity still exists, but is no longer related to the dependent/child entities.
 
 ## Many-to-many relationships
 
@@ -821,7 +821,7 @@ Consider this EF Core model that creates a many-to-many relationship between pos
     {
         public int PostId { get; set; } // First part of composite PK; FK to Post
         public int TagId { get; set; } // Second part of composite PK; FK to Tag
-        
+
         public Post Post { get; set; } // Reference navigation
         public Tag Tag { get; set; } // Reference navigation
     }
@@ -837,7 +837,7 @@ Notice that the `PostTag` join entity type contains two foreign key properties. 
             var tag = context.Tags.Single(e => e.Id == 1);
 
             context.Add(new PostTag { PostId = post.Id, TagId = tag.Id });
-            
+
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 -->
 [!code-csharp[Many_to_many_relationships_1](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/ExplicitJoinEntitySamples.cs?name=Many_to_many_relationships_1)]
@@ -906,7 +906,7 @@ Manipulating the join table manually can be cumbersome. Starting with EF Core 5.
     {
         public int PostId { get; set; } // First part of composite PK; FK to Post
         public int TagId { get; set; } // Second part of composite PK; FK to Tag
-        
+
         public Post Post { get; set; } // Reference navigation
         public Tag Tag { get; set; } // Reference navigation
     }
@@ -939,7 +939,7 @@ Skip navigations look and behave like normal collection navigations. However, th
             var tag = context.Tags.Single(e => e.Id == 1);
 
             post.Tags.Add(tag);
-            
+
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 -->
@@ -997,13 +997,13 @@ In the previous section we added skip navigations _in addition to_ fully definin
             var tag = context.Tags.Single(e => e.Id == 1);
 
             post.Tags.Add(tag);
-            
+
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 -->
 [!code-csharp[Many_to_many_relationships_6](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/OptionalRelationshipsSamples.cs?name=Many_to_many_relationships_6)]
 
-Looking at the debug view after making this change reveals that EF Core has created an instance of `Dictionary<string, object>` to represent the join entity. This join entity contains both `PostsId` and `TagsId` foreign key properties which have been set to match the PK values of the post and tag that are associated.  
+Looking at the debug view after making this change reveals that EF Core has created an instance of `Dictionary<string, object>` to represent the join entity. This join entity contains both `PostsId` and `TagsId` foreign key properties which have been set to match the PK values of the post and tag that are associated.
 
 ```output
 Post {Id: 3} Unchanged
@@ -1040,7 +1040,7 @@ EF Core supports adding additional properties to the join entity type. This is k
     {
         public int PostId { get; set; } // Foreign key to Post
         public int TagId { get; set; } // Foreign key to Tag
-        
+
         public DateTime TaggedOn { get; set; } // Payload
     }
 -->
@@ -1107,7 +1107,7 @@ Following on from the previous example, let's add a payload property that does n
     {
         public int PostId { get; set; } // First part of composite PK; FK to Post
         public int TagId { get; set; } // Second part of composite PK; FK to Tag
-        
+
         public DateTime TaggedOn { get; set; } // Auto-generated payload property
         public string TaggedBy { get; set; } // Not-generated payload property
     }
@@ -1129,7 +1129,7 @@ A post can now be tagged in the same way as before, and the join entity will sti
             var joinEntity = context.Set<PostTag>().Find(post.Id, tag.Id);
 
             joinEntity.TaggedBy = "ajcvickers";
-            
+
             context.SaveChanges();
 
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -1155,7 +1155,7 @@ Alternately, the join entity can be created explicitly to associate a post with 
                 TagId = tag.Id,
                 TaggedBy = "ajcvickers"
             });
-            
+
             context.SaveChanges();
 
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -1174,7 +1174,7 @@ Finally, another way to set payload data is by either overriding <xref:Microsoft
                     entityEntry.Entity.TaggedBy = "ajcvickers";
                 }
             }
-            
+
             return base.SaveChanges();
         }
 -->

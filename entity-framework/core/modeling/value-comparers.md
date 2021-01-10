@@ -1,6 +1,6 @@
 ---
 title: Value Comparers - EF Core
-description: Using value comparers to control how EF Core compares property values 
+description: Using value comparers to control how EF Core compares property values
 author: ajcvickers
 ms.date: 03/20/2020
 uid: core/modeling/value-comparers
@@ -8,10 +8,10 @@ uid: core/modeling/value-comparers
 
 # Value Comparers
 
-> [!NOTE]  
+> [!NOTE]
 > This feature was introduced in EF Core 3.0.
 
-> [!TIP]  
+> [!TIP]
 > The code in this document can be found on GitHub as a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/ValueConversions/).
 
 ## Background
@@ -102,7 +102,7 @@ The <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ValueComparer%601> constr
 
 * An expression for checking equality
 * An expression for generating a hash code
-* An expression to snapshot a value  
+* An expression to snapshot a value
 
 In this case the comparison is done by checking if the sequences of numbers are the same.
 
@@ -114,7 +114,7 @@ The snapshot is created by cloning the list with `ToList`.
 Again, this is only needed if the lists are going to be mutated.
 Be immutable instead if you can.
 
-> [!NOTE]  
+> [!NOTE]
 > Value converters and comparers are constructed using expressions rather than simple delegates.
 > This is because EF Core inserts these expressions into a much more complex expression tree that is then compiled into an entity shaper delegate.
 > Conceptually, this is similar to compiler inlining.

@@ -16,7 +16,7 @@ The Entity Framework Core (EF Core) change tracker generates two kinds of output
 > [!TIP]
 > This document assumes that entity states and the basics of EF Core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
 
-> [!TIP]  
+> [!TIP]
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/ChangeTrackerDebugging).
 
 ## Change tracker debug view
@@ -59,7 +59,7 @@ Let's look at a debug view example using the model shown at the end of this docu
 
         // Make something Modified
         blogs[0].Name = ".NET Blog (All new!)";
-        
+
         context.ChangeTracker.DetectChanges();
 -->
 [!code-csharp[Change_tracker_debug_view_1a](../../../samples/core/ChangeTracking/ChangeTrackerDebugging/Samples.cs?name=Change_tracker_debug_view_1a)]
@@ -315,7 +315,7 @@ The model is mostly configured by convention, with just a few lines in OnModelCr
             .Entity<Blog>()
             .Property(e => e.AssetsId)
             .ValueGeneratedOnAdd();
-        
+
         modelBuilder
             .Entity<BlogAssets>()
             .HasOne(e => e.Blog)

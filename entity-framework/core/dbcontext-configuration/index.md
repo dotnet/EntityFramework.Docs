@@ -1,6 +1,6 @@
 ---
 title: DbContext Lifetime, Configuration, and Initialization - EF Core
-description: Patterns for creating and managing DbContext instances with or without dependency injection 
+description: Patterns for creating and managing DbContext instances with or without dependency injection
 author: ajcvickers
 ms.date: 11/07/2020
 uid: core/dbcontext-configuration/index
@@ -43,7 +43,7 @@ ASP.NET Core applications are [configured using dependency injection](/aspnet/co
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
+
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
         }

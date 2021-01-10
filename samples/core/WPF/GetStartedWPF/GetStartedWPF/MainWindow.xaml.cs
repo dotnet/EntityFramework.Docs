@@ -10,7 +10,7 @@ namespace GetStartedWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ProductContext _context = 
+        private readonly ProductContext _context =
             new ProductContext();
 
         private CollectionViewSource categoryViewSource;
@@ -18,8 +18,8 @@ namespace GetStartedWPF
         public MainWindow()
         {
             InitializeComponent();
-            categoryViewSource = 
-                (CollectionViewSource)FindResource(nameof(categoryViewSource));            
+            categoryViewSource =
+                (CollectionViewSource)FindResource(nameof(categoryViewSource));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

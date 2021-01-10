@@ -1,6 +1,6 @@
 ---
 title: EF Core releases and planning
-description: Current EF Core releases and schedule/planning details for future releases 
+description: Current EF Core releases and schedule/planning details for future releases
 author: ajcvickers
 ms.date: 10/11/2020
 uid: core/what-is-new/index

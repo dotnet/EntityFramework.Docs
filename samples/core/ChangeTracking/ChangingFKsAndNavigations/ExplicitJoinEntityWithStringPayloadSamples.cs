@@ -25,7 +25,7 @@ namespace JoinEntityWithStringPayload
             post.Tags.Add(tag);
 
             context.ChangeTracker.DetectChanges();
-            
+
             var joinEntity = context.Set<PostTag>().Find(post.Id, tag.Id);
 
             joinEntity.TaggedBy = "ajcvickers";

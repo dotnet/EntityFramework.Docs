@@ -38,5 +38,5 @@ The most common operations that result in the query being sent to the database a
 * Iterating the results in a `for` loop
 * Using an operator such as `ToList`, `ToArray`, `Single`, `Count`, or the equivalent async overloads
 
-> [!WARNING]  
+> [!WARNING]
 > **Always validate user input:** While EF Core protects against SQL injection attacks by using parameters and escaping literals in queries, it does not validate inputs. Appropriate validation, per the application's requirements, should be performed before values from un-trusted sources are used in LINQ queries, assigned to entity properties, or passed to other EF Core APIs. This includes any user input used to dynamically construct queries. Even when using LINQ, if you are accepting user input to build expressions, you need to make sure that only intended expressions can be constructed.

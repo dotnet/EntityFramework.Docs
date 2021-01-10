@@ -20,7 +20,7 @@ Each of these is described in more detail in the sections below.
 > [!TIP]
 > This document assumes that entity states and the basics of EF Core change tracking are understood. See [Change Tracking in EF Core](xref:core/change-tracking/index) for more information on these topics.
 
-> [!TIP]  
+> [!TIP]
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/AccessingTrackedEntities).
 
 ## Using DbContext.Entry and EntityEntry instances
@@ -121,7 +121,7 @@ This allows access to property information for any property regardless of its ty
 
 <!--
             object blog = context.Blogs.Single(e => e.Id == 1);
-            
+
             object currentValue = context.Entry(blog).Property("Name").CurrentValue;
             context.Entry(blog).Property("Name").CurrentValue = "1unicorn2";
 -->
@@ -242,7 +242,7 @@ The previous example set values from an entity or DTO instance. The same behavio
 <!--
         var blogDictionary = new Dictionary<string, object>
         {
-            ["Id"] = 1, 
+            ["Id"] = 1,
             ["Name"] = "1unicorn2"
         };
 
@@ -321,12 +321,12 @@ Member Posts is of type IList<Post> and has value System.Collections.Generic.Lis
         var blog1 = context.Blogs.Find(1);
 
         Console.WriteLine($"...found blog {blog1.Name}");
-        
+
         Console.WriteLine();
         Console.WriteLine("Second call to Find...");
         var blog2 = context.Blogs.Find(1);
         Debug.Assert(blog1 == blog2);
-        
+
         Console.WriteLine("...returned the same instance without executing a query.");
 -->
 [!code-csharp[Find_and_FindAsync_1](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Find_and_FindAsync_1)]
@@ -360,7 +360,7 @@ public class OrderLine
 {
     public int OrderId { get; set; }
     public int ProductId { get; set; }
-    
+
     //...
 }
 -->
@@ -457,7 +457,7 @@ Since `DbSet.Local` is used to query tracked entities, it is typical to load ent
 
 <!--
         using var context = new BlogsContext();
-        
+
         context.Blogs.Include(e => e.Posts).Load();
 
         foreach (var blog in context.Blogs.Local)
@@ -500,7 +500,7 @@ The following code demonstrates this my marking one post as `Deleted` and then a
         }
 
         context.Remove(posts[1]);
-        
+
         context.Add(new Post
         {
             Title = "What’s next for System.Text.Json?",

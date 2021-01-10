@@ -44,7 +44,7 @@ namespace EFModeling.ValueConversions
 
             ConsoleWriteLines("Sample finished.");
         }
-        
+
         public class SampleDbContext : DbContext
         {
             private static readonly ILoggerFactory
@@ -83,7 +83,7 @@ namespace EFModeling.ValueConversions
         public class EntityType
         {
             public int Id { get; set; }
-        
+
             #region ListProperty
             public List<int> MyListProperty { get; set; }
             #endregion

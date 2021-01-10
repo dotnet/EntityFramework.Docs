@@ -26,7 +26,7 @@ namespace Tests
             var connection = new SqliteConnection("Filename=:memory:");
 
             connection.Open();
-            
+
             return connection;
         }
 
