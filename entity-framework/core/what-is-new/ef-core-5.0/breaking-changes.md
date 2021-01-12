@@ -14,7 +14,7 @@ The following API and behavior changes have the potential to break existing appl
 
 | **Breaking change**                                                                                                                   | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
-| [EF Core 5.0 does not support .NET Framework](#netstandard21)                                                                  | Medium     |
+| [EF Core 5.0 does not support .NET Framework](#netstandard21)                                                                         | Medium     |
 | [IProperty.GetColumnName() is now obsolete](#getcolumnname-obsolete)                                                                  | Medium     |
 | [Precision and scale are required for decimals](#decimals)                                                                            | Medium     |
 | [Required on the navigation from principal to dependent has different semantics](#required-dependent)                                 | Medium     |
