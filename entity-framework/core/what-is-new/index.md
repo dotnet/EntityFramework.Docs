@@ -1,8 +1,8 @@
 ---
 title: EF Core releases and planning
-description: Current EF Core releases and schedule/planning details for future releases 
+description: Current EF Core releases and schedule/planning details for future releases
 author: ajcvickers
-ms.date: 10/11/2020
+ms.date: 01/12/2021
 uid: core/what-is-new/index
 ---
 
@@ -45,7 +45,7 @@ We typically don't do detailed planning for further out than the next major or m
 
 The next planned stable release is **EF Core 6.0**, scheduled for **November 2021**.
 
-We are currently working on a high-level plan based on the [release planning process](xref:core/what-is-new/release-planning).
+A [high-level plan for EF Core 6.0](xref:core/what-is-new/ef-core-6.0/plan) has been created by following the documented [release planning process](xref:core/what-is-new/release-planning).
 
 Your feedback on planning is important.
 The best way to indicate the importance of an issue is to vote (thumbs-up 👍) for that issue on GitHub.
@@ -56,7 +56,7 @@ This data will then feed into the planning process for the next release.
 EF Core 6.0 packages are **available now** as
 
 * [Daily builds](https://github.com/dotnet/aspnetcore/blob/master/docs/DailyBuilds.md)
-  * All the latest features and bug fixes. Generally very stable; 57,000+ tests run against each build.
+  * All the latest features and bug fixes. Generally very stable; 75,000+ tests run against each build.
 
 In addition, as we progress, frequent previews will be pushed to NuGet. Note that the previews lag behind daily builds, but are tested to work with the corresponding ASP.NET Core and .NET Core previews.
 

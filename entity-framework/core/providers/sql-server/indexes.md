@@ -19,6 +19,9 @@ You can configure an index or key to be clustered as follows:
 
 [!code-csharp[ClusteredIndex](../../../../samples/core/SqlServer/Indexes/ClusteredIndexContext.cs?name=ClusteredIndex)]
 
+> [!NOTE]
+> SQL Server only supports one clustered index per table, and the primary key is by default clustered. If you'd like to have a clustered index on a non-key column, you must explicitly make your key non-clustered.
+
 ## Fill factor
 
 > [!NOTE]

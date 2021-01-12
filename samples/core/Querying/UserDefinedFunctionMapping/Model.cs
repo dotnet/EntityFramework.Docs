@@ -63,6 +63,14 @@ namespace EFQuerying.UserDefinedFunctionMapping
             => FromExpression(() => PostsWithPopularComments(likeThreshold));
         #endregion
 
+        #region NullabilityPropagationFunctionDefinition
+        public string ConcatStrings(string prm1, string prm2)
+            => throw new System.InvalidOperationException();
+
+        public string ConcatStringsOptimized(string prm1, string prm2)
+            => throw new System.InvalidOperationException();
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region EntityConfiguration
@@ -144,6 +152,21 @@ namespace EFQuerying.UserDefinedFunctionMapping
                             args.First().TypeMapping),
                         args.First().Type,
                         args.First().TypeMapping));
+            #endregion
+
+            #region NullabilityPropagationModelConfiguration
+            modelBuilder
+                .HasDbFunction(typeof(BloggingContext).GetMethod(nameof(ConcatStrings), new[] { typeof(string), typeof(string) }))
+                .HasName("ConcatStrings");
+
+            modelBuilder.HasDbFunction(
+                typeof(BloggingContext).GetMethod(nameof(ConcatStringsOptimized), new[] { typeof(string), typeof(string) }),
+                b =>
+                {
+                    b.HasName("ConcatStrings");
+                    b.HasParameter("prm1").PropagatesNullability();
+                    b.HasParameter("prm2").PropagatesNullability();
+                });
             #endregion
 
             #region QueryableFunctionConfigurationHasDbFunction

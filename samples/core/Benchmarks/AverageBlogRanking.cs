@@ -11,7 +11,8 @@ namespace Benchmarks
     [MemoryDiagnoser]
     public class AverageBlogRanking
     {
-        public const int NumBlogs = 1000;
+        [Params(1000)]
+        public int NumBlogs;            // number of records to write [once], and read [each pass]
 
         [GlobalSetup]
         public void Setup()
@@ -19,7 +20,7 @@ namespace Benchmarks
             using var context = new BloggingContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            context.SeedData();
+            context.SeedData(NumBlogs);
         }
 
         #region LoadEntities
@@ -35,7 +36,7 @@ namespace Benchmarks
                 count++;
             }
 
-            return sum / count;
+            return (double)sum / count;
         }
         #endregion
 
@@ -52,7 +53,7 @@ namespace Benchmarks
                 count++;
             }
 
-            return sum / count;
+            return (double)sum / count;
         }
         #endregion
 
@@ -69,7 +70,7 @@ namespace Benchmarks
                 count++;
             }
 
-            return sum / count;
+            return (double)sum / count;
         }
         #endregion
 
@@ -89,10 +90,10 @@ namespace Benchmarks
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Integrated Security=True");
 
-            public void SeedData()
+            public void SeedData(int numblogs)
             {
                 Blogs.AddRange(
-                    Enumerable.Range(0, NumBlogs).Select(i => new Blog
+                    Enumerable.Range(0, numblogs).Select(i => new Blog
                     {
                         Name = $"Blog{i}",
                         Url = $"blog{i}.blogs.net",

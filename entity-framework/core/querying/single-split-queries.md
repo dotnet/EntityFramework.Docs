@@ -5,7 +5,7 @@ author: smitpatel
 ms.date: 10/03/2019
 uid: core/querying/single-split-queries
 ---
-# Single vs. split queries
+# Split queries
 
 ## Single queries
 

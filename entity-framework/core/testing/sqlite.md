@@ -11,7 +11,7 @@ uid: core/testing/sqlite
 > [!WARNING]
 > Using SQLite can be an effective way to test an EF Core application.
 > However, problems can arise where SQLite behaves differently from other database systems.
-> See [Testing code that uses EF Core](xref:core/testing/index) for a discussion of the issues and trade-offs.  
+> See [Testing code that uses EF Core](xref:core/testing/index) for a discussion of the issues and trade-offs.
 
 This document builds uses on the concepts introduced in [Sample showing how to test applications that use EF Core](xref:core/testing/testing-sample).
 The code examples shown here come from this sample.
@@ -28,7 +28,7 @@ This is easy to use with EF Core as long as you understand the in-memory databas
 * The database is deleted when the connection to it is closed
 
 EF Core will use an already open connection when given one, and will never attempt to close it.
-So the key to using EF Core with an in-memory SQLite database is to open the connection before passing it to EF.  
+So the key to using EF Core with an in-memory SQLite database is to open the connection before passing it to EF.
 
 The [sample](xref:core/testing/testing-sample) achieves this with the following code:
 

@@ -8,6 +8,9 @@ uid: core/what-is-new/ef-core-5.0/plan
 
 # Plan for Entity Framework Core 5.0
 
+> [!IMPORTANT]
+> EF Core 5.0 [has now been released](xref:core/what-is-new/index). This page remains as a historical record of the plan.
+
 As described in the [planning process](xref:core/what-is-new/release-planning), we have gathered input from stakeholders into a tentative plan for the EF Core 5.0 release.
 
 > [!IMPORTANT]

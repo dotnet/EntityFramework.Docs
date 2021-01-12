@@ -9,7 +9,7 @@ uid: core/modeling/relationships
 
 A relationship defines how two entities relate to each other. In a relational database, this is represented by a foreign key constraint.
 
-> [!NOTE]  
+> [!NOTE]
 > Most of the samples in this article use a one-to-many relationship to demonstrate concepts. For examples of one-to-one and many-to-many relationships see the [Other Relationship Patterns](#other-relationship-patterns) section at the end of the article.
 
 ## Definition of terms
@@ -31,7 +31,7 @@ There are a number of terms used to describe relationships
   * **Reference navigation property:** A navigation property that holds a reference to a single related entity.
 
   * **Inverse navigation property:** When discussing a particular navigation property, this term refers to the navigation property on the other end of the relationship.
-  
+
 * **Self-referencing relationship:** A relationship in which the dependent and the principal entity types are the same.
 
 The following code shows a one-to-many relationship between `Blog` and `Post`
@@ -56,7 +56,7 @@ The following code shows a one-to-many relationship between `Blog` and `Post`
 
 By default, a relationship will be created when there is a navigation property discovered on a type. A property is considered a navigation property if the type it points to can not be mapped as a scalar type by the current database provider.
 
-> [!NOTE]  
+> [!NOTE]
 > Relationships that are discovered by convention will always target the primary key of the principal entity. To target an alternate key, additional configuration must be performed using the Fluent API.
 
 ### Fully defined relationships
@@ -172,7 +172,7 @@ You can use the Data Annotations to configure which property should be used as t
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/ForeignKey.cs?name=ForeignKey&highlight=17)]
 
-> [!TIP]  
+> [!TIP]
 > The `[ForeignKey]` annotation can be placed on either navigation property in the relationship. It does not need to go on the navigation property in the dependent entity class.
 
 > [!NOTE]
@@ -202,7 +202,7 @@ You don't necessarily need to provide a navigation property. You can simply prov
 
 ### Principal key
 
-If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be setup as an [alternate key](xref:core/modeling/keys#alternate-keys).
+If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be set up as an [alternate key](xref:core/modeling/keys#alternate-keys).
 
 #### [Simple key](#tab/simple-key)
 
@@ -212,7 +212,7 @@ If you want the foreign key to reference a property other than the primary key, 
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositePrincipalKey.cs?name=CompositePrincipalKey&highlight=11)]
 
-> [!WARNING]  
+> [!WARNING]
 > The order in which you specify principal key properties must match the order in which they are specified for the foreign key.
 
 ---
@@ -244,7 +244,7 @@ One to one relationships have a reference navigation property on both sides. The
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/OneToOne.cs?name=OneToOne&highlight=6,15-16)]
 
-> [!NOTE]  
+> [!NOTE]
 > EF will choose one of the entities to be the dependent based on its ability to detect a foreign key property. If the wrong entity is chosen as the dependent, you can use the Fluent API to correct this.
 
 When configuring the relationship with the Fluent API, you use the `HasOne` and `WithOne` methods.

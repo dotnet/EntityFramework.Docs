@@ -10,5 +10,6 @@
     "MD036": false,
     "MD046": {
         "style": "fenced"
-    }
+    },
+    "DOCSMD010": false
 }

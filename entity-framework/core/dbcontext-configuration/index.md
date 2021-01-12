@@ -1,6 +1,6 @@
 ---
 title: DbContext Lifetime, Configuration, and Initialization - EF Core
-description: Patterns for creating and managing DbContext instances with or without dependency injection 
+description: Patterns for creating and managing DbContext instances with or without dependency injection
 author: ajcvickers
 ms.date: 11/07/2020
 uid: core/dbcontext-configuration/index
@@ -43,7 +43,7 @@ ASP.NET Core applications are [configured using dependency injection](/aspnet/co
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
+
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
         }
@@ -298,7 +298,7 @@ The following table contains examples of common methods called on `DbContextOpti
 |:-------------------------------------------------------------------------------------------|-------------------------------------------------------------|--------------
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseQueryTrackingBehavior%2A>   | Sets the default tracking behavior for queries              | [Query Tracking Behavior](xref:core/querying/tracking)
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A>                      | A simple way to get EF Core logs (EF Core 5.0 and later)    | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
-| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseLoggerFactory%2A>           | Registers an `Micrsofot.Extensions.Logging` factory         | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
+| <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseLoggerFactory%2A>           | Registers an `Microsoft.Extensions.Logging` factory         | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging%2A> | Includes application data in exceptions and logging         | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableDetailedErrors%2A>       | More detailed query errors (at the expense of performance)  | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)
 | <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.ConfigureWarnings%2A>          | Ignore or throw for warnings and other events               | [Logging, Events, and Diagnostics](xref:core/logging-events-diagnostics/index)

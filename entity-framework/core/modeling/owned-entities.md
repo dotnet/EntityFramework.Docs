@@ -42,7 +42,7 @@ See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tre
 
 ## Implicit keys
 
-Owned types configured with `OwnsOne` or discovered through a reference navigation always have a one-to-one relationship with the owner, therefore they don't need their own key values as the foreign key values are unique. In the previous example, the `StreetAddress` type does not need to define a key property.  
+Owned types configured with `OwnsOne` or discovered through a reference navigation always have a one-to-one relationship with the owner, therefore they don't need their own key values as the foreign key values are unique. In the previous example, the `StreetAddress` type does not need to define a key property.
 
 In order to understand how EF Core tracks these objects, it is useful to know that a primary key is created as a [shadow property](xref:core/modeling/shadow-properties) for the owned type. The value of the key of an instance of the owned type will be the same as the value of the key of the owner instance.
 
@@ -110,7 +110,7 @@ In addition to nested owned types, an owned type can reference a regular entity 
 
 [!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
 
-## Configuring Owned Types
+## Configuring owned types
 
 It is possible to chain the `OwnsOne` method in a fluent call to configure this model:
 
@@ -124,7 +124,7 @@ In addition, notice the `Navigation` call. In EFCore 5.0, navigation properties 
 
 The model above is mapped to the following database schema:
 
-![Sceenshot of the database model for entity containing nested owned references](_static/owned-entities-nested.png)
+![Screenshot of the database model for entity containing nested owned references](_static/owned-entities-nested.png)
 
 ## Storing owned types in separate tables
 

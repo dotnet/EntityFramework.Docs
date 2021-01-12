@@ -89,7 +89,7 @@ namespace EFModeling.ValueConversions
                 => ReferenceEquals(this, obj) || obj is ImmutableClass other && Equals(other);
 
             public override int GetHashCode()
-                => Value;
+                => Value.GetHashCode();
         }
         #endregion
     }

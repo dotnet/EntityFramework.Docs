@@ -21,10 +21,10 @@ namespace EFGetStarted
         {
             using (var blogContext = new BloggingContext())
             {
-                var postList = blogContext.Posts                    
+                var postList = blogContext.Posts
                     .Where(p => p.BlogId == BlogId)
                     .ToList();
-                
+
                 postCollection.ItemsSource = postList;
             }
         }

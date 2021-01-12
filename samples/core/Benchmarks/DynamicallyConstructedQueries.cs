@@ -17,7 +17,7 @@ namespace Benchmarks
         private int _blogNumber;
 
         [GlobalSetup]
-        public void GlobalSetup()
+        public static void GlobalSetup()
         {
             using var context = new BloggingContext();
             context.Database.EnsureDeleted();
@@ -30,7 +30,7 @@ namespace Benchmarks
         {
             return GetBlogCount("blog" + Interlocked.Increment(ref _blogNumber));
 
-            int GetBlogCount(string url)
+            static int GetBlogCount(string url)
             {
                 using var context = new BloggingContext();
 

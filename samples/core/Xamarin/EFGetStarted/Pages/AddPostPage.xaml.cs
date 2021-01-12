@@ -26,7 +26,7 @@ namespace EFGetStarted
                 Content = postCell.Text,
                 Title = titleCell.Text
             };
-                                                
+
             try
             {
                 using (var blogContext = new BloggingContext())

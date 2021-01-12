@@ -24,7 +24,7 @@ This requires understanding:
 
 * How to safely share objects between tests
 * When the test framework runs tests in parallel
-* How to keep the database in a clean state for every test  
+* How to keep the database in a clean state for every test
 
 ## The fixture
 
@@ -60,7 +60,7 @@ This ensures that the database matches the current EF model even if it has been 
 The database connection is disposed when the fixture is disposed.
 You may also consider deleting the test database at this point.
 However, this will require additional locking and reference counting if the fixture is being shared by multiple test classes.
-Also, it is often useful to have the test database still available for debugging failed tests.  
+Also, it is often useful to have the test database still available for debugging failed tests.
 
 ## Using the fixture
 

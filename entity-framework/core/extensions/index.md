@@ -2,7 +2,7 @@
 title: Tools & Extensions - EF Core
 description: External tools and extensions for Entity Framework Core
 author: ErikEJ
-ms.date: 11/22/2020
+ms.date: 01/06/2021
 uid: core/extensions/index
 ---
 
@@ -10,7 +10,7 @@ uid: core/extensions/index
 
 These tools and extensions provide additional functionality for Entity Framework Core 2.1 and later.
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Extensions are built by a variety of sources and aren't maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate its quality, licensing, compatibility, support, etc. to ensure it meets your requirements. In particular, an extension built for an older version of EF Core may need updating before it will work with the latest versions.
 
 ## Tools
@@ -31,7 +31,7 @@ Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibe
 
 An O/RM that creates strongly-typed, extendable classes for Entity Framework. The generated code is Entity Framework Core. There is no difference. This is not a replacement for EF or a custom O/RM. It is a visual, modeling layer that allows a team to manage complex database schemas. It works well with SCM software like Git, allowing multi-user access to your model with minimal conflicts. The installer tracks model changes and creates upgrade scripts. For EF Core: 3.
 
-[Github site](https://github.com/nHydrate/nHydrate)
+[Github repository](https://github.com/nHydrate/nHydrate)
 
 ### EF Core Power Tools
 
@@ -114,11 +114,23 @@ Revival of [Index] attribute (with extension for model building). For EF Core: 2
 
 [GitHub repository](https://github.com/jsakamoto/EntityFrameworkCore.IndexAttribute)
 
-### EfCore.InMemoryHelpers
+### Verify.EntityFramework
 
-Provides a wrapper around the EF Core In-Memory Database Provider. Makes it act more like a relational provider. For EF Core: 2.
+Extends [Verify](https://github.com/VerifyTests/Verify) to allow snapshot testing with EntityFramework. For EF Core: 3, 5.
 
-[GitHub repository](https://github.com/SimonCropp/EfCore.InMemoryHelpers)
+[GitHub repository](https://github.com/VerifyTests/Verify.EntityFramework)
+
+### LocalDb
+
+Provides a wrapper around [SQL Server Express LocalDB](https://docs.microsoft.com/sql/database-engine/configure-windows/sql-server-express-localdb) to simplify running tests against Entity Framework. For EF Core: 3, 5.
+
+[GitHub repository](https://github.com/SimonCropp/LocalDb)
+
+### EfFluentValidation
+
+Adds [FluentValidation](https://fluentvalidation.net/) support to Entity Framework. For EF Core: 3, 5.
+
+[GitHub repository](https://github.com/SimonCropp/EfFluentValidation)
 
 ### EFCore.TemporalSupport
 
@@ -165,7 +177,7 @@ Extends your DbContext with features such as: Include Filter, Auditing, Caching,
 
 ### Entity Framework Extensions
 
-Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2, 3.
+Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2, 3, 5.
 
 [Website](https://entityframework-extensions.net/)
 
@@ -241,3 +253,21 @@ Extends EF Core to resolve connection strings from App.config. For EF Core: 3.
 A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff). For EF Core: 3, 5.
 
 [NuGet](https://www.nuget.org/packages/Detached.Mappers.EntityFramework)
+
+### EntityFrameworkCore.Sqlite.NodaTime
+
+Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](https://sqlite.org). For EF Core: 5.
+
+[GitHub repository](https://github.com/khellang/EFCore.Sqlite.NodaTime)
+
+### ErikEJ.EntityFrameworkCore.SqlServer.Dacpac
+
+Enables reverse engineering an EF Core model from a SQL Server data-tier application package (.dacpac). For EF Core: 3, 5.
+
+[GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac)
+
+### ErikEJ.EntityFrameworkCore.DgmlBuilder
+
+Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() extension method to the DbContext class. For EF Core: 3, 5.
+
+[GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki/Inspect-your-DbContext-model)

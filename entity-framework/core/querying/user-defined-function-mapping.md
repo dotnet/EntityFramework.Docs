@@ -3,7 +3,7 @@ title: User-defined function mapping - EF Core
 description: Mapping user-defined functions to database functions
 author: maumar
 ms.date: 11/23/2020
-uid: core/user-defined-function-mapping
+uid: core/querying/user-defined-function-mapping
 ---
 # User-defined function mapping
 
@@ -88,6 +88,52 @@ Produces the following SQL:
 SELECT 100 * (ABS(CAST([p].[BlogId] AS float) - 3) / ((CAST([p].[BlogId] AS float) + 3) / 2))
 FROM [Posts] AS [p]
 ```
+
+## Configuring nullability of user-defined function based on its arguments
+
+If the user-defined function can only return `null` when one or more of its arguments are `null`, EFCore provides way to specify that, resulting in more performant SQL. It can be done by adding a `PropagatesNullability()` call to the relevant function parameters model configuration.
+
+To illustrate this, define user function `ConcatStrings`:
+
+```sql
+CREATE FUNCTION [dbo].[ConcatStrings] (@prm1 nvarchar(max), @prm2 nvarchar(max))
+RETURNS nvarchar(max)
+AS
+BEGIN
+    RETURN @prm1 + @prm2;
+END
+```
+
+and two CLR methods that map to it:
+
+[!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#NullabilityPropagationFunctionDefinition)]
+
+The model configuration (inside `OnModelCreating` method) is as follows:
+
+[!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#NullabilityPropagationModelConfiguration)]
+
+The first function is configured in the standard way. The second function is configured to take advantage of the nullability propagation optimization, providing more information on how the function behaves around null parameters.
+
+When issuing the following queries:
+
+[!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Program.cs#NullabilityPropagationExamples)]
+
+We get this SQL:
+
+```sql
+SELECT [b].[BlogId], [b].[Rating], [b].[Url]
+FROM [Blogs] AS [b]
+WHERE ([dbo].[ConcatStrings]([b].[Url], CONVERT(VARCHAR(11), [b].[Rating])) <> N'Lorem ipsum...') OR [dbo].[ConcatStrings]([b].[Url], CONVERT(VARCHAR(11), [b].[Rating])) IS NULL
+
+SELECT [b].[BlogId], [b].[Rating], [b].[Url]
+FROM [Blogs] AS [b]
+WHERE ([dbo].[ConcatStrings]([b].[Url], CONVERT(VARCHAR(11), [b].[Rating])) <> N'Lorem ipsum...') OR ([b].[Url] IS NULL OR [b].[Rating] IS NULL)
+```
+
+The second query doesn't need to re-evaluate the function itself to test its nullability.
+
+> [!NOTE]
+> This optimization should only be used if the function can only return `null` when it's parameters are `null`.
 
 ## Mapping a queryable function to a table-valued function
 

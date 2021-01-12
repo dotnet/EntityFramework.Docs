@@ -1,6 +1,6 @@
 ---
 title: Overview of logging and interception - EF Core
-description: Overview of logging, events, interceptors, and diagnostics for EF Core  
+description: Overview of logging, events, interceptors, and diagnostics for EF Core
 author: ajcvickers
 ms.date: 10/01/2020
 uid: core/logging-events-diagnostics/index

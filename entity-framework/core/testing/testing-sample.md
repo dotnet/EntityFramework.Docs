@@ -120,7 +120,7 @@ This is covered in more detail below.
 
 XUnit, like most testing frameworks, will create a new test class instance for each test run.
 Also, XUnit will not run tests within a given test class in parallel.
-This means that we can setup and configure the database in the test constructor and it will be in a well-known state for each test.
+This means that we can set up and configure the database in the test constructor and it will be in a well-known state for each test.
 
 > [!TIP]
 > This sample recreates the database for each test.

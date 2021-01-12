@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 #region DiagnosticObserver
 public class DiagnosticObserver : IObserver<DiagnosticListener>
 {
-    public void OnCompleted() 
+    public void OnCompleted()
         => throw new NotImplementedException();
-    
-    public void OnError(Exception error) 
+
+    public void OnError(Exception error)
         => throw new NotImplementedException();
 
     public void OnNext(DiagnosticListener value)
@@ -27,10 +27,10 @@ public class DiagnosticObserver : IObserver<DiagnosticListener>
 #region KeyValueObserver
 public class KeyValueObserver : IObserver<KeyValuePair<string, object>>
 {
-    public void OnCompleted() 
+    public void OnCompleted()
         => throw new NotImplementedException();
-    
-    public void OnError(Exception error) 
+
+    public void OnError(Exception error)
         => throw new NotImplementedException();
 
     public void OnNext(KeyValuePair<string, object> value)
@@ -58,12 +58,12 @@ public class Program
         #region RegisterDiagnosticListener
         DiagnosticListener.AllListeners.Subscribe(new DiagnosticObserver());
         #endregion
-        
+
         using (var context = new BlogsContext())
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            
+
             context.Add(
                 new Blog
                 {
@@ -93,7 +93,7 @@ public class Program
 }
 
 public class BlogsContext : DbContext
-{ 
+{
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlite("DataSource=blogs.db");
 

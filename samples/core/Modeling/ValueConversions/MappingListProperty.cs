@@ -21,14 +21,14 @@ namespace EFModeling.ValueConversions
 
                 ConsoleWriteLines("Save a new entity...");
 
-                var entity = new EntityType { MyProperty = new List<int> { 1, 2, 3 } };
+                var entity = new EntityType { MyListProperty = new List<int> { 1, 2, 3 } };
                 context.Add(entity);
                 context.SaveChanges();
 
                 ConsoleWriteLines("Mutate the property value and save again...");
 
                 // This will be detected and EF will update the database on SaveChanges
-                entity.MyProperty.Add(4);
+                entity.MyListProperty.Add(4);
 
                 context.SaveChanges();
             }
@@ -39,12 +39,12 @@ namespace EFModeling.ValueConversions
 
                 var entity = context.Set<EntityType>().Single();
 
-                Debug.Assert(entity.MyProperty.SequenceEqual(new List<int> { 1, 2, 3, 4 }));
+                Debug.Assert(entity.MyListProperty.SequenceEqual(new List<int> { 1, 2, 3, 4 }));
             }
 
             ConsoleWriteLines("Sample finished.");
         }
-        
+
         public class SampleDbContext : DbContext
         {
             private static readonly ILoggerFactory
@@ -55,23 +55,14 @@ namespace EFModeling.ValueConversions
                 #region ConfigureListProperty
                 modelBuilder
                     .Entity<EntityType>()
-                    .Property(e => e.MyProperty)
+                    .Property(e => e.MyListProperty)
                     .HasConversion(
                         v => JsonSerializer.Serialize(v, null),
-                        v => JsonSerializer.Deserialize<List<int>>(v, null));
-                #endregion
-
-                #region ConfigureListPropertyComparer
-                var valueComparer = new ValueComparer<List<int>>(
-                    (c1, c2) => c1.SequenceEqual(c2),
-                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                    c => c.ToList());
-            
-                modelBuilder
-                    .Entity<EntityType>()
-                    .Property(e => e.MyProperty)
-                    .Metadata
-                    .SetValueComparer(valueComparer);
+                        v => JsonSerializer.Deserialize<List<int>>(v, null),
+                        new ValueComparer<List<int>>(
+                            (c1, c2) => c1.SequenceEqual(c2),
+                            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                            c => c.ToList()));
                 #endregion
             }
 
@@ -85,9 +76,9 @@ namespace EFModeling.ValueConversions
         public class EntityType
         {
             public int Id { get; set; }
-        
+
             #region ListProperty
-            public List<int> MyProperty { get; set; }
+            public List<int> MyListProperty { get; set; }
             #endregion
         }
     }

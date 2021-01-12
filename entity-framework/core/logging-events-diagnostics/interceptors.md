@@ -21,7 +21,7 @@ Interceptors are registered using <xref:Microsoft.EntityFrameworkCore.DbContextO
 <!--
 public class ExampleContext : BlogsContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.AddInterceptors(new TaggedQueryCommandInterceptor());
 }
 -->
@@ -37,10 +37,10 @@ Interceptors are often stateless, which means that a single interceptor instance
 <!--
 public class TaggedQueryCommandInterceptorContext : BlogsContext
 {
-    private static readonly TaggedQueryCommandInterceptor _interceptor 
+    private static readonly TaggedQueryCommandInterceptor _interceptor
         = new TaggedQueryCommandInterceptor();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.AddInterceptors(_interceptor);
 }
 -->
@@ -70,7 +70,7 @@ Each pair of methods have both sync and async variations. This allows for asynch
 
 ### Example: Command interception to add query hints
 
-> [!TIP]  
+> [!TIP]
 > You can [download the command interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/CommandInterception) from GitHub.
 
 An <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbCommandInterceptor> can be used to modify SQL before it is sent to the database. This example shows how to modify the SQL to include a query hint.
@@ -143,7 +143,7 @@ FROM [Blogs] AS [b]
 
 ### Example: Connection interception for SQL Azure authentication using ADD
 
-> [!TIP]  
+> [!TIP]
 > You can [download the connection interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/ConnectionInterception) from GitHub.
 
 An <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor> can be used to manipulate the <xref:System.Data.Common.DbConnection> before it is used to connect to the database. This can be used to obtain an Azure Active Directory (AAD) access token. For example:
@@ -187,7 +187,7 @@ public class AadAuthenticationInterceptor : DbConnectionInterceptor
 
 ### Example: Advanced command interception for caching
 
-> [!TIP]  
+> [!TIP]
 > You can [download the advanced command interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/CachingInterception) from GitHub.
 
 EF Core interceptors can:
@@ -338,7 +338,7 @@ The [caching interceptor sample](https://github.com/dotnet/EntityFramework.Docs/
         {
             Console.WriteLine(await GetDailyMessage(context));
         }
-        
+
         #region GetDailyMessage
         async Task<string> GetDailyMessage(DailyMessageContext context)
             => (await context.DailyMessages.TagWith("Get_Daily_Message").OrderBy(e => e.Id).LastAsync()).Message;
@@ -393,7 +393,7 @@ Notice from the log output that the application continues to use the cached mess
 > [!NOTE]
 > SaveChanges interception was introduced in EF Core 5.0.
 
-> [!TIP]  
+> [!TIP]
 > You can [download the SaveChanges interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/SaveChangesInterception) from GitHub.
 
 <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> interception points are defined by the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor> interface. As for other interceptors, the <xref:Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesInterceptor> base class with no-op methods is provided as a convenience.
