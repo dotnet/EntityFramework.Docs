@@ -151,6 +151,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeTrackerDebugging", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NullSemantics", "Querying\NullSemantics\NullSemantics.csproj", "{A241ED91-DE41-4310-B7CD-802F4304F27D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CascadeDeletes", "CascadeDeletes\CascadeDeletes.csproj", "{1F72C1AD-D6E1-4F06-B0C7-B04B57DA22B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -413,6 +415,10 @@ Global
 		{A241ED91-DE41-4310-B7CD-802F4304F27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A241ED91-DE41-4310-B7CD-802F4304F27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A241ED91-DE41-4310-B7CD-802F4304F27D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F72C1AD-D6E1-4F06-B0C7-B04B57DA22B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F72C1AD-D6E1-4F06-B0C7-B04B57DA22B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F72C1AD-D6E1-4F06-B0C7-B04B57DA22B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F72C1AD-D6E1-4F06-B0C7-B04B57DA22B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
