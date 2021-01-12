@@ -220,7 +220,7 @@ Miscellaneous features planned for EF 6.0 include, but are not limited to:
 - [Split query for non-navigation collections](https://github.com/dotnet/efcore/issues/21234)
 - [Detect simple join tables in reverse engineering and create many-to-many relationships](https://github.com/dotnet/efcore/issues/22475)
 - [Complete full/free-text search on SQLite and SQL Server](https://github.com/dotnet/efcore/issues/4823)
-- [SQL Server Spatial Indexes](https://github.com/dotnet/efcore/issues/12538)
+- [SQL Server spatial indexes](https://github.com/dotnet/efcore/issues/12538)
 - [Mechanism/API to specify a default conversion for any property of a given type in the model](https://github.com/dotnet/efcore/issues/10784)
 - [Use the new batching API from ADO.NET](https://github.com/dotnet/efcore/issues/18990)
 
