@@ -202,7 +202,7 @@ You don't necessarily need to provide a navigation property. You can simply prov
 
 ### Principal key
 
-If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be setup as an [alternate key](xref:core/modeling/keys#alternate-keys).
+If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be set up as an [alternate key](xref:core/modeling/keys#alternate-keys).
 
 #### [Simple key](#tab/simple-key)
 

@@ -607,7 +607,7 @@ The fix for this is to either to set key values explicitly or configure the key 
 
 <xref:Microsoft.EntityFrameworkCore.DbContext> is designed to represent a short-lived unit-of-work, as described in [DbContext Initialization and Configuration](xref:core/dbcontext-configuration/index), and elaborated on in [Change Tracking in EF Core](xref:core/change-tracking/index). Not following this guidance makes it is easy to run into situations where an attempt is made to track multiple instances of the same entity. Common examples are:
 
-- Using the same DbContext instance to both setup test state and then execute the test. This often results in the DbContext still tracking one entity instance from test setup, while then attempting to attach a new instance in the test proper. Instead, use a different DbContext instance for setting up test state and the test code proper.
+- Using the same DbContext instance to both set up test state and then execute the test. This often results in the DbContext still tracking one entity instance from test setup, while then attempting to attach a new instance in the test proper. Instead, use a different DbContext instance for setting up test state and the test code proper.
 - Using a shared DbContext instance in a repository or similar code. Instead, make sure your repository uses a single DbContext instance for each unit-of-work.
 
 ## Identity resolution and queries
