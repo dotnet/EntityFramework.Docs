@@ -85,7 +85,7 @@ Status: Not started
 
 T-shirt size: Medium
 
-The EF Core codebase already contains a set of performance benchmarks that are executed for every build. For 6.0, we plan to improve the infrastructure for these tests as well as adding new tests. We will also profile mainline perf scenarios and fix any low-hanging fruit found.
+The EF Core codebase already contains a set of performance benchmarks that are executed every day. For 6.0, we plan to improve the infrastructure for these tests as well as adding new tests. We will also profile mainline perf scenarios and fix any low-hanging fruit found.
 
 ### Compiled models
 
