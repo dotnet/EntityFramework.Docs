@@ -11,7 +11,7 @@ Entity Framework Core (EF Core) represents relationships using foreign keys. An 
 
 If the principal/parent entity is deleted, then the foreign key values of the dependents/children will no longer match the primary or alternate key of _any_ principal/parent. This is an invalid state, and will cause a referential constraint violation in most databases.
 
-There are two options for resolving this invalid state:
+There are two options to avoid this referential constraint violation:
 
 1. Set the FK values to null
 2. Also delete the dependent/child entities
@@ -177,7 +177,7 @@ CREATE TABLE [Posts] (
 
 Notice that the foreign key constraint defining the relationship between blogs and posts is configured with `ON DELETE CASCADE`.
 
-If we know that database is configured like this, then we can delete a blog _without first loading posts_ and the database will take care of deleting all the posts that were related to that blog. For example:
+If we know that the database is configured like this, then we can delete a blog _without first loading posts_ and the database will take care of deleting all the posts that were related to that blog. For example:
 
 <!--
             using var context = new BlogsContext();
@@ -200,7 +200,7 @@ WHERE [Id] = @p0;
 SELECT @@ROWCOUNT;
 ```
 
-This will result in an exception if the foreign key constraint in the database is not configured for cascade deletes. However, in this case the posts are deleted by the database because it has been configured with `ON DELETE CASCADE` when it was created.
+This would result in an exception if the foreign key constraint in the database is not configured for cascade deletes. However, in this case the posts are deleted by the database because it has been configured with `ON DELETE CASCADE` when it was created.
 
 > [!NOTE]
 > Databases don't typically have any way to automatically delete orphans. This is because while EF Core represents relationships using navigations as well of foreign keys, databases have only foreign keys and no navigations. This means that it is usually not possible to sever a relationship without loading both sides into the DbContext.
@@ -208,7 +208,7 @@ This will result in an exception if the foreign key constraint in the database i
 > [!NOTE]
 > The EF Core in-memory database does not currently support cascade deletes in the database.
 
-> [!NOTE]
+> [!WARNING]
 > Do not configure cascade delete in the database when soft-deleting entities. This may cause entities to be accidentally really deleted instead of soft-deleted.
 
 ### Database cascade limitations
@@ -342,7 +342,7 @@ The statement has been terminated.
 
 Optional relationships have nullable foreign key properties mapped to nullable database columns. This means that the foreign key value can be set to null when the current principal/parent is deleted or is severed from the dependent/child.
 
-Lets look again at the examples from [When cascading behaviors happen](#when-cascading-behaviors-happen), but this time with an optional relationship represented by a nullable `Post.BlogId` foreign key property:
+Let's look again at the examples from [When cascading behaviors happen](#when-cascading-behaviors-happen), but this time with an optional relationship represented by a nullable `Post.BlogId` foreign key property:
 
 <!--
             public int? BlogId { get; set; }
@@ -457,7 +457,7 @@ Cascade behaviors are configured per relationship using the <xref:Microsoft.Enti
 
 See [Relationships](xref:core/modeling/relationships) for more information on configuring relationships between entity types.
 
-`OnDelete` accepts a value from the, admittedly confusing, <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> enum. This enum defines both the behavior of EF Core on tracked entities, and the configuration of cascade delete in the database.
+`OnDelete` accepts a value from the, admittedly confusing, <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> enum. This enum defines both the behavior of EF Core on tracked entities, and the configuration of cascade delete in the database when EF is used to create the schema.
 
 ### Impact on database schema
 
@@ -467,16 +467,16 @@ The following table shows the result of each `OnDelete` value on the foreign key
 |:----------------------|--------------------------
 | Cascade               | ON DELETE CASCADE
 | Restrict              | ON DELETE NO ACTION
-| NoAction              |
+| NoAction              | <database default>
 | SetNull               | ON DELETE SET NULL
 | ClientSetNull         | ON DELETE NO ACTION
 | ClientCascade         | ON DELETE NO ACTION
-| ClientNoAction        |
+| ClientNoAction        | <database default>
 
 > [!NOTE]
 > This table is confusing and we plan to revisit this in a future release. See [GitHub Issue #21252](https://github.com/dotnet/efcore/issues/21252).
 
-The behaviors of `ON DELETE NO ACTION` and `ON DELETE RESTRICT` in relational databases are typically either identical or very similar. Despite what `NO ACTION` may imply, both of these options cause referential constraints to be enforced. The difference, when there is one, is _when_ the database checks the constraints. This is of academic interest only for most applications since it rarely effects behavior. Check your database documentation for the specific differences between `ON DELETE NO ACTION` and `ON DELETE RESTRICT` on your database system.
+The behaviors of `ON DELETE NO ACTION` and `ON DELETE RESTRICT` in relational databases are typically either identical or very similar. Despite what `NO ACTION` may imply, both of these options cause referential constraints to be enforced. The difference, when there is one, is _when_ the database checks the constraints.  Check your database documentation for the specific differences between `ON DELETE NO ACTION` and `ON DELETE RESTRICT` on your database system.
 
 The only values that will cause cascading behaviors on the database are `Cascade` and `SetNull`. All other values will configure the database to not cascade any changes.
 
@@ -506,7 +506,7 @@ Notes:
   - Typically, this is an `InvalidOperationException` from EF Core since the invalid state is detected in the loaded children/dependents.
   - `ClientNoAction` forces EF Core to not check fixup dependents before sending them to the database, so in this case the database throws an exception, which is then wrapped in a `DbUpdateException` by SaveChanges.
   - `SetNull` is rejected when creating the database since the foreign key column is not nullable.
-- Since dependents/children are loaded they are always deleted by EF Core, and never left for the database to delete.
+- Since dependents/children are loaded, they are always deleted by EF Core, and never left for the database to delete.
 
 #### Required relationship with dependents/children not loaded
 
