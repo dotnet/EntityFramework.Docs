@@ -70,7 +70,7 @@ Similarly, a property can be configured to have its value generated on add or up
 > [!WARNING]
 > Unlike with default values or computed columns, we are not specifying *how* the values are to be generated; that depends on the database provider being used. Database providers may automatically set up value generation for some property types, but others may require you to manually set up how the value is generated.
 >
-> For example, on SQL Server, when a Guid property is configured as value generated on add, the provider automatically performs value generation client-side, using an algorithm to generate optimal sequential GUID values. However, specifying `ValueGeneratedOnAdd()` on a DateTime property will have no effect ([see the section below for DateTime value generation](#datetime-value-generation)).
+> For example, on SQL Server, when a GUID property is configured as value generated on add, the provider automatically performs value generation client-side, using an algorithm to generate optimal sequential GUID values. However, specifying `ValueGeneratedOnAdd()` on a DateTime property will have no effect ([see the section below for DateTime value generation](#datetime-value-generation)).
 >
 > Similarly, byte[] properties that are configured as generated on add or update and marked as concurrency tokens are set up with the rowversion data type, so that values are automatically generated in the database. However, specifying `ValueGeneratedOnAddOrUpdate()` will again have no effect.
 >
