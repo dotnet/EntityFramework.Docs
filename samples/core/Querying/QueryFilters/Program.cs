@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.QueryFilters
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             QueryFiltersBasicExample();
             QueryFiltersWithNavigationsExample();
@@ -15,7 +15,7 @@ namespace EFQuerying.QueryFilters
             QueryFiltersUsingNavigationExample();
         }
 
-        static void QueryFiltersBasicExample()
+        private static void QueryFiltersBasicExample()
         {
             using (var db = new BloggingContext("diego"))
             {
@@ -55,8 +55,7 @@ namespace EFQuerying.QueryFilters
                                 Url = "http://sample.com/blogs/catfish",
                                 Posts = new List<Post>
                                 {
-                                    new Post { Title = "Catfish care 101" },
-                                    new Post { Title = "History of the catfish name" }
+                                    new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
                                 }
                             });
 
@@ -243,7 +242,6 @@ namespace EFQuerying.QueryFilters
             Console.WriteLine("Use of required navigations to access entity with query filter demo");
             using (var db = new FilteredBloggingContextRequired())
             {
-
                 #region Queries
                 var allPosts = db.Posts.ToList();
                 var allPostsWithBlogsIncluded = db.Posts.Include(p => p.Blog).ToList();
@@ -300,8 +298,7 @@ namespace EFQuerying.QueryFilters
                         Url = "http://sample.com/blogs/catfish",
                         Posts = new List<Post>
                         {
-                            new Post { Title = "Catfish care 101" },
-                            new Post { Title = "History of the catfish name" }
+                            new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
                         }
                     });
                 #endregion
@@ -316,10 +313,12 @@ namespace EFQuerying.QueryFilters
                 var filteredBlogs = db.Blogs.ToList();
                 #endregion
                 var filteredBlogsInclude = db.Blogs.Include(b => b.Posts).ToList();
-                if (filteredBlogs.Count == 2 && filteredBlogsInclude.Count == 2)
+                if (filteredBlogs.Count == 2
+                    && filteredBlogsInclude.Count == 2)
                 {
                     Console.WriteLine("Blogs without any Posts are also filtered out. Posts must contain 'fish' in title.");
-                    Console.WriteLine("Filters are applied recursively, so Blogs that do have Posts, but those Posts don't contain 'fish' in the title will also be filtered out.");
+                    Console.WriteLine(
+                        "Filters are applied recursively, so Blogs that do have Posts, but those Posts don't contain 'fish' in the title will also be filtered out.");
                 }
             }
         }

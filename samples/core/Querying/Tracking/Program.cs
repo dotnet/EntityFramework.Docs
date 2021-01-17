@@ -1,15 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.Tracking
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using (var context = new BloggingContext())
             {
@@ -65,12 +61,9 @@ namespace EFQuerying.Tracking
             {
                 #region CustomProjection1
                 var blog = context.Blogs
-                    .Select(b =>
-                        new
-                        {
-                            Blog = b,
-                            PostCount = b.Posts.Count()
-                        });
+                    .Select(
+                        b =>
+                            new { Blog = b, PostCount = b.Posts.Count() });
                 #endregion
             }
 
@@ -78,12 +71,9 @@ namespace EFQuerying.Tracking
             {
                 #region CustomProjection2
                 var blog = context.Blogs
-                    .Select(b =>
-                        new
-                        {
-                            Blog = b,
-                            Post = b.Posts.OrderBy(p => p.Rating).LastOrDefault()
-                        });
+                    .Select(
+                        b =>
+                            new { Blog = b, Post = b.Posts.OrderBy(p => p.Rating).LastOrDefault() });
                 #endregion
             }
 
@@ -91,12 +81,9 @@ namespace EFQuerying.Tracking
             {
                 #region CustomProjection3
                 var blog = context.Blogs
-                    .Select(b =>
-                        new
-                        {
-                            Id = b.BlogId,
-                            Url = b.Url
-                        });
+                    .Select(
+                        b =>
+                            new { Id = b.BlogId, b.Url });
                 #endregion
             }
 
@@ -105,11 +92,8 @@ namespace EFQuerying.Tracking
                 #region ClientProjection
                 var blogs = context.Blogs
                     .OrderByDescending(blog => blog.Rating)
-                    .Select(blog => new
-                    {
-                        Id = blog.BlogId,
-                        Url = StandardizeUrl(blog)
-                    })
+                    .Select(
+                        blog => new { Id = blog.BlogId, Url = StandardizeUrl(blog) })
                     .ToList();
                 #endregion
             }

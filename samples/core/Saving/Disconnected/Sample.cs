@@ -32,7 +32,7 @@ namespace EFSaving.Disconnected
             Console.WriteLine("Show entity-specific check for key set:");
             using (var context = new BloggingContext())
             {
-                var blog = new Blog {Url = "http://sample.com"};
+                var blog = new Blog { Url = "http://sample.com" };
 
                 // Key is not set for a new entity
                 Console.WriteLine($"  Blog entity is {(IsItNew(blog) ? "new" : "existing")}.");
@@ -48,7 +48,7 @@ namespace EFSaving.Disconnected
             Console.WriteLine("Show general IsKeySet:");
             using (var context = new BloggingContext())
             {
-                var blog = new Blog {Url = "http://sample.com"};
+                var blog = new Blog { Url = "http://sample.com" };
 
                 // Key is not set for a new entity
                 Console.WriteLine($"  Blog entity is {(IsItNew(context, (object)blog) ? "new" : "existing")}.");
@@ -64,7 +64,7 @@ namespace EFSaving.Disconnected
             Console.WriteLine("Show key set on Add:");
             using (var context = new BloggingContext())
             {
-                var blog = new Blog {Url = "http://sample.com"};
+                var blog = new Blog { Url = "http://sample.com" };
 
                 // Key is not set for a new entity
                 Console.WriteLine($"  Blog entity is {(IsItNew(context, (object)blog) ? "new" : "existing")}.");
@@ -79,7 +79,7 @@ namespace EFSaving.Disconnected
             Console.WriteLine("Show using query to check for new entity:");
             using (var context = new BloggingContext())
             {
-                var blog = new Blog {Url = "http://sample.com"};
+                var blog = new Blog { Url = "http://sample.com" };
 
                 Console.WriteLine($"  Blog entity is {(IsItNew(context, blog) ? "new" : "existing")}.");
 
@@ -427,12 +427,7 @@ namespace EFSaving.Disconnected
             #region CreateBlogAndPosts
             var blog = new Blog
             {
-                Url = "http://sample.com",
-                Posts = new List<Post>
-                {
-                    new Post {Title = "Post 1"},
-                    new Post {Title = "Post 2"},
-                }
+                Url = "http://sample.com", Posts = new List<Post> { new Post { Title = "Post 1" }, new Post { Title = "Post 2" }, }
             };
             #endregion
 

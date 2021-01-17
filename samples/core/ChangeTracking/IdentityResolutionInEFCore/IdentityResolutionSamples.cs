@@ -45,12 +45,7 @@ namespace Updates
             Helpers.PopulateDatabase();
 
             UpdateFromHttpPost1(
-                new Blog
-                {
-                    Id = 1,
-                    Name = ".NET Blog (All new!)",
-                    Summary = "Posts about .NET"
-                });
+                new Blog { Id = 1, Name = ".NET Blog (All new!)", Summary = "Posts about .NET" });
 
             Console.WriteLine();
         }
@@ -75,12 +70,7 @@ namespace Updates
             Helpers.PopulateDatabase();
 
             UpdateFromHttpPost2(
-                new Blog
-                {
-                    Id = 1,
-                    Name = ".NET Blog (All new!)",
-                    Summary = "Posts about .NET"
-                });
+                new Blog { Id = 1, Name = ".NET Blog (All new!)", Summary = "Posts about .NET" });
 
             Console.WriteLine();
         }
@@ -108,12 +98,7 @@ namespace Updates
             Helpers.PopulateDatabase();
 
             UpdateFromHttpPost3(
-                new Blog
-                {
-                    Id = 1,
-                    Name = ".NET Blog (All new!)",
-                    Summary = "Posts about .NET"
-                });
+                new Blog { Id = 1, Name = ".NET Blog (All new!)", Summary = "Posts about .NET" });
 
             Console.WriteLine();
         }
@@ -140,12 +125,7 @@ namespace Updates
             Helpers.PopulateDatabase();
 
             UpdateFromHttpPost4(
-                new BlogDto
-                {
-                    Id = 1,
-                    Name = ".NET Blog (All new!)",
-                    Summary = "Posts about .NET"
-                });
+                new BlogDto { Id = 1, Name = ".NET Blog (All new!)", Summary = "Posts about .NET" });
 
             Console.WriteLine();
         }
@@ -172,12 +152,7 @@ namespace Updates
             Helpers.PopulateDatabase();
 
             UpdateFromHttpPost5(
-                new Dictionary<string, object>
-                {
-                    ["Id"] = 1,
-                    ["Name"] = ".NET Blog (All new!)",
-                    ["Summary"] = "Posts about .NET"
-                });
+                new Dictionary<string, object> { ["Id"] = 1, ["Name"] = ".NET Blog (All new!)", ["Summary"] = "Posts about .NET" });
 
             Console.WriteLine();
         }
@@ -204,18 +179,8 @@ namespace Updates
             Helpers.PopulateDatabase();
 
             UpdateFromHttpPost6(
-                new Blog
-                {
-                    Id = 1,
-                    Name = ".NET Blog (All new!)",
-                    Summary = "Posts about .NET"
-                },
-                new Dictionary<string, object>
-                {
-                    ["Id"] = 1,
-                    ["Name"] = ".NET Blog",
-                    ["Summary"] = "Posts about .NET"
-                });
+                new Blog { Id = 1, Name = ".NET Blog (All new!)", Summary = "Posts about .NET" },
+                new Dictionary<string, object> { ["Id"] = 1, ["Name"] = ".NET Blog", ["Summary"] = "Posts about .NET" });
 
             Console.WriteLine();
         }

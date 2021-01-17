@@ -65,15 +65,7 @@ public class Program
             context.Database.EnsureCreated();
 
             context.Add(
-                new Blog
-                {
-                    Name = "EF Blog",
-                    Posts =
-                    {
-                        new Post { Title = "EF Core 3.1!" },
-                        new Post { Title = "EF Core 5.0!" }
-                    }
-                });
+                new Blog { Name = "EF Blog", Posts = { new Post { Title = "EF Core 3.1!" }, new Post { Title = "EF Core 5.0!" } } });
 
             context.SaveChanges();
         }

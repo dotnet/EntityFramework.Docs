@@ -2,7 +2,7 @@
 
 namespace EFModeling.FluentAPI.Relational.TableExcludeFromMigrations
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<IdentityUser> Users { get; set; }
 

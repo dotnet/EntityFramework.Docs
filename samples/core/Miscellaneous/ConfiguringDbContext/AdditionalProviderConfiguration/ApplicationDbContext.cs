@@ -10,10 +10,7 @@ namespace AdditionalProviderConfiguration
             optionsBuilder
                 .UseSqlServer(
                     @"Server=(localdb)\mssqllocaldb;Database=Test",
-                    providerOptions =>
-                        {
-                            providerOptions.EnableRetryOnFailure();
-                        });
+                    providerOptions => { providerOptions.EnableRetryOnFailure(); });
         }
     }
     #endregion

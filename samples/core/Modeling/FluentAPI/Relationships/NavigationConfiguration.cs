@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.Relationships.NavigationConfiguration
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -17,7 +17,7 @@ namespace EFModeling.FluentAPI.Relationships.NavigationConfiguration
 
             modelBuilder.Entity<Blog>()
                 .Navigation(b => b.Posts)
-                    .UsePropertyAccessMode(PropertyAccessMode.Property);
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
         }
         #endregion
     }

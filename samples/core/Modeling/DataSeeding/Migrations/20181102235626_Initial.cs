@@ -15,10 +15,7 @@ namespace EFModeling.DataSeeding.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Url = table.Column<string>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Blogs", x => x.BlogId);
-                });
+                constraints: table => { table.PrimaryKey("PK_Blogs", x => x.BlogId); });
 
             migrationBuilder.CreateTable(
                 name: "Posts",

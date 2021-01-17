@@ -1,12 +1,12 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System.Linq;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace EFQuerying.RawSQL
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using (var context = new BloggingContext())
             {
@@ -31,6 +31,18 @@ namespace EFQuerying.RawSQL
                                   where ([b].[BlogId] = [p].[BlogId]) and (charindex(@searchTerm, [p].[Title]) > 0))
 
                                   return
+                          end");
+
+                context.Database.ExecuteSqlRaw(
+                    @"create procedure [dbo].[GetMostPopularBlogs] as
+                          begin
+                              select * from dbo.Blogs order by Rating
+                          end");
+
+                context.Database.ExecuteSqlRaw(
+                    @"create procedure [dbo].[GetMostPopularBlogsForUser] @filterByUser nvarchar(max) as
+                          begin
+                              select * from dbo.Blogs order by Rating
                           end");
             }
 

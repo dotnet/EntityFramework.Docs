@@ -1,6 +1,3 @@
-// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
 using System;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
@@ -12,7 +9,7 @@ namespace Benchmarks
     public class AverageBlogRanking
     {
         [Params(1000)]
-        public int NumBlogs;            // number of records to write [once], and read [each pass]
+        public int NumBlogs; // number of records to write [once], and read [each pass]
 
         [GlobalSetup]
         public void Setup()
@@ -93,13 +90,11 @@ namespace Benchmarks
             public void SeedData(int numblogs)
             {
                 Blogs.AddRange(
-                    Enumerable.Range(0, numblogs).Select(i => new Blog
-                    {
-                        Name = $"Blog{i}",
-                        Url = $"blog{i}.blogs.net",
-                        CreationTime = new DateTime(2020, 1, 1),
-                        Rating = i % 5
-                    }));
+                    Enumerable.Range(0, numblogs).Select(
+                        i => new Blog
+                        {
+                            Name = $"Blog{i}", Url = $"blog{i}.blogs.net", CreationTime = new DateTime(2020, 1, 1), Rating = i % 5
+                        }));
                 SaveChanges();
             }
         }

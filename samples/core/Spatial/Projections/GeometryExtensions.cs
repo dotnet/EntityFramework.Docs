@@ -6,9 +6,9 @@ using ProjNet.CoordinateSystems.Transformations;
 namespace NetTopologySuite.Geometries
 {
     #region snippet_GeometryExtensions
-    static class GeometryExtensions
+    internal static class GeometryExtensions
     {
-        static readonly CoordinateSystemServices _coordinateSystemServices
+        private static readonly CoordinateSystemServices _coordinateSystemServices
             = new CoordinateSystemServices(
                 new Dictionary<int, string>
                 {
@@ -19,7 +19,7 @@ namespace NetTopologySuite.Geometries
                     // This coordinate system covers the area of our data.
                     // Different data requires a different coordinate system.
                     [2855] =
-                    @"
+                        @"
                         PROJCS[""NAD83(HARN) / Washington North"",
                             GEOGCS[""NAD83(HARN)"",
                                 DATUM[""NAD83_High_Accuracy_Regional_Network"",
@@ -54,9 +54,9 @@ namespace NetTopologySuite.Geometries
             return result;
         }
 
-        class MathTransformFilter : ICoordinateSequenceFilter
+        private class MathTransformFilter : ICoordinateSequenceFilter
         {
-            readonly MathTransform _transform;
+            private readonly MathTransform _transform;
 
             public MathTransformFilter(MathTransform transform)
                 => _transform = transform;
@@ -78,4 +78,3 @@ namespace NetTopologySuite.Geometries
     }
     #endregion
 }
-

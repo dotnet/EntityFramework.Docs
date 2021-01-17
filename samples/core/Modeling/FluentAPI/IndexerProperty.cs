@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.IndexerProperty
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
@@ -18,13 +18,13 @@ namespace EFModeling.FluentAPI.IndexerProperty
 
     public class Blog
     {
-        private readonly Dictionary<string, object>  _data = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _data = new Dictionary<string, object>();
         public int BlogId { get; set; }
+
         public object this[string key]
         {
             get => _data[key];
             set => _data[key] = value;
-
         }
     }
 }

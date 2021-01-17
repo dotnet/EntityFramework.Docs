@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,10 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
         => services.AddDbContext<ApplicationDbContext>();
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+    }
 }
 
 public class ApplicationDbContext : DbContext

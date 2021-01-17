@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Conventions.EntityTypes
 {
     #region EntityTypes
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
@@ -61,7 +61,8 @@ namespace EFModeling.Conventions.EntityTypes
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFModeling.EntityTypeToFunctionMapping;Trusted_Connection=True;ConnectRetryCount=0");
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=EFModeling.EntityTypeToFunctionMapping;Trusted_Connection=True;ConnectRetryCount=0");
         }
     }
 }

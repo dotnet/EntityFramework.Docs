@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.DataAnnotations.ValueGeneratedOnAdd
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
     }
@@ -14,6 +14,7 @@ namespace EFModeling.DataAnnotations.ValueGeneratedOnAdd
     {
         public int BlogId { get; set; }
         public string Url { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime Inserted { get; set; }
     }

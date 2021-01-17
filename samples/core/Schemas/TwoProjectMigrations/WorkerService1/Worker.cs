@@ -6,11 +6,11 @@ using Microsoft.Extensions.Hosting;
 
 namespace WorkerService1
 {
-    class Worker : IHostedService, IDisposable
+    internal class Worker : IHostedService, IDisposable
     {
-        readonly IServiceProvider _services;
+        private readonly IServiceProvider _services;
 
-        Timer _timer;
+        private Timer _timer;
 
         public Worker(IServiceProvider services)
             => _services = services;
@@ -26,7 +26,7 @@ namespace WorkerService1
             return Task.CompletedTask;
         }
 
-        void Execute()
+        private void Execute()
         {
             using var scope = _services.CreateScope();
             var services = scope.ServiceProvider;

@@ -7,10 +7,11 @@ public abstract class BlogsContext : DbContext
     private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=InterceptionTest;ConnectRetryCount=0";
 
     protected BlogsContext()
-        : base(new DbContextOptionsBuilder()
-            .LogTo(Console.WriteLine, LogLevel.Information)
-            .UseSqlServer(ConnectionString)
-            .Options)
+        : base(
+            new DbContextOptionsBuilder()
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .UseSqlServer(ConnectionString)
+                .Options)
     {
     }
 

@@ -1,6 +1,6 @@
-﻿using BusinessLogic;
+﻿using System.Linq;
+using BusinessLogic;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using Xunit;
 
 namespace EFTesting.TestProject.InMemory
@@ -81,10 +81,11 @@ namespace EFTesting.TestProject.InMemory
         }
 
         private static BloggingContext CreateContext(DbContextOptions<BloggingContext> options)
-            => new BloggingContext(options, (context, modelBuilder) =>
-            {
-                modelBuilder.Entity<UrlResource>()
-                    .ToInMemoryQuery(() => context.Blogs.Select(b => new UrlResource { Url = b.Url }));
-            });
+            => new BloggingContext(
+                options, (context, modelBuilder) =>
+                {
+                    modelBuilder.Entity<UrlResource>()
+                        .ToInMemoryQuery(() => context.Blogs.Select(b => new UrlResource { Url = b.Url }));
+                });
     }
 }

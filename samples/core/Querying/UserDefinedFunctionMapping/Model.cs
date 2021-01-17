@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EFQuerying.UserDefinedFunctionMapping
 {
@@ -65,10 +65,10 @@ namespace EFQuerying.UserDefinedFunctionMapping
 
         #region NullabilityPropagationFunctionDefinition
         public string ConcatStrings(string prm1, string prm2)
-            => throw new System.InvalidOperationException();
+            => throw new InvalidOperationException();
 
         public string ConcatStringsOptimized(string prm1, string prm2)
-            => throw new System.InvalidOperationException();
+            => throw new InvalidOperationException();
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -90,15 +90,49 @@ namespace EFQuerying.UserDefinedFunctionMapping
 
             modelBuilder.Entity<Post>()
                 .HasData(
-                    new Post { PostId = 1, BlogId = 1, Title = "What's new", Content = "Lorem ipsum dolor sit amet", Rating = 5 },
-                    new Post { PostId = 2, BlogId = 2, Title = "Around the World in Eighty Days", Content = "consectetur adipiscing elit", Rating = 5 },
-                    new Post { PostId = 3, BlogId = 2, Title = "Glamping *is* the way", Content = "sed do eiusmod tempor incididunt", Rating = 4 },
-                    new Post { PostId = 4, BlogId = 2, Title = "Travel in the time of pandemic", Content = "ut labore et dolore magna aliqua", Rating = 3 });
+                    new Post
+                    {
+                        PostId = 1,
+                        BlogId = 1,
+                        Title = "What's new",
+                        Content = "Lorem ipsum dolor sit amet",
+                        Rating = 5
+                    },
+                    new Post
+                    {
+                        PostId = 2,
+                        BlogId = 2,
+                        Title = "Around the World in Eighty Days",
+                        Content = "consectetur adipiscing elit",
+                        Rating = 5
+                    },
+                    new Post
+                    {
+                        PostId = 3,
+                        BlogId = 2,
+                        Title = "Glamping *is* the way",
+                        Content = "sed do eiusmod tempor incididunt",
+                        Rating = 4
+                    },
+                    new Post
+                    {
+                        PostId = 4,
+                        BlogId = 2,
+                        Title = "Travel in the time of pandemic",
+                        Content = "ut labore et dolore magna aliqua",
+                        Rating = 3
+                    });
 
             modelBuilder.Entity<Comment>()
                 .HasData(
                     new Comment { CommentId = 1, PostId = 1, Text = "Exciting!", Likes = 3 },
-                    new Comment { CommentId = 2, PostId = 1, Text = "Dotnet is useless - why use C# when you can write super fast assembly code instead?", Likes = 0 },
+                    new Comment
+                    {
+                        CommentId = 2,
+                        PostId = 1,
+                        Text = "Dotnet is useless - why use C# when you can write super fast assembly code instead?",
+                        Likes = 0
+                    },
                     new Comment { CommentId = 3, PostId = 2, Text = "Didn't think you would make it!", Likes = 3 },
                     new Comment { CommentId = 4, PostId = 2, Text = "Are you going to try 70 days next time?", Likes = 5 },
                     new Comment { CommentId = 5, PostId = 2, Text = "Good thing the earth is round :)", Likes = 5 },
@@ -111,47 +145,49 @@ namespace EFQuerying.UserDefinedFunctionMapping
 
             #region HasTranslationFunctionConfiguration
             // 100 * ABS(first - second) / ((first + second) / 2)
-            modelBuilder.HasDbFunction(typeof(BloggingContext).GetMethod(nameof(PercentageDifference), new[] { typeof(double), typeof(int) }))
-                .HasTranslation(args =>
-                    new SqlBinaryExpression(
-                        ExpressionType.Multiply,
-                        new SqlConstantExpression(
-                            Expression.Constant(100),
-                            new IntTypeMapping("int", DbType.Int32)),
+            modelBuilder.HasDbFunction(
+                    typeof(BloggingContext).GetMethod(nameof(PercentageDifference), new[] { typeof(double), typeof(int) }))
+                .HasTranslation(
+                    args =>
                         new SqlBinaryExpression(
-                            ExpressionType.Divide,
-                            new SqlFunctionExpression(
-                                "ABS",
-                                new SqlExpression[]
-                                {
+                            ExpressionType.Multiply,
+                            new SqlConstantExpression(
+                                Expression.Constant(100),
+                                new IntTypeMapping("int", DbType.Int32)),
+                            new SqlBinaryExpression(
+                                ExpressionType.Divide,
+                                new SqlFunctionExpression(
+                                    "ABS",
+                                    new SqlExpression[]
+                                    {
+                                        new SqlBinaryExpression(
+                                            ExpressionType.Subtract,
+                                            args.First(),
+                                            args.Skip(1).First(),
+                                            args.First().Type,
+                                            args.First().TypeMapping)
+                                    },
+                                    nullable: true,
+                                    argumentsPropagateNullability: new[] { true, true },
+                                    type: args.First().Type,
+                                    typeMapping: args.First().TypeMapping),
+                                new SqlBinaryExpression(
+                                    ExpressionType.Divide,
                                     new SqlBinaryExpression(
-                                        ExpressionType.Subtract,
+                                        ExpressionType.Add,
                                         args.First(),
                                         args.Skip(1).First(),
                                         args.First().Type,
-                                        args.First().TypeMapping)
-                                },
-                                nullable: true,
-                                argumentsPropagateNullability: new[] { true, true },
-                                type: args.First().Type,
-                                typeMapping: args.First().TypeMapping),
-                            new SqlBinaryExpression(
-                                ExpressionType.Divide,
-                                new SqlBinaryExpression(
-                                    ExpressionType.Add,
-                                    args.First(),
-                                    args.Skip(1).First(),
+                                        args.First().TypeMapping),
+                                    new SqlConstantExpression(
+                                        Expression.Constant(2),
+                                        new IntTypeMapping("int", DbType.Int32)),
                                     args.First().Type,
                                     args.First().TypeMapping),
-                                new SqlConstantExpression(
-                                    Expression.Constant(2),
-                                    new IntTypeMapping("int", DbType.Int32)),
                                 args.First().Type,
                                 args.First().TypeMapping),
                             args.First().Type,
-                            args.First().TypeMapping),
-                        args.First().Type,
-                        args.First().TypeMapping));
+                            args.First().TypeMapping));
             #endregion
 
             #region NullabilityPropagationModelConfiguration
@@ -177,7 +213,8 @@ namespace EFQuerying.UserDefinedFunctionMapping
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFQuerying.UserDefinedFunctionMapping;Trusted_Connection=True;ConnectRetryCount=0");
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.UserDefinedFunctionMapping;Trusted_Connection=True;ConnectRetryCount=0");
         }
     }
 }

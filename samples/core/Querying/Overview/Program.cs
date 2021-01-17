@@ -2,10 +2,16 @@
 
 namespace EFQuerying.Overview
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            using (var context = new BloggingContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
+
             #region LoadingAllData
             using (var context = new BloggingContext())
             {

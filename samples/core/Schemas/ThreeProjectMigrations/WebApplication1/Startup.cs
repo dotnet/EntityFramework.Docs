@@ -22,14 +22,16 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             #region snippet_MigrationsAssembly
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
-                    x => x.MigrationsAssembly("WebApplication1.Migrations")));
+            services.AddDbContext<ApplicationDbContext>(
+                options =>
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("DefaultConnection"),
+                        x => x.MigrationsAssembly("WebApplication1.Migrations")));
             #endregion
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,7 +40,7 @@ namespace WebApplication1
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -55,10 +57,7 @@ namespace WebApplication1
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
         }
     }
 }

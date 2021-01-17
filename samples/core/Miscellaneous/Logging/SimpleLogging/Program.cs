@@ -210,9 +210,10 @@ public class ChangeLogLevelContext : BlogsContext
     #region ChangeLogLevel
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
-            .ConfigureWarnings(b => b.Log(
-                (RelationalEventId.ConnectionOpened, LogLevel.Information),
-                (RelationalEventId.ConnectionClosed, LogLevel.Information)))
+            .ConfigureWarnings(
+                b => b.Log(
+                    (RelationalEventId.ConnectionOpened, LogLevel.Information),
+                    (RelationalEventId.ConnectionClosed, LogLevel.Information)))
             .LogTo(Console.WriteLine, LogLevel.Information);
     #endregion
 }

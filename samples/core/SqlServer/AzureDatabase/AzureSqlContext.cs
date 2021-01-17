@@ -8,7 +8,8 @@ namespace SqlServer.AzureDatabase
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=tcp:[serverName].database.windows.net;Database=myDataBase;User ID=[Login]@[serverName];Password=myPassword];Trusted_Connection=False;Encrypt=True;");
+            optionsBuilder.UseSqlServer(
+                "Server=tcp:[serverName].database.windows.net;Database=myDataBase;User ID=[Login]@[serverName];Password=myPassword];Trusted_Connection=False;Encrypt=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

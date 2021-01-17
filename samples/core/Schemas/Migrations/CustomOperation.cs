@@ -5,26 +5,22 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 
 #region snippet_CreateUserOperation
-class CreateUserOperation : MigrationOperation
+internal class CreateUserOperation : MigrationOperation
 {
     public string Name { get; set; }
     public string Password { get; set; }
 }
 #endregion
 
-static class MigrationBuilderExtensions
+internal static class MigrationBuilderExtensions
 {
     #region snippet_MigrationBuilderExtension
-    static OperationBuilder<CreateUserOperation> CreateUser(
+    private static OperationBuilder<CreateUserOperation> CreateUser(
         this MigrationBuilder migrationBuilder,
         string name,
         string password)
     {
-        var operation = new CreateUserOperation
-        {
-            Name = name,
-            Password = password
-        };
+        var operation = new CreateUserOperation { Name = name, Password = password };
         migrationBuilder.Operations.Add(operation);
 
         return new OperationBuilder<CreateUserOperation>(operation);
@@ -33,11 +29,11 @@ static class MigrationBuilderExtensions
 }
 
 #region snippet_MigrationsSqlGenerator
-class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
+internal class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 {
     public MyMigrationsSqlGenerator(
         MigrationsSqlGeneratorDependencies dependencies,
-        IMigrationsAnnotationProvider migrationsAnnotations)
+        IRelationalAnnotationProvider migrationsAnnotations)
         : base(dependencies, migrationsAnnotations)
     {
     }
@@ -75,9 +71,9 @@ class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 }
 #endregion
 
-class CustomOperationContext : DbContext
+internal class CustomOperationContext : DbContext
 {
-    readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
+    private readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
 
     #region snippet_OnConfiguring
     protected override void OnConfiguring(DbContextOptionsBuilder options)
