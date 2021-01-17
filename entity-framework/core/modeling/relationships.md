@@ -295,7 +295,10 @@ CREATE TABLE [PostTag] (
 );
 ```
 
-Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. `Dictionary<string, object>` is used for it to handle any combination of foreign key properties, see [property bag entity types](shadow-properties.md#property-bag-entity-types) for more information. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
+Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. `Dictionary<string, object>` is currently used for it to handle any combination of foreign key properties, see [property bag entity types](shadow-properties.md#property-bag-entity-types) for more information. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
+
+> [!IMPORTANT]
+> The CLR type used for join entity types by convention may change in future releases to improve performance. Do not depend on the join type being `Dictionary<string, object>` unless this has been explicitly configured, as described in the next section.
 
 The many to many navigations are called skip navigations as they effectively skip over the join entity type. If you are employing bulk configuration all skip navigations can be obtained from <xref:Microsoft.EntityFrameworkCore.Metadata.IEntityType.GetSkipNavigations%2A>.
 
