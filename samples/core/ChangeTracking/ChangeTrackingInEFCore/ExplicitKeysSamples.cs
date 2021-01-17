@@ -20,11 +20,7 @@ namespace ExplicitKeys
 
             #region Inserting_new_entities_1
             context.Add(
-                new Blog
-                {
-                    Id = 1,
-                    Name = ".NET Blog",
-                });
+                new Blog { Id = 1, Name = ".NET Blog", });
             #endregion
 
             Console.WriteLine("Before SaveChanges:");
@@ -94,11 +90,7 @@ namespace ExplicitKeys
 
             #region Attaching_existing_entities_1
             context.Attach(
-                new Blog
-                {
-                    Id = 1,
-                    Name = ".NET Blog",
-                });
+                new Blog { Id = 1, Name = ".NET Blog", });
             #endregion
 
             Console.WriteLine("Before SaveChanges:");
@@ -169,11 +161,7 @@ namespace ExplicitKeys
 
             #region Updating_existing_entities_1
             context.Update(
-                new Blog
-                {
-                    Id = 1,
-                    Name = ".NET Blog",
-                });
+                new Blog { Id = 1, Name = ".NET Blog", });
             #endregion
 
             Console.WriteLine("Before SaveChanges:");
@@ -244,10 +232,7 @@ namespace ExplicitKeys
 
             #region Deleting_existing_entities_1
             context.Remove(
-                new Post
-                {
-                    Id = 2
-                });
+                new Post { Id = 2 });
             #endregion
 
             Console.WriteLine("Before SaveChanges:");

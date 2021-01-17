@@ -1,17 +1,20 @@
-﻿namespace EFSaving
+﻿using EFSaving.Basics;
+using EFSaving.Transactions;
+
+namespace EFSaving
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Basics.Sample.Run();
+            Sample.Run();
             RelatedData.Sample.Run();
             CascadeDelete.Sample.Run();
             Concurrency.Sample.Run();
-            Transactions.ControllingTransaction.Run();
-            Transactions.ManagingSavepoints.Run();
-            Transactions.SharingTransaction.Run();
-            Transactions.ExternalDbTransaction.Run();
+            ControllingTransaction.Run();
+            ManagingSavepoints.Run();
+            SharingTransaction.Run();
+            ExternalDbTransaction.Run();
             Disconnected.Sample.Run();
         }
     }

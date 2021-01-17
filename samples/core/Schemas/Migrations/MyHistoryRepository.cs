@@ -9,7 +9,7 @@ namespace Migrations
 {
     public class MyHistoryRepositoryContext : DbContext
     {
-        readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
+        private readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
 
         #region HistoryRepositoryContext
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -20,7 +20,7 @@ namespace Migrations
     }
 
     #region HistoryRepository
-    class MyHistoryRepository : SqlServerHistoryRepository
+    internal class MyHistoryRepository : SqlServerHistoryRepository
     {
         public MyHistoryRepository(HistoryRepositoryDependencies dependencies)
             : base(dependencies)

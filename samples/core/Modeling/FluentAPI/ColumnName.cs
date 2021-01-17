@@ -2,7 +2,7 @@
 
 namespace EFModeling.FluentAPI.Relational.ColumnName
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 

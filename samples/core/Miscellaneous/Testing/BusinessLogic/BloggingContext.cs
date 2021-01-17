@@ -1,19 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic
 {
     public class BloggingContext : DbContext
     {
-        private Action<BloggingContext, ModelBuilder> _customizeModel;
+        private readonly Action<BloggingContext, ModelBuilder> _customizeModel;
 
         #region Constructors
         public BloggingContext()
-        { }
+        {
+        }
 
         public BloggingContext(DbContextOptions<BloggingContext> options)
             : base(options)
-        { }
+        {
+        }
 
         public BloggingContext(DbContextOptions<BloggingContext> options, Action<BloggingContext, ModelBuilder> customizeModel)
             : base(options)
@@ -43,7 +45,8 @@ namespace BusinessLogic
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
+                optionsBuilder.UseSqlServer(
+                    @"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
             }
         }
         #endregion

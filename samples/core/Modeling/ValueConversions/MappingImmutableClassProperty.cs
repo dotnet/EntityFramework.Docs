@@ -55,7 +55,6 @@ namespace EFModeling.ValueConversions
                     .HasConversion(
                         v => v.Value,
                         v => new ImmutableClass(v));
-
                 #endregion
             }
 

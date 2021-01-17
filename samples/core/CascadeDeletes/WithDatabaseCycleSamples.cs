@@ -77,10 +77,7 @@ namespace DatabaseCycles
         {
             using var context = new BlogsContext(quiet: true);
 
-            var person = new Person
-            {
-                Name = "ajcvickers"
-            };
+            var person = new Person { Name = "ajcvickers" };
 
             context.Add(
                 new Blog

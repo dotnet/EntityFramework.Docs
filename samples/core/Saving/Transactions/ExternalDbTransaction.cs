@@ -1,5 +1,6 @@
-using Microsoft.EntityFrameworkCore;
+using System;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Transactions
 {
@@ -7,7 +8,8 @@ namespace EFSaving.Transactions
     {
         public static void Run()
         {
-            var connectionString = @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
+            var connectionString =
+                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
 
             using (var context = new BloggingContext(
                 new DbContextOptionsBuilder<BloggingContext>()
@@ -47,7 +49,7 @@ namespace EFSaving.Transactions
                 // when disposed if either commands fails
                 transaction.Commit();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 // TODO: Handle failure
             }
@@ -58,11 +60,11 @@ namespace EFSaving.Transactions
         {
             public BloggingContext(DbContextOptions<BloggingContext> options)
                 : base(options)
-            { }
+            {
+            }
 
             public DbSet<Blog> Blogs { get; set; }
         }
-
 
         public class Blog
         {

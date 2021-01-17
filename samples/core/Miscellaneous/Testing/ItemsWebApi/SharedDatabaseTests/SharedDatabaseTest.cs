@@ -12,7 +12,6 @@ namespace SharedDatabaseTests
         public SharedDatabaseTest(SharedDatabaseFixture fixture) => Fixture = fixture;
 
         public SharedDatabaseFixture Fixture { get; }
-
         #endregion
 
         #region CanGetItems

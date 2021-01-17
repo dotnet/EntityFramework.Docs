@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.RelatedData
 {
@@ -74,7 +74,8 @@ namespace EFSaving.RelatedData
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFSaving.RelatedData;Trusted_Connection=True;ConnectRetryCount=0");
+                optionsBuilder.UseSqlServer(
+                    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.RelatedData;Trusted_Connection=True;ConnectRetryCount=0");
             }
         }
 

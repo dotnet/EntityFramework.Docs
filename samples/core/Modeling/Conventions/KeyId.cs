@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace EFModeling.Conventions.KeyId
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
         public DbSet<Truck> Trucks { get; set; }
     }
 
     #region KeyId
-    class Car
+    internal class Car
     {
         public string Id { get; set; }
 
@@ -18,7 +17,7 @@ namespace EFModeling.Conventions.KeyId
         public string Model { get; set; }
     }
 
-    class Truck
+    internal class Truck
     {
         public string TruckId { get; set; }
 

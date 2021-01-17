@@ -2,7 +2,7 @@
 
 namespace EFModeling.FluentAPI.Relational.SequenceConfiguration
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
 

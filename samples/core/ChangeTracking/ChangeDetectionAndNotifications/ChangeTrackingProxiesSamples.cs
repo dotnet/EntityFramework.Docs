@@ -28,10 +28,10 @@ namespace Proxies
             blog.Posts.Add(
                 context.CreateProxy<Post>(
                     p =>
-                        {
-                            p.Title = "What’s next for System.Text.Json?";
-                            p.Content = ".NET 5.0 was released recently and has come with many...";
-                        }));
+                    {
+                        p.Title = "What’s next for System.Text.Json?";
+                        p.Content = ".NET 5.0 was released recently and has come with many...";
+                    }));
 
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
             #endregion
@@ -57,42 +57,43 @@ namespace Proxies
             context.AddRange(
                 context.CreateProxy<Blog>(
                     b =>
-                        {
-                            b.Name = ".NET Blog";
-                            b.Posts.Add(
-                                context.CreateProxy<Post>(
-                                    p =>
-                                        {
-                                            p.Title = "Announcing the Release of EF Core 5.0";
-                                            p.Content = "Announcing the release of EF Core 5.0, a full featured cross-platform...";
-                                        }));
-                            b.Posts.Add(
-                                context.CreateProxy<Post>(
-                                    p =>
-                                        {
-                                            p.Title = "Announcing F# 5";
-                                            p.Content = "F# 5 is the latest version of F#, the functional programming language...";
-                                        }));
-                        }),
+                    {
+                        b.Name = ".NET Blog";
+                        b.Posts.Add(
+                            context.CreateProxy<Post>(
+                                p =>
+                                {
+                                    p.Title = "Announcing the Release of EF Core 5.0";
+                                    p.Content = "Announcing the release of EF Core 5.0, a full featured cross-platform...";
+                                }));
+                        b.Posts.Add(
+                            context.CreateProxy<Post>(
+                                p =>
+                                {
+                                    p.Title = "Announcing F# 5";
+                                    p.Content = "F# 5 is the latest version of F#, the functional programming language...";
+                                }));
+                    }),
                 context.CreateProxy<Blog>(
                     b =>
-                        {
-                            b.Name = "Visual Studio Blog";
-                            b.Posts.Add(
-                                context.CreateProxy<Post>(
-                                    p =>
-                                        {
-                                            p.Title = "Disassembly improvements for optimized managed debugging";
-                                            p.Content = "If you are focused on squeezing out the last bits of performance for your .NET service or...";
-                                        }));
-                            b.Posts.Add(
-                                context.CreateProxy<Post>(
-                                    p =>
-                                        {
-                                            p.Title = "Database Profiling with Visual Studio";
-                                            p.Content = "Examine when database queries were executed and measure how long the take using...";
-                                        }));
-                        }));
+                    {
+                        b.Name = "Visual Studio Blog";
+                        b.Posts.Add(
+                            context.CreateProxy<Post>(
+                                p =>
+                                {
+                                    p.Title = "Disassembly improvements for optimized managed debugging";
+                                    p.Content =
+                                        "If you are focused on squeezing out the last bits of performance for your .NET service or...";
+                                }));
+                        b.Posts.Add(
+                            context.CreateProxy<Post>(
+                                p =>
+                                {
+                                    p.Title = "Database Profiling with Visual Studio";
+                                    p.Content = "Examine when database queries were executed and measure how long the take using...";
+                                }));
+                    }));
 
             context.SaveChanges();
         }

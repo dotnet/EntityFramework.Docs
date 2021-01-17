@@ -1,7 +1,7 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.CascadeDelete
 {
@@ -32,7 +32,8 @@ namespace EFSaving.CascadeDelete
 
         private static void DeleteBehaviorSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
         {
-            Console.WriteLine($"Test using DeleteBehavior.{deleteBehavior} with {(requiredRelationship ? "required" : "optional")} relationship:");
+            Console.WriteLine(
+                $"Test using DeleteBehavior.{deleteBehavior} with {(requiredRelationship ? "required" : "optional")} relationship:");
 
             InitializeDatabase(requiredRelationship);
 
@@ -64,7 +65,8 @@ namespace EFSaving.CascadeDelete
                 DumpSql();
 
                 Console.WriteLine();
-                Console.WriteLine($"  SaveChanges threw {e.GetType().Name}: {(e is DbUpdateException ? e.InnerException.Message : e.Message)}");
+                Console.WriteLine(
+                    $"  SaveChanges threw {e.GetType().Name}: {(e is DbUpdateException ? e.InnerException.Message : e.Message)}");
             }
             #endregion
 
@@ -73,7 +75,8 @@ namespace EFSaving.CascadeDelete
 
         private static void DeleteOrphansSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
         {
-            Console.WriteLine($"Test deleting orphans with DeleteBehavior.{deleteBehavior} and {(requiredRelationship ? "a required" : "an optional")} relationship:");
+            Console.WriteLine(
+                $"Test deleting orphans with DeleteBehavior.{deleteBehavior} and {(requiredRelationship ? "a required" : "an optional")} relationship:");
 
             InitializeDatabase(requiredRelationship);
 
@@ -105,7 +108,8 @@ namespace EFSaving.CascadeDelete
                 DumpSql();
 
                 Console.WriteLine();
-                Console.WriteLine($"  SaveChanges threw {e.GetType().Name}: {(e is DbUpdateException ? e.InnerException.Message : e.Message)}");
+                Console.WriteLine(
+                    $"  SaveChanges threw {e.GetType().Name}: {(e is DbUpdateException ? e.InnerException.Message : e.Message)}");
             }
             #endregion
 
@@ -118,15 +122,12 @@ namespace EFSaving.CascadeDelete
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            context.Blogs.Add(new Blog
-            {
-                Url = "http://sample.com",
-                Posts = new List<Post>
+            context.Blogs.Add(
+                new Blog
                 {
-                    new Post {Title = "Saving Data with EF"},
-                    new Post {Title = "Cascade Delete with EF"}
-                }
-            });
+                    Url = "http://sample.com",
+                    Posts = new List<Post> { new Post { Title = "Saving Data with EF" }, new Post { Title = "Cascade Delete with EF" } }
+                });
 
             context.SaveChanges();
         }
@@ -146,7 +147,7 @@ namespace EFSaving.CascadeDelete
 
                 Console.WriteLine(
                     $"      Post '{post.PostId}' is in state {postEntry.State} " +
-                    $"with FK '{post.BlogId?.ToString() ?? "null"}' and {(post.Blog == null ? "no reference to a blog." : $"reference to blog '{post.BlogId}'." )}");
+                    $"with FK '{post.BlogId?.ToString() ?? "null"}' and {(post.Blog == null ? "no reference to a blog." : $"reference to blog '{post.BlogId}'.")}");
             }
         }
 

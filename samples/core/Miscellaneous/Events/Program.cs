@@ -20,11 +20,7 @@ public class Program
                 {
                     Id = 1,
                     Name = "EF Blog",
-                    Posts =
-                    {
-                        new Post { Id = 1, Title = "EF Core 3.1!" },
-                        new Post { Id = 2, Title = "EF Core 5.0!" }
-                    }
+                    Posts = { new Post { Id = 1, Title = "EF Core 3.1!" }, new Post { Id = 2, Title = "EF Core 5.0!" } }
                 });
 
             context.SaveChanges();
@@ -35,7 +31,7 @@ public class Program
             var blog = context.Blogs.Include(e => e.Posts).Single();
 
             blog.Name = "EF Core Blog";
-            context.Remove(blog.Posts.First());
+            context.Remove((object)blog.Posts.First());
             blog.Posts.Add(new Post { Id = 3, Title = "EF Core 6.0!" });
 
             context.SaveChanges();

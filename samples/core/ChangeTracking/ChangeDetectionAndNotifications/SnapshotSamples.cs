@@ -27,8 +27,7 @@ namespace Snapshot
             blog.Posts.Add(
                 new Post
                 {
-                    Title = "What’s next for System.Text.Json?",
-                    Content = ".NET 5.0 was released recently and has come with many..."
+                    Title = "What’s next for System.Text.Json?", Content = ".NET 5.0 was released recently and has come with many..."
                 });
 
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -110,7 +109,8 @@ namespace Snapshot
                         new Post
                         {
                             Title = "Disassembly improvements for optimized managed debugging",
-                            Content = "If you are focused on squeezing out the last bits of performance for your .NET service or..."
+                            Content =
+                                "If you are focused on squeezing out the last bits of performance for your .NET service or..."
                         },
                         new Post
                         {

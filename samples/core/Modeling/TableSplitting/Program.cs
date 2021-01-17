@@ -5,7 +5,7 @@ namespace EFModeling.TableSplitting
 {
     public static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             #region Usage
             using (var context = new TableSplittingContext())
@@ -13,16 +13,17 @@ namespace EFModeling.TableSplitting
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                context.Add(new Order
-                {
-                    Status = OrderStatus.Pending,
-                    DetailedOrder = new DetailedOrder
+                context.Add(
+                    new Order
                     {
                         Status = OrderStatus.Pending,
-                        ShippingAddress = "221 B Baker St, London",
-                        BillingAddress = "11 Wall Street, New York"
-                    }
-                });
+                        DetailedOrder = new DetailedOrder
+                        {
+                            Status = OrderStatus.Pending,
+                            ShippingAddress = "221 B Baker St, London",
+                            BillingAddress = "11 Wall Street, New York"
+                        }
+                    });
 
                 context.SaveChanges();
             }

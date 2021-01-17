@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 
-static class MultiSqlMigrationBuilderExtensions
+internal static class MultiSqlMigrationBuilderExtensions
 {
     #region snippet_CustomOperationMultiSql
-    static OperationBuilder<SqlOperation> CreateUser(
+    private static OperationBuilder<SqlOperation> CreateUser(
         this MigrationBuilder migrationBuilder,
         string name,
         string password)

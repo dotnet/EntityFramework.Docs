@@ -2,7 +2,7 @@
 
 namespace EFModeling.FluentAPI.Relational.AlternateKeyName
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
 
@@ -16,7 +16,7 @@ namespace EFModeling.FluentAPI.Relational.AlternateKeyName
         #endregion
     }
 
-    class Car
+    internal class Car
     {
         public int CarId { get; set; }
         public string LicensePlate { get; set; }

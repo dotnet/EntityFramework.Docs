@@ -15,10 +15,7 @@ namespace SqlServerMigrations
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Blogs", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Blogs", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 name: "People",
@@ -29,10 +26,7 @@ namespace SqlServerMigrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_People", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_People", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 name: "Posts",

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 
@@ -43,9 +42,10 @@ namespace EFLogging
         #region ChangeLogLevel
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .ConfigureWarnings(b => b.Log(
-                    (RelationalEventId.ConnectionOpened, LogLevel.Information),
-                    (RelationalEventId.ConnectionClosed, LogLevel.Information)));
+                .ConfigureWarnings(
+                    b => b.Log(
+                        (RelationalEventId.ConnectionOpened, LogLevel.Information),
+                        (RelationalEventId.ConnectionClosed, LogLevel.Information)));
         #endregion
     }
 
@@ -66,5 +66,4 @@ namespace EFLogging
                 .ConfigureWarnings(b => b.Throw(RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning));
         #endregion
     }
-
 }

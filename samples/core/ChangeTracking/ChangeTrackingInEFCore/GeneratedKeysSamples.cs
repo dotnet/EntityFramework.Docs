@@ -83,8 +83,7 @@ namespace GeneratedKeys
             blog.Posts.Add(
                 new Post
                 {
-                    Title = "What’s next for System.Text.Json?",
-                    Content = ".NET 5.0 was released recently and has come with many..."
+                    Title = "What’s next for System.Text.Json?", Content = ".NET 5.0 was released recently and has come with many..."
                 });
 
             // Mark an existing Post as Deleted
@@ -276,26 +275,26 @@ namespace GeneratedKeys
 
             context.ChangeTracker.TrackGraph(
                 blog, node =>
+                {
+                    var propertyEntry = node.Entry.Property("Id");
+                    var keyValue = (int)propertyEntry.CurrentValue;
+
+                    if (keyValue == 0)
                     {
-                        var propertyEntry = node.Entry.Property("Id");
-                        var keyValue = (int)propertyEntry.CurrentValue;
+                        node.Entry.State = EntityState.Added;
+                    }
+                    else if (keyValue < 0)
+                    {
+                        propertyEntry.CurrentValue = -keyValue;
+                        node.Entry.State = EntityState.Deleted;
+                    }
+                    else
+                    {
+                        node.Entry.State = EntityState.Modified;
+                    }
 
-                        if (keyValue == 0)
-                        {
-                            node.Entry.State = EntityState.Added;
-                        }
-                        else if (keyValue < 0)
-                        {
-                            propertyEntry.CurrentValue = -keyValue;
-                            node.Entry.State = EntityState.Deleted;
-                        }
-                        else
-                        {
-                            node.Entry.State = EntityState.Modified;
-                        }
-
-                        Console.WriteLine($"Tracking {node.Entry.Metadata.DisplayName()} with key value {keyValue} as {node.Entry.State}");
-                    });
+                    Console.WriteLine($"Tracking {node.Entry.Metadata.DisplayName()} with key value {keyValue} as {node.Entry.State}");
+                });
 
             context.SaveChanges();
         }

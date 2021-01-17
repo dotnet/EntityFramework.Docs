@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.DataSeeding
 {
-    static class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             #region CustomSeeding
             using (var context = new DataSeedingContext())
@@ -18,6 +18,7 @@ namespace EFModeling.DataSeeding
                 {
                     context.Blogs.Add(new Blog { Url = "http://test.com" });
                 }
+
                 context.SaveChanges();
             }
             #endregion

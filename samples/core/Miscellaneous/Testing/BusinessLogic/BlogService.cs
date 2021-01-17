@@ -5,7 +5,7 @@ namespace BusinessLogic
 {
     public class BlogService
     {
-        private BloggingContext _context;
+        private readonly BloggingContext _context;
 
         public BlogService(BloggingContext context)
         {

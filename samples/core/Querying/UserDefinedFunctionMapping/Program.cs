@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.UserDefinedFunctionMapping
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using var context = new BloggingContext();
             context.Database.EnsureDeleted();
@@ -56,12 +56,13 @@ namespace EFQuerying.UserDefinedFunctionMapping
             #region HasTranslationQuery
             var query2 = from p in context.Posts
                          select context.PercentageDifference(p.BlogId, 3);
-                         #endregion
+            #endregion
             var result2 = query2.ToList();
 
             #region NullabilityPropagationExamples
             var query3 = context.Blogs.Where(e => context.ConcatStrings(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
-            var query4 = context.Blogs.Where(e => context.ConcatStringsOptimized(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
+            var query4 = context.Blogs.Where(
+                e => context.ConcatStringsOptimized(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
             #endregion
 
             var result3 = query3.ToList();

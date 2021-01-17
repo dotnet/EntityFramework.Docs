@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SqlServer.ValueGeneration
+﻿namespace SqlServer.ValueGeneration
 {
     public class Blog
     {

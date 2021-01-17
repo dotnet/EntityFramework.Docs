@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.DataAnnotations.Relationships.InverseProperty
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }

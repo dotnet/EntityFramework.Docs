@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.Relationships.ManyToManyShared
 {
@@ -37,7 +37,7 @@ namespace EFModeling.FluentAPI.Relationships.ManyToManyShared
             #region Seeding
             modelBuilder
                 .Entity<Post>()
-                .HasData(new Post { PostId = 1, Title = "First"});
+                .HasData(new Post { PostId = 1, Title = "First" });
 
             modelBuilder
                 .Entity<Tag>()

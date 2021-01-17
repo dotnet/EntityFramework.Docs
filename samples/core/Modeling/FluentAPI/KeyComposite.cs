@@ -2,7 +2,7 @@
 
 namespace EFModeling.FluentAPI.KeyComposite
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
 
@@ -15,7 +15,7 @@ namespace EFModeling.FluentAPI.KeyComposite
         #endregion
     }
 
-    class Car
+    internal class Car
     {
         public string State { get; set; }
         public string LicensePlate { get; set; }

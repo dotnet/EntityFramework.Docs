@@ -97,7 +97,8 @@ namespace JoinEntity
                         new Post
                         {
                             Title = "Disassembly improvements for optimized managed debugging",
-                            Content = "If you are focused on squeezing out the last bits of performance for your .NET service or..."
+                            Content =
+                                "If you are focused on squeezing out the last bits of performance for your .NET service or..."
                         },
                         new Post
                         {
@@ -106,18 +107,9 @@ namespace JoinEntity
                         },
                     }
                 },
-                new Tag
-                {
-                    Text = ".NET"
-                },
-                new Tag
-                {
-                    Text = "Visual Studio"
-                },
-                new Tag
-                {
-                    Text = "EF Core"
-                });
+                new Tag { Text = ".NET" },
+                new Tag { Text = "Visual Studio" },
+                new Tag { Text = "EF Core" });
 
             context.SaveChanges();
         }
