@@ -62,7 +62,7 @@ Conversions can be configured in <xref:Microsoft.EntityFrameworkCore.DbContext.O
 
 ## Pre-defined conversions
 
-EF Core contains many pre-defined conversions that avoid the need to write conversion functions manually. Instead, EF Core will pick the conversion to used based on the property type in the model and the requested database provider type.
+EF Core contains many pre-defined conversions that avoid the need to write conversion functions manually. Instead, EF Core will pick the conversion to use based on the property type in the model and the requested database provider type.
 
 For example, enum to string conversions are used as an example above, but EF Core will actually do this automatically when the provider type is configured as `string` using the generic type of <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder.HasConversion%2A>:
 
@@ -319,7 +319,7 @@ However, if by default all `EquineBeast` columns should be `varchar(20)`, then t
 -->
 [!code-csharp[ConversionByConverterInstanceWithMappingHints](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=ConversionByConverterInstanceWithMappingHints)]
 
-Now anywhere this converter will create non-unicode database columns with max length of 20. However, these are only hints since they are be overridden by any facets explicitly set on the mapped property.
+Now any time this converter is used, the database column will be non-unicode with a max length of 20. However, these are only hints since they are be overridden by any facets explicitly set on the mapped property.
 
 ## Examples
 
@@ -652,7 +652,7 @@ This can be mapped to a SQL server `rowversion` column using a value converter:
 
 ### Specify the DateTime.Kind when reading dates
 
-SQL Server discards the <xref:System.DateTime.Kind%2A?displayProperty=nameWithType> flag when storing a <xref:System.DateTime> as a [`datetime`](/sql/t-sql/data-types/datetime-transact-sql) or [`datetime2`](/sql/t-sql/data-types/datetime2-transact-sql). This means that DateTime values coming back from the database always have <xref:System.DateTimeKind> of `Unspecified`.
+SQL Server discards the <xref:System.DateTime.Kind%2A?displayProperty=nameWithType> flag when storing a <xref:System.DateTime> as a [`datetime`](/sql/t-sql/data-types/datetime-transact-sql) or [`datetime2`](/sql/t-sql/data-types/datetime2-transact-sql). This means that DateTime values coming back from the database always have a <xref:System.DateTimeKind> of `Unspecified`.
 
 Value converters can be used in two ways to deal with this. First, EF Core has a value converter that creates an 8-byte opaque value which preserves the `Kind` flag. For example:
 
@@ -665,7 +665,7 @@ Value converters can be used in two ways to deal with this. First, EF Core has a
 
 This allows DateTime values with different `Kind` flags to be mixed in the database.
 
-The problem with this approach is that the database no longer has recognizable `datetime` or `datetime2` columns. So instead it is common to always store UTC time (or, less commonly, always local time) and then either ignore the `Kind` flag or set it to the appropriate value using a value converter. For example, the converter below ensures that the `DateTime` value read from the database will have the <xref:System.DateTimeKind> `UTC` kind:
+The problem with this approach is that the database no longer has recognizable `datetime` or `datetime2` columns. So instead it is common to always store UTC time (or, less commonly, always local time) and then either ignore the `Kind` flag or set it to the appropriate value using a value converter. For example, the converter below ensures that the `DateTime` value read from the database will have the <xref:System.DateTimeKind> `UTC`:
 
 <!--
                 modelBuilder.Entity<Post>()
@@ -744,7 +744,7 @@ This will not work as expected if some of the `Post.BlogId` values have differen
 
 ### Handle fixed-length database strings
 
-The previous example did not need a value converter. However, a converter can be useful for fixed-length database string types like `char(20)` or `nchar(20)`. Fixed-length strings are padded to their full length whenever a value is inserted into the database. This means that a key value of "dotnet" will be read back from the database as "dotnet              ". This will then not compare correctly with key values that are not padded.
+The previous example did not need a value converter. However, a converter can be useful for fixed-length database string types like `char(20)` or `nchar(20)`. Fixed-length strings are padded to their full length whenever a value is inserted into the database. This means that a key value of "`dotnet`" will be read back from the database as "`dotnet..............`", where `.` represents a space character. This will then not compare correctly with key values that are not padded.
 
 A value converter can be used to trim the padding when reading key values. This can be combined with the value comparer in the previous example to compare fixed length case-insensitive ASCII keys correctly. For example:
 
