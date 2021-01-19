@@ -77,4 +77,4 @@ Before version 3.0, EF Core had some differences in how tracking was done. Notab
     [!code-csharp[Main](../../../samples/core/Querying/Tracking/Program.cs#CustomProjection2)]
 
 - Whenever query results contained keyless entity types, the whole query was made non-tracking. That means that entity types with keys, which are in the result weren't being tracked either.
-- EF Core did identity resolution in a no-tracking query. It used weak references to keep track of entities that had already been returned. So if a result set contained the same entity multiples times, you would get the same instance for each occurrence. Though if a previous result with the same identity went out of scope and got garbage collected, EF Core returned a new instance.
+- EF Core used to do identity resolution in no-tracking queries. It used weak references to keep track of entities that had already been returned. So if a result set contained the same entity multiples times, you would get the same instance for each occurrence. Though if a previous result with the same identity went out of scope and got garbage collected, EF Core returned a new instance.
