@@ -95,6 +95,40 @@ namespace EFModeling.ValueConversions
             {
                 ConsoleWriteLines($"Enum value read as '{context.Set<Rider>().Single().Mount}'.");
             }
+
+            ConsoleWriteLines("Sample showing conversion configured by CLR type with per-property facets");
+
+            using (var context = new SampleDbContextByClrTypeWithFacets())
+            {
+                CleanDatabase(context);
+
+                context.Add(new Rider { Mount = EquineBeast.Horse });
+                context.SaveChanges();
+
+                context.SaveChanges();
+            }
+
+            using (var context = new SampleDbContextByClrTypeWithFacets())
+            {
+                ConsoleWriteLines($"Enum value read as '{context.Set<Rider>().Single().Mount}'.");
+            }
+
+            ConsoleWriteLines("Sample showing conversion configured by a ValueConverter instance with per-property facets");
+
+            using (var context = new SampleDbContextByConverterInstanceWithFacets())
+            {
+                CleanDatabase(context);
+
+                context.Add(new Rider { Mount = EquineBeast.Horse });
+                context.SaveChanges();
+
+                context.SaveChanges();
+            }
+
+            using (var context = new SampleDbContextByConverterInstanceWithFacets())
+            {
+                ConsoleWriteLines($"Enum value read as '{context.Set<Rider>().Single().Mount}'.");
+            }
         }
 
         public class SampleDbContextExplicit : SampleDbContextBase
@@ -150,6 +184,58 @@ namespace EFModeling.ValueConversions
             #endregion
         }
 
+        public class SampleDbContextByClrTypeWithFacets : SampleDbContextBase
+        {
+            #region ConversionByClrTypeWithFacets
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                modelBuilder
+                    .Entity<Rider>()
+                    .Property(e => e.Mount)
+                    .HasConversion<string>()
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+            }
+            #endregion
+        }
+
+        public class SampleDbContextByConverterInstanceWithFacets : SampleDbContextBase
+        {
+            #region ConversionByConverterInstanceWithFacets
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                var converter = new ValueConverter<EquineBeast, string>(
+                    v => v.ToString(),
+                    v => (EquineBeast)Enum.Parse(typeof(EquineBeast), v));
+
+                modelBuilder
+                    .Entity<Rider>()
+                    .Property(e => e.Mount)
+                    .HasConversion(converter)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+            }
+            #endregion
+        }
+
+        public class SampleDbContextByConverterInstanceWithMappingHints : SampleDbContextBase
+        {
+            #region ConversionByConverterInstanceWithMappingHints
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                var converter = new ValueConverter<EquineBeast, string>(
+                    v => v.ToString(),
+                    v => (EquineBeast)Enum.Parse(typeof(EquineBeast), v),
+                    new ConverterMappingHints(size: 20, unicode: false));
+
+                modelBuilder
+                    .Entity<Rider>()
+                    .Property(e => e.Mount)
+                    .HasConversion(converter);
+            }
+            #endregion
+        }
+
         public class SampleDbContextByBuiltInInstance : SampleDbContextBase
         {
             #region ConversionByBuiltInInstance
@@ -193,12 +279,24 @@ namespace EFModeling.ValueConversions
             #endregion
         }
 
+        public class SampleDbContextRider2 : SampleDbContextBase
+        {
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                #region ConversionByDatabaseTypeFluent
+                modelBuilder
+                    .Entity<Rider2>()
+                    .Property(e => e.Mount)
+                    .HasColumnType("nvarchar(24)");
+                #endregion
+            }
+        }
         public class SampleDbContextBase : DbContext
         {
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder
                     .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                    .UseSqlite("DataSource=test.db")
+                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EnumConversions;Integrated Security=True")
                     .EnableSensitiveDataLogging();
         }
 

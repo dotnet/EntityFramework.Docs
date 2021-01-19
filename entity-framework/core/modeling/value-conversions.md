@@ -42,7 +42,7 @@ Value conversions are configured in <xref:Microsoft.EntityFrameworkCore.DbContex
 -->
 [!code-csharp[BeastAndRider](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=BeastAndRider)]
 
-Conversions can be configured in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A> to store the enum values as strings such as "Donkey", "Mule", etc. in the database:
+Conversions can be configured in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A> to store the enum values as strings such as "Donkey", "Mule", etc. in the database; you simply need to provide one function which converts from the `ModelClrType` to the `ProviderClrType`, and another for the opposite conversion:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -79,6 +79,8 @@ For example, enum to string conversions are used as an example above, but EF Cor
 
 The same thing can be achieved by explicitly specifying the database column type. For example, if the entity type is defined like so:
 
+### [Data Annotations](#tab/data-annotations)
+
 <!--
         public class Rider2
         {
@@ -90,7 +92,19 @@ The same thing can be achieved by explicitly specifying the database column type
 -->
 [!code-csharp[ConversionByDatabaseType](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=ConversionByDatabaseType)]
 
-Then the enum values will be saved as strings in the database without any further configuration in OnModelCreating.
+### [Fluent API](#tab/fluent-api)
+
+<!--
+                modelBuilder
+                    .Entity<Rider2>()
+                    .Property(e => e.Mount)
+                    .HasColumnType("nvarchar(24)");
+-->
+[!code-csharp[ConversionByDatabaseTypeFluent](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=ConversionByDatabaseTypeFluent)]
+
+***
+
+Then the enum values will be saved as strings in the database without any further configuration in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>.
 
 ## The ValueConverter class
 
@@ -143,9 +157,7 @@ This is functionally the same as creating an instance of the built-in <xref:Micr
 -->
 [!code-csharp[ConversionByBuiltInBoolToIntExplicit](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=ConversionByBuiltInBoolToIntExplicit)]
 
-The following table summarizes commonly used pre-defined conversions from model/property types to database provider types.
-
-In the table `any_numeric_type` means one of `int`, `short`, `long`, `byte`, `uint`, `ushort`, `ulong`, `sbyte`, `char`, `decimal`, `float`, or `double`.
+The following table summarizes commonly-used pre-defined conversions from model/property types to database provider types. In the table `any_numeric_type` means one of `int`, `short`, `long`, `byte`, `uint`, `ushort`, `ulong`, `sbyte`, `char`, `decimal`, `float`, or `double`.
 
 | Model/property type | Provider/database type | Conversion                                                | Usage
 |:--------------------|------------------------|-----------------------------------------------------------|------
@@ -237,6 +249,77 @@ The full list of built-in converters is:
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.UriToStringConverter> - <xref:System.Uri> to string
 
 Note that all the built-in converters are stateless and so a single instance can be safely shared by multiple properties.
+
+## Column facets and mapping hints
+
+Some database types have facets that modify how the data is stored. These include:
+
+* Precision and scale for decimals and date/time columns
+* Size/length for binary and string columns
+* Unicode for string columns
+
+These facets can be configured in the normal way for a property that uses a value converter, and will apply to the converted database type. For example, when converting from an enum to strings, we can specify that the database column should be non-Unicode and store up to 20 characters:
+
+<!--
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                modelBuilder
+                    .Entity<Rider>()
+                    .Property(e => e.Mount)
+                    .HasConversion<string>()
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+            }
+-->
+[!code-csharp[ConversionByClrTypeWithFacets](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=ConversionByClrTypeWithFacets)]
+
+Or, when creating the converter explicitly:
+
+<!--
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                var converter = new ValueConverter<EquineBeast, string>(
+                    v => v.ToString(),
+                    v => (EquineBeast)Enum.Parse(typeof(EquineBeast), v));
+
+                modelBuilder
+                    .Entity<Rider>()
+                    .Property(e => e.Mount)
+                    .HasConversion(converter)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+            }
+-->
+[!code-csharp[ConversionByConverterInstanceWithFacets](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=ConversionByConverterInstanceWithFacets)]
+
+This results in a `varchar(20)` column when using EF Core migrations against SQL Server:
+
+```sql
+CREATE TABLE [Rider] (
+    [Id] int NOT NULL IDENTITY,
+    [Mount] varchar(20) NOT NULL,
+    CONSTRAINT [PK_Rider] PRIMARY KEY ([Id]));
+```
+
+However, if by default all `EquineBeast` columns should be `varchar(20)`, then this information can be given to the value converter as a <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints>. For example:
+
+<!--
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                var converter = new ValueConverter<EquineBeast, string>(
+                    v => v.ToString(),
+                    v => (EquineBeast)Enum.Parse(typeof(EquineBeast), v),
+                    new ConverterMappingHints(size: 20, unicode: false));
+
+                modelBuilder
+                    .Entity<Rider>()
+                    .Property(e => e.Mount)
+                    .HasConversion(converter);
+            }
+-->
+[!code-csharp[ConversionByConverterInstanceWithMappingHints](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=ConversionByConverterInstanceWithMappingHints)]
+
+Now anywhere this converter will create non-unicode database columns with max length of 20. However, these are only hints since they are be overridden by any facets explicitly set on the mapped property.
 
 ## Examples
 
@@ -337,7 +420,7 @@ Value converters can currently only convert values to and from a single database
 [!code-csharp[ConfigureCompositeValueObject](../../../samples/core/Modeling/ValueConversions/CompositeValueObject.cs?name=ConfigureCompositeValueObject)]
 
 > [!NOTE]
-> We plan to allow mapping an object to multiple columns in EF Core 6.0. This will remove the need to use serialization here. This is tacked by [GitHub issue #13947](https://github.com/dotnet/efcore/issues/13947).
+> We plan to allow mapping an object to multiple columns in EF Core 6.0, removing the need to use serialization here. This is tracked by [GitHub issue #13947](https://github.com/dotnet/efcore/issues/13947).
 
 > [!NOTE]
 > As with the previous example, this value object is implemented as a [readonly struct](/dotnet/csharp/language-reference/builtin-types/struct). This means that EF Core can snapshot and compare values without issue. See [Value Comparers](xref:core/modeling/value-comparers) for more information.
@@ -545,7 +628,7 @@ These key properties can then be mapped using value converters:
 
 ### Use ulong for timestamp/rowversion
 
-SQL Server supports automatic [optimistic concurrency](xref:core/saving/concurrency) using [8-byte binary rowversion/timestamp columns](/sql/t-sql/data-types/rowversion-transact-sql). These are always read from and written to the database using an 8-byte array. However, byte arrays are a mutable reference type, which makes them someone painful to deal with. Value converters allow the rowversion to instead be mapped to a `ulong` property, which is much more appropriate and easy to use than the byte array. For example, consider a `Blog` entity with a ulong concurrency token:
+SQL Server supports automatic [optimistic concurrency](xref:core/saving/concurrency) using [8-byte binary `rowversion`/`timestamp` columns](/sql/t-sql/data-types/rowversion-transact-sql). These are always read from and written to the database using an 8-byte array. However, byte arrays are a mutable reference type, which makes them somewhat painful to deal with. Value converters allow the `rowversion` to instead be mapped to a `ulong` property, which is much more appropriate and easy to use than the byte array. For example, consider a `Blog` entity with a ulong concurrency token:
 
 <!--
         public class Blog
@@ -557,7 +640,7 @@ SQL Server supports automatic [optimistic concurrency](xref:core/saving/concurre
 -->
 [!code-csharp[ULongConcurrencyModel](../../../samples/core/Modeling/ValueConversions/ULongConcurrency.cs?name=ULongConcurrencyModel)]
 
-This can be mapped to a SQL server rowversion column using a value converter:
+This can be mapped to a SQL server `rowversion` column using a value converter:
 
 <!--
                 modelBuilder.Entity<Blog>()
@@ -569,7 +652,7 @@ This can be mapped to a SQL server rowversion column using a value converter:
 
 ### Specify the DateTime.Kind when reading dates
 
-SQL Server discards the <xref:System.DateTime.Kind%2A?displayProperty=nameWithType> flag when storing a <xref:System.DateTime> as a [datetime](/sql/t-sql/data-types/datetime-transact-sql) or [datetime2](/sql/t-sql/data-types/datetime2-transact-sql). This means that DateTime values coming back from the database always have <xref:System.DateTimeKind> of `Unspecified`.
+SQL Server discards the <xref:System.DateTime.Kind%2A?displayProperty=nameWithType> flag when storing a <xref:System.DateTime> as a [`datetime`](/sql/t-sql/data-types/datetime-transact-sql) or [`datetime2`](/sql/t-sql/data-types/datetime2-transact-sql). This means that DateTime values coming back from the database always have <xref:System.DateTimeKind> of `Unspecified`.
 
 Value converters can be used in two ways to deal with this. First, EF Core has a value converter that creates an 8-byte opaque value which preserves the `Kind` flag. For example:
 
@@ -593,9 +676,23 @@ The problem with this approach is that the database no longer has recognizable `
 -->
 [!code-csharp[ConfigurePreserveDateTimeKind2](../../../samples/core/Modeling/ValueConversions/PreserveDateTimeKind.cs?name=ConfigurePreserveDateTimeKind2)]
 
+If a mix of local and UTC values are being set in entity instances, then the converter can be used to convert appropriately before inserting. For example:
+
+<!--
+                modelBuilder.Entity<Post>()
+                    .Property(e => e.LastUpdated)
+                    .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => new DateTime(v.Ticks, DateTimeKind.Utc));
+-->
+[!code-csharp[ConfigurePreserveDateTimeKind3](../../../samples/core/Modeling/ValueConversions/PreserveDateTimeKind.cs?name=ConfigurePreserveDateTimeKind3)]
+
+> [!NOTE]
+> Carefully consider unifying all database access code to use UTC time all the time, only dealing with local time when presenting data to users.
+
 ### Use case-insensitive string keys
 
-Some databases, including SQL Server, perform case-insensitive string comparisons by default. .NET on the other hand performs case-sensitive string comparisons by default. This means that a foreign key value like "DotNet" will match the primary key value "dotnet" on SQL Server, but will not match it in EF Core. A value comparer for keys can be used for force EF Core into case-insensitive string comparisons like in the database. For example, consider a blog/posts model with string keys:
+Some databases, including SQL Server, perform case-insensitive string comparisons by default. .NET, on the other hand, performs case-sensitive string comparisons by default. This means that a foreign key value like "DotNet" will match the primary key value "dotnet" on SQL Server, but will not match it in EF Core. A value comparer for keys can be used to force EF Core into case-insensitive string comparisons like in the database. For example, consider a blog/posts model with string keys:
 
 <!--
         public class Blog
@@ -618,7 +715,7 @@ Some databases, including SQL Server, perform case-insensitive string comparison
 -->
 [!code-csharp[CaseInsensitiveStringsModel](../../../samples/core/Modeling/ValueConversions/CaseInsensitiveStrings.cs?name=CaseInsensitiveStringsModel)]
 
-This will not work as expected if some of the `Post.BlogId` values have different casing. A value comparer can be used to correct this:
+This will not work as expected if some of the `Post.BlogId` values have different casing. The errors caused by this will depend on what the application is doing, but typically involve graphs of objects that are not [fixed-up](xref:core/change-tracking/relationship-changes) correctly, and/or updates that fail because the FK value is wrong. A value comparer can be used to correct this:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -694,45 +791,6 @@ Value converters can be used to encrypt property values before sending them to t
 
 > [!WARNING]
 > Make sure to understand all the implications if you roll your own encryption to protect sensitive data. Consider instead using pre-built encryption mechanisms, such as [Always Encrypted](/sql/relational-databases/security/encryption/always-encrypted-database-engine) on SQL Server.
-
-### Column facets and mapping hints
-
-Some database types have facets that modify how the data is stored. These include:
-
-* Precision and scale for decimals and date/time columns
-* Size/length for binary and string columns
-* Unicode for string columns
-
-These facets can be configured in the normal way for a property that uses a value converter, and will apply to the converted database type. For example, using the `Dollars` type from the first example above, we can set the precision and scale for the underlying decimal column:
-
-<!--
-                modelBuilder.Entity<Order2>()
-                    .Property(e => e.Price)
-                    .HasConversion(converter)
-                    .HasPrecision(20, 2);
--->
-[!code-csharp[ConfigureWithFacets](../../../samples/core/Modeling/ValueConversions/WithMappingHints.cs?name=ConfigureWithFacets)]
-
-This results in a `decimal(20,2)` column when using EF Core migrations against SQL Server:
-
-```sql
-CREATE TABLE [Order2] (
-    [Id] int NOT NULL IDENTITY,
-    [Price] decimal(20,2) NOT NULL,
-    CONSTRAINT [PK_Order2] PRIMARY KEY ([Id]));
-```
-
-However, if by default all `Dollars` columns should be, for example, `decimal(16,2)`, then this information can be given to the value converter as a <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints>. For example:
-
-<!--
-                var converter = new ValueConverter<Dollars, decimal>(
-                    v => v.Amount,
-                    v => new Dollars(v),
-                    new ConverterMappingHints(precision: 16, scale: 2));
--->
-[!code-csharp[ConverterWithMappingHints](../../../samples/core/Modeling/ValueConversions/WithMappingHints.cs?name=ConverterWithMappingHints)]
-
-These are only hints since they are only used when facets have not been explicitly set on the mapped property.
 
 ## Limitations
 

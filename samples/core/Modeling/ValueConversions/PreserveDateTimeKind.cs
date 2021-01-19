@@ -71,6 +71,14 @@ namespace EFModeling.ValueConversions
                         v => v,
                         v => new DateTime(v.Ticks, DateTimeKind.Utc));
                 #endregion
+
+                #region ConfigurePreserveDateTimeKind3
+                modelBuilder.Entity<Post>()
+                    .Property(e => e.LastUpdated)
+                    .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => new DateTime(v.Ticks, DateTimeKind.Utc));
+                #endregion
             }
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
