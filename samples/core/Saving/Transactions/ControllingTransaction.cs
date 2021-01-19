@@ -1,39 +1,38 @@
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Transactions
 {
     public class ControllingTransaction
     {
-        public static async Task RunAsync()
+        public static void Run()
         {
-            await using (var setupContext = new BloggingContext())
+            using (var setupContext = new BloggingContext())
             {
-                await setupContext.Database.EnsureDeletedAsync();
-                await setupContext.Database.EnsureCreatedAsync();
+                setupContext.Database.EnsureDeleted();
+                setupContext.Database.EnsureCreated();
             }
 
             #region Transaction
-            await using var context = new BloggingContext();
-            await using var transaction = await context.Database.BeginTransactionAsync();
+            using var context = new BloggingContext();
+            using var transaction = context.Database.BeginTransaction();
 
             try
             {
                 context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                await context.SaveChangesAsync();
+                context.SaveChanges();
 
                 context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
-                await context.SaveChangesAsync();
+                context.SaveChanges();
 
-                var blogs = await context.Blogs
+                var blogs = context.Blogs
                     .OrderBy(b => b.Url)
-                    .ToListAsync();
+                    .ToList();
 
                 // Commit transaction if all commands succeed, transaction will auto-rollback
                 // when disposed if either commands fails
-                await transaction.CommitAsync();
+                transaction.Commit();
             }
             catch (Exception)
             {
@@ -48,7 +47,8 @@ namespace EFSaving.Transactions
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0");
+                optionsBuilder.UseSqlServer(
+                    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0");
             }
         }
 

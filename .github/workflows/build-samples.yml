@@ -3,12 +3,18 @@ name: Build Samples
 on:
   push:
     branches: [master]
+    paths:
+      - "samples/core/**"
+      - ".github/workflows/build-samples.yml"
   pull_request:
     branches: [master]
+    paths:
+      - "samples/core/**"
+      - ".github/workflows/build-samples.yml"
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout
@@ -22,7 +28,7 @@ jobs:
       - name: Setup .NET 5.0 SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.100-rc.2.20479.15
+          dotnet-version: 5.0.x
 
       - name: Build samples
         working-directory: samples/core

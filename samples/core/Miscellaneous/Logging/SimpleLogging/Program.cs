@@ -19,11 +19,14 @@ public class Program
         TestCode<EventIdsContext>();
         TestCode<DatabaseCategoryContext>();
         TestCode<CustomFilterContext>();
+        TestCode<ChangeLogLevelContext>();
+        TestCode<SuppressMessageContext>();
+        TestCode<ThrowForEventContext>();
         TestCode<UtcContext>();
         TestCode<SingleLineContext>();
         TestCode<TerseLogsContext>();
         TestDatabaseLog();
-        
+
         static void TestCode<TContext>()
             where TContext : BlogsContext, new()
         {
@@ -32,7 +35,7 @@ public class Program
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        
+
         static void TestDatabaseLog()
         {
             using var context = new DatabaseLogContext();
@@ -40,7 +43,7 @@ public class Program
             context.Database.EnsureDeleted();
 
             context.Log = Console.WriteLine;
-            
+
             context.Database.EnsureCreated();
         }
     }
@@ -49,7 +52,7 @@ public class Program
 public class Blog
 {
     public int Id { get; set; }
-    public int Name { get; set; }
+    public string Name { get; set; }
 }
 
 public abstract class BlogsContext : DbContext
@@ -81,7 +84,7 @@ public class LogToDebugContext : BlogsContext
 public class LogToFileContext : BlogsContext
 {
     #region LogToFile
-    private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true); 
+    private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true);
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.LogTo(_logStream.WriteLine);
@@ -91,7 +94,7 @@ public class LogToFileContext : BlogsContext
         base.Dispose();
         _logStream.Dispose();
     }
-    
+
     public override async ValueTask DisposeAsync()
     {
         await base.DisposeAsync();
@@ -202,3 +205,35 @@ public class DatabaseLogContext : BlogsContext
     #endregion
 }
 
+public class ChangeLogLevelContext : BlogsContext
+{
+    #region ChangeLogLevel
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(
+                b => b.Log(
+                    (RelationalEventId.ConnectionOpened, LogLevel.Information),
+                    (RelationalEventId.ConnectionClosed, LogLevel.Information)))
+            .LogTo(Console.WriteLine, LogLevel.Information);
+    #endregion
+}
+
+public class SuppressMessageContext : BlogsContext
+{
+    #region SuppressMessage
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Ignore(CoreEventId.DetachedLazyLoadingWarning))
+            .LogTo(Console.WriteLine);
+    #endregion
+}
+
+public class ThrowForEventContext : BlogsContext
+{
+    #region ThrowForEvent
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
+            .LogTo(Console.WriteLine);
+    #endregion
+}

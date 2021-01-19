@@ -1,16 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.RelatedData
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            using (var context = new BloggingContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
+
             #region SingleInclude
             using (var context = new BloggingContext())
             {
@@ -25,11 +27,8 @@ namespace EFQuerying.RelatedData
             {
                 var blogs = context.Blogs
                     .Include(blog => blog.Posts)
-                    .Select(blog => new
-                    {
-                        Id = blog.BlogId,
-                        Url = blog.Url
-                    })
+                    .Select(
+                        blog => new { Id = blog.BlogId, blog.Url })
                     .ToList();
             }
             #endregion
@@ -49,7 +48,7 @@ namespace EFQuerying.RelatedData
             {
                 var blogs = context.Blogs
                     .Include(blog => blog.Posts)
-                        .ThenInclude(post => post.Author)
+                    .ThenInclude(post => post.Author)
                     .ToList();
             }
             #endregion
@@ -59,20 +58,8 @@ namespace EFQuerying.RelatedData
             {
                 var blogs = context.Blogs
                     .Include(blog => blog.Posts)
-                        .ThenInclude(post => post.Author)
-                            .ThenInclude(author => author.Photo)
-                    .ToList();
-            }
-            #endregion
-
-            #region MultipleLeafIncludes
-            using (var context = new BloggingContext())
-            {
-                var blogs = context.Blogs
-                    .Include(blog => blog.Posts)
-                        .ThenInclude(post => post.Author)
-                    .Include(blog => blog.Posts)
-                        .ThenInclude(post => post.Tags)
+                    .ThenInclude(post => post.Author)
+                    .ThenInclude(author => author.Photo)
                     .ToList();
             }
             #endregion
@@ -82,10 +69,32 @@ namespace EFQuerying.RelatedData
             {
                 var blogs = context.Blogs
                     .Include(blog => blog.Posts)
-                        .ThenInclude(post => post.Author)
-                            .ThenInclude(author => author.Photo)
+                    .ThenInclude(post => post.Author)
+                    .ThenInclude(author => author.Photo)
                     .Include(blog => blog.Owner)
-                        .ThenInclude(owner => owner.Photo)
+                    .ThenInclude(owner => owner.Photo)
+                    .ToList();
+            }
+            #endregion
+
+            #region MultipleLeafIncludes
+            using (var context = new BloggingContext())
+            {
+                var blogs = context.Blogs
+                    .Include(blog => blog.Posts)
+                    .ThenInclude(post => post.Author)
+                    .Include(blog => blog.Posts)
+                    .ThenInclude(post => post.Tags)
+                    .ToList();
+            }
+            #endregion
+
+            #region IncludeMultipleNavigationsWithSingleInclude
+            using (var context = new BloggingContext())
+            {
+                var blogs = context.Blogs
+                    .Include(blog => blog.Owner.AuthoredPosts)
+                    .ThenInclude(post => post.Blog.Owner.Photo)
                     .ToList();
             }
             #endregion
@@ -99,6 +108,12 @@ namespace EFQuerying.RelatedData
                     .ToList();
             }
             #endregion
+
+            using (var context = new SplitQueriesBloggingContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
 
             #region WithSplitQueryAsDefault
             using (var context = new SplitQueriesBloggingContext())
@@ -166,10 +181,11 @@ namespace EFQuerying.RelatedData
             using (var context = new BloggingContext())
             {
                 var filteredBlogs = context.Blogs
-                    .Include(blog => blog.Posts
-                        .Where(post => post.BlogId == 1)
-                        .OrderByDescending(post => post.Title)
-                        .Take(5))
+                    .Include(
+                        blog => blog.Posts
+                            .Where(post => post.BlogId == 1)
+                            .OrderByDescending(post => post.Title)
+                            .Take(5))
                     .ToList();
             }
             #endregion
@@ -179,9 +195,9 @@ namespace EFQuerying.RelatedData
             {
                 var filteredBlogs = context.Blogs
                     .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
-                        .ThenInclude(post => post.Author)
+                    .ThenInclude(post => post.Author)
                     .Include(blog => blog.Posts)
-                        .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
+                    .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
                     .ToList();
             }
             #endregion
@@ -191,9 +207,9 @@ namespace EFQuerying.RelatedData
             {
                 var filteredBlogs = context.Blogs
                     .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
-                        .ThenInclude(post => post.Author)
+                    .ThenInclude(post => post.Author)
                     .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
-                        .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
+                    .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
                     .ToList();
             }
             #endregion

@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cosmos.ModelBuilding
 {
@@ -20,12 +20,11 @@ namespace Cosmos.ModelBuilding
                 await context.Database.EnsureDeletedAsync();
                 await context.Database.EnsureCreatedAsync();
 
-                context.Add(new Order
-                {
-                    Id = 1,
-                    ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" },
-                    PartitionKey = "1"
-                });
+                context.Add(
+                    new Order
+                    {
+                        Id = 1, ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" }, PartitionKey = "1"
+                    });
 
                 await context.SaveChangesAsync();
             }
@@ -41,19 +40,18 @@ namespace Cosmos.ModelBuilding
             #region PartitionKey
             using (var context = new OrderContext())
             {
-                context.Add(new Order
-                {
-                    Id = 2,
-                    ShippingAddress = new StreetAddress { City = "New York", Street = "11 Wall Street" },
-                    PartitionKey = "2"
-                });
+                context.Add(
+                    new Order
+                    {
+                        Id = 2, ShippingAddress = new StreetAddress { City = "New York", Street = "11 Wall Street" }, PartitionKey = "2"
+                    });
 
                 await context.SaveChangesAsync();
             }
 
             using (var context = new OrderContext())
             {
-                var order = await context.Orders.Where(p => p.PartitionKey == "2").LastAsync();
+                var order = await context.Orders.WithPartitionKey("2").LastAsync();
                 Console.Write("Last order will ship to: ");
                 Console.WriteLine($"{order.ShippingAddress.Street}, {order.ShippingAddress.City}");
                 Console.WriteLine();
@@ -64,10 +62,11 @@ namespace Cosmos.ModelBuilding
             var distributor = new Distributor
             {
                 Id = 1,
-                ShippingCenters = new HashSet<StreetAddress> {
-                        new StreetAddress { City = "Phoenix", Street = "500 S 48th Street" },
-                        new StreetAddress { City = "Anaheim", Street = "5650 Dolly Ave" }
-                    }
+                ShippingCenters = new HashSet<StreetAddress>
+                {
+                    new StreetAddress { City = "Phoenix", Street = "500 S 48th Street" },
+                    new StreetAddress { City = "Anaheim", Street = "5650 Dolly Ave" }
+                }
             };
 
             using (var context = new OrderContext())
@@ -87,7 +86,8 @@ namespace Cosmos.ModelBuilding
                 var addressEntry = context.Entry(firstDistributor.ShippingCenters.First());
                 var addressPKProperties = addressEntry.Metadata.FindPrimaryKey().Properties;
 
-                Console.WriteLine($"First shipping center PK: ({addressEntry.Property(addressPKProperties[0].Name).CurrentValue}, {addressEntry.Property(addressPKProperties[1].Name).CurrentValue})");
+                Console.WriteLine(
+                    $"First shipping center PK: ({addressEntry.Property(addressPKProperties[0].Name).CurrentValue}, {addressEntry.Property(addressPKProperties[1].Name).CurrentValue})");
                 Console.WriteLine();
             }
             #endregion

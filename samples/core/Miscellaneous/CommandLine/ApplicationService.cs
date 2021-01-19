@@ -1,3 +1,10 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+#region ApplicationService
 public class Program
 {
     public static void Main(string[] args)
@@ -14,6 +21,10 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
         => services.AddDbContext<ApplicationDbContext>();
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+    }
 }
 
 public class ApplicationDbContext : DbContext
@@ -23,3 +34,4 @@ public class ApplicationDbContext : DbContext
     {
     }
 }
+#endregion

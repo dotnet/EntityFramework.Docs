@@ -31,6 +31,10 @@ If the `ShippingAddress` property is private in the `Order` type, you can use th
 
 [!code-csharp[OwnsOneString](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneString)]
 
+The model above is mapped to the following database schema:
+
+![Sceenshot of the database model for entity containing owned reference](_static/owned-entities-ownsone.png)
+
 See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/OwnedEntities) for more context.
 
 > [!TIP]
@@ -38,7 +42,7 @@ See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tre
 
 ## Implicit keys
 
-Owned types configured with `OwnsOne` or discovered through a reference navigation always have a one-to-one relationship with the owner, therefore they don't need their own key values as the foreign key values are unique. In the previous example, the `StreetAddress` type does not need to define a key property.  
+Owned types configured with `OwnsOne` or discovered through a reference navigation always have a one-to-one relationship with the owner, therefore they don't need their own key values as the foreign key values are unique. In the previous example, the `StreetAddress` type does not need to define a key property.
 
 In order to understand how EF Core tracks these objects, it is useful to know that a primary key is created as a [shadow property](xref:core/modeling/shadow-properties) for the owned type. The value of the key of an instance of the owned type will be the same as the value of the key of the owner instance.
 
@@ -62,6 +66,10 @@ By default the primary key used for the owned type referenced through the `Shipp
 To configure a different primary key call `HasKey`.
 
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
+
+The model above is mapped to the following database schema:
+
+![Sceenshot of the database model for entity containing owned collection](_static/owned-entities-ownsmany.png)
 
 ## Mapping owned types with table splitting
 
@@ -102,7 +110,7 @@ In addition to nested owned types, an owned type can reference a regular entity 
 
 [!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
 
-## Configuring Owned Types
+## Configuring owned types
 
 It is possible to chain the `OwnsOne` method in a fluent call to configure this model:
 
@@ -113,6 +121,10 @@ Notice the `WithOwner` call used to define the navigation property pointing back
 It is also possible to achieve this result using `OwnedAttribute` on both `OrderDetails` and `StreetAddress`.
 
 In addition, notice the `Navigation` call. In EFCore 5.0, navigation properties to owned types can be further configured [as for non-owned navigation properties](xref:core/modeling/relationships#configuring-navigation-properties).
+
+The model above is mapped to the following database schema:
+
+![Screenshot of the database model for entity containing nested owned references](_static/owned-entities-nested.png)
 
 ## Storing owned types in separate tables
 

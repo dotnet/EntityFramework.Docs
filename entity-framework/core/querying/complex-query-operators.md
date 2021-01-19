@@ -14,7 +14,7 @@ Language Integrated Query (LINQ) contains many complex operators, which combine 
 
 ## Join
 
-The LINQ Join operator allows you to connect two data sources based on the key selector for each source, generating a tuple of values when the key matches. It naturally translates to `INNER JOIN` on relational databases. While the LINQ Join has outer and inner key selectors, the database requires a single join condition. So EF Core generates a join condition by comparing the outer key selector to the inner key selector for equality. Further, if the key selectors are anonymous types, EF Core generates a join condition to compare equality component wise.
+The LINQ Join operator allows you to connect two data sources based on the key selector for each source, generating a tuple of values when the key matches. It naturally translates to `INNER JOIN` on relational databases. While the LINQ Join has outer and inner key selectors, the database requires a single join condition. So EF Core generates a join condition by comparing the outer key selector to the inner key selector for equality.
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Program.cs#Join)]
 
@@ -22,6 +22,16 @@ The LINQ Join operator allows you to connect two data sources based on the key s
 SELECT [p].[PersonId], [p].[Name], [p].[PhotoId], [p0].[PersonPhotoId], [p0].[Caption], [p0].[Photo]
 FROM [PersonPhoto] AS [p0]
 INNER JOIN [Person] AS [p] ON [p0].[PersonPhotoId] = [p].[PhotoId]
+```
+
+Further, if the key selectors are anonymous types, EF Core generates a join condition to compare equality component-wise.
+
+[!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Program.cs#JoinComposite)]
+
+```sql
+SELECT [p].[PersonId], [p].[Name], [p].[PhotoId], [p0].[PersonPhotoId], [p0].[Caption], [p0].[Photo]
+FROM [PersonPhoto] AS [p0]
+INNER JOIN [Person] AS [p] ON ([p0].[PersonPhotoId] = [p].[PhotoId] AND ([p0].[Caption] = N'SN'))
 ```
 
 ## GroupJoin

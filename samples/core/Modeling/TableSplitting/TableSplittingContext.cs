@@ -14,20 +14,21 @@ namespace EFModeling.TableSplitting
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region TableSplitting
-            modelBuilder.Entity<DetailedOrder>(dob =>
-            {
-                dob.ToTable("Orders");
-                dob.Property(o => o.Status).HasColumnName("Status");
-            });
+            modelBuilder.Entity<DetailedOrder>(
+                dob =>
+                {
+                    dob.ToTable("Orders");
+                    dob.Property(o => o.Status).HasColumnName("Status");
+                });
 
-            modelBuilder.Entity<Order>(ob =>
-            {
-                ob.ToTable("Orders");
-                ob.Property(o => o.Status).HasColumnName("Status");
-                ob.HasOne(o => o.DetailedOrder).WithOne()
-                    .HasForeignKey<DetailedOrder>(o => o.Id);
-            });
-
+            modelBuilder.Entity<Order>(
+                ob =>
+                {
+                    ob.ToTable("Orders");
+                    ob.Property(o => o.Status).HasColumnName("Status");
+                    ob.HasOne(o => o.DetailedOrder).WithOne()
+                        .HasForeignKey<DetailedOrder>(o => o.Id);
+                });
             #endregion
 
             #region ConcurrencyToken

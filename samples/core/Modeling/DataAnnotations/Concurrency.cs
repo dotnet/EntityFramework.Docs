@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.DataAnnotations.Concurrency
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Person> People { get; set; }
     }

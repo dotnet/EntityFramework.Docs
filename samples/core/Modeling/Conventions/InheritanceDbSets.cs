@@ -2,9 +2,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Conventions.InheritanceDbSets
 {
-
     #region InheritanceDbSets
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<RssBlog> RssBlogs { get; set; }

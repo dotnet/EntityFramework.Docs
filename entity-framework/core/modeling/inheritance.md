@@ -29,9 +29,9 @@ If you don't want to expose a `DbSet` for one or more entities in the hierarchy,
 
 By default, EF maps the inheritance using the *table-per-hierarchy* (TPH) pattern. TPH uses a single table to store the data for all types in the hierarchy, and a discriminator column is used to identify which type each row represents.
 
-The model above is mapped to the following database schema (note the implicitly-created `Discriminator` column, which identifies which type of `Blog` is stored in each row).
+The model above is mapped to the following database schema (note the implicitly created `Discriminator` column, which identifies which type of `Blog` is stored in each row).
 
-![image](_static/inheritance-tph-data.png)
+![Screenshot of the results of querying the Blog entity hierarchy using table-per-hierarchy pattern](_static/inheritance-tph-data.png)
 
 You can configure the name and type of the discriminator column and the values that are used to identify each type in the hierarchy:
 
@@ -45,6 +45,10 @@ Finally, the discriminator can also be mapped to a regular .NET property in your
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/NonShadowDiscriminator.cs?name=NonShadowDiscriminator&highlight=4)]
 
+When querying for derived entities, which use the TPH pattern, EF Core adds a predicate over discriminator column in the query. This filter makes sure that we don't get any additional rows for base types or sibling types not in the result. This filter predicate is skipped for the base entity type since querying for the base entity will get results for all the entities in the hierarchy. When materializing results from a query, if we come across a discriminator value, which isn't mapped to any entity type in the model, we throw an exception since we don't know how to materialize the results. This error only occurs if your database contains rows with discriminator values, which aren't mapped in the EF model. If you have such data, then you can mark the discriminator mapping in EF Core model as incomplete to indicate that we should always add filter predicate for querying any type in the hierarchy. `IsComplete(false)` call on the discriminator configuration marks the mapping to be incomplete.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DiscriminatorMappingIncomplete.cs?name=DiscriminatorMappingIncomplete&highlight=5)]
+
 ### Shared columns
 
 By default, when two sibling entity types in the hierarchy have a property with the same name, they will be mapped to two separate columns. However, if their type is identical they can be mapped to the same database column:
@@ -54,7 +58,7 @@ By default, when two sibling entity types in the hierarchy have a property with 
 ## Table-per-type configuration
 
 > [!NOTE]
-> The table-per-type (TPT) is a new feature in EF Core 5.0. Table-per-concrete-type (TPC) is supported by EF6, but is not yet supported by EF Core.
+> The table-per-type (TPT) feature was introduced in EF Core 5.0. Table-per-concrete-type (TPC) is supported by EF6, but is not yet supported by EF Core.
 
 In the TPT mapping pattern, all the types are mapped to individual tables. Properties that belong solely to a base type or derived type are stored in a table that maps to that type. Tables that map to derived types also store a foreign key that joins the derived table with the base table.
 
@@ -80,6 +84,9 @@ CREATE TABLE [RssBlogs] (
 > [!NOTE]
 > If the primary key constraint is renamed the new name will be applied to all the tables mapped to the hierarchy, future EF versions will allow renaming the constraint only for a particular table when [issue 19970](https://github.com/dotnet/efcore/issues/19970) is fixed.
 
-If you are employing bulk configuration you can retrieve the column name for a specific table by calling <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnName%2A>.
+If you are employing bulk configuration you can retrieve the column name for a specific table by calling <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnName(Microsoft.EntityFrameworkCore.Metadata.IProperty,Microsoft.EntityFrameworkCore.Metadata.StoreObjectIdentifier@)>.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TPTConfiguration.cs?name=Metadata&highlight=10)]
+
+> [!WARNING]
+> In many cases, TPT shows inferior performance when compared to TPH. [See the performance docs for more information](xref:core/performance/modeling-for-performance#inheritance-mapping).

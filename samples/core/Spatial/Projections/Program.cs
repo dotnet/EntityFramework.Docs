@@ -11,6 +11,5 @@ var redmond = new Point(-122.123889, 47.669444) { SRID = 4326 };
 var distanceInDegrees = seattle.Distance(redmond);
 var distanceInMeters = seattle.ProjectTo(2855).Distance(redmond.ProjectTo(2855));
 #endregion
-
 Console.WriteLine($"Degrees: {distanceInDegrees:N4}");
 Console.WriteLine($"Meters:  {distanceInMeters:N0}");

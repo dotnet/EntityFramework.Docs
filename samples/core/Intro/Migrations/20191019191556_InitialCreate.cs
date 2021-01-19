@@ -15,10 +15,7 @@ namespace Intro.Migrations
                     Url = table.Column<string>(nullable: true),
                     Rating = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Blogs", x => x.BlogId);
-                });
+                constraints: table => { table.PrimaryKey("PK_Blogs", x => x.BlogId); });
 
             migrationBuilder.CreateTable(
                 name: "Posts",

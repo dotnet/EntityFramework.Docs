@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace EFQuerying.ComplexQuery
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using (var context = new BloggingContext())
             {
@@ -13,6 +12,17 @@ namespace EFQuerying.ComplexQuery
                 var query = from photo in context.Set<PersonPhoto>()
                             join person in context.Set<Person>()
                                 on photo.PersonPhotoId equals person.PhotoId
+                            select new { person, photo };
+                #endregion
+            }
+
+            using (var context = new BloggingContext())
+            {
+                #region JoinComposite
+                var query = from photo in context.Set<PersonPhoto>()
+                            join person in context.Set<Person>()
+                                on new { Id = (int?)photo.PersonPhotoId, photo.Caption }
+                                equals new { Id = person.PhotoId, Caption = "SN" }
                             select new { person, photo };
                 #endregion
             }
@@ -76,12 +86,9 @@ namespace EFQuerying.ComplexQuery
             {
                 #region GroupBy
                 var query = from p in context.Set<Post>()
-                            group p by p.AuthorId into g
-                            select new
-                            {
-                                g.Key,
-                                Count = g.Count()
-                            };
+                            group p by p.AuthorId
+                            into g
+                            select new { g.Key, Count = g.Count() };
                 #endregion
             }
 
@@ -89,14 +96,11 @@ namespace EFQuerying.ComplexQuery
             {
                 #region GroupByFilter
                 var query = from p in context.Set<Post>()
-                            group p by p.AuthorId into g
+                            group p by p.AuthorId
+                            into g
                             where g.Count() > 0
                             orderby g.Key
-                            select new
-                            {
-                                g.Key,
-                                Count = g.Count()
-                            };
+                            select new { g.Key, Count = g.Count() };
                 #endregion
             }
 

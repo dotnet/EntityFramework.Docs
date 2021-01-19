@@ -55,7 +55,6 @@ namespace EFModeling.ValueConversions
                     .HasConversion(
                         v => v.Value,
                         v => new ImmutableClass(v));
-
                 #endregion
             }
 
@@ -89,7 +88,7 @@ namespace EFModeling.ValueConversions
                 => ReferenceEquals(this, obj) || obj is ImmutableClass other && Equals(other);
 
             public override int GetHashCode()
-                => Value;
+                => Value.GetHashCode();
         }
         #endregion
     }

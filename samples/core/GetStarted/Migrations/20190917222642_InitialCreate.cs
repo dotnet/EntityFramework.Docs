@@ -14,10 +14,7 @@ namespace EFGetStarted.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Url = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Blogs", x => x.BlogId);
-                });
+                constraints: table => { table.PrimaryKey("PK_Blogs", x => x.BlogId); });
 
             migrationBuilder.CreateTable(
                 name: "Posts",

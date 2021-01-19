@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Conventions.AlternateKey
 {
     #region AlternateKey
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }

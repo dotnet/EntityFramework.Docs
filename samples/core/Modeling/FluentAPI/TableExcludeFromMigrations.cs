@@ -2,22 +2,22 @@
 
 namespace EFModeling.FluentAPI.Relational.TableExcludeFromMigrations
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
-        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<IdentityUser> Users { get; set; }
 
         #region TableExcludeFromMigrations
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Blog>()
-                .ToTable("blogs", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<IdentityUser>()
+                .ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
         }
         #endregion
     }
 
-    public class Blog
+    public class IdentityUser
     {
-        public int BlogId { get; set; }
-        public string Url { get; set; }
+        public string Id { get; set; }
+        public string UserName { get; set; }
     }
 }

@@ -10,6 +10,19 @@ namespace Samples
     {
         private static void Main()
         {
+            using (var db = new AdventureWorksContext())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+
+                foreach (var accountNumber in GetAccountNumbers(2000))
+                {
+                    db.Add(new Customer { AccountNumber = accountNumber, });
+                }
+
+                db.SaveChanges();
+            }
+
             // Warmup
             using (var db = new AdventureWorksContext())
             {
@@ -18,34 +31,35 @@ namespace Samples
 
             RunTest(
                 accountNumbers =>
+                {
+                    using (var db = new AdventureWorksContext())
                     {
-                        using (var db = new AdventureWorksContext())
+                        foreach (var id in accountNumbers)
                         {
-                            foreach (var id in accountNumbers)
-                            {
-                                // Use a regular auto-compiled query
-                                var customer = db.Customers.Single(c => c.AccountNumber == id);
-                            }
+                            // Use a regular auto-compiled query
+                            var customer = db.Customers.Single(c => c.AccountNumber == id);
                         }
-                    },
+                    }
+                },
                 name: "Regular");
 
             RunTest(
                 accountNumbers =>
-                    {
-                        // Create an explicit compiled query
-                        var query = EF.CompileQuery((AdventureWorksContext db, string id) 
-                                    => db.Customers.Single(c => c.AccountNumber == id));
+                {
+                    // Create an explicit compiled query
+                    var query = EF.CompileQuery(
+                        (AdventureWorksContext db, string id)
+                            => db.Customers.Single(c => c.AccountNumber == id));
 
-                        using (var db = new AdventureWorksContext())
+                    using (var db = new AdventureWorksContext())
+                    {
+                        foreach (var id in accountNumbers)
                         {
-                            foreach (var id in accountNumbers)
-                            {
-                                // Invoke the compiled query
-                                query(db, id);
-                            }
+                            // Invoke the compiled query
+                            query(db, id);
                         }
-                    },
+                    }
+                },
                 name: "Compiled");
         }
 

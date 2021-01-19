@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Net.Http;
+﻿using System.Net.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.BackingFieldNoProperty
 {
     #region Sample
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
@@ -23,7 +23,7 @@ namespace EFModeling.FluentAPI.BackingFieldNoProperty
 
         public string GetUrl()
         {
-            return _validatedUrl; 
+            return _validatedUrl;
         }
 
         public void SetUrl(string url)

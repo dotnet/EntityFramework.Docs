@@ -138,7 +138,7 @@ services.AddDbContext(b => b
 Query types, which represent data that can be read from the database but not updated, have been renamed to [keyless entity types](xref:core/modeling/keyless-entity-types).
 As they are an excellent fit for mapping database views in most scenarios, EF Core now automatically creates keyless entity types when reverse engineering database views.
 
-For example, using the [dotnet ef command-line tool](xref:core/miscellaneous/cli/dotnet) you can type:
+For example, using the [dotnet ef command-line tool](xref:core/cli/dotnet) you can type:
 
 ```dotnetcli
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer
@@ -197,5 +197,5 @@ For more details, see [what's new in EF 6](xref:ef6/what-is-new/index).
 
 Some features originally planned for EF Core 3.x were postponed to future releases:
 
-- Ability to ignore parts of a model in migrations, tracked as [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725).
-- Property bag entities, tracked as two separate issues: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) about shared-type entities and [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) about indexed property mapping support.
+- Ability to ignore parts of a model in migrations, tracked as [#2725](https://github.com/dotnet/efcore/issues/2725).
+- Property bag entities, tracked as two separate issues: [#9914](https://github.com/dotnet/efcore/issues/9914) about shared-type entities and [#13610](https://github.com/dotnet/efcore/issues/13610) about indexed property mapping support.

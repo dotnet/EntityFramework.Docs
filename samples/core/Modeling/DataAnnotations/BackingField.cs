@@ -2,7 +2,7 @@
 
 namespace EFModeling.DataAnnotations.BackingField
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
     }
@@ -22,7 +22,7 @@ namespace EFModeling.DataAnnotations.BackingField
 
         public void SetUrl(string url)
         {
-           // put your validation code here
+            // put your validation code here
 
             _validatedUrl = url;
         }

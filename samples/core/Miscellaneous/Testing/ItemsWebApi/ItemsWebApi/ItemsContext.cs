@@ -4,7 +4,7 @@ namespace Items
 {
     public class ItemsContext : DbContext
     {
-        public ItemsContext(DbContextOptions options) 
+        public ItemsContext(DbContextOptions<ItemsContext> options)
             : base(options)
         {
         }
@@ -14,22 +14,22 @@ namespace Items
             #region ConfigureItem
             modelBuilder.Entity<Item>(
                 b =>
-                    {
-                        b.Property("_id");
-                        b.HasKey("_id");
-                        b.Property(e => e.Name);
-                        b.HasMany(e => e.Tags).WithOne().IsRequired();
-                    });
+                {
+                    b.Property("_id");
+                    b.HasKey("_id");
+                    b.Property(e => e.Name);
+                    b.HasMany(e => e.Tags).WithOne().IsRequired();
+                });
             #endregion
 
             #region ConfigureTag
             modelBuilder.Entity<Tag>(
                 b =>
-                    {
-                        b.Property("_id");
-                        b.HasKey("_id");
-                        b.Property(e => e.Label);
-                    });
+                {
+                    b.Property("_id");
+                    b.HasKey("_id");
+                    b.Property(e => e.Label);
+                });
             #endregion
         }
     }

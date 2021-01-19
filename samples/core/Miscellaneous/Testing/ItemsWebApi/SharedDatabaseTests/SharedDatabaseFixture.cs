@@ -9,20 +9,20 @@ namespace SharedDatabaseTests
     #region SharedDatabaseFixture
     public class SharedDatabaseFixture : IDisposable
     {
-        private static readonly object _lock = new object(); 
-        private static bool _databaseInitialized; 
-        
+        private static readonly object _lock = new object();
+        private static bool _databaseInitialized;
+
         public SharedDatabaseFixture()
         {
             Connection = new SqlConnection(@"Server=(localdb)\mssqllocaldb;Database=EFTestSample;ConnectRetryCount=0");
-            
+
             Seed();
-            
+
             Connection.Open();
         }
 
         public DbConnection Connection { get; }
-        
+
         public ItemsContext CreateContext(DbTransaction transaction = null)
         {
             var context = new ItemsContext(new DbContextOptionsBuilder<ItemsContext>().UseSqlServer(Connection).Options);
@@ -31,10 +31,10 @@ namespace SharedDatabaseTests
             {
                 context.Database.UseTransaction(transaction);
             }
-            
+
             return context;
         }
-        
+
         private void Seed()
         {
             lock (_lock)

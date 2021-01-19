@@ -2,48 +2,39 @@
 title: Migrations with Multiple Providers - EF Core
 description: Using migrations to manage database schemas when targeting multiple database providers with Entity Framework Core
 author: bricelam
-ms.date: 11/08/2017
+ms.date: 10/29/2020
 uid: core/managing-schemas/migrations/providers
 ---
 # Migrations with Multiple Providers
 
-The [EF Core Tools][1] only scaffold migrations for the active provider. Sometimes, however, you may want to use more than one provider (for example Microsoft SQL Server and SQLite) with your DbContext. There are two ways to handle this with Migrations. You can maintain two sets of migrations--one for each provider--or merge them into a single set
-that can work on both.
+The [EF Core Tools](xref:core/cli/index) only scaffold migrations for the active provider. Sometimes, however, you may want to use more than one provider (for example Microsoft SQL Server and SQLite) with your DbContext. Handle this by maintaining multiple sets of migrations--one for each provider--and adding a migration to each for every model change.
 
-## Two migration sets
+## Using multiple context types
 
-In the first approach, you generate two migrations for each model change.
-
-One way to do this is to put each migration set [in a separate assembly][2] and manually switch the active provider (and migrations assembly) between adding the two migrations.
-
-Another approach that makes working with the tools easier is to create a new type that derives from your DbContext and overrides the active provider. This type is used at design time when adding or applying migrations.
+One way to create multiple migration sets is to use one DbContext type per provider.
 
 ```csharp
-class MySqliteDbContext : MyDbContext
+class SqliteBlogContext : BlogContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite("Data Source=my.db");
 }
 ```
 
-> [!NOTE]
-> Since each migration set uses its own DbContext types, this approach doesn't require using a separate migrations
-> assembly.
-
-When adding new migration, specify the context types.
+Specify the context type when adding new migrations.
 
 ### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef migrations add InitialCreate --context MyDbContext --output-dir Migrations/SqlServerMigrations
-dotnet ef migrations add InitialCreate --context MySqliteDbContext --output-dir Migrations/SqliteMigrations
+dotnet ef migrations add InitialCreate --context BlogContext --output-dir Migrations/SqlServerMigrations
+dotnet ef migrations add InitialCreate --context SqliteBlogContext --output-dir Migrations/SqliteMigrations
 ```
 
 ### [Visual Studio](#tab/vs)
 
 ```powershell
-Add-Migration InitialCreate -Context MyDbContext -OutputDir Migrations\SqlServerMigrations
-Add-Migration InitialCreate -Context MySqliteDbContext -OutputDir Migrations\SqliteMigrations
+Add-Migration InitialCreate -Context BlogContext -OutputDir Migrations\SqlServerMigrations
+Add-Migration InitialCreate -Context SqliteBlogContext -OutputDir Migrations\SqliteMigrations
 ```
 
 ***
@@ -52,28 +43,39 @@ Add-Migration InitialCreate -Context MySqliteDbContext -OutputDir Migrations\Sql
 > You don't need to specify the output directory for subsequent migrations since they are created as siblings to the
 > last one.
 
-## One migration set
+## Using one context type
 
-If you don't like having two sets of migrations, you can manually combine them into a single set that can be applied to both providers.
+It's also possible to use one DbContext type. This currently requires moving the migrations into a separate assembly. Please refer to [Using a Separate Migrations Project](xref:core/managing-schemas/migrations/projects) for instructions on setting up your projects.
 
-Annotations can coexist since a provider ignores any annotations that it doesn't understand. For example, a primary key column that works with both Microsoft SQL Server and SQLite might look like this.
+> [!TIP]
+> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Schemas/TwoProjectMigrations).
 
-```csharp
-Id = table.Column<int>(nullable: false)
-    .Annotation("SqlServer:ValueGenerationStrategy",
-        SqlServerValueGenerationStrategy.IdentityColumn)
-    .Annotation("Sqlite:Autoincrement", true),
+Starting in EF Core 5.0, you can pass arguments into the app from the tools. This can enable a more streamlined workflow that avoids having to make manual changes to the project when running the tools.
+
+Here's one pattern that works well when using a [Generic Host](/dotnet/core/extensions/generic-host).
+
+[!code-csharp[](../../../../samples/core/Schemas/TwoProjectMigrations/WorkerService1/Program.cs#snippet_CreateHostBuilder)]
+
+Since the default host builder reads configuration from command-line arguments, you can specify the provider when running the tools.
+
+### [.NET Core CLI](#tab/dotnet-core-cli)
+
+```dotnetcli
+dotnet ef migrations add MyMigration --project ../SqlServerMigrations -- --provider SqlServer
+dotnet ef migrations add MyMigration --project ../SqliteMigrations -- --provider Sqlite
 ```
 
-If operations can be applied only for one provider, or they're different between providers, use the `ActiveProvider` property to determine which provider is active:
+> [!TIP]
+> The `--` token directs `dotnet ef` to treat everything that follows as an argument and not try to parse them as options. Any extra arguments not used by `dotnet ef` are forwarded to the app.
 
-```csharp
-if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
-{
-    migrationBuilder.CreateSequence(
-        name: "EntityFrameworkHiLoSequence");
-}
+### [Visual Studio](#tab/vs)
+
+```powershell
+Add-Migration MyMigration -Args "--provider SqlServer"
+Add-Migration MyMigration -Args "--provider Sqlite"
 ```
 
-  [1]: xref:core/miscellaneous/cli/index
-  [2]: xref:core/managing-schemas/migrations/projects
+***
+
+> [!NOTE]
+> The ability to specify additional arguments for the app was added in EF Core 5.0. If you're using an older version, specify configuration values with environment variables instead.

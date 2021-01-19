@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.Relationships.ManyToManyShared
 {
@@ -37,7 +37,7 @@ namespace EFModeling.FluentAPI.Relationships.ManyToManyShared
             #region Seeding
             modelBuilder
                 .Entity<Post>()
-                .HasData(new Post { PostId = 1, Title = "First"});
+                .HasData(new Post { PostId = 1, Title = "First" });
 
             modelBuilder
                 .Entity<Tag>()
@@ -48,6 +48,26 @@ namespace EFModeling.FluentAPI.Relationships.ManyToManyShared
                 .HasMany(p => p.Tags)
                 .WithMany(p => p.Posts)
                 .UsingEntity(j => j.HasData(new { PostsPostId = 1, TagsTagId = "ef" }));
+            #endregion
+
+            #region Components
+            modelBuilder.Entity<Post>()
+                .HasMany(p => p.Tags)
+                .WithMany(p => p.Posts)
+                .UsingEntity<Dictionary<string, object>>(
+                    "PostTag",
+                    j => j
+                        .HasOne<Tag>()
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .HasConstraintName("FK_PostTag_Tags_TagId")
+                        .OnDelete(DeleteBehavior.Cascade),
+                    j => j
+                        .HasOne<Post>()
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .HasConstraintName("FK_PostTag_Posts_PostId")
+                        .OnDelete(DeleteBehavior.ClientCascade));
             #endregion
         }
     }

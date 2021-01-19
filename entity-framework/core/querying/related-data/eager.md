@@ -20,6 +20,9 @@ You can include related data from multiple relationships in a single query.
 
 [!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#MultipleIncludes)]
 
+> [!CAUTION]
+> Eager loading a collection navigation in a single query may cause performance issues. For more information, see [Single vs. split queries](xref:core/querying/single-split-queries).
+
 ## Including multiple levels
 
 You can drill down through relationships to include multiple levels of related data using the `ThenInclude` method. The following example loads all blogs, their related posts, and the author of each post.
@@ -38,74 +41,17 @@ You may want to include multiple related entities for one of the entities that i
 
 [!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#MultipleLeafIncludes)]
 
-## Single and split queries
+> [!TIP]
+> You can also load multiple navigations using a single `Include` method. This is possible for navigation "chains" that are all references, or when they end with a single collection.
 
-### Single queries
-
-In relational databases, all related entities are by default loaded by introducing JOINs:
-
-```sql
-SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url], [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title]
-FROM [Blogs] AS [b]
-LEFT JOIN [Post] AS [p] ON [b].[BlogId] = [p].[BlogId]
-ORDER BY [b].[BlogId], [p].[PostId]
-```
-
-If a typical blog has multiple related posts, rows for these posts will duplicate the blog's information, leading to the so-called "cartesian explosion" problem. As more one-to-many relationships are loaded, the amount of duplicated data may grow and adversely affect the performance of your application. By default, EF Core emits a warning if it detects queries loading collection includes that may cause performance issues.
-
-### Split queries
-
-> [!NOTE]
-> This feature is introduced in EF Core 5.0.
-
-EF allows you to specify that a given LINQ query should be *split* into multiple SQL queries. Instead of JOINs, split queries perform an additional SQL query for each included one-to-many navigation:
-
-[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs?name=AsSplitQuery&highlight=5)]
-
-It will produce the following SQL:
-
-```sql
-SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url]
-FROM [Blogs] AS [b]
-ORDER BY [b].[BlogId]
-
-SELECT [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title], [b].[BlogId]
-FROM [Blogs] AS [b]
-INNER JOIN [Post] AS [p] ON [b].[BlogId] = [p].[BlogId]
-ORDER BY [b].[BlogId]
-```
-
-> [!NOTE]
-> One-to-one related entities are always loaded via JOINs in the same query, as this has no performance impact.
-
-### Enabling split queries globally
-
-You can also configure split queries as the default for your application's context:
-
-[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/SplitQueriesBloggingContext.cs?name=QuerySplittingBehaviorSplitQuery&highlight=6)]
-
-When split queries are configured as the default, it is still possible to configure specific queries to execute as single queries:
-
-[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs?name=AsSingleQuery&highlight=5)]
-
-If the query splitting mode isn't explicitly specified - neither globally nor on the query - and EF Core detects that a single query loads multiple collection includes, a warning is emitted to draw attention to the potential resulting performance issues. Setting the query mode to SingleQuery will cause the warning not to be generated.
-
-### Characteristics of split queries
-
-While split query avoids the performance issues associated with JOINs and cartesian explosion, it also has some drawbacks:
-
-* While most databases guarantee data consistency for single queries, no such guarantees exist for multiple queries. If the database is updated concurrently when executing your queries, resulting data may not be consistent. You can mitigate it by wrapping the queries in a serializable or snapshot transaction, although doing so may create performance issues of its own. For more information, see your database's documentation.
-* Each query currently implies an additional network roundtrip to your database. Multiple network roundtrip can degrade performance, especially where latency to the database is high (for example, cloud services).
-* While some databases allow consuming the results of multiple queries at the same time (SQL Server with MARS, Sqlite), most allow only a single query to be active at any given point. So all results from earlier queries must be buffered in your application's memory before executing later queries, which leads to increased memory requirements.
-
-Unfortunately, there isn't one strategy for loading related entities that fits all scenarios. Carefully consider the advantages and disadvantages of single and split queries, and select the one that fits your needs.
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#IncludeMultipleNavigationsWithSingleInclude)]
 
 ## Filtered include
 
 > [!NOTE]
-> This feature is introduced in EF Core 5.0.
+> This feature was introduced in EF Core 5.0.
 
-When applying Include to load related data, you can apply certain enumerable operations on the included collection navigation, which allows for filtering and sorting of the results.
+When applying Include to load related data, you can add certain enumerable operations to the included collection navigation, which allows for filtering and sorting of the results.
 
 Supported operations are: `Where`, `OrderBy`, `OrderByDescending`, `ThenBy`, `ThenByDescending`, `Skip`, and `Take`.
 
@@ -132,6 +78,9 @@ var orders = context.Orders.Where(o => o.Id > 1000).ToList();
 // customer entities will have references to all orders where Id > 1000, rather than > 5000
 var filtered = context.Customers.Include(c => c.Orders.Where(o => o.Id > 5000)).ToList();
 ```
+
+> [!NOTE]
+> In case of tracking queries, the navigation on which filtered include was applied is considered to be loaded. This means that EF Core will not attempt to re-load it's values using [explicit loading](xref:core/querying/related-data/explicit) or [lazy loading](xref:core/querying/related-data/lazy), even though some elements could still be missing.
 
 ## Include on derived types
 

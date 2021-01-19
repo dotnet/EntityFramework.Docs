@@ -2,7 +2,7 @@
 
 namespace EFModeling.FluentAPI.Relational.SequenceConfiguration
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
 
@@ -14,7 +14,7 @@ namespace EFModeling.FluentAPI.Relational.SequenceConfiguration
                 .IncrementsBy(5);
         }
         #endregion
-    }   
+    }
 
     public class Order
     {

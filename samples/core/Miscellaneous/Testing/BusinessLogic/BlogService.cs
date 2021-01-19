@@ -5,7 +5,7 @@ namespace BusinessLogic
 {
     public class BlogService
     {
-        private BloggingContext _context;
+        private readonly BloggingContext _context;
 
         public BlogService(BloggingContext context)
         {
@@ -23,6 +23,13 @@ namespace BusinessLogic
         {
             return _context.Blogs
                 .Where(b => b.Url.Contains(term))
+                .OrderBy(b => b.Url)
+                .ToList();
+        }
+
+        public IEnumerable<UrlResource> GetAllResources()
+        {
+            return _context.Resources
                 .OrderBy(b => b.Url)
                 .ToList();
         }

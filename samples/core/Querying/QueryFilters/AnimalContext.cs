@@ -28,5 +28,4 @@ namespace EFQuerying.QueryFilters
             //modelBuilder.Entity<Animal>().HasQueryFilter(a => a.Owner.Name != "John");
         }
     }
-
 }

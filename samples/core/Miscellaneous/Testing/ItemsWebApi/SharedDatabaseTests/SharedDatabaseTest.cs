@@ -12,9 +12,8 @@ namespace SharedDatabaseTests
         public SharedDatabaseTest(SharedDatabaseFixture fixture) => Fixture = fixture;
 
         public SharedDatabaseFixture Fixture { get; }
-    
         #endregion
-    
+
         #region CanGetItems
         [Fact]
         public void Can_get_items()
@@ -24,7 +23,7 @@ namespace SharedDatabaseTests
                 var controller = new ItemsController(context);
 
                 var items = controller.Get().ToList();
-                
+
                 Assert.Equal(3, items.Count);
                 Assert.Equal("ItemOne", items[0].Name);
                 Assert.Equal("ItemThree", items[1].Name);
@@ -32,7 +31,7 @@ namespace SharedDatabaseTests
             }
         }
         #endregion
-        
+
         [Fact]
         public void Can_get_item()
         {
@@ -41,11 +40,11 @@ namespace SharedDatabaseTests
                 var controller = new ItemsController(context);
 
                 var item = controller.Get("ItemTwo");
-                
+
                 Assert.Equal("ItemTwo", item.Name);
             }
         }
-        
+
         #region CanAddItem
         [Fact]
         public void Can_add_item()
@@ -71,7 +70,7 @@ namespace SharedDatabaseTests
             }
         }
         #endregion
-        
+
         #region CanAddTag
         [Fact]
         public void Can_add_tag()
@@ -99,7 +98,7 @@ namespace SharedDatabaseTests
             }
         }
         #endregion
-        
+
         #region CanUpTagCount
         [Fact]
         public void Can_add_tag_when_already_existing_tag()
@@ -129,7 +128,7 @@ namespace SharedDatabaseTests
             }
         }
         #endregion
-        
+
         #region DeleteItem
         [Fact]
         public void Can_remove_item_and_all_associated_tags()

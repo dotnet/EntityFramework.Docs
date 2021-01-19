@@ -19,10 +19,13 @@ You can configure an index or key to be clustered as follows:
 
 [!code-csharp[ClusteredIndex](../../../../samples/core/SqlServer/Indexes/ClusteredIndexContext.cs?name=ClusteredIndex)]
 
+> [!NOTE]
+> SQL Server only supports one clustered index per table, and the primary key is by default clustered. If you'd like to have a clustered index on a non-key column, you must explicitly make your key non-clustered.
+
 ## Fill factor
 
 > [!NOTE]
-> This feature is introduced in EF Core 5.0.
+> This feature was introduced in EF Core 5.0.
 
 The index fill-factor option is provided for fine-tuning index data storage and performance. For more information, see [the SQL Server documentation on fill factor](/sql/relational-databases/indexes/specify-fill-factor-for-an-index).
 

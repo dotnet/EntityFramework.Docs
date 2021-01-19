@@ -1,10 +1,10 @@
-﻿using Cosmos.ModelBuilding;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Cosmos.ModelBuilding;
 using Microsoft.Azure.Cosmos;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cosmos.UnstructuredData
 {
@@ -24,9 +24,7 @@ namespace Cosmos.UnstructuredData
 
                 var order = new Order
                 {
-                    Id = 1,
-                    ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" },
-                    PartitionKey = "1"
+                    Id = 1, ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" }, PartitionKey = "1"
                 };
 
                 context.Add(order);

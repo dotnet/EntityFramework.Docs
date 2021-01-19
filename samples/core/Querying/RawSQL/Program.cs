@@ -1,13 +1,51 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System.Linq;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace EFQuerying.RawSQL
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            using (var context = new BloggingContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                context.Database.ExecuteSqlRaw(
+                    @"create function [dbo].[SearchBlogs] (@searchTerm nvarchar(max))
+                          returns @found table
+                          (
+                              BlogId int not null,
+                              Url nvarchar(max),
+                              Rating int
+                          )
+                          as
+                          begin
+                              insert into @found
+                              select * from dbo.Blogs as b
+                              where exists (
+                                  select 1
+                                  from [Post] as [p]
+                                  where ([b].[BlogId] = [p].[BlogId]) and (charindex(@searchTerm, [p].[Title]) > 0))
+
+                                  return
+                          end");
+
+                context.Database.ExecuteSqlRaw(
+                    @"create procedure [dbo].[GetMostPopularBlogs] as
+                          begin
+                              select * from dbo.Blogs order by Rating
+                          end");
+
+                context.Database.ExecuteSqlRaw(
+                    @"create procedure [dbo].[GetMostPopularBlogsForUser] @filterByUser nvarchar(max) as
+                          begin
+                              select * from dbo.Blogs order by Rating
+                          end");
+            }
+
             using (var context = new BloggingContext())
             {
                 #region FromSqlRaw
@@ -73,7 +111,7 @@ namespace EFQuerying.RawSQL
             using (var context = new BloggingContext())
             {
                 #region FromSqlInterpolatedComposed
-                var searchTerm = ".NET";
+                var searchTerm = "Lorem ipsum";
 
                 var blogs = context.Blogs
                     .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
@@ -86,7 +124,7 @@ namespace EFQuerying.RawSQL
             using (var context = new BloggingContext())
             {
                 #region FromSqlInterpolatedAsNoTracking
-                var searchTerm = ".NET";
+                var searchTerm = "Lorem ipsum";
 
                 var blogs = context.Blogs
                     .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
@@ -98,7 +136,7 @@ namespace EFQuerying.RawSQL
             using (var context = new BloggingContext())
             {
                 #region FromSqlInterpolatedInclude
-                var searchTerm = ".NET";
+                var searchTerm = "Lorem ipsum";
 
                 var blogs = context.Blogs
                     .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")

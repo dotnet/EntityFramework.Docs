@@ -11,7 +11,7 @@ uid: core/what-is-new/ef-core-2.0
 ## .NET Standard 2.0
 
 EF Core now targets .NET Standard 2.0, which means it can work with .NET Core 2.0, .NET Framework 4.6.1, and other libraries that implement .NET Standard 2.0.
-See [Supported .NET Implementations](xref:core/platforms/index) for more details on what is supported.
+See [Supported .NET Implementations](xref:core/miscellaneous/platforms) for more details on what is supported.
 
 ## Modeling
 

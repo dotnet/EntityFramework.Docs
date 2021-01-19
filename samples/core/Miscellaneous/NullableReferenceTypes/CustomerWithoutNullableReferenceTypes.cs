@@ -8,11 +8,14 @@ namespace NullableReferenceTypes
     public class CustomerWithoutNullableReferenceTypes
     {
         public int Id { get; set; }
-        [Required]                               // Data annotations needed to configure as required
-        public string FirstName { get; set; }    
+
+        [Required] // Data annotations needed to configure as required
+        public string FirstName { get; set; }
+
         [Required]
-        public string LastName { get; set; }     // Data annotations needed to configure as required
-        public string MiddleName { get; set; }   // Optional by convention
+        public string LastName { get; set; } // Data annotations needed to configure as required
+
+        public string MiddleName { get; set; } // Optional by convention
     }
     #endregion
 }

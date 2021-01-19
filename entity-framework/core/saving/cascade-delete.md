@@ -1,302 +1,566 @@
 ---
 title: Cascade Delete - EF Core
-description: Configuring delete behaviors for related entities when a principal entity is deleted
+description: Configuring cascading behaviors triggered when an entity is deleted or severed from its principal/parent
 author: ajcvickers
-ms.date: 10/27/2016
+ms.date: 01/07/2021
 uid: core/saving/cascade-delete
 ---
 # Cascade Delete
 
-Cascade delete is commonly used in database terminology to describe a characteristic that allows the deletion of a row to automatically trigger the deletion of related rows. A closely related concept also covered by EF Core delete behaviors is the automatic deletion of a child entity when it's relationship to a parent has been severed--this is commonly known as "deleting orphans".
+Entity Framework Core (EF Core) represents relationships using foreign keys. An entity with a foreign key is the child or dependent entity in the relationship. This entity's foreign key value must match the primary key value (or an alternate key value) of the related principal/parent entity.
 
-EF Core implements several different delete behaviors and allows for the configuration of the delete behaviors of individual relationships. EF Core also implements conventions that automatically configure useful default delete behaviors for each relationship based on the [requiredness of the relationship](xref:core/modeling/relationships#required-and-optional-relationships).
+If the principal/parent entity is deleted, then the foreign key values of the dependents/children will no longer match the primary or alternate key of _any_ principal/parent. This is an invalid state, and will cause a referential constraint violation in most databases.
 
-## Delete behaviors
+There are two options to avoid this referential constraint violation:
 
-Delete behaviors are defined in the *DeleteBehavior* enumerator type and can be passed to the *OnDelete* fluent API to control whether the deletion of a principal/parent entity or the severing of the relationship to dependent/child entities should have a side effect on the dependent/child entities.
+1. Set the FK values to null
+2. Also delete the dependent/child entities
 
-There are three actions EF can take when a principal/parent entity is deleted or the relationship to the child is severed:
+The first option in only valid for optional relationships where the foreign key property (and the database column to which it is mapped) must be nullable.
 
-* The child/dependent can be deleted
-* The child's foreign key values can be set to null
-* The child remains unchanged
+The second option is valid for any kind of relationship and is known as "cascade delete".
 
-> [!NOTE]
-> The delete behavior configured in the EF Core model is only applied when the principal entity is deleted using EF Core and the dependent entities are loaded in memory (that is, for tracked dependents). A corresponding cascade behavior needs to be setup in the database to ensure data that is not being tracked by the context has the necessary action applied. If you use EF Core to create the database, this cascade behavior will be setup for you.
+> [!TIP]
+> This document describes cascade deletes (and deleting orphans) from the perspective of updating the database. It makes heavy use of concepts introduced in [Change Tracking in EF Core](xref:core/change-tracking/index) and [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes). Make sure to fully understand these concepts before tackling the material here.
 
-For the second action above, setting a foreign key value to null is not valid if foreign key is not nullable. (A non-nullable foreign key is equivalent to a required relationship.) In these cases, EF Core tracks that the foreign key property has been marked as null until SaveChanges is called, at which time an exception is thrown because the change cannot be persisted to the database. This is similar to getting a constraint violation from the database.
+> [!TIP]  
+> You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/CascadeDeletes).
 
-There are four delete behaviors, as listed in the tables below.
+## When cascading behaviors happen
 
-### Optional relationships
+Cascading deletes are needed when a dependent/child entity can no longer be associated with its current principal/parent. This can happen because the principal/parent is deleted, or it can happen when the principal/parent still exists but the dependent/child is no longer associated with it.
 
-For optional relationships (nullable foreign key) it _is_ possible to save a null foreign key value, which results in the following effects:
+### Deleting a principal/parent
 
-| Behavior Name               | Effect on dependent/child in memory    | Effect on dependent/child in database  |
-|:----------------------------|:---------------------------------------|:---------------------------------------|
-| **Cascade**                 | Entities are deleted                   | Entities are deleted                   |
-| **ClientSetNull** (Default) | Foreign key properties are set to null | None                                   |
-| **SetNull**                 | Foreign key properties are set to null | Foreign key properties are set to null |
-| **Restrict**                | None                                   | None                                   |
+Consider this simple model where `Blog` is the principal/parent in a relationship with `Post`, which is the dependent/child. `Post.BlogId` is a foreign key property, the value of which must match the `Post.Id` primary key of the post to which the blog belongs.
 
-### Required relationships
+<!--
+    public class Blog
+    {
+        public int Id { get; set; }
 
-For required relationships (non-nullable foreign key) it is _not_ possible to save a null foreign key value, which results in the following effects:
+        public string Name { get; set; }
 
-| Behavior Name         | Effect on dependent/child in memory | Effect on dependent/child in database |
-|:----------------------|:------------------------------------|:--------------------------------------|
-| **Cascade** (Default) | Entities are deleted                | Entities are deleted                  |
-| **ClientSetNull**     | SaveChanges throws                  | None                                  |
-| **SetNull**           | SaveChanges throws                  | SaveChanges throws                    |
-| **Restrict**          | None                                | None                                  |
+        public IList<Post> Posts { get; } = new List<Post>();
+    }
 
-In the tables above, *None* can result in a constraint violation. For example, if a principal/child entity is deleted but no action is taken to change the foreign key of a dependent/child, then the database will likely throw on SaveChanges due to a foreign constraint violation.
+    public class Post
+    {
+        public int Id { get; set; }
 
-At a high level:
+        public string Title { get; set; }
+        public string Content { get; set; }
 
-* If you have entities that cannot exist without a parent, and you want EF to take care for deleting the children automatically, then use *Cascade*.
-  * Entities that cannot exist without a parent usually make use of required relationships, for which *Cascade* is the default.
-* If you have entities that may or may not have a parent, and you want EF to take care of nulling out the foreign key for you, then use *ClientSetNull*
-  * Entities that can exist without a parent usually make use of optional relationships, for which *ClientSetNull* is the default.
-  * If you want the database to also try to propagate null values to child foreign keys even when the child entity is not loaded, then use *SetNull*. However, note that the database must support this, and configuring the database like this can result in other restrictions, which in practice often makes this option impractical. This is why *SetNull* is not the default.
-* If you don't want EF Core to ever delete an entity automatically or null out the foreign key automatically, then use *Restrict*. Note that this requires that your code keep child entities and their foreign key values in sync manually otherwise constraint exceptions will be thrown.
+        public int BlogId { get; set; }
+        public Blog Blog { get; set; }
+    }
+-->
+[!code-csharp[Model](../../../samples/core/CascadeDeletes/IntroRequiredSamples.cs?name=Model)]
 
-> [!NOTE]
-> In EF Core, unlike EF6, cascading effects do not happen immediately, but instead only when SaveChanges is called.
+By convention, this relationship is configured as a required, since the `Post.BlogId` foreign key property is non-nullable. Required relationships are configured to use cascade deletes by default. See [Relationships](xref:core/modeling/relationships) for more information on modeling relationships.
 
-## Entity deletion examples
+When deleting a blog, all posts are cascade deleted. For example:
 
-The code below is part of a [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) that can be downloaded and run. The sample shows what happens for each delete behavior for both optional and required relationships when a parent entity is deleted.
+<!--
+            using var context = new BlogsContext();
 
-[!code-csharp[Main](../../../samples/core/Saving/CascadeDelete/Sample.cs#DeleteBehaviorVariations)]
+            var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
 
-Let's walk through each variation to understand what is happening.
+            context.Remove(blog);
+            
+            context.SaveChanges();
+-->
+[!code-csharp[Deleting_principal_parent_1](../../../samples/core/CascadeDeletes/IntroRequiredSamples.cs?name=Deleting_principal_parent_1)]
 
-### DeleteBehavior.Cascade with required or optional relationship
-
-```output
-After loading entities:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-After deleting blog '1':
-  Blog '1' is in state Deleted with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-Saving changes:
-  DELETE FROM [Posts] WHERE [PostId] = 1
-  DELETE FROM [Posts] WHERE [PostId] = 2
-  DELETE FROM [Blogs] WHERE [BlogId] = 1
-
-After SaveChanges:
-  Blog '1' is in state Detached with 2 posts referenced.
-    Post '1' is in state Detached with FK '1' and no reference to a blog.
-    Post '2' is in state Detached with FK '1' and no reference to a blog.
-```
-
-* Blog is marked as Deleted
-* Posts initially remain Unchanged since cascades do not happen until SaveChanges
-* SaveChanges sends deletes for both dependents/children (posts) and then the principal/parent (blog)
-* After saving, all entities are detached since they have now been deleted from the database
-
-### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with required relationship
-
-```output
-After loading entities:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-After deleting blog '1':
-  Blog '1' is in state Deleted with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-Saving changes:
-  UPDATE [Posts] SET [BlogId] = NULL WHERE [PostId] = 1
-
-SaveChanges threw DbUpdateException: Cannot insert the value NULL into column 'BlogId', table 'EFSaving.CascadeDelete.dbo.Posts'; column does not allow nulls. UPDATE fails. The statement has been terminated.
-```
-
-* Blog is marked as Deleted
-* Posts initially remain Unchanged since cascades do not happen until SaveChanges
-* SaveChanges attempts to set the post FK to null, but this fails because the FK is not nullable
-
-### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with optional relationship
-
-```output
-After loading entities:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-After deleting blog '1':
-  Blog '1' is in state Deleted with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-Saving changes:
-  UPDATE [Posts] SET [BlogId] = NULL WHERE [PostId] = 1
-  UPDATE [Posts] SET [BlogId] = NULL WHERE [PostId] = 2
-  DELETE FROM [Blogs] WHERE [BlogId] = 1
-
-After SaveChanges:
-  Blog '1' is in state Detached with 2 posts referenced.
-    Post '1' is in state Unchanged with FK 'null' and no reference to a blog.
-    Post '2' is in state Unchanged with FK 'null' and no reference to a blog.
-```
-
-* Blog is marked as Deleted
-* Posts initially remain Unchanged since cascades do not happen until SaveChanges
-* SaveChanges attempts sets the FK of both dependents/children (posts) to null before deleting the principal/parent (blog)
-* After saving, the principal/parent (blog) is deleted, but the dependents/children (posts) are still tracked
-* The tracked dependents/children (posts) now have null FK values and their reference to the deleted principal/parent (blog) has been removed
-
-### DeleteBehavior.Restrict with required or optional relationship
-
-```output
-After loading entities:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-After deleting blog '1':
-  Blog '1' is in state Deleted with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-Saving changes:
-SaveChanges threw InvalidOperationException: The association between entity types 'Blog' and 'Post' has been severed but the foreign key for this relationship cannot be set to null. If the dependent entity should be deleted, then setup the relationship to use cascade deletes.
-```
-
-* Blog is marked as Deleted
-* Posts initially remain Unchanged since cascades do not happen until SaveChanges
-* Since *Restrict* tells EF to not automatically set the FK to null, it remains non-null and SaveChanges throws without saving
-
-## Delete orphans examples
-
-The code below is part of a [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) that can be downloaded and run. The sample shows what happens for each delete behavior for both optional and required relationships when the relationship between a parent/principal and its children/dependents is severed. In this example, the relationship is severed by removing the dependents/children (posts) from the collection navigation property on the principal/parent (blog). However, the behavior is the same if the reference from dependent/child to principal/parent is instead nulled out.
-
-[!code-csharp[Main](../../../samples/core/Saving/CascadeDelete/Sample.cs#DeleteOrphansVariations)]
-
-Let's walk through each variation to understand what is happening.
-
-### DeleteBehavior.Cascade with required or optional relationship
-
-```output
-After loading entities:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-After making posts orphans:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Modified with FK '1' and no reference to a blog.
-    Post '2' is in state Modified with FK '1' and no reference to a blog.
-
-Saving changes:
-  DELETE FROM [Posts] WHERE [PostId] = 1
-  DELETE FROM [Posts] WHERE [PostId] = 2
-
-After SaveChanges:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Detached with FK '1' and no reference to a blog.
-    Post '2' is in state Detached with FK '1' and no reference to a blog.
-```
-
-* Posts are marked as Modified because severing the relationship caused the FK to be marked as null
-  * If the FK is not nullable, then the actual value will not change even though it is marked as null
-* SaveChanges sends deletes for dependents/children (posts)
-* After saving, the dependents/children (posts) are detached since they have now been deleted from the database
-
-### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with required relationship
-
-```output
-After loading entities:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-After making posts orphans:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Modified with FK 'null' and no reference to a blog.
-    Post '2' is in state Modified with FK 'null' and no reference to a blog.
-
-Saving changes:
-  UPDATE [Posts] SET [BlogId] = NULL WHERE [PostId] = 1
-
-SaveChanges threw DbUpdateException: Cannot insert the value NULL into column 'BlogId', table 'EFSaving.CascadeDelete.dbo.Posts'; column does not allow nulls. UPDATE fails. The statement has been terminated.
-```
-
-* Posts are marked as Modified because severing the relationship caused the FK to be marked as null
-  * If the FK is not nullable, then the actual value will not change even though it is marked as null
-* SaveChanges attempts to set the post FK to null, but this fails because the FK is not nullable
-
-### DeleteBehavior.ClientSetNull or DeleteBehavior.SetNull with optional relationship
-
-```output
-After loading entities:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-After making posts orphans:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Modified with FK 'null' and no reference to a blog.
-    Post '2' is in state Modified with FK 'null' and no reference to a blog.
-
-Saving changes:
-  UPDATE [Posts] SET [BlogId] = NULL WHERE [PostId] = 1
-  UPDATE [Posts] SET [BlogId] = NULL WHERE [PostId] = 2
-
-After SaveChanges:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Unchanged with FK 'null' and no reference to a blog.
-    Post '2' is in state Unchanged with FK 'null' and no reference to a blog.
-```
-
-* Posts are marked as Modified because severing the relationship caused the FK to be marked as null
-  * If the FK is not nullable, then the actual value will not change even though it is marked as null
-* SaveChanges sets the FK of both dependents/children (posts) to null
-* After saving, the dependents/children (posts) now have null FK values and their reference to the deleted principal/parent (blog) has been removed
-
-### DeleteBehavior.Restrict with required or optional relationship
-
-```output
-After loading entities:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Unchanged with FK '1' and reference to blog '1'.
-    Post '2' is in state Unchanged with FK '1' and reference to blog '1'.
-
-After making posts orphans:
-  Blog '1' is in state Unchanged with 2 posts referenced.
-    Post '1' is in state Modified with FK '1' and no reference to a blog.
-    Post '2' is in state Modified with FK '1' and no reference to a blog.
-
-Saving changes:
-SaveChanges threw InvalidOperationException: The association between entity types 'Blog' and 'Post' has been severed but the foreign key for this relationship cannot be set to null. If the dependent entity should be deleted, then setup the relationship to use cascade deletes.
-```
-
-* Posts are marked as Modified because severing the relationship caused the FK to be marked as null
-  * If the FK is not nullable, then the actual value will not change even though it is marked as null
-* Since *Restrict* tells EF to not automatically set the FK to null, it remains non-null and SaveChanges throws without saving
-
-## Cascading to untracked entities
-
-When you call *SaveChanges*, the cascade delete rules will be applied to any entities that are being tracked by the context. This is the situation in all the examples shown above, which is why SQL was generated to delete both the principal/parent (blog) and all the dependents/children (posts):
+SaveChanges generates the following SQL, using SQL Server as an example:
 
 ```sql
-DELETE FROM [Posts] WHERE [PostId] = 1
-DELETE FROM [Posts] WHERE [PostId] = 2
-DELETE FROM [Blogs] WHERE [BlogId] = 1
+-- Executed DbCommand (1ms) [Parameters=[@p0='1'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Posts]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;
+
+-- Executed DbCommand (0ms) [Parameters=[@p0='2'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Posts]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;
+
+-- Executed DbCommand (2ms) [Parameters=[@p1='1'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Blogs]
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT;
 ```
 
-If only the principal is loaded--for example, when a query is made for a blog without an `Include(b => b.Posts)` to also include posts--then SaveChanges will only generate SQL to delete the principal/parent:
+### Severing a relationship
+
+Rather than deleting the blog, we could instead sever the relationship between each post and its blog. This can be done by setting the reference navigation `Post.Blog` to null for each post:
+
+<!--
+            using var context = new BlogsContext();
+
+            var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+
+            foreach (var post in blog.Posts)
+            {
+                post.Blog = null;
+            }
+            
+            context.SaveChanges();
+-->
+[!code-csharp[Severing_a_relationship_1](../../../samples/core/CascadeDeletes/IntroRequiredSamples.cs?name=Severing_a_relationship_1)]
+
+The relationship can also be severed by removing each post from the `Blog.Posts` collection navigation:
+
+<!--
+            using var context = new BlogsContext();
+
+            var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+
+            blog.Posts.Clear();
+            
+            context.SaveChanges();
+-->
+[!code-csharp[Severing_a_relationship_2](../../../samples/core/CascadeDeletes/IntroRequiredSamples.cs?name=Severing_a_relationship_2)]
+
+In either case the result is the same: the blog is not deleted, but the posts that are no longer associated with any blog are deleted:
 
 ```sql
-DELETE FROM [Blogs] WHERE [BlogId] = 1
+-- Executed DbCommand (1ms) [Parameters=[@p0='1'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Posts]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;
+
+-- Executed DbCommand (0ms) [Parameters=[@p0='2'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Posts]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;
 ```
 
-The dependents/children (posts) will only be deleted if the database has a corresponding cascade behavior configured. If you use EF to create the database, this cascade behavior will be setup for you.
+Deleting entities that are no longer associated with any principal/dependent is known as "deleting orphans".
+
+> [!TIP]
+> Cascade delete and deleting orphans are closely related. Both result in deleting dependent/child entities when the relationship to their required principal/parent is severed. For cascade delete, this severing happens because the principal/parent is itself deleted. For orphans, the principal/parent entity still exists, but is no longer related to the dependent/child entities.  
+
+## Where cascading behaviors happen
+
+Cascading behaviors can be applied to:
+
+- Entities tracked by the current <xref:Microsoft.EntityFrameworkCore.DbContext>
+- Entities in the database that have not been loaded into the context
+
+### Cascade delete of tracked entities
+
+EF Core always applies configured cascading behaviors to tracked entities. This means that if the application loads all relevant dependent/child entities into the DbContext, as is shown in the examples above, then cascading behaviors will be correctly applied regardless of how the database is configured.
+
+> [!TIP]
+> The exact timing of when cascading behaviors happen to tracked entities can be controlled using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.CascadeDeleteTiming?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DeleteOrphansTiming?displayProperty=nameWithType>. See [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes) for more information.
+
+### Cascade delete in the database
+
+Many database systems also offer cascading behaviors that are triggered when an entity is deleted in the database. EF Core configures these behaviors based on the cascade delete behavior in the EF Core model when a database is created using <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated%2A> or EF Core migrations. For example, using the model above, the following table is created for posts when using SQL Server:
+
+```sql
+CREATE TABLE [Posts] (
+    [Id] int NOT NULL IDENTITY,
+    [Title] nvarchar(max) NULL,
+    [Content] nvarchar(max) NULL,
+    [BlogId] int NOT NULL,
+    CONSTRAINT [PK_Posts] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Posts_Blogs_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [Blogs] ([Id]) ON DELETE CASCADE
+);
+```
+
+Notice that the foreign key constraint defining the relationship between blogs and posts is configured with `ON DELETE CASCADE`.
+
+If we know that the database is configured like this, then we can delete a blog _without first loading posts_ and the database will take care of deleting all the posts that were related to that blog. For example:
+
+<!--
+            using var context = new BlogsContext();
+
+            var blog = context.Blogs.OrderBy(e => e.Name).First();
+
+            context.Remove(blog);
+            
+            context.SaveChanges();
+-->
+[!code-csharp[Where_cascading_behaviors_happen_1](../../../samples/core/CascadeDeletes/IntroRequiredSamples.cs?name=Where_cascading_behaviors_happen_1)]
+
+Notice that there is no `Include` for posts, so they are not loaded. SaveChanges in this case will delete just the blog, since that's the only entity being tracked:
+
+```sql
+-- Executed DbCommand (6ms) [Parameters=[@p0='1'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Blogs]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;
+```
+
+This would result in an exception if the foreign key constraint in the database is not configured for cascade deletes. However, in this case the posts are deleted by the database because it has been configured with `ON DELETE CASCADE` when it was created.
+
+> [!NOTE]
+> Databases don't typically have any way to automatically delete orphans. This is because while EF Core represents relationships using navigations as well of foreign keys, databases have only foreign keys and no navigations. This means that it is usually not possible to sever a relationship without loading both sides into the DbContext.
+
+> [!NOTE]
+> The EF Core in-memory database does not currently support cascade deletes in the database.
+
+> [!WARNING]
+> Do not configure cascade delete in the database when soft-deleting entities. This may cause entities to be accidentally really deleted instead of soft-deleted.
+
+### Database cascade limitations
+
+Some databases, most notably SQL Server, have limitations on the cascade behaviors that form cycles. For example, consider the following model:
+
+<!--
+    public class Blog
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public IList<Post> Posts { get; } = new List<Post>();
+        
+        public int OwnerId { get; set; }
+        public Person Owner { get; set; }
+    }
+
+    public class Post
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+
+        public int BlogId { get; set; }
+        public Blog Blog { get; set; }
+        
+        public int AuthorId { get; set; }
+        public Person Author { get; set; }
+    }
+
+    public class Person
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        
+        public IList<Post> Posts { get; } = new List<Post>();
+
+        public Blog OwnedBlog { get; set; }
+    }
+-->
+[!code-csharp[Model](../../../samples/core/CascadeDeletes/WithDatabaseCycleSamples.cs?name=Model)]
+
+This model has three relationships, all required and therefore configured to cascade delete by convention:
+
+- Deleting a blog will cascade delete all the related posts
+- Deleting the author of posts will cause the authored posts to be cascade deleted
+- Deleting the owner of a blog will cause the blog to be cascade deleted
+
+This is all reasonable (if a bit draconian in blog management policies!) but attempting to create a SQL Server database with these cascades configured results in the following exception:
+
+> Microsoft.Data.SqlClient.SqlException (0x80131904): Introducing FOREIGN KEY constraint 'FK_Posts_Person_AuthorId' on table 'Posts' may cause cycles or multiple cascade paths. Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints.
+
+There are two ways to handle this situation:
+
+1. Change one or more of the relationships to not cascade delete.
+2. Configure the database without one or more of these cascade deletes, then ensure all dependent entities are loaded so that EF Core can perform the cascading behavior.
+
+Taking the first approach with our example, we could make the blog-owner relationship optional by giving it a nullable foreign key property:
+
+<!--
+            public int? BlogId { get; set; }
+-->
+[!code-csharp[NullableBlogId](../../../samples/core/CascadeDeletes/OptionalDependentsSamples.cs?name=NullableBlogId)]
+
+An optional relationship allows the blog to exist without an owner, which means cascade delete will no longer be configured by default. This means there is no longer a cycle in cascading actions, and the database can be created without error on SQL Server.
+
+Taking the second approach instead, we can keep the blog-owner relationship required and configured for cascade delete, but make this configuration only apply to tracked entities, not the database:
+
+<!--
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Blog>()
+                .HasOne(e => e.Owner)
+                .WithOne(e => e.OwnedBlog)
+                .OnDelete(DeleteBehavior.ClientCascade);
+        }
+-->
+[!code-csharp[OnModelCreating](../../../samples/core/CascadeDeletes/WithDatabaseCycleSamples.cs?name=OnModelCreating)]
+
+Now what happens if we load both a person and the blog they own, then delete the person?
+
+<!--
+            using var context = new BlogsContext();
+
+            var owner = context.People.Single(e => e.Name == "ajcvickers");
+            var blog = context.Blogs.Single(e => e.Owner == owner);
+
+            context.Remove(owner);
+            
+            context.SaveChanges();
+-->
+[!code-csharp[Database_cascade_limitations_1](../../../samples/core/CascadeDeletes/WithDatabaseCycleSamples.cs?name=Database_cascade_limitations_1)]
+
+EF Core will cascade the delete of the owner so that the blog is also deleted:
+
+```sql
+-- Executed DbCommand (8ms) [Parameters=[@p0='1'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Blogs]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;
+
+-- Executed DbCommand (2ms) [Parameters=[@p1='1'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [People]
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT;
+```
+
+However, if the blog is not loaded when the owner is deleted:
+
+<!--
+                using var context = new BlogsContext();
+
+                var owner = context.People.Single(e => e.Name == "ajcvickers");
+
+                context.Remove(owner);
+            
+                context.SaveChanges();
+-->
+[!code-csharp[Database_cascade_limitations_2](../../../samples/core/CascadeDeletes/WithDatabaseCycleSamples.cs?name=Database_cascade_limitations_2)]
+
+Then an exception will be thrown due to violation of the foreign key constraint in the database:
+
+> Microsoft.Data.SqlClient.SqlException: The DELETE statement conflicted with the REFERENCE constraint "FK_Blogs_People_OwnerId". The conflict occurred in database "Scratch", table "dbo.Blogs", column 'OwnerId'.
+The statement has been terminated.
+
+## Cascading nulls
+
+Optional relationships have nullable foreign key properties mapped to nullable database columns. This means that the foreign key value can be set to null when the current principal/parent is deleted or is severed from the dependent/child.
+
+Let's look again at the examples from [When cascading behaviors happen](#when-cascading-behaviors-happen), but this time with an optional relationship represented by a nullable `Post.BlogId` foreign key property:
+
+<!--
+            public int? BlogId { get; set; }
+-->
+[!code-csharp[NullableBlogId](../../../samples/core/CascadeDeletes/OptionalDependentsSamples.cs?name=NullableBlogId)]
+
+This foreign key property will be set to null for each post when its related blog is deleted. For example, this code, which is the same as before:
+
+<!--
+            using var context = new BlogsContext();
+
+            var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+
+            context.Remove(blog);
+            
+            context.SaveChanges();
+-->
+[!code-csharp[Deleting_principal_parent_1b](../../../samples/core/CascadeDeletes/IntroOptionalSamples.cs?name=Deleting_principal_parent_1b)]
+
+Will now result in the following database updates when SaveChanges is called:
+
+```sql
+-- Executed DbCommand (2ms) [Parameters=[@p1='1', @p0=NULL (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Posts] SET [BlogId] = @p0
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT;
+
+-- Executed DbCommand (0ms) [Parameters=[@p1='2', @p0=NULL (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Posts] SET [BlogId] = @p0
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT;
+
+-- Executed DbCommand (1ms) [Parameters=[@p2='1'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Blogs]
+WHERE [Id] = @p2;
+SELECT @@ROWCOUNT;
+```
+
+Likewise, if the relationship is severed using either of the examples from above:
+
+<!--
+            using var context = new BlogsContext();
+
+            var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+
+            foreach (var post in blog.Posts)
+            {
+                post.Blog = null;
+            }
+            
+            context.SaveChanges();
+-->
+[!code-csharp[Severing_a_relationship_1b](../../../samples/core/CascadeDeletes/IntroOptionalSamples.cs?name=Severing_a_relationship_1b)]
+
+Or:
+
+<!--
+            using var context = new BlogsContext();
+
+            var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+
+            blog.Posts.Clear();
+            
+            context.SaveChanges();
+-->
+[!code-csharp[Severing_a_relationship_2b](../../../samples/core/CascadeDeletes/IntroOptionalSamples.cs?name=Severing_a_relationship_2b)]
+
+Then the posts are updated with null foreign key values when SaveChanges is called:
+
+```sql
+-- Executed DbCommand (2ms) [Parameters=[@p1='1', @p0=NULL (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Posts] SET [BlogId] = @p0
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT;
+
+-- Executed DbCommand (0ms) [Parameters=[@p1='2', @p0=NULL (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Posts] SET [BlogId] = @p0
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT;
+```
+
+See [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes) for more information on how EF Core manages foreign keys and navigations as their values are changed.
+
+> [!NOTE]
+> The fixup of relationships like this has been the default behavior of Entity Framework since the first version in 2008. Prior to EF Core it didn't have a name and was not possible to change. It is now known as `ClientSetNull` as described in the next section.
+
+Databases can also be configured to cascade nulls like this when a principal/parent in an optional relationship is deleted. However, this is much less common than using cascading deletes in the database. Using cascading deletes and cascading nulls in the database at the same time will almost always result in relationship cycles when using SQL Server. See the next section for more information on configuring cascading nulls.
+
+## Configuring cascading behaviors
+
+> [!TIP]
+> Be sure to read sections above before coming here. The configuration options will likely not make sense if the preceding material is not understood.
+
+Cascade behaviors are configured per relationship using the <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.ReferenceCollectionBuilder.OnDelete%2A> method in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>. For example:
+
+<!--
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Blog>()
+                .HasOne(e => e.Owner)
+                .WithOne(e => e.OwnedBlog)
+                .OnDelete(DeleteBehavior.ClientCascade);
+        }
+-->
+[!code-csharp[OnModelCreating](../../../samples/core/CascadeDeletes/WithDatabaseCycleSamples.cs?name=OnModelCreating)]
+
+See [Relationships](xref:core/modeling/relationships) for more information on configuring relationships between entity types.
+
+`OnDelete` accepts a value from the, admittedly confusing, <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> enum. This enum defines both the behavior of EF Core on tracked entities, and the configuration of cascade delete in the database when EF is used to create the schema.
+
+### Impact on database schema
+
+The following table shows the result of each `OnDelete` value on the foreign key constraint created by EF Core migrations or <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated%2A>.
+
+| DeleteBehavior        | Impact on database schema
+|:----------------------|--------------------------
+| Cascade               | ON DELETE CASCADE
+| Restrict              | ON DELETE NO ACTION
+| NoAction              | database default
+| SetNull               | ON DELETE SET NULL
+| ClientSetNull         | ON DELETE NO ACTION
+| ClientCascade         | ON DELETE NO ACTION
+| ClientNoAction        | database default
+
+> [!NOTE]
+> This table is confusing and we plan to revisit this in a future release. See [GitHub Issue #21252](https://github.com/dotnet/efcore/issues/21252).
+
+The behaviors of `ON DELETE NO ACTION` and `ON DELETE RESTRICT` in relational databases are typically either identical or very similar. Despite what `NO ACTION` may imply, both of these options cause referential constraints to be enforced. The difference, when there is one, is _when_ the database checks the constraints.  Check your database documentation for the specific differences between `ON DELETE NO ACTION` and `ON DELETE RESTRICT` on your database system.
+
+The only values that will cause cascading behaviors on the database are `Cascade` and `SetNull`. All other values will configure the database to not cascade any changes.
+
+### Impact on SaveChanges behavior
+
+The tables in the following sections cover what happens to dependent/child entities when the principal/parent is deleted, or its relationship to the dependent/child entities is severed. Each table covers one of:
+
+- Optional (nullable FK) and required (non-nullable FK) relationships
+- When dependents/children are loaded and tracked by the DbContext and when they exist only in the database
+
+#### Required relationship with dependents/children loaded
+
+| DeleteBehavior    | On deleting principal/parent             | On severing from principal/parent
+|:------------------|------------------------------------------|----------------------------------------
+| Cascade           | Dependents deleted by EF Core            | Dependents deleted by EF Core
+| Restrict          | `InvalidOperationException`              | `InvalidOperationException`
+| NoAction          | `InvalidOperationException`              | `InvalidOperationException`
+| SetNull           | `SqlException` on creating database      | `SqlException` on creating database
+| ClientSetNull     | `InvalidOperationException`              | `InvalidOperationException`
+| ClientCascade     | Dependents deleted by EF Core            | Dependents deleted by EF Core
+| ClientNoAction    | `DbUpdateException`                      | `InvalidOperationException`
+
+Notes:
+
+- The default for required relationships like this is `Cascade`.
+- Using anything other than cascade delete for required relationships will result in an exception when SaveChanges is called.
+  - Typically, this is an `InvalidOperationException` from EF Core since the invalid state is detected in the loaded children/dependents.
+  - `ClientNoAction` forces EF Core to not check fixup dependents before sending them to the database, so in this case the database throws an exception, which is then wrapped in a `DbUpdateException` by SaveChanges.
+  - `SetNull` is rejected when creating the database since the foreign key column is not nullable.
+- Since dependents/children are loaded, they are always deleted by EF Core, and never left for the database to delete.
+
+#### Required relationship with dependents/children not loaded
+
+| DeleteBehavior    | On deleting principal/parent             | On severing from principal/parent
+|:------------------|------------------------------------------|----------------------------------------
+| Cascade           | Dependents deleted by database           | N/A
+| Restrict          | `DbUpdateException`                      | N/A
+| NoAction          | `DbUpdateException`                      | N/A
+| SetNull           | `SqlException` on creating database      | N/A
+| ClientSetNull     | `DbUpdateException`                      | N/A
+| ClientCascade     | `DbUpdateException`                      | N/A
+| ClientNoAction    | `DbUpdateException`                      | N/A
+
+Notes:
+
+- Severing a relationship is not valid here since the dependents/children are not loaded.
+- The default for required relationships like this is `Cascade`.
+- Using anything other than cascade delete for required relationships will result in an exception when SaveChanges is called.
+  - Typically, this is a `DbUpdateException` because the dependents/children are not loaded, and hence the invalid state can only be detected by the database. SaveChanges then wraps the database exception in a `DbUpdateException`.
+  - `SetNull` is rejected when creating the database since the foreign key column is not nullable.
+
+#### Optional relationship with dependents/children loaded
+
+| DeleteBehavior    | On deleting principal/parent             | On severing from principal/parent
+|:------------------|------------------------------------------|----------------------------------------
+| Cascade           | Dependents deleted by EF Core            | Dependents deleted by EF Core
+| Restrict          | Dependent FKs set to null by EF Core     | Dependent FKs set to null by EF Core
+| NoAction          | Dependent FKs set to null by EF Core     | Dependent FKs set to null by EF Core
+| SetNull           | Dependent FKs set to null by EF Core     | Dependent FKs set to null by EF Core
+| ClientSetNull     | Dependent FKs set to null by EF Core     | Dependent FKs set to null by EF Core
+| ClientCascade     | Dependents deleted by EF Core            | Dependents deleted by EF Core
+| ClientNoAction    | `DbUpdateException`                      | Dependent FKs set to null by EF Core
+
+Notes:
+
+- The default for optional relationships like this is `ClientSetNull`.
+- Dependents/children are never deleted unless `Cascade` or `ClientCascade` are configured.
+- All other values cause the dependent FKs to be set to null by EF Core...
+  - ...except `ClientNoAction` which tells EF Core not to touch the foreign keys of dependents/children when the principal/parent is deleted. The database therefore throws an exception, which is wrapped as a `DbUpdateException` by SaveChanges.
+
+#### Optional relationship with dependents/children not loaded
+
+| DeleteBehavior    | On deleting principal/parent             | On severing from principal/parent
+|:------------------|------------------------------------------|----------------------------------------
+| Cascade           | Dependents deleted by database           | N/A
+| Restrict          | `DbUpdateException`                      | N/A
+| NoAction          | `DbUpdateException`                      | N/A
+| SetNull           | Dependent FKs set to null by database    | N/A
+| ClientSetNull     | `DbUpdateException`                      | N/A
+| ClientCascade     | `DbUpdateException`                      | N/A
+| ClientNoAction    | `DbUpdateException`                      | N/A
+
+Notes:
+
+- Severing a relationship is not valid here since the dependents/children are not loaded.
+- The default for optional relationships like this is `ClientSetNull`.
+- Dependents/children must be loaded to avoid a database exception unless the database has been configured to cascade either deletes or nulls.

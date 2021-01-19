@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-WebApplication1-1FCCDCDB-A580-40BC-B4DC-17498EB689D9</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApplication1.Data\WebApplication1.Data.csproj" />
+    <ProjectReference Include="..\WebApplication1.Migrations\WebApplication1.Migrations.csproj">
+      <!-- Not working. See dotnet/sdk#952 -->
+      <PrivateAssets>all</PrivateAssets>
+      <ExcludeAssets>compile</ExcludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>

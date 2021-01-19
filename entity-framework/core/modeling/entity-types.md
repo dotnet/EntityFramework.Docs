@@ -38,15 +38,15 @@ If you don't want a type to be included in the model, you can exclude it:
 ### Excluding from migrations
 
 > [!NOTE]
-> The ability to exclude tables from migrations was added in EF Core 5.0.
+> The ability to exclude tables from migrations was introduced in EF Core 5.0.
 
 It is sometimes useful to have the same entity type mapped in multiple `DbContext` types. This is especially true when using [bounded contexts](https://www.martinfowler.com/bliki/BoundedContext.html), for which it is common to have a different `DbContext` type for each bounded context.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TableExcludeFromMigrations.cs?name=TableExcludeFromMigrations&highlight=4)]
 
-With this configuration migrations will not create the `blogs` table, but `Blog` is still included in the model and can be used normally.
+With this configuration migrations will not create the `AspNetUsers` table, but `IdentityUser` is still included in the model and can be used normally.
 
-If you need to start managing the table using migrations again then a new migration should be created where `blogs` is not excluded. The next migration will now contain any changes made to the table.
+If you need to start managing the table using migrations again then a new migration should be created where `AspNetUsers` is not excluded. The next migration will now contain any changes made to the table.
 
 ## Table name
 
@@ -95,4 +95,67 @@ Entity types can be mapped to database views using the Fluent API.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ViewNameAndSchema.cs?name=ViewNameAndSchema&highlight=1)]
 
- Mapping to a view will remove the default table mapping, but the entity type can also be mapped to a table explicitly. In this case the query mapping will be used for queries and the table mapping will be used for updates.
+ Mapping to a view will remove the default table mapping, but starting with EF 5.0 the entity type can also be mapped to a table explicitly. In this case the query mapping will be used for queries and the table mapping will be used for updates.
+
+> [!TIP]
+> To test entity types mapped to views using the in-memory provider map them to a query via `ToInMemoryQuery`. See a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing/ItemsWebApi/) using this technique for more details.
+
+## Table-valued function mapping
+
+It's possible to map an entity type to a table-valued function (TVF) instead of a table in the database. To illustrate this, let's define another entity that represents blog with multiple posts. In the example, the entity is [keyless](xref:core/modeling/keyless-entity-types), but it doesn't have to be.
+
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/EntityTypes.cs#BlogWithMultiplePostsEntity)]
+
+Next, create the following table-valued function in the database, which returns only blogs with multiple posts as well as the number of posts associated with each of these blogs:
+
+```sql
+CREATE FUNCTION dbo.BlogsWithMultiplePosts()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT b.Url, COUNT(p.BlogId) AS PostCount
+    FROM Blogs AS b
+    JOIN Posts AS p ON b.BlogId = p.BlogId
+    GROUP BY b.BlogId, b.Url
+    HAVING COUNT(p.BlogId) > 1
+)
+```
+
+Now, the entity `BlogWithMultiplePost` can be mapped to this function in a following way:
+
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/EntityTypes.cs#QueryableFunctionConfigurationToFunction)]
+
+> [!NOTE]
+> In order to map an entity to a table-valued function the function must be parameterless.
+
+Conventionally the entity properties will be mapped to matching columns returned by the TVF. If the columns returned by TVF has different name than entity property then it can be configured using `HasColumnName` method, just like when mapping to a regular table.
+
+When the entity type is mapped to a table-valued function, the query:
+
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Program.cs#ToFunctionQuery)]
+
+Produces the following SQL:
+
+```sql
+SELECT [b].[Url], [b].[PostCount]
+FROM [dbo].[BlogsWithMultiplePosts]() AS [b]
+WHERE [b].[PostCount] > 3
+```
+
+## Table comments
+
+You can set an arbitrary text comment that gets set on the database table, allowing you to document your schema in the database:
+
+### [Data Annotations](#tab/data-annotations)
+
+> [!NOTE]
+> Setting comments via data annotations was introduced in EF Core 5.0.
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/TableComment.cs?name=TableComment&highlight=1)]
+
+### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TableComment.cs?name=TableComment&highlight=4)]
+
+***

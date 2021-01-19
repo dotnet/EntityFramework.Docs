@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +5,7 @@ namespace EFCollations
 {
     public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             using (var db = new CustomerContext())
             {

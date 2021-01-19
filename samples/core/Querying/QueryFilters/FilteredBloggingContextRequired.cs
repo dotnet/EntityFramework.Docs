@@ -34,6 +34,14 @@ namespace EFQuerying.QueryFilters
                 modelBuilder.Entity<Blog>().HasQueryFilter(b => b.Url.Contains("fish"));
                 #endregion
             }
+            else if (setup == "NavigationInFilter")
+            {
+                #region NavigationInFilter
+                modelBuilder.Entity<Blog>().HasMany(b => b.Posts).WithOne(p => p.Blog);
+                modelBuilder.Entity<Blog>().HasQueryFilter(b => b.Posts.Count > 0);
+                modelBuilder.Entity<Post>().HasQueryFilter(p => p.Title.Contains("fish"));
+                #endregion
+            }
             else
             {
                 // The relationship is still required but there is a matching filter configured on dependent side too,
@@ -44,10 +52,6 @@ namespace EFQuerying.QueryFilters
                 modelBuilder.Entity<Post>().HasQueryFilter(p => p.Blog.Url.Contains("fish"));
                 #endregion
             }
-
-
-
         }
     }
-
 }

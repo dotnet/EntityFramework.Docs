@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.Relational.IndexInclude
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Post> Posts { get; set; }
 
@@ -12,11 +12,8 @@ namespace EFModeling.FluentAPI.Relational.IndexInclude
         {
             modelBuilder.Entity<Post>()
                 .HasIndex(p => p.Url)
-                .IncludeProperties(p => new
-                {
-                    p.Title,
-                    p.PublishedOn
-                });
+                .IncludeProperties(
+                    p => new { p.Title, p.PublishedOn });
         }
         #endregion
     }

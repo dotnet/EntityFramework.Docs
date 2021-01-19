@@ -43,7 +43,7 @@ namespace EFModeling.ValueConversions
 
             ConsoleWriteLines("Sample finished.");
         }
-        
+
         public class SampleDbContext : DbContext
         {
             private static readonly ILoggerFactory
@@ -56,10 +56,11 @@ namespace EFModeling.ValueConversions
                     .Entity<EntityType>()
                     .Property(e => e.MyBytes)
                     .Metadata
-                    .SetValueComparer(new ValueComparer<byte[]>(
-                        (c1, c2) => c1.SequenceEqual(c2),
-                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                        c => c.ToArray()));
+                    .SetValueComparer(
+                        new ValueComparer<byte[]>(
+                            (c1, c2) => c1.SequenceEqual(c2),
+                            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                            c => c.ToArray()));
                 #endregion
             }
 
@@ -73,7 +74,7 @@ namespace EFModeling.ValueConversions
         public class EntityType
         {
             public int Id { get; set; }
-        
+
             public byte[] MyBytes { get; set; }
         }
     }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.ValueConversions
 {
     /// <summary>
-    /// Samples for value conversions and comparisons.
+    ///     Samples for value conversions and comparisons.
     /// </summary>
     public class Program
     {
@@ -13,6 +13,7 @@ namespace EFModeling.ValueConversions
             new MappingImmutableClassProperty().Run();
             new MappingImmutableStructProperty().Run();
             new MappingListProperty().Run();
+            new MappingListPropertyOld().Run();
             new OverridingByteArrayComparisons().Run();
         }
 
@@ -23,6 +24,7 @@ namespace EFModeling.ValueConversions
             {
                 Console.WriteLine(value);
             }
+
             Console.WriteLine();
         }
 

@@ -2,7 +2,7 @@
 
 namespace EFModeling.FluentAPI.Required
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 

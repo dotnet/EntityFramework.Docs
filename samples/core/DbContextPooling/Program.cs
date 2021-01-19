@@ -20,7 +20,7 @@ namespace Samples
         public static long InstanceCount;
 
         public BloggingContext(DbContextOptions options)
-            : base(options) 
+            : base(options)
             => Interlocked.Increment(ref InstanceCount);
 
         public DbSet<Blog> Blogs { get; set; }

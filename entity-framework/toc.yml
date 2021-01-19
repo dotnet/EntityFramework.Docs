@@ -18,14 +18,43 @@
 
   - name: Entity Framework Core
     items:
-    - name: Overview
+    - name: Welcome!
       href: core/index.md
+    - name: "What's new in EF Core 5.0"
+      href: /ef/core/what-is-new/ef-core-5.0/whatsnew
+    - name: Getting started
+      items:
+      - name: EF Core Overview
+        items:
+        #- name: What is EF Core?
+        - name: Install EF Core
+          href: core/get-started/overview/install.md
+        - name: Your first EF Core App
+          href: core/get-started/overview/first-app.md
+      - name: ASP.NET Core tutorial >>
+        href: /aspnet/core/data/ef-rp/intro
+      - name: Blazor Server with EF Core guidance >>
+        href: /aspnet/core/blazor/blazor-server-ef-core
+      - name: WPF .NET Core tutorial
+        href: core/get-started/wpf.md
+      #- name: Windows Forms tutorial
+      - name: Xamarin tutorial
+        href: core/get-started/xamarin.md
+
     - name: "Releases and planning (roadmap)"
       items:
       - name: Current and planned releases
         href: core/what-is-new/index.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
+      - name: EF Core 6.0
+        items:
+        - name: High-level plan
+          href: core/what-is-new/ef-core-6.0/plan.md
+        - name: "What's new?"
+          href: core/what-is-new/ef-core-6.0/whatsnew.md
+        - name: Breaking changes
+          href: core/what-is-new/ef-core-6.0/breaking-changes.md
       - name: EF Core 5.0
         items:
         - name: High-level plan
@@ -34,7 +63,7 @@
           href: core/what-is-new/ef-core-5.0/whatsnew.md
         - name: Breaking changes
           href: core/what-is-new/ef-core-5.0/breaking-changes.md
-      - name: EF Core 3.x
+      - name: EF Core 3.1
         items:
         - name: New features
           href: core/what-is-new/ef-core-3.x/index.md
@@ -44,6 +73,8 @@
         href: core/what-is-new/ef-core-2.1.md
       - name: Out of support
         items:
+        - name: EF Core 3.0
+          href: core/what-is-new/ef-core-3.0.md
         - name: EF Core 2.2
           href: core/what-is-new/ef-core-2.2.md
         - name: EF Core 2.0
@@ -56,50 +87,12 @@
           href: core/what-is-new/ef-core-1.1.md
         - name: EF Core 1.0
           href: core/what-is-new/ef-core-1.0.md
-    - name: Get started
+
+    - name: DbContext configuration and initialization
       items:
-      - name: EF Core tutorial
-        href: core/get-started/index.md
-      - name: Install EF Core
-        href: core/get-started/install/index.md
-      - name: ASP.NET Core tutorial >>
-        href: /aspnet/core/data/ef-rp/intro
-      - name: Blazor Server with EF Core guidance >>
-        href: /aspnet/core/blazor/blazor-server-ef-core
-      - name: WPF .NET Core tutorial
-        href: core/get-started/wpf.md
-      - name: Xamarin tutorial
-        href: core/get-started/xamarin.md
-    - name: Fundamentals
-      items:
-      - name: Connection strings
-        href: core/miscellaneous/connection-strings.md
-      - name: Asynchronous programming
-        href: core/miscellaneous/async.md
-      - name: Logging
-        href: core/miscellaneous/logging.md
-      - name: Context pooling
-        href: core/miscellaneous/context-pooling.md
-      - name: Connection resiliency
-        href: core/miscellaneous/connection-resiliency.md
-      - name: Testing
-        items:
-        - name: Testing code that uses EF Core
-          href: core/miscellaneous/testing/index.md
-        - name: EF Core testing sample
-          href: core/miscellaneous/testing/testing-sample.md
-        - name: Sharing databases between tests
-          href: core/miscellaneous/testing/sharing-databases.md
-        - name: Test with SQLite
-          href: core/miscellaneous/testing/sqlite.md
-        - name: Test with InMemory
-          href: core/miscellaneous/testing/in-memory.md
-      - name: Configure a DbContext
-        href: core/miscellaneous/configuring-dbcontext.md
-      - name: Nullable reference types
-        href: core/miscellaneous/nullable-reference-types.md
-      - name: Collations and case sensitivity
-        href: core/miscellaneous/collations-and-case-sensitivity.md
+      - name: Overview
+        href: core/dbcontext-configuration/index.md
+
     - name: Create a model
       items:
       - name: Overview
@@ -145,6 +138,8 @@
       - name: Spatial data
         displayName: GIS
         href: core/modeling/spatial.md
+      #- name: Conventions
+
     - name: Manage database schemas
       items:
       - name: Overview
@@ -171,10 +166,15 @@
         href: core/managing-schemas/ensure-created.md
       - name: Reverse engineering (scaffolding)
         href: core/managing-schemas/scaffolding.md
+
     - name: Query data
       items:
       - name: Overview
         href: core/querying/index.md
+      - name: Client vs. server evaluation
+        href: core/querying/client-eval.md
+      - name: Tracking vs. no-tracking
+        href: core/querying/tracking.md
       - name: Load related data
         items:
           - name: Overview
@@ -187,20 +187,25 @@
             href: core/querying/related-data/lazy.md
           - name: Related data and serialization
             href: core/querying/related-data/serialization.md
-      - name: Client vs. server evaluation
-        href: core/querying/client-eval.md
-      - name: Tracking vs. no-tracking
-        href: core/querying/tracking.md
+      - name: Split queries
+        href: core/querying/single-split-queries.md
       - name: Complex query operators
         href: core/querying/complex-query-operators.md
       - name: Raw SQL queries
         href: core/querying/raw-sql.md
+      - name: Database functions
+        href: core/querying/database-functions.md
+      - name: User-defined function mapping
+        href: core/querying/user-defined-function-mapping.md
       - name: Global query filters
         href: core/querying/filters.md
       - name: Query tags
         href: core/querying/tags.md
+      - name: Comparisons with null values in queries
+        href: core/querying/null-comparisons.md
       - name: How queries work
         href: core/querying/how-query-works.md
+
     - name: Save data
       items:
       - name: Overview
@@ -217,10 +222,91 @@
         href: core/saving/transactions.md
       - name: Disconnected entities
         href: core/saving/disconnected-entities.md
-      - name: Explicit values for generated properties
-        href: core/saving/explicit-values-generated-properties.md
-    - name: Supported .NET implementations
-      href: core/platforms/index.md
+
+    - name: Change tracking
+      items:
+      - name: Overview
+        href: core/change-tracking/index.md
+      - name: Explicitly tracking entities
+        href: core/change-tracking/explicit-tracking.md
+      - name: Accessing tracked entities
+        href: core/change-tracking/entity-entries.md
+      - name: Changing foreign keys and navigations
+        href: core/change-tracking/relationship-changes.md
+      - name: Change detection and notifications
+        href: core/change-tracking/change-detection.md
+      - name: Identity resolution
+        href: core/change-tracking/identity-resolution.md
+      - name: Additional change tracking features
+        href: core/change-tracking/miscellaneous.md
+      - name: Change tracker debugging
+        href: core/change-tracking/debug-views.md
+
+    - name: Logging, events, and diagnostics
+      items:
+      - name: Overview
+        href: core/logging-events-diagnostics/index.md
+      - name: Simple logging
+        href: core/logging-events-diagnostics/simple-logging.md
+      - name: Microsoft.Extensions.Logging
+        href: core/logging-events-diagnostics/extensions-logging.md
+      #- name: ToQueryString
+      - name: Events
+        href: core/logging-events-diagnostics/events.md
+      - name: Interceptors
+        href: core/logging-events-diagnostics/interceptors.md
+      - name: Diagnostic listeners
+        href: core/logging-events-diagnostics/diagnostic-listeners.md
+      #- name: Debug views
+      - name: Event counters
+        href: core/logging-events-diagnostics/event-counters.md
+
+    - name: Testing
+      items:
+      - name: Testing code that uses EF Core
+        href: core/testing/index.md
+      - name: EF Core testing sample
+        href: core/testing/testing-sample.md
+      - name: Sharing databases between tests
+        href: core/testing/sharing-databases.md
+      - name: Test with SQLite
+        href: core/testing/sqlite.md
+      - name: Test with InMemory
+        href: core/testing/in-memory.md
+
+    - name: Performance
+      items:
+      - name: Introduction
+        href: core/performance/index.md
+      - name: Performance diagnosis
+        href: core/performance/performance-diagnosis.md
+      - name: Efficient querying
+        href: core/performance/efficient-querying.md
+      - name: Efficient updating
+        href: core/performance/efficient-updating.md
+      - name: Modeling for performance
+        href: core/performance/modeling-for-performance.md
+      - name: Advanced performance topics
+        href: core/performance/advanced-performance-topics.md
+
+    - name: Miscellaneous
+      items:
+      - name: Supported .NET implementations
+        href: core/miscellaneous/platforms.md
+      - name: Asynchronous programming
+        href: core/miscellaneous/async.md
+      - name: Nullable reference types
+        href: core/miscellaneous/nullable-reference-types.md
+      #- name: Using dependency injection
+      - name: Collations and case sensitivity
+        href: core/miscellaneous/collations-and-case-sensitivity.md
+      - name: Connection resiliency
+        href: core/miscellaneous/connection-resiliency.md
+      - name: Connection strings
+        href: core/miscellaneous/connection-strings.md
+      - name: Context pooling
+        href: core/miscellaneous/context-pooling.md
+
     - name: Database providers
       items:
       - name: Overview
@@ -229,6 +315,8 @@
         items:
         - name: Overview
           href: core/providers/sql-server/index.md
+        - name: Value generation
+          href: core/providers/sql-server/value-generation.md
         - name: Function mappings
           href: core/providers/sql-server/functions.md
         - name: Indexes
@@ -269,22 +357,25 @@
         href: core/providers/writing-a-provider.md
       - name: Provider-impacting changes
         href: core/providers/provider-log.md
+
     - name: Tools & extensions
       href: core/extensions/index.md
+
     - name: Command-line reference
       items:
       - name: Overview
-        href: core/miscellaneous/cli/index.md
+        href: core/cli/index.md
       - name: Package Manager Console (Visual Studio)
-        href: core/miscellaneous/cli/powershell.md
+        href: core/cli/powershell.md
       - name: .NET Core CLI
-        href: core/miscellaneous/cli/dotnet.md
+        href: core/cli/dotnet.md
       - name: Design-time DbContext creation
-        href: core/miscellaneous/cli/dbcontext-creation.md
+        href: core/cli/dbcontext-creation.md
       - name: Design-time services
-        href: core/miscellaneous/cli/services.md
+        href: core/cli/services.md
+
     - name: EF Core API reference >>
-      href: /dotnet/api/?view=efcore-3.1
+      href: /dotnet/api/?view=efcore-5.0
 
   - name: Entity Framework 6
     items:

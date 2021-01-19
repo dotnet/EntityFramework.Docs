@@ -2,7 +2,7 @@
 title: Migrations Overview - EF Core
 description: Overview of using migrations to manage database schemas with Entity Framework Core
 author: bricelam
-ms.date: 05/06/2020
+ms.date: 10/28/2020
 uid: core/managing-schemas/migrations/index
 ---
 # Migrations Overview
@@ -32,10 +32,10 @@ During development, you may have used the [Create and Drop APIs](xref:core/manag
 
 ### Install the tools
 
-First, you'll have to install the [EF Core command-line tools](xref:core/miscellaneous/cli/index):
+First, you'll have to install the [EF Core command-line tools](xref:core/cli/index):
 
-* We generally recommend using the [.NET Core CLI tools](xref:core/miscellaneous/cli/dotnet), which work on all platforms.
-* If you're more comfortable working inside Visual Studio or have experience with EF6 migrations, you can also use the [Package Manager Console tools](xref:core/miscellaneous/cli/powershell).
+* We generally recommend using the [.NET Core CLI tools](xref:core/cli/dotnet), which work on all platforms.
+* If you're more comfortable working inside Visual Studio or have experience with EF6 migrations, you can also use the [Package Manager Console tools](xref:core/cli/powershell).
 
 ### Create your first migration
 
@@ -66,6 +66,7 @@ At this point you can have EF create your database and create your schema from t
 ```dotnetcli
 dotnet ef database update
 ```
+
 #### [Visual Studio](#tab/vs)
 
 ```powershell
@@ -111,21 +112,39 @@ Since this isn't the project's first migration, EF Core now compares your update
 
 You can now apply your migration as before:
 
+<!--markdownlint-disable MD024-->
+
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef database update
 ```
+
 #### [Visual Studio](#tab/vs)
 
 ```powershell
 Update-Database
 ```
 
+<!--markdownlint-enable MD024-->
+
 ***
 
 Note that this time, EF detects that the database already exists. In addition, when our first migration was applied above, this fact was recorded in a special migrations history table in your database; this allows EF to automatically apply only the new migration.
 
+### Excluding parts of your model
+
+> [!NOTE]
+> This feature was introduced EF in Core 5.0.
+
+Sometimes you may want to reference types from another DbContext. This can lead to migration conflicts. To prevent this, exclude the type from the migrations of one of the DbContexts.
+
+[!code-csharp[](../../../../samples/core/Modeling/FluentAPI/TableExcludeFromMigrations.cs#TableExcludeFromMigrations)]
+
 ### Next steps
 
-The above was only a brief introduction to migrations. Please consult the other documentation pages to learn more about [managing migrations](xref:core/managing-schemas/migrations/managing), [applying them](xref:core/managing-schemas/migrations/applying), and other aspects. The [.NET Core CLI tool reference](xref:core/miscellaneous/cli/index) also contains useful information on the different commands
+The above was only a brief introduction to migrations. Please consult the other documentation pages to learn more about [managing migrations](xref:core/managing-schemas/migrations/managing), [applying them](xref:core/managing-schemas/migrations/applying), and other aspects. The [.NET Core CLI tool reference](xref:core/cli/index) also contains useful information on the different commands
+
+## Additional resources
+
+* [EF Core Community Standup session](https://www.youtube.com/watch?v=mSsGERmrhnE&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=20) going over new migration features in EF Core 5.0.

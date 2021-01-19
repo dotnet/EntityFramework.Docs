@@ -1,72 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
 
 namespace EFSaving.Basics
 {
     public class Sample
     {
-        public static async Task RunAsync()
+        public static void Run()
         {
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                await context.Database.EnsureDeletedAsync();
-                await context.Database.EnsureCreatedAsync();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
             }
 
             #region Add
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 var blog = new Blog { Url = "http://example.com" };
                 context.Blogs.Add(blog);
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
             #endregion
 
             #region Update
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var blog = await context.Blogs.FirstAsync();
+                var blog = context.Blogs.First();
                 blog.Url = "http://example.com/blog";
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
             #endregion
 
             #region Remove
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
-                var blog = await context.Blogs.FirstAsync();
+                var blog = context.Blogs.First();
                 context.Blogs.Remove(blog);
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
             #endregion
 
             #region MultipleOperations
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 // seeding database
                 context.Blogs.Add(new Blog { Url = "http://example.com/blog" });
                 context.Blogs.Add(new Blog { Url = "http://example.com/another_blog" });
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
 
-            await using (var context = new BloggingContext())
+            using (var context = new BloggingContext())
             {
                 // add
                 context.Blogs.Add(new Blog { Url = "http://example.com/blog_one" });
                 context.Blogs.Add(new Blog { Url = "http://example.com/blog_two" });
 
                 // update
-                var firstBlog = await context.Blogs.FirstAsync();
+                var firstBlog = context.Blogs.First();
                 firstBlog.Url = "";
 
                 // remove
-                var lastBlog = await context.Blogs.LastAsync();
+                var lastBlog = context.Blogs.OrderBy(e => e.BlogId).Last();
                 context.Blogs.Remove(lastBlog);
 
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
             #endregion
         }

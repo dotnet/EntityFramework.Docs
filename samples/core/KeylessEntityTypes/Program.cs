@@ -1,7 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -70,8 +67,7 @@ namespace Samples
                             Url = "http://sample.com/blogs/catfish",
                             Posts = new List<Post>
                             {
-                                new Post { Title = "Catfish care 101" },
-                                new Post { Title = "History of the catfish name" }
+                                new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
                             }
                         });
 
@@ -79,8 +75,8 @@ namespace Samples
 
                     #region View
                     db.Database.ExecuteSqlRaw(
-                        @"CREATE VIEW View_BlogPostCounts AS 
-                            SELECT b.Name, Count(p.PostId) as PostCount 
+                        @"CREATE VIEW View_BlogPostCounts AS
+                            SELECT b.Name, Count(p.PostId) as PostCount
                             FROM Blogs b
                             JOIN Posts p on p.BlogId = b.BlogId
                             GROUP BY b.Name");
@@ -93,7 +89,8 @@ namespace Samples
     public class BloggingContext : DbContext
     {
         private static readonly ILoggerFactory _loggerFactory
-            = LoggerFactory.Create(builder => builder.AddConsole().AddFilter((c, l) => l == LogLevel.Information && !c.EndsWith("Connection")));
+            = LoggerFactory.Create(
+                builder => builder.AddConsole().AddFilter((c, l) => l == LogLevel.Information && !c.EndsWith("Connection")));
 
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -101,7 +98,7 @@ namespace Samples
         #region DbSet
         public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
         #endregion
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
@@ -114,12 +111,13 @@ namespace Samples
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<BlogPostsCount>(eb =>
-                {
-                    eb.HasNoKey();
-                    eb.ToView("View_BlogPostCounts");
-                    eb.Property(v => v.BlogName).HasColumnName("Name");
-                });
+                .Entity<BlogPostsCount>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("View_BlogPostCounts");
+                        eb.Property(v => v.BlogName).HasColumnName("Name");
+                    });
         }
         #endregion
     }

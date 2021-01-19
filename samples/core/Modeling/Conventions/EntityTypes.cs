@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Conventions.EntityTypes
 {
     #region EntityTypes
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
@@ -38,4 +38,31 @@ namespace EFModeling.Conventions.EntityTypes
         public string Action { get; set; }
     }
     #endregion
+
+    #region BlogWithMultiplePostsEntity
+    public class BlogWithMultiplePosts
+    {
+        public string Url { get; set; }
+        public int PostCount { get; set; }
+    }
+    #endregion
+
+    public class MyContextWithFunctionMapping : DbContext
+    {
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Post> Posts { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            #region QueryableFunctionConfigurationToFunction
+            modelBuilder.Entity<BlogWithMultiplePosts>().HasNoKey().ToFunction("BlogsWithMultiplePosts");
+            #endregion
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=EFModeling.EntityTypeToFunctionMapping;Trusted_Connection=True;ConnectRetryCount=0");
+        }
+    }
 }

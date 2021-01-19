@@ -66,13 +66,16 @@ namespace EFSaving.CascadeDelete
         {
             public ILogger CreateLogger(string categoryName) => new SampleLogger();
 
-            public void Dispose() { }
+            public void Dispose()
+            {
+            }
 
             private class SampleLogger : ILogger
             {
                 public bool IsEnabled(LogLevel logLevel) => true;
 
-                public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
+                public void Log<TState>(
+                    LogLevel logLevel, EventId eventId, TState state, Exception exception,
                     Func<TState, Exception, string> formatter)
                 {
                     if (eventId.Id == RelationalEventId.CommandExecuting.Id)
@@ -81,7 +84,8 @@ namespace EFSaving.CascadeDelete
                         var commandIndex = Math.Max(message.IndexOf("UPDATE"), message.IndexOf("DELETE"));
                         if (commandIndex >= 0)
                         {
-                            var truncatedMessage = message.Substring(commandIndex, message.IndexOf(";", commandIndex) - commandIndex).Replace(Environment.NewLine, " ");
+                            var truncatedMessage = message.Substring(commandIndex, message.IndexOf(";", commandIndex) - commandIndex)
+                                .Replace(Environment.NewLine, " ");
 
                             for (var i = 0; i < 4; i++)
                             {

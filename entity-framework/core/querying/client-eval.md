@@ -2,7 +2,7 @@
 title: Client vs. Server Evaluation - EF Core
 description: Client and server evaluation of queries with Entity Framework Core
 author: smitpatel
-ms.date: 10/03/2019
+ms.date: 11/09/2020
 uid: core/querying/client-eval
 ---
 # Client vs. Server Evaluation
@@ -40,6 +40,9 @@ In such cases, you can explicitly opt into client evaluation by calling methods 
 
 [!code-csharp[Main](../../../samples/core/Querying/ClientEvaluation/Program.cs#ExplicitClientEvaluation)]
 
+> [!TIP]
+> If you are using `AsAsyncEnumerable` and want to compose the query further on client side then you can use [System.Interactive.Async](https://www.nuget.org/packages/System.Interactive.Async/) library which defines operators for async enumerables. For more information, see [client side linq operators](xref:core/miscellaneous/async#client-side-async-linq-operators).
+
 ## Potential memory leak in client evaluation
 
 Since query translation and compilation are expensive, EF Core caches the compiled query plan. The cached delegate may use client code while doing client evaluation of top-level projection. EF Core generates parameters for the client-evaluated parts of the tree and reuses the query plan by replacing the parameter values. But certain constants in the expression tree can't be converted into parameters. If the cached delegate contains such constants, then those objects can't be garbage collected since they're still being referenced. If such an object contains a DbContext or other services in it, then it could cause the memory usage of the app to grow over time. This behavior is generally a sign of a memory leak. EF Core throws an exception whenever it comes across constants of a type that can't be mapped using current database provider. Common causes and their solutions are as follows:
@@ -52,7 +55,7 @@ Since query translation and compilation are expensive, EF Core caches the compil
 
 The following section applies to EF Core versions before 3.0.
 
-Older EF Core versions supported client evaluation in any part of the query--not just the top-level projection. That's why queries similar to one posted under the [Unsupported client evaluation](#unsupported-client-evaluation) section worked correctly. Since this behavior could cause unnoticed performance issues, EF Core logged a client evaluation warning. For more information on viewing logging output, see [Logging](xref:core/miscellaneous/logging).
+Older EF Core versions supported client evaluation in any part of the query--not just the top-level projection. That's why queries similar to one posted under the [Unsupported client evaluation](#unsupported-client-evaluation) section worked correctly. Since this behavior could cause unnoticed performance issues, EF Core logged a client evaluation warning. For more information on viewing logging output, see [Logging](xref:core/logging-events-diagnostics/index).
 
 Optionally EF Core allowed you to change the default behavior to either throw an exception or do nothing when doing client evaluation (except for in the projection). The exception throwing behavior would make it similar to the behavior in 3.0. To change the behavior, you need to configure warnings while setting up the options for your context - typically in `DbContext.OnConfiguring`, or in `Startup.cs` if you're using ASP.NET Core.
 

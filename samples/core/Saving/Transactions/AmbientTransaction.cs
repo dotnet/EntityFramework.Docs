@@ -1,23 +1,24 @@
-using System.Threading.Tasks;
+using System;
 using System.Transactions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Transactions
 {
     public class AmbientTransaction
     {
-        public static async Task RunAsync()
+        public static void Run()
         {
-            var connectionString = @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
+            var connectionString =
+                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0";
 
-            await using (var context = new BloggingContext(
+            using (var context = new BloggingContext(
                 new DbContextOptionsBuilder<BloggingContext>()
                     .UseSqlServer(connectionString)
                     .Options))
             {
-                await context.Database.EnsureDeletedAsync();
-                await context.Database.EnsureCreatedAsync();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
             }
 
             #region Transaction
@@ -25,32 +26,32 @@ namespace EFSaving.Transactions
                 TransactionScopeOption.Required,
                 new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
             {
-                await using var connection = new SqlConnection(connectionString);
-                await connection.OpenAsync();
+                using var connection = new SqlConnection(connectionString);
+                connection.Open();
 
                 try
                 {
                     // Run raw ADO.NET command in the transaction
                     var command = connection.CreateCommand();
                     command.CommandText = "DELETE FROM dbo.Blogs";
-                    await command.ExecuteNonQueryAsync();
+                    command.ExecuteNonQuery();
 
                     // Run an EF Core command in the transaction
                     var options = new DbContextOptionsBuilder<BloggingContext>()
                         .UseSqlServer(connection)
                         .Options;
 
-                    await using (var context = new BloggingContext(options))
+                    using (var context = new BloggingContext(options))
                     {
                         context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                        await context.SaveChangesAsync();
+                        context.SaveChanges();
                     }
 
                     // Commit transaction if all commands succeed, transaction will auto-rollback
                     // when disposed if either commands fails
                     scope.Complete();
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
                     // TODO: Handle failure
                 }
@@ -62,11 +63,11 @@ namespace EFSaving.Transactions
         {
             public BloggingContext(DbContextOptions<BloggingContext> options)
                 : base(options)
-            { }
+            {
+            }
 
             public DbSet<Blog> Blogs { get; set; }
         }
-
 
         public class Blog
         {

@@ -31,14 +31,16 @@ This is because it is critical that patch releases do not introduce new bugs.
 Therefore, the decision process emphasizes high value and low risk.
 
 We are more likely to patch an issue if:
-  * It is impacting multiple customers
-  * It is a regression from a previous release
-  * The failure causes data corruption
+
+* It is impacting multiple customers
+* It is a regression from a previous release
+* The failure causes data corruption
 
 We are less likely to patch an issue if:
-  * There are reasonable workarounds
-  * The fix has high risk of breaking something else
-  * The bug is in a corner-case
+
+* There are reasonable workarounds
+* The fix has high risk of breaking something else
+* The bug is in a corner-case
 
 This bar gradually rises through the lifetime of a [long-term support (LTS)](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) release. This is because LTS releases emphasize stability.
 
@@ -50,6 +52,7 @@ Minor releases change only the "minor" part of the version.
 For example, EF Core 3.**1**.0 is a release that improves on EF Core 3.**0**.0.
 
 Minor releases:
+
 * Are intended to improve the quality and features of the previous release
 * Typically contain bug fixes and new features
 * Do not include intentional breaking changes
@@ -61,6 +64,7 @@ Major releases change the EF "major" version number.
 For example, EF Core **3**.0.0 is a major release that makes a big step forward over EF Core 2.2.x.
 
 Major releases:
+
 * Are intended to improve the quality and features of the previous release
 * Typically contain bug fixes and new features
   * Some of the new features may be fundamental changes to the way EF Core works

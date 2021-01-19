@@ -21,7 +21,7 @@ highlightedContent:
     # Card
     - title: "Entity Framework Core"
       itemType: get-started
-      url: core/get-started/index.md
+      url: core/get-started/overview/first-app.md
     # Card
     - title: "Persist and retrieve relational data with Entity Framework Core"
       itemType: learn
@@ -52,7 +52,7 @@ additionalContent:
       # Card
       - title: Develop your first app
         links:
-          - url: core/get-started/index.md
+          - url: core/get-started/overview/first-app.md
             text: ".NET Core console app accessing SQLite with EF Core"
           - url: /aspnet/core/data/ef-rp/
             text: "ASP.NET Core Razor Pages web app accessing  SQL Server LocalDB or SQLite with EF Core"
@@ -82,7 +82,7 @@ additionalContent:
       # Card
       - title: Platforms
         links:
-          - url: core/platforms/index.md
+          - url: core/miscellaneous/platforms.md
             text: "All supported platforms"
           - url: /aspnet/core/data/ef-rp/intro
             text: "ASP.NET Core Razor Pages"
@@ -101,13 +101,13 @@ additionalContent:
         links:
           - url: core/miscellaneous/connection-strings.md
             text: "Connection strings"
-          - url: core/miscellaneous/logging.md
+          - url: core/logging-events-diagnostics/index.md
             text: "Logging"
           - url: core/miscellaneous/connection-resiliency.md
             text: "Connection resiliency"
-          - url: core/miscellaneous/testing/index.md
+          - url: core/testing/index.md
             text: "Testing"
-          - url: core/miscellaneous/configuring-dbcontext.md
+          - url: core/dbcontext-configuration/index.md
             text: "Configure a DbContext"
           - url: core/miscellaneous/nullable-reference-types.md
             text: "Nullable reference types"
@@ -151,8 +151,12 @@ additionalContent:
             text: "Asynchronous queries"
           - url: core/querying/raw-sql.md
             text: "Raw SQL queries"
+          - url: core/querying/user-defined-function-mapping.md
+            text: "User-defined function mapping"
           - url: core/querying/filters.md
             text: "Global query filters"
+          - url: core/querying/null-comparisons.md
+            text: "Comparisons with null values in queries"
       # Card
       - title: Manage database schemas
         links:
@@ -196,15 +200,15 @@ additionalContent:
       # Card
       - title: Command-line reference
         links:
-          - url: core/miscellaneous/cli/index.md
+          - url: core/cli/index.md
             text: "Overview"
-          - url: core/miscellaneous/cli/powershell.md
+          - url: core/cli/powershell.md
             text: "Package Manager Console (Visual Studio)"
-          - url: core/miscellaneous/cli/dotnet.md
+          - url: core/cli/dotnet.md
             text: ".NET Core CLI"
-          - url: core/miscellaneous/cli/dbcontext-creation.md
+          - url: core/cli/dbcontext-creation.md
             text: "Design-time DbContext creation"
-          - url: core/miscellaneous/cli/services.md
+          - url: core/cli/services.md
             text: "Design-time services"
       # Card
       - title: Previous Versions

@@ -8,7 +8,7 @@ uid: core/miscellaneous/collations-and-case-sensitivity
 # Collations and Case Sensitivity
 
 > [!NOTE]
-> This feature is introduced in EF Core 5.0.
+> This feature was introduced in EF Core 5.0.
 
 Text processing in databases can be a complex, and requires more user attention that one would suspect. For one thing, databases vary considerably in how they handle text; for example, while some databases are case-sensitive by default (e.g. Sqlite, PostgreSQL), others are case-insensitive (SQL Server, MySQL). In addition, because of index usage, case-sensitivity and similar aspects can have a far-reaching impact on query performance: while it may be tempting to use `string.Lower` to force a case-insensitive comparison in a case-sensitive database, doing so may prevent your application from using indexes. This page details how to configure case sensitivity, or more generally, collations, and how to do so in an efficient way without compromising query performance.
 
@@ -63,9 +63,15 @@ In .NET, string equality is case-sensitive by default: `s1 == s2` performs an or
 
 In addition, .NET provides overloads of [`string.Equals`](/dotnet/api/system.string.equals#System_String_Equals_System_String_System_StringComparison_) accepting a [`StringComparison`](/dotnet/api/system.stringcomparison) enum, which allows specifying case-sensitivity and culture for the comparison. By design, EF Core refrains from translating these overloads to SQL, and attempting to use them will result in an exception. For one thing, EF Core does know not which case-sensitive or case-insensitive collation should be used. More importantly, applying a collation would in most cases prevent index usage, significantly impacting performance for a very basic and commonly-used .NET construct. To force a query to use case-sensitive or case-insensitive comparison, specify a collation explicitly via `EF.Functions.Collate` as [detailed above](#explicit-collations-and-indexes).
 
-## Database-specific information
+## Additional resources
+
+### Database-specific information
 
 * [SQL Server documentation on collations](/sql/relational-databases/collations/collation-and-unicode-support).
 * [Microsoft.Data.Sqlite documentation on collations](/dotnet/standard/data/sqlite/collation).
 * [PostgreSQL documentation on collations](https://www.postgresql.org/docs/current/collation.html).
 * [MySQL documentation on collations](https://dev.mysql.com/doc/refman/en/charset-general.html).
+
+### Other resources
+
+* [EF Core Community Standup session](https://www.youtube.com/watch?v=OgMhLVa_VfA&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=1), introducing collations and exploring perf and indexing aspects.

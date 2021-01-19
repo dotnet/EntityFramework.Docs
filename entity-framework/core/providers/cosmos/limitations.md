@@ -2,19 +2,18 @@
 title: Azure Cosmos DB Provider - Limitations - EF Core
 description: Limitations of the Entity Framework Core Azure Cosmos DB provider as compared to other providers
 author: AndriySvyryd
-ms.date: 11/05/2019
+ms.date: 11/05/2020
 uid: core/providers/cosmos/limitations
 ---
 # EF Core Azure Cosmos DB Provider Limitations
 
-The Cosmos provider has a number of limitations. Many of these limitations are a result of limitations in the underlying Cosmos database engine and are not specific to EF. But most simply [haven't been implemented yet](https://github.com/aspnet/EntityFrameworkCore/issues?page=1&q=is%3Aissue+is%3Aopen+Cosmos+in%3Atitle+label%3Atype-enhancement+sort%3Areactions-%2B1-desc).
+The Cosmos provider has a number of limitations. Many of these limitations are a result of limitations in the underlying Cosmos database engine and are not specific to EF. But most simply [haven't been implemented yet](https://github.com/dotnet/efcore/issues?page=1&q=is%3Aissue+is%3Aopen+Cosmos+in%3Atitle+label%3Atype-enhancement+sort%3Areactions-%2B1-desc).
 
-## Temporary limitations
+These are some of the commonly requested features:
 
-- Even if there is only one entity type without inheritance mapped to a container it still has a discriminator property.
-- Entity types with partition keys don't work correctly in some scenarios
-- `Include` calls are not supported
-- `Join` calls are not supported
+- [`Include` support](https://github.com/dotnet/efcore/issues/16920)
+- [`Join` support](https://github.com/dotnet/efcore/issues/17314)
+- [Collections of primitive types support](https://github.com/dotnet/efcore/issues/14762)
 
 ## Azure Cosmos DB SDK limitations
 
@@ -28,4 +27,4 @@ The Cosmos provider has a number of limitations. Many of these limitations are a
 You can see the full overview of [Azure Cosmos DB supported features](/azure/cosmos-db/modeling-data), these are the most notable differences compared to a relational database:
 
 - Client-initiated transactions are not supported
-- Some cross-partition queries are either not supported or much slower depending on the operators involved
+- Some cross-partition queries are slower depending on the operators involved (for example `Skip/Take` or `OFFSET LIMIT`)

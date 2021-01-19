@@ -9,7 +9,7 @@ uid: core/modeling/relationships
 
 A relationship defines how two entities relate to each other. In a relational database, this is represented by a foreign key constraint.
 
-> [!NOTE]  
+> [!NOTE]
 > Most of the samples in this article use a one-to-many relationship to demonstrate concepts. For examples of one-to-one and many-to-many relationships see the [Other Relationship Patterns](#other-relationship-patterns) section at the end of the article.
 
 ## Definition of terms
@@ -31,7 +31,7 @@ There are a number of terms used to describe relationships
   * **Reference navigation property:** A navigation property that holds a reference to a single related entity.
 
   * **Inverse navigation property:** When discussing a particular navigation property, this term refers to the navigation property on the other end of the relationship.
-  
+
 * **Self-referencing relationship:** A relationship in which the dependent and the principal entity types are the same.
 
 The following code shows a one-to-many relationship between `Blog` and `Post`
@@ -56,7 +56,7 @@ The following code shows a one-to-many relationship between `Blog` and `Post`
 
 By default, a relationship will be created when there is a navigation property discovered on a type. A property is considered a navigation property if the type it points to can not be mapped as a scalar type by the current database provider.
 
-> [!NOTE]  
+> [!NOTE]
 > Relationships that are discovered by convention will always target the primary key of the principal entity. To target an alternate key, additional configuration must be performed using the Fluent API.
 
 ### Fully defined relationships
@@ -79,7 +79,7 @@ In this example the highlighted properties will be used to configure the relatio
 > If the property is the primary key or is of a type not compatible with the principal key then it won't be configured as the foreign key.
 
 > [!NOTE]
-> Before EF Core 3.0 the property named exactly the same as the principal key property [was also matched as the foreign key](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
+> Before EF Core 3.0 the property named exactly the same as the principal key property [was also matched as the foreign key](https://github.com/dotnet/efcore/issues/13274)
 
 ### No foreign key property
 
@@ -143,7 +143,7 @@ If you only have one navigation property then there are parameterless overloads 
 ### Configuring navigation properties
 
 > [!NOTE]
-> This feature was added in EF Core 5.0.
+> This feature was introduced in EF Core 5.0.
 
 After the navigation property has been created, you may need to further configure it.
 
@@ -172,7 +172,7 @@ You can use the Data Annotations to configure which property should be used as t
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/ForeignKey.cs?name=ForeignKey&highlight=17)]
 
-> [!TIP]  
+> [!TIP]
 > The `[ForeignKey]` annotation can be placed on either navigation property in the relationship. It does not need to go on the navigation property in the dependent entity class.
 
 > [!NOTE]
@@ -188,7 +188,7 @@ You can use the string overload of `HasForeignKey(...)` to configure a shadow pr
 
 #### Foreign key constraint name
 
-By convention, when targeting a relational database, foreign key constraints are named FK_<dependent type name>_<principal type name>_<foreign key property name>. For composite foreign keys <foreign key property name> becomes an underscore separated list of foreign key property names.
+By convention, when targeting a relational database, foreign key constraints are named FK\_\<dependent type name>\_\<principal type name>\_\<foreign key property name>. For composite foreign keys, \<foreign key property name> becomes an underscore separated list of foreign key property names.
 
 You can also configure the constraint name as follows:
 
@@ -202,7 +202,7 @@ You don't necessarily need to provide a navigation property. You can simply prov
 
 ### Principal key
 
-If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be setup as an [alternate key](xref:core/modeling/keys#alternate-keys).
+If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be set up as an [alternate key](xref:core/modeling/keys#alternate-keys).
 
 #### [Simple key](#tab/simple-key)
 
@@ -212,7 +212,7 @@ If you want the foreign key to reference a property other than the primary key, 
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositePrincipalKey.cs?name=CompositePrincipalKey&highlight=11)]
 
-> [!WARNING]  
+> [!WARNING]
 > The order in which you specify principal key properties must match the order in which they are specified for the foreign key.
 
 ---
@@ -244,7 +244,7 @@ One to one relationships have a reference navigation property on both sides. The
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/OneToOne.cs?name=OneToOne&highlight=6,15-16)]
 
-> [!NOTE]  
+> [!NOTE]
 > EF will choose one of the entities to be the dependent based on its ability to detect a foreign key property. If the wrong entity is chosen as the dependent, you can use the Fluent API to correct this.
 
 When configuring the relationship with the Fluent API, you use the `HasOne` and `WithOne` methods.
@@ -263,7 +263,7 @@ With this configuration the columns corresponding to `ShippingAddress` will be m
 > If you are using [non-nullable reference types](/dotnet/csharp/nullable-references) calling `IsRequired` is not necessary.
 
 > [!NOTE]
-> The ability to configure whether the dependent is required was added in EF Core 5.0.
+> The ability to configure whether the dependent is required was introduced in EF Core 5.0.
 
 ### Many-to-many
 
@@ -287,19 +287,24 @@ CREATE TABLE [Tags] (
 );
 
 CREATE TABLE [PostTag] (
-    [PostId] int NOT NULL,
-    [TagId] nvarchar(450) NOT NULL,
-    CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostId], [TagId]),
-    CONSTRAINT [FK_PostTag_Posts_PostId] FOREIGN KEY ([PostId]) REFERENCES [Posts] ([PostId]) ON DELETE CASCADE,
-    CONSTRAINT [FK_PostTag_Tags_TagId] FOREIGN KEY ([TagId]) REFERENCES [Tags] ([TagId]) ON DELETE CASCADE
+    [PostsId] int NOT NULL,
+    [TagsId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostsId], [TagsId]),
+    CONSTRAINT [FK_PostTag_Posts_PostsId] FOREIGN KEY ([PostsId]) REFERENCES [Posts] ([PostId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PostTag_Tags_TagsId] FOREIGN KEY ([TagsId]) REFERENCES [Tags] ([TagId]) ON DELETE CASCADE
 );
 ```
 
-Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. There is no specific CLR type that can be used for this, so `Dictionary<string, object>` is used. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
+Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. `Dictionary<string, object>` is currently used for it to handle any combination of foreign key properties, see [property bag entity types](shadow-properties.md#property-bag-entity-types) for more information. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
 
-The many to many navigations are called skip navigations as they effectively skip over the join entity type. If you are employing bulk configuration all skip navigations can be obtained from `GetSkipNavigations`.
+> [!IMPORTANT]
+> The CLR type used for join entity types by convention may change in future releases to improve performance. Do not depend on the join type being `Dictionary<string, object>` unless this has been explicitly configured, as described in the next section.
+
+The many to many navigations are called skip navigations as they effectively skip over the join entity type. If you are employing bulk configuration all skip navigations can be obtained from <xref:Microsoft.EntityFrameworkCore.Metadata.IEntityType.GetSkipNavigations%2A>.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Metadata)]
+
+#### Join entity type configuration
 
 It is common to apply configuration to the join entity type. This action can be accomplished via `UsingEntity`.
 
@@ -313,9 +318,24 @@ Additional data can be stored in the join entity type, but for this it's best to
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyPayload.cs?name=ManyToManyPayload)]
 
+#### Joining relationships configuration
+
+EF uses two one-to-many relationships on the join entity type to represent the many-to-many relationship. You can configure these relationships in the `UsingEntity` arguments.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Components)]
+
 > [!NOTE]
-> The ability to configure many-to-many relationships was added in EF Core 5.0, for previous version use the following approach.
+> The ability to configure many-to-many relationships was introduced in EF Core 5.0, for previous version use the following approach.
+
+#### Indirect many-to-many relationships
 
 You can also represent a many-to-many relationship by just adding the join entity type and mapping two separate one-to-many relationships.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11-14,16-19,39-46)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=16-19,21-24)]
+
+> [!NOTE]
+> Support for scaffolding many-to-many relationships from the database is not yet added. See [tracking issue](https://github.com/dotnet/efcore/issues/22475).
+
+## Additional resources
+
+* [EF Core Community Standup session](https://www.youtube.com/watch?v=W1sxepfIMRM&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=32), with a deep dive into Many-to-many and the infrastructure underpinning it.

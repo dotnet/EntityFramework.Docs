@@ -8,7 +8,7 @@ uid: core/modeling/spatial
 # Spatial Data
 
 > [!NOTE]
-> This feature was added in EF Core 2.2.
+> This feature was introduced in EF Core 2.2.
 
 Spatial data represents the physical location and the shape of objects. Many databases provide support for this type of data so it can be indexed and queried alongside other data. Common scenarios include querying for objects within a given distance from a location, or selecting the object whose border contains a given location. EF Core supports mapping to spatial data types using the NetTopologySuite spatial library.
 
@@ -91,9 +91,15 @@ Here is an example of using ProjNet4GeoAPI to calculate the distance between two
 
 ## Additional resources
 
+### Database-specific information
+
 Be sure to read your provider's documentation for additional information on working with spatial data.
 
 * [Spatial Data in the SQL Server Provider](xref:core/providers/sql-server/spatial)
 * [Spatial Data in the SQLite Provider](xref:core/providers/sqlite/spatial)
 * [Spatial Data in the Npgsql Provider](https://www.npgsql.org/efcore/mapping/nts.html)
+
+### Other resources
+
 * [NetTopologySuite Docs](https://nettopologysuite.github.io/NetTopologySuite/)
+* [EF Core Community Standup session](https://www.youtube.com/watch?v=IHslY5rrxD0&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=15), focusing on spatial data and NetTopologySuite.

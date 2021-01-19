@@ -91,7 +91,7 @@ In the following example, configuring the `Score` property to have precision 14 
 
 #### [Data Annotations](#tab/data-annotations)
 
-Currently not possible to use data annotations to configure.
+Precision and scale cannot currently be configured via data annotations.
 
 #### [Fluent API](#tab/fluent-api)
 
@@ -110,18 +110,18 @@ A property is considered optional if it is valid for it to contain `null`. If `n
 
 By convention, a property whose .NET type can contain null will be configured as optional, whereas properties whose .NET type cannot contain null will be configured as required. For example, all properties with .NET value types (`int`, `decimal`, `bool`, etc.) are configured as required, and all properties with nullable .NET value types (`int?`, `decimal?`, `bool?`, etc.) are configured as optional.
 
-C# 8 introduced a new feature called [nullable reference types](/dotnet/csharp/tutorials/nullable-reference-types), which allows reference types to be annotated, indicating whether it is valid for them to contain null or not. This feature is disabled by default, and if enabled, it modifies EF Core's behavior in the following way:
+C# 8 introduced a new feature called [nullable reference types (NRT)](/dotnet/csharp/tutorials/nullable-reference-types), which allows reference types to be annotated, indicating whether it is valid for them to contain null or not. This feature is disabled by default, and affects EF Core's behavior in the following way:
 
 * If nullable reference types are disabled (the default), all properties with .NET reference types are configured as optional by convention (for example, `string`).
 * If nullable reference types are enabled, properties will be configured based on the C# nullability of their .NET type: `string?` will be configured as optional, but `string` will be configured as required.
 
 The following example shows an entity type with required and optional properties, with the nullable reference feature disabled (the default) and enabled:
 
-#### [Without nullable reference types (default)](#tab/without-nrt)
+#### [Without NRT (default)](#tab/without-nrt)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithoutNullableReferenceTypes.cs?name=Customer&highlight=4-8)]
 
-#### [With nullable reference types](#tab/with-nrt)
+#### [With NRT](#tab/with-nrt)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Customer.cs?name=Customer&highlight=4-6)]
 
@@ -151,7 +151,7 @@ A property that would be optional by convention can be configured to be required
 ## Column collations
 
 > [!NOTE]
-> This feature is introduced in EF Core 5.0.
+> This feature was introduced in EF Core 5.0.
 
 A collation can be defined on text columns, determining how they are compared and ordered. For example, the following code snippet configures a SQL Server column to be case-insensitive:
 
@@ -160,3 +160,20 @@ A collation can be defined on text columns, determining how they are compared an
 If all columns in a database need to use a certain collation, define the collation at the database level instead.
 
 General information about EF Core support for collations can be found in the [collation documentation page](xref:core/miscellaneous/collations-and-case-sensitivity).
+
+## Column comments
+
+You can set an arbitrary text comment that gets set on the database column, allowing you to document your schema in the database:
+
+### [Data Annotations](#tab/data-annotations)
+
+> [!NOTE]
+> Setting comments via data annotations was introduced in EF Core 5.0.
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnComment.cs?name=ColumnComment&highlight=4)]
+
+### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnComment.cs?name=ColumnComment&highlight=5)]
+
+***

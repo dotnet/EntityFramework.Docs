@@ -1,21 +1,21 @@
-﻿using System.Threading.Tasks;
+﻿using EFSaving.Basics;
+using EFSaving.Transactions;
 
 namespace EFSaving
 {
-    class Program
+    internal class Program
     {
-        static async Task Main(string[] args)
+        private static void Main(string[] args)
         {
-            await Basics.Sample.RunAsync();
-            await RelatedData.Sample.RunAsync();
-            await CascadeDelete.Sample.RunAsync();
-            await Concurrency.Sample.RunAsync();
-            await Transactions.ControllingTransaction.RunAsync();
-            await Transactions.ManagingSavepoints.RunAsync();
-            await Transactions.SharingTransaction.RunAsync();
-            await Transactions.ExternalDbTransaction.RunAsync();
-            await ExplicitValuesGenerateProperties.Sample.RunAsync();
-            await Disconnected.Sample.RunAsync();
+            Sample.Run();
+            RelatedData.Sample.Run();
+            CascadeDelete.Sample.Run();
+            Concurrency.Sample.Run();
+            ControllingTransaction.Run();
+            ManagingSavepoints.Run();
+            SharingTransaction.Run();
+            ExternalDbTransaction.Run();
+            Disconnected.Sample.Run();
         }
     }
 }

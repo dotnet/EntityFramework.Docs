@@ -6,7 +6,7 @@ namespace NullableReferenceTypes
 {
     public static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using (var context = new NullableReferenceTypesContext())
             {
@@ -15,15 +15,16 @@ namespace NullableReferenceTypes
 
                 context.Add(new Customer("John", "Doe"));
 
-                context.Add(new Order
-                {
-                    ShippingAddress = new Address("London", "Downing"),
-                    Product = new Product("Cooking stove"),
-                    OptionalInfo = new OptionalOrderInfo("Some additional info")
+                context.Add(
+                    new Order
                     {
-                        ExtraAdditionalInfo = new ExtraOptionalOrderInfo("Some extra additional info")
-                    }
-                });
+                        ShippingAddress = new Address("London", "Downing"),
+                        Product = new Product("Cooking stove"),
+                        OptionalInfo = new OptionalOrderInfo("Some additional info")
+                        {
+                            ExtraAdditionalInfo = new ExtraOptionalOrderInfo("Some extra additional info")
+                        }
+                    });
 
                 context.SaveChanges();
             }
@@ -35,7 +36,7 @@ namespace NullableReferenceTypes
 
                 var order = context.Orders
                     .Include(o => o.OptionalInfo!)
-                        .ThenInclude(op => op.ExtraAdditionalInfo)
+                    .ThenInclude(op => op.ExtraAdditionalInfo)
                     .Single();
 
                 // The following would be a programming bug: we forgot to include ShippingAddress above. It would throw InvalidOperationException.

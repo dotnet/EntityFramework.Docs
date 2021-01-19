@@ -2,7 +2,7 @@
 
 namespace EFModeling.DataAnnotations.Keyless
 {
-    class BlogsContext : DbContext
+    internal class BlogsContext : DbContext
     {
         public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
     }
