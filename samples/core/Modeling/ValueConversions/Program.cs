@@ -15,6 +15,18 @@ namespace EFModeling.ValueConversions
             new MappingListProperty().Run();
             new MappingListPropertyOld().Run();
             new OverridingByteArrayComparisons().Run();
+            new EnumToStringConversions().Run();
+            new KeyValueObjects().Run();
+            new SimpleValueObject().Run();
+            new CompositeValueObject().Run();
+            new PrimitiveCollection().Run();
+            new ValueObjectCollection().Run();
+            new ULongConcurrency().Run();
+            new PreserveDateTimeKind().Run();
+            new CaseInsensitiveStrings().Run();
+            new FixedLengthStrings().Run();
+            new EncryptPropertyValues().Run();
+            new WithMappingHints().Run();
         }
 
         protected static void ConsoleWriteLines(params string[] values)
