@@ -88,7 +88,7 @@ namespace GeneratedKeys
 
             // Mark an existing Post as Deleted
             var postToDelete = blog.Posts.Single(e => e.Title == "Announcing F# 5");
-            context.Remove((object)postToDelete);
+            context.Remove(postToDelete);
 
             context.ChangeTracker.DetectChanges();
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
