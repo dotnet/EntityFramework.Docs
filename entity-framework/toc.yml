@@ -45,6 +45,8 @@
       items:
       - name: Current and planned releases
         href: core/what-is-new/index.md
+      - name: NuGet packages
+        href: core/what-is-new/nuget-packages.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
       - name: EF Core 6.0
