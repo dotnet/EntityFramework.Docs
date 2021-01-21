@@ -443,21 +443,6 @@ Serialization can also be used to store a collection of primitive values. For ex
 
 Using <xref:System.Text.Json> again:
 
-```csharp
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                modelBuilder.Entity<Post>()
-                    .Property(e => e.Tags)
-                    .HasConversion(
-                        v => JsonSerializer.Serialize(v, null),
-                        v => JsonSerializer.Deserialize<List<string>>(v, null),
-                        new ValueComparer<ICollection<string>>(
-                            (c1, c2) => c1.SequenceEqual(c2),
-                            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                            c => (ICollection<string>)c.ToList()));
-            }
-```
-
 <!--
                 modelBuilder.Entity<Post>()
                     .Property(e => e.Tags)
