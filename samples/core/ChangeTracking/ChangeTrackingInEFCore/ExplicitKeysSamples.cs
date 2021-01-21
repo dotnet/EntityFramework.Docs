@@ -297,7 +297,7 @@ namespace ExplicitKeys
             context.Attach(blog);
 
             // Mark one post as Deleted
-            context.Remove((object)blog.Posts[1]);
+            context.Remove(blog.Posts[1]);
             #endregion
 
             Console.WriteLine("Before SaveChanges:");

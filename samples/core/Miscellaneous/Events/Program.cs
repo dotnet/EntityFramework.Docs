@@ -31,7 +31,7 @@ public class Program
             var blog = context.Blogs.Include(e => e.Posts).Single();
 
             blog.Name = "EF Core Blog";
-            context.Remove((object)blog.Posts.First());
+            context.Remove(blog.Posts.First());
             blog.Posts.Add(new Post { Id = 3, Title = "EF Core 6.0!" });
 
             context.SaveChanges();
