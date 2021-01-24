@@ -309,7 +309,7 @@ The following table contains examples of common methods called on `DbContextOpti
 > [!NOTE]
 > <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseLazyLoadingProxies%2A> and <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies%2A> are extension methods from the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) NuGet package. This kind of ".UseSomething()" call is the recommended way to configure and/or use EF Core extensions contained in other packages.
 
-### `DbContextOptions` verses `DbContextOptions<TContext>`
+### `DbContextOptions` versus `DbContextOptions<TContext>`
 
 Most `DbContext` subclasses that accept a `DbContextOptions` should use the [generic](/dotnet/csharp/programming-guide/generics/) `DbContextOptions<TContext>` variation. For example:
 
