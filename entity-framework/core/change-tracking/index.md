@@ -45,7 +45,7 @@ DbContext is designed to represent a short-lived unit-of-work, as described in [
 
 ## Entity states
 
-Every entity is is associated with a given <xref:Microsoft.EntityFrameworkCore.EntityState>:
+Every entity is associated with a given <xref:Microsoft.EntityFrameworkCore.EntityState>:
 
 - `Detached` entities are not being tracked by the <xref:Microsoft.EntityFrameworkCore.DbContext>.
 - `Added` entities are new and have not yet been inserted into the database. This means they will be inserted when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called.
