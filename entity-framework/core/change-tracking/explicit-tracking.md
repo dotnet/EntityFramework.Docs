@@ -888,7 +888,7 @@ After SaveChanges completes, all the deleted entities are detached from the DbCo
 
 <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.TrackGraph%2A?displayProperty=nameWithType> works like `Add`, `Attach` and `Update` except that it generates a callback for every entity instance before tracking it. This allows custom logic to be used when determining how to track individual entities in a graph.
 
-For example, consider the rule EF Core uses when tracking entities with generated key values: if the kye value is zero, then the entity is new and should be inserted. Let's extend this rule to say if the key value is negative, then the entity should be deleted. This allows us to change the primary key values in entities of a disconnected graph to mark deleted entities:
+For example, consider the rule EF Core uses when tracking entities with generated key values: if the key value is zero, then the entity is new and should be inserted. Let's extend this rule to say if the key value is negative, then the entity should be deleted. This allows us to change the primary key values in entities of a disconnected graph to mark deleted entities:
 
 <!--
             blog.Posts.Add(
