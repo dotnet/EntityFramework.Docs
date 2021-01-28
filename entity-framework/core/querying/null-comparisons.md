@@ -71,7 +71,7 @@ The optimization can also be used for user-defined functions. See [user defined 
 
 - Comparing non-nullable columns is simpler and faster than comparing nullable columns. Consider marking columns as non-nullable whenever possible.
 
-- Checking for equality (`==`) is simpler and faster than checking for non-equality (`!=`), because query doesn't need to distinguish between `null` and `false` result. Use equality comparison whenever possible.However, simply negating `==` comparison is effectively the same as `!=`, so it doesn't result in performance improvement.
+- Checking for equality (`==`) is simpler and faster than checking for non-equality (`!=`), because query doesn't need to distinguish between `null` and `false` result. Use equality comparison whenever possible. However, simply negating `==` comparison is effectively the same as `!=`, so it doesn't result in performance improvement.
 
 - In some cases, it is possible to simplify a complex comparison by filtering out `null` values from a column explicitly - for example when no `null` values are present or these values are not relevant in the result. Consider the following example:
 
