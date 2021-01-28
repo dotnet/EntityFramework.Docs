@@ -51,11 +51,11 @@ You can also configure your columns to specify an exact data type for a column. 
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnDataType.cs?name=ColumnDataType&highlight=4,6)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnDataType.cs?name=ColumnDataType&highlight=5,8)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnDataType.cs?name=ColumnDataType&highlight=5-6)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnDataType.cs?name=ColumnDataType&highlight=6-7)]
 
 ***
 
@@ -70,7 +70,7 @@ In the following example, configuring a maximum length of 500 will cause a colum
 
 #### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/MaxLength.cs?name=MaxLength&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/MaxLength.cs?name=MaxLength&highlight=5)]
 
 #### [Fluent API](#tab/fluent-api)
 
@@ -119,7 +119,7 @@ The following example shows an entity type with required and optional properties
 
 #### [Without NRT (default)](#tab/without-nrt)
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithoutNullableReferenceTypes.cs?name=Customer&highlight=4-8)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithoutNullableReferenceTypes.cs?name=Customer&highlight=5,8)]
 
 #### [With NRT](#tab/with-nrt)
 
@@ -140,7 +140,7 @@ A property that would be optional by convention can be configured to be required
 
 #### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Required.cs?name=Required&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Required.cs?name=Required&highlight=5)]
 
 #### [Fluent API](#tab/fluent-api)
 
@@ -155,7 +155,7 @@ A property that would be optional by convention can be configured to be required
 
 A collation can be defined on text columns, determining how they are compared and ordered. For example, the following code snippet configures a SQL Server column to be case-insensitive:
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/Collations/Program.cs?range=42-43)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Collations/Program.cs?name=ColumnCollation)]
 
 If all columns in a database need to use a certain collation, define the collation at the database level instead.
 
@@ -170,7 +170,7 @@ You can set an arbitrary text comment that gets set on the database column, allo
 > [!NOTE]
 > Setting comments via data annotations was introduced in EF Core 5.0.
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnComment.cs?name=ColumnComment&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnComment.cs?name=ColumnComment&highlight=5)]
 
 ### [Fluent API](#tab/fluent-api)
 
