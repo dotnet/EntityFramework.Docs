@@ -1,6 +1,3 @@
-// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +35,7 @@ namespace Benchmarks
         }
 
         [Benchmark]
-        public static List<Root> TPH()
+        public List<Root> TPH()
         {
             using var context = new TPHContext();
 
@@ -46,7 +43,7 @@ namespace Benchmarks
         }
 
         [Benchmark]
-        public static List<Root> TPT()
+        public List<Root> TPT()
         {
             using var context = new TPTContext();
 

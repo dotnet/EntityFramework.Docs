@@ -1,6 +1,3 @@
-// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +27,7 @@ namespace Benchmarks
         }
 
         [Benchmark(Baseline = true)]
-        public static List<Post> AsTracking()
+        public List<Post> AsTracking()
         {
             using var context = new BloggingContext();
 
@@ -38,7 +35,7 @@ namespace Benchmarks
         }
 
         [Benchmark]
-        public static List<Post> AsNoTracking()
+        public List<Post> AsNoTracking()
         {
             using var context = new BloggingContext();
 
@@ -57,10 +54,8 @@ namespace Benchmarks
             {
                 using var context = new BloggingContext();
                 context.AddRange(
-                    Enumerable.Range(0, numBlogs).Select(_ => new Blog
-                    {
-                        Posts = Enumerable.Range(0, numPostsPerBlog).Select(_ => new Post()).ToList()
-                    }));
+                    Enumerable.Range(0, numBlogs).Select(
+                        _ => new Blog { Posts = Enumerable.Range(0, numPostsPerBlog).Select(_ => new Post()).ToList() }));
                 context.SaveChanges();
             }
         }

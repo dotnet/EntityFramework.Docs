@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System.Net.Http;
+﻿using System.Net.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.FluentAPI.BackingFieldAccessMode
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
@@ -21,14 +20,9 @@ namespace EFModeling.FluentAPI.BackingFieldAccessMode
 
     public class Blog
     {
-        private string _validatedUrl;
-
         public int BlogId { get; set; }
 
-        public string Url
-        {
-            get { return _validatedUrl; }
-        }
+        public string Url { get; private set; }
 
         public void SetUrl(string url)
         {
@@ -38,7 +32,7 @@ namespace EFModeling.FluentAPI.BackingFieldAccessMode
                 response.EnsureSuccessStatusCode();
             }
 
-            _validatedUrl = url;
+            Url = url;
         }
     }
 }

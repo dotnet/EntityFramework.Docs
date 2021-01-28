@@ -1,7 +1,7 @@
-﻿using BusinessLogic;
+﻿using System.Linq;
+using BusinessLogic;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using Xunit;
 
 namespace EFTesting.TestProject.SQLite

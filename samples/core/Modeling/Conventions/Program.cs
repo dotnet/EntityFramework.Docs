@@ -1,12 +1,12 @@
-﻿using EFModeling.Conventions.EntityTypes;
+﻿using System.Linq;
+using EFModeling.Conventions.EntityTypes;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace EFModeling.Conventions
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using (var context = new MyContextWithFunctionMapping())
             {

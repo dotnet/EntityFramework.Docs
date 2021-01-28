@@ -237,11 +237,7 @@ public static class Samples
 
         {
             #region Work_with_all_properties_of_an_entity_2d
-            var blogDictionary = new Dictionary<string, object>
-            {
-                ["Id"] = 1,
-                ["Name"] = "1unicorn2"
-            };
+            var blogDictionary = new Dictionary<string, object> { ["Id"] = 1, ["Name"] = "1unicorn2" };
 
             context.Entry(blog).CurrentValues.SetValues(blogDictionary);
             #endregion

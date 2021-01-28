@@ -1,16 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EFQuerying.Tags
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using (var context = new SpatialContext())
             {
@@ -38,20 +34,20 @@ namespace EFQuerying.Tags
             using (var context = new SpatialContext())
             {
                 #region MultilineQueryTag
-var results = Limit(GetNearestPeople(context, new Point(1, 2)), 25).TagWith(
-@"This is a multi-line
+                var results = Limit(GetNearestPeople(context, new Point(1, 2)), 25).TagWith(
+                    @"This is a multi-line
 string").ToList();
                 #endregion
             }
         }
 
         #region QueryableMethods
-        static IQueryable<Person> GetNearestPeople(SpatialContext context, Point myLocation)
+        private static IQueryable<Person> GetNearestPeople(SpatialContext context, Point myLocation)
             => from f in context.People.TagWith("GetNearestPeople")
                orderby f.Location.Distance(myLocation) descending
                select f;
 
-        static IQueryable<T> Limit<T>(IQueryable<T> source, int limit) => source.TagWith("Limit").Take(limit);
+        private static IQueryable<T> Limit<T>(IQueryable<T> source, int limit) => source.TagWith("Limit").Take(limit);
         #endregion
     }
 

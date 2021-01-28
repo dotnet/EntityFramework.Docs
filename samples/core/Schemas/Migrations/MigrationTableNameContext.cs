@@ -4,7 +4,7 @@ namespace Migrations
 {
     public class MigrationTableNameContext : DbContext
     {
-        readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
+        private readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
 
         #region TableNameContext
         protected override void OnConfiguring(DbContextOptionsBuilder options)

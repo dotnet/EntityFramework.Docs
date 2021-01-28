@@ -59,7 +59,7 @@ namespace EFSaving.Basics
                 firstBlog.Url = "";
 
                 // remove
-                var lastBlog = context.Blogs.Last();
+                var lastBlog = context.Blogs.OrderBy(e => e.BlogId).Last();
                 context.Blogs.Remove(lastBlog);
 
                 context.SaveChanges();

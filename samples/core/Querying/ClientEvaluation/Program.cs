@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EFQuerying.ClientEvaluation
 {
-    class Program
+    internal class Program
     {
         #region ClientMethod
         public static string StandardizeUrl(string url)
@@ -19,18 +19,21 @@ namespace EFQuerying.ClientEvaluation
         }
         #endregion
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            using (var context = new BloggingContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
+
             using (var context = new BloggingContext())
             {
                 #region ClientProjection
                 var blogs = context.Blogs
                     .OrderByDescending(blog => blog.Rating)
-                    .Select(blog => new
-                    {
-                        Id = blog.BlogId,
-                        Url = StandardizeUrl(blog.Url)
-                    })
+                    .Select(
+                        blog => new { Id = blog.BlogId, Url = StandardizeUrl(blog.Url) })
                     .ToList();
                 #endregion
             }

@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.DataAnnotations.KeySingle
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
     }
 
     #region KeySingle
-    class Car
+    internal class Car
     {
         [Key]
         public string LicensePlate { get; set; }

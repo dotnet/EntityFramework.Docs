@@ -2,7 +2,7 @@
 
 namespace EFModeling.DataAnnotations.IndexComposite
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Person> People { get; set; }
     }

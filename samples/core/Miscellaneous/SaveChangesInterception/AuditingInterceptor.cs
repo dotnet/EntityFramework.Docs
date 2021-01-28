@@ -16,7 +16,7 @@ public class AuditingInterceptor : ISaveChangesInterceptor
         _connectionString = connectionString;
     }
 
-#region SavingChanges
+    #region SavingChanges
     public async ValueTask<InterceptionResult<int>> SavingChangesAsync(
         DbContextEventData eventData,
         InterceptionResult<int> result,
@@ -47,9 +47,9 @@ public class AuditingInterceptor : ISaveChangesInterceptor
 
         return result;
     }
-#endregion
+    #endregion
 
-#region SavedChanges
+    #region SavedChanges
     public int SavedChanges(SaveChangesCompletedEventData eventData, int result)
     {
         using (var auditContext = new AuditContext(_connectionString))
@@ -80,9 +80,9 @@ public class AuditingInterceptor : ISaveChangesInterceptor
 
         return result;
     }
-#endregion
+    #endregion
 
-#region SaveChangesFailed
+    #region SaveChangesFailed
     public void SaveChangesFailed(DbContextErrorEventData eventData)
     {
         using (var auditContext = new AuditContext(_connectionString))
@@ -110,18 +110,14 @@ public class AuditingInterceptor : ISaveChangesInterceptor
             await auditContext.SaveChangesAsync(cancellationToken);
         }
     }
-#endregion
+    #endregion
 
-#region CreateAudit
+    #region CreateAudit
     private static SaveChangesAudit CreateAudit(DbContext context)
     {
         context.ChangeTracker.DetectChanges();
 
-        var audit = new SaveChangesAudit
-        {
-            AuditId = Guid.NewGuid(),
-            StartTime = DateTime.UtcNow
-        };
+        var audit = new SaveChangesAudit { AuditId = Guid.NewGuid(), StartTime = DateTime.UtcNow };
 
         foreach (var entry in context.ChangeTracker.Entries())
         {
@@ -156,5 +152,5 @@ public class AuditingInterceptor : ISaveChangesInterceptor
                 $"Deleting {entry.Metadata.DisplayName()} with ",
                 (auditString, property) => auditString + $"{property.Metadata.Name}: '{property.CurrentValue}' ");
     }
-#endregion
+    #endregion
 }

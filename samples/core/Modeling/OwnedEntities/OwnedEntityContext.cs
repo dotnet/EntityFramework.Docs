@@ -32,45 +32,45 @@ namespace EFModeling.OwnedEntities
             #endregion
 
             #region Required
-            modelBuilder.Entity<Order>(ob =>
-            {
-                ob.OwnsOne(
-                    o => o.ShippingAddress,
-                    sa =>
-                    {
-                        sa.Property(p => p.Street).IsRequired();
-                        sa.Property(p => p.City).IsRequired();
-                    });
+            modelBuilder.Entity<Order>(
+                ob =>
+                {
+                    ob.OwnsOne(
+                        o => o.ShippingAddress,
+                        sa =>
+                        {
+                            sa.Property(p => p.Street).IsRequired();
+                            sa.Property(p => p.City).IsRequired();
+                        });
 
-                ob.Navigation(o => o.ShippingAddress)
-                    .IsRequired();
-            });
+                    ob.Navigation(o => o.ShippingAddress)
+                        .IsRequired();
+                });
             #endregion
 
             #region OwnsOneNested
-            modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od =>
-            {
-                od.WithOwner(d => d.Order);
-                od.Navigation(d => d.Order).UsePropertyAccessMode(PropertyAccessMode.Property);
-                od.OwnsOne(c => c.BillingAddress);
-                od.OwnsOne(c => c.ShippingAddress);
-            });
+            modelBuilder.Entity<DetailedOrder>().OwnsOne(
+                p => p.OrderDetails, od =>
+                {
+                    od.WithOwner(d => d.Order);
+                    od.Navigation(d => d.Order).UsePropertyAccessMode(PropertyAccessMode.Property);
+                    od.OwnsOne(c => c.BillingAddress);
+                    od.OwnsOne(c => c.ShippingAddress);
+                });
             #endregion
 
             #region OwnsOneTable
-            modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od =>
-            {
-                od.ToTable("OrderDetails");
-            });
+            modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od => { od.ToTable("OrderDetails"); });
             #endregion
 
             #region OwnsMany
-            modelBuilder.Entity<Distributor>().OwnsMany(p => p.ShippingCenters, a =>
-            {
-                a.WithOwner().HasForeignKey("OwnerId");
-                a.Property<int>("Id");
-                a.HasKey("Id");
-            });
+            modelBuilder.Entity<Distributor>().OwnsMany(
+                p => p.ShippingCenters, a =>
+                {
+                    a.WithOwner().HasForeignKey("OwnerId");
+                    a.Property<int>("Id");
+                    a.HasKey("Id");
+                });
             #endregion
         }
     }

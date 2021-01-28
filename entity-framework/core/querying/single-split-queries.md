@@ -68,7 +68,7 @@ To turn off the warning, configure query splitting mode globally or at the query
 While split query avoids the performance issues associated with JOINs and cartesian explosion, it also has some drawbacks:
 
 - While most databases guarantee data consistency for single queries, no such guarantees exist for multiple queries. If the database is updated concurrently when executing your queries, resulting data may not be consistent. You can mitigate it by wrapping the queries in a serializable or snapshot transaction, although doing so may create performance issues of its own. For more information, see your database's documentation.
-- Each query currently implies an additional network roundtrip to your database. Multiple network roundtrip can degrade performance, especially where latency to the database is high (for example, cloud services).
+- Each query currently implies an additional network roundtrip to your database. Multiple network roundtrips can degrade performance, especially where latency to the database is high (for example, cloud services).
 - While some databases allow consuming the results of multiple queries at the same time (SQL Server with MARS, Sqlite), most allow only a single query to be active at any given point. So all results from earlier queries must be buffered in your application's memory before executing later queries, which leads to increased memory requirements.
 
 Unfortunately, there isn't one strategy for loading related entities that fits all scenarios. Carefully consider the advantages and disadvantages of single and split queries to select the one that fits your needs.

@@ -133,7 +133,8 @@ public static class Helpers
                     new Post
                     {
                         Title = "Disassembly improvements for optimized managed debugging",
-                        Content = "If you are focused on squeezing out the last bits of performance for your .NET service or..."
+                        Content =
+                            "If you are focused on squeezing out the last bits of performance for your .NET service or..."
                     },
                     new Post
                     {
@@ -146,21 +147,9 @@ public static class Helpers
 
         var tags = new[]
         {
-            new Tag
-            {
-                Text = ".NET",
-                Posts = { blogs[0].Posts[0], blogs[0].Posts[1] }
-            },
-            new Tag
-            {
-                Text = "Visual Studio",
-                Posts = { blogs[1].Posts[0], blogs[1].Posts[1] }
-            },
-            new Tag
-            {
-                Text = "EF Core",
-                Posts = { blogs[0].Posts[0] }
-            }
+            new Tag { Text = ".NET", Posts = { blogs[0].Posts[0], blogs[0].Posts[1] } },
+            new Tag { Text = "Visual Studio", Posts = { blogs[1].Posts[0], blogs[1].Posts[1] } },
+            new Tag { Text = "EF Core", Posts = { blogs[0].Posts[0] } }
         };
 
         context.AddRange(blogs);

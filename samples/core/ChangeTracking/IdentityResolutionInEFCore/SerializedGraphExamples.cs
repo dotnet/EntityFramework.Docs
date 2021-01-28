@@ -27,11 +27,7 @@ namespace Graphs
 
             var serialized = JsonConvert.SerializeObject(
                 blogs,
-                new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    Formatting = Formatting.Indented
-                });
+                new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, Formatting = Formatting.Indented });
 
             Console.WriteLine(serialized);
             #endregion
@@ -70,11 +66,7 @@ namespace Graphs
 
             var serialized = JsonConvert.SerializeObject(
                 posts,
-                new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    Formatting = Formatting.Indented
-                });
+                new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, Formatting = Formatting.Indented });
 
             Console.WriteLine(serialized);
             #endregion
@@ -120,8 +112,7 @@ namespace Graphs
                 posts,
                 new JsonSerializerSettings
                 {
-                    PreserveReferencesHandling = PreserveReferencesHandling.All,
-                    Formatting = Formatting.Indented
+                    PreserveReferencesHandling = PreserveReferencesHandling.All, Formatting = Formatting.Indented
                 });
             #endregion
 
@@ -158,11 +149,7 @@ namespace Graphs
 
             #region Attaching_a_serialized_graph_4
             var serialized = JsonSerializer.Serialize(
-                posts, new JsonSerializerOptions
-                {
-                    ReferenceHandler = ReferenceHandler.Preserve,
-                    WriteIndented = true
-                });
+                posts, new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.Preserve, WriteIndented = true });
             #endregion
 
             Console.WriteLine(serialized);
@@ -184,11 +171,7 @@ namespace Graphs
 
             var serialized = JsonConvert.SerializeObject(
                 posts,
-                new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    Formatting = Formatting.Indented
-                });
+                new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, Formatting = Formatting.Indented });
 
             Console.WriteLine(serialized);
 
@@ -208,26 +191,26 @@ namespace Graphs
             {
                 context.ChangeTracker.TrackGraph(
                     post, node =>
+                    {
+                        var keyValue = node.Entry.Property("Id").CurrentValue;
+                        var entityType = node.Entry.Metadata;
+
+                        var existingEntity = node.Entry.Context.ChangeTracker.Entries()
+                            .FirstOrDefault(
+                                e => Equals(e.Metadata, entityType)
+                                     && Equals(e.Property("Id").CurrentValue, keyValue));
+
+                        if (existingEntity == null)
                         {
-                            var keyValue = node.Entry.Property("Id").CurrentValue;
-                            var entityType = node.Entry.Metadata;
+                            Console.WriteLine($"Tracking {entityType.DisplayName()} entity with key value {keyValue}");
 
-                            var existingEntity = node.Entry.Context.ChangeTracker.Entries()
-                                .FirstOrDefault(
-                                    e => Equals(e.Metadata, entityType)
-                                         && Equals(e.Property("Id").CurrentValue, keyValue));
-
-                            if (existingEntity == null)
-                            {
-                                Console.WriteLine($"Tracking {entityType.DisplayName()} entity with key value {keyValue}");
-
-                                node.Entry.State = EntityState.Modified;
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Discarding duplicate {entityType.DisplayName()} entity with key value {keyValue}");
-                            }
-                        });
+                            node.Entry.State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Discarding duplicate {entityType.DisplayName()} entity with key value {keyValue}");
+                        }
+                    });
             }
 
             context.SaveChanges();
@@ -277,7 +260,8 @@ namespace Graphs
                         new Post
                         {
                             Title = "Disassembly improvements for optimized managed debugging",
-                            Content = "If you are focused on squeezing out the last bits of performance for your .NET service or..."
+                            Content =
+                                "If you are focused on squeezing out the last bits of performance for your .NET service or..."
                         },
                         new Post
                         {

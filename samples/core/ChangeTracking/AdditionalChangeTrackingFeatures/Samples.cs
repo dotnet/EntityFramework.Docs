@@ -23,11 +23,7 @@ namespace Optional
             var tag = context.Tags.Single(e => e.Id == 1);
 
             var joinEntitySet = context.Set<Dictionary<string, int>>("PostTag");
-            var joinEntity = new Dictionary<string, int>
-            {
-                ["PostId"] = post.Id,
-                ["TagId"] = tag.Id
-            };
+            var joinEntity = new Dictionary<string, int> { ["PostId"] = post.Id, ["TagId"] = tag.Id };
             joinEntitySet.Add(joinEntity);
 
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -68,11 +64,7 @@ namespace Optional
             Helpers.RecreateCleanDatabase();
 
             #region Temporary_values_2
-            var blogs = new List<Blog>
-            {
-                new Blog { Id = -1, Name = ".NET Blog" },
-                new Blog { Id = -2, Name = "Visual Studio Blog" }
-            };
+            var blogs = new List<Blog> { new Blog { Id = -1, Name = ".NET Blog" }, new Blog { Id = -2, Name = "Visual Studio Blog" } };
 
             var posts = new List<Post>
             {
@@ -155,7 +147,8 @@ namespace Optional
                         new Post
                         {
                             Title = "Disassembly improvements for optimized managed debugging",
-                            Content = "If you are focused on squeezing out the last bits of performance for your .NET service or..."
+                            Content =
+                                "If you are focused on squeezing out the last bits of performance for your .NET service or..."
                         },
                         new Post
                         {
@@ -164,18 +157,9 @@ namespace Optional
                         },
                     }
                 },
-                new Tag
-                {
-                    Text = ".NET"
-                },
-                new Tag
-                {
-                    Text = "Visual Studio"
-                },
-                new Tag
-                {
-                    Text = "EF Core"
-                });
+                new Tag { Text = ".NET" },
+                new Tag { Text = "Visual Studio" },
+                new Tag { Text = "EF Core" });
 
             context.SaveChanges();
         }
@@ -243,10 +227,10 @@ namespace Optional
                 .SharedTypeEntity<Dictionary<string, int>>(
                     "PostTag",
                     b =>
-                        {
-                            b.IndexerProperty<int>("TagId");
-                            b.IndexerProperty<int>("PostId");
-                        });
+                    {
+                        b.IndexerProperty<int>("TagId");
+                        b.IndexerProperty<int>("PostId");
+                    });
 
             modelBuilder.Entity<Post>()
                 .HasMany(p => p.Tags)

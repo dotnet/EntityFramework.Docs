@@ -1,7 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Samples.Model
 {
@@ -17,31 +14,30 @@ namespace Samples.Model
         {
             modelBuilder.Entity<Customer>(
                 entity =>
-                    {
-                        entity.ToTable("Customer", "Sales");
+                {
+                    entity.ToTable("Customer", "Sales");
 
-                        entity.HasIndex(e => e.AccountNumber)
-                            .HasName("AK_Customer_AccountNumber")
-                            .IsUnique();
+                    entity.HasIndex(e => e.AccountNumber)
+                        .HasDatabaseName("AK_Customer_AccountNumber")
+                        .IsUnique();
 
-                        entity.HasIndex(e => e.TerritoryID)
-                            .HasName("IX_Customer_TerritoryID");
+                    entity.HasIndex(e => e.TerritoryID)
+                        .HasDatabaseName("IX_Customer_TerritoryID");
 
-                        entity.HasIndex(e => e.rowguid)
-                            .HasName("AK_Customer_rowguid")
-                            .IsUnique();
+                    entity.HasIndex(e => e.rowguid)
+                        .HasDatabaseName("AK_Customer_rowguid")
+                        .IsUnique();
 
-                        entity.Property(e => e.AccountNumber)
-                            .IsRequired()
-                            .HasColumnType("varchar(10)")
-                            .ValueGeneratedOnAddOrUpdate();
+                    entity.Property(e => e.AccountNumber)
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
 
-                        entity.Property(e => e.ModifiedDate)
-                            .HasColumnType("datetime")
-                            .HasDefaultValueSql("getdate()");
+                    entity.Property(e => e.ModifiedDate)
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
 
-                        entity.Property(e => e.rowguid).HasDefaultValueSql("newid()");
-                    });
+                    entity.Property(e => e.rowguid).HasDefaultValueSql("newid()");
+                });
         }
 
         public virtual DbSet<Customer> Customers { get; set; }

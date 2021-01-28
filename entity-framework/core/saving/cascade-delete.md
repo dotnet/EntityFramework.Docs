@@ -467,11 +467,11 @@ The following table shows the result of each `OnDelete` value on the foreign key
 |:----------------------|--------------------------
 | Cascade               | ON DELETE CASCADE
 | Restrict              | ON DELETE NO ACTION
-| NoAction              | <database default>
+| NoAction              | database default
 | SetNull               | ON DELETE SET NULL
 | ClientSetNull         | ON DELETE NO ACTION
 | ClientCascade         | ON DELETE NO ACTION
-| ClientNoAction        | <database default>
+| ClientNoAction        | database default
 
 > [!NOTE]
 > This table is confusing and we plan to revisit this in a future release. See [GitHub Issue #21252](https://github.com/dotnet/efcore/issues/21252).

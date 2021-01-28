@@ -7,7 +7,7 @@ namespace EFConnectionResiliency
 {
     public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             using (var db = new BloggingContext())
             {
@@ -31,22 +31,23 @@ namespace EFConnectionResiliency
             {
                 var strategy = db.Database.CreateExecutionStrategy();
 
-                strategy.Execute(() =>
-                {
-                    using (var context = new BloggingContext())
+                strategy.Execute(
+                    () =>
                     {
-                        using (var transaction = context.Database.BeginTransaction())
+                        using (var context = new BloggingContext())
                         {
-                            context.Blogs.Add(new Blog {Url = "http://blogs.msdn.com/dotnet"});
-                            context.SaveChanges();
+                            using (var transaction = context.Database.BeginTransaction())
+                            {
+                                context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                                context.SaveChanges();
 
-                            context.Blogs.Add(new Blog {Url = "http://blogs.msdn.com/visualstudio"});
-                            context.SaveChanges();
+                                context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
+                                context.SaveChanges();
 
-                            transaction.Commit();
+                                transaction.Commit();
+                            }
                         }
-                    }
-                });
+                    });
             }
             #endregion
         }
@@ -60,21 +61,22 @@ namespace EFConnectionResiliency
 
                 var strategy = context1.Database.CreateExecutionStrategy();
 
-                strategy.Execute(() =>
-                {
-                    using (var context2 = new BloggingContext())
+                strategy.Execute(
+                    () =>
                     {
-                        using (var transaction = new TransactionScope())
+                        using (var context2 = new BloggingContext())
                         {
-                            context2.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                            context2.SaveChanges();
+                            using (var transaction = new TransactionScope())
+                            {
+                                context2.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                                context2.SaveChanges();
 
-                            context1.SaveChanges();
+                                context1.SaveChanges();
 
-                            transaction.Complete();
+                                transaction.Complete();
+                            }
                         }
-                    }
-                });
+                    });
             }
             #endregion
         }
@@ -86,14 +88,12 @@ namespace EFConnectionResiliency
             {
                 var strategy = db.Database.CreateExecutionStrategy();
 
-                var blogToAdd = new Blog {Url = "http://blogs.msdn.com/dotnet"};
+                var blogToAdd = new Blog { Url = "http://blogs.msdn.com/dotnet" };
                 db.Blogs.Add(blogToAdd);
 
-                strategy.ExecuteInTransaction(db,
-                    operation: context =>
-                    {
-                        context.SaveChanges(acceptAllChangesOnSuccess: false);
-                    },
+                strategy.ExecuteInTransaction(
+                    db,
+                    operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
                     verifySucceeded: context => context.Blogs.AsNoTracking().Any(b => b.BlogId == blogToAdd.BlogId));
 
                 db.ChangeTracker.AcceptAllChanges();
@@ -110,14 +110,12 @@ namespace EFConnectionResiliency
 
                 db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
 
-                var transaction = new TransactionRow {Id = Guid.NewGuid()};
+                var transaction = new TransactionRow { Id = Guid.NewGuid() };
                 db.Transactions.Add(transaction);
 
-                strategy.ExecuteInTransaction(db,
-                    operation: context =>
-                    {
-                        context.SaveChanges(acceptAllChangesOnSuccess: false);
-                    },
+                strategy.ExecuteInTransaction(
+                    db,
+                    operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
                     verifySucceeded: context => context.Transactions.AsNoTracking().Any(t => t.Id == transaction.Id));
 
                 db.ChangeTracker.AcceptAllChanges();

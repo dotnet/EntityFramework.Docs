@@ -9,8 +9,9 @@ namespace WithContextFactory
         #region ConfigureServices
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextFactory<ApplicationDbContext>(options =>
-                options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test"));
+            services.AddDbContextFactory<ApplicationDbContext>(
+                options =>
+                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test"));
         }
         #endregion
     }

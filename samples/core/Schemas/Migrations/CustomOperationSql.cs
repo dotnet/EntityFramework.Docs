@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 
-static class SqlMigrationBuilderExtensions
+internal static class SqlMigrationBuilderExtensions
 {
     #region snippet_CustomOperationSql
-    static OperationBuilder<SqlOperation> CreateUser(
+    private static OperationBuilder<SqlOperation> CreateUser(
         this MigrationBuilder migrationBuilder,
         string name,
         string password)

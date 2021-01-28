@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.DataAnnotations.Relational.ColumnName
 {
-    class MyContext : DbContext
+    internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
     }
@@ -13,6 +13,7 @@ namespace EFModeling.DataAnnotations.Relational.ColumnName
     {
         [Column("blog_id")]
         public int BlogId { get; set; }
+
         public string Url { get; set; }
     }
     #endregion

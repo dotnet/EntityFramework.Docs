@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
+﻿using System.Linq;
 
 namespace NullSemantics
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using var context = new NullSemanticsContext();
             context.Database.EnsureDeleted();
@@ -26,7 +25,7 @@ namespace NullSemantics
             //ManualOptimization();
         }
 
-        static void BasicExamples()
+        private static void BasicExamples()
         {
             using var context = new NullSemanticsContext();
             #region BasicExamples
@@ -44,7 +43,7 @@ namespace NullSemantics
             var result5 = query5.ToList();
         }
 
-        static void Functions()
+        private static void Functions()
         {
             using var context = new NullSemanticsContext();
 
@@ -55,13 +54,14 @@ namespace NullSemantics
             var result = query.ToList();
         }
 
-        static void ManualOptimization()
+        private static void ManualOptimization()
         {
             using var context = new NullSemanticsContext();
 
             #region ManualOptimization
             var query1 = context.Entities.Where(e => e.String1 != e.String2 || e.String1.Length == e.String2.Length);
-            var query2 = context.Entities.Where(e => e.String1 != null && e.String2 != null && (e.String1 != e.String2 || e.String1.Length == e.String2.Length));
+            var query2 = context.Entities.Where(
+                e => e.String1 != null && e.String2 != null && (e.String1 != e.String2 || e.String1.Length == e.String2.Length));
             #endregion
 
             var result1 = query1.ToList();

@@ -31,7 +31,7 @@ namespace CommandLine
         }
     }
 
-    class MyDbContext : DbContext
+    internal class MyDbContext : DbContext
     {
     }
 }

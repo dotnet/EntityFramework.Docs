@@ -9,7 +9,8 @@ namespace EFSaving.Disconnected
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFSaving.Disconnected;Trusted_Connection=True;ConnectRetryCount=0");
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Disconnected;Trusted_Connection=True;ConnectRetryCount=0");
         }
     }
 }

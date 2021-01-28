@@ -6,14 +6,28 @@ using Performance.LazyLoading;
 
 namespace Performance
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using (var context = new BloggingContext())
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
+
+                context.Add(
+                    new Blog
+                    {
+                        Url = "http://someblog.microsoft.com",
+                        Rating = 0,
+                        Posts = new List<Post>
+                        {
+                            new Post { Title = "Post 1", Content = "Sometimes..." },
+                            new Post { Title = "Post 2", Content = "Other times..." }
+                        }
+                    });
+
+                context.SaveChanges();
             }
 
             using (var context = new BloggingContext())
@@ -102,8 +116,8 @@ namespace Performance
                 #region SaveChangesBatching
                 var blog = context.Blogs.Single(b => b.Url == "http://someblog.microsoft.com");
                 blog.Url = "http://someotherblog.microsoft.com";
-                context.Add(new Blog { Url = "http://newblog1.microsoft.com"});
-                context.Add(new Blog { Url = "http://newblog2.microsoft.com"});
+                context.Add(new Blog { Url = "http://newblog1.microsoft.com" });
+                context.Add(new Blog { Url = "http://newblog2.microsoft.com" });
                 context.SaveChanges();
                 #endregion
             }
@@ -133,15 +147,15 @@ namespace Performance
 
                 for (var i = 0; i < 10; i++)
                 {
-                    context.Blogs.Add(new LazyLoading.Blog
-                    {
-                        Url = $"http://blog{i}.microsoft.com",
-                        Posts = new List<LazyLoading.Post>
+                    context.Blogs.Add(
+                        new LazyLoading.Blog
                         {
-                            new() { Title = $"1st post of blog{i}" },
-                            new() { Title = $"2nd post of blog{i}" }
-                        }
-                    });
+                            Url = $"http://blog{i}.microsoft.com",
+                            Posts = new List<LazyLoading.Post>
+                            {
+                                new() { Title = $"1st post of blog{i}" }, new() { Title = $"2nd post of blog{i}" }
+                            }
+                        });
                 }
 
                 context.SaveChanges();
@@ -178,6 +192,7 @@ namespace Performance
                 {
                     employee.Salary += 1000;
                 }
+
                 context.SaveChanges();
                 #endregion
             }
