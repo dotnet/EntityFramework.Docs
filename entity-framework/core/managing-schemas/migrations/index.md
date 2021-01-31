@@ -44,7 +44,7 @@ You're now ready to add your first migration! Instruct EF Core to create a migra
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef migrations add InitialCreate
+dotnet-ef migrations add InitialCreate
 ```
 
 #### [Visual Studio](#tab/vs)
@@ -64,7 +64,7 @@ At this point you can have EF create your database and create your schema from t
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef database update
+dotnet-ef database update
 ```
 
 #### [Visual Studio](#tab/vs)
@@ -95,7 +95,7 @@ Your model and your production database are now out of sync - we must add a new 
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef migrations add AddBlogCreatedTimestamp
+dotnet-ef migrations add AddBlogCreatedTimestamp
 ```
 
 #### [Visual Studio](#tab/vs)
@@ -117,7 +117,7 @@ You can now apply your migration as before:
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef database update
+dotnet-ef database update
 ```
 
 #### [Visual Studio](#tab/vs)
