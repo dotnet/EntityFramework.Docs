@@ -37,7 +37,7 @@ Note that there are no async versions of some LINQ operators such as Where or Or
 
 ## Client-side async LINQ operators
 
-The async LINQ operators discussed above can only be used on EF queries - you cannot use them with client-side LINQ to Objects query. To perform client-side async LINQ operations outside of EF, use the [System.Interactive.Async package](https://www.nuget.org/packages/System.Interactive.Async); this package can be especially useful for performing operations on the client that cannot be translated for evaluation at the server.
+The async LINQ operators discussed above can only be used on EF queries - you cannot use them with client-side LINQ to Objects query. To perform client-side async LINQ operations outside of EF, use the [System.Linq.Async package](https://www.nuget.org/packages/System.Linq.Async); this package can be especially useful for performing operations on the client that cannot be translated for evaluation at the server.
 
 Unfortunately, referencing System.Interactive.Async causes ambiguous invocation compilation errors on LINQ operators applied to EF's DbSets; this makes it hard to use both EF and System.Interactive.Async in the same project. To work around this issue, add AsQueryable to your DbSet:
 
