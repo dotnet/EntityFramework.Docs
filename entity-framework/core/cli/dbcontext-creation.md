@@ -43,7 +43,7 @@ A design-time factory can be especially useful if you need to configure the `DbC
 
 ## Args
 
-Both <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory-1.CreateDbContext> and `Program.CreateHostBuilder` accept command line arguments.
+Both <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory.CreateDbContext?displayProperty=nameWithType> and `Program.CreateHostBuilder` accept command line arguments.
 
 Starting in EF Core 5.0, you can specify these arguments from the tools:
 
