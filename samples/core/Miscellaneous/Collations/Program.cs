@@ -33,15 +33,17 @@ namespace EFCollations
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCollations;Trusted_Connection=True;ConnectRetryCount=0");
         }
 
-        #region OnModelCreating
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region DatabaseCollation
             modelBuilder.UseCollation("SQL_Latin1_General_CP1_CS_AS");
+            #endregion
 
+            #region ColumnCollation
             modelBuilder.Entity<Customer>().Property(c => c.Name)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            #endregion
         }
-        #endregion
     }
 
     public class Customer
