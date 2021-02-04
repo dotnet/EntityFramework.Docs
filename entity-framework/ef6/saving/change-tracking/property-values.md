@@ -216,7 +216,7 @@ using (var context = new BloggingContext())
 {
     var blog = context.Blogs.Find(1);
 
-    var newValues = new Dictionary\<string, object>
+    var newValues = new Dictionary<string, object>
     {
         { "Name", "The New ADO.NET Blog" },
         { "Url", "blogs.msdn.com/adonet" },
@@ -244,7 +244,7 @@ using (var context = new BloggingContext())
 {
     var user = context.Users.Find("johndoe1987");
 
-    var newValues = new Dictionary\<string, object>
+    var newValues = new Dictionary<string, object>
     {
         { "Name", "John Doe" },
         { "Location.City", "Redmond" },
