@@ -9,7 +9,9 @@ namespace EFGetStarted
         {
             using (var db = new BloggingContext())
             {
-                // Note: This sample requires the database to be created before running.
+                // This will delete your database and recreate it each time the program is run.
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
 
                 // Create
                 Console.WriteLine("Inserting a new blog");

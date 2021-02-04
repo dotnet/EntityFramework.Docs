@@ -92,42 +92,11 @@ EF Core can also [reverse engineer](xref:core/managing-schemas/scaffolding) a mo
 
 Tip: This application intentionally keeps things simple for clarity. [Connection strings](xref:core/miscellaneous/connection-strings) should not be stored in the code for production applications. You may also want to split each C# class into its own file.
 
-## Create the database
-
-The following steps use [migrations](xref:core/managing-schemas/migrations/index) to create a database.
-
-### [.NET Core CLI](#tab/netcore-cli)
-
-* Run the following commands:
-
-  ```dotnetcli
-  dotnet tool install --global dotnet-ef
-  dotnet add package Microsoft.EntityFrameworkCore.Design
-  dotnet ef migrations add InitialCreate
-  dotnet ef database update
-  ```
-
-  This installs [dotnet ef](xref:core/cli/dotnet) and the design package which is required to run the command on a project. The `migrations` command scaffolds a migration to create the initial set of tables for the model. The `database update` command creates the database and applies the new migration to it.
-
-### [Visual Studio](#tab/visual-studio)
-
-* Run the following commands in **Package Manager Console (PMC)**
-
-  ```powershell
-  Install-Package Microsoft.EntityFrameworkCore.Tools
-  Add-Migration InitialCreate
-  Update-Database
-  ```
-
-  This installs the [PMC tools for EF Core](xref:core/cli/powershell). The `Add-Migration` command scaffolds a migration to create the initial set of tables for the model. The `Update-Database` command creates the database and applies the new migration to it.
-
----
-
-## Create, read, update & delete
+## Use EF Core to access the database
 
 * Open *Program.cs* and replace the contents with the following code:
 
-  [!code-csharp[Main](../../../../samples/core/GetStarted/Program.cs)]
+[!code-csharp[Main](../../../../samples/core/GetStarted/Program.cs)]
 
 ## Run the app
 
