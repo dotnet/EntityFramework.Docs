@@ -43,7 +43,7 @@ The APIs to generate views are on the System.Data.Entity.Core.Mapping.StorageMap
 Once you have the StorageMappingItemCollection then you can get access to the GenerateViews and ComputeMappingHashValue methods.
 
 ``` csharp
-    public Dictionary\<EntitySetBase, DbMappingView> GenerateViews(IList<EdmSchemaError> errors)
+    public Dictionary<EntitySetBase, DbMappingView> GenerateViews(IList<EdmSchemaError> errors)
     public string ComputeMappingHashValue()
 ```
 
