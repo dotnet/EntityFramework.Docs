@@ -9,7 +9,7 @@ public class Program
         Console.WriteLine("Samples for _Identity Resolution in EF Core_");
         Console.WriteLine();
 
-        Samples.DbContext_verses_DbSet_methods_1();
+        Samples.DbContext_versus_DbSet_methods_1();
         Samples.Temporary_values_1();
         Samples.Temporary_values_2();
 

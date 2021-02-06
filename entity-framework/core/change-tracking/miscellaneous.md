@@ -16,7 +16,7 @@ This document covers miscellaneous features and scenarios involving change track
 > [!TIP]
 > You can run and debug into all the code in this document by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/ChangeTracking/AdditionalChangeTrackingFeatures).
 
-## Add verses AddAsync
+## `Add` versus `AddAsync`
 
 Entity Framework Core (EF Core) provides async methods whenever using that method may result in a database interaction. Synchronous methods are also provided to avoid overhead when using databases that do not support high performance asynchronous access.
 
@@ -24,16 +24,16 @@ Entity Framework Core (EF Core) provides async methods whenever using that metho
 
 Other similar methods like `Update`, `Attach`, and `Remove` do not have async overloads because they never generate new key values, and hence never need to access the database.
 
-## AddRange, UpdateRange, AttachRange, and RemoveRange
+## `AddRange`, `UpdateRange`, `AttachRange`, and `RemoveRange`
 
-<xref:Microsoft.EntityFrameworkCore.DbSet%601> and <xref:Microsoft.EntityFrameworkCore.DbContext> provide alternate versions of `Add`, `Update`, `Attach`, and `Remove` that accept multiple instances in a single call. These methods are called `AddRange`, `UpdateRange`, `AttachRange`, and `RemoveRange` respectively.
+<xref:Microsoft.EntityFrameworkCore.DbSet%601> and <xref:Microsoft.EntityFrameworkCore.DbContext> provide alternate versions of `Add`, `Update`, `Attach`, and `Remove` that accept multiple instances in a single call. These methods are <xref:Microsoft.EntityFrameworkCore.DbSet%601.AddRange%2A>, <xref:Microsoft.EntityFrameworkCore.DbSet%601.UpdateRange%2A>, <xref:Microsoft.EntityFrameworkCore.DbSet%601.AttachRange%2A>, and <xref:Microsoft.EntityFrameworkCore.DbSet%601.RemoveRange%2A> respectively.
 
 These methods are provided as a convenience. Using a "range" method has the same functionality as multiple calls to the equivalent non-range method. There is no significant performance difference between the two approaches.
 
 > [!NOTE]
-> This is different from EF6, where AddRange and Add both automatically called DetectChanges, but calling Add multiple times caused DetectChanges to be called multiple times instead of once. This made AddRange more efficient in EF6. In EF Core, neither of these methods automatically call DetectChanges.
+> This is different from EF6, where `AddRange` and `Add` both automatically called `DetectChanges`, but calling `Add` multiple times caused DetectChanges to be called multiple times instead of once. This made `AddRange` more efficient in EF6. In EF Core, neither of these methods automatically call `DetectChanges`.
 
-## DbContext verses DbSet methods
+## DbContext versus DbSet methods
 
 Many methods, including `Add`, `Update`, `Attach`, and `Remove`, have implementations on both <xref:Microsoft.EntityFrameworkCore.DbSet%601> and <xref:Microsoft.EntityFrameworkCore.DbContext>. These methods have _exactly the same behavior_ for normal entity types. This is because the CLR type of the entity is mapped onto one and only one entity type in the EF Core model. Therefore, the CLR type fully defines where the entity fits in the model, and so the DbSet to use can be determined implicitly.
 
@@ -84,14 +84,14 @@ Shared-type entity types are used by default for the join entities in many-to-ma
 
             context.SaveChanges();
 -->
-[!code-csharp[DbContext_verses_DbSet_methods_1](../../../samples/core/ChangeTracking/AdditionalChangeTrackingFeatures/Samples.cs?name=DbContext_verses_DbSet_methods_1)]
+[!code-csharp[DbContext_versus_DbSet_methods_1](../../../samples/core/ChangeTracking/AdditionalChangeTrackingFeatures/Samples.cs?name=DbContext_versus_DbSet_methods_1)]
 
 Notice that <xref:Microsoft.EntityFrameworkCore.DbContext.Set%60%601(System.String)?displayProperty=nameWithType> is used to create a DbSet for the `PostTag` entity type. This DbSet can then be used to call `Add` with the new join entity instance.
 
 > [!IMPORTANT]
 > The CLR type used for join entity types by convention may change in future releases to improve performance. Do not depend on any specific join entity type unless it has been explicitly configured as is done for `Dictionary<string, int>` in the code above.
 
-## Property verses field access
+## Property versus field access
 
 Starting with EF Core 3.0, access to entity properties uses the backing field of the property by default. This is efficient and avoids triggering side effects from calling property getters and setters. For example, this is how lazy-loading is able to avoid triggering infinite loops. See [Backing Fields](xref:core/modeling/backing-field) for more information on configuring backing fields in the model.
 
