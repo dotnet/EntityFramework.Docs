@@ -37,7 +37,7 @@ The web application must now re-attach these entities so that they are again tra
 > [!TIP]
 > Attaching entities to the _same DbContext instance_ that they were queried from should not normally be needed. Do not routinely perform a no-tracking query and then attach the returned entities to the same context. This will be slower than using a tracking query, and may also result in issues such as missing shadow property values, making it harder to get right.
 
-### Generated verses explicit key values
+### Generated versus explicit key values
 
 By default, integer and GUID [key properties](xref:core/modeling/keys) are configured to use [automatically generated key values](xref:core/modeling/generated-properties). This has a **major advantage for change tracking: an unset key value indicates that the entity is "new"**. By "new", we mean that it has not yet been inserted into the database.
 

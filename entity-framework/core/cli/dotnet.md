@@ -123,7 +123,7 @@ dotnet ef database update -- --environment Production
 
 Starting in EF Core 5.0, any additional arguments are passed to the application.
 
-## dotnet ef database drop
+## `dotnet ef database drop`
 
 Deletes the database.
 
@@ -136,7 +136,7 @@ Options:
 
 The [common options](#common-options) are listed above.
 
-## dotnet ef database update
+## `dotnet ef database update`
 
 Updates the database to the last migration or to a specified migration.
 
@@ -161,19 +161,19 @@ dotnet ef database update InitialCreate
 dotnet ef database update 20180904195021_InitialCreate --connection your_connection_string
 ```
 
-## dotnet ef dbcontext info
+## `dotnet ef dbcontext info`
 
 Gets information about a `DbContext` type.
 
 The [common options](#common-options) are listed above.
 
-## dotnet ef dbcontext list
+## `dotnet ef dbcontext list`
 
 Lists available `DbContext` types.
 
 The [common options](#common-options) are listed above.
 
-## dotnet ef dbcontext scaffold
+## `dotnet ef dbcontext scaffold`
 
 Generates code for a `DbContext` and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.
 
@@ -222,7 +222,7 @@ dotnet user-secrets set ConnectionStrings:Blogging "Data Source=(localdb)\MSSQLL
 dotnet ef dbcontext scaffold Name=ConnectionStrings:Blogging Microsoft.EntityFrameworkCore.SqlServer
 ```
 
-## dotnet ef dbcontext script
+## `dotnet ef dbcontext script`
 
 Generates a SQL script from the DbContext. Bypasses any migrations. Added in EF Core 3.0.
 
@@ -234,7 +234,7 @@ Options:
 
 The [common options](#common-options) are listed above.
 
-## dotnet ef migrations add
+## `dotnet ef migrations add`
 
 Adds a new migration.
 
@@ -253,7 +253,7 @@ Options:
 
 The [common options](#common-options) are listed above.
 
-## dotnet ef migrations list
+## `dotnet ef migrations list`
 
 Lists available migrations.
 
@@ -266,7 +266,7 @@ Options:
 
 The [common options](#common-options) are listed above.
 
-## dotnet ef migrations remove
+## `dotnet ef migrations remove`
 
 Removes the last migration (rolls back the code changes that were done for the migration).
 
@@ -278,7 +278,7 @@ Options:
 
 The [common options](#common-options) are listed above.
 
-## dotnet ef migrations script
+## `dotnet ef migrations script`
 
 Generates a SQL script from migrations.
 
