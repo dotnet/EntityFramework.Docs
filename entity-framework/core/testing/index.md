@@ -80,7 +80,7 @@ SQLite is a good choice because:
 
 However, remember that:
 
-* SQLite inevitability doesn't support everything that your production database system does.
+* SQLite inevitably doesn't support everything that your production database system does.
 * SQLite will behave differently than your production database system for some queries.
 
 So if you do use SQLite for some testing, make sure to also test against your real database system.
