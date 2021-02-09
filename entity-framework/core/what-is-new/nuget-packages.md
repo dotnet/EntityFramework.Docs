@@ -15,7 +15,7 @@ Entity Framework Core (EF Core) is shipped as [NuGet](https://www.nuget.org/) pa
 
 The usual process for installing packages is:
 
-- Decide on a database provider and install the appropriate package (see below)
+- Decide on a database provider and install the appropriate package ([see below](#database-providers))
 - Also install [Microsoft.EntityFrameworkCore](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/), and [Microsoft.EntityFrameworkCore.Relational](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Relational/) if using a relational provider. This helps ensure that consistent versions are being used, and also means that NuGet will let you know know when new package versions are shipped.
 - Optionally, decide which kind of tooling you need and install the appropriate packages for that (see below)
 
@@ -59,7 +59,7 @@ Use of tooling for [EF Core migrations](xref:core/managing-schemas/migrations/in
 See [Entity Framework Core Tools Reference](xref:core/cli/index) for more information on using EF Core tooling, including how to correctly install the `dotnet-ef` tool in a project or globally.
 
 > [!TIP]
-> By default, the Microsoft.EntityFrameworkCore.Design package is installed in such a way that it will not be deployed with your application. This also means that its types cannot be transitively used in other projects. Use a normal `PackageReference` in your `.csproj` file or equivalent if you need access to the types in package.
+> By default, the Microsoft.EntityFrameworkCore.Design package is installed in such a way that it will not be deployed with your application. This also means that its types cannot be transitively used in other projects. Use a normal `PackageReference` in your `.csproj` file or equivalent if you need access to the types in package. See [Design-time services](xref:core/cli/services) for more information.
 
 ## Extension packages
 
@@ -71,6 +71,7 @@ There are many [extensions for EF Core](xref:core/extensions/index) published bo
 | Spatial support for SQL Server               | [Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/) | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite/) and [NetTopologySuite.IO.SqlServerBytes](https://www.nuget.org/packages/NetTopologySuite.IO.SqlServerBytes/)
 | Spatial support for SQLite                   | [Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/) | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite/) and [NetTopologySuite.IO.SpatiaLite](https://www.nuget.org/packages/NetTopologySuite.IO.SpatiaLite/)
 | Spatial support for PostgreSQL               | [Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite) | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite/) and [NetTopologySuite.IO.PostGIS](https://www.nuget.org/packages/NetTopologySuite.IO.PostGIS/) (via [Npgsql.NetTopologySuite](https://www.nuget.org/packages/Npgsql.NetTopologySuite/))
+| Spatial support for MySQL                    | [Pomelo.EntityFrameworkCore.MySql.NetTopologySuite](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql.NetTopologySuite) | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite/)
 
 ## Other packages
 
