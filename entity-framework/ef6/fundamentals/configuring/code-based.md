@@ -15,7 +15,7 @@ Configuration in a config file is described in a [separate article](xref:ef6/fun
 
 ## Using `DbConfiguration`
 
-Code-based configuration in EF6 and above is achieved by creating a subclass of System.Data.Entity.Config.`DbConfiguration`. The following guidelines should be followed when subclassing `DbConfiguration`:  
+Code-based configuration in EF6 and above is achieved by creating a subclass of `System.Data.Entity.Config.DbConfiguration`. The following guidelines should be followed when subclassing `DbConfiguration`:  
 
 - Create only one `DbConfiguration` class for your application. This class specifies app-domain wide settings.  
 - Place your `DbConfiguration` class in the same assembly as your `DbContext` class. (See the *Moving `DbConfiguration`* section if you want to change this.)  
