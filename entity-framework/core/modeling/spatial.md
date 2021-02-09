@@ -76,11 +76,14 @@ The spatial NuGet packages also enable [reverse engineering](xref:core/managing-
 
 ## SRID Ignored during client operations
 
-NTS ignores SRID values during operations. It assumes a planar coordinate system. This means that if you specify coordinates in terms of longitude and latitude, some client-evaluated values like distance, length, and area will be in degrees, not meters. For more meaningful values, you first need to project the coordinates to another coordinate system using a library like [ProjNet4GeoAPI](https://github.com/NetTopologySuite/ProjNet4GeoAPI) before calculating these values.
+NTS ignores SRID values during operations. It assumes a planar coordinate system. This means that if you specify coordinates in terms of longitude and latitude, some client-evaluated values like distance, length, and area will be in degrees, not meters. For more meaningful values, you first need to project the coordinates to another coordinate system using a library like [ProjNet (for GeoAPI)](https://github.com/NetTopologySuite/ProjNet4GeoAPI).
+
+> [!NOTE]
+> Use the newer [ProjNet NuGet package](https://www.nuget.org/packages/ProjNet/), **not** the older package called ProjNet4GeoAPI.
 
 If an operation is server-evaluated by EF Core via SQL, the result's unit will be determined by the database.
 
-Here is an example of using ProjNet4GeoAPI to calculate the distance between two cities.
+Here is an example of using ProjNet to calculate the distance between two cities.
 
 [!code-csharp[](../../../samples/core/Spatial/Projections/GeometryExtensions.cs?name=snippet_GeometryExtensions)]
 
