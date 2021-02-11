@@ -9,7 +9,7 @@ namespace EFGetStarted
         public DbSet<Post> Posts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite("Data Source=blogging.db");
+            => options.UseSqlite(@"Data Source=C:\blogging.db");
     }
 
     public class Blog

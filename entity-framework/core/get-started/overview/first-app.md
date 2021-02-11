@@ -139,20 +139,7 @@ dotnet run
 
 ### [Visual Studio](#tab/visual-studio)
 
-Visual Studio uses an inconsistent working directory when running .NET Core console apps. (see [dotnet/project-system#3619](https://github.com/dotnet/project-system/issues/3619)) This results in an exception being thrown: *no such table: Blogs*. To update the working directory:
-
-* Right-click on the project and select **Edit Project File**
-* Just below the *TargetFramework* property, add the following:
-
-  ```xml
-  <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
-  ```
-
-* Save the file
-
-Now you can run the app:
-
-* **Debug > Start Without Debugging**
+**Debug > Start Without Debugging**
 
 ---
 
