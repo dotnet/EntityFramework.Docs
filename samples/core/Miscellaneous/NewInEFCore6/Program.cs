@@ -16,5 +16,9 @@ public class Program
         InMemoryRequiredPropertiesSample.Required_properties_validated_with_in_memory_database();
         InMemoryRequiredPropertiesSample.Required_property_validation_with_in_memory_database_can_be_disabled();
         SqliteSamples.SavepointsApi();
+        IsNullOrWhitespaceSample.Translate_IsNullOrWhitespace();
+
+        // Did not make it for preview 1
+        // StringConcatSample.Concat_with_multiple_args();
     }
 }

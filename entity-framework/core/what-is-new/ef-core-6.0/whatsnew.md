@@ -285,6 +285,55 @@ This validation can be disabled if necessary. For example:
 -->
 [!code-csharp[OnConfiguring](../../../../samples/core/Miscellaneous/NewInEFCore6/InMemoryRequiredPropertiesSample.cs?name=OnConfiguring)]
 
+### Improved SQL Server translation for IsNullOrWhitespace
+
+GitHub Issue: [#22916](https://github.com/dotnet/efcore/issues/22916). This feature was contributed by [@Marusyk](https://github.com/Marusyk).
+
+Consider the following query:
+
+<!--
+        var users = context.Users.Where(
+            e => string.IsNullOrWhiteSpace(e.FirstName)
+                 || string.IsNullOrWhiteSpace(e.LastName)).ToList();
+-->
+[!code-csharp[Query](../../../../samples/core/Miscellaneous/NewInEFCore6/IsNullOrWhitespaceSample.cs?name=Query)]
+
+Before EF Core 6.0, this was translated to the following on SQL Server:
+
+```sql
+SELECT [u].[Id], [u].[FirstName], [u].[LastName]
+FROM [Users] AS [u]
+WHERE ([u].[FirstName] IS NULL OR (LTRIM(RTRIM([u].[FirstName])) = N'')) OR ([u].[LastName] IS NULL OR (LTRIM(RTRIM([u].[LastName])) = N''))
+```
+
+This translation has been improved for EF Core 6.0 to:
+
+```sql
+SELECT [u].[Id], [u].[FirstName], [u].[LastName]
+FROM [Users] AS [u]
+WHERE ([u].[FirstName] IS NULL OR ([u].[FirstName] = N'')) OR ([u].[LastName] IS NULL OR ([u].[LastName] = N''))
+```
+
+### Database comments are scaffolded to code comments
+
+GitHub Issue: [#19113](https://github.com/dotnet/efcore/issues/19113). This feature was contributed by [@ErikEJ](https://github.com/ErikEJ).
+
+Comments on SQL tables and columns are now scaffolded into the entity types created when [reverse-engineering an EF Core model](xref:core/managing-schemas/scaffolding) from an existing SQL Server database. For example:
+
+```csharp
+/// <summary>
+/// The Blog table.
+/// </summary>
+public partial class Blog
+{
+    /// <summary>
+    /// The primary key.
+    /// </summary>
+    [Key]
+    public int Id { get; set; }
+}
+```
+
 ## Microsoft.Data.Sqlite 6.0 Preview 1
 
 > [!TIP]
