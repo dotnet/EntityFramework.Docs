@@ -34,7 +34,7 @@ Starting with EF Core 6.0, a string property can now be mapped to a non-Unicode 
         public string Isbn { get; set; }
     }
 -->
-[!code-csharp[BookEntityType](../../../samples/core/Miscellaneous/NewInEFCore6/UnicodeAttributeSample.cs?name=BookEntityType)]
+[!code-csharp[BookEntityType](../../../../samples/core/Miscellaneous/NewInEFCore6/UnicodeAttributeSample.cs?name=BookEntityType)]
 
 Since ISBNs cannot contain any non-unicode characters, the `Unicode` attribute will cause a non-Unicode string type to be used. In addition, `MaxLength` is used to limit the size of the database column. For example, when using SQL Server, this results in a database column of `varchar(22)`:
 
@@ -64,7 +64,7 @@ The precision and scale of a database column can now be configured using mapping
         public decimal Price { get; set; }
     }
 -->
-[!code-csharp[ProductEntityType](../../../samples/core/Miscellaneous/NewInEFCore6/PrecisionAttributeSample.cs?name=ProductEntityType)]
+[!code-csharp[ProductEntityType](../../../../samples/core/Miscellaneous/NewInEFCore6/PrecisionAttributeSample.cs?name=ProductEntityType)]
 
 EF Core will map this property to a database column with precision 10 and scale 2. For example, on SQL Server:
 
@@ -93,7 +93,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
     }
 }
 -->
-[!code-csharp[BookConfiguration](../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=BookConfiguration)]
+[!code-csharp[BookConfiguration](../../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=BookConfiguration)]
 
 Normally, this configuration class must be instantiated and called into from <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A?displayProperty=nameWithType>. For example:
 
@@ -115,7 +115,7 @@ public class Book
     public string Isbn { get; set; }
 }
 -->
-[!code-csharp[BookEntityType](../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=BookEntityType)]
+[!code-csharp[BookEntityType](../../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=BookEntityType)]
 
 This attribute means that EF Core will use the specified `IEntityTypeConfiguration` implementation whenever the `Book` entity type is included in a model. The entity type is included in a model using one of the normal mechanisms. For example, by creating a <xref:Microsoft.EntityFrameworkCore.DbSet%601> property for the entity type:
 
@@ -126,7 +126,7 @@ public class BooksContext : DbContext
 
     //...
 -->
-[!code-csharp[DbContext](../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=DbContext)]
+[!code-csharp[DbContext](../../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=DbContext)]
 
 Or by registering it in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>:
 
@@ -154,14 +154,14 @@ Calls to <xref:System.Object.ToString> are now translated to SQL when using the 
         public long PhoneNumber { get; set; }
     }
 -->
-[!code-csharp[UserEntityType](../../../samples/core/Miscellaneous/NewInEFCore6/ToStringTranslationSample.cs?name=UserEntityType)]
+[!code-csharp[UserEntityType](../../../../samples/core/Miscellaneous/NewInEFCore6/ToStringTranslationSample.cs?name=UserEntityType)]
 
 `ToString` can be used to convert the number to a string in the database. We can then use this string with a function such as `LIKE` to find numbers that match a pattern. For example, to find all numbers containing 555:
 
 <!--
 var users = context.Users.Where(u => EF.Functions.Like(u.PhoneNumber.ToString(), "%555%")).ToList();
 -->
-[!code-csharp[Query](../../../samples/core/Miscellaneous/NewInEFCore6/ToStringTranslationSample.cs?name=Query)]
+[!code-csharp[Query](../../../../samples/core/Miscellaneous/NewInEFCore6/ToStringTranslationSample.cs?name=Query)]
 
 This translates to the following SQL when using a SQLite database:
 
@@ -187,14 +187,14 @@ GitHub Issue: [#16141](https://github.com/dotnet/efcore/issues/16141). This feat
         public int Popularity { get; set; }
     }
 -->
-[!code-csharp[UserEntityType](../../../samples/core/Miscellaneous/NewInEFCore6/RandomFunctionSample.cs?name=UserEntityType)]
+[!code-csharp[UserEntityType](../../../../samples/core/Miscellaneous/NewInEFCore6/RandomFunctionSample.cs?name=UserEntityType)]
 
 `Popularity` can have values from 1 to 5 inclusive. Using `EF.Functions.Random` we can write a query to return all users with a randomly chosen popularity:
 
 <!--
 var users = context.Users.Where(u => u.Popularity == (int)(EF.Functions.Random() * 5.0) + 1).ToList();
 -->
-[!code-csharp[Query](../../../samples/core/Miscellaneous/NewInEFCore6/RandomFunctionSample.cs?name=Query)]
+[!code-csharp[Query](../../../../samples/core/Miscellaneous/NewInEFCore6/RandomFunctionSample.cs?name=Query)]
 
 This translates to the following SQL when using a SQL Server database:
 
@@ -222,7 +222,7 @@ SQL Server [sparse columns](/sql/relational-databases/tables/use-sparse-columns)
         public string ForumName { get; set; }
     }
 -->
-[!code-csharp[UserEntityType](../../../samples/core/Miscellaneous/NewInEFCore6/SparseColumnsSample.cs?name=UserEntityType)]
+[!code-csharp[UserEntityType](../../../../samples/core/Miscellaneous/NewInEFCore6/SparseColumnsSample.cs?name=UserEntityType)]
 
 There may be millions of users, with only a handful of these being moderators. This means mapping the `ForumName` as sparse might make sense here. This can now be configured using `IsSparse` in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>. For example:
 
@@ -235,7 +235,7 @@ There may be millions of users, with only a handful of these being moderators. T
                 .IsSparse();
         }
 -->
-[!code-csharp[OnModelCreating](../../../samples/core/Miscellaneous/NewInEFCore6/SparseColumnsSample.cs?name=OnModelCreating)]
+[!code-csharp[OnModelCreating](../../../../samples/core/Miscellaneous/NewInEFCore6/SparseColumnsSample.cs?name=OnModelCreating)]
 
 EF Core migrations will then mark the column as sparse. For example:
 
@@ -266,7 +266,7 @@ The EF Core in-memory database will now throw an exception if an attempt is made
         public string Username { get; set; }
     }
 -->
-[!code-csharp[UserEntityType](../../../samples/core/Miscellaneous/NewInEFCore6/InMemoryRequiredPropertiesSample.cs?name=UserEntityType)]
+[!code-csharp[UserEntityType](../../../../samples/core/Miscellaneous/NewInEFCore6/InMemoryRequiredPropertiesSample.cs?name=UserEntityType)]
 
 Attempting to save an entity with a null `Username` will result in the following exception:
 
@@ -283,7 +283,7 @@ This validation can be disabled if necessary. For example:
                 .EnableNullabilityCheck(false);
         }
 -->
-[!code-csharp[OnConfiguring](../../../samples/core/Miscellaneous/NewInEFCore6/InMemoryRequiredPropertiesSample.cs?name=OnConfiguring)]
+[!code-csharp[OnConfiguring](../../../../samples/core/Miscellaneous/NewInEFCore6/InMemoryRequiredPropertiesSample.cs?name=OnConfiguring)]
 
 ## Microsoft.Data.Sqlite 6.0 Preview 1
 
@@ -333,7 +333,7 @@ Using a savepoint allows part of a transaction to be rolled back without rolling
 
         transaction.Commit();
 -->
-[!code-csharp[PerformUpdates](../../../samples/core/Miscellaneous/NewInEFCore6/SqliteSamples.cs?name=PerformUpdates)]
+[!code-csharp[PerformUpdates](../../../../samples/core/Miscellaneous/NewInEFCore6/SqliteSamples.cs?name=PerformUpdates)]
 
 This will result in the first update being committed to the database, while the second update is not committed since the savepoint was rolled back before committing the transaction.
 
