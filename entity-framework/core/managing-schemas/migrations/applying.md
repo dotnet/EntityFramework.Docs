@@ -82,7 +82,7 @@ You can use a `from` that is newer than the `to` in order to generate a rollback
 
 ***
 
-Script generation accepts the following two arguments in indicate which range of migrations should be generated:
+Script generation accepts the following two arguments to indicate which range of migrations should be generated:
 
 * The **from** migration should be the last migration applied to the database before running the script. If no migrations have been applied, specify `0` (this is the default).
 * The **to** migration is the last migration that will be applied to the database after running the script. This defaults to the last migration in your project.
