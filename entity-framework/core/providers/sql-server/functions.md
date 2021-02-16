@@ -2,7 +2,7 @@
 title: Function Mappings - Microsoft SQL Server Database Provider - EF Core
 description: Function Mappings of the Microsoft SQL Server database provider
 author: bricelam
-ms.date: 10/07/2020
+ms.date: 1/26/2021
 uid: core/providers/sql-server/functions
 ---
 # Function Mappings of the Microsoft SQL Server Provider
@@ -14,8 +14,10 @@ This page shows which .NET members are translated into which SQL functions when 
 .NET                         | SQL                           | Added in
 ---------------------------- | ----------------------------- | --------
 bytes.Contains(value)        | CHARINDEX(@value, @bytes) > 0 | EF Core 5.0
+bytes.First()                | SUBSTRING(@bytes, 1, 1)       | EF Core 6.0
 bytes.Length                 | DATALENGTH(@bytes)            | EF Core 5.0
 bytes.SequenceEqual(second)  | @bytes = @second              | EF Core 5.0
+bytes[i]                     | SUBSTRING(@bytes, @i + 1, 1)  | EF Core 6.0
 EF.Functions.DataLength(arg) | DATALENGTH(@arg)              | EF Core 5.0
 
 ## Conversion functions
@@ -115,8 +117,9 @@ timeSpan.Seconds                                            | DATEPART(second, @
 
 ## Numeric functions
 
-.NET                    | SQL
------------------------ | ---
+.NET                    | SQL                  | Added in
+----------------------- | -------------------- | --------
+EF.Functions.Random()   | RAND()               | EF Core 6.0
 Math.Abs(value)         | ABS(@value)
 Math.Acos(d)            | ACOS(@d)
 Math.Asin(d)            | ASIN(@d)
@@ -147,11 +150,12 @@ EF.Functions.Contains(propertyReference, searchCondition)               | CONTAI
 EF.Functions.Contains(propertyReference, searchCondition, languageTerm) | CONTAINS(@propertyReference, @searchCondition, LANGUAGE @languageTerm) | EF Core 2.2
 EF.Functions.FreeText(propertyReference, freeText)                      | FREETEXT(@propertyReference, @freeText)
 EF.Functions.FreeText(propertyReference, freeText, languageTerm)        | FREETEXT(@propertyReference, @freeText, LANGUAGE @languageTerm)
+EF.Functions.IsNumeric(expression)                                      | ISNUMERIC(@expression)                                                 | EF Core 6.0
 EF.Functions.Like(matchExpression, pattern)                             | @matchExpression LIKE @pattern
 EF.Functions.Like(matchExpression, pattern, escapeCharacter)            | @matchExpression LIKE @pattern ESCAPE @escapeCharacter
 string.Compare(strA, strB)                                              | CASE WHEN @strA = @strB THEN 0 ... END
 string.Concat(str0, str1)                                               | @str0 + @str1
-string.IsNullOrEmpty(value)                                             | @value IS NULL OR @value = N''
+string.IsNullOrEmpty(value)                                             | @value IS NULL OR @value LIKE N''
 string.IsNullOrWhiteSpace(value)                                        | @value IS NULL OR LTRIM(RTRIM(@value)) = N''
 stringValue.CompareTo(strB)                                             | CASE WHEN @stringValue = @strB THEN 0 ... END
 stringValue.Contains(value)                                             | @stringValue LIKE N'%' + @value + N'%'

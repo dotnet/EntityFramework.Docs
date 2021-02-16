@@ -24,7 +24,7 @@ In most database systems, a default collation is defined at the database level; 
 
 When using EF Core migrations to manage your database schema, the following in your model's `OnModelCreating` method configures a SQL Server database to use a case-sensitive collation:
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/Collations/Program.cs?range=40)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Collations/Program.cs?name=DatabaseCollation)]
 
 ## Column collation
 
@@ -32,7 +32,7 @@ Collations can also be defined on text columns, overriding the database default.
 
 When using EF Core migrations to manage your database schema, the following configures the column for the `Name` property to be case-insensitive in a database that is otherwise configured to be case-sensitive:
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/Collations/Program.cs?name=OnModelCreating&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/Collations/Program.cs?name=ColumnCollation)]
 
 ## Explicit collation in a query
 

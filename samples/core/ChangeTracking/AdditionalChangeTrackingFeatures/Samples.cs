@@ -8,15 +8,15 @@ namespace Optional
 {
     public class Samples
     {
-        public static void DbContext_verses_DbSet_methods_1()
+        public static void DbContext_versus_DbSet_methods_1()
         {
-            Console.WriteLine($">>>> Sample: {nameof(DbContext_verses_DbSet_methods_1)}");
+            Console.WriteLine($">>>> Sample: {nameof(DbContext_versus_DbSet_methods_1)}");
             Console.WriteLine();
 
             Helpers.RecreateCleanDatabase();
             Helpers.PopulateDatabase();
 
-            #region DbContext_verses_DbSet_methods_1
+            #region DbContext_versus_DbSet_methods_1
             using var context = new BlogsContext();
 
             var post = context.Posts.Single(e => e.Id == 3);

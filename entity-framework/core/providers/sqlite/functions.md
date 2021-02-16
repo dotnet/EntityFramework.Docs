@@ -2,7 +2,7 @@
 title: Function Mappings - SQLite Database Provider - EF Core
 description: Function Mappings of the SQLite EF Core database provider
 author: bricelam
-ms.date: 10/06/2020
+ms.date: 1/26/2021
 uid: core/providers/sqlite/functions
 ---
 # Function Mappings of the SQLite EF Core Provider
@@ -11,11 +11,36 @@ This page shows which .NET members are translated into which SQL functions when 
 
 ## Binary functions
 
-.NET                        | SQL                             | Added in
---------------------------- | ------------------------------- | --------
-bytes.Contains(value)       | instr(@bytes, char(@value)) > 0 | EF Core 5.0
-bytes.Length                | length(@bytes)                  | EF Core 5.0
-bytes.SequenceEqual(second) | @bytes = @second                | EF Core 5.0
+.NET                                           | SQL                                  | Added in
+---------------------------------------------- | ------------------------------------ | --------
+bytes.Contains(value)                          | instr(@bytes, char(@value)) > 0      | EF Core 5.0
+bytes.Length                                   | length(@bytes)                       | EF Core 5.0
+bytes.SequenceEqual(second)                    | @bytes = @second                     | EF Core 5.0
+EF.Functions.Hex(bytes)                        | hex(@bytes)                          | EF Core 6.0
+EF.Functions.Substr(bytes, startIndex)         | substr(@bytes, @startIndex)          | EF Core 6.0
+EF.Functions.Substr(bytes, startIndex, length) | substr(@bytes, @startIndex, @length) | EF Core 6.0
+
+## Conversion functions
+
+.NET                      | SQL                           | Added in
+------------------------- | ----------------------------- | --------
+boolValue.ToString()      | CAST(@boolValue AS TEXT)      | EF Core 6.0
+byteValue.ToString()      | CAST(@byteValue AS TEXT)      | EF Core 6.0
+bytes.ToString()          | CAST(@bytes AS TEXT)          | EF Core 6.0
+charValue.ToString()      | CAST(@charValue AS TEXT)      | EF Core 6.0
+dateTime.ToString()       | CAST(@dateTime AS TEXT)       | EF Core 6.0
+dateTimeOffset.ToString() | CAST(@dateTimeOffset AS TEXT) | EF Core 6.0
+decimalValue.ToString()   | CAST(@decimalValue AS TEXT)   | EF Core 6.0
+doubleValue.ToString()    | CAST(@doubleValue AS TEXT)    | EF Core 6.0
+floatValue.ToString()     | CAST(@floatValue AS TEXT)     | EF Core 6.0
+guid.ToString()           | CAST(@guid AS TEXT)           | EF Core 6.0
+intValue.ToString()       | CAST(@intValue AS TEXT)       | EF Core 6.0
+longValue.ToString()      | CAST(@longValue AS TEXT)      | EF Core 6.0
+sbyteValue.ToString()     | CAST(@sbyteValue AS TEXT)     | EF Core 6.0
+shortValue.ToString()     | CAST(@shortValue AS TEXT)     | EF Core 6.0
+timeSpan.ToString()       | CAST(@timeSpan AS TEXT)       | EF Core 6.0
+uintValue.ToString()      | CAST(@uintValue AS TEXT)      | EF Core 6.0
+ushortValue.ToString()    | CAST(@ushortValue AS TEXT)    | EF Core 6.0
 
 ## Date and time functions
 
@@ -50,20 +75,21 @@ dateTime.Year                   | strftime('%Y', @dateTime)
 
 ## Numeric functions
 
-.NET                  | SQL                                  | Added in
---------------------- | ------------------------------------ | --------
--decimalValue         | ef_negate(@decimalValue)             | EF Core 5.0
-decimalValue - d      | ef_add(@decimalValue, ef_negate(@d)) | EF Core 5.0
-decimalValue * d      | ef_multiply(@decimalValue, @d)       | EF Core 5.0
-decimalValue / d      | ef_divide(@decimalValue, @d)         | EF Core 5.0
-decimalValue % d      | ef_mod(@decimalValue, @d)            | EF Core 5.0
-decimalValue + d      | ef_add(@decimalValue, @d)            | EF Core 5.0
-decimalValue < d      | ef_compare(@decimalValue, @d) < 0    | EF Core 5.0
-decimalValue <= d     | ef_compare(@decimalValue, @d) <= 0   | EF Core 5.0
-decimalValue > d      | ef_compare(@decimalValue, @d) > 0    | EF Core 5.0
-decimalValue >= d     | ef_compare(@decimalValue, @d) >= 0   | EF Core 5.0
-doubleValue % d       | ef_mod(@doubleValue, @d)             | EF Core 5.0
-floatValue % d        | ef_mod(@floatValue, @d)              | EF Core 5.0
+.NET                  | SQL                                   | Added in
+--------------------- | ------------------------------------- | --------
+-decimalValue         | ef_negate(@decimalValue)              | EF Core 5.0
+decimalValue - d      | ef_add(@decimalValue, ef_negate(@d))  | EF Core 5.0
+decimalValue * d      | ef_multiply(@decimalValue, @d)        | EF Core 5.0
+decimalValue / d      | ef_divide(@decimalValue, @d)          | EF Core 5.0
+decimalValue % d      | ef_mod(@decimalValue, @d)             | EF Core 5.0
+decimalValue + d      | ef_add(@decimalValue, @d)             | EF Core 5.0
+decimalValue < d      | ef_compare(@decimalValue, @d) < 0     | EF Core 5.0
+decimalValue <= d     | ef_compare(@decimalValue, @d) <= 0    | EF Core 5.0
+decimalValue > d      | ef_compare(@decimalValue, @d) > 0     | EF Core 5.0
+decimalValue >= d     | ef_compare(@decimalValue, @d) >= 0    | EF Core 5.0
+doubleValue % d       | ef_mod(@doubleValue, @d)              | EF Core 5.0
+EF.Functions.Random() | abs(random() / 9223372036854780000.0) | EF Core 6.0
+floatValue % d        | ef_mod(@floatValue, @d)               | EF Core 5.0
 Math.Abs(value)       | abs(@value)
 Math.Max(val1, val2)  | max(@val1, @val2)
 Math.Min(val1, val2)  | min(@val1, @val2)
@@ -77,9 +103,13 @@ Math.Round(d, digits) | round(@d, @digits)
 
 .NET                                                         | SQL                                                    | Added in
 ------------------------------------------------------------ | ------------------------------------------------------ | --------
+char.ToLower(c)                                              | lower(@c)                                              | EF Core 6.0
+char.ToUpper(c)                                              | upper(@c)                                              | EF Core 6.0
 EF.Functions.Collate(operand, collation)                     | @operand COLLATE @collation                            | EF Core 5.0
+EF.Functions.Glob(matchExpression, pattern)                  | glob(@pattern, @matchExpression)                       | EF Core 6.0
 EF.Functions.Like(matchExpression, pattern)                  | @matchExpression LIKE @pattern
 EF.Functions.Like(matchExpression, pattern, escapeCharacter) | @matchExpression LIKE @pattern ESCAPE @escapeCharacter
+Regex.IsMatch(input, pattern)                                | regexp(@pattern, @input)                               | EF Core 6.0
 string.Compare(strA, strB)                                   | CASE WHEN @strA = @strB THEN 0 ... END
 string.Concat(str0, str1)                                    | @str0 \|\| @str1
 string.IsNullOrEmpty(value)                                  | @value IS NULL OR @value = ''
