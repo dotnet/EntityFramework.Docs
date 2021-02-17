@@ -88,9 +88,6 @@ Define a context class and entity classes that make up the model.
 
 [!code-csharp[Main](../../../../samples/core/GetStarted/Model.cs)]
 
-> [!NOTE]
-> The above will create a Sqlite database file as `C:\blogging.db`. For Mac or Linux, change this to `/tmp/blogging.db` or any other abolute path.
-
 EF Core can also [reverse engineer](xref:core/managing-schemas/scaffolding) a model from an existing database.
 
 Tip: This application intentionally keeps things simple for clarity. [Connection strings](xref:core/miscellaneous/connection-strings) should not be stored in the code for production applications. You may also want to split each C# class into its own file.
