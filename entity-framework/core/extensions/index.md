@@ -277,6 +277,8 @@ Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() 
 When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`,
 `CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints.
 
-For EF Core: 3, 5. Supports SQL Server, Postgres, MySql, SQLite and Oracle
+Supports SQL Server, Postgres, MySql, SQLite and Oracle
+
+For EF Core: 3, 5.
 
 [GitHub Repository](https://github.com/Giorgi/EntityFramework.Exceptions)
