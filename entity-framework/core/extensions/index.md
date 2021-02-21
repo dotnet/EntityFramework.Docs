@@ -2,7 +2,7 @@
 title: Tools & Extensions - EF Core
 description: External tools and extensions for Entity Framework Core
 author: ErikEJ
-ms.date: 01/06/2021
+ms.date: 02/21/2021
 uid: core/extensions/index
 ---
 
@@ -271,3 +271,12 @@ Enables reverse engineering an EF Core model from a SQL Server data-tier applica
 Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() extension method to the DbContext class. For EF Core: 3, 5.
 
 [GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki/Inspect-your-DbContext-model)
+
+### EntityFramework.Exceptions
+
+When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`,
+`CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints.
+
+For EF Core: 3, 5. Supports SQL Server, Postgres, MySql, SQLite and Oracle
+
+[GitHub Repository](https://github.com/Giorgi/EntityFramework.Exceptions)
