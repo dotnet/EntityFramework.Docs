@@ -30,7 +30,7 @@ If the DbContext can't be obtained from the application service provider, the to
 
 ## From a design-time factory
 
-You can also tell the tools how to create your DbContext by implementing the `IDesignTimeDbContextFactory<TContext>` interface: If a class implementing this interface is found in either the same project as the derived `DbContext` or in the application's startup project, the tools bypass the other ways of creating the DbContext and use the design-time factory instead.
+You can also tell the tools how to create your DbContext by implementing the <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory-1?displayProperty=nameWithType> interface: If a class implementing this interface is found in either the same project as the derived `DbContext` or in the application's startup project, the tools bypass the other ways of creating the DbContext and use the design-time factory instead.
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/CommandLine/BloggingContextFactory.cs#BloggingContextFactory)]
 
