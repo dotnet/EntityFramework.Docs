@@ -268,13 +268,13 @@ The [common options](#common-options) are listed above.
 
 ## `dotnet ef migrations remove`
 
-Removes the last migration (rolls back the code changes that were done for the migration).
+Removes the last migration by calling the `Down` method of the latest migration. The command rolls back the code changes that were done for the latest migration.
 
 Options:
 
 | Option                 | Short             | Description                                                                     |
 |:-----------------------|:------------------|:--------------------------------------------------------------------------------|
-| <nobr>`--force`</nobr> | <nobr>`-f`</nobr> | Revert the migration (roll back the changes that were applied to the database). |
+| <nobr>`--force`</nobr> | <nobr>`-f`</nobr> | Revert the latest migration, that is, rolls back the changes that were applied to the database on the last migration. |
 
 The [common options](#common-options) are listed above.
 
