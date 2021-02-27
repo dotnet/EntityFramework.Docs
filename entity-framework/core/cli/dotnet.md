@@ -274,7 +274,7 @@ Options:
 
 | Option                 | Short             | Description                                                                     |
 |:-----------------------|:------------------|:--------------------------------------------------------------------------------|
-| <nobr>`--force`</nobr> | <nobr>`-f`</nobr> | Revert the latest migration, that is, rolls back the changes that were applied to the database on the last migration. |
+| <nobr>`--force`</nobr> | <nobr>`-f`</nobr> | Revert the latest migration, rolling back the changes that were applied to the database in the last migration. |
 
 The [common options](#common-options) are listed above.
 
