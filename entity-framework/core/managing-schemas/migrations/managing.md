@@ -189,7 +189,7 @@ Remove-Migration
 After removing the migration, you can make the additional model changes and add it again.
 
 > [!WARNING]
-> Take care not to remove any migrations which are already applied to production databases. Not doing so will prevent you from being able to revert it, and may break the assumptions made by subsequent migrations.
+> Avoid removing any migrations which have already been applied to production databases. Doing so means you won't be able to revert those migrations from the databases, and may break the assumptions made by subsequent migrations.
 
 ## Listing migrations
 
