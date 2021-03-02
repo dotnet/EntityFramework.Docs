@@ -59,7 +59,7 @@ This is part of the wider movement across .NET teams aimed at unification to a s
 
 #### Mitigations
 
-.NET Framework applications can continue to use EF Core 3.1, which is a [long-term support (LTS) release](https://dotnet.microsoft.com/platform/support/policy/dotnet-core). Alternately, applications can be updated to use .NET Core 2.1, .NET Core 3.1, or .NET 5, all of which support .NET Standard 2.1.
+.NET Framework applications can continue to use EF Core 3.1, which is a [long-term support (LTS) release](https://dotnet.microsoft.com/platform/support/policy/dotnet-core). Alternately, applications can be updated to use .NET Core 3.1 or .NET 5, both of which support .NET Standard 2.1.
 
 <a name="getcolumnname-obsolete"></a>
 
