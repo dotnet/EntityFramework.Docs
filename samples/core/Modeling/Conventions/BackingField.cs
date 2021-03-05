@@ -10,6 +10,8 @@ namespace EFModeling.Conventions.BackingField
     #region Sample
     public class Blog
     {
+        private string _url;
+        
         public int BlogId { get; set; }
 
         public string Url { get; set; }
