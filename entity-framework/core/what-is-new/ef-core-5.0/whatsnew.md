@@ -110,7 +110,7 @@ var blogs = context.Blogs
 
 This query will return blogs together with each associated post, but only when the post title contains "Cheese".
 
-For further information, [see the full documentation on split queries](xref:core/querying/related-data/eager#filtered-include).
+For further information, [see the full documentation on filtered include](xref:core/querying/related-data/eager#filtered-include).
 
 ## Table-per-type (TPT) mapping
 
