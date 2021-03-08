@@ -11,7 +11,7 @@ uid: core/managing-schemas/migrations/projects
 You may want to store your migrations in a different project than the one containing your `DbContext`. You can also use this strategy to maintain multiple sets of migrations, for example, one for development and another for release-to-release upgrades.
 
 > [!TIP]
-> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Schemas/ThreeProjectMigrations).
+> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Schemas/ThreeProjectMigrations).
 
 ## Steps
 

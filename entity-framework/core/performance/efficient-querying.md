@@ -174,7 +174,7 @@ In read-only scenarios where changes aren't saved back to the database, the abov
 
 To illustrate, assume we are loading a large number of Posts from the database, as well as the Blog referenced by each Post. If 100 Posts happen to reference the same Blog, a tracking query detects this via identity resolution, and all Post instances will refer the same de-duplicated Blog instance. A no-tracking query, in contrast, duplicates the same Blog 100 times - and application code must be written accordingly.
 
-Here are the results for a benchmark comparing tracking vs. no-tracking behavior for a query loading 10 Blogs with 20 Posts each. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Benchmarks/QueryTrackingBehavior.cs), feel free to use it as a basis for your own measurements.
+Here are the results for a benchmark comparing tracking vs. no-tracking behavior for a query loading 10 Blogs with 20 Posts each. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/QueryTrackingBehavior.cs), feel free to use it as a basis for your own measurements.
 
 |       Method | NumBlogs | NumPostsPerBlog |       Mean |    Error |   StdDev |     Median | Ratio | RatioSD |   Gen 0 |   Gen 1 | Gen 2 | Allocated |
 |------------- |--------- |---------------- |-----------:|---------:|---------:|-----------:|------:|--------:|--------:|--------:|------:|----------:|

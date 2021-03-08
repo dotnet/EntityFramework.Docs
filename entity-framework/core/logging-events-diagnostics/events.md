@@ -9,7 +9,7 @@ uid: core/logging-events-diagnostics/events
 # .NET Events in EF Core
 
 > [!TIP]
-> You can [download the events sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Events) from GitHub.
+> You can [download the events sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/Events) from GitHub.
 
 Entity Framework Core (EF Core) exposes [.NET events](/dotnet/standard/events/) to act as callbacks when certain things happen in the EF Core code. Events are simpler than [interceptors](xref:core/logging-events-diagnostics/interceptors) and allow more flexible registration. However, they are sync only and so cannot perform non-blocking async I/O.
 
@@ -85,7 +85,7 @@ This method has the appropriate signature to use as an event handler for both th
 
 Both events are needed because new entities fire `Tracked` events when they are first tracked. `StateChanged` events are only fired for entities that change state while they are _already_ being tracked.
 
-The [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Events) for this example contains a simple console application that makes changes to the blogging database:
+The [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/Events) for this example contains a simple console application that makes changes to the blogging database:
 
 <!--
         using (var context = new BlogsContext())

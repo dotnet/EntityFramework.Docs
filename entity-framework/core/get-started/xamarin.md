@@ -14,7 +14,7 @@ In this tutorial, you create a [Xamarin.Forms](/xamarin/get-started/what-is-xama
 You can follow the tutorial by using Visual Studio on Windows or Visual Studio for Mac.
 
 > [!TIP]
-> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Xamarin).
+> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Xamarin).
 
 ## Prerequisites
 
