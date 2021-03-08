@@ -71,7 +71,7 @@ Each pair of methods have both sync and async variations. This allows for asynch
 ### Example: Command interception to add query hints
 
 > [!TIP]
-> You can [download the command interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/CommandInterception) from GitHub.
+> You can [download the command interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/CommandInterception) from GitHub.
 
 An <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbCommandInterceptor> can be used to modify SQL before it is sent to the database. This example shows how to modify the SQL to include a query hint.
 
@@ -144,7 +144,7 @@ FROM [Blogs] AS [b]
 ### Example: Connection interception for SQL Azure authentication using ADD
 
 > [!TIP]
-> You can [download the connection interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/ConnectionInterception) from GitHub.
+> You can [download the connection interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/ConnectionInterception) from GitHub.
 
 An <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor> can be used to manipulate the <xref:System.Data.Common.DbConnection> before it is used to connect to the database. This can be used to obtain an Azure Active Directory (AAD) access token. For example:
 
@@ -188,7 +188,7 @@ public class AadAuthenticationInterceptor : DbConnectionInterceptor
 ### Example: Advanced command interception for caching
 
 > [!TIP]
-> You can [download the advanced command interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/CachingInterception) from GitHub.
+> You can [download the advanced command interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/CachingInterception) from GitHub.
 
 EF Core interceptors can:
 
@@ -294,7 +294,7 @@ If no cached message is available, or if it has expired, then the code above doe
 
 #### Demonstration
 
-The [caching interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/CachingInterception) contains a simple console application that queries for daily messages to test the caching:
+The [caching interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/CachingInterception) contains a simple console application that queries for daily messages to test the caching:
 
 <!--
         // 1. Initialize the database with some daily messages.
@@ -394,7 +394,7 @@ Notice from the log output that the application continues to use the cached mess
 > SaveChanges interception was introduced in EF Core 5.0.
 
 > [!TIP]
-> You can [download the SaveChanges interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/SaveChangesInterception) from GitHub.
+> You can [download the SaveChanges interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/SaveChangesInterception) from GitHub.
 
 <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> interception points are defined by the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor> interface. As for other interceptors, the <xref:Microsoft.EntityFrameworkCore.Diagnostics.SaveChangesInterceptor> base class with no-op methods is provided as a convenience.
 
@@ -410,7 +410,7 @@ SaveChanges can be intercepted to create an independent audit record of the chan
 
 #### The application context
 
-The [sample for auditing](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/SaveChangesInterception) uses a simple DbContext with blogs and posts.
+The [sample for auditing](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/SaveChangesInterception) uses a simple DbContext with blogs and posts.
 
 <!--
 public class BlogsContext : DbContext
@@ -668,7 +668,7 @@ Failure is handled in much the same way as success, but in the <xref:Microsoft.E
 
 #### Demonstration
 
-The [auditing sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/SaveChangesInterception) contains a simple console application that makes changes to the blogging database and then shows the auditing that was created.
+The [auditing sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/SaveChangesInterception) contains a simple console application that makes changes to the blogging database and then shows the auditing that was created.
 
 <!--
         // Insert, update, and delete some entities

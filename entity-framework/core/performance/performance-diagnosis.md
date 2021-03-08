@@ -92,7 +92,7 @@ See the dedicated page on [EF's event counters](xref:core/logging-events-diagnos
 At the end of the day, you sometimes need to know whether a particular way of writing or executing a query is faster than another. It's important to never assume or speculate the answer, and it's extremely easy to put together a quick benchmark to get the answer. When writing benchmarks, it's strongly recommended to use the well-known [BenchmarkDotNet](https://benchmarkdotnet.org/index.html) library, which handles many pitfalls users encounter when trying to write their own benchmarks: have you performed some warmup iterations? How many iterations does your benchmark actually run, and why? Let's take a look at what a benchmark with EF Core looks like.
 
 > [!TIP]
-> The full benchmark project for the source below is available [here](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Benchmarks/AverageBlogRanking.cs). You are encouraged to copy it and use it as a template for your own benchmarks.
+> The full benchmark project for the source below is available [here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/AverageBlogRanking.cs). You are encouraged to copy it and use it as a template for your own benchmarks.
 
 As a simple benchmark scenario, let's compare the following different methods of calculating the average ranking of all Blogs in our database:
 
@@ -101,7 +101,7 @@ As a simple benchmark scenario, let's compare the following different methods of
 * Avoid loading the entire Blog entity instances at all, by projecting out the ranking only. The saves us from transferring the other, unneeded columns of the Blog entity type.
 * Calculate the average in the database by making it part of the query. This should be the fastest way, since everything is calculated in the database and only the result is transferred back to the client.
 
-With BenchmarkDotNet, you write the code to be benchmarked as a simple method - just like a unit test - and BenchmarkDotNet automatically runs each method for sufficient number of iterations, reliably measuring how long it takes and how much memory is allocated. Here are the different method ([the full benchmark code can be seen here](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Benchmarks/AverageBlogRanking.cs)):
+With BenchmarkDotNet, you write the code to be benchmarked as a simple method - just like a unit test - and BenchmarkDotNet automatically runs each method for sufficient number of iterations, reliably measuring how long it takes and how much memory is allocated. Here are the different method ([the full benchmark code can be seen here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/AverageBlogRanking.cs)):
 
 ### [Load entities](#tab/load-entities)
 

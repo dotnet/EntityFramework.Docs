@@ -10,14 +10,14 @@ no-loc: [Item, Tag, Items, Tags, items, tags]
 # EF Core testing sample
 
 > [!TIP]
-> The code in this document can be found on GitHub as a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing/ItemsWebApi/).
+> The code in this document can be found on GitHub as a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/Testing/ItemsWebApi/).
 > Note that some of these tests **are expected to fail**. The reasons for this are explained below.
 
 This doc walks through a sample for testing code that uses EF Core.
 
 ## The application
 
-The [sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing/ItemsWebApi/) contains two projects:
+The [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/Testing/ItemsWebApi/) contains two projects:
 
 - ItemsWebApi: A very simple [Web API backed by ASP.NET Core](/aspnet/core/tutorials/first-web-api) with a single controller
 - Tests: An [XUnit](https://xunit.net/) test project to test the controller

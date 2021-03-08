@@ -15,7 +15,7 @@ This page does not duplicate the [plan for EF Core 6.0](xref:core/what-is-new/ef
 ## EF Core 6.0 Preview 1
 
 > [!TIP]
-> You can run and debug into all the preview 1 samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/NewInEFCore6).
+> You can run and debug into all the preview 1 samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6).
 
 ### UnicodeAttribute
 
@@ -337,7 +337,7 @@ public partial class Blog
 ## Microsoft.Data.Sqlite 6.0 Preview 1
 
 > [!TIP]
-> You can run and debug into all the preview 1 samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/NewInEFCore6).
+> You can run and debug into all the preview 1 samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6).
 
 ### Savepoints API
 

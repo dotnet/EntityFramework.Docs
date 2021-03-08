@@ -15,7 +15,7 @@ The model defines two types that participate in one-to-many relationship: **Cate
 The screen shots and code listings in this walkthrough are taken from Visual Studio 2019 16.6.5.
 
 > [!TIP]
-> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/WPF).
+> You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/WPF).
 
 ## Pre-Requisites
 

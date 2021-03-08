@@ -2,12 +2,12 @@ name: Build Samples
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths:
       - "samples/core/**"
       - ".github/workflows/build-samples.yml"
   pull_request:
-    branches: [master]
+    branches: [main]
     paths:
       - "samples/core/**"
       - ".github/workflows/build-samples.yml"

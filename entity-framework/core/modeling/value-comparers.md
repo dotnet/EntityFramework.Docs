@@ -12,7 +12,7 @@ uid: core/modeling/value-comparers
 > This feature was introduced in EF Core 3.0.
 
 > [!TIP]
-> The code in this document can be found on GitHub as a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Modeling/ValueConversions/).
+> The code in this document can be found on GitHub as a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/ValueConversions/).
 
 ## Background
 

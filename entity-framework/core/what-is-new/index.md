@@ -33,7 +33,7 @@ See the [.NET support policy](https://dotnet.microsoft.com/platform/support/poli
 
 ## Release planning and schedules
 
-EF Core releases align with the [.NET Core shipping schedule](https://github.com/dotnet/core/blob/master/roadmap.md).
+EF Core releases align with the [.NET Core shipping schedule](https://github.com/dotnet/core/blob/main/roadmap.md).
 
 Patch releases usually ship monthly, but have a long lead time.
 We are working to improve this.

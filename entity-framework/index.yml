@@ -216,4 +216,4 @@ additionalContent:
           - url: ef6/get-started.md
             text: "Entity Framework 6"
   # footer (optional)
-  footer: "Contribute to Entity Framework docs. Read our [contributor guide](https://github.com/dotnet/EntityFramework.Docs/blob/master/CONTRIBUTING.md)."
+  footer: "Contribute to Entity Framework docs. Read our [contributor guide](https://github.com/dotnet/EntityFramework.Docs/blob/main/CONTRIBUTING.md)."
