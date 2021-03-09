@@ -189,7 +189,7 @@ Tracked by [#214](https://github.com/dotnet/efcore/issues/214)
 
 Status: Not started
 
-T-shirt size: medium
+T-shirt size: Medium
 
 EF Core uses a set of conventions for building a model from .NET types. These conventions are currently controlled by the database provider. In EF Core 6.0, we intend to allow applications to hook into and change these conventions.
 
