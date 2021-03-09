@@ -15,7 +15,10 @@ public static class StringConcatSample
 
         using var context = new BooksContext();
 
-        var shards = context.Shards.Where(e => string.Concat(e.Token1, e.Token2, e.Token3) != e.TokensProcessed).ToList();
+        #region StringConcat
+        var shards = context.Shards
+            .Where(e => string.Concat(e.Token1, e.Token2, e.Token3) != e.TokensProcessed).ToList();
+        #endregion
 
         foreach (var shard in shards)
         {
