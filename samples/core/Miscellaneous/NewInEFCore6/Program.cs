@@ -7,6 +7,7 @@ public class Program
         Console.WriteLine("Samples for _Accessing Tracked Entities_");
         Console.WriteLine();
 
+        // Preview 1
         EntityTypeConfigurationAttributeSample.Using_EntityTypeConfigurationAttribute();
         UnicodeAttributeSample.Using_UnicodeAttribute();
         PrecisionAttributeSample.Using_PrecisionAttribute();
@@ -18,7 +19,10 @@ public class Program
         SqliteSamples.SavepointsApi();
         IsNullOrWhitespaceSample.Translate_IsNullOrWhitespace();
 
-        // Did not make it for preview 1
-        // StringConcatSample.Concat_with_multiple_args();
+        // Preview 2
+        StringConcatSample.Concat_with_multiple_args();
+
+        // Note: this sample requires a full version of SQL Server. It does not work with LocalDb
+        // ContainsFreeTextSample.Contains_with_non_string();
     }
 }

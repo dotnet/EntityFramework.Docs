@@ -2,7 +2,7 @@
 title: What's New in EF Core 6.0
 description: Overview of new features in EF Core 6.0
 author: ajcvickers
-ms.date: 01/28/2021
+ms.date: 03/08/2021
 uid: core/what-is-new/ef-core-6.0/whatsnew
 ---
 
@@ -12,10 +12,95 @@ EF Core 6.0 is currently in development. This contains an overview of interestin
 
 This page does not duplicate the [plan for EF Core 6.0](xref:core/what-is-new/ef-core-6.0/plan). The plan describes the overall themes for EF Core 6.0, including everything we are planning to include before shipping the final release.
 
-## EF Core 6.0 Preview 1
-
 > [!TIP]
 > You can run and debug into all the preview 1 samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6).
+
+## EF Core 6.0 Preview 2
+
+### Preserve synchronization context in SaveChangesAsync
+
+GitHub Issue: [#23971](https://github.com/dotnet/efcore/issues/23971).
+
+We [changed the EF Core code in the 5.0 release](https://github.com/dotnet/efcore/issues/10164) to set <xref:System.Threading.Tasks.Task.ConfigureAwait%2A?displayProperty=nameWithType> to `false` in all places where we `await` async code. This is generally a better choice for EF Core usage. However, <xref:System.Data.Entity.DbContext.SaveChangesAsync%2A> is a special case because EF Core will set generated values into tracked entities after the async database operation is complete. These changes may then trigger notifications which, for example, may have to run on the U.I. thread. Therefore, we are reverting this change in EF Core 6.0 for the <xref:System.Data.Entity.DbContext.SaveChangesAsync%2A> method only.
+
+### Translate String.Concat with multiple arguments
+
+GitHub Issue: [#23859](https://github.com/dotnet/efcore/issues/23859). This feature was contributed by [@wmeints](https://github.com/wmeints).
+
+Starting with EF Core 6.0, calls to <xref:System.String.Concat%2A?displayProperty=nameWithType> with multiple arguments are now translated to SQL. For example, the following query:
+
+<!--
+        var shards = context.Shards
+            .Where(e => string.Concat(e.Token1, e.Token2, e.Token3) != e.TokensProcessed).ToList();
+-->
+[!code-csharp[StringConcat](../../../../samples/core/Miscellaneous/NewInEFCore6/StringConcatSample.cs?name=StringConcat)]
+
+Will be translated to the following SQL when using SQL Server:
+
+```sql
+SELECT [s].[Id], [s].[Token1], [s].[Token2], [s].[Token3], [s].[TokensProcessed]
+FROM [Shards] AS [s]
+WHERE ((COALESCE([s].[Token1], N'') + (COALESCE([s].[Token2], N'') + COALESCE([s].[Token3], N''))) <> [s].[TokensProcessed]) OR [s].[TokensProcessed] IS NULL
+```
+
+### Smoother integration with System.Linq.Async
+
+GitHub Issue: [#24041](https://github.com/dotnet/efcore/issues/24041).
+
+The [System.Linq.Async](https://www.nuget.org/packages/System.Linq.Async/) package adds client-side async LINQ processing. Using this package with previous versions of EF Core was cumbersome due to a namespace clash for the async LINQ methods. In EF Core 6.0 we have taken advantage of C# pattern matching for <xref:System.Collections.Generic.IAsyncEnumerable%601> such that the exposed EF Core <xref:Microsoft.EntityFrameworkCore.DbSet%601> does not need to implement the interface directly.
+
+Note that most applications do not need to use System.Linq.Async since EF Core queries are usually fully translated on the server.
+
+### More flexible free-text search
+
+GitHub Issue: [#23921](https://github.com/dotnet/efcore/issues/23921).
+
+In EF Core 6.0, we have relaxed the parameter requirements for <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.FreeText(Microsoft.EntityFrameworkCore.DbFunctions,System.String,System.String)> and <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.Contains%2A>. This allows these functions to be used with binary columns, or with columns mapped using a value converter. For example, consider an entity type with a `Name` property defined as a value object:
+
+<!--
+    public class Customer
+    {
+        public int Id { get; set; }
+
+        public Name Name{ get; set; }
+    }
+
+    public class Name
+    {
+        public string First { get; set; }
+        public string MiddleInitial { get; set; }
+        public string Last { get; set; }
+    }
+-->
+[!code-csharp[EntityType](../../../../samples/core/Miscellaneous/NewInEFCore6/ContainsFreeTextSample.cs?name=EntityType)]
+
+This is mapped to JSON in the database:
+
+<!--
+            modelBuilder.Entity<Customer>()
+                .Property(e => e.Name)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, null),
+                    v => JsonSerializer.Deserialize<Name>(v, null));
+-->
+[!code-csharp[ConfigureCompositeValueObject](../../../../samples/core/Miscellaneous/NewInEFCore6/ContainsFreeTextSample.cs?name=ConfigureCompositeValueObject)]
+
+A query can now be executed using `Contains` or `FreeText` even though the type of the property is `Name` not `string`. For example:
+
+<!--
+        var result = context.Customers.Where(e => EF.Functions.Contains(e.Name, "Martin")).ToList();
+-->
+[!code-csharp[Query](../../../../samples/core/Miscellaneous/NewInEFCore6/ContainsFreeTextSample.cs?name=Query)]
+
+This generates the following SQL, when using SQL Server:
+
+```sql
+SELECT [c].[Id], [c].[Name]
+FROM [Customers] AS [c]
+WHERE CONTAINS([c].[Name], N'Martin')
+```
+
+## EF Core 6.0 Preview 1
 
 ### UnicodeAttribute
 
