@@ -228,5 +228,5 @@ It's also possible to reset all migrations and create a single one without losin
 
 ## Additional resources
 
-* [Entity Framework Core tools reference - .NET Core CLI](/ef/core/cli/dotnet) : Includes commands to update, drop, add, remove, and  more.
-* [Entity Framework Core tools reference - Package Manager Console in Visual Studio](https://docs.microsoft.com/en-us/ef/core/cli/powershell) : Includes commands to update, drop, add, remove, and  more.
+* [Entity Framework Core tools reference - .NET Core CLI](xref:core/cli/dotnet) : Includes commands to update, drop, add, remove, and  more.
+* [Entity Framework Core tools reference - Package Manager Console in Visual Studio](xref:core/cli/powershell) : Includes commands to update, drop, add, remove, and  more.
