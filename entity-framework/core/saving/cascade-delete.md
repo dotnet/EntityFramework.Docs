@@ -16,7 +16,7 @@ There are two options to avoid this referential constraint violation:
 1. Set the FK values to null
 2. Also delete the dependent/child entities
 
-The first option in only valid for optional relationships where the foreign key property (and the database column to which it is mapped) must be nullable.
+The first option is only valid for optional relationships where the foreign key property (and the database column to which it is mapped) must be nullable.
 
 The second option is valid for any kind of relationship and is known as "cascade delete".
 
