@@ -141,7 +141,7 @@ SELECT [b].[Id], [b].[Name]
 FROM [Blogs] AS [b]
 ```
 
-### Example: Connection interception for SQL Azure authentication using ADD
+### Example: Connection interception for SQL Azure authentication using AAD
 
 > [!TIP]
 > You can [download the connection interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/ConnectionInterception) from GitHub.
