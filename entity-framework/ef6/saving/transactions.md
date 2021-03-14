@@ -276,6 +276,8 @@ namespace TransactionsExamples
                         await context.SaveChangesAsync();
                     }
                 }
+                
+                scope.Complete();
             }
         }
     }
