@@ -14,7 +14,11 @@ namespace EFModeling.Conventions.BackingField
         
         public int BlogId { get; set; }
 
-        public string Url { get; set; }
+        public string Url
+        {
+            get { return _url; }
+            set { _url = value; }
+        }
     }
     #endregion
 }
