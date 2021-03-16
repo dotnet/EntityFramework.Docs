@@ -282,3 +282,9 @@ Supports SQL Server, Postgres, MySql, SQLite and Oracle
 For EF Core: 3, 5.
 
 [GitHub Repository](https://github.com/Giorgi/EntityFramework.Exceptions)
+
+### EFCoreAuditing
+
+A Library for Entity Framework Core to support automatically recording data changes history (audit logging), soft-delete, and snake_case naming convention functionality. For EF Core: 3.
+
+[GitHub Repository](https://github.com/OKTAYKIR/EFCoreAuditing)
