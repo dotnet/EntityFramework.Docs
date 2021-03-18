@@ -11,7 +11,7 @@ EF Core allows for using user-defined SQL functions in queries. To do that, the 
 
 ## Mapping a method to a SQL function
 
-To illustrate how user-defined function mapping work, let's define the following entities:
+To illustrate how user-defined function mapping works, let's define the following entities:
 
 [!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#Entities)]
 
