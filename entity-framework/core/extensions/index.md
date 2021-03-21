@@ -288,3 +288,9 @@ For EF Core: 3, 5.
 A Library for Entity Framework Core to support automatically recording data changes history (audit logging), soft-delete, and snake_case naming convention functionality. For EF Core: 3.
 
 [GitHub Repository](https://github.com/OKTAYKIR/EFCoreAuditing)
+
+### EntityFrameworkCore.FSharp
+
+Adds F# design-time support to EF Core. For EF Core: 5.
+
+[GitHub repository](https://github.com/efcore/EFCore.FSharp)
