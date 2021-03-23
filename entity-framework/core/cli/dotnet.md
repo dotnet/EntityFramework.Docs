@@ -280,7 +280,7 @@ Options:
 
 | Option                 | Short             | Description                                                                     |
 |:-----------------------|:------------------|:--------------------------------------------------------------------------------|
-| <nobr>`--force`</nobr> | <nobr>`-f`</nobr> | Revert the latest migration, rolling back both code and database changes that were done for the latest migration. |
+| <nobr>`--force`</nobr> | <nobr>`-f`</nobr> | Revert the latest migration, rolling back both code and database changes that were done for the latest migration. Continues to roll back only the code changes if an error occurs while connecting to the database. |
 
 The [common options](#common-options) are listed above.
 
