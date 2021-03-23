@@ -475,7 +475,6 @@ namespace EFSaving.Disconnected
                 foreach (var post in blog.Posts)
                 {
                     var existingPost = existingBlog.Posts
-                        .AsQueryable()
                         .FirstOrDefault(p => p.PostId == post.PostId);
 
                     if (existingPost == null)
@@ -510,7 +509,6 @@ namespace EFSaving.Disconnected
                 foreach (var post in blog.Posts)
                 {
                     var existingPost = existingBlog.Posts
-                        .AsQueryable()
                         .FirstOrDefault(p => p.PostId == post.PostId);
 
                     if (existingPost == null)
