@@ -41,7 +41,7 @@ namespace EFSaving.CascadeDelete
 
             #region DeleteBehaviorVariations
             var blog = context.Blogs.Include(b => b.Posts).First();
-            var posts = blog.Posts.AsQueryable().ToList();
+            var posts = blog.Posts.ToList();
 
             DumpEntities("  After loading entities:", context, blog, posts);
 
@@ -84,7 +84,7 @@ namespace EFSaving.CascadeDelete
 
             #region DeleteOrphansVariations
             var blog = context.Blogs.Include(b => b.Posts).First();
-            var posts = blog.Posts.AsQueryable().ToList();
+            var posts = blog.Posts.ToList();
 
             DumpEntities("  After loading entities:", context, blog, posts);
 

@@ -59,7 +59,7 @@ namespace EFSaving.RelatedData
             using (var context = new BloggingContext())
             {
                 var blog = context.Blogs.Include(b => b.Posts).First();
-                var post = blog.Posts.AsQueryable().First();
+                var post = blog.Posts.First();
 
                 blog.Posts.Remove(post);
                 context.SaveChanges();
