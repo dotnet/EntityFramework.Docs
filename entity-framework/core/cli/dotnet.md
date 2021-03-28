@@ -26,7 +26,7 @@ dotnet tool install --global dotnet-ef
 
 To use it as a local tool, restore the dependencies of a project that declares it as a tooling dependency using a [tool manifest file](/dotnet/core/tools/global-tools#install-a-local-tool).
 
-Update the tool tool using the following command:
+Update the tool using the following command:
 
 ```dotnetcli
 dotnet tool update --global dotnet-ef
