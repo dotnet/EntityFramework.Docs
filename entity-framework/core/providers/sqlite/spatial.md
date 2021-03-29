@@ -42,11 +42,11 @@ DYLD_LIBRARY_PATH=/usr/local/opt/sqlite/lib
 
 ## Configuring SRID
 
-In SpatiaLite, columns need to specify an SRID per column. The default SRID is `0`. Specify a different SRID using the ForSqliteHasSrid method.
+In SpatiaLite, columns need to specify an SRID per column. The default SRID is `0`. Specify a different SRID using the HasSrid method.
 
 ```csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
-    .ForSqliteHasSrid(4326);
+    .HasSrid(4326);
 ```
 
 > [!NOTE]
