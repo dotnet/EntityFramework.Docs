@@ -52,8 +52,7 @@ namespace Cosmos.ModelBuilding
             using (var context = new OrderContext())
             {
                 var order = await context.Orders.WithPartitionKey("2").LastAsync();
-                Console.Write("Last order will ship to: ");
-                Console.WriteLine($"{order.ShippingAddress.Street}, {order.ShippingAddress.City}");
+                Console.WriteLine($"Last order will ship to: {order.ShippingAddress.Street}, {order.ShippingAddress.City}");
                 Console.WriteLine();
             }
             #endregion
