@@ -45,7 +45,7 @@ To illustrate this configure query filters in `OnModelCreating` in the following
 [!code-csharp[Main](../../../samples/core/Querying/QueryFilters/FilteredBloggingContextRequired.cs#NavigationInFilter)]
 
 Next, query for all `Blog` entities:
-[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/FilteredBloggingContextRequired.cs#QueriesNavigation)]
+[!code-csharp[Main](../../../samples/core/Querying/QueryFilters/Program.cs#QueriesNavigation)]
 
 This query produces the following SQL, which applies query filters defined for both `Blog` and `Post` entities:
 
