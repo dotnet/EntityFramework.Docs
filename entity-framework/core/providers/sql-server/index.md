@@ -30,6 +30,9 @@ Install-Package Microsoft.EntityFrameworkCore.SqlServer
 > [!NOTE]
 > Since version 3.0.0, the provider references Microsoft.Data.SqlClient (previous versions depended on System.Data.SqlClient). If your project takes a direct dependency on SqlClient, make sure it references the Microsoft.Data.SqlClient package.
 
+>[!TIP]
+> The Microsoft.Data.SqlClient package ships more frequently than the EF Core provider. If you would like to take advantage of new features and bug fixes, you can add a direct package reference to the latest version of Microsoft.Data.SqlClient.  
+
 ## Supported Database Engines
 
 * Microsoft SQL Server (2012 onwards)
