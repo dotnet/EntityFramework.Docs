@@ -10,7 +10,7 @@ uid: core/miscellaneous/collations-and-case-sensitivity
 > [!NOTE]
 > This feature was introduced in EF Core 5.0.
 
-Text processing in databases can be a complex, and requires more user attention that one would suspect. For one thing, databases vary considerably in how they handle text; for example, while some databases are case-sensitive by default (e.g. Sqlite, PostgreSQL), others are case-insensitive (SQL Server, MySQL). In addition, because of index usage, case-sensitivity and similar aspects can have a far-reaching impact on query performance: while it may be tempting to use `string.Lower` to force a case-insensitive comparison in a case-sensitive database, doing so may prevent your application from using indexes. This page details how to configure case sensitivity, or more generally, collations, and how to do so in an efficient way without compromising query performance.
+Text processing in databases can be complex, and requires more user attention than one would suspect. For one thing, databases vary considerably in how they handle text; for example, while some databases are case-sensitive by default (e.g. Sqlite, PostgreSQL), others are case-insensitive (SQL Server, MySQL). In addition, because of index usage, case-sensitivity and similar aspects can have a far-reaching impact on query performance: while it may be tempting to use `string.Lower` to force a case-insensitive comparison in a case-sensitive database, doing so may prevent your application from using indexes. This page details how to configure case sensitivity, or more generally, collations, and how to do so in an efficient way without compromising query performance.
 
 ## Introduction to collations
 
