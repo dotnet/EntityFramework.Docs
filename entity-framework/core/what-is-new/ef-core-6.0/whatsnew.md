@@ -251,7 +251,7 @@ var users = context.Users.Where(u => EF.Functions.Like(u.PhoneNumber.ToString(),
 This translates to the following SQL when using a SQLite database:
 
 ```sql
-SELECT COUNT(*)
+SELECT "u"."Id", "u"."PhoneNumber", "u"."Username"
 FROM "Users" AS "u"
 WHERE CAST("u"."PhoneNumber" AS TEXT) LIKE '%555%'
 ```
