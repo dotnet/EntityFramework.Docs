@@ -17,7 +17,7 @@ Tracking behavior controls if Entity Framework Core will keep information about 
 
 ## Tracking queries
 
-By default, queries that return entity types are tracking. Which means you can make changes to those entity instances and have those changes persisted by `SaveChanges()`. In the following example, the change to the blogs rating will be detected and persisted to the database during `SaveChanges()`.
+By default, queries that return entity types are tracked. Which means you can make changes to those entity instances and have those changes persisted by `SaveChanges()`. In the following example, the change to the blogs rating will be detected and persisted to the database during `SaveChanges()`.
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Program.cs#Tracking)]
 
