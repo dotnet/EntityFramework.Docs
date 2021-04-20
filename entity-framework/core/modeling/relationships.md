@@ -255,7 +255,7 @@ When configuring the foreign key you need to specify the dependent entity type -
 
 The dependent side is considered optional by default, but can be configured as required. However EF will not validate whether a dependent entity was provided, so this configuration will only make a difference when the database mapping allows it to be enforced. A common scenario for this are reference owned types that use table splitting by default.
 
-[!code-csharp[Main](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=Required&highlight=11-12)]
+[!code-csharp[Main](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=Required&highlight=12-13)]
 
 With this configuration the columns corresponding to `ShippingAddress` will be marked as non-nullable in the database.
 
