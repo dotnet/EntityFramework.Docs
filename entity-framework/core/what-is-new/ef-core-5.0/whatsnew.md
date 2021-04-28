@@ -341,7 +341,7 @@ For further information, [see the full documentation on event counters](xref:cor
 * Improved query translation around null semantics, resulting in tighter, more efficient queries.
 * User-mapped functions can now be annotated to control null propagation, again resulting in tighter, more efficient queries.
 * SQL containing CASE blocks is now considerably more concise.
-* The SQL Server [`DATELENGTH`](https://docs.microsoft.com/sql/t-sql/functions/datalength-transact-sql) function can now be called in queries via the new [`EF.Functions.DataLength`](xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.DataLength%2A) method.
+* The SQL Server [`DATALENGTH`](https://docs.microsoft.com/sql/t-sql/functions/datalength-transact-sql) function can now be called in queries via the new [`EF.Functions.DataLength`](xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.DataLength%2A) method.
 * `EnableDetailedErrors` adds [additional details to exceptions](xref:core/logging-events-diagnostics/simple-logging#detailed-query-exceptions).
 
 ### Saving
