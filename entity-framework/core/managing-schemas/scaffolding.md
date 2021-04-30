@@ -171,3 +171,6 @@ Another commonly requested feature is the ability to update the model from the d
 
 > [!WARNING]
 > If you reverse engineer the model from the database again, any changes you've made to the files will be lost.
+
+> [!TIP]
+> If you use Visual Studio, the [EF Core Power Tools](https://github.com/ErikEJ/EFCorePowerTools/) community extension, a graphical tool which builds on top of the EF Core command line tools, offers additional workflow and customization options.
