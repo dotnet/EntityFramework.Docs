@@ -32,7 +32,7 @@ Cascading deletes are needed when a dependent/child entity can no longer be asso
 
 ### Deleting a principal/parent
 
-Consider this simple model where `Blog` is the principal/parent in a relationship with `Post`, which is the dependent/child. `Post.BlogId` is a foreign key property, the value of which must match the `Post.Id` primary key of the post to which the blog belongs.
+Consider this simple model where `Blog` is the principal/parent in a relationship with `Post`, which is the dependent/child. `Post.BlogId` is a foreign key property, the value of which must match the `Blog.Id` primary key of the blog to which the post belongs.
 
 <!--
     public class Blog
