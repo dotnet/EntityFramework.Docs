@@ -294,3 +294,9 @@ A Library for Entity Framework Core to support automatically recording data chan
 Adds F# design-time support to EF Core. For EF Core: 5.
 
 [GitHub repository](https://github.com/efcore/EFCore.FSharp)
+
+### EntityFrameworkCore.VisualBasic
+
+Adds VB design-time support to EF Core. For EF Core: 5.
+
+[GitHub repository](https://github.com/efcore/EFCore.VisualBasic)
