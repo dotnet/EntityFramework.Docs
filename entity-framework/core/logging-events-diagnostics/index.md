@@ -16,7 +16,7 @@ The table below provides a quick reference for the differences between the mecha
 
 | Mechanism |  Async | Scope | Registered | Intended use
 |:----------|--------|-------|------------|-------------
-| Configuration Logging | ? | ? | Configuration system | Development-time logging
+| Configuration Logging | No | Per context | Configuration system | Development-time logging
 | Simple Logging | No | Per context | Context configuration | Development-time logging
 | Microsoft.Extensions.Logging | No | Per context* | D.I. or context configuration | Production logging
 | Events | No | Per context | Any time | Reacting to EF events
@@ -44,7 +44,7 @@ Logging configuration is commonly provided by the `Logging` section of *appsetti
 
 With the preceding JSON, SQL statements are displayed on the command line and in the Visual Studio output window.
 
-For more information on configuring logging in .NET, see [Configure logging in .NET](/dotnet/core/extensions/logging#configure-logging) and [Configure logging in ASP.NET Core](/aspnet/core/fundamentals/logging#configure-logging).
+For more information on configuring logging, see [Configure logging in .NET](/dotnet/core/extensions/logging#configure-logging) and [Configure logging in ASP.NET Core](/aspnet/core/fundamentals/logging#configure-logging).
 
 ## Simple logging
 
