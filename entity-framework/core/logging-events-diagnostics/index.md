@@ -16,6 +16,7 @@ The table below provides a quick reference for the differences between the mecha
 
 | Mechanism |  Async | Scope | Registered | Intended use
 |:----------|--------|-------|------------|-------------
+| Configuration Logging | ? | ? | Configuration system | Development-time logging
 | Simple Logging | No | Per context | Context configuration | Development-time logging
 | Microsoft.Extensions.Logging | No | Per context* | D.I. or context configuration | Production logging
 | Events | No | Per context | Any time | Reacting to EF events
@@ -23,6 +24,25 @@ The table below provides a quick reference for the differences between the mecha
 | Diagnostics listeners | No | Process | Globally | Application diagnostics
 
 *Typically `Microsoft.Extensions.Logging` is configured per-application via dependency injection However, at the EF level, each context _can_ be configured with a different logger if needed.
+
+## Configuration Logging
+
+Logging configuration is commonly provided by the `Logging` section of *appsettings*.`{Environment}`*.json* files. To log SQL statements in development, add `"Microsoft.EntityFrameworkCore.Database.Command": "Information"` to the *appsettings.Development.json* file:
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information",
+      "Microsoft.EntityFrameworkCore.Database.Command": "Information"
+    }
+  }
+}
+```
+
+For more information on configuring logging in .NET, see [Configure logging in .NET](/dotnet/core/extensions/logging#configure-logging) and [Configure logging in ASP.NET Core](/aspnet/core/fundamentals/logging#configure-logging).
 
 ## Simple logging
 
