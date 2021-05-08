@@ -42,6 +42,8 @@ Logging configuration is commonly provided by the `Logging` section of *appsetti
 }
 ```
 
+With the preceding JSON, SQL statements are displayed on the command line and in the Visual Studio output window.
+
 For more information on configuring logging in .NET, see [Configure logging in .NET](/dotnet/core/extensions/logging#configure-logging) and [Configure logging in ASP.NET Core](/aspnet/core/fundamentals/logging#configure-logging).
 
 ## Simple logging
