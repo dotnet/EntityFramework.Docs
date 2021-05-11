@@ -6,9 +6,9 @@ namespace WithContextFactory
     public class MyController
     {
         #region Construct
-        private readonly IDbContextFactory<ApplicationDbContext> _contextFactory;
+        private readonly IDesignTimeDbContextFactory<ApplicationDbContext> _contextFactory;
 
-        public MyController(IDbContextFactory<ApplicationDbContext> contextFactory)
+        public MyController(IDesignTimeDbContextFactory<ApplicationDbContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }
