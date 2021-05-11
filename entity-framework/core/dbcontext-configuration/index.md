@@ -176,9 +176,9 @@ The `ApplicationDbContext` class must expose a public constructor with a `DbCont
 The `DbContextFactory` factory can then be used in other services through constructor injection. For example:
 
 <!--
-        private readonly IDbContextFactory<ApplicationDbContext> _contextFactory;
+        private readonly IDesignTimeDbContextFactory<ApplicationDbContext> _contextFactory;
 
-        public MyController(IDbContextFactory<ApplicationDbContext> contextFactory)
+        public MyController(IDesignTimeDbContextFactory<ApplicationDbContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }
