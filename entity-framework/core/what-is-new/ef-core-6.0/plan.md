@@ -2,13 +2,13 @@
 title: Plan for Entity Framework Core 6.0
 description: The themes and features planned for EF Core 6.0
 author: ajcvickers
-ms.date: 01/12/2021
+ms.date: 05/12/2021
 uid: core/what-is-new/ef-core-6.0/plan
 ---
 
 # Plan for Entity Framework Core 6.0
 
-As described in the [planning process](xref:core/what-is-new/release-planning), we have gathered input from stakeholders into a plan for the Entity Framework Core (EF Core) 6.0 release.
+As described in the [planning process](xref:core/what-is-new/release-planning), we have gathered input from stakeholders into a plan for the Entity Framework Core (EF Core) 6.0 release. This plan is periodically updated to reflect schedule and scope adjustments.
 
 Unlike previous releases, this plan does not attempt to cover all work for the 6.0 release. Instead, it indicates where and how we intend to invest in this release, but with flexibility to adjust scope or pull in new work as we gather feedback and learn while working on the release.
 
@@ -45,7 +45,7 @@ As always, a major input into the [planning process](xref:core/what-is-new/relea
 
 Tracked by [#4693](https://github.com/dotnet/efcore/issues/4693)
 
-Status: Not started
+Status: In-progress
 
 T-shirt size: Large
 
@@ -81,17 +81,19 @@ This theme will involve a lot of iterative investigation, which will inform wher
 
 ### Performance infrastructure and new tests
 
-Status: Not started
+Status: Scoped/Complete
 
 T-shirt size: Medium
 
 The EF Core codebase already contains a set of performance benchmarks that are executed every day. For 6.0, we plan to improve the infrastructure for these tests as well as adding new tests. We will also profile mainline perf scenarios and fix any low-hanging fruit found.
 
+Update: We have improved test infrastructure and added new tests to support the work done for EF Core 6. Additional improvements in this area have been scoped out of the EF Core 6.0 release.
+
 ### Compiled models
 
 Tracked by [#1906](https://github.com/dotnet/efcore/issues/1906)
 
-Status: Not started
+Status: In-progress
 
 T-shirt size: X-Large
 
@@ -101,7 +103,7 @@ Compiled models will allow the generation of a compiled form of the EF model. Th
 
 Tracked by [#23611](https://github.com/dotnet/efcore/issues/23611)
 
-Status: Not started
+Status: Complete
 
 T-shirt size: X-Large
 
@@ -141,11 +143,13 @@ A migrations bundle is a self-contained executable that applies migrations to a 
 
 Tracked by [#22945](https://github.com/dotnet/efcore/issues/22945)
 
-Status: Not started
+Status: Cut
 
 T-shirt size: Large
 
 The number of migrations created for an application can grow to become a burden. In addition, these migrations are frequently deployed with the application even when this is not needed. In EF Core 6.0, we plan to improve this through better tooling and project/assembly management. Two specific issues we plan to address are [squash many migrations into one](https://github.com/dotnet/efcore/issues/2174) and [regenerate a clean model snapshot](https://github.com/dotnet/efcore/issues/18557).
+
+Update: most of the work in this area has been cut for 6.0 due to resource constraints.
 
 ## Improve existing features and fix bugs
 
@@ -155,17 +159,19 @@ Any [issue or bug assigned to the 6.0.0 milestone](https://github.com/dotnet/efc
 
 Tracked by [issues labeled with 'ef6-parity' and in the 6.0 milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aef6-parity+milestone%3A6.0.0)
 
-Status: Not started
+Status: Scoped/in-progress
 
 T-shirt size: Large
 
-EF Core 5.0 supports most query patterns supported by EF6, in addition to patterns not supported in EF6. For EF Core 6.0, we plan to close the gap and make supported EF Core queries a true superset of supported EF6 queries. This will be driven by investigation of the gaps, but already includes GroupBy issues such as [translate GroupBy followed by FirstOrDefault](https://github.com/dotnet/efcore/issues/12088), and raw SQL queries for [primitive](https://github.com/dotnet/efcore/issues/11624) and [unmapped](https://github.com/dotnet/efcore/issues/10753) types.  
+EF Core 5.0 supports most query patterns supported by EF6, in addition to patterns not supported in EF6. For EF Core 6.0, we plan to close the gap and make supported EF Core queries a true superset of supported EF6 queries. This will be driven by investigation of the gaps, but already includes GroupBy issues such as [translate GroupBy followed by FirstOrDefault](https://github.com/dotnet/efcore/issues/12088), and raw SQL queries for [primitive](https://github.com/dotnet/efcore/issues/11624) and [unmapped](https://github.com/dotnet/efcore/issues/10753) types.
+
+Update: Raw SQL queries for primitive and unmapped types has been cut from 6.0 due to resourcing constraints and priority adjustments.
 
 ### Value objects
 
 Tracked by [#9906](https://github.com/dotnet/efcore/issues/9906)
 
-Status: Not started
+Status: In-progress
 
 T-shirt size: Medium
 
@@ -182,6 +188,24 @@ Status: Not started
 T-shirt size: Large
 
 We are actively gathering feedback on which improvements to make to the Cosmos provider in EF Core 6.0. We will update this document as we learn more. For now, please make sure to vote (👍) for the Cosmos features that you need.
+
+Update: We have been doing extensive customer development around the Cosmos provider. This has resulted in the following enhancements being pulled into EF Core 6.0:
+
+- [Azure Cosmos DB provider should default to implicit ownership](https://github.com/dotnet/efcore/issues/24803)
+- [Find/FindAsync performs SQL API query when entity has embedded entities](https://github.com/dotnet/efcore/issues/24202)
+- [Set partition key on join entity type by convention](https://github.com/dotnet/efcore/issues/23491)
+- [Optimize more queries that could use ReadItem](https://github.com/dotnet/efcore/issues/20693)
+- [Detect partition key filters in more queries](https://github.com/dotnet/efcore/issues/20350)
+- [Translate subquery in filter condition](https://github.com/dotnet/efcore/issues/17957)
+- [FromSql support](https://github.com/dotnet/efcore/issues/17311)
+- [Allow to specify consistency level for CUD operations](https://github.com/dotnet/efcore/issues/17309)
+- [Configure TTL per entity/entity type/collection](https://github.com/dotnet/efcore/issues/17307)
+- [API to configure container facets (throughput, size, partition key, etc.)](https://github.com/dotnet/efcore/issues/17301)
+- [Diagnostic events including statistics (query cost, activity id)](https://github.com/dotnet/efcore/issues/17298)
+- [Support aggregate operators](https://github.com/dotnet/efcore/issues/16146)
+- [Distinct operator in queries](https://github.com/dotnet/efcore/issues/16144)
+- [Add translators for member/methods which map to built-in functions](https://github.com/dotnet/efcore/issues/16143)
+- [Add basic support for collections and dictionaries of primitive types](https://github.com/dotnet/efcore/issues/14762)
 
 ### Expose model building conventions to applications
 
@@ -219,9 +243,12 @@ Miscellaneous features planned for EF 6.0 include, but are not limited to:
 
 - [Split query for non-navigation collections](https://github.com/dotnet/efcore/issues/21234)
 - [Detect simple join tables in reverse engineering and create many-to-many relationships](https://github.com/dotnet/efcore/issues/22475)
+- [Mechanism/API to specify a default conversion for any property of a given type in the model](https://github.com/dotnet/efcore/issues/10784)
+
+Update: The following issues were cut from the 6.0 release:
+
 - [Complete full/free-text search on SQLite and SQL Server](https://github.com/dotnet/efcore/issues/4823)
 - [SQL Server spatial indexes](https://github.com/dotnet/efcore/issues/12538)
-- [Mechanism/API to specify a default conversion for any property of a given type in the model](https://github.com/dotnet/efcore/issues/10784)
 - [Use the new batching API from ADO.NET](https://github.com/dotnet/efcore/issues/18990)
 
 ## .NET integration
@@ -246,17 +273,19 @@ This work includes:
 
 Tracked by [issues labeled with `type-enhancement` and `area-adonet-sqlite` in the 6.0 milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+milestone%3A6.0.0+label%3Atype-enhancement+label%3Aarea-adonet-sqlite)
 
-Status: In-progress
+Status: Scoped/In-progress
 
 T-shirt size: Medium
 
 Several small improvements are planned for the Microsoft.Data.Sqlite, including [connection pooling](https://github.com/dotnet/efcore/issues/13837) and [prepared statements](https://github.com/dotnet/efcore/issues/14044) for performance.
 
+Update: Prepared statements has been cut from the 6.0 release.
+
 ### Nullable reference types
 
 Tracked by [#14150](https://github.com/dotnet/efcore/issues/14150)
 
-Status: In-progress
+Status: Complete
 
 T-shirt size: Large
 
@@ -270,7 +299,7 @@ The EF team is planning to invest time during the EF Core 6.0 timeframe experime
 
 Tracked in the [.NET Data Lab repo](https://github.com/dotnet/datalab/)
 
-Status: Not started
+Status: In-progress
 
 T-shirt size: Ongoing
 
@@ -281,7 +310,7 @@ T-shirt size: Ongoing
 
 ### GraphQL
 
-Status: Not started
+Status: In-progress
 
 T-shirt size: Ongoing
 
@@ -289,7 +318,7 @@ T-shirt size: Ongoing
 
 ### DataVerse (formerly Common Data Services)
 
-Status: Not started
+Status: In-progress
 
 T-shirt size: Ongoing
 

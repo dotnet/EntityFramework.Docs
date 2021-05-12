@@ -35,11 +35,9 @@ See the [.NET support policy](https://dotnet.microsoft.com/platform/support/poli
 
 EF Core releases align with the [.NET Core shipping schedule](https://github.com/dotnet/core/blob/main/roadmap.md).
 
-Patch releases usually ship monthly, but have a long lead time.
-We are working to improve this.
+Patch releases usually ship monthly, but have a long lead time. We are working to improve this.
 
-See the [release planning process](xref:core/what-is-new/release-planning) for more information on how we decide what to ship in each release.
-We typically don't do detailed planning for further out than the next major or minor release.
+See the [release planning process](xref:core/what-is-new/release-planning) for more information on how we decide what to ship in each release. We typically don't do detailed planning for further out than the next major or minor release.
 
 ## EF Core 6.0
 
@@ -47,9 +45,7 @@ The next planned stable release is **EF Core 6.0**, scheduled for **November 202
 
 A [high-level plan for EF Core 6.0](xref:core/what-is-new/ef-core-6.0/plan) has been created by following the documented [release planning process](xref:core/what-is-new/release-planning).
 
-Your feedback on planning is important.
-The best way to indicate the importance of an issue is to vote (thumbs-up 👍) for that issue on GitHub.
-This data will then feed into the planning process for the next release.
+Your feedback on planning is important. The best way to indicate the importance of an issue is to vote (thumbs-up 👍) for that issue on GitHub. This data will then feed into the planning process for the next release.
 
 ### Get it now
 
@@ -57,8 +53,8 @@ EF Core 6.0 packages are **available now** as
 
 * [Daily builds](https://github.com/dotnet/aspnetcore/blob/master/docs/DailyBuilds.md)
   * All the latest features and bug fixes. Generally very stable; 75,000+ tests run against each build.
+* [Previews on NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/6.0.0-preview.3.21201.2)
 
-In addition, as we progress, frequent previews will be pushed to NuGet. Note that the previews lag behind daily builds, but are tested to work with the corresponding ASP.NET Core and .NET Core previews.
+Note that the previews lag behind daily builds, but are tested to work with the corresponding ASP.NET Core and .NET Core previews.
 
-Using the previews or daily builds is a great way to find issues and provide feedback as early as possible.
-The sooner we get such feedback, the more likely it will be actionable before the next official release.
+Using the previews or daily builds is a great way to find issues and provide feedback as early as possible. The sooner we get such feedback, the more likely it will be actionable before the next official release.
