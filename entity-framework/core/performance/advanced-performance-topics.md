@@ -25,7 +25,7 @@ When `AddDbContextPool` is used, at the time a context instance is requested, EF
 
 This is conceptually similar to how connection pooling operates in ADO.NET providers and has the advantage of saving some of the cost of initialization of the context instance.
 
-The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> sets the maximum number of instances retained by the pool. Once `poolSize` is exceeded, new context instances are not cached and  EF falls back to the non-pooling behavior of creating instances on demand.
+The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> sets the maximum number of instances retained by the pool (defaults to 1024 in EF Core 6.0, and to 128 in previous versions). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
 
 ### Limitations
 
@@ -109,3 +109,16 @@ Even if the sub-millisecond difference seems small, keep in mind that the consta
 
 > [!NOTE]
 > Avoid constructing queries with the expression tree API unless you really need to. Aside from the API's complexity, it's very easy to inadvertently cause significant performance issues when using them.
+
+## Reducing runtime overhead
+
+As with any layer, EF Core adds a bit of runtime overhead compared to coding directly against lower-level database APIs. This runtime overhead is unlikely to impact most real-world applications in a significant way; the other topics in this performance guide, such as query efficiency, index usage and minimizing roundtrips, are far more important. In addition, even for highly-optimized applications, network latency and database I/O will usually dominate any time spent inside EF Core itself. However, for high-performance, low-latency applications where every bit of perf is important, the following recommendations can be used to reduce EF Core overhead to a minimum:
+
+* Turn on [DbContext pooling](#dbcontext-pooling); our benchmarks show that this feature can have a decisive impact on high-perf, low-latency applications.
+  * Make sure that the `maxPoolSize` corresponds to your usage scenario; if it is too low, DbContext instances will be constantly created and disposed, degrading performance. Setting it too high may needlessly consume memory as unused DbContext instances are maintained in the pool.
+  * For an extra tiny perf boost, consider using `PooledDbContextFactory` instead of having DI inject context instances directly (EF Core 6 and above). DI management of DbContext pooling incurs a slight overhead.
+* Use precompiled queries for hot queries.
+  * The more complex the LINQ query - the more operators it contains and the bigger the resulting expression tree - the more gains can be expected from using compiled queries.
+* Consider disabling thread safety checks by setting `EnableThreadSafetyChecks` to false in your context configuration (EF Core 6 and above).
+  * Using the same DbContext instance concurrently from different threads isn't supported. EF Core has a safety feature which detects this programming bug in many cases (but not all), and immediately throws an informative exception. However, this safety feature adds some runtime overhead.
+  * **WARNING:** Only disable thread safety checks after thoroughly testing that your application doesn't contain such concurrency bugs.
