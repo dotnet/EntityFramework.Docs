@@ -291,7 +291,7 @@ For further information, [see the full documentation on collations and case sens
 
 ## Event counters
 
-EF Core 5.0 exposes [event counters](https://devblogs.microsoft.com/dotnet/introducing-diagnostics-improvements-in-net-core-3-0) which can be used to track your application's performance and spot various anomalies. Simply attach to a process running EF with the [dotnet-counters](https://docs.microsoft.com/dotnet/core/diagnostics/dotnet-counters) tool:
+EF Core 5.0 exposes [event counters](https://devblogs.microsoft.com/dotnet/introducing-diagnostics-improvements-in-net-core-3-0) which can be used to track your application's performance and spot various anomalies. Simply attach to a process running EF with the [dotnet-counters](/dotnet/core/diagnostics/dotnet-counters) tool:
 
 ```console
 > dotnet counters monitor Microsoft.EntityFrameworkCore -p 49496
@@ -341,7 +341,7 @@ For further information, [see the full documentation on event counters](xref:cor
 * Improved query translation around null semantics, resulting in tighter, more efficient queries.
 * User-mapped functions can now be annotated to control null propagation, again resulting in tighter, more efficient queries.
 * SQL containing CASE blocks is now considerably more concise.
-* The SQL Server [`DATALENGTH`](https://docs.microsoft.com/sql/t-sql/functions/datalength-transact-sql) function can now be called in queries via the new [`EF.Functions.DataLength`](xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.DataLength%2A) method.
+* The SQL Server [`DATALENGTH`](/sql/t-sql/functions/datalength-transact-sql) function can now be called in queries via the new [`EF.Functions.DataLength`](xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.DataLength%2A) method.
 * `EnableDetailedErrors` adds [additional details to exceptions](xref:core/logging-events-diagnostics/simple-logging#detailed-query-exceptions).
 
 ### Saving

@@ -11,7 +11,7 @@ This page details value generation configuration  and patterns that are specific
 
 ## IDENTITY columns
 
-By convention, numeric columns that are configured to have their values generated on add are set up as [SQL Server IDENTITY columns](https://docs.microsoft.com/sql/t-sql/statements/create-table-transact-sql-identity-property).
+By convention, numeric columns that are configured to have their values generated on add are set up as [SQL Server IDENTITY columns](/sql/t-sql/statements/create-table-transact-sql-identity-property).
 
 ### Seed and increment
 
