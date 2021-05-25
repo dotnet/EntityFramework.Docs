@@ -21,7 +21,7 @@ EF Core reports metrics via the standard .NET event counters feature; it's recom
 
 ## Attach to a process using dotnet-counters
 
-The [dotnet-counters tool](https://docs.microsoft.com/dotnet/core/diagnostics/dotnet-counters) can be used to attach to a running process and report EF Core event counters regularly; nothing special needs to be done in the program for these counters to be available.
+The [dotnet-counters tool](/dotnet/core/diagnostics/dotnet-counters) can be used to attach to a running process and report EF Core event counters regularly; nothing special needs to be done in the program for these counters to be available.
 
 First, install the `dotnet-counters` tool: `dotnet tool install --global dotnet-counters`.
 
@@ -81,4 +81,4 @@ SaveChanges                           | The number of times `SaveChanges` has be
 
 ## Additional resources
 
-* [.NET documentation on event counters](https://docs.microsoft.com/dotnet/core/diagnostics/event-counters)
+* [.NET documentation on event counters](/dotnet/core/diagnostics/event-counters)
