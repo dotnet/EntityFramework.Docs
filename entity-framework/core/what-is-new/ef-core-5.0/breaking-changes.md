@@ -114,7 +114,7 @@ public class Blog
 {
     public int Id { get; set; }
 
-    [Column(TypeName = "decimal(16, 5")]
+    [Column(TypeName = "decimal(16, 5)")]
     public decimal Score { get; set; }
 }
 ```
