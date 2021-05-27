@@ -122,14 +122,14 @@ RETURN
 )
 ```
 
-Now, the entity `BlogWithMultiplePost` can be mapped to this function in a following way:
+Now, the entity `BlogWithMultiplePosts` can be mapped to this function in a following way:
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/EntityTypes.cs#QueryableFunctionConfigurationToFunction)]
 
 > [!NOTE]
 > In order to map an entity to a table-valued function the function must be parameterless.
 
-Conventionally the entity properties will be mapped to matching columns returned by the TVF. If the columns returned by TVF has different name than entity property then it can be configured using `HasColumnName` method, just like when mapping to a regular table.
+Conventionally, the entity properties will be mapped to matching columns returned by the TVF. If the columns returned by the TVF have different names than the entity property, then the entity's columns can be configured using `HasColumnName` method, just like when mapping to a regular table.
 
 When the entity type is mapped to a table-valued function, the query:
 
