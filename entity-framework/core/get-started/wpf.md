@@ -110,8 +110,8 @@ Add the classes that are defined in the model as data sources for this WPF appli
 
 ## Adding a Details Grid
 
-Now that the grid exists to display categories, the details grid can be added to show products. Add this inside the `Grid` after the 
-categories `DataGrid`.  
+Now that the grid exists to display categories, the details grid can be added to show products. Add this inside the
+`Grid` element, after the categories `DataGrid` element.  
 
 **`MainWindow.xaml`**
 
