@@ -164,7 +164,7 @@ NCache Entity Framework Core Provider is a distributed second level cache provid
 
 ### EntityFrameworkCore.Projectables
 
-Flexible projection magic for EFCore. Use properties, methods, and extension methods in your query without client evaluation. For EF Core 3 and 5.
+Flexible projection magic for EF Core. Use properties, methods, and extension methods in your query without client evaluation. For EF Core 3, 5.
 
 [GitHub repository](https://github.com/koenbeuk/EntityFrameworkCore.Projectables)
 
