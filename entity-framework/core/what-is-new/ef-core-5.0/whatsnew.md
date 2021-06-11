@@ -147,7 +147,7 @@ CREATE TABLE [Animals] (
 
 CREATE TABLE [Cats] (
     [Id] int NOT NULL,
-    [EdcuationLevel] nvarchar(max) NULL,
+    [EducationLevel] nvarchar(max) NULL,
     CONSTRAINT [PK_Cats] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_Cats_Animals_Id] FOREIGN KEY ([Id]) REFERENCES [Animals] ([Id]) ON DELETE NO ACTION,
 );
