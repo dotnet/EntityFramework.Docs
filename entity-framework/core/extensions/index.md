@@ -162,6 +162,12 @@ NCache Entity Framework Core Provider is a distributed second level cache provid
 
 [Website](https://www.alachisoft.com/ncache/ef-core-cache.html)
 
+### EntityFrameworkCore.Projectables
+
+Flexible projection magic for EF Core. Use properties, methods, and extension methods in your query without client evaluation. For EF Core 3, 5.
+
+[GitHub repository](https://github.com/koenbeuk/EntityFrameworkCore.Projectables)
+
 ### EntityFrameworkCore.Triggered
 
 Triggers for EF Core. Respond to changes in your DbContext before and after they are committed to the database. Triggers are fully asynchronous and support dependency injection, inheritance, cascading and more. For EF Core: 3, 5.
