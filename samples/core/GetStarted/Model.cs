@@ -18,8 +18,8 @@ namespace EFGetStarted
             DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}blogging.db";
         }
 
-        // The following configures EF to create a Sqlite database file as `C:\blogging.db`.
-        // For Mac or Linux, change this to `/tmp/blogging.db` or any other absolute path.
+        // The following configures EF to create a Sqlite database file in the
+        // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
     }
