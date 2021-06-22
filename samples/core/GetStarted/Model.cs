@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFGetStarted
@@ -12,9 +13,9 @@ namespace EFGetStarted
 
         public BloggingContext()
         {
-            var folder = System.Environment.SpecialFolder.LocalApplicationData;
-            var path = System.Environment.GetFolderPath(folder);
-            DbPath = $"{path}\\blogging.db";
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}blogging.db";
         }
 
         // The following configures EF to create a Sqlite database file as `C:\blogging.db`.
