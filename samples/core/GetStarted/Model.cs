@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFGetStarted
@@ -8,10 +9,19 @@ namespace EFGetStarted
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
-        // The following configures EF to create a Sqlite database file as `C:\blogging.db`.
-        // For Mac or Linux, change this to `/tmp/blogging.db` or any other absolute path.
+        public string DbPath { get; private set; }
+
+        public BloggingContext()
+        {
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}blogging.db";
+        }
+
+        // The following configures EF to create a Sqlite database file in the
+        // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite(@"Data Source=C:\blogging.db");
+            => options.UseSqlite($"Data Source={DbPath}");
     }
 
     public class Blog
