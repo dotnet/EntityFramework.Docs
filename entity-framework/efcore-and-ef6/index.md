@@ -12,7 +12,7 @@ uid: efcore-and-ef6/index
 
 Entity Framework Core ([EF Core](xref:core/index)) is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations.
 
-EF Core works with SQL Server/SQL Azure, SQLite, Azure Cosmos DB, MySQL, PostgreSQL, and many more databases through a [database provider plugin model](xref:core/providers/index).
+EF Core works with SQL Server/Azure SQL Database, SQLite, Azure Cosmos DB, MySQL, PostgreSQL, and many more databases through a [database provider plugin model](xref:core/providers/index).
 
 ## EF6
 
@@ -39,12 +39,12 @@ The EF Core column indicates the product version in which the feature first appe
 | Data annotations                                      | Yes      | 1.0                                   |
 | Fluent API                                            | Yes      | 1.0                                   |
 | Inheritance: Table per hierarchy (TPH)                | Yes      | 1.0                                   |
-| Inheritance: Table per type (TPT)                     | Yes      | Planned for 5.0 ([#2266](https://github.com/dotnet/efcore/issues/2266)) |
-| Inheritance: Table per concrete class (TPC)           | Yes      | Stretch for 5.0 ([#3170](https://github.com/dotnet/efcore/issues/3170)) <sup>(1)</sup> |
+| Inheritance: Table per type (TPT)                     | Yes      | 5.0                                   |
+| Inheritance: Table per concrete class (TPC)           | Yes      | On the backlog ([#3170](https://github.com/dotnet/efcore/issues/3170)) |
 | Shadow state properties                               |          | 1.0                                   |
 | Alternate keys                                        |          | 1.0                                   |
-| Many-to-many navigations                              | Yes      | Planned for 5.0 ([#19003](https://github.com/dotnet/efcore/issues/19003)) |
-| Many-to-many without join entity                      | Yes      | On the backlog ([#1368](https://github.com/dotnet/efcore/issues/1368)) |
+| Many-to-many navigations                              | Yes      | 5.0                                   |
+| Many-to-many without join entity                      | Yes      | 5.0                                   |
 | Key generation: Database                              | Yes      | 1.0                                   |
 | Key generation: Client                                |          | 1.0                                   |
 | Complex/owned types                                   | Yes      | 2.0                                   |
@@ -54,14 +54,15 @@ The EF Core column indicates the product version in which the feature first appe
 | Update model from database                            | Partial  | On the backlog ([#831](https://github.com/dotnet/efcore/issues/831)) |
 | Global query filters                                  |          | 2.0                                   |
 | Table splitting                                       | Yes      | 2.0                                   |
-| Entity splitting                                      | Yes      | Stretch for 5.0 ([#620](https://github.com/dotnet/efcore/issues/620)) <sup>(1)</sup> |
+| Entity splitting                                      | Yes      | On the backlog ([#620](https://github.com/dotnet/efcore/issues/620)) |
 | Database scalar function mapping                      | Poor     | 2.0                                   |
+| Database table valued function mapping                | Poor     | 5.0                                   |
 | Field mapping                                         |          | 1.1                                   |
 | Nullable reference types (C# 8.0)                     |          | 3.0                                   |
-| Graphical visualization of model                      | Yes      | No support planned <sup>(2)</sup>     |
-| Graphical model editor                                | Yes      | No support planned <sup>(2)</sup>     |
-| Model format: EDMX (XML)                              | Yes      | No support planned <sup>(2)</sup>     |
-| Create model from database: VS wizard                 | Yes      | No support planned <sup>(2)</sup>     |
+| Graphical visualization of model                      | Yes      | No support planned <sup>(1)</sup>     |
+| Graphical model editor                                | Yes      | No support planned <sup>(1)</sup>     |
+| Model format: EDMX (XML)                              | Yes      | No support planned <sup>(1)</sup>     |
+| Create model from database: VS wizard                 | Yes      | No support planned <sup>(1)</sup>     |
 
 ### Querying data
 
@@ -79,7 +80,7 @@ The EF Core column indicates the product version in which the feature first appe
 | Raw SQL queries: Composing with LINQ                  |          | 1.0                                   |
 | Explicitly compiled queries                           | Poor     | 2.0                                   |
 | await foreach (C# 8.0)                                |          | 3.0                                   |
-| Text-based query language (Entity SQL)                | Yes      | No support planned <sup>(2)</sup>     |
+| Text-based query language (Entity SQL)                | Yes      | No support planned <sup>(1)</sup>     |
 
 ### Saving data
 
@@ -87,7 +88,7 @@ The EF Core column indicates the product version in which the feature first appe
 |:------------------------------------------------------|:---------|:--------------------------------------|
 | Change tracking: Snapshot                             | Yes      | 1.0                                   |
 | Change tracking: Notification                         | Yes      | 1.0                                   |
-| Change tracking: Proxies                              | Yes      | Merged for 5.0 ([#10949](https://github.com/dotnet/efcore/issues/10949)) |
+| Change tracking: Proxies                              | Yes      | 5.0                                   |
 | Accessing tracked state                               | Yes      | 1.0                                   |
 | Optimistic concurrency                                | Yes      | 1.0                                   |
 | Transactions                                          | Yes      | 1.0                                   |
@@ -106,10 +107,10 @@ The EF Core column indicates the product version in which the feature first appe
 | Connection resiliency                                 | Yes      | 1.1                                   |
 | Interceptors                                          | Yes      | 3.0                                   |
 | Events                                                | Yes      | 3.0 (partial; [#626](https://github.com/dotnet/efcore/issues/626)) |
-| Simple Logging (Database.Log)                         | Yes      | Merged for 5.0 ([#1199](https://github.com/dotnet/efcore/issues/1199)) |
+| Simple Logging (Database.Log)                         | Yes      | 5.0                                   |
 | DbContext pooling                                     |          | 2.0                                   |
 
-### Database providers <sup>(3)</sup>
+### Database providers <sup>(2)</sup>
 
 | **Feature**                                           | **EF6.4**| **EF Core**                           |
 |:------------------------------------------------------|:---------|:--------------------------------------|
@@ -118,24 +119,22 @@ The EF Core column indicates the product version in which the feature first appe
 | PostgreSQL                                            | Yes      | 1.0                                   |
 | Oracle                                                | Yes      | 1.0                                   |
 | SQLite                                                | Yes      | 1.0                                   |
-| SQL Server Compact                                    | Yes      | 1.0 <sup>(4)</sup>                    |
+| SQL Server Compact                                    | Yes      | 1.0 <sup>(3)</sup>                    |
 | DB2                                                   | Yes      | 1.0                                   |
 | Firebird                                              | Yes      | 2.0                                   |
-| Jet (Microsoft Access)                                |          | 2.0 <sup>(4)</sup>                    |
+| Jet (Microsoft Access)                                |          | 2.0 <sup>(3)</sup>                    |
 | Azure Cosmos DB                                       |          | 3.0                                   |
 | In-memory (for testing)                               |          | 1.0                                   |
 
-<sup>1</sup> Stretch goals are not likely to be achieved for a given release. However, if things go well, then we will try to pull them in.
+<sup>1</sup> Some EF6 features will not be implemented in EF Core. These features either depend on EF6's underlying Entity Data Model (EDM) and/or are complex features with relatively low return on investment. We always welcome feedback, but while EF Core enables many things not possible in EF6, it is conversely not feasible for EF Core to support all the features of EF6.
 
-<sup>2</sup> Some EF6 features will not be implemented in EF Core. These features either depend on EF6's underlying Entity Data Model (EDM) and/or are complex features with relatively low return on investment. We always welcome feedback, but while EF Core enables many things not possible in EF6, it is conversely not feasible for EF Core to support all the features of EF6.
+<sup>2</sup> EF Core database providers implemented by third-parties may be delayed in updating to new major versions of EF Core. See [Database Providers](xref:core/providers/index) for more information.
 
-<sup>3</sup> EF Core database providers implemented by third-parties may be delayed in updating to new major versions of EF Core. See [Database Providers](xref:core/providers/index) for more information.
-
-<sup>4</sup> The SQL Server Compact and Jet providers only work on .NET Framework (not on .NET Core).
+<sup>3</sup> The SQL Server Compact and Jet providers only work on .NET Framework (not on .NET Core).
 
 ### Supported platforms
 
-EF Core 3.1 runs on .NET Core and .NET Framework, through the use of .NET Standard 2.0. However, EF Core 5.0 will not run on .NET Framework. See [Platforms](xref:core/miscellaneous/platforms) for more details.
+EF Core 3.1 runs on .NET Core and .NET Framework, through the use of .NET Standard 2.0. However, EF Core 5.0 does not run on .NET Framework. See [Platforms](xref:core/miscellaneous/platforms) for more details.
 
 EF6.4 runs on .NET Core and .NET Framework, through multi-targeting.
 
