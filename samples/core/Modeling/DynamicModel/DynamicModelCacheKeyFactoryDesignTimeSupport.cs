@@ -6,9 +6,9 @@ namespace EFModeling.DynamicModel
     #region DynamicModelDesignTimeSupport
     public class DynamicModelCacheKeyFactory : IModelCacheKeyFactory
     {
-        public object Create(DbContext context)
+        public object Create(DbContext context, bool designTime)
             => context is DynamicContext dynamicContext
-                ? (context.GetType(), dynamicContext.UseIntProperty)
+                ? (context.GetType(), dynamicContext.UseIntProperty, designTime)
                 : (object)context.GetType();
 
         public object Create(DbContext context)
