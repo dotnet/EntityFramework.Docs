@@ -21,7 +21,7 @@ The following implementation takes the `UseIntProperty` into account when produc
 
 [!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicModelCacheKeyFactory.cs?name=DynamicModel)]
 
-If you have to support [Design-time DbContext creation](https://docs.microsoft.com/en-us/ef/core/cli/dbcontext-creation?tabs=dotnet-core-cli)(Needed by, for example, the Migration commands), you have to use the new overload for the Create method. As in the following example:
+If you have to support [Design-time DbContext creation](xref:core/cli/dbcontext-creation)(Needed by, for example, the Migration commands), you have to use the new overload for the Create method. As in the following example:
 
 [!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicModelCacheKeyFactoryDesignTimeSupport.cs?name=DynamicModelDesignTimeSupport)]
 
