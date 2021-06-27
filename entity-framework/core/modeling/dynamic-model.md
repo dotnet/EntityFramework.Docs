@@ -17,7 +17,7 @@ Unfortunately, this code wouldn't work as-is, since EF builds the model and runs
 
 EF uses the `IModelCacheKeyFactory` to generate cache keys for models; by default, EF assumes that for any given context type the model will be the same, so the default implementation of this service returns a key that just contains the context type. To produce different models from the same context type, you need to replace the `IModelCacheKeyFactory` service with the correct implementation; the generated key will be compared to other model keys using the `Equals` method, taking into account all the variables that affect the model.
 
-The following implementation takes the `UseIntProperty` into account when producing a model cache key:
+In order to support [Design-time DbContext creation](https://docs.microsoft.com/en-us/ef/core/cli/dbcontext-creation?tabs=dotnet-core-cli)(Needed by, for example, the Migration commands), you have to pass it as an argument to the Create method. As in the following implementation, that takes the `UseIntProperty` into account when producing a model cache key:
 
 [!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicModelCacheKeyFactory.cs?name=DynamicModel)]
 
