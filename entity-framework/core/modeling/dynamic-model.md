@@ -21,6 +21,10 @@ The following implementation takes the `UseIntProperty` into account when produc
 
 [!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicModelCacheKeyFactory.cs?name=DynamicModel)]
 
+Starting with EF Core 6 you have to implement the overload of the Create method that also handles design-time model caching. As in the following example:
+
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicModelCacheKeyFactoryDesignTimeSupport.cs?name=DynamicModelDesignTimeSupport)]
+
 Finally, register your new `IModelCacheKeyFactory` in your context's `OnConfiguring`:
 
 [!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicContext.cs?name=OnConfiguring)]
