@@ -2,7 +2,7 @@
 title: Function Mappings - SQLite Database Provider - EF Core
 description: Function Mappings of the SQLite EF Core database provider
 author: bricelam
-ms.date: 1/26/2021
+ms.date: 6/28/2021
 uid: core/providers/sqlite/functions
 ---
 # Function Mappings of the SQLite EF Core Provider
@@ -46,6 +46,14 @@ ushortValue.ToString()    | CAST(@ushortValue AS TEXT)    | EF Core 6.0
 
 .NET                            | SQL                                                                      | Added in
 ------------------------------- | ------------------------------------------------------------------------ | --------
+dateOnly.AddDays(value)         | date(@dateOnly, @value \|\| ' days')                                     | EF Core 6.0
+dateOnly.AddMonths(months)      | date(@dateOnly, @months \|\| ' months')                                  | EF Core 6.0
+dateOnly.AddYears(value)        | date(@dateOnly, @value \|\| ' years')                                    | EF Core 6.0
+dateOnly.Day                    | strftime('%d', @dateOnly)                                                | EF Core 6.0
+dateOnly.DayOfWeek              | strftime('%w', @dateOnly)                                                | EF Core 6.0
+dateOnly.DayOfYear              | strftime('%j', @dateOnly)                                                | EF Core 6.0
+dateOnly.Month                  | strftime('%m', @dateOnly)                                                | EF Core 6.0
+dateOnly.Year                   | strftime('%Y', @dateOnly)                                                | EF Core 6.0
 DateTime.Now                    | datetime('now', 'localtime')
 DateTime.Today                  | datetime('now', 'localtime', 'start of day')
 DateTime.UtcNow                 | datetime('now')
@@ -75,26 +83,31 @@ dateTime.Year                   | strftime('%Y', @dateTime)
 
 ## Numeric functions
 
-.NET                  | SQL                                   | Added in
---------------------- | ------------------------------------- | --------
--decimalValue         | ef_negate(@decimalValue)              | EF Core 5.0
-decimalValue - d      | ef_add(@decimalValue, ef_negate(@d))  | EF Core 5.0
-decimalValue * d      | ef_multiply(@decimalValue, @d)        | EF Core 5.0
-decimalValue / d      | ef_divide(@decimalValue, @d)          | EF Core 5.0
-decimalValue % d      | ef_mod(@decimalValue, @d)             | EF Core 5.0
-decimalValue + d      | ef_add(@decimalValue, @d)             | EF Core 5.0
-decimalValue < d      | ef_compare(@decimalValue, @d) < 0     | EF Core 5.0
-decimalValue <= d     | ef_compare(@decimalValue, @d) <= 0    | EF Core 5.0
-decimalValue > d      | ef_compare(@decimalValue, @d) > 0     | EF Core 5.0
-decimalValue >= d     | ef_compare(@decimalValue, @d) >= 0    | EF Core 5.0
-doubleValue % d       | ef_mod(@doubleValue, @d)              | EF Core 5.0
-EF.Functions.Random() | abs(random() / 9223372036854780000.0) | EF Core 6.0
-floatValue % d        | ef_mod(@floatValue, @d)               | EF Core 5.0
-Math.Abs(value)       | abs(@value)
-Math.Max(val1, val2)  | max(@val1, @val2)
-Math.Min(val1, val2)  | min(@val1, @val2)
-Math.Round(d)         | round(@d)
-Math.Round(d, digits) | round(@d, @digits)
+.NET                   | SQL                                   | Added in
+---------------------- | ------------------------------------- | --------
+-decimalValue          | ef_negate(@decimalValue)              | EF Core 5.0
+decimalValue - d       | ef_add(@decimalValue, ef_negate(@d))  | EF Core 5.0
+decimalValue * d       | ef_multiply(@decimalValue, @d)        | EF Core 5.0
+decimalValue / d       | ef_divide(@decimalValue, @d)          | EF Core 5.0
+decimalValue % d       | ef_mod(@decimalValue, @d)             | EF Core 5.0
+decimalValue + d       | ef_add(@decimalValue, @d)             | EF Core 5.0
+decimalValue < d       | ef_compare(@decimalValue, @d) < 0     | EF Core 5.0
+decimalValue <= d      | ef_compare(@decimalValue, @d) <= 0    | EF Core 5.0
+decimalValue > d       | ef_compare(@decimalValue, @d) > 0     | EF Core 5.0
+decimalValue >= d      | ef_compare(@decimalValue, @d) >= 0    | EF Core 5.0
+doubleValue % d        | ef_mod(@doubleValue, @d)              | EF Core 5.0
+EF.Functions.Random()  | abs(random() / 9223372036854780000.0) | EF Core 6.0
+floatValue % d         | ef_mod(@floatValue, @d)               | EF Core 5.0
+Math.Abs(value)        | abs(@value)
+Math.Max(val1, val2)   | max(@val1, @val2)
+Math.Min(val1, val2)   | min(@val1, @val2)
+Math.Round(d)          | round(@d)
+Math.Round(d, digits)  | round(@d, @digits)
+MathF.Abs(x)           | abs(@x)                               | EF Core 6.0
+MathF.Max(x, y)        | max(@x, @y)                           | EF Core 6.0
+MathF.Min(x, y)        | min(@x, @y)                           | EF Core 6.0
+MathF.Round(x)         | round(@x)                             | EF Core 6.0
+MathF.Round(x, digits) | round(@x, @digits)                    | EF Core 6.0
 
 > [!TIP]
 > SQL functions prefixed with *ef* are created by EF Core.
@@ -123,6 +136,7 @@ stringValue.LastOrDefault()                                  | substr(@stringVal
 stringValue.Length                                           | length(@stringValue)
 stringValue.Replace(oldValue, newValue)                      | replace(@stringValue, @oldValue, @newValue)
 stringValue.StartsWith(value)                                | @stringValue LIKE @value \|\| '%'
+stringValue.Substring(startIndex)                            | substr(@stringValue, @startIndex + 1)                  | EF Core 6.0
 stringValue.Substring(startIndex, length)                    | substr(@stringValue, @startIndex + 1, @length)
 stringValue.ToLower()                                        | lower(@stringValue)
 stringValue.ToUpper()                                        | upper(@stringValue)

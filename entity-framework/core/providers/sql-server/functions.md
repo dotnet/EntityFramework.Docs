@@ -2,7 +2,7 @@
 title: Function Mappings - Microsoft SQL Server Database Provider - EF Core
 description: Function Mappings of the Microsoft SQL Server database provider
 author: bricelam
-ms.date: 1/26/2021
+ms.date: 6/28/2021
 uid: core/providers/sql-server/functions
 ---
 # Function Mappings of the Microsoft SQL Server Provider
@@ -117,29 +117,49 @@ timeSpan.Seconds                                            | DATEPART(second, @
 
 ## Numeric functions
 
-.NET                    | SQL                  | Added in
------------------------ | -------------------- | --------
-EF.Functions.Random()   | RAND()               | EF Core 6.0
-Math.Abs(value)         | ABS(@value)
-Math.Acos(d)            | ACOS(@d)
-Math.Asin(d)            | ASIN(@d)
-Math.Atan(d)            | ATAN(@d)
-Math.Atan2(y, x)        | ATN2(@y, @x)
-Math.Ceiling(d)         | CEILING(@d)
-Math.Cos(d)             | COS(@d)
-Math.Exp(d)             | EXP(@d)
-Math.Floor(d)           | FLOOR(@d)
-Math.Log(d)             | LOG(@d)
-Math.Log(a, newBase)    | LOG(@a, @newBase)
-Math.Log10(d)           | LOG10(@d)
-Math.Pow(x, y)          | POWER(@x, @y)
-Math.Round(d)           | ROUND(@d, 0)
-Math.Round(d, decimals) | ROUND(@d, @decimals)
-Math.Sign(value)        | SIGN(@value)
-Math.Sin(a)             | SIN(@a)
-Math.Sqrt(d)            | SQRT(@d)
-Math.Tan(a)             | TAN(@a)
-Math.Truncate(d)        | ROUND(@d, 0, 1)
+.NET                     | SQL                  | Added in
+------------------------ | -------------------- | --------
+EF.Functions.Random()    | RAND()               | EF Core 6.0
+Math.Abs(value)          | ABS(@value)
+Math.Acos(d)             | ACOS(@d)
+Math.Asin(d)             | ASIN(@d)
+Math.Atan(d)             | ATAN(@d)
+Math.Atan2(y, x)         | ATN2(@y, @x)
+Math.Ceiling(d)          | CEILING(@d)
+Math.Cos(d)              | COS(@d)
+Math.Exp(d)              | EXP(@d)
+Math.Floor(d)            | FLOOR(@d)
+Math.Log(d)              | LOG(@d)
+Math.Log(a, newBase)     | LOG(@a, @newBase)
+Math.Log10(d)            | LOG10(@d)
+Math.Pow(x, y)           | POWER(@x, @y)
+Math.Round(d)            | ROUND(@d, 0)
+Math.Round(d, decimals)  | ROUND(@d, @decimals)
+Math.Sign(value)         | SIGN(@value)
+Math.Sin(a)              | SIN(@a)
+Math.Sqrt(d)             | SQRT(@d)
+Math.Tan(a)              | TAN(@a)
+Math.Truncate(d)         | ROUND(@d, 0, 1)
+MathF.Abs(x)             | ABS(@x)              | EF Core 6.0
+MathF.Acos(x)            | ACOS(@x)             | EF Core 6.0
+MathF.Asin(x)            | ASIN(@x)             | EF Core 6.0
+MathF.Atan(x)            | ATAN(@x)             | EF Core 6.0
+MathF.Atan2(y, x)        | ATN2(@y, @x)         | EF Core 6.0
+MathF.Ceiling(x)         | CEILING(@x)          | EF Core 6.0
+MathF.Cos(x)             | COS(@x)              | EF Core 6.0
+MathF.Exp(x)             | EXP(@x)              | EF Core 6.0
+MathF.Floor(x)           | FLOOR(@x)            | EF Core 6.0
+MathF.Log(x)             | LOG(@x)              | EF Core 6.0
+MathF.Log(x, y)          | LOG(@x, @y)          | EF Core 6.0
+MathF.Log10(x)           | LOG10(@x)            | EF Core 6.0
+MathF.Pow(x, y)          | POWER(@x, @y)        | EF Core 6.0
+MathF.Round(x)           | ROUND(@x, 0)         | EF Core 6.0
+MathF.Round(x, decimals) | ROUND(@x, @decimals) | EF Core 6.0
+MathF.Sign(x)            | SIGN(@x)             | EF Core 6.0
+MathF.Sin(x)             | SIN(@x)              | EF Core 6.0
+MathF.Sqrt(x)            | SQRT(@x)             | EF Core 6.0
+MathF.Tan(x)             | TAN(@x)              | EF Core 6.0
+MathF.Truncate(x)        | ROUND(@x, 0, 1)      | EF Core 6.0
 
 ## String functions
 
@@ -166,6 +186,7 @@ stringValue.LastOrDefault()                                             | SUBSTR
 stringValue.Length                                                      | LEN(@stringValue)
 stringValue.Replace(@oldValue, @newValue)                               | REPLACE(@stringValue, @oldValue, @newValue)
 stringValue.StartsWith(value)                                           | @stringValue LIKE @value + N'%'
+stringValue.Substring(startIndex)                                       | SUBSTRING(@stringValue, @startIndex + 1, LEN(@stringValue))            | EF Core 6.0
 stringValue.Substring(startIndex, length)                               | SUBSTRING(@stringValue, @startIndex + 1, @length)
 stringValue.ToLower()                                                   | LOWER(@stringValue)
 stringValue.ToUpper()                                                   | UPPER(@stringValue)
