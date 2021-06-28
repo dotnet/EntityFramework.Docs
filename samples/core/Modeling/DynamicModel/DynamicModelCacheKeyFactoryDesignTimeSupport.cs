@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace EFModeling.DynamicModel
 {
     #region DynamicModelDesignTimeSupport
-    public class DynamicModelCacheKeyFactory : IModelCacheKeyFactory
+    public class DynamicModelCacheKeyFactoryDesignTimeSupport : IModelCacheKeyFactory
     {
         public object Create(DbContext context, bool designTime)
             => context is DynamicContext dynamicContext
