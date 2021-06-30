@@ -485,7 +485,7 @@ All of this means that `DbSet.Local` is view over the data that reflects the cur
 
 This is typically the ideal view for data binding, since it presents to the user the data as they understand it based on the changes made by the application.
 
-The following code demonstrates this my marking one post as `Deleted` and then adding a new post, marking it as `Added`:
+The following code demonstrates this by marking one post as `Deleted` and then adding a new post, marking it as `Added`:
 
 <!--
         using var context = new BlogsContext();
