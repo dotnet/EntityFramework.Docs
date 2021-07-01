@@ -133,7 +133,7 @@ Following on from the [investigations done for EF Core 5.0](xref:core/what-is-ne
 
 Tracked by [#19693](https://github.com/dotnet/efcore/issues/19693)
 
-Status: Not started
+Status: Started
 
 T-shirt size: Medium
 
