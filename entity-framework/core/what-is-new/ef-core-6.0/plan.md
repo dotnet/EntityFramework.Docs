@@ -133,7 +133,7 @@ Following on from the [investigations done for EF Core 5.0](xref:core/what-is-ne
 
 Tracked by [#19693](https://github.com/dotnet/efcore/issues/19693)
 
-Status: Not started
+Status: In-progress
 
 T-shirt size: Medium
 
@@ -183,7 +183,7 @@ This work is initially scoped to allow [value converters which map to multiple c
 
 Tracked by [issues labeled with 'area-cosmos' and in the 6.0 milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+milestone%3A6.0.0+label%3Aarea-cosmos)
 
-Status: Not started
+Status: In-progress
 
 T-shirt size: Large
 
@@ -259,7 +259,7 @@ The EF Core team also works on several related but independent technologies. In 
 
 Tracked by [issues in the dotnet\runtime repo labeled with `area-System.Data` in the 6.0 milestone](https://github.com/dotnet/runtime/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-System.Data+milestone%3A6.0.0)
 
-Status: Not started
+Status: In-progress
 
 T-shirt size: Large
 
