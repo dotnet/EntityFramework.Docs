@@ -17,7 +17,7 @@ These tools and extensions provide additional functionality for Entity Framework
 
 ### LLBLGen Pro
 
-LLBLGen Pro is an entity modeling solution with support for Entity Framework and Entity Framework Core. It lets you easily define your entity model and map it to your database, using database first or model first, so you can get started writing queries right away. For EF Core: 2, 3.
+LLBLGen Pro is an entity modeling solution with support for Entity Framework and Entity Framework Core. It lets you easily define your entity model and map it to your database, using database first or model first, so you can get started writing queries right away. For EF Core: 2, 3, 5.
 
 [Website](https://www.llblgen.com/)
 
@@ -35,7 +35,7 @@ An O/RM that creates strongly-typed, extendable classes for Entity Framework. Th
 
 ### EF Core Power Tools
 
-EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 3, 5.
+EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 3, 5, 6.
 
 [GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki)
 
@@ -62,7 +62,7 @@ Entity Framework Core Generator (efg) is a .NET Core CLI tool that can generate 
 
 ### Microsoft.EntityFrameworkCore.AutoHistory
 
-A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 2, 3.
+A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 2, 3, 5.
 
 [GitHub repository](https://github.com/Arch/AutoHistory/)
 
@@ -98,13 +98,13 @@ A plugin for Microsoft.EntityFrameworkCore to support repository, unit of work p
 
 ### EFCore.BulkExtensions
 
-EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 2, 3.
+EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 2, 3, 5.
 
 [GitHub repository](https://github.com/borisdj/EFCore.BulkExtensions)
 
 ### Bricelam.EntityFrameworkCore.Pluralizer
 
-Adds design-time pluralization. For EF Core: 2, 3.
+Adds design-time pluralization. For EF Core: 2, 3, 5.
 
 [GitHub repository](https://github.com/bricelam/EFCore.Pluralizer)
 
@@ -140,13 +140,13 @@ An implementation of temporal support. For EF Core: 2.
 
 ### EfCoreTemporalTable
 
-Easily perform temporal queries on your favourite database using introduced extension methods: `AsTemporalAll()`, `AsTemporalAsOf(date)`, `AsTemporalFrom(startDate, endDate)`, `AsTemporalBetween(startDate, endDate)`, `AsTemporalContained(startDate, endDate)`. For EF Core: 3.
+Easily perform temporal queries on your favourite database using introduced extension methods: `AsTemporalAll()`, `AsTemporalAsOf(date)`, `AsTemporalFrom(startDate, endDate)`, `AsTemporalBetween(startDate, endDate)`, `AsTemporalContained(startDate, endDate)`. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/glautrou/EfCoreTemporalTable)
 
 ### EntityFrameworkCore.TemporalTables
 
-Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2, 3.
+Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2, 3, 5.
 
 [GitHub repository](https://github.com/findulov/EntityFrameworkCore.TemporalTables)
 
@@ -189,7 +189,7 @@ Extends your DbContext with high-performance bulk operations: BulkSaveChanges, B
 
 ### Expressionify
 
-Add support for calling extension methods in LINQ lambdas. For EF Core: 3.
+Add support for calling extension methods in LINQ lambdas. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/ClaveConsulting/Expressionify)
 
@@ -212,7 +212,7 @@ Lifecycle hooks (for SaveChanges). For EF Core: 2, 3.
 
 ### EFCore.NamingConventions
 
-This will automatically make all your table and column names have snake_case, all UPPER or all lower case naming. For EF Core: 3.
+This will automatically make all your table and column names have snake_case, all UPPER or all lower case naming. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/efcore/EFCore.NamingConventions)
 
@@ -230,7 +230,7 @@ LINQ extensions to Entity Framework Core 3.1 to support Microsoft SQL Server Tem
 
 ### EntityFrameworkCore.SqlServer.HierarchyId
 
-Adds hierarchyid support to the SQL Server EF Core provider. For EF Core: 3.
+Adds hierarchyid support to the SQL Server EF Core provider. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/efcore/EFCore.SqlServer.HierarchyId)
 
@@ -291,7 +291,7 @@ For EF Core: 3, 5.
 
 ### EFCoreAuditing
 
-A Library for Entity Framework Core to support automatically recording data changes history (audit logging), soft-delete, and snake_case naming convention functionality. For EF Core: 3.
+A Library for Entity Framework Core to support automatically recording data changes history (audit logging), soft-delete, and snake_case naming convention functionality. For EF Core: 2.
 
 [GitHub Repository](https://github.com/OKTAYKIR/EFCoreAuditing)
 
