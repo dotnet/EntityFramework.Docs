@@ -311,7 +311,7 @@ dbug: 10/6/2020 10:52:45.725 RelationalEventId.TransactionCommitted[20202] (Micr
 
 ### Other content options
 
-Other flags in <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbContextLoggerOptions> can be used to trim down the amount of metadata included in the log. This is can be useful in conjunction with single-line logging. For example:
+Other flags in <xref:Microsoft.EntityFrameworkCore.Diagnostics.DbContextLoggerOptions> can be used to trim down the amount of metadata included in the log. This can be useful in conjunction with single-line logging. For example:
 
 <!--
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

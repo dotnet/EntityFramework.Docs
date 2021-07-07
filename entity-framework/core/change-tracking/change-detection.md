@@ -179,7 +179,7 @@ The performance of detecting changes is not a bottleneck for most applications. 
 As we know from the previous section, both <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Entries%60%601?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A?displayProperty=nameWithType> automatically detect changes. However, after calling Entries, the code does not then make any entity or property state changes. (Setting normal property values on Added entities does not cause any state changes.) The code therefore disables unnecessary automatic change detection when calling down into the base SaveChanges method. The code also makes use of a try/finally block to ensure that the default setting is restored even if SaveChanges fails.
 
 > [!TIP]
-> Do not assume that your code must disable automatic change detection to to perform well. This is only needed when profiling an application tracking many entities indicates that performance of change detection is an issue.
+> Do not assume that your code must disable automatic change detection to perform well. This is only needed when profiling an application tracking many entities indicates that performance of change detection is an issue.
 
 ### Detecting changes and value conversions
 
@@ -234,7 +234,7 @@ Notification entities make use of the <xref:System.ComponentModel.INotifyPropert
 -->
 [!code-csharp[Model](../../../samples/core/ChangeTracking/ChangeDetectionAndNotifications/NotificationEntitiesSamples.cs?name=Model)]
 
-In addition, any collection navigations must implement `INotifyCollectionChanged`; in the example above this satisfied by using an <xref:System.Collections.ObjectModel.ObservableCollection%601> of posts. EF Core also ships with an <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ObservableHashSet%601> implementation that has more efficient lookups at the expense of stable ordering.
+In addition, any collection navigations must implement `INotifyCollectionChanged`; in the example above this is satisfied by using an <xref:System.Collections.ObjectModel.ObservableCollection%601> of posts. EF Core also ships with an <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ObservableHashSet%601> implementation that has more efficient lookups at the expense of stable ordering.
 
 Most of this notification code is typically moved into an unmapped base class. For example:
 
@@ -297,7 +297,7 @@ Instead, EF Core must be configured to use these notification entities. This is 
 
 Full notification change tracking requires that both `INotifyPropertyChanging` and `INotifyPropertyChanged` are implemented. This allows original values to be saved just before the property value is changed, avoiding the need for EF Core to create a snapshot when tracking the entity. Entity types that implement only `INotifyPropertyChanged` can also be used with EF Core. In this case, EF still creates a snapshot when tracking an entity to keep track of original values, but then uses the notifications to detect changes immediately, rather than needing DetectChanges to be called.
 
-The different <xref:Microsoft.EntityFrameworkCore.ChangeTrackingStrategy> values are summarized in the the following table.
+The different <xref:Microsoft.EntityFrameworkCore.ChangeTrackingStrategy> values are summarized in the following table.
 
 | ChangeTrackingStrategy                              | Interfaces needed                                      | Needs DetectChanges | Snapshots original values
 |:----------------------------------------------------|--------------------------------------------------------|---------------------|--------------------------

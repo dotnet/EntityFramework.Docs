@@ -260,7 +260,7 @@ Looking at the methods defined on any of the interceptor interfaces it is appare
 
 ### Result handling  
 
-The DbCommandInterceptionContext\<\> class contains a properties called Result, OriginalResult, Exception, and OriginalException. These properties are set to null/zero for calls to the interception methods that are called before the operation is executed — that is, for the …Executing methods. If the operation is executed and succeeds, then Result and OriginalResult are set to the result of the operation. These values can then be observed in the interception methods that are called after the operation has executed — that is, on the …Executed methods. Likewise, if the operation throws, then the Exception and OriginalException properties will be set.  
+The DbCommandInterceptionContext\<\> class contains properties called Result, OriginalResult, Exception, and OriginalException. These properties are set to null/zero for calls to the interception methods that are called before the operation is executed — that is, for the …Executing methods. If the operation is executed and succeeds, then Result and OriginalResult are set to the result of the operation. These values can then be observed in the interception methods that are called after the operation has executed — that is, on the …Executed methods. Likewise, if the operation throws, then the Exception and OriginalException properties will be set.  
 
 #### Suppressing execution  
 

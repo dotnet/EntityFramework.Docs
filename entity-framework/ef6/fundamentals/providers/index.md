@@ -88,6 +88,6 @@ If the provider is available for previous versions of EF, then we encourage you 
 
 ## Can I write a provider myself?
 
-It is certainly possible to create an EF provider yourself although it should not be considered a trivial undertaking. The the link above about the EF6 provider model is a good place to start. You may also find it useful to use the code for the SQL Server and SQL CE provider included in the [EF open source codebase](https://github.com/aspnet/EntityFramework6) as a starting point or for reference.
+It is certainly possible to create an EF provider yourself although it should not be considered a trivial undertaking. The link above about the EF6 provider model is a good place to start. You may also find it useful to use the code for the SQL Server and SQL CE provider included in the [EF open source codebase](https://github.com/aspnet/EntityFramework6) as a starting point or for reference.
 
 Note that starting with EF6 the EF provider is less tightly coupled to the underlying ADO.NET provider. This makes it easier to write an EF provider without needing to write or wrap the ADO.NET classes.

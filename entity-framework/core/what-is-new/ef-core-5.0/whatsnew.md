@@ -219,7 +219,7 @@ These entities can then be queried and updated just like normal entity types wit
 
 In EF Core 3.1, the dependent end of a one-to-one relationship was always considered optional. This was most apparent when using owned entities, as all the owned entity's column were created as nullable in the database, even if they were configured as required in the model.
 
-In EF Core 5.0, a navigation to an owned entity can be configured as as a required dependent. For example:
+In EF Core 5.0, a navigation to an owned entity can be configured as a required dependent. For example:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)

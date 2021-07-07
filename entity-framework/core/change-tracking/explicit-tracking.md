@@ -28,7 +28,7 @@ Entities can be explicitly "attached" to a <xref:Microsoft.EntityFrameworkCore.D
 1. Creating new entities that will be inserted into the database.
 2. Re-attaching disconnected entities that were previously queried by a _different_ DbContext instance.
 
-The first of these will be needed by most applications, and is primary handled by the <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType> methods.
+The first of these will be needed by most applications, and is primarily handled by the <xref:Microsoft.EntityFrameworkCore.DbContext.Add%2A?displayProperty=nameWithType> methods.
 
 The second is only needed by applications that change entities or their relationships **_while the entities are not being tracked_**. For example, a web application may send entities to the web client where the user makes changes and sends the entities back. These entities are referred to as "disconnected" since they were originally queried from a DbContext, but were then disconnected from that context when sent to the client.
 
@@ -462,7 +462,7 @@ The important point to notice here is that, with generated key values, EF Core i
 
 ### Explicit key values
 
-<xref:Microsoft.EntityFrameworkCore.DbContext.Update%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.UpdateRange%2A?displayProperty=nameWithType>, and the equivalent methods on <xref:Microsoft.EntityFrameworkCore.DbSet%601> behave exactly as the `Attach` methods described above, except that entities are put into the `Modfied` instead of the `Unchanged` state. For example, to start tracking an existing blog as `Modified`:
+<xref:Microsoft.EntityFrameworkCore.DbContext.Update%2A?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.DbContext.UpdateRange%2A?displayProperty=nameWithType>, and the equivalent methods on <xref:Microsoft.EntityFrameworkCore.DbSet%601> behave exactly as the `Attach` methods described above, except that entities are put into the `Modified` instead of the `Unchanged` state. For example, to start tracking an existing blog as `Modified`:
 
 <!--
             context.Update(
@@ -678,7 +678,7 @@ It is unusual to call `Remove` on an entity created with `new`. Further, unlike 
 1. Running a query for the entities
 2. Using the `Attach` or `Update` methods on a graph of disconnected entities, as described in the preceding sections.
 
-For example, the code in the previous section is more likely obtain a post from a client and then do something like this:
+For example, the code in the previous section is more likely to obtain a post from a client and then do something like this:
 
 <!--
             context.Attach(post);
@@ -753,7 +753,7 @@ In the preceding examples we were deleting a post, which is a dependent/child en
 This invalid model state can be handled in two ways:
 
 1. Setting FK values to null. This indicates that the dependents/children are no longer related to any principal/parent. This is the default for optional relationships where the foreign key must be nullable. Setting the FK to null is not valid for required relationships, where the foreign key is typically non-nullable.
-2. Deleting the the dependents/children. This is the default for required relationships, and is also valid for optional relationships.
+2. Deleting the dependents/children. This is the default for required relationships, and is also valid for optional relationships.
 
 See [Changing Foreign Keys and Navigations](xref:core/change-tracking/relationship-changes) for detailed information on change tracking and relationships.
 
