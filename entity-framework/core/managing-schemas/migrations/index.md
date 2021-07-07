@@ -135,7 +135,7 @@ Note that this time, EF detects that the database already exists. In addition, w
 ### Excluding parts of your model
 
 > [!NOTE]
-> This feature was introduced EF in Core 5.0.
+> This feature was introduced in EF Core 5.0.
 
 Sometimes you may want to reference types from another DbContext. This can lead to migration conflicts. To prevent this, exclude the type from the migrations of one of the DbContexts.
 
