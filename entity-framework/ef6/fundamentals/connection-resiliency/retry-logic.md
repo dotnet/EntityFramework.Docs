@@ -63,7 +63,7 @@ The SqlAzureExecutionStrategy will retry instantly the first time a transient fa
 
 The execution strategies will only retry a limited number of exceptions that are usually transient, you will still need to handle other errors as well as catching the RetryLimitExceeded exception for the case where an error is not transient or takes too long to resolve itself.  
 
-There are some known of limitations when using a retrying execution strategy:  
+There are some known limitations when using a retrying execution strategy:  
 
 ## Streaming queries are not supported  
 

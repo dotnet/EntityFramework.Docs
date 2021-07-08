@@ -42,9 +42,9 @@ When the feature is enabled, EF will automatically add a new table to the databa
 
 Although EF will do a best effort to prune rows from the table when they aren’t needed anymore, the table can grow if the application exits prematurely and for that reason you may need to purge the table manually in some cases.  
 
-## How to handle commit failures with previous Versions
+## How to handle commit failures with previous versions
 
-Before EF 6.1 there was not mechanism to handle commit failures in the EF product. There are several ways to dealing with this situation that can be applied to previous versions of EF6:  
+Before EF 6.1 there was no mechanism to handle commit failures in the EF product. There are several ways to dealing with this situation that can be applied to previous versions of EF6:  
 
 * Option 1 - Do nothing  
 
