@@ -79,7 +79,7 @@ In this example the highlighted properties will be used to configure the relatio
 > If the property is the primary key or is of a type not compatible with the principal key then it won't be configured as the foreign key.
 
 > [!NOTE]
-> Before EF Core 3.0 the property named exactly the same as the principal key property [was also matched as the foreign key](https://github.com/dotnet/efcore/issues/13274)
+> Before EF Core 3.0, the property named exactly the same as the principal key property [was also matched as the foreign key](https://github.com/dotnet/efcore/issues/13274)
 
 ### No foreign key property
 
@@ -87,10 +87,10 @@ While it is recommended to have a foreign key property defined in the dependent 
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=6,15)]
 
-In this example the shadow foreign key is `BlogId` because prepending the navigation name would be redundant.
+In this example, the shadow foreign key is `BlogId` because prepending the navigation name would be redundant.
 
 > [!NOTE]
-> If a property with the same name already exists then the shadow property name will be suffixed with a number.
+> If a property with the same name already exists, then the shadow property name will be suffixed with a number.
 
 ### Single navigation property
 
