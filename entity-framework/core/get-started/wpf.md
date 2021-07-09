@@ -102,7 +102,7 @@ Add the classes that are defined in the model as data sources for this WPF appli
     [!code-xaml[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/MainWindow.xaml?range=1-13&highlight=9-13)]
 
 1. This sets up source for the "parent" categories, and second source for the "detail" products.
-1. Next, add the following markup to your XAML after the closing `Window.Resources` tag.
+1. Next, add the following markup to your XAML after the opening `Grid` tag.
 
     [!code-xaml[](../../../samples/core/WPF/GetStartedWPF/GetStartedWPF/MainWindow.xaml?range=15-26)]
 
@@ -110,7 +110,8 @@ Add the classes that are defined in the model as data sources for this WPF appli
 
 ## Adding a Details Grid
 
-Now that the grid exists to display categories, the details grid can be added to show products.
+Now that the grid exists to display categories, the details grid can be added to show products. Add this inside the
+`Grid` element, after the categories `DataGrid` element.  
 
 **`MainWindow.xaml`**
 
