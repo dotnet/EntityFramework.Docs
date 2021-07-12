@@ -224,7 +224,7 @@ The **ComplexType** property element can have the following child elements:
 
 -   ScalarProperty (zero or more)
 -   **ComplexProperty** (zero or more)
--   ComplextTypeMapping (zero or more)
+-   ComplexTypeMapping (zero or more)
 -   Condition (zero or more)
 
 ### Applicable Attributes
@@ -417,7 +417,7 @@ The following example shows **Condition** elements as children of **MappingFragm
 The **DeleteFunction** element in mapping specification language (MSL) maps the delete function of an entity type or association in the conceptual model to a stored procedure in the underlying database. Stored procedures to which modification functions are mapped must be declared in the storage model. For more information, see Function Element (SSDL).
 
 > [!NOTE]
-> If you do not map all three of the insert, update, or delete operations of a entity type to stored procedures, the unmapped operations will fail if executed at runtime and an UpdateException is thrown.
+> If you do not map all three of the insert, update, or delete operations of an entity type to stored procedures, the unmapped operations will fail if executed at runtime and an UpdateException is thrown.
 
 ### DeleteFunction Applied to EntityTypeMapping
 
@@ -427,7 +427,7 @@ The **DeleteFunction** element can have the following child elements when applie
 
 -   AssociationEnd (zero or more)
 -   ComplexProperty (zero or more)
--   ScarlarProperty (zero or more)
+-   ScalarProperty (zero or more)
 
 #### Applicable Attributes
 
@@ -851,7 +851,7 @@ Also consider this function import in the conceptual model:
  </FunctionImport>
 ```
 
-The following example show a **FunctionImportMapping** element used to map the function and function import above to each other:
+The following example shows a **FunctionImportMapping** element used to map the function and function import above to each other:
 
 ``` xml
  <FunctionImportMapping FunctionImportName="GetStudentGrades"
@@ -863,7 +863,7 @@ The following example show a **FunctionImportMapping** element used to map the f
 The **InsertFunction** element in mapping specification language (MSL) maps the insert function of an entity type or association in the conceptual model to a stored procedure in the underlying database. Stored procedures to which modification functions are mapped must be declared in the storage model. For more information, see Function Element (SSDL).
 
 > [!NOTE]
-> If you do not map all three of the insert, update, or delete operations of a entity type to stored procedures, the unmapped operations will fail if executed at runtime and an UpdateException is thrown.
+> If you do not map all three of the insert, update, or delete operations of an entity type to stored procedures, the unmapped operations will fail if executed at runtime and an UpdateException is thrown.
 
 The **InsertFunction** element can be a child of the ModificationFunctionMapping element and applied to the EntityTypeMapping element or the AssociationSetMapping element.
 
@@ -876,7 +876,7 @@ The **InsertFunction** element can have the following child elements when applie
 -   AssociationEnd (zero or more)
 -   ComplexProperty (zero or more)
 -   ResultBinding (zero or one)
--   ScarlarProperty (zero or more)
+-   ScalarProperty (zero or more)
 
 #### Applicable Attributes
 
@@ -1085,7 +1085,7 @@ The following example shows a **MappingFragment** element as the child of an **E
 The **ModificationFunctionMapping** element in mapping specification language (MSL) maps the insert, update, and delete functions of a conceptual model entity type to stored procedures in the underlying database. The **ModificationFunctionMapping** element can also map the insert and delete functions for many-to-many associations in the conceptual model to stored procedures in the underlying database. Stored procedures to which modification functions are mapped must be declared in the storage model. For more information, see Function Element (SSDL).
 
 > [!NOTE]
-> If you do not map all three of the insert, update, or delete operations of a entity type to stored procedures, the unmapped operations will fail if executed at runtime and an UpdateException is thrown.
+> If you do not map all three of the insert, update, or delete operations of an entity type to stored procedures, the unmapped operations will fail if executed at runtime and an UpdateException is thrown.
 
 
 > [!NOTE]
@@ -1575,7 +1575,7 @@ The next example shows the **ScalarProperty** element used to map the insert and
 The **UpdateFunction** element in mapping specification language (MSL) maps the update function of an entity type in the conceptual model to a stored procedure in the underlying database. Stored procedures to which modification functions are mapped must be declared in the storage model. For more information, see Function Element (SSDL).
 
 > [!NOTE]
->  If you do not map all three of the insert, update, or delete operations of a entity type to stored procedures, the unmapped operations will fail if executed at runtime and an UpdateException is thrown.
+>  If you do not map all three of the insert, update, or delete operations of an entity type to stored procedures, the unmapped operations will fail if executed at runtime and an UpdateException is thrown.
 
 The **UpdateFunction** element can be a child of the ModificationFunctionMapping element and applied to the EntityTypeMapping element.
 
@@ -1584,7 +1584,7 @@ The **UpdateFunction** element can have the following child elements:
 -   AssociationEnd (zero or more)
 -   ComplexProperty (zero or more)
 -   ResultBinding (zero or one)
--   ScarlarProperty (zero or more)
+-   ScalarProperty (zero or more)
 
 ### Applicable Attributes
 

@@ -164,7 +164,7 @@ CREATE TABLE [Product] (
 
 GitHub Issue: [#23163](https://github.com/dotnet/efcore/issues/23163). This feature was contributed by [@KaloyanIT](https://github.com/KaloyanIT).
 
-<xref:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration%601> instances allow <xref:Microsoft.EntityFrameworkCore.ModelBuilder> configuration for a each entity type to be contained in its own configuration class. For example:
+<xref:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration%601> instances allow <xref:Microsoft.EntityFrameworkCore.ModelBuilder> configuration for each entity type to be contained in its own configuration class. For example:
 
 <!--
 public class BookConfiguration : IEntityTypeConfiguration<Book>

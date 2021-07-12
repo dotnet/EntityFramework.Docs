@@ -260,7 +260,7 @@ using (var context = new BloggingContext())
 }
 ```  
 
-You'll notice we are introducing a Author and Reader class into the example - both of these classes implement the IPerson interface.  
+You'll notice we are introducing an Author and Reader class into the example - both of these classes implement the IPerson interface.  
 
 ``` csharp
 public class Author : IPerson

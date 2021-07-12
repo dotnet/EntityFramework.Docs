@@ -377,7 +377,7 @@ In the previous example, a post was moved from one blog to another by manipulati
 -->
 [!code-csharp[Changing_relationships_using_navigations_2](../../../samples/core/ChangeTracking/ChangingFKsAndNavigations/OptionalRelationshipsSamples.cs?name=Changing_relationships_using_navigations_2)]
 
-The debug view after this change is _exactly the same_ as it was in the previous example. This because EF Core detected the reference navigation change and then fixed up the collection navigations and FK value to match.
+The debug view after this change is _exactly the same_ as it was in the previous example. This is because EF Core detected the reference navigation change and then fixed up the collection navigations and FK value to match.
 
 ## Changing relationships using foreign key values
 
@@ -391,7 +391,7 @@ In the previous section, relationships were manipulated by navigations leaving f
 
 Notice how this is very similar to changing the reference navigation, as shown in the previous example.
 
-The debug view after this change is again _exactly the same_ as was the case for the previous two examples. This because EF Core detected the FK value change and then fixed up both the reference and collection navigations to match.
+The debug view after this change is again _exactly the same_ as was the case for the previous two examples. This is because EF Core detected the FK value change and then fixed up both the reference and collection navigations to match.
 
 > [!TIP]
 > Do not write code to manipulate all navigations and FK values each time a relationship changes. Such code is more complicated and must ensure consistent changes to foreign keys and navigations in every case. If possible, just manipulate a single navigation, or maybe both navigations. If needed, just manipulate FK values. Avoid manipulating both navigations and FK values.
@@ -407,7 +407,7 @@ EF Core performs the following actions when it [detects](xref:core/change-tracki
 - The entity becomes associated with the principal/parent that owns the collection navigation.
 - Navigations and foreign key values are fixed up for all entities involved.
 
-Based on this we can see that to move a post from one blog to another we don't actually need to remove it from the old collection navigation before adding it to the new. So the code from the example above can be changed from:
+Based on this we can see that to move a post from one blog to another we don't actually need to remove it from the old collection navigation before adding it to the new one. So the code from the example above can be changed from:
 
 <!--
         var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
@@ -668,7 +668,7 @@ BlogAssets {Id: 1} Deleted
   Blog: <null>
 ```
 
-This then results in an delete an and insert when SaveChanges is called:
+This then results in a delete and an insert when SaveChanges is called:
 
 ```sql
 -- Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String)], CommandType='Text', CommandTimeout='30']
@@ -789,7 +789,7 @@ Cascade deletes, as well as deleting orphans, can be forced at any time by calli
 
 ## Many-to-many relationships
 
-Many-to-many relationships in EF Core are implemented using a join entity. Each side the many-to-many relationship is related to this join entity with a one-to-many relationship. Before EF Core 5.0, this join entity had to explicitly defined and mapped. Starting with EF Core 5.0, it can be created implicitly and hidden. However, in both cases the underlying behavior is the same. We will look at this underlying behavior first to understand how tracking of many-to-many relationships works.
+Many-to-many relationships in EF Core are implemented using a join entity. Each side of the many-to-many relationship is related to this join entity with a one-to-many relationship. Before EF Core 5.0, this join entity had to explicitly defined and mapped. Starting with EF Core 5.0, it can be created implicitly and hidden. However, in both cases the underlying behavior is the same. We will look at this underlying behavior first to understand how tracking of many-to-many relationships works.
 
 ### How many-to-many relationships work
 
