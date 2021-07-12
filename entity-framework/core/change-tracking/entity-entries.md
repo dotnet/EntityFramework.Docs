@@ -60,7 +60,7 @@ The most common use of <xref:Microsoft.EntityFrameworkCore.ChangeTracking.Entity
 -->
 [!code-csharp[Work_with_the_entity_1](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Work_with_the_entity_1)]
 
-The Entry method can also be used on entities that are not yet tracked. This _does not start tracking the entity_; the state of the entity is still `Detatched`. However, the returned EntityEntry can then be used to change the entity state, at which point the entity will become tracked in the given state. For example, the following code will start tracking a Blog instance as `Added`:
+The Entry method can also be used on entities that are not yet tracked. This _does not start tracking the entity_; the state of the entity is still `Detached`. However, the returned EntityEntry can then be used to change the entity state, at which point the entity will become tracked in the given state. For example, the following code will start tracking a Blog instance as `Added`:
 
 <!--
         var newBlog = new Blog();
@@ -543,7 +543,7 @@ The local view's notifications are hooked into DbContext change tracking such th
 - An entity that becomes tracked by the DbContext will automatically appear in the `DbSet.Local` collection. For example, executing a query to bring in more entities automatically causes the local view to be updated.
 - An entity that is marked as `Deleted` will be removed from the local collection automatically.
 
-This means the local view can be used to manipulate tracked entities simply by adding and removing from the collection. For example, lets modify the previous example code to add and remove posts from the local collection:
+This means the local view can be used to manipulate tracked entities simply by adding and removing from the collection. For example, let's modify the previous example code to add and remove posts from the local collection:
 
 <!--
         using var context = new BlogsContext();
@@ -595,4 +595,4 @@ For example:
 See [Get Started with WPF](xref:core/get-started/wpf) for more information on WPF data binding with EF Core.
 
 > [!TIP]
-> The local view for a given DbSet instance is created lazily when first accessed and then cached. LocalView creation itself is fast and it does not use significant memory. However, it does call [DetectChanges](xref:core/change-tracking/change-detection), which can be slow for large numbers of entities. The collections created by `ToObservableCollection` and `ToBindingList` are also created lazily and and then cached. Both of these methods create new collections, which can be slow and use a lot of memory when thousands of entities are involved.
+> The local view for a given DbSet instance is created lazily when first accessed and then cached. LocalView creation itself is fast and it does not use significant memory. However, it does call [DetectChanges](xref:core/change-tracking/change-detection), which can be slow for large numbers of entities. The collections created by `ToObservableCollection` and `ToBindingList` are also created lazily and then cached. Both of these methods create new collections, which can be slow and use a lot of memory when thousands of entities are involved.

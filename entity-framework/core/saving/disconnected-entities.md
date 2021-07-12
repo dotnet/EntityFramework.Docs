@@ -25,7 +25,7 @@ However, sometimes entities are queried using one context instance and then save
 
 The simplest case to deal with is when the client informs the server whether the entity is new or existing. For example, often the request to insert a new entity is different from the request to update an existing entity.
 
-The remainder of this section covers the cases where it necessary to determine in some other way whether to insert or update.
+The remainder of this section covers the cases where it is necessary to determine in some other way whether to insert or update.
 
 ### With auto-generated keys
 
@@ -65,7 +65,7 @@ However, if the entity uses auto-generated key values, then the Update method ca
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntity)]
 
-The Update method normally marks the entity for update, not insert. However, if the entity has a auto-generated key, and no key value has been set, then the entity is instead automatically marked for insert.
+The Update method normally marks the entity for update, not insert. However, if the entity has an auto-generated key, and no key value has been set, then the entity is instead automatically marked for insert.
 
 If the entity is not using auto-generated keys, then the application must decide whether the entity should be inserted or updated: For example:
 

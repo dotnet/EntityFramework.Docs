@@ -184,7 +184,7 @@ In this case:
 - Applying the original values ensures that only property values that have actually changed are updated in the database.
 - One database round-trip is made.
 
-As with the examples in the previous section, the original values do not have to passed as a dictionary; an entity instance or DTO will also work.
+As with the examples in the previous section, the original values do not have to be passed as a dictionary; an entity instance or DTO will also work.
 
 > [!TIP]
 > While this approach has appealing characteristics, it does require sending the entity's original values to and from the web client. Carefully consider whether this extra complexity is worth the benefits; for many applications one of the simpler approaches is more pragmatic.
@@ -387,7 +387,7 @@ The serialized JSON now looks like this:
 ]
 ```
 
-Notice that the graph now includes multiple Blog instances with the same key value, as well as multiple Post instance with the same key value. Attempting to track this graph like we did in the previous example will throw:
+Notice that the graph now includes multiple Blog instances with the same key value, as well as multiple Post instances with the same key value. Attempting to track this graph like we did in the previous example will throw:
 
 > System.InvalidOperationException: The instance of entity type 'Post' cannot be tracked because another instance with the key value '{Id: 2}' is already being tracked. When attaching existing entities, ensure that only one entity instance with a given key value is attached.
 
@@ -605,7 +605,7 @@ The fix for this is to either to set key values explicitly or configure the key 
 
 ## Overusing a single DbContext instance
 
-<xref:Microsoft.EntityFrameworkCore.DbContext> is designed to represent a short-lived unit-of-work, as described in [DbContext Initialization and Configuration](xref:core/dbcontext-configuration/index), and elaborated on in [Change Tracking in EF Core](xref:core/change-tracking/index). Not following this guidance makes it is easy to run into situations where an attempt is made to track multiple instances of the same entity. Common examples are:
+<xref:Microsoft.EntityFrameworkCore.DbContext> is designed to represent a short-lived unit-of-work, as described in [DbContext Initialization and Configuration](xref:core/dbcontext-configuration/index), and elaborated on in [Change Tracking in EF Core](xref:core/change-tracking/index). Not following this guidance makes it easy to run into situations where an attempt is made to track multiple instances of the same entity. Common examples are:
 
 - Using the same DbContext instance to both set up test state and then execute the test. This often results in the DbContext still tracking one entity instance from test setup, while then attempting to attach a new instance in the test proper. Instead, use a different DbContext instance for setting up test state and the test code proper.
 - Using a shared DbContext instance in a repository or similar code. Instead, make sure your repository uses a single DbContext instance for each unit-of-work.
@@ -615,7 +615,7 @@ The fix for this is to either to set key values explicitly or configure the key 
 Identity resolution happens automatically when entities are tracked from a query. This means that if an entity instance with a given key value is already tracked, then this existing tracked instance is used instead of creating a new instance. This has an important consequence: if the data has changed in the database, then this will not be reflected in the results of the query. This is a good reason to use a new DbContext instance for each unit-of-work, as described in [DbContext Initialization and Configuration](xref:core/dbcontext-configuration/index), and elaborated on in [Change Tracking in EF Core](xref:core/change-tracking/index).
 
 > [!IMPORTANT]
-> It is important to understand that EF Core always executes a LINQ query on a DbSet against the database and only returns results based on what is in the database. However, for a tracking query, if the entities returned are already tracked, then the tracked instances are used instead of creating a instances from the data in the database.
+> It is important to understand that EF Core always executes a LINQ query on a DbSet against the database and only returns results based on what is in the database. However, for a tracking query, if the entities returned are already tracked, then the tracked instances are used instead of creating instances from the data in the database.
 
 <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.Reload> or <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.GetDatabaseValues> can be used when tracked entities need to be refreshed with the latest data from the database. See [Accessing Tracked Entities](xref:core/change-tracking/entity-entries) for more information.
 
@@ -662,4 +662,4 @@ This comparer can then be used when creating collection navigations. For example
 
 ### Comparing key properties
 
-In addition to equality comparisons, key values also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key properties, as well as those used for unique indexes, must implement <xref:System.IComparable%601> and <xref:System.IEquatable%601>. Types normally used as keys (int, Guid, string, etc.) already support these interfaces. Custom key types may to add these interfaces.
+In addition to equality comparisons, key values also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key properties, as well as those used for unique indexes, must implement <xref:System.IComparable%601> and <xref:System.IEquatable%601>. Types normally used as keys (int, Guid, string, etc.) already support these interfaces. Custom key types may add these interfaces.
