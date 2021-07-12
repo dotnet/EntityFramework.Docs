@@ -43,7 +43,7 @@ This can be optimized by using `Select` to tell EF which columns to project out:
 
 The resulting SQL pulls back only the needed columns:
 
-```csharp
+```sql
 SELECT [b].[Url]
 FROM [Blogs] AS [b]
 ```
