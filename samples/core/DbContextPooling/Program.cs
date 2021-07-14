@@ -38,7 +38,7 @@ namespace Samples
     public class Startup
     {
         private const string ConnectionString
-            = @"Server=(localdb)\mssqllocaldb;Database=Demo.ContextPooling;Integrated Security=True";
+            = @"Server=(localdb)\mssqllocaldb;Database=Demo.ContextPooling;Trusted_Connection=True";
 
         public void ConfigureServices(IServiceCollection services)
         {
