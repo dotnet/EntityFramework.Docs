@@ -32,7 +32,7 @@ Entity instances are no longer tracked when:
 - The change tracker is cleared (EF Core 5.0 and later)
 - The entities are explicitly detached
 
-DbContext is designed to represent a short-lived unit-of-work, as described in [DbContext Initialization and Configuration](xref:core/dbcontext-configuration/index). This means that disposing the DbContext is _the normal way_ to stop tracking entities. In other words, the lifetime of a DbContext should be:
+DbContext is designed to represent a short-lived unit-of-work, as described in [DbContext Initialization and Configuration](xref:core/dbcontext-configuration/index). This means, that disposing the DbContext is _the normal way_ to stop tracking entities. In other words, the lifetime of a DbContext should be:
 
 1. Create the DbContext instance
 2. Track some entities
@@ -50,10 +50,10 @@ Every entity is associated with a given <xref:Microsoft.EntityFrameworkCore.Enti
 - `Detached` entities are not being tracked by the <xref:Microsoft.EntityFrameworkCore.DbContext>.
 - `Added` entities are new and have not yet been inserted into the database. This means they will be inserted when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called.
 - `Unchanged` entities have _not_ been changed since they were queried from the database. All entities returned from queries are initially in this state.
-- `Modified` entities have been changed since they were queried from the database. This means they will be updated when SaveChanges is called.
+- `Modified` entities have been changed since they were queried from the database. This means, they will be updated when SaveChanges is called.
 - `Deleted` entities exist in the database, but are marked to be deleted when SaveChanges is called.
 
-EF Core tracks changes at the property level. For example, if only a single property value is modified, then a database update will change only that value. However, properties can only be marked as modified when the entity itself is in the Modified state. (Or, from an alternate perspective, the Modified state means that at least one property value has been marked as modified.)
+EF Core tracks changes at the property level. For example, if only a single property value is modified, then a database update will change only that value. However, properties can only be marked as modified when the entity itself is in the Modified state. (Or, from an alternate perspective, the Modified state means, that at least one property value has been marked as modified.)
 
 The following table summarizes the different states:
 
