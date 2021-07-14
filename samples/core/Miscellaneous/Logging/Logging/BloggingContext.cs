@@ -17,7 +17,7 @@ namespace EFLogging
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                 .UseLoggerFactory(MyLoggerFactory)
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFLogging");
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFLogging;Trusted_Connection=True");
         #endregion
     }
 
