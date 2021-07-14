@@ -32,7 +32,7 @@ namespace EFSaving.CascadeDelete
                 .ReplaceService<IModelCacheKeyFactory, DeleteBehaviorCacheKeyFactory>()
                 .EnableSensitiveDataLogging()
                 .UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.CascadeDelete;Trusted_Connection=True;ConnectRetryCount=0",
+                    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.CascadeDelete;Trusted_Connection=True",
                     b => b.MaxBatchSize(1));
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

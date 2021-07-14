@@ -24,7 +24,7 @@ namespace EFQuerying.Tags
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tags;Trusted_Connection=True;ConnectRetryCount=0",
+                @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tags;Trusted_Connection=True",
                 b => b.UseNetTopologySuite());
         }
     }

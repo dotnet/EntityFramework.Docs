@@ -169,7 +169,7 @@ namespace DatabaseCycles
         {
             optionsBuilder
                 .EnableSensitiveDataLogging()
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Scratch;ConnectRetryCount=0");
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Scratch;Trusted_Connection=True");
             //.UseSqlite("DataSource=test.db");
 
             if (!_quiet)

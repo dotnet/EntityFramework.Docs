@@ -48,7 +48,7 @@ namespace EFSaving.Transactions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder.UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True;ConnectRetryCount=0");
+                    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True");
             }
         }
 

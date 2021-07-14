@@ -8,7 +8,7 @@ namespace Tests
         public SqlServerItemsControllerTest()
             : base(
                 new DbContextOptionsBuilder<ItemsContext>()
-                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFTestSample;ConnectRetryCount=0")
+                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFTestSample;Trusted_Connection=True")
                     .Options)
         {
         }

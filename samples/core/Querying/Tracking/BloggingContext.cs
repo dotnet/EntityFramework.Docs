@@ -17,7 +17,7 @@ namespace EFQuerying.Tracking
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tracking;Trusted_Connection=True;ConnectRetryCount=0");
+                @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tracking;Trusted_Connection=True");
         }
     }
 }
