@@ -42,6 +42,7 @@ Service                                                                         
 <xref:Microsoft.EntityFrameworkCore.Scaffolding.IModelCodeGenerator>                 | Generates code for a model.
 <xref:Microsoft.EntityFrameworkCore.Scaffolding.IProviderConfigurationCodeGenerator> | Generates OnConfiguring code.
 <xref:Microsoft.EntityFrameworkCore.Scaffolding.IReverseEngineerScaffolder>          | The main class for scaffolding reverse engineered models.
+<xref:Microsoft.EntityFrameworkCore.Scaffolding.IScaffoldingModelFactory>            | Creates a model from a database model. Added in EF Core 6.0.
 
 ## Using services
 
