@@ -310,6 +310,10 @@ It is common to apply configuration to the join entity type. This action can be 
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=SharedConfiguration)]
 
+You can also specify the Foreign Key columns when they don't follow conventions.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManySharedWithCustomKeys.cs?name=SharedConfiguration)]
+
 [Model seed data](xref:core/modeling/data-seeding) can be provided for the join entity type by using anonymous types. You can examine the model debug view to determine the property names created by convention.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Seeding)]
