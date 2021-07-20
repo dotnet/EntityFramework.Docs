@@ -163,7 +163,7 @@ The following table summarizes commonly-used pre-defined conversions from model/
 |:--------------------|------------------------|-----------------------------------------------------------|------
 | bool                | any_numeric_type       | False/true to 0/1                                         | `.HasConversion<any_numeric_type>()`
 |                     | any_numeric_type       | False/true to any two numbers                             | Use <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToTwoValuesConverter%601>
-|                     | string                 | False/true to "Y"/"N"                                     | `.HasConversion<string>()`
+|                     | string                 | False/true to "N"/"Y"                                     | `.HasConversion<string>()`
 |                     | string                 | False/true to any two strings                             | Use <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToStringConverter>
 | any_numeric_type    | bool                   | 0/1 to false/true                                         | `.HasConversion<bool>()`
 |                     | any_numeric_type       | Simple cast                                               | `.HasConversion<any_numeric_type>()`
@@ -199,7 +199,7 @@ Note that these conversions assume that the format of the value is appropriate f
 The full list of built-in converters is:
 
 * Converting bool properties:
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToStringConverter> - Bool to strings such as "Y" and "N"
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToStringConverter> - Bool to strings such as "N" and "Y"
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToTwoValuesConverter%601> - Bool to any two values
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.BoolToZeroOneConverter%601> - Bool to zero and one
 * Converting byte array properties:
@@ -232,7 +232,7 @@ The full list of built-in converters is:
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.PhysicalAddressToBytesConverter> - <xref:System.Net.NetworkInformation.PhysicalAddress> to byte array
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.PhysicalAddressToStringConverter> - <xref:System.Net.NetworkInformation.PhysicalAddress> to string
 * Converting string properties:
-  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToBoolConverter> - Strings such as "Y" and "N" to bool
+  * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToBoolConverter> - Strings such as "N" and "Y" to bool
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToBytesConverter> - String to UTF8 bytes
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToCharConverter> - String to character
   * <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.StringToDateTimeConverter> - String to <xref:System.DateTime>
