@@ -68,4 +68,4 @@ In the following example, `Person.FirstName` and `Person.LastName` are set up as
 
 ## Additional resources
 
-See [Conflict detection in EF Core](/aspnet/core/data/ef-rp/concurrency#conflict-detection-in-ef-core) for an ASP.NET Core sample with concurrency detection.
+See [Conflict detection in EF Core](/aspnet/core/data/ef-rp/concurrency#conflict-detection-in-ef-core) for an ASP.NET Core sample with conflict detection.
