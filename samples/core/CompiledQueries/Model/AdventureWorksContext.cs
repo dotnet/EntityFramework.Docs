@@ -7,7 +7,7 @@ namespace Samples.Model
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                "data source=(localdb)\\mssqllocaldb;initial catalog=AdventureWorks2014;integrated security=True;MultipleActiveResultSets=True;ConnectRetryCount=0");
+                "data source=(localdb)\\mssqllocaldb;initial catalog=AdventureWorks2014;Trusted_Connection=True;MultipleActiveResultSets=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

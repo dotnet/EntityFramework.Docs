@@ -296,7 +296,7 @@ namespace EFModeling.ValueConversions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder
                     .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EnumConversions;Integrated Security=True")
+                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EnumConversions;Trusted_Connection=True")
                     .EnableSensitiveDataLogging();
         }
 

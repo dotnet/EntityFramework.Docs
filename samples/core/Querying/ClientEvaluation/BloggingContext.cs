@@ -17,7 +17,7 @@ namespace EFQuerying.ClientEvaluation
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.ClientEvaluation;Trusted_Connection=True;ConnectRetryCount=0");
+                @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.ClientEvaluation;Trusted_Connection=True");
         }
     }
 }

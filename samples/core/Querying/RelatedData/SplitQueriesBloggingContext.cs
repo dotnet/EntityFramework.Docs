@@ -9,7 +9,7 @@ namespace EFQuerying.RelatedData
         {
             optionsBuilder
                 .UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=EFQuerying;Trusted_Connection=True;ConnectRetryCount=0",
+                    @"Server=(localdb)\mssqllocaldb;Database=EFQuerying;Trusted_Connection=True",
                     o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
         }
         #endregion

@@ -81,7 +81,7 @@ namespace EFModeling.ValueConversions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder
                     .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=CaseInsensitiveStrings;Integrated Security=True")
+                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=CaseInsensitiveStrings;Trusted_Connection=True")
                     .EnableSensitiveDataLogging();
         }
 

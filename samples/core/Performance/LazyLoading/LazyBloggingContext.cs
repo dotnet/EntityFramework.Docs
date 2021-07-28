@@ -12,7 +12,7 @@ namespace Performance.LazyLoading
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Integrated Security=True")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .UseLazyLoadingProxies();
     }

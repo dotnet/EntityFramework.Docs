@@ -50,7 +50,7 @@ namespace EFModeling.ValueConversions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder
                     .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EncryptPropertyValues;Integrated Security=True")
+                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EncryptPropertyValues;Trusted_Connection=True")
                     .EnableSensitiveDataLogging();
         }
 

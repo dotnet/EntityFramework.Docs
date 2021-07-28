@@ -80,7 +80,7 @@ namespace EFModeling.ValueConversions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder
                     .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ULongConcurrency;Integrated Security=True")
+                    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ULongConcurrency;Trusted_Connection=True")
                     .EnableSensitiveDataLogging();
         }
 

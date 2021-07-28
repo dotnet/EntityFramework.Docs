@@ -11,7 +11,7 @@ namespace EFQuerying.QueryFilters
         {
             optionsBuilder
                 .UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=Querying.QueryFilters.BloggingRequired;Trusted_Connection=True;ConnectRetryCount=0;");
+                    @"Server=(localdb)\mssqllocaldb;Database=Querying.QueryFilters.BloggingRequired;Trusted_Connection=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

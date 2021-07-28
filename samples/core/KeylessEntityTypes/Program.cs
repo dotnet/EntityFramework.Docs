@@ -103,7 +103,7 @@ namespace Samples
         {
             optionsBuilder
                 .UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=Sample.KeylessEntityTypes;Trusted_Connection=True;ConnectRetryCount=0;")
+                    @"Server=(localdb)\mssqllocaldb;Database=Sample.KeylessEntityTypes;Trusted_Connection=True")
                 .UseLoggerFactory(_loggerFactory);
         }
 

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 public abstract class BlogsContext : DbContext
 {
-    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=InterceptionTest;ConnectRetryCount=0";
+    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=InterceptionTest;Trusted_Connection=True";
 
     protected BlogsContext()
         : base(
