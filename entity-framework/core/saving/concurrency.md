@@ -65,3 +65,7 @@ The general approach to handle a concurrency conflicts is:
 In the following example, `Person.FirstName` and `Person.LastName` are set up as concurrency tokens. There is a `// TODO:` comment in the location where you include application specific logic to choose the value to be saved.
 
 [!code-csharp[Main](../../../samples/core/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=33-34)]
+
+## Additional resources
+
+See [Conflict detection in EF Core](/aspnet/core/data/ef-rp/concurrency#conflict-detection-in-ef-core) for an ASP.NET Core sample with conflict detection.
