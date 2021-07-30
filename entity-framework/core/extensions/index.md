@@ -17,13 +17,13 @@ These tools and extensions provide additional functionality for Entity Framework
 
 ### LLBLGen Pro
 
-LLBLGen Pro is an entity modeling solution with support for Entity Framework and Entity Framework Core. It lets you easily define your entity model and map it to your database, using database first or model first, so you can get started writing queries right away. For EF Core: 2, 3, 5.
+LLBLGen Pro is an entity modeling solution with support for Entity Framework and Entity Framework Core. It lets you easily define your entity model and map it to your database, using database first or model first, so you can get started writing queries right away. For EF Core: 3, 5.
 
 [Website](https://www.llblgen.com/)
 
 ### Devart Entity Developer
 
-Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 2, 3, 5.
+Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 3, 5.
 
 [Website](https://www.devart.com/entitydeveloper/)
 
@@ -41,28 +41,15 @@ EF Core Power Tools is a Visual Studio extension that exposes various EF Core de
 
 ### Entity Framework Visual Editor
 
-Entity Framework Visual Editor is a Visual Studio extension that adds an O/RM designer for visual design of EF 6, and EF Core classes. Code is generated using T4 templates so can be customized to suit any needs. It supports inheritance, unidirectional and bidirectional associations, enumerations, and the ability to color-code your classes and add text blocks to explain potentially arcane parts of your design. For EF Core: 2, 3, 5.
+Entity Framework Visual Editor is a Visual Studio extension that adds an O/RM designer for visual design of EF 6, and EF Core classes. Code is generated using T4 templates so can be customized to suit any needs. It supports inheritance, unidirectional and bidirectional associations, enumerations, and the ability to color-code your classes and add text blocks to explain potentially arcane parts of your design. For EF Core: 3, 5.
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner)
-
-### CatFactory
-
-CatFactory is a scaffolding engine for .NET Core that can automate the generation of DbContext classes, entities, mapping configurations, and repository classes from a SQL Server database. For EF Core: 2.
-
-[GitHub repository](https://github.com/hherzl/CatFactory.EntityFrameworkCore)
-
-### LoreSoft's Entity Framework Core Generator
-
-Entity Framework Core Generator (efg) is a .NET Core CLI tool that can generate EF Core models from an existing database, much like `dotnet ef dbcontext scaffold`, but it also supports safe code [regeneration](https://efg.loresoft.com/en/latest/regeneration/) via region replacement or by parsing mapping files. This tool supports generating view models, validation, and object mapper code. For EF Core: 2.
-
-[Tutorial](https://www.loresoft.com/Generate-ASP-NET-Web-API)
-[Documentation](https://efg.loresoft.com/en/latest/)
 
 ## Extensions
 
 ### Microsoft.EntityFrameworkCore.AutoHistory
 
-A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 2, 3, 5.
+A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/Arch/AutoHistory/)
 
@@ -72,45 +59,39 @@ Second level caching is a query cache. The results of EF commands will be stored
 
 [GitHub repository](https://github.com/VahidN/EFCoreSecondLevelCacheInterceptor)
 
-### Geco
-
-Geco (Generator Console) is a simple code generator based on a console project, that runs on .NET Core and uses C# interpolated strings for code generation. Geco includes a reverse model generator for EF Core with support for pluralization, singularization, and editable templates. It also provides a seed data script generator, a script runner, and a database cleaner. For EF Core: 2.
-
-[GitHub repository](https://github.com/iQuarc/Geco)
-
 ### EntityFrameworkCore.Scaffolding.Handlebars
 
-Allows customization of classes reverse engineered from an existing database using the Entity Framework Core toolchain with Handlebars templates. For EF Core: 2, 3, 5.
+Allows customization of classes reverse engineered from an existing database using the Entity Framework Core toolchain with Handlebars templates. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/TrackableEntities/EntityFrameworkCore.Scaffolding.Handlebars)
 
 ### NeinLinq.EntityFrameworkCore
 
-NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core: 2, 3, 5.
+NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/axelheer/nein-linq/)
 
 ### Microsoft.EntityFrameworkCore.UnitOfWork
 
-A plugin for Microsoft.EntityFrameworkCore to support repository, unit of work patterns, and multiple databases with distributed transaction supported. For EF Core: 2, 3.
+A plugin for Microsoft.EntityFrameworkCore to support repository, unit of work patterns, and multiple databases with distributed transaction supported. For EF Core: 3.
 
 [GitHub repository](https://github.com/Arch/UnitOfWork/)
 
 ### EFCore.BulkExtensions
 
-EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 2, 3, 5.
+EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/borisdj/EFCore.BulkExtensions)
 
 ### Bricelam.EntityFrameworkCore.Pluralizer
 
-Adds design-time pluralization. For EF Core: 2, 3, 5.
+Adds design-time pluralization. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/bricelam/EFCore.Pluralizer)
 
 ### Toolbelt.EntityFrameworkCore.IndexAttribute
 
-Revival of [Index] attribute (with extension for model building). For EF Core: 2, 3, 5.
+Revival of [Index] attribute (with extension for model building). For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/jsakamoto/EntityFrameworkCore.IndexAttribute)
 
@@ -132,12 +113,6 @@ Adds [FluentValidation](https://fluentvalidation.net/) support to Entity Framewo
 
 [GitHub repository](https://github.com/SimonCropp/EfFluentValidation)
 
-### EFCore.TemporalSupport
-
-An implementation of temporal support. For EF Core: 2.
-
-[GitHub repository](https://github.com/cpoDesign/EFCore.TemporalSupport)
-
 ### EfCoreTemporalTable
 
 Easily perform temporal queries on your favourite database using introduced extension methods: `AsTemporalAll()`, `AsTemporalAsOf(date)`, `AsTemporalFrom(startDate, endDate)`, `AsTemporalBetween(startDate, endDate)`, `AsTemporalContained(startDate, endDate)`. For EF Core: 3, 5.
@@ -146,25 +121,19 @@ Easily perform temporal queries on your favourite database using introduced exte
 
 ### EntityFrameworkCore.TemporalTables
 
-Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2, 3, 5.
+Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/findulov/EntityFrameworkCore.TemporalTables)
 
-### EntityFrameworkCore.Cacheable
-
-A high-performance second-level query cache. For EF Core: 2.
-
-[GitHub repository](https://github.com/SteffenMangold/EntityFrameworkCore.Cacheable)
-
 ### EntityFrameworkCore.NCache
 
-NCache Entity Framework Core Provider is a distributed second level cache provider for caching query results. The distributed architecture of NCache makes it more scalable and highly available. For EF Core 2, 3.
+NCache Entity Framework Core Provider is a distributed second level cache provider for caching query results. The distributed architecture of NCache makes it more scalable and highly available. For EF Core: 3.
 
 [Website](https://www.alachisoft.com/ncache/ef-core-cache.html)
 
 ### EntityFrameworkCore.Projectables
 
-Flexible projection magic for EF Core. Use properties, methods, and extension methods in your query without client evaluation. For EF Core 3, 5.
+Flexible projection magic for EF Core. Use properties, methods, and extension methods in your query without client evaluation. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/koenbeuk/EntityFrameworkCore.Projectables)
 
@@ -176,14 +145,14 @@ Triggers for EF Core. Respond to changes in your DbContext before and after they
 
 ### Entity Framework Plus
 
-Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2, 3, 5.
+Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 3, 5.
 
 [Website](https://entityframework-plus.net/)
 [GitHub repository](https://github.com/zzzprojects/EntityFramework-Plus)
 
 ### Entity Framework Extensions
 
-Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2, 3, 5.
+Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 3, 5.
 
 [Website](https://entityframework-extensions.net/)
 
@@ -206,7 +175,7 @@ As a result SQL becomes just "another" class library exposing its API locally, l
 
 ### Ramses
 
-Lifecycle hooks (for SaveChanges). For EF Core: 2, 3.
+Lifecycle hooks (for SaveChanges). For EF Core: 3.
 
 [GitHub repository](https://github.com/JValck/Ramses)
 
@@ -281,19 +250,11 @@ Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() 
 ### EntityFramework.Exceptions
 
 When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`,
-`CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints.
+`CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints. For EF Core: 3, 5.
 
 Supports SQL Server, Postgres, MySql, SQLite and Oracle
 
-For EF Core: 3, 5.
-
 [GitHub Repository](https://github.com/Giorgi/EntityFramework.Exceptions)
-
-### EFCoreAuditing
-
-A Library for Entity Framework Core to support automatically recording data changes history (audit logging), soft-delete, and snake_case naming convention functionality. For EF Core: 2.
-
-[GitHub Repository](https://github.com/OKTAYKIR/EFCoreAuditing)
 
 ### EntityFrameworkCore.FSharp
 
