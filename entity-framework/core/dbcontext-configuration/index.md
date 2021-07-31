@@ -214,7 +214,7 @@ Examples of each of these are shown in the preceding sections. The same configur
 
 ### Configuring the database provider
 
-Each `DbContext` instance must be configured to use one and only one database provider. (Different instances of a `DbContext` subtype can be used with different database providers, but a single instance must only use one.) A database provider is configured using a specific `Use*`" call. For example, to use the SQL Server database provider:
+Each `DbContext` instance must be configured to use one and only one database provider. (Different instances of a `DbContext` subtype can be used with different database providers, but a single instance must only use one.) A database provider is configured using a specific `Use*` call. For example, to use the SQL Server database provider:
 
 <!--
     public class ApplicationDbContext : DbContext
@@ -227,7 +227,7 @@ Each `DbContext` instance must be configured to use one and only one database pr
 -->
 [!code-csharp[ApplicationDbContext](../../../samples/core/Miscellaneous/ConfiguringDbContext/WithNew/ApplicationDbContext.cs?name=ApplicationDbContext)]
 
-These `Use*`" methods are extension methods implemented by the database provider. This means that the database provider NuGet package must be installed before the extension method can be used.
+These `Use*` methods are extension methods implemented by the database provider. This means that the database provider NuGet package must be installed before the extension method can be used.
 
 > [!TIP]
 > EF Core database providers make extensive use of [extension methods](/dotnet/csharp/programming-guide/classes-and-structs/extension-methods). If the compiler indicates that a method cannot be found, then make sure that the provider's NuGet package is installed and that you have `using Microsoft.EntityFrameworkCore;` in your code.
