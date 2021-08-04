@@ -23,7 +23,7 @@ EF Core 6.0 is the next release after EF Core 5.0 and is currently scheduled for
 
 ### Supported platforms
 
-EF Core 6.0 currently targets .NET 5. This will likely be updated to .NET 6 as we near the release. EF Core 6.0 does not target any .NET Standard version; for more information see [the future of .NET Standard](https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/).
+EF Core 6.0 requires .NET 6. EF Core 6.0 does not target any .NET Standard version; for more information see [the future of .NET Standard](https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/).
 
 EF Core 6.0 will not run on .NET Framework.
 
@@ -57,7 +57,7 @@ This work is initially scoped as [described on the issue](https://github.com/dot
 
 Tracked by [#4021](https://github.com/dotnet/efcore/issues/4021)
 
-Status: Not started
+Status: Cut
 
 T-shirt size: Medium
 
@@ -67,7 +67,7 @@ This feature will introduce a common mechanism and patterns for JSON support tha
 
 Tracked by [#10059](https://github.com/dotnet/efcore/issues/10059)
 
-Status: Not started
+Status: In-progress
 
 T-shirt size: Small
 
@@ -93,7 +93,7 @@ Update: We have improved test infrastructure and added new tests to support the 
 
 Tracked by [#1906](https://github.com/dotnet/efcore/issues/1906)
 
-Status: In-progress
+Status: Complete
 
 T-shirt size: X-Large
 
@@ -171,7 +171,7 @@ Update: Raw SQL queries for primitive and unmapped types has been cut from 6.0 d
 
 Tracked by [#9906](https://github.com/dotnet/efcore/issues/9906)
 
-Status: In-progress
+Status: Cut
 
 T-shirt size: Medium
 
@@ -192,26 +192,29 @@ We are actively gathering feedback on which improvements to make to the Cosmos p
 Update: We have been doing extensive customer development around the Cosmos provider. This has resulted in the following enhancements being pulled into EF Core 6.0:
 
 - [Azure Cosmos DB provider should default to implicit ownership](https://github.com/dotnet/efcore/issues/24803)
-- [Find/FindAsync performs SQL API query when entity has embedded entities](https://github.com/dotnet/efcore/issues/24202)
 - [Set partition key on join entity type by convention](https://github.com/dotnet/efcore/issues/23491)
-- [Optimize more queries that could use ReadItem](https://github.com/dotnet/efcore/issues/20693)
-- [Detect partition key filters in more queries](https://github.com/dotnet/efcore/issues/20350)
-- [Translate subquery in filter condition](https://github.com/dotnet/efcore/issues/17957)
 - [FromSql support](https://github.com/dotnet/efcore/issues/17311)
-- [Allow to specify consistency level for CUD operations](https://github.com/dotnet/efcore/issues/17309)
 - [Configure TTL per entity/entity type/collection](https://github.com/dotnet/efcore/issues/17307)
 - [API to configure container facets (throughput, size, partition key, etc.)](https://github.com/dotnet/efcore/issues/17301)
 - [Diagnostic events including statistics (query cost, activity id)](https://github.com/dotnet/efcore/issues/17298)
-- [Support aggregate operators](https://github.com/dotnet/efcore/issues/16146)
 - [Distinct operator in queries](https://github.com/dotnet/efcore/issues/16144)
 - [Add translators for member/methods which map to built-in functions](https://github.com/dotnet/efcore/issues/16143)
 - [Add basic support for collections and dictionaries of primitive types](https://github.com/dotnet/efcore/issues/14762)
+
+Update: The following issues were cut from the 6.0 release:
+
+- [Find/FindAsync performs SQL API query when entity has embedded entities](https://github.com/dotnet/efcore/issues/24202)
+- [Optimize more queries that could use ReadItem](https://github.com/dotnet/efcore/issues/20693)
+- [Detect partition key filters in more queries](https://github.com/dotnet/efcore/issues/20350)
+- [Translate subquery in filter condition](https://github.com/dotnet/efcore/issues/17957)
+- [Allow to specify consistency level for CUD operations](https://github.com/dotnet/efcore/issues/17309)
+- [Support aggregate operators](https://github.com/dotnet/efcore/issues/16146)
 
 ### Expose model building conventions to applications
 
 Tracked by [#214](https://github.com/dotnet/efcore/issues/214)
 
-Status: Not started
+Status: Cut
 
 T-shirt size: Medium
 
@@ -221,7 +224,7 @@ EF Core uses a set of conventions for building a model from .NET types. These co
 
 Tracked by [issues labeled with `type-bug` in the 6.0 milestone](https://github.com/dotnet/efcore/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A6.0.0+label%3Atype-bug+)
 
-Status: In-progress
+Status: In-progress/Scoped
 
 T-shirt size: Large
 
@@ -259,7 +262,7 @@ The EF Core team also works on several related but independent technologies. In 
 
 Tracked by [issues in the dotnet\runtime repo labeled with `area-System.Data` in the 6.0 milestone](https://github.com/dotnet/runtime/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-System.Data+milestone%3A6.0.0)
 
-Status: In-progress
+Status: Scoped/Complete
 
 T-shirt size: Large
 
@@ -267,6 +270,9 @@ This work includes:
 
 - Implementation of the new [batching API](https://github.com/dotnet/runtime/issues/28633).
 - Continued work with other .NET teams and the community to understand and evolve ADO.NET.
+
+Update: The following issues were cut from the 6.0 release:
+
 - [Standardize on DiagnosticSource for tracing in System.Data.* components](https://github.com/dotnet/runtime/issues/22336).
 
 ### Enhancements to Microsoft.Data.Sqlite

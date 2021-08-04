@@ -73,8 +73,7 @@ public static class InMemoryRequiredPropertiesSample
         {
             optionsBuilder
                 .LogTo(Console.WriteLine, new[] { InMemoryEventId.ChangesSaved })
-                .UseInMemoryDatabase("UserContextWithNullCheckingDisabled")
-                .EnableNullabilityCheck(false);
+                .UseInMemoryDatabase("UserContextWithNullCheckingDisabled", b => b.EnableNullabilityCheck(false));
         }
         #endregion
     }
