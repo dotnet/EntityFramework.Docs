@@ -30,6 +30,12 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
+      - name: Setup .NET 6.0 SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+          include-prerelease: true
+
       - name: Build samples
         working-directory: samples/core
         run: dotnet build
