@@ -44,7 +44,7 @@ namespace EFModeling.FluentAPI.Relationships.ManyToManyShared
                 .HasData(new Tag { TagId = "ef" });
 
             modelBuilder
-                .Entity<Post>()
+                .Entity<PostTag>()
                 .HasMany(p => p.Tags)
                 .WithMany(p => p.Posts)
                 .UsingEntity(j => j.HasData(new { PostsPostId = 1, TagsTagId = "ef" }));
