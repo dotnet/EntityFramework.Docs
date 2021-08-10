@@ -2,7 +2,7 @@
 title: Cascade Delete - EF Core
 description: Configuring cascading behaviors triggered when an entity is deleted or severed from its principal/parent
 author: ajcvickers
-ms.date: 01/07/2021
+ms.date: 08/10/2021
 uid: core/saving/cascade-delete
 ---
 # Cascade Delete
@@ -466,17 +466,16 @@ The following table shows the result of each `OnDelete` value on the foreign key
 | DeleteBehavior        | Impact on database schema
 |:----------------------|--------------------------
 | Cascade               | ON DELETE CASCADE
-| Restrict              | ON DELETE NO ACTION
+| Restrict              | ON DELETE RESTRICT
 | NoAction              | database default
 | SetNull               | ON DELETE SET NULL
-| ClientSetNull         | ON DELETE NO ACTION
-| ClientCascade         | ON DELETE NO ACTION
+| ClientSetNull         | database default
+| ClientCascade         | database default
 | ClientNoAction        | database default
 
-> [!NOTE]
-> This table is confusing and we plan to revisit this in a future release. See [GitHub Issue #21252](https://github.com/dotnet/efcore/issues/21252).
+The behaviors of `ON DELETE NO ACTION` (the database default) and `ON DELETE RESTRICT` in relational databases are typically either identical or very similar. Despite what `NO ACTION` may imply, both of these options cause referential constraints to be enforced. The difference, when there is one, is _when_ the database checks the constraints.  Check your database documentation for the specific differences between `ON DELETE NO ACTION` and `ON DELETE RESTRICT` on your database system.
 
-The behaviors of `ON DELETE NO ACTION` and `ON DELETE RESTRICT` in relational databases are typically either identical or very similar. Despite what `NO ACTION` may imply, both of these options cause referential constraints to be enforced. The difference, when there is one, is _when_ the database checks the constraints.  Check your database documentation for the specific differences between `ON DELETE NO ACTION` and `ON DELETE RESTRICT` on your database system.
+SQL Server doesn't support `ON DELETE RESTRICT`, so `ON DELETE NO ACTION` is used instead.
 
 The only values that will cause cascading behaviors on the database are `Cascade` and `SetNull`. All other values will configure the database to not cascade any changes.
 
