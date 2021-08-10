@@ -115,8 +115,8 @@ public static class ContainsFreeTextSample
             modelBuilder.Entity<Customer>()
                 .Property(e => e.Name)
                 .HasConversion(
-                    v => JsonSerializer.Serialize(v, null),
-                    v => JsonSerializer.Deserialize<Name>(v, null));
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<Name>(v, (JsonSerializerOptions)null));
             #endregion
         }
 
