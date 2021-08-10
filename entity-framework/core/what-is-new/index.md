@@ -25,7 +25,7 @@ See [supported platforms](xref:core/miscellaneous/platforms) for information abo
 
 See the [.NET support policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) for information on support expiration and long-term support (LTS) releases.
 
-`*` EF Core 2.1 will continue to be supported when used with ASP.NET Core 2.1 on .NET Framework only. See [ASP.NET Support Policy](https://dotnet.microsoft.com/platform/support/policy/aspnet) for details.
+\* EF Core 2.1 will continue to be supported when used with ASP.NET Core 2.1 on .NET Framework only. See [ASP.NET Support Policy](https://dotnet.microsoft.com/platform/support/policy/aspnet) for details.
 
 ## Guidance on updating to new releases
 
