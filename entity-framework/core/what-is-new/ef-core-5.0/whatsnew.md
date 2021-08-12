@@ -213,7 +213,7 @@ public class ProductsContext : DbContext
 }
 ```
 
-These entities can then be queried and updated just like normal entity types with their own, dedicated CLR type. More information can be found in the documentation on [property bags](xref:core/modeling/shadow-properties).
+These entities can then be queried and updated just like normal entity types with their own, dedicated CLR type. More information can be found in the documentation on [property bags](xref:core/modeling/shadow-properties#property-bag-entity-types).
 
 ## Required 1:1 dependents
 
