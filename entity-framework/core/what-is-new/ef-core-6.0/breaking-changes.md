@@ -15,6 +15,7 @@ The following API and behavior changes have the potential to break existing appl
 | **Breaking change**                                                                                                                   | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
+| [Removed last ORDER BY when joining for collections](#last-order-by)                                                                  | Low        |
 
 ## Low-impact changes
 
@@ -62,3 +63,43 @@ The default OnDelete() behavior of optional relationships is ClientSetNull. Its 
 You can choose to either apply these operations or manually remove them from the migration since they have no functional impact on EF Core.
 
 SQL Server doesn't support RESTRICT, so these foreign keys were already created using NO ACTION. The migration operations will have no affect on SQL Server and are safe to remove.
+
+<a name="last-order-by"></a>
+
+### Removed last ORDER BY when joining for collections
+
+[Tracking Issue #19828](https://github.com/dotnet/efcore/issues/19828)
+
+#### Old behavior
+
+When performing SQL JOINs on collections (one-to-many relationships), EF Core used to add an ORDER BY for each key column of the joined table. For example, loading all Blogs with their related Posts was done via the following SQL:
+
+```sql
+SELECT [b].[BlogId], [b].[Name], [p].[PostId], [p].[BlogId], [p].[Title]
+FROM [Blogs] AS [b]
+LEFT JOIN [Post] AS [p] ON [b].[BlogId] = [p].[BlogId]
+ORDER BY [b].[BlogId], [p].[PostId]
+```
+
+These orderings are necessary for proper materialization of the entities.
+
+#### New behavior
+
+The very last ORDER BY for a collection join is now omitted:
+
+```sql
+SELECT [b].[BlogId], [b].[Name], [p].[PostId], [p].[BlogId], [p].[Title]
+FROM [Blogs] AS [b]
+LEFT JOIN [Post] AS [p] ON [b].[BlogId] = [p].[BlogId]
+ORDER BY [b].[BlogId]
+```
+
+An ORDER BY for the Post's ID column is no longer generated.
+
+#### Why
+
+Every ORDER BY imposes additional work at the database side, and the last ordering isn't necessary for EF Core's materialization needs. Data shows that removing this last ordering can produce a significant performance improvement in some scenarios.
+
+#### Mitigations
+
+If your application expects joined entities to be returned in a particular order, make that explicit by adding a LINQ `OrderBy` operator to your query.
