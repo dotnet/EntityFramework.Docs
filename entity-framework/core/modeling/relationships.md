@@ -2,7 +2,7 @@
 title: Relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
 author: AndriySvyryd
-ms.date: 10/01/2020
+ms.date: 11/15/2021
 uid: core/modeling/relationships
 ---
 # Relationships
@@ -77,9 +77,6 @@ In this example the highlighted properties will be used to configure the relatio
 
 > [!NOTE]
 > If the property is the primary key or is of a type not compatible with the principal key then it won't be configured as the foreign key.
-
-> [!NOTE]
-> Before EF Core 3.0, the property named exactly the same as the principal key property [was also matched as the foreign key](https://github.com/dotnet/efcore/issues/13274)
 
 ### No foreign key property
 

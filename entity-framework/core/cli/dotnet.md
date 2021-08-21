@@ -2,7 +2,7 @@
 title: EF Core tools reference (.NET CLI) - EF Core
 description: Reference guide for the Entity Framework Core .NET Core CLI tools
 author: bricelam
-ms.date: 11/02/2021
+ms.date: 11/15/2021
 uid: core/cli/dotnet
 ---
 
@@ -257,7 +257,7 @@ dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Us
 
 ## `dotnet ef dbcontext script`
 
-Generates a SQL script from the DbContext. Bypasses any migrations. Added in EF Core 3.0.
+Generates a SQL script from the DbContext. Bypasses any migrations.
 
 Options:
 

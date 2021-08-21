@@ -2,7 +2,7 @@
 title: Function Mappings - SQLite Database Provider - EF Core
 description: Function Mappings of the SQLite EF Core database provider
 author: bricelam
-ms.date: 6/28/2021
+ms.date: 11/15/2021
 uid: core/providers/sqlite/functions
 ---
 # Function Mappings of the SQLite EF Core Provider
@@ -59,23 +59,23 @@ DateTime.Today                  | datetime('now', 'localtime', 'start of day')
 DateTime.UtcNow                 | datetime('now')
 dateTime.AddDays(value)         | datetime(@dateTime, @value \|\| ' days')
 dateTime.AddHours(value)        | datetime(@dateTime, @d \|\| ' hours')
-dateTime.AddMilliseconds(value) | datetime(@dateTime, (@value / 1000.0) \|\| ' seconds')                   | EF Core 2.2
+dateTime.AddMilliseconds(value) | datetime(@dateTime, (@value / 1000.0) \|\| ' seconds')
 dateTime.AddMinutes(value)      | datetime(@dateTime, @value \|\| ' minutes')
 dateTime.AddMonths(months)      | datetime(@dateTime, @months \|\| ' months')
 dateTime.AddSeconds(value)      | datetime(@dateTime, @value \|\| ' seconds')
-dateTime.AddTicks(value)        | datetime(@dateTime, (@value / 10000000.0) \|\| ' seconds')               | EF Core 2.2
+dateTime.AddTicks(value)        | datetime(@dateTime, (@value / 10000000.0) \|\| ' seconds')
 dateTime.AddYears(value)        | datetime(@dateTime, @value \|\| ' years')
 dateTime.Date                   | datetime(@dateTime, 'start of day')
 dateTime.Day                    | strftime('%d', @dateTime)
-dateTime.DayOfWeek              | strftime('%w', @dateTime)                                                | EF Core 2.2
+dateTime.DayOfWeek              | strftime('%w', @dateTime)
 dateTime.DayOfYear              | strftime('%j', @dateTime)
 dateTime.Hour                   | strftime('%H', @dateTime)
 dateTime.Millisecond            | (strftime('%f', @dateTime) * 1000) % 1000
 dateTime.Minute                 | strftime('%M', @dateTime)
 dateTime.Month                  | strftime('%m', @dateTime)
 dateTime.Second                 | strftime('%S', @dateTime)
-dateTime.Ticks                  | (julianday(@dateTime) - julianday('0001-01-01 00:00:00')) * 864000000000 | EF Core 2.2
-dateTime.TimeOfDay              | time(@dateTime)                                                          | EF Core 3.0
+dateTime.Ticks                  | (julianday(@dateTime) - julianday('0001-01-01 00:00:00')) * 864000000000
+dateTime.TimeOfDay              | time(@dateTime)
 dateTime.Year                   | strftime('%Y', @dateTime)
 
 > [!NOTE]
@@ -152,9 +152,9 @@ stringValue.TrimStart(trimChar)                              | ltrim(@stringValu
 
 ## Miscellaneous functions
 
-.NET                                     | SQL                                | Added in
----------------------------------------- | ---------------------------------- | --------
-collection.Contains(item)                | @item IN @collection               | EF Core 3.0
+.NET                                     | SQL
+---------------------------------------- | ---
+collection.Contains(item)                | @item IN @collection
 enumValue.HasFlag(flag)                  | @enumValue & @flag = @flag
 nullable.GetValueOrDefault()             | coalesce(@nullable, 0)
 nullable.GetValueOrDefault(defaultValue) | coalesce(@nullable, @defaultValue)

@@ -2,7 +2,7 @@
 title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: bricelam
-ms.date: 11/02/2021
+ms.date: 11/15/2021
 uid: core/cli/powershell
 ---
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
@@ -254,7 +254,7 @@ Scaffold-DbContext "Name=ConnectionStrings:Blogging" Microsoft.EntityFrameworkCo
 
 ## Script-DbContext
 
-Generates a SQL script from the DbContext. Bypasses any migrations. Added in EF Core 3.0.
+Generates a SQL script from the DbContext. Bypasses any migrations.
 
 Parameters:
 
