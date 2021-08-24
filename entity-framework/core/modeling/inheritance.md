@@ -56,7 +56,7 @@ By default, when two sibling entity types in the hierarchy have a property with 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/SharedTPHColumns.cs?name=SharedTPHColumns&highlight=9,13)]
 
 > [!NOTE]
-> Relational database providers, such as SQL Server, will not automatically use the discriminator predicate when querying shared columns when using a cast. The query `Url = (blob as RssBlog).Url` would also return the `Url` value for the sibling `Blog` rows. To restrict the query to `RssBlog` entities you need to manually add a filter on the discriminator, such as `Url = blob is RssBlog ? (blob as RssBlog).Url : null`.
+> Relational database providers, such as SQL Server, will not automatically use the discriminator predicate when querying shared columns when using a cast. The query `Url = (blog as RssBlog).Url` would also return the `Url` value for the sibling `Blog` rows. To restrict the query to `RssBlog` entities you need to manually add a filter on the discriminator, such as `Url = blog is RssBlog ? (blog as RssBlog).Url : null`.
 
 ## Table-per-type configuration
 
