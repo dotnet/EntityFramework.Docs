@@ -1193,7 +1193,7 @@ Entity Framework by default will generate SQL code that has C\# null comparison 
             short? reorderLevel = null;
 
             var q = from p incontext.Products
-                    wherep.Category.CategoryName == "Beverages"
+                    where p.Category.CategoryName == "Beverages"
                           || (p.CategoryID == categoryId
                                 || p.SupplierID == supplierId
                                 || p.UnitPrice == unitPrice
