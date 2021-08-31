@@ -14,7 +14,7 @@ public static class SqliteSamples
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
 
-        Console.WriteLine("After update:");
+        Console.WriteLine("Before update:");
 
         using (var context = new BooksContext())
         {
@@ -41,7 +41,7 @@ public static class SqliteSamples
     private static void PerformUpdates()
     {
         #region PerformUpdates
-        using var connection = new SqliteConnection("DataSource=test.db");
+        using var connection = new SqliteConnection("Command Timeout=60;DataSource=test.db");
         connection.Open();
 
         using var transaction = connection.BeginTransaction();
@@ -64,6 +64,47 @@ public static class SqliteSamples
 
         transaction.Commit();
         #endregion
+    }
+
+    public static void ConnectionPooling()
+    {
+        Console.WriteLine($">>>> Sample: {nameof(ConnectionPooling)}");
+        Console.WriteLine();
+
+        Helpers.RecreateCleanDatabase();
+        Helpers.PopulateDatabase();
+
+        using (var context = new BooksContext(quiet: false, connectionEvents: true))
+        {
+            #region ConnectionExample
+            Console.WriteLine("Starting query...");
+            Console.WriteLine();
+
+            var users = context.Users.ToList();
+
+            Console.WriteLine();
+            Console.WriteLine("Query finished.");
+            Console.WriteLine();
+
+            foreach (var user in users)
+            {
+                if (user.Username.Contains("microsoft"))
+                {
+                    user.Username = "msft:" + user.Username;
+
+                    Console.WriteLine("Starting SaveChanges...");
+                    Console.WriteLine();
+
+                    context.SaveChanges();
+
+                    Console.WriteLine();
+                    Console.WriteLine("SaveChanges finished.");
+                }
+            }
+            #endregion
+        }
+
+        Console.WriteLine();
     }
 
     public static class Helpers
@@ -105,10 +146,14 @@ public static class SqliteSamples
         public DbSet<User> Users { get; set; }
 
         private readonly bool _quiet;
+        private readonly bool _connectionEvents;
 
-        public BooksContext(bool quiet = false)
+        public BooksContext(
+            bool quiet = false,
+            bool connectionEvents = false)
         {
             _quiet = quiet;
+            _connectionEvents = connectionEvents;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -119,7 +164,16 @@ public static class SqliteSamples
 
             if (!_quiet)
             {
-                optionsBuilder.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted });
+                if (_connectionEvents)
+                {
+                    optionsBuilder.LogTo(
+                        Console.WriteLine,
+                        new[] { RelationalEventId.ConnectionOpened, RelationalEventId.ConnectionClosed });
+                }
+                else
+                {
+                    optionsBuilder.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted });
+                }
             }
         }
     }

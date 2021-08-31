@@ -155,6 +155,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CascadeDeletes", "CascadeDe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewInEFCore6", "Miscellaneous\NewInEFCore6\NewInEFCore6.csproj", "{DADCEB89-6242-4A40-A390-0D957E02D426}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewInEFCore6.Cosmos", "Miscellaneous\NewInEFCore6.Cosmos\NewInEFCore6.Cosmos.csproj", "{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -425,6 +427,10 @@ Global
 		{DADCEB89-6242-4A40-A390-0D957E02D426}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DADCEB89-6242-4A40-A390-0D957E02D426}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DADCEB89-6242-4A40-A390-0D957E02D426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -489,6 +495,7 @@ Global
 		{D1AB173F-582D-43C3-9EC0-20CE9FECFEB6} = {F55D545B-2B45-47A5-8C55-39F972528400}
 		{A241ED91-DE41-4310-B7CD-802F4304F27D} = {1AD64707-0BE0-48B0-A803-916FF96DCB4F}
 		{DADCEB89-6242-4A40-A390-0D957E02D426} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
+		{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C98D35-54EF-46A6-8F3B-1855C1AE4F70}

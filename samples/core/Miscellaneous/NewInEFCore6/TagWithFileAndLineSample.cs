@@ -17,7 +17,7 @@ public static class TagWithFileAndLineSample
 
         var results1 = context
             .Customers
-            .TagWith()
+            .TagWithCallSite()
             .Where(c => c.Name.StartsWith("A"))
             .ToList();
 
@@ -27,7 +27,7 @@ public static class TagWithFileAndLineSample
             .Customers
             .OrderBy(c => c.Name)
             .TagWith("Ordering query")
-            .TagWith()
+            .TagWithCallSite()
             .ToList();
 
         Console.WriteLine();
