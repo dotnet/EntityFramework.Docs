@@ -52,7 +52,7 @@ dotnet ef migrations add InitialCreate
 ```powershell
 Add-Migration InitialCreate
 ```
-
+###### Is important to mention that, to everything works well is needed to run migration from data project folder (where Migrations folder will be created) followed by `--startup-project <startup-application-folder>` param
 ***
 
 EF Core will create a directory called **Migrations** in your project, and generate some files. It's a good idea to inspect what exactly EF Core generated - and possibly amend it - but we'll skip over that for now.
