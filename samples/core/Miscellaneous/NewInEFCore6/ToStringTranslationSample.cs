@@ -74,7 +74,7 @@ public static class ToStringTranslationSample
         {
             optionsBuilder
                 .EnableSensitiveDataLogging()
-                .UseSqlite("DataSource=test.db");
+                .UseSqlite("Command Timeout=60;DataSource=test.db");
 
             if (!_quiet)
             {
