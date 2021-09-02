@@ -52,6 +52,9 @@ dotnet ef migrations add InitialCreate
 ```powershell
 Add-Migration InitialCreate
 ```
+> [!NOTE]
+> Is important to mention that, to everything works well is needed to run migration inside data project folder (where Migrations folder will be created) followed by param 
+> `--startup-project <startup-application-folder>` param
 
 ***
 
