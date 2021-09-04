@@ -249,7 +249,7 @@ services.AddDbContextFactory<SomeDbContext>(b =>
 At this point, application services such as ASP.NET Core controllers can then be injected with `IDbContextFactory<TContext>`, and use it to instantiate context instances:
 
 ```csharp
-public class MyController
+public class MyController : Controller
 {
     private readonly IDbContextFactory<SomeDbContext> _contextFactory;
 
