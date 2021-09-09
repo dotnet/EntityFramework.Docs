@@ -749,7 +749,7 @@ SqlQuery on DbSet:
 var q2 = context.Products.SqlQuery("select * from products");
 ```
 
-ExecyteStoreQuery:
+ExecuteStoreQuery:
 
 ``` csharp
 var beverages = context.ExecuteStoreQuery<Product>(
