@@ -278,6 +278,12 @@ Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() 
 
 [GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki/Inspect-your-DbContext-model)
 
+### ErikEJ.EntityFrameworkCore.SqlServer.SqlQuery
+
+Provides the SqlQueryAsync<T> and SqlQueryValueAsync<T> methods to help you populate arbitrary classes or a list of primitive types from a raw SQL query. For EF Core: 5.
+
+[GitHub repository](https://github.com/ErikEJ/EFCorePowerTools)  
+  
 ### EntityFramework.Exceptions
 
 When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`,
