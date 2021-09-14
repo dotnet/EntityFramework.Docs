@@ -280,7 +280,7 @@ Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() 
 
 ### ErikEJ.EntityFrameworkCore.SqlServer.SqlQuery
 
-Provides the SqlQueryAsync<T> and SqlQueryValueAsync<T> methods to help you populate arbitrary classes or a list of primitive types from a raw SQL query. For EF Core: 5.
+Provides the `SqlQueryAsync<T>` and `SqlQueryValueAsync<T>` methods to help you populate arbitrary classes or a list of primitive types from a raw SQL query. For EF Core: 5.
 
 [GitHub repository](https://github.com/ErikEJ/EFCorePowerTools)  
   
