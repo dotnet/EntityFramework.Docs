@@ -2,7 +2,7 @@
 title: What's New in EF Core 6.0
 description: Overview of new features in EF Core 6.0
 author: ajcvickers
-ms.date: 08/26/2021
+ms.date: 09/14/2021
 uid: core/what-is-new/ef-core-6.0/whatsnew
 ---
 
@@ -291,25 +291,360 @@ Historical data for Rainbow Dash:
 
 GitHub Issue: [#19693](https://github.com/dotnet/efcore/issues/19693).
 
-// TODO
+EF Core migrations are used to generate database schema updates based on changes to the EF model. These schema updates should be applied at application deployment time, often as part of a continuous integration/continuous deployment (C.I./C.D.) system.
+
+EF Core now includes a new way to apply these schema updates: migration bundles. A migration bundle is a small executable containing migrations and the code needed to apply these migrations to the database.
+
+> [!NOTE]
+> See [Introducing DevOps-friendly EF Core Migration Bundles](https://devblogs.microsoft.com/dotnet/introducing-devops-friendly-ef-core-migration-bundles/) on the .NET Blog for a more in-depth discussion on migrations, bundles, and deployment.
+
+Migration bundles are created using the `dotnet ef` command-line tool. Ensure that you have [installed the latest version of the tool](xref:core/cli/dotnet#installing-the-tools) before continuing.
+
+A bundle needs migrations to include. These are created using `dotnet ef migrations add` as described in the [migrations documentation](xref:core/managing-schemas/migrations/index). Once you have migrations ready to deploy, create a bundle using the `dotnet ef migrations bundle`. For example:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> dotnet ef migrations bundle
+Build started...
+Build succeeded.
+Building bundle...
+Done. Migrations Bundle: C:\local\AllTogetherNow\SixOh\efbundle.exe
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+The output is an executable suitable for your target operating system. In my case this is Windows x64, so I get an `efbundle.exe` dropped in my local folder. Running this executable applies the migrations contained within it:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> .\efbundle.exe
+Applying migration '20210903083845_MyMigration'.
+Done.
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+Migrations are applied to the database only if they have not been already applied. For example, running the same bundle again does nothing, since there are no new migrations to apply:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> .\efbundle.exe
+No migrations were applied. The database is already up to date.
+Done.
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+However, if changes are made to the model and more migrations are generated with `dotnet ef migrations add`, then these can be bundled into a new executable ready to apply. For example:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> dotnet ef migrations add SecondMigration
+Build started...
+Build succeeded.
+Done. To undo this action, use 'ef migrations remove'
+PS C:\local\AllTogetherNow\SixOh> dotnet ef migrations add Number3
+Build started...
+Build succeeded.
+Done. To undo this action, use 'ef migrations remove'
+PS C:\local\AllTogetherNow\SixOh> dotnet ef migrations bundle --force
+Build started...
+Build succeeded.
+Building bundle...
+Done. Migrations Bundle: C:\local\AllTogetherNow\SixOh\efbundle.exe
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+Notice that the `--force` option can be used to overwrite the existing bundle with a new one.
+
+Executing this new bundle applies these two new migrations to the database:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> .\efbundle.exe
+Applying migration '20210903084526_SecondMigration'.
+Applying migration '20210903084538_Number3'.
+Done.
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+By default, the bundle uses the database connection string from your application's configuration. However, a different database can be migrated by passing the connection string on the command line. For example:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> .\efbundle.exe --connection "Data Source=(LocalDb)\MSSQLLocalDB;Database=SixOhProduction"
+Applying migration '20210903083845_MyMigration'.
+Applying migration '20210903084526_SecondMigration'.
+Applying migration '20210903084538_Number3'.
+Done.
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+Notice that this time all three migrations were applied, since none of them had yet been applied to the production database.
+
+Other options can be passed to the command line. Some common options are:
+
+* `--output` to specify the path of executable file to create.
+* `--context` to specify the DbContext type to use when the project contains multiple context types.
+* `--project` to specify the project to use. Defaults to the current working directory.
+* `--startup-project` to specify the startup project to use. Defaults to the current working directory.
+* `--no-build` to prevent the project from being built before running the command. This should only be used if the project is known to be up-to-date.
+* `--verbose` to see detailed information on what the command is doing. Use this option when including information in bug reports.
+
+Use `dotnet ef migrations bundle --help` to see all available options.
+
+Note that by default each migration is applied in its own transaction. See [GitHub issue #22616](https://github.com/dotnet/efcore/issues/22616) for a discussion of possible future enhancements in this area.
 
 ## Pre-convention model configuration
 
 GitHub Issue: [#12229](https://github.com/dotnet/efcore/issues/12229).
 
-// TODO
+Previous versions of EF Core require that the mapping for every property of a given type is configured explicitly when that mapping differs from the default. This includes "facets" like the maximum length of strings and decimal precision, as well as value conversion for the property type.
+
+This necessitated either:
+
+* Model builder configuration for each property
+* A mapping attribute on each property
+* Explicit iteration over all properties of all entity types and use of the low-level metadata APIs when building the model.
+
+Note that explicit iteration is error-prone and hard to do robustly because the list of entity types and mapped properties may not be final at the time this iteration happens.
+
+EF Core 6.0 allows this mapping configuration to be specified once for a given type. It will then be applied to all properties of that type in the model. This is called "pre-convention model configuration", since it configures aspects of the model that are then used by the model building conventions. Such configuration is applied by overriding `ConfigureConventions` on your `DbContext`:
+
+<!--
+    public class SomeDbContext : DbContext
+    {
+        protected override void ConfigureConventions(
+            ModelConfigurationBuilder configurationBuilder)
+        {
+            // Pre-convention model configuration goes here
+        }
+    }
+-->
+[!code-csharp[WhereItGoes](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=WhereItGoes)]
+
+For example, consider the following entity types:
+
+<!--
+    public class Customer
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public bool IsActive { get; set; }
+        public Money AccountValue { get; set; }
+
+        public Session CurrentSession { get; set; }
+
+        public ICollection<Order> Orders { get; } = new List<Order>();
+    }
+
+    public class Order
+    {
+        public int Id { get; set; }
+        public string SpecialInstructions { get; set; }
+        public DateTime OrderDate { get; set; }
+        public bool IsComplete { get; set; }
+        public Money Price { get; set; }
+        public Money? Discount { get; set; }
+
+        public Customer Customer { get; set; }
+    }
+-->
+[!code-csharp[EntityTypes](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=EntityTypes)]
+
+All string properties can be configured to be ANSI (instead of Unicode) and have a maximum length of 1024:
+
+<!--
+            configurationBuilder
+                .Properties<string>()
+                .AreUnicode(false)
+                .HaveMaxLength(1024);
+-->
+[!code-csharp[StringFacets](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=StringFacets)]
+
+All DateTime properties can be converted to 64-bit integers in the database, using the default conversion from DateTimes to longs:
+
+<!--
+            configurationBuilder
+                .Properties<DateTime>()
+                .HaveConversion<long>();
+-->
+[!code-csharp[DateTimeConversion](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=DateTimeConversion)]
+
+All bool properties can be converted to the integers `0` or `1` using one of the built-in value converters:
+
+<!--
+            configurationBuilder
+                .Properties<bool>()
+                .HaveConversion<BoolToZeroOneConverter<int>>();
+-->
+[!code-csharp[BoolConversion](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=BoolConversion)]
+
+Assuming `Session` is a transient property of the entity and should not be persisted, it can be ignored everywhere in the model:
+
+<!--
+            configurationBuilder
+                .IgnoreAny<Session>();
+-->
+[!code-csharp[IgnoreSession](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=IgnoreSession)]
+
+Pre-convention model configuration is very useful when working with value objects. For example, the type `Money` in the model above is represented by read-only struct:
+
+<!--
+    public readonly struct Money
+    {
+        [JsonConstructor]
+        public Money(decimal amount, Currency currency)
+        {
+            Amount = amount;
+            Currency = currency;
+        }
+
+        public override string ToString()
+            => (Currency == Currency.UsDollars ? "$" : "£") + Amount;
+
+        public decimal Amount { get; }
+        public Currency Currency { get; }
+    }
+
+    public enum Currency
+    {
+        UsDollars,
+        PoundsStirling
+    }
+-->
+[!code-csharp[MoneyType](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=MoneyType)]
+
+This is then serialized to and from JSON using a custom value converter:
+
+<!--
+    public class MoneyConverter : ValueConverter<Money, string>
+    {
+        public MoneyConverter()
+            : base(
+                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                v => JsonSerializer.Deserialize<Money>(v, (JsonSerializerOptions)null))
+        {
+        }
+    }
+-->
+[!code-csharp[MoneyConverter](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=MoneyConverter)]
+
+This value converter can be configured once for all uses of Money:
+
+<!--
+            configurationBuilder
+                .Properties<Money>()
+                .HaveConversion<MoneyConverter>()
+                .HaveMaxLength(64);
+-->
+[!code-csharp[MoneyConversion](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=MoneyConversion)]
+
+Notice also that additional facets can be specified for the string column into which the serialized JSON is stored. In this case, the column is limited to a maximum length of 64.
+
+The tables created for SQL Server using migrations show how the configuration has been applied to all mapped columns:
+
+```sql
+CREATE TABLE [Customers] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] varchar(1024) NULL,
+    [IsActive] int NOT NULL,
+    [AccountValue] nvarchar(64) NOT NULL,
+    CONSTRAINT [PK_Customers] PRIMARY KEY ([Id])
+);
+CREATE TABLE [Order] (
+    [Id] int NOT NULL IDENTITY,
+    [SpecialInstructions] varchar(1024) NULL,
+    [OrderDate] bigint NOT NULL,
+    [IsComplete] int NOT NULL,
+    [Price] nvarchar(64) NOT NULL,
+    [Discount] nvarchar(64) NULL,
+    [CustomerId] int NULL,
+    CONSTRAINT [PK_Order] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Order_Customers_CustomerId] FOREIGN KEY ([CustomerId]) REFERENCES [Customers] ([Id])
+);
+```
+
+It is also possible to specify a default type mapping for a given type. For example:
+
+<!--
+            configurationBuilder
+                .DefaultTypeMapping<string>()
+                .IsUnicode(false);
+-->
+[!code-csharp[DefaultTypeMapping](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=DefaultTypeMapping)]
+
+This is rarely needed, but can be useful if a type is used in query in a way that is uncorrelated with any mapped property of the model.
+
+> [!NOTE]
+> See [Announcing Entity Framework Core 6.0 Preview 6: Configure Conventions](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-6-0-preview-6-configure-conventions/) on the .NET Blog for more discussion and examples of pre-convention model configuration.
 
 ## Compiled models
 
 GitHub Issue: [#1906](https://github.com/dotnet/efcore/issues/1906).
 
-// TODO
+Compiled models can improve EF Core startup time for applications with large models. A large model typically means 100s to 1000s of entity types and relationships.
+
+Startup time typically means the time to perform the first operation on a DbContext when that DbContext type is used for the first time in the application. Note that just creating a DbContext instance does not cause the EF model to be initialized.Instead, typical first operations that cause the model to be initialized include calling `DbContext.Add` or executing the first query.
+
+Compiled models are created using the `dotnet ef` command-line tool. Ensure that you have [installed the latest version of the tool](xref:core/cli/dotnet#installing-the-tools) before continuing.
+
+A new `dbcontext optimize` command is used to generate the compiled model. For example:
+
+```dotnetcli
+dotnet ef dbcontext optimize
+```
+
+The `--output-dir` and `--namespace` options can be used to specify the directory and namespace into which the compiled model will be generated. For example:
+
+```dotnetcli
+PS C:\dotnet\efdocs\samples\core\Miscellaneous\CompiledModels> dotnet ef dbcontext optimize --output-dir MyCompiledModels --namespace MyCompiledModels
+Build started...
+Build succeeded.
+Successfully generated a compiled model, to use it call 'options.UseModel(MyCompiledModels.BlogsContextModel.Instance)'. Run this command again when the model is modified.
+PS C:\dotnet\efdocs\samples\core\Miscellaneous\CompiledModels>
+```
+
+The output from running this command includes a piece of code to copy-and-paste into your DbContext configuration to cause EF Core to use the compiled model. For example:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseModel(MyCompiledModels.BlogsContextModel.Instance)
+        .UseSqlite(@"Data Source=test.db");
+```
+
+### Limitations
+
+Compiled models have some limitations:
+
+* [Global query filters are not supported](https://github.com/dotnet/efcore/issues/24897).
+* [Lazy loading and change-tracking proxies are not supported](https://github.com/dotnet/efcore/issues/24902).
+* Custom IModelCacheKeyFactory implementations are not supported. However, you can compile multiple models and load the appropriate one as needed.
+* [The model must be manually synchronized by regenerating it any time the model definition or configuration change](https://github.com/dotnet/efcore/issues/24894).
+
+Because of these limitations, you should only use compiled models if your EF Core startup time is too slow. Compiling small models is typically not worth it.
+
+If supporting any of these features is critical to your success, then please vote for the appropriate issues linked above.
+
+### Benchmarks
+
+> [!TIP]
+> You can try compiling a large model and running a benchmark on it by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/CompiledModels).
+
+The model in the GitHub repo referenced above contains 449 entity types, 6390 properties, and 720 relationships. This is a moderately large model. Using [BenchmarkDotNet](https://www.nuget.org/packages/BenchmarkDotNet) to measure, the average time to first query is 1.02 seconds on a reasonably powerful laptop. Using compiled models brings this down to 117 milliseconds on the same hardware. An improvement of 10 to 12 percent like this stays relatively constant as the model size increases.
+
+![Add Connection LocalDB](compiled_models.png)
+
+> [!NOTE]
+> See [Announcing Entity Framework Core 6.0 Preview 5: Compiled Models](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-6-0-preview-5-compiled-models/) on the .NET Blog for a more in-depth discussion of EF Core startup performance and compiled models.
 
 ## Improved performance on TechEmpower Fortunes
 
 GitHub Issue: [#23611](https://github.com/dotnet/efcore/issues/23611).
 
-// TODO
+We made significant improvements to query performance for EF Core 6.0. Specifically:
+
+* EF Core 6.0 performance is now 70% faster on the industry-standard TechEmpower Fortunes benchmark, compared to 5.0.
+  * This is the full-stack perf improvement, including improvements in the benchmark code, the .NET runtime, etc.
+* EF Core 6.0 itself is 31% faster executing queries.
+* Heap allocations have been reduced by 43% when executing queries.
+
+After these improvements, the gap between the popular "micro-ORM" [Dapper](https://github.com/DapperLib/Dapper) and EF Core in the TechEmpower Fortunes benchmark narrowed from 55% to around a little under 5%.
+
+> [!NOTE]
+> See [Announcing Entity Framework Core 6.0 Preview 4: Performance Edition](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-6-0-preview-4-performance-edition/) on the .NET Blog for a detailed discussion of query performance improvements in EF Core 6.0.
 
 ## Cosmos provider enhancements
 
@@ -322,7 +657,7 @@ EF Core 6.0 contains many improvements to the Azure Cosmos DB database provider.
 
 GitHub Issue: [#24803](https://github.com/dotnet/efcore/issues/24803).
 
-// TODO
+// Coming soon...
 
 ### Collections of primitive types
 
@@ -746,13 +1081,16 @@ optionsBuilder
 -->
 [!code-csharp[HttpClientFactory](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosModelConfigurationSample.cs?name=HttpClientFactory)]
 
+> [!NOTE]
+> See [Taking the EF Core Azure Cosmos DB Provider for a Test Drive](https://devblogs.microsoft.com/dotnet/taking-the-ef-core-azure-cosmos-db-provider-for-a-test-drive/) on the .NET Blog for a detailed example of applying the Cosmos provider improvements to an existing application.
+
 ## Improved GroupBy support
 
 GitHub Issue: [#12088](https://github.com/dotnet/efcore/issues/12088).
 GitHub Issue: [#13805](https://github.com/dotnet/efcore/issues/13805).
 GitHub Issue: [#22609](https://github.com/dotnet/efcore/issues/22609).
 
-// TODO: Examples from Smit.
+// Coming soon...
 
 ## Preserve synchronization context in SaveChangesAsync
 
@@ -1160,109 +1498,109 @@ public partial class Blog
 
 GitHub Issue: [#25468](https://github.com/dotnet/efcore/issues/25468).
 
-// TODO
+// Coming soon...
 
 ## EF Core minimal API
 
 GitHub Issue: [#25192](https://github.com/dotnet/efcore/issues/25192).
 
-// TODO
+// Coming soon...
 
 ## AddDbContextFactory also registers DbContext directly
 
 GitHub Issue: [#25164](https://github.com/dotnet/efcore/issues/25164).
 
-// TODO
+// Coming soon...
 
 ## Defining query for in-memory provider
 
 GitHub Issue: [#24600](https://github.com/dotnet/efcore/issues/24600).
 
-// TODO
+// Coming soon...
 
 ## Query source information for diagnostics and interceptors
 
 GitHub Issue: [#23719](https://github.com/dotnet/efcore/issues/23719).
 
-// TODO
+// Coming soon...
 
 ## Scaffolding many-to-many relationships
 
 GitHub Issue: [#22475](https://github.com/dotnet/efcore/issues/22475).
 
-// TODO
+// Coming soon...
 
 ## Less configuration for many-to-many relationships
 
 GitHub Issue: [#21535](https://github.com/dotnet/efcore/issues/21535).
 
-// TODO
+// Coming soon...
 
 ## Scaffolding preserves DeleteBehavior
 
 GitHub Issue: [#21252](https://github.com/dotnet/efcore/issues/21252).
 
-// TODO
+// Coming soon...
 
 ## Remove last ORDER BY when joining for collection
 
 GitHub Issue: [#19828](https://github.com/dotnet/efcore/issues/19828).
 
-// TODO
+// Coming soon...
 
 ## Changes to owned optional dependent handling
 
 GitHub Issue: [#24558](https://github.com/dotnet/efcore/issues/24558).
 
-// TODO
+// Coming soon...
 
 ## 64-bit SQL Server Identity seed values
 
 GitHub Issue: [#24840](https://github.com/dotnet/efcore/issues/24840).
 
-// TODO
+// Coming soon...
 
 ## Allow value converters to convert nulls
 
 GitHub Issue: [#13850](https://github.com/dotnet/efcore/issues/13850).
 
-// TODO
+// Coming soon...
 
 ## Tag queries with file name and line number
 
 GitHub Issue: [#14176](https://github.com/dotnet/efcore/issues/14176).
 
-// TODO
+// Coming soon...
 
 ## Scaffold C# nullable reference types
 
 GitHub Issue: [#15520](https://github.com/dotnet/efcore/issues/15520).
 
-// TODO
+// Coming soon...
 
 ## Translate Substring with single parameter
 
 GitHub Issue: [#20173](https://github.com/dotnet/efcore/issues/20173).
 
-// TODO
+// Coming soon...
 
 ## Split-queries for non-navigation collections
 
 GitHub Issue: [#21234](https://github.com/dotnet/efcore/issues/21234).
 
-// TODO
+// Coming soon...
 
 ## Better temporary values handling
 
 GitHub Issue: [#24245](https://github.com/dotnet/efcore/issues/24245).
 
-// TODO
+// Coming soon...
 
 ## EF Core annotated for C# nullable reference types
 
 GitHub Issue: [#19007](https://github.com/dotnet/efcore/issues/19007).
 
-// TODO
+// Coming soon...
 
 ## Microsoft.Data.Sqlite 6.0
 
@@ -1335,7 +1673,7 @@ SQLite is a little bit different since database access is typically just accessi
 
 GitHub Issue: [#24506](https://github.com/dotnet/efcore/issues/24506).
 
-// TODO
+// Coming soon...
 
 ### Savepoints API
 
