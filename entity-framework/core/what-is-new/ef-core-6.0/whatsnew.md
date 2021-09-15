@@ -576,7 +576,7 @@ GitHub Issue: [#1906](https://github.com/dotnet/efcore/issues/1906).
 
 Compiled models can improve EF Core startup time for applications with large models. A large model typically means 100s to 1000s of entity types and relationships.
 
-Startup time typically means the time to perform the first operation on a DbContext when that DbContext type is used for the first time in the application. Note that just creating a DbContext instance does not cause the EF model to be initialized.Instead, typical first operations that cause the model to be initialized include calling `DbContext.Add` or executing the first query.
+Startup time means the time to perform the first operation on a DbContext when that DbContext type is used for the first time in the application. Note that just creating a DbContext instance does not cause the EF model to be initialized. Instead, typical first operations that cause the model to be initialized include calling `DbContext.Add` or executing the first query.
 
 Compiled models are created using the `dotnet ef` command-line tool. Ensure that you have [installed the latest version of the tool](xref:core/cli/dotnet#installing-the-tools) before continuing.
 
@@ -623,7 +623,7 @@ If supporting any of these features is critical to your success, then please vot
 > [!TIP]
 > You can try compiling a large model and running a benchmark on it by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/CompiledModels).
 
-The model in the GitHub repo referenced above contains 449 entity types, 6390 properties, and 720 relationships. This is a moderately large model. Using [BenchmarkDotNet](https://www.nuget.org/packages/BenchmarkDotNet) to measure, the average time to first query is 1.02 seconds on a reasonably powerful laptop. Using compiled models brings this down to 117 milliseconds on the same hardware. An improvement of 10 to 12 percent like this stays relatively constant as the model size increases.
+The model in the GitHub repo referenced above contains 449 entity types, 6390 properties, and 720 relationships. This is a moderately large model. Using [BenchmarkDotNet](https://www.nuget.org/packages/BenchmarkDotNet) to measure, the average time to first query is 1.02 seconds on a reasonably powerful laptop. Using compiled models brings this down to 117 milliseconds on the same hardware. An 8x to 10x improvement like this stays relatively constant as the model size increases.
 
 ![Add Connection LocalDB](compiled_models.png)
 
@@ -638,7 +638,7 @@ We made significant improvements to query performance for EF Core 6.0. Specifica
 
 * EF Core 6.0 performance is now 70% faster on the industry-standard TechEmpower Fortunes benchmark, compared to 5.0.
   * This is the full-stack perf improvement, including improvements in the benchmark code, the .NET runtime, etc.
-* EF Core 6.0 itself is 31% faster executing queries.
+* EF Core 6.0 itself is 31% faster executing untracked queries.
 * Heap allocations have been reduced by 43% when executing queries.
 
 After these improvements, the gap between the popular "micro-ORM" [Dapper](https://github.com/DapperLib/Dapper) and EF Core in the TechEmpower Fortunes benchmark narrowed from 55% to around a little under 5%.

@@ -12,10 +12,4 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0-rc.1.21452.10" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Update="test.db">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
 </Project>

@@ -1,15 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace CompiledModelTest
 {
     public class BlogsContext : DbContext
     {
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        {
+            var currentDirectory = Environment.CurrentDirectory;
+            var location = currentDirectory.Substring(
+                0, currentDirectory.IndexOf("CompiledModels", StringComparison.Ordinal) + "CompiledModels".Length);
+
+            optionsBuilder
                 //.UseModel(MyCompiledModels.BlogsContextModel.Instance)
                 .EnableServiceProviderCaching(false)
-                .UseSqlite(@"Data Source=test.db");
+                .UseSqlite(@$"Data Source={Path.Combine(location, "compiled_model.db")}");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
