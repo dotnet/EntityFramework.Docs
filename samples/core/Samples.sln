@@ -157,6 +157,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewInEFCore6", "Miscellaneo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewInEFCore6.Cosmos", "Miscellaneous\NewInEFCore6.Cosmos\NewInEFCore6.Cosmos.csproj", "{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompiledModels", "Miscellaneous\CompiledModels\CompiledModels.csproj", "{E6DC981D-4404-496E-972B-8DAC5D4A56F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -431,6 +433,10 @@ Global
 		{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6DC981D-4404-496E-972B-8DAC5D4A56F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6DC981D-4404-496E-972B-8DAC5D4A56F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6DC981D-4404-496E-972B-8DAC5D4A56F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6DC981D-4404-496E-972B-8DAC5D4A56F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -496,6 +502,7 @@ Global
 		{A241ED91-DE41-4310-B7CD-802F4304F27D} = {1AD64707-0BE0-48B0-A803-916FF96DCB4F}
 		{DADCEB89-6242-4A40-A390-0D957E02D426} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 		{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
+		{E6DC981D-4404-496E-972B-8DAC5D4A56F6} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C98D35-54EF-46A6-8F3B-1855C1AE4F70}
