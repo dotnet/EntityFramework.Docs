@@ -10,7 +10,6 @@
         SparseColumnsSample.Use_sparse_columns();
         InMemoryRequiredPropertiesSample.Required_properties_validated_with_in_memory_database();
         InMemoryRequiredPropertiesSample.Required_property_validation_with_in_memory_database_can_be_disabled();
-        SqliteSamples.SavepointsApi();
         IsNullOrWhitespaceSample.Translate_IsNullOrWhitespace();
         StringConcatSample.Concat_with_multiple_args();
         ArrayParametersSample.Array_parameters_are_logged_in_readable_form();
@@ -32,6 +31,9 @@
         PreConventionModelConfigurationSample.Configure_property_types_and_value_converter_in_one_place();
         MathFTranslationSample.Translate_MathF_methods();
         TemporalTablesSample.Use_SQL_Server_temporal_tables();
+        GroupBySample.Translate_GroupBy_followed_by_FirstOrDefault_over_group();
+
+        SqliteSamples.SavepointsApi();
         SqliteSamples.ConnectionPooling();
 
         // Note: this sample requires a full version of SQL Server. It does not work with LocalDb

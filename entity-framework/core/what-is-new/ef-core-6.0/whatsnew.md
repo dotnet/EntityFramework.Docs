@@ -2,7 +2,7 @@
 title: What's New in EF Core 6.0
 description: Overview of new features in EF Core 6.0
 author: ajcvickers
-ms.date: 09/14/2021
+ms.date: 09/18/2021
 uid: core/what-is-new/ef-core-6.0/whatsnew
 ---
 
@@ -1086,11 +1086,311 @@ optionsBuilder
 
 ## Improved GroupBy support
 
-GitHub Issue: [#12088](https://github.com/dotnet/efcore/issues/12088).
-GitHub Issue: [#13805](https://github.com/dotnet/efcore/issues/13805).
-GitHub Issue: [#22609](https://github.com/dotnet/efcore/issues/22609).
+GitHub Issues: [#12088](https://github.com/dotnet/efcore/issues/12088), [#13805](https://github.com/dotnet/efcore/issues/13805), and [#22609](https://github.com/dotnet/efcore/issues/22609).
 
-// Coming soon...
+EF Core 6.0 contains better support for `GroupBy` queries. Specifically, EF Core now:
+
+* Translate GroupBy followed by `FirstOrDefault` (or similar) over a group
+* Supports selecting the top N results from a group
+* Expands navigations after the `GroupBy` operator has been applied
+
+The following are example queries from customer reports and their translation on SQL Server.
+
+**Example 1:**
+
+<!--
+var people = context.People
+    .Include(e => e.Shoes)
+    .GroupBy(e => e.FirstName)
+    .Select(
+        g => g.OrderBy(e => e.FirstName)
+            .ThenBy(e => e.LastName)
+            .FirstOrDefault())
+    .ToList();
+-->
+[!code-csharp[GroupBy1](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy1)]
+
+```sql
+SELECT [t0].[Id], [t0].[Age], [t0].[FirstName], [t0].[LastName], [t0].[MiddleInitial], [t].[FirstName], [s].[Id], [s].[Age], [s].[PersonId], [s].[Style]
+FROM (
+    SELECT [p].[FirstName]
+    FROM [People] AS [p]
+    GROUP BY [p].[FirstName]
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[Age], [t1].[FirstName], [t1].[LastName], [t1].[MiddleInitial]
+    FROM (
+        SELECT [p0].[Id], [p0].[Age], [p0].[FirstName], [p0].[LastName], [p0].[MiddleInitial], ROW_NUMBER() OVER(PARTITION BY [p0].[FirstName] ORDER BY [p0].[FirstName], [p0].[LastName]) AS [row]
+        FROM [People] AS [p0]
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[FirstName] = [t0].[FirstName]
+LEFT JOIN [Shoes] AS [s] ON [t0].[Id] = [s].[PersonId]
+ORDER BY [t].[FirstName], [t0].[FirstName]
+```
+
+**Example 2:**
+
+<!--
+var group = context.People
+    .Select(
+        p => new
+        {
+            p.FirstName,
+            FullName = p.FirstName + " " + p.MiddleInitial + " " + p.LastName
+        })
+    .GroupBy(p => p.FirstName)
+    .Select(g => g.First())
+    .First();
+-->
+[!code-csharp[GroupBy2](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy2)]
+
+```sql
+SELECT [t0].[FirstName], [t0].[FullName], [t0].[c]
+FROM (
+    SELECT TOP(1) [p].[FirstName]
+    FROM [People] AS [p]
+    GROUP BY [p].[FirstName]
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[FirstName], [t1].[FullName], [t1].[c]
+    FROM (
+        SELECT [p0].[FirstName], (((COALESCE([p0].[FirstName], N'') + N' ') + COALESCE([p0].[MiddleInitial], N'')) + N' ') + COALESCE([p0].[LastName], N'') AS [FullName], 1 AS [c], ROW_NUMBER() OVER(PARTITION BY [p0].[FirstName] ORDER BY [p0].[FirstName]) AS [row]
+        FROM [People] AS [p0]
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[FirstName] = [t0].[FirstName]
+```
+
+**Example 3:**
+
+<!--
+var people = context.People
+    .Where(e => e.MiddleInitial == "Q" && e.Age == 20)
+    .GroupBy(e => e.LastName)
+    .Select(g => g.First().LastName)
+    .OrderBy(e => e.Length)
+    .ToList();
+-->
+[!code-csharp[GroupBy3](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy3)]
+
+```sql
+SELECT (
+    SELECT TOP(1) [p1].[LastName]
+    FROM [People] AS [p1]
+    WHERE (([p1].[MiddleInitial] = N'Q') AND ([p1].[Age] = 20)) AND (([p].[LastName] = [p1].[LastName]) OR ([p].[LastName] IS NULL AND [p1].[LastName] IS NULL)))
+FROM [People] AS [p]
+WHERE ([p].[MiddleInitial] = N'Q') AND ([p].[Age] = 20)
+GROUP BY [p].[LastName]
+ORDER BY CAST(LEN((
+    SELECT TOP(1) [p1].[LastName]
+    FROM [People] AS [p1]
+    WHERE (([p1].[MiddleInitial] = N'Q') AND ([p1].[Age] = 20)) AND (([p].[LastName] = [p1].[LastName]) OR ([p].[LastName] IS NULL AND [p1].[LastName] IS NULL)))) AS int)
+```
+
+**Example 4:**
+
+<!--
+var results = (from person in context.People
+               join shoes in context.Shoes on person.Age equals shoes.Age
+               group shoes by shoes.Style
+               into people
+               select new
+               {
+                   people.Key,
+                   Style = people.Select(p => p.Style).FirstOrDefault(),
+                   Count = people.Count()
+               })
+    .ToList();
+-->
+[!code-csharp[GroupBy4](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy4)]
+
+```sql
+SELECT [s].[Style] AS [Key], (
+    SELECT TOP(1) [s0].[Style]
+    FROM [People] AS [p0]
+    INNER JOIN [Shoes] AS [s0] ON [p0].[Age] = [s0].[Age]
+    WHERE ([s].[Style] = [s0].[Style]) OR ([s].[Style] IS NULL AND [s0].[Style] IS NULL)) AS [Style], COUNT(*) AS [Count]
+FROM [People] AS [p]
+INNER JOIN [Shoes] AS [s] ON [p].[Age] = [s].[Age]
+GROUP BY [s].[Style]
+```
+
+**Example 5:**
+
+<!--
+var results = context.People
+    .GroupBy(e => e.FirstName)
+    .Select(g => g.First().LastName)
+    .OrderBy(e => e)
+    .ToList();
+-->
+[!code-csharp[GroupBy5](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy5)]
+
+```sql
+SELECT (
+    SELECT TOP(1) [p1].[LastName]
+    FROM [People] AS [p1]
+    WHERE ([p].[FirstName] = [p1].[FirstName]) OR ([p].[FirstName] IS NULL AND [p1].[FirstName] IS NULL))
+FROM [People] AS [p]
+GROUP BY [p].[FirstName]
+ORDER BY (
+    SELECT TOP(1) [p1].[LastName]
+    FROM [People] AS [p1]
+    WHERE ([p].[FirstName] = [p1].[FirstName]) OR ([p].[FirstName] IS NULL AND [p1].[FirstName] IS NULL))
+```
+
+**Example 6:**
+
+<!--
+var results = context.People.Where(e => e.Age == 20)
+    .GroupBy(e => e.Id)
+    .Select(g => g.First().MiddleInitial)
+    .OrderBy(e => e)
+    .ToList();
+-->
+[!code-csharp[GroupBy6](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy6)]
+
+```sql
+SELECT (
+    SELECT TOP(1) [p1].[MiddleInitial]
+    FROM [People] AS [p1]
+    WHERE ([p1].[Age] = 20) AND ([p].[Id] = [p1].[Id]))
+FROM [People] AS [p]
+WHERE [p].[Age] = 20
+GROUP BY [p].[Id]
+ORDER BY (
+    SELECT TOP(1) [p1].[MiddleInitial]
+    FROM [People] AS [p1]
+    WHERE ([p1].[Age] = 20) AND ([p].[Id] = [p1].[Id]))
+```
+
+**Example 7:**
+
+<!--
+var size = 11;
+var results
+    = context.People
+        .Where(
+            p => p.Feet.Size == size
+                 && p.MiddleInitial != null
+                 && p.Feet.Id != 1)
+        .GroupBy(
+            p => new
+            {
+                p.Feet.Size,
+                p.Feet.Person.LastName
+            })
+        .Select(
+            g => new
+            {
+                g.Key.LastName,
+                g.Key.Size,
+                Min = g.Min(p => p.Feet.Size),
+            })
+        .ToList();
+-->
+[!code-csharp[GroupBy7](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy7)]
+
+```sql
+Executed DbCommand (12ms) [Parameters=[@__size_0='11'], CommandType='Text', CommandTimeout='30']
+SELECT [p0].[LastName], [f].[Size], MIN([f0].[Size]) AS [Min]
+FROM [People] AS [p]
+LEFT JOIN [Feet] AS [f] ON [p].[Id] = [f].[Id]
+LEFT JOIN [People] AS [p0] ON [f].[Id] = [p0].[Id]
+LEFT JOIN [Feet] AS [f0] ON [p].[Id] = [f0].[Id]
+WHERE (([f].[Size] = @__size_0) AND [p].[MiddleInitial] IS NOT NULL) AND (([f].[Id] <> 1) OR [f].[Id] IS NULL)
+GROUP BY [f].[Size], [p0].[LastName]
+```
+
+**Example 8:**
+
+<!--
+var result = context.People
+    .Include(x => x.Shoes)
+    .Include(x => x.Feet)
+    .GroupBy(
+        x => new
+        {
+            x.Feet.Id,
+            x.Feet.Size
+        })
+    .Select(
+        x => new
+        {
+            Key = x.Key.Id + x.Key.Size,
+            Count = x.Count(),
+            Sum = x.Sum(el => el.Id),
+            SumOver60 = x.Sum(el => el.Id) / (decimal)60,
+            TotalCallOutCharges = x.Sum(el => el.Feet.Size == 11 ? 1 : 0)
+        })
+    .Count();
+-->
+[!code-csharp[GroupBy8](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy8)]
+
+```sql
+SELECT COUNT(*)
+FROM (
+    SELECT [f].[Id], [f].[Size]
+    FROM [People] AS [p]
+    LEFT JOIN [Feet] AS [f] ON [p].[Id] = [f].[Id]
+    GROUP BY [f].[Id], [f].[Size]
+) AS [t]
+```
+
+**Example 9:**
+
+<!--
+var results = context.People
+    .GroupBy(n => n.FirstName)
+    .Select(g => new 
+    {
+        Feet = g.Key,
+        Total = g.Sum(n => n.Feet.Size) 
+    })
+    .ToList();
+-->
+[!code-csharp[GroupBy9](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy9)]
+
+```sql
+SELECT [p].[FirstName] AS [Feet], COALESCE(SUM([f].[Size]), 0) AS [Total]
+FROM [People] AS [p]
+LEFT JOIN [Feet] AS [f] ON [p].[Id] = [f].[Id]
+GROUP BY [p].[FirstName]
+```
+
+**Model**
+
+The entity types used for these examples are:
+
+<!--
+public class Person
+{
+    public int Id { get; set; }
+    public int Age { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string MiddleInitial { get; set; }
+    public Feet Feet { get; set; }
+    public ICollection<Shoes> Shoes { get; } = new List<Shoes>();
+}
+
+public class Shoes
+{
+    public int Id { get; set; }
+    public int Age { get; set; }
+    public string Style { get; set; }
+    public Person Person { get; set; }
+}
+
+public class Feet
+{
+    public int Id { get; set; }
+    public int Size { get; set; }
+    public Person Person { get; set; }
+}
+-->
+[!code-csharp[Model](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=Model)]
 
 ## Preserve synchronization context in SaveChangesAsync
 
