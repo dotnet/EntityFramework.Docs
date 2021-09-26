@@ -315,6 +315,6 @@ Adds VB design-time support to EF Core. For EF Core: 5.
 
 ### Krzysztofz01.EFCore.QueryFilterBuilder
 
-Extension for Entity Framework that allows you to create and manage multiple query filters.
+Extension for Entity Framework that allows you to create and manage multiple query filters. For EF Core: 5.
 
 [GitHub repository](https://github.com/Krzysztofz01/EFCore.QueryFilterBuilder)
