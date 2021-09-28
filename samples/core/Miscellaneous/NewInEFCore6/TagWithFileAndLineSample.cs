@@ -15,11 +15,13 @@ public static class TagWithFileAndLineSample
 
         using var context = new CustomersContext();
 
+        #region TagWithCallSite
         var results1 = context
             .Customers
             .TagWithCallSite()
             .Where(c => c.Name.StartsWith("A"))
             .ToList();
+        #endregion
 
         Console.WriteLine();
 
