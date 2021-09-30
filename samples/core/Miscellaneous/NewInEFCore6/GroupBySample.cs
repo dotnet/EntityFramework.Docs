@@ -132,7 +132,7 @@ public static class GroupBySample
         // Example 6. From #12600
         using (var context = new ShoesContext())
         {
-            #region GrouoBy6
+            #region GroupBy6
             var results = context.People.Where(e => e.Age == 20)
                 .GroupBy(e => e.Id)
                 .Select(g => g.First().MiddleInitial)

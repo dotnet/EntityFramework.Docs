@@ -54,6 +54,7 @@ public static class CosmosModelConfigurationSample
         public string County { get; set; }
         public string City { get; set; }
     }
+
     public class FamilyContext : DbContext
     {
         public DbSet<Family> Families { get; set; }

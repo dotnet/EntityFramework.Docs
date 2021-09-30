@@ -16,7 +16,7 @@ public static class SqliteSamples
 
         Console.WriteLine("Before update:");
 
-        using (var context = new BooksContext())
+        using (var context = new UsersContext())
         {
             foreach (var user in context.Users)
             {
@@ -29,12 +29,41 @@ public static class SqliteSamples
         Console.WriteLine();
         Console.WriteLine("After update:");
 
-        using (var context = new BooksContext())
+        using (var context = new UsersContext())
         {
             foreach (var user in context.Users)
             {
                 Console.WriteLine($"  Found '{user.Username}'");
             }
+        }
+    }
+
+    public static void DateOnly_and_TimeOnly()
+    {
+        Console.WriteLine($">>>> Sample: {nameof(DateOnly_and_TimeOnly)}");
+        Console.WriteLine();
+
+        Helpers.RecreateCleanDatabase();
+        Helpers.PopulateDatabase();
+
+
+        using (var context = new UsersContext())
+        {
+            #region DateOnlyQuery
+            var users = context.Users.Where(u => u.Birthday < new DateOnly(1900, 1, 1)).ToList();
+            #endregion
+            
+            Console.WriteLine();
+
+            foreach (var user in users)
+            {
+                Console.WriteLine($"  Found '{user.Username}'");
+                user.Birthday = new(user.Birthday.Year + 100, user.Birthday.Month, user.Birthday.Day);
+            }
+            
+            Console.WriteLine();
+
+            context.SaveChanges();
         }
     }
 
@@ -74,7 +103,7 @@ public static class SqliteSamples
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
 
-        using (var context = new BooksContext(quiet: false, connectionEvents: true))
+        using (var context = new UsersContext(quiet: false, connectionEvents: true))
         {
             #region ConnectionExample
             Console.WriteLine("Starting query...");
@@ -111,7 +140,7 @@ public static class SqliteSamples
     {
         public static void RecreateCleanDatabase()
         {
-            using var context = new BooksContext(quiet: true);
+            using var context = new UsersContext(quiet: true);
 
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
@@ -119,12 +148,27 @@ public static class SqliteSamples
 
         public static void PopulateDatabase()
         {
-            using var context = new BooksContext(quiet: true);
+            using var context = new UsersContext(quiet: true);
 
             context.AddRange(
-                new User { Username = "arthur" },
-                new User { Username = "wendy" },
-                new User { Username = "microsoft" });
+                new User
+                {
+                    Username = "arthur", 
+                    Birthday = new(1869, 9, 3),
+                    TokensRenewed = new(16, 30) 
+                },
+                new User
+                {
+                    Username = "wendy",
+                    Birthday = new(1873, 8, 3),
+                    TokensRenewed = new(9, 25) 
+                },
+                new User
+                {
+                    Username = "microsoft",
+                    Birthday = new(1975, 4, 4),
+                    TokensRenewed = new(0, 0) 
+                });
 
             context.SaveChanges();
 
@@ -138,17 +182,20 @@ public static class SqliteSamples
     {
         public int Id { get; set; }
         public string Username { get; set; }
+        
+        public DateOnly Birthday { get; set; }
+        public TimeOnly TokensRenewed { get; set; }
     }
     #endregion
 
-    public class BooksContext : DbContext
+    public class UsersContext : DbContext
     {
         public DbSet<User> Users { get; set; }
 
         private readonly bool _quiet;
         private readonly bool _connectionEvents;
 
-        public BooksContext(
+        public UsersContext(
             bool quiet = false,
             bool connectionEvents = false)
         {
