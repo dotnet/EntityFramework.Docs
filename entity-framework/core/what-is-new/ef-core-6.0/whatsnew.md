@@ -1336,7 +1336,7 @@ And a class for Tag:
 -->
 [!code-csharp[Tag](../../../../samples/core/Miscellaneous/NewInEFCore6/ScaffoldingSample.cs?name=Tag)]
 
-But no class for the `PostTag` table. Instead, configuration fo a many-to-many relationship is scaffolded:
+But no class for the `PostTag` table. Instead, configuration for a many-to-many relationship is scaffolded:
 
 <!--
 entity.HasMany(d => d.Tags)
