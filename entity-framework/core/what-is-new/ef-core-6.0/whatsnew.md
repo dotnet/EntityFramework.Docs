@@ -636,7 +636,7 @@ partial class BlogsContextModel : RuntimeModel
 -->
 [!code-csharp[RuntimeModel](../../../../samples/core/Miscellaneous/CompiledModels/SingleRuntimeModel.cs?name=RuntimeModel)]
 
-This is a partial class with partial methods that can be implemented to initialize or customize the model as needed.
+This is a partial class with partial methods that can be implemented to customize the model as needed.
 
 In addition, multiple compiled models can be generated for DbContext types that may use different models depending on some runtime configuration. These should be placed into different folders and namespaces, as shown above. Runtime information, such as the connection string, can then be examined and the correct model returned as needed. For example:
 
