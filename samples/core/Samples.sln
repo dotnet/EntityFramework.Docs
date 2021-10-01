@@ -159,6 +159,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewInEFCore6.Cosmos", "Misc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompiledModels", "Miscellaneous\CompiledModels\CompiledModels.csproj", "{E6DC981D-4404-496E-972B-8DAC5D4A56F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndexesAndConstraints", "Modeling\IndexesAndConstraints\IndexesAndConstraints.csproj", "{56F8DE05-6E33-4DB0-A779-70164B200289}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -437,6 +439,10 @@ Global
 		{E6DC981D-4404-496E-972B-8DAC5D4A56F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6DC981D-4404-496E-972B-8DAC5D4A56F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6DC981D-4404-496E-972B-8DAC5D4A56F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56F8DE05-6E33-4DB0-A779-70164B200289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56F8DE05-6E33-4DB0-A779-70164B200289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56F8DE05-6E33-4DB0-A779-70164B200289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56F8DE05-6E33-4DB0-A779-70164B200289}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -503,6 +509,7 @@ Global
 		{DADCEB89-6242-4A40-A390-0D957E02D426} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 		{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 		{E6DC981D-4404-496E-972B-8DAC5D4A56F6} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
+		{56F8DE05-6E33-4DB0-A779-70164B200289} = {CA5046EC-C894-4535-8190-A31F75FDEB96}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C98D35-54EF-46A6-8F3B-1855C1AE4F70}

@@ -113,7 +113,7 @@
         href: core/modeling/shadow-properties.md
       - name: Relationships
         href: core/modeling/relationships.md
-      - name: Indexes
+      - name: Indexes and constraints
         href: core/modeling/indexes.md
       - name: Inheritance
         href: core/modeling/inheritance.md

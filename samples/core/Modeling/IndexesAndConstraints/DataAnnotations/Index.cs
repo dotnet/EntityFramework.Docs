@@ -1,14 +1,14 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.Relational.IndexName
+namespace EFModeling.IndexesAndConstraints.DataAnnotations.Index
 {
     internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
     }
 
-    #region IndexName
-    [Index(nameof(Url), Name = "Index_Url")]
+    #region Index
+    [Index(nameof(Url))]
     public class Blog
     {
         public int BlogId { get; set; }

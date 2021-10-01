@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.Relational.IndexInclude
+namespace EFModeling.IndexesAndConstraints.FluentAPI.IndexInclude
 {
     internal class MyContext : DbContext
     {

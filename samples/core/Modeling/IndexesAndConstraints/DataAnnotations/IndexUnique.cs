@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.DataAnnotations.IndexUnique
+namespace EFModeling.IndexesAndConstraints.DataAnnotations.IndexUnique
 {
     internal class MyContext : DbContext
     {
