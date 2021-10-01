@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 6.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 6.0
 author: ajcvickers
-ms.date: 08/10/2021
+ms.date: 10/1/2021
 uid: core/what-is-new/ef-core-6.0/breaking-changes
 ---
 
@@ -16,6 +16,7 @@ The following API and behavior changes have the potential to break existing appl
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
 | [Removed last ORDER BY when joining for collections](#last-order-by)                                                                  | Low        |
+| [DbSet no longer implements IAsyncEnumerable](#dbset-iasyncenumerable)                                                                | Low        |
 
 ## Low-impact changes
 
@@ -103,3 +104,27 @@ Every ORDER BY imposes additional work at the database side, and the last orderi
 #### Mitigations
 
 If your application expects joined entities to be returned in a particular order, make that explicit by adding a LINQ `OrderBy` operator to your query.
+
+<a name="dbset-iasyncenumerable"></a>
+
+### DbSet no longer implements IAsyncEnumerable
+
+[Tracking Issue #24041](https://github.com/dotnet/efcore/issues/24041)
+
+#### Old behavior
+
+<xref:Microsoft.EntityFrameworkCore.DbSet%601>, which is used to execute queries on DbContext, used to implement <xref:System.Collections.Generic.IAsyncEnumerable%601>.
+
+#### New behavior
+
+<xref:Microsoft.EntityFrameworkCore.DbSet%601> no longer directly implements <xref:System.Collections.Generic.IAsyncEnumerable%601>.
+
+#### Why
+
+<xref:Microsoft.EntityFrameworkCore.DbSet%601> was originally made to implement <xref:System.Collections.Generic.IAsyncEnumerable%601> mainly in order to allow direct enumeration on it via the `foreach` construct. Unfortunately, when a project also references [System.Linq.Async](https://www.nuget.org/packages/System.Linq.Async) in order to compose async LINQ operators client-side, this resulted in an ambiguous invocation error between the operators defined over `IQueryable<T>` and those defined over `IAsyncEnumerable<T>`. C# 9 added [extension `GetEnumerator` support for `foreach` loops](/dotnet/csharp/language-reference/proposals/csharp-9.0/extension-getenumerator), removing the original main reason to reference `IAsyncEnumerable`.
+
+The vast majority of `DbSet` usages will continue to work as-is, since they either compose LINQ operators over `DbSet`, enumerate it directly, etc. The only usages broken are those which attempt to cast `DbSet` directly to `IAsyncEnumerable`.
+
+#### Mitigations
+
+If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> as an <xref:System.Collections.Generic.IAsyncEnumerable%601>, call <xref:Microsoft.EntityFrameworkCore.DbSet%601.AsAsyncEnumerable%2A?displayProperty=nameWithType> to explicitly cast it.
