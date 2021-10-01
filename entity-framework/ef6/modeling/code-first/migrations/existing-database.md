@@ -14,6 +14,9 @@ This article covers using Code First Migrations with an existing database, one t
 > [!NOTE]
 > This article assumes you know how to use Code First Migrations in basic scenarios. If you don’t, then you’ll need to read [Code First Migrations](xref:ef6/modeling/code-first/migrations/index) before continuing.
 
+> [!NOTE]
+> The add-migration parameter `--ignore-changes` & `-IgnoreChanges` does not exist in EF Core [Workaround](https://github.com/dotnet/efcore/issues/11134) could be applied.
+
 ## Screencasts
 
 If you'd rather watch a screencast than read this article, the following two videos cover the same content as this article.
