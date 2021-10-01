@@ -1,16 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.Index
+namespace EFModeling.IndexesAndConstraints.FluentAPI.IndexUnique
 {
     internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
-        #region Index
+        #region IndexUnique
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
-                .HasIndex(b => b.Url);
+                .HasIndex(b => b.Url)
+                .IsUnique();
         }
         #endregion
     }

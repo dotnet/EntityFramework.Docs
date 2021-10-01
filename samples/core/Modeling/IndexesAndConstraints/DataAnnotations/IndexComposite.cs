@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.DataAnnotations.IndexComposite
+namespace EFModeling.IndexesAndConstraints.DataAnnotations.IndexComposite
 {
     internal class MyContext : DbContext
     {

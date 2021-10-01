@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.FluentAPI.IndexComposite
+namespace EFModeling.IndexesAndConstraints.FluentAPI.IndexComposite
 {
     internal class MyContext : DbContext
     {

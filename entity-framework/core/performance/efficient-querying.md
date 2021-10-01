@@ -2,7 +2,7 @@
 title: Efficient Querying - EF Core
 description: Performance guide for efficient querying using Entity Framework Core
 author: roji
-ms.date: 12/1/2020
+ms.date: 10/1/2021
 uid: core/performance/efficient-querying
 ---
 # Efficient Querying
@@ -20,7 +20,7 @@ A good way to spot indexing issues is to first pinpoint a slow query, and then e
 As a general rule, there isn't any special EF knowledge to using indexes or diagnosing performance issues related to them; general database knowledge related to indexes is just as relevant to EF applications as to applications not using EF. The following lists some general guidelines to keep in mind when using indexes:
 
 * While indexes speed up queries, they also slow down updates since they need to be kept up-to-date. Avoid defining indexes which aren't needed, and consider using [index filters](xref:core/modeling/indexes#index-filter) to limit the index to a subset of the rows, thereby reducing this overhead.
-* Composite indexes can speed up queries which filter on multiple columns, but they can also speed up queries which don't filter on all the index's columns - depending on ordering. For example, an index on columns A and B speed up queries filtering by A and B, as well as queries filtering only by A, but it does not speed up queries filtering over only by B.
+* Composite indexes can speed up queries which filter on multiple columns, but they can also speed up queries which don't filter on all the index's columns - depending on ordering. For example, an index on columns A and B speeds up queries filtering by A and B as well as queries filtering only by A, but it does not speed up queries only filtering over B.
 * If a query filters by an expression over a column (e.g. `price / 2`), a simple index cannot be used. However, you can define a [stored persisted column](xref:core/modeling/generated-properties#computed-columns) for your expression, and create an index over that. Some databases also support expression indexes, which can be directly used to speed up queries filtering by any expression.
 * Different databases allow indexes to be configured in various ways, and in many cases EF Core providers expose these via the Fluent API. For example, the SQL Server provider allows you to configure whether an index is [clustered](xref:core/providers/sql-server/indexes#clustering), or set its [fill factor](xref:core/providers/sql-server/indexes#fill-factor). Consult your provider's documentation for more information.
 
