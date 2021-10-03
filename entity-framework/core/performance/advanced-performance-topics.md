@@ -37,7 +37,7 @@ The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.Entit
 ### [Without dependency injection](#tab/without-di)
 
 > [!NOTE]
-> This feature was introduced in EF Core 6.0.
+> Pooling without dependency injection was introduced in EF Core 6.0.
 
 To use `DbContext` pooling without dependency injection, initialize a `PooledDbContextFactory` and request context instances from it:
 
