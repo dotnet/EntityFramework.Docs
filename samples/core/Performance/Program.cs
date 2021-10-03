@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Performance.LazyLoading;
 
 namespace Performance
@@ -203,6 +204,19 @@ namespace Performance
                 context.Database.ExecuteSqlRaw("UPDATE [Employees] SET [Salary] = [Salary] + 1000");
                 #endregion
             }
+
+            #region DbContextPoolingWithoutDI
+            var options = new DbContextOptionsBuilder<PooledBloggingContext>()
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
+                .Options;
+
+            var factory = new PooledDbContextFactory<PooledBloggingContext>(options);
+
+            using (var context = factory.CreateDbContext())
+            {
+                var allPosts = context.Posts.ToList();
+            }
+            #endregion
         }
     }
 }
