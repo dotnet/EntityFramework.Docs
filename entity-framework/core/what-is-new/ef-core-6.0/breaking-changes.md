@@ -123,7 +123,7 @@ If your application expects joined entities to be returned in a particular order
 
 <xref:Microsoft.EntityFrameworkCore.DbSet%601> was originally made to implement <xref:System.Collections.Generic.IAsyncEnumerable%601> mainly in order to allow direct enumeration on it via the `foreach` construct. Unfortunately, when a project also references [System.Linq.Async](https://www.nuget.org/packages/System.Linq.Async) in order to compose async LINQ operators client-side, this resulted in an ambiguous invocation error between the operators defined over `IQueryable<T>` and those defined over `IAsyncEnumerable<T>`. C# 9 added [extension `GetEnumerator` support for `foreach` loops](/dotnet/csharp/language-reference/proposals/csharp-9.0/extension-getenumerator), removing the original main reason to reference `IAsyncEnumerable`.
 
-The vast majority of `DbSet` usages will continue to work as-is, since they either compose LINQ operators over `DbSet`, enumerate it directly, etc. The only usages broken are those which attempt to cast `DbSet` directly to `IAsyncEnumerable`.
+The vast majority of `DbSet` usages will continue to work as-is, since they compose LINQ operators over `DbSet`, enumerate it, etc. The only usages broken are those which attempt to cast `DbSet` directly to `IAsyncEnumerable`.
 
 #### Mitigations
 
