@@ -176,7 +176,7 @@ EF.Functions.Like(matchExpression, pattern, escapeCharacter)            | @match
 string.Compare(strA, strB)                                              | CASE WHEN @strA = @strB THEN 0 ... END
 string.Concat(str0, str1)                                               | @str0 + @str1
 string.IsNullOrEmpty(value)                                             | @value IS NULL OR @value LIKE N''
-string.IsNullOrWhiteSpace(value)                                        | @value IS NULL OR LTRIM(RTRIM(@value)) = N''
+string.IsNullOrWhiteSpace(value)                                        | @value IS NULL OR @value = N''
 stringValue.CompareTo(strB)                                             | CASE WHEN @stringValue = @strB THEN 0 ... END
 stringValue.Contains(value)                                             | @stringValue LIKE N'%' + @value + N'%'
 stringValue.EndsWith(value)                                             | @stringValue LIKE N'%' + @value
