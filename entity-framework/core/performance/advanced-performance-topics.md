@@ -12,7 +12,7 @@ uid: core/performance/advanced-performance-topics
 
 A `DbContext` is generally a light object: creating and disposing one doesn't involve a database operation, and most applications can do so without any noticeable impact on performance. However, each `DbContext` does set up a various internal services and objects necessary for performing its duties, and the overhead of continuously doing so may be significant in high-performance scenarios. For these cases, EF Core can *pool* your `DbContext` instances: when you dispose your `DbContext`, EF Core resets its state and stores it in an internal pool; when a new instance is next requested, that pooled instance is returned instead of setting up a new one. `DbContext` pooling allows you to pay `DbContext` setup costs only once at program startup, rather than continuously.
 
-Following are the benchmark results for fetching a single row from a SQL Server database running locally on the same machine, with and without `DbContext` pooling. As always, results will change with the number of rows, the latency to your database server and other factors. Importantly, this benchmarks single-threaded pooling performance, while a real-world contended scenario may have default results; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
+Following are the benchmark results for fetching a single row from a SQL Server database running locally on the same machine, with and without `DbContext` pooling. As always, results will change with the number of rows, the latency to your database server and other factors. Importantly, this benchmarks single-threaded pooling performance, while a real-world contended scenario may have different results; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
 
 |                Method | NumBlogs |     Mean |    Error |   StdDev |   Gen 0 | Gen 1 | Gen 2 | Allocated |
 |---------------------- |--------- |---------:|---------:|---------:|--------:|------:|------:|----------:|
@@ -25,7 +25,7 @@ Note that `DbContext` pooling is orthogonal to database connection pooling, whic
 
 The typical pattern in an ASP.NET Core app using EF Core involves registering a custom <xref:Microsoft.EntityFrameworkCore.DbContext> type into the [dependency injection](/aspnet/core/fundamentals/dependency-injection) container via <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A>. Then, instances of that type are obtained through constructor parameters in controllers or Razor Pages.
 
-To enable `DbContext` pooling, simply replace `AddDbContext` by <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A>:
+To enable `DbContext` pooling, simply replace `AddDbContext` with <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A>:
 
 ```csharp
 services.AddDbContextPool<BloggingContext>(
