@@ -17,6 +17,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
 | [Removed last ORDER BY when joining for collections](#last-order-by)                                                                  | Low        |
 | [DbSet no longer implements IAsyncEnumerable](#dbset-iasyncenumerable)                                                                | Low        |
+| [New snapshot model initialization procedure](#snapshot-initialization)                                                               | Low        |
 
 ## Low-impact changes
 
@@ -128,3 +129,45 @@ The vast majority of `DbSet` usages will continue to work as-is, since they comp
 #### Mitigations
 
 If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> as an <xref:System.Collections.Generic.IAsyncEnumerable%601>, call <xref:Microsoft.EntityFrameworkCore.DbSet%601.AsAsyncEnumerable%2A?displayProperty=nameWithType> to explicitly cast it.
+
+<a name="snapshot-initialization"></a>
+
+### New snapshot model initialization procedure
+
+[Tracking Issue #22031](https://github.com/dotnet/efcore/issues/22031)
+
+#### Old behavior
+
+In EF Core 5, specific conventions needed to be invoked before the snapshot model was ready to be used.
+
+#### New behavior
+
+<xref:Microsoft.EntityFrameworkCore.Infrastructure.IModelRuntimeInitializer> was introduced to hide some of the required steps, and a run-time model was introduced that doesn't have all the migrations metadata, so the design-time model should be used for model diffing.
+
+#### Why
+
+<xref:Microsoft.EntityFrameworkCore.Infrastructure.IModelRuntimeInitializer> abstracts away the model finalization steps, so these can now be changed without further breaking changes for the users.
+
+The optimized run-time model was introduced to improve run-time performance. It has several optimizations, one of which is removing metadata that is not used at run-time.
+
+#### Mitigations
+
+The following snippet illustrates how to check whether the current model is different from the snapshot model:
+
+```csharp
+var snapshotModel = migrationsAssembly.ModelSnapshot?.Model;
+
+if (snapshotModel is IMutableModel mutableModel)
+{
+    snapshotModel = mutableModel.FinalizeModel();
+}
+
+if (snapshotModel != null)
+{
+    snapshotModel = context.GetService<IModelRuntimeInitializer>().Initialize(snapshotModel);
+}
+
+var hasDifferences = context.GetService<IMigrationsModelDiffer>().HasDifferences(
+    snapshotModel?.GetRelationalModel(),
+    context.GetService<IDesignTimeModel>().Model.GetRelationalModel());
+```
