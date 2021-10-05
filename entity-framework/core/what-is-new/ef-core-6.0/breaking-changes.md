@@ -138,11 +138,11 @@ If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> as an <
 
 #### Old behavior
 
-In EF Core 5 specific conventions needed to be invoked before the snapshot model was ready to be used.
+In EF Core 5, specific conventions needed to be invoked before the snapshot model was ready to be used.
 
 #### New behavior
 
-<xref:Microsoft.EntityFrameworkCore.Infrastructure.IModelRuntimeInitializer> was introduced to hide some of the required steps, also run-time model was introduced that doesn't have all the migrations metadata, so design-time model should be used for model diffing.
+<xref:Microsoft.EntityFrameworkCore.Infrastructure.IModelRuntimeInitializer> was introduced to hide some of the required steps, and a run-time model was introduced that doesn't have all the migrations metadata, so the design-time model should be used for model diffing.
 
 #### Why
 
