@@ -144,13 +144,13 @@ Many query services and some design-time services that were registered as `Singl
 
 #### Why
 
-The lifetime had to be changed to allow a new feature - <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping> to affect queries.
+The lifetime had to be changed to allow a new feature - <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping> - to affect queries.
 
 The design-time services lifetimes have been adjusted to match the run-time services lifetimes to avoid errors when using both.
 
 #### Mitigations
 
-Use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBuilder.TryAdd%2A> to register EF Core services using the default lifetime. And only use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBuilder.TryAddProviderSpecificServices%2A> for services that are not added by EF.
+Use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBuilder.TryAdd%2A> to register EF Core services using the default lifetime. Only use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBuilder.TryAddProviderSpecificServices%2A> for services that are not added by EF.
 
 <a name="extensions-caching"></a>
 
@@ -166,7 +166,7 @@ In EF Core 5, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOption
 
 <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.GetServiceProviderHashCode%2A> now returns `int` and is only used to calculate the hash code of the cache key for the service provider.
 
-Also <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.ShouldUseSameServiceProvider%2A> needs to be implemented to indicate whether the current object represents the same service configuration and thus can use the same service provider.
+Also, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.ShouldUseSameServiceProvider%2A> needs to be implemented to indicate whether the current object represents the same service configuration and thus can use the same service provider.
 
 #### Why
 
@@ -174,7 +174,7 @@ Just using a hash code as part of the cache key resulted in occasional collision
 
 #### Mitigations
 
-Many extensions doesn't expose any options that affect registered services and can use the following implementation of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.ShouldUseSameServiceProvider%2A>:
+Many extensions don't expose any options that affect registered services and can use the following implementation of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.ShouldUseSameServiceProvider%2A>:
 
 ```csharp
 private sealed class ExtensionInfo : DbContextOptionsExtensionInfo
