@@ -17,6 +17,8 @@ The following API and behavior changes have the potential to break existing appl
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
 | [Removed last ORDER BY when joining for collections](#last-order-by)                                                                  | Low        |
 | [DbSet no longer implements IAsyncEnumerable](#dbset-iasyncenumerable)                                                                | Low        |
+| [Some Singleton services are now Scoped](#query-services)                                                                             | Low        |
+| [New caching API for extensions that add or replace services](#extensions-caching)                                                    | Low        |
 | [New snapshot model initialization procedure](#snapshot-initialization)                                                               | Low        |
 
 ## Low-impact changes
@@ -129,6 +131,67 @@ The vast majority of `DbSet` usages will continue to work as-is, since they comp
 #### Mitigations
 
 If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> as an <xref:System.Collections.Generic.IAsyncEnumerable%601>, call <xref:Microsoft.EntityFrameworkCore.DbSet%601.AsAsyncEnumerable%2A?displayProperty=nameWithType> to explicitly cast it.
+
+<a name="query-services"></a>
+
+### Some Singleton services are now Scoped
+
+[Tracking Issue #25084](https://github.com/dotnet/efcore/issues/25084)
+
+#### New behavior
+
+Many query services and some design-time services that were registered as `Singleton` are now registered as `Scoped`.
+
+#### Why
+
+The lifetime had to be changed to allow a new feature - <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping> to affect queries.
+
+The design-time services lifetimes have been adjusted to match the run-time services lifetimes to avoid errors when using both.
+
+#### Mitigations
+
+Use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBuilder.TryAdd%2A> to register EF Core services using the default lifetime. And only use <xref:Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkServicesBuilder.TryAddProviderSpecificServices%2A> for services that are not added by EF.
+
+<a name="extensions-caching"></a>
+
+### New caching API for extensions that add or replace services
+
+[Tracking Issue #19152](https://github.com/dotnet/efcore/issues/19152)
+
+#### Old behavior
+
+In EF Core 5, <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.GetServiceProviderHashCode%2A> returned `long` and was used directly as part of the cache key for the service provider.
+
+#### New behavior
+
+<xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.GetServiceProviderHashCode%2A> now returns `int` and is only used to calculate the hash code of the cache key for the service provider.
+
+Also <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.ShouldUseSameServiceProvider%2A> needs to be implemented to indicate whether the current object represents the same service configuration and thus can use the same service provider.
+
+#### Why
+
+Just using a hash code as part of the cache key resulted in occasional collisions that were hard to diagnose and fix. The additional method ensures that the same service provider is used only when appropriate.
+
+#### Mitigations
+
+Many extensions doesn't expose any options that affect registered services and can use the following implementation of <xref:Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInfo.ShouldUseSameServiceProvider%2A>:
+
+```csharp
+private sealed class ExtensionInfo : DbContextOptionsExtensionInfo
+{
+    public ExtensionInfo(IDbContextOptionsExtension extension)
+        : base(extension)
+    {
+    }
+
+    ...
+
+    public override bool ShouldUseSameServiceProvider(DbContextOptionsExtensionInfo other)
+        => other is ExtensionInfo;
+}
+```
+
+Otherwise, additional predicates should be added to compare all relevant options.
 
 <a name="snapshot-initialization"></a>
 
