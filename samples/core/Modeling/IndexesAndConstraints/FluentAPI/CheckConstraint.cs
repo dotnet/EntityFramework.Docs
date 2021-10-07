@@ -10,7 +10,7 @@ namespace EFModeling.IndexesAndConstraints.FluentAPI.CheckConstraint
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()
-                .HasCheckConstraint("CK_Prices", "[Price] > [DiscountedPrice]");
+                .HasCheckConstraint("CK_Prices", "[Price] > [DiscountedPrice]", c => c.HasName("CK_Product_Prices"));
         }
         #endregion
     }

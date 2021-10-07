@@ -14,12 +14,42 @@ The following API and behavior changes have the potential to break existing appl
 
 | **Breaking change**                                                                                                                   | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
+| [Changing the owner of an owned entity now throws an exception](#owned-reparenting)                                                   | Medium     |
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
 | [Removed last ORDER BY when joining for collections](#last-order-by)                                                                  | Low        |
 | [DbSet no longer implements IAsyncEnumerable](#dbset-iasyncenumerable)                                                                | Low        |
+| [Check constraint name uniqueness is now validated](#unique-check-constraints)                                                        | Low        |
+| [Added IReadOnly Metadata interfaces and removed extension methods](#ireadonly-metadata)                                              | Low        |
 | [Some Singleton services are now Scoped](#query-services)                                                                             | Low        |
 | [New caching API for extensions that add or replace services](#extensions-caching)                                                    | Low        |
 | [New snapshot model initialization procedure](#snapshot-initialization)                                                               | Low        |
+| [`OwnedNavigationBuilder.HasIndex` returns a different type now](#owned-index)                                                        | Low        |
+
+## Medium-impact changes
+
+<a name="owned-reparenting"></a>
+
+### Changing the owner of an owned entity now throws an exception
+
+[Tracking Issue #4073](https://github.com/dotnet/efcore/issues/4073)
+
+#### Old behavior
+
+It was possible to reassign an owned entity to a different owner entity.
+
+#### New behavior
+
+This action will now throw an exception:
+
+> The property '{entityType}.{property}' is part of a key and so cannot be modified or marked as modified. To change the principal of an existing entity with an identifying foreign key, first delete the dependent and invoke 'SaveChanges', and then associate the dependent with the new principal.
+
+#### Why
+
+Even though we don't require key properties to exist on an owned type, EF will still create shadow properties to be used as the primary key and the foreign key pointing to the owner. When the owner entity is changed it causes the values of the foreign key on the owned entity to change, and since they are also used as the primary key this results in the entity identity to change. This isn't yet fully supported in EF Core and was only conditionally allowed for owned entities, sometimes resulting in the internal state becoming inconsistent.
+
+#### Mitigations
+
+Instead of assigning the same owned instance to a new owner you can assign a copy and delete the old one.
 
 ## Low-impact changes
 
@@ -132,6 +162,54 @@ The vast majority of `DbSet` usages will continue to work as-is, since they comp
 
 If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> as an <xref:System.Collections.Generic.IAsyncEnumerable%601>, call <xref:Microsoft.EntityFrameworkCore.DbSet%601.AsAsyncEnumerable%2A?displayProperty=nameWithType> to explicitly cast it.
 
+<a name="iunique-check-constraints"></a>
+
+### Check constraint name uniqueness is now validated
+
+[Tracking Issue #25061](https://github.com/dotnet/efcore/issues/25061)
+
+#### Old behavior
+
+Check constraints with the same name were allowed to be declared and used on the same table.
+
+#### New behavior
+
+Explicitly configuring two check constraints with the same name on the same table will now result in an exception. Check constraints created by a convention will be assigned a unique name.
+
+#### Why
+
+Most databases don't allow two check constraints with the same name to be created on the same table, and some require them to be unique even across tables. This would result in exception being thrown when applying a migration.
+
+#### Mitigations
+
+In some cases, valid check constraint names might be different due to this change. To specify the desired name explicitly, call <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.CheckConstraintBuilder.HasName%2A>:
+
+```csharp
+modelBuilder.Entity<MyEntity>().HasCheckConstraint("CK_Id", "Id > 0", c => c.HasName("CK_MyEntity_Id"));
+```
+
+<a name="ireadonly-metadata"></a>
+
+### Added IReadOnly Metadata interfaces and removed extension methods
+
+[Tracking Issue #19213](https://github.com/dotnet/efcore/issues/19213)
+
+#### Old behavior
+
+There were three sets of metadata interfaces: <xref:Microsoft.EntityFrameworkCore.Metadata.IModel>, <xref:Microsoft.EntityFrameworkCore.Metadata.IMutableModel> and <xref:Microsoft.EntityFrameworkCore.Metadata.IConventionModel> as well as extension methods.
+
+#### New behavior
+
+A new set of `IReadOnly` interfaces has been added, e.g. <xref:Microsoft.EntityFrameworkCore.Metadata.IReadOnlyModel>. Extension methods that were previously defined for the metadata interfaces have been converted to default interface methods.
+
+#### Why
+
+Default interface methods allow the implementation to be overridden, this is leveraged by the new run-time model implementation to offer better performance.
+
+#### Mitigations
+
+These changes shouldn't affect most code. However, if you were using the extension methods via the static invocation syntax, it would need to be converted to instance invocation syntax.
+
 <a name="query-services"></a>
 
 ### Some Singleton services are now Scoped
@@ -234,3 +312,25 @@ var hasDifferences = context.GetService<IMigrationsModelDiffer>().HasDifferences
     snapshotModel?.GetRelationalModel(),
     context.GetService<IDesignTimeModel>().Model.GetRelationalModel());
 ```
+
+<a name="owned-index"></a>
+
+### `OwnedNavigationBuilder.HasIndex` returns a different type now
+
+[Tracking Issue #24005](https://github.com/dotnet/efcore/issues/24005)
+
+#### Old behavior
+
+In EF Core 5, <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigationBuilder.HasIndex%2A> returned `IndexBuilder<TEntity>` where `TEntity` is the owner type.
+
+#### New behavior
+
+<xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigationBuilder.HasIndex%2A> now returns `IndexBuilder<TDependentEntity>`, where `TDependentEntity` is the owned type.
+
+#### Why
+
+The returned builder object wasn't typed correctly.
+
+#### Mitigations
+
+Recompiling your assembly against the latest version of EF Core will be enough to fix any issues caused by this change.
