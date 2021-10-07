@@ -45,7 +45,7 @@ This action will now throw an exception:
 
 #### Why
 
-Even though we don't require key properties to exist on an owned type, EF will still create shadow properties to be used as the primary key and the foreign key pointing to the owner. When the owner entity is changed it causes the values of the foreign key on the owned entity to change and since they are also used as the primary key this results in the entity identity to change. This isn't fully supported in EF Core yet and was only conditionally allowed for owned entities which sometimes resulted in the internal state to become inconsistent.
+Even though we don't require key properties to exist on an owned type, EF will still create shadow properties to be used as the primary key and the foreign key pointing to the owner. When the owner entity is changed it causes the values of the foreign key on the owned entity to change, and since they are also used as the primary key this results in the entity identity to change. This isn't yet fully supported in EF Core and was only conditionally allowed for owned entities, sometimes resulting in the internal state becoming inconsistent.
 
 #### Mitigations
 
@@ -170,19 +170,19 @@ If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> as an <
 
 #### Old behavior
 
-Check constraints with the same name were allowed to be declared and used.
+Check constraints with the same name were allowed to be declared and used on the same table.
 
 #### New behavior
 
-Explicitly configuring two check constraints with the same name will now result in an exception. Check constraints created by a convention will be assigned a unique name.
+Explicitly configuring two check constraints with the same name on the same table will now result in an exception. Check constraints created by a convention will be assigned a unique name.
 
 #### Why
 
-Most databases don't allow two check constraints with the same name to be created on the same table and some require them to be unique even across tables. This would result in exception being thrown when applying a migration.
+Most databases don't allow two check constraints with the same name to be created on the same table, and some require them to be unique even across tables. This would result in exception being thrown when applying a migration.
 
 #### Mitigations
 
-In some cases valid check constraint names might be different due to this change. To specify the desired name explicitly call <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.CheckConstraintBuilder.HasName%2A>:
+In some cases, valid check constraint names might be different due to this change. To specify the desired name explicitly, call <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.CheckConstraintBuilder.HasName%2A>:
 
 ```csharp
 modelBuilder.Entity<MyEntity>().HasCheckConstraint("CK_Id", "Id > 0", c => c.HasName("CK_MyEntity_Id"));
@@ -200,7 +200,7 @@ There were three sets of metadata interfaces: <xref:Microsoft.EntityFrameworkCor
 
 #### New behavior
 
-A new set of `IReadOnly` interfaces has been added, e.g. <xref:Microsoft.EntityFrameworkCore.Metadata.IReadOnlyModel>. And extension methods that were previously defined for the metadata interfaces have been converted to default interface methods.
+A new set of `IReadOnly` interfaces has been added, e.g. <xref:Microsoft.EntityFrameworkCore.Metadata.IReadOnlyModel>. Extension methods that were previously defined for the metadata interfaces have been converted to default interface methods.
 
 #### Why
 
@@ -208,7 +208,7 @@ Default interface methods allow the implementation to be overridden, this is lev
 
 #### Mitigations
 
-These changes shouldn't affect most code, however if you were using the extension methods vis the static invocation syntax it needs to be converted to instance invocation syntax.
+These changes shouldn't affect most code. However, if you were using the extension methods via the static invocation syntax, it would need to be converted to instance invocation syntax.
 
 <a name="query-services"></a>
 
@@ -325,7 +325,7 @@ In EF Core 5, <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigat
 
 #### New behavior
 
-Now  <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigationBuilder.HasIndex%2A> returned `IndexBuilder<TDependentEntity>` where `TDependentEntity` is the owned type.
+<xref:Microsoft.EntityFrameworkCore.Metadata.Builders.OwnedNavigationBuilder.HasIndex%2A> now returns `IndexBuilder<TDependentEntity>`, where `TDependentEntity` is the owned type.
 
 #### Why
 
