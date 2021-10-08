@@ -68,11 +68,11 @@ As in other providers, related entity types were discovered as normal (non-owned
 
 #### New behavior
 
-Now related entity types will be owned by the entity type on which they were discovered. Only the entity types that correspond to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> property will be discovered as non-owned.
+Related entity types will now be owned by the entity type on which they were discovered. Only the entity types that correspond to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> property will be discovered as non-owned.
 
 #### Why
 
-This behavior follows the common pattern of modeling data in Azure Cosmos DB of embedding related data into a single document.
+This behavior follows the common pattern of modeling data in Azure Cosmos DB of embedding related data into a single document. Cosmos DB does not natively support joining different documents, so modeling related entities as non-owned has limited usefulness.
 
 #### Mitigations
 
@@ -197,7 +197,7 @@ If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> as an <
 
 #### Old behavior
 
-Entity type was not mapped to a table by default when used as a return type of a TVF configured with <xref:Microsoft.EntityFrameworkCore.RelationalModelBuilderExtensions.HasDbFunction%2A>.
+An entity type was not mapped to a table by default when used as a return type of a TVF configured with <xref:Microsoft.EntityFrameworkCore.RelationalModelBuilderExtensions.HasDbFunction%2A>.
 
 #### New behavior
 
@@ -209,7 +209,7 @@ It isn't intuitive that configuring a TVF removes the default table mapping for 
 
 #### Mitigations
 
-To remove the default table mapping call <xref:Microsoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions.ToTable(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder,System.String)>:
+To remove the default table mapping, call <xref:Microsoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions.ToTable(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder,System.String)>:
 
 ```csharp
 modelBuilder.Entity<MyEntity>().ToTable((string?)null));
@@ -271,7 +271,7 @@ These changes shouldn't affect most code. However, if you were using the extensi
 
 #### New behavior
 
-The errors listed in the issue above are now considered transient. When using the default (non-retrying) execution strategy these errors will now be wrapped in an addition exception instance.
+The errors listed in the issue above are now considered transient. When using the default (non-retrying) execution strategy, these errors will now be wrapped in an addition exception instance.
 
 #### Why
 
@@ -279,7 +279,7 @@ We continue to gather feedback from both users and SQL Server team on which erro
 
 #### Mitigations
 
-To change the set of errors that are considered transient use a custom execution strategy that could be derived from <xref:Microsoft.EntityFrameworkCore.SqlServerRetryingExecutionStrategy> - <xref:core/miscellaneous/connection-resiliency>.
+To change the set of errors that are considered transient, use a custom execution strategy that could be derived from <xref:Microsoft.EntityFrameworkCore.SqlServerRetryingExecutionStrategy> - <xref:core/miscellaneous/connection-resiliency>.
 
 <a name="cosmos-id"></a>
 
@@ -293,7 +293,7 @@ In EF Core 5, only `'|'` was escaped in `id` values.
 
 #### New behavior
 
-Now only `'/'`, `'\'`, `'?'` and `'#'` are also escaped in `id` values.
+In EF Core 6, `'/'`, `'\'`, `'?'` and `'#'` are also escaped in `id` values.
 
 #### Why
 
