@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 6.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 6.0
 author: ajcvickers
-ms.date: 10/1/2021
+ms.date: 10/8/2021
 uid: core/what-is-new/ef-core-6.0/breaking-changes
 ---
 
@@ -201,7 +201,7 @@ An entity type was not mapped to a table by default when used as a return type o
 
 #### New behavior
 
-Entity types used as a return type of a TVF retains the default table mapping.
+An entity type used as a return type of a TVF retains the default table mapping.
 
 #### Why
 
