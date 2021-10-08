@@ -15,11 +15,15 @@ The following API and behavior changes have the potential to break existing appl
 | **Breaking change**                                                                                                                   | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [Changing the owner of an owned entity now throws an exception](#owned-reparenting)                                                   | Medium     |
+| [Cosmos: Related entity types are discovered as owned](#cosmos-owned)                                                                 | Medium     |
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
 | [Removed last ORDER BY when joining for collections](#last-order-by)                                                                  | Low        |
 | [DbSet no longer implements IAsyncEnumerable](#dbset-iasyncenumerable)                                                                | Low        |
+| [TVF return entity type is also mapped to a table by default](#tvf-table)                                                             | Low        |
 | [Check constraint name uniqueness is now validated](#unique-check-constraints)                                                        | Low        |
 | [Added IReadOnly Metadata interfaces and removed extension methods](#ireadonly-metadata)                                              | Low        |
+| [SQL Server: More errors are considered transient](#transient-errors)                                                                 | Low        |
+| [Cosmos: More characters are escaped in 'id' values](#cosmos-id)                                                                      | Low        |
 | [Some Singleton services are now Scoped](#query-services)                                                                             | Low        |
 | [New caching API for extensions that add or replace services](#extensions-caching)                                                    | Low        |
 | [New snapshot model initialization procedure](#snapshot-initialization)                                                               | Low        |
@@ -50,6 +54,29 @@ Even though we don't require key properties to exist on an owned type, EF will s
 #### Mitigations
 
 Instead of assigning the same owned instance to a new owner you can assign a copy and delete the old one.
+
+<a name="cosmos-owned"></a>
+
+### Cosmos: Related entity types are discovered as owned
+
+[Tracking Issue #24803](https://github.com/dotnet/efcore/issues/24803)
+[What's new: Default to implicit ownership](/core/what-is-new/ef-core-6.0/whatsnew#default-to-implicit-ownership)
+
+#### Old behavior
+
+As in other providers, related entity types were discovered as normal (non-owned) types.
+
+#### New behavior
+
+Now related entity types will be owned by the entity type on which they were discovered. Only the entity types that correspond to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> property will be discovered as non-owned.
+
+#### Why
+
+This behavior follows the common pattern of modeling data in Azure Cosmos DB of embedding related data into a single document.
+
+#### Mitigations
+
+To configure an entity type to be non-owned call `modelBuilder.Entity<MyEntity>();`
 
 ## Low-impact changes
 
@@ -162,6 +189,32 @@ The vast majority of `DbSet` usages will continue to work as-is, since they comp
 
 If you need to refer to a <xref:Microsoft.EntityFrameworkCore.DbSet%601> as an <xref:System.Collections.Generic.IAsyncEnumerable%601>, call <xref:Microsoft.EntityFrameworkCore.DbSet%601.AsAsyncEnumerable%2A?displayProperty=nameWithType> to explicitly cast it.
 
+<a name="tvf-table"></a>
+
+### TVF return entity type is also mapped to a table by default
+
+[Tracking Issue #23408](https://github.com/dotnet/efcore/issues/23408)
+
+#### Old behavior
+
+Entity type was not mapped to a table by default when used as a return type of a TVF configured with <xref:Microsoft.EntityFrameworkCore.RelationalModelBuilderExtensions.HasDbFunction%2A>.
+
+#### New behavior
+
+Entity types used as a return type of a TVF retains the default table mapping.
+
+#### Why
+
+It isn't intuitive that configuring a TVF removes the default table mapping for the return entity type.
+
+#### Mitigations
+
+To remove the default table mapping call <xref:Microsoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions.ToTable(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder,System.String)>:
+
+```csharp
+modelBuilder.Entity<MyEntity>().ToTable((string?)null));
+```
+
 <a name="iunique-check-constraints"></a>
 
 ### Check constraint name uniqueness is now validated
@@ -209,6 +262,52 @@ Default interface methods allow the implementation to be overridden, this is lev
 #### Mitigations
 
 These changes shouldn't affect most code. However, if you were using the extension methods via the static invocation syntax, it would need to be converted to instance invocation syntax.
+
+<a name="transient-errors"></a>
+
+### SQL Server: More errors are considered transient
+
+[Tracking Issue #25050](https://github.com/dotnet/efcore/issues/25050)
+
+#### New behavior
+
+The errors listed in the issue above are now considered transient. When using the default (non-retrying) execution strategy these errors will now be wrapped in an addition exception instance.
+
+#### Why
+
+We continue to gather feedback from both users and SQL Server team on which errors should be considered transient.
+
+#### Mitigations
+
+To change the set of errors that are considered transient use a custom execution strategy that could be derived from <xref:Microsoft.EntityFrameworkCore.SqlServerRetryingExecutionStrategy> - <xref:core/miscellaneous/connection-resiliency>.
+
+<a name="cosmos-id"></a>
+
+### Cosmos: More characters are escaped in 'id' values
+
+[Tracking Issue #25100](https://github.com/dotnet/efcore/issues/25100)
+
+#### Old behavior
+
+In EF Core 5, only `'|'` was escaped in `id` values.
+
+#### New behavior
+
+Now only `'/'`, `'\'`, `'?'` and `'#'` are also escaped in `id` values.
+
+#### Why
+
+These characters are invalid, as documented in [Resource.Id](/dotnet/api/microsoft.azure.documents.resource.id). Using them in `id` will cause queries to fail.
+
+#### Mitigations
+
+You can override the generated value by setting it before the entity is marked as `Added`:
+
+```csharp
+var entry = context.Attach(entity);
+entry.Property("__id").CurrentValue = "MyEntity|/\\?#";
+entry.State = EntityState.Added;
+```
 
 <a name="query-services"></a>
 
