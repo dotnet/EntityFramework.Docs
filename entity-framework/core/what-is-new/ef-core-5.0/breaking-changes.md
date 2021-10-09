@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 5.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 5.0
 author: bricelam
-ms.date: 11/07/2020
+ms.date: 10/08/2021
 uid: core/what-is-new/ef-core-5.0/breaking-changes
 ---
 
@@ -17,7 +17,7 @@ The following API and behavior changes have the potential to break existing appl
 | [EF Core 5.0 does not support .NET Framework](#netstandard21)                                                                         | Medium     |
 | [IProperty.GetColumnName() is now obsolete](#getcolumnname-obsolete)                                                                  | Medium     |
 | [Precision and scale are required for decimals](#decimals)                                                                            | Medium     |
-| [Required on the navigation from principal to dependent has different semantics](#required-dependent)                                 | Medium     |
+| [Required or non-nullable navigation from principal to dependent has different semantics](#required-dependent)                        | Medium     |
 | [Defining query is replaced with provider-specific methods](#defining-query)                                                          | Medium     |
 | [Non-null reference navigations are not overwritten by queries](#nonnullreferences)                                                   | Medium     |
 | [ToView() is treated differently by migrations](#toview)                                                                              | Medium     |
@@ -130,13 +130,13 @@ Or use `HasPrecision` in the model building APIs. For example:
 
 <a name="required-dependent"></a>
 
-### Required on the navigation from principal to dependent has different semantics
+### Required or non-nullable navigation from principal to dependent has different semantics
 
 [Tracking Issue #17286](https://github.com/dotnet/efcore/issues/17286)
 
 #### Old behavior
 
-Only the navigations to principal could be configured as required. Therefore using `RequiredAttribute` on the navigation to the dependent (the entity containing the foreign key) would instead create the foreign key on the defining entity type.
+Only the navigations to principal could be configured as required. Therefore using `RequiredAttribute` on the navigation to the dependent (the entity containing the foreign key) or marking it as non-nullable would instead create the foreign key on the defining entity type.
 
 #### New behavior
 
