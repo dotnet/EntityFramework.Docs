@@ -236,7 +236,7 @@ Adds hierarchyid support to the SQL Server EF Core provider. For EF Core: 3, 5.
 
 ### linq2db.EntityFrameworkCore
 
-Alternative translator of LINQ queries to SQL expressions. For EF Core: 3, 5, 6.
+Alternative translator of LINQ queries to SQL expressions. For EF Core: 2, 3, 5, 6.
 
 Includes support for advanced SQL features such as CTEs, bulk copy, table hints, windowed functions, temporary tables, and database-side create/update/delete operations.
 
