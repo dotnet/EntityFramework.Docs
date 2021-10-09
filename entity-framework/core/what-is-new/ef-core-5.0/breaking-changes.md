@@ -136,7 +136,7 @@ Or use `HasPrecision` in the model building APIs. For example:
 
 #### Old behavior
 
-Only the navigations to principal could be configured as required. Therefore using `RequiredAttribute` on the navigation to the dependent (the entity containing the foreign key) or marking it as non-nullable would instead create the foreign key on the defining entity type.
+Only the navigations to principal could be configured as required. Therefore, using `RequiredAttribute` on the navigation to the dependent (the entity containing the foreign key) or marking it as non-nullable would instead create the foreign key on the defining entity type.
 
 #### New behavior
 
