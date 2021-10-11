@@ -52,7 +52,7 @@ The `poolSize` parameter of the `PooledDbContextFactory` constructor sets the ma
 `DbContext` pooling has a few limitations on what can be done in the `OnConfiguring` method of the context.
 
 > [!WARNING]
-> Avoid using context pooling in apps that maintain state. For example, private fields in the context that shouldn't be shared across requests. EF Core only resets the state that it is aware of before adding a context instance to the pool.
+> Avoid using context pooling in apps that maintain state. For example, private fields in the context that shouldn't be shared across requests. This also includes the use of Lazy Loading through `UseLazyLoadingProxies()`. EF Core only resets the state that it is aware of before adding a context instance to the pool.
 
 Context pooling works by reusing the same context instance across requests. This means that it's effectively registered as a [Singleton](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) in terms of the instance itself so that it's able to persist.
 
