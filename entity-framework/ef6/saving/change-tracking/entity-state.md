@@ -130,7 +130,7 @@ using (var context = new BloggingContext())
 
 When you change the state to Modified all the properties of the entity will be marked as modified and all the property values will be sent to the database when SaveChanges is called.  
 
-Note that if the entity being attached has references to other entities that are not yet tracked, then these new entities will attached to the context in the Unchanged state—they will not automatically be made Modified.
+Note that if the entity being attached has references to other entities that are not yet tracked, then these new entities will be attached to the context in the Unchanged state—they will not automatically be made Modified.
 If you have multiple entities that need to be marked Modified you should set the state for each of these entities individually.  
 
 ## Changing the state of a tracked entity  
