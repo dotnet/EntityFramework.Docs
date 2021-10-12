@@ -2,7 +2,7 @@
 title: Entity Properties - EF Core
 description: How to configure and map entity properties using Entity Framework Core
 author: roji
-ms.date: 05/27/2020
+ms.date: 10/12/2021
 uid: core/modeling/entity-properties
 ---
 # Entity Properties
@@ -80,9 +80,7 @@ In the following example, configuring a maximum length of 500 will cause a colum
 
 ### Precision and Scale
 
-Starting with EFCore 5.0, you can use fluent API to configure the precision and scale. It tells the database provider how much storage is needed for a given column. It only applies to data types where the provider allows the precision and scale to vary - usually `decimal` and `DateTime`.
-
-For `decimal` properties, precision defines the maximum number of digits needed to express any value the column will contain, and scale defines the maximum number of decimal places needed. For `DateTime` properties, precision defines the maximum number of digits needed to express fractions of seconds, and scale is not used.
+Some relational data types support the precision and scale facets; these control what values can be stored, and how much storage is needed for the column. Which data types support precision and scale is database-dependent, but in most databases `decimal` and `DateTime` types do support these facets. For `decimal` properties, precision defines the maximum number of digits needed to express any value the column will contain, and scale defines the maximum number of decimal places needed. For `DateTime` properties, precision defines the maximum number of digits needed to express fractions of seconds, and scale is not used.
 
 > [!NOTE]
 > Entity Framework does not do any validation of precision or scale before passing data to the provider. It is up to the provider or data store to validate as appropriate. For example, when targeting SQL Server, a column of data type `datetime` does not allow the precision to be set, whereas a `datetime2` one can have precision between 0 and 7 inclusive.
@@ -91,14 +89,40 @@ In the following example, configuring the `Score` property to have precision 14 
 
 #### [Data Annotations](#tab/data-annotations)
 
-Precision and scale cannot currently be configured via data annotations.
+> [!NOTE]
+> The Data Annotation for configuring precision and scale was introduced in EF Core 6.0.
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=4,6)]
+
+Scale is never defined without first defining precision, so the Data Annotation for defining the scale is `[Precision(precision, scale)]`.
 
 #### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=3-9)]
+> [!NOTE]
+> The Fluent API for configuring precision and scale was introduced in EF Core 5.0.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=5,9)]
+
+Scale is never defined without first defining precision, so the Fluent API for defining the scale is `HasPrecision(precision, scale)`.
+
+***
+
+### Unicode
+
+In some relational databases, different types exist to represent Unicode and non-Unicode text data. For example, in SQL Server, `nvarchar(x)` is used to represent Unicode data in UTF-16, while `varchar(x)` is used to represent non-Unicode data (but see the notes on [SQL Server UTF-8 support](xref:core/providers/sql-server/columns#unicode-and-utf-8)). For databases which don't support this concept, configuring this has no effect.
+
+Text properties are configured as Unicode by default. You can configure a column as non-Unicode as follows:
+
+#### [Data Annotations](#tab/data-annotations)
 
 > [!NOTE]
-> Scale is never defined without first defining precision, so the Fluent API for defining the scale is `HasPrecision(precision, scale)`.
+> The Data Annotation for configuring Unicode was introduced in EF Core 6.0.
+
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Unicode.cs?name=Unicode&highlight=6-7)]
+
+#### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Unicode.cs?name=Unicode&highlight=5)]
 
 ***
 
