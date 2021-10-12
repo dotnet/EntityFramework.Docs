@@ -1815,7 +1815,7 @@ In EF Core 6.0, we have relaxed the parameter requirements for <xref:Microsoft.E
     {
         public int Id { get; set; }
 
-        public Name Name{ get; set; }
+        public Name Name { get; set; }
     }
 
     public class Name
