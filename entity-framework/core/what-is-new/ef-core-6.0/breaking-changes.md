@@ -215,7 +215,7 @@ To remove the default table mapping, call <xref:Microsoft.EntityFrameworkCore.Re
 modelBuilder.Entity<MyEntity>().ToTable((string?)null));
 ```
 
-<a name="iunique-check-constraints"></a>
+<a name="unique-check-constraints"></a>
 
 ### Check constraint name uniqueness is now validated
 
