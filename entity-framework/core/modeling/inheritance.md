@@ -87,6 +87,9 @@ CREATE TABLE [RssBlogs] (
 > [!NOTE]
 > If the primary key constraint is renamed the new name will be applied to all the tables mapped to the hierarchy, future EF versions will allow renaming the constraint only for a particular table when [issue 19970](https://github.com/dotnet/efcore/issues/19970) is fixed.
 
+> [!NOTE]
+> If you want to create TPT with IdentityUser, you should invoke the base onModelCreating(builder) passing the Modelbuilder object as an argument.
+
 If you are employing bulk configuration you can retrieve the column name for a specific table by calling <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnName(Microsoft.EntityFrameworkCore.Metadata.IProperty,Microsoft.EntityFrameworkCore.Metadata.StoreObjectIdentifier@)>.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TPTConfiguration.cs?name=Metadata&highlight=10)]
