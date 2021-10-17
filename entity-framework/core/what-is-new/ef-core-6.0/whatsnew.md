@@ -2,7 +2,7 @@
 title: What's New in EF Core 6.0
 description: Overview of new features in EF Core 6.0
 author: ajcvickers
-ms.date: 09/28/2021
+ms.date: 10/17/2021
 uid: core/what-is-new/ef-core-6.0/whatsnew
 ---
 
@@ -1743,6 +1743,149 @@ LEFT JOIN [Feet] AS [f] ON [p].[Id] = [f].[Id]
 GROUP BY [p].[FirstName]
 ```
 
+**Example 10:**
+
+<!--
+var results = from Person person1
+                  in from Person person2
+                         in context.People
+                     select person2
+              join Shoes shoes
+                  in context.Shoes
+                  on person1.Age equals shoes.Age
+              group shoes by
+                  new
+                  {
+                      person1.Id,
+                      shoes.Style,
+                      shoes.Age
+                  }
+              into temp
+              select
+                  new
+                  {
+                      temp.Key.Id,
+                      temp.Key.Age,
+                      temp.Key.Style,
+                      Values = from t
+                                   in temp
+                               select
+                                   new
+                                   {
+                                       t.Id,
+                                       t.Style,
+                                       t.Age
+                                   }
+                  };
+-->
+[!code-csharp[GroupBy10](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy10)]
+
+```sql
+SELECT [t].[Id], [t].[Age], [t].[Style], [t0].[Id], [t0].[Style], [t0].[Age], [t0].[Id0]
+FROM (
+    SELECT [p].[Id], [s].[Age], [s].[Style]
+    FROM [People] AS [p]
+    INNER JOIN [Shoes] AS [s] ON [p].[Age] = [s].[Age]
+    GROUP BY [p].[Id], [s].[Style], [s].[Age]
+) AS [t]
+LEFT JOIN (
+    SELECT [s0].[Id], [s0].[Style], [s0].[Age], [p0].[Id] AS [Id0]
+    FROM [People] AS [p0]
+    INNER JOIN [Shoes] AS [s0] ON [p0].[Age] = [s0].[Age]
+) AS [t0] ON (([t].[Id] = [t0].[Id0]) AND (([t].[Style] = [t0].[Style]) OR ([t].[Style] IS NULL AND [t0].[Style] IS NULL))) AND ([t].[Age] = [t0].[Age])
+ORDER BY [t].[Id], [t].[Style], [t].[Age], [t0].[Id0]
+```
+
+**Example 11:**
+
+<!--
+var grouping = context.People
+    .GroupBy(i => i.LastName)
+    .Select(g => new { LastName = g.Key, Count = g.Count() , First = g.FirstOrDefault(), Take = g.Take(2)})
+    .OrderByDescending(e => e.LastName)
+    .ToList();
+-->
+[!code-csharp[GroupBy11](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy11)]
+
+```sql
+SELECT [t].[LastName], [t].[c], [t0].[Id], [t2].[Id], [t2].[Age], [t2].[FirstName], [t2].[LastName], [t2].[MiddleInitial], [t0].[Age], [t0].[FirstName], [t0].[LastName], [t0].[MiddleInitial]
+FROM (
+    SELECT [p].[LastName], COUNT(*) AS [c]
+    FROM [People] AS [p]
+    GROUP BY [p].[LastName]
+) AS [t]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[Age], [t1].[FirstName], [t1].[LastName], [t1].[MiddleInitial]
+    FROM (
+        SELECT [p0].[Id], [p0].[Age], [p0].[FirstName], [p0].[LastName], [p0].[MiddleInitial], ROW_NUMBER() OVER(PARTITION BY [p0].[LastName] ORDER BY [p0].[Id]) AS [row]
+        FROM [People] AS [p0]
+    ) AS [t1]
+    WHERE [t1].[row] <= 1
+) AS [t0] ON [t].[LastName] = [t0].[LastName]
+LEFT JOIN (
+    SELECT [t3].[Id], [t3].[Age], [t3].[FirstName], [t3].[LastName], [t3].[MiddleInitial]
+    FROM (
+        SELECT [p1].[Id], [p1].[Age], [p1].[FirstName], [p1].[LastName], [p1].[MiddleInitial], ROW_NUMBER() OVER(PARTITION BY [p1].[LastName] ORDER BY [p1].[Id]) AS [row]
+        FROM [People] AS [p1]
+    ) AS [t3]
+    WHERE [t3].[row] <= 2
+) AS [t2] ON [t].[LastName] = [t2].[LastName]
+ORDER BY [t].[LastName] DESC, [t0].[Id], [t2].[LastName], [t2].[Id]
+```
+
+**Example 12:**
+
+<!--
+var grouping = context.People
+    .Include(e => e.Shoes)
+    .OrderBy(e => e.FirstName)
+    .ThenBy(e => e.LastName)
+    .GroupBy(e => e.FirstName)
+    .Select(g => new { Name = g.Key, People = g.ToList()})
+    .ToList();
+-->
+[!code-csharp[GroupBy12](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy12)]
+
+```sql
+SELECT [t].[FirstName], [t0].[Id], [t0].[Age], [t0].[FirstName], [t0].[LastName], [t0].[MiddleInitial], [t0].[Id0], [t0].[Age0], [t0].[PersonId], [t0].[Style]
+FROM (
+    SELECT [p].[FirstName]
+    FROM [People] AS [p]
+    GROUP BY [p].[FirstName]
+) AS [t]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[Age], [p0].[FirstName], [p0].[LastName], [p0].[MiddleInitial], [s].[Id] AS [Id0], [s].[Age] AS [Age0], [s].[PersonId], [s].[Style]
+    FROM [People] AS [p0]
+    LEFT JOIN [Shoes] AS [s] ON [p0].[Id] = [s].[PersonId]
+) AS [t0] ON [t].[FirstName] = [t0].[FirstName]
+ORDER BY [t].[FirstName], [t0].[Id]
+```
+
+**Example 13:**
+
+<!--
+var grouping = context.People
+    .GroupBy(m => new {m.FirstName, m.MiddleInitial })
+    .Select(am => new
+    {
+        Key = am.Key,
+        Items = am.ToList()
+    })
+    .ToList();
+-->
+[!code-csharp[GroupBy13](../../../../samples/core/Miscellaneous/NewInEFCore6/GroupBySample.cs?name=GroupBy13)]
+
+```sql
+SELECT [t].[FirstName], [t].[MiddleInitial], [p0].[Id], [p0].[Age], [p0].[FirstName], [p0].[LastName], [p0].[MiddleInitial]
+FROM (
+    SELECT [p].[FirstName], [p].[MiddleInitial]
+    FROM [People] AS [p]
+    GROUP BY [p].[FirstName], [p].[MiddleInitial]
+) AS [t]
+LEFT JOIN [People] AS [p0] ON (([t].[FirstName] = [p0].[FirstName]) OR ([t].[FirstName] IS NULL AND [p0].[FirstName] IS NULL)) AND (([t].[MiddleInitial] = [p0].[MiddleInitial]) OR ([t].[MiddleInitial] IS NULL AND [p0].[MiddleInitial] IS NULL))
+ORDER BY [t].[FirstName], [t].[MiddleInitial]
+```
+
 **Model**
 
 The entity types used for these examples are:
@@ -2742,9 +2885,21 @@ modelBuilder.Entity<Cat>()
 
 GitHub Issue: [#13850](https://github.com/dotnet/efcore/issues/13850).
 
+> [!IMPORTANT]
+> Due to the problems outlined below, the constructors for `ValueConverter` that allow conversion of nulls have been marked with `[EntityFrameworkInternal]` for the EF Core 6.0 release. Using these constructors will now generate a build warning.
+
 Value converters do not generally allow the conversion of null to some other value. This is because the same value converter can be used for both nullable and non-nullable types, which is very useful for PK/FK combinations where the FK is often nullable and the PK is not.
 
-Starting with EF Core 6.0, a value converter can be created that does convert nulls. One example of where this can be useful is when the database contains nulls, but the entity type wants to use some other default value for the property. For example, consider an enum where its default value is "Unknown":
+Starting with EF Core 6.0, a value converter can be created that does convert nulls. However, validation of this feature has revealed proved it to be very problematic in practice with many pitfalls. For example:
+
+* [Value conversion to null in the store generates bad queries](https://github.com/dotnet/efcore/issues/26209)
+* [Value conversion from null in the store generates bad queries](https://github.com/dotnet/efcore/issues/26210)
+* [Value converters do not handle cases where the database column has multiple different values that convert to the same value](https://github.com/dotnet/efcore/issues/13850#issuecomment-894166107)
+* [Allow value converters to change nullability of columns](https://github.com/dotnet/efcore/issues/24685)
+
+These are not trivial issues and for the query issues they are not easy to detect. Therefore, we have marked this feature as internal for EF Core 6.0. You can still use it, but you will get a compiler warning. The warning can be disabled using `#pragma warning disable EF1001`.
+
+One example of where converting nulls can be useful is when the database contains nulls, but the entity type wants to use some other default value for the property. For example, consider an enum where its default value is "Unknown":
 
 <!--
 public enum Breed
@@ -2759,16 +2914,18 @@ public enum Breed
 However, the database may have null values when the breed is unknown. In EF Core 6.0, a value converter can be used to account for this:
 
 <!--
-public class BreedConverter : ValueConverter<Breed, string>
-{
-    public BreedConverter()
-        : base(
-            v => v == Breed.Unknown ? null : v.ToString(),
-            v => v == null ? Breed.Unknown : Enum.Parse<Breed>(v),
-            convertsNulls: true)
+    public class BreedConverter : ValueConverter<Breed, string>
     {
+#pragma warning disable EF1001
+        public BreedConverter()
+            : base(
+                v => v == Breed.Unknown ? null : v.ToString(),
+                v => v == null ? Breed.Unknown : Enum.Parse<Breed>(v),
+                convertsNulls: true)
+        {
+        }
+#pragma warning restore EF1001
     }
-}
 -->
 [!code-csharp[BreedConverter](../../../../samples/core/Miscellaneous/NewInEFCore6/ConvertNullsSample.cs?name=BreedConverter)]
 
