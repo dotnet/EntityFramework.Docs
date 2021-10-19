@@ -60,15 +60,13 @@ Entity Framework Core Generator (efg) is a .NET Core CLI tool that can generate 
 
 ## Extensions
 
-
 ### Pagination.EntityFrameworkCore.Extensions
 
 This is a library for Pagination on EntityFrameworkCore. Works well with Entity Framework Core as an extension, support both asynchronous and synchronous.
 It also has many useful features commonly used especially on web development, [examples and documentation here](https://github.com/SitholeWB/Pagination.EntityFrameworkCore.Extensions)
-`Microsoft.EntityFrameworkCore (>= 2.1.1)` `.NETStandard 2.1` 
+`Microsoft.EntityFrameworkCore (>= 2.1.1)` `.NETStandard 2.1`
 
 [GitHub repository](https://github.com/SitholeWB/Pagination.EntityFrameworkCore.Extensions) or [NuGet](https://www.nuget.org/packages/Pagination.EntityFrameworkCore.Extensions)
-
 
 ### Microsoft.EntityFrameworkCore.AutoHistory
 
