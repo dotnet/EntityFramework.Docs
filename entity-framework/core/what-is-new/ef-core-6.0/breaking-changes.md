@@ -29,6 +29,7 @@ The following API and behavior changes have the potential to break existing appl
 | [New caching API for extensions that add or replace services](#extensions-caching)                                                    | Low*       |
 | [New snapshot model initialization procedure](#snapshot-initialization)                                                               | Low        |
 | [`OwnedNavigationBuilder.HasIndex` returns a different type now](#owned-index)                                                        | Low        |
+| [`DbFunctionBuilder.HasSchema(null)` overrides `[DbFunction(Schema = "schema")]`](#function-schema)                                   | Low        |
 | [Pre-initialized navigations are overridden by values from database queries](#overwrite-navigations)                                  | Low        |
 | [Unknown enum string values in the database are not converted to the enum default when queried](#unknown-emums)                       | Low        |
 
@@ -468,6 +469,28 @@ The returned builder object wasn't typed correctly.
 #### Mitigations
 
 Recompiling your assembly against the latest version of EF Core will be enough to fix any issues caused by this change.
+
+<a name="function-schema"></a>
+
+### `DbFunctionBuilder.HasSchema(null)` overrides `[DbFunction(Schema = "schema")]`
+
+[Tracking Issue #24228](https://github.com/dotnet/efcore/issues/24228)
+
+#### Old behavior
+
+In EF Core 5, calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionBuilder.HasSchema%2A> with `null` value didn't store the configuration source, thus <xref:Microsoft.EntityFrameworkCore.DbFunctionAttribute> was able to override it.
+
+#### New behavior
+
+Calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.DbFunctionBuilder.HasSchema%2A> with `null` value now stores the configuration source and prevents the attribute from overriding it.
+
+#### Why
+
+Configuration specified with the <xref:Microsoft.EntityFrameworkCore.ModelBuilder> API should not be overridable by data annotations.
+
+#### Mitigations
+
+Remove the `HasSchema` call to let the attribute configure the schema.
 
 <a name="overwrite-navigations"></a>
 
