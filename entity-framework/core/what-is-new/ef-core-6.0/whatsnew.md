@@ -2,7 +2,7 @@
 title: What's New in EF Core 6.0
 description: Overview of new features in EF Core 6.0
 author: ajcvickers
-ms.date: 10/17/2021
+ms.date: 10/19/2021
 uid: core/what-is-new/ef-core-6.0/whatsnew
 ---
 
@@ -2539,7 +2539,36 @@ For this reason, EF Core 6.0 will now warn you when saving an optional dependent
 > warn: 9/27/2021 09:25:01.338 RelationalEventId.OptionalDependentWithAllNullPropertiesWarning[20704] (Microsoft.EntityFrameworkCore.Update)
 > The entity of type 'Address' with primary key values {CustomerId: -2147482646} is an optional dependent using table sharing. The entity does not have any property with a non-default value to identify whether the entity exists. This means that when it is queried no object instance will be created instead of an instance with all properties set to default values. Any nested dependents will also be lost. Either don't save any instance with only default values or mark the incoming navigation as required in the model.
 
-This becomes even more tricky where the optional dependent itself acts a a principal for a further optional dependent, also mapped to the same table.
+This becomes even more tricky where the optional dependent itself acts a a principal for a further optional dependent, also mapped to the same table. Rather than just warning, EF Core 6.0 disallows just cases of nested optional dependents. For example, consider the following model, where `ContactInfo` is owned by `Customer` and `Address` is in turned owned by `ContactInfo`:
+
+<!--
+public class Customer
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public ContactInfo ContactInfo { get; set; }
+}
+
+public class ContactInfo
+{
+    public string Phone { get; set; }
+    public Address Address { get; set; }
+}
+
+public class Address
+{
+    public string House { get; set; }
+    public string Street { get; set; }
+    public string City { get; set; }
+    public string Postcode { get; set; }
+}
+-->
+[!code-csharp[NestedWithoutRequiredProperty](../../../../samples/core/Miscellaneous/NewInEFCore6/OptionalDependentsSample.cs?name=NestedWithoutRequiredProperty)]
+
+Now if `ContactInfo.Phone` is null, then EF Core will not create an instance of `Address` if the relationship is optional, even though the address itself may have data. For this kind of model, EF Core 6.0 will throw the following exception:
+
+> System.InvalidOperationException:
+> Entity type 'ContactInfo' is an optional dependent using table sharing and containing other dependents without any required non shared property to identify whether the entity exists. If all nullable properties contain a null value in database then an object instance won't be created in the query causing nested dependent's values to be lost. Add a required property to create instances with null values for other properties or mark the incoming navigation as required to always create an instance.
 
 The bottom line here is to avoid the case where an optional dependent can contain all nullable property values and shares a table with its principal. There are three easy ways to avoid this:
 

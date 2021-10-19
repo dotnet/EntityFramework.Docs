@@ -94,7 +94,7 @@ public static class OptionalDependentsSample
         {
             var connection = context.Database.GetDbConnection();
             connection.Open();
-         
+
             using var command = connection.CreateCommand();
             command.CommandText = "SELECT Id, Name, Address_House, Address_Street, Address_City, Address_Postcode FROM Customers2";
 
@@ -427,7 +427,7 @@ public static class OptionalDependentsSample
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            
+
             [Required]
             public Address Address { get; set; }
         }
@@ -449,6 +449,32 @@ public static class OptionalDependentsSample
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public Address Address { get; set; }
+        }
+
+        public class Address
+        {
+            public string House { get; set; }
+            public string Street { get; set; }
+            public string City { get; set; }
+            public string Postcode { get; set; }
+        }
+        #endregion
+    }
+
+    public class NestedWithoutRequiredProperty
+    {
+        #region NestedWithoutRequiredProperty
+        public class Customer
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public ContactInfo ContactInfo { get; set; }
+        }
+
+        public class ContactInfo
+        {
+            public string Phone { get; set; }
             public Address Address { get; set; }
         }
 
@@ -484,7 +510,7 @@ public static class OptionalDependentsSample
             modelBuilder
                 .Entity<WithRequiredProperty.Customer>()
                 .OwnsOne(e => e.Address);
-            
+
             modelBuilder
                 .Entity<WithoutRequiredProperty.Customer>()
                 .OwnsOne(e => e.Address);
