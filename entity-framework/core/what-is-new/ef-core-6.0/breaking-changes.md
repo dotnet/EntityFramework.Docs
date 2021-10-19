@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 6.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 6.0
 author: ajcvickers
-ms.date: 10/17/2021
+ms.date: 10/19/2021
 uid: core/what-is-new/ef-core-6.0/breaking-changes
 ---
 
@@ -14,6 +14,7 @@ The following API and behavior changes have the potential to break existing appl
 
 | **Breaking change**                                                                                                                   | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
+| [Nested optional dependents sharing a table and with no required properties cannot be saved](#nested-optionals)                       | High       |
 | [Changing the owner of an owned entity now throws an exception](#owned-reparenting)                                                   | Medium     |
 | [Cosmos: Related entity types are discovered as owned](#cosmos-owned)                                                                 | Medium     |
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
@@ -33,6 +34,68 @@ The following API and behavior changes have the potential to break existing appl
 | [Unknown enum string values in the database are not converted to the enum default when queried](#unknown-emums)                       | Low        |
 
 \* These changes are of particular interest to authors of database providers and extensions.
+
+## High-impact changes
+
+<a name="nested-optionals"></a>
+
+### Nested optional dependents sharing a table and with no required properties are disallowed
+
+[Tracking Issue #24558](https://github.com/dotnet/efcore/issues/24558)
+
+#### Old behavior
+
+Models with nested optional dependents sharing a table and with no required properties were allowed, but could result in data loss when querying for the data and then saving again. For example, consider the following model:
+
+```csharp
+public class Customer
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public ContactInfo ContactInfo { get; set; }
+}
+
+[Owned]
+public class ContactInfo
+{
+    public string Phone { get; set; }
+    public Address Address { get; set; }
+}
+
+[Owned]
+public class Address
+{
+    public string House { get; set; }
+    public string Street { get; set; }
+    public string City { get; set; }
+    public string Postcode { get; set; }
+}
+```
+
+None of the properties in `ContactInfo` or `Address` are required, and all these entity types are mapped to the same table. The rules for optional dependents (as opposed to required dependents) say that if all of the columns for `ContactInfo` are null, then no instance of `ContactInfo` will be created when querying for the owner `Customer`. However, this also means that no instance of `Address` will be created, even if the `Address` columns are non-null.
+
+#### New behavior
+
+Attempting to use this model will now throw the following exception:
+
+> System.InvalidOperationException:
+> Entity type 'ContactInfo' is an optional dependent using table sharing and containing other dependents without any required non shared property to identify whether the entity exists. If all nullable properties contain a null value in database then an object instance won't be created in the query causing nested dependent's values to be lost. Add a required property to create instances with null values for other properties or mark the incoming navigation as required to always create an instance.
+
+This prevents data loss when querying and saving data.
+
+#### Why
+
+Using models with nested optional dependents sharing a table and with no required properties often resulted in silent data loss.
+
+#### Mitigations
+
+Avoid using optional dependents sharing a table and with no required properties. There are three easy ways to do this:
+
+1. Make the dependents required. This means that the dependent entity will always have a value after it is queried, even if all its properties are null.
+2. Make sure that the dependent contains at least one required property.
+3. Map optional dependents to their own table, instead of sharing a table with the principal.
+
+The problems with optional dependents and examples of these mitigations are included in the documentation for [What's new in EF Core 6.0](xref:core/what-is-new/ef-core-6.0/whatsnew#changes-to-owned-optional-dependent-handling).
 
 ## Medium-impact changes
 
