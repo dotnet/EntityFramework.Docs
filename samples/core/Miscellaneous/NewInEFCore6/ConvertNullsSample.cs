@@ -26,10 +26,10 @@ public static class ConvertNullsSample
 
             context.SaveChanges();
             #endregion
-            
+
             Console.WriteLine();
         }
-        
+
         using (var context = new CatsContext())
         {
             var cats = context.Cats.ToList();
@@ -41,7 +41,7 @@ public static class ConvertNullsSample
                 Console.WriteLine($"{cat.Name} has breed '{cat.Breed}'.");
             }
         }
-        
+
         Console.WriteLine();
     }
 
@@ -66,10 +66,10 @@ public static class ConvertNullsSample
                 });
 
             context.SaveChanges();
-            
+
             Console.WriteLine();
         }
-        
+
         using (var context = new CarsContext())
         {
             // Not currently working
@@ -82,7 +82,7 @@ public static class ConvertNullsSample
                 Console.WriteLine($"The {car.Model} does not have an owner.");
             }
         }
-        
+
         Console.WriteLine();
     }
 
@@ -117,7 +117,7 @@ public static class ConvertNullsSample
     {
         public int Id { get; set; }
         public string Model { get; set; }
-        
+
         public int? OwnerId { get; set; }
         public Person Owner { get; set; }
     }
@@ -125,6 +125,7 @@ public static class ConvertNullsSample
 
     public class ZeroToNullConverter : ValueConverter<int?, int>
     {
+#pragma warning disable EF1001
         public ZeroToNullConverter()
             : base(
                 v => v ?? 0,
@@ -132,6 +133,7 @@ public static class ConvertNullsSample
                 convertsNulls: true)
         {
         }
+#pragma warning restore EF1001
     }
 
     public class CarsContext : DbContext
@@ -178,13 +180,14 @@ public static class ConvertNullsSample
     {
         Unknown,
         Burmese,
-        Tonkinese 
+        Tonkinese
     }
     #endregion
 
     #region BreedConverter
     public class BreedConverter : ValueConverter<Breed, string>
     {
+#pragma warning disable EF1001
         public BreedConverter()
             : base(
                 v => v == Breed.Unknown ? null : v.ToString(),
@@ -192,6 +195,7 @@ public static class ConvertNullsSample
                 convertsNulls: true)
         {
         }
+#pragma warning restore EF1001
     }
     #endregion
 

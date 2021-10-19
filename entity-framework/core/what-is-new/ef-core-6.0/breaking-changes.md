@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 6.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 6.0
 author: ajcvickers
-ms.date: 10/8/2021
+ms.date: 10/19/2021
 uid: core/what-is-new/ef-core-6.0/breaking-changes
 ---
 
@@ -14,9 +14,11 @@ The following API and behavior changes have the potential to break existing appl
 
 | **Breaking change**                                                                                                                   | **Impact** |
 |:--------------------------------------------------------------------------------------------------------------------------------------|------------|
+| [Nested optional dependents sharing a table and with no required properties cannot be saved](#nested-optionals)                       | High       |
 | [Changing the owner of an owned entity now throws an exception](#owned-reparenting)                                                   | Medium     |
 | [Cosmos: Related entity types are discovered as owned](#cosmos-owned)                                                                 | Medium     |
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
+| [In-memory database validates required properties do not contain nulls](#in-memory-required)                                          | Low        |
 | [Removed last ORDER BY when joining for collections](#last-order-by)                                                                  | Low        |
 | [DbSet no longer implements IAsyncEnumerable](#dbset-iasyncenumerable)                                                                | Low        |
 | [TVF return entity type is also mapped to a table by default](#tvf-table)                                                             | Low        |
@@ -24,10 +26,76 @@ The following API and behavior changes have the potential to break existing appl
 | [Added IReadOnly Metadata interfaces and removed extension methods](#ireadonly-metadata)                                              | Low        |
 | [SQL Server: More errors are considered transient](#transient-errors)                                                                 | Low        |
 | [Cosmos: More characters are escaped in 'id' values](#cosmos-id)                                                                      | Low        |
-| [Some Singleton services are now Scoped](#query-services)                                                                             | Low        |
-| [New caching API for extensions that add or replace services](#extensions-caching)                                                    | Low        |
+| [Some Singleton services are now Scoped](#query-services)                                                                             | Low*       |
+| [New caching API for extensions that add or replace services](#extensions-caching)                                                    | Low*       |
 | [New snapshot model initialization procedure](#snapshot-initialization)                                                               | Low        |
 | [`OwnedNavigationBuilder.HasIndex` returns a different type now](#owned-index)                                                        | Low        |
+| [Pre-initialized navigations are overridden by values from database queries](#overwrite-navigations)                                  | Low        |
+| [Unknown enum string values in the database are not converted to the enum default when queried](#unknown-emums)                       | Low        |
+
+\* These changes are of particular interest to authors of database providers and extensions.
+
+## High-impact changes
+
+<a name="nested-optionals"></a>
+
+### Nested optional dependents sharing a table and with no required properties are disallowed
+
+[Tracking Issue #24558](https://github.com/dotnet/efcore/issues/24558)
+
+#### Old behavior
+
+Models with nested optional dependents sharing a table and with no required properties were allowed, but could result in data loss when querying for the data and then saving again. For example, consider the following model:
+
+```csharp
+public class Customer
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public ContactInfo ContactInfo { get; set; }
+}
+
+[Owned]
+public class ContactInfo
+{
+    public string Phone { get; set; }
+    public Address Address { get; set; }
+}
+
+[Owned]
+public class Address
+{
+    public string House { get; set; }
+    public string Street { get; set; }
+    public string City { get; set; }
+    public string Postcode { get; set; }
+}
+```
+
+None of the properties in `ContactInfo` or `Address` are required, and all these entity types are mapped to the same table. The rules for optional dependents (as opposed to required dependents) say that if all of the columns for `ContactInfo` are null, then no instance of `ContactInfo` will be created when querying for the owner `Customer`. However, this also means that no instance of `Address` will be created, even if the `Address` columns are non-null.
+
+#### New behavior
+
+Attempting to use this model will now throw the following exception:
+
+> System.InvalidOperationException:
+> Entity type 'ContactInfo' is an optional dependent using table sharing and containing other dependents without any required non shared property to identify whether the entity exists. If all nullable properties contain a null value in database then an object instance won't be created in the query causing nested dependent's values to be lost. Add a required property to create instances with null values for other properties or mark the incoming navigation as required to always create an instance.
+
+This prevents data loss when querying and saving data.
+
+#### Why
+
+Using models with nested optional dependents sharing a table and with no required properties often resulted in silent data loss.
+
+#### Mitigations
+
+Avoid using optional dependents sharing a table and with no required properties. There are three easy ways to do this:
+
+1. Make the dependents required. This means that the dependent entity will always have a value after it is queried, even if all its properties are null.
+2. Make sure that the dependent contains at least one required property.
+3. Map optional dependents to their own table, instead of sharing a table with the principal.
+
+The problems with optional dependents and examples of these mitigations are included in the documentation for [What's new in EF Core 6.0](xref:core/what-is-new/ef-core-6.0/whatsnew#changes-to-owned-optional-dependent-handling).
 
 ## Medium-impact changes
 
@@ -124,6 +192,36 @@ The default OnDelete() behavior of optional relationships is ClientSetNull. Its 
 You can choose to either apply these operations or manually remove them from the migration since they have no functional impact on EF Core.
 
 SQL Server doesn't support RESTRICT, so these foreign keys were already created using NO ACTION. The migration operations will have no affect on SQL Server and are safe to remove.
+
+<a name="in-memory-required"></a>
+
+### In-memory database validates required properties do not contain nulls
+
+[Tracking Issue #10613](https://github.com/dotnet/efcore/issues/10613)
+
+#### Old behavior
+
+The in-memory database allowed saving null values even when the property was configured as required.
+
+#### New behavior
+
+The in-memory database throws a `Microsoft.EntityFrameworkCore.DbUpdateException` when `SaveChanges` or `SaveChangesAsync` is called and a required property is set to null.
+
+#### Why
+
+The in-memory database behavior now matches the behavior of other databases.
+
+#### Mitigations
+
+The previous behavior (i.e. not checking null values) can be restored when configuring the in-memory provider. For example:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    optionsBuilder
+        .UseInMemoryDatabase("MyDatabase", b => b.EnableNullChecks(false));
+}
+```
 
 <a name="last-order-by"></a>
 
@@ -433,3 +531,101 @@ The returned builder object wasn't typed correctly.
 #### Mitigations
 
 Recompiling your assembly against the latest version of EF Core will be enough to fix any issues caused by this change.
+
+<a name="overwrite-navigations"></a>
+
+### Pre-initialized navigations are overridden by values from database queries
+
+[Tracking Issue #23851](https://github.com/dotnet/efcore/issues/23851)
+
+#### Old behavior
+
+Navigation properties set to an empty object were left unchanged for tracking queries, but were overwritten for non-tracking queries. For example, consider the following entity types:
+
+```csharp
+public class Foo
+{
+    public int Id { get; set; }
+
+    public Bar Bar { get; set; } = new(); // Don't do this.
+}
+
+public class Bar
+{
+    public int Id { get; set; }
+}
+```
+
+A no-tracking query for `Foo` including `Bar` set `Foo.Bar` to the entity queried from the database. For example, this code:
+
+```csharp
+var foo = context.Foos.AsNoTracking().Include(e => e.Bar).Single();
+Console.WriteLine($"Foo.Bar.Id = {foo.Bar.Id}");
+```
+
+Printed `Foo.Bar.Id = 1`.
+
+However, the same query run for tracking didn't overwrite `Foo.Bar` with the entity queried from the database. For example, this code:
+
+```csharp
+var foo = context.Foos.Include(e => e.Bar).Single();
+Console.WriteLine($"Foo.Bar.Id = {foo.Bar.Id}");
+```
+
+Printed `Foo.Bar.Id = 0`.
+
+#### New behavior
+
+In EF Core 6.0, the behavior of tracking queries now matches that of no-tracking queries. This means that both this code:
+
+```csharp
+var foo = context.Foos.AsNoTracking().Include(e => e.Bar).Single();
+Console.WriteLine($"Foo.Bar.Id = {foo.Bar.Id}");
+```
+
+And this code:
+
+```csharp
+var foo = context.Foos.Include(e => e.Bar).Single();
+Console.WriteLine($"Foo.Bar.Id = {foo.Bar.Id}");
+```
+
+Print `Foo.Bar.Id = 1`.
+
+#### Why
+
+There are two reasons for making this change:
+
+1. To ensure that tracking and no-tracking queries have consistent behavior.
+2. When a database is queried it is reasonable to assume that the application code wants to get back the values that are stored in the database.
+
+#### Mitigations
+
+There are two mitigations:
+
+1. Do not query for objects from the database that should not be included in the results. For example, in the code snippets above, do not `Include` `Foo.Bar` if the `Bar` instance should not be returned from the database and included in the results.
+2. Set the value of the navigation after querying from the database. For example, in the code snippets above, call `foo.Bar = new()` after running the query.
+
+Also, consider not initializing related entity instances to default objects. This implies that the related instance is a new entity, not saved to the database, with no key value set. If instead the related entity does exist in the database, then the data in code is fundamentally at odds with the data stored in the database.
+
+<a name="unknown-emums"></a>
+
+### Unknown enum string values in the database are not converted to the enum default when queried
+
+[Tracking Issue #24084](https://github.com/dotnet/efcore/issues/24084)
+
+#### Old behavior
+
+Enum properties can be mapped to string columns in the database using `HasConversion<string>()` or `EnumToStringConverter`. This results in EF Core converting string values in the column to matching members of the .NET enum type. However, if the string value did not match and enum member, then the property was set to the default value for the enum.
+
+#### New behavior
+
+EF Core 6.0 now throws an `InvalidOperationException` with the message "Cannot convert string value '`{value}`' from the database to any value in the mapped '`{enumType}`' enum."
+
+#### Why
+
+Converting to the default value can result in database corruption if the entity is later saved back to the database.
+
+#### Mitigations
+
+Ideally, ensure that the database column only contains valid values. Alternately, implement a `ValueConverter` with the old behavior.
