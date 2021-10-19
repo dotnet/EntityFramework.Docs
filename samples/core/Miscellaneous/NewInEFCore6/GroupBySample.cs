@@ -27,14 +27,14 @@ public static class GroupBySample
                         .FirstOrDefault())
                 .ToList();
             #endregion
-        
+
             Console.WriteLine();
-        
+
             foreach (var person in people)
             {
                 Console.WriteLine($"{person.FirstName} {person.MiddleInitial} {person.LastName} has {person.Shoes.Count} pairs of shoes.");
             }
-        
+
             Console.WriteLine();
         }
 
@@ -53,7 +53,7 @@ public static class GroupBySample
                 .Select(g => g.First())
                 .First();
             #endregion
-        
+
             Console.WriteLine();
             Console.WriteLine($"First name: {group.FirstName} Full name: {group.FullName}");
             Console.WriteLine();
@@ -70,17 +70,17 @@ public static class GroupBySample
                 .OrderBy(e => e.Length)
                 .ToList();
             #endregion
-        
+
             Console.WriteLine();
-        
+
             foreach (var person in people)
             {
                 Console.WriteLine(person);
             }
-        
+
             Console.WriteLine();
         }
-        
+
         // Example 4: From #18037
         using (var context = new ShoesContext())
         {
@@ -97,17 +97,17 @@ public static class GroupBySample
                            })
                 .ToList();
             #endregion
-        
+
             Console.WriteLine();
-            
+
             foreach (var result in results)
             {
                 Console.WriteLine($"{result.Key}: {result.Style} Count: {result.Count}");
             }
-            
+
             Console.WriteLine();
         }
-        
+
         // Example 5. From #12601
         using (var context = new ShoesContext())
         {
@@ -118,17 +118,17 @@ public static class GroupBySample
                 .OrderBy(e => e)
                 .ToList();
             #endregion
-        
+
             Console.WriteLine();
-            
+
             foreach (var result in results)
             {
                 Console.WriteLine(result);
             }
-        
+
             Console.WriteLine();
         }
-        
+
         // Example 6. From #12600
         using (var context = new ShoesContext())
         {
@@ -139,17 +139,17 @@ public static class GroupBySample
                 .OrderBy(e => e)
                 .ToList();
             #endregion
-        
+
             Console.WriteLine();
-        
+
             foreach (var result in results)
             {
                 Console.WriteLine(result);
             }
-        
+
             Console.WriteLine();
         }
-        
+
         // Example 7. From #25460
         using (var context = new ShoesContext())
         {
@@ -176,17 +176,17 @@ public static class GroupBySample
                         })
                     .ToList();
             #endregion
-        
+
             Console.WriteLine();
-            
+
             foreach (var result in results)
             {
                 Console.WriteLine($"Last name = {result.LastName} Min = {result.Min} Size = {result.Size}");
             }
-            
+
             Console.WriteLine();
         }
-        
+
         // Example 8. From #24869
         using (var context = new ShoesContext())
         {
@@ -211,148 +211,167 @@ public static class GroupBySample
                     })
                 .Count();
             #endregion
-            
+
             Console.WriteLine();
             Console.WriteLine($"Count = {result}");
             Console.WriteLine();
         }
-        
+
         // Example 9. From #24591
         using (var context = new ShoesContext())
         {
             #region GroupBy9
             var results = context.People
                 .GroupBy(n => n.FirstName)
-                .Select(g => new 
+                .Select(g => new
                 {
                     Feet = g.Key,
-                    Total = g.Sum(n => n.Feet.Size) 
+                    Total = g.Sum(n => n.Feet.Size)
                 })
                 .ToList();
             #endregion
-           
+
             Console.WriteLine();
-            
+
             foreach (var result in results)
             {
                 Console.WriteLine($"{result.Feet}: {result.Total}");
             }
-            
+
             Console.WriteLine();
         }
 
-        // // Sample 10. Returns incorrect results in RC1. From #24695 closed as duplicate of #13805.
-        // using (var context = new ShoesContext())
-        // {
-        //     var results = from Person person1
-        //                       in from Person person2
-        //                              in context.People
-        //                          select person2
-        //                   join Shoes shoes
-        //                       in context.Shoes
-        //                       on person1.Age equals shoes.Age
-        //                   group shoes by
-        //                       new
-        //                       {
-        //                           person1.Id,
-        //                           shoes.Style,
-        //                           shoes.Age
-        //                       }
-        //                   into temp
-        //                   select
-        //                       new
-        //                       {
-        //                           temp.Key.Id,
-        //                           temp.Key.Age,
-        //                           temp.Key.Style,
-        //                           Values = from t
-        //                                        in temp
-        //                                    select
-        //                                        new
-        //                                        {
-        //                                            t.Id, 
-        //                                            t.Style,
-        //                                            t.Age
-        //                                        }
-        //                       };
-        //     
-        //     foreach (var result in results)
-        //     {
-        //         Console.WriteLine($"{result.Id}: {result.Age} year old {result.Style}");
-        //         foreach (var value in result.Values)
-        //         {
-        //             Console.WriteLine($"    {value.Id}: {value.Age} year old {value.Style}");
-        //         }
-        //     }
-        // }
+        // Sample 10. From #24695 closed as duplicate of #13805.
+        using (var context = new ShoesContext())
+        {
+            #region GroupBy10
+            var results = from Person person1
+                              in from Person person2
+                                     in context.People
+                                 select person2
+                          join Shoes shoes
+                              in context.Shoes
+                              on person1.Age equals shoes.Age
+                          group shoes by
+                              new
+                              {
+                                  person1.Id,
+                                  shoes.Style,
+                                  shoes.Age
+                              }
+                          into temp
+                          select
+                              new
+                              {
+                                  temp.Key.Id,
+                                  temp.Key.Age,
+                                  temp.Key.Style,
+                                  Values = from t
+                                               in temp
+                                           select
+                                               new
+                                               {
+                                                   t.Id,
+                                                   t.Style,
+                                                   t.Age
+                                               }
+                              };
+            #endregion
 
-        // // Sample 11. Returns incorrect results in RC1. From #19506 closed as duplicate of #13805.
-        // using (var context = new ShoesContext())
-        // {
-        //     var grouping = context.People
-        //         .GroupBy(i => i.LastName)
-        //         .Select(g => new { LastName = g.Key, Count = g.Count() , First = g.FirstOrDefault(), Take = g.Take(2)})
-        //         .OrderByDescending(e => e.LastName)
-        //         .ToList();
-        //     
-        //     foreach (var group in grouping)
-        //     {
-        //         Console.WriteLine($"LastName: {group.LastName} Count: {group.Count} First: {group.First.FirstName} {group.First.MiddleInitial} {group.First.LastName}");
-        //
-        //         foreach (var person in group.Take)
-        //         {
-        //             Console.WriteLine($"    {person.FirstName} {person.MiddleInitial} {person.LastName}");
-        //         }
-        //     }
-        // }
+            Console.WriteLine();
 
-        // // Sample 12. Returns incorrect results in RC1. From #13805
-        // using (var context = new ShoesContext())
-        // {
-        //     var grouping = context.People
-        //         .Include(e => e.Shoes)
-        //         .OrderBy(e => e.FirstName)
-        //         .ThenBy(e => e.LastName)
-        //         .GroupBy(e => e.FirstName)
-        //         .Select(g => new { Name = g.Key, People = g.ToList()})
-        //         .ToList();
-	       //
-        //     foreach (var group in grouping)
-        //     {
-        //         foreach (var person in group.People)
-        //         {
-        //             Console.WriteLine($"{person.FirstName} {person.LastName} has {person.Shoes.Count} pairs of shoes.");
-        //         }
-        //     }
-        // }
-        
-        // // Sample 13. Returns incorrect results in RC1. From #12088
-        // using (var context = new ShoesContext())
-        // {
-        //     var grouping = context.People
-        //         .GroupBy(m => new {m.FirstName, m.MiddleInitial })
-        //         .Select(am => new
-        //         {
-        //             Key = am.Key,
-        //             Items = am.ToList()
-        //         })
-        //         .ToList();
-        //     
-        //     
-        //     Console.WriteLine();
-        //
-        //     foreach (var group in grouping)
-        //     {
-        //         Console.WriteLine($"Group: {group.Key}");
-        //     
-        //         foreach (var person in group.Items)
-        //         {
-        //             Console.WriteLine($"    {person.FirstName} {person.MiddleInitial} {person.LastName}");
-        //         }
-        //     }
-        //
-        //     Console.WriteLine();
-        // }
+            foreach (var result in results)
+            {
+                Console.WriteLine($"{result.Id}: {result.Age} year old {result.Style}");
+                foreach (var value in result.Values)
+                {
+                    Console.WriteLine($"    {value.Id}: {value.Age} year old {value.Style}");
+                }
+            }
+
+            Console.WriteLine();
+        }
+
+        // Sample 11. From #19506 closed as duplicate of #13805.
+        using (var context = new ShoesContext())
+        {
+            #region GroupBy11
+            var grouping = context.People
+                .GroupBy(i => i.LastName)
+                .Select(g => new { LastName = g.Key, Count = g.Count() , First = g.FirstOrDefault(), Take = g.Take(2)})
+                .OrderByDescending(e => e.LastName)
+                .ToList();
+            #endregion
+
+            Console.WriteLine();
+
+            foreach (var group in grouping)
+            {
+                Console.WriteLine($"LastName: {group.LastName} Count: {group.Count} First: {group.First.FirstName} {group.First.MiddleInitial} {group.First.LastName}");
+
+                foreach (var person in group.Take)
+                {
+                    Console.WriteLine($"    {person.FirstName} {person.MiddleInitial} {person.LastName}");
+                }
+            }
+
+            Console.WriteLine();
+        }
+
+        // Sample 12. From #13805
+        using (var context = new ShoesContext())
+        {
+            #region GroupBy12
+            var grouping = context.People
+                .Include(e => e.Shoes)
+                .OrderBy(e => e.FirstName)
+                .ThenBy(e => e.LastName)
+                .GroupBy(e => e.FirstName)
+                .Select(g => new { Name = g.Key, People = g.ToList()})
+                .ToList();
+            #endregion
+
+            Console.WriteLine();
+
+            foreach (var group in grouping)
+            {
+                foreach (var person in group.People)
+                {
+                    Console.WriteLine($"{person.FirstName} {person.LastName} has {person.Shoes.Count} pairs of shoes.");
+                }
+            }
+
+            Console.WriteLine();
+        }
+
+        // Sample 13. From #12088
+        using (var context = new ShoesContext())
+        {
+            #region GroupBy13
+            var grouping = context.People
+                .GroupBy(m => new {m.FirstName, m.MiddleInitial })
+                .Select(am => new
+                {
+                    Key = am.Key,
+                    Items = am.ToList()
+                })
+                .ToList();
+            #endregion
+
+            Console.WriteLine();
+
+            foreach (var group in grouping)
+            {
+                Console.WriteLine($"Group: {group.Key}");
+
+                foreach (var person in group.Items)
+                {
+                    Console.WriteLine($"    {person.FirstName} {person.MiddleInitial} {person.LastName}");
+                }
+            }
+
+            Console.WriteLine();
+        }
     }
 
     public static class Helpers
