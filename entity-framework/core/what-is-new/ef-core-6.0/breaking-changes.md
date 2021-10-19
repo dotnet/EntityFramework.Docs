@@ -493,23 +493,23 @@ public class Bar
 }
 ```
 
-A no-tracking query for `Foo` including `Bar` sets `Foo.Bar` to the entity queried from the database. For example, this code:
+A no-tracking query for `Foo` including `Bar` set `Foo.Bar` to the entity queried from the database. For example, this code:
 
 ```csharp
 var foo = context.Foos.AsNoTracking().Include(e => e.Bar).Single();
 Console.WriteLine($"Foo.Bar.Id = {foo.Bar.Id}");
 ```
 
-Prints `Foo.Bar.Id = 1`.
+Printed `Foo.Bar.Id = 1`.
 
-However, the same query run for tracking does not overwrite `Foo.Bar` with the entity queried from the database. For example, this code:
+However, the same query run for tracking didn't overwrite `Foo.Bar` with the entity queried from the database. For example, this code:
 
 ```csharp
 var foo = context.Foos.Include(e => e.Bar).Single();
 Console.WriteLine($"Foo.Bar.Id = {foo.Bar.Id}");
 ```
 
-Prints `Foo.Bar.Id = 0`.
+Printed `Foo.Bar.Id = 0`.
 
 #### New behavior
 
@@ -553,11 +553,11 @@ Also, consider not initializing related entity instances to default objects. Thi
 
 #### Old behavior
 
-Enum properties can be mapped to string columns in the database using `HasConversion<string>()` or `EnumToStringConverter`. This results in EF Core converting string values in the column to matching members of the .NET enum type. However, if the string value did not match and enum member, then the property would be set to the default value for the enum.
+Enum properties can be mapped to string columns in the database using `HasConversion<string>()` or `EnumToStringConverter`. This results in EF Core converting string values in the column to matching members of the .NET enum type. However, if the string value did not match and enum member, then the property was set to the default value for the enum.
 
 #### New behavior
 
-EF Core 6.0 will throw an `InvalidOperationException` with the message "Cannot convert string value '`{value}`' from the database to any value in the mapped '`{enumType}`' enum."
+EF Core 6.0 now throws an `InvalidOperationException` with the message "Cannot convert string value '`{value}`' from the database to any value in the mapped '`{enumType}`' enum."
 
 #### Why
 
