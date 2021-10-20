@@ -10,12 +10,13 @@
         "XML"
     ],
     "cSpell.words": [
-        "LINQ",
         "dbcontext",
         "denormalization",
         "idempotency",
+        "LINQ",
         "mitigations",
         "navigations",
+        "overridable",
         "parameterizable",
         "pluralizer",
         "queryable",
