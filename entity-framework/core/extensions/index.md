@@ -322,8 +322,7 @@ Extension for Entity Framework that allows you to create and manage multiple que
 ### Pagination.EntityFrameworkCore.Extensions
 
 This is a library for Pagination on EntityFrameworkCore. Works well with Entity Framework Core as an extension, and supports both asynchronous and synchronous.
-It also has many useful features commonly used especially on web development. For EF Core 2, 3, 5.
+It also has many useful features commonly used especially on web development. For EF Core: 2, 3, 5.
 
-[Examples and documentation](https://github.com/SitholeWB/Pagination.EntityFrameworkCore.Extensions)
 [GitHub repository](https://github.com/SitholeWB/Pagination.EntityFrameworkCore.Extensions)
 [NuGet](https://www.nuget.org/packages/Pagination.EntityFrameworkCore.Extensions)
