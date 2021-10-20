@@ -60,14 +60,6 @@ Entity Framework Core Generator (efg) is a .NET Core CLI tool that can generate 
 
 ## Extensions
 
-### Pagination.EntityFrameworkCore.Extensions
-
-This is a library for Pagination on EntityFrameworkCore. Works well with Entity Framework Core as an extension, support both asynchronous and synchronous.
-It also has many useful features commonly used especially on web development, [examples and documentation here](https://github.com/SitholeWB/Pagination.EntityFrameworkCore.Extensions)
-`Microsoft.EntityFrameworkCore (>= 2.1.1)` `.NETStandard 2.1`
-
-[GitHub repository](https://github.com/SitholeWB/Pagination.EntityFrameworkCore.Extensions) or [NuGet](https://www.nuget.org/packages/Pagination.EntityFrameworkCore.Extensions)
-
 ### Microsoft.EntityFrameworkCore.AutoHistory
 
 A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 2, 3, 5.
@@ -290,8 +282,8 @@ Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() 
 
 Provides the `SqlQueryAsync<T>` and `SqlQueryValueAsync<T>` methods to help you populate arbitrary classes or a list of primitive types from a raw SQL query. For EF Core: 5.
 
-[GitHub repository](https://github.com/ErikEJ/EFCorePowerTools)  
-  
+[GitHub repository](https://github.com/ErikEJ/EFCorePowerTools)
+
 ### EntityFramework.Exceptions
 
 When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`,
@@ -326,3 +318,12 @@ Adds VB design-time support to EF Core. For EF Core: 5.
 Extension for Entity Framework that allows you to create and manage multiple query filters. For EF Core: 5.
 
 [GitHub repository](https://github.com/Krzysztofz01/EFCore.QueryFilterBuilder)
+
+### Pagination.EntityFrameworkCore.Extensions
+
+This is a library for Pagination on EntityFrameworkCore. Works well with Entity Framework Core as an extension, and supports both asynchronous and synchronous.
+It also has many useful features commonly used especially on web development. For EF Core 2, 3, 5.
+
+[Examples and documentation](https://github.com/SitholeWB/Pagination.EntityFrameworkCore.Extensions)
+[GitHub repository](https://github.com/SitholeWB/Pagination.EntityFrameworkCore.Extensions)
+[NuGet](https://www.nuget.org/packages/Pagination.EntityFrameworkCore.Extensions)
