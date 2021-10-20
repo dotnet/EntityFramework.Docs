@@ -2854,7 +2854,7 @@ public class CurrencyToSymbolConverter : ValueConverter<Currency, string>
 -->
 [!code-csharp[CurrencyConverter](../../../../samples/core/Miscellaneous/NewInEFCore6/HasConversionSample.cs?name=CurrencyConverter)]
 
-This can bow be configured using the generic `HasConversion` method:
+This can now be configured using the generic `HasConversion` method:
 
 <!--
 modelBuilder.Entity<TestEntity3>()
