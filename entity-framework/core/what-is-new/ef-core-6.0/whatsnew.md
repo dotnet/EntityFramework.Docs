@@ -3150,6 +3150,143 @@ Instances are returned to the pool when they are disposed.
 
 And finally, EF Core contains several improvements in areas not covered above.
 
+### Use [ColumnAttribute.Order] when creating tables
+
+GitHub Issue: [#10059](https://github.com/dotnet/efcore/issues/10059).
+
+The `Order` property of `ColumnAttribute` can now be used to order columns when creating a table with migrations. For example, consider the following model:
+
+<!--
+public class EntityBase
+{
+    public int Id { get; set; }
+    public DateTime UpdatedOn { get; set; }
+    public DateTime CreatedOn { get; set; }
+}
+
+public class PersonBase : EntityBase
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+}
+
+public class Employee : PersonBase
+{
+    public string Department { get; set; }
+    public decimal AnnualSalary { get; set; }
+    public Address Address { get; set; }
+}
+
+[Owned]
+public class Address
+{
+    public string House { get; set; }
+    public string Street { get; set; }
+    public string City { get; set; }
+
+    [Required]
+    public string Postcode { get; set; }
+}
+-->
+[!code-csharp[WithoutOrdering](../../../../samples/core/Miscellaneous/NewInEFCore6/ColumnOrderSample.cs?name=WithoutOrdering)]
+
+By default, EF Core orders primary key columns first, following by properties of the entity type and owned types, and finally properties from base types. For example, the following table is created on SQL Server:
+
+```sql
+CREATE TABLE [EmployeesWithoutOrdering] (
+    [Id] int NOT NULL IDENTITY,
+    [Department] nvarchar(max) NULL,
+    [AnnualSalary] decimal(18,2) NOT NULL,
+    [Address_House] nvarchar(max) NULL,
+    [Address_Street] nvarchar(max) NULL,
+    [Address_City] nvarchar(max) NULL,
+    [Address_Postcode] nvarchar(max) NULL,
+    [UpdatedOn] datetime2 NOT NULL,
+    [CreatedOn] datetime2 NOT NULL,
+    [FirstName] nvarchar(max) NULL,
+    [LastName] nvarchar(max) NULL,
+    CONSTRAINT [PK_EmployeesWithoutOrdering] PRIMARY KEY ([Id]));
+```
+
+In EF Core 6.0, `ColumnAttribute` can be used to specify a different column order. For example:
+
+<!--
+public class EntityBase
+{
+    [Column(Order = 1)]
+    public int Id { get; set; }
+
+    [Column(Order = 98)]
+    public DateTime UpdatedOn { get; set; }
+
+    [Column(Order = 99)]
+    public DateTime CreatedOn { get; set; }
+}
+
+public class PersonBase : EntityBase
+{
+    [Column(Order = 2)]
+    public string FirstName { get; set; }
+
+    [Column(Order = 3)]
+    public string LastName { get; set; }
+}
+
+public class Employee : PersonBase
+{
+    [Column(Order = 20)]
+    public string Department { get; set; }
+
+    [Column(Order = 21)]
+    public decimal AnnualSalary { get; set; }
+
+    public Address Address { get; set; }
+}
+
+[Owned]
+public class Address
+{
+    [Column("House", Order = 10)]
+    public string House { get; set; }
+
+    [Column("Street", Order = 11)]
+    public string Street { get; set; }
+
+    [Column("City", Order = 12)]
+    public string City { get; set; }
+
+    [Required]
+    [Column("Postcode", Order = 13)]
+    public string Postcode { get; set; }
+}
+-->
+[!code-csharp[WithOrdering](../../../../samples/core/Miscellaneous/NewInEFCore6/ColumnOrderSample.cs?name=WithOrdering)]
+
+On SQL Server, the table generated is now:
+
+```sql
+CREATE TABLE [EmployeesWithOrdering] (
+    [Id] int NOT NULL IDENTITY,
+    [FirstName] nvarchar(max) NULL,
+    [LastName] nvarchar(max) NULL,
+    [House] nvarchar(max) NULL,
+    [Street] nvarchar(max) NULL,
+    [City] nvarchar(max) NULL,
+    [Postcode] nvarchar(max) NULL,
+    [Department] nvarchar(max) NULL,
+    [AnnualSalary] decimal(18,2) NOT NULL,
+    [UpdatedOn] datetime2 NOT NULL,
+    [CreatedOn] datetime2 NOT NULL,
+    CONSTRAINT [PK_EmployeesWithOrdering] PRIMARY KEY ([Id]));
+```
+
+This moves the `FistName` and `LastName` columns are moved to the top, even though they are defined in a base type. Notice that the column order values can have gaps, allowing ranges to be used to always place columns at the end, even when used by multiple derived types.
+
+This example also shows how the same `ColumnAttribute` can be used to specify both the column name and order.
+
+> [!IMPORTANT]
+> Note that, in the general case, most databases only support ordering columns when the table is created. This means that the column order attribute cannot be used to re-order columns in an existing table. One notable exception to this is SQLite, where migrations will rebuild the entire table with new column orders.
+
 ### EF Core Minimal API
 
 GitHub Issue: [#25192](https://github.com/dotnet/efcore/issues/25192).

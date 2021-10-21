@@ -42,6 +42,7 @@
         ScaffoldingSample.Reverse_engineer_from_database();
         ManyToManyConfigurationSample.Many_to_many_relationships_may_need_less_configuration();
         ConvertNullsSample.Value_converters_can_convert_nulls();
+        ColumnOrderSample.Can_use_ColumnAttribute_to_set_column_order();
 
         SqliteSamples.SavepointsApi();
         SqliteSamples.ConnectionPooling();
