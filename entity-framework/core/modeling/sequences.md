@@ -16,7 +16,7 @@ A sequence generates unique, sequential numeric values in the database. Sequence
 
 You can set up a sequence in the model, and then use it to generate values for properties:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Sequence.cs?name=Sequence&highlight=3,7)]
+[!code-csharp[Main](../../../samples/core/Modeling/Sequences/Sequence.cs?name=Sequence&highlight=3,7)]
 
 Note that the specific SQL used to generate a value from a sequence is database-specific; the above example works on SQL Server but will fail on other databases. Consult your specific database's documentation for more information.
 
@@ -24,4 +24,4 @@ Note that the specific SQL used to generate a value from a sequence is database-
 
 You can also configure additional aspects of the sequence, such as its schema, start value, increment, etc.:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/SequenceConfiguration.cs?name=SequenceConfiguration&highlight=3-5)]
+[!code-csharp[Main](../../../samples/core/Modeling/Sequences/SequenceConfiguration.cs?name=SequenceConfiguration&highlight=3-5)]

@@ -18,11 +18,11 @@ Keyless entity types can be defined using either the Data Annotation or the Flue
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Keyless.cs?Name=Keyless&highlight=1)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/DataAnnotations/Keyless.cs?Name=Keyless&highlight=1)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Keyless.cs?Name=Keyless&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/FluentAPI/Keyless.cs?Name=Keyless&highlight=4)]
 
 ***
 
@@ -68,28 +68,28 @@ The following example shows how to use keyless entity types to query a database 
 
 First, we define a simple Blog and Post model:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#Entities)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#Entities)]
 
 Next, we define a simple database view that will allow us to query the number of posts associated with each blog:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#View)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#View)]
 
 Next, we define a class to hold the result from the database view:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#KeylessEntityType)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#KeylessEntityType)]
 
 Next, we configure the keyless entity type in _OnModelCreating_ using the `HasNoKey` API.
 We use fluent configuration API to configure the mapping for the keyless entity type:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#Configuration)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#Configuration)]
 
 Next, we configure the `DbContext` to include the `DbSet<T>`:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#DbSet)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#DbSet)]
 
 Finally, we can query the database view in the standard way:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#Query)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#Query)]
 
 > [!TIP]
 > Note we have also defined a context level query property (DbSet) to act as a root for queries against this type.

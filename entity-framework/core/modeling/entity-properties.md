@@ -17,11 +17,11 @@ Specific properties can be excluded as follows:
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/IgnoreProperty.cs?name=IgnoreProperty&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/IgnoreProperty.cs?name=IgnoreProperty&highlight=6)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IgnoreProperty.cs?name=IgnoreProperty&highlight=3,4)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/IgnoreProperty.cs?name=IgnoreProperty&highlight=3,4)]
 
 ***
 
@@ -33,11 +33,11 @@ If you prefer to configure your columns with different names, you can do so as f
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnName.cs?Name=ColumnName&highlight=3)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/ColumnName.cs?Name=ColumnName&highlight=3)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnName.cs?Name=ColumnName&highlight=3-5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/ColumnName.cs?Name=ColumnName&highlight=3-5)]
 
 ***
 
@@ -51,11 +51,11 @@ You can also configure your columns to specify an exact data type for a column. 
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnDataType.cs?name=ColumnDataType&highlight=5,8)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/ColumnDataType.cs?name=ColumnDataType&highlight=5,8)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnDataType.cs?name=ColumnDataType&highlight=6-7)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/ColumnDataType.cs?name=ColumnDataType&highlight=6-7)]
 
 ***
 
@@ -70,11 +70,11 @@ In the following example, configuring a maximum length of 500 will cause a colum
 
 #### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/MaxLength.cs?name=MaxLength&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/MaxLength.cs?name=MaxLength&highlight=5)]
 
 #### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/MaxLength.cs?name=MaxLength&highlight=3-5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/MaxLength.cs?name=MaxLength&highlight=3-5)]
 
 ***
 
@@ -92,7 +92,7 @@ In the following example, configuring the `Score` property to have precision 14 
 > [!NOTE]
 > The Data Annotation for configuring precision and scale was introduced in EF Core 6.0.
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=4,6)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=4,6)]
 
 Scale is never defined without first defining precision, so the Data Annotation for defining the scale is `[Precision(precision, scale)]`.
 
@@ -101,7 +101,7 @@ Scale is never defined without first defining precision, so the Data Annotation 
 > [!NOTE]
 > The Fluent API for configuring precision and scale was introduced in EF Core 5.0.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=5,9)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=5,9)]
 
 Scale is never defined without first defining precision, so the Fluent API for defining the scale is `HasPrecision(precision, scale)`.
 
@@ -118,11 +118,11 @@ Text properties are configured as Unicode by default. You can configure a column
 > [!NOTE]
 > The Data Annotation for configuring Unicode was introduced in EF Core 6.0.
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Unicode.cs?name=Unicode&highlight=6-7)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/Unicode.cs?name=Unicode&highlight=6-7)]
 
 #### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Unicode.cs?name=Unicode&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/Unicode.cs?name=Unicode&highlight=5)]
 
 ***
 
@@ -164,11 +164,11 @@ A property that would be optional by convention can be configured to be required
 
 #### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Required.cs?name=Required&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/Required.cs?name=Required&highlight=5)]
 
 #### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Required.cs?name=Required&highlight=3-5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/Required.cs?name=Required&highlight=3-5)]
 
 ***
 
@@ -194,10 +194,10 @@ You can set an arbitrary text comment that gets set on the database column, allo
 > [!NOTE]
 > Setting comments via data annotations was introduced in EF Core 5.0.
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnComment.cs?name=ColumnComment&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/ColumnComment.cs?name=ColumnComment&highlight=5)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnComment.cs?name=ColumnComment&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/ColumnComment.cs?name=ColumnComment&highlight=5)]
 
 ***

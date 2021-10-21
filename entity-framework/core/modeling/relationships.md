@@ -36,7 +36,7 @@ There are a number of terms used to describe relationships
 
 The following code shows a one-to-many relationship between `Blog` and `Post`
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs#Full)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/Full.cs#Full)]
 
 * `Post` is the dependent entity
 
@@ -71,7 +71,7 @@ The most common pattern for relationships is to have navigation properties defin
   * `<principal entity name><principal key property name>`
   * `<principal entity name>Id`
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs?name=Full&highlight=6,15-16)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/Full.cs?name=Full&highlight=6,15-16)]
 
 In this example the highlighted properties will be used to configure the relationship.
 
@@ -85,7 +85,7 @@ In this example the highlighted properties will be used to configure the relatio
 
 While it is recommended to have a foreign key property defined in the dependent entity class, it is not required. If no foreign key property is found, a [shadow foreign key property](xref:core/modeling/shadow-properties) will be introduced with the name `<navigation property name><principal key property name>` or `<principal entity name><principal key property name>` if no navigation is present on the dependent type.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=6,15)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=6,15)]
 
 In this example, the shadow foreign key is `BlogId` because prepending the navigation name would be redundant.
 
@@ -96,7 +96,7 @@ In this example, the shadow foreign key is `BlogId` because prepending the navig
 
 Including just one navigation property (no inverse navigation, and no foreign key property) is enough to have a relationship defined by convention. You can also have a single navigation property and a foreign key property.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/OneNavigation.cs?name=OneNavigation&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/OneNavigation.cs?name=OneNavigation&highlight=6)]
 
 ### Limitations
 
@@ -116,13 +116,13 @@ See [Cascade Delete](xref:core/saving/cascade-delete) for more details about the
 
 To configure a relationship in the Fluent API, you start by identifying the navigation properties that make up the relationship. `HasOne` or `HasMany` identifies the navigation property on the entity type you are beginning the configuration on. You then chain a call to `WithOne` or `WithMany` to identify the inverse navigation. `HasOne`/`WithOne` are used for reference navigation properties and `HasMany`/`WithMany` are used for collection navigation properties.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=8-10)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/NoForeignKey.cs?name=NoForeignKey&highlight=8-10)]
 
 ### [Data annotations](#tab/data-annotations)
 
 You can use the Data Annotations to configure how navigation properties on the dependent and principal entities pair up. This is typically done when there is more than one pair of navigation properties between two entity types.
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/InverseProperty.cs?name=InverseProperty&highlight=20,23)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/DataAnnotations/InverseProperty.cs?name=InverseProperty&highlight=20,23)]
 
 > [!NOTE]
 > You can only use [Required] on properties on the dependent entity to impact the requiredness of the relationship. [Required] on the navigation from the principal entity is usually ignored, but it may cause the entity to become the dependent one.
@@ -136,7 +136,7 @@ You can use the Data Annotations to configure how navigation properties on the d
 
 If you only have one navigation property then there are parameterless overloads of `WithOne` and `WithMany`. This indicates that there is conceptually a reference or collection on the other end of the relationship, but there is no navigation property included in the entity class.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneNavigation.cs?name=OneNavigation&highlight=8-10)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/OneNavigation.cs?name=OneNavigation&highlight=8-10)]
 
 ---
 
@@ -147,7 +147,7 @@ If you only have one navigation property then there are parameterless overloads 
 
 After the navigation property has been created, you may need to further configure it.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
 
 > [!NOTE]
 > This call cannot be used to create a navigation property. It is only used to configure a navigation property which has been previously created by defining a relationship or from a convention.
@@ -158,19 +158,19 @@ After the navigation property has been created, you may need to further configur
 
 You can use the Fluent API to configure which property should be used as the foreign key property for a given relationship:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ForeignKey.cs?name=ForeignKey&highlight=11)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ForeignKey.cs?name=ForeignKey&highlight=11)]
 
 #### [Fluent API (composite key)](#tab/fluent-api-composite-key)
 
 You can use the Fluent API to configure which properties should be used as the composite foreign key properties for a given relationship:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositeForeignKey.cs?name=CompositeForeignKey&highlight=13)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/CompositeForeignKey.cs?name=CompositeForeignKey&highlight=13)]
 
 #### [Data annotations (simple key)](#tab/data-annotations-simple-key)
 
 You can use the Data Annotations to configure which property should be used as the foreign key property for a given relationship. This is typically done when the foreign key property is not discovered by convention:
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/ForeignKey.cs?name=ForeignKey&highlight=17)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/DataAnnotations/ForeignKey.cs?name=ForeignKey&highlight=17)]
 
 > [!TIP]
 > The `[ForeignKey]` annotation can be placed on either navigation property in the relationship. It does not need to go on the navigation property in the dependent entity class.
@@ -184,7 +184,7 @@ You can use the Data Annotations to configure which property should be used as t
 
 You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](xref:core/modeling/shadow-properties) for more information). We recommend explicitly adding the shadow property to the model before using it as a foreign key (as shown below).
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ShadowForeignKey.cs?name=ShadowForeignKey&highlight=10,16)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ShadowForeignKey.cs?name=ShadowForeignKey&highlight=10,16)]
 
 #### Foreign key constraint name
 
@@ -192,13 +192,13 @@ By convention, when targeting a relational database, foreign key constraints are
 
 You can also configure the constraint name as follows:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ConstraintName.cs?name=ConstraintName&highlight=6-7)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ConstraintName.cs?name=ConstraintName&highlight=6-7)]
 
 ### Without navigation property
 
 You don't necessarily need to provide a navigation property. You can simply provide a foreign key on one side of the relationship.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoNavigation.cs?name=NoNavigation&highlight=8-11)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/NoNavigation.cs?name=NoNavigation&highlight=8-11)]
 
 ### Principal key
 
@@ -206,11 +206,11 @@ If you want the foreign key to reference a property other than the primary key, 
 
 #### [Simple key](#tab/simple-key)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/PrincipalKey.cs?name=PrincipalKey&highlight=11)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/PrincipalKey.cs?name=PrincipalKey&highlight=11)]
 
 #### [Composite key](#tab/composite-key)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositePrincipalKey.cs?name=CompositePrincipalKey&highlight=11)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/CompositePrincipalKey.cs?name=CompositePrincipalKey&highlight=11)]
 
 > [!WARNING]
 > The order in which you specify principal key properties must match the order in which they are specified for the foreign key.
@@ -223,7 +223,7 @@ You can use the Fluent API to configure whether the relationship is required or 
 
 The foreign key properties are located on the dependent entity type, so if they are configured as required it means that every dependent entity is required to have a corresponding principal entity.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?name=Required&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/Required.cs?name=Required&highlight=6)]
 
 > [!NOTE]
 > Calling `IsRequired(false)` also makes the foreign key property optional unless it's configured otherwise.
@@ -234,7 +234,7 @@ You can use the Fluent API to configure the cascade delete behavior for a given 
 
 See [Cascade Delete](xref:core/saving/cascade-delete) for a detailed discussion of each option.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CascadeDelete.cs?name=CascadeDelete&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/CascadeDelete.cs?name=CascadeDelete&highlight=6)]
 
 ## Other relationship patterns
 
@@ -242,7 +242,7 @@ See [Cascade Delete](xref:core/saving/cascade-delete) for a detailed discussion 
 
 One to one relationships have a reference navigation property on both sides. They follow the same conventions as one-to-many relationships, but a unique index is introduced on the foreign key property to ensure only one dependent is related to each principal.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/OneToOne.cs?name=OneToOne&highlight=6,15-16)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOne&highlight=6,15-16)]
 
 > [!NOTE]
 > EF will choose one of the entities to be the dependent based on its ability to detect a foreign key property. If the wrong entity is chosen as the dependent, you can use the Fluent API to correct this.
@@ -251,7 +251,7 @@ When configuring the relationship with the Fluent API, you use the `HasOne` and 
 
 When configuring the foreign key you need to specify the dependent entity type - notice the generic parameter provided to `HasForeignKey` in the listing below. In a one-to-many relationship it is clear that the entity with the reference navigation is the dependent and the one with the collection is the principal. But this is not so in a one-to-one relationship - hence the need to explicitly define it.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneToOne.cs?name=OneToOne&highlight=11)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/OneToOne.cs?name=OneToOne&highlight=11)]
 
 The dependent side is considered optional by default, but can be configured as required. However EF will not validate whether a dependent entity was provided, so this configuration will only make a difference when the database mapping allows it to be enforced. A common scenario for this are reference owned types that use table splitting by default.
 
@@ -269,7 +269,7 @@ With this configuration the columns corresponding to `ShippingAddress` will be m
 
 Many to many relationships require a collection navigation property on both sides. They will be discovered by convention like other types of relationships.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=ManyToManyShared)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=ManyToManyShared)]
 
 The way this relationship is implemented in the database is by a join table that contains foreign keys to both `Post` and `Tag`. For example this is what EF will create in a relational database for the above model.
 
@@ -302,27 +302,27 @@ Internally, EF creates an entity type to represent the join table that will be r
 
 The many to many navigations are called skip navigations as they effectively skip over the join entity type. If you are employing bulk configuration all skip navigations can be obtained from <xref:Microsoft.EntityFrameworkCore.Metadata.IEntityType.GetSkipNavigations%2A>.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Metadata)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Metadata)]
 
 #### Join entity type configuration
 
 It is common to apply configuration to the join entity type. This action can be accomplished via `UsingEntity`.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=SharedConfiguration)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=SharedConfiguration)]
 
 [Model seed data](xref:core/modeling/data-seeding) can be provided for the join entity type by using anonymous types. You can examine the model debug view to determine the property names created by convention.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Seeding)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Seeding)]
 
 Additional data can be stored in the join entity type, but for this it's best to create a bespoke CLR type. When configuring the relationship with a custom join entity type both foreign keys need to be specified explicitly.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyPayload.cs?name=ManyToManyPayload)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyPayload.cs?name=ManyToManyPayload)]
 
 #### Joining relationships configuration
 
 EF uses two one-to-many relationships on the join entity type to represent the many-to-many relationship. You can configure these relationships in the `UsingEntity` arguments.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToManyShared.cs?name=Components)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Components)]
 
 > [!NOTE]
 > The ability to configure many-to-many relationships was introduced in EF Core 5.0, for previous version use the following approach.
@@ -331,7 +331,7 @@ EF uses two one-to-many relationships on the join entity type to represent the m
 
 You can also represent a many-to-many relationship by just adding the join entity type and mapping two separate one-to-many relationships.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=16-19,21-24)]
+[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToMany.cs?name=ManyToMany&highlight=16-19,21-24)]
 
 > [!NOTE]
 > Support for scaffolding many-to-many relationships from the database is not yet added. See [tracking issue](https://github.com/dotnet/efcore/issues/22475).

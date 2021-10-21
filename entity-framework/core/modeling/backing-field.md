@@ -20,7 +20,7 @@ By convention, the following fields will be discovered as backing fields for a g
 
 In the following sample, the `Url` property is configured to have `_url` as its backing field:
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/BackingField.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/BackingFields/BackingField.cs#Sample)]
 
 Note that backing fields are only discovered for properties that are included in the model. For more information on which properties are included in the model, see [Including & Excluding Properties](xref:core/modeling/entity-properties).
 
@@ -28,11 +28,11 @@ You can also configure backing fields by using a Data Annotation (available in E
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/BackingField.cs?name=BackingField&highlight=7)]
+[!code-csharp[Main](../../../samples/core/Modeling/BackingFields/DataAnnotations/BackingField.cs?name=BackingField&highlight=7)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs?name=BackingField&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/BackingFields/FluentAPI/BackingField.cs?name=BackingField&highlight=5)]
 
 ***
 
@@ -40,7 +40,7 @@ You can also configure backing fields by using a Data Annotation (available in E
 
 By default, EF will always read and write to the backing field - assuming one has been properly configured - and will never use the property. However, EF also supports other access patterns. For example, the following sample instructs EF to write to the backing field only while materializing, and to use the property in all other cases:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs?name=BackingFieldAccessMode&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Modeling/BackingFields/FluentAPI/BackingFieldAccessMode.cs?name=BackingFieldAccessMode&highlight=6)]
 
 See the [PropertyAccessMode enum](/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) for the complete set of supported options.
 
@@ -53,7 +53,7 @@ You can also create a conceptual property in your model that does not have a cor
 
 You can configure a field-only property by providing a name in the `Property(...)` API:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldNoProperty.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/BackingFields/FluentAPI/BackingFieldNoProperty.cs#Sample)]
 
 EF will attempt to find a CLR property with the given name, or a field if a property isn't found. If neither a property nor a field are found, a shadow property will be set up instead.
 

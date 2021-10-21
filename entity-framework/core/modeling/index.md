@@ -18,21 +18,21 @@ This article covers configuration that can be applied to a model targeting any d
 
 You can override the `OnModelCreating` method in your derived context and use the `ModelBuilder API` to configure your model. This is the most powerful method of configuration and allows configuration to be specified without modifying your entity classes. Fluent API configuration has the highest precedence and will override conventions and data annotations.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Required.cs?highlight=12-14)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/Required.cs?highlight=12-14)]
 
 ### Grouping configuration
 
 To reduce the size of the <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A> method all configuration for an entity type can be extracted to a separate class implementing <xref:Microsoft.EntityFrameworkCore.IEntityTypeConfiguration%601>.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/EntityTypeConfiguration.cs?Name=IEntityTypeConfiguration)]
+[!code-csharp[Main](../../../samples/core/Modeling/Misc/EntityTypeConfiguration.cs?Name=IEntityTypeConfiguration)]
 
 Then just invoke the `Configure` method from `OnModelCreating`.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/EntityTypeConfiguration.cs?Name=ApplyIEntityTypeConfiguration)]
+[!code-csharp[Main](../../../samples/core/Modeling/Misc/EntityTypeConfiguration.cs?Name=ApplyIEntityTypeConfiguration)]
 
 It is possible to apply all configuration specified in types implementing `IEntityTypeConfiguration` in a given assembly.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/EntityTypeConfiguration.cs?Name=ApplyConfigurationsFromAssembly)]
+[!code-csharp[Main](../../../samples/core/Modeling/Misc/EntityTypeConfiguration.cs?Name=ApplyConfigurationsFromAssembly)]
 
 > [!NOTE]
 > The order in which the configurations will be applied is undefined, therefore this method should only be used when the order doesn't matter.
@@ -41,4 +41,4 @@ It is possible to apply all configuration specified in types implementing `IEnti
 
 You can also apply attributes (known as Data Annotations) to your classes and properties. Data annotations will override conventions, but will be overridden by Fluent API configuration.
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Required.cs?highlight=16)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/Required.cs?highlight=16)]
