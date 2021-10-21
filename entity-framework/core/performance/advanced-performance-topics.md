@@ -85,7 +85,7 @@ Note that the delegate is thread-safe, and can be invoked concurrently on differ
 
 ### Limitations
 
-* Compiled queries may only be used against a single EF Core model. Different contexts can sometimes be configured to use different models; running compiled queries in this scenario is not supported.
+* Compiled queries may only be used against a single EF Core model. Different context instances of the same type can sometimes be configured to use different models; running compiled queries in this scenario is not supported.
 * When using parameters in compiled queries, use simple, scalar parameters. More complex parameter expressions - such as member/method accesses on instances - are not supported.
 
 ## Query caching and parameterization
