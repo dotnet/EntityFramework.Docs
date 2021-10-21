@@ -60,7 +60,7 @@ Context pooling is intended for scenarios where the context configuration, which
 
 ## Compiled queries
 
-When EF receives a LINQ query tree for execution, it must first "compile" that tree, e.g. produce SQL from it. Because this task is a heavy process, EF caches queries by the query tree shape: queries with the same structure reuse internally-cached compilation outputs, and can skip repeated compilation. This caching ensures that executing the same LINQ query multiple times is very fast, even if parameter values differ.
+When EF receives a LINQ query tree for execution, it must first "compile" that tree, e.g. produce SQL from it. Because this task is a heavy process, EF caches queries by the query tree shape, so that queries with the same structure reuse internally-cached compilation outputs. This caching ensures that executing the same LINQ query multiple times is very fast, even if parameter values differ.
 
 However, EF must still perform certain tasks before it can make use of the internal query cache. For example, your query's expression tree must be recursively compared with the expression trees of cached queries, to find the correct cached query. The overhead for this initial processing is negligible in the majority of EF applications, especially when compared to other costs associated with query execution (network I/O, actual query processing and disk I/O at the database...). However, in certain high-performance scenarios it may be desirable to eliminate it.
 
@@ -83,9 +83,14 @@ In this code sample, we provide EF with a lambda accepting a `DbContext` instanc
 
 Note that the delegate is thread-safe, and can be invoked concurrently on different context instances.
 
+### Limitations
+
+* Compiled queries may only be used against a single EF Core model. Different contexts can sometimes be configured to use different models; running compiled queries in this scenario is not supported.
+* When using parameters in compiled queries, use simple, scalar parameters. More complex parameter expressions - such as member/method accesses on instances - are not supported.
+
 ## Query caching and parameterization
 
-When EF receives a LINQ query tree for execution, it must first "compile" that tree into a SQL query. Because this is a heavy process, EF caches queries by the query tree *shape*: queries with the same structure reuse internally-cached compilation outputs, and can skip repeated compilation. The different queries may still reference different *values*, but as long as these values are properly parameterized, the structure is the same and caching will function properly.
+When EF receives a LINQ query tree for execution, it must first "compile" that tree, e.g. produce SQL from it. Because this task is a heavy process, EF caches queries by the query tree shape, so that queries with the same structure reuse internally-cached compilation outputs. This caching ensures that executing the same LINQ query multiple times is very fast, even if parameter values differ.
 
 Consider the following two queries:
 
