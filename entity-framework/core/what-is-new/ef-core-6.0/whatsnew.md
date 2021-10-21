@@ -3284,6 +3284,36 @@ This moves the `FistName` and `LastName` columns are moved to the top, even thou
 
 This example also shows how the same `ColumnAttribute` can be used to specify both the column name and order.
 
+Column ordering can also be configured using the `ModelBuilder` API in `OnModelCreating`. For example:
+
+<!--
+modelBuilder.Entity<UsingModelBuilder.Employee>(
+    entityBuilder =>
+    {
+        entityBuilder.Property(e => e.Id).HasColumnOrder(1);
+        entityBuilder.Property(e => e.FirstName).HasColumnOrder(2);
+        entityBuilder.Property(e => e.LastName).HasColumnOrder(3);
+
+        entityBuilder.OwnsOne(
+            e => e.Address,
+            ownedBuilder =>
+            {
+                ownedBuilder.Property(e => e.House).HasColumnName("House").HasColumnOrder(4);
+                ownedBuilder.Property(e => e.Street).HasColumnName("Street").HasColumnOrder(5);
+                ownedBuilder.Property(e => e.City).HasColumnName("City").HasColumnOrder(6);
+                ownedBuilder.Property(e => e.Postcode).HasColumnName("Postcode").HasColumnOrder(7).IsRequired();
+            });
+
+        entityBuilder.Property(e => e.Department).HasColumnOrder(8);
+        entityBuilder.Property(e => e.AnnualSalary).HasColumnOrder(9);
+        entityBuilder.Property(e => e.UpdatedOn).HasColumnOrder(10);
+        entityBuilder.Property(e => e.CreatedOn).HasColumnOrder(11);
+    });
+-->
+[!code-csharp[UsingModelBuilder](../../../../samples/core/Miscellaneous/NewInEFCore6/ColumnOrderSample.cs?name=UsingModelBuilder)]
+
+Ordering on the model builder with `HasColumnOrder` takes precedence over any order specified with `ColumnAttribute`. This means `HasColumnOrder` can be used to override ordering made with attributes, including resolving any conflicts when attributes on different properties specify the same order number.
+
 > [!IMPORTANT]
 > Note that, in the general case, most databases only support ordering columns when the table is created. This means that the column order attribute cannot be used to re-order columns in an existing table. One notable exception to this is SQLite, where migrations will rebuild the entire table with new column orders.
 

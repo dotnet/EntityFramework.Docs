@@ -109,6 +109,39 @@ public static class ColumnOrderSample
         #endregion
     }
 
+    public static class UsingModelBuilder
+    {
+        #region WithOrdering
+        public class EntityBase
+        {
+            public int Id { get; set; }
+            public DateTime UpdatedOn { get; set; }
+            public DateTime CreatedOn { get; set; }
+        }
+
+        public class PersonBase : EntityBase
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+        }
+
+        public class Employee : PersonBase
+        {
+            public string Department { get; set; }
+            public decimal AnnualSalary { get; set; }
+            public Address Address { get; set; }
+        }
+
+        public class Address
+        {
+            public string House { get; set; }
+            public string Street { get; set; }
+            public string City { get; set; }
+            public string Postcode { get; set; }
+        }
+        #endregion
+    }
+
     public class EmployeeContext : DbContext
     {
         private readonly bool _quiet;
@@ -132,5 +165,34 @@ public static class ColumnOrderSample
 
         public DbSet<WithoutOrdering.Employee> EmployeesWithoutOrdering { get; set; }
         public DbSet<WithOrdering.Employee> EmployeesWithOrdering { get; set; }
+        public DbSet<UsingModelBuilder.Employee> EmployeesOrderedInModelBuilder { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            #region UsingModelBuilder
+            modelBuilder.Entity<UsingModelBuilder.Employee>(
+                entityBuilder =>
+                {
+                    entityBuilder.Property(e => e.Id).HasColumnOrder(1);
+                    entityBuilder.Property(e => e.FirstName).HasColumnOrder(2);
+                    entityBuilder.Property(e => e.LastName).HasColumnOrder(3);
+
+                    entityBuilder.OwnsOne(
+                        e => e.Address,
+                        ownedBuilder =>
+                        {
+                            ownedBuilder.Property(e => e.House).HasColumnName("House").HasColumnOrder(4);
+                            ownedBuilder.Property(e => e.Street).HasColumnName("Street").HasColumnOrder(5);
+                            ownedBuilder.Property(e => e.City).HasColumnName("City").HasColumnOrder(6);
+                            ownedBuilder.Property(e => e.Postcode).HasColumnName("Postcode").HasColumnOrder(7).IsRequired();
+                        });
+
+                    entityBuilder.Property(e => e.Department).HasColumnOrder(8);
+                    entityBuilder.Property(e => e.AnnualSalary).HasColumnOrder(9);
+                    entityBuilder.Property(e => e.UpdatedOn).HasColumnOrder(10);
+                    entityBuilder.Property(e => e.CreatedOn).HasColumnOrder(11);
+                });
+            #endregion
+        }
     }
 }
