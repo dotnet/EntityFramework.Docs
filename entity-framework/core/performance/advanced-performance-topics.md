@@ -58,6 +58,31 @@ Context pooling works by reusing the same context instance across requests. This
 
 Context pooling is intended for scenarios where the context configuration, which includes services resolved, is fixed between requests. For cases where [Scoped](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) services are required, or configuration needs to be changed, don't use pooling.
 
+## Compiled queries
+
+When EF receives a LINQ query tree for execution, it must first "compile" that tree into a SQL query. Because this is a heavy process, EF caches queries by the query tree shape: queries with the same structure reuse internally-cached compilation outputs, and can skip repeated compilation. This ensures that executing the same LINQ query multiple times is very fast, even if parameter values differ.
+
+However, EF must still perform certain tasks before it can make use of the internal query cache. For example, your query's expression tree must be (recursively) compared with the expression trees of cached queries, to find the correct cached query. The overhead for this initial processing is negligible in the majority of EF applications, especially when compared to other costs associated with query execution (network I/O, actual query processing and disk I/O at the database...). However, in certain high-performance scenarios it may be desirable to eliminate it.
+
+EF supports *compiled queries*, which allow the explicit, up-front compilation of a LINQ query into a .NET delegate. Once this is done, the delegate can be invoked directly to execute the query, without providing the LINQ expression tree; this bypasses the cache lookup, and provides the most optimized way to execute a query in EF Core. Following are some benchmark results comparing compiled and non-compiled query performance; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
+
+|               Method | NumBlogs |     Mean |    Error |   StdDev |  Gen 0 | Allocated |
+|--------------------- |--------- |---------:|---------:|---------:|-------:|----------:|
+|    WithCompiledQuery |        1 | 564.2 us |  6.75 us |  5.99 us | 1.9531 |      9 KB |
+| WithoutCompiledQuery |        1 | 671.6 us | 12.72 us | 16.54 us | 2.9297 |     13 KB |
+|    WithCompiledQuery |       10 | 645.3 us | 10.00 us |  9.35 us | 2.9297 |     13 KB |
+| WithoutCompiledQuery |       10 | 709.8 us | 25.20 us | 73.10 us | 3.9063 |     18 KB |
+
+To used compiled queries, first compile a query with <xref:Microsoft.EntityFrameworkCore.EF.CompileAsyncQuery%2A?displayProperty=nameWithType> as follows (use <xref:Microsoft.EntityFrameworkCore.EF.CompileQuery%2A?displayProperty=nameWithType> for synchronous queries):
+
+[!code-csharp[Main](../../../samples/core/Performance/Program.cs#CompiledQueryCompile)]
+
+In this code sample, we provide EF with a lambda accepting a `DbContext` instance, and an arbitrary parameter to be passed to the query. You can now invoke that delegate whenever you wish to execute the query:
+
+[!code-csharp[Main](../../../samples/core/Performance/Program.cs#CompiledQueryExecute)]
+
+Note that the delegate is thread-safe, and can be invoked concurrently on different context instances.
+
 ## Query caching and parameterization
 
 When EF receives a LINQ query tree for execution, it must first "compile" that tree into a SQL query. Because this is a heavy process, EF caches queries by the query tree *shape*: queries with the same structure reuse internally-cached compilation outputs, and can skip repeated compilation. The different queries may still reference different *values*, but as long as these values are properly parameterized, the structure is the same and caching will function properly.

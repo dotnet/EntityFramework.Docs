@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Performance.LazyLoading;
@@ -9,7 +10,13 @@ namespace Performance
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        #region CompiledQueryCompile
+        private static readonly Func<BloggingContext, int, IAsyncEnumerable<Blog>> _compiledQuery
+            = EF.CompileAsyncQuery(
+                (BloggingContext context, int length) => context.Blogs.Where(b => b.Url.StartsWith("http://") && b.Url.Length == length));
+        #endregion
+
+        private static async Task Main(string[] args)
         {
             using (var context = new BloggingContext())
             {
@@ -217,6 +224,16 @@ namespace Performance
                 var allPosts = context.Posts.ToList();
             }
             #endregion
+
+            using (var context = new BloggingContext())
+            {
+                #region CompiledQueryExecute
+                await foreach (var blog in _compiledQuery(context, 8))
+                {
+                    // Do something with the results
+                }
+                #endregion
+            }
         }
     }
 }
