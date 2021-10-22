@@ -205,4 +205,5 @@ For more information, see the page on [async programming](xref:core/miscellaneou
 
 ## Additional resources
 
-See the [performance section](xref:core/querying/null-comparisons#writing-performant-queries) of the null comparison documentation page for some best practices when comparing nullable values.
+* See the [advanced performance topics page](xref:core/performance/advanced-performance-topics) for additional topics related to efficient querying.
+* See the [performance section](xref:core/querying/null-comparisons#writing-performant-queries) of the null comparison documentation page for some best practices when comparing nullable values.

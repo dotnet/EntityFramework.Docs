@@ -77,8 +77,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RelatedData", "Querying\Rel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleLogging", "Miscellaneous\Logging\SimpleLogging\SimpleLogging.csproj", "{6A67BD7F-86AA-4F18-ACAF-0420482189AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompiledQueries", "CompiledQueries\CompiledQueries.csproj", "{077C2862-467F-4DE0-8412-0F0670C36593}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intro", "Intro\Intro.csproj", "{937D4D99-A6FE-459A-A5B8-A96D5D952D42}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NullableReferenceTypes", "Miscellaneous\NullableReferenceTypes\NullableReferenceTypes.csproj", "{0F8779BE-F32A-42A9-B2D7-1974A1D9DD09}"
@@ -307,10 +305,6 @@ Global
 		{6A67BD7F-86AA-4F18-ACAF-0420482189AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A67BD7F-86AA-4F18-ACAF-0420482189AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A67BD7F-86AA-4F18-ACAF-0420482189AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{077C2862-467F-4DE0-8412-0F0670C36593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{077C2862-467F-4DE0-8412-0F0670C36593}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{077C2862-467F-4DE0-8412-0F0670C36593}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{077C2862-467F-4DE0-8412-0F0670C36593}.Release|Any CPU.Build.0 = Release|Any CPU
 		{937D4D99-A6FE-459A-A5B8-A96D5D952D42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{937D4D99-A6FE-459A-A5B8-A96D5D952D42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{937D4D99-A6FE-459A-A5B8-A96D5D952D42}.Release|Any CPU.ActiveCfg = Release|Any CPU
