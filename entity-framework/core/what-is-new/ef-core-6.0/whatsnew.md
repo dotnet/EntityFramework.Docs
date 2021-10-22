@@ -190,7 +190,7 @@ EF Core supports querying historical data from the table through several new que
 * `TemporalBetween`: The same as `TemporalFromTo`, except that rows are included that became active on the upper boundary.
 * `TemporalContainedIn`: : Returns all rows that started being active and ended being active between two given UTC times. This may be many rows from the history table for a given primary key.
 
-> [!INFO]
+> [!NOTE]
 > See the [SQL Server temporal tables documentation](/sql/relational-databases/tables/temporal-tables#how-do-i-query-temporal-data)] for more information on exactly which rows are included for each of these operators.
 
 For example, after making some updates and deletes to our data, we can run a query using `TemporalAll` to see the historical data:
@@ -686,7 +686,7 @@ If supporting any of these features is critical to your success, then please vot
 
 The model in the GitHub repo referenced above contains 449 entity types, 6390 properties, and 720 relationships. This is a moderately large model. Using [BenchmarkDotNet](https://www.nuget.org/packages/BenchmarkDotNet) to measure, the average time to first query is 1.02 seconds on a reasonably powerful laptop. Using compiled models brings this down to 117 milliseconds on the same hardware. An 8x to 10x improvement like this stays relatively constant as the model size increases.
 
-![Add Connection LocalDB](compiled_models.png)
+![Compiled model performance improvement](compiled_models.png)
 
 > [!NOTE]
 > See [Announcing Entity Framework Core 6.0 Preview 5: Compiled Models](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-6-0-preview-5-compiled-models/) on the .NET Blog for a more in-depth discussion of EF Core startup performance and compiled models.
