@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 6.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 6.0
 author: ajcvickers
-ms.date: 10/19/2021
+ms.date: 10/22/2021
 uid: core/what-is-new/ef-core-6.0/breaking-changes
 ---
 
@@ -17,6 +17,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Nested optional dependents sharing a table and with no required properties cannot be saved](#nested-optionals)                       | High       |
 | [Changing the owner of an owned entity now throws an exception](#owned-reparenting)                                                   | Medium     |
 | [Cosmos: Related entity types are discovered as owned](#cosmos-owned)                                                                 | Medium     |
+| [SQLite: Connections are pooled](#connection-pool)                                                                                    | Medium     |
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
 | [In-memory database validates required properties do not contain nulls](#in-memory-required)                                          | Low        |
 | [Removed last ORDER BY when joining for collections](#last-order-by)                                                                  | Low        |
@@ -146,6 +147,36 @@ This behavior follows the common pattern of modeling data in Azure Cosmos DB of 
 #### Mitigations
 
 To configure an entity type to be non-owned call `modelBuilder.Entity<MyEntity>();`
+
+<a name="connection-pool"></a>
+
+### SQLite: Connections are pooled
+
+[Tracking Issue #13837](https://github.com/dotnet/efcore/issues/13837)
+[What's new: Default to implicit ownership](/core/what-is-new/ef-core-6.0/whatsnew#connection-pooling)
+
+#### Old behavior
+
+Previously, connections in Microsoft.Data.Sqlite were not pooled.
+
+#### New behavior
+
+Starting in 6.0, connections are now pooled by default. This results in database files being kept open by the process even after the ADO.NET connection object is closed.
+
+#### Why
+
+Pooling the underlying connections greatly improves the performance of opening and closing ADO.NET connection objects. This is especially noticeable for scenarios where opening the underlying connection is expensive as in the case of encryption, or in scenarios where there are a lot of short-lived connection to the database.
+
+#### Mitigations
+
+Connection pooling can be disabled by adding `Pooling=False` to a connection string.
+
+Some scenarios (like deleting the database file) may now encounter errors stating that the file is still in use. You can manually clear the connection pool before performing operations of the file using `SqliteConnection.ClearPool()`.
+
+```csharp
+SqliteConnection.ClearPool(connection);
+File.Delete(databaseFile);
+```
 
 ## Low-impact changes
 
