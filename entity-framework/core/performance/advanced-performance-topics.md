@@ -3,7 +3,7 @@ title: Advanced Performance Topics
 description: Advanced performance topics for Entity Framework Core
 author: rick-anderson
 ms.author: riande
-ms.date: 12/9/2020
+ms.date: 10/21/2021
 uid: core/performance/advanced-performance-topics
 ---
 # Advanced Performance Topics
@@ -128,15 +128,126 @@ Even if the sub-millisecond difference seems small, keep in mind that the consta
 > [!NOTE]
 > Avoid constructing queries with the expression tree API unless you really need to. Aside from the API's complexity, it's very easy to inadvertently cause significant performance issues when using them.
 
+## Compiled models
+
+> [!NOTE]
+> Compiled models were introduced in EF Core 6.0.
+
+Compiled models can improve EF Core startup time for applications with large models. A large model typically means hundreds to thousands of entity types and relationships. Startup time here is the time to perform the first operation on a `DbContext` when that `DbContext` type is used for the first time in the application. Note that just creating a `DbContext` instance does not cause the EF model to be initialized. Instead, typical first operations that cause the model to be initialized include calling `DbContext.Add` or executing the first query.
+
+Compiled models are created using the `dotnet ef` command-line tool. Ensure that you have [installed the latest version of the tool](xref:core/cli/dotnet#installing-the-tools) before continuing.
+
+A new `dbcontext optimize` command is used to generate the compiled model. For example:
+
+```dotnetcli
+dotnet ef dbcontext optimize
+```
+
+The `--output-dir` and `--namespace` options can be used to specify the directory and namespace into which the compiled model will be generated. For example:
+
+```dotnetcli
+PS C:\dotnet\efdocs\samples\core\Miscellaneous\CompiledModels> dotnet ef dbcontext optimize --output-dir MyCompiledModels --namespace MyCompiledModels
+Build started...
+Build succeeded.
+Successfully generated a compiled model, to use it call 'options.UseModel(MyCompiledModels.BlogsContextModel.Instance)'. Run this command again when the model is modified.
+PS C:\dotnet\efdocs\samples\core\Miscellaneous\CompiledModels>
+```
+
+* For more information see [`dotnet ef dbcontext optimize`](xref:core/cli/dotnet#dotnet-ef-dbcontext-optimize).
+* If you're more comfortable working inside Visual Studio, you can also use [Optimize-DbContext](../cli/powershell.md#optimize-dbcontext)
+
+The output from running this command includes a piece of code to copy-and-paste into your `DbContext` configuration to cause EF Core to use the compiled model. For example:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseModel(MyCompiledModels.BlogsContextModel.Instance)
+        .UseSqlite(@"Data Source=test.db");
+```
+
+### Compiled model bootstrapping
+
+It is typically not necessary to look at the generated bootstrapping code. However, sometimes it can be useful to customize the model or its loading. The bootstrapping code looks something like this:
+
+<!--
+[DbContext(typeof(BlogsContext))]
+partial class BlogsContextModel : RuntimeModel
+{
+    private static BlogsContextModel _instance;
+    public static IModel Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new BlogsContextModel();
+                _instance.Initialize();
+                _instance.Customize();
+            }
+
+            return _instance;
+        }
+    }
+
+    partial void Initialize();
+
+    partial void Customize();
+}
+-->
+[!code-csharp[RuntimeModel](../../../samples/core/Miscellaneous/CompiledModels/SingleRuntimeModel.cs?name=RuntimeModel)]
+
+This is a partial class with partial methods that can be implemented to customize the model as needed.
+
+In addition, multiple compiled models can be generated for `DbContext` types that may use different models depending on some runtime configuration. These should be placed into different folders and namespaces, as shown above. Runtime information, such as the connection string, can then be examined and the correct model returned as needed. For example:
+
+<!--
+public static class RuntimeModelCache
+{
+    private static readonly ConcurrentDictionary<string, IModel> _runtimeModels
+        = new();
+
+    public static IModel GetOrCreateModel(string connectionString)
+        => _runtimeModels.GetOrAdd(
+            connectionString, cs =>
+                {
+                    if (cs.Contains("X"))
+                    {
+                        return BlogsContextModel1.Instance;
+                    }
+
+                    if (cs.Contains("Y"))
+                    {
+                        return BlogsContextModel2.Instance;
+                    }
+
+                    throw new InvalidOperationException("No appropriate compiled model found.");
+                });
+}
+-->
+[!code-csharp[RuntimeModelCache](../../../samples/core/Miscellaneous/CompiledModels/MultipleRuntimeModels.cs?name=RuntimeModelCache)]
+
+### Limitations
+
+Compiled models have some limitations:
+
+* [Global query filters are not supported](https://github.com/dotnet/efcore/issues/24897).
+* [Lazy loading and change-tracking proxies are not supported](https://github.com/dotnet/efcore/issues/24902).
+* [The model must be manually synchronized by regenerating it any time the model definition or configuration change](https://github.com/dotnet/efcore/issues/24894).
+* Custom IModelCacheKeyFactory implementations are not supported. However, you can compile multiple models and load the appropriate one as needed.
+
+Because of these limitations, you should only use compiled models if your EF Core startup time is too slow. Compiling small models is typically not worth it.
+
+If supporting any of these features is critical to your success, then please vote for the appropriate issues linked above.
+
 ## Reducing runtime overhead
 
 As with any layer, EF Core adds a bit of runtime overhead compared to coding directly against lower-level database APIs. This runtime overhead is unlikely to impact most real-world applications in a significant way; the other topics in this performance guide, such as query efficiency, index usage and minimizing roundtrips, are far more important. In addition, even for highly-optimized applications, network latency and database I/O will usually dominate any time spent inside EF Core itself. However, for high-performance, low-latency applications where every bit of perf is important, the following recommendations can be used to reduce EF Core overhead to a minimum:
 
 * Turn on [DbContext pooling](#dbcontext-pooling); our benchmarks show that this feature can have a decisive impact on high-perf, low-latency applications.
-  * Make sure that the `maxPoolSize` corresponds to your usage scenario; if it is too low, DbContext instances will be constantly created and disposed, degrading performance. Setting it too high may needlessly consume memory as unused DbContext instances are maintained in the pool.
-  * For an extra tiny perf boost, consider using `PooledDbContextFactory` instead of having DI inject context instances directly (EF Core 6 and above). DI management of DbContext pooling incurs a slight overhead.
+  * Make sure that the `maxPoolSize` corresponds to your usage scenario; if it is too low, `DbContext` instances will be constantly created and disposed, degrading performance. Setting it too high may needlessly consume memory as unused `DbContext` instances are maintained in the pool.
+  * For an extra tiny perf boost, consider using `PooledDbContextFactory` instead of having DI inject context instances directly (EF Core 6 and above). DI management of `DbContext` pooling incurs a slight overhead.
 * Use precompiled queries for hot queries.
   * The more complex the LINQ query - the more operators it contains and the bigger the resulting expression tree - the more gains can be expected from using compiled queries.
 * Consider disabling thread safety checks by setting `EnableThreadSafetyChecks` to false in your context configuration (EF Core 6 and above).
-  * Using the same DbContext instance concurrently from different threads isn't supported. EF Core has a safety feature which detects this programming bug in many cases (but not all), and immediately throws an informative exception. However, this safety feature adds some runtime overhead.
+  * Using the same `DbContext` instance concurrently from different threads isn't supported. EF Core has a safety feature which detects this programming bug in many cases (but not all), and immediately throws an informative exception. However, this safety feature adds some runtime overhead.
   * **WARNING:** Only disable thread safety checks after thoroughly testing that your application doesn't contain such concurrency bugs.
