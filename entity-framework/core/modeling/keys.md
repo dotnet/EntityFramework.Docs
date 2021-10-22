@@ -13,7 +13,7 @@ A key serves as a unique identifier for each entity instance. Most entities in E
 
 By convention, a property named `Id` or `<type name>Id` will be configured as the primary key of an entity.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/KeyId.cs?name=KeyId&highlight=3,11)]
+[!code-csharp[Main](../../../samples/core/Modeling/Keys/KeyId.cs?name=KeyId&highlight=3,11)]
 
 > [!NOTE]
 > [Owned entity types](xref:core/modeling/owned-entities) use different rules to define keys.
@@ -22,17 +22,17 @@ You can configure a single property to be the primary key of an entity as follow
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/KeySingle.cs?name=KeySingle&highlight=3)]
+[!code-csharp[Main](../../../samples/core/Modeling/Keys/DataAnnotations/KeySingle.cs?name=KeySingle&highlight=3)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeySingle.cs?name=KeySingle&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/Keys/FluentAPI/KeySingle.cs?name=KeySingle&highlight=4)]
 
 ***
 
 You can also configure multiple properties to be the key of an entity - this is known as a composite key. Composite keys can only be configured using the Fluent API; conventions will never set up a composite key, and you can not use Data Annotations to configure one.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeyComposite.cs?name=KeyComposite&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/Keys/FluentAPI/KeyComposite.cs?name=KeyComposite&highlight=4)]
 
 ## Value generation
 
@@ -42,7 +42,7 @@ For non-composite numeric and GUID primary keys, EF Core sets up value generatio
 
 By convention, on relational databases primary keys are created with the name `PK_<type name>`. You can configure the name of the primary key constraint as follows:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeyName.cs?name=KeyName&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/Keys/FluentAPI/KeyName.cs?name=KeyName&highlight=5)]
 
 ## Key types and values
 
@@ -62,16 +62,16 @@ An alternate key serves as an alternate unique identifier for each entity instan
 
 Alternate keys are typically introduced for you when needed and you do not need to manually configure them. By convention, an alternate key is introduced for you when you identify a property which isn't the primary key as the target of a relationship.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/AlternateKey.cs?name=AlternateKey&highlight=12)]
+[!code-csharp[Main](../../../samples/core/Modeling/Keys/AlternateKey.cs?name=AlternateKey&highlight=12)]
 
 You can also configure a single property to be an alternate key:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/AlternateKeySingle.cs?name=AlternateKeySingle&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/Keys/FluentAPI/AlternateKeySingle.cs?name=AlternateKeySingle&highlight=4)]
 
 You can also configure multiple properties to be an alternate key (known as a composite alternate key):
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/AlternateKeyComposite.cs?name=AlternateKeyComposite&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/Keys/FluentAPI/AlternateKeyComposite.cs?name=AlternateKeyComposite&highlight=4)]
 
 Finally, by convention, the index and constraint that are introduced for an alternate key will be named `AK_<type name>_<property name>` (for composite alternate keys `<property name>` becomes an underscore separated list of property names). You can configure the name of the alternate key's index and unique constraint:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/AlternateKeyName.cs?name=AlternateKeyName&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/Keys/FluentAPI/AlternateKeyName.cs?name=AlternateKeyName&highlight=5)]
