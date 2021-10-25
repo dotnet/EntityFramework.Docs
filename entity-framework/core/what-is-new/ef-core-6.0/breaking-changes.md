@@ -252,7 +252,6 @@ Finally, remove the generated configuration for the many-to-many relationship fr
 
 Note that with this configuration, the join entity can be used explicitly, just like in previous versions of EF Core. However, the relationship can also be used as a many-to-many relationship. This means that updating the code like this can be a temporary solution while the rest of the code is updated to use the relationship as a many-to-many in the natural way.
 
->>>>>>> 09d0f9c1 (Document scaffolding of many-to-many as a breaking change)
 ## Low-impact changes
 
 <a name="on-delete"></a>
