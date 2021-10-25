@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 6.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 6.0
 author: ajcvickers
-ms.date: 10/22/2021
+ms.date: 10/25/2021
 uid: core/what-is-new/ef-core-6.0/breaking-changes
 ---
 
@@ -18,6 +18,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Changing the owner of an owned entity now throws an exception](#owned-reparenting)                                                   | Medium     |
 | [Cosmos: Related entity types are discovered as owned](#cosmos-owned)                                                                 | Medium     |
 | [SQLite: Connections are pooled](#connection-pool)                                                                                    | Medium     |
+| [Many-to-many relationships without mapped join entities are now scaffolded](#many-to-many)                                           | Medium     |
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
 | [In-memory database validates required properties do not contain nulls](#in-memory-required)                                          | Low        |
 | [Removed last ORDER BY when joining for collections](#last-order-by)                                                                  | Low        |
@@ -178,6 +179,80 @@ SqliteConnection.ClearPool(connection);
 File.Delete(databaseFile);
 ```
 
+<a name="many-to-many"></a>
+
+### Many-to-many relationships without mapped join entities are now scaffolded
+
+[Tracking Issue #22475](https://github.com/dotnet/efcore/issues/22475)
+
+#### Old behavior
+
+Scaffolding (reverse engineering) a DbContext and entity types from an existing database always explicitly mapped join tables to join entity types for many-to-many relationships.
+
+#### New behavior
+
+Simple join tables containing only two foreign key properties to other tables are now not mapped to explicit entity types, but are instead mapped as a manu-to-many relationship between the two joined tables.
+
+#### Why
+
+Many-to-many relationships without explicit join types were introduced in EF Core 5.0 and are a cleaner, more natural way to represent simple join tables.
+
+#### Mitigations
+
+There are two mitigations. The preferred approach is to update code to use the many-to-many relationships directly. It is very rare that the join entity type needs to be used directly when it contains only two foreign keys for the many-to-many relationships.
+
+Alternately, the explicit join entity can be added back to the EF model. For example, assuming a many-to-many relationship between `Post` and `Tag`, add back the join type and navigations using partial classes:
+
+```csharp
+public partial class PostTag
+{
+    public int PostsId { get; set; }
+    public int TagsId { get; set; }
+
+    public virtual Post Posts { get; set; }
+    public virtual Tag Tags { get; set; }
+}
+
+public partial class Post
+{
+    public virtual ICollection<PostTag> PostTags { get; set; }
+}
+
+public partial class Tag
+{
+    public virtual ICollection<PostTag> PostTags { get; set; }
+}
+```
+
+Then add configuration for the join type and navigations to a partial class for the DbContext:
+
+```csharp
+public partial class DailyContext
+{
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Post>(entity =>
+        {
+            entity.HasMany(d => d.Tags)
+                .WithMany(p => p.Posts)
+                .UsingEntity<PostTag>(
+                    l => l.HasOne<Tag>(e => e.Tags).WithMany(e => e.PostTags).HasForeignKey(e => e.TagsId),
+                    r => r.HasOne<Post>(e => e.Posts).WithMany(e => e.PostTags).HasForeignKey(e => e.PostsId),
+                    j =>
+                    {
+                        j.HasKey("PostsId", "TagsId");
+                        j.ToTable("PostTag");
+                    });
+        });
+    }
+}
+```
+
+Finally, remove the generated configuration for the many-to-many relationship from the scaffolded context. This is needed because the scaffolded join entity type must be removed from the model before the explicit type can be used. This code will need to be removed each time the context is scaffolded, but because the code above is in partial classes it will persist.
+
+Note that with this configuration, the join entity can be used explicitly, just like in previous versions of EF Core. However, the relationship can also be used as a many-to-many relationship. This means that updating the code like this can be a temporary solution while the rest of the code is updated to use the relationship as a many-to-many in the natural way.
+
+>>>>>>> 09d0f9c1 (Document scaffolding of many-to-many as a breaking change)
 ## Low-impact changes
 
 <a name="on-delete"></a>
