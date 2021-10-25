@@ -187,7 +187,7 @@ File.Delete(databaseFile);
 
 #### Old behavior
 
-Scaffolding (reverse engineering) a DbContext and entity types from an existing database always explicitly mapped join tables to join entity types for many-to-many relationships.
+Scaffolding (reverse engineering) a `DbContext` and entity types from an existing database always explicitly mapped join tables to join entity types for many-to-many relationships.
 
 #### New behavior
 
