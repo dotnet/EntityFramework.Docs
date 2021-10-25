@@ -201,3 +201,24 @@ You can set an arbitrary text comment that gets set on the database column, allo
 [!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/ColumnComment.cs?name=ColumnComment&highlight=5)]
 
 ***
+
+## Column order
+
+> [!NOTE]
+> This feature was introduced in EF Core 6.0.
+
+By default when creating a table with [Migrations](../managing-schemas/migrations/index.md), EF Core orders primary key columns first, followed by properties of the entity type and owned types, and finally properties from base types. You can, however, specify a different column order:
+
+### [Data Annotations](#tab/data-annotations)
+
+[!code-csharp[](../../../samples/core/Modeling/EntityProperties/DataAnnotations/ColumnOrder.cs#snippet_ColumnAttribute)]
+
+The Fluent API can be used to override ordering made with attributes, including resolving any conflicts when attributes on different properties specify the same order number.
+
+### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[](../../../samples/core/Modeling/EntityProperties/FluentAPI/ColumnOrder.cs#snippet_HasColumnOrder)]
+
+***
+
+Note that, in the general case, most databases only support ordering columns when the table is created. This means that the column order attribute cannot be used to re-order columns in an existing table.
