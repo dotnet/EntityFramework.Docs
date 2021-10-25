@@ -191,7 +191,7 @@ Scaffolding (reverse engineering) a DbContext and entity types from an existing 
 
 #### New behavior
 
-Simple join tables containing only two foreign key properties to other tables are now not mapped to explicit entity types, but are instead mapped as a manu-to-many relationship between the two joined tables.
+Simple join tables containing only two foreign key properties to other tables are now not mapped to explicit entity types, but are instead mapped as a many-to-many relationship between the two joined tables.
 
 #### Why
 
