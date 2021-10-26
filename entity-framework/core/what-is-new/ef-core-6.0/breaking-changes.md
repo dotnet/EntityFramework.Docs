@@ -35,6 +35,8 @@ The following API and behavior changes have the potential to break existing appl
 | [`DbFunctionBuilder.HasSchema(null)` overrides `[DbFunction(Schema = "schema")]`](#function-schema)                                   | Low        |
 | [Pre-initialized navigations are overridden by values from database queries](#overwrite-navigations)                                  | Low        |
 | [Unknown enum string values in the database are not converted to the enum default when queried](#unknown-emums)                       | Low        |
+| [DbFunctionBuilder.HasTranslation now provides the function arguments as IReadOnlyList rather than IReadOnlyCollection](#func-args)   | Low        |
+| [Default table mapping is not removed when the entity is mapped to a table-valued function](#tvf-default-mapping)                     | Low        |
 
 \* These changes are of particular interest to authors of database providers and extensions.
 
@@ -757,3 +759,51 @@ Converting to the default value can result in database corruption if the entity 
 #### Mitigations
 
 Ideally, ensure that the database column only contains valid values. Alternately, implement a `ValueConverter` with the old behavior.
+
+<a name="func-args"></a>
+
+### DbFunctionBuilder.HasTranslation now provides the function arguments as IReadOnlyList rather than IReadOnlyCollection
+
+[Tracking Issue #23565](https://github.com/dotnet/efcore/issues/23565)
+
+#### Old behavior
+
+When configuring translation for a user-defined function using `HasTranslation` method, the arguments to the function were provided as `IReadOnlyCollection<SqlExpression>`.
+
+#### New behavior
+
+In EF Core 6.0, the arguments are now provided as `IReadOnlyList<SqlExpression>`.
+
+#### Why
+
+`IReadOnlyList` allows to use indexers, so the arguments are now easier to access.
+
+#### Mitigations
+
+None. `IReadOnlyList` implements `IReadOnlyCollection` interface, so the transition should be straightforward.
+
+<a name="tvf-default-mapping"></a>
+
+### Default table mapping is not removed when the entity is mapped to a table-valued function
+
+[Tracking Issue #23408](https://github.com/dotnet/efcore/issues/23408)
+
+#### Old behavior
+
+When an entity was mapped to a table-valued function, its default mapping to a table was removed.
+
+#### New behavior
+
+In EF Core 6.0, the entity is still mapped to a table using default mapping, even if it's also mapped to table-valued function.
+
+#### Why
+
+Table-valued functions which return entities are often used either as a helper or to encapsulate an operation returning a collection of entities, rather than as a strict replacement of the entire table. This change aims to be more in line with the likely user intention.
+
+#### Mitigations
+
+Mapping to a table can be explicitly disabled in the model configuration:
+
+```csharp
+modelBuilder.Entity<MyEntity>().ToTable((string)null);
+```
