@@ -111,7 +111,6 @@ public static class ColumnOrderSample
 
     public static class UsingModelBuilder
     {
-        #region WithOrdering
         public class EntityBase
         {
             public int Id { get; set; }
@@ -139,7 +138,6 @@ public static class ColumnOrderSample
             public string City { get; set; }
             public string Postcode { get; set; }
         }
-        #endregion
     }
 
     public class EmployeeContext : DbContext
