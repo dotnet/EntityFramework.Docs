@@ -2,7 +2,7 @@
 title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: bricelam
-ms.date: 10/21/2021
+ms.date: 11/02/2021
 uid: core/cli/powershell
 ---
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
@@ -123,6 +123,22 @@ Parameters:
 
 The [common parameters](#common-parameters) are listed above.
 
+## Bundle-Migration
+
+Creates an executable to update the database.
+
+Parameters:
+
+Parameter                              | Description
+-------------------------------------- | -----------
+`-Output <String>`                     | The path of executable file to create.
+`-Force`                               | Overwrite existing files.
+`-SelfContained`                       | Also bundle the .NET runtime so it doesn't need to be installed on the machine.
+<nobr>`-TargetRuntime <String>`</nobr> | The target runtime to bundle for.
+`-Framework <String>`                  | The target framework. Defaults to the first one in the project.
+
+The [common parameters](#common-parameters) are listed above.
+
 ## Drop-Database
 
 Drops the database.
@@ -153,6 +169,33 @@ Parameters:
 | <nobr>`-NoConnect`</nobr>           | Don't connect to the database.                                                                         |
 
 The [common parameters](#common-parameters) are listed above.
+
+## Optimize-DbContext
+
+Generates a compiled version of the model used by the `DbContext`. Added in EF Core 6.
+
+See [Compiled models](../performance/advanced-performance-topics.md#compiled-models) for more information.
+
+Parameters:
+
+| Parameter                           | Description                                                                                                                                                                                                                                                             |
+|:------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <nobr>`-OutputDir <String>`</nobr>  | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
+| <nobr>`-Namespace <String>`</nobr>  | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus `CompiledModels`.                                                                                                                           |
+
+The [common parameters](#common-parameters) are listed above.
+
+Example that uses the defaults and works if there is only one `DbContext` in the project:
+
+```powershell
+Optimize-DbContext
+```
+
+Example that optimizes the model for the context with the specified name amd places it in a separate folder and namespace:
+
+```powershell
+Optimize-DbContext -OutputDir Models -Namespace BlogModels -Context BlogContext
+```
 
 ## Remove-Migration
 
@@ -207,33 +250,6 @@ The following example reads the connection string from the project's configurati
 
 ```powershell
 Scaffold-DbContext "Name=ConnectionStrings:Blogging" Microsoft.EntityFrameworkCore.SqlServer
-```
-
-## Optimize-DbContext
-
-Generates a compiled version of the model used by the `DbContext`. Added in EF Core 6.
-
-See [Compiled models](../performance/advanced-performance-topics.md#compiled-models) for more information.
-
-Parameters:
-
-| Parameter                           | Description                                                                                                                                                                                                                                                             |
-|:------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr>`-OutputDir <String>`</nobr>  | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
-| <nobr>`-Namespace <String>`</nobr>  | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus `CompiledModels`.                                                                                                                           |
-
-The [common parameters](#common-parameters) are listed above.
-
-Example that uses the defaults and works if there is only one `DbContext` in the project:
-
-```powershell
-Optimize-DbContext
-```
-
-Example that optimizes the model for the context with the specified name amd places it in a separate folder and namespace:
-
-```powershell
-Optimize-DbContext -OutputDir Models -Namespace BlogModels -Context BlogContext
 ```
 
 ## Script-DbContext
@@ -310,3 +326,4 @@ Update-Database 20180904195021_InitialCreate -Connection your_connection_string
 
 * [Migrations](xref:core/managing-schemas/migrations/index)
 * [Reverse Engineering](xref:core/managing-schemas/scaffolding)
+* [Compiled models](../performance/advanced-performance-topics.md#compiled-models)
