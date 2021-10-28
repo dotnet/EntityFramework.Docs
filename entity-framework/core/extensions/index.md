@@ -218,7 +218,7 @@ This will automatically make all your table and column names have snake_case, al
 
 ### SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime
 
-Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3, 5.
+Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3, 5, 6.
 
 [GitHub repository](https://github.com/StevenRasmussen/EFCore.SqlServer.NodaTime)
 
