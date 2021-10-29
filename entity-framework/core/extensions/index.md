@@ -319,7 +319,7 @@ Provides the `SqlQueryAsync<T>` and `SqlQueryValueAsync<T>` methods to help you 
 
 ### EntityFramework.Exceptions
 
-When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`, `CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints. 
+When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`, `CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints.
 
 Supports SQL Server, Postgres, MySql, SQLite and Oracle. For EF Core: 3, 5.
 
