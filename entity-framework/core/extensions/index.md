@@ -58,144 +58,163 @@ Entity Framework Core Generator (efg) is a .NET Core CLI tool that can generate 
 [Tutorial](https://www.loresoft.com/Generate-ASP-NET-Web-API)
 [Documentation](https://efg.loresoft.com/en/latest/)
 
-## Extensions
-
-### Microsoft.EntityFrameworkCore.AutoHistory
-
-A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 2, 3, 5.
-
-[GitHub repository](https://github.com/Arch/AutoHistory/)
-
-### EFCoreSecondLevelCacheInterceptor
-
-Second level caching is a query cache. The results of EF commands will be stored in the cache, so that the same EF commands will retrieve their data from the cache rather than executing them against the database again. For EF Core: 3, 5.
-
-[GitHub repository](https://github.com/VahidN/EFCoreSecondLevelCacheInterceptor)
-
 ### Geco
 
 Geco (Generator Console) is a simple code generator based on a console project, that runs on .NET Core and uses C# interpolated strings for code generation. Geco includes a reverse model generator for EF Core with support for pluralization, singularization, and editable templates. It also provides a seed data script generator, a script runner, and a database cleaner. For EF Core: 2.
 
 [GitHub repository](https://github.com/iQuarc/Geco)
 
+## Extensions
+
+### Microsoft.EntityFrameworkCore.AutoHistory
+
+A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 2, 3, 5.
+
+[GitHub repository](https://github.com/Arch/AutoHistory)
+[NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.AutoHistory)
+
+### EFCoreSecondLevelCacheInterceptor
+
+Second level caching is a query cache. The results of EF commands will be stored in the cache, so that the same EF commands will retrieve their data from the cache rather than executing them against the database again. For EF Core: 3, 5.
+
+[GitHub repository](https://github.com/VahidN/EFCoreSecondLevelCacheInterceptor)
+[NuGet](https://www.nuget.org/packages/EFCoreSecondLevelCacheInterceptor)
+
 ### EntityFrameworkCore.Scaffolding.Handlebars
 
-Allows customization of classes reverse engineered from an existing database using the Entity Framework Core toolchain with Handlebars templates. For EF Core: 2, 3, 5.
+Allows customization of classes reverse engineered from an existing database using the Entity Framework Core tool chain with Handlebars templates. For EF Core: 2, 3, 5.
 
 [GitHub repository](https://github.com/TrackableEntities/EntityFrameworkCore.Scaffolding.Handlebars)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Scaffolding.Handlebars)
 
 ### NeinLinq.EntityFrameworkCore
 
 NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core: 2, 3, 5.
 
-[GitHub repository](https://github.com/axelheer/nein-linq/)
+[GitHub repository](https://github.com/axelheer/nein-linq)
+[NuGet](https://www.nuget.org/packages/NeinLinq.EntityFrameworkCore)
 
 ### Microsoft.EntityFrameworkCore.UnitOfWork
 
 A plugin for Microsoft.EntityFrameworkCore to support repository, unit of work patterns, and multiple databases with distributed transaction supported. For EF Core: 2, 3.
 
-[GitHub repository](https://github.com/Arch/UnitOfWork/)
+[GitHub repository](https://github.com/Arch/UnitOfWork)
 
 ### EFCore.BulkExtensions
 
 EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 2, 3, 5.
 
 [GitHub repository](https://github.com/borisdj/EFCore.BulkExtensions)
+[NuGet](https://www.nuget.org/packages/EFCore.BulkExtensions)
 
 ### Bricelam.EntityFrameworkCore.Pluralizer
 
 Adds design-time pluralization. For EF Core: 2, 3, 5.
 
 [GitHub repository](https://github.com/bricelam/EFCore.Pluralizer)
+[NuGet](https://www.nuget.org/packages/Bricelam.EntityFrameworkCore.Pluralizer)
 
 ### Toolbelt.EntityFrameworkCore.IndexAttribute
 
 Revival of [Index] attribute (with extension for model building). For EF Core: 2, 3, 5.
 
 [GitHub repository](https://github.com/jsakamoto/EntityFrameworkCore.IndexAttribute)
+[NuGet](https://www.nuget.org/packages/Toolbelt.EntityFrameworkCore.IndexAttribute)
 
 ### Verify.EntityFramework
 
-Extends [Verify](https://github.com/VerifyTests/Verify) to allow snapshot testing with EntityFramework. For EF Core: 3, 5.
+Extends [Verify](https://github.com/VerifyTests/Verify) to allow snapshot testing with Entity Framework. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/VerifyTests/Verify.EntityFramework)
+[NuGet](https://www.nuget.org/packages/Verify.EntityFramework)
 
 ### LocalDb
 
 Provides a wrapper around [SQL Server Express LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb) to simplify running tests against Entity Framework. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/SimonCropp/LocalDb)
+[NuGet](https://www.nuget.org/packages/EfLocalDb)
 
 ### EfFluentValidation
 
-Adds [FluentValidation](https://fluentvalidation.net/) support to Entity Framework. For EF Core: 3, 5.
+Adds [FluentValidation](https://fluentvalidation.net) support to Entity Framework. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/SimonCropp/EfFluentValidation)
+[NuGet](https://www.nuget.org/packages/EfFluentValidation)
 
 ### EFCore.TemporalSupport
 
 An implementation of temporal support. For EF Core: 2.
 
 [GitHub repository](https://github.com/cpoDesign/EFCore.TemporalSupport)
+[NuGet](https://www.nuget.org/packages/EFCoreTemporalSupport)
 
 ### EfCoreTemporalTable
 
-Easily perform temporal queries on your favourite database using introduced extension methods: `AsTemporalAll()`, `AsTemporalAsOf(date)`, `AsTemporalFrom(startDate, endDate)`, `AsTemporalBetween(startDate, endDate)`, `AsTemporalContained(startDate, endDate)`. For EF Core: 3, 5.
+Easily perform temporal queries on your favorite database using introduced extension methods: `AsTemporalAll()`, `AsTemporalAsOf(date)`, `AsTemporalFrom(startDate, endDate)`, `AsTemporalBetween(startDate, endDate)`, `AsTemporalContained(startDate, endDate)`. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/glautrou/EfCoreTemporalTable)
+[NuGet](https://www.nuget.org/packages/EfCoreTemporalTable)
 
 ### EntityFrameworkCore.TemporalTables
 
 Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2, 3, 5.
 
 [GitHub repository](https://github.com/findulov/EntityFrameworkCore.TemporalTables)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.TemporalTables)
 
 ### EntityFrameworkCore.Cacheable
 
 A high-performance second-level query cache. For EF Core: 2.
 
 [GitHub repository](https://github.com/SteffenMangold/EntityFrameworkCore.Cacheable)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Cacheable)
 
 ### EntityFrameworkCore.NCache
 
-NCache Entity Framework Core Provider is a distributed second level cache provider for caching query results. The distributed architecture of NCache makes it more scalable and highly available. For EF Core 2, 3.
+NCache Entity Framework Core Provider is a distributed second level cache provider for caching query results. The distributed architecture of NCache makes it more scalable and highly available. For EF Core: 2, 3.
 
 [Website](https://www.alachisoft.com/ncache/ef-core-cache.html)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.NCache)
 
 ### EntityFrameworkCore.Projectables
 
-Flexible projection magic for EF Core. Use properties, methods, and extension methods in your query without client evaluation. For EF Core 3, 5, 6.
+Flexible projection magic for EF Core. Use properties, methods, and extension methods in your query without client evaluation. For EF Core: 3, 5, 6.
 
 [GitHub repository](https://github.com/koenbeuk/EntityFrameworkCore.Projectables)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Projectables)
 
 ### EntityFrameworkCore.Triggered
 
 Triggers for EF Core. Respond to changes in your DbContext before and after they are committed to the database. Triggers are fully asynchronous and support dependency injection, inheritance, cascading and more. For EF Core: 3, 5, 6.
 
 [GitHub repository](https://github.com/koenbeuk/EntityFrameworkCore.Triggered)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Triggered)
 
 ### Entity Framework Plus
 
 Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2, 3, 5.
 
-[Website](https://entityframework-plus.net/)
 [GitHub repository](https://github.com/zzzprojects/EntityFramework-Plus)
+[NuGet](https://www.nuget.org/packages/Z.EntityFramework.Plus.EFCore)
 
 ### Entity Framework Extensions
 
 Extends your DbContext with high-performance bulk operations: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, and more. For EF Core: 2, 3, 5.
 
 [Website](https://entityframework-extensions.net/)
+[NuGet](https://www.nuget.org/packages/Z.EntityFramework.Plus.EFCore)
 
 ### Expressionify
 
 Add support for calling extension methods in LINQ lambdas. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/ClaveConsulting/Expressionify)
+[NuGet](https://www.nuget.org/packages/Clave.Expressionify)
 
 ### ELinq
 
-Language Integrated Query (LINQ) technology for relational databases. It allows you to use C# to write strongly typed queries. For EF Core: 3.
+Language Integrated Query (LINQ) technology for relational databases. It allows you to use C# to write strongly typed queries. For EF Core: 3, 5.
 
 - Full C# support for query creation: multiple statements inside lambda, variables, functions, etc.
 - No semantic gap with SQL. ELinq declares SQL statements (like `SELECT`, `FROM`, `WHERE`) as first class C# methods, combining familiar syntax with intellisense, type safety and refactoring.
@@ -203,36 +222,42 @@ Language Integrated Query (LINQ) technology for relational databases. It allows 
 As a result SQL becomes just "another" class library exposing its API locally, literally *"Language Integrated SQL"*.
 
 [Website](https://entitylinq.com/)
+[NuGet](https://www.nuget.org/packages/Streamx.Linq.SQL.EFCore)
 
 ### Ramses
 
-Lifecycle hooks (for SaveChanges). For EF Core: 2, 3.
+Life cycle hooks (for SaveChanges). For EF Core: 2, 3.
 
 [GitHub repository](https://github.com/JValck/Ramses)
+[NuGet](https://www.nuget.org/packages/Ramses)
 
 ### EFCore.NamingConventions
 
 This will automatically make all your table and column names have snake_case, all UPPER or all lower case naming. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/efcore/EFCore.NamingConventions)
+[NuGet](https://www.nuget.org/packages/EFCore.NamingConventions)
 
 ### SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime
 
-Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3, 5.
+Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3, 5, 6.
 
 [GitHub repository](https://github.com/StevenRasmussen/EFCore.SqlServer.NodaTime)
+[NuGet](https://www.nuget.org/packages/SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime)
 
 ### Dabble.EntityFrameworkCore.Temporal.Query
 
 LINQ extensions to Entity Framework Core 3.1 to support Microsoft SQL Server Temporal Table Querying. For EF Core: 3.
 
 [GitHub repository](https://github.com/Adam-Langley/efcore-temporal-query)
+[NuGet](https://www.nuget.org/packages/Dabble.EntityFrameworkCore.Temporal.Query)
 
 ### EntityFrameworkCore.SqlServer.HierarchyId
 
 Adds hierarchyid support to the SQL Server EF Core provider. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/efcore/EFCore.SqlServer.HierarchyId)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.SqlServer.HierarchyId)
 
 ### linq2db.EntityFrameworkCore
 
@@ -241,11 +266,13 @@ Alternative translator of LINQ queries to SQL expressions. For EF Core: 2, 3, 5,
 Includes support for advanced SQL features such as CTEs, bulk copy, table hints, windowed functions, temporary tables, and database-side create/update/delete operations.
 
 [GitHub repository](https://github.com/linq2db/linq2db.EntityFrameworkCore)
+[NuGet](https://www.nuget.org/packages/linq2db.EntityFrameworkCore)
 
 ### EFCore.SoftDelete
 
 An implementation for soft deleting entities. For EF Core: 3.
 
+[GitHub repository](https://github.com/AshkanAbd/efCoreSoftDeletes)
 [NuGet](https://www.nuget.org/packages/EFCore.SoftDelete)
 
 ### EntityFrameworkCore.ConfigurationManager
@@ -253,11 +280,13 @@ An implementation for soft deleting entities. For EF Core: 3.
 Extends EF Core to resolve connection strings from App.config. For EF Core: 3.
 
 [GitHub repository](https://github.com/efcore/EFCore.ConfigurationManager)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.ConfigurationManager)
 
 ### Detached Mapper
 
 A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff). For EF Core: 3, 5.
 
+[GitHub repository](https://github.com/leonardoporro/Detached-Mapper)
 [NuGet](https://www.nuget.org/packages/Detached.Mappers.EntityFramework)
 
 ### EntityFrameworkCore.Sqlite.NodaTime
@@ -265,33 +294,34 @@ A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff)
 Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](https://sqlite.org). For EF Core: 5.
 
 [GitHub repository](https://github.com/khellang/EFCore.Sqlite.NodaTime)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Sqlite.NodaTime)
 
 ### ErikEJ.EntityFrameworkCore.SqlServer.Dacpac
 
 Enables reverse engineering an EF Core model from a SQL Server data-tier application package (.dacpac). For EF Core: 3, 5.
 
 [GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac)
+[NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac)
 
 ### ErikEJ.EntityFrameworkCore.DgmlBuilder
 
 Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() extension method to the DbContext class. For EF Core: 3, 5.
 
 [GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki/Inspect-your-DbContext-model)
+[NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.DgmlBuilder)
 
 ### ErikEJ.EntityFrameworkCore.SqlServer.SqlQuery
 
 Provides the `SqlQueryAsync<T>` and `SqlQueryValueAsync<T>` methods to help you populate arbitrary classes or a list of primitive types from a raw SQL query. For EF Core: 5.
 
 [GitHub repository](https://github.com/ErikEJ/EFCorePowerTools)
+[NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.SqlQuery)
 
 ### EntityFramework.Exceptions
 
-When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`,
-`CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints.
+When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`, `CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints. 
 
-Supports SQL Server, Postgres, MySql, SQLite and Oracle
-
-For EF Core: 3, 5.
+Supports SQL Server, Postgres, MySql, SQLite and Oracle. For EF Core: 3, 5.
 
 [GitHub Repository](https://github.com/Giorgi/EntityFramework.Exceptions)
 
@@ -300,18 +330,21 @@ For EF Core: 3, 5.
 A Library for Entity Framework Core to support automatically recording data changes history (audit logging), soft-delete, and snake_case naming convention functionality. For EF Core: 2.
 
 [GitHub Repository](https://github.com/OKTAYKIR/EFCoreAuditing)
+[NuGet](https://www.nuget.org/packages/EFCore.Auditing)
 
 ### EntityFrameworkCore.FSharp
 
 Adds F# design-time support to EF Core. For EF Core: 5.
 
 [GitHub repository](https://github.com/efcore/EFCore.FSharp)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.FSharp)
 
 ### EntityFrameworkCore.VisualBasic
 
-Adds VB design-time support to EF Core. For EF Core: 5.
+Adds VB design-time support to EF Core. For EF Core: 5, 6.
 
 [GitHub repository](https://github.com/efcore/EFCore.VisualBasic)
+[NuGet](https://www.nuget.org/packages/EntityFrameworkCore.VisualBasic)
 
 ### Krzysztofz01.EFCore.QueryFilterBuilder
 
