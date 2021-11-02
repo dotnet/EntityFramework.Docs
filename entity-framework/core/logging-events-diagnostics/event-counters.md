@@ -70,8 +70,6 @@ Press p to pause, r to resume, q to quit.
 
 ## Counters and their meaning
 
-The following counters are available and maintained in [`EntityFrameworkEventSource.cs`](https://github.com/dotnet/efcore/blob/main/src/EFCore/Infrastructure/EntityFrameworkEventSource.cs)
-
 Counter name                                                                      | Description
 --------------------------------------------------------------------------------  | ----
 Active DbContexts <br /> (`active-db-contexts`)                                          | The number of active, undisposed DbContext instances currently in your application. If this number grows continuously, you may have a leak because DbContext instances aren't being properly disposed. Note that if [context pooling](xref:core/performance/advanced-performance-topics#dbcontext-pooling) is enabled, this number includes pooled DbContext instances not currently in use.
