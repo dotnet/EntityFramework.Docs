@@ -8,8 +8,8 @@
 
     <ItemGroup>
         <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.0-rc.1.21452.10" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0-rc.1.21452.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.0-rtm.21519.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0-rtm.21519.8" />
     </ItemGroup>
 
 </Project>

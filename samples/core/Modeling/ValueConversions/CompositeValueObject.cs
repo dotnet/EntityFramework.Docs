@@ -46,8 +46,8 @@ namespace EFModeling.ValueConversions
                 modelBuilder.Entity<Order>()
                     .Property(e => e.Price)
                     .HasConversion(
-                        v => JsonSerializer.Serialize(v, null),
-                        v => JsonSerializer.Deserialize<Money>(v, null));
+                        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                        v => JsonSerializer.Deserialize<Money>(v, (JsonSerializerOptions)null));
                 #endregion
             }
 

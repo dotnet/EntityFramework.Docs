@@ -212,6 +212,15 @@ namespace Performance
                 #endregion
             }
 
+            using (var context = new PooledBloggingContext(
+                       new DbContextOptionsBuilder()
+                           .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
+                           .Options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
+
             #region DbContextPoolingWithoutDI
             var options = new DbContextOptionsBuilder<PooledBloggingContext>()
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")

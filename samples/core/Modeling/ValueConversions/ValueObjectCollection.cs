@@ -62,8 +62,8 @@ namespace EFModeling.ValueConversions
                 modelBuilder.Entity<Blog>()
                     .Property(e => e.Finances)
                     .HasConversion(
-                        v => JsonSerializer.Serialize(v, null),
-                        v => JsonSerializer.Deserialize<List<AnnualFinance>>(v, null),
+                        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                        v => JsonSerializer.Deserialize<List<AnnualFinance>>(v, (JsonSerializerOptions)null),
                         new ValueComparer<IList<AnnualFinance>>(
                             (c1, c2) => c1.SequenceEqual(c2),
                             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
@@ -125,7 +125,7 @@ namespace EFModeling.ValueConversions
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            
+
             public IList<AnnualFinance> Finances { get; set; }
         }
         #endregion
