@@ -501,7 +501,7 @@ Pre-convention model configuration is very useful when working with value object
     public enum Currency
     {
         UsDollars,
-        PoundsStirling
+        PoundsSterling
     }
 -->
 [!code-csharp[MoneyType](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=MoneyType)]
