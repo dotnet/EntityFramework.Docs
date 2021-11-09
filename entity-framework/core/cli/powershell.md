@@ -174,7 +174,7 @@ The [common parameters](#common-parameters) are listed above.
 
 Generates a compiled version of the model used by the `DbContext`. Added in EF Core 6.
 
-See [Compiled models](../performance/advanced-performance-topics.md#compiled-models) for more information.
+See [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models) for more information.
 
 Parameters:
 
@@ -326,4 +326,4 @@ Update-Database 20180904195021_InitialCreate -Connection your_connection_string
 
 * [Migrations](xref:core/managing-schemas/migrations/index)
 * [Reverse Engineering](xref:core/managing-schemas/scaffolding)
-* [Compiled models](../performance/advanced-performance-topics.md#compiled-models)
+* [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models)
