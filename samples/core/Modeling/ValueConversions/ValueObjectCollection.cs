@@ -116,7 +116,7 @@ namespace EFModeling.ValueConversions
         public enum Currency
         {
             UsDollars,
-            PoundsStirling
+            PoundsSterling
         }
         #endregion
 

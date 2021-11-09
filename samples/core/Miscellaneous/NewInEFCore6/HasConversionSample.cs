@@ -41,7 +41,7 @@ public static class HasConversionSample
                 },
                 new TestEntity1
                 {
-                    Currency = Currency.PoundsStirling
+                    Currency = Currency.PoundsSterling
                 },
                 new TestEntity2
                 {
@@ -53,7 +53,7 @@ public static class HasConversionSample
                 },
                 new TestEntity2
                 {
-                    Currency = Currency.PoundsStirling
+                    Currency = Currency.PoundsSterling
                 },
                 new TestEntity3
                 {
@@ -65,7 +65,7 @@ public static class HasConversionSample
                 },
                 new TestEntity3
                 {
-                    Currency = Currency.PoundsStirling
+                    Currency = Currency.PoundsSterling
                 });
 
             context.SaveChanges();
@@ -83,7 +83,7 @@ public static class HasConversionSample
         public int Id { get; set; }
         public Currency Currency{ get; set; }
     }
-    
+
     public class TestEntity3
     {
         public int Id { get; set; }
@@ -94,7 +94,7 @@ public static class HasConversionSample
     public enum Currency
     {
         UsDollars,
-        PoundsStirling,
+        PoundsSterling,
         Euros
     }
     #endregion
@@ -104,8 +104,8 @@ public static class HasConversionSample
     {
         public CurrencyToSymbolConverter()
             : base(
-                v => v == Currency.PoundsStirling ? "£" : v == Currency.Euros ? "€" : "$",
-                v => v == "£" ? Currency.PoundsStirling : v == "€" ? Currency.Euros : Currency.UsDollars)
+                v => v == Currency.PoundsSterling ? "£" : v == Currency.Euros ? "€" : "$",
+                v => v == "£" ? Currency.PoundsSterling : v == "€" ? Currency.Euros : Currency.UsDollars)
         {
         }
     }
