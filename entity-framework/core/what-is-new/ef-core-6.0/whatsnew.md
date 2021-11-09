@@ -2,13 +2,13 @@
 title: What's New in EF Core 6.0
 description: Overview of new features in EF Core 6.0
 author: ajcvickers
-ms.date: 10/19/2021
+ms.date: 11/09/2021
 uid: core/what-is-new/ef-core-6.0/whatsnew
 ---
 
 # What's New in EF Core 6.0
 
-EF Core 6.0 has reached release candidate quality. This page contains an overview of interesting changes introduced in this release.
+EF Core 6.0 has [shipped to NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/). This page contains an overview of interesting changes introduced in this release.
 
 > [!TIP]
 > You can run and debug into the samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6).
