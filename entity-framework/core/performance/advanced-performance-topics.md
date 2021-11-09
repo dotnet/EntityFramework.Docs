@@ -184,7 +184,7 @@ PS C:\dotnet\efdocs\samples\core\Miscellaneous\CompiledModels>
 ```
 
 * For more information see [`dotnet ef dbcontext optimize`](xref:core/cli/dotnet#dotnet-ef-dbcontext-optimize).
-* If you're more comfortable working inside Visual Studio, you can also use [Optimize-DbContext](../cli/powershell.md#optimize-dbcontext)
+* If you're more comfortable working inside Visual Studio, you can also use [Optimize-DbContext](xref:core/cli/powershell#optimize-dbcontext)
 
 The output from running this command includes a piece of code to copy-and-paste into your `DbContext` configuration to cause EF Core to use the compiled model. For example:
 
