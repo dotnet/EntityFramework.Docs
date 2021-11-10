@@ -188,10 +188,10 @@ EF Core supports querying historical data from the table through several new que
 * `TemporalAll`: Returns all rows in the historical data. This is typically many rows from the history table for a given primary key.
 * `TemporalFromTo`: Returns all rows that were active between two given UTC times. This may be many rows from the history table for a given primary key.
 * `TemporalBetween`: The same as `TemporalFromTo`, except that rows are included that became active on the upper boundary.
-* `TemporalContainedIn`: : Returns all rows that started being active and ended being active between two given UTC times. This may be many rows from the history table for a given primary key.
+* `TemporalContainedIn`: Returns all rows that started being active and ended being active between two given UTC times. This may be many rows from the history table for a given primary key.
 
 > [!NOTE]
-> See the [SQL Server temporal tables documentation](/sql/relational-databases/tables/temporal-tables#how-do-i-query-temporal-data)] for more information on exactly which rows are included for each of these operators.
+> See the [SQL Server temporal tables documentation](/sql/relational-databases/tables/temporal-tables#how-do-i-query-temporal-data) for more information on exactly which rows are included for each of these operators.
 
 For example, after making some updates and deletes to our data, we can run a query using `TemporalAll` to see the historical data:
 
