@@ -6,6 +6,7 @@ namespace EFQuerying.RelatedData
     {
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Theme> Themes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,13 +25,21 @@ namespace EFQuerying.RelatedData
                 .WithMany(t => t.Posts)
                 .HasForeignKey(pt => pt.TagId);
 
+            #region AutoInclude
+            modelBuilder.Entity<Theme>().Navigation(e => e.ColorScheme).AutoInclude();
+            #endregion
+
             modelBuilder.Entity<Blog>()
                 .HasData(
                     new Blog
                     {
-                        BlogId = 1, Url = @"https://devblogs.microsoft.com/dotnet", Rating = 5, OwnerId = 1,
+                        BlogId = 1,
+                        Url = @"https://devblogs.microsoft.com/dotnet",
+                        Rating = 5,
+                        OwnerId = 1,
+                        ThemeId = 1
                     },
-                    new Blog { BlogId = 2, Url = @"https://mytravelblog.com/", Rating = 4, OwnerId = 3 });
+                    new Blog { BlogId = 2, Url = @"https://mytravelblog.com/", Rating = 4, OwnerId = 3, ThemeId = 1 });
 
             modelBuilder.Entity<Post>()
                 .HasData(
@@ -98,6 +107,16 @@ namespace EFQuerying.RelatedData
                     new PostTag { PostTagId = 4, PostId = 3, TagId = "opinion" },
                     new PostTag { PostTagId = 5, PostId = 4, TagId = "opinion" },
                     new PostTag { PostTagId = 6, PostId = 4, TagId = "informative" });
+
+            modelBuilder.Entity<ColorScheme>()
+                .HasData(
+                    new ColorScheme { Id = 1, Background = "FFFFFF", HighlightColor = "00FF00" }
+                );
+
+            modelBuilder.Entity<Theme>()
+                .HasData(
+                    new Theme { Id = 1, ColorSchemeId = 1 }
+                );
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
