@@ -361,9 +361,7 @@ It also has many useful features commonly used especially on web development. Fo
 [NuGet](https://www.nuget.org/packages/Pagination.EntityFrameworkCore.Extensions)
 
 ### Laraue.EfCoreTriggers
-Fluent API to declare triggers in `Context.OnModelCreating` which are later built into migrations. Providers to Postgres, MySql, SqlServer and SqlLite.
-
-Support for EFCore:  5, 6.
+Fluent API to declare triggers in `Context.OnModelCreating` which are later built into migrations. Providers to Postgres, MySql, SqlServer and SqlLite. For EF Core:  5, 6.
 
 [GitHub repository](https://github.com/win7user10/Laraue.EfCoreTriggers)
 [NuGet](https://www.nuget.org/packages/Laraue.EfCoreTriggers.Common)
