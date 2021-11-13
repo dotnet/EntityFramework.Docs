@@ -1257,7 +1257,7 @@ optionsBuilder
                     }));
         });
 -->
-[!code-csharp[HttpClientFactory](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosModelConfigurationSample.cs?name=HttpClientFactory)]
+[!code-csharp[HttpClientFactory](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosPrimitiveTypesSample.cs?name=HttpClientFactory)]
 
 > [!NOTE]
 > See [Taking the EF Core Azure Cosmos DB Provider for a Test Drive](https://devblogs.microsoft.com/dotnet/taking-the-ef-core-azure-cosmos-db-provider-for-a-test-drive/) on the .NET Blog for a detailed example of applying the Cosmos provider improvements to an existing application.
@@ -2055,7 +2055,7 @@ This translates to the following SQL when using a SQL Server database:
 ```sql
 SELECT [u].[Id], [u].[Popularity], [u].[Username]
 FROM [Users] AS [u]
-WHERE [u].[Popularity] = (CAST((RAND() * 5.0E0) AS int) + 1)
+WHERE [u].[Popularity] = (CAST((RAND() * 4.0E0) AS int) + 1)
 ```
 
 ### Improved SQL Server translation for IsNullOrWhitespace
