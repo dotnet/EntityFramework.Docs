@@ -363,7 +363,5 @@ It also has many useful features commonly used especially on web development. Fo
 ### Laraue.EfCoreTriggers
 Fluent API to declare triggers in `Context.OnModelCreating` which are later built into migrations. Providers to Postgres, MySql, SqlServer and SqlLite.
 
-There is some support for method call expression conversion. The library is on par with framework releases and the devoloper seems engaged.
-
 [GitHub repository](https://github.com/win7user10/Laraue.EfCoreTriggers)
 [NuGet](https://www.nuget.org/packages/Laraue.EfCoreTriggers.Common)
