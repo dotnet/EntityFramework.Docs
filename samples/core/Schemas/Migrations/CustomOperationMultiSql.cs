@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 internal static class MultiSqlMigrationBuilderExtensions
 {
     #region snippet_CustomOperationMultiSql
-    private static OperationBuilder<SqlOperation> CreateUser(
+    public static OperationBuilder<SqlOperation> CreateUser(
         this MigrationBuilder migrationBuilder,
         string name,
         string password)
