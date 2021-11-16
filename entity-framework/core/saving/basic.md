@@ -1,11 +1,11 @@
 ---
-title: Basic Save - EF Core
+title: Create Update Delete - EF Core
 description: Basic information on adding, updating and removing data with Entity Framework Core
 author: ajcvickers
 ms.date: 10/27/2016
 uid: core/saving/basic
 ---
-# Basic Save
+# Create Update Delete
 
 Learn how to add, modify, and remove data using your context and entity classes.
 
