@@ -233,11 +233,19 @@ Life cycle hooks (for SaveChanges). For EF Core: 2, 3.
 
 ### EFCore.NamingConventions
 
-This will automatically make all your table and column names have snake_case, all UPPER or all lower case naming. For EF Core: 3, 5.
+This will automatically make all your table and column names have snake_case, all UPPER or all lower case naming. For EF Core: 3, 5, 6.
 
 [GitHub repository](https://github.com/efcore/EFCore.NamingConventions)
 [NuGet](https://www.nuget.org/packages/EFCore.NamingConventions)
 
+### EFCore.CheckConstraints
+
+This plugin allows you to opt into some check constraints - just activate it and they'll automatically get created for you. For EF Core: 5, 6.
+
+[GitHub repository](https://github.com/efcore/EFCore.CheckConstraints)
+[NuGet](https://www.nuget.org/packages/EFCore.CheckConstraints)
+
+Entity Framework Core for automatically adding check constraints in various scenarios.
 ### SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime
 
 Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3, 5, 6.
@@ -362,7 +370,7 @@ It also has many useful features commonly used especially on web development. Fo
 
 ### Laraue.EfCoreTriggers
 
-Fluent API to declare triggers in `Context.OnModelCreating` which are later built into migrations. Providers to Postgres, MySql, SqlServer and SqlLite. For EF Core:  5, 6.
+Fluent API to declare triggers in `Context.OnModelCreating` which are later built into migrations. Providers to Postgres, MySQL, SQL Server and SQLite. For EF Core: 5, 6.
 
 [GitHub repository](https://github.com/win7user10/Laraue.EfCoreTriggers)
 [NuGet](https://www.nuget.org/packages/Laraue.EfCoreTriggers.Common)
