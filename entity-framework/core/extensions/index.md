@@ -245,7 +245,6 @@ This plugin allows you to opt into some check constraints - just activate it and
 [GitHub repository](https://github.com/efcore/EFCore.CheckConstraints)
 [NuGet](https://www.nuget.org/packages/EFCore.CheckConstraints)
 
-Entity Framework Core for automatically adding check constraints in various scenarios.
 ### SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime
 
 Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3, 5, 6.
