@@ -106,6 +106,20 @@ The same thing can be achieved by explicitly specifying the database column type
 
 Then the enum values will be saved as strings in the database without any further configuration in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>.
 
+## Configuring conventions for all properties of a certain type
+
+All `EquineBeast` properties can be converted to strings.
+
+<!--
+            protected override void ConfigureConventions(
+                ModelConfigurationBuilder configurationBuilder)
+            {
+                configurationBuilder
+                    .Properties<EquineBeast>()
+                    .HasConversion(converter);
+            }
+-->
+
 ## The ValueConverter class
 
 Calling <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder.HasConversion%2A> as shown above will create a <xref:Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter%602> instance and set it on the property. The `ValueConverter` can instead be created explicitly. For example:
