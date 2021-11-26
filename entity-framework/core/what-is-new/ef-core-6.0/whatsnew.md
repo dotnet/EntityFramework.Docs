@@ -26,6 +26,9 @@ EF Core now supports:
 * Querying historical data
 * Restoring data from some point in the past
 
+> [!NOTE]
+> historical data are data containing the both previous and current state of a record. Previous states stored in History Table and current state stored in Temporal Table itself.
+
 ### Configuring a temporal table
 
 The model builder can be used to configure a table as temporal. For example:
