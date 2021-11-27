@@ -2,13 +2,13 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using static System.Console;
 
 public static class CosmosQueriesSample
 {
     public static void Cosmos_queries()
     {
-        WriteLine($">>>> Sample: {nameof(Cosmos_queries)}\n");
+        Console.WriteLine($">>>> Sample: {nameof(Cosmos_queries)}");
+        Console.WriteLine();
 
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
@@ -24,12 +24,12 @@ public static class CosmosQueriesSample
                 .ToList();
         #endregion
 
-        WriteLine();
+        Console.WriteLine();
         foreach (var result in stringResults)
         {
-            WriteLine($" {result.Name}");
+            Console.WriteLine($" {result.Name}");
         }
-        WriteLine();
+        Console.WriteLine();
 
         #region MathTranslations
         var hypotenuse = 42.42;
@@ -42,12 +42,12 @@ public static class CosmosQueriesSample
                 .ToList();
         #endregion
 
-        WriteLine();
+        Console.WriteLine();
         foreach (var result in mathResults)
         {
-            WriteLine($" {result.Name}");
+            Console.WriteLine($" {result.Name}");
         }
-        WriteLine();
+        Console.WriteLine();
 
         #region TimeTranslations
         var timeResults
@@ -56,12 +56,12 @@ public static class CosmosQueriesSample
                 .ToList();
         #endregion
 
-        WriteLine();
+        Console.WriteLine();
         foreach (var result in timeResults)
         {
-            WriteLine($" {result.Name}");
+            Console.WriteLine($" {result.Name}");
         }
-        WriteLine();
+        Console.WriteLine();
 
         #region DistictTranslation
         var distinctResults
@@ -70,12 +70,12 @@ public static class CosmosQueriesSample
                 .ToList();
         #endregion
 
-        WriteLine();
+        Console.WriteLine();
         foreach (var result in distinctResults)
         {
-            WriteLine($" {result}");
+            Console.WriteLine($" {result}");
         }
-        WriteLine();
+        Console.WriteLine();
 
         #region FromSql
         var maxAngle = 60;
@@ -86,12 +86,12 @@ public static class CosmosQueriesSample
                 .ToList();
         #endregion
 
-        WriteLine();
+        Console.WriteLine();
         foreach (var result in rawResults)
         {
-            WriteLine($" {result.Name}");
+            Console.WriteLine($" {result.Name}");
         }
-        WriteLine();
+        Console.WriteLine();
     }
 
     public static class Helpers
@@ -152,13 +152,13 @@ public static class CosmosQueriesSample
             optionsBuilder
                 .EnableSensitiveDataLogging()
                 .UseCosmos(
-                    new System.Text.RegularExpressions.Regex("\\\\").Replace(Environment.GetEnvironmentVariable("COSMOS_ENDPOINT"), "/"),
-                    Environment.GetEnvironmentVariable("COSMOS_ACCOUNTKEY"),
+                    "https://localhost:8081",
+                    "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
                     "Queries");
 
             if (!_quiet)
             {
-                optionsBuilder.LogTo(WriteLine, new[] { CosmosEventId.ExecutingSqlQuery });
+                optionsBuilder.LogTo(Console.WriteLine, new[] { CosmosEventId.ExecutingSqlQuery });
             }
         }
     }

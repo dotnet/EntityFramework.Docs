@@ -1,4 +1,4 @@
-﻿public class Program
+public class NewInEFCore6MainProgram
 {
     public static void Main()
     {
@@ -43,12 +43,3 @@
         ManyToManyConfigurationSample.Many_to_many_relationships_may_need_less_configuration();
         ConvertNullsSample.Value_converters_can_convert_nulls();
         ColumnOrderSample.Can_use_ColumnAttribute_to_set_column_order();
-
-        SqliteSamples.SavepointsApi();
-        SqliteSamples.ConnectionPooling();
-        SqliteSamples.DateOnly_and_TimeOnly();
-
-        // Note: this sample requires a full version of SQL Server. It does not work with LocalDb
-        // ContainsFreeTextSample.Contains_with_non_string();
-    }
-}

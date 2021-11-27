@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using static System.Console;
 
 public static class CosmosModelConfigurationSample
 {
     public static void Cosmos_configure_time_to_live()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Cosmos_configure_time_to_live)}");
-        Console.WriteLine();
+        WriteLine($">>>> Sample: {nameof(Cosmos_configure_time_to_live)}\n");
 
         using var context = new FamilyContext();
 
         // Don't run on the emulator since some options are not supported there.
-        Console.WriteLine(context.Model.ToDebugString());
+        WriteLine(context.Model.ToDebugString());
 
-        Console.WriteLine();
+        WriteLine();
     }
 
     public class Family
@@ -104,13 +104,13 @@ public static class CosmosModelConfigurationSample
             optionsBuilder
                 .EnableSensitiveDataLogging()
                 .UseCosmos(
-                    "https://localhost:8081",
-                    "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
+                new System.Text.RegularExpressions.Regex("\\\\").Replace(Environment.GetEnvironmentVariable("COSMOS_ENDPOINT"), "/"),
+                Environment.GetEnvironmentVariable("COSMOS_ACCOUNTKEY"),
                     "TODO");
 
             if (!_quiet)
             {
-                optionsBuilder.LogTo(Console.WriteLine, new[] { CosmosEventId.ExecutingSqlQuery });
+                optionsBuilder.LogTo(WriteLine, new[] { CosmosEventId.ExecutingSqlQuery });
             }
         }
     }

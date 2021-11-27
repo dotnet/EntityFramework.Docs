@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-
+using static System.Console;
 public static class CosmosMinimalApiSample
 {
     public static void Add_a_DbContext_and_provider()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Add_a_DbContext_and_provider)}");
+        WriteLine($">>>> Sample: {nameof(Add_a_DbContext_and_provider)}");
         
         CosmosMinimal(null);
         CosmosNormal(null);
@@ -18,8 +18,8 @@ public static class CosmosMinimalApiSample
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddCosmos<MyDbContext>(
-            "https://localhost:8081",
-            "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==");
+            new System.Text.RegularExpressions.Regex("\\\\").Replace(Environment.GetEnvironmentVariable("COSMOS_ENDPOINT"), "/"),
+            Environment.GetEnvironmentVariable("COSMOS_ACCOUNTKEY"));
         #endregion
     }
 
@@ -30,8 +30,8 @@ public static class CosmosMinimalApiSample
 
         builder.Services.AddDbContext<MyDbContext>(
             options => options.UseCosmos(
-                "https://localhost:8081",
-                "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw=="));
+                new System.Text.RegularExpressions.Regex("\\\\").Replace(Environment.GetEnvironmentVariable("COSMOS_ENDPOINT"), "/"),
+                Environment.GetEnvironmentVariable("COSMOS_ACCOUNTKEY")));
         #endregion
     }
 

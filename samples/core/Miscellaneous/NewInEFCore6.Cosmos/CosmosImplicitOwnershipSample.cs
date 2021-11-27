@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using static System.Console;
 
 public static class CosmosImplicitOwnershipSample
 {
     public static void Cosmos_models_use_implicit_ownership_by_default()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Cosmos_models_use_implicit_ownership_by_default)}");
-        Console.WriteLine();
+        WriteLine($">>>> Sample: {nameof(Cosmos_models_use_implicit_ownership_by_default)}\n");
 
         using (var context = new FamilyContext())
         {
@@ -72,23 +72,23 @@ public static class CosmosImplicitOwnershipSample
             context.SaveChanges();
         }
 
-        Console.WriteLine();
+        WriteLine();
 
         using (var context = new FamilyContext())
         {
             var families = context.Families.ToList();
 
-            Console.WriteLine();
+            WriteLine();
 
             foreach (var family in families)
             {
-                Console.WriteLine($"{family.LastName} family:");
-                Console.WriteLine($"    From {family.Address.City}, {family.Address.State}");
-                Console.WriteLine($"    With {family.Children.Count} children and {family.Children.SelectMany(e => e.Pets).Count()} pets.");
+                WriteLine($"{family.LastName} family:");
+                WriteLine($"    From {family.Address.City}, {family.Address.State}");
+                WriteLine($"    With {family.Children.Count} children and {family.Children.SelectMany(e => e.Pets).Count()} pets.");
             }
         }
 
-        Console.WriteLine();
+        WriteLine();
     }
 
     #region Model
@@ -176,14 +176,14 @@ public static class CosmosImplicitOwnershipSample
             optionsBuilder
                 .EnableSensitiveDataLogging()
                 .UseCosmos(
-                    "https://localhost:8081",
-                    "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
+                    new System.Text.RegularExpressions.Regex("\\\\").Replace(Environment.GetEnvironmentVariable("COSMOS_ENDPOINT"), "/"),
+                    Environment.GetEnvironmentVariable("COSMOS_ACCOUNTKEY"),
                     "TODOImplicit");
 
             if (!_quiet)
             {
                 optionsBuilder.LogTo(
-                    Console.WriteLine, new[]
+                    WriteLine, new[]
                     {
                         CosmosEventId.ExecutedCreateItem,
                         CosmosEventId.ExecutedDeleteItem,

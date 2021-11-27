@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using static System.Console;
 
 public static class CosmosPrimitiveTypesSample
 {
     public static void Collections_and_dictionaries_of_primitive_types()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Collections_and_dictionaries_of_primitive_types)}");
-        Console.WriteLine();
+        WriteLine($">>>> Sample: {nameof(Collections_and_dictionaries_of_primitive_types)}\n");
 
         Helpers.RecreateCleanDatabase();
 
@@ -45,7 +45,7 @@ public static class CosmosPrimitiveTypesSample
         context.SaveChanges();
         #endregion
 
-        Console.WriteLine();
+        WriteLine();
     }
 
     public static class Helpers
@@ -91,8 +91,8 @@ public static class CosmosPrimitiveTypesSample
             optionsBuilder
                 .EnableSensitiveDataLogging()
                 .UseCosmos(
-                    "https://localhost:8081",
-                    "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
+                    new System.Text.RegularExpressions.Regex("\\\\").Replace(Environment.GetEnvironmentVariable("COSMOS_ENDPOINT"), "/"),
+                    Environment.GetEnvironmentVariable("COSMOS_ACCOUNTKEY"),
                     "PrimitiveCollections",
                     cosmosOptionsBuilder =>
                     {
@@ -109,7 +109,7 @@ public static class CosmosPrimitiveTypesSample
             if (!_quiet)
             {
                 optionsBuilder.LogTo(
-                    Console.WriteLine,
+                    WriteLine,
                     new[] { CosmosEventId.ExecutedCreateItem, CosmosEventId.ExecutingSqlQuery, CoreEventId.SaveChangesCompleted });
             }
         }
