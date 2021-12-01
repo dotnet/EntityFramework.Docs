@@ -376,7 +376,7 @@ Fluent API to declare triggers in `Context.OnModelCreating` which are later buil
 
 ### EntityCloner.Microsoft.EntityFrameworkCore
 
-Cloning entities using EntityFrameworkCore configuration. You can use the 'Include' method to specify related data to be cloned. For EF Core: 5, 6.
+Cloning entities using EF Core configuration. You can use the `Include` method to specify related data to be cloned. For EF Core: 5, 6.
 
 [GitHub repository](https://github.com/HenkKin/EntityCloner.Microsoft.EntityFrameworkCore)
 [NuGet](https://www.nuget.org/packages/EntityCloner.Microsoft.EntityFrameworkCore)
