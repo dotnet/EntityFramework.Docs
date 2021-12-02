@@ -2,7 +2,7 @@
 title: Relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
 author: AndriySvyryd
-ms.date: 10/01/2020
+ms.date: 11/15/2021
 uid: core/modeling/relationships
 ---
 # Relationships
@@ -77,9 +77,6 @@ In this example the highlighted properties will be used to configure the relatio
 
 > [!NOTE]
 > If the property is the primary key or is of a type not compatible with the principal key then it won't be configured as the foreign key.
-
-> [!NOTE]
-> Before EF Core 3.0, the property named exactly the same as the principal key property [was also matched as the foreign key](https://github.com/dotnet/efcore/issues/13274)
 
 ### No foreign key property
 
@@ -295,7 +292,7 @@ CREATE TABLE [PostTag] (
 );
 ```
 
-Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. `Dictionary<string, object>` is currently used for it to handle any combination of foreign key properties, see [property bag entity types](shadow-properties.md#property-bag-entity-types) for more information. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
+Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. `Dictionary<string, object>` is currently used for it to handle any combination of foreign key properties, see [property bag entity types](xref:core/modeling/shadow-properties#property-bag-entity-types) for more information. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
 
 > [!IMPORTANT]
 > The CLR type used for join entity types by convention may change in future releases to improve performance. Do not depend on the join type being `Dictionary<string, object>` unless this has been explicitly configured, as described in the next section.

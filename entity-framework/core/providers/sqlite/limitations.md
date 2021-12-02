@@ -2,7 +2,7 @@
 title: SQLite Database Provider - Limitations - EF Core
 description: Limitations of the Entity Framework Core SQLite database provider as compared to other providers
 author: bricelam
-ms.date: 09/24/2020
+ms.date: 11/15/2021
 uid: core/providers/sqlite/limitations
 ---
 # SQLite EF Core Database Provider Limitations
@@ -58,7 +58,7 @@ A rebuild will be attempted in order to perform certain operations. Rebuilds are
 | DropPrimaryKey       | ✔ (rebuild) | 5.0              |
 | DropTable            | ✔           |                  |
 | DropUniqueConstraint | ✔ (rebuild) | 5.0              |
-| RenameColumn         | ✔           | 2.2              |
+| RenameColumn         | ✔           |                  |
 | RenameIndex          | ✔ (rebuild) |                  |
 | RenameTable          | ✔           |                  |
 | EnsureSchema         | ✔ (no-op)   |                  |

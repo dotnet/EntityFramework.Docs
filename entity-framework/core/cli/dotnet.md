@@ -2,7 +2,7 @@
 title: EF Core tools reference (.NET CLI) - EF Core
 description: Reference guide for the Entity Framework Core .NET Core CLI tools
 author: bricelam
-ms.date: 10/21/2021
+ms.date: 11/15/2021
 uid: core/cli/dotnet
 ---
 
@@ -173,6 +173,33 @@ Lists available `DbContext` types.
 
 The [common options](#common-options) are listed above.
 
+## `dotnet ef dbcontext optimize`
+
+Generates a compiled version of the model used by the `DbContext`. Added in EF Core 6.
+
+See [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models) for more information.
+
+Options:
+
+| Option                                   | Short             | Description                                                                                                                                                                    |
+|:-----------------------------------------|:------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <nobr>`--output-dir <PATH>`</nobr>       | `-o`              | The directory to put files in. Paths are relative to the project directory.                                                                                       |
+| <nobr>`--namespace <NAMESPACE>`</nobr>   | `-n`              | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus `CompiledModels`.                                  |
+
+The [common options](#common-options) are listed above.
+
+The following example uses the default settings and works if there is only one `DbContext` in the project:
+
+```dotnetcli
+dotnet ef dbcontext optimize
+```
+
+The following example optimizes the model for the context with the specified name and places it in a separate folder and namespace:
+
+```dotnetcli
+dotnet ef dbcontext optimize -o Models -n BlogModels -c BlogContext
+```
+
 ## `dotnet ef dbcontext scaffold`
 
 Generates code for a `DbContext` and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.
@@ -228,36 +255,9 @@ The following example skips scaffolding an `OnConfiguring` method. This can be u
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;User Id=myUsername;Password=myPassword;" Microsoft.EntityFrameworkCore.SqlServer --no-onconfiguring
 ```
 
-## `dotnet ef dbcontext optimize`
-
-Generates a compiled version of the model used by the `DbContext`. Added in EF Core 6.
-
-See [Compiled models](../performance/advanced-performance-topics.md#compiled-models) for more information.
-
-Options:
-
-| Option                                   | Short             | Description                                                                                                                                                                    |
-|:-----------------------------------------|:------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr>`--output-dir <PATH>`</nobr>       | `-o`              | The directory to put files in. Paths are relative to the project directory.                                                                                       |
-| <nobr>`--namespace <NAMESPACE>`</nobr>   | `-n`              | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus `CompiledModels`.                                  |
-
-The [common options](#common-options) are listed above.
-
-The following example uses the default settings and works if there is only one `DbContext` in the project:
-
-```dotnetcli
-dotnet ef dbcontext optimize
-```
-
-The following example optimizes the model for the context with the specified name and places it in a separate folder and namespace:
-
-```dotnetcli
-dotnet ef dbcontext optimize -o Models -n BlogModels -c BlogContext
-```
-
 ## `dotnet ef dbcontext script`
 
-Generates a SQL script from the DbContext. Bypasses any migrations. Added in EF Core 3.0.
+Generates a SQL script from the DbContext. Bypasses any migrations.
 
 Options:
 
@@ -283,6 +283,21 @@ Options:
 |:---------------------------------------|:------------------|:-----------------------------------------------------------------------------------------------------------------------|
 | <nobr>`--output-dir <PATH>`</nobr>     | <nobr>`-o`</nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations".   |
 | <nobr>`--namespace <NAMESPACE>`</nobr> | `-n`              | The namespace to use for the generated classes. Defaults to generated from the output directory. Added in EF Core 5.0. |
+
+The [common options](#common-options) are listed above.
+
+## `dotnet ef migrations bundle`
+
+Creates an executable to update the database.
+
+Options:
+
+Option                                               | Short             | Description
+---------------------------------------------------- | ----------------- | -----------
+`--output <FILE>`                                    | <nobr>`-o`</nobr> | The path of executable file to create.
+`--force`                                            | `-f`              | Overwrite existing files.
+`--self-contained`                                   |                   | Also bundle the .NET runtime so it doesn't need to be installed on the machine.
+<nobr>`--target-runtime <RUNTIME_IDENTIFIER>`</nobr> | `-r`              | The target runtime to bundle for.
 
 The [common options](#common-options) are listed above.
 
@@ -348,3 +363,4 @@ dotnet ef migrations script 20180904195021_InitialCreate
 
 * [Migrations](xref:core/managing-schemas/migrations/index)
 * [Reverse Engineering](xref:core/managing-schemas/scaffolding)
+* [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models)

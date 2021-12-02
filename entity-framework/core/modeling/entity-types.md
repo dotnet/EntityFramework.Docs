@@ -1,8 +1,8 @@
 ---
 title: Entity Types - EF Core
 description: How to configure and map entity types using Entity Framework Core
-author: roji
-ms.date: 10/06/2020
+author: AndriySvyryd
+ms.date: 10/25/2021
 uid: core/modeling/entity-types
 ---
 # Entity Types
@@ -159,3 +159,12 @@ You can set an arbitrary text comment that gets set on the database table, allow
 [!code-csharp[Main](../../../samples/core/Modeling/EntityTypes/FluentAPI/TableComment.cs?name=TableComment&highlight=4)]
 
 ***
+
+## Shared-type entity types
+
+> [!NOTE]
+> Support for Shared-type entity types was introduced in EF Core 5.0.
+
+Entity types that use the same CLR type are known as shared-type entity types. These entity types need to be configured with a unique name, which must be supplied whenever the shared-type entity type is used, in addition to the CLR type. This means that the corresponding `DbSet` property must be implemented using a `Set` call.
+
+[!code-csharp[Main](../../../samples/core/Modeling/ShadowAndIndexerProperties/SharedType.cs?name=SharedType&highlight=3,7)]

@@ -2,11 +2,14 @@
 title: Plan for Entity Framework Core 6.0
 description: The themes and features planned for EF Core 6.0
 author: ajcvickers
-ms.date: 08/26/2021
+ms.date: 11/09/2021
 uid: core/what-is-new/ef-core-6.0/plan
 ---
 
 # Plan for Entity Framework Core 6.0
+
+> [!IMPORTANT]
+> EF Core 6.0 [has now been released](xref:core/what-is-new/index). This page remains as a historical record of the plan.
 
 As described in the [planning process](xref:core/what-is-new/release-planning), we have gathered input from stakeholders into a plan for the Entity Framework Core (EF Core) 6.0 release. This plan is periodically updated to reflect schedule and scope adjustments.
 

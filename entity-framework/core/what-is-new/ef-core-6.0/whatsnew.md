@@ -2,13 +2,13 @@
 title: What's New in EF Core 6.0
 description: Overview of new features in EF Core 6.0
 author: ajcvickers
-ms.date: 10/19/2021
+ms.date: 11/09/2021
 uid: core/what-is-new/ef-core-6.0/whatsnew
 ---
 
 # What's New in EF Core 6.0
 
-EF Core 6.0 has reached release candidate quality. This page contains an overview of interesting changes introduced in this release.
+EF Core 6.0 has [shipped to NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/). This page contains an overview of interesting changes introduced in this release.
 
 > [!TIP]
 > You can run and debug into the samples shown below by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6).
@@ -188,10 +188,10 @@ EF Core supports querying historical data from the table through several new que
 * `TemporalAll`: Returns all rows in the historical data. This is typically many rows from the history table for a given primary key.
 * `TemporalFromTo`: Returns all rows that were active between two given UTC times. This may be many rows from the history table for a given primary key.
 * `TemporalBetween`: The same as `TemporalFromTo`, except that rows are included that became active on the upper boundary.
-* `TemporalContainedIn`: : Returns all rows that started being active and ended being active between two given UTC times. This may be many rows from the history table for a given primary key.
+* `TemporalContainedIn`: Returns all rows that started being active and ended being active between two given UTC times. This may be many rows from the history table for a given primary key.
 
 > [!NOTE]
-> See the [SQL Server temporal tables documentation](/sql/relational-databases/tables/temporal-tables#how-do-i-query-temporal-data)] for more information on exactly which rows are included for each of these operators.
+> See the [SQL Server temporal tables documentation](/sql/relational-databases/tables/temporal-tables#how-do-i-query-temporal-data) for more information on exactly which rows are included for each of these operators.
 
 For example, after making some updates and deletes to our data, we can run a query using `TemporalAll` to see the historical data:
 
@@ -501,7 +501,7 @@ Pre-convention model configuration is very useful when working with value object
     public enum Currency
     {
         UsDollars,
-        PoundsStirling
+        PoundsSterling
     }
 -->
 [!code-csharp[MoneyType](../../../../samples/core/Miscellaneous/NewInEFCore6/PreConventionModelConfigurationSample.cs?name=MoneyType)]
@@ -1257,7 +1257,7 @@ optionsBuilder
                     }));
         });
 -->
-[!code-csharp[HttpClientFactory](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosModelConfigurationSample.cs?name=HttpClientFactory)]
+[!code-csharp[HttpClientFactory](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosPrimitiveTypesSample.cs?name=HttpClientFactory)]
 
 > [!NOTE]
 > See [Taking the EF Core Azure Cosmos DB Provider for a Test Drive](https://devblogs.microsoft.com/dotnet/taking-the-ef-core-azure-cosmos-db-provider-for-a-test-drive/) on the .NET Blog for a detailed example of applying the Cosmos provider improvements to an existing application.
@@ -1285,16 +1285,14 @@ CREATE TABLE [Posts] (
     [Contents] nvarchar(max) NOT NULL,
     [PostedOn] datetime2 NOT NULL,
     [UpdatedOn] datetime2 NULL,
-    [BlogId] int NOT NULL,
-    CONSTRAINT [PK_Posts] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Posts_Blogs_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [Blogs] ([Id]));
+    CONSTRAINT [PK_Posts] PRIMARY KEY ([Id]));
 
 CREATE TABLE [PostTag] (
     [PostsId] int NOT NULL,
     [TagsId] int NOT NULL,
     CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostsId], [TagsId]),
-    CONSTRAINT [FK_PostTag_Posts_TagsId] FOREIGN KEY ([TagsId]) REFERENCES [Posts] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_PostTag_Tags_PostsId] FOREIGN KEY ([PostsId]) REFERENCES [Tags] ([Id]) ON DELETE CASCADE);
+    CONSTRAINT [FK_PostTag_Posts_TagsId] FOREIGN KEY ([TagsId]) REFERENCES [Tags] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PostTag_Tags_PostsId] FOREIGN KEY ([PostsId]) REFERENCES [Posts] ([Id]) ON DELETE CASCADE);
 ```
 
 These tables can be scaffolded from the command line. For example:
@@ -2057,7 +2055,7 @@ This translates to the following SQL when using a SQL Server database:
 ```sql
 SELECT [u].[Id], [u].[Popularity], [u].[Username]
 FROM [Users] AS [u]
-WHERE [u].[Popularity] = (CAST((RAND() * 5.0E0) AS int) + 1)
+WHERE [u].[Popularity] = (CAST((RAND() * 4.0E0) AS int) + 1)
 ```
 
 ### Improved SQL Server translation for IsNullOrWhitespace

@@ -2,7 +2,7 @@
 title: Microsoft SQL Server Database Provider - Value Generation - EF Core
 description: Value Generation Patterns Specific to the SQL Server Entity Framework Core Database Provider
 author: roji
-ms.date: 1/10/2020
+ms.date: 11/15/2021
 uid: core/providers/sql-server/value-generation
 ---
 # SQL Server Value Generation
@@ -18,9 +18,6 @@ By convention, numeric columns that are configured to have their values generate
 By default, IDENTITY columns start off at 1 (the seed), and increment by 1 each time a row is added (the increment). You can configure a different seed and increment as follows:
 
 [!code-csharp[Main](../../../../samples/core/SqlServer/ValueGeneration/IdentityOptionsContext.cs?name=IdentityOptions&highlight=5)]
-
-> [!NOTE]
-> The ability to configure IDENTITY seed and increment was introduced in EF Core 3.0.
 
 ### Inserting explicit values into IDENTITY columns
 

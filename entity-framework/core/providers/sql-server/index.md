@@ -2,7 +2,7 @@
 title: Microsoft SQL Server Database Provider - EF Core
 description: Documentation for the database provider that allows Entity Framework Core to be used with Microsoft SQL Server
 author: AndriySvyryd
-ms.date: 11/05/2019
+ms.date: 11/15/2021
 uid: core/providers/sql-server/index
 ---
 # Microsoft SQL Server EF Core Database Provider
@@ -28,10 +28,10 @@ Install-Package Microsoft.EntityFrameworkCore.SqlServer
 ***
 
 > [!NOTE]
-> Since version 3.0.0, the provider references Microsoft.Data.SqlClient (previous versions depended on System.Data.SqlClient). If your project takes a direct dependency on SqlClient, make sure it references the Microsoft.Data.SqlClient package.
+> The provider references Microsoft.Data.SqlClient (not System.Data.SqlClient). If your project takes a direct dependency on SqlClient, make sure it references the Microsoft.Data.SqlClient package.
 
 >[!TIP]
-> The Microsoft.Data.SqlClient package ships more frequently than the EF Core provider. If you would like to take advantage of new features and bug fixes, you can add a direct package reference to the latest version of Microsoft.Data.SqlClient.  
+> The Microsoft.Data.SqlClient package ships more frequently than the EF Core provider. If you would like to take advantage of new features and bug fixes, you can add a direct package reference to the latest version of Microsoft.Data.SqlClient.
 
 ## Supported Database Engines
 

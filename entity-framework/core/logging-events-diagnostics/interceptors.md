@@ -2,7 +2,7 @@
 title: Interceptors - EF Core
 description: Interception for database operations and other events
 author: ajcvickers
-ms.date: 10/08/2020
+ms.date: 11/15/2021
 uid: core/logging-events-diagnostics/interceptors
 ---
 
@@ -51,7 +51,7 @@ Every interceptor instance must implement one or more interface derived from <xr
 ## Database interception
 
 > [!NOTE]
-> Database interception was introduced in EF Core 3.0 and is only available for relational database providers.
+> Database interception is only available for relational database providers.
 > Savepoint support was introduced in EF Core 5.0.
 
 Low-level database interception is split into the three interfaces shown in the following table.

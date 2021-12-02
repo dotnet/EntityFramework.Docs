@@ -40,14 +40,14 @@ public static class PreConventionModelConfigurationSample
                 {
                     Name = "Arthur",
                     IsActive = true,
-                    AccountValue = new Money(1090.0m, Currency.PoundsStirling),
+                    AccountValue = new Money(1090.0m, Currency.PoundsSterling),
                     Orders =
                     {
                         new()
                         {
                             OrderDate = new DateTime(2021, 7, 31),
-                            Price = new Money(29.0m, Currency.PoundsStirling),
-                            Discount = new Money(5.0m, Currency.PoundsStirling)
+                            Price = new Money(29.0m, Currency.PoundsSterling),
+                            Discount = new Money(5.0m, Currency.PoundsSterling)
                         }
                     }
                 },
@@ -119,7 +119,7 @@ public static class PreConventionModelConfigurationSample
     public enum Currency
     {
         UsDollars,
-        PoundsStirling
+        PoundsSterling
     }
     #endregion
 

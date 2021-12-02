@@ -2,7 +2,7 @@
 title: Additional Change Tracking Features - EF Core
 description: Miscellaneous features and scenarios involving EF Core change tracking
 author: ajcvickers
-ms.date: 12/30/2020
+ms.date: 11/15/2021
 uid: core/change-tracking/miscellaneous
 ---
 
@@ -93,7 +93,7 @@ Notice that <xref:Microsoft.EntityFrameworkCore.DbContext.Set%60%601(System.Stri
 
 ## Property versus field access
 
-Starting with EF Core 3.0, access to entity properties uses the backing field of the property by default. This is efficient and avoids triggering side effects from calling property getters and setters. For example, this is how lazy-loading is able to avoid triggering infinite loops. See [Backing Fields](xref:core/modeling/backing-field) for more information on configuring backing fields in the model.
+Access to entity properties uses the backing field of the property by default. This is efficient and avoids triggering side effects from calling property getters and setters. For example, this is how lazy-loading is able to avoid triggering infinite loops. See [Backing Fields](xref:core/modeling/backing-field) for more information on configuring backing fields in the model.
 
 Sometimes it may be desirable for EF Core to generate side-effects when it modifies property values. For example, when data binding to entities, setting a property may generate notifications to the U.I. which do not happen when setting the field directly. This can be achieved by changing the <xref:Microsoft.EntityFrameworkCore.PropertyAccessMode> for:
 
@@ -106,9 +106,9 @@ Property access modes `Field` and `PreferField` will cause EF Core to access the
 
 If `Field` or `Property` are used and EF Core cannot access the value through the field or property getter/setter respectively, then EF Core will throw an exception. This ensures EF Core is always using field/property access when you think it is.
 
-On the other hand, the `PreferField` and `PreferProperty` modes will fall back to using the property or backing field respectively if it is not possible to use the preferred access. `PreferField` is the default from EF Core 3.0 onwards. This means EF Core will use fields whenever it can, but will not fail if a property must be accessed through its getter or setter instead.
+On the other hand, the `PreferField` and `PreferProperty` modes will fall back to using the property or backing field respectively if it is not possible to use the preferred access. `PreferField` is the default. This means EF Core will use fields whenever it can, but will not fail if a property must be accessed through its getter or setter instead.
 
-`FieldDuringConstruction` and `PreferFieldDuringConstruction` configure EF Core to use of backing fields _only when creating entity instances_. This allows queries to be executed without getter and setter side effects, while later property changes by EF Core will cause these side effects. `PreferFieldDuringConstruction` was the default prior to EF Core 3.0.
+`FieldDuringConstruction` and `PreferFieldDuringConstruction` configure EF Core to use of backing fields _only when creating entity instances_. This allows queries to be executed without getter and setter side effects, while later property changes by EF Core will cause these side effects.
 
 The different property access modes are summarized in the following table:
 

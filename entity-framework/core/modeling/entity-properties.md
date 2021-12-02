@@ -207,7 +207,7 @@ You can set an arbitrary text comment that gets set on the database column, allo
 > [!NOTE]
 > This feature was introduced in EF Core 6.0.
 
-By default when creating a table with [Migrations](../managing-schemas/migrations/index.md), EF Core orders primary key columns first, followed by properties of the entity type and owned types, and finally properties from base types. You can, however, specify a different column order:
+By default when creating a table with [Migrations](xref:core/managing-schemas/migrations/index), EF Core orders primary key columns first, followed by properties of the entity type and owned types, and finally properties from base types. You can, however, specify a different column order:
 
 ### [Data Annotations](#tab/data-annotations)
 

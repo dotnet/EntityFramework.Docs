@@ -2,7 +2,7 @@
 title: Applying Migrations - EF Core
 description: Strategies for applying schema migrations to production and development databases using Entity Framework Core
 author: bricelam
-ms.date: 05/06/2020
+ms.date: 11/02/2021
 uid: core/managing-schemas/migrations/applying
 ---
 # Applying Migrations
@@ -78,7 +78,10 @@ The following generates a SQL script from the specified `from` migration to the 
 Script-Migration AddNewTables AddAuditTable
 ```
 
-You can use a `from` that is newer than the `to` in order to generate a rollback script. *Please take note of potential data loss scenarios.*
+You can use a `from` that is newer than the `to` in order to generate a rollback script.
+
+> [!WARNING]
+> Please take note of potential data loss scenarios.
 
 ***
 
@@ -89,7 +92,7 @@ Script generation accepts the following two arguments to indicate which range of
 
 ## Idempotent SQL scripts
 
-The SQL scripts generated above can only be applied to change your schema from one migration to another; it is your responsibility to apply the script appropriately, and only to database in the correct migration state. EF Core also supports generating **idempotent** scripts, which internally check which migrations have already been applied (via the migrations history table), and only apply missing ones. This is useful if you don't exactly know what the last migration applied to the database was, or if you are deploying to multiple databases that may each be at a different migration.
+The SQL scripts generated above can only be applied to change your schema from one migration to another; it is your responsibility to apply the script appropriately, and only to databases in the correct migration state. EF Core also supports generating **idempotent** scripts, which internally check which migrations have already been applied (via the migrations history table), and only apply missing ones. This is useful if you don't exactly know what the last migration applied to the database was, or if you are deploying to multiple databases that may each be at a different migration.
 
 The following generates idempotent migrations:
 
@@ -112,7 +115,7 @@ Script-Migration -Idempotent
 The EF command-line tools can be used to apply migrations to a database. While productive for local development and testing of migrations, this approach isn't ideal for managing production databases:
 
 * The SQL commands are applied directly by the tool, without giving the developer a chance to inspect or modify them. This can be dangerous in a production environment.
-* The .NET SDK and the EF tool must be installed on production servers.
+* The .NET SDK and the EF tool must be installed on production servers and requires the project's source code.
 
 ### [.NET Core CLI](#tab/dotnet-core-cli)
 
@@ -155,6 +158,77 @@ Note that this can be used to roll back to an earlier migration as well.
 ***
 
 For more information on applying migrations via the command-line tools, see the [EF Core tools reference](xref:core/cli/index).
+
+## Bundles
+
+> [!NOTE]
+> This feature was introduced in EF Core 6.0.
+
+Migration bundles are single-file executables than can be used to apply migrations to a database. They address some of the shortcomings of the SQL script and command-line tools:
+
+* Executing SQL scripts requires additional tools.
+* The transaction handling and continue-on-error behavior of these tools are inconsistent and sometimes unexpected. This can leave your database in an undefined state if a failure occurs when applying migrations.
+* Bundles can be generated as part of your CI process and easily executed later as part of your deployment process.
+* Bundles can be executed without installing the .NET SDK or EF Tool (or even the .NET Runtime, when self-contained), and they don't require the project's source code.
+
+### [.NET Core CLI](#tab/dotnet-core-cli)
+
+The following generates a bundle:
+
+```dotnetcli
+dotnet ef migrations bundle
+```
+
+The following generates a self-contained bundle for Linux:
+
+```dotnetcli
+dotnet ef migrations bundle --self-contained -r linux-x64
+```
+
+### [Visual Studio](#tab/vs)
+
+The following generates a bundle:
+
+```powershell
+Bundle-Migration
+```
+
+The following generates a self-contained bundle for Linux:
+
+```dotnetcli
+Bundle-Migration -SelfContained -TargetRuntime linux-x64
+```
+
+***
+
+For more information on creating bundles see the [EF Core tools reference](xref:core/cli/index).
+
+### `efbundle`
+
+The resulting executable is named `efbundle` by default. It can be used to update the database to the latest migration. It's equivalent to running `dotnet ef database update` or `Update-Database`.
+
+Arguments:
+
+Argument                   | Description
+-------------------------- | -----------
+<nobr>`<MIGRATION>`</nobr> | The target migration. If '0', all migrations will be reverted. Defaults to the last migration.
+
+Options:
+
+Option                                   | Short             | Description
+---------------------------------------- | ----------------- | -----------
+<nobr>`--connection <CONNECTION>`</nobr> |                   | The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring.
+`--verbose`                              | <nobr>`-v`</nobr> | Show verbose output.
+`--no-color`                             |                   | Don't colorize output.
+`--prefix-output`                        |                   | Prefix output with level.
+
+The following example applies migrations to a local SQL Server instance using the specified username and password.
+
+```powershell
+.\efbundle.exe --connection 'Data Source=(local)\MSSQLSERVER;Initial Catalog=Blogging;User ID=myUsername;Password=myPassword'
+```
+
+***
 
 ## Apply migrations at runtime
 

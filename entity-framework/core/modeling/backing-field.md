@@ -2,7 +2,7 @@
 title: Backing Fields - EF Core
 description: Configuring backing fields for properties in an Entity Framework Core model
 author: ajcvickers
-ms.date: 10/27/2016
+ms.date: 11/15/2021
 uid: core/modeling/backing-field
 ---
 # Backing Fields
@@ -43,9 +43,6 @@ By default, EF will always read and write to the backing field - assuming one ha
 [!code-csharp[Main](../../../samples/core/Modeling/BackingFields/FluentAPI/BackingFieldAccessMode.cs?name=BackingFieldAccessMode&highlight=6)]
 
 See the [PropertyAccessMode enum](/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) for the complete set of supported options.
-
-> [!NOTE]
-> With EF Core 3.0, the default property access mode changed from `PreferFieldDuringConstruction` to `PreferField`.
 
 ## Field-only properties
 

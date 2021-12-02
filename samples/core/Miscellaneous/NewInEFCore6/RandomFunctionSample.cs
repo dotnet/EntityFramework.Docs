@@ -16,7 +16,7 @@ public static class RandomFunctionSample
         using var context = new BooksContext();
 
         #region Query
-        var users = context.Users.Where(u => u.Popularity == (int)(EF.Functions.Random() * 5.0) + 1).ToList();
+        var users = context.Users.Where(u => u.Popularity == (int)(EF.Functions.Random() * 4.0) + 1).ToList();
         #endregion
 
         foreach (var user in users)

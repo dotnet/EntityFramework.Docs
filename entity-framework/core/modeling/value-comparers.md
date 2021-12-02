@@ -2,14 +2,11 @@
 title: Value Comparers - EF Core
 description: Using value comparers to control how EF Core compares property values
 author: ajcvickers
-ms.date: 01/16/2021
+ms.date: 11/15/2021
 uid: core/modeling/value-comparers
 ---
 
 # Value Comparers
-
-> [!NOTE]
-> This feature was introduced in EF Core 3.0.
 
 > [!TIP]
 > The code in this document can be found on GitHub as a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/ValueConversions/).

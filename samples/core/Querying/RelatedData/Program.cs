@@ -134,7 +134,7 @@ namespace EFQuerying.RelatedData
             }
             #endregion
 
-            #region Eager
+            #region Explicit
             using (var context = new BloggingContext())
             {
                 var blog = context.Blogs
@@ -212,6 +212,22 @@ namespace EFQuerying.RelatedData
                     .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
                     .ToList();
             }
+            #endregion
+
+            #region AutoIncludes
+            using (var context = new BloggingContext())
+            {
+                var themes = context.Themes.ToList();
+            }
+
+            #endregion
+
+            #region IgnoreAutoIncludes
+            using (var context = new BloggingContext())
+            {
+                var themes = context.Themes.IgnoreAutoIncludes().ToList();
+            }
+
             #endregion
         }
     }

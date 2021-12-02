@@ -2,7 +2,7 @@
 title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: bricelam
-ms.date: 10/21/2021
+ms.date: 11/15/2021
 uid: core/cli/powershell
 ---
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
@@ -65,9 +65,9 @@ Before using the tools:
 
 The commands refer to a *project* and a *startup project*.
 
-* The *project* is also known as the *target project* because it's where the commands add or remove files. By default, the **Default project** selected in **Package Manager Console** is the target project. You can specify a different project as target project by using the <nobr>`--project`</nobr> option.
+* The *project* is also known as the *target project* because it's where the commands add or remove files. By default, the **Default project** selected in **Package Manager Console** is the target project. You can specify a different project as target project by using the <nobr>`-Project`</nobr> parameter.
 
-* The *startup project* is the one that the tools build and run. The tools have to execute application code at design time to get information about the project, such as the database connection string and the configuration of the model. By default, the **Startup Project** in **Solution Explorer** is the startup project. You can specify a different project as startup project by using the <nobr>`--startup-project`</nobr> option.
+* The *startup project* is the one that the tools build and run. The tools have to execute application code at design time to get information about the project, such as the database connection string and the configuration of the model. By default, the **Startup Project** in **Solution Explorer** is the startup project. You can specify a different project as startup project by using the <nobr>`-StartupProject`</nobr> parameter.
 
 The startup project and target project are often the same project. A typical scenario where they are separate projects is when:
 
@@ -123,6 +123,22 @@ Parameters:
 
 The [common parameters](#common-parameters) are listed above.
 
+## Bundle-Migration
+
+Creates an executable to update the database.
+
+Parameters:
+
+Parameter                              | Description
+-------------------------------------- | -----------
+`-Output <String>`                     | The path of executable file to create.
+`-Force`                               | Overwrite existing files.
+`-SelfContained`                       | Also bundle the .NET runtime so it doesn't need to be installed on the machine.
+<nobr>`-TargetRuntime <String>`</nobr> | The target runtime to bundle for.
+`-Framework <String>`                  | The target framework. Defaults to the first one in the project.
+
+The [common parameters](#common-parameters) are listed above.
+
 ## Drop-Database
 
 Drops the database.
@@ -153,6 +169,33 @@ Parameters:
 | <nobr>`-NoConnect`</nobr>           | Don't connect to the database.                                                                         |
 
 The [common parameters](#common-parameters) are listed above.
+
+## Optimize-DbContext
+
+Generates a compiled version of the model used by the `DbContext`. Added in EF Core 6.
+
+See [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models) for more information.
+
+Parameters:
+
+| Parameter                           | Description                                                                                                                                                                                                                                                             |
+|:------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <nobr>`-OutputDir <String>`</nobr>  | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
+| <nobr>`-Namespace <String>`</nobr>  | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus `CompiledModels`.                                                                                                                           |
+
+The [common parameters](#common-parameters) are listed above.
+
+Example that uses the defaults and works if there is only one `DbContext` in the project:
+
+```powershell
+Optimize-DbContext
+```
+
+Example that optimizes the model for the context with the specified name amd places it in a separate folder and namespace:
+
+```powershell
+Optimize-DbContext -OutputDir Models -Namespace BlogModels -Context BlogContext
+```
 
 ## Remove-Migration
 
@@ -209,36 +252,9 @@ The following example reads the connection string from the project's configurati
 Scaffold-DbContext "Name=ConnectionStrings:Blogging" Microsoft.EntityFrameworkCore.SqlServer
 ```
 
-## Optimize-DbContext
-
-Generates a compiled version of the model used by the `DbContext`. Added in EF Core 6.
-
-See [Compiled models](../performance/advanced-performance-topics.md#compiled-models) for more information.
-
-Parameters:
-
-| Parameter                           | Description                                                                                                                                                                                                                                                             |
-|:------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr>`-OutputDir <String>`</nobr>  | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
-| <nobr>`-Namespace <String>`</nobr>  | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus `CompiledModels`.                                                                                                                           |
-
-The [common parameters](#common-parameters) are listed above.
-
-Example that uses the defaults and works if there is only one `DbContext` in the project:
-
-```powershell
-Optimize-DbContext
-```
-
-Example that optimizes the model for the context with the specified name amd places it in a separate folder and namespace:
-
-```powershell
-Optimize-DbContext -OutputDir Models -Namespace BlogModels -Context BlogContext
-```
-
 ## Script-DbContext
 
-Generates a SQL script from the DbContext. Bypasses any migrations. Added in EF Core 3.0.
+Generates a SQL script from the DbContext. Bypasses any migrations.
 
 Parameters:
 
@@ -310,3 +326,4 @@ Update-Database 20180904195021_InitialCreate -Connection your_connection_string
 
 * [Migrations](xref:core/managing-schemas/migrations/index)
 * [Reverse Engineering](xref:core/managing-schemas/scaffolding)
+* [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models)

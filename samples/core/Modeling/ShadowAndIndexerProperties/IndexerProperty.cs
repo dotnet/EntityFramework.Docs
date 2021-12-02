@@ -4,16 +4,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.ShadowAndIndexerProperties.IndexerProperty
 {
+    #region IndexerProperty
     internal class MyContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
-        #region ShadowProperty
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>().IndexerProperty<DateTime>("LastUpdated");
         }
-        #endregion
     }
 
     public class Blog
@@ -27,4 +26,5 @@ namespace EFModeling.ShadowAndIndexerProperties.IndexerProperty
             set => _data[key] = value;
         }
     }
+    #endregion
 }

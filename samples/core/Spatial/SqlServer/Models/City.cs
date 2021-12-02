@@ -5,7 +5,7 @@ namespace SqlServer.Models
 {
     #region snippet_City
     [Table("Cities", Schema = "Application")]
-    internal class City
+    public class City
     {
         public int CityID { get; set; }
 

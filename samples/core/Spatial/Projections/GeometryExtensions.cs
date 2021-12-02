@@ -6,7 +6,7 @@ using ProjNet.CoordinateSystems.Transformations;
 namespace NetTopologySuite.Geometries
 {
     #region snippet_GeometryExtensions
-    internal static class GeometryExtensions
+    public static class GeometryExtensions
     {
         private static readonly CoordinateSystemServices _coordinateSystemServices
             = new CoordinateSystemServices(

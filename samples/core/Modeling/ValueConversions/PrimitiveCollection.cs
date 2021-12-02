@@ -52,8 +52,8 @@ namespace EFModeling.ValueConversions
                 modelBuilder.Entity<Post>()
                     .Property(e => e.Tags)
                     .HasConversion(
-                        v => JsonSerializer.Serialize(v, null),
-                        v => JsonSerializer.Deserialize<List<string>>(v, null),
+                        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                        v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null),
                         new ValueComparer<ICollection<string>>(
                             (c1, c2) => c1.SequenceEqual(c2),
                             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),

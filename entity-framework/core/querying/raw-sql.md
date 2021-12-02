@@ -2,7 +2,7 @@
 title: Raw SQL Queries - EF Core
 description: Using raw SQL for queries in Entity Framework Core
 author: smitpatel
-ms.date: 10/08/2019
+ms.date: 11/15/2021
 uid: core/querying/raw-sql
 ---
 # Raw SQL Queries
@@ -36,9 +36,6 @@ The following example passes a single parameter to a stored procedure by includi
 [!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlRawStoredProcedureParameter)]
 
 `FromSqlInterpolated` is similar to `FromSqlRaw` but allows you to use string interpolation syntax. Just like `FromSqlRaw`, `FromSqlInterpolated` can only be used on query roots. As with the previous example, the value is converted to a `DbParameter` and isn't vulnerable to SQL injection.
-
-> [!NOTE]
-> Prior to version 3.0, `FromSqlRaw` and `FromSqlInterpolated` were two overloads named `FromSql`. For more information, see the [previous versions section](#previous-versions).
 
 [!code-csharp[Main](../../../samples/core/Querying/RawSQL/Program.cs#FromSqlInterpolatedStoredProcedureParameter)]
 
@@ -100,7 +97,3 @@ There are a few limitations to be aware of when using raw SQL queries:
 - The SQL query must return data for all properties of the entity type.
 - The column names in the result set must match the column names that properties are mapped to. Note this behavior is different from EF6. EF6 ignored property to column mapping for raw SQL queries and result set column names had to match the property names.
 - The SQL query can't contain related data. However, in many cases you can compose on top of the query using the `Include` operator to return related data (see [Including related data](#including-related-data)).
-
-## Previous versions
-
-EF Core version 2.2 and earlier had two overloads of method named `FromSql`, which behaved in the same way as the newer `FromSqlRaw` and `FromSqlInterpolated`. It was easy to accidentally call the raw string method when the intent was to call the interpolated string method, and the other way around. Calling wrong overload accidentally could result in queries not being parameterized when they should have been.
