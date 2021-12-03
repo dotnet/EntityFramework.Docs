@@ -7,4 +7,6 @@ ms.date: 10/25/2021
 uid: efcore-and-ef6/porting/port-database
 ---
 
+# Port from EF6 to EF Core - Database as Source of Truth
+
 This is a work in progress.

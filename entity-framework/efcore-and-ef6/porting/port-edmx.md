@@ -33,7 +33,7 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 
 You would now remove the EF6 model from your application.
 
-It is fine to leave the EF6 NuGet package (EntityFramework) installed, as EF Core and EF6 can be used side-by-side in the same application. However, if you aren't intending to use EF6 in any areas of your application, then uninstalling the package will help give compile errors on pieces of code that need attention.
+It is fine to leave the EF6 NuGet package (EntityFramework) installed, as EF Core and EF6 can be used side-by-side in the same application. However, if you aren't intending to use EF6 in any areas of your application, then uninstalling the package will help focus compiler errors on pieces of code that need attention.
 
 ## Update your code
 
@@ -42,3 +42,9 @@ At this point, it's a matter of addressing compilation errors and reviewing code
 ## Test the port
 
 Just because your application compiles, does not mean it is successfully ported to EF Core. You will need to test all areas of your application to ensure that none of the behavior changes have adversely impacted your application.
+
+## Other considerations
+
+EF Core does not support the `EntityClient` provider and therefore any [EntitySQL](/dotnet/framework/data/adonet/ef/language-reference/entity-sql-language) queries must be migrated to LINQ or `FromRawSql`.
+
+Furthermore, there is no support for [EntityClient connection strings](/ef/ef6/fundamentals/configuring/connection-strings#databasemodel-first-with-connection-string-in-appconfigwebconfig-file).

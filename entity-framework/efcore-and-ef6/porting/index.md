@@ -43,8 +43,11 @@ The **Database as source of truth** approach involves reverse-engineering or sca
 
 Finally, a more common **Hybrid mapping** approach follows the philosophy that the code and database are managed separately, and EF Core is used to map between the two. This approach may or may not use migrations.
 
-> [!IMPORTANT]
-> EF6 supported a special model definition format named **Entity Data Model XML (EDMX)**. EDMX files contain multiple definitions, including conceptual schema definitions (CSDL), mapping specifications (MSL), and store schema definitions (SSDL). EF Core tracks the domain, mapping, and database schemas through internal model graphs and does not support the EDMX format. Many blog posts and articles mistakenly claim this means EF Core only supports code first. EF Core supports all three application models described in the previous section. You can rebuild the model in EF Core by [reverse-engineering the database](/ef/core/managing-schemas/scaffolding). If you use EDMX for a visual representation of your entity model, consider using the open source [EF Core Power Tools](https://github.com/ErikEJ/EFCorePowerTools).
+### Understand the impact of moving away from EDMX
+
+EF6 supported a special model definition format named **Entity Data Model XML (EDMX)**. EDMX files contain multiple definitions, including conceptual schema definitions (CSDL), mapping specifications (MSL), and store schema definitions (SSDL). EF Core tracks the domain, mapping, and database schemas through internal model graphs and does not support the EDMX format. Many blog posts and articles mistakenly claim this means EF Core only supports code first. EF Core supports all three application models described in the previous section. You can rebuild the model in EF Core by [reverse-engineering the database](/ef/core/managing-schemas/scaffolding). If you use EDMX for a visual representation of your entity model, consider using the open source [EF Core Power Tools](https://github.com/ErikEJ/EFCorePowerTools).
+
+For more information on the impact of lack of support for EDMX files, read the [porting EDMX](/efcore-and-ef6/porting/port-edmx#other-considerations) guide.
 
 ### Perform the upgrade steps
 
@@ -60,12 +63,11 @@ The following documents detail specific steps for the port. At a high level, you
     - `DbModelBuilder` to `ModelBuilder`
     - Rename `DbEntityEntry<T>` to `EntityEntry<T>`
     - Move from `Database.Log` to `Microsoft.Extensions.Logging APIs`
-    - `WithRequired` to `WithOne` and `IsRequired(true)`
-    - `WithOptional` to `WithOne` and `IsRequired(false)`
+    - Apply changes for `WithRequired` and `WithOptional` (see [here](/efcore-and-ef6/porting/port-detailed-cases#required-and-optional))
     - Update validation code. There is no data validation built into EF Core, but you can [do it yourself](/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/domain-model-layer-validations#use-validation-attributes-in-the-model-based-on-data-annotations).
 1. Perform specific steps based on your EF Core approach:
     - [Code as source of truth](/efcore-and-ef6/porting/port-code.md)
     - [Database as source of truth](/efcore-and-ef6/porting/port-database.md)
     - [Hybrid model](/efcore-and-ef6/porting/port-hybrid.md)
 
-Finally, review some ways to address and work around the [edge cases](/efcore-and-ef6/porting/port-code.md).
+Finally, review some ways to address and work around the [detailed differences](/efcore-and-ef6/porting/port-detailed-cases.md).
