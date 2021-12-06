@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29230.47
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31815.197
+MinimumVisualStudioVersion = 17.0.31815.197
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{4E2B02EE-0C76-42D6-BA0A-337D7680A5D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Miscellaneous", "Miscellaneous", "{85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}"
@@ -119,61 +119,63 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfiguringDbContext", "Mis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserDefinedFunctionMapping", "Querying\UserDefinedFunctionMapping\UserDefinedFunctionMapping.csproj", "{11AB574E-5DA9-4C37-A342-41B3DB5D7C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{7CC1CD44-6C02-4736-9A6D-B3F2E987CBCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{7CC1CD44-6C02-4736-9A6D-B3F2E987CBCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Performance", "Performance\Performance.csproj", "{A870AAA4-EAF1-4F7D-A71E-83B20219EF6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Performance", "Performance\Performance.csproj", "{A870AAA4-EAF1-4F7D-A71E-83B20219EF6C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ChangeTracking", "ChangeTracking", "{F55D545B-2B45-47A5-8C55-39F972528400}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeTrackingInEFCore", "ChangeTracking\ChangeTrackingInEFCore\ChangeTrackingInEFCore.csproj", "{81D6316C-B612-418E-9DA1-013A9D3881BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangeTrackingInEFCore", "ChangeTracking\ChangeTrackingInEFCore\ChangeTrackingInEFCore.csproj", "{81D6316C-B612-418E-9DA1-013A9D3881BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessingTrackedEntities", "ChangeTracking\AccessingTrackedEntities\AccessingTrackedEntities.csproj", "{0EBD2D46-533A-4DEA-A37A-453908975B9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessingTrackedEntities", "ChangeTracking\AccessingTrackedEntities\AccessingTrackedEntities.csproj", "{0EBD2D46-533A-4DEA-A37A-453908975B9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangingFKsAndNavigations", "ChangeTracking\ChangingFKsAndNavigations\ChangingFKsAndNavigations.csproj", "{45C2F9E0-76D3-4C4A-8B3F-9465393D4155}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangingFKsAndNavigations", "ChangeTracking\ChangingFKsAndNavigations\ChangingFKsAndNavigations.csproj", "{45C2F9E0-76D3-4C4A-8B3F-9465393D4155}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeDetectionAndNotifications", "ChangeTracking\ChangeDetectionAndNotifications\ChangeDetectionAndNotifications.csproj", "{0D3C4BCC-5F19-4864-A794-2823DAD22917}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangeDetectionAndNotifications", "ChangeTracking\ChangeDetectionAndNotifications\ChangeDetectionAndNotifications.csproj", "{0D3C4BCC-5F19-4864-A794-2823DAD22917}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityResolutionInEFCore", "ChangeTracking\IdentityResolutionInEFCore\IdentityResolutionInEFCore.csproj", "{6BC461D1-C015-4350-9DA8-F2468D71F718}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityResolutionInEFCore", "ChangeTracking\IdentityResolutionInEFCore\IdentityResolutionInEFCore.csproj", "{6BC461D1-C015-4350-9DA8-F2468D71F718}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdditionalChangeTrackingFeatures", "ChangeTracking\AdditionalChangeTrackingFeatures\AdditionalChangeTrackingFeatures.csproj", "{B696F0AC-5282-4E95-9043-A177E3A9C5C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdditionalChangeTrackingFeatures", "ChangeTracking\AdditionalChangeTrackingFeatures\AdditionalChangeTrackingFeatures.csproj", "{B696F0AC-5282-4E95-9043-A177E3A9C5C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeTrackerDebugging", "ChangeTracking\ChangeTrackerDebugging\ChangeTrackerDebugging.csproj", "{D1AB173F-582D-43C3-9EC0-20CE9FECFEB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangeTrackerDebugging", "ChangeTracking\ChangeTrackerDebugging\ChangeTrackerDebugging.csproj", "{D1AB173F-582D-43C3-9EC0-20CE9FECFEB6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NullSemantics", "Querying\NullSemantics\NullSemantics.csproj", "{A241ED91-DE41-4310-B7CD-802F4304F27D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CascadeDeletes", "CascadeDeletes\CascadeDeletes.csproj", "{1F72C1AD-D6E1-4F06-B0C7-B04B57DA22B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CascadeDeletes", "CascadeDeletes\CascadeDeletes.csproj", "{1F72C1AD-D6E1-4F06-B0C7-B04B57DA22B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewInEFCore6", "Miscellaneous\NewInEFCore6\NewInEFCore6.csproj", "{DADCEB89-6242-4A40-A390-0D957E02D426}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewInEFCore6", "Miscellaneous\NewInEFCore6\NewInEFCore6.csproj", "{DADCEB89-6242-4A40-A390-0D957E02D426}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewInEFCore6.Cosmos", "Miscellaneous\NewInEFCore6.Cosmos\NewInEFCore6.Cosmos.csproj", "{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewInEFCore6.Cosmos", "Miscellaneous\NewInEFCore6.Cosmos\NewInEFCore6.Cosmos.csproj", "{9614B4D9-08B7-4DA1-AF92-5B640C3C4E3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompiledModels", "Miscellaneous\CompiledModels\CompiledModels.csproj", "{E6DC981D-4404-496E-972B-8DAC5D4A56F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompiledModels", "Miscellaneous\CompiledModels\CompiledModels.csproj", "{E6DC981D-4404-496E-972B-8DAC5D4A56F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndexesAndConstraints", "Modeling\IndexesAndConstraints\IndexesAndConstraints.csproj", "{56F8DE05-6E33-4DB0-A779-70164B200289}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IndexesAndConstraints", "Modeling\IndexesAndConstraints\IndexesAndConstraints.csproj", "{56F8DE05-6E33-4DB0-A779-70164B200289}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityTypes", "Modeling\EntityTypes\EntityTypes.csproj", "{35539488-F445-4FAC-88DF-3C3082DC5B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityTypes", "Modeling\EntityTypes\EntityTypes.csproj", "{35539488-F445-4FAC-88DF-3C3082DC5B8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityProperties", "Modeling\EntityProperties\EntityProperties.csproj", "{3A93EF9A-A095-4BD1-89C3-95CC517B7A44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityProperties", "Modeling\EntityProperties\EntityProperties.csproj", "{3A93EF9A-A095-4BD1-89C3-95CC517B7A44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keys", "Modeling\Keys\Keys.csproj", "{F443CE43-F630-4C33-BE0F-3434D823C07A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Keys", "Modeling\Keys\Keys.csproj", "{F443CE43-F630-4C33-BE0F-3434D823C07A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratedProperties", "Modeling\GeneratedProperties\GeneratedProperties.csproj", "{4F1C7FAF-DD6F-4749-9D7E-4FC627BC0B90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneratedProperties", "Modeling\GeneratedProperties\GeneratedProperties.csproj", "{4F1C7FAF-DD6F-4749-9D7E-4FC627BC0B90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcurrencyTokens", "Modeling\ConcurrencyTokens\ConcurrencyTokens.csproj", "{E4471E3B-F8F4-45BE-95E4-8CFE0E547771}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConcurrencyTokens", "Modeling\ConcurrencyTokens\ConcurrencyTokens.csproj", "{E4471E3B-F8F4-45BE-95E4-8CFE0E547771}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowAndIndexerProperties", "Modeling\ShadowAndIndexerProperties\ShadowAndIndexerProperties.csproj", "{E842C983-21DC-4FE4-88C0-7B75E75E6653}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShadowAndIndexerProperties", "Modeling\ShadowAndIndexerProperties\ShadowAndIndexerProperties.csproj", "{E842C983-21DC-4FE4-88C0-7B75E75E6653}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Relationships", "Modeling\Relationships\Relationships.csproj", "{8C7271CA-BD6C-4209-BD97-2A4781BB9152}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Relationships", "Modeling\Relationships\Relationships.csproj", "{8C7271CA-BD6C-4209-BD97-2A4781BB9152}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inheritance", "Modeling\Inheritance\Inheritance.csproj", "{417F3A21-3429-41FC-86FA-9A9FCF166BCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inheritance", "Modeling\Inheritance\Inheritance.csproj", "{417F3A21-3429-41FC-86FA-9A9FCF166BCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sequences", "Modeling\Sequences\Sequences.csproj", "{B4C32942-AB77-4674-95ED-5C0D3F85768E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sequences", "Modeling\Sequences\Sequences.csproj", "{B4C32942-AB77-4674-95ED-5C0D3F85768E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackingFields", "Modeling\BackingFields\BackingFields.csproj", "{4FA547E3-7A94-4951-8B1D-5A4C3FBB0798}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackingFields", "Modeling\BackingFields\BackingFields.csproj", "{4FA547E3-7A94-4951-8B1D-5A4C3FBB0798}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeylessEntityTypes", "Modeling\KeylessEntityTypes\KeylessEntityTypes.csproj", "{06539D34-C8D3-4868-A925-C3FCB3C7EE1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeylessEntityTypes", "Modeling\KeylessEntityTypes\KeylessEntityTypes.csproj", "{06539D34-C8D3-4868-A925-C3FCB3C7EE1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misc", "Modeling\Misc\Misc.csproj", "{8A45191D-F719-4CFB-AB37-7A1653BCC720}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misc", "Modeling\Misc\Misc.csproj", "{8A45191D-F719-4CFB-AB37-7A1653BCC720}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkConfiguration", "Modeling\BulkConfiguration\BulkConfiguration.csproj", "{FE7AB616-97A5-46D4-A8B1-B2980A8C7379}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -485,6 +487,10 @@ Global
 		{8A45191D-F719-4CFB-AB37-7A1653BCC720}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A45191D-F719-4CFB-AB37-7A1653BCC720}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A45191D-F719-4CFB-AB37-7A1653BCC720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE7AB616-97A5-46D4-A8B1-B2980A8C7379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE7AB616-97A5-46D4-A8B1-B2980A8C7379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE7AB616-97A5-46D4-A8B1-B2980A8C7379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE7AB616-97A5-46D4-A8B1-B2980A8C7379}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -561,6 +567,7 @@ Global
 		{4FA547E3-7A94-4951-8B1D-5A4C3FBB0798} = {CA5046EC-C894-4535-8190-A31F75FDEB96}
 		{06539D34-C8D3-4868-A925-C3FCB3C7EE1E} = {CA5046EC-C894-4535-8190-A31F75FDEB96}
 		{8A45191D-F719-4CFB-AB37-7A1653BCC720} = {CA5046EC-C894-4535-8190-A31F75FDEB96}
+		{FE7AB616-97A5-46D4-A8B1-B2980A8C7379} = {CA5046EC-C894-4535-8190-A31F75FDEB96}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C98D35-54EF-46A6-8F3B-1855C1AE4F70}

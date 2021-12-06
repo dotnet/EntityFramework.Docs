@@ -137,12 +137,13 @@
         href: core/modeling/owned-entities.md
       - name: Keyless entity types
         href: core/modeling/keyless-entity-types.md
-      - name: Alternating models with same DbContext
-        href: core/modeling/dynamic-model.md
       - name: Spatial data
         displayName: GIS
         href: core/modeling/spatial.md
-      #- name: Conventions
+      - name: Bulk configuration
+        href: core/modeling/bulk-configuration.md
+      - name: Alternating models with same DbContext
+        href: core/modeling/dynamic-model.md
 
     - name: Manage database schemas
       items:
