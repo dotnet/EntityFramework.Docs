@@ -26,6 +26,9 @@ EF Core now supports:
 * Querying historical data
 * Restoring data from some point in the past
 
+> [!NOTE]
+> historical data are data containing the both previous and current state of a record. Previous states stored in History Table and current state stored in Temporal Table itself.
+
 ### Configuring a temporal table
 
 The model builder can be used to configure a table as temporal. For example:
@@ -185,7 +188,7 @@ Notice that the `ValidTo` column (by default called `PeriodEnd`) contains the `d
 EF Core supports querying historical data from the table through several new query operators:
 
 * `TemporalAsOf`: Returns rows that were active (current) at the given UTC time. This is a single row from the history table for a given primary key.
-* `TemporalAll`: Returns all rows in the historical data. This is typically many rows from the history table for a given primary key.
+* `TemporalAll`: Returns all rows in the historical data, as well as their current state. This is typically many rows from the history table for a given primary key.
 * `TemporalFromTo`: Returns all rows that were active between two given UTC times. This may be many rows from the history table for a given primary key.
 * `TemporalBetween`: The same as `TemporalFromTo`, except that rows are included that became active on the upper boundary.
 * `TemporalContainedIn`: Returns all rows that started being active and ended being active between two given UTC times. This may be many rows from the history table for a given primary key.
