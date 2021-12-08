@@ -66,7 +66,7 @@ EF6 supported table-per-hierarchy (TPH), table-per-type (TPT) and table-per-conc
 
 ### Attributes
 
-EF6 supported index attributes on properties. In EF Core, they are applied at the type level which should make it easier for scenarios that require composite indexes. EF core
+EF6 supported index attributes on properties. In EF Core, they are applied at the type level which should make it easier for scenarios that require composite indexes. EF Core doesn't support composite keys with data annotations (i.e. using Order in `ColumnAttribute` together with `KeyAttribute`).
 
 ### Required and optional
 

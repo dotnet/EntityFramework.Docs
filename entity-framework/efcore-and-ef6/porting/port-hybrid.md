@@ -9,7 +9,7 @@ uid: efcore-and-ef6/porting/port-hybrid
 
 # Port from EF6 to EF Core - the Hybrid Approach
 
-Code first generates the database from your code. Database first generates your code from the database. In the hybrid approach, you don't generate anything. Instead, you let the database and codebase evolve and use model configuration to keep the two in sync. This page contains some tips for success using the hybrid approach:
+Two common approaches are to generate your database from code and use migrations, or generate your entities from the database using reverse-engineering. In the hybrid approach, you don't generate anything. Instead, you let the database and codebase evolve and use model configuration to keep the two in sync. This page contains some tips for success using the hybrid approach:
 
 1. First, read the guides for [code as source of truth](/efcore-and-ef6/porting/port-code) and [database as source of truth](/efcore-and-ef6/porting/port-database) to familiarize yourself with some of the considerations to be aware of.
 1. Because you won't be using migrations, there is no need to model sequences, non-primary indexes, constraints and index filters.
