@@ -7,7 +7,9 @@ uid: efcore-and-ef6/porting/port-behavior
 ---
 # Behavior Changes between EF6 and EF Core
 
-This is a non-exhaustive list of some changes in behavior between EF6 and EF Core. It is important to keep these in mind as your port your application as they may change the way your application behaves, but will not show up as compilation errors after swapping to EF Core.
+This is a non-exhaustive list of changes in behavior between EF6 and EF Core. It is important to keep these in mind as your port your application as they may change the way your application behaves, but will not show up as compilation errors after swapping to EF Core.
+
+This is meant as a high level review to consider as part of the porting process. For more detailed, case-by-case instructions, read the [detailed cases](/efcore-and-ef6/porting/port-detailed-cases).
 
 ## DbSet.Add/Attach and graph behavior
 
