@@ -19,7 +19,7 @@ It is not a requirement that you port your code to EF Core. There are many reaso
 
 - Take advantage of the ongoing performance improvements in EF Core. For example, one customer who migrated from EF6 to EF Core 6 saw a 40x reduction in use of a heavy query due to the [query splitting feature](/ef/core/querying/single-split-queries/). Many customers report enormous performance gains simply by moving to the latest EF Core.
 
-- Use new features in EF Core. There will be no new features added to EF6. All of the new functionality, for example the [Azure Cosmos DB provider](/ef/core/providers/cosmos/) and [`DbContextFactory`](/ef/core/what-is-new/ef-core-5.0/whatsnew#dbcontextfactory), will only be added EF Core.
+- Use new features in EF Core. There will be no new features added to EF6. All of the new functionality, for example the [Azure Cosmos DB provider](/ef/core/providers/cosmos/) and [`DbContextFactory`](/ef/core/what-is-new/ef-core-5.0/whatsnew#dbcontextfactory), will only be added to EF Core.
 
 - Modernize your application stack by using dependency injection and seamlessly integrating your data access with technologies like gRPC and GraphQL.
 

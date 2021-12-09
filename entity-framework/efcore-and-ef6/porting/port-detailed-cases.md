@@ -24,7 +24,7 @@ There are several differences between how EF6 connects to various data sources c
 
 EF6 supported custom ("lightweight") conventions and model conventions. The lightweight conventions are similar to EF Core's [pre-convention model configuration](/ef/core/what-is-new/ef-core-6.0/whatsnew#pre-convention-model-configuration). Other conventions are supported as part of model building.
 
-EF6 runs conventions after the model is built. EF Core applies them as the model is being built. In EF Core, you can decouple model building from active sessions with a DbContext, but unlike EF6 you must pass your conventions to the model builder.
+EF6 runs conventions after the model is built. EF Core applies them as the model is being built. In EF Core, you can decouple model building from active sessions with a DbContext. It is possible to create a model initialized with the conventions.
 
 ## Data validation
 
@@ -44,7 +44,7 @@ EF Core uses a [DbContext](/ef/core/dbcontext-configuration) instead of an `Obje
 
 ## Model configuration
 
-There are many important differences between how models in EF6 and EF Core are designed. EF Core lacks full support for conditional mapping. It does not have model builder versions. For spatial support, EF Core recommends using a third-party library such as [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite).
+There are many important differences between how models in EF6 and EF Core are designed. EF Core lacks full support for conditional mapping. It does not have model builder versions.
 
 Other differences include:
 
@@ -56,17 +56,23 @@ In EF Core, Entity Types are discovered by the engine in three ways:
 - Reference a `Set<TEntity>` from somewhere in your code.
 - Complex types referenced by discovered types are recursively discovered (for example, if your `Blog` references a `Post` and `Blog` is discoverable, `Post` will be discovered as well)
 
+Assemblies are _not_ scanned for derived types.
+
 ### Mapping
 
-The `.Map()` extension in EF6 has been replaced with overloads and extension methods in EF Core. For example, to call a stored procedure you can use the `FromSqlRaw()` method on the `DbSet<>` instance.
+The `.Map()` extension in EF6 has been replaced with overloads and extension methods in EF Core. For example, you can use '.HasDiscriminator()` to configure table-per-hierarchy (TPH). See: [Modeling Inheritance](/ef/core/modeling/inheritance).
 
 ### Inheritance mapping
 
 EF6 supported table-per-hierarchy (TPH), table-per-type (TPT) and table-per-concrete-class (TPC) and enabled hybrid mapping of different flavors at different levels of the hierarchy. EF Core will continue to require an inheritance chain to modeled one way (TPT or TPH) and the plan is to add support for TPC in EF7.
 
+See: [Modeling Inheritance](/ef/core/modeling/inheritance).
+
 ### Attributes
 
 EF6 supported index attributes on properties. In EF Core, they are applied at the type level which should make it easier for scenarios that require composite indexes. EF Core doesn't support composite keys with data annotations (i.e. using Order in `ColumnAttribute` together with `KeyAttribute`).
+
+For more information, see: [Indexes and constraints](/ef/core/modeling/indexes).
 
 ### Required and optional
 
@@ -99,6 +105,10 @@ modelBuilder.Entity<OfficeAssignment>()
 
 By default everything is optional, so usually it's not necessary to call `.IsRequired(false)`.
 
+### Spatial support
+
+For spatial support, EF Core recommends using a third-party library such as [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite).
+
 ### Independent associations
 
 EF Core does not support independent associations (an EDM concept that allows the relationship between two entities to be defined independent from the entities themselves). A similar concept supported in EF Core is [shadow properties](/ef/core/modeling/shadow-properties).
@@ -116,6 +126,8 @@ Although these features do not ship with EF Core, there are OSS community projec
 - Reverse engineering from inside Visual Studio with support for database projects (`.dacpac`). Includes template-based code customizations.
 - Visual inspection of DbContext with model graphing and scripting.
 - Management of migrations from within Visual Studio using a GUI.
+
+For a complete list of community tools and extensions, see: [EF Core Tools and Extensions](/ef/core/extensions/).
 
 ## Change tracking
 
