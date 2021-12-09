@@ -3,7 +3,7 @@ title: Port from EF6 to EF Core - Hybrid Approach
 description: How to port from EF6 to EF Core when you iterate your domain model and database separately and use mapping to connect the two.
 author: jeremylikness
 ms.alias: jeliknes
-ms.date: 10/25/2021
+ms.date: 12/09/2021
 uid: efcore-and-ef6/porting/port-hybrid
 ---
 

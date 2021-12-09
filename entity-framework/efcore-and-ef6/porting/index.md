@@ -3,7 +3,7 @@ title: Port from EF6 to EF Core - EF
 description: A detailed guide to port your EF6 apps to EF Core
 author: jeremylikness
 ms.alias: jeliknes
-ms.date: 10/25/2021
+ms.date: 12/09/2021
 uid: efcore-and-ef6/porting/index
 ---
 # Port from EF6 to EF Core
