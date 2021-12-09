@@ -9,7 +9,7 @@ uid: efcore-and-ef6/porting/port-database
 
 # Port from EF6 to EF Core - Database as Source of Truth
 
-If you're using the database as the source of truth, your migration will mostly involve addressing any changes to the shape of entities generated. The steps to migrate include:
+If you're using the database as the source of truth, the upgrade will mostly involve addressing any changes to the shape of entities generated. The steps to migrate include:
 
 1. Pick a point-in-time to model the database.
 1. Ensure your EF6 projects are up to date and in-sync with the database.
