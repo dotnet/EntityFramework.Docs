@@ -15,7 +15,7 @@ By convention, EF will not automatically scan for base or derived types; this me
 
 The following sample exposes a DbSet for `Blog` and its subclass `RssBlog`. If `Blog` has any other subclass, it will not be included in the model.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs?name=InheritanceDbSets&highlight=3-4)]
+[!code-csharp[Main](../../../samples/core/Modeling/Inheritance/InheritanceDbSets.cs?name=InheritanceDbSets&highlight=3-4)]
 
 > [!NOTE]
 > Database columns are automatically made nullable as necessary when using TPH mapping. For example, the `RssUrl` column is nullable because regular `Blog` instances do not have that property.
@@ -35,28 +35,28 @@ The model above is mapped to the following database schema (note the implicitly 
 
 You can configure the name and type of the discriminator column and the values that are used to identify each type in the hierarchy:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DiscriminatorConfiguration.cs?name=DiscriminatorConfiguration&highlight=4-6)]
+[!code-csharp[Main](../../../samples/core/Modeling/Inheritance/FluentAPI/DiscriminatorConfiguration.cs?name=DiscriminatorConfiguration&highlight=4-6)]
 
 In the examples above, EF added the discriminator implicitly as a [shadow property](xref:core/modeling/shadow-properties) on the base entity of the hierarchy. This property can be configured like any other:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DiscriminatorPropertyConfiguration.cs?name=DiscriminatorPropertyConfiguration&highlight=4-5)]
+[!code-csharp[Main](../../../samples/core/Modeling/Inheritance/FluentAPI/DiscriminatorPropertyConfiguration.cs?name=DiscriminatorPropertyConfiguration&highlight=4-5)]
 
 Finally, the discriminator can also be mapped to a regular .NET property in your entity:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/NonShadowDiscriminator.cs?name=NonShadowDiscriminator&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/Inheritance/FluentAPI/NonShadowDiscriminator.cs?name=NonShadowDiscriminator&highlight=4)]
 
 When querying for derived entities, which use the TPH pattern, EF Core adds a predicate over discriminator column in the query. This filter makes sure that we don't get any additional rows for base types or sibling types not in the result. This filter predicate is skipped for the base entity type since querying for the base entity will get results for all the entities in the hierarchy. When materializing results from a query, if we come across a discriminator value, which isn't mapped to any entity type in the model, we throw an exception since we don't know how to materialize the results. This error only occurs if your database contains rows with discriminator values, which aren't mapped in the EF model. If you have such data, then you can mark the discriminator mapping in EF Core model as incomplete to indicate that we should always add filter predicate for querying any type in the hierarchy. `IsComplete(false)` call on the discriminator configuration marks the mapping to be incomplete.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DiscriminatorMappingIncomplete.cs?name=DiscriminatorMappingIncomplete&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/Inheritance/FluentAPI/DiscriminatorMappingIncomplete.cs?name=DiscriminatorMappingIncomplete&highlight=5)]
 
 ### Shared columns
 
 By default, when two sibling entity types in the hierarchy have a property with the same name, they will be mapped to two separate columns. However, if their type is identical they can be mapped to the same database column:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/SharedTPHColumns.cs?name=SharedTPHColumns&highlight=9,13)]
+[!code-csharp[Main](../../../samples/core/Modeling/Inheritance/FluentAPI/SharedTPHColumns.cs?name=SharedTPHColumns&highlight=9,13)]
 
 > [!NOTE]
-> Relational database providers, such as SQL Server, will not automatically use the discriminator predicate when querying shared columns when using a cast. The query `Url = (blob as RssBlog).Url` would also return the `Url` value for the sibling `Blog` rows. To restrict the query to `RssBlog` entities you need to manually add a filter on the discriminator, such as `Url = blob is RssBlog ? (blob as RssBlog).Url : null`.
+> Relational database providers, such as SQL Server, will not automatically use the discriminator predicate when querying shared columns when using a cast. The query `Url = (blog as RssBlog).Url` would also return the `Url` value for the sibling `Blog` rows. To restrict the query to `RssBlog` entities you need to manually add a filter on the discriminator, such as `Url = blog is RssBlog ? (blog as RssBlog).Url : null`.
 
 ## Table-per-type configuration
 
@@ -65,7 +65,7 @@ By default, when two sibling entity types in the hierarchy have a property with 
 
 In the TPT mapping pattern, all the types are mapped to individual tables. Properties that belong solely to a base type or derived type are stored in a table that maps to that type. Tables that map to derived types also store a foreign key that joins the derived table with the base table.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TPTConfiguration.cs?name=TPTConfiguration)]
+[!code-csharp[Main](../../../samples/core/Modeling/Inheritance/FluentAPI/TPTConfiguration.cs?name=TPTConfiguration)]
 
 EF will create the following database schema for the model above.
 
@@ -89,7 +89,7 @@ CREATE TABLE [RssBlogs] (
 
 If you are employing bulk configuration you can retrieve the column name for a specific table by calling <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnName(Microsoft.EntityFrameworkCore.Metadata.IProperty,Microsoft.EntityFrameworkCore.Metadata.StoreObjectIdentifier@)>.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/TPTConfiguration.cs?name=Metadata&highlight=10)]
+[!code-csharp[Main](../../../samples/core/Modeling/Inheritance/FluentAPI/TPTConfiguration.cs?name=Metadata&highlight=10)]
 
 > [!WARNING]
 > In many cases, TPT shows inferior performance when compared to TPH. [See the performance docs for more information](xref:core/performance/modeling-for-performance#inheritance-mapping).

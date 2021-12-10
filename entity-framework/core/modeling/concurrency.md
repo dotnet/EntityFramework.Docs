@@ -16,11 +16,11 @@ Properties configured as concurrency tokens are used to implement optimistic con
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Concurrency.cs?name=Concurrency&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/ConcurrencyTokens/DataAnnotations/Concurrency.cs?name=Concurrency&highlight=5)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Concurrency.cs?name=Concurrency&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/ConcurrencyTokens/FluentAPI/Concurrency.cs?name=Concurrency&highlight=5)]
 
 ***
 
@@ -32,10 +32,10 @@ You can configure a property to be a timestamp/rowversion as follows:
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Timestamp.cs?name=Timestamp&highlight=7)]
+[!code-csharp[Main](../../../samples/core/Modeling/ConcurrencyTokens/DataAnnotations/Timestamp.cs?name=Timestamp&highlight=7)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Timestamp.cs?name=Timestamp&highlight=9,17)]
+[!code-csharp[Main](../../../samples/core/Modeling/ConcurrencyTokens/FluentAPI/Timestamp.cs?name=Timestamp&highlight=9,17)]
 
 ***

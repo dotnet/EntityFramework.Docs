@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 internal static class SqlMigrationBuilderExtensions
 {
     #region snippet_CustomOperationSql
-    private static OperationBuilder<SqlOperation> CreateUser(
+    public static OperationBuilder<SqlOperation> CreateUser(
         this MigrationBuilder migrationBuilder,
         string name,
         string password)

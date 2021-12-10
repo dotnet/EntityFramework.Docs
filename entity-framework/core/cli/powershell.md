@@ -2,7 +2,7 @@
 title: EF Core tools reference (Package Manager Console) - EF Core
 description: Reference guide for the Entity Framework Core Visual Studio Package Manager Console
 author: bricelam
-ms.date: 10/27/2020
+ms.date: 11/15/2021
 uid: core/cli/powershell
 ---
 # Entity Framework Core tools reference - Package Manager Console in Visual Studio
@@ -65,9 +65,9 @@ Before using the tools:
 
 The commands refer to a *project* and a *startup project*.
 
-* The *project* is also known as the *target project* because it's where the commands add or remove files. By default, the **Default project** selected in **Package Manager Console** is the target project. You can specify a different project as target project by using the <nobr>`--project`</nobr> option.
+* The *project* is also known as the *target project* because it's where the commands add or remove files. By default, the **Default project** selected in **Package Manager Console** is the target project. You can specify a different project as target project by using the <nobr>`-Project`</nobr> parameter.
 
-* The *startup project* is the one that the tools build and run. The tools have to execute application code at design time to get information about the project, such as the database connection string and the configuration of the model. By default, the **Startup Project** in **Solution Explorer** is the startup project. You can specify a different project as startup project by using the <nobr>`--startup-project`</nobr> option.
+* The *startup project* is the one that the tools build and run. The tools have to execute application code at design time to get information about the project, such as the database connection string and the configuration of the model. By default, the **Startup Project** in **Solution Explorer** is the startup project. You can specify a different project as startup project by using the <nobr>`-StartupProject`</nobr> parameter.
 
 The startup project and target project are often the same project. A typical scenario where they are separate projects is when:
 
@@ -98,16 +98,16 @@ The following table shows parameters that are common to all of the EF Core comma
 
 | Parameter                 | Description                                                                                                                                                                                                          |
 |:--------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| -Context \<String>        | The `DbContext` class to use. Class name only or fully qualified with namespaces.  If this parameter is omitted, EF Core finds the context class. If there are multiple context classes, this parameter is required. |
-| -Project \<String>        | The target project. If this parameter is omitted, the **Default project** for **Package Manager Console** is used as the target project.                                                                             |
-| <nobr>-StartupProject</nobr> \<String> | The startup project. If this parameter is omitted, the **Startup project** in **Solution properties** is used as the target project.                                                                                 |
-| -Args \<String>           | Arguments passed to the application. Added in EF Core 5.0.                                                                                                                                                           |
-| -Verbose                  | Show verbose output.                                                                                                                                                                                                 |
+| <nobr>`-Context <String>`</nobr>        | The `DbContext` class to use. Class name only or fully qualified with namespaces.  If this parameter is omitted, EF Core finds the context class. If there are multiple context classes, this parameter is required. |
+| <nobr>`-Project <String>`</nobr>        | The target project. If this parameter is omitted, the **Default project** for **Package Manager Console** is used as the target project.                                                                             |
+| <nobr>`-StartupProject <String>`</nobr> | The startup project. If this parameter is omitted, the **Startup project** in **Solution properties** is used as the target project.                                                                                 |
+| <nobr>`-Args <String>`</nobr>           | Arguments passed to the application. Added in EF Core 5.0.                                                                                                                                                           |
+| `-Verbose`                              | Show verbose output.                                                                                                                                                                                                 |
 
 To show help information about a command, use PowerShell's `Get-Help` command.
 
 > [!TIP]
-> The Context, Project, and StartupProject parameters support tab-expansion.
+> The `Context`, `Project`, and `StartupProject` parameters support tab-expansion.
 
 ## Add-Migration
 
@@ -115,11 +115,27 @@ Adds a new migration.
 
 Parameters:
 
-| Parameter                         | Description                                                                                                             |
-|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
-| <nobr>-Name \<String><nobr>       | The name of the migration. This is a positional parameter and is required.                                              |
-| <nobr>-OutputDir \<String></nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
-| <nobr>-Namespace \<String></nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. Added in EF Core 5.0.  |
+| Parameter                          | Description                                                                                                             |
+|:-----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
+| <nobr>`-Name <String>`</nobr>      | The name of the migration. This is a positional parameter and is required.                                              |
+| <nobr>`-OutputDir <String>`</nobr> | The directory use to output the files. Paths are relative to the target project directory. Defaults to "Migrations". |
+| <nobr>`-Namespace <String>`</nobr> | The namespace to use for the generated classes. Defaults to generated from the output directory. Added in EF Core 5.0.  |
+
+The [common parameters](#common-parameters) are listed above.
+
+## Bundle-Migration
+
+Creates an executable to update the database.
+
+Parameters:
+
+Parameter                              | Description
+-------------------------------------- | -----------
+`-Output <String>`                     | The path of executable file to create.
+`-Force`                               | Overwrite existing files.
+`-SelfContained`                       | Also bundle the .NET runtime so it doesn't need to be installed on the machine.
+<nobr>`-TargetRuntime <String>`</nobr> | The target runtime to bundle for.
+`-Framework <String>`                  | The target framework. Defaults to the first one in the project.
 
 The [common parameters](#common-parameters) are listed above.
 
@@ -129,9 +145,9 @@ Drops the database.
 
 Parameters:
 
-| Parameter | Description                                              |
-|:----------|:---------------------------------------------------------|
-| -WhatIf   | Show which database would be dropped, but don't drop it. |
+| Parameter              | Description                                              |
+|:-----------------------|:---------------------------------------------------------|
+| <nobr>`-WhatIf`</nobr> | Show which database would be dropped, but don't drop it. |
 
 The [common parameters](#common-parameters) are listed above.
 
@@ -147,12 +163,39 @@ Lists available migrations. Added in EF Core 5.0.
 
 Parameters:
 
-| Parameter                          | Description                                                                                            |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| <nobr>-Connection \<String></nobr> | The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring. |
-| -NoConnect                         | Don't connect to the database.                                                                         |
+| Parameter                           | Description                                                                                            |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| <nobr>`-Connection <String>`</nobr> | The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring. |
+| <nobr>`-NoConnect`</nobr>           | Don't connect to the database.                                                                         |
 
 The [common parameters](#common-parameters) are listed above.
+
+## Optimize-DbContext
+
+Generates a compiled version of the model used by the `DbContext`. Added in EF Core 6.
+
+See [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models) for more information.
+
+Parameters:
+
+| Parameter                           | Description                                                                                                                                                                                                                                                             |
+|:------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <nobr>`-OutputDir <String>`</nobr>  | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
+| <nobr>`-Namespace <String>`</nobr>  | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory plus `CompiledModels`.                                                                                                                           |
+
+The [common parameters](#common-parameters) are listed above.
+
+The following example uses the defaults and works if there is only one `DbContext` in the project:
+
+```powershell
+Optimize-DbContext
+```
+
+The following example optimizes the model for the context with the specified name and places it in a separate folder and namespace:
+
+```powershell
+Optimize-DbContext -OutputDir Models -Namespace BlogModels -Context BlogContext
+```
 
 ## Remove-Migration
 
@@ -160,9 +203,9 @@ Removes the last migration (rolls back the code changes that were done for the m
 
 Parameters:
 
-| Parameter | Description                                                                     |
-|:----------|:--------------------------------------------------------------------------------|
-| -Force    | Revert the migration (roll back the changes that were applied to the database). |
+| Parameter             | Description                                                                     |
+|:----------------------|:--------------------------------------------------------------------------------|
+| <nobr>`-Force`</nobr> | Revert the migration (roll back the changes that were applied to the database). |
 
 The [common parameters](#common-parameters) are listed above.
 
@@ -174,20 +217,20 @@ Parameters:
 
 | Parameter                          | Description                                                                                                                                                                                                                                                             |
 |:-----------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr>-Connection \<String></nobr> | The connection string to the database. For ASP.NET Core 2.x projects, the value can be *name=\<name of connection string>*. In that case the name comes from the configuration sources that are set up for the project. This is a positional parameter and is required. |
-| <nobr>-Provider \<String></nobr>   | The provider to use. Typically this is the name of the NuGet package, for example: `Microsoft.EntityFrameworkCore.SqlServer`. This is a positional parameter and is required.                                                                                           |
-| -OutputDir \<String>               | The directory to put files in. Paths are relative to the project directory.                                                                                                                                                                                             |
-| -ContextDir \<String>              | The directory to put the `DbContext` file in. Paths are relative to the project directory.                                                                                                                                                               |
-| -Namespace \<String>               | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0.                                                                                                                           |
-| -ContextNamespace \<String>        | The namespace to use for the generated `DbContext` class. Note: overrides `-Namespace`. Added in EF Core 5.0.                                                                                                                                                           |
-| -Context \<String>                 | The name of the `DbContext` class to generate.                                                                                                                                                                                                                          |
-| -Schemas \<String[]>               | The schemas of tables to generate entity types for. If this parameter is omitted, all schemas are included.                                                                                                                                                             |
-| -Tables \<String[]>                | The tables to generate entity types for. If this parameter is omitted, all tables are included.                                                                                                                                                                         |
-| -DataAnnotations                   | Use attributes to configure the model (where possible). If this parameter is omitted, only the fluent API is used.                                                                                                                                                      |
-| -UseDatabaseNames                  | Use table and column names exactly as they appear in the database. If this parameter is omitted, database names are changed to more closely conform to C# name style conventions.                                                                                       |
-| -Force                             | Overwrite existing files.                                                                                                                                                                                                                                               |
-| -NoOnConfiguring                   | Don't generate `DbContext.OnConfiguring`. Added in EF Core 5.0.                                                                                                                                                                                                         |
-| -NoPluralize                       | Don't use the pluralizer. Added in EF Core 5.0.                                                                                                                                                                                                                         |
+| <nobr>`-Connection <String>`</nobr>       | The connection string to the database. For ASP.NET Core 2.x projects, the value can be *name=\<name of connection string>*. In that case the name comes from the configuration sources that are set up for the project. This is a positional parameter and is required. |
+| <nobr>`-Provider <String>`</nobr>         | The provider to use. Typically this is the name of the NuGet package, for example: `Microsoft.EntityFrameworkCore.SqlServer`. This is a positional parameter and is required.                                                                                           |
+| <nobr>`-OutputDir <String>`</nobr>        | The directory to put entity class files in. Paths are relative to the project directory.                                                                                                                                                                                  |
+| <nobr>`-ContextDir <String>`</nobr>       | The directory to put the `DbContext` file in. Paths are relative to the project directory.                                                                                                                                                               |
+| <nobr>`-Namespace <String>`</nobr>        | The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0.                                                                                                                           |
+| <nobr>`-ContextNamespace <String>`</nobr> | The namespace to use for the generated `DbContext` class. Note: overrides `-Namespace`. Added in EF Core 5.0.                                                                                                                                                           |
+| <nobr>`-Context <String>`</nobr>          | The name of the `DbContext` class to generate.                                                                                                                                                                                                                          |
+| <nobr>`-Schemas <String[]>`</nobr>        | The schemas of tables to generate entity types for. If this parameter is omitted, all schemas are included.                                                                                                                                                             |
+| <nobr>`-Tables <String[]>`</nobr>         | The tables to generate entity types for. If this parameter is omitted, all tables are included.                                                                                                                                                                         |
+| <nobr>`-DataAnnotations`</nobr>           | Use attributes to configure the model (where possible). If this parameter is omitted, only the fluent API is used.                                                                                                                                                      |
+| <nobr>`-UseDatabaseNames`</nobr>          | Use table and column names exactly as they appear in the database. If this parameter is omitted, database names are changed to more closely conform to C# name style conventions.                                                                                       |
+| <nobr>`-Force`</nobr>                     | Overwrite existing files.                                                                                                                                                                                                                                               |
+| <nobr>`-NoOnConfiguring`</nobr>           | Don't generate `DbContext.OnConfiguring`. Added in EF Core 5.0.                                                                                                                                                                                                         |
+| <nobr>`-NoPluralize`</nobr>               | Don't use the pluralizer. Added in EF Core 5.0.                                                                                                                                                                                                                         |
 
 The [common parameters](#common-parameters) are listed above.
 
@@ -211,13 +254,13 @@ Scaffold-DbContext "Name=ConnectionStrings:Blogging" Microsoft.EntityFrameworkCo
 
 ## Script-DbContext
 
-Generates a SQL script from the DbContext. Bypasses any migrations. Added in EF Core 3.0.
+Generates a SQL script from the DbContext. Bypasses any migrations.
 
 Parameters:
 
-| Parameter                      | Description                      |
-| ------------------------------ | -------------------------------- |
-| <nobr>-Output \<String></nobr> | The file to write the result to. |
+| Parameter                       | Description                      |
+| ------------------------------- | -------------------------------- |
+| <nobr>`-Output <String>`</nobr> | The file to write the result to. |
 
 The [common parameters](#common-parameters) are listed above.
 
@@ -228,17 +271,17 @@ Generates a SQL script that applies all of the changes from one selected migrati
 Parameters:
 
 | Parameter                    | Description                                                                                                                                                                                                                |
-|:---------------------------- |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| *-From* \<String>            | The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration*. Defaults to 0.                                                              |
-| *-To* \<String>              | The ending migration. Defaults to the last migration.                                                                                                                                                                      |
-| -Idempotent                  | Generate a script that can be used on a database at any migration.                                                                                                                                                         |
-| <nobr>-NoTransactions</nobr> | Don't generate SQL transaction statements. Added in EF Core 5.0.                                                                                                                                                           |
-| -Output \<String>            | The file to write the result to. IF this parameter is omitted, the file is created with a generated name in the same folder as the app's runtime files are created, for example: */obj/Debug/netcoreapp2.1/ghbkztfz.sql/*. |
+|:------------------------------- |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <nobr>`-From <String>`</nobr>   | The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration*. Defaults to 0.                                                              |
+| <nobr>`-To <String>`</nobr>     | The ending migration. Defaults to the last migration.                                                                                                                                                                      |
+| <nobr>`-Idempotent`</nobr>      | Generate a script that can be used on a database at any migration.                                                                                                                                                         |
+| <nobr>`-NoTransactions`</nobr>  | Don't generate SQL transaction statements. Added in EF Core 5.0.                                                                                                                                                           |
+| <nobr>`-Output <String>`</nobr> | The file to write the result to. IF this parameter is omitted, the file is created with a generated name in the same folder as the app's runtime files are created, for example: */obj/Debug/netcoreapp2.1/ghbkztfz.sql/*. |
 
 The [common parameters](#common-parameters) are listed above.
 
 > [!TIP]
-> The To, From, and Output parameters support tab-expansion.
+> The `To`, `From`, and `Output` parameters support tab-expansion.
 
 The following example creates a script for the InitialCreate migration (from a database without any migrations), using the migration name.
 
@@ -258,13 +301,13 @@ Updates the database to the last migration or to a specified migration.
 
 | Parameter                           | Description                                                                                                                                                                                                                                                     |
 |:------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr>*-Migration* \<String></nobr> | The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration* and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration. |
-| <nobr>-Connection \<String></nobr>  | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. Added in EF Core 5.0.                                                                                                                                |
+| <nobr>`-Migration <String>`</nobr>  | The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means *before the first migration* and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration. |
+| <nobr>`-Connection <String>`</nobr> | The connection string to the database. Defaults to the one specified in `AddDbContext` or `OnConfiguring`. Added in EF Core 5.0.                                                                                                                                |
 
 The [common parameters](#common-parameters) are listed above.
 
 > [!TIP]
-> The Migration parameter supports tab-expansion.
+> The `Migration` parameter supports tab-expansion.
 
 The following example reverts all migrations.
 
@@ -283,3 +326,4 @@ Update-Database 20180904195021_InitialCreate -Connection your_connection_string
 
 * [Migrations](xref:core/managing-schemas/migrations/index)
 * [Reverse Engineering](xref:core/managing-schemas/scaffolding)
+* [Compiled models](xref:core/performance/advanced-performance-topics#compiled-models)

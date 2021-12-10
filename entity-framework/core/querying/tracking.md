@@ -2,7 +2,7 @@
 title: Tracking vs. No-Tracking Queries - EF Core
 description: Information on tracking and no-tracking queries in Entity Framework Core
 author: smitpatel
-ms.date: 11/09/2020
+ms.date: 11/15/2021
 uid: core/querying/tracking
 ---
 # Tracking vs. No-Tracking Queries
@@ -35,7 +35,7 @@ You can also change the default tracking behavior at the context instance level:
 
 ## Identity resolution
 
-Since a tracking query uses the change tracker, EF Core will do identity resolution in a tracking query. When materializing an entity, EF Core will return the same entity instance from the change tracker if it's already being tracked. If the result contains the same entity multiple times, you get back same instance for each occurrence. No-tracking queries don't use the change tracker and don't do identity resolution. So you get back a new instance of the entity even when the same entity is contained in the result multiple times. This behavior was different in versions before EF Core 3.0, see [previous versions](#previous-versions).
+Since a tracking query uses the change tracker, EF Core will do identity resolution in a tracking query. When materializing an entity, EF Core will return the same entity instance from the change tracker if it's already being tracked. If the result contains the same entity multiple times, you get back same instance for each occurrence. No-tracking queries don't use the change tracker and don't do identity resolution. So you get back a new instance of the entity even when the same entity is contained in the result multiple times.
 
 Starting with EF Core 5.0, you can combine both of the above behaviors in same query. That is, you can have a no tracking query, which will do identity resolution in the results. Just like `AsNoTracking()` queryable operator, we've added another operator `AsNoTrackingWithIdentityResolution()`. There's also associated entry added in the <xref:Microsoft.EntityFrameworkCore.QueryTrackingBehavior> enum. When you configure the query to use identity resolution with no tracking, we use a stand-alone change tracker in the background when generating query results so each instance is materialized only once. Since this change tracker is different from the one in the context, the results are not tracked by the context. After the query is enumerated fully, the change tracker goes out of scope and garbage collected as required.
 
@@ -62,8 +62,6 @@ If the result set doesn't contain any entity types, then no tracking is done. In
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Program.cs#ClientMethod)]
 
 EF Core doesn't track the keyless entity instances contained in the result. But EF Core tracks all the other instances of entity types with a key according to rules above.
-
-Some of the above rules worked differently before EF Core 3.0. For more information, see [previous versions](#previous-versions).
 
 ## Previous versions
 

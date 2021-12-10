@@ -2,7 +2,7 @@
 title: Asynchronous Programming - EF Core
 description: Querying and saving data asynchronously with Entity Framework Core
 author: roji
-ms.date: 9/2/2020
+ms.date: 10/1/2021
 uid: core/miscellaneous/async
 ---
 # Asynchronous Programming
@@ -26,19 +26,19 @@ For more information, see [the general C# asynchronous programming docs](/dotnet
 
 ## Async LINQ operators
 
-In order to support executing LINQ queries asynchronously, EF Core provides a set of async extension methods which execute the query and return results. These counterparts to the standard, synchronous LINQ operators include ToListAsync, SingleAsync, AsAsyncEnumerable, etc.:
+In order to support executing LINQ queries asynchronously, EF Core provides a set of async extension methods which execute the query and return results. These counterparts to the standard, synchronous LINQ operators include <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync%2A>, <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.SingleAsync%2A>, <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsAsyncEnumerable%2A>, etc.:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Async/Program.cs#ToListAsync)]
 
-Note that there are no async versions of some LINQ operators such as Where or OrderBy, because these only build up the LINQ expression tree and don't cause the query to be executed in the database. Only operators which cause query execution have async counterparts.
+Note that there are no async versions of some LINQ operators such as <xref:System.Linq.Queryable.Where%2A> or <xref:System.Linq.Queryable.OrderBy%2A>, because these only build up the LINQ expression tree and don't cause the query to be executed in the database. Only operators which cause query execution have async counterparts.
 
 > [!IMPORTANT]
 > The EF Core async extension methods are defined in the `Microsoft.EntityFrameworkCore` namespace. This namespace must be imported for the methods to be available.
 
 ## Client-side async LINQ operators
 
-The async LINQ operators discussed above can only be used on EF queries - you cannot use them with client-side LINQ to Objects query. To perform client-side async LINQ operations outside of EF, use the [System.Linq.Async package](https://www.nuget.org/packages/System.Linq.Async); this package can be especially useful for performing operations on the client that cannot be translated for evaluation at the server.
+The async LINQ operators discussed above can only be used on EF queries - you cannot use them with client-side LINQ to Objects query. To perform client-side async LINQ operations outside of EF, use the [`System.Linq.Async` package](https://www.nuget.org/packages/System.Linq.Async); this package can be especially useful for performing operations on the client that cannot be translated for evaluation at the server.
 
-Unfortunately, referencing System.Interactive.Async causes ambiguous invocation compilation errors on LINQ operators applied to EF's DbSets; this makes it hard to use both EF and System.Interactive.Async in the same project. To work around this issue, add AsQueryable to your DbSet:
+In EF Core 6.0 and lower, referencing `System.Linq.Async` unfortunately causes ambiguous invocation compilation errors on LINQ operators applied to EF's DbSets; this makes it hard to use both EF and `System.Linq.Async` in the same project. To work around this issue, add <xref:System.Linq.Queryable.AsQueryable%2A> to your DbSet:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/AsyncWithSystemInteractive/Program.cs#SystemInteractiveAsync)]

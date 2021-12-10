@@ -2,7 +2,7 @@
 title: Eager Loading of Related Data - EF Core
 description: Eager loading of related data with Entity Framework Core
 author: roji
-ms.date: 9/8/2020
+ms.date: 11/11/2021
 uid: core/querying/related-data/eager
 ---
 # Eager Loading of Related Data
@@ -120,22 +120,44 @@ public class School
 }
 ```
 
-Contents of `School` navigation of all People who are Students can be eagerly loaded using a number of patterns:
+Contents of `School` navigation of all People who are Students can be eagerly loaded using many patterns:
 
-* using cast
+* Using cast
 
   ```csharp
   context.People.Include(person => ((Student)person).School).ToList()
   ```
 
-* using `as` operator
+* Using `as` operator
 
   ```csharp
   context.People.Include(person => (person as Student).School).ToList()
   ```
 
-* using overload of `Include` that takes parameter of type `string`
+* Using overload of `Include` that takes parameter of type `string`
 
   ```csharp
   context.People.Include("School").ToList()
   ```
+
+## Model configuration for auto-including navigations
+
+> [!NOTE]
+> This feature was introduced in EF Core 6.0.
+
+You can configure a navigation in the model to be included every time the entity is loaded from the database using `AutoInclude` method. It has same effect as specifying `Include` with the navigation in every query where the entity type is returned in the results. Following example shows how to configure a navigation to be automatically included.
+
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/BloggingContext.cs#AutoInclude)]
+
+After above configuration, running a query like below will load `ColorScheme` navigation for all the themes in the results.
+
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#AutoIncludes)]
+
+This configuration is applied on every entity returned in the result no matter how it appeared in the results. That means if an entity is in the result because of use of a navigation, using `Include` over another entity type or auto-include configuration, it will load all the auto-included navigations for it. The same rule extends to the navigations configured as auto-included on derived type of the entity.
+
+If for a particular query you don't want to load the related data through a navigation, which is configured at model level to be auto-included, you can use `IgnoreAutoIncludes` method in your query. Using this method will stop loading all the navigations configured as auto-include by the user. Running a query like below will bring back all themes from database but won't load `ColorScheme` even though it's configured as auto-included navigation.
+
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#IgnoreAutoIncludes)]
+
+> [!NOTE]
+> Navigations to owned types are also configured as auto-included by convention and using `IgnoreAutoIncludes` API doesn't stop them from being included. They will still be included in query results.

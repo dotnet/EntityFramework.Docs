@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Performance.LazyLoading;
 
 namespace Performance
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        #region CompiledQueryCompile
+        private static readonly Func<BloggingContext, int, IAsyncEnumerable<Blog>> _compiledQuery
+            = EF.CompileAsyncQuery(
+                (BloggingContext context, int length) => context.Blogs.Where(b => b.Url.StartsWith("http://") && b.Url.Length == length));
+        #endregion
+
+        private static async Task Main(string[] args)
         {
             using (var context = new BloggingContext())
             {
@@ -201,6 +209,38 @@ namespace Performance
             {
                 #region UpdateWithBulk
                 context.Database.ExecuteSqlRaw("UPDATE [Employees] SET [Salary] = [Salary] + 1000");
+                #endregion
+            }
+
+            using (var context = new PooledBloggingContext(
+                       new DbContextOptionsBuilder()
+                           .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
+                           .Options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
+
+            #region DbContextPoolingWithoutDI
+            var options = new DbContextOptionsBuilder<PooledBloggingContext>()
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
+                .Options;
+
+            var factory = new PooledDbContextFactory<PooledBloggingContext>(options);
+
+            using (var context = factory.CreateDbContext())
+            {
+                var allPosts = context.Posts.ToList();
+            }
+            #endregion
+
+            using (var context = new BloggingContext())
+            {
+                #region CompiledQueryExecute
+                await foreach (var blog in _compiledQuery(context, 8))
+                {
+                    // Do something with the results
+                }
                 #endregion
             }
         }

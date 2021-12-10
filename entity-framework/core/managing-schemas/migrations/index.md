@@ -139,7 +139,7 @@ Note that this time, EF detects that the database already exists. In addition, w
 
 Sometimes you may want to reference types from another DbContext. This can lead to migration conflicts. To prevent this, exclude the type from the migrations of one of the DbContexts.
 
-[!code-csharp[](../../../../samples/core/Modeling/FluentAPI/TableExcludeFromMigrations.cs#TableExcludeFromMigrations)]
+[!code-csharp[](../../../../samples/core/Modeling/EntityTypes/FluentAPI/TableExcludeFromMigrations.cs#TableExcludeFromMigrations)]
 
 ### Next steps
 

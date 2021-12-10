@@ -2,7 +2,7 @@
 title: Entity Properties - EF Core
 description: How to configure and map entity properties using Entity Framework Core
 author: roji
-ms.date: 05/27/2020
+ms.date: 10/12/2021
 uid: core/modeling/entity-properties
 ---
 # Entity Properties
@@ -17,11 +17,11 @@ Specific properties can be excluded as follows:
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/IgnoreProperty.cs?name=IgnoreProperty&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/IgnoreProperty.cs?name=IgnoreProperty&highlight=6)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IgnoreProperty.cs?name=IgnoreProperty&highlight=3,4)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/IgnoreProperty.cs?name=IgnoreProperty&highlight=3,4)]
 
 ***
 
@@ -33,11 +33,11 @@ If you prefer to configure your columns with different names, you can do so as f
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnName.cs?Name=ColumnName&highlight=3)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/ColumnName.cs?Name=ColumnName&highlight=3)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnName.cs?Name=ColumnName&highlight=3-5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/ColumnName.cs?Name=ColumnName&highlight=3-5)]
 
 ***
 
@@ -51,11 +51,11 @@ You can also configure your columns to specify an exact data type for a column. 
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnDataType.cs?name=ColumnDataType&highlight=5,8)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/ColumnDataType.cs?name=ColumnDataType&highlight=5,8)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnDataType.cs?name=ColumnDataType&highlight=6-7)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/ColumnDataType.cs?name=ColumnDataType&highlight=6-7)]
 
 ***
 
@@ -70,19 +70,17 @@ In the following example, configuring a maximum length of 500 will cause a colum
 
 #### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/MaxLength.cs?name=MaxLength&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/MaxLength.cs?name=MaxLength&highlight=5)]
 
 #### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/MaxLength.cs?name=MaxLength&highlight=3-5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/MaxLength.cs?name=MaxLength&highlight=3-5)]
 
 ***
 
 ### Precision and Scale
 
-Starting with EFCore 5.0, you can use fluent API to configure the precision and scale. It tells the database provider how much storage is needed for a given column. It only applies to data types where the provider allows the precision and scale to vary - usually `decimal` and `DateTime`.
-
-For `decimal` properties, precision defines the maximum number of digits needed to express any value the column will contain, and scale defines the maximum number of decimal places needed. For `DateTime` properties, precision defines the maximum number of digits needed to express fractions of seconds, and scale is not used.
+Some relational data types support the precision and scale facets; these control what values can be stored, and how much storage is needed for the column. Which data types support precision and scale is database-dependent, but in most databases `decimal` and `DateTime` types do support these facets. For `decimal` properties, precision defines the maximum number of digits needed to express any value the column will contain, and scale defines the maximum number of decimal places needed. For `DateTime` properties, precision defines the maximum number of digits needed to express fractions of seconds, and scale is not used.
 
 > [!NOTE]
 > Entity Framework does not do any validation of precision or scale before passing data to the provider. It is up to the provider or data store to validate as appropriate. For example, when targeting SQL Server, a column of data type `datetime` does not allow the precision to be set, whereas a `datetime2` one can have precision between 0 and 7 inclusive.
@@ -91,14 +89,40 @@ In the following example, configuring the `Score` property to have precision 14 
 
 #### [Data Annotations](#tab/data-annotations)
 
-Precision and scale cannot currently be configured via data annotations.
+> [!NOTE]
+> The Data Annotation for configuring precision and scale was introduced in EF Core 6.0.
+
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=4,6)]
+
+Scale is never defined without first defining precision, so the Data Annotation for defining the scale is `[Precision(precision, scale)]`.
 
 #### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=3-9)]
+> [!NOTE]
+> The Fluent API for configuring precision and scale was introduced in EF Core 5.0.
+
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=5,9)]
+
+Scale is never defined without first defining precision, so the Fluent API for defining the scale is `HasPrecision(precision, scale)`.
+
+***
+
+### Unicode
+
+In some relational databases, different types exist to represent Unicode and non-Unicode text data. For example, in SQL Server, `nvarchar(x)` is used to represent Unicode data in UTF-16, while `varchar(x)` is used to represent non-Unicode data (but see the notes on [SQL Server UTF-8 support](xref:core/providers/sql-server/columns#unicode-and-utf-8)). For databases which don't support this concept, configuring this has no effect.
+
+Text properties are configured as Unicode by default. You can configure a column as non-Unicode as follows:
+
+#### [Data Annotations](#tab/data-annotations)
 
 > [!NOTE]
-> Scale is never defined without first defining precision, so the Fluent API for defining the scale is `HasPrecision(precision, scale)`.
+> The Data Annotation for configuring Unicode was introduced in EF Core 6.0.
+
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/Unicode.cs?name=Unicode&highlight=6-7)]
+
+#### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/Unicode.cs?name=Unicode&highlight=5)]
 
 ***
 
@@ -140,11 +164,11 @@ A property that would be optional by convention can be configured to be required
 
 #### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Required.cs?name=Required&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/Required.cs?name=Required&highlight=5)]
 
 #### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Required.cs?name=Required&highlight=3-5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/Required.cs?name=Required&highlight=3-5)]
 
 ***
 
@@ -170,10 +194,31 @@ You can set an arbitrary text comment that gets set on the database column, allo
 > [!NOTE]
 > Setting comments via data annotations was introduced in EF Core 5.0.
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ColumnComment.cs?name=ColumnComment&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/ColumnComment.cs?name=ColumnComment&highlight=5)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ColumnComment.cs?name=ColumnComment&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/ColumnComment.cs?name=ColumnComment&highlight=5)]
 
 ***
+
+## Column order
+
+> [!NOTE]
+> This feature was introduced in EF Core 6.0.
+
+By default when creating a table with [Migrations](xref:core/managing-schemas/migrations/index), EF Core orders primary key columns first, followed by properties of the entity type and owned types, and finally properties from base types. You can, however, specify a different column order:
+
+### [Data Annotations](#tab/data-annotations)
+
+[!code-csharp[](../../../samples/core/Modeling/EntityProperties/DataAnnotations/ColumnOrder.cs#snippet_ColumnAttribute)]
+
+The Fluent API can be used to override ordering made with attributes, including resolving any conflicts when attributes on different properties specify the same order number.
+
+### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[](../../../samples/core/Modeling/EntityProperties/FluentAPI/ColumnOrder.cs#snippet_HasColumnOrder)]
+
+***
+
+Note that, in the general case, most databases only support ordering columns when the table is created. This means that the column order attribute cannot be used to re-order columns in an existing table.

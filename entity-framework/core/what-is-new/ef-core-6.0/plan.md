@@ -2,11 +2,14 @@
 title: Plan for Entity Framework Core 6.0
 description: The themes and features planned for EF Core 6.0
 author: ajcvickers
-ms.date: 05/12/2021
+ms.date: 11/09/2021
 uid: core/what-is-new/ef-core-6.0/plan
 ---
 
 # Plan for Entity Framework Core 6.0
+
+> [!IMPORTANT]
+> EF Core 6.0 [has now been released](xref:core/what-is-new/index). This page remains as a historical record of the plan.
 
 As described in the [planning process](xref:core/what-is-new/release-planning), we have gathered input from stakeholders into a plan for the Entity Framework Core (EF Core) 6.0 release. This plan is periodically updated to reflect schedule and scope adjustments.
 
@@ -45,7 +48,7 @@ As always, a major input into the [planning process](xref:core/what-is-new/relea
 
 Tracked by [#4693](https://github.com/dotnet/efcore/issues/4693)
 
-Status: In-progress
+Status: Complete
 
 T-shirt size: Large
 
@@ -119,7 +122,7 @@ The goal for EF Core 6.0 is to get the EF Core performance to match that of Dapp
 
 Tracked by [#10963](https://github.com/dotnet/efcore/issues/10963)
 
-Status: Not started
+Status: Scoped/Complete
 
 T-shirt size: Medium
 
@@ -133,7 +136,7 @@ Following on from the [investigations done for EF Core 5.0](xref:core/what-is-ne
 
 Tracked by [#19693](https://github.com/dotnet/efcore/issues/19693)
 
-Status: In-progress
+Status: Complete
 
 T-shirt size: Medium
 
@@ -159,7 +162,7 @@ Any [issue or bug assigned to the 6.0.0 milestone](https://github.com/dotnet/efc
 
 Tracked by [issues labeled with 'ef6-parity' and in the 6.0 milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aef6-parity+milestone%3A6.0.0)
 
-Status: Scoped/in-progress
+Status: Scoped/Complete
 
 T-shirt size: Large
 
@@ -183,7 +186,7 @@ This work is initially scoped to allow [value converters which map to multiple c
 
 Tracked by [issues labeled with 'area-cosmos' and in the 6.0 milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+milestone%3A6.0.0+label%3Aarea-cosmos)
 
-Status: In-progress
+Status: Expanded/Complete
 
 T-shirt size: Large
 
@@ -238,7 +241,7 @@ We plan to fix all outstanding bugs during the EF Core 6.0 time frame. Some thin
 
 Tracked by [issues labeled with `type-enhancement` in the 6.0 milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+milestone%3A6.0.0+label%3Atype-enhancement)
 
-Status: In-progress
+Status: Complete
 
 T-shirt size: Large
 
@@ -279,7 +282,7 @@ Update: The following issues were cut from the 6.0 release:
 
 Tracked by [issues labeled with `type-enhancement` and `area-adonet-sqlite` in the 6.0 milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+milestone%3A6.0.0+label%3Atype-enhancement+label%3Aarea-adonet-sqlite)
 
-Status: Scoped/In-progress
+Status: Scoped/Complete
 
 T-shirt size: Medium
 

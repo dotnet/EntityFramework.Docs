@@ -10,12 +10,13 @@
         "XML"
     ],
     "cSpell.words": [
-        "LINQ",
         "dbcontext",
         "denormalization",
         "idempotency",
+        "LINQ",
         "mitigations",
         "navigations",
+        "overridable",
         "parameterizable",
         "pluralizer",
         "queryable",
@@ -26,5 +27,11 @@
         "savepoints",
         "serializable",
         "subquery"
-    ]
+    ],
+    "markdownlint.config": {
+        "MD028": false,
+        "MD025": {
+            "front_matter_title": ""
+        }
+    }
 }

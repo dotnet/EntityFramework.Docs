@@ -12,5 +12,8 @@ namespace EFQuerying.RelatedData
 
         public int OwnerId { get; set; }
         public Person Owner { get; set; }
+
+        public int ThemeId { get; set; }
+        public Theme Theme { get; set; }
     }
 }

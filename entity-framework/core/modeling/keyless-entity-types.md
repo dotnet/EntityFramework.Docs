@@ -2,13 +2,13 @@
 title: Keyless Entity Types - EF Core
 description: How to configure keyless entity types using Entity Framework Core
 author: AndriySvyryd
-ms.date: 9/13/2019
+ms.date: 11/15/2021
 uid: core/modeling/keyless-entity-types
 ---
 # Keyless Entity Types
 
 > [!NOTE]
-> This feature was added under the name of query types. In EF Core 3.0 the concept was renamed to keyless entity types. The `[Keyless]` Data Annotation became available in EFCore 5.0.
+> This feature was added under the name of query types. It was later renamed to keyless entity types. The `[Keyless]` Data Annotation became available in EFCore 5.0.
 
 In addition to regular entity types, an EF Core model can contain _keyless entity types_, which can be used to carry out database queries against data that doesn't contain key values.
 
@@ -18,11 +18,11 @@ Keyless entity types can be defined using either the Data Annotation or the Flue
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Keyless.cs?Name=Keyless&highlight=1)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/DataAnnotations/Keyless.cs?Name=Keyless&highlight=1)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Keyless.cs?Name=Keyless&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/FluentAPI/Keyless.cs?Name=Keyless&highlight=4)]
 
 ***
 
@@ -57,7 +57,7 @@ Some of the main usage scenarios for keyless entity types are:
 Mapping a keyless entity type to a database object is achieved using the `ToTable` or `ToView` fluent API. From the perspective of EF Core, the database object specified in this method is a _view_, meaning that it is treated as a read-only query source and cannot be the target of update, insert or delete operations. However, this does not mean that the database object is actually required to be a database view. It can alternatively be a database table that will be treated as read-only. Conversely, for regular entity types, EF Core assumes that a database object specified in the `ToTable` method can be treated as a _table_, meaning that it can be used as a query source but also targeted by update, delete and insert operations. In fact, you can specify the name of a database view in `ToTable` and everything should work fine as long as the view is configured to be updatable on the database.
 
 > [!NOTE]
-> Until EF Core 5.0 `ToView` assumed that the object already exists in the database and it won't be created by migrations. In EF Core 5.0 and later use modelBuilder.Entity<ViewType>().ToTable("ViewNameInDatabase", t => t.ExcludeFromMigrations()) to exclude the object from migrations, see [ToView() is treated differently by migrations](xref:core/what-is-new/ef-core-5.0/breaking-changes#toview).
+> Until EF Core 5.0 `ToView` assumed that the object already exists in the database and it won't be created by migrations. In EF Core 5.0 and later use `modelBuilder.Entity<ViewType>().ToTable("ViewNameInDatabase", t => t.ExcludeFromMigrations())` to exclude the object from migrations, see [ToView() is treated differently by migrations](xref:core/what-is-new/ef-core-5.0/breaking-changes#toview).
 
 ## Example
 
@@ -68,28 +68,28 @@ The following example shows how to use keyless entity types to query a database 
 
 First, we define a simple Blog and Post model:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#Entities)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#Entities)]
 
 Next, we define a simple database view that will allow us to query the number of posts associated with each blog:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#View)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#View)]
 
 Next, we define a class to hold the result from the database view:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#KeylessEntityType)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#KeylessEntityType)]
 
 Next, we configure the keyless entity type in _OnModelCreating_ using the `HasNoKey` API.
 We use fluent configuration API to configure the mapping for the keyless entity type:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#Configuration)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#Configuration)]
 
 Next, we configure the `DbContext` to include the `DbSet<T>`:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#DbSet)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#DbSet)]
 
 Finally, we can query the database view in the standard way:
 
-[!code-csharp[Main](../../../samples/core/KeylessEntityTypes/Program.cs#Query)]
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#Query)]
 
 > [!TIP]
 > Note we have also defined a context level query property (DbSet) to act as a root for queries against this type.

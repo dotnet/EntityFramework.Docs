@@ -57,8 +57,8 @@ namespace EFModeling.ValueConversions
                     .Entity<EntityType>()
                     .Property(e => e.MyListProperty)
                     .HasConversion(
-                        v => JsonSerializer.Serialize(v, null),
-                        v => JsonSerializer.Deserialize<List<int>>(v, null),
+                        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                        v => JsonSerializer.Deserialize<List<int>>(v, (JsonSerializerOptions)null),
                         new ValueComparer<List<int>>(
                             (c1, c2) => c1.SequenceEqual(c2),
                             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),

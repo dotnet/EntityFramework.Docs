@@ -1,10 +1,122 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 public static class OptionalDependentsSample
 {
+    public static void Optional_dependents_with_a_required_property()
+    {
+        Console.WriteLine($">>>> Sample: {nameof(Optional_dependents_with_a_required_property)}");
+        Console.WriteLine();
+
+        Helpers.RecreateCleanDatabase();
+
+        using (var context = new SomeDbContext())
+        {
+            #region NoAddress
+            context.Customers1.Add(
+                new()
+                {
+                    Name = "Foul Ole Ron"
+                });
+            #endregion
+
+            #region PostcodeOnly
+            context.Customers1.Add(
+                new()
+                {
+                    Name = "Havelock Vetinari",
+                    Address = new()
+                    {
+                        Postcode = "AN1 1PL",
+                    }
+                });
+            #endregion
+
+            context.SaveChanges();
+        }
+
+        using (var context = new SomeDbContext())
+        {
+            #region CheckForNullAddress
+            foreach (var customer in context.Customers1)
+            {
+                Console.Write(customer.Name);
+
+                if (customer.Address == null)
+                {
+                    Console.WriteLine(" has no address.");
+                }
+                else
+                {
+                    Console.WriteLine($" has postcode {customer.Address.Postcode}.");
+                }
+            }
+            #endregion
+        }
+
+        Console.WriteLine();
+    }
+
+    public static void Optional_dependents_without_a_required_property()
+    {
+        Console.WriteLine($">>>> Sample: {nameof(Optional_dependents_without_a_required_property)}");
+        Console.WriteLine();
+
+        Helpers.RecreateCleanDatabase();
+
+        using (var context = new SomeDbContext())
+        {
+            #region AllNull
+            context.Customers2.Add(
+                new()
+                {
+                    Name = "Foul Ole Ron"
+                });
+
+            context.Customers2.Add(
+                new()
+                {
+                    Name = "Havelock Vetinari",
+                    Address = new()
+                });
+
+            #endregion
+
+            context.SaveChanges();
+        }
+
+        Console.WriteLine();
+
+        using (var context = new SomeDbContext())
+        {
+            var connection = context.Database.GetDbConnection();
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT Id, Name, Address_House, Address_Street, Address_City, Address_Postcode FROM Customers2";
+
+            Console.WriteLine($"Id  Name               House   Street  City    Postcode");
+
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Console.Write($"{reader.GetInt32(0)}   {reader.GetString(1).PadRight(17)}  ");
+                for (int i = 2; i <= 5; i++)
+                {
+                    Console.Write(reader.IsDBNull(i) ? "NULL    " : reader.GetString(i).PadRight(8));
+                }
+                Console.WriteLine();
+            }
+
+            connection.Close();
+        }
+
+        Console.WriteLine();
+    }
+
     public static void Handling_optional_dependents_sharing_table_with_principal_1()
     {
         Console.WriteLine($">>>> Sample: {nameof(Handling_optional_dependents_sharing_table_with_principal_1)}");
@@ -266,12 +378,125 @@ public static class OptionalDependentsSample
         public DependentWithOnlyOptionalProperties Nested { get; set; }
     }
 
+    public class WithRequiredProperty
+    {
+        #region AddressWithRequiredProperty
+        public class Customer
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public Address Address { get; set; }
+        }
+
+        public class Address
+        {
+            public string House { get; set; }
+            public string Street { get; set; }
+            public string City { get; set; }
+
+            [Required]
+            public string Postcode { get; set; }
+        }
+        #endregion
+    }
+
+    public class WithoutRequiredProperty
+    {
+        #region AddressWithoutRequiredProperty
+        public class Customer
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public Address Address { get; set; }
+        }
+
+        public class Address
+        {
+            public string House { get; set; }
+            public string Street { get; set; }
+            public string City { get; set; }
+            public string Postcode { get; set; }
+        }
+        #endregion
+    }
+
+    public class WithRequiredNavigation
+    {
+        #region AddressWithRequiredNavigation
+        public class Customer
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+
+            [Required]
+            public Address Address { get; set; }
+        }
+
+        public class Address
+        {
+            public string House { get; set; }
+            public string Street { get; set; }
+            public string City { get; set; }
+            public string Postcode { get; set; }
+        }
+        #endregion
+    }
+
+    public class WithDifferentTable
+    {
+        #region AddressWithDifferentTable
+        public class Customer
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public Address Address { get; set; }
+        }
+
+        public class Address
+        {
+            public string House { get; set; }
+            public string Street { get; set; }
+            public string City { get; set; }
+            public string Postcode { get; set; }
+        }
+        #endregion
+    }
+
+    public class NestedWithoutRequiredProperty
+    {
+        #region NestedWithoutRequiredProperty
+        public class Customer
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public ContactInfo ContactInfo { get; set; }
+        }
+
+        public class ContactInfo
+        {
+            public string Phone { get; set; }
+            public Address Address { get; set; }
+        }
+
+        public class Address
+        {
+            public string House { get; set; }
+            public string Street { get; set; }
+            public string City { get; set; }
+            public string Postcode { get; set; }
+        }
+        #endregion
+    }
+
     public class SomeDbContext : DbContext
     {
         public DbSet<PrincipalWithOptionalDependents> PrincipalsWithOptionalDependents { get; set; }
         public DbSet<PrincipalWithRequiredDependents> PrincipalsWithRequiredDependents { get; set; }
         public DbSet<PrincipalWithNestedOptionalDependents> PrincipalsWithNestedOptionalDependents { get; set; }
         public DbSet<PrincipalWithNestedRequiredDependents> PrincipalsWithNestedRequiredDependents { get; set; }
+
+        public DbSet<WithRequiredProperty.Customer> Customers1 { get; set; }
+        public DbSet<WithoutRequiredProperty.Customer> Customers2 { get; set; }
 
         private readonly bool _quiet;
 
@@ -282,6 +507,35 @@ public static class OptionalDependentsSample
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder
+                .Entity<WithRequiredProperty.Customer>()
+                .OwnsOne(e => e.Address);
+
+            modelBuilder
+                .Entity<WithoutRequiredProperty.Customer>()
+                .OwnsOne(e => e.Address);
+
+            #region RequiredInModel
+            modelBuilder.Entity<WithRequiredNavigation.Customer>(
+                b =>
+                    {
+                        b.OwnsOne(e => e.Address);
+                        b.Navigation(e => e.Address).IsRequired();
+                    });
+            #endregion
+
+            #region WithDifferentTable
+            modelBuilder
+                .Entity<WithDifferentTable.Customer>(
+                    b =>
+                        {
+                            b.ToTable("Customers");
+                            b.OwnsOne(
+                                e => e.Address,
+                                b => b.ToTable("CustomerAddresses"));
+                        });
+            #endregion
+
             modelBuilder.Entity<PrincipalWithOptionalDependents>(
                 b =>
                 {

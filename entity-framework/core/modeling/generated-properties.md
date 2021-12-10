@@ -16,21 +16,21 @@ On relational databases, a column can be configured with a default value; if a r
 
 You can configure a default value on a property:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DefaultValue.cs?name=DefaultValue&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValue.cs?name=DefaultValue&highlight=5)]
 
 You can also specify a SQL fragment that is used to calculate the default value:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DefaultValueSql.cs?name=DefaultValueSql&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValueSql.cs?name=DefaultValueSql&highlight=5)]
 
 ## Computed columns
 
 On most relational databases, a column can be configured to have its value computed in the database, typically with an expression referring to other columns:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=DefaultComputedColumn&highlight=3)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/ComputedColumn.cs?name=DefaultComputedColumn&highlight=3)]
 
 The above creates a *virtual* computed column, whose value is computed every time it is fetched from the database. You may also specify that a computed column be *stored* (sometimes called *persisted*), meaning that it is computed on every update of the row, and is stored on disk alongside regular columns:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ComputedColumn.cs?name=StoredComputedColumn&highlight=3)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/ComputedColumn.cs?name=StoredComputedColumn&highlight=3)]
 
 > [!NOTE]
 > Support for creating stored computed columns was added in EF Core 5.0.
@@ -47,11 +47,11 @@ We saw above that EF Core automatically sets up value generation for primary key
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedOnAdd.cs?name=ValueGeneratedOnAdd&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/DataAnnotations/ValueGeneratedOnAdd.cs?name=ValueGeneratedOnAdd&highlight=6)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAdd.cs?name=ValueGeneratedOnAdd&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/ValueGeneratedOnAdd.cs?name=ValueGeneratedOnAdd&highlight=5)]
 
 ***
 
@@ -59,11 +59,11 @@ Similarly, a property can be configured to have its value generated on add or up
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedOnAddOrUpdate.cs?name=ValueGeneratedOnAddOrUpdate&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/DataAnnotations/ValueGeneratedOnAddOrUpdate.cs?name=ValueGeneratedOnAddOrUpdate&highlight=6)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.cs?name=ValueGeneratedOnAddOrUpdate&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/ValueGeneratedOnAddOrUpdate.cs?name=ValueGeneratedOnAddOrUpdate&highlight=5)]
 
 ***
 
@@ -85,7 +85,7 @@ A common request is to have a database column which contains the date/time for w
 
 Configuring a date/time column to have the creation timestamp of the row is usually a matter of configuring a default value with the appropriate SQL function. For example, on SQL Server you may use the following:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DefaultValueSql.cs?name=DefaultValueSql&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/DefaultValueSql.cs?name=DefaultValueSql&highlight=5)]
 
 Be sure to select the appropriate function, as several may exist (e.g. `GETDATE()` vs. `GETUTCDATE()`).
 
@@ -126,7 +126,7 @@ To override value generation with an explicit value, simply set the property to 
 
 To provide an explicit value for properties that have been configured as value generated on add or update, you must also configure the property as follows:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdateWithPropertySaveBehavior.cs?name=ValueGeneratedOnAddOrUpdateWithPropertySaveBehavior&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/ValueGeneratedOnAddOrUpdateWithPropertySaveBehavior.cs?name=ValueGeneratedOnAddOrUpdateWithPropertySaveBehavior&highlight=5)]
 
 ## No value generation
 
@@ -136,10 +136,10 @@ However, in some cases you may want to disable value generation that has been se
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/ValueGeneratedNever.cs?name=ValueGeneratedNever&highlight=3)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/DataAnnotations/ValueGeneratedNever.cs?name=ValueGeneratedNever&highlight=3)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedNever.cs?name=ValueGeneratedNever&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/ValueGeneratedNever.cs?name=ValueGeneratedNever&highlight=5)]
 
 ***

@@ -52,11 +52,11 @@ namespace EFSaving.CascadeDelete
 
         public class DeleteBehaviorCacheKeyFactory : IModelCacheKeyFactory
         {
-            public virtual object Create(DbContext context)
+            public virtual object Create(DbContext context, bool designTime)
             {
                 var bloggingContext = (BloggingContext)context;
 
-                return (bloggingContext.DeleteBehavior, bloggingContext.RequiredRelationship);
+                return (bloggingContext.DeleteBehavior, bloggingContext.RequiredRelationship, designTime);
             }
         }
 

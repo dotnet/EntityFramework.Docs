@@ -52,7 +52,7 @@ public class Post
 
 ## Lazy loading without proxies
 
-Lazy-loading proxies work by injecting the `ILazyLoader` service into an entity, as described in [Entity Type Constructors](xref:core/modeling/constructors). For example:
+Lazy-loading without proxies work by injecting the `ILazyLoader` service into an entity, as described in [Entity Type Constructors](xref:core/modeling/constructors). For example:
 
 ```csharp
 public class Blog

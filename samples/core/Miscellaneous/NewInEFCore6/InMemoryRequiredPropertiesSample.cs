@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -73,7 +72,7 @@ public static class InMemoryRequiredPropertiesSample
         {
             optionsBuilder
                 .LogTo(Console.WriteLine, new[] { InMemoryEventId.ChangesSaved })
-                .UseInMemoryDatabase("UserContextWithNullCheckingDisabled", b => b.EnableNullabilityCheck(false));
+                .UseInMemoryDatabase("UserContextWithNullCheckingDisabled", b => b.EnableNullChecks(false));
         }
         #endregion
     }

@@ -14,6 +14,7 @@ public static class TemporaryValuesSample
 
         using var context = new SomeDbContext();
 
+        #region MarkTemporary
         var blog = new Blog { Id = -1 };
         var post1 = new Post { Id = -1, BlogId = -1 };
         var post2 = new Post { Id = -2, BlogId = -1 };
@@ -25,9 +26,12 @@ public static class TemporaryValuesSample
         Console.WriteLine($"Blog has explicit temporary ID = {blog.Id}");
         Console.WriteLine($"Post 1 has explicit temporary ID = {post1.Id} and FK to Blog = {post1.BlogId}");
         Console.WriteLine($"Post 2 has explicit temporary ID = {post2.Id} and FK to Blog = {post2.BlogId}");
+        #endregion
 
+        Console.WriteLine();
         Console.WriteLine("SavingChanges...");
         context.SaveChanges();
+        Console.WriteLine();
 
         Console.WriteLine($"Blog has ID = {blog.Id}");
         Console.WriteLine($"Post 1 has ID = {post1.Id} and FK to Blog = {post1.BlogId}");
@@ -46,11 +50,23 @@ public static class TemporaryValuesSample
 
         using var context = new SomeDbContext();
 
+        #region AddBlog
         var blog = new Blog();
+        context.Add(blog);
+        #endregion
+
+        #region ShowValues
+        Console.WriteLine($"Blog.Id value on entity instance = {blog.Id}");
+        Console.WriteLine($"Blog.Id value tracked by EF = {context.Entry(blog).Property(e => e.Id).CurrentValue}");
+        #endregion
+
+        Console.WriteLine();
+
+        #region ExplicitManipulation
         var post1 = new Post();
         var post2 = new Post();
 
-        var blogIdEntry = context.Add(blog).Property(e => e.Id);
+        var blogIdEntry = context.Entry(blog).Property(e => e.Id);
         blog.Id = blogIdEntry.CurrentValue;
         blogIdEntry.IsTemporary = true;
 
@@ -67,9 +83,12 @@ public static class TemporaryValuesSample
         Console.WriteLine($"Blog has generated temporary ID = {blog.Id}");
         Console.WriteLine($"Post 1 has generated temporary ID = {post1.Id} and FK to Blog = {post1.BlogId}");
         Console.WriteLine($"Post 2 has generated temporary ID = {post2.Id} and FK to Blog = {post2.BlogId}");
+        #endregion
 
+        Console.WriteLine();
         Console.WriteLine("SavingChanges...");
         context.SaveChanges();
+        Console.WriteLine();
 
         Console.WriteLine($"Blog has ID = {blog.Id}");
         Console.WriteLine($"Post 1 has ID = {post1.Id} and FK to Blog = {post1.BlogId}");
@@ -89,12 +108,14 @@ public static class TemporaryValuesSample
         }
     }
 
+    #region Blog
     public class Blog
     {
         public int Id { get; set; }
 
         public ICollection<Post> Posts { get; } = new List<Post>();
     }
+    #endregion
 
     public class Post
     {

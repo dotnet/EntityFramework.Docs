@@ -2,7 +2,7 @@
 title: Function Mappings - Microsoft SQL Server Database Provider - EF Core
 description: Function Mappings of the Microsoft SQL Server database provider
 author: bricelam
-ms.date: 6/28/2021
+ms.date: 11/15/2021
 uid: core/providers/sql-server/functions
 ---
 # Function Mappings of the Microsoft SQL Server Provider
@@ -72,7 +72,7 @@ dateTime.Millisecond                                        | DATEPART(milliseco
 dateTime.Minute                                             | DATEPART(minute, @dateTime)
 dateTime.Month                                              | DATEPART(month, @dateTime)
 dateTime.Second                                             | DATEPART(second, @dateTime)
-dateTime.TimeOfDay                                          | CONVERT(time, @dateTime)                              | EF Core 2.2
+dateTime.TimeOfDay                                          | CONVERT(time, @dateTime)
 dateTime.Year                                               | DATEPART(year, @dateTime)
 DateTimeOffset.Now                                          | SYSDATETIMEOFFSET()
 DateTimeOffset.UtcNow                                       | SYSUTCDATETIME()
@@ -91,7 +91,7 @@ dateTimeOffset.Millisecond                                  | DATEPART(milliseco
 dateTimeOffset.Minute                                       | DATEPART(minute, @dateTimeOffset)
 dateTimeOffset.Month                                        | DATEPART(month, @dateTimeOffset)
 dateTimeOffset.Second                                       | DATEPART(second, @dateTimeOffset)
-dateTimeOffset.TimeOfDay                                    | CONVERT(time, @dateTimeOffset)                        | EF Core 2.2
+dateTimeOffset.TimeOfDay                                    | CONVERT(time, @dateTimeOffset)
 dateTimeOffset.Year                                         | DATEPART(year, @dateTimeOffset)
 EF.Functions.DateDiffDay(start, end)                        | DATEDIFF(day, @start, @end)
 EF.Functions.DateDiffHour(start, end)                       | DATEDIFF(hour, @start, @end)
@@ -107,7 +107,7 @@ EF.Functions.DateFromParts(year, month, day)                | DATEFROMPARTS(@yea
 EF.Functions.DateTime2FromParts(year, month, day, ...)      | DATETIME2FROMPARTS(@year, @month, @day, ...)         | EF Core 5.0
 EF.Functions.DateTimeFromParts(year, month, day, ...)       | DATETIMEFROMPARTS(@year, @month, @day, ...)          | EF Core 5.0
 EF.Functions.DateTimeOffsetFromParts(year, month, day, ...) | DATETIMEOFFSETFROMPARTS(@year, @month, @day, ...)    | EF Core 5.0
-EF.Functions.IsDate(expression)                             | ISDATE(@expression)                                  | EF Core 3.0
+EF.Functions.IsDate(expression)                             | ISDATE(@expression)
 EF.Functions.SmallDateTimeFromParts(year, month, day, ...)  | SMALLDATETIMEFROMPARTS(@year, @month, @day, ...)     | EF Core 5.0
 EF.Functions.TimeFromParts(hour, minute, second, ...)       | TIMEFROMPARTS(@hour, @minute, @second, ...)          | EF Core 5.0
 timeSpan.Hours                                              | DATEPART(hour, @timeSpan)                            | EF Core 5.0
@@ -166,8 +166,8 @@ MathF.Truncate(x)        | ROUND(@x, 0, 1)      | EF Core 6.0
 .NET                                                                    | SQL                                                                    | Added in
 ----------------------------------------------------------------------- | ---------------------------------------------------------------------- | --------
 EF.Functions.Collate(operand, collation)                                | @operand COLLATE @collation                                            | EF Core 5.0
-EF.Functions.Contains(propertyReference, searchCondition)               | CONTAINS(@propertyReference, @searchCondition)                         | EF Core 2.2
-EF.Functions.Contains(propertyReference, searchCondition, languageTerm) | CONTAINS(@propertyReference, @searchCondition, LANGUAGE @languageTerm) | EF Core 2.2
+EF.Functions.Contains(propertyReference, searchCondition)               | CONTAINS(@propertyReference, @searchCondition)
+EF.Functions.Contains(propertyReference, searchCondition, languageTerm) | CONTAINS(@propertyReference, @searchCondition, LANGUAGE @languageTerm)
 EF.Functions.FreeText(propertyReference, freeText)                      | FREETEXT(@propertyReference, @freeText)
 EF.Functions.FreeText(propertyReference, freeText, languageTerm)        | FREETEXT(@propertyReference, @freeText, LANGUAGE @languageTerm)
 EF.Functions.IsNumeric(expression)                                      | ISNUMERIC(@expression)                                                 | EF Core 6.0
@@ -176,7 +176,7 @@ EF.Functions.Like(matchExpression, pattern, escapeCharacter)            | @match
 string.Compare(strA, strB)                                              | CASE WHEN @strA = @strB THEN 0 ... END
 string.Concat(str0, str1)                                               | @str0 + @str1
 string.IsNullOrEmpty(value)                                             | @value IS NULL OR @value LIKE N''
-string.IsNullOrWhiteSpace(value)                                        | @value IS NULL OR LTRIM(RTRIM(@value)) = N''
+string.IsNullOrWhiteSpace(value)                                        | @value IS NULL OR @value = N''
 stringValue.CompareTo(strB)                                             | CASE WHEN @stringValue = @strB THEN 0 ... END
 stringValue.Contains(value)                                             | @stringValue LIKE N'%' + @value + N'%'
 stringValue.EndsWith(value)                                             | @stringValue LIKE N'%' + @value
@@ -196,9 +196,9 @@ stringValue.TrimStart()                                                 | LTRIM(
 
 ## Miscellaneous functions
 
-.NET                                     | SQL                                | Added in
----------------------------------------- | ---------------------------------- | --------
-collection.Contains(item)                | @item IN @collection               | EF Core 3.0
+.NET                                     | SQL
+---------------------------------------- | ---
+collection.Contains(item)                | @item IN @collection
 enumValue.HasFlag(flag)                  | @enumValue & @flag = @flag
 Guid.NewGuid()                           | NEWID()
 nullable.GetValueOrDefault()             | COALESCE(@nullable, 0)

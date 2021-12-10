@@ -2,7 +2,7 @@
 title: Indexes - EF Core
 description: Configuring indexes in an Entity Framework Core model
 author: roji
-ms.date: 12/16/2019
+ms.date: 10/1/2021
 uid: core/modeling/indexes
 ---
 # Indexes
@@ -13,14 +13,14 @@ You can specify an index over a column as follows:
 
 ## [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Index.cs?name=Index&highlight=1)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/DataAnnotations/Index.cs?name=Index&highlight=1)]
 
 > [!NOTE]
 > Configuring indexes via Data Annotations has been introduced in EF Core 5.0.
 
 ## [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Index.cs?name=Index&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/Index.cs?name=Index&highlight=4)]
 
 ***
 
@@ -35,11 +35,11 @@ An index can also span more than one column:
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/IndexComposite.cs?name=Composite&highlight=1)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/DataAnnotations/IndexComposite.cs?name=Composite&highlight=1)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IndexComposite.cs?name=Composite&highlight=4)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/IndexComposite.cs?name=Composite&highlight=4)]
 
 ***
 
@@ -51,11 +51,11 @@ By default, indexes aren't unique: multiple rows are allowed to have the same va
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/IndexUnique.cs?name=IndexUnique&highlight=1)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/DataAnnotations/IndexUnique.cs?name=IndexUnique&highlight=1)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IndexUnique.cs?name=IndexUnique&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/IndexUnique.cs?name=IndexUnique&highlight=5)]
 
 ***
 
@@ -69,11 +69,11 @@ You can set the name of the index created in the database:
 
 ### [Data Annotations](#tab/data-annotations)
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/IndexName.cs?name=IndexName&highlight=1)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/DataAnnotations/IndexName.cs?name=IndexName&highlight=1)]
 
 ### [Fluent API](#tab/fluent-api)
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IndexName.cs?name=IndexName&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/IndexName.cs?name=IndexName&highlight=5)]
 
 ***
 
@@ -83,11 +83,11 @@ Some relational databases allow you to specify a filtered or partial index. This
 
 You can use the Fluent API to specify a filter on an index, provided as a SQL expression:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IndexFilter.cs?name=IndexFilter&highlight=5)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/IndexFilter.cs?name=IndexFilter&highlight=5)]
 
 When using the SQL Server provider EF adds an `'IS NOT NULL'` filter for all nullable columns that are part of a unique index. To override this convention you can supply a `null` value.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IndexNoFilter.cs?name=IndexNoFilter&highlight=6)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/IndexNoFilter.cs?name=IndexNoFilter&highlight=6)]
 
 ## Included columns
 
@@ -95,4 +95,16 @@ Some relational databases allow you to configure a set of columns which get incl
 
 In the following example, the `Url` column is part of the index key, so any query filtering on that column can use the index. But in addition, queries accessing only the `Title` and `PublishedOn` columns will not need to access the table and will run more efficiently:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/IndexInclude.cs?name=IndexInclude&highlight=5-9)]
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/IndexInclude.cs?name=IndexInclude&highlight=5-9)]
+
+## Check constraints
+
+Check constraints are a standard relational feature that allows you to define a condition that must hold for all rows in a table; any attempt to insert or modify data that violates the constraint will fail. Check constraints are similar to non-null constraints (which prohibit nulls in a column) or to unique constraints (which prohibit duplicates), but allow arbitrary SQL expression to be defined.
+
+You can use the Fluent API to specify a check constraint on a table, provided as a SQL expression:
+
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/CheckConstraint.cs?name=CheckConstraint&highlight=4)]
+
+Multiple check constraints can be defined on the same table, each with their own name.
+
+Note: some common check constraints can be configured via the community package [EFCore.CheckConstraints](https://github.com/efcore/EFCore.CheckConstraints).

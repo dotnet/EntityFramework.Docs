@@ -20,8 +20,10 @@
     items:
     - name: Welcome!
       href: core/index.md
-    - name: "What's new in EF Core 5.0"
-      href: /ef/core/what-is-new/ef-core-5.0/whatsnew
+    - name: "What's new in EF Core 6.0"
+      href: /ef/core/what-is-new/ef-core-6.0/whatsnew
+    - name: "Breaking changes in EF Core 6.0"
+      href: /ef/core/what-is-new/ef-core-6.0/breaking-changes
     - name: Getting started
       items:
       - name: EF Core Overview
@@ -71,14 +73,14 @@
           href: core/what-is-new/ef-core-3.x/index.md
         - name: Breaking changes
           href: core/what-is-new/ef-core-3.x/breaking-changes.md
-      - name: EF Core 2.1
-        href: core/what-is-new/ef-core-2.1.md
       - name: Out of support
         items:
         - name: EF Core 3.0
           href: core/what-is-new/ef-core-3.0.md
         - name: EF Core 2.2
           href: core/what-is-new/ef-core-2.2.md
+        - name: EF Core 2.1
+          href: core/what-is-new/ef-core-2.1.md
         - name: EF Core 2.0
           items:
             - name: New features
@@ -113,7 +115,7 @@
         href: core/modeling/shadow-properties.md
       - name: Relationships
         href: core/modeling/relationships.md
-      - name: Indexes
+      - name: Indexes and constraints
         href: core/modeling/indexes.md
       - name: Inheritance
         href: core/modeling/inheritance.md
@@ -135,12 +137,13 @@
         href: core/modeling/owned-entities.md
       - name: Keyless entity types
         href: core/modeling/keyless-entity-types.md
-      - name: Alternating models with same DbContext
-        href: core/modeling/dynamic-model.md
       - name: Spatial data
         displayName: GIS
         href: core/modeling/spatial.md
-      #- name: Conventions
+      - name: Bulk configuration
+        href: core/modeling/bulk-configuration.md
+      - name: Alternating models with same DbContext
+        href: core/modeling/dynamic-model.md
 
     - name: Manage database schemas
       items:
@@ -321,6 +324,8 @@
           href: core/providers/sql-server/value-generation.md
         - name: Function mappings
           href: core/providers/sql-server/functions.md
+        - name: Columns
+          href: core/providers/sql-server/columns.md
         - name: Indexes
           href: core/providers/sql-server/indexes.md
         - name: Memory-optimized tables

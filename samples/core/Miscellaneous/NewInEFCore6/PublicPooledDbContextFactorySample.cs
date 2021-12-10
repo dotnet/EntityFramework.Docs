@@ -9,13 +9,16 @@ public static class PublicPooledDbContextFactorySample
         Console.WriteLine($">>>> Sample: {nameof(Can_create_pooled_DbContext_factory)}");
         Console.WriteLine();
 
+        #region CreatePool
         var options = new DbContextOptionsBuilder<SomeDbContext>()
             .EnableSensitiveDataLogging()
             .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample")
             .Options;
 
         var factory = new PooledDbContextFactory<SomeDbContext>(options);
+        #endregion
 
+        #region UsePool
         for (var i = 0; i < 2; i++)
         {
             using var context1 = factory.CreateDbContext();
@@ -24,6 +27,7 @@ public static class PublicPooledDbContextFactorySample
             using var context2 = factory.CreateDbContext();
             Console.WriteLine($"Created DbContext with ID {context2.ContextId}");
         }
+        #endregion
 
         Console.WriteLine();
     }

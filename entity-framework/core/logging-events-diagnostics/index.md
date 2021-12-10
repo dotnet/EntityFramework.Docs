@@ -2,7 +2,7 @@
 title: Overview of logging and interception - EF Core
 description: Overview of logging, events, interceptors, and diagnostics for EF Core
 author: ajcvickers
-ms.date: 10/01/2020
+ms.date: 11/15/2021
 uid: core/logging-events-diagnostics/index
 ---
 
@@ -61,7 +61,7 @@ See [.NET Events in EF Core](xref:core/logging-events-diagnostics/events) for mo
 ## Interception
 
 > [!NOTE]
-> This feature was introduced in EF Core 3.0. Additional interceptors were introduced in EF Core 5.0.
+> Additional interceptors were introduced in EF Core 5.0.
 
 EF Core interceptors enable interception, modification, and/or suppression of EF Core operations. This includes low-level database operations such as executing a command, as well as higher-level operations, such as calls to SaveChanges.
 

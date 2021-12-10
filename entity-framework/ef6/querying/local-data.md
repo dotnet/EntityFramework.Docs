@@ -99,7 +99,7 @@ using (var context = new BloggingContext())
         context.Entry(post1).State);  
 
     // Query some more posts from the database
-    context.Posts.Where(p => p.Tags.Contains("asp.net").Load();  
+    context.Posts.Where(p => p.Tags.Contains("asp.net")).Load();  
 
     // Loop over the posts in the context again.
     Console.WriteLine("\nIn Local after asp.net query: ");

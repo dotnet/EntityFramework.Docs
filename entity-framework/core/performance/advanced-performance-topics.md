@@ -3,46 +3,94 @@ title: Advanced Performance Topics
 description: Advanced performance topics for Entity Framework Core
 author: rick-anderson
 ms.author: riande
-ms.date: 12/9/2020
+ms.date: 10/21/2021
 uid: core/performance/advanced-performance-topics
 ---
 # Advanced Performance Topics
 
 ## DbContext pooling
 
-`AddDbContextPool` enables pooling of `DbContext` instances. Context pooling can increase throughput in high-scale scenarios such as web servers by reusing context instances, rather than creating new instances for each request.
+A `DbContext` is generally a light object: creating and disposing one doesn't involve a database operation, and most applications can do so without any noticeable impact on performance. However, each `DbContext` does set up a various internal services and objects necessary for performing its duties, and the overhead of continuously doing so may be significant in high-performance scenarios. For these cases, EF Core can *pool* your `DbContext` instances: when you dispose your `DbContext`, EF Core resets its state and stores it in an internal pool; when a new instance is next requested, that pooled instance is returned instead of setting up a new one. `DbContext` pooling allows you to pay `DbContext` setup costs only once at program startup, rather than continuously.
 
-The typical pattern in an ASP.NET Core app using EF Core involves registering a custom <xref:Microsoft.EntityFrameworkCore.DbContext> type into the [dependency injection](/aspnet/core/fundamentals/dependency-injection) container and obtaining instances of that type through constructor parameters in controllers or Razor Pages. Using constructor injection, a new context instance is created for each request.
+Following are the benchmark results for fetching a single row from a SQL Server database running locally on the same machine, with and without `DbContext` pooling. As always, results will change with the number of rows, the latency to your database server and other factors. Importantly, this benchmarks single-threaded pooling performance, while a real-world contended scenario may have different results; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
 
-<xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> enables a pool of reusable context instances. To use context pooling, use the `AddDbContextPool` method instead of `AddDbContext` during service registration:
+|                Method | NumBlogs |     Mean |    Error |   StdDev |   Gen 0 | Gen 1 | Gen 2 | Allocated |
+|---------------------- |--------- |---------:|---------:|---------:|--------:|------:|------:|----------:|
+| WithoutContextPooling |        1 | 701.6 us | 26.62 us | 78.48 us | 11.7188 |     - |     - |  50.38 KB |
+|    WithContextPooling |        1 | 350.1 us |  6.80 us | 14.64 us |  0.9766 |     - |     - |   4.63 KB |
+
+Note that `DbContext` pooling is orthogonal to database connection pooling, which is managed at a lower level in the database driver.
+
+### [With dependency injection](#tab/with-di)
+
+The typical pattern in an ASP.NET Core app using EF Core involves registering a custom <xref:Microsoft.EntityFrameworkCore.DbContext> type into the [dependency injection](/aspnet/core/fundamentals/dependency-injection) container via <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A>. Then, instances of that type are obtained through constructor parameters in controllers or Razor Pages.
+
+To enable `DbContext` pooling, simply replace `AddDbContext` with <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A>:
 
 ```csharp
 services.AddDbContextPool<BloggingContext>(
     options => options.UseSqlServer(connectionString));
 ```
 
-When `AddDbContextPool` is used, at the time a context instance is requested, EF first checks if there is an instance available in the pool. Once the request processing finalizes, any state on the instance is reset and the instance is itself returned to the pool.
-
-This is conceptually similar to how connection pooling operates in ADO.NET providers and has the advantage of saving some of the cost of initialization of the context instance.
-
 The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> sets the maximum number of instances retained by the pool (defaults to 1024 in EF Core 6.0, and to 128 in previous versions). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
+
+### [Without dependency injection](#tab/without-di)
+
+> [!NOTE]
+> Pooling without dependency injection was introduced in EF Core 6.0.
+
+To use `DbContext` pooling without dependency injection, initialize a `PooledDbContextFactory` and request context instances from it:
+
+[!code-csharp[Main](../../../samples/core/Performance/Program.cs#DbContextPoolingWithoutDI)]
+
+The `poolSize` parameter of the `PooledDbContextFactory` constructor sets the maximum number of instances retained by the pool (defaults to 1024 in EF Core 6.0, and to 128 in previous versions). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
+
+***
 
 ### Limitations
 
-Apps should be profiled and tested to show that context initialization is a significant cost.
-
-`AddDbContextPool` has a few limitations on what can be done in the `OnConfiguring` method of the context.
+`DbContext` pooling has a few limitations on what can be done in the `OnConfiguring` method of the context.
 
 > [!WARNING]
 > Avoid using context pooling in apps that maintain state. For example, private fields in the context that shouldn't be shared across requests. EF Core only resets the state that it is aware of before adding a context instance to the pool.
 
 Context pooling works by reusing the same context instance across requests. This means that it's effectively registered as a [Singleton](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) in terms of the instance itself so that it's able to persist.
 
-Context pooling is intended for scenarios where the context configuration, which includes services resolved, is fixed between requests. For cases where [Scoped](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) services are required, or configuration needs to be changed, don't use pooling. The performance gain from pooling is usually negligible except in highly optimized scenarios.
+Context pooling is intended for scenarios where the context configuration, which includes services resolved, is fixed between requests. For cases where [Scoped](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) services are required, or configuration needs to be changed, don't use pooling.
+
+## Compiled queries
+
+When EF receives a LINQ query tree for execution, it must first "compile" that tree, e.g. produce SQL from it. Because this task is a heavy process, EF caches queries by the query tree shape, so that queries with the same structure reuse internally-cached compilation outputs. This caching ensures that executing the same LINQ query multiple times is very fast, even if parameter values differ.
+
+However, EF must still perform certain tasks before it can make use of the internal query cache. For example, your query's expression tree must be recursively compared with the expression trees of cached queries, to find the correct cached query. The overhead for this initial processing is negligible in the majority of EF applications, especially when compared to other costs associated with query execution (network I/O, actual query processing and disk I/O at the database...). However, in certain high-performance scenarios it may be desirable to eliminate it.
+
+EF supports *compiled queries*, which allow the explicit compilation of a LINQ query into a .NET delegate. Once this delegate is acquired, it can be invoked directly to execute the query, without providing the LINQ expression tree. This technique bypasses the cache lookup, and provides the most optimized way to execute a query in EF Core. Following are some benchmark results comparing compiled and non-compiled query performance; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
+
+|               Method | NumBlogs |     Mean |    Error |   StdDev |  Gen 0 | Allocated |
+|--------------------- |--------- |---------:|---------:|---------:|-------:|----------:|
+|    WithCompiledQuery |        1 | 564.2 us |  6.75 us |  5.99 us | 1.9531 |      9 KB |
+| WithoutCompiledQuery |        1 | 671.6 us | 12.72 us | 16.54 us | 2.9297 |     13 KB |
+|    WithCompiledQuery |       10 | 645.3 us | 10.00 us |  9.35 us | 2.9297 |     13 KB |
+| WithoutCompiledQuery |       10 | 709.8 us | 25.20 us | 73.10 us | 3.9063 |     18 KB |
+
+To used compiled queries, first compile a query with <xref:Microsoft.EntityFrameworkCore.EF.CompileAsyncQuery%2A?displayProperty=nameWithType> as follows (use <xref:Microsoft.EntityFrameworkCore.EF.CompileQuery%2A?displayProperty=nameWithType> for synchronous queries):
+
+[!code-csharp[Main](../../../samples/core/Performance/Program.cs#CompiledQueryCompile)]
+
+In this code sample, we provide EF with a lambda accepting a `DbContext` instance, and an arbitrary parameter to be passed to the query. You can now invoke that delegate whenever you wish to execute the query:
+
+[!code-csharp[Main](../../../samples/core/Performance/Program.cs#CompiledQueryExecute)]
+
+Note that the delegate is thread-safe, and can be invoked concurrently on different context instances.
+
+### Limitations
+
+* Compiled queries may only be used against a single EF Core model. Different context instances of the same type can sometimes be configured to use different models; running compiled queries in this scenario is not supported.
+* When using parameters in compiled queries, use simple, scalar parameters. More complex parameter expressions - such as member/method accesses on instances - are not supported.
 
 ## Query caching and parameterization
 
-When EF receives a LINQ query tree for execution, it must first "compile" that tree into a SQL query. Because this is a heavy process, EF caches queries by the query tree *shape*: queries with the same structure reuse internally-cached compilation outputs, and can skip repeated compilation. The different queries may still reference different *values*, but as long as these values are properly parameterized, the structure is the same and caching will function properly.
+When EF receives a LINQ query tree for execution, it must first "compile" that tree, e.g. produce SQL from it. Because this task is a heavy process, EF caches queries by the query tree shape, so that queries with the same structure reuse internally-cached compilation outputs. This caching ensures that executing the same LINQ query multiple times is very fast, even if parameter values differ.
 
 Consider the following two queries:
 
@@ -110,15 +158,126 @@ Even if the sub-millisecond difference seems small, keep in mind that the consta
 > [!NOTE]
 > Avoid constructing queries with the expression tree API unless you really need to. Aside from the API's complexity, it's very easy to inadvertently cause significant performance issues when using them.
 
+## Compiled models
+
+> [!NOTE]
+> Compiled models were introduced in EF Core 6.0.
+
+Compiled models can improve EF Core startup time for applications with large models. A large model typically means hundreds to thousands of entity types and relationships. Startup time here is the time to perform the first operation on a `DbContext` when that `DbContext` type is used for the first time in the application. Note that just creating a `DbContext` instance does not cause the EF model to be initialized. Instead, typical first operations that cause the model to be initialized include calling `DbContext.Add` or executing the first query.
+
+Compiled models are created using the `dotnet ef` command-line tool. Ensure that you have [installed the latest version of the tool](xref:core/cli/dotnet#installing-the-tools) before continuing.
+
+A new `dbcontext optimize` command is used to generate the compiled model. For example:
+
+```dotnetcli
+dotnet ef dbcontext optimize
+```
+
+The `--output-dir` and `--namespace` options can be used to specify the directory and namespace into which the compiled model will be generated. For example:
+
+```dotnetcli
+PS C:\dotnet\efdocs\samples\core\Miscellaneous\CompiledModels> dotnet ef dbcontext optimize --output-dir MyCompiledModels --namespace MyCompiledModels
+Build started...
+Build succeeded.
+Successfully generated a compiled model, to use it call 'options.UseModel(MyCompiledModels.BlogsContextModel.Instance)'. Run this command again when the model is modified.
+PS C:\dotnet\efdocs\samples\core\Miscellaneous\CompiledModels>
+```
+
+* For more information see [`dotnet ef dbcontext optimize`](xref:core/cli/dotnet#dotnet-ef-dbcontext-optimize).
+* If you're more comfortable working inside Visual Studio, you can also use [Optimize-DbContext](xref:core/cli/powershell#optimize-dbcontext)
+
+The output from running this command includes a piece of code to copy-and-paste into your `DbContext` configuration to cause EF Core to use the compiled model. For example:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseModel(MyCompiledModels.BlogsContextModel.Instance)
+        .UseSqlite(@"Data Source=test.db");
+```
+
+### Compiled model bootstrapping
+
+It is typically not necessary to look at the generated bootstrapping code. However, sometimes it can be useful to customize the model or its loading. The bootstrapping code looks something like this:
+
+<!--
+[DbContext(typeof(BlogsContext))]
+partial class BlogsContextModel : RuntimeModel
+{
+    private static BlogsContextModel _instance;
+    public static IModel Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new BlogsContextModel();
+                _instance.Initialize();
+                _instance.Customize();
+            }
+
+            return _instance;
+        }
+    }
+
+    partial void Initialize();
+
+    partial void Customize();
+}
+-->
+[!code-csharp[RuntimeModel](../../../samples/core/Miscellaneous/CompiledModels/SingleRuntimeModel.cs?name=RuntimeModel)]
+
+This is a partial class with partial methods that can be implemented to customize the model as needed.
+
+In addition, multiple compiled models can be generated for `DbContext` types that may use different models depending on some runtime configuration. These should be placed into different folders and namespaces, as shown above. Runtime information, such as the connection string, can then be examined and the correct model returned as needed. For example:
+
+<!--
+public static class RuntimeModelCache
+{
+    private static readonly ConcurrentDictionary<string, IModel> _runtimeModels
+        = new();
+
+    public static IModel GetOrCreateModel(string connectionString)
+        => _runtimeModels.GetOrAdd(
+            connectionString, cs =>
+                {
+                    if (cs.Contains("X"))
+                    {
+                        return BlogsContextModel1.Instance;
+                    }
+
+                    if (cs.Contains("Y"))
+                    {
+                        return BlogsContextModel2.Instance;
+                    }
+
+                    throw new InvalidOperationException("No appropriate compiled model found.");
+                });
+}
+-->
+[!code-csharp[RuntimeModelCache](../../../samples/core/Miscellaneous/CompiledModels/MultipleRuntimeModels.cs?name=RuntimeModelCache)]
+
+### Limitations
+
+Compiled models have some limitations:
+
+* [Global query filters are not supported](https://github.com/dotnet/efcore/issues/24897).
+* [Lazy loading and change-tracking proxies are not supported](https://github.com/dotnet/efcore/issues/24902).
+* [The model must be manually synchronized by regenerating it any time the model definition or configuration change](https://github.com/dotnet/efcore/issues/24894).
+* Custom IModelCacheKeyFactory implementations are not supported. However, you can compile multiple models and load the appropriate one as needed.
+
+Because of these limitations, you should only use compiled models if your EF Core startup time is too slow. Compiling small models is typically not worth it.
+
+If supporting any of these features is critical to your success, then please vote for the appropriate issues linked above.
+
 ## Reducing runtime overhead
 
 As with any layer, EF Core adds a bit of runtime overhead compared to coding directly against lower-level database APIs. This runtime overhead is unlikely to impact most real-world applications in a significant way; the other topics in this performance guide, such as query efficiency, index usage and minimizing roundtrips, are far more important. In addition, even for highly-optimized applications, network latency and database I/O will usually dominate any time spent inside EF Core itself. However, for high-performance, low-latency applications where every bit of perf is important, the following recommendations can be used to reduce EF Core overhead to a minimum:
 
 * Turn on [DbContext pooling](#dbcontext-pooling); our benchmarks show that this feature can have a decisive impact on high-perf, low-latency applications.
-  * Make sure that the `maxPoolSize` corresponds to your usage scenario; if it is too low, DbContext instances will be constantly created and disposed, degrading performance. Setting it too high may needlessly consume memory as unused DbContext instances are maintained in the pool.
-  * For an extra tiny perf boost, consider using `PooledDbContextFactory` instead of having DI inject context instances directly (EF Core 6 and above). DI management of DbContext pooling incurs a slight overhead.
+  * Make sure that the `maxPoolSize` corresponds to your usage scenario; if it is too low, `DbContext` instances will be constantly created and disposed, degrading performance. Setting it too high may needlessly consume memory as unused `DbContext` instances are maintained in the pool.
+  * For an extra tiny perf boost, consider using `PooledDbContextFactory` instead of having DI inject context instances directly (EF Core 6 and above). DI management of `DbContext` pooling incurs a slight overhead.
 * Use precompiled queries for hot queries.
   * The more complex the LINQ query - the more operators it contains and the bigger the resulting expression tree - the more gains can be expected from using compiled queries.
 * Consider disabling thread safety checks by setting `EnableThreadSafetyChecks` to false in your context configuration (EF Core 6 and above).
-  * Using the same DbContext instance concurrently from different threads isn't supported. EF Core has a safety feature which detects this programming bug in many cases (but not all), and immediately throws an informative exception. However, this safety feature adds some runtime overhead.
+  * Using the same `DbContext` instance concurrently from different threads isn't supported. EF Core has a safety feature which detects this programming bug in many cases (but not all), and immediately throws an informative exception. However, this safety feature adds some runtime overhead.
   * **WARNING:** Only disable thread safety checks after thoroughly testing that your application doesn't contain such concurrency bugs.

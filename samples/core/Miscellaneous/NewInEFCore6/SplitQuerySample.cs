@@ -19,7 +19,18 @@ public static class SplitQuerySample
         Console.WriteLine("LINQ query: 'context.Customers.Select(c => new { c, Orders = c.Orders.Where(o => o.Id > 1) })'");
         Console.WriteLine();
         Console.WriteLine("Executed as a single query:");
-        context.Customers.Select(c => new { c, Orders = c.Orders.Where(o => o.Id > 1) }).ToList();
+
+        #region SplitQuery1
+        context.Customers
+            .Select(
+                c => new
+                {
+                    c,
+                    Orders = c.Orders
+                        .Where(o => o.Id > 1)
+                })
+            .ToList();
+        #endregion
 
         Console.WriteLine();
         Console.WriteLine("Executed as split queries:");
@@ -29,7 +40,19 @@ public static class SplitQuerySample
         Console.WriteLine("LINQ query: 'context.Customers.Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate) })'");
         Console.WriteLine();
         Console.WriteLine("Executed as a single query:");
-        context.Customers.Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate) }).ToList();
+
+        #region SplitQuery2
+        context.Customers
+            .Select(
+                c => new
+                {
+                    c,
+                    OrderDates = c.Orders
+                        .Where(o => o.Id > 1)
+                        .Select(o => o.OrderDate)
+                })
+            .ToList();
+        #endregion
 
         Console.WriteLine();
         Console.WriteLine("Executed as split queries:");
@@ -39,11 +62,48 @@ public static class SplitQuerySample
         Console.WriteLine("LINQ query: 'context.Customers.Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate).Distinct() })'");
         Console.WriteLine();
         Console.WriteLine("Executed as a single query:");
-        context.Customers.Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate).Distinct() }).ToList();
+
+        #region SplitQuery3
+        context.Customers
+            .Select(
+                c => new
+                {
+                    c,
+                    OrderDates = c.Orders
+                        .Where(o => o.Id > 1)
+                        .Select(o => o.OrderDate)
+                        .Distinct()
+                })
+            .ToList();
+        #endregion
 
         Console.WriteLine();
         Console.WriteLine("Executed as split queries:");
         context.Customers.AsSplitQuery().Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate).Distinct() }).ToList();
+
+        Console.WriteLine();
+    }
+
+    public static void Last_column_in_ORDER_BY_removed_when_joining_for_collection()
+    {
+        Console.WriteLine($">>>> Sample: {nameof(Last_column_in_ORDER_BY_removed_when_joining_for_collection)}");
+        Console.WriteLine();
+
+        Helpers.RecreateCleanDatabase();
+        Helpers.PopulateDatabase();
+
+        using var context = new CustomersContext();
+
+        #region OrderBy
+        context.Customers
+            .Select(
+                e => new
+                {
+                    e.Id,
+                    FirstOrder = e.Orders.Where(i => i.Id == 1).ToList()
+                })
+            .ToList();
+        #endregion
 
         Console.WriteLine();
     }

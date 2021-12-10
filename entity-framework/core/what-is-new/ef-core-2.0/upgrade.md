@@ -2,7 +2,7 @@
 title: Upgrading from previous versions to EF Core 2 - EF Core
 description: Instructions and notes for upgrading to Entity Framework Core 2.0
 author: ajcvickers
-ms.date: 08/13/2017
+ms.date: 10/25/2021
 uid: core/what-is-new/ef-core-2.0/upgrade
 ---
 
@@ -137,6 +137,33 @@ optionsBuilder.UseInMemoryDatabase("MyDatabase");
 ```
 
 This creates/uses a database with the name “MyDatabase”. If `UseInMemoryDatabase` is called again with the same name, then the same in-memory database will be used, allowing it to be shared by multiple context instances.
+
+## In-memory provider 'Include' operation no longer returns results if the included navigation is required but its value is null
+
+When trying to include a required navigation and the included navigation is null, the query no longer returns result for the entity on which the Include operation is applied. To avoid this problem, either provide a value for the required navigation or change the navigation to be optional.
+
+```csharp
+public class Person
+{
+    public int Id { get; set; }
+    public Language NativeLanguage { get; set;} // required navigation
+    public Person Sibling { get; set; } // optional navigation
+}
+...
+var person = new Person();
+context.People.Add(person);
+context.SaveChanges();
+...
+
+// returns one result
+context.People.ToList();
+
+// returns no results because 'NativeLanguage' navigation is required but has not been provided
+context.People.Include(p => p.NativeLanguage).ToList(); 
+
+// returns one result because 'Sibling' navigation is optional so it doesn't have to be provided
+context.People.Include(p => p.Sibling).ToList(); 
+```
 
 ## Read-only API changes
 

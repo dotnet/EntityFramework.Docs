@@ -15,9 +15,11 @@ public static class SubstringTranslationSample
 
         using var context = new CustomersContext();
 
+        #region Substring
         var result = context.Customers
             .Select(a => new { Name = a.Name.Substring(3) })
             .FirstOrDefault(a => a.Name == "hur");
+        #endregion
 
         Console.WriteLine();
         Console.WriteLine($"Found {result.Name}.");

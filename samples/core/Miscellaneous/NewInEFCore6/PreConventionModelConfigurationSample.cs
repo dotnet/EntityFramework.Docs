@@ -40,14 +40,14 @@ public static class PreConventionModelConfigurationSample
                 {
                     Name = "Arthur",
                     IsActive = true,
-                    AccountValue = new Money(1090.0m, Currency.PoundsStirling),
+                    AccountValue = new Money(1090.0m, Currency.PoundsSterling),
                     Orders =
                     {
                         new()
                         {
                             OrderDate = new DateTime(2021, 7, 31),
-                            Price = new Money(29.0m, Currency.PoundsStirling),
-                            Discount = new Money(5.0m, Currency.PoundsStirling)
+                            Price = new Money(29.0m, Currency.PoundsSterling),
+                            Discount = new Money(5.0m, Currency.PoundsSterling)
                         }
                     }
                 },
@@ -73,6 +73,7 @@ public static class PreConventionModelConfigurationSample
         }
     }
 
+    #region EntityTypes
     public class Customer
     {
         public int Id { get; set; }
@@ -88,6 +89,7 @@ public static class PreConventionModelConfigurationSample
     public class Order
     {
         public int Id { get; set; }
+        public string SpecialInstructions { get; set; }
         public DateTime OrderDate { get; set; }
         public bool IsComplete { get; set; }
         public Money Price { get; set; }
@@ -95,7 +97,9 @@ public static class PreConventionModelConfigurationSample
 
         public Customer Customer { get; set; }
     }
+    #endregion
 
+    #region MoneyType
     public readonly struct Money
     {
         [JsonConstructor]
@@ -115,8 +119,9 @@ public static class PreConventionModelConfigurationSample
     public enum Currency
     {
         UsDollars,
-        PoundsStirling
+        PoundsSterling
     }
+    #endregion
 
     public class Session
     {
@@ -149,42 +154,52 @@ public static class PreConventionModelConfigurationSample
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
+            #region BoolConversion
             configurationBuilder
                 .Properties<bool>()
-                .HaveConversion(typeof(BoolToZeroOneIntConverter), null);
+                .HaveConversion<BoolToZeroOneConverter<int>>();
+            #endregion
 
+            #region MoneyConversion
             configurationBuilder
                 .Properties<Money>()
-                .HaveConversion(typeof(MoneyConverter), null)
-                .AreUnicode(false)
-                .HaveMaxLength(1024);
-
+                .HaveConversion<MoneyConverter>()
+                .HaveMaxLength(64);
+            #endregion
 
             // See #25416
             configurationBuilder
                 .Properties<Money?>()
-                .HaveConversion(typeof(MoneyConverter), null)
-                .AreUnicode(false)
-                .HaveMaxLength(1024);
+                .HaveConversion<MoneyConverter>()
+                .HaveMaxLength(64);
 
+            #region DateTimeConversion
             configurationBuilder
                 .Properties<DateTime>()
                 .HaveConversion<long>();
+            #endregion
 
+            #region StringFacets
             configurationBuilder
                 .Properties<string>()
                 .AreUnicode(false)
                 .HaveMaxLength(1024);
+            #endregion
 
-            configurationBuilder.IgnoreAny<Session>();
+            #region IgnoreSession
+            configurationBuilder
+                .IgnoreAny<Session>();
+            #endregion
+
+            #region DefaultTypeMapping
+            configurationBuilder
+                .DefaultTypeMapping<string>()
+                .IsUnicode(false);
+            #endregion
         }
     }
 
-    // Remove once #25415 is fixed.
-    public class BoolToZeroOneIntConverter : BoolToZeroOneConverter<int>
-    {
-    }
-
+    #region MoneyConverter
     public class MoneyConverter : ValueConverter<Money, string>
     {
         public MoneyConverter()
@@ -194,4 +209,16 @@ public static class PreConventionModelConfigurationSample
         {
         }
     }
+    #endregion
+
+    #region WhereItGoes
+    public class SomeDbContext : DbContext
+    {
+        protected override void ConfigureConventions(
+            ModelConfigurationBuilder configurationBuilder)
+        {
+            // Pre-convention model configuration goes here
+        }
+    }
+    #endregion
 }
