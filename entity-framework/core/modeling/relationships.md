@@ -54,7 +54,7 @@ The following code shows a one-to-many relationship between `Blog` and `Post`
 
 ## Conventions
 
-By default, a relationship will be created when there is a navigation property discovered on a type. A property is considered a navigation property if the type it points to can not be mapped as a scalar type by the current database provider.
+By default, a relationship will be created when there is a navigation property discovered on a type. A property is considered a navigation property if the type it points to cannot be mapped as a scalar type by the current database provider.
 
 > [!NOTE]
 > Relationships that are discovered by convention will always target the primary key of the principal entity. To target an alternate key, additional configuration must be performed using the Fluent API.
@@ -264,7 +264,7 @@ With this configuration the columns corresponding to `ShippingAddress` will be m
 
 ### Many-to-many
 
-Many to many relationships require a collection navigation property on both sides. They will be discovered by convention like other types of relationships.
+Many-to-many relationships require a collection navigation property on both sides. They will be discovered by convention like other types of relationships.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=ManyToManyShared)]
 
@@ -297,7 +297,7 @@ Internally, EF creates an entity type to represent the join table that will be r
 > [!IMPORTANT]
 > The CLR type used for join entity types by convention may change in future releases to improve performance. Do not depend on the join type being `Dictionary<string, object>` unless this has been explicitly configured, as described in the next section.
 
-The many to many navigations are called skip navigations as they effectively skip over the join entity type. If you are employing bulk configuration all skip navigations can be obtained from <xref:Microsoft.EntityFrameworkCore.Metadata.IEntityType.GetSkipNavigations%2A>.
+The many-to-many navigations are called skip navigations as they effectively skip over the join entity type. If you are employing bulk configuration all skip navigations can be obtained from <xref:Microsoft.EntityFrameworkCore.Metadata.IEntityType.GetSkipNavigations%2A>.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Metadata)]
 
