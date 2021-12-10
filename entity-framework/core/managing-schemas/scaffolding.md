@@ -9,11 +9,11 @@ uid: core/managing-schemas/scaffolding
 
 Reverse engineering is the process of scaffolding entity type classes and a DbContext class based on a database schema. It can be performed using the `Scaffold-DbContext` command of the EF Core Package Manager Console (PMC) tools or the `dotnet ef dbcontext scaffold` command of the .NET Command-line Interface (CLI) tools.
 
-## Installing
+## Prerequisites
 
-Before reverse engineering, you'll need to install either the [PMC tools](xref:core/cli/powershell) (Visual Studio only) or the [CLI tools](xref:core/cli/dotnet). See links for details.
-
-You'll also need to install an appropriate [database provider](xref:core/providers/index) for the database schema you want to reverse engineer.
+- Before reverse engineering, you'll need to install either the [PMC tools](xref:core/cli/powershell) (Visual Studio only) or the [CLI tools](xref:core/cli/dotnet). See links for details.
+- Install the NuGet package for `Microsoft.EntityFramework.Design` in the project you are scaffolding to.
+- You'll also need to install an appropriate [database provider](xref:core/providers/index) for the database schema you want to reverse engineer.
 
 ## Connection string
 
