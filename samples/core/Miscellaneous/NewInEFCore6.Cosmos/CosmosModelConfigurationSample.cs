@@ -84,7 +84,7 @@ public static class CosmosModelConfigurationSample
             modelBuilder.Entity<Family>(
                 entityTypeBuilder =>
                 {
-                    entityTypeBuilder.HasAutoscaleThroughput(3000);
+                    entityTypeBuilder.HasManualThroughput(3000);
                     entityTypeBuilder.HasAutoscaleThroughput(12000);
                 });
             #endregion
