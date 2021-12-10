@@ -13,21 +13,15 @@ Entity Framework Core, or EF Core for short, is a total rewrite of Entity Framew
 > [!IMPORTANT]
 > Before you start the porting process it is important to validate that EF Core meets the data access requirements for your application. You can find everything you need in the [EF Core documentation](/ef/core/).
 
-## When to port
+## Reasons to upgrade
 
-It is not a requirement that you port your code to EF Core. There are many reasons why you may choose to remain on EF6. The latest version of EF6 supports .NET Core, .NET 5 and .NET 6. If your application is running fine and you don't need any of the latest features, you may wish to consider remaining on EF6. Some reasons you might consider porting:
+All new Entity Framework development is happening in EF Core. There are no plans to backport any new features to EF6. EF Core runs on the latest .NET runtimes and takes full advantage of runtime, platform-specific (such as ASP.NET Core or WPF) and language-specific features. Here are a few of the benefits you gain from upgrading:
 
-- Take advantage of the ongoing performance improvements in EF Core. For example, one customer who migrated from EF6 to EF Core 6 saw a 40x reduction in use of a heavy query due to the [query splitting feature](/ef/core/querying/single-split-queries/). Many customers report enormous performance gains simply by moving to the latest EF Core.
+- Take advantage of the ongoing **performance improvements** in EF Core. For example, one customer who migrated from EF6 to EF Core 6 saw a 40x reduction in use of a heavy query due to the [query splitting feature](/ef/core/querying/single-split-queries/). Many customers report enormous performance gains simply by moving to the latest EF Core.
+- Use **new features** in EF Core. There will be no new features added to EF6. All of the new functionality, for example the [Azure Cosmos DB provider](/ef/core/providers/cosmos/) and [`DbContextFactory`](/ef/core/what-is-new/ef-core-5.0/whatsnew#dbcontextfactory), will only be added to EF Core. For a full comparison of EF6 to EF Core, including several features exclusive to EF Core, see: [Compare EF Core & EF6](/ef/efcore-and-ef6/).
+- **Modernize your application stack** by using dependency injection and seamlessly integrate your data access with technologies like gRPC and GraphQL.
 
-- Use new features in EF Core. There will be no new features added to EF6. All of the new functionality, for example the [Azure Cosmos DB provider](/ef/core/providers/cosmos/) and [`DbContextFactory`](/ef/core/what-is-new/ef-core-5.0/whatsnew#dbcontextfactory), will only be added to EF Core.
-
-- Modernize your application stack by using dependency injection and seamlessly integrating your data access with technologies like gRPC and GraphQL.
-
-For a full comparison of EF6 to EF Core, including several features exclusive to EF Core, see: [Compare EF Core & EF6](/ef/efcore-and-ef6/).
-
-Regardless of your reasons for considering an upgrade, make sure that EF Core has all the features you need to use in your application. See [Feature Comparison](xref:efcore-and-ef6/index) for a detailed comparison of how the feature set in EF Core compares to EF6. If any required features are missing, ensure that you can compensate for the lack of these features before porting to EF Core.
-
-## Migrations
+## A note on migrations
 
 This documentation uses the terms _port_ and _upgrade_ to avoid confusion with the term [_migrations_](/ef/core/managing-schemas/migrations/) as a feature of EF Core. Migrations in EF Core are not compatible with [EF6 Code First migrations](/ef/ef6/modeling/code-first/migrations/) due to significant improvements to how migrations are handled. There is not a recommended approach to port your migrations history, so plan to start "fresh" in EF Core. You can maintain the codebase and data from your EF6 migrations. Apply your final migration in EF6, then create an initial migration in EF Core. You will be able to track history in EF Core moving forward.
 
