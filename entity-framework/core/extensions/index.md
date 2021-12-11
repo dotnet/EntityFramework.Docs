@@ -139,7 +139,7 @@ An implementation of temporal support. For EF Core: 2.
 
 ### EfCoreTemporalTable
 
-> [!INFO]
+> [!NOTE]
 > SQL Server temporal tables are supported directly within EF Core as of [EF Core 6](/ef/core/what-is-new/ef-core-6.0/whatsnew#sql-server-temporal-tables).
 
 Easily perform temporal queries on your favorite database using introduced extension methods: `AsTemporalAll()`, `AsTemporalAsOf(date)`, `AsTemporalFrom(startDate, endDate)`, `AsTemporalBetween(startDate, endDate)`, `AsTemporalContained(startDate, endDate)`. For EF Core: 3, 5.
@@ -148,7 +148,7 @@ Easily perform temporal queries on your favorite database using introduced exten
 
 ### EntityFrameworkCore.TemporalTables
 
-> [!INFO]
+> [!NOTE]
 > SQL Server temporal tables are supported directly within EF Core as of [EF Core 6](/ef/core/what-is-new/ef-core-6.0/whatsnew#sql-server-temporal-tables).
 
 Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2, 3, 5.
