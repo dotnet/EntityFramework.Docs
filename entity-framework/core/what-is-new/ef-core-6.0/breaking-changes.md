@@ -100,7 +100,7 @@ Avoid using optional dependents sharing a table and with no required properties.
 2. Make sure that the dependent contains at least one required property.
 3. Map optional dependents to their own table, instead of sharing a table with the principal.
 
-The problems with optional dependents and examples of these mitigations are included in the documentation for [What's new in EF Core 6.0](whatsnew.md#changes-to-owned-optional-dependent-handling).
+The problems with optional dependents and examples of these mitigations are included in the documentation for [What's new in EF Core 6.0](xref:core/what-is-new/ef-core-6.0/whatsnew#changes-to-owned-optional-dependent-handling).
 
 ## Medium-impact changes
 
