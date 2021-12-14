@@ -77,7 +77,7 @@ As for the port itself, at a high level, you will:
     - Change `DbContext` constructor to consume options and/or override `OnConfiguring`
     - `DbModelBuilder` to `ModelBuilder`
     - Rename `DbEntityEntry<T>` to `EntityEntry<T>`
-    - Move from `Database.Log` to `Microsoft.Extensions.Logging APIs`
+    - Move from `Database.Log` to `Microsoft.Extensions.Logging` (advanced) or `DbContextOptionsBuilder.LogTo` (simple) APIs
     - Apply changes for `WithRequired` and `WithOptional` (see [here](/efcore-and-ef6/porting/port-detailed-cases#required-and-optional))
     - Update validation code. There is no data validation built into EF Core, but you can [do it yourself](/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/domain-model-layer-validations#use-validation-attributes-in-the-model-based-on-data-annotations).
     - Follow any necessary steps to [port from EDMX](/efcore-and-ef6/porting/port-edmx).
