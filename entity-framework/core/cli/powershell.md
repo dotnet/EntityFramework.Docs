@@ -185,13 +185,13 @@ Parameters:
 
 The [common parameters](#common-parameters) are listed above.
 
-Example that uses the defaults and works if there is only one `DbContext` in the project:
+The following example uses the defaults and works if there is only one `DbContext` in the project:
 
 ```powershell
 Optimize-DbContext
 ```
 
-Example that optimizes the model for the context with the specified name amd places it in a separate folder and namespace:
+The following example optimizes the model for the context with the specified name and places it in a separate folder and namespace:
 
 ```powershell
 Optimize-DbContext -OutputDir Models -Namespace BlogModels -Context BlogContext
