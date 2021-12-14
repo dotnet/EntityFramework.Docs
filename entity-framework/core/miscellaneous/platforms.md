@@ -2,7 +2,7 @@
 title: Supported .NET implementations - EF Core
 description: Information on supported platforms across Entity Framework Core versions
 author: bricelam
-ms.date: 11/15/2021
+ms.date: 12/14/2021
 uid: core/miscellaneous/platforms
 ---
 
@@ -14,25 +14,30 @@ We want EF Core to be available to developers on all modern .NET implementations
 
 The following table provides guidance for each .NET implementation:
 
-| EF Core                       | 3.1        | 5.0             |
-|:------------------------------|:-----------|:----------------|
-| .NET Standard                 | 2.0        | 2.1             |
-| .NET Core                     | 2.0        | 3.0             |
-| .NET Framework<sup>(1)</sup>  | 4.7.2      | (not supported) |
-| Mono                          | 5.4        | 6.4             |
-| Xamarin.iOS<sup>(2)</sup>     | 10.14      | 12.16           |
-| Xamarin.Mac<sup>(2)</sup>     | 3.8        | 5.16            |
-| Xamarin.Android<sup>(2)</sup> | 8.0        | 10.0            |
-| UWP<sup>(3)</sup>             | 10.0.16299 | TBD             |
-| Unity<sup>(4)</sup>           | 2018.1     | TBD             |
+EF Core                       | 3.1        | 5.0    | 6.0
+----------------------------- | ---------- | ------ | ---
+.NET & .NET Core              | 3.1        | 5.0    | 6.0
+.NET Standard<sup>(1)</sup>   | 2.0        | 2.1    |
+.NET Framework<sup>(2)</sup>  | 4.7.2      |        |
+Mono                          | 5.4        | 6.4    |
+Xamarin.iOS<sup>(3)</sup>     | 10.14      | 12.16  | (use .NET 6)
+Xamarin.Mac<sup>(3)</sup>     | 3.8        | 5.16   | (use .NET 6)
+Xamarin.Android<sup>(3)</sup> | 8.0        | 10.0   | (use .NET 6)
+UWP<sup>(4)</sup>             | 10.0.16299 |        | (use [Windows App SDK](/windows/apps/windows-app-sdk/))
+Unity<sup>(5)</sup>           | 2018.1     | 2021.2 | TBD
+Tizen<sup>(6)</sup>           | 4.0        | 6.0    | (use .NET 6)
 
-<sup>(1)</sup> See the [.NET Framework](#net-framework) section below.
+<sup>(1)</sup> .NET Standard has been superseded by a new approach to uniformity. For more information, see [The future of .NET Standard](https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/).
 
-<sup>(2)</sup> There are issues and known limitations with Xamarin which may prevent some applications developed using EF Core from working correctly. Check the list of [active issues](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin) for workarounds.
+<sup>(2)</sup> See the [.NET Framework](#net-framework) section below.
 
-<sup>(3)</sup> EF Core 2.0.1 and newer recommended. Install the [.NET Core UWP 6.x package](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/). See the [Universal Windows Platform](#universal-windows-platform) section of this article.
+<sup>(3)</sup> There are issues and known limitations with Xamarin which may prevent some applications developed using EF Core from working correctly. Check the list of [active issues](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin) for workarounds.
 
-<sup>(4)</sup> There are issues and known limitations with Unity. Check the list of [active issues](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-unity).
+<sup>(4)</sup> Install the [.NET Core UWP 6.x package](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/). See the [Universal Windows Platform](#universal-windows-platform) section of this article.
+
+<sup>(5)</sup> There are issues and known limitations with Unity. Check the list of [active issues](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-unity).
+
+<sup>(6)</sup> EF Core compatibility with Tizen is largely unknown. If you've tried it, we'd love your feedback.
 
 ## .NET Framework
 
