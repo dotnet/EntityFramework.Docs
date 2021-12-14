@@ -133,7 +133,7 @@ Instead of assigning the same owned instance to a new owner you can assign a cop
 ### Cosmos: Related entity types are discovered as owned
 
 [Tracking Issue #24803](https://github.com/dotnet/efcore/issues/24803)
-[What's new: Default to implicit ownership](/core/what-is-new/ef-core-6.0/whatsnew#default-to-implicit-ownership)
+[What's new: Default to implicit ownership](xref:core/what-is-new/ef-core-6.0/whatsnew#default-to-implicit-ownership)
 
 #### Old behavior
 
@@ -156,7 +156,7 @@ To configure an entity type to be non-owned call `modelBuilder.Entity<MyEntity>(
 ### SQLite: Connections are pooled
 
 [Tracking Issue #13837](https://github.com/dotnet/efcore/issues/13837)
-[What's new: Default to implicit ownership](/core/what-is-new/ef-core-6.0/whatsnew#connection-pooling)
+[What's new: Default to implicit ownership](xref:core/what-is-new/ef-core-6.0/whatsnew#connection-pooling)
 
 #### Old behavior
 
