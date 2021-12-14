@@ -100,7 +100,7 @@ Avoid using optional dependents sharing a table and with no required properties.
 2. Make sure that the dependent contains at least one required property.
 3. Map optional dependents to their own table, instead of sharing a table with the principal.
 
-The problems with optional dependents and examples of these mitigations are included in the documentation for [What's new in EF Core 6.0](xref:core/what-is-new/ef-core-6.0/whatsnew#changes-to-owned-optional-dependent-handling).
+The problems with optional dependents and examples of these mitigations are included in the documentation for [What's new in EF Core 6.0](whatsnew.md#changes-to-owned-optional-dependent-handling).
 
 ## Medium-impact changes
 
@@ -133,7 +133,7 @@ Instead of assigning the same owned instance to a new owner you can assign a cop
 ### Cosmos: Related entity types are discovered as owned
 
 [Tracking Issue #24803](https://github.com/dotnet/efcore/issues/24803)
-[What's new: Default to implicit ownership](/core/what-is-new/ef-core-6.0/whatsnew#default-to-implicit-ownership)
+[What's new: Default to implicit ownership](whatsnew.md#default-to-implicit-ownership)
 
 #### Old behavior
 
@@ -156,7 +156,7 @@ To configure an entity type to be non-owned call `modelBuilder.Entity<MyEntity>(
 ### SQLite: Connections are pooled
 
 [Tracking Issue #13837](https://github.com/dotnet/efcore/issues/13837)
-[What's new: Default to implicit ownership](/core/what-is-new/ef-core-6.0/whatsnew#connection-pooling)
+[What's new: Default to implicit ownership](whatsnew.md#connection-pooling)
 
 #### Old behavior
 
