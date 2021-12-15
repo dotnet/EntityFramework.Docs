@@ -68,7 +68,7 @@ Tracked by [Issue #626: Lifecycle hooks](https://github.com/dotnet/efcore/issues
 
 Value proposition: Allow applications to react when interesting things happen in EF code.
 
-Lifecycle hooks enable notification of an application or library whenever certain interesting conditions or actions occur for  entities, properties, relationships, queries, context instances, and other EF constructs. We have implemented many lifecycle hooks over the previous versions of EF Core, including various [interceptors](xref:core/logging-events-diagnostics/interceptors) and [events](xref:core/logging-events-diagnostics/events). For EF7, we plan to add important missing hooks. For example, a hook for manipulation of entity instances after they are created, commonly known as [ObjectMaterialized](https://github.com/dotnet/efcore/issues/15911).
+Lifecycle hooks enable notification of an application or library whenever certain interesting conditions or actions occur for entities, properties, relationships, queries, context instances, and other EF constructs. We have implemented many lifecycle hooks over the previous versions of EF Core, including various [interceptors](xref:core/logging-events-diagnostics/interceptors) and [events](xref:core/logging-events-diagnostics/events). For EF7, we plan to add important missing hooks. For example, a hook for manipulation of entity instances after they are created, commonly known as [ObjectMaterialized](https://github.com/dotnet/efcore/issues/15911).
 
 ### Table-per-concrete-type (TPC) mapping
 
