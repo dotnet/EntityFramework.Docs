@@ -152,7 +152,7 @@ Tracked by [Issue #26798: Modernize EF Core tooling](https://github.com/dotnet/e
 
 Value proposition: `dotnet ef` commands are easy to use and work with modern platforms and technologies.
 
-.NET platforms have evolved since we first introduced tooling for migrations, database scaffolding, etc. in EF Core 1.0. In EF7, we plan to update the tooling architecture to better support new platforms, like .NET MAUI, and to streamline the process in areas such as the use of multiple projects.  This includes providing better feedback when things go wrong, better integration with logging, performance, and new [sugar](https://en.wikipedia.org/wiki/Syntactic_sugar).
+.NET platforms have evolved since we first introduced tooling for migrations, database scaffolding, etc. in EF Core 1.0. In EF7, we plan to update the tooling architecture to better support new platforms, like .NET MAUI, and to streamline the process in areas such as the use of multiple projects. This includes providing better feedback when things go wrong, better integration with logging, performance, and new [sugar](https://en.wikipedia.org/wiki/Syntactic_sugar).
 
 ### EF Core and graphical user interfaces
 
