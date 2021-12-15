@@ -60,7 +60,7 @@ Value proposition: Efficient, predicate-based updates for many database rows wit
 
 In contrast, bulk, or set-based, updates involve defining the changes that should be made to the database and then executing those changes without first loading entities into memory. This can be significantly faster than tracked updates, especially when the same modification must be applied to many different entities/rows.
 
-Note that bulk updates is not the same as batching updates. EF Core already combines changes to many tracked entities into batches when sending updates to the database via `SaveChanges`.
+For EF7, we plan to implement bulk updates and deletes (but not inserts). Note that bulk updates is not the same as batching updates. EF Core already combines changes to many tracked entities into batches when sending updates to the database via `SaveChanges`.
 
 ### Lifecycle hooks
 
