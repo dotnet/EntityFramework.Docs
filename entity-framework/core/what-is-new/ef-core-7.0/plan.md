@@ -296,7 +296,7 @@ Great performance is a fundamental tenet of EF Core, lower-level data access, an
 
 Tracked by [Issue 26797: Improve change tracking and update performance](https://github.com/dotnet/efcore/issues/26797)
 
-Value proposition: High performance database inserts and updates from EF Core
+Value proposition: High performance database inserts and updates from EF Core.
 
 Over the past few releases, we have focused on improving EF Core performance on non-tracking queries. For EF7, we plan to focus on performance related to database inserts and updates. This includes performance of change-tracking queries, performance of `DetectChanges`, and performance of the insert and update commands sent to the database.
 
