@@ -318,7 +318,7 @@ Tracked by [issues labeled with `type-enhancement` in the 7.0 milestone](https:/
 
 Value proposition: Continuous improvement to EF Core to meet existing and evolving application requirements.
 
-Miscellaneous features planned for EF 6.0 include, but are not limited to:
+Miscellaneous features planned for EF 7.0 include, but are not limited to:
 
 - [Issue #14545: Design: Modernize generated C#](https://github.com/dotnet/efcore/issues/14545)
 - [Issue #15762: Provide easy way to get script from latest applied on database to latest in the codebase](https://github.com/dotnet/efcore/issues/15762)
