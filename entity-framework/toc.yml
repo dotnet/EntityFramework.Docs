@@ -13,6 +13,12 @@
         href: efcore-and-ef6/porting/port-edmx.md
       - name: Porting a Code-based model
         href: efcore-and-ef6/porting/port-code.md
+      - name: Porting a Database-first project
+        href: efcore-and-ef6/porting/port-database.md
+      - name: Porting to a hybrid model
+        href: efcore-and-ef6/porting/port-hybrid.md
+      - name: Detailed cases to consider when Porting
+        href: efcore-and-ef6/porting/port-detailed-cases.md
     - name: Use EF6 and EF Core in the same application
       href: efcore-and-ef6/side-by-side.md
 
