@@ -107,7 +107,7 @@ By default everything is optional, so usually it's not necessary to call `.IsReq
 
 ### Spatial support
 
-For spatial support, EF Core recommends using a third-party library such as [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite).
+EF Core integrates with the third-party library community library [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) to provide spatial support.
 
 ### Independent associations
 
