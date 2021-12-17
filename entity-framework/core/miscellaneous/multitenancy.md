@@ -1,0 +1,123 @@
+---
+title: Multi-tenancy - EF Core
+description: Learn several ways to implement multi-tenant databases using Entity Framework Core.
+author: jeliknes
+ms.date: 12/17/2021
+uid: core/miscellaneous/multitenancy
+---
+# Multi-tenancy
+
+Many line of business applications are designed to work with multiple customers. It is important to secure the data so that customer data isn't "leaked" or seen by other customers and potential competitors. These applications are classified as "multi-tenant" because each customer is considered a tenant of the application with their own set of data.
+
+> [!IMPORTANT]
+> This document provides examples and solutions "as is." These are not intended to be "best practices" but rather "working practices" for your consideration.
+
+## Supporting multi-tenancy
+
+There are many approaches to implementing multi-tenancy in applications. One common approach (that is sometimes a requirement) is to keep data for each customer in a separate database. The schema is the same but the data is customer-specific. Another approach is to partition the data in an existing database by customer.
+
+Both approaches are supported by EF Core.
+
+For the approach that uses multiple databases, switching to the right database is as simple as providing the correct connection string. When the data is stored in a single database, a [global query filter](/ef/core/querying/filters) makes sense to ensure that developers don't accidentally write code that can access data from other customers.
+
+## Blazor Server apps and the life of the factory
+
+The recommended pattern for [using Entity Framework Core in Blazor apps](/aspnet/core/blazor/blazor-server-ef-core) is to register the [DbContextFactory](/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor), then call it to create a new instance of the `DbContext` each operation. By default, the factory is a _singleton_ so only one copy exists for all users of the application. This is usually fine because although the factory is shared, the individual `DbContext` instances are not.
+
+For multi-tenancy, however, the connection string may change per user. Because the factory caches the configuration with the same lifetime, this means all users must share the same configuration.
+
+This issue doesn't occur in Blazor WebAssembly apps because the singleton is scoped to the user. Blazor Server apps, on the other hand, present a unique challenge. Although the app is a web app, it is "kept alive" by real-time communication using SignalR. A session is created per user and lasts beyond the initial request. A new factory should be provided per user to allow new settings. The lifetime for this special factory is called `Scoped` and creates a new instance per user session.
+
+### An example solution (single database)
+
+A possible solution is to create a simple `TenantProvider` class handles setting the user's current tenant. It provides callbacks so code is notified when the tenant changes. The implementation (with the callbacks omitted for clarity) might look like this:
+
+```csharp
+public class TenantProvider
+{
+    private string tenant = TypeProvider.GetTypes().First().FullName;
+
+    public void SetTenant(string tenant)
+    {
+        this.tenant = tenant;
+        // notify changes
+    }
+
+    public string GetTenant() => tenant;
+
+    public string GetTenantShortName() => tenant.Split('.')[^1];
+}
+```
+
+The `DbContext` can then manage the multi-tenancy. The approach depends on your database strategy. If you are storing all tenants in a single database, you are likely going to use a query filter. The `TenantProvider` is passed to the constructor via dependency injection and used to resolve and store the tenant identifier.
+
+```csharp
+private readonly string tenant = string.Empty;
+
+public SingleDbContext(
+    DbContextOptions<SingleDbContext> options,
+    TenantProvider tenantProvider)
+    : base(options) 
+{
+    tenant = tenantProvider.GetTenant();
+}
+```
+
+The `OnModelCreating` method is overridden to specify the query filter:
+
+```csharp
+ modelBuilder.Entity<MultiTenantTable>()
+    .HasQueryFilter(mtt => mtt.Tenant == tenant);
+```
+
+This ensures that every query is filtered to the tenant on every request. There is no need to filter in application code because the global filter will be automatically applied.
+
+The tenant provider and `DbContextFactory` are configured in the application startup like this, using Sqlite as an example:
+
+```csharp
+services.AddScoped<TenantProvider>();
+
+services.AddDbContextFactory<SingleDbContext>(
+    opts => opts.UseSqlite("Data Source=alltenants.sqlite"),
+    ServiceLifetime.Scoped);
+```
+
+Notice that the [service lifetime](/dotnet/core/extensions/dependency-injection#service-lifetimes) is configured with `ServiceLifetime.Scoped`. This enables it to take a dependency on the tenant provider.
+
+> [!NOTE]
+> Dependencies must always flow towards the singleton. That means a `Scoped` service can depend on another `Scoped` service or a `Singleton` service, but a `Singleton` service can only depend on other `Singleton` services: `Transient => Scoped => Singleton`.
+
+## Multiple databases and connection strings
+
+The multiple database version is implemented by passing a different connection string for each tenant. This can be configured at startup by resolving the service provider and using it to build the connection string. This example specifies a different file by tenant for SQlite, but can easily be repurposed to specify a different database name in a SQL Server or other provider's connection string:
+
+```csharp
+services.AddDbContextFactory<MultipleDbContext>((sp, opts) =>
+{
+    var tenantProvider = sp.GetRequiredService<TenantProvider>();
+    opts.UseSqlite($"Data Source={tenantProvider.GetTenantShortName()}.sqlite");
+}, ServiceLifetime.Scoped);
+```
+
+This works fine for most scenarios unless the user can switch tenants in realtime.
+
+### Realtime tenant changes
+
+In the previous configuration for multiple databases, the options are cached at the `Scoped` level. This means that if the user changes the tenant, the options are _not_ reevaluated and so the tenant change isn't reflected in queries.
+
+The easy solution for this when the tenant _can_ change is to set the lifetime to `Transient.` This ensures the tenant is re-evaluated along with the connection string each time a `DbContext` is requested. The user can switch tenants as often as they like. The following table helps you choose which lifetime makes the most sense for your factory.
+
+|**Scenario**|**Single database**|**Multiple databases**|
+|:--|:--|:--|
+|_User stays in a single tenant_|`Scoped`|`Scoped`|
+|_User can switch tenants_|`Scoped`|`Transient`|
+
+The default of `Singleton` still makes sense if your database does not take on user-scoped dependencies.
+
+## Performance notes
+
+It is highly unlikely that a single user session will require hundreds or thousands of `DbContext` instances during a given session. In local benchmarks it only takes 3 microseconds on a laptop to go from requesting the factory to creating a usable `DbContext`. That translates to over 300,000 requests per second.
+
+## Conclusion
+
+This is working guidance for implementing multi-tenancy in EF Core apps. If you have further examples or scenarios or wish to provide feedback, please [open an issue](https://github.com/dotnet/EntityFramework.Docs/issues/new) and reference this document.
