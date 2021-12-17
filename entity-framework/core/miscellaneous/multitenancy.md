@@ -31,22 +31,16 @@ This issue doesn't occur in Blazor WebAssembly apps because the singleton is sco
 
 ### An example solution (single database)
 
-A possible solution is to create a simple `TenantProvider` class handles setting the user's current tenant. It provides callbacks so code is notified when the tenant changes. The implementation (with the callbacks omitted for clarity) might look like this:
+A possible solution is to create a simple `TenantProvider` class that handles setting the user's current tenant. It provides callbacks so code is notified when the tenant changes. The implementation (with the callbacks omitted for clarity) might look like this:
 
 ```csharp
 public class TenantProvider
 {
-    private string tenant = TypeProvider.GetTypes().First().FullName;
+    private string tenant;
 
-    public void SetTenant(string tenant)
-    {
-        this.tenant = tenant;
-        // notify changes
-    }
+    public void SetTenant(string tenant) => this.tenant = tenant;
 
     public string GetTenant() => tenant;
-
-    public string GetTenantShortName() => tenant.Split('.')[^1];
 }
 ```
 
@@ -96,7 +90,7 @@ The multiple database version is implemented by passing a different connection s
 services.AddDbContextFactory<MultipleDbContext>((sp, opts) =>
 {
     var tenantProvider = sp.GetRequiredService<TenantProvider>();
-    opts.UseSqlite($"Data Source={tenantProvider.GetTenantShortName()}.sqlite");
+    opts.UseSqlite($"Data Source={tenantProvider.GetTenant()}.sqlite");
 }, ServiceLifetime.Scoped);
 ```
 
