@@ -101,7 +101,7 @@ As a simple benchmark scenario, let's compare the following different methods of
 * Avoid loading the entire Blog entity instances at all, by projecting out the ranking only. The saves us from transferring the other, unneeded columns of the Blog entity type.
 * Calculate the average in the database by making it part of the query. This should be the fastest way, since everything is calculated in the database and only the result is transferred back to the client.
 
-With BenchmarkDotNet, you write the code to be benchmarked as a simple method - just like a unit test - and BenchmarkDotNet automatically runs each method for sufficient number of iterations, reliably measuring how long it takes and how much memory is allocated. Here are the different method ([the full benchmark code can be seen here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/AverageBlogRanking.cs)):
+With BenchmarkDotNet, you write the code to be benchmarked as a simple method - just like a unit test - and BenchmarkDotNet automatically runs each method for a sufficient number of iterations, reliably measuring how long it takes and how much memory is allocated. Here are the different methods ([the full benchmark code can be seen here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/AverageBlogRanking.cs)):
 
 ### [Load entities](#tab/load-entities)
 

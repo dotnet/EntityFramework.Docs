@@ -13,6 +13,12 @@
         href: efcore-and-ef6/porting/port-edmx.md
       - name: Porting a Code-based model
         href: efcore-and-ef6/porting/port-code.md
+      - name: Porting a Database-first project
+        href: efcore-and-ef6/porting/port-database.md
+      - name: Porting to a hybrid model
+        href: efcore-and-ef6/porting/port-hybrid.md
+      - name: Detailed cases to consider when Porting
+        href: efcore-and-ef6/porting/port-detailed-cases.md
     - name: Use EF6 and EF Core in the same application
       href: efcore-and-ef6/side-by-side.md
 
@@ -24,6 +30,8 @@
       href: /ef/core/what-is-new/ef-core-6.0/whatsnew
     - name: "Breaking changes in EF Core 6.0"
       href: /ef/core/what-is-new/ef-core-6.0/breaking-changes
+    - name: "Plan for Entity Framework Core 7.0"
+      href: /ef/core/what-is-new/ef-core-7.0/plan
     - name: Getting started
       items:
       - name: EF Core Overview
@@ -51,6 +59,14 @@
         href: core/what-is-new/index.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
+      - name: EF Core 7.0
+        items:
+          - name: High-level plan
+            href: core/what-is-new/ef-core-7.0/plan.md
+          - name: "What's new?"
+            href: core/what-is-new/ef-core-7.0/whatsnew.md
+          - name: Breaking changes
+            href: core/what-is-new/ef-core-7.0/breaking-changes.md
       - name: EF Core 6.0
         items:
         - name: High-level plan

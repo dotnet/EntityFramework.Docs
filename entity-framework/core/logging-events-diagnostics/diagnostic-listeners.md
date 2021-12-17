@@ -11,7 +11,7 @@ uid: core/logging-events-diagnostics/diagnostic-listeners
 > [!TIP]
 > You can [download this article's sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/DiagnosticListeners) from GitHub.
 
-Diagnostic listeners allow listening for any EF Core event that occurs in the current .NET process. The <xref:System.Diagnostics.DiagnosticListener> class is a part of a [common mechanism across .NET](https://github.com/dotnet/runtime/blob/master/src/libraries/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md) for obtaining diagnostic information from running applications.
+Diagnostic listeners allow listening for any EF Core event that occurs in the current .NET process. The <xref:System.Diagnostics.DiagnosticListener> class is a part of a [common mechanism across .NET](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md) for obtaining diagnostic information from running applications.
 
 Diagnostic listeners are not suitable for getting events from a single DbContext instance. EF Core [interceptors](xref:core/logging-events-diagnostics/interceptors) provide access to the same events with per-context registration.
 
