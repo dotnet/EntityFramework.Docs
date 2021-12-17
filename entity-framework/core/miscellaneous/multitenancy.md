@@ -1,7 +1,8 @@
 ---
 title: Multi-tenancy - EF Core
 description: Learn several ways to implement multi-tenant databases using Entity Framework Core.
-author: jeliknes
+author: jeremylikness
+ms.author: jeliknes
 ms.date: 12/17/2021
 uid: core/miscellaneous/multitenancy
 ---
