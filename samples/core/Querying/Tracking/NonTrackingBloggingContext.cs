@@ -2,7 +2,7 @@
 
 namespace EFQuerying.Tracking
 {
-    public class BloggingContext : DbContext
+    public class NonTrackingBloggingContext : DbContext
     {
         public DbSet<Blog> Blogs { get; set; }
 
@@ -14,10 +14,13 @@ namespace EFQuerying.Tracking
                     new Blog { BlogId = 2, Url = @"https://mytravelblog.com/", Rating = 4 });
         }
 
+        #region OnConfiguring
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tracking;Trusted_Connection=True");
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tracking;Trusted_Connection=True")
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
+        #endregion
     }
 }
