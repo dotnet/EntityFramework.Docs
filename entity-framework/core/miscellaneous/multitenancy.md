@@ -87,7 +87,7 @@ Notice that the [service lifetime](/dotnet/core/extensions/dependency-injection#
 In a different approach, the same database may handle `tenant1` and `tenant2` by using table schemas. The table `CustomerData` might be defined as:
 
 - **Tenant1** - `tenant1.CustomerData`
-- **Tenant2** - `tenant2.CustomerData` 
+- **Tenant2** - `tenant2.CustomerData`
 
 This can be supported with some extra effort. For example, you could use `OnModelCreating` to specify the schema.
 
