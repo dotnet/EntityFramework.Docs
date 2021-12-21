@@ -15,9 +15,9 @@ Many line of business applications are designed to work with multiple customers.
 
 ## Supporting multi-tenancy
 
-There are many approaches to implementing multi-tenancy in applications. One common approach (that is sometimes a requirement) is to keep data for each customer in a separate database. The schema is the same but the data is customer-specific. Another approach is to partition the data in an existing database by customer.
+There are many approaches to implementing multi-tenancy in applications. One common approach (that is sometimes a requirement) is to keep data for each customer in a separate database. The schema is the same but the data is customer-specific. Another approach is to partition the data in an existing database by customer. This can be done by using a column in a table, or applying multiple schemas to the same table.
 
-Both approaches are supported by EF Core.
+All approaches are supported by EF Core.
 
 For the approach that uses multiple databases, switching to the right database is as simple as providing the correct connection string. When the data is stored in a single database, a [global query filter](/ef/core/querying/filters) makes sense to ensure that developers don't accidentally write code that can access data from other customers.
 
@@ -81,6 +81,36 @@ Notice that the [service lifetime](/dotnet/core/extensions/dependency-injection#
 
 > [!NOTE]
 > Dependencies must always flow towards the singleton. That means a `Scoped` service can depend on another `Scoped` service or a `Singleton` service, but a `Singleton` service can only depend on other `Singleton` services: `Transient => Scoped => Singleton`.
+
+## Multiple schemas
+
+In a different approach, the same database may handle `tenant1` and `tenant2` by using table schemas. The table `CustomerData` might be defined as:
+
+- **Tenant1** - `tenant1.CustomerData`
+- **Tenant2** - `tenant2.CustomerData` 
+
+This can be supported with some extra effort. For example, you could use `OnModelCreating` to specify the schema.
+
+```csharp
+private readonly string tenant = string.Empty;
+
+public MultiSchemaContext(
+    DbContextOptions<SingleDbContext> options,
+    TenantProvider tenantProvider)
+    : base(options) 
+{
+    tenant = tenantProvider.GetTenant();
+}
+
+public DbSet<CustomerData> Data { get; set; }
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<CustomerData>().ToTable(nameof(CustomerData), tenant);
+}
+```
+
+Another approach is to define the table as a base class, then derive a class for each tenant. A `DbSet` is defined for every tenant and a dictionary can be used to provide generic access to the base class by tenant.
 
 ## Multiple databases and connection strings
 
