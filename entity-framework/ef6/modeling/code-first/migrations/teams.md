@@ -89,7 +89,7 @@ Issues start to arise when you have multiple developers making changes to the EF
 
 First let’s look at a concrete example of such a merge conflict. We’ll continue on with the example we looked at earlier. As a starting point let’s assume the changes from the previous section were checked in by the original developer. We’ll track two developers as they make changes to code base.
 
-We’ll track the EF model and the migrations thru a number of changes. For a starting point, both developers have synced to the source control repository, as depicted in the following graphic.
+We’ll track the EF model and the migrations through a number of changes. For a starting point, both developers have synced to the source control repository, as depicted in the following graphic.
 
 ![Starting Point](~/ef6/media/startingpoint.png)
 
