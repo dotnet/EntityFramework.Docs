@@ -43,9 +43,11 @@ Starting with EF Core 5.0, you can combine both of the above behaviors in same q
 
 ## Configuring the default tracking behavior
 
-In some scenarios, most (or even all) queries in your application should be non-tracking queries. Rather than adding `AsNoTracking()` on each and every query in the codebase, you can configure the default tracking behavior at the context level:
+If you find yourself changing the tracking behavior for many queries, you may want to change the default instead:
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/NonTrackingBloggingContext.cs?name=OnConfiguring&highlight=5)]
+
+This makes all your queries non-tracking by default. You can still add `AsTracking()` to make specific queries tracking.
 
 ## Tracking and custom projections
 
