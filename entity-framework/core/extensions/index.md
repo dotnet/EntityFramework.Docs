@@ -197,12 +197,12 @@ Add support for calling extension methods in LINQ lambdas. For EF Core: 3, 5.
 
 [GitHub repository](https://github.com/ClaveConsulting/Expressionify) | [NuGet](https://www.nuget.org/packages/Clave.Expressionify)
 
-### ELinq
+### EntityLinq
 
-Language Integrated Query (LINQ) technology for relational databases. It allows you to use C# to write strongly typed queries. For EF Core: 3, 5.
+Alternative (not MS based) Language Integrated Query (LINQ) technology for relational databases. It allows you to use C# to write strongly typed SQL queries. For EF Core: 3, 5, 6.
 
 - Full C# support for query creation: multiple statements inside lambda, variables, functions, etc.
-- No semantic gap with SQL. ELinq declares SQL statements (like `SELECT`, `FROM`, `WHERE`) as first class C# methods, combining familiar syntax with intellisense, type safety and refactoring.
+- No semantic gap with SQL. EntityLinq declares SQL statements (like `SELECT`, `FROM`, `WHERE`) as first class C# methods, combining familiar syntax with intellisense, type safety and refactoring.
 
 As a result SQL becomes just "another" class library exposing its API locally, literally *"Language Integrated SQL"*.
 
