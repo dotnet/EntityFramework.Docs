@@ -12,7 +12,7 @@ This project is licensed under "﻿Attribution 4.0 International". See the [lice
 
 > **Important Security Notice** This app is meant for demo purposes only. As implemented, it
 is not a production-ready app. More specifically, there are no users or roles defined and
-access is _not_ secured by a login. That means anyone with the URL can modify your 
+access is _not_ secured by a login. That means anyone with the URL can modify your
 document database.
 
 ## Quickstart
@@ -32,7 +32,7 @@ git clone https://github.com/dotnet/EntityFramework.Docs
 To run this demo, you will need to either run the [Azure Cosmos DB emulator](https://docs.microsoft.com/azure/cosmos-db/local-emulator)
 or create an Azure Cosmos DB account. You can read
 [Create an Azure Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/create-cosmosdb-resources-portal#create-an-azure-cosmos-db-account) to learn how. Be sure to check out the option
-for a [free account](https://docs.microsoft.com/azure/cosmos-db/optimize-dev-test#azure-cosmos-db-free-tier)! 
+for a [free account](https://docs.microsoft.com/azure/cosmos-db/optimize-dev-test#azure-cosmos-db-free-tier)!
 
 Choose the SQL API.
 
@@ -49,7 +49,7 @@ If you are using an Azure Cosmos DB account, update `Program.cs` with:
 - The Azure Cosmos DB endpoint
 - The Azure Cosmos DB key
 
-> The endpoint is the `URI` and the key is the `Primary Key` on the **keys** pane of your Azure 
+> The endpoint is the `URI` and the key is the `Primary Key` on the **keys** pane of your Azure
 Cosmos DB account in the [Azure Portal](https://portal.azure.com/).
 
 Run the application (`dotnet run` from the command line). You should see status
@@ -58,7 +58,7 @@ may take several minutes.
 
 ### Configure and run the Blazor app
 
-If you are using the emulator, the Blazor app is ready to run. If you are using an account, 
+If you are using the emulator, the Blazor app is ready to run. If you are using an account,
 navigate to the `PlanetaryDocs` Blazor Server project and either update the `CosmosSettings`
 in the `appsettings.json` file, or create a new section in `appsettings.Development.json`
 and add your access key and endpoint. Run the app. You should be ready to go!
@@ -67,32 +67,32 @@ and add your access key and endpoint. Run the app. You should be ready to go!
 
 The following features were integrated into this project.
 
-`PlanetaryDocsLoader` parses the docs repository and inserts the 
+`PlanetaryDocsLoader` parses the docs repository and inserts the
 documents into the database. It includes tests to verify the
 functionality is working.
 
 `PlanetaryDocs.Domain` hosts the domain classes, validation logic,
 and signature (interface) for data access.
 
-`PlanetaryDocs.DataAccess` contains the EF Core `DbContext` 
+`PlanetaryDocs.DataAccess` contains the EF Core `DbContext`
 and an implementation of the data access service.
 
 - `DocsContext`
-    - Has model-building code that shows how to map ownership
-    - Uses value converters with JSON serialization to support primitives collection and nested
+  - Has model-building code that shows how to map ownership
+  - Uses value converters with JSON serialization to support primitives collection and nested
 complex types
-    - Demonstrates use of partition keys, including how to define them for the
+  - Demonstrates use of partition keys, including how to define them for the
 model and how to specify them in queries
-    - Provides an example of specifying the container by entity
-    - Shows how to turn off the discriminator
-    - Stores two entity types (aliases and tags) in the same container
-    - Uses a "shadow property" to track partition keys on aliases and tags
-    - Hooks into the `SavingChanges` event to automate the generation of audit snapshots
+  - Provides an example of specifying the container by entity
+  - Shows how to turn off the discriminator
+  - Stores two entity types (aliases and tags) in the same container
+  - Uses a "shadow property" to track partition keys on aliases and tags
+  - Hooks into the `SavingChanges` event to automate the generation of audit snapshots
 - `DocumentService`
-    - Shows various strategies for C.R.U.D. operations
-    - Programmatically synchronizes related entities
-    - Demonstrates how to handle updates with concurrency to disconnected entities
-    - Uses the new `IDbContextFactory<T>` implementation to manage context instances
+  - Shows various strategies for C.R.U.D. operations
+  - Programmatically synchronizes related entities
+  - Demonstrates how to handle updates with concurrency to disconnected entities
+  - Uses the new `IDbContextFactory<T>` implementation to manage context instances
 
 `PlanetaryDocs` is a Blazor Server app.
 
