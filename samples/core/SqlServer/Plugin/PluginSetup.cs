@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace SqlServer.Plugin;
-public class AugmentationExtension : IDbContextOptionsExtension
+public class AugmentationDbFunctionsExtensions : IDbContextOptionsExtension
 {
     private ExtensionInfo _info;
 
@@ -24,8 +24,8 @@ public class AugmentationExtension : IDbContextOptionsExtension
         {
         }
 
-        private new AugmentationExtension Extension
-            => (AugmentationExtension)base.Extension;
+        private new AugmentationDbFunctionsExtensions Extension
+            => (AugmentationDbFunctionsExtensions)base.Extension;
 
         public override bool IsDatabaseProvider
             => false;
@@ -44,7 +44,7 @@ public class AugmentationExtension : IDbContextOptionsExtension
     }
 }
 
-public static class SqlServerNetTopologySuiteServiceCollectionExtensions
+public static class AugmentationServiceCollectionExtensions
 {
     public static IServiceCollection AddAugmentationExtension(
         this IServiceCollection serviceCollection)
@@ -75,7 +75,7 @@ public static class SqlServerExtensions
     public static SqlServerDbContextOptionsBuilder UseAugmentation(this SqlServerDbContextOptionsBuilder optionsBuilder)
     {
         var coreOptionsBuilder = ((IRelationalDbContextOptionsBuilderInfrastructure)optionsBuilder).OptionsBuilder;
-        var extension = coreOptionsBuilder.Options.FindExtension<AugmentationExtension>() ?? new AugmentationExtension();
+        var extension = coreOptionsBuilder.Options.FindExtension<AugmentationDbFunctionsExtensions>() ?? new AugmentationDbFunctionsExtensions();
         ((IDbContextOptionsBuilderInfrastructure)coreOptionsBuilder).AddOrUpdateExtension(extension);
 
         return optionsBuilder;
