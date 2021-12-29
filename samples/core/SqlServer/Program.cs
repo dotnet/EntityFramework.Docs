@@ -4,6 +4,7 @@
     {
         private static void Main()
         {
+            Plugin.CustomPlugin.Run();
         }
     }
 }
