@@ -1,0 +1,133 @@
+﻿@page "/View/{Uid}"
+
+@inherits ViewBase 
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            @if (LoadingService.Loading)
+            {
+                <span class="oi oi-reload"></span><span>&nbsp;Loading...</span>
+            }
+        </div>
+    </div>
+    @if (NotFound)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger">
+                    <span class="oi oi-warning"></span>&nbsp;Document with id '@Uid' was not found.
+                    <a href="/">Click here</a> to return to search.
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Loading && Document != null)
+    {
+        <div class="row">
+            @if (Audit)
+            {
+            <div class="col-12">
+                <h2>@Title</h2>
+            </div>
+            }
+            else
+            {
+                <div class="col-2">
+                    <a href="@NavigationHelper.EditDocument(Uid)"
+                       title="Edit"><span class="oi oi-pencil"></span>&nbsp;Edit</a>
+                </div>
+                <div class="col-10">
+                    <h2>@Title</h2>
+                </div>
+            }
+        </div>
+        @if (Audit)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        You are viewing an archived version of this document.
+                        <button class="btn btn-link btn-sm" 
+                                @onclick="() => BackToMain()">Click here</button>
+                        to return to the current version.
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-2">
+                Author: @Document.AuthorAlias
+            </div>
+            <div class="col-2">
+                @if (DateTimeOffset.UtcNow.Ticks >
+                Document.PublishDate.Ticks)
+                {
+                    <span>Published: @Document.PublishDate</span>
+                }
+                else
+                {
+                    <span>Scheduled: @Document.PublishDate</span>
+                }
+            </div>
+            <div class="col-8">
+                Tags: @foreach (var tag in Document.Tags)
+                {
+                    <span>'@tag'&nbsp;</span>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-justify">
+                @Document.Description
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                @if (!ShowHistory && !Audit)
+                {
+                    <button class="btn btn-link"
+                            @onclick="() => ShowHistory=true">
+                        Show Audit History
+                    </button><span>&nbsp;</span>
+                }
+                <button class="btn btn-link"
+                        @onclick="() => { ShowMarkdown = !ShowMarkdown; ShowHistory = false; }">
+                    @ToggleText
+                </button>
+                @if (!ShowMarkdown)
+                {
+                    <span>&nbsp;</span>
+                    <button class="btn btn-link"
+                            @onclick="()=> { PreviewHtml = !PreviewHtml; ShowHistory = false; }">
+                        @PreviewText
+                    </button>
+                }
+            </div>
+        </div>
+        <div class="row">
+                @if (ShowHistory)
+                {
+                    <DocHistory Uid="@Document.Uid"/>
+                }
+                else if (ShowMarkdown)
+                {
+                    <div class="col-12 code">
+                        @Document.Markdown
+                    </div>
+                }
+                else if (PreviewHtml)
+                {
+                    <div class="col-12">
+                        <HtmlPreview Html="@Document.Html" />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-12 code">
+                        @Document.Html
+                    </div>
+                }                
+        </div>
+    }
+</div>

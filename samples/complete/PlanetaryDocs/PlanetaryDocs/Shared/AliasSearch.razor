@@ -1,0 +1,8 @@
+﻿@inherits AliasSearchBase
+
+<AutoComplete @ref="AutoComplete"
+              TabIndex="@TabIndex"
+              LabelText="Alias:" 
+              PlaceHolderText="Type the alias..."
+              @bind-SelectedValue="Alias"
+              SearchFn="SearchAsync"/>
