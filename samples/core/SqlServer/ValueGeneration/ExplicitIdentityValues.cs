@@ -30,9 +30,9 @@ namespace SqlServer.ValueGeneration
                 context.Database.OpenConnection();
                 try
                 {
-                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Employees ON");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Blogs ON");
                     context.SaveChanges();
-                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Employees OFF");
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Blogs OFF");
                 }
                 finally
                 {
