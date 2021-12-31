@@ -13,7 +13,6 @@ namespace GetStartedWPF
             optionsBuilder.UseSqlite(
                 "Data Source=products.db");
             optionsBuilder.UseLazyLoadingProxies();
-            base.OnConfiguring(optionsBuilder);
         }
     }
 }
