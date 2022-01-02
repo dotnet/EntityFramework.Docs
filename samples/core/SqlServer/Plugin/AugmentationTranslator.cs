@@ -18,7 +18,7 @@ internal class AugmentationTranslator : IMethodCallTranslator
                 var argument = arguments[1];
                 return new SqlBinaryExpression(ExpressionType.Add, argument, new SqlConstantExpression(Expression.Constant(1), null), argument.Type, null);
             default:
-                throw new InvalidOperationException($"Unexpected method '{method.Name}' in '{nameof(RelationalDbFunctionsExtensions)}'.");
+                return null;
         }
     }
 }
