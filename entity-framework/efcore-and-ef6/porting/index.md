@@ -68,7 +68,7 @@ It is not a requirement to port the entire application. EF6 and EF Core can run 
 
 As for the port itself, at a high level, you will:
 
-1. [Review behavior changes between EF6 and EF Core](/efcore-and-ef6/porting/port-behavior).
+1. [Review behavior changes between EF6 and EF Core](/ef/efcore-and-ef6/porting/port-behavior).
 1. Perform your final migrations, if any, in EF6.
 1. Create your EF Core project.
 1. Either copy code to the new project, run reverse-engineering, or a combination of both.
@@ -78,12 +78,12 @@ As for the port itself, at a high level, you will:
     - `DbModelBuilder` to `ModelBuilder`
     - Rename `DbEntityEntry<T>` to `EntityEntry<T>`
     - Move from `Database.Log` to `Microsoft.Extensions.Logging` (advanced) or `DbContextOptionsBuilder.LogTo` (simple) APIs
-    - Apply changes for `WithRequired` and `WithOptional` (see [here](/efcore-and-ef6/porting/port-detailed-cases#required-and-optional))
+    - Apply changes for `WithRequired` and `WithOptional` (see [here](/ef/efcore-and-ef6/porting/port-detailed-cases#required-and-optional))
     - Update validation code. There is no data validation built into EF Core, but you can [do it yourself](/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/domain-model-layer-validations#use-validation-attributes-in-the-model-based-on-data-annotations).
-    - Follow any necessary steps to [port from EDMX](/efcore-and-ef6/porting/port-edmx).
+    - Follow any necessary steps to [port from EDMX](/ef/efcore-and-ef6/porting/port-edmx).
 1. Perform specific steps based on your EF Core approach:
-    - [Code as source of truth](/efcore-and-ef6/porting/port-code.md)
-    - [Database as source of truth](/efcore-and-ef6/porting/port-database.md)
-    - [Hybrid model](/efcore-and-ef6/porting/port-hybrid.md)
+    - [Code as source of truth](/ef/efcore-and-ef6/porting/port-code)
+    - [Database as source of truth](/ef/efcore-and-ef6/porting/port-database)
+    - [Hybrid model](/ef/efcore-and-ef6/porting/port-hybrid)
 
-There are many considerations that relate to all of the approaches, so you will also want to review ways to address and work around the [detailed differences between EF6 and EF Core](/efcore-and-ef6/porting/port-detailed-cases.md).
+There are many considerations that relate to all of the approaches, so you will also want to review ways to address and work around the [detailed differences between EF6 and EF Core](/ef/efcore-and-ef6/porting/port-detailed-cases).
