@@ -41,6 +41,14 @@ Starting with EF Core 5.0, you can combine both of the above behaviors in same q
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Program.cs#NoTrackingWithIdentityResolution)]
 
+## Configuring the default tracking behavior
+
+If you find yourself changing the tracking behavior for many queries, you may want to change the default instead:
+
+[!code-csharp[Main](../../../samples/core/Querying/Tracking/NonTrackingBloggingContext.cs?name=OnConfiguring&highlight=5)]
+
+This makes all your queries non-tracking by default. You can still add `AsTracking()` to make specific queries tracking.
+
 ## Tracking and custom projections
 
 Even if the result type of the query isn't an entity type, EF Core will still track entity types contained in the result by default. In the following query, which returns an anonymous type, the instances of `Blog` in the result set will be tracked.
