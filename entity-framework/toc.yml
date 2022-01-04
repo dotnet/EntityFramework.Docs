@@ -112,6 +112,8 @@
       items:
       - name: Overview
         href: core/dbcontext-configuration/index.md
+      - name: Context pooling
+        href: core/performance/advanced-performance-topics#dbcontext-pooling
 
     - name: Create a model
       items:
@@ -327,8 +329,6 @@
         href: core/miscellaneous/connection-resiliency.md
       - name: Connection strings
         href: core/miscellaneous/connection-strings.md
-      - name: Context pooling
-        href: core/miscellaneous/context-pooling.md
 
     - name: Database providers
       items:
