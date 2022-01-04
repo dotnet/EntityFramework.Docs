@@ -32,7 +32,7 @@ namespace EFSaving.Transactions
 
                 // Commit transaction if all commands succeed, transaction will auto-rollback
                 // when disposed if either commands fails
-                transaction.Commit();
+                transaction.CommitTransaction ();
             }
             catch (Exception)
             {
