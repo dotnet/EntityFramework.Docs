@@ -9,11 +9,11 @@ uid: core/managing-schemas/scaffolding
 
 Reverse engineering is the process of scaffolding entity type classes and a DbContext class based on a database schema. It can be performed using the `Scaffold-DbContext` command of the EF Core Package Manager Console (PMC) tools or the `dotnet ef dbcontext scaffold` command of the .NET Command-line Interface (CLI) tools.
 
-## Installing
+## Prerequisites
 
-Before reverse engineering, you'll need to install either the [PMC tools](xref:core/cli/powershell) (Visual Studio only) or the [CLI tools](xref:core/cli/dotnet). See links for details.
-
-You'll also need to install an appropriate [database provider](xref:core/providers/index) for the database schema you want to reverse engineer.
+- Before reverse engineering, you'll need to install either the [PMC tools](xref:core/cli/powershell) (Visual Studio only) or the [CLI tools](xref:core/cli/dotnet). See links for details.
+- Install the NuGet package for `Microsoft.EntityFramework.Design` in the project you are scaffolding to.
+- You'll also need to install an appropriate [database provider](xref:core/providers/index) for the database schema you want to reverse engineer.
 
 ## Connection string
 
@@ -148,10 +148,10 @@ Finally, the model is used to generate code. The corresponding entity type class
 
 ## Limitations
 
-* Not everything about a model can be represented using a database schema. For example, information about [**inheritance hierarchies**](xref:core/modeling/inheritance), [**owned types**](xref:core/modeling/owned-entities), and [**table splitting**](xref:core/modeling/table-splitting) are not present in the database schema. Because of this, these constructs will never be reverse engineered.
-* In addition, **some column types** may not be supported by the EF Core provider. These columns won't be included in the model.
-* You can define [**concurrency tokens**](xref:core/modeling/concurrency), in an EF Core model to prevent two users from updating the same entity at the same time. Some databases have a special type to represent this type of column (for example, rowversion in SQL Server) in which case we can reverse engineer this information; however, other concurrency tokens will not be reverse engineered.
-* Prior to EF Core 6, [the C# 8 nullable reference type feature](/dotnet/csharp/tutorials/nullable-reference-types) was unsupported in reverse engineering: EF Core always generated C# code that assumed the feature is disabled. For example, nullable text columns were scaffolded as a property with type `string` , not `string?`, with either the Fluent API or Data Annotations used to configure whether a property is required or not. If using an older version of EF Core, you can still edit the scaffolded code and replace these with C# nullability annotations.
+- Not everything about a model can be represented using a database schema. For example, information about [**inheritance hierarchies**](xref:core/modeling/inheritance), [**owned types**](xref:core/modeling/owned-entities), and [**table splitting**](xref:core/modeling/table-splitting) are not present in the database schema. Because of this, these constructs will never be reverse engineered.
+- In addition, **some column types** may not be supported by the EF Core provider. These columns won't be included in the model.
+- You can define [**concurrency tokens**](xref:core/modeling/concurrency), in an EF Core model to prevent two users from updating the same entity at the same time. Some databases have a special type to represent this type of column (for example, rowversion in SQL Server) in which case we can reverse engineer this information; however, other concurrency tokens will not be reverse engineered.
+- Prior to EF Core 6, [the C# 8 nullable reference type feature](/dotnet/csharp/tutorials/nullable-reference-types) wasn't supported in reverse engineering: EF Core always generated C# code that assumed the feature is disabled. For example, nullable text columns were scaffolded as a property with type `string` , not `string?`, with either the Fluent API or Data Annotations used to configure whether a property is required or not. If using an older version of EF Core, you can still edit the scaffolded code and replace these with C# nullability annotations.
 
 ## Customizing the model
 

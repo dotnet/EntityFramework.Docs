@@ -319,7 +319,7 @@ However, if by default all `EquineBeast` columns should be `varchar(20)`, then t
 -->
 [!code-csharp[ConversionByConverterInstanceWithMappingHints](../../../samples/core/Modeling/ValueConversions/EnumToStringConversions.cs?name=ConversionByConverterInstanceWithMappingHints)]
 
-Now any time this converter is used, the database column will be non-unicode with a max length of 20. However, these are only hints since they are be overridden by any facets explicitly set on the mapped property.
+Now any time this converter is used, the database column will be non-unicode with a max length of 20. However, these are only hints since they are overridden by any facets explicitly set on the mapped property.
 
 ## Examples
 

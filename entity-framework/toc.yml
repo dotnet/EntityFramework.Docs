@@ -112,6 +112,8 @@
       items:
       - name: Overview
         href: core/dbcontext-configuration/index.md
+      - name: Context pooling
+        href: core/performance/advanced-performance-topics#dbcontext-pooling
 
     - name: Create a model
       items:
@@ -212,6 +214,8 @@
         href: core/querying/single-split-queries.md
       - name: Complex query operators
         href: core/querying/complex-query-operators.md
+      - name: Pagination
+        href: core/querying/pagination.md
       - name: Raw SQL queries
         href: core/querying/raw-sql.md
       - name: Database functions

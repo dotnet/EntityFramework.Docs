@@ -30,7 +30,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Cosmos: More characters are escaped in 'id' values](#cosmos-id)                                                                      | Low        |
 | [Some Singleton services are now Scoped](#query-services)                                                                             | Low*       |
 | [New caching API for extensions that add or replace services](#extensions-caching)                                                    | Low*       |
-| [New snapshot model initialization procedure](#snapshot-initialization)                                                               | Low        |
+| [New snapshot and design-time model initialization procedure](#snapshot-initialization)                                               | Low        |
 | [`OwnedNavigationBuilder.HasIndex` returns a different type now](#owned-index)                                                        | Low        |
 | [`DbFunctionBuilder.HasSchema(null)` overrides `[DbFunction(Schema = "schema")]`](#function-schema)                                   | Low        |
 | [Pre-initialized navigations are overridden by values from database queries](#overwrite-navigations)                                  | Low        |
@@ -578,7 +578,7 @@ Otherwise, additional predicates should be added to compare all relevant options
 
 <a name="snapshot-initialization"></a>
 
-### New snapshot model initialization procedure
+### New snapshot and design-time model initialization procedure
 
 [Tracking Issue #22031](https://github.com/dotnet/efcore/issues/22031)
 
@@ -616,6 +616,27 @@ if (snapshotModel != null)
 var hasDifferences = context.GetService<IMigrationsModelDiffer>().HasDifferences(
     snapshotModel?.GetRelationalModel(),
     context.GetService<IDesignTimeModel>().Model.GetRelationalModel());
+```
+
+This snippet shows how to implement <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory%601> by creating a model externally and calling <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseModel%2A>:
+
+```csharp
+internal class MyDesignContext : IDesignTimeDbContextFactory<MyContext>
+{
+    public TestContext CreateDbContext(string[] args)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder();
+        optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DB"));
+
+        var modelBuilder = SqlServerConventionSetBuilder.CreateModelBuilder();
+        CustomizeModel(modelBuilder);
+        var model = modelBuilder.Model.FinalizeModel();
+
+        var serviceContext = new MyContext(optionsBuilder.Options);
+        model = serviceContext.GetService<IModelRuntimeInitializer>().Initialize(model);
+        return new MyContext(optionsBuilder.Options);
+    }
+}
 ```
 
 <a name="owned-index"></a>

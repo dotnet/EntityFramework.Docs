@@ -64,7 +64,13 @@ As a result, it's usually worth giving thought to limiting the number of results
 
 [!code-csharp[Main](../../../samples/core/Performance/Program.cs#Limit25)]
 
-At a minimum, your UI could show a message indicating that more rows may exist in the database (and allow retrieving them in some other manner). A full-blown solution would implement *paging*, where your UI only shows a certain number of rows at a time, and allow users to advance to the next page as needed; this typically combines the <xref:System.Linq.Enumerable.Take%2A> and <xref:System.Linq.Enumerable.Skip%2A> operators to select a specific range in the resultset each time.
+At a minimum, your UI could show a message indicating that more rows may exist in the database (and allow retrieving them in some other manner). A full-blown solution would implement *pagination*, where your UI only shows a certain number of rows at a time, and allow users to advance to the next page as needed; see the next section for more details on how to implement this efficiently.
+
+## Efficient pagination
+
+Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is shown that allows the user to navigate to the next or previous page of the results. A common way to implement pagination with databases is to use the `Skip` and `Take` operators (`OFFSET` and `LIMIT` in SQL); while this is an intuitive implementation, it's also quite inefficient. For pagination that allows moving on page at a time (as opposed to jumping to arbitrary pages), consider using *keyset pagination* instead.
+
+For more information, [eee the documentation page on pagination](xref:core/querying/pagination).
 
 ## Avoid cartesian explosion when loading related entities
 
