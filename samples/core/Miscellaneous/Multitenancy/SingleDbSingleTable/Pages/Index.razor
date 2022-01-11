@@ -1,0 +1,60 @@
+﻿@page "/"
+@using Common;
+@using Microsoft.EntityFrameworkCore
+@using SingleDbSingleTable.Data
+@inject ITenantService Service
+@inject IDbContextFactory<ContactContext> Factory
+
+<PageTitle>Contacts for @Service.Tenant</PageTitle>
+
+<h1>Contacts for @Service.Tenant</h1>
+
+@if (Contacts == null)
+{
+    <p class="alert alert-info">Loading...</p>
+}
+else
+{
+    if (Contacts.Count < 1)
+    {
+        <p class="alert alert-warning">No contacts found.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var contact in Contacts)
+            {
+                <li>
+                    @contact.Name
+                    @if (contact.IsUnicorn)
+                    {
+                        <span>&nbsp;🦄</span>
+                    }
+                </li>
+            }
+        </ul>    
+    }
+}
+
+@code
+{
+    private List<Contact>? Contacts = null;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Service.OnTenantChanged += (o, e) =>
+        {
+            RefreshContacts();
+            StateHasChanged();
+        };
+        RefreshContacts();
+    }
+
+    private void RefreshContacts()
+    {
+        Contacts = null;
+        var list = Factory.CreateDbContext();
+        Contacts = new List<Contact>(list.Contacts);
+    }
+}
