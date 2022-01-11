@@ -1,9 +1,21 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+@using Common
+@using Microsoft.EntityFrameworkCore
+@using TenantControls
 
-<h1>Hello, world!</h1>
+@inject ITenantService Service
+@inject IDbContextFactory<ContactContext> Factory
 
-Welcome to your new app.
+<PageTitle>Contacts for @Service.Tenant</PageTitle>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<ContactList FetchContacts="RefreshContacts"/>
+
+@code {
+
+    private List<Contact> RefreshContacts()
+    {
+        using var ctx = Factory.CreateDbContext();
+        return new List<Contact>(ctx.Contacts);
+    }
+}

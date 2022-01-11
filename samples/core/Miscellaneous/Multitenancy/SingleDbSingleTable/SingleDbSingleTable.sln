@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SingleDbSingleTable", "Sing
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\Common\Common.csproj", "{EB3478E1-0264-479D-84ED-615653657379}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TenantControls", "..\TenantControls\TenantControls.csproj", "{BB014658-C50A-4A8B-A1D1-DD52BB41B4F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TenantControls", "..\TenantControls\TenantControls.csproj", "{BB014658-C50A-4A8B-A1D1-DD52BB41B4F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

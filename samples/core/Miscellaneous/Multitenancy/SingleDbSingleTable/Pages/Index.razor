@@ -7,54 +7,13 @@
 
 <PageTitle>Contacts for @Service.Tenant</PageTitle>
 
-<h1>Contacts for @Service.Tenant</h1>
-
-@if (Contacts == null)
-{
-    <p class="alert alert-info">Loading...</p>
-}
-else
-{
-    if (Contacts.Count < 1)
-    {
-        <p class="alert alert-warning">No contacts found.</p>
-    }
-    else
-    {
-        <ul>
-            @foreach (var contact in Contacts)
-            {
-                <li>
-                    @contact.Name
-                    @if (contact.IsUnicorn)
-                    {
-                        <span>&nbsp;🦄</span>
-                    }
-                </li>
-            }
-        </ul>    
-    }
-}
+<ContactList FetchContacts="RefreshContacts"/>
 
 @code
 {
-    private List<Contact>? Contacts = null;
-
-    protected override void OnInitialized()
+    private List<Contact> RefreshContacts()
     {
-        base.OnInitialized();
-        Service.OnTenantChanged += (o, e) =>
-        {
-            RefreshContacts();
-            StateHasChanged();
-        };
-        RefreshContacts();
-    }
-
-    private void RefreshContacts()
-    {
-        Contacts = null;
-        var list = Factory.CreateDbContext();
-        Contacts = new List<Contact>(list.Contacts);
+        var list = Factory.CreateDbContext();        
+        return new List<Contact>(list.Contacts);
     }
 }
