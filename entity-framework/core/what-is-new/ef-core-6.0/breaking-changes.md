@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 6.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 6.0
 author: ajcvickers
-ms.date: 10/25/2021
+ms.date: 01/10/2022
 uid: core/what-is-new/ef-core-6.0/breaking-changes
 ---
 
@@ -26,6 +26,7 @@ The following API and behavior changes have the potential to break existing appl
 | [TVF return entity type is also mapped to a table by default](#tvf-table)                                                             | Low        |
 | [Check constraint name uniqueness is now validated](#unique-check-constraints)                                                        | Low        |
 | [Added IReadOnly Metadata interfaces and removed extension methods](#ireadonly-metadata)                                              | Low        |
+| [IExecutionStrategy is now a singleton service](#iexecutionstrategy)                                                                  | Low        |
 | [SQL Server: More errors are considered transient](#transient-errors)                                                                 | Low        |
 | [Cosmos: More characters are escaped in 'id' values](#cosmos-id)                                                                      | Low        |
 | [Some Singleton services are now Scoped](#query-services)                                                                             | Low*       |
@@ -468,6 +469,26 @@ Default interface methods allow the implementation to be overridden, this is lev
 #### Mitigations
 
 These changes shouldn't affect most code. However, if you were using the extension methods via the static invocation syntax, it would need to be converted to instance invocation syntax.
+
+<a name="iexecutionstrategy"></a>
+
+### IExecutionStrategy is now a singleton service
+
+[Tracking Issue #21350](https://github.com/dotnet/efcore/issues/21350)
+
+#### New behavior
+
+<xref:Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy> is now a singleton service. This means that any added state in custom implementations will remain between executions and the delegate passed to <xref:Microsoft.EntityFrameworkCore.Infrastructure.RelationalDbContextOptionsBuilder%602.ExecutionStrategy%2A> will only be executed once.
+
+#### Why
+
+This reduced allocations on two hot paths in EF.
+
+#### Mitigations
+
+Implementations deriving from <xref:Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy> should clear any state in <xref:Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.OnFirstExecution>.
+
+Conditional logic in the delegate passed to <xref:Microsoft.EntityFrameworkCore.Infrastructure.RelationalDbContextOptionsBuilder%602.ExecutionStrategy%2A> should be moved to a custom implementation of <xref:Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy>.
 
 <a name="transient-errors"></a>
 
