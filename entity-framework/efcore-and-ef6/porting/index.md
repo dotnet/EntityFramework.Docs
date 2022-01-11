@@ -11,7 +11,7 @@ uid: efcore-and-ef6/porting/index
 Entity Framework Core, or EF Core for short, is a total rewrite of Entity Framework for modern application architectures. Due to fundamental changes, there is not a direct upgrade path. The purpose of this documentation is to provide an end-to-end guide for porting your EF6 applications to EF Core.
 
 > [!IMPORTANT]
-> Before you start the porting process it is important to validate that EF Core meets the data access requirements for your application. You can find everything you need in the [EF Core documentation](/ef/core/).
+> Before you start the porting process it is important to validate that EF Core meets the data access requirements for your application. You can find everything you need in the [EF Core documentation](xref:core/index).
 
 > [!IMPORTANT]
 > There is a known issue ([microsoft/dotnet-apiport #993](https://github.com/microsoft/dotnet-apiport/issues/993)) with the [portability analyzer](/dotnet/standard/analyzers/portability-analyzer) that erroneously reports EF Core as incompatible with .NET 5 and .NET 6. These warnings can be safely ignored as EF Core is 100% compatible with .NET 5 and .NET 6 target frameworks.
@@ -20,8 +20,8 @@ Entity Framework Core, or EF Core for short, is a total rewrite of Entity Framew
 
 All new Entity Framework development is happening in EF Core. There are no plans to backport any new features to EF6. EF Core runs on the latest .NET runtimes and takes full advantage of runtime, platform-specific (such as ASP.NET Core or WPF) and language-specific features. Here are a few of the benefits you gain from upgrading:
 
-- Take advantage of the ongoing **performance improvements** in EF Core. For example, one customer who migrated from EF6 to EF Core 6 saw a 40x reduction in use of a heavy query due to the [query splitting feature](/ef/core/querying/single-split-queries/). Many customers report enormous performance gains simply by moving to the latest EF Core.
-- Use **new features** in EF Core. There will be no new features added to EF6. All of the new functionality, for example the [Azure Cosmos DB provider](/ef/core/providers/cosmos/) and [`DbContextFactory`](/ef/core/what-is-new/ef-core-5.0/whatsnew#dbcontextfactory), will only be added to EF Core. For a full comparison of EF6 to EF Core, including several features exclusive to EF Core, see: [Compare EF Core & EF6](/ef/efcore-and-ef6/).
+- Take advantage of the ongoing **performance improvements** in EF Core. For example, one customer who migrated from EF6 to EF Core 6 saw a 40x reduction in use of a heavy query due to the [query splitting feature](xref:core/querying/single-split-queries). Many customers report enormous performance gains simply by moving to the latest EF Core.
+- Use **new features** in EF Core. There will be no new features added to EF6. All of the new functionality, for example the [Azure Cosmos DB provider](xref:core/providers/cosmos/index) and [`DbContextFactory`](xref:core/what-is-new/ef-core-5.0/whatsnew#dbcontextfactory), will only be added to EF Core. For a full comparison of EF6 to EF Core, including several features exclusive to EF Core, see: [Compare EF Core & EF6](xref:efcore-and-ef6/index).
 - **Modernize your application stack** by using dependency injection and seamlessly integrate your data access with technologies like gRPC and GraphQL.
 
 ## A note on migrations
