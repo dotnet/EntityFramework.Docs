@@ -1,0 +1,56 @@
+﻿@inject ITenantService Service
+
+<h1>Contacts for @Service.Tenant</h1>
+
+@if (Contacts == null)
+{
+    <p class="alert alert-info">Loading...</p>
+}
+else
+{
+    if (Contacts.Count < 1)
+    {
+        <p class="alert alert-warning">No contacts found.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var contact in Contacts)
+            {
+                <li>
+                    @contact.Name
+                    @if (contact.IsUnicorn)
+                    {
+                        <span>&nbsp;🦄</span>
+                    }
+                </li>
+            }
+        </ul>    
+    }
+}
+
+@code {
+    [Parameter]
+    public Func<List<Contact>> FetchContacts { get; set; } =
+            () => new List<Contact>();
+
+    private List<Contact>? Contacts = null;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Service.OnTenantChanged += (o, e) =>
+        {
+            RefreshContacts();
+            StateHasChanged();
+        };
+        RefreshContacts();
+    }
+
+    private void RefreshContacts()
+    {
+        Contacts = null;
+        var list = FetchContacts();
+        Contacts = new List<Contact>(list);
+    }
+}
