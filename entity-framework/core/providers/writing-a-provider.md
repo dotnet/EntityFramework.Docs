@@ -46,3 +46,46 @@ To start using the specification tests, follow these steps:
 * At the very beginning, you'll have a bit of test infrastructure to implement - once that's done once, things will become easier. For example, for `NorthwindWhereQueryAcmeDbTest` you'll have to implement `NorthwindWhereQueryAcmeDbFixture`, which will require a `AcmeDbNorthwindTestStoreFactory`, which would need a Northwind.sql script to seed the AcmeDb version of the Northwind database. We strongly suggest keeping another EF Core provider's test suite open nearby, and following what it does. For example, the SQL Server implementation of the specification tests is visible [here](https://github.com/dotnet/efcore/tree/main/test/EFCore.SqlServer.FunctionalTests).
 * Once the infrastructure for the test class is done, you'll start seeing some green tests on it. You can investigate the failing tests, or temporarily skip them for later investigation. In this way you can add more and more test classes.
 * At some point, when you've extended most of the upstream test classes, you can also create `AcmeDbComplianceTest`, which extends `RelationalComplianceTestBase`. This test class will fail if your own test project doesn't extend an EF Core test class - it's a great way to know whether your test suite is complete, and also whether EF added a new test class in a new version. You can also opt out of extending specific test classes if they're not ready (or not relevant).
+
+### SQL assertions
+
+When implementing the specification tests, you have the option of additionally asserting the SQL that EF Core produces. This isn't mandatory: the specification test implementation already checks that your provider returned the expected rows from the database, so if it passes, your provider is likely doing the right thing. However, asserting that the SQL is what you expect it to be can add additional coverage in some cases, especially where some SQL construct is being used that's specific to your database.
+
+For example, here's the `Where_simple` test in [NorthwindWhereQuerySqlServerTest](https://github.com/dotnet/efcore/blob/main/test/EFCore.SqlServer.FunctionalTests/Query/NorthwindWhereQuerySqlServerTest.cs) test class:
+
+```c#
+public override async Task Where_simple(bool async)
+{
+    await base.Where_simple(async);
+
+    AssertSql(
+        @"SELECT [c].[CustomerID], [c].[Address], [c].[City], [c].[CompanyName], [c].[ContactName], [c].[ContactTitle], [c].[Country], [c].[Fax], [c].[Phone], [c].[PostalCode], [c].[Region]
+FROM [Customers] AS [c]
+WHERE [c].[City] = N'London'");
+}
+```
+
+The base invocation runs the specification test, which executes the LINQ query and verifies that the results are correct. In addition, `AssertSql` ensures that the SQL matched the baseline included in the test.
+
+#### Inspecting SQL assertion failures
+
+If a SQL assertion fails, xunit typically reports only the fragment of the SQL which did not match. To see the full SQL produced by your provider, you can have the test infrastructure output the complete new baseline when a test fails, so that you can inspect it and possibly replace the old one. To do this, pass the `ITestOutputHelper` provided by xunit to the `TestSqlLoggerFactory` of the test fixture:
+
+```c#
+public NorthwindWhereQuerySqlServerTest(
+    NorthwindQuerySqlServerFixture<NoopModelCustomizer> fixture,
+    ITestOutputHelper testOutputHelper)
+    : base(fixture)
+{
+    ClearLog();
+    Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
+}
+```
+
+In the EF Core test suites, we usually keep the above line commented out in the constructor, so that we can easily uncomment it any time a SQL assertion fails.
+
+#### Bulk update of baselines
+
+If you use SQL assertions a lot, you'll have many SQL baselines in your test suite. In some cases, a small change - either in your provider or in EF Core itself - may cause a large number of these assertions to fail for some reason, e.g. parentheses were added somewhere. If that happens, manually correcting all the affected baselines can be a very tedious and time-consuming process.
+
+The EF Core test infrastructure has a feature which automatically updates all failing baselines with the new ones. Simply set the `EF_TEST_REWRITE_BASELINES` environment variable to `1` and run the tests, and the test source files should get updated. It's recommend to commit before doing this, and then use git to inspect the test diff, to make sure the new baselines make sense. Once you're satisfied, you can commit those changes as well.
