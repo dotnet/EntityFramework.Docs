@@ -9,7 +9,7 @@ uid: efcore-and-ef6/porting/port-behavior
 
 This is a non-exhaustive list of changes in behavior between EF6 and EF Core. It is important to keep these in mind as your port your application as they may change the way your application behaves, but will not show up as compilation errors after swapping to EF Core.
 
-This is meant as a high level review to consider as part of the porting process. For more detailed, case-by-case instructions, read the [detailed cases](/efcore-and-ef6/porting/port-detailed-cases).
+This is meant as a high level review to consider as part of the porting process. For more detailed, case-by-case instructions, read the [detailed cases](xref:efcore-and-ef6/porting/port-detailed-cases).
 
 ## DbSet.Add/Attach and graph behavior
 
@@ -30,7 +30,7 @@ The general philosophy here is that `Update` is a very simple way to handle inse
 
 At the same time, `Add` still provides an easy way force entities to be inserted. Add is mostly useful only when not using store-generated keys, such that EF doesn't know if the entity is new or not.
 
-For more information on these behaviors in EF Core, read [Change Tracking in EF Core](/ef/core/change-tracking/).
+For more information on these behaviors in EF Core, read [Change Tracking in EF Core](xref:core/change-tracking/index).
 
 ## Code First database initialization
 
@@ -53,4 +53,4 @@ EF6 runs the entity class name through a pluralization service to calculate the 
 
 EF Core uses the name of the `DbSet` property that the entity is exposed in on the derived context. If the entity does not have a `DbSet` property, then the class name is used.
 
-For more information, read [Managing Database Schemas](/ef/core/managing-schemas/).
+For more information, read [Managing Database Schemas](xref:core/managing-schemas/index).
