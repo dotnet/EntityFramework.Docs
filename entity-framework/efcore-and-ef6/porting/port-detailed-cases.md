@@ -156,6 +156,6 @@ EF6 has some query capabilities that do not exist in EF Core. These include:
 - Interception of the command tree for queries and updates.
 - Support for table-valued parameters (TVPs).
 
-EF6 has built-in support for lazy-loading proxies. This is an opt-in package for EF Core (see [Lazy Loading of Related Data]xref:core/querying/related-data/lazy)).
+EF6 has built-in support for lazy-loading proxies. This is an opt-in package for EF Core (see [Lazy Loading of Related Data](xref:core/querying/related-data/lazy)).
 
 EF Core allows you to compose over raw SQL using `FromSQL`.
