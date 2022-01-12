@@ -2,7 +2,7 @@
 title: Azure Cosmos DB Provider - EF Core
 description: Documentation for the database provider that allows Entity Framework Core to be used with the Azure Cosmos DB SQL API
 author: AndriySvyryd
-ms.date: 11/15/2021
+ms.date: 01/11/2022
 uid: core/providers/cosmos/index
 ---
 # EF Core Azure Cosmos DB Provider
@@ -103,7 +103,32 @@ Once configured the partition key property should always have a non-null value. 
 
 It is generally recommended to add the partition key to the primary key as that best reflects the server semantics and allows some optimizations, for example in `FindAsync`.
 
+### Provisioned throughput
+
+If you use EF Core to create the Azure Cosmos database or containers you can configure [provisioned throughput](/azure/cosmos-db/set-throughput) for the database by calling <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasAutoscaleThroughput%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasManualThroughput%2A?displayProperty=nameWithType>. For example:
+
+<!--
+modelBuilder.HasManualThroughput(2000);
+modelBuilder.HasAutoscaleThroughput(4000);
+-->
+[!code-csharp[ModelThroughput](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosModelConfigurationSample.cs?name=ModelThroughput)]
+
+To configure provisioned throughput for a container call <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasAutoscaleThroughput%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasManualThroughput%2A?displayProperty=nameWithType>. For example:
+
+<!--
+modelBuilder.Entity<Family>(
+    entityTypeBuilder =>
+    {
+        entityTypeBuilder.HasManualThroughput(5000);
+        entityTypeBuilder.HasAutoscaleThroughput(3000);
+    });
+-->
+[!code-csharp[EntityTypeThroughput](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosModelConfigurationSample.cs?name=EntityTypeThroughput)]
+
 ## Embedded entities
+
+> [!NOTE]
+> Beginning with EF Core 6.0 related entity types are configured as owned by default. To prevent this for a specific entity type call <xref:Microsoft.EntityFrameworkCore.ModelBuilder.Entity%2A?displayProperty=nameWithType>.
 
 For Cosmos, owned entities are embedded in the same item as the owner. To change a property name use [ToJsonProperty](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.ToJsonProperty):
 
@@ -168,6 +193,91 @@ Internally EF Core always needs to have unique key values for all tracked entiti
 
 > [!TIP]
 > When necessary the default primary key for the owned entity types can be changed, but then key values should be provided explicitly.
+
+### Collections of primitive types
+
+Collections of supported primitive types, such as `string` and `int`, are discovered and mapped automatically. Supported collections are all types that implement <xref:System.Collections.Generic.IReadOnlyList%601> or <xref:System.Collections.Generic.IReadOnlyDictionary%602>. For example, consider this entity type:
+
+<!--
+public class Book
+{
+    public Guid Id { get; set; }
+    public string Title { get; set; }
+    public IList<string> Quotes { get; set; }
+    public IDictionary<string, string> Notes { get; set; }
+}
+-->
+[!code-csharp[BookEntity](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosPrimitiveTypesSample.cs?name=BookEntity)]
+
+Both the list and the dictionary can be populated and inserted into the database in the normal way:
+
+<!--
+using var context = new BooksContext();
+
+var book = new Book
+{
+    Title = "How It Works: Incredible History",
+    Quotes = new List<string>
+    {
+        "Thomas (Tommy) Flowers was the British engineer behind the design of the Colossus computer.",
+        "Invented originally for Guinness, plastic widgets are nitrogen-filled spheres.",
+        "For 20 years after its introduction in 1979, the Walkman dominated the personal stereo market."
+    },
+    Notes = new Dictionary<string, string>
+    {
+        { "121", "Fridges" },
+        { "144", "Peter Higgs" },
+        { "48", "Saint Mark's Basilica" },
+        { "36", "The Terracotta Army" }
+    }
+};
+
+context.Add(book);
+context.SaveChanges();
+-->
+[!code-csharp[Insert](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosPrimitiveTypesSample.cs?name=Insert)]
+
+This results in the following JSON document:
+
+```json
+{
+    "Id": "0b32283e-22a8-4103-bb4f-6052604868bd",
+    "Discriminator": "Book",
+    "Notes": {
+        "36": "The Terracotta Army",
+        "48": "Saint Mark's Basilica",
+        "121": "Fridges",
+        "144": "Peter Higgs"
+    },
+    "Quotes": [
+        "Thomas (Tommy) Flowers was the British engineer behind the design of the Colossus computer.",
+        "Invented originally for Guinness, plastic widgets are nitrogen-filled spheres.",
+        "For 20 years after its introduction in 1979, the Walkman dominated the personal stereo market."
+    ],
+    "Title": "How It Works: Incredible History",
+    "id": "Book|0b32283e-22a8-4103-bb4f-6052604868bd",
+    "_rid": "t-E3AIxaencBAAAAAAAAAA==",
+    "_self": "dbs/t-E3AA==/colls/t-E3AIxaenc=/docs/t-E3AIxaencBAAAAAAAAAA==/",
+    "_etag": "\"00000000-0000-0000-9b50-fc769dc901d7\"",
+    "_attachments": "attachments/",
+    "_ts": 1630075016
+}
+```
+
+These collections can then be updated, again in the normal way:
+
+<!--
+book.Quotes.Add("Pressing the emergency button lowered the rods again.");
+book.Notes["48"] = "Chiesa d'Oro";
+
+context.SaveChanges();
+-->
+[!code-csharp[Updates](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosPrimitiveTypesSample.cs?name=Updates)]
+
+Limitations:
+
+* Only dictionaries with string keys are supported
+* Querying into the contents of primitive collections is not currently supported. Vote for [#16926](https://github.com/dotnet/efcore/issues/16926), [#25700](https://github.com/dotnet/efcore/issues/25700), and [#25701](https://github.com/dotnet/efcore/issues/25701) if these features are important to you.
 
 ## Working with disconnected entities
 

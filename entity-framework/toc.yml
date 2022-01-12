@@ -113,7 +113,7 @@
       - name: Overview
         href: core/dbcontext-configuration/index.md
       - name: Context pooling
-        href: core/performance/advanced-performance-topics#dbcontext-pooling
+        href: core/performance/advanced-performance-topics.md#dbcontext-pooling
 
     - name: Create a model
       items:
