@@ -9,6 +9,9 @@ uid: core/querying/pagination
 
 Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is shown that allows the user to navigate to the next or previous page of the results.
 
+> [!WARNING]
+> Regardless of the pagination method used, always make sure that your ordering is fully deterministic. For example, if results are ordered only by date, but there can be multiple results with the same date, then results could be skipped when paginating as they're ordered differently across two paginating queries. Ordering by both date and ID (or any other unique property) makes the ordering fully deterministic and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key; queries without explicit ordering have non-deterministic resultsets.
+
 ## Offset pagination
 
 A common way to implement pagination with databases is to use the `Skip` and `Take` (`OFFSET` and `LIMIT` in SQL). Given a a page size of 10 results, the third page can be fetched with EF Core as follows:
@@ -29,9 +32,6 @@ The recommended alternative to offset-based pagination - sometimes called *keyse
 Assuming an index is defined on `PostId`, this query is very efficient, and also isn't sensitive to any concurrent changes happening in lower Id values.
 
 Keyset pagination is appropriate for pagination interfaces where the user navigates forwards and backwards, but does not support random access, where the user can jump to any specific page. Random access pagination requires using offset pagination as explained above; because of the shortcomings of offset pagination, carefully consider if random access pagination really is required for your use case, or if next/previous page navigation is enough. If random access pagination is necessary, a robust implementation could use keyset pagination when navigation to the next/previous page, and offset navigation when jumping to any other page.
-
-> [!WARNING]
-> Always make sure that your ordering is fully deterministic. For example, if results are ordered only by date, but there can be multiple results with the same date, then results could be skipped when paginating as they're ordered differently across two queries. Ordering by both date and ID (or any other unique property) makes the resultset deterministic and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key; queries without explicit ordering have non-deterministic resultsets.
 
 ### Multiple pagination keys
 
