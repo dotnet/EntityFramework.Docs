@@ -548,7 +548,7 @@ Many query services and some design-time services that were registered as `Singl
 
 #### Why
 
-The lifetime had to be changed to allow a new feature - <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping> - to affect queries.
+The lifetime had to be changed to allow a new feature - <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping%2A> - to affect queries.
 
 The design-time services lifetimes have been adjusted to match the run-time services lifetimes to avoid errors when using both.
 
