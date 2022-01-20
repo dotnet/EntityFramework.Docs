@@ -60,7 +60,7 @@ Pre-convention configuration also allows to ignore a type and prevent it from be
 
 ### Default type mapping
 
-Generally, EF is able to translate queries with constants of a type that is not supported by the provider, as long as you have specified a value converter for a property of this type. However, in queries that don't involve any properties of this type, there is no way for EF to find the correct value converter. In this case, it's possible to call <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping> to add or override a provider type mapping:
+Generally, EF is able to translate queries with constants of a type that is not supported by the provider, as long as you have specified a value converter for a property of this type. However, in queries that don't involve any properties of this type, there is no way for EF to find the correct value converter. In this case, it's possible to call <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping%2A> to add or override a provider type mapping:
 
 [!code-csharp[Main](../../../samples/core/Modeling/BulkConfiguration/PreConventionContext.cs?name=DefaultTypeMapping)]
 
