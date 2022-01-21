@@ -31,26 +31,29 @@ else
 
 @code {
     [Parameter]
-    public Func<List<Contact>> FetchContacts { get; set; } =
-            () => new List<Contact>();
+    public Func<List<Contact>>? FetchContacts { get; set; }             
+
+    [Parameter]
+    public Func<Task<List<Contact>>> FetchContactsAsync { get; set; } =
+            async () => await Task.FromResult(new List<Contact>());
 
     private List<Contact>? Contacts = null;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
-        Service.OnTenantChanged += (o, e) =>
+        await base.OnInitializedAsync();
+        Service.OnTenantChanged += async (o, e) =>
         {
-            RefreshContacts();
+            await RefreshContactsAsync();
             StateHasChanged();
         };
-        RefreshContacts();
+        await RefreshContactsAsync();
     }
 
-    private void RefreshContacts()
+    private async Task RefreshContactsAsync()
     {
         Contacts = null;
-        var list = FetchContacts();
+        var list = FetchContacts == null ? await FetchContactsAsync() : FetchContacts();
         Contacts = new List<Contact>(list);
     }
 }
