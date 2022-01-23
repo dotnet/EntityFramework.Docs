@@ -6,7 +6,9 @@ namespace EF.Testing.BusinessLogic
     public interface IBloggingRepository
     {
         Blog GetBlogByName(string name);
+
         IEnumerable<Blog> GetAllBlogs();
+
         void AddBlog(Blog blog);
 
         void SaveChanges();

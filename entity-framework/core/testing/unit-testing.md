@@ -19,7 +19,7 @@ The repository pattern is the recommended technique for writing unit tests for E
 
 [!code-csharp[Main](../../../samples/core/Testing/BusinessLogic/BloggingRepository.cs?name=BloggingRepository)]
 
-There's not much to it: the repository simply wraps an EF Core context, and exposes methods which execute the database queries and updates on it. A key point to note is that our `GetAllBlogs` method returns `IEnumerable<Blog>`, and not `IQueryable<Blog>`. Returning the latter would mean that query operators can still be composed over the result, requiring EF Core to still involved in translating the query; this would defeat the purpose of having a repository in the first place. `IEnumerable<Blog>` allows us to easily stub or mock what the repository returns.
+There's not much to it: the repository simply wraps an EF Core context, and exposes methods which execute the database queries and updates on it. A key point to note is that our `GetAllBlogs` method returns `IEnumerable<Blog>`, and not `IQueryable<Blog>`. Returning the latter would mean that query operators can still be composed over the result, requiring that EF Core still be involved in translating the query; this would defeat the purpose of having a repository in the first place. `IEnumerable<Blog>` allows us to easily stub or mock what the repository returns.
 
 For an ASP.NET application, we need to register the repository as a service in dependency injection by adding the following to the application's `ConfigureServices`:
 
@@ -47,14 +47,14 @@ Tests can now call `CreateContext`, which returns a context using the connection
 
 The full sample code can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/UnitTests/SqliteInMemoryBloggingControllerTest.cs).
 
-## InMemory provider
+## In-memory provider
 
-As discussed in the [testing overview page](xref:core/testing/index#inmemory-as-a-database-fake), using the InMemory provider for testing is strongly discouraged; [consider using SQLite instead](#sqlite-in-memory), or [implementing the repository pattern](#repository-pattern). If you've decided to use InMemory, here is a typical test class constructor that sets up and seeds a new in-memory database before each test:
+As discussed in the [testing overview page](xref:core/testing/index#inmemory-as-a-database-fake), using the in-memory provider for testing is strongly discouraged; [consider using SQLite instead](#sqlite-in-memory), or [implementing the repository pattern](#repository-pattern). If you've decided to use in-memory, here is a typical test class constructor that sets up and seeds a new in-memory database before each test:
 
 [!code-csharp[Main](../../../samples/core/Testing/UnitTests/InMemoryBloggingControllerTest.cs?name=Constructor)]
 
-InMemory databases are identified by a simple, string name, and it's possible to connect to the same database several times by providing the same name (this is why the sample above must call `EnsureDeleted` before each test). However, note that in-memory databases are rooted in the context's internal service provider; while in most cases contexts share the same service provider, configuring contexts with different options may trigger the use of a new internal service provider. When that's the case, explicitly pass the same instance of <xref:Microsoft.EntityFrameworkCore.Storage.InMemoryDatabaseRoot> to `UseInMemoryDatabase` for all contexts which should share in-memory databases (this is typically done by having a static `InMemoryDatabaseRoot` field).
+In-memory databases are identified by a simple, string name, and it's possible to connect to the same database several times by providing the same name (this is why the sample above must call `EnsureDeleted` before each test). However, note that in-memory databases are rooted in the context's internal service provider; while in most cases contexts share the same service provider, configuring contexts with different options may trigger the use of a new internal service provider. When that's the case, explicitly pass the same instance of <xref:Microsoft.EntityFrameworkCore.Storage.InMemoryDatabaseRoot> to `UseInMemoryDatabase` for all contexts which should share in-memory databases (this is typically done by having a static `InMemoryDatabaseRoot` field).
 
-Note that by default, if a transaction is started, the InMemory provider will throw an exception, since transactions aren't supported. You may wish to have transactions silently ignored instead, by configuring EF Core to ignore `InMemoryEventId.TransactionIgnoredWarning` as in the above sample. However, if your code actually relies on transactional semantics - e.g. depends on rollback to be implemented - your test won't work.
+Note that by default, if a transaction is started, the in-memory provider will throw an exception, since transactions aren't supported. You may wish to have transactions silently ignored instead, by configuring EF Core to ignore `InMemoryEventId.TransactionIgnoredWarning` as in the above sample. However, if your code actually relies on transactional semantics - e.g. depends on rollback to be implemented - your test won't work.
 
 The full sample code can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/UnitTests/InMemoryBloggingControllerTest.cs).

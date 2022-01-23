@@ -32,11 +32,11 @@ The above is not meant to disparage unit testing or to argue against writing the
 Unlike integration tests, unit tests never involve the actual database system used in production, but rather swap it with a [test double](https://en.wikipedia.org/wiki/Test_double). Below are some common methods for unit testing EF Core applications with test doubles:
 
 1. Use SQLite (in-memory mode) as a database fake, replacing your production database system.
-2. Use the EF Core InMemory provider as a database fake, replacing your production database system.
+2. Use the EF Core in-memory provider as a database fake, replacing your production database system.
 3. Mock or stub out `DbContext` and `DbSet`.
 4. Introduce a repository layer between EF Core and your application code, and mock or stub that layer.
 
-Below, we'll explore what each method means, and compare it with the others. We recommend reading through the different methods to gain a full understanding, but if you're looking for a quick suggestion, we highly recommend the 4th method: introducing a repository layer.
+Below, we'll explore what each method means, and compare it with the others; We recommend reading through the different methods to gain a full understanding of each one. If you've decided that unit tests are required (as opposed to integration tests), than a repository layer is the only approach allowing the comprehensive and reliable stubbing/mocking of the data layer. However, that approach has a significant cost in terms of implementation and maintenance.
 
 ### SQLite as a database fake
 
@@ -53,18 +53,18 @@ Compared to running integration tests against your production database system, i
 
 For information on how to use SQLite for unit testing, see the [unit testing page](xref:core/testing/unit-testing#sqlite-in-memory).
 
-### InMemory as a database fake
+### In-memory as a database fake
 
-As an alternative to SQLite, EF Core also comes with an InMemory provider. Although this provider was originally designed to support internal testing of EF Core itself, some developers use it as a database fake when unit testing EF Core using EF Core. Doing so is **highly discouraged**: as a database fake, InMemory has the same issues as SQLite (see above), but in addition has the following additional limitations:
+As an alternative to SQLite, EF Core also comes with an in-memory provider. Although this provider was originally designed to support internal testing of EF Core itself, some developers use it as a database fake when unit testing EF Core using EF Core. Doing so is **highly discouraged**: as a database fake, in-memory has the same issues as SQLite (see above), but in addition has the following additional limitations:
 
-* The InMemory provider generally supports less query types than the SQLite provider, since it isn't a relational database. More queries will fail or behave differently in comparison to your production database.
+* The in-memory provider generally supports less query types than the SQLite provider, since it isn't a relational database. More queries will fail or behave differently in comparison to your production database.
 * Transactions are not supported.
 * Raw SQL is completely unsupported. Compare this with SQLite, where it's possible to use raw SQL, as long as that SQL works in the same way on SQLite and your production database.
-* The InMemory provider has not been optimized for performance, and will generally work slower than SQLite in in-memory mode.
+* The in-memory provider has not been optimized for performance, and will generally work slower than SQLite in in-memory mode.
 
-In summary, InMemory has all the disadvantages of SQLite, along with a few more - and offers no advantages in return. If you are looking for a simple, in-memory database fake, use SQLite instead of the InMemory provider; but consider using the repository pattern instead as described below.
+In summary, in-memory has all the disadvantages of SQLite, along with a few more - and offers no advantages in return. If you are looking for a simple, in-memory database fake, use SQLite instead of the in-memory provider; but consider using the repository pattern instead as described below.
 
-For information on how to use InMemory for unit testing, see the [unit testing page](xref:core/testing/unit-testing#inmemory).
+For information on how to use in-memory for unit testing, see the [unit testing page](xref:core/testing/unit-testing#inmemory).
 
 ### Mocking or stubbing DbContext and DbSet
 
@@ -72,7 +72,7 @@ This approach typically uses a mock framework to create a test double of `DbCont
 
 However, properly mocking `DbSet` *query* functionality is not possible, since queries are expressed via LINQ operators, which are static extension method calls over `IQueryable`. As a result, when some people talk about "mocking `DbSet`", what they really mean is that they stub `DbSet` out with an in-memory collection, and then evaluate query operators against that collection in memory, just like a simple `IEnumerable`. This isn't the same as actually mocking or stubbing the database, which would involve stubbing out query **end results**, rather than query inputs (i.e. the database table, as represented by a `DbSet`).
 
-Since only the `DbSet` itself is stubbed and the query is evaluated in-memory, this approach ends up being very similar to using the EF Core InMemory provider: both techniques execute query operators in .NET over an in-memory collection. As a result, this technique suffers from the same drawbacks as well: queries will behave differently (e.g. around case sensitivity) or will simply fail (e.g. because of provider-specific methods), raw SQL won't work and transactions will be ignored at best. As a result, this technique should generally be avoided for testing any query code.
+Since only the `DbSet` itself is stubbed and the query is evaluated in-memory, this approach ends up being very similar to using the EF Core in-memory provider: both techniques execute query operators in .NET over an in-memory collection. As a result, this technique suffers from the same drawbacks as well: queries will behave differently (e.g. around case sensitivity) or will simply fail (e.g. because of provider-specific methods), raw SQL won't work and transactions will be ignored at best. As a result, this technique should generally be avoided for testing any query code.
 
 ### Repository pattern
 
@@ -80,33 +80,37 @@ The approaches above attempted to either swap EF Core's production database prov
 
 For proper, reliable unit testing, consider introducing a [repository layer](https://martinfowler.com/eaaCatalog/repository.html) which mediates between your application code and EF Core. The production implementation of the repository contains the actual LINQ queries and executes them via EF Core. In testing, the repository abstraction is directly stubbed or mocked without needing any actual LINQ queries, effectively removing EF Core from your testing stack altogether and allowing tests to focus on application code alone.
 
-The following diagram compares the database fake pattern (SQLite/InMemory) with the repository pattern:
+The following diagram compares the database fake pattern (SQLite/in-memory) with the repository pattern:
 
 ![Comparison of fake provider with repository pattern](_static/fake-provider-and-repository-pattern.png)
 
-Since LINQ queries are no longer part of testing, you can directly provide query results to your application. Put another way, the previous approaches roughly allow stubbing out *query inputs* (e.g. replacing SQL Server tables with an in-memory one), but then still execute the actual query operators in-memory; the repository pattern, in contrast, allows you to stub out *query outputs* directly, allowing for far more powerful and focused unit testing.
+Since LINQ queries are no longer part of testing, you can directly provide query results to your application. Put another way, the previous approaches roughly allow stubbing out *query inputs* (e.g. replacing SQL Server tables with an in-memory one), but then still execute the actual query operators in-memory; the repository pattern, in contrast, allows you to stub out *query outputs* directly, allowing for far more powerful and focused unit testing. Note that for this to work, your repository cannot expose any IQueryable-returning methods, as these once again cannot be stubbed out; IEnumerable should be returned instead.
 
-One possible disadvantage of the repository pattern is that it requires you to architect your application accordingly: application code can no longer execute LINQ queries directly, but must instead call into a repository method, which executes the query (and is stubbed in testing). This can make for a somewhat heavier application architecture, but can also have other advantages: all data access code is concentrated in one place rather than being spread around the application, and if your application needs to support more than one database, the repository abstraction can be very helpful for tweaking queries across providers.
+However, since the repository pattern requires encapsulating each and every (testable) LINQ query in an IEnumerable-returning method, it imposes an additional architectural layer on your application, and requires a significant cost to implement and maintain. This cost should not be discounted when making a choice on how to test an application, especially given that integration tests for the queries generated by the repository will still be needed anyway.
 
-For an example of a unit testing with a repository, see the [unit testing page](xref:core/testing/unit-testing#repository-pattern).
+It's worth noting that repositories do have advantages outside of just testing. They ensure all data access code is concentrated in one place rather than being spread around the application, and if your application needs to support more than one database, then the repository abstraction can be very helpful for tweaking queries across providers.
+
+For a sample showing unit testing with a repository, see the [unit testing page](xref:core/testing/unit-testing#repository-pattern).
 
 ## Overall comparison
 
 The following table provides a quick, comparative view of the different testing techniques, and shows which functionality can be tested under which approach:
 
-Feature                             | InMemory     | SQLite in-memory          | Mock DbContext | Repository pattern | Integration testing
------------------------------------ | ------------ | ------------------------- | -------------- | ------------------ | -------------------
-Test double type                    | Fake         | Fake                      | Mock/stub      | Mock/stub          | Real, no double
-Raw SQL?                            | No           | Depends                   | No             | Yes                | Yes
-Transactions?                       | No (ignored) | Yes                       | Yes            | Yes                | Yes
-Provider-specific translations?     | No           | No                        | No             | Yes                | Yes
-Exact query behavior?               | Depends      | Depends                   | Depends        | Yes                | Yes
-Requires special code architecture? | No           | No                        | No             | Yes                | No
+Feature                                   | In-memory    | SQLite in-memory          | Mock DbContext | Repository pattern | Integration testing
+----------------------------------------- | ------------ | ------------------------- | -------------- | ------------------ | -------------------
+Test double type                          | Fake         | Fake                      | Mock/stub      | Mock/stub          | Real, no double
+Raw SQL?                                  | No           | Depends                   | No             | Yes                | Yes
+Transactions?                             | No (ignored) | Yes                       | Yes            | Yes                | Yes
+Provider-specific translations?           | No           | No                        | No             | Yes                | Yes
+Exact query behavior?                     | Depends      | Depends                   | Depends        | Yes                | Yes
+Can use LINQ anywhere in the application? | Yes          | Yes                       | Yes            | No*                | Yes
+
+* All testable database LINQ queries must be encapsulated in IEnumerable-returning repository methods, in order to be stubbed/mocked.
 
 ## Summary
 
 * We highly recommend that developers have good test coverage of their application running against their actual production database system. This provides confidence that the application actually works in production, and with proper design, tests can execute reliably and quickly. Since integration tests are required in any case, it's a good idea to start there, and add unit tests later, based on need.
-* For unit testing, we recommend implementing the repository pattern, allowing you to properly stub or mock out your data access layer above EF Core, rather than via a fake EF Core provider (Sqlite/InMemory) or by mocking `DbSet`.
+* For unit testing, we recommend implementing the repository pattern, allowing you to properly stub or mock out your data access layer above EF Core, rather than via a fake EF Core provider (Sqlite/un-memory) or by mocking `DbSet`.
 * If the repository pattern isn't a viable option for some reason, consider using SQLite in-memory databases.
-* Avoid the InMemory provider for testing purposes - this is discouraged and only supported for legacy applications.
+* Avoid the in-memory provider for testing purposes - this is discouraged and only supported for legacy applications.
 * Avoid mocking `DbSet` for querying purposes.
