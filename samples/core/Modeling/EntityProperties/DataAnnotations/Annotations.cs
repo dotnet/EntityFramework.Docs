@@ -1,10 +1,5 @@
-// RequiredAttribute
 using System.ComponentModel.DataAnnotations;
-
-// TableAttribute
 using System.ComponentModel.DataAnnotations.Schema;
-
-// DbContext
 using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityProperties.DataAnnotations.Required
@@ -14,7 +9,6 @@ namespace EFModeling.EntityProperties.DataAnnotations.Required
         public DbSet<Blog> Blogs { get; set; }
     }
 
-    #region Required
     [Table("Blogs")]
     public class Blog
     {
@@ -23,5 +17,4 @@ namespace EFModeling.EntityProperties.DataAnnotations.Required
         [Required]
         public string Url { get; set; }
     }
-    #endregion
 }
