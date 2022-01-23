@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.EntityProperties.DataAnnotations.Required
+namespace EFModeling.EntityProperties.DataAnnotations.Annotations
 {
     internal class MyContext : DbContext
     {
