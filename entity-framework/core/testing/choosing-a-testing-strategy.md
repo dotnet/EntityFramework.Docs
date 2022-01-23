@@ -49,7 +49,7 @@ However, before doing this, it's important to understand that in EF Core, differ
 * If your query happens to use a provider-specific method such as SQL Server's [`EF.Functions.DateDiffDay`](xref:core/providers/sql-server/functions#date-and-time-functions), that query will fail on SQLite, and cannot be tested.
 * Raw SQL may work, or it may fail or return different results, depending on exactly what is being done. SQL dialects are different in many ways across databases.
 
-Compared to running integration tests against your production database system, it's relatively easy to get started with SQLite, and so many users do. Unfortunately, the above limitations tend to eventually become problematic when unit testing EF Core applications, even if they don't seem to be at the beginning. As a result, we recommend either concentrating on integration tests, or implementing unit tests via the repository pattern as discussed below.
+Compared to running integration tests against your production database system, it's relatively easy to get started with SQLite, and so many users do. Unfortunately, the above limitations tend to eventually become problematic when unit testing EF Core applications, even if they don't seem to be at the beginning. As a result, we recommend either concentrating on integration tests, or if unit tests for these things are an absolute necessity, then taking onboard the cost of a repository pattern as discussed below.
 
 For information on how to use SQLite for unit testing, see the [unit testing page](xref:core/testing/unit-testing#sqlite-in-memory).
 
