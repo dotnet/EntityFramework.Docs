@@ -40,7 +40,7 @@ dbContext.Database.EnsureCreated();
 
 ## SQL Script
 
-To get the SQL used by `EnsureCreated`, you can use the <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.GenerateCreateScript> method.
+To get the SQL used by `EnsureCreated`, you can use the <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.GenerateCreateScript%2A> method.
 
 ```csharp
 var sql = dbContext.Database.GenerateCreateScript();

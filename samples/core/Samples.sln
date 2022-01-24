@@ -169,11 +169,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{0667
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "Testing\BusinessLogic\BusinessLogic.csproj", "{487B9A76-363D-441F-84B6-ADEDEA1F2E39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "Testing\IntegrationTests\IntegrationTests.csproj", "{E056C05D-9BAD-4B69-9751-5C26D76319A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingWithTheDatabase", "Testing\TestingWithTheDatabase\TestingWithTheDatabase.csproj", "{E056C05D-9BAD-4B69-9751-5C26D76319A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloggingWebApi", "Testing\BloggingWebApi\BloggingWebApi.csproj", "{046C7454-643D-4C83-A2C7-50E060446B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Testing\UnitTests\UnitTests.csproj", "{937DD70A-FF53-4129-A7C5-FD5F0758591D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingWithoutTheDatabase", "Testing\TestingWithoutTheDatabase\TestingWithoutTheDatabase.csproj", "{937DD70A-FF53-4129-A7C5-FD5F0758591D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

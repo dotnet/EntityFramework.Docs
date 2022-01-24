@@ -34,7 +34,7 @@ Install-Package Microsoft.EntityFrameworkCore.InMemory
 
 The following resources will help you get started with this provider.
 
-* [Testing with InMemory](xref:core/testing/unit-testing#inmemory-provider)
+* [Testing with InMemory](xref:core/testing/testing-without-the-database#inmemory-provider)
 * [UnicornStore Sample Application Tests](https://github.com/rowanmiller/UnicornStore/blob/master/UnicornStore/src/UnicornStore.Tests/Controllers/ShippingControllerTests.cs)
 
 ## Supported Database Engines

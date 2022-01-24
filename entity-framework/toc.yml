@@ -290,10 +290,10 @@
       items:
       - name: Introduction to testing
         href: core/testing/index.md
-      - name: Integration testing
-        href: core/testing/integration-testing.md
-      - name: Unit testing
-        href: core/testing/unit-testing.md
+      - name: Testing against your production database system
+        href: core/testing/testing-with-the-database.md
+      - name: Testing without your production database system
+        href: core/testing/testing-without-the-database.md
 
     - name: Performance
       items:
