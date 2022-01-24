@@ -288,16 +288,12 @@
 
     - name: Testing
       items:
-      - name: Testing code that uses EF Core
+      - name: Introduction to testing
         href: core/testing/index.md
-      - name: EF Core testing sample
-        href: core/testing/testing-sample.md
-      - name: Sharing databases between tests
-        href: core/testing/sharing-databases.md
-      - name: Test with SQLite
-        href: core/testing/sqlite.md
-      - name: Test with InMemory
-        href: core/testing/in-memory.md
+      - name: Testing against your production database system
+        href: core/testing/testing-with-the-database.md
+      - name: Testing without your production database system
+        href: core/testing/testing-without-the-database.md
 
     - name: Performance
       items:

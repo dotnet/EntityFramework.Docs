@@ -439,6 +439,26 @@
             "source_path": "core/saving/explicit-values-generated-properties.md",
             "redirect_url": "/ef/core/modeling/generated-properties#overriding-values",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "core/testing/testing-sample.md",
+            "redirect_url": "/ef/core/testing/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "core/testing/sharing-databases.md",
+            "redirect_url": "/ef/core/testing/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "core/testing/sqlite.md",
+            "redirect_url": "/ef/core/testing/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "core/testing/in-memory.md",
+            "redirect_url": "/ef/core/testing/index",
+            "redirect_document_id": false
         }
     ]
 }
