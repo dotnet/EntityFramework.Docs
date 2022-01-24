@@ -8,6 +8,7 @@ namespace EFModeling.EntityProperties.DataAnnotations.Required
         public DbSet<Blog> Blogs { get; set; }
     }
 
+#region Required
     public class Blog
     {
         public int BlogId { get; set; }
@@ -15,4 +16,5 @@ namespace EFModeling.EntityProperties.DataAnnotations.Required
         [Required]
         public string Url { get; set; }
     }
+#endregion
 }
