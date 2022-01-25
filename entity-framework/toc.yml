@@ -290,6 +290,8 @@
       items:
       - name: Introduction to testing
         href: core/testing/index.md
+      - name: Choosing a testing strategy
+        href: core/testing/choosing-a-testing-strategy.md
       - name: Testing against your production database system
         href: core/testing/testing-with-the-database.md
       - name: Testing without your production database system
