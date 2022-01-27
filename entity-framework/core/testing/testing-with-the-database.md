@@ -7,7 +7,7 @@ uid: core/testing/testing-with-the-database
 ---
 # Testing against your production database system
 
-In this page, we discuss techniques for writing automated tests which involve the database system against which the application runs in production. Alternate testing approaches exist, where the production database system is swapped out by test doubles; see the [testing overview page](xref:core/testing/index) for more information. Note that testing against an a different database than what is used in production (e.g. Sqlite) is not covered here, since the different database is used as a test double; this approach is covered in [Testing without your production database system](xref:core/testing/testing-without-the-database).
+In this page, we discuss techniques for writing automated tests which involve the database system against which the application runs in production. Alternate testing approaches exist, where the production database system is swapped out by test doubles; see the [testing overview page](xref:core/testing/index) for more information. Note that testing against a different database than what is used in production (e.g. Sqlite) is not covered here, since the different database is used as a test double; this approach is covered in [Testing without your production database system](xref:core/testing/testing-without-the-database).
 
 The main hurdle with testing which involves a real database is to ensure proper test isolation, so that tests running in parallel (or even in serial) don't interfere with each other. The full sample code for the below can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithTheDatabase).
 
@@ -16,7 +16,7 @@ The main hurdle with testing which involves a real database is to ensure proper 
 
 ## Setting up your database system
 
-Most database systems nowadays can be easily installed, both in CI environments and on developer machines. While it's frequently easy enough to install the database via the regular installation mechanism, ready-to-use Docker images are available for most major databases and can make installation particularly easy in CI. For the developer environment, [Github Workspaces](https://docs.github.com/en/codespaces/overview), [Dev Container](https://code.visualstudio.com/docs/remote/create-dev-container) can set up all needed services and dependencies - including the database. While this requires an initial investment in setup, once that's done you have a working testing environment and can concentrate on more important things.
+Most database systems nowadays can be easily installed, both in CI environments and on developer machines. While it's frequently easy enough to install the database via the regular installation mechanism, ready-to-use Docker images are available for most major databases and can make installation particularly easy in CI. For the developer environment, [GitHub Workspaces](https://docs.github.com/en/codespaces/overview), [Dev Container](https://code.visualstudio.com/docs/remote/create-dev-container) can set up all needed services and dependencies - including the database. While this requires an initial investment in setup, once that's done you have a working testing environment and can concentrate on more important things.
 
 In certain cases, databases have a special edition or version which can be helpful for testing. When using SQL Server, [LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb) can be used to run tests locally with virtually no setup at all, spinning up the database instance on demand and possibly saving resources on less powerful developer machines. However, LocalDB is not without its issues:
 
@@ -123,7 +123,7 @@ You may also want to consider using the [respawn](https://github.com/jbogard/res
 
 ## Summary
 
-* When test against a real database, it's worth distinguishing between the following test categories:
+* When testing against a real database, it's worth distinguishing between the following test categories:
   * Read-only tests are relatively simple, and can always execute in parallel against the same database without having to worry about isolation.
   * Write tests are more problematic, but transactions can be used to make sure they're properly isolated.
   * Transactional tests are the most problematic, requiring logic to reset the database back to its original state, as well as disabling parallelization.
