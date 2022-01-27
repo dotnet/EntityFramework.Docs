@@ -76,7 +76,7 @@ Since only the `DbSet` itself is faked and the query is evaluated in-memory, thi
 
 ### Repository pattern
 
-The approaches above attempted to either swap EF Core's production database provider with a fake testing provider, or to create a `DbSet` backed by an in-memory collection. These techniques are similar in that they evaluate the program's LINQ queries - either in SQLite or in memory - and this is ultimately the source of the difficulties outlined above: a query designed to execute against a specific production database cannot reliably execute elsewhere without issues.
+The approaches above attempted to either swap EF Core's production database provider with a fake testing provider, or to create a `DbSet` backed by an in-memory collection. These techniques are similar in that they still evaluate the program's LINQ queries - either in SQLite or in memory - and this is ultimately the source of the difficulties outlined above: a query designed to execute against a specific production database cannot reliably execute elsewhere without issues.
 
 For a proper, reliable test double, consider introducing a [repository layer](https://martinfowler.com/eaaCatalog/repository.html) which mediates between your application code and EF Core. The production implementation of the repository contains the actual LINQ queries and executes them via EF Core. In testing, the repository abstraction is directly stubbed or mocked without needing any actual LINQ queries, effectively removing EF Core from your testing stack altogether and allowing tests to focus on application code alone.
 
@@ -84,13 +84,13 @@ The following diagram compares the database fake approach (SQLite/in-memory) wit
 
 ![Comparison of fake provider with repository pattern](_static/fake-provider-and-repository-pattern.png)
 
-Since LINQ queries are no longer part of testing, you can directly provide query results to your application. Put another way, the previous approaches roughly allow stubbing out *query inputs* (e.g. replacing SQL Server *tables* with an in-memory one), but then still execute the actual query operators in-memory. The repository pattern, in contrast, allows you to stub out *query outputs* directly, allowing for far more powerful and focused unit testing. Note that for this to work, your repository cannot expose any IQueryable-returning methods, as these once again cannot be stubbed out; IEnumerable should be returned instead.
+Since LINQ queries are no longer part of testing, you can directly provide query results to your application. Put another way, the previous approaches roughly allow stubbing out *query inputs* (e.g. replacing SQL Server *tables* with in-memory ones), but then still execute the actual query operators in-memory. The repository pattern, in contrast, allows you to stub out *query outputs* directly, allowing for far more powerful and focused unit testing. Note that for this to work, your repository cannot expose any IQueryable-returning methods, as these once again cannot be stubbed out; IEnumerable should be returned instead.
 
 However, since the repository pattern requires encapsulating each and every (testable) LINQ query in an IEnumerable-returning method, it imposes an additional architectural layer on your application, and can incur significant cost to implement and maintain. This cost should not be discounted when making a choice on how to test an application, especially given that tests against the real database are still likely to be needed for the queries exposed by the repository.
 
 It's worth noting that repositories do have advantages outside of just testing. They ensure all data access code is concentrated in one place rather than being spread around the application, and if your application needs to support more than one database, then the repository abstraction can be very helpful for tweaking queries across providers.
 
-For a sample showing testing with a repository, [see this section]](xref:core/testing/testing-without-the-database#repository-pattern).
+For a sample showing testing with a repository, [see this section](xref:core/testing/testing-without-the-database#repository-pattern).
 
 ## Overall comparison
 
@@ -105,12 +105,12 @@ Provider-specific translations?           | No           | No                   
 Exact query behavior?                     | Depends      | Depends                   | Depends        | Yes                | Yes
 Can use LINQ anywhere in the application? | Yes          | Yes                       | Yes            | No*                | Yes
 
-* All testable database LINQ queries must be encapsulated in IEnumerable-returning repository methods, in order to be stubbed/mocked.
+<sup>*</sup> All testable database LINQ queries must be encapsulated in IEnumerable-returning repository methods, in order to be stubbed/mocked.
 
 ## Summary
 
 * We recommend that developers have good test coverage of their application running against their actual production database system. This provides confidence that the application actually works in production, and with proper design, tests can execute reliably and quickly. Since these tests are required in any case, it's a good idea to start there, and if needed, add tests using test doubles later, as required.
-* If you've decided to use a test double, we recommend implementing the repository pattern, which allows you to stubb or mock out your data access layer above EF Core, rather than using a fake EF Core provider (Sqlite/in-memory) or by mocking `DbSet`.
+* If you've decided to use a test double, we recommend implementing the repository pattern, which allows you to stub or mock out your data access layer above EF Core, rather than using a fake EF Core provider (Sqlite/in-memory) or by mocking `DbSet`.
 * If the repository pattern isn't a viable option for some reason, consider using SQLite in-memory databases.
 * Avoid the in-memory provider for testing purposes - this is discouraged and only supported for legacy applications.
 * Avoid mocking `DbSet` for querying purposes.
