@@ -96,7 +96,7 @@ Finally, we make our test class disposable, arranging for the fixture's `Cleanup
 
 Note that since xUnit only ever instantiates the collection fixture once, there is no need for us to use locking around database creation and seeding as we did above.
 
-The full sample code for the above can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/IntegrationTests/TransactionalBloggingControllerTest.cs).
+The full sample code for the above can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithTheDatabase/TransactionalBloggingControllerTest.cs).
 
 > [!TIP]
 > If you have multiple test classes with tests which modify the database, you can still run them in parallel by having different fixtures, each referencing its own database. Creating and using many test databases isn't problematic and should be done whenever it's helpful.
