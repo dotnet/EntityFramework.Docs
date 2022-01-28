@@ -38,5 +38,5 @@ jobs:
         run: dotnet build
 
       - name: Build planetary docs sample
-        working-directory: samples/e2e/PlanetaryDocs
+        working-directory: samples/end2end/PlanetaryDocs
         run: dotnet build
