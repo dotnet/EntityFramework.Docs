@@ -28,7 +28,7 @@ For an ASP.NET Core application, we need to register the repository as a service
 
 [!code-csharp[Main](../../../samples/core/Testing/BloggingWebApi/Startup.cs?name=RegisterRepositoryInDI)]
 
-Finally, our ASP.NET Core controllers get injected with the repository service instead of the EF Core context, and execute methods on it:
+Finally, our controllers get injected with the repository service instead of the EF Core context, and execute methods on it:
 
 [!code-csharp[Main](../../../samples/core/Testing/BloggingWebApi/Controllers/BloggingControllerWithRepository.cs?name=BloggingControllerWithRepository&highlight=8)]
 
