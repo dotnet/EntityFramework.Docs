@@ -308,3 +308,4 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
+/samples/core/Miscellaneous/Multitenancy/MultiDb

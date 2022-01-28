@@ -4,12 +4,6 @@ Welcome to Planetary Docs! This repository is intended to showcase a full
 application that supports Create, Read, Update, and Delete operations (CRUD)
 using Blazor (Server), Entity Framework Core and Azure Cosmos DB.
 
-Please read our [Code of Conduct](https://github.com/dotnet/EntityFramework.Docs/blob/main/CODE-OF-CONDUCT.md) for participating in
-discussions and contributions. If you are interested in contributing, please
-read our [Guide for Contributors](https://github.com/dotnet/EntityFramework.Docs/blob/main/CONTRIBUTING.md).
-
-This project is licensed under "﻿Attribution 4.0 International". See the [license file](https://github.com/dotnet/EntityFramework.Docs/blob/main/LICENSE) for more information.
-
 > **Important Security Notice** This app is meant for demo purposes only. As implemented, it
 is not a production-ready app. More specifically, there are no users or roles defined and
 access is _not_ secured by a login. That means anyone with the URL can modify your
