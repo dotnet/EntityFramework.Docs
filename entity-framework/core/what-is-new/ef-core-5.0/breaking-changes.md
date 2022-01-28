@@ -499,7 +499,7 @@ It was possible to change the discriminator value before calling `SaveChanges`
 
 #### New behavior
 
-An exception will be throws in the above case.
+An exception will be thrown in the above case.
 
 #### Why
 
