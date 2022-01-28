@@ -24,11 +24,11 @@ If you've decided to write tests without involving your production database syst
 
 There's not much to it: the repository simply wraps an EF Core context, and exposes methods which execute the database queries and updates on it. A key point to note is that our `GetAllBlogs` method returns `IEnumerable<Blog>`, and not `IQueryable<Blog>`. Returning the latter would mean that query operators can still be composed over the result, requiring that EF Core still be involved in translating the query; this would defeat the purpose of having a repository in the first place. `IEnumerable<Blog>` allows us to easily stub or mock what the repository returns.
 
-For an ASP.NET application, we need to register the repository as a service in dependency injection by adding the following to the application's `ConfigureServices`:
+For an ASP.NET Core application, we need to register the repository as a service in dependency injection by adding the following to the application's `ConfigureServices`:
 
 [!code-csharp[Main](../../../samples/core/Testing/BloggingWebApi/Startup.cs?name=RegisterRepositoryInDI)]
 
-Finally, our ASP.NET controllers get injected with the repository service instead of the EF Core context, and execute methods on it:
+Finally, our controllers get injected with the repository service instead of the EF Core context, and execute methods on it:
 
 [!code-csharp[Main](../../../samples/core/Testing/BloggingWebApi/Controllers/BloggingControllerWithRepository.cs?name=BloggingControllerWithRepository&highlight=8)]
 
