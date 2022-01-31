@@ -2,18 +2,23 @@
 title: Choosing a testing strategy - EF Core
 description: Different approaches to testing applications that use Entity Framework Core
 author: roji
-ms.date: 11/07/2021
+ms.date: 1/31/2022
 uid: core/testing/choosing-a-testing-strategy
 ---
 # Choosing a testing strategy
 
-As discussed in the [Overview](xref:core/testing/index), a basic decision you need to make is whether your tests will involve your production database system - just as your application does - or whether your tests will run against a [test double](https://martinfowler.com/bliki/TestDouble.html), which replaces your production database system.
+As discussed in the [Overview](xref:core/testing/index), the test design much choose between testing with one of the following approaches:
 
-Testing against a real external resource - rather than replacing it with a test double - can involve the following difficulties:
+* The production database system, similar to the application database.
+* A [test double](https://martinfowler.com/bliki/TestDouble.html), which replaces the production database system.
 
-1. In many cases, it's simply not possible or practical to test against the actual external resource. For example, your application may interact with some service that cannot be easily tested against (because of rate limiting, or the lack of a testing environment).
-2. Even when it's possible to involve the real external resource, this may be exceedingly slow: running a large amount of tests against a cloud service may cause tests to take too long. Testing should be part of the developer's everyday workflow, so it's important that tests run quickly.
-3. Executing tests against an external resource may involve isolation issues, where tests interfere with one another. For example, multiple tests running in parallel against a database may modify data and cause each other to fail in various ways. Using a test double avoids this, as each test runs against its own, in-memory resource, and is therefore naturally isolated from other tests.
+Testing against a real external resource, rather than replacing it with a test double, can involve the following difficulties:
+
+1. In many cases, it's simply not possible or practical to test against the actual external resource. For example, the application may interact with some service that cannot be easily mocked or tested against. For example, mocking may not be possible because of rate limiting, or the lack of a testing environment.
+2. Even when it's possible to involve the real external resource, testing external resources may be too slow. Running a large amount of tests against a cloud service may cause tests to take too long. Testing should be part of the developer's everyday workflow, so it's important that tests run quickly.
+3. Executing tests against an external resource may involve isolation issues, where tests interfere with one another. For example, multiple tests running in parallel against a database may modify data and cause each other to fail in various ways. Using a test double avoids interference, each test:
+  * Runs against its own, in-memory resource.
+  * Is naturally isolated from other tests.
 
 However, tests which pass against a test double don't guarantee that your program works when running against the real external resource. For example, a database test double may perform case-sensitive string comparisons, whereas the production database system does case-insensitive comparisons. Such issues are only uncovered when tests are executed against your real production database, making these tests an important part of any testing strategy.
 
@@ -55,14 +60,17 @@ For information on how to use SQLite for testing, [see this section](xref:core/t
 
 ### In-memory as a database fake
 
-As an alternative to SQLite, EF Core also comes with an in-memory provider. Although this provider was originally designed to support internal testing of EF Core itself, some developers use it as a database fake when testing EF Core applications. Doing so is **highly discouraged**: as a database fake, in-memory has the same issues as SQLite (see above), but in addition has the following additional limitations:
+The EF-Core in-memory database provider can be used for limited and basic testing, however the  SQLite provider is the recommend choice for in-memory testing. The EF Core in-memory has the [same issues as SQLite](#sqlite-as-a-database-fake), and has the following additional limitations:
 
-* The in-memory provider generally supports less query types than the SQLite provider, since it isn't a relational database. More queries will fail or behave differently in comparison to your production database.
-* Transactions are not supported.
-* Raw SQL is completely unsupported. Compare this with SQLite, where it's possible to use raw SQL, as long as that SQL works in the same way on SQLite and your production database.
-* The in-memory provider has not been optimized for performance, and will generally work slower than SQLite in in-memory mode (or even your production database system).
+* Supports less query types than the SQLite provider, since it isn't a relational database. More queries fail or behave differently in comparison to a production database.
+* Isn't optimized for performance, and generally runs slower than SQLite in in-memory mode or even a production database system.
+* The following database features are not supported:
+  * Transactions.
+  * Raw SQL. SQLite supports raw SQL as long as that SQL works in the same way on SQLite and the production database.
+  * Relational features.
+  * Unique indexes.
 
-In summary, in-memory has all the disadvantages of SQLite, along with a few more - and offers no advantages in return. If you are looking for a simple, in-memory database fake, use SQLite instead of the in-memory provider; but consider using the repository pattern instead as described below.
+The in-memory provider has all the limitations of SQLite and many more. Developers are discouraged from from using the in-memory provider, SQLite is the recommended fake.
 
 For information on how to use in-memory for testing, see the [see this section](xref:core/testing/testing-without-the-database#inmemory).
 
