@@ -10,7 +10,7 @@ uid: core/querying/pagination
 Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is shown that allows the user to navigate to the next or previous page of the results.
 
 > [!WARNING]
-> Regardless of the pagination method used, always make sure that your ordering is fully deterministic. For example, if results are ordered only by date, but there can be multiple results with the same date, then results could be skipped when paginating as they're ordered differently across two paginating queries. Ordering by both date and ID (or any other unique property) makes the ordering fully deterministic and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key.
+> Regardless of the pagination method used, always make sure that your ordering is fully unique. For example, if results are ordered only by date, but there can be multiple results with the same date, then results could be skipped when paginating as they're ordered differently across two paginating queries. Ordering by both date and ID (or any other unique property or combination of properties) makes the ordering fully unique and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key.
 
 ## Offset pagination
 
