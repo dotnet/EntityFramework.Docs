@@ -7,16 +7,17 @@ uid: core/testing/choosing-a-testing-strategy
 ---
 # Choosing a testing strategy
 
-As discussed in the [Overview](xref:core/testing/index), the test design much choose between testing with one of the following approaches:
+As discussed in the [Overview](xref:core/testing/index), the test design must choose between testing with one of the following approaches:
 
 * The production database system, similar to the application database.
 * A [test double](https://martinfowler.com/bliki/TestDouble.html), which replaces the production database system.
 
 Testing against a real external resource, rather than replacing it with a test double, can involve the following difficulties:
 
-1. In many cases, it's simply not possible or practical to test against the actual external resource. For example, the application may interact with some service that cannot be easily mocked or tested against. For example, mocking may not be possible because of rate limiting, or the lack of a testing environment.
-2. Even when it's possible to involve the real external resource, testing external resources may be too slow. Running a large amount of tests against a cloud service may cause tests to take too long. Testing should be part of the developer's everyday workflow, so it's important that tests run quickly.
-3. Executing tests against an external resource may involve isolation issues, where tests interfere with one another. For example, multiple tests running in parallel against a database may modify data and cause each other to fail in various ways. Using a test double avoids interference, each test:
+* In many cases, it isn't possible or practical to test against the actual external resource. For example, the application may interact with a service that cannot be easily mocked or tested against. For example, mocking may not be possible because of rate limiting, or the lack of a testing environment.
+* Even when it's possible to involve the real external resource, testing external resources may be prohibitively slow. Running many tests against a cloud service may take too long. Testing should be part of the developer's everyday workflow, so it's important that tests run quickly.
+* Executing tests against an external resource may involve isolation issues, where tests interfere with one another. For example, multiple tests running in parallel against a database may modify data and cause each other to fail in various ways. Using a test double avoids interference, each test:
+
   * Runs against its own, in-memory resource.
   * Is naturally isolated from other tests.
 

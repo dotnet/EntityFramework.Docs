@@ -10,7 +10,7 @@ uid: core/providers/in-memory/index
 This database provider allows Entity Framework Core to be used with an in-memory database. Although the in-memory database can be used for basic and limited testing, the SQLite provider in in-memory mode is the recommended test replacement for relational databases. For more information on how to test EF Core applications, see the [testing documentation](xref:core/testing/index). The EF Core in-memory provider is maintained as part of the [Entity Framework Core Project](https://github.com/dotnet/efcore).
 
 > [!WARNING]
-> The in-memory provider should not be used in production applications.
+> The in-memory provider should ***not*** be used in production applications.
 
 ## Install
 
