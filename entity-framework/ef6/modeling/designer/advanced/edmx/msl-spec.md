@@ -19,8 +19,8 @@ Versions of MSL are differentiated by XML namespaces.
 | MSL Version | XML Namespace                                        |
 |:------------|:-----------------------------------------------------|
 | MSL v1      | urn:schemas-microsoft-com:windows:storage:mapping:CS |
-| MSL v2      | https://schemas.microsoft.com/ado/2008/09/mapping/cs |
-| MSL v3      | https://schemas.microsoft.com/ado/2009/11/mapping/cs  |
+| MSL v2      | `https://schemas.microsoft.com/ado/2008/09/mapping/cs` |
+| MSL v3      | `https://schemas.microsoft.com/ado/2009/11/mapping/cs`  |
 
 ## Alias Element (MSL)
 
