@@ -49,4 +49,4 @@ EF Core does not support the `EntityClient` provider and therefore any [EntitySQ
 
 Furthermore, there is no support for [EntityClient connection strings](xref:ef6/fundamentals/configuring/connection-strings#databasemodel-first-with-connection-string-in-appconfigwebconfig-file).
 
-For more considerations, read the complete guide to [differences between EF6 and EF Core](/efcore-and-ef6/porting/port-detailed-cases.md).
+For more considerations, read the complete guide to [differences between EF6 and EF Core](xref:efcore-and-ef6/porting/port-detailed-cases).

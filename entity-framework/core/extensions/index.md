@@ -125,12 +125,6 @@ Provides a wrapper around [SQL Server Express LocalDB](/sql/database-engine/conf
 
 [GitHub repository](https://github.com/SimonCropp/LocalDb) | [NuGet](https://www.nuget.org/packages/EfLocalDb)
 
-### EfFluentValidation
-
-Adds [FluentValidation](https://fluentvalidation.net) support to Entity Framework. For EF Core: 3, 5.
-
-[GitHub repository](https://github.com/SimonCropp/EfFluentValidation) | [NuGet](https://www.nuget.org/packages/EfFluentValidation)
-
 ### EFCore.TemporalSupport
 
 An implementation of temporal support. For EF Core: 2.

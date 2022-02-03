@@ -12,7 +12,6 @@ Entity Framework has been a popular O/RM for many years. Here are some examples 
 
 - [EF Power Tools Community Edition](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EntityFramework6PowerToolsCommunityEdition)
 - [EF Profiler](https://efprof.com)  
-- [ORM Profiler](https://www.ormprofiler.com)  
 - [LINQPad](https://www.linqpad.net)  
 - [LLBLGen Pro](https://www.llblgen.com)  
 - [Huagati DBML/EDMX Tools](https://www.huagati.com/dbmltools)  
