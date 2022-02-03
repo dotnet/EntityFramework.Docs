@@ -781,10 +781,10 @@ Value converters can be used to encrypt property values before sending them to t
 
 There are a few known current limitations of the value conversion system:
 
-* There is currently no way to specify in one place that every property of a given type must use the same value converter. Please vote (👍) for [GitHub issue #10784](https://github.com/dotnet/efcore/issues/10784) if this is something you need.
 * As noted above, `null` cannot be converted. Please vote (👍) for [GitHub issue #13850](https://github.com/dotnet/efcore/issues/13850) if this is something you need.
 * There is currently no way to spread a conversion of one property to multiple columns or vice-versa. Please vote (👍) for [GitHub issue #13947](https://github.com/dotnet/efcore/issues/13947) if this is something you need.
 * Value generation is not supported for most keys mapped through value converters. Please vote (👍) for [GitHub issue #11597](https://github.com/dotnet/efcore/issues/11597) if this is something you need.
 * Value conversions cannot reference the current DbContext instance. Please vote (👍) for [GitHub issue #11597](https://github.com/dotnet/efcore/issues/12205) if this is something you need.
+* Parameters using value-converted types cannot currently be used in raw SQL APIs. Please vote (👍) for [GitHub issue #11597](https://github.com/dotnet/efcore/issues/27354) if this is something you need.
 
 Removal of these limitations is being considered for future releases.
