@@ -227,7 +227,7 @@ EF Core 3.0 does not support automatic client evaluation, since it was error pro
 
 #### Mitigations
 
-If you are using a stored procedure in FromSqlRaw/FromSqlInterpolated, you know that it cannot be composed upon, so you can add __AsEnumerable/AsAsyncEnumerable__ right after the FromSql method call to avoid any composition on server side.
+If you are using a stored procedure in FromSqlRaw/FromSqlInterpolated, you know that it cannot be composed upon, so you can add `AsEnumerable`/`AsAsyncEnumerable` right after the FromSql method call to avoid any composition on server side.
 
 ```csharp
 context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable().FirstOrDefault();
@@ -1421,7 +1421,7 @@ Microsoft.Data.Sqlite remains capable of reading Guid values from both BLOB and 
 
 #### Old behavior
 
-Char values were previously sored as INTEGER values on SQLite. For example, a char value of *A* was stored as the integer value 65.
+Char values were previously sored as INTEGER values on SQLite. For example, a char value of _A_ was stored as the integer value 65.
 
 #### New behavior
 
