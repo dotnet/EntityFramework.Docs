@@ -15,7 +15,7 @@ As discussed in the [Overview](xref:core/testing/index), the test design must ch
 Testing against a real external resource, rather than replacing it with a test double, can involve the following difficulties:
 
 * In many cases, it isn't possible or practical to test against the actual external resource. For example, the application may interact with a service that cannot be easily mocked or tested against. For example, mocking may not be possible because of rate limiting, or the lack of a testing environment.
-* Even when it's possible to involve the real external resource, testing external resources may be prohibitively slow. Running many tests against a cloud service may take too long. Testing should be part of the developer's everyday workflow, so it's important that tests run quickly.
+* Even when it's possible to involve the real external resource, testing external resources may be prohibitively slow. Running many tests against a cloud service may take too long. Testing should be part of the workflow when code changes, so it's important that tests run quickly and can be run frequently.
 * Executing tests against an external resource may involve isolation issues, where tests interfere with one another. For example, multiple tests running in parallel against a database may modify data and cause each other to fail in various ways. Using a test double avoids interference, each test:
 
   * Runs against its own, in-memory resource.
@@ -61,7 +61,7 @@ For information on how to use SQLite for testing, [see this section](xref:core/t
 
 ### In-memory as a database fake
 
-The EF-Core in-memory database provider can be used for limited and basic testing, however the  SQLite provider is the recommend choice for in-memory testing. The EF Core in-memory has the [same issues as SQLite](#sqlite-as-a-database-fake), and has the following additional limitations:
+The [EF-Core in-memory database provider](xref:core/providers/in-memory/index) can be used for limited and basic testing, however the  SQLite provider is the recommend choice for in-memory testing. The EF Core in-memory has the [same issues as SQLite](#sqlite-as-a-database-fake), and has the following additional limitations:
 
 * Supports less query types than the SQLite provider, since it isn't a relational database. More queries fail or behave differently in comparison to a production database.
 * Isn't optimized for performance, and generally runs slower than SQLite in in-memory mode or even a production database system.
