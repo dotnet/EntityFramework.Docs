@@ -101,7 +101,7 @@ IDs have also moved from Microsoft.EntityFrameworkCore.Infrastructure to the new
 
 ## EF Core relational metadata API changes
 
-EF Core 2.0 will now build a different [IModel](/dotnet/api/microsoft.entityframeworkcore.metadata.imodel) for each different provider being used. This is usually transparent to the application. This has facilitated a simplification of lower-level metadata APIs such that any access to _common relational metadata concepts_ is always made through a call to `.Relational` instead of `.SqlServer`, `.Sqlite`, etc. For example, 1.1.x code like this:
+EF Core 2.0 will now build a different [IModel](/dotnet/api/microsoft.entityframeworkcore.metadata.imodel) for each different provider being used. This is usually transparent to the application. This has facilitated a simplification of lower-level metadata APIs such that any access to *common relational metadata concepts* is always made through a call to `.Relational` instead of `.SqlServer`, `.Sqlite`, etc. For example, 1.1.x code like this:
 
 ```csharp
 var tableName = context.Model.FindEntityType(typeof(User)).SqlServer().TableName;
@@ -120,7 +120,7 @@ modelBuilder.Entity<User>().ToTable(
     Database.IsSqlServer() ? "SqlServerName" : "OtherName");
 ```
 
-Note that this change only applies to APIs/metadata that is defined for _all_ relational providers. The API and metadata remains the same when it is specific to only a single provider. For example, clustered indexes are specific to SQL Sever, so `ForSqlServerIsClustered` and  `.SqlServer().IsClustered()` must still be used.
+Note that this change only applies to APIs/metadata that is defined for *all* relational providers. The API and metadata remains the same when it is specific to only a single provider. For example, clustered indexes are specific to SQL Sever, so `ForSqlServerIsClustered` and  `.SqlServer().IsClustered()` must still be used.
 
 ## Don’t take control of the EF service provider
 
