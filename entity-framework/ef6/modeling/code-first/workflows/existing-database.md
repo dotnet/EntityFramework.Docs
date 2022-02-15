@@ -6,10 +6,7 @@ ms.date: 10/23/2016
 uid: ef6/modeling/code-first/workflows/existing-database
 ---
 # Code First to an Existing Database
-This video and step-by-step walkthrough provide an introduction to Code First development targeting an existing database. Code First allows you to define your model using C\# or VB.Net classes. Optionally additional configuration can be performed using attributes on your classes and properties or by using a fluent API.
-
-## Watch the video
-This video is [now available on Channel 9](https://channel9.msdn.com/blogs/ef/code-first-to-existing-database-ef6-1-onwards-).
+This step-by-step walkthrough provides an introduction to Code First development targeting an existing database. Code First allows you to define your model using C\# or VB.Net classes. Optionally additional configuration can be performed using attributes on your classes and properties or by using a fluent API.
 
 ## Pre-Requisites
 
