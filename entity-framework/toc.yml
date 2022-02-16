@@ -376,6 +376,8 @@
           href: core/providers/cosmos/limitations.md
         - name: Function mappings
           href: core/providers/cosmos/functions.md
+        - name: End-to-end sample
+          href: core/providers/cosmos/planetary-docs-sample.md
       - name: InMemory (for testing)
         href: core/providers/in-memory/index.md
       - name: Write a database provider
