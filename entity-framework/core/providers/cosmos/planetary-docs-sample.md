@@ -211,7 +211,7 @@ The document query allows the user to search on text anywhere in the document an
 
 Performance-wise, a tag and/or author-based search only requires one or two documents to be loaded. A text search always loads matching documents and then further filters the list based on the existing documents, so it is significantly slower (but still fast).
 
-Here's the implementation. Note the `HashSet` _just works_ because I overrode `Equals` and `GetHashCode`:
+Here's the implementation. Note the `HashSet` works due to the `Equals` and `GetHashCode` overrides:
 
 :::code language="csharp" source="../../../../samples/end2end/PlanetaryDocs/PlanetaryDocs.DataAccess/DocumentService.cs" range="65-142":::
 
