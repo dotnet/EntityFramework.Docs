@@ -3,6 +3,8 @@
   items:
   - name: EF Core & EF6
     items:
+    - name: Entity Framework Support Policies
+      href: efcore-and-ef6/support.md
     - name: Compare EF Core & EF6
       href: efcore-and-ef6/index.md
     - name: Port from EF6 to EF Core
