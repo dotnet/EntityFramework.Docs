@@ -38,7 +38,7 @@ Microsoft will provide a minimum of 12 months notification prior to ending suppo
 > Entity Framework 4.1, 4.2, 4.3, and 5.0 and all patches of these versions are out-of-support and should not be used.
 The NuGet packages for Entity Framework 4.1, 4.2, 4.3, and 5.0 are no longer supported. Applications using these versions should be updated to use Entity Framework 6, or [ported to use Entity Framework Core](xref:efcore-and-ef6/porting/index).
 
-Some of the code for Entity Framework 4.x and 5.0 is contained in the .NET Framework. As such, this code is supported as long as [.NET Framework is supported](/lifecycle/products/microsoft-net-framework). However, note that this code is intended to be used in conjunction with the NuGet packages for these Entity Framework versions. The .NET Framework code should not be used independently.
+Some of the code for Entity Framework 4.x and 5.0 is contained in the .NET Framework. As such, this code will be supported as long as [.NET Framework is supported](/lifecycle/products/microsoft-net-framework). However, note that this code is intended to be used in conjunction with the NuGet packages for these Entity Framework versions. The .NET Framework code should not be used independently.
 
 ## Entity Framework 1 and 4
 
