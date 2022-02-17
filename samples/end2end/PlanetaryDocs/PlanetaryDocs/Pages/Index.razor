@@ -1,0 +1,128 @@
+﻿@page "/"
+
+@inherits IndexBase
+  
+<h1>Planetary Docs</h1>
+<div class="container fixed">
+    <div class="row">
+        <div class="col">
+            <strong>Search Documents:</strong>
+        </div>
+    </div>
+    <div class="row @(Loading ? "loading" : string.Empty)"
+         @onkeypress="HandleKeyPress">
+        <div class="col-4">
+            @if (Loading)
+            {
+                <p>@Text</p>
+            }
+            else
+            {
+                <input tabindex="100"
+                        @bind-value="Text"
+                        @bind-value:event="oninput"
+                        @ref="InputElement"
+                        autofocus
+                        placeholder="Enter search text" />
+            }
+        </div>
+        <div class="col-3">
+            @if (@Loading)
+            {
+                <p><strong>Alias:</strong>&nbsp;@Alias</p>
+            }
+            else
+            {
+                <AliasSearch TabIndex="200" @bind-Alias="Alias"/>
+            }
+        </div>
+        <div class="col-3">
+            @if (Loading)
+            {
+                <p><strong>Tag:</strong>&nbsp;@Tag</p>
+            }
+            else
+            {
+            <TagSearch TabIndex="300" @bind-Tag="Tag" />
+            }
+        </div>
+        <div class="col-2">
+            &nbsp;<button tabindex="400"
+                          class="btn btn-sm btn-success"
+                    @onclick="async () => await SearchAsync()"
+                    disabled="@(!CanSearch)">
+                Search
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            @if (Loading)
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-warning">🔎 Searching...</div>
+                    </div>
+                </div>
+            }
+            @if (DocsList != null && !Loading)
+            {
+                <div class="row">
+                    <div class="col-12 text-sm-left">
+                        Search criteria: Alias = '@Alias', Tag = '@Tag', SearchText = '@Text''
+                    </div>
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            @if (DocsList.Count < 1)
+                            {
+                                <span class="oi oi-circle-x"></span>
+                                <span>&nbsp;No documents found.</span>
+                            }
+                            @if (DocsList.Count == 1)
+                            {
+                                <span class="oi oi-circle-check"></span>
+                                <span>&nbsp;One document found.</span>
+                            }
+                            @if (DocsList.Count > 1)
+                            {
+                                <span class="oi oi-circle-check"></span>
+                                <span>&nbsp;@DocsList.Count documents found.</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-4">
+                        <b>Alias</b>
+                    </div>
+                    <div class="col-6">
+                        <b>Title</b>
+                    </div>
+                </div>
+                foreach (var doc in DocsList)
+                {
+                    <div @key="doc.Uid" class="row result">
+                        <div class="col-2">
+                            <a title="Edit document" href="@NavigationHelper.EditDocument(doc.Uid)">
+                                <span class="oi oi-pencil">&nbsp;</span>
+                            </a>
+                            &nbsp;
+                            <a title="View document" href="@NavigationHelper.ViewDocument(doc.Uid)">
+                                <span class="oi oi-eye">&nbsp;</span>
+                            </a>
+                        </div>
+                        <div class="col-4 clickable" @onclick="() => Navigate(doc.Uid)">
+                            @doc.AuthorAlias
+                        </div>
+                        <div class="col-6 clickable" @onclick="() => Navigate(doc.Uid)">
+                            @doc.Title
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

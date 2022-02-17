@@ -1,0 +1,10 @@
+﻿.code {
+    padding-top: 1em;
+    white-space: pre;
+    height: 60vh;
+    color: green;
+    background: black;
+    font-family: Consolas, monospace;
+    width: 60vw;
+    overflow: scroll;
+}
