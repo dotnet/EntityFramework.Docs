@@ -13,7 +13,7 @@ namespace EFModeling.Sequences.Sequence
 
             modelBuilder.Entity<Order>()
                 .Property(o => o.OrderNo)
-                .HasDefaultValueSql("NEXT VALUE FOR shared.OrderNumbers");
+                .HasDefaultValueSql("NEXT VALUE FOR OrderNumbers");
         }
         #endregion
     }
