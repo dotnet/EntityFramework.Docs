@@ -48,7 +48,7 @@ To use in-memory SQLite, it's important to understand that a new database is cre
 
 Tests can now call `CreateContext`, which returns a context using the connection we set up in the constructor, ensuring we have a clean database with the seeded data.
 
-The full sample code can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/SqliteInMemoryBloggingControllerTest.cs).
+The full sample code for SQLite in-memory testing can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/SqliteInMemoryBloggingControllerTest.cs).
 
 ## In-memory provider
 
@@ -56,8 +56,18 @@ As discussed in the [testing overview page](xref:core/testing/choosing-a-testing
 
 [!code-csharp[Main](../../../samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs?name=Constructor)]
 
+The full sample code for in-memory testing can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs).
+
+### In-memory database naming
+
 In-memory databases are identified by a simple, string name, and it's possible to connect to the same database several times by providing the same name (this is why the sample above must call `EnsureDeleted` before each test). However, note that in-memory databases are rooted in the context's internal service provider; while in most cases contexts share the same service provider, configuring contexts with different options may trigger the use of a new internal service provider. When that's the case, explicitly pass the same instance of <xref:Microsoft.EntityFrameworkCore.Storage.InMemoryDatabaseRoot> to `UseInMemoryDatabase` for all contexts which should share in-memory databases (this is typically done by having a static `InMemoryDatabaseRoot` field).
+
+### Transactions
 
 Note that by default, if a transaction is started, the in-memory provider will throw an exception since transactions aren't supported. You may wish to have transactions silently ignored instead, by configuring EF Core to ignore `InMemoryEventId.TransactionIgnoredWarning` as in the above sample. However, if your code actually relies on transactional semantics - e.g. depends on rollback actually rolling back changes - your test won't work.
 
-The full sample code can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs).
+### Views
+
+The in-memory provider allows the definition of views via LINQ queries, using <xref:Microsoft.EntityFrameworkCore.InMemoryEntityTypeBuilderExtensions.ToInMemoryQuery%2A>:
+
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs?name=ToInMemoryQuery)]

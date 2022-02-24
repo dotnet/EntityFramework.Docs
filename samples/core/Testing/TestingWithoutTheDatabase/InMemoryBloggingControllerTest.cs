@@ -83,6 +83,12 @@ namespace EF.Testing.UnitTests
             Assert.Equal("http://blog2_updated.com", blog.Url);
         }
 
-        BloggingContext CreateContext() => new BloggingContext(_contextOptions);
+        BloggingContext CreateContext() => new BloggingContext(_contextOptions, (context, modelBuilder) =>
+        {
+            #region ToInMemoryQuery
+            modelBuilder.Entity<UrlResource>()
+                .ToInMemoryQuery(() => context.Blogs.Select(b => new UrlResource { Url = b.Url }));
+            #endregion
+        });
     }
 }
