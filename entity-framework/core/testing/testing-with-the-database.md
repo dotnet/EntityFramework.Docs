@@ -54,7 +54,7 @@ The above example showed a read-only test, which is the easy case from a test is
 
 Here's a controller method which adds a Blog to our database:
 
-[!code-csharp[Main](../../../samples/core/Testing/BloggingWebApi/Controllers/BloggingController.cs?name=PostBlog)]
+[!code-csharp[Main](../../../samples/core/Testing/BloggingWebApi/Controllers/BloggingController.cs?name=AddBlog)]
 
 We can test this method with the following:
 

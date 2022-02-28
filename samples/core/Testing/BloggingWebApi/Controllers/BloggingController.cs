@@ -28,6 +28,7 @@ namespace EF.Testing.BloggingWebApi.Controllers
         public ActionResult<Blog[]> GetAllBlogs()
             => _context.Blogs.OrderBy(b => b.Name).ToArray();
 
+        #region AddBlog
         [HttpPost]
         public ActionResult AddBlog(string name, string url)
         {
@@ -36,7 +37,9 @@ namespace EF.Testing.BloggingWebApi.Controllers
 
             return Ok();
         }
+        #endregion
 
+        #region UpdateBlogUrl
         [HttpPost]
         public ActionResult UpdateBlogUrl(string name, string url)
         {
@@ -55,5 +58,6 @@ namespace EF.Testing.BloggingWebApi.Controllers
             transaction.Commit();
             return Ok();
         }
+        #endregion
     }
 }
