@@ -3,7 +3,7 @@ title: Multi-tenancy - EF Core
 description: Learn several ways to implement multi-tenant databases using Entity Framework Core.
 author: jeremylikness
 ms.author: jeliknes
-ms.date: 12/17/2021
+ms.date: 03/01/2022
 uid: core/miscellaneous/multitenancy
 ---
 # Multi-tenancy
@@ -13,11 +13,12 @@ Many line of business applications are designed to work with multiple customers.
 > [!IMPORTANT]
 > This document provides examples and solutions "as is." These are not intended to be "best practices" but rather "working practices" for your consideration.
 
+> [!TIP]
+> You can view the source code for this [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/Multitenancy)
+
 ## Supporting multi-tenancy
 
 There are many approaches to implementing multi-tenancy in applications. One common approach (that is sometimes a requirement) is to keep data for each customer in a separate database. The schema is the same but the data is customer-specific. Another approach is to partition the data in an existing database by customer. This can be done by using a column in a table, or applying multiple schemas to the same table.
-
-All approaches are supported by EF Core.
 
 For the approach that uses multiple databases, switching to the right database is as simple as providing the correct connection string. When the data is stored in a single database, a [global query filter](/ef/core/querying/filters) makes sense to ensure that developers don't accidentally write code that can access data from other customers.
 
@@ -31,51 +32,23 @@ This issue doesn't occur in Blazor WebAssembly apps because the singleton is sco
 
 ### An example solution (single database)
 
-A possible solution is to create a simple `TenantProvider` class that handles setting the user's current tenant. It provides callbacks so code is notified when the tenant changes. The implementation (with the callbacks omitted for clarity) might look like this:
+A possible solution is to create a simple `ITenantService` service that handles setting the user's current tenant. It provides callbacks so code is notified when the tenant changes. The implementation (with the callbacks omitted for clarity) might look like this (the tenant list is hard-coded for brevity, but could be pulled from a configuration file or database table):
 
-```csharp
-public class TenantProvider
-{
-    private string tenant;
+:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/Common/ITenantService.cs":::
 
-    public void SetTenant(string tenant) => this.tenant = tenant;
+The `DbContext` can then manage the multi-tenancy. The approach depends on your database strategy. If you are storing all tenants in a single database, you are likely going to use a query filter. The `ITenantService` is passed to the constructor via dependency injection and used to resolve and store the tenant identifier.
 
-    public string GetTenant() => tenant;
-}
-```
-
-The `DbContext` can then manage the multi-tenancy. The approach depends on your database strategy. If you are storing all tenants in a single database, you are likely going to use a query filter. The `TenantProvider` is passed to the constructor via dependency injection and used to resolve and store the tenant identifier.
-
-```csharp
-private readonly string tenant = string.Empty;
-
-public SingleDbContext(
-    DbContextOptions<SingleDbContext> options,
-    TenantProvider tenantProvider)
-    : base(options) 
-{
-    tenant = tenantProvider.GetTenant();
-}
-```
+:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/SingleDbSingleTable/Data/ContactContext.cs" range="10-13":::
 
 The `OnModelCreating` method is overridden to specify the query filter:
 
-```csharp
- modelBuilder.Entity<MultiTenantTable>()
-    .HasQueryFilter(mtt => mtt.Tenant == tenant);
-```
+:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/SingleDbSingleTable/Data/ContactContext.cs" range="31-33":::
 
 This ensures that every query is filtered to the tenant on every request. There is no need to filter in application code because the global filter will be automatically applied.
 
 The tenant provider and `DbContextFactory` are configured in the application startup like this, using Sqlite as an example:
 
-```csharp
-services.AddScoped<TenantProvider>();
-
-services.AddDbContextFactory<SingleDbContext>(
-    opts => opts.UseSqlite("Data Source=alltenants.sqlite"),
-    ServiceLifetime.Scoped);
-```
+:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/MultiDb/Program.cs" range="13-14":::
 
 Notice that the [service lifetime](/dotnet/core/extensions/dependency-injection#service-lifetimes) is configured with `ServiceLifetime.Scoped`. This enables it to take a dependency on the tenant provider.
 
@@ -84,45 +57,34 @@ Notice that the [service lifetime](/dotnet/core/extensions/dependency-injection#
 
 ## Multiple schemas
 
-In a different approach, the same database may handle `tenant1` and `tenant2` by using table schemas. The table `CustomerData` might be defined as:
+In a different approach, the same database may handle `tenant1` and `tenant2` by using table schemas.
 
 - **Tenant1** - `tenant1.CustomerData`
 - **Tenant2** - `tenant2.CustomerData`
 
-This can be supported with some extra effort. For example, you could use `OnModelCreating` to specify the schema.
+If you are not using EF Core to handle database updates with migrations and already have multi-schema tables, you can override the schema in a `DbContext` in `OnModelCreating` like this (the schema for table `CustomerData` is set to the tenant):
 
 ```csharp
-private readonly string tenant = string.Empty;
-
-public MultiSchemaContext(
-    DbContextOptions<SingleDbContext> options,
-    TenantProvider tenantProvider)
-    : base(options) 
-{
-    tenant = tenantProvider.GetTenant();
-}
-
-public DbSet<CustomerData> Data { get; set; }
-
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
+protected override void OnModelCreating(ModelBuilder modelBuilder) =>
     modelBuilder.Entity<CustomerData>().ToTable(nameof(CustomerData), tenant);
-}
 ```
 
-Another approach is to define the table as a base class, then derive a class for each tenant. A `DbSet` is defined for every tenant and a dictionary can be used to provide generic access to the base class by tenant.
+> [!WARNING]
+> This scenario is not directly supported by EF Core and is not a recommended solution.
 
 ## Multiple databases and connection strings
 
-The multiple database version is implemented by passing a different connection string for each tenant. This can be configured at startup by resolving the service provider and using it to build the connection string. This example specifies a different file by tenant for SQlite, but can easily be repurposed to specify a different database name in a SQL Server or other provider's connection string:
+The multiple database version is implemented by passing a different connection string for each tenant. This can be configured at startup by resolving the service provider and using it to build the connection string. A connection string by tenant section is added to the `appsettings.json` configuration file.  
 
-```csharp
-services.AddDbContextFactory<MultipleDbContext>((sp, opts) =>
-{
-    var tenantProvider = sp.GetRequiredService<TenantProvider>();
-    opts.UseSqlite($"Data Source={tenantProvider.GetTenant()}.sqlite");
-}, ServiceLifetime.Scoped);
-```
+:::code language="json" source="../../../samples/core/Miscellaneous/Multitenancy/MultiDb/appsettings.json":::
+
+The service and configuration are both injected into the `DbContext`:
+
+:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/MultiDb/ContactContext.cs" range="11-19":::
+
+The tenant is then used to look up the connection string in `OnConfiguring`:
+
+:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/MultiDb/ContactContext.cs" range="40-45":::
 
 This works fine for most scenarios unless the user can switch tenants in realtime.
 
