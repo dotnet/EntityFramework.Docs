@@ -73,7 +73,7 @@ EF supports *compiled queries*, which allow the explicit compilation of a LINQ q
 |    WithCompiledQuery |       10 | 645.3 us | 10.00 us |  9.35 us | 2.9297 |     13 KB |
 | WithoutCompiledQuery |       10 | 709.8 us | 25.20 us | 73.10 us | 3.9063 |     18 KB |
 
-To used compiled queries, first compile a query with <xref:Microsoft.EntityFrameworkCore.EF.CompileAsyncQuery%2A?displayProperty=nameWithType> as follows (use <xref:Microsoft.EntityFrameworkCore.EF.CompileQuery%2A?displayProperty=nameWithType> for synchronous queries):
+To use compiled queries, first compile a query with <xref:Microsoft.EntityFrameworkCore.EF.CompileAsyncQuery%2A?displayProperty=nameWithType> as follows (use <xref:Microsoft.EntityFrameworkCore.EF.CompileQuery%2A?displayProperty=nameWithType> for synchronous queries):
 
 [!code-csharp[Main](../../../samples/core/Performance/Program.cs#CompiledQueryCompile)]
 

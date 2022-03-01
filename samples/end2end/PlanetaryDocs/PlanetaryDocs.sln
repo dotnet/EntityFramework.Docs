@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanetaryDocs", "PlanetaryDocs\PlanetaryDocs.csproj", "{9752E8CA-BCA2-4383-A2C3-9A619C95C2C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanetaryDocs.Domain", "PlanetaryDocs.Domain\PlanetaryDocs.Domain.csproj", "{41EE61E6-81B4-4816-9E62-25040A4BAC6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanetaryDocs.DataAccess", "PlanetaryDocs.DataAccess\PlanetaryDocs.DataAccess.csproj", "{8E4FB7E5-BC05-4A5F-9A5C-377FDB0F4172}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanetaryDocsLoader", "PlanetaryDocsLoader\PlanetaryDocsLoader.csproj", "{43DFBA3B-80BE-4DCB-82D2-2EAC03CD5EF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B956AEFD-4189-4B9B-86B6-2B23A9B7DE1C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		README.md = README.md
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BE2E007C-9286-4061-AF85-D0E641C9AF79}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Directory.Build.props = Tests\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainTests", "Tests\DomainTests\DomainTests.csproj", "{2D7599D9-6851-4BA3-9B83-1BE219E286B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9752E8CA-BCA2-4383-A2C3-9A619C95C2C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9752E8CA-BCA2-4383-A2C3-9A619C95C2C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9752E8CA-BCA2-4383-A2C3-9A619C95C2C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9752E8CA-BCA2-4383-A2C3-9A619C95C2C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41EE61E6-81B4-4816-9E62-25040A4BAC6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41EE61E6-81B4-4816-9E62-25040A4BAC6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41EE61E6-81B4-4816-9E62-25040A4BAC6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41EE61E6-81B4-4816-9E62-25040A4BAC6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E4FB7E5-BC05-4A5F-9A5C-377FDB0F4172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E4FB7E5-BC05-4A5F-9A5C-377FDB0F4172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E4FB7E5-BC05-4A5F-9A5C-377FDB0F4172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E4FB7E5-BC05-4A5F-9A5C-377FDB0F4172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43DFBA3B-80BE-4DCB-82D2-2EAC03CD5EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43DFBA3B-80BE-4DCB-82D2-2EAC03CD5EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43DFBA3B-80BE-4DCB-82D2-2EAC03CD5EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43DFBA3B-80BE-4DCB-82D2-2EAC03CD5EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D7599D9-6851-4BA3-9B83-1BE219E286B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D7599D9-6851-4BA3-9B83-1BE219E286B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D7599D9-6851-4BA3-9B83-1BE219E286B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D7599D9-6851-4BA3-9B83-1BE219E286B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2D7599D9-6851-4BA3-9B83-1BE219E286B9} = {BE2E007C-9286-4061-AF85-D0E641C9AF79}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2064456E-0D82-443B-ACBD-92A598775C6B}
+	EndGlobalSection
+EndGlobal

@@ -23,7 +23,7 @@ If a typical blog has multiple related posts, rows for these posts will duplicat
 ## Split queries
 
 > [!NOTE]
-> This feature was introduced in EF Core 5.0. It only works when using `Include`. [This issue](https://github.com/dotnet/efcore/issues/21234) is tracking support for split query when loading related data in projection without `Include`.
+> This feature was introduced in EF Core 5.0, where it only worked when using `Include`. EF Core 6.0 added support for split queries when loading related data in projections, without `Include`.
 
 EF allows you to specify that a given LINQ query should be *split* into multiple SQL queries. Instead of JOINs, split queries generate an additional SQL query for each included collection navigation:
 
@@ -41,6 +41,9 @@ FROM [Blogs] AS [b]
 INNER JOIN [Post] AS [p] ON [b].[BlogId] = [p].[BlogId]
 ORDER BY [b].[BlogId]
 ```
+
+> [!WARNING]
+> When using split queries with Skip/Take, pay special attention to making your query ordering fully unique; not doing so could cause incorrect data to be returned. For example, if results are ordered only by date, but there can be multiple results with the same date, then each one of the split queries could each get different results from the database. Ordering by both date and ID (or any other unique property or combination of properties) makes the ordering fully unique and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key.
 
 > [!NOTE]
 > One-to-one related entities are always loaded via JOINs in the same query, as it has no performance impact.

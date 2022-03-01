@@ -499,7 +499,7 @@ It was possible to change the discriminator value before calling `SaveChanges`
 
 #### New behavior
 
-An exception will be throws in the above case.
+An exception will be thrown in the above case.
 
 #### Why
 
@@ -531,7 +531,7 @@ Provider-specific methods have been updated to throw an exception in their metho
 
 #### Why
 
-Provider-specific methods map to a database function. The computation done by the mapped database function can't always be replicated on the client side in LINQ. It may cause the result from the server to differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database functions, they don't need to be evaluated on client side. As InMemory provider is a different *database*, these methods aren't available for this provider. Trying to execute them for InMemory provider, or any other provider that doesn't translate these methods, throws an exception.
+Provider-specific methods map to a database function. The computation done by the mapped database function can't always be replicated on the client side in LINQ. It may cause the result from the server to differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database functions, they don't need to be evaluated on client side. As InMemory provider is a different _database_, these methods aren't available for this provider. Trying to execute them for InMemory provider, or any other provider that doesn't translate these methods, throws an exception.
 
 #### Mitigations
 

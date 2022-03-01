@@ -1,0 +1,44 @@
+﻿@inherits NavMenuBase
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">
+        <span class="oi oi-globe"></span>
+        <span class="oi oi-document"></span>
+        Planetary Docs
+    </a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <br />
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        @foreach (var navItem in NavItems)
+        {
+            <li @key="navItem.Text" class="nav-item px-3">
+                @if (!navItem.Disabled)
+                {
+                    <NavLink class="nav-link"
+                             href="@navItem.Href"
+                             Match="@navItem.Match">
+                        <span class="oi oi-@navItem.Icon"
+                              aria-hidden="true"></span>&nbsp;@navItem.Text
+                    </NavLink>
+                }
+                else
+                {
+                    <DisabledNavLink class="nav-link"
+                                        href="@navItem.Href"
+                                        Match="@navItem.Match">
+                        <span class="oi oi-@navItem.Icon" aria-hidden="true"></span>&nbsp;@navItem.Text
+                    </DisabledNavLink>
+                }
+            </li>
+        }
+    </ul>
+</div>
+
+<div class="version">
+    version: @Version
+</div>

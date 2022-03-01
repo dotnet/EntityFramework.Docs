@@ -1,0 +1,7 @@
+﻿@inherits TagSearchBase
+
+<AutoComplete TabIndex="@TabIndex"
+              LabelText="Tag:" 
+              PlaceHolderText="Type the tag..."
+              @bind-SelectedValue="Tag"
+              SearchFn="SearchAsync" />

@@ -16,9 +16,9 @@ Versions of SSDL are differentiated by XML namespaces.
 
 | SSDL Version | XML Namespace                                     |
 |:-------------|:--------------------------------------------------|
-| SSDL v1      | https://schemas.microsoft.com/ado/2006/04/edm/ssdl |
-| SSDL v2      | https://schemas.microsoft.com/ado/2009/02/edm/ssdl |
-| SSDL v3      | https://schemas.microsoft.com/ado/2009/11/edm/ssdl |
+| SSDL v1      | `https://schemas.microsoft.com/ado/2006/04/edm/ssdl` |
+| SSDL v2      | `https://schemas.microsoft.com/ado/2009/02/edm/ssdl` |
+| SSDL v3      | `https://schemas.microsoft.com/ado/2009/11/edm/ssdl` |
 
 ## Association Element (SSDL)
 
@@ -897,7 +897,7 @@ The **Schema** element may contain zero or more of the following child elements:
 
 The **Schema** element uses the **Namespace** attribute to define the namespace for the entity type and association objects in a storage model. Within a namespace, no two objects can have the same name.
 
-A storage model namespace is different from the XML namespace of the **Schema** element. A storage model namespace (as defined by the **Namespace** attribute) is a logical container for entity types and association types. The XML namespace (indicated by the **xmlns** attribute) of a **Schema** element is the default namespace for child elements and attributes of the **Schema** element. XML namespaces of the form https://schemas.microsoft.com/ado/YYYY/MM/edm/ssdl (where YYYY and MM represent a year and month respectively) are reserved for SSDL. Custom elements and attributes cannot be in namespaces that have this form.
+A storage model namespace is different from the XML namespace of the **Schema** element. A storage model namespace (as defined by the **Namespace** attribute) is a logical container for entity types and association types. The XML namespace (indicated by the **xmlns** attribute) of a **Schema** element is the default namespace for child elements and attributes of the **Schema** element. XML namespaces of the form `https://schemas.microsoft.com/ado/YYYY/MM/edm/ssdl` (where YYYY and MM represent a year and month respectively) are reserved for SSDL. Custom elements and attributes cannot be in namespaces that have this form.
 
 ### Applicable Attributes
 

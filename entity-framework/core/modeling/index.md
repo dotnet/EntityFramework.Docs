@@ -41,4 +41,4 @@ It is possible to apply all configuration specified in types implementing `IEnti
 
 You can also apply attributes (known as Data Annotations) to your classes and properties. Data annotations will override conventions, but will be overridden by Fluent API configuration.
 
-[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/Required.cs?highlight=16)]
+[!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/Annotations.cs)]
