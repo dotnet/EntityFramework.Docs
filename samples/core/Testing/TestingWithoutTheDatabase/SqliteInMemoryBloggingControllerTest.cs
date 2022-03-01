@@ -30,7 +30,15 @@ namespace EF.Testing.UnitTests
             // Create the schema and seed some data
             using var context = new BloggingContext(_contextOptions);
 
-            context.Database.EnsureCreated();
+            if (context.Database.EnsureCreated())
+            {
+                using var viewCommand = context.Database.GetDbConnection().CreateCommand();
+                viewCommand.CommandText = @"
+CREATE VIEW AllResources AS
+SELECT Url
+FROM Blogs;";
+                viewCommand.ExecuteNonQuery();
+            }
 
             context.AddRange(
                 new Blog { Name = "Blog1", Url = "http://blog1.com" },
