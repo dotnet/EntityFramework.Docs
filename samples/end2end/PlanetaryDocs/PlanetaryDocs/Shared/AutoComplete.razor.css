@@ -1,0 +1,20 @@
+﻿div {
+    display: inline-table;
+}
+
+p:hover, p.active {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.labelArea {
+    font-weight: bold;
+    text-align: right;
+    margin-right: 1em;
+    display: table-cell;
+}
+
+a, input {
+    width: 95%;
+    display: table-cell;
+}

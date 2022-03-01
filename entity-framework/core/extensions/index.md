@@ -125,12 +125,6 @@ Provides a wrapper around [SQL Server Express LocalDB](/sql/database-engine/conf
 
 [GitHub repository](https://github.com/SimonCropp/LocalDb) | [NuGet](https://www.nuget.org/packages/EfLocalDb)
 
-### EfFluentValidation
-
-Adds [FluentValidation](https://fluentvalidation.net) support to Entity Framework. For EF Core: 3, 5.
-
-[GitHub repository](https://github.com/SimonCropp/EfFluentValidation) | [NuGet](https://www.nuget.org/packages/EfFluentValidation)
-
 ### EFCore.TemporalSupport
 
 An implementation of temporal support. For EF Core: 2.
@@ -254,7 +248,7 @@ Includes support for advanced SQL features such as CTEs, bulk copy, table hints,
 
 ### EFCore.SoftDelete
 
-An implementation for soft deleting entities. For EF Core: 3.
+An implementation for soft deleting entities. For EF Core: 3, 5, 6.
 
 [GitHub repository](https://github.com/AshkanAbd/efCoreSoftDeletes) | [NuGet](https://www.nuget.org/packages/EFCore.SoftDelete)
 
@@ -272,7 +266,7 @@ A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff)
 
 ### EntityFrameworkCore.Sqlite.NodaTime
 
-Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](https://sqlite.org). For EF Core: 5.
+Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](https://sqlite.org). For EF Core: 5, 6.
 
 [GitHub repository](https://github.com/khellang/EFCore.Sqlite.NodaTime) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Sqlite.NodaTime)
 

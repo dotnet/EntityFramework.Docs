@@ -3,6 +3,8 @@
   items:
   - name: EF Core & EF6
     items:
+    - name: Entity Framework Support Policies
+      href: efcore-and-ef6/support.md
     - name: Compare EF Core & EF6
       href: efcore-and-ef6/index.md
     - name: Port from EF6 to EF Core
@@ -113,7 +115,7 @@
       - name: Overview
         href: core/dbcontext-configuration/index.md
       - name: Context pooling
-        href: core/performance/advanced-performance-topics#dbcontext-pooling
+        href: core/performance/advanced-performance-topics.md#dbcontext-pooling
 
     - name: Create a model
       items:
@@ -288,16 +290,14 @@
 
     - name: Testing
       items:
-      - name: Testing code that uses EF Core
+      - name: Introduction to testing
         href: core/testing/index.md
-      - name: EF Core testing sample
-        href: core/testing/testing-sample.md
-      - name: Sharing databases between tests
-        href: core/testing/sharing-databases.md
-      - name: Test with SQLite
-        href: core/testing/sqlite.md
-      - name: Test with InMemory
-        href: core/testing/in-memory.md
+      - name: Choosing a testing strategy
+        href: core/testing/choosing-a-testing-strategy.md
+      - name: Testing against your production database system
+        href: core/testing/testing-with-the-database.md
+      - name: Testing without your production database system
+        href: core/testing/testing-without-the-database.md
 
     - name: Performance
       items:
@@ -380,6 +380,8 @@
           href: core/providers/cosmos/limitations.md
         - name: Function mappings
           href: core/providers/cosmos/functions.md
+        - name: End-to-end sample
+          href: core/providers/cosmos/planetary-docs-sample.md
       - name: InMemory (for testing)
         href: core/providers/in-memory/index.md
       - name: Write a database provider

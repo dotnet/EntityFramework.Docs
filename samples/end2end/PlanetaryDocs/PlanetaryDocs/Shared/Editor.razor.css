@@ -1,0 +1,10 @@
+﻿li {
+    font-weight: bold;
+    color: darkred;
+}
+
+.field-label {
+    font-weight: bold;
+    margin-left: 1em;
+    color: #202020;
+}

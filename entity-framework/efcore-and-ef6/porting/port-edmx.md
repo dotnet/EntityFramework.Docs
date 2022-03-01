@@ -47,6 +47,6 @@ Just because your application compiles, does not mean it is successfully ported 
 
 EF Core does not support the `EntityClient` provider and therefore any [EntitySQL](/dotnet/framework/data/adonet/ef/language-reference/entity-sql-language) queries must be migrated to LINQ or `FromRawSql`.
 
-Furthermore, there is no support for [EntityClient connection strings](/ef/ef6/fundamentals/configuring/connection-strings#databasemodel-first-with-connection-string-in-appconfigwebconfig-file).
+Furthermore, there is no support for [EntityClient connection strings](xref:ef6/fundamentals/configuring/connection-strings#databasemodel-first-with-connection-string-in-appconfigwebconfig-file).
 
-For more considerations, read the complete guide to [differences between EF6 and EF Core](/efcore-and-ef6/porting/port-detailed-cases.md).
+For more considerations, read the complete guide to [differences between EF6 and EF Core](xref:efcore-and-ef6/porting/port-detailed-cases).

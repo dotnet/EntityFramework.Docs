@@ -1,0 +1,49 @@
+﻿@page "/Edit/{Uid}"
+
+@inherits EditBase
+
+<div class="container">
+    @if (NotFound)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger">
+                    <span class="oi oi-circle-x"></span>&nbsp;A document with the id '@Uid' was not found. 
+                </div>
+            </div>
+        </div>
+    }
+    else if (Saving)
+    {
+        <Saving />
+    }
+    else if (Loading)
+    {
+        <Loading />
+    }
+    else
+    {
+        <EditBar ChangeCount="ChangeCount"
+                 IsDirty="IsDirty"
+                 IsValid="IsValid"
+                 SaveAsync="SaveAsync" />
+        @if (Concurrency)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-danger">
+                        <span class="oi oi-warning"></span>&nbsp;The document was updated since it was last loaded. You can save again to overwrite changes or reset to reload the document and view the changes.
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-12">
+                <Editor DocumentToEdit="Document"
+                        @bind-IsValid="IsValid"
+                        @bind-ChangeCount="ChangeCount"
+                        @ref="Editor" />
+            </div>
+        </div>
+    }
+</div>

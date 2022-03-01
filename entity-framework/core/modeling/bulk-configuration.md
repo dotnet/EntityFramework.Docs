@@ -33,11 +33,11 @@ Properties of this type are not discovered by default as the current EF provider
 
 ## Pre-convention configuration
 
-EF Core 6.0 allows the mapping configuration to be specified once for a given CLR type; that configuration is then applied to all properties of that type in the model as they are discovered. This is called "pre-convention model configuration", since it configures aspects of the model that are then used by the model building conventions. Such configuration is applied by overriding `<xref:Microsoft.EntityFrameworkCore.DbContext.ConfigureConventions>` on the type derived from `<xref:Microsoft.EntityFrameworkCore.DbContext>`.
+EF Core 6.0 allows the mapping configuration to be specified once for a given CLR type; that configuration is then applied to all properties of that type in the model as they are discovered. This is called "pre-convention model configuration", since it configures aspects of the model that are then used by the model building conventions. Such configuration is applied by overriding <xref:Microsoft.EntityFrameworkCore.DbContext.ConfigureConventions%2A> on the type derived from <xref:Microsoft.EntityFrameworkCore.DbContext>.
 
 This example shows how configure all properties of type `Currency` to have a value converter:
 
-[!code-csharp[Main](../../../samples/core/Modeling/BulkConfiguration/PreConventionContext.cs?name=CurrencyConversion)]
+[!code-csharp[Main](../../../samples/core/Modeling/BulkConfiguration/CurrencyContext.cs?name=ConfigureConventions)]
 
 And this example shows how to configure some facets on all properties of type `string`:
 
@@ -60,7 +60,7 @@ Pre-convention configuration also allows to ignore a type and prevent it from be
 
 ### Default type mapping
 
-Generally, EF is able to translate queries with constants of a type that is not supported by the provider, as long as you have specified a value converter for a property of this type. However, in queries that don't involve any properties of this type, there is no way for EF to find the correct value converter. In this case, it's possible to call <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping> to add or override a provider type mapping:
+Generally, EF is able to translate queries with constants of a type that is not supported by the provider, as long as you have specified a value converter for a property of this type. However, in queries that don't involve any properties of this type, there is no way for EF to find the correct value converter. In this case, it's possible to call <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping%2A> to add or override a provider type mapping:
 
 [!code-csharp[Main](../../../samples/core/Modeling/BulkConfiguration/PreConventionContext.cs?name=DefaultTypeMapping)]
 

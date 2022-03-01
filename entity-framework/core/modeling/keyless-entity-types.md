@@ -64,7 +64,7 @@ Mapping a keyless entity type to a database object is achieved using the `ToTabl
 The following example shows how to use keyless entity types to query a database view.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/KeylessEntityTypes) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/KeylessEntityTypes) on GitHub.
 
 First, we define a simple Blog and Post model:
 
@@ -95,4 +95,4 @@ Finally, we can query the database view in the standard way:
 > Note we have also defined a context level query property (DbSet) to act as a root for queries against this type.
 
 > [!TIP]
-> To test keyless entity types mapped to views using the in-memory provider map them to a query via `ToInMemoryQuery`. See a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/Testing/ItemsWebApi/) using this technique for more details.
+> To test keyless entity types mapped to views using the in-memory provider, map them to a query via <xref:Microsoft.EntityFrameworkCore.InMemoryEntityTypeBuilderExtensions.ToInMemoryQuery%2A>. See the [in-memory provider docs](xref:core/testing/testing-without-the-database#in-memory-provider) for more information.

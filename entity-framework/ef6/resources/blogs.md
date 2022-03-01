@@ -26,4 +26,3 @@ Besides the product documentation, these blogs can be a source of useful informa
 ## EF Community Bloggers
 
 - [Julie Lerman](https://thedatafarm.com/blog/)  
-- [Shawn Wildermuth](https://wildermuth.com/Tag/%20Entity%20Framework)  

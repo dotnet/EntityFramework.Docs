@@ -5,11 +5,13 @@ on:
     branches: [main]
     paths:
       - "samples/core/**"
+      - "samples/end2end/**"
       - ".github/workflows/build-samples.yml"
   pull_request:
     branches: [main]
     paths:
       - "samples/core/**"
+      - "samples/end2end/**"
       - ".github/workflows/build-samples.yml"
 
 jobs:
@@ -33,4 +35,8 @@ jobs:
 
       - name: Build samples
         working-directory: samples/core
+        run: dotnet build
+
+      - name: Build planetary docs sample
+        working-directory: samples/end2end/PlanetaryDocs
         run: dotnet build
