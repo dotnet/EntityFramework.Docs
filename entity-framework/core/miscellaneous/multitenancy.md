@@ -18,9 +18,17 @@ Many line of business applications are designed to work with multiple customers.
 
 ## Supporting multi-tenancy
 
-There are many approaches to implementing multi-tenancy in applications. One common approach (that is sometimes a requirement) is to keep data for each customer in a separate database. The schema is the same but the data is customer-specific. Another approach is to partition the data in an existing database by customer. This can be done by using a column in a table, or applying multiple schemas to the same table.
+There are many approaches to implementing multi-tenancy in applications. One common approach (that is sometimes a requirement) is to keep data for each customer in a separate database. The schema is the same but the data is customer-specific. Another approach is to partition the data in an existing database by customer. This can be done by using a column in a table, or having a table in multiple schemas with a schema for each tenant.
 
-For the approach that uses multiple databases, switching to the right database is as simple as providing the correct connection string. When the data is stored in a single database, a [global query filter](/ef/core/querying/filters) makes sense to ensure that developers don't accidentally write code that can access data from other customers.
+|Approach|Column for Tenant?|Schema per Tenant?|Multiple Databases?|EF Core Support|
+|:--:|:--:|:--:|:--:|:--:|
+|Discriminator (column)|Yes|No|No|Global query filter|
+|Database per tenant|No|No|Yes|Configuration|
+|Schema per tenant|No|Yes|No|Not supported|
+
+For the database-per-tenant approach, switching to the right database is as simple as providing the correct connection string. When the data is stored in a single database, a [global query filter](/ef/core/querying/filters) can be used to automatically filter rows by the tenant ID column, ensuring that developers don't accidentally write code that can access data from other customers.
+
+These examples should work fine in most app models, including console, WPF, WinForms, and ASP.NET Core apps. Blazor Server apps require special consideration.
 
 ## Blazor Server apps and the life of the factory
 
@@ -28,7 +36,7 @@ The recommended pattern for [using Entity Framework Core in Blazor apps](/aspnet
 
 For multi-tenancy, however, the connection string may change per user. Because the factory caches the configuration with the same lifetime, this means all users must share the same configuration.
 
-This issue doesn't occur in Blazor WebAssembly apps because the singleton is scoped to the user. Blazor Server apps, on the other hand, present a unique challenge. Although the app is a web app, it is "kept alive" by real-time communication using SignalR. A session is created per user and lasts beyond the initial request. A new factory should be provided per user to allow new settings. The lifetime for this special factory is called `Scoped` and creates a new instance per user session.
+This issue doesn't occur in Blazor WebAssembly apps because the singleton is scoped to the user. Blazor Server apps, on the other hand, present a unique challenge. Although the app is a web app, it is "kept alive" by real-time communication using SignalR. A session is created per user and lasts beyond the initial request. A new factory should be provided per user to allow new settings. The lifetime for this special factory is scoped and a new instance is created per user session.
 
 ### An example solution (single database)
 
@@ -86,9 +94,9 @@ The tenant is then used to look up the connection string in `OnConfiguring`:
 
 :::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/MultiDb/ContactContext.cs" range="40-45":::
 
-This works fine for most scenarios unless the user can switch tenants in realtime.
+This works fine for most scenarios unless the user can switch tenants during the same session.
 
-### Realtime tenant changes
+### Switching tenants
 
 In the previous configuration for multiple databases, the options are cached at the `Scoped` level. This means that if the user changes the tenant, the options are _not_ reevaluated and so the tenant change isn't reflected in queries.
 
@@ -103,7 +111,7 @@ The default of `Singleton` still makes sense if your database does not take on u
 
 ## Performance notes
 
-It is highly unlikely that a single user session will require hundreds or thousands of `DbContext` instances during a given session. In local benchmarks it only takes 3 microseconds on a laptop to go from requesting the factory to creating a usable `DbContext`. That translates to over 300,000 requests per second.
+EF Core was designed so that `DbContext` instances can be instantiated quickly with as little overhead as possible. For that reason, creating a new `DbContext` per operation should usually be fine. If this approach is impacting the performance of your application, consider using [DbContext pooling](xref:core/performance/advanced-performance-topics).
 
 ## Conclusion
 
