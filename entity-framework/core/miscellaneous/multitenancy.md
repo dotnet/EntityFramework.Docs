@@ -30,17 +30,17 @@ For the database-per-tenant approach, switching to the right database is as simp
 
 These examples should work fine in most app models, including console, WPF, WinForms, and ASP.NET Core apps. Blazor Server apps require special consideration.
 
-## Blazor Server apps and the life of the factory
+### Blazor Server apps and the life of the factory
 
 The recommended pattern for [using Entity Framework Core in Blazor apps](/aspnet/core/blazor/blazor-server-ef-core) is to register the [DbContextFactory](/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor), then call it to create a new instance of the `DbContext` each operation. By default, the factory is a _singleton_ so only one copy exists for all users of the application. This is usually fine because although the factory is shared, the individual `DbContext` instances are not.
 
-For multi-tenancy, however, the connection string may change per user. Because the factory caches the configuration with the same lifetime, this means all users must share the same configuration.
+For multi-tenancy, however, the connection string may change per user. Because the factory caches the configuration with the same lifetime, this means all users must share the same configuration. Therefore, the lifetime should be changed to `Scoped`.
 
 This issue doesn't occur in Blazor WebAssembly apps because the singleton is scoped to the user. Blazor Server apps, on the other hand, present a unique challenge. Although the app is a web app, it is "kept alive" by real-time communication using SignalR. A session is created per user and lasts beyond the initial request. A new factory should be provided per user to allow new settings. The lifetime for this special factory is scoped and a new instance is created per user session.
 
-### An example solution (single database)
+## An example solution (single database)
 
-A possible solution is to create a simple `ITenantService` service that handles setting the user's current tenant. It provides callbacks so code is notified when the tenant changes. The implementation (with the callbacks omitted for clarity) might look like this (the tenant list is hard-coded for brevity, but could be pulled from a configuration file or database table):
+A possible solution is to create a simple `ITenantService` service that handles setting the user's current tenant. It provides callbacks so code is notified when the tenant changes. The implementation (with the callbacks omitted for clarity) might look like this:
 
 :::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/Common/ITenantService.cs":::
 
@@ -56,7 +56,7 @@ This ensures that every query is filtered to the tenant on every request. There 
 
 The tenant provider and `DbContextFactory` are configured in the application startup like this, using Sqlite as an example:
 
-:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/MultiDb/Program.cs" range="13-14":::
+:::code language="csharp" source="../../../samples/core/Miscellaneous/Multitenancy/SingleDbSingleTable/Program.cs" range="13-14":::
 
 Notice that the [service lifetime](/dotnet/core/extensions/dependency-injection#service-lifetimes) is configured with `ServiceLifetime.Scoped`. This enables it to take a dependency on the tenant provider.
 
