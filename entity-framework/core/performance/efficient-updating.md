@@ -11,7 +11,7 @@ uid: core/performance/efficient-updating
 
 EF Core helps minimize roundtrips by automatically batching together all updates in a single roundtrip. Consider the following:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#SaveChangesBatching)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#SaveChangesBatching)]
 
 The above loads a blog from the database, changes its URL, and then adds two new blogs; to apply this, two SQL INSERT statements and one UPDATE statement are sent to the database. Rather than sending them one by one, as Blog instances are added, EF Core tracks these changes internally, and executes them in a single roundtrip when <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> is called.
 
@@ -19,13 +19,13 @@ The number of statements that EF batches in a single roundtrip depends on the da
 
 Users can also tweak these thresholds to achieve potentially higher performance - but benchmark carefully before modifying these:
 
-[!code-csharp[Main](../../../samples/core/Performance/BatchTweakingContext.cs#BatchTweaking)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/BatchTweakingContext.cs#BatchTweaking)]
 
 ## Bulk updates
 
 Let's assume you want to give all your employees a raise. A typical implementation for this in EF Core would look like the following:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#UpdateWithoutBulk)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#UpdateWithoutBulk)]
 
 While this is perfectly valid code, let's analyze what it does from a performance perspective:
 
@@ -43,4 +43,4 @@ This performs the entire operation in a single roundtrip, without loading or sen
 
 Unfortunately, EF doesn't currently provide APIs for performing bulk updates. Until these are introduced, you can use raw SQL to perform the operation where performance is sensitive:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#UpdateWithBulk)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#UpdateWithBulk)]

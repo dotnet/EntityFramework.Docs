@@ -13,7 +13,7 @@ Querying efficiently is a vast subject, that covers subjects as wide-ranging as 
 
 The main deciding factor in whether a query runs fast or not is whether it will properly utilize indexes where appropriate: databases are typically used to hold large amounts of data, and queries which traverse entire tables are typically sources of serious performance issues. Indexing issues aren't easy to spot, because it isn't immediately obvious whether a given query will use an index or not. For example:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#Indexes)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#Indexes)]
 
 A good way to spot indexing issues is to first pinpoint a slow query, and then examine its query plan via your database's favorite tool; see the [performance diagnosis](xref:core/performance/performance-diagnosis) page for more information on how to do that. The query plan displays whether the query traverses the entire table, or uses an index.
 
@@ -28,7 +28,7 @@ As a general rule, there isn't any special EF knowledge to using indexes or diag
 
 EF Core makes it very easy to query out entity instances, and then use those instances in code. However, querying entity instances can frequently pull back more data than necessary from your database. Consider the following:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#ProjectEntities)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#ProjectEntities)]
 
 Although this code only actually needs each Blog's `Url` property, the entire Blog entity is fetched, and unneeded columns are transferred from the database:
 
@@ -39,7 +39,7 @@ FROM [Blogs] AS [b]
 
 This can be optimized by using `Select` to tell EF which columns to project out:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#ProjectSingleProperty)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#ProjectSingleProperty)]
 
 The resulting SQL pulls back only the needed columns:
 
@@ -56,13 +56,13 @@ Note that this technique is very useful for read-only queries, but things get mo
 
 By default, a query returns all rows that matches its filters:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#NoLimit)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#NoLimit)]
 
 Since the number of rows returned depends on actual data in your database, it's impossible to know how much data will be loaded from the database, how much memory will be taken up by the results, and how much additional load will be generated when processing these results (e.g. by sending them to a user browser over the network). Crucially, test databases frequently contain little data, so that everything works well while testing, but performance problems suddenly appear when the query starts running on real-world data and many rows are returned.
 
 As a result, it's usually worth giving thought to limiting the number of results:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#Limit25)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#Limit25)]
 
 At a minimum, your UI could show a message indicating that more rows may exist in the database (and allow retrieving them in some other manner). A full-blown solution would implement *pagination*, where your UI only shows a certain number of rows at a time, and allow users to advance to the next page as needed; see the next section for more details on how to implement this efficiently.
 
@@ -106,7 +106,7 @@ In other scenarios, we may not know which related entity we're going to need bef
 
 Consider the following:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#NPlusOne)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#NPlusOne)]
 
 This seemingly innocent piece of code iterates through all the blogs and their posts, printing them out. Turning on EF Core's [statement logging](xref:core/logging-events-diagnostics/index) reveals the following:
 
@@ -138,7 +138,7 @@ What's going on here? Why are all these queries being sent for the simple loops 
 
 Assuming we're going to need all of the blogs' posts, it makes sense to use eager loading here instead. We can use the [Include](xref:core/querying/related-data/eager#eager-loading) operator to perform the loading, but since we only need the Blogs' URLs (and we should only [load what's needed](xref:core/performance/efficient-querying#project-only-properties-you-need)). So we'll use a projection instead:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#EagerlyLoadRelatedAndProject)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#EagerlyLoadRelatedAndProject)]
 
 This will make EF Core fetch all the Blogs - along with their Posts - in a single query. In some cases, it may also be useful to avoid cartesian explosion effects by using [split queries](xref:core/querying/single-split-queries).
 
@@ -151,7 +151,7 @@ Buffering refers to loading all your query results into memory, whereas streamin
 
 Whether a query buffers or streams depends on how it is evaluated:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#BufferingAndStreaming)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#BufferingAndStreaming)]
 
 If your queries return just a few results, then you probably don't have to worry about this. However, if your query might return large numbers of rows, it's worth giving thought to streaming instead of buffering.
 

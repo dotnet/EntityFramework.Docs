@@ -17,11 +17,11 @@ EF makes it very easy to capture command execution times, via either [simple log
 
 ### [Simple logging](#tab/simple-logging)
 
-[!code-csharp[Main](../../../samples/core/Performance/BloggingContext.cs#SimpleLogging)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/BloggingContext.cs#SimpleLogging)]
 
 ### [Microsoft.Extensions.Logging](#tab/microsoft-extensions-logging)
 
-[!code-csharp[Main](../../../samples/core/Performance/ExtensionsLoggingContext.cs#ExtensionsLogging)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/ExtensionsLoggingContext.cs#ExtensionsLogging)]
 
 ***
 
