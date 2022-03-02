@@ -1,9 +1,8 @@
-﻿namespace EFQuerying.RelatedData
+﻿namespace EFQuerying.RelatedData;
+
+public class ColorScheme
 {
-    public class ColorScheme
-    {
-        public int Id { get; set; }
-        public string Background { get; set; }
-        public string HighlightColor { get; set; }
-    }
+    public int Id { get; set; }
+    public string Background { get; set; }
+    public string HighlightColor { get; set; }
 }

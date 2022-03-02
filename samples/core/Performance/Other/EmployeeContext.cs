@@ -2,24 +2,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Performance
+namespace Performance;
+
+public class EmployeeContext : DbContext
 {
-    public class EmployeeContext : DbContext
-    {
-        public DbSet<Employee> Employees { get; set; }
+    public DbSet<Employee> Employees { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
-                .LogTo(Console.WriteLine, LogLevel.Information);
-        }
-    }
-
-    public class Employee
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Salary { get; set; }
+        optionsBuilder
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
+            .LogTo(Console.WriteLine, LogLevel.Information);
     }
+}
+
+public class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Salary { get; set; }
 }

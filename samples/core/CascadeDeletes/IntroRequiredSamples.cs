@@ -4,185 +4,184 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace IntroRequired
+namespace IntroRequired;
+
+public static class IntroRequiredSamples
 {
-    public static class IntroRequiredSamples
+    public static void Deleting_principal_parent_1()
     {
-        public static void Deleting_principal_parent_1()
-        {
-            Console.WriteLine($">>>> Sample: {nameof(Deleting_principal_parent_1)}");
-            Console.WriteLine();
+        Console.WriteLine($">>>> Sample: {nameof(Deleting_principal_parent_1)}");
+        Console.WriteLine();
 
-            Helpers.RecreateCleanDatabase();
-            Helpers.PopulateDatabase();
+        Helpers.RecreateCleanDatabase();
+        Helpers.PopulateDatabase();
 
-            #region Deleting_principal_parent_1
-            using var context = new BlogsContext();
+        #region Deleting_principal_parent_1
+        using var context = new BlogsContext();
 
-            var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+        var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
 
-            context.Remove(blog);
+        context.Remove(blog);
 
-            context.SaveChanges();
-            #endregion
+        context.SaveChanges();
+        #endregion
 
-            Console.WriteLine();
-        }
-
-        public static void Severing_a_relationship_1()
-        {
-            Console.WriteLine($">>>> Sample: {nameof(Severing_a_relationship_1)}");
-            Console.WriteLine();
-
-            Helpers.RecreateCleanDatabase();
-            Helpers.PopulateDatabase();
-
-            #region Severing_a_relationship_1
-            using var context = new BlogsContext();
-
-            var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
-
-            foreach (var post in blog.Posts)
-            {
-                post.Blog = null;
-            }
-
-            context.SaveChanges();
-            #endregion
-
-            Console.WriteLine();
-        }
-
-        public static void Severing_a_relationship_2()
-        {
-            Console.WriteLine($">>>> Sample: {nameof(Severing_a_relationship_2)}");
-            Console.WriteLine();
-
-            Helpers.RecreateCleanDatabase();
-            Helpers.PopulateDatabase();
-
-            #region Severing_a_relationship_2
-            using var context = new BlogsContext();
-
-            var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
-
-            blog.Posts.Clear();
-
-            context.SaveChanges();
-            #endregion
-
-            Console.WriteLine();
-        }
-
-        public static void Where_cascading_behaviors_happen_1()
-        {
-            Console.WriteLine($">>>> Sample: {nameof(Where_cascading_behaviors_happen_1)}");
-            Console.WriteLine();
-
-            Helpers.RecreateCleanDatabase();
-            Helpers.PopulateDatabase();
-
-            #region Where_cascading_behaviors_happen_1
-            using var context = new BlogsContext();
-
-            var blog = context.Blogs.OrderBy(e => e.Name).First();
-
-            context.Remove(blog);
-
-            context.SaveChanges();
-            #endregion
-
-            Console.WriteLine();
-        }
+        Console.WriteLine();
     }
 
-    public static class Helpers
+    public static void Severing_a_relationship_1()
     {
-        public static void RecreateCleanDatabase()
-        {
-            using var context = new BlogsContext(quiet: true);
+        Console.WriteLine($">>>> Sample: {nameof(Severing_a_relationship_1)}");
+        Console.WriteLine();
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+        Helpers.RecreateCleanDatabase();
+        Helpers.PopulateDatabase();
+
+        #region Severing_a_relationship_1
+        using var context = new BlogsContext();
+
+        var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+
+        foreach (var post in blog.Posts)
+        {
+            post.Blog = null;
         }
 
-        public static void PopulateDatabase()
-        {
-            using var context = new BlogsContext(quiet: true);
+        context.SaveChanges();
+        #endregion
 
-            context.Add(
-                new Blog
+        Console.WriteLine();
+    }
+
+    public static void Severing_a_relationship_2()
+    {
+        Console.WriteLine($">>>> Sample: {nameof(Severing_a_relationship_2)}");
+        Console.WriteLine();
+
+        Helpers.RecreateCleanDatabase();
+        Helpers.PopulateDatabase();
+
+        #region Severing_a_relationship_2
+        using var context = new BlogsContext();
+
+        var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+
+        blog.Posts.Clear();
+
+        context.SaveChanges();
+        #endregion
+
+        Console.WriteLine();
+    }
+
+    public static void Where_cascading_behaviors_happen_1()
+    {
+        Console.WriteLine($">>>> Sample: {nameof(Where_cascading_behaviors_happen_1)}");
+        Console.WriteLine();
+
+        Helpers.RecreateCleanDatabase();
+        Helpers.PopulateDatabase();
+
+        #region Where_cascading_behaviors_happen_1
+        using var context = new BlogsContext();
+
+        var blog = context.Blogs.OrderBy(e => e.Name).First();
+
+        context.Remove(blog);
+
+        context.SaveChanges();
+        #endregion
+
+        Console.WriteLine();
+    }
+}
+
+public static class Helpers
+{
+    public static void RecreateCleanDatabase()
+    {
+        using var context = new BlogsContext(quiet: true);
+
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+    }
+
+    public static void PopulateDatabase()
+    {
+        using var context = new BlogsContext(quiet: true);
+
+        context.Add(
+            new Blog
+            {
+                Name = ".NET Blog",
+                Posts =
                 {
-                    Name = ".NET Blog",
-                    Posts =
+                    new Post
                     {
-                        new Post
-                        {
-                            Title = "Announcing the Release of EF Core 5.0",
-                            Content = "Announcing the release of EF Core 5.0, a full featured cross-platform..."
-                        },
-                        new Post
-                        {
-                            Title = "Announcing F# 5",
-                            Content = "F# 5 is the latest version of F#, the functional programming language..."
-                        },
-                    }
-                });
+                        Title = "Announcing the Release of EF Core 5.0",
+                        Content = "Announcing the release of EF Core 5.0, a full featured cross-platform..."
+                    },
+                    new Post
+                    {
+                        Title = "Announcing F# 5",
+                        Content = "F# 5 is the latest version of F#, the functional programming language..."
+                    },
+                }
+            });
 
-            context.SaveChanges();
-        }
+        context.SaveChanges();
+    }
+}
+
+#region Model
+public class Blog
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; }
+
+    public IList<Post> Posts { get; } = new List<Post>();
+}
+
+public class Post
+{
+    public int Id { get; set; }
+
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public int BlogId { get; set; }
+    public Blog Blog { get; set; }
+}
+#endregion
+
+public class BlogsContext : DbContext
+{
+    private readonly bool _quiet;
+
+    public BlogsContext(bool quiet = false)
+    {
+        _quiet = quiet;
     }
 
-    #region Model
-    public class Blog
+    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Post> Posts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public IList<Post> Posts { get; } = new List<Post>();
+        modelBuilder.Entity<Blog>().HasMany(e => e.Posts).WithOne(e => e.Blog); //.OnDelete(DeleteBehavior.ClientSetNull);
     }
 
-    public class Post
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        public int Id { get; set; }
+        optionsBuilder
+            .EnableSensitiveDataLogging()
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Scratch;Trusted_Connection=True");
+        //.UseSqlite("DataSource=test.db");
 
-        public string Title { get; set; }
-        public string Content { get; set; }
-
-        public int BlogId { get; set; }
-        public Blog Blog { get; set; }
-    }
-    #endregion
-
-    public class BlogsContext : DbContext
-    {
-        private readonly bool _quiet;
-
-        public BlogsContext(bool quiet = false)
+        if (!_quiet)
         {
-            _quiet = quiet;
-        }
-
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Blog>().HasMany(e => e.Posts).WithOne(e => e.Blog); //.OnDelete(DeleteBehavior.ClientSetNull);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .EnableSensitiveDataLogging()
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Scratch;Trusted_Connection=True");
-            //.UseSqlite("DataSource=test.db");
-
-            if (!_quiet)
-            {
-                optionsBuilder.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted });
-            }
+            optionsBuilder.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted });
         }
     }
 }

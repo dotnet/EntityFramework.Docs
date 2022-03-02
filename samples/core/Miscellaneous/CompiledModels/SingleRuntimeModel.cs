@@ -5,31 +5,30 @@ using Microsoft.EntityFrameworkCore.Metadata;
 #pragma warning disable 219, 612, 618
 #nullable disable
 
-namespace SingleRuntimeModel
+namespace SingleRuntimeModel;
+
+#region RuntimeModel
+[DbContext(typeof(BlogsContext))]
+partial class BlogsContextModel : RuntimeModel
 {
-    #region RuntimeModel
-    [DbContext(typeof(BlogsContext))]
-    partial class BlogsContextModel : RuntimeModel
+    private static BlogsContextModel _instance;
+    public static IModel Instance
     {
-        private static BlogsContextModel _instance;
-        public static IModel Instance
+        get
         {
-            get
+            if (_instance == null)
             {
-                if (_instance == null)
-                {
-                    _instance = new BlogsContextModel();
-                    _instance.Initialize();
-                    _instance.Customize();
-                }
-
-                return _instance;
+                _instance = new BlogsContextModel();
+                _instance.Initialize();
+                _instance.Customize();
             }
+
+            return _instance;
         }
-
-        partial void Initialize();
-
-        partial void Customize();
     }
-    #endregion
+
+    partial void Initialize();
+
+    partial void Customize();
 }
+#endregion

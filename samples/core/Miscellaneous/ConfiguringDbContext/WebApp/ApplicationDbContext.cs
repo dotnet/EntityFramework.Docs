@@ -1,14 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApp
+namespace WebApp;
+
+#region ApplicationDbContext
+public class ApplicationDbContext : DbContext
 {
-    #region ApplicationDbContext
-    public class ApplicationDbContext : DbContext
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
     }
-    #endregion
 }
+#endregion

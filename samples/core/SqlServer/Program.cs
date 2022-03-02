@@ -1,9 +1,8 @@
-﻿namespace SqlServer
+﻿namespace SqlServer;
+
+public class Program
 {
-    public class Program
+    private static void Main()
     {
-        private static void Main()
-        {
-        }
     }
 }

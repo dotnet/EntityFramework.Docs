@@ -1,26 +1,25 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.GeneratedProperties.FluentAPI.DefaultValueSql
+namespace EFModeling.GeneratedProperties.FluentAPI.DefaultValueSql;
+
+internal class MyContext : DbContext
 {
-    internal class MyContext : DbContext
-    {
-        public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Blog> Blogs { get; set; }
 
-        #region DefaultValueSql
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Blog>()
-                .Property(b => b.Created)
-                .HasDefaultValueSql("getdate()");
-        }
-        #endregion
-    }
-
-    public class Blog
+    #region DefaultValueSql
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public int BlogId { get; set; }
-        public string Url { get; set; }
-        public DateTime Created { get; set; }
+        modelBuilder.Entity<Blog>()
+            .Property(b => b.Created)
+            .HasDefaultValueSql("getdate()");
     }
+    #endregion
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+    public DateTime Created { get; set; }
 }

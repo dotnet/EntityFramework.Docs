@@ -1,9 +1,8 @@
-namespace EFModeling.Inheritance
+namespace EFModeling.Inheritance;
+
+internal class Program
 {
-    internal class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
-        {
-        }
     }
 }

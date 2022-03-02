@@ -1,7 +1,6 @@
-namespace SqlServer.Columns
+namespace SqlServer.Columns;
+
+public class RareBlog : Blog
 {
-    public class RareBlog : Blog
-    {
-        public string RareProperty { get; set; }
-    }
+    public string RareProperty { get; set; }
 }

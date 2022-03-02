@@ -3,23 +3,23 @@ using ProjNet;
 using ProjNet.CoordinateSystems;
 using ProjNet.CoordinateSystems.Transformations;
 
-namespace NetTopologySuite.Geometries
+namespace NetTopologySuite.Geometries;
+
+#region snippet_GeometryExtensions
+public static class GeometryExtensions
 {
-    #region snippet_GeometryExtensions
-    public static class GeometryExtensions
-    {
-        private static readonly CoordinateSystemServices _coordinateSystemServices
-            = new CoordinateSystemServices(
-                new Dictionary<int, string>
-                {
-                    // Coordinate systems:
+    private static readonly CoordinateSystemServices _coordinateSystemServices
+        = new CoordinateSystemServices(
+            new Dictionary<int, string>
+            {
+                // Coordinate systems:
 
-                    [4326] = GeographicCoordinateSystem.WGS84.WKT,
+                [4326] = GeographicCoordinateSystem.WGS84.WKT,
 
-                    // This coordinate system covers the area of our data.
-                    // Different data requires a different coordinate system.
-                    [2855] =
-                        @"
+                // This coordinate system covers the area of our data.
+                // Different data requires a different coordinate system.
+                [2855] =
+                    @"
                         PROJCS[""NAD83(HARN) / Washington North"",
                             GEOGCS[""NAD83(HARN)"",
                                 DATUM[""NAD83_High_Accuracy_Regional_Network"",
@@ -42,39 +42,38 @@ namespace NetTopologySuite.Geometries
                                 AUTHORITY[""EPSG"",""9001""]],
                             AUTHORITY[""EPSG"",""2855""]]
                     "
-                });
+            });
 
-        public static Geometry ProjectTo(this Geometry geometry, int srid)
+    public static Geometry ProjectTo(this Geometry geometry, int srid)
+    {
+        var transformation = _coordinateSystemServices.CreateTransformation(geometry.SRID, srid);
+
+        var result = geometry.Copy();
+        result.Apply(new MathTransformFilter(transformation.MathTransform));
+
+        return result;
+    }
+
+    private class MathTransformFilter : ICoordinateSequenceFilter
+    {
+        private readonly MathTransform _transform;
+
+        public MathTransformFilter(MathTransform transform)
+            => _transform = transform;
+
+        public bool Done => false;
+        public bool GeometryChanged => true;
+
+        public void Filter(CoordinateSequence seq, int i)
         {
-            var transformation = _coordinateSystemServices.CreateTransformation(geometry.SRID, srid);
-
-            var result = geometry.Copy();
-            result.Apply(new MathTransformFilter(transformation.MathTransform));
-
-            return result;
-        }
-
-        private class MathTransformFilter : ICoordinateSequenceFilter
-        {
-            private readonly MathTransform _transform;
-
-            public MathTransformFilter(MathTransform transform)
-                => _transform = transform;
-
-            public bool Done => false;
-            public bool GeometryChanged => true;
-
-            public void Filter(CoordinateSequence seq, int i)
-            {
-                var x = seq.GetX(i);
-                var y = seq.GetY(i);
-                var z = seq.GetZ(i);
-                _transform.Transform(ref x, ref y, ref z);
-                seq.SetX(i, x);
-                seq.SetY(i, y);
-                seq.SetZ(i, z);
-            }
+            var x = seq.GetX(i);
+            var y = seq.GetY(i);
+            var z = seq.GetZ(i);
+            _transform.Transform(ref x, ref y, ref z);
+            seq.SetX(i, x);
+            seq.SetY(i, y);
+            seq.SetZ(i, z);
         }
     }
-    #endregion
 }
+#endregion

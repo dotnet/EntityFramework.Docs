@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EFModeling.BulkConfiguration
+namespace EFModeling.BulkConfiguration;
+
+#region CurrencyConverter
+public class CurrencyConverter : ValueConverter<Currency, decimal>
 {
-    #region CurrencyConverter
-    public class CurrencyConverter : ValueConverter<Currency, decimal>
+    public CurrencyConverter()
+        : base(
+            v => v.Amount,
+            v => new Currency(v))
     {
-        public CurrencyConverter()
-            : base(
-                v => v.Amount,
-                v => new Currency(v))
-        {
-        }
     }
-    #endregion
 }
+#endregion

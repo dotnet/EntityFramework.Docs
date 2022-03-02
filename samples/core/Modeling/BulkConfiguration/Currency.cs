@@ -1,15 +1,14 @@
-﻿namespace EFModeling.BulkConfiguration
+﻿namespace EFModeling.BulkConfiguration;
+
+#region Currency
+public readonly struct Currency
 {
-    #region Currency
-    public readonly struct Currency
-    {
-        public Currency(decimal amount)
-            => Amount = amount;
+    public Currency(decimal amount)
+        => Amount = amount;
 
-        public decimal Amount { get; }
+    public decimal Amount { get; }
 
-        public override string ToString()
-            => $"${Amount}";
-    }
-    #endregion
+    public override string ToString()
+        => $"${Amount}";
 }
+#endregion

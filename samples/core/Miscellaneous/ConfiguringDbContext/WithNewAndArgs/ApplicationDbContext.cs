@@ -1,21 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace WithNewAndArgs
+namespace WithNewAndArgs;
+
+#region ApplicationDbContext
+public class ApplicationDbContext : DbContext
 {
-    #region ApplicationDbContext
-    public class ApplicationDbContext : DbContext
+    private readonly string _connectionString;
+
+    public ApplicationDbContext(string connectionString)
     {
-        private readonly string _connectionString;
-
-        public ApplicationDbContext(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_connectionString);
-        }
+        _connectionString = connectionString;
     }
-    #endregion
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer(_connectionString);
+    }
 }
+#endregion

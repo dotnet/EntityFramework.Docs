@@ -1,16 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace AdditionalConfiguration
+namespace AdditionalConfiguration;
+
+#region ApplicationDbContext
+public class ApplicationDbContext : DbContext
 {
-    #region ApplicationDbContext
-    public class ApplicationDbContext : DbContext
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .EnableSensitiveDataLogging()
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test");
-        }
+        optionsBuilder
+            .EnableSensitiveDataLogging()
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test");
     }
-    #endregion
 }
+#endregion

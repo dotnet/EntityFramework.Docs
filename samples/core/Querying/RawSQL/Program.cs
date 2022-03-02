@@ -2,19 +2,19 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFQuerying.RawSQL
-{
-    internal class Program
-    {
-        private static void Main(string[] args)
-        {
-            using (var context = new BloggingContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+namespace EFQuerying.RawSQL;
 
-                context.Database.ExecuteSqlRaw(
-                    @"create function [dbo].[SearchBlogs] (@searchTerm nvarchar(max))
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        using (var context = new BloggingContext())
+        {
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
+            context.Database.ExecuteSqlRaw(
+                @"create function [dbo].[SearchBlogs] (@searchTerm nvarchar(max))
                           returns @found table
                           (
                               BlogId int not null,
@@ -33,117 +33,116 @@ namespace EFQuerying.RawSQL
                                   return
                           end");
 
-                context.Database.ExecuteSqlRaw(
-                    @"create procedure [dbo].[GetMostPopularBlogs] as
+            context.Database.ExecuteSqlRaw(
+                @"create procedure [dbo].[GetMostPopularBlogs] as
                           begin
                               select * from dbo.Blogs order by Rating
                           end");
 
-                context.Database.ExecuteSqlRaw(
-                    @"create procedure [dbo].[GetMostPopularBlogsForUser] @filterByUser nvarchar(max) as
+            context.Database.ExecuteSqlRaw(
+                @"create procedure [dbo].[GetMostPopularBlogsForUser] @filterByUser nvarchar(max) as
                           begin
                               select * from dbo.Blogs order by Rating
                           end");
-            }
+        }
 
-            using (var context = new BloggingContext())
-            {
-                #region FromSqlRaw
-                var blogs = context.Blogs
-                    .FromSqlRaw("SELECT * FROM dbo.Blogs")
-                    .ToList();
-                #endregion
-            }
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlRaw
+            var blogs = context.Blogs
+                .FromSqlRaw("SELECT * FROM dbo.Blogs")
+                .ToList();
+            #endregion
+        }
 
-            using (var context = new BloggingContext())
-            {
-                #region FromSqlRawStoredProcedure
-                var blogs = context.Blogs
-                    .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogs")
-                    .ToList();
-                #endregion
-            }
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlRawStoredProcedure
+            var blogs = context.Blogs
+                .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogs")
+                .ToList();
+            #endregion
+        }
 
-            using (var context = new BloggingContext())
-            {
-                #region FromSqlRawStoredProcedureParameter
-                var user = "johndoe";
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlRawStoredProcedureParameter
+            var user = "johndoe";
 
-                var blogs = context.Blogs
-                    .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser {0}", user)
-                    .ToList();
-                #endregion
-            }
+            var blogs = context.Blogs
+                .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser {0}", user)
+                .ToList();
+            #endregion
+        }
 
-            using (var context = new BloggingContext())
-            {
-                #region FromSqlInterpolatedStoredProcedureParameter
-                var user = "johndoe";
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlInterpolatedStoredProcedureParameter
+            var user = "johndoe";
 
-                var blogs = context.Blogs
-                    .FromSqlInterpolated($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
-                    .ToList();
-                #endregion
-            }
+            var blogs = context.Blogs
+                .FromSqlInterpolated($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
+                .ToList();
+            #endregion
+        }
 
-            using (var context = new BloggingContext())
-            {
-                #region FromSqlRawStoredProcedureSqlParameter
-                var user = new SqlParameter("user", "johndoe");
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlRawStoredProcedureSqlParameter
+            var user = new SqlParameter("user", "johndoe");
 
-                var blogs = context.Blogs
-                    .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
-                    .ToList();
-                #endregion
-            }
+            var blogs = context.Blogs
+                .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
+                .ToList();
+            #endregion
+        }
 
-            using (var context = new BloggingContext())
-            {
-                #region FromSqlRawStoredProcedureNamedSqlParameter
-                var user = new SqlParameter("user", "johndoe");
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlRawStoredProcedureNamedSqlParameter
+            var user = new SqlParameter("user", "johndoe");
 
-                var blogs = context.Blogs
-                    .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser @filterByUser=@user", user)
-                    .ToList();
-                #endregion
-            }
+            var blogs = context.Blogs
+                .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser @filterByUser=@user", user)
+                .ToList();
+            #endregion
+        }
 
-            using (var context = new BloggingContext())
-            {
-                #region FromSqlInterpolatedComposed
-                var searchTerm = "Lorem ipsum";
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlInterpolatedComposed
+            var searchTerm = "Lorem ipsum";
 
-                var blogs = context.Blogs
-                    .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
-                    .Where(b => b.Rating > 3)
-                    .OrderByDescending(b => b.Rating)
-                    .ToList();
-                #endregion
-            }
+            var blogs = context.Blogs
+                .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                .Where(b => b.Rating > 3)
+                .OrderByDescending(b => b.Rating)
+                .ToList();
+            #endregion
+        }
 
-            using (var context = new BloggingContext())
-            {
-                #region FromSqlInterpolatedAsNoTracking
-                var searchTerm = "Lorem ipsum";
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlInterpolatedAsNoTracking
+            var searchTerm = "Lorem ipsum";
 
-                var blogs = context.Blogs
-                    .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
-                    .AsNoTracking()
-                    .ToList();
-                #endregion
-            }
+            var blogs = context.Blogs
+                .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                .AsNoTracking()
+                .ToList();
+            #endregion
+        }
 
-            using (var context = new BloggingContext())
-            {
-                #region FromSqlInterpolatedInclude
-                var searchTerm = "Lorem ipsum";
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlInterpolatedInclude
+            var searchTerm = "Lorem ipsum";
 
-                var blogs = context.Blogs
-                    .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
-                    .Include(b => b.Posts)
-                    .ToList();
-                #endregion
-            }
+            var blogs = context.Blogs
+                .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                .Include(b => b.Posts)
+                .ToList();
+            #endregion
         }
     }
 }

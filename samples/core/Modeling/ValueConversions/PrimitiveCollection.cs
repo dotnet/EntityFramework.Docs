@@ -9,74 +9,73 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace EFModeling.ValueConversions
+namespace EFModeling.ValueConversions;
+
+public class PrimitiveCollection : Program
 {
-    public class PrimitiveCollection : Program
+    public void Run()
     {
-        public void Run()
+        ConsoleWriteLines("Sample showing value conversions for a collections of primitive values...");
+
+        using (var context = new SampleDbContext())
         {
-            ConsoleWriteLines("Sample showing value conversions for a collections of primitive values...");
+            CleanDatabase(context);
 
-            using (var context = new SampleDbContext())
-            {
-                CleanDatabase(context);
+            ConsoleWriteLines("Save a new entity...");
 
-                ConsoleWriteLines("Save a new entity...");
-
-                context.Add(new Post { Tags = new List<string> { "EF Core", "Unicorns", "Donkeys" } });
-                context.SaveChanges();
-            }
-
-            using (var context = new SampleDbContext())
-            {
-                ConsoleWriteLines("Read the entity back...");
-
-                var post = context.Set<Post>().Single();
-
-                ConsoleWriteLines($"Post with tags {string.Join(", ", post.Tags)}.");
-
-                ConsoleWriteLines("Changing the value object and saving again");
-
-                post.Tags.Add("ASP.NET Core");
-                context.SaveChanges();
-            }
-
-            ConsoleWriteLines("Sample finished.");
+            context.Add(new Post { Tags = new List<string> { "EF Core", "Unicorns", "Donkeys" } });
+            context.SaveChanges();
         }
 
-        public class SampleDbContext : DbContext
+        using (var context = new SampleDbContext())
         {
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                #region ConfigurePrimitiveCollection
-                modelBuilder.Entity<Post>()
-                    .Property(e => e.Tags)
-                    .HasConversion(
-                        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                        v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null),
-                        new ValueComparer<ICollection<string>>(
-                            (c1, c2) => c1.SequenceEqual(c2),
-                            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                            c => (ICollection<string>)c.ToList()));
-                #endregion
-            }
+            ConsoleWriteLines("Read the entity back...");
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder
-                    .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                    .UseSqlite("DataSource=test.db")
-                    .EnableSensitiveDataLogging();
+            var post = context.Set<Post>().Single();
+
+            ConsoleWriteLines($"Post with tags {string.Join(", ", post.Tags)}.");
+
+            ConsoleWriteLines("Changing the value object and saving again");
+
+            post.Tags.Add("ASP.NET Core");
+            context.SaveChanges();
         }
 
-        #region PrimitiveCollectionModel
-        public class Post
-        {
-            public int Id { get; set; }
-            public string Title { get; set; }
-            public string Contents { get; set; }
-
-            public ICollection<string> Tags { get; set; }
-        }
-        #endregion
+        ConsoleWriteLines("Sample finished.");
     }
+
+    public class SampleDbContext : DbContext
+    {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            #region ConfigurePrimitiveCollection
+            modelBuilder.Entity<Post>()
+                .Property(e => e.Tags)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null),
+                    new ValueComparer<ICollection<string>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                        c => (ICollection<string>)c.ToList()));
+            #endregion
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            => optionsBuilder
+                .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
+                .UseSqlite("DataSource=test.db")
+                .EnableSensitiveDataLogging();
+    }
+
+    #region PrimitiveCollectionModel
+    public class Post
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Contents { get; set; }
+
+        public ICollection<string> Tags { get; set; }
+    }
+    #endregion
 }

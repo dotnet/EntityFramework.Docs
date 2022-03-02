@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace EFQuerying.ComplexQuery
+namespace EFQuerying.ComplexQuery;
+
+public class Person
 {
-    public class Person
-    {
-        public int PersonId { get; set; }
-        public string Name { get; set; }
+    public int PersonId { get; set; }
+    public string Name { get; set; }
 
-        public List<Post> AuthoredPosts { get; set; }
-        public List<Blog> OwnedBlogs { get; set; }
+    public List<Post> AuthoredPosts { get; set; }
+    public List<Blog> OwnedBlogs { get; set; }
 
-        public int? PhotoId { get; set; }
-        public PersonPhoto Photo { get; set; }
-    }
+    public int? PhotoId { get; set; }
+    public PersonPhoto Photo { get; set; }
 }
