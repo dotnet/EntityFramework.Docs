@@ -4,167 +4,166 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace JoinEntityWithPayload
+namespace JoinEntityWithPayload;
+
+public class ExplicitJoinEntityWithPayloadSamples
 {
-    public class ExplicitJoinEntityWithPayloadSamples
+    public static void Many_to_many_relationships_7()
     {
-        public static void Many_to_many_relationships_7()
-        {
-            Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_7)}");
-            Console.WriteLine();
+        Console.WriteLine($">>>> Sample: {nameof(Many_to_many_relationships_7)}");
+        Console.WriteLine();
 
-            Helpers.RecreateCleanDatabase();
-            Helpers.PopulateDatabase();
+        Helpers.RecreateCleanDatabase();
+        Helpers.PopulateDatabase();
 
-            #region Many_to_many_relationships_7
-            using var context = new BlogsContext();
+        #region Many_to_many_relationships_7
+        using var context = new BlogsContext();
 
-            var post = context.Posts.Single(e => e.Id == 3);
-            var tag = context.Tags.Single(e => e.Id == 1);
+        var post = context.Posts.Single(e => e.Id == 3);
+        var tag = context.Tags.Single(e => e.Id == 1);
 
-            post.Tags.Add(tag);
+        post.Tags.Add(tag);
 
-            context.SaveChanges();
+        context.SaveChanges();
 
-            Console.WriteLine(context.ChangeTracker.DebugView.LongView);
-            #endregion
+        Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+        #endregion
 
-            Console.WriteLine();
-        }
+        Console.WriteLine();
+    }
+}
+
+public static class Helpers
+{
+    public static void RecreateCleanDatabase()
+    {
+        using var context = new BlogsContext(quiet: true);
+
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
     }
 
-    public static class Helpers
+    public static void PopulateDatabase()
     {
-        public static void RecreateCleanDatabase()
-        {
-            using var context = new BlogsContext(quiet: true);
+        using var context = new BlogsContext(quiet: true);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-        }
-
-        public static void PopulateDatabase()
-        {
-            using var context = new BlogsContext(quiet: true);
-
-            context.AddRange(
-                new Blog
+        context.AddRange(
+            new Blog
+            {
+                Name = ".NET Blog",
+                Posts =
                 {
-                    Name = ".NET Blog",
-                    Posts =
+                    new Post
                     {
-                        new Post
-                        {
-                            Title = "Announcing the Release of EF Core 5.0",
-                            Content = "Announcing the release of EF Core 5.0, a full featured cross-platform..."
-                        },
-                        new Post
-                        {
-                            Title = "Announcing F# 5",
-                            Content = "F# 5 is the latest version of F#, the functional programming language..."
-                        },
+                        Title = "Announcing the Release of EF Core 5.0",
+                        Content = "Announcing the release of EF Core 5.0, a full featured cross-platform..."
+                    },
+                    new Post
+                    {
+                        Title = "Announcing F# 5",
+                        Content = "F# 5 is the latest version of F#, the functional programming language..."
                     },
                 },
-                new Blog
+            },
+            new Blog
+            {
+                Name = "Visual Studio Blog",
+                Posts =
                 {
-                    Name = "Visual Studio Blog",
-                    Posts =
+                    new Post
                     {
-                        new Post
-                        {
-                            Title = "Disassembly improvements for optimized managed debugging",
-                            Content =
-                                "If you are focused on squeezing out the last bits of performance for your .NET service or..."
-                        },
-                        new Post
-                        {
-                            Title = "Database Profiling with Visual Studio",
-                            Content = "Examine when database queries were executed and measure how long the take using..."
-                        },
-                    }
-                },
-                new Tag { Text = ".NET" },
-                new Tag { Text = "Visual Studio" },
-                new Tag { Text = "EF Core" });
+                        Title = "Disassembly improvements for optimized managed debugging",
+                        Content =
+                            "If you are focused on squeezing out the last bits of performance for your .NET service or..."
+                    },
+                    new Post
+                    {
+                        Title = "Database Profiling with Visual Studio",
+                        Content = "Examine when database queries were executed and measure how long the take using..."
+                    },
+                }
+            },
+            new Tag { Text = ".NET" },
+            new Tag { Text = "Visual Studio" },
+            new Tag { Text = "EF Core" });
 
-            context.SaveChanges();
+        context.SaveChanges();
+    }
+}
+
+public class Blog
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+
+    public IList<Post> Posts { get; } = new List<Post>();
+}
+
+public class Post
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public int? BlogId { get; set; }
+    public Blog Blog { get; set; }
+
+    public IList<Tag> Tags { get; } = new List<Tag>(); // Skip collection navigation
+}
+
+public class Tag
+{
+    public int Id { get; set; }
+    public string Text { get; set; }
+
+    public IList<Post> Posts { get; } = new List<Post>(); // Skip collection navigation
+}
+
+#region Model
+public class PostTag
+{
+    public int PostId { get; set; } // First part of composite PK; FK to Post
+    public int TagId { get; set; } // Second part of composite PK; FK to Tag
+
+    public DateTime TaggedOn { get; set; } // Payload
+}
+#endregion
+
+public class BlogsContext : DbContext
+{
+    private readonly bool _quiet;
+
+    public BlogsContext(bool quiet = false)
+    {
+        _quiet = quiet;
+    }
+
+    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<Tag> Tags { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder
+            .EnableSensitiveDataLogging()
+            .UseSqlite("DataSource=test.db");
+
+        if (!_quiet)
+        {
+            optionsBuilder.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted });
         }
     }
 
-    public class Blog
+    #region OnModelCreating
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-        public IList<Post> Posts { get; } = new List<Post>();
-    }
-
-    public class Post
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-
-        public int? BlogId { get; set; }
-        public Blog Blog { get; set; }
-
-        public IList<Tag> Tags { get; } = new List<Tag>(); // Skip collection navigation
-    }
-
-    public class Tag
-    {
-        public int Id { get; set; }
-        public string Text { get; set; }
-
-        public IList<Post> Posts { get; } = new List<Post>(); // Skip collection navigation
-    }
-
-    #region Model
-    public class PostTag
-    {
-        public int PostId { get; set; } // First part of composite PK; FK to Post
-        public int TagId { get; set; } // Second part of composite PK; FK to Tag
-
-        public DateTime TaggedOn { get; set; } // Payload
+        modelBuilder.Entity<Post>()
+            .HasMany(p => p.Tags)
+            .WithMany(p => p.Posts)
+            .UsingEntity<PostTag>(
+                j => j.HasOne<Tag>().WithMany(),
+                j => j.HasOne<Post>().WithMany(),
+                j => j.Property(e => e.TaggedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
     }
     #endregion
-
-    public class BlogsContext : DbContext
-    {
-        private readonly bool _quiet;
-
-        public BlogsContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
-
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .EnableSensitiveDataLogging()
-                .UseSqlite("DataSource=test.db");
-
-            if (!_quiet)
-            {
-                optionsBuilder.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted });
-            }
-        }
-
-        #region OnModelCreating
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Post>()
-                .HasMany(p => p.Tags)
-                .WithMany(p => p.Posts)
-                .UsingEntity<PostTag>(
-                    j => j.HasOne<Tag>().WithMany(),
-                    j => j.HasOne<Post>().WithMany(),
-                    j => j.Property(e => e.TaggedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
-        }
-        #endregion
-    }
 }

@@ -1,10 +1,9 @@
-﻿namespace EFModeling.TableSplitting
+﻿namespace EFModeling.TableSplitting;
+
+#region OrderStatus
+public enum OrderStatus
 {
-    #region OrderStatus
-    public enum OrderStatus
-    {
-        Pending,
-        Shipped
-    }
-    #endregion
+    Pending,
+    Shipped
 }
+#endregion

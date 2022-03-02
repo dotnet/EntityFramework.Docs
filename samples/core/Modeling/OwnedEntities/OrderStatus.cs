@@ -1,10 +1,9 @@
-﻿namespace EFModeling.OwnedEntities
+﻿namespace EFModeling.OwnedEntities;
+
+#region OrderStatus
+public enum OrderStatus
 {
-    #region OrderStatus
-    public enum OrderStatus
-    {
-        Pending,
-        Shipped
-    }
-    #endregion
+    Pending,
+    Shipped
 }
+#endregion

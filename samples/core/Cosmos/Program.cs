@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Cosmos.ModelBuilding;
 
-namespace Cosmos
+namespace Cosmos;
+
+public class Program
 {
-    public class Program
+    private static async Task Main()
     {
-        private static async Task Main()
-        {
-            await Sample.Run();
-            await UnstructuredData.Sample.Run();
-        }
+        await Sample.Run();
+        await UnstructuredData.Sample.Run();
     }
 }

@@ -8,87 +8,86 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace EFModeling.ValueConversions
+namespace EFModeling.ValueConversions;
+
+public class CompositeValueObject : Program
 {
-    public class CompositeValueObject : Program
+    public void Run()
     {
-        public void Run()
+        ConsoleWriteLines("Sample showing value conversions for a composite value object...");
+
+        using (var context = new SampleDbContext())
         {
-            ConsoleWriteLines("Sample showing value conversions for a composite value object...");
+            CleanDatabase(context);
 
-            using (var context = new SampleDbContext())
-            {
-                CleanDatabase(context);
+            ConsoleWriteLines("Save a new entity...");
 
-                ConsoleWriteLines("Save a new entity...");
-
-                context.Add(new Order { Price = new Money(3.99m, Currency.UsDollars) });
-                context.SaveChanges();
-            }
-
-            using (var context = new SampleDbContext())
-            {
-                ConsoleWriteLines("Read the entity back...");
-
-                var order = context.Set<Order>().Single();
-
-                ConsoleWriteLines($"Order with price {order.Price.Amount} in {order.Price.Currency}.");
-            }
-
-            ConsoleWriteLines("Sample finished.");
+            context.Add(new Order { Price = new Money(3.99m, Currency.UsDollars) });
+            context.SaveChanges();
         }
 
-        public class SampleDbContext : DbContext
+        using (var context = new SampleDbContext())
         {
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                #region ConfigureCompositeValueObject
-                modelBuilder.Entity<Order>()
-                    .Property(e => e.Price)
-                    .HasConversion(
-                        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                        v => JsonSerializer.Deserialize<Money>(v, (JsonSerializerOptions)null));
-                #endregion
-            }
+            ConsoleWriteLines("Read the entity back...");
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder
-                    .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                    .UseSqlite("DataSource=test.db")
-                    .EnableSensitiveDataLogging();
+            var order = context.Set<Order>().Single();
+
+            ConsoleWriteLines($"Order with price {order.Price.Amount} in {order.Price.Currency}.");
         }
 
-        #region CompositeValueObjectModel
-        public class Order
-        {
-            public int Id { get; set; }
-
-            public Money Price { get; set; }
-        }
-        #endregion
-
-        #region CompositeValueObject
-        public readonly struct Money
-        {
-            [JsonConstructor]
-            public Money(decimal amount, Currency currency)
-            {
-                Amount = amount;
-                Currency = currency;
-            }
-
-            public override string ToString()
-                => (Currency == Currency.UsDollars ? "$" : "£") + Amount;
-
-            public decimal Amount { get; }
-            public Currency Currency { get; }
-        }
-
-        public enum Currency
-        {
-            UsDollars,
-            PoundsSterling
-        }
-        #endregion
+        ConsoleWriteLines("Sample finished.");
     }
+
+    public class SampleDbContext : DbContext
+    {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            #region ConfigureCompositeValueObject
+            modelBuilder.Entity<Order>()
+                .Property(e => e.Price)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<Money>(v, (JsonSerializerOptions)null));
+            #endregion
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            => optionsBuilder
+                .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
+                .UseSqlite("DataSource=test.db")
+                .EnableSensitiveDataLogging();
+    }
+
+    #region CompositeValueObjectModel
+    public class Order
+    {
+        public int Id { get; set; }
+
+        public Money Price { get; set; }
+    }
+    #endregion
+
+    #region CompositeValueObject
+    public readonly struct Money
+    {
+        [JsonConstructor]
+        public Money(decimal amount, Currency currency)
+        {
+            Amount = amount;
+            Currency = currency;
+        }
+
+        public override string ToString()
+            => (Currency == Currency.UsDollars ? "$" : "£") + Amount;
+
+        public decimal Amount { get; }
+        public Currency Currency { get; }
+    }
+
+    public enum Currency
+    {
+        UsDollars,
+        PoundsSterling
+    }
+    #endregion
 }

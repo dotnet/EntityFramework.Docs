@@ -1,23 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.EntityTypes.FluentAPI.TableExcludeFromMigrations
+namespace EFModeling.EntityTypes.FluentAPI.TableExcludeFromMigrations;
+
+internal class MyContext : DbContext
 {
-    internal class MyContext : DbContext
-    {
-        public DbSet<IdentityUser> Users { get; set; }
+    public DbSet<IdentityUser> Users { get; set; }
 
-        #region TableExcludeFromMigrations
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<IdentityUser>()
-                .ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
-        }
-        #endregion
-    }
-
-    public class IdentityUser
+    #region TableExcludeFromMigrations
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public string Id { get; set; }
-        public string UserName { get; set; }
+        modelBuilder.Entity<IdentityUser>()
+            .ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
     }
+    #endregion
+}
+
+public class IdentityUser
+{
+    public string Id { get; set; }
+    public string UserName { get; set; }
 }

@@ -2,99 +2,98 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFSaving.RelatedData
+namespace EFSaving.RelatedData;
+
+public class Sample
 {
-    public class Sample
+    public static void Run()
     {
-        public static void Run()
+        using (var context = new BloggingContext())
         {
-            using (var context = new BloggingContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-            }
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+        }
 
-            #region AddingGraphOfEntities
-            using (var context = new BloggingContext())
+        #region AddingGraphOfEntities
+        using (var context = new BloggingContext())
+        {
+            var blog = new Blog
             {
-                var blog = new Blog
+                Url = "http://blogs.msdn.com/dotnet",
+                Posts = new List<Post>
                 {
-                    Url = "http://blogs.msdn.com/dotnet",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Intro to C#" },
-                        new Post { Title = "Intro to VB.NET" },
-                        new Post { Title = "Intro to F#" }
-                    }
-                };
+                    new Post { Title = "Intro to C#" },
+                    new Post { Title = "Intro to VB.NET" },
+                    new Post { Title = "Intro to F#" }
+                }
+            };
 
-                context.Blogs.Add(blog);
-                context.SaveChanges();
-            }
-            #endregion
-
-            #region AddingRelatedEntity
-            using (var context = new BloggingContext())
-            {
-                var blog = context.Blogs.Include(b => b.Posts).First();
-                var post = new Post { Title = "Intro to EF Core" };
-
-                blog.Posts.Add(post);
-                context.SaveChanges();
-            }
-            #endregion
-
-            #region ChangingRelationships
-            using (var context = new BloggingContext())
-            {
-                var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio" };
-                var post = context.Posts.First();
-
-                post.Blog = blog;
-                context.SaveChanges();
-            }
-            #endregion
-
-            #region RemovingRelationships
-            using (var context = new BloggingContext())
-            {
-                var blog = context.Blogs.Include(b => b.Posts).First();
-                var post = blog.Posts.First();
-
-                blog.Posts.Remove(post);
-                context.SaveChanges();
-            }
-            #endregion
+            context.Blogs.Add(blog);
+            context.SaveChanges();
         }
+        #endregion
 
-        public class BloggingContext : DbContext
+        #region AddingRelatedEntity
+        using (var context = new BloggingContext())
         {
-            public DbSet<Blog> Blogs { get; set; }
-            public DbSet<Post> Posts { get; set; }
+            var blog = context.Blogs.Include(b => b.Posts).First();
+            var post = new Post { Title = "Intro to EF Core" };
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            {
-                optionsBuilder.UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=EFSaving.RelatedData;Trusted_Connection=True");
-            }
+            blog.Posts.Add(post);
+            context.SaveChanges();
         }
+        #endregion
 
-        public class Blog
+        #region ChangingRelationships
+        using (var context = new BloggingContext())
         {
-            public int BlogId { get; set; }
-            public string Url { get; set; }
+            var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio" };
+            var post = context.Posts.First();
 
-            public List<Post> Posts { get; set; }
+            post.Blog = blog;
+            context.SaveChanges();
         }
+        #endregion
 
-        public class Post
+        #region RemovingRelationships
+        using (var context = new BloggingContext())
         {
-            public int PostId { get; set; }
-            public string Title { get; set; }
-            public string Content { get; set; }
+            var blog = context.Blogs.Include(b => b.Posts).First();
+            var post = blog.Posts.First();
 
-            public int BlogId { get; set; }
-            public Blog Blog { get; set; }
+            blog.Posts.Remove(post);
+            context.SaveChanges();
         }
+        #endregion
+    }
+
+    public class BloggingContext : DbContext
+    {
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Post> Posts { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.RelatedData;Trusted_Connection=True");
+        }
+    }
+
+    public class Blog
+    {
+        public int BlogId { get; set; }
+        public string Url { get; set; }
+
+        public List<Post> Posts { get; set; }
+    }
+
+    public class Post
+    {
+        public int PostId { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+
+        public int BlogId { get; set; }
+        public Blog Blog { get; set; }
     }
 }

@@ -4,34 +4,33 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CommandLine
+namespace CommandLine;
+
+public class CustomTools
 {
-    public class CustomTools
+    public static void AddMigration(string migrationName)
     {
-        public static void AddMigration(string migrationName)
-        {
-            var projectDir = Directory.GetCurrentDirectory();
-            var rootNamespace = "ConsoleApp1";
-            var outputDir = "Migraitons";
+        var projectDir = Directory.GetCurrentDirectory();
+        var rootNamespace = "ConsoleApp1";
+        var outputDir = "Migraitons";
 
-            #region CustomTools
-            var db = new MyDbContext();
+        #region CustomTools
+        var db = new MyDbContext();
 
-            // Create design-time services
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddEntityFrameworkDesignTimeServices();
-            serviceCollection.AddDbContextDesignTimeServices(db);
-            var serviceProvider = serviceCollection.BuildServiceProvider();
+        // Create design-time services
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddEntityFrameworkDesignTimeServices();
+        serviceCollection.AddDbContextDesignTimeServices(db);
+        var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            // Add a migration
-            var migrationsScaffolder = serviceProvider.GetService<IMigrationsScaffolder>();
-            var migration = migrationsScaffolder.ScaffoldMigration(migrationName, rootNamespace);
-            migrationsScaffolder.Save(projectDir, migration, outputDir);
-            #endregion
-        }
+        // Add a migration
+        var migrationsScaffolder = serviceProvider.GetService<IMigrationsScaffolder>();
+        var migration = migrationsScaffolder.ScaffoldMigration(migrationName, rootNamespace);
+        migrationsScaffolder.Save(projectDir, migration, outputDir);
+        #endregion
     }
+}
 
-    internal class MyDbContext : DbContext
-    {
-    }
+internal class MyDbContext : DbContext
+{
 }

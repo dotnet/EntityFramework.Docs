@@ -1,10 +1,9 @@
-﻿namespace Cosmos.ModelBuilding
+﻿namespace Cosmos.ModelBuilding;
+
+#region StreetAddress
+public class StreetAddress
 {
-    #region StreetAddress
-    public class StreetAddress
-    {
-        public string Street { get; set; }
-        public string City { get; set; }
-    }
-    #endregion
+    public string Street { get; set; }
+    public string City { get; set; }
 }
+#endregion

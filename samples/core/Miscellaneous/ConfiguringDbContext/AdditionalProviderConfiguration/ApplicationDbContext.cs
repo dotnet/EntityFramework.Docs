@@ -1,17 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace AdditionalProviderConfiguration
+namespace AdditionalProviderConfiguration;
+
+#region ApplicationDbContext
+public class ApplicationDbContext : DbContext
 {
-    #region ApplicationDbContext
-    public class ApplicationDbContext : DbContext
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=Test",
-                    providerOptions => { providerOptions.EnableRetryOnFailure(); });
-        }
+        optionsBuilder
+            .UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=Test",
+                providerOptions => { providerOptions.EnableRetryOnFailure(); });
     }
-    #endregion
 }
+#endregion

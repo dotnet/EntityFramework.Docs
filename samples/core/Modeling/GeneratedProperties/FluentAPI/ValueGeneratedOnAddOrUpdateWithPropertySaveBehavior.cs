@@ -2,26 +2,25 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace EFModeling.GeneratedProperties.FluentAPI.ValueGeneratedOnAddOrUpdateWithPropertySaveBehavior
+namespace EFModeling.GeneratedProperties.FluentAPI.ValueGeneratedOnAddOrUpdateWithPropertySaveBehavior;
+
+internal class MyContext : DbContext
 {
-    internal class MyContext : DbContext
-    {
-        public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Blog> Blogs { get; set; }
 
-        #region ValueGeneratedOnAddOrUpdateWithPropertySaveBehavior
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Blog>().Property(b => b.LastUpdated)
-                .ValueGeneratedOnAddOrUpdate()
-                .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
-        }
-        #endregion
-    }
-
-    public class Blog
+    #region ValueGeneratedOnAddOrUpdateWithPropertySaveBehavior
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public int BlogId { get; set; }
-        public string Url { get; set; }
-        public DateTime LastUpdated { get; set; }
+        modelBuilder.Entity<Blog>().Property(b => b.LastUpdated)
+            .ValueGeneratedOnAddOrUpdate()
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
     }
+    #endregion
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+    public DateTime LastUpdated { get; set; }
 }

@@ -1,26 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace MyProject
+namespace MyProject;
+
+#region BloggingContextFactory
+public class BloggingContextFactory : IDesignTimeDbContextFactory<BloggingContext>
 {
-    #region BloggingContextFactory
-    public class BloggingContextFactory : IDesignTimeDbContextFactory<BloggingContext>
+    public BloggingContext CreateDbContext(string[] args)
     {
-        public BloggingContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
-            optionsBuilder.UseSqlite("Data Source=blog.db");
+        var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
+        optionsBuilder.UseSqlite("Data Source=blog.db");
 
-            return new BloggingContext(optionsBuilder.Options);
-        }
+        return new BloggingContext(optionsBuilder.Options);
     }
-    #endregion
+}
+#endregion
 
-    public class BloggingContext : DbContext
+public class BloggingContext : DbContext
+{
+    public BloggingContext(DbContextOptions<BloggingContext> options)
+        : base(options)
     {
-        public BloggingContext(DbContextOptions<BloggingContext> options)
-            : base(options)
-        {
-        }
     }
 }

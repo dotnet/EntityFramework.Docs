@@ -6,145 +6,144 @@ using Microsoft.Extensions.Logging;
 
 #pragma warning disable 169
 
-namespace EFModeling.KeylessEntityTypes
+namespace EFModeling.KeylessEntityTypes;
+
+public class Program
 {
-    public class Program
+    private static void Main()
     {
-        private static void Main()
+        SetupDatabase();
+
+        using (var db = new BloggingContext())
         {
-            SetupDatabase();
+            #region Query
+            var postCounts = db.BlogPostCounts.ToList();
 
-            using (var db = new BloggingContext())
+            foreach (var postCount in postCounts)
             {
-                #region Query
-                var postCounts = db.BlogPostCounts.ToList();
-
-                foreach (var postCount in postCounts)
-                {
-                    Console.WriteLine($"{postCount.BlogName} has {postCount.PostCount} posts.");
-                    Console.WriteLine();
-                }
-                #endregion
+                Console.WriteLine($"{postCount.BlogName} has {postCount.PostCount} posts.");
+                Console.WriteLine();
             }
+            #endregion
         }
+    }
 
-        private static void SetupDatabase()
+    private static void SetupDatabase()
+    {
+        using (var db = new BloggingContext())
         {
-            using (var db = new BloggingContext())
+            if (db.Database.EnsureCreated())
             {
-                if (db.Database.EnsureCreated())
-                {
-                    db.Blogs.Add(
-                        new Blog
+                db.Blogs.Add(
+                    new Blog
+                    {
+                        Name = "Fish Blog",
+                        Url = "http://sample.com/blogs/fish",
+                        Posts = new List<Post>
                         {
-                            Name = "Fish Blog",
-                            Url = "http://sample.com/blogs/fish",
-                            Posts = new List<Post>
-                            {
-                                new Post { Title = "Fish care 101" },
-                                new Post { Title = "Caring for tropical fish" },
-                                new Post { Title = "Types of ornamental fish" }
-                            }
-                        });
+                            new Post { Title = "Fish care 101" },
+                            new Post { Title = "Caring for tropical fish" },
+                            new Post { Title = "Types of ornamental fish" }
+                        }
+                    });
 
-                    db.Blogs.Add(
-                        new Blog
+                db.Blogs.Add(
+                    new Blog
+                    {
+                        Name = "Cats Blog",
+                        Url = "http://sample.com/blogs/cats",
+                        Posts = new List<Post>
                         {
-                            Name = "Cats Blog",
-                            Url = "http://sample.com/blogs/cats",
-                            Posts = new List<Post>
-                            {
-                                new Post { Title = "Cat care 101" },
-                                new Post { Title = "Caring for tropical cats" },
-                                new Post { Title = "Types of ornamental cats" }
-                            }
-                        });
+                            new Post { Title = "Cat care 101" },
+                            new Post { Title = "Caring for tropical cats" },
+                            new Post { Title = "Types of ornamental cats" }
+                        }
+                    });
 
-                    db.Blogs.Add(
-                        new Blog
+                db.Blogs.Add(
+                    new Blog
+                    {
+                        Name = "Catfish Blog",
+                        Url = "http://sample.com/blogs/catfish",
+                        Posts = new List<Post>
                         {
-                            Name = "Catfish Blog",
-                            Url = "http://sample.com/blogs/catfish",
-                            Posts = new List<Post>
-                            {
-                                new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
-                            }
-                        });
+                            new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
+                        }
+                    });
 
-                    db.SaveChanges();
+                db.SaveChanges();
 
-                    #region View
-                    db.Database.ExecuteSqlRaw(
-                        @"CREATE VIEW View_BlogPostCounts AS
+                #region View
+                db.Database.ExecuteSqlRaw(
+                    @"CREATE VIEW View_BlogPostCounts AS
                             SELECT b.Name, Count(p.PostId) as PostCount
                             FROM Blogs b
                             JOIN Posts p on p.BlogId = b.BlogId
                             GROUP BY b.Name");
-                    #endregion
-                }
+                #endregion
             }
         }
     }
+}
 
-    public class BloggingContext : DbContext
-    {
-        private static readonly ILoggerFactory _loggerFactory
-            = LoggerFactory.Create(
-                builder => builder.AddConsole().AddFilter((c, l) => l == LogLevel.Information && !c.EndsWith("Connection")));
+public class BloggingContext : DbContext
+{
+    private static readonly ILoggerFactory _loggerFactory
+        = LoggerFactory.Create(
+            builder => builder.AddConsole().AddFilter((c, l) => l == LogLevel.Information && !c.EndsWith("Connection")));
 
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
+    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Post> Posts { get; set; }
 
-        #region DbSet
-        public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
-        #endregion
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=Sample.KeylessEntityTypes;Trusted_Connection=True")
-                .UseLoggerFactory(_loggerFactory);
-        }
-
-        #region Configuration
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder
-                .Entity<BlogPostsCount>(
-                    eb =>
-                    {
-                        eb.HasNoKey();
-                        eb.ToView("View_BlogPostCounts");
-                        eb.Property(v => v.BlogName).HasColumnName("Name");
-                    });
-        }
-        #endregion
-    }
-
-    #region Entities
-    public class Blog
-    {
-        public int BlogId { get; set; }
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public ICollection<Post> Posts { get; set; }
-    }
-
-    public class Post
-    {
-        public int PostId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public int BlogId { get; set; }
-    }
+    #region DbSet
+    public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
     #endregion
 
-    #region KeylessEntityType
-    public class BlogPostsCount
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        public string BlogName { get; set; }
-        public int PostCount { get; set; }
+        optionsBuilder
+            .UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=Sample.KeylessEntityTypes;Trusted_Connection=True")
+            .UseLoggerFactory(_loggerFactory);
+    }
+
+    #region Configuration
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder
+            .Entity<BlogPostsCount>(
+                eb =>
+                {
+                    eb.HasNoKey();
+                    eb.ToView("View_BlogPostCounts");
+                    eb.Property(v => v.BlogName).HasColumnName("Name");
+                });
     }
     #endregion
 }
+
+#region Entities
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Name { get; set; }
+    public string Url { get; set; }
+    public ICollection<Post> Posts { get; set; }
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public int BlogId { get; set; }
+}
+#endregion
+
+#region KeylessEntityType
+public class BlogPostsCount
+{
+    public string BlogName { get; set; }
+    public int PostCount { get; set; }
+}
+#endregion

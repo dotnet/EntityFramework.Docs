@@ -1,19 +1,19 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.EntityTypes
-{
-    internal class Program
-    {
-        private static void Main(string[] args)
-        {
-            using (var context = new MyContextWithFunctionMapping())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+namespace EFModeling.EntityTypes;
 
-                context.Database.ExecuteSqlRaw(
-                    @"CREATE FUNCTION dbo.BlogsWithMultiplePosts()
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        using (var context = new MyContextWithFunctionMapping())
+        {
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
+            context.Database.ExecuteSqlRaw(
+                @"CREATE FUNCTION dbo.BlogsWithMultiplePosts()
                         RETURNS TABLE
                         AS
                         RETURN
@@ -25,13 +25,12 @@ namespace EFModeling.EntityTypes
                             HAVING COUNT(p.BlogId) > 1
                         )");
 
-                #region ToFunctionQuery
-                var query = from b in context.Set<BlogWithMultiplePosts>()
-                            where b.PostCount > 3
-                            select new { b.Url, b.PostCount };
-                #endregion
-                var result = query.ToList();
-            }
+            #region ToFunctionQuery
+            var query = from b in context.Set<BlogWithMultiplePosts>()
+                        where b.PostCount > 3
+                        select new { b.Url, b.PostCount };
+            #endregion
+            var result = query.ToList();
         }
     }
 }

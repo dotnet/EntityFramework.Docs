@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.OwnedEntities
+namespace EFModeling.OwnedEntities;
+
+#region StreetAddress
+[Owned]
+public class StreetAddress
 {
-    #region StreetAddress
-    [Owned]
-    public class StreetAddress
-    {
-        public string Street { get; set; }
-        public string City { get; set; }
-    }
-    #endregion
+    public string Street { get; set; }
+    public string City { get; set; }
 }
+#endregion

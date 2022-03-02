@@ -2,17 +2,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WebApp;
 
-namespace WithContextFactory
+namespace WithContextFactory;
+
+public class FactoryServicesExample
 {
-    public class FactoryServicesExample
+    #region ConfigureServices
+    public void ConfigureServices(IServiceCollection services)
     {
-        #region ConfigureServices
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContextFactory<ApplicationDbContext>(
-                options =>
-                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test"));
-        }
-        #endregion
+        services.AddDbContextFactory<ApplicationDbContext>(
+            options =>
+                options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test"));
     }
+    #endregion
 }

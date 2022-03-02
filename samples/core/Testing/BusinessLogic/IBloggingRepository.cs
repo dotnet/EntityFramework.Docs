@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 
-namespace EF.Testing.BusinessLogic
+namespace EF.Testing.BusinessLogic;
+
+#region IBloggingRepository
+public interface IBloggingRepository
 {
-    #region IBloggingRepository
-    public interface IBloggingRepository
-    {
-        Blog GetBlogByName(string name);
+    Blog GetBlogByName(string name);
 
-        IEnumerable<Blog> GetAllBlogs();
+    IEnumerable<Blog> GetAllBlogs();
 
-        void AddBlog(Blog blog);
+    void AddBlog(Blog blog);
 
-        void SaveChanges();
-    }
-    #endregion
+    void SaveChanges();
 }
+#endregion
