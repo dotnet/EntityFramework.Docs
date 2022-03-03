@@ -5,6 +5,8 @@ author: codemillmatt
 ms.date: 07/07/2020
 ms.author: masoucou
 uid: core/get-started/xamarin
+ms.custom: team=cloud_advocates
+ms.contributors: masoucou-03082021
 ---
 
 # Getting Started with EF Core and Xamarin

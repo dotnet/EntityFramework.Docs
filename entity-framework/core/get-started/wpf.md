@@ -5,6 +5,8 @@ author: jeremylikness
 ms.author: jeliknes
 ms.date: 07/24/2020
 uid: core/get-started/wpf
+ms.custom: team=cloud_advocates
+ms.contributors: jeliknes-03082021
 ---
 # Getting Started with WPF
 
