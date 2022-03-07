@@ -329,6 +329,10 @@
         href: core/miscellaneous/connection-resiliency.md
       - name: Connection strings
         href: core/miscellaneous/connection-strings.md
+      - name: Context pooling
+        href: core/miscellaneous/context-pooling.md
+      - name: Support multi-tenant databases
+        href: core/miscellaneous/multitenancy.md
 
     - name: Database providers
       items:
