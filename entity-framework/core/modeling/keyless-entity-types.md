@@ -96,3 +96,6 @@ Finally, we can query the database view in the standard way:
 
 > [!TIP]
 > To test keyless entity types mapped to views using the in-memory provider, map them to a query via <xref:Microsoft.EntityFrameworkCore.InMemoryEntityTypeBuilderExtensions.ToInMemoryQuery%2A>. See the [in-memory provider docs](xref:core/testing/testing-without-the-database#in-memory-provider) for more information.
+
+> [!TIP]
+> Given an existing table in an existing database, you can let the Visual Studio Package Manager generate the code for you using the Scaffold-DbContext command. See the [database reverse engineering docs](xref:core/managing-schemas/scaffolding) for more information.
