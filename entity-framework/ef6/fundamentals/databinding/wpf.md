@@ -79,9 +79,10 @@ When using Code First development you usually begin by writing .NET Framework cl
             public virtual Category Category { get; set; }
         }
     }
-
+```
 - Add a **Category** class with the following definition:
 
+``` csharp
     using System.Collections.ObjectModel;
 
     namespace WPFwithEFSample
