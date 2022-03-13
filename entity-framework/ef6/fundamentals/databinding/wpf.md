@@ -80,6 +80,7 @@ When using Code First development you usually begin by writing .NET Framework cl
         }
     }
 ```
+
 - Add a **Category** class with the following definition:
 
 ``` csharp
