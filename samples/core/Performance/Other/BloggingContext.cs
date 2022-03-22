@@ -10,12 +10,14 @@ public class BloggingContext : DbContext
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
 
+    #region SimpleLogging
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
             .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
             .LogTo(Console.WriteLine, LogLevel.Information);
     }
+    #endregion
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
