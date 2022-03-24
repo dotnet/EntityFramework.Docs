@@ -91,7 +91,7 @@ Be sure to select the appropriate function, as several may exist (e.g. `GETDATE(
 
 ### Update timestamp
 
-Although stored computed columns seem like a good solution for managing last-updated timestamps, databases usually don't allow specifying functions such as `GETDATE()` in a computed column. As an alternative, you can set up a database trigger to achieve the same effect:
+Although using stored computed columns seems like a good solution for managing last-updated timestamps, databases usually don't allow specifying functions such as `GETDATE()` in a computed column. As an alternative, you can set up a database trigger to achieve the same effect:
 
 ```sql
 CREATE TRIGGER [dbo].[Blogs_UPDATE] ON [dbo].[Blogs]
