@@ -80,7 +80,7 @@ var filtered = context.Customers.Include(c => c.Orders.Where(o => o.Id > 5000)).
 ```
 
 > [!NOTE]
-> In case of tracking queries, the navigation on which filtered include was applied is considered to be loaded. This means that EF Core will not attempt to re-load it's values using [explicit loading](xref:core/querying/related-data/explicit) or [lazy loading](xref:core/querying/related-data/lazy), even though some elements could still be missing.
+> In case of tracking queries, the navigation on which filtered include was applied is considered to be loaded. This means that EF Core will not attempt to re-load its values using [explicit loading](xref:core/querying/related-data/explicit) or [lazy loading](xref:core/querying/related-data/lazy), even though some elements could still be missing.
 
 ## Include on derived types
 
