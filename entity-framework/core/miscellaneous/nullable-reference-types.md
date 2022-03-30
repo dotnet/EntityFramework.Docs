@@ -7,7 +7,7 @@ uid: core/miscellaneous/nullable-reference-types
 ---
 # Working with Nullable Reference Types
 
-C# 8 introduced a new feature called [nullable reference types (NRT)](/dotnet/csharp/tutorials/nullable-reference-types), allowing reference types to be annotated, indicating whether it is valid for them to contain null or not. If you are new to this feature, it is recommended that make yourself familiar with it by reading the C# docs.
+C# 8 introduced a new feature called [nullable reference types (NRT)](/dotnet/csharp/tutorials/nullable-reference-types), allowing reference types to be annotated, indicating whether it is valid for them to contain null or not. If you are new to this feature, it is recommended that make yourself familiar with it by reading the C# docs. Nullable reference types are enabled by default in new project templates, but remain disabled in existing projects unless explicitly opted into.
 
 This page introduces EF Core's support for nullable reference types, and describes best practices for working with them.
 
