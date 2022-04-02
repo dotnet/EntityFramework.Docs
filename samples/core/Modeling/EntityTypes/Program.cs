@@ -7,13 +7,12 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        using (var context = new MyContextWithFunctionMapping())
-        {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+        using var context = new MyContextWithFunctionMapping();
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
 
-            context.Database.ExecuteSqlRaw(
-                @"CREATE FUNCTION dbo.BlogsWithMultiplePosts()
+        context.Database.ExecuteSqlRaw(
+            @"CREATE FUNCTION dbo.BlogsWithMultiplePosts()
                         RETURNS TABLE
                         AS
                         RETURN
@@ -25,12 +24,11 @@ internal class Program
                             HAVING COUNT(p.BlogId) > 1
                         )");
 
-            #region ToFunctionQuery
-            var query = from b in context.Set<BlogWithMultiplePosts>()
-                        where b.PostCount > 3
-                        select new { b.Url, b.PostCount };
-            #endregion
-            var result = query.ToList();
-        }
+        #region ToFunctionQuery
+        var query = from b in context.Set<BlogWithMultiplePosts>()
+                    where b.PostCount > 3
+                    select new { b.Url, b.PostCount };
+        #endregion
+        var result = query.ToList();
     }
 }

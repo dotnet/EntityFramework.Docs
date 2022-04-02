@@ -27,101 +27,95 @@ public class Program
     private static void ExecuteWithManualTransaction()
     {
         #region ManualTransaction
-        using (var db = new BloggingContext())
-        {
-            var strategy = db.Database.CreateExecutionStrategy();
 
-            strategy.Execute(
-                () =>
-                {
-                    using (var context = new BloggingContext())
-                    {
-                        using (var transaction = context.Database.BeginTransaction())
-                        {
-                            context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                            context.SaveChanges();
+        using var db = new BloggingContext();
+        var strategy = db.Database.CreateExecutionStrategy();
 
-                            context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
-                            context.SaveChanges();
+        strategy.Execute(
+            () =>
+            {
+                using var context = new BloggingContext();
+                using var transaction = context.Database.BeginTransaction();
 
-                            transaction.Commit();
-                        }
-                    }
-                });
-        }
+                context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                context.SaveChanges();
+
+                context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
+                context.SaveChanges();
+
+                transaction.Commit();
+            });
+
         #endregion
     }
 
     private static void ExecuteWithManualAmbientTransaction()
     {
         #region AmbientTransaction
-        using (var context1 = new BloggingContext())
-        {
-            context1.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
 
-            var strategy = context1.Database.CreateExecutionStrategy();
+        using var context1 = new BloggingContext();
+        context1.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
 
-            strategy.Execute(
-                () =>
-                {
-                    using (var context2 = new BloggingContext())
-                    {
-                        using (var transaction = new TransactionScope())
-                        {
-                            context2.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                            context2.SaveChanges();
+        var strategy = context1.Database.CreateExecutionStrategy();
 
-                            context1.SaveChanges();
+        strategy.Execute(
+            () =>
+            {
+                using var context2 = new BloggingContext();
+                using var transaction = new TransactionScope();
 
-                            transaction.Complete();
-                        }
-                    }
-                });
-        }
+                context2.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                context2.SaveChanges();
+
+                context1.SaveChanges();
+
+                transaction.Complete();
+            });
+
         #endregion
     }
 
     private static void ExecuteInTransactionWithVerification()
     {
         #region Verification
-        using (var db = new BloggingContext())
-        {
-            var strategy = db.Database.CreateExecutionStrategy();
 
-            var blogToAdd = new Blog { Url = "http://blogs.msdn.com/dotnet" };
-            db.Blogs.Add(blogToAdd);
+        using var db = new BloggingContext();
+        var strategy = db.Database.CreateExecutionStrategy();
 
-            strategy.ExecuteInTransaction(
-                db,
-                operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
-                verifySucceeded: context => context.Blogs.AsNoTracking().Any(b => b.BlogId == blogToAdd.BlogId));
+        var blogToAdd = new Blog { Url = "http://blogs.msdn.com/dotnet" };
+        db.Blogs.Add(blogToAdd);
 
-            db.ChangeTracker.AcceptAllChanges();
-        }
+        strategy.ExecuteInTransaction(
+            db,
+            operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
+            verifySucceeded: context => context.Blogs.AsNoTracking().Any(b => b.BlogId == blogToAdd.BlogId));
+
+        db.ChangeTracker.AcceptAllChanges();
+
         #endregion
     }
 
     private static void ExecuteInTransactionWithTracking()
     {
         #region Tracking
-        using (var db = new BloggingContext())
-        {
-            var strategy = db.Database.CreateExecutionStrategy();
 
-            db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+        using var db = new BloggingContext();
+        var strategy = db.Database.CreateExecutionStrategy();
 
-            var transaction = new TransactionRow { Id = Guid.NewGuid() };
-            db.Transactions.Add(transaction);
+        db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
 
-            strategy.ExecuteInTransaction(
-                db,
-                operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
-                verifySucceeded: context => context.Transactions.AsNoTracking().Any(t => t.Id == transaction.Id));
+        var transaction = new TransactionRow { Id = Guid.NewGuid() };
+        db.Transactions.Add(transaction);
 
-            db.ChangeTracker.AcceptAllChanges();
-            db.Transactions.Remove(transaction);
-            db.SaveChanges();
-        }
+        strategy.ExecuteInTransaction(
+            db,
+            operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
+            verifySucceeded: context => context.Transactions.AsNoTracking().Any(t => t.Id == transaction.Id));
+
+        db.ChangeTracker.AcceptAllChanges();
+        db.Transactions.Remove(transaction);
+        db.SaveChanges();
+
         #endregion
     }
 }

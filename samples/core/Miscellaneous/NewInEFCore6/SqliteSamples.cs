@@ -46,25 +46,23 @@ public static class SqliteSamples
         Helpers.RecreateCleanDatabase();
         Helpers.PopulateDatabase();
 
+        using var context = new UsersContext();
 
-        using (var context = new UsersContext())
+        #region DateOnlyQuery
+        var users = context.Users.Where(u => u.Birthday < new DateOnly(1900, 1, 1)).ToList();
+        #endregion
+            
+        Console.WriteLine();
+
+        foreach (var user in users)
         {
-            #region DateOnlyQuery
-            var users = context.Users.Where(u => u.Birthday < new DateOnly(1900, 1, 1)).ToList();
-            #endregion
-            
-            Console.WriteLine();
-
-            foreach (var user in users)
-            {
-                Console.WriteLine($"  Found '{user.Username}'");
-                user.Birthday = new(user.Birthday.Year + 100, user.Birthday.Month, user.Birthday.Day);
-            }
-            
-            Console.WriteLine();
-
-            context.SaveChanges();
+            Console.WriteLine($"  Found '{user.Username}'");
+            user.Birthday = new(user.Birthday.Year + 100, user.Birthday.Month, user.Birthday.Day);
         }
+            
+        Console.WriteLine();
+
+        context.SaveChanges();
     }
 
     private static void PerformUpdates()
