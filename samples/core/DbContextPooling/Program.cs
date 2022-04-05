@@ -77,16 +77,14 @@ public class Program
 
     private static void SetupDatabase(IServiceProvider serviceProvider)
     {
-        using (var serviceScope = serviceProvider.CreateScope())
-        {
-            var context = serviceScope.ServiceProvider.GetService<BloggingContext>();
+        using var serviceScope = serviceProvider.CreateScope();
+        var context = serviceScope.ServiceProvider.GetService<BloggingContext>();
 
-            if (context.Database.EnsureCreated())
-            {
-                context.Blogs.Add(new Blog { Name = "The Dog Blog", Url = "http://sample.com/dogs" });
-                context.Blogs.Add(new Blog { Name = "The Cat Blog", Url = "http://sample.com/cats" });
-                context.SaveChanges();
-            }
+        if (context.Database.EnsureCreated())
+        {
+            context.Blogs.Add(new Blog { Name = "The Dog Blog", Url = "http://sample.com/dogs" });
+            context.Blogs.Add(new Blog { Name = "The Cat Blog", Url = "http://sample.com/cats" });
+            context.SaveChanges();
         }
     }
 
