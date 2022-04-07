@@ -163,7 +163,7 @@ If your queries return just a few results, then you probably don't have to worry
 In certain situations, EF will itself buffer the resultset internally, regardless of how you evaluate your query. The two cases where this happens are:
 
 * When a retrying execution strategy is in place. This is done to make sure the same results are returned if the query is retried later.
-* When [split query](xref:core/querying/single-split-queries) is used, the resultsets of all but the last query are buffered - unless Multiple Active Result Sets(MARS) is enabled on SQL Server. This is because it is usually impossible to have multiple query resultsets active at the same time.
+* When [split query](xref:core/querying/single-split-queries) is used, the resultsets of all but the last query are buffered - unless MARS (Multiple Active Result Sets) is enabled on SQL Server. This is because it is usually impossible to have multiple query resultsets active at the same time.
 
 Note that this internal buffering occurs in addition to any buffering you cause via LINQ operators. For example, if you use <xref:System.Linq.Enumerable.ToList%2A> on a query and a retrying execution strategy is in place, the resultset is loaded into memory *twice*: once internally by EF, and once by <xref:System.Linq.Enumerable.ToList%2A>.
 
