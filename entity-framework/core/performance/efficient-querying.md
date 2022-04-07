@@ -68,7 +68,7 @@ At a minimum, your UI could show a message indicating that more rows may exist i
 
 ## Efficient pagination
 
-Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is shown that allows the user to navigate to the next or previous page of the results. A common way to implement pagination with databases is to use the `Skip` and `Take` operators (`OFFSET` and `LIMIT` in SQL); while this is an intuitive implementation, it's also quite inefficient. For pagination that allows moving on page at a time (as opposed to jumping to arbitrary pages), consider using *keyset pagination* instead.
+Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is shown that allows the user to navigate to the next or previous page of the results. A common way to implement pagination with databases is to use the `Skip` and `Take` operators (`OFFSET` and `LIMIT` in SQL); while this is an intuitive implementation, it's also quite inefficient. For pagination that allows moving one page at a time (as opposed to jumping to arbitrary pages), consider using *keyset pagination* instead.
 
 For more information, [see the documentation page on pagination](xref:core/querying/pagination).
 
