@@ -26,6 +26,9 @@ You can use the `DbContext.Database` API to begin, commit, and rollback transact
 
 While all relational database providers support transactions, other providers types may throw or no-op when transaction APIs are called.
 
+> [!NOTE]
+> Manually controlling transactions in this way is incompatible with retrying execution strategies. See [Connection Resiliency](xref:core/miscellaneous/connection-resiliency#execution-strategies-and-transactions) for more information.
+
 ## Savepoints
 
 > [!NOTE]
