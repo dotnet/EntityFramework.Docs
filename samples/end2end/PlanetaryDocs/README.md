@@ -1,4 +1,16 @@
-﻿# Planetary Docs
+---
+page_type: sample
+description: "This repository is intended to showcase a full application that supports Create, Read, Update, and Delete operations (CRUD) using Blazor (Server), Entity Framework Core and Azure Cosmos DB."
+languages:
+- csharp
+products:
+- dotnet-core
+- ef-core
+- blazor
+- azure-cosmos-db
+---
+
+# Planetary Docs
 
 Welcome to Planetary Docs! This repository is intended to showcase a full
 application that supports Create, Read, Update, and Delete operations (CRUD)
