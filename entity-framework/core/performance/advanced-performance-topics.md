@@ -51,15 +51,19 @@ Context pooling works by reusing the same context instance across requests; this
 
 A typical scenario involving context state would be a multi-tenant ASP.NET Core application, where the context instance has a *tenant ID* which is taken into account by queries (see [Global Query Filters](xref:core/querying/filters) for more details). Since the tenant ID needs to change with each web request, we need to have go through some extra steps to make it all work with context pooling.
 
-First, register a pooling context factory as a Singleton service, as usual:
+Let's assume that your application registers a scoped `ITenant` service, which wraps the tenant ID and any other tenant-related information:
+
+[!code-csharp[Main](../../../samples/core/Performance/AspNetContextPoolingWithState/Program.cs#TenantResolution)]
+
+As written above, pay special attention to where you get the tenant ID from: this is an important aspect of your application's security.
+
+Once we have our scoped `ITenant` service, register a pooling context factory as a Singleton service, as usual:
 
 [!code-csharp[Main](../../../samples/core/Performance/AspNetContextPoolingWithState/Program.cs#RegisterSingletonContextFactory)]
 
-Next, write a custom context factory which gets a pooled context from the Singleton factory we registered, finds the tenant ID in the web request's `HttpContext`, and injects the ID into the context:
+Next, write a custom context factory which gets a pooled context from the Singleton factory we registered, and injects the tenant ID into context instances it hands out:
 
 [!code-csharp[Main](../../../samples/core/Performance/AspNetContextPoolingWithState/WeatherForecastScopedFactory.cs#WeatherForecastScopedFactory)]
-
-As written above, pay special attention to where you get the tenant ID from: this is an important aspect of your application's security.
 
 Once we have our custom context factory, register it as a Scoped service:
 
