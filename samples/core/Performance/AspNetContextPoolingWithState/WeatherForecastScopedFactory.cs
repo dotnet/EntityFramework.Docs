@@ -6,22 +6,17 @@ namespace Performance.AspNetContextPoolingWithState;
 #region WeatherForecastScopedFactory
 public class WeatherForecastScopedFactory : IDbContextFactory<WeatherForecastContext>
 {
+    private const int DefaultTenantId = -1;
+
     private readonly IDbContextFactory<WeatherForecastContext> _pooledFactory;
     private readonly int _tenantId;
 
     public WeatherForecastScopedFactory(
         IDbContextFactory<WeatherForecastContext> pooledFactory,
-        IHttpContextAccessor httpContextAccessor)
+        ITenant tenant)
     {
         _pooledFactory = pooledFactory;
-
-        // In this sample, we simply accept the tenant ID as a request query, which means that a client can impersonate any tenant.
-        // In a real application, the tenant ID would be set based on secure authentication data.
-        var tenantIdString = httpContextAccessor.HttpContext.Request.Query["TenantId"];
-        if (tenantIdString != StringValues.Empty && int.TryParse(tenantIdString, out var tenantId))
-        {
-            _tenantId = tenantId;
-        }
+        _tenantId = tenant?.TenantId ?? DefaultTenantId;
     }
 
     public WeatherForecastContext CreateDbContext()
