@@ -55,7 +55,7 @@ Let's assume that your application registers a scoped `ITenant` service, which w
 
 [!code-csharp[Main](../../../samples/core/Performance/AspNetContextPoolingWithState/Program.cs#TenantResolution)]
 
-As written above, pay special attention to where you get the tenant ID from: this is an important aspect of your application's security.
+As written above, pay special attention to where you get the tenant ID from - this is an important aspect of your application's security.
 
 Once we have our scoped `ITenant` service, register a pooling context factory as a Singleton service, as usual:
 
