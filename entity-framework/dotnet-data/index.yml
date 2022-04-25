@@ -151,7 +151,10 @@ additionalContent:
             text: "Analyze it!"
 
       # Card
-      - title: Messages, notifications, and events
+        - title: Messages, notifications, and events
+          links:
+          - url: core/
+            text: "Analyze it!"
 
     # Section
     - title: "APIs"
