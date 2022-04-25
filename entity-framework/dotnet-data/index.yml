@@ -1,0 +1,194 @@
+### YamlMime:Hub
+
+title: .NET data
+summary: .NET is the open source and cross-platform for integrating data, data services and data backends with your applications.
+brand: dotnet
+
+metadata:
+  title: .NET data documentation
+  description: Learn to use Entity Framework Core, a modern object-database mapper for .NET that supports LINQ queries, change tracking, updates, and schema migrations. Browse tutorials, sample code, fundamentals, API reference and more.
+  ms.product: entity-framework
+  ms.topic: hub-page
+  author: JeremyLikness
+  ms.author: jeliknes
+  ms.date: 04/22/2022
+
+# highlightedContent section (optional)
+# Maximum of 8 items
+highlightedContent:
+# itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
+  items:
+    
+    # Card
+    - title: "LINQ overview"
+      itemType: overview
+      url: /dotnet/standard/linq
+
+    # Card
+    - title: "SQLite overview"
+      itemType: overview
+      url: /dotnet/standard/data/sqlite
+
+    # Card
+    - title: "Microsoft SQL documentation"
+      itemType: reference
+      url: /sql
+
+    # Card
+    - title: "Azure Cosmos DB documentation"
+      itemType: reference
+      url: /azure/cosmos-db/
+
+    # Card
+    - title: "Entity Framework Core"
+      itemType: overview
+      url: core/
+    
+    # Card
+    - title: "Persist and retrieve relational data with Entity Framework Core"
+      itemType: learn
+      url: /learn/modules/persist-data-ef-core/
+
+    # Card
+    - title: "What is ML.NET?"
+      itemType: overview
+      url: https://dotnet.microsoft.com/learn/ml-dotnet/what-is-mldotnet
+    
+    # Card
+    - title: "What is .NET for Apache Spark?"
+      itemType: overview
+      url: /dotnet/spark/what-is-apache-spark-dotnet    
+
+# Card with summary style
+additionalContent:
+  # Supports up to 3 sections
+  sections:
+    - title: Databases # < 60 chars (optional)
+      items:
+      # Card
+      - title: Relational databases
+        links:
+          - url: https://docs.microsoft.com/dotnet/standard/data/sqlite/
+            text: "Microsoft.Data.Sqlite overview"
+          - url: /sql/
+            text: "Microsoft SQL documentation"
+          - url: /azure/postgresql/flexible-server/connect-csharp
+            text: "Use C# .NET to connect and query data in Azure Database for PostgreSQL - Flexible Server"
+          - url: /azure/mysql/connect-csharp
+            text: "Use C# .NET to connect and query data in Azure Database for MySQL"
+        
+      # Card
+      - title: Document databases
+        links:
+          - url: /azure/cosmos-db
+            text: "Azure Cosmos DB documentation"
+          - url: /azure/cosmos-db/sql/sql-api-dotnet-application
+            text: "Develop an ASP.NET Core MVC web application with Azure Cosmos DB by using .NET SDK"
+          - url: /azure/cosmos-db/sql/create-notebook-visualize-data
+            text: "Create a notebook in Azure Cosmos DB to analyze and visualize the data"
+          - url: /azure/cosmos-db/mongodb/mongodb-introduction
+            text: "Azure Cosmos DB API for MongoDB"
+          - url: core/providers/cosmos/
+            text: "EF Core Azure Cosmos DB provider"
+
+      # Card
+      - title: Graph databases
+        links:
+          - url: /azure/cosmos-db/graph/graph-introduction
+            text: "Introduction to Gremlin API in Azure Cosmos Db"
+          - url: /azure/cosmos-db/graph/create-graph-dotnet
+            text: "Build a .NET Framework or Core application using the Azure Cosmos DB Gremlin API account"         
+      
+      # Card
+      - title: Distributed key/value databases and cache
+        links:
+          - url: core/modeling/index.md
+            text: "Overview"
+
+      # Card
+      - title: Unstructured/blob storage
+        links:
+          - url: core/querying/index.md
+            text: "Overview"
+
+      # Card
+      - title: EF Core
+        links:
+          - url: core/managing-schemas/index.md
+            text: "Overview"
+    
+    #Section
+    - title: Data services
+      items:
+
+        - title: LINQ                                               
+          links:
+          - url: core/managing-schemas/index.md
+            text: "Overview"
+
+      # Card
+        - title: Big data
+          links: 
+          - url: core/
+            text: "Your data is big"
+
+      # Card
+        - title: Machine learning
+          links: 
+          - url: core/
+            text: "Your data is big"
+
+      # Card
+        - title: ETL
+          links: 
+          - url: core/
+            text: "Your data is big"
+
+      # Card
+        - title: Analytics
+          links:
+          - url: core/
+            text: "Analyze it!"
+
+      # Card
+      - title: Messages, notifications, and events
+
+    # Section
+    - title: "APIs"
+      items:
+
+      # Card
+      - title: REST
+        links:
+          - url: core/
+            text: "Analyze it!"
+          
+      # Card
+      - title: OData
+        links:
+          - url: core/
+            text: "Analyze it!"
+        
+      # Card
+      - title: GraphQL 
+        links:
+          - url: core/
+            text: "Analyze it!"
+
+      # Card
+      - title: CoreWCF
+        links:
+          - url: core/
+            text: "Analyze it!"
+
+      # Card
+      - title: gRPC
+        links:
+          - url: core/
+            text: "Analyze it!"
+
+      # Card
+      - title: SignalR
+        links:
+          - url: core/
+            text: "Analyze it!"

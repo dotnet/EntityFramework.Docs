@@ -1,3 +1,5 @@
+- name: .NET Data
+  href: dotnet-data/index.yml
 - name: Entity Framework
   href: index.yml
   items:
