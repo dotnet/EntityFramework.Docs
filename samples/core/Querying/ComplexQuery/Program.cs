@@ -32,7 +32,7 @@ internal class Program
             #region GroupJoin
             var query = from b in context.Set<Blog>()
                         join p in context.Set<Post>()
-                            on b.BlogId equals p.PostId into grouping
+                            on b.BlogId equals p.BlogId into grouping
                         select new { b, grouping };
             #endregion
         }
@@ -42,7 +42,7 @@ internal class Program
             #region GroupJoinComposed
             var query = from b in context.Set<Blog>()
                         join p in context.Set<Post>()
-                            on b.BlogId equals p.PostId into grouping
+                            on b.BlogId equals p.BlogId into grouping
                         select new { b, Posts = grouping.Where(p => p.Content.Contains("EF")).ToList() };
             #endregion
         }
