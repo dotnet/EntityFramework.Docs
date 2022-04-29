@@ -97,12 +97,20 @@ additionalContent:
               text: "Introduction to Gremlin API in Azure Cosmos Db"
             - url: /azure/cosmos-db/graph/create-graph-dotnet
               text: "Build a .NET Framework or Core application using the Azure Cosmos DB Gremlin API account"
+            - url: /sql/relational-databases/graphs/sql-graph-architecture
+              text: "SQL Graph Architecture"
 
         # Card
         - title: Distributed key/value databases and cache
           links:
-            - url: /ef/core/modeling/index.md
-              text: "Overview"
+            - url: https://microsoft.github.io/FASTER/
+              text: "FASTER concurrent persistent key/value store"
+            - url: /dotnet/orleans/overview
+              text: "Microsoft Orleans framework for distributed apps"
+            - url: https://github.com/Azure/azure-sdk-for-net/blob/Azure.Data.Tables_12.5.0/sdk/tables/Azure.Data.Tables/README.md
+              text: "Azure Tables client library for .NET"
+            - url: /azure/azure-cache-for-redis/cache-overview
+              text: "Azure Cache for Redis"
 
         # Card
         - title: Unstructured/blob storage
