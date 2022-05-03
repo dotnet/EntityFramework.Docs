@@ -65,6 +65,9 @@ Notice that the [service lifetime](/dotnet/core/extensions/dependency-injection#
 
 ## Multiple schemas
 
+> [!WARNING]
+> This scenario is not directly supported by EF Core and is not a recommended solution.
+
 In a different approach, the same database may handle `tenant1` and `tenant2` by using table schemas.
 
 - **Tenant1** - `tenant1.CustomerData`
@@ -76,9 +79,6 @@ If you are not using EF Core to handle database updates with migrations and alre
 protected override void OnModelCreating(ModelBuilder modelBuilder) =>
     modelBuilder.Entity<CustomerData>().ToTable(nameof(CustomerData), tenant);
 ```
-
-> [!WARNING]
-> This scenario is not directly supported by EF Core and is not a recommended solution.
 
 ## Multiple databases and connection strings
 
