@@ -102,4 +102,4 @@ Be sure to read your provider's documentation for additional information on work
 ### Other resources
 
 * [NetTopologySuite Docs](https://nettopologysuite.github.io/NetTopologySuite/)
-* [EF Core Community Standup session](https://www.youtube.com/watch?v=IHslY5rrxD0&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=15), focusing on spatial data and NetTopologySuite.
+* [.NET Data Community Standup session](https://www.youtube.com/watch?v=IHslY5rrxD0&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=15), focusing on spatial data and NetTopologySuite.
