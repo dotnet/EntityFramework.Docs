@@ -38,6 +38,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Unknown enum string values in the database are not converted to the enum default when queried](#unknown-emums)                       | Low        |
 | [DbFunctionBuilder.HasTranslation now provides the function arguments as IReadOnlyList rather than IReadOnlyCollection](#func-args)   | Low        |
 | [Default table mapping is not removed when the entity is mapped to a table-valued function](#tvf-default-mapping)                     | Low        |
+| [dotnet-ef targets .NET 6](#dotnet-ef)                                                                                                | Low        |
 
 \* These changes are of particular interest to authors of database providers and extensions.
 
@@ -848,4 +849,30 @@ Mapping to a table can be explicitly disabled in the model configuration:
 
 ```csharp
 modelBuilder.Entity<MyEntity>().ToTable((string)null);
+```
+
+<a name="dotnet-ef"></a>
+
+### dotnet-ef targets .NET 6
+
+[Tracking Issue #27787](https://github.com/dotnet/efcore/issues/27787)
+
+#### Old behavior
+
+The dotnet-ef command has targeted .NET Core 3.1 for a while now. This allowed you to use newer version of the tool without installing newer versions of the .NET runtime.
+
+#### New behavior
+
+In EF Core 6.0.6, the dotnet-ef tool now targets .NET 6. You can still use the tool on projects targeting older versions of .NET and .NET Core, but you'll need to install the .NET 6 runtime in order to run the tool.
+
+#### Why
+
+The .NET 6.0.200 SDK updated the behavior of `dotnet tool install` on osx-arm64 to create an osx-x64 shim for tools targeting .NET Core 3.1. In order to maintain a working default experience for dotnet-ef, we had to update it to target .NET 6.
+
+#### Mitigations
+
+To run dotnet-ef without installing the .NET 6 runtime, you can install an older version of the tool:
+
+```dotnetcli
+dotnet tool install dotnet-ef --version 3.1.*
 ```
