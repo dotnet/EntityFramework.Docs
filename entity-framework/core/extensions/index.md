@@ -363,6 +363,7 @@ A standard for implementing REST APIs with specifications for discovery, filteri
 
 ### IWAPI
 
-IWAPI is a scaffolding engine for .NET Core that can automate the generation of DbContext classes, entities, models and creates a working Web API from any SQL Server database.
+IWAPI (Instant Web API) is a scaffolding engine for .NET Core that can automate the generation of DbContext classes, entities, models and creates a working Web API from any SQL Server database.
 
-[GitHub repository]([https://github.com/ExesoftInc/IWAPI](https://github.com/ExesoftInc/IWAPI) 
+[Website](https://instantwebapi.com/)
+[GitHub repository](https://github.com/ExesoftInc/IWAPI) 
