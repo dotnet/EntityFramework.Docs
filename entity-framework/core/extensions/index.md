@@ -360,3 +360,9 @@ Add Entity Framework `IQueryable` support to GraphQL.
 A standard for implementing REST APIs with specifications for discovery, filtering, sorting, projections, navigations, bulk operations, and more.
 
 [GitHub repository](https://github.com/OData) | [NuGet](https://www.nuget.org/packages/Microsoft.OData.Core/)
+
+### IWAPI
+
+A is a scaffolding engine for .NET Core that can automate the generation of DbContext classes, entities, models and creates a working Web API from any SQL Server database.
+
+[GitHub repository]([https://github.com/OData](https://github.com/ExesoftInc/IWAPI)) 
