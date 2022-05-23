@@ -24,10 +24,10 @@ git clone https://github.com/dotnet/EntityFramework.Docs
 
 ### Create an Azure Cosmos DB instance
 
-To run this demo, you will need to either run the [Azure Cosmos DB emulator](https://docs.microsoft.com/azure/cosmos-db/local-emulator)
+To run this demo, you will need to either run the [Azure Cosmos DB emulator](/azure/cosmos-db/local-emulator)
 or create an Azure Cosmos DB account. You can read
-[Create an Azure Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/create-cosmosdb-resources-portal#create-an-azure-cosmos-db-account) to learn how. Be sure to check out the option
-for a [free account](https://docs.microsoft.com/azure/cosmos-db/optimize-dev-test#azure-cosmos-db-free-tier)!
+[Create an Azure Cosmos DB account](/azure/cosmos-db/create-cosmosdb-resources-portal#create-an-azure-cosmos-db-account) to learn how. Be sure to check out the option
+for a [free account](/azure/cosmos-db/optimize-dev-test#azure-cosmos-db-free-tier)!
 
 Choose the **SQL API**.
 
@@ -120,13 +120,13 @@ This is used by both `Author` and `Tag`. They look pretty similar. Here's the `T
 
 The `ETag` property is implemented on the model so it can be sent around the app and maintain the value (as opposed to using a [shadow property](xref:core/modeling/shadow-properties) ). The `ETag` is used [for concurrency](/dotnet/api/microsoft.azure.documents.resource.etag) in Azure Cosmos DB. Concurrency support is implemented in the sample app. To test it, try opening the same document in two tabs, then update one and save it, and finally update the other and save it.
 
-People often struggle with [disconnected entities](xref:core/saving/disconnected-entities) in EF Core. The pattern is used in this app to provide an example. It's not necessary in Blazor Server, but makes it easier to scale the app. The alternative approach is to track the state of the entity with EF Core's [change tracker](xref:core/change-tracking/). The change tracker would enable you to drop the `ETag` property and use a shadow property instead.
+People often struggle with [disconnected entities](xref:core/saving/disconnected-entities) in EF Core. The pattern is used in this app to provide an example. It's not necessary in Blazor Server, but makes it easier to scale the app. The alternative approach is to track the state of the entity with EF Core's [change tracker](xref:core/change-tracking/index). The change tracker would enable you to drop the `ETag` property and use a shadow property instead.
 
 Finally, there is the `DocumentAudit` document.
 
 :::code language="csharp" source="../../../../samples/end2end/PlanetaryDocs/PlanetaryDocs.Domain/DocumentAudit.cs":::
 
-Ideally, the `Document` snapshot would be a proper property instead of a string. This is one of the [EF Core Azure Cosmos DB provider limitations](https://docs.microsoft.com/ef/core/providers/cosmos/limitations) EF Core currently has. There is not a way for `Document` to do double-duty as both a standalone entity and an "owned" entity. If you want the user to be able to search on properties in the historical document, you could either add those properties to the `DocumentAudit` class to be automatically indexed, or make a `DocumentSnapshot` class that shares the same properties but is configured as "owned" by the `DocumentAudit` parent.
+Ideally, the `Document` snapshot would be a proper property instead of a string. This is one of the [EF Core Azure Cosmos DB provider limitations](xref:core/providers/cosmos/limitations) EF Core currently has. There is not a way for `Document` to do double-duty as both a standalone entity and an "owned" entity. If you want the user to be able to search on properties in the historical document, you could either add those properties to the `DocumentAudit` class to be automatically indexed, or make a `DocumentSnapshot` class that shares the same properties but is configured as "owned" by the `DocumentAudit` parent.
 
 ### Azure Cosmos DB setup
 
