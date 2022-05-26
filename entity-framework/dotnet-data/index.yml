@@ -77,7 +77,7 @@ additionalContent:
               text: "Use C# .NET to connect and query data in Azure Database for MySQL"
 
         # Card
-        - title: Document databases
+        - title: Document database (Azure Cosmos DB)
           links:
             - url: /azure/cosmos-db
               text: "Azure Cosmos DB documentation"
@@ -91,7 +91,7 @@ additionalContent:
               text: "EF Core Azure Cosmos DB provider"
 
         # Card
-        - title: Graph databases
+        - title: Graph database (Azure Cosmos DB Graph API)
           links:
             - url: /azure/cosmos-db/graph/graph-introduction
               text: "Introduction to Gremlin API in Azure Cosmos Db"
@@ -115,28 +115,42 @@ additionalContent:
         # Card
         - title: Unstructured/blob storage
           links:
-            - url: /ef/core/querying/index.md
-              text: "Overview"
-
-        # Card
-        - title: EF Core
-          links:
-            - url: /ef/core/managing-schemas/index.md
-              text: "Overview"
+            - url: /azure/storage/blobs/storage-blobs-introduction
+              text: "Introduction to blob storage"
+            - url: /azure/storage/blobs/storage-quickstart-blobs-dotnet?tabs=environment-variable-windows
+              text: "Quickstart: Azure Blob Storage client library v12 for .NET"
+            - url: /azure/storage/blobs/data-lake-storage-introduction
+              text: "Introduction to Azure Data Lake Storage Gen2"
 
     #Section
     - title: Data services
       items:
-        - title: LINQ
-          links:
-            - url: /ef/core/managing-schemas/index.md
-              text: "Overview"
 
+        # Card
+        - title: EF Core
+          links:
+            - url: /ef/core/
+              text: "Overview"
+            - url: /ef/core/get-started/overview/first-app
+              text: "Create you first EF Core app"
+            - url: /learn/modules/persist-data-ef-core/
+              text: "Learn: persist and retrieve relational data with EF Core"
+            - url: /ef/core/providers/
+              text: "Supported databases"
+
+        - title: Language Integrated Query (LINQ)
+          links:
+            - url: /dotnet/csharp/programming-guide/concepts/linq
+              text: "Overview"
+            - url: /dotnet/csharp/programming-guide/concepts/linq/introduction-to-linq-queries
+              text: "Introduction to LINQ queries"
+            - url: /dotnet/csharp/programming-guide/concepts/linq/linq-to-objects
+              text: "LINQ over IEnumerable"
         # Card
         - title: Big data
           links:
-            - url: /ef/core/
-              text: "Your data is big"
+            - url: /learn/data/spark-tutorial/intro
+              text: "10-minute .NET for Apache Spark(tm) Tutorial"    
 
         # Card
         - title: Machine learning
