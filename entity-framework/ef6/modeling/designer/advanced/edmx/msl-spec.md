@@ -977,7 +977,7 @@ The following example is based on the School model and shows the **InsertFunctio
 
 The **Mapping** element in mapping specification language (MSL) contains information for mapping objects that are defined in a conceptual model to a database (as described in a storage model). For more information, see CSDL Specification and SSDL Specification.
 
-The **Mapping** element is the root element for a mapping specification. The XML namespace for mapping specifications is https://schemas.microsoft.com/ado/2009/11/mapping/cs.
+The **Mapping** element is the root element for a mapping specification. The XML namespace for mapping specifications is `https://schemas.microsoft.com/ado/2009/11/mapping/cs`.
 
 The mapping element can have the following child elements (in the order listed):
 
