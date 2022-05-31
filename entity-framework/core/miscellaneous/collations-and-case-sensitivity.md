@@ -74,4 +74,4 @@ In addition, .NET provides overloads of [`string.Equals`](/dotnet/api/system.str
 
 ### Other resources
 
-* [EF Core Community Standup session](https://www.youtube.com/watch?v=OgMhLVa_VfA&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=1), introducing collations and exploring perf and indexing aspects.
+* [.NET Data Community Standup session](https://www.youtube.com/watch?v=OgMhLVa_VfA&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=1), introducing collations and exploring perf and indexing aspects.
