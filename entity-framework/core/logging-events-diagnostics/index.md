@@ -22,7 +22,7 @@ The table below provides a quick reference for the differences between the mecha
 | Interceptors | Yes | Per context | Context configuration | Manipulating EF operations
 | Diagnostics listeners | No | Process | Globally | Application diagnostics
 
-*Typically `Microsoft.Extensions.Logging` is configured per-application via dependency injection However, at the EF level, each context _can_ be configured with a different logger if needed.
+*Typically `Microsoft.Extensions.Logging` is configured per-application via dependency injection. However, at the EF level, each context _can_ be configured with a different logger if needed.
 
 ## Simple logging
 
