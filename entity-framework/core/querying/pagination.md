@@ -53,4 +53,6 @@ For more information, [see the documentation page on indexes](xref:core/modeling
 ## Additional resources
 
 * To learn more about the shortcomings of offset-based pagination and about keyset pagination, [see this post](https://use-the-index-luke.com/no-offset).
+* [.NET Data Community Standup session](https://www.youtube.com/watch?v=DIKH-q-gJNU) where we discuss pagination and demo all the above concepts.
 * [A technical deep dive presentation](https://www.slideshare.net/MarkusWinand/p2d2-pagination-done-the-postgresql-way) comparing offset and keyset pagination. While the content deals with the PostgreSQL database, the general information is valid for other relational databases as well.
+* For extensions on top of EF Core which simplify keyset pagination, see [MR.EntityFrameworkCore.KeysetPagination](https://github.com/mrahhal/MR.EntityFrameworkCore.KeysetPagination) and [MR.AspNetCore.Pagination](https://github.com/mrahhal/MR.AspNetCore.Pagination).

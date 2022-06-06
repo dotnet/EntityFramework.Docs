@@ -63,6 +63,12 @@ Geco (Generator Console) is a simple code generator based on a console project, 
 
 [GitHub repository](https://github.com/iQuarc/Geco)
 
+### IWAPI
+
+IWAPI (Instant Web API) is a scaffolding engine for .NET Core that can automate the generation of DbContext classes, entities, models and creates a working Web API from any SQL Server database.
+
+[Website](https://instantwebapi.com/)
+
 ## Extensions
 
 ### Microsoft.EntityFrameworkCore.AutoHistory
