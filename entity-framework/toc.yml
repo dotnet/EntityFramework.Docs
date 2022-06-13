@@ -357,6 +357,8 @@
           href: core/providers/sql-server/spatial.md
         - name: Specify Azure SQL Database options
           href: core/providers/sql-server/azure-sql-database.md
+        - name: Miscellaneous
+          href: core/providers/sql-server/misc.md
       - name: SQLite
         items:
         - name: Overview
