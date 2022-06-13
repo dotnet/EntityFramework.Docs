@@ -1,11 +1,11 @@
 ### YamlMime:Hub
 
-title: .NET data
+title: .NET Data documentation
 summary: .NET is the open source and cross-platform for integrating data, data services and data backends with your applications.
 brand: dotnet
 
 metadata:
-  title: .NET data documentation
+  title: .NET Data documentation
   description: Learn to use Entity Framework Core, a modern object-database mapper for .NET that supports LINQ queries, change tracking, updates, and schema migrations. Browse tutorials, sample code, fundamentals, API reference and more.
   ms.product: entity-framework
   ms.topic: hub-page
@@ -149,26 +149,28 @@ additionalContent:
         # Card
         - title: Big data
           links:
+            - url: /dotnet/spark/what-is-apache-spark-dotnet
+              text: "What is .NET for Apache Spark?"
             - url: /learn/data/spark-tutorial/intro
               text: "10-minute .NET for Apache Spark(tm) Tutorial"    
+            - url: /azure/synapse-analytics/overview-what-is
+              text: "What is Azure Synapse?"
 
         # Card
         - title: Machine learning
           links:
-            - url: /ef/core/
-              text: "Your data is big"
+            - url: https://dotnet.microsoft.com/learn/ml-dotnet/what-is-mldotnet
+              text: "What is ML.NET? Step-by-step"
+            - url: /dotnet/machine-learning/
+              text: "ML.NET documentation"
+            - url: /dotnet/machine-learning/tutorials/
+              text: "ML.NET tutorials"
 
         # Card
-        - title: ETL
+        - title: ETL and Analytics
           links:
             - url: /ef/core/
               text: "Your data is big"
-
-        # Card
-        - title: Analytics
-          links:
-            - url: /ef/core/
-              text: "Analyze it!"
 
         # Card
         - title: Messages, notifications, and events
