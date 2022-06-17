@@ -45,7 +45,7 @@ using (var context = new BlogContext())
 
     blog.Posts.Add(new Post { Title = "I do not like them!" });
 
-    context.SaveChangesAsync().Wait();
+    context.SaveChanges();
 }
 ```  
 
