@@ -167,16 +167,26 @@ additionalContent:
               text: "ML.NET tutorials"
 
         # Card
-        - title: ETL and Analytics
+        - title: ETL and analytics
           links:
-            - url: /ef/core/
-              text: "Your data is big"
+            - url: /azure/architecture/data-guide/relational-data/etl
+              text: "Extract, Transform and Load (ETL) Architecture"
+            - url: /azure/data-factory/concepts-pipelines-activities?tabs=data-factory
+              text: "ETL with Azure Data Factory and/or Synapse Analytics"
+            - url: /sql/integration-services/sql-server-integration-services
+              text: "SQL Server Integration Services"
 
         # Card
         - title: Messages, notifications, and events
           links:
-            - url: /ef/core/
-              text: "Analyze it!"
+            - url: /dotnet/architecture/microservices/multi-container-microservice-net-applications/integration-event-based-microservice-communications
+              text: "Implementing event-based communication between .NET microservices"
+            - url: /dotnet/architecture/serverless/event-grid
+              text: "Serverless messaging with Azure Event Grid"
+            - url: /azure/event-hubs/event-hubs-dotnet-standard-getstarted-send
+              text: "Send and receive events from .NET using Azure Event Hubs"
+            - url: /dotnet/orleans/overview 
+              text: "Distributed .NET apps with Orleans"
 
     # Section
     - title: "APIs"
