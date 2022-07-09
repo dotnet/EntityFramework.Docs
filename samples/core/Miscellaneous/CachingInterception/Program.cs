@@ -45,7 +45,7 @@ public class Program
         // 5. Pretend it's the next day.
         Thread.Sleep(10000);
 
-        // 6. Cache is expired, so the last message will noe be queried again.
+        // 6. Cache is expired, so the last message will not be queried again.
         using (var context = new DailyMessageContext())
         {
             Console.WriteLine(await GetDailyMessage(context));
