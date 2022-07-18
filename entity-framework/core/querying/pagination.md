@@ -14,7 +14,7 @@ Pagination refers to retrieving results in pages, rather than all at once; this 
 
 ## Offset pagination
 
-A common way to implement pagination with databases is to use the `Skip` and `Take` (`OFFSET` and `LIMIT` in SQL). Given a a page size of 10 results, the third page can be fetched with EF Core as follows:
+A common way to implement pagination with databases is to use the `Skip` and `Take` (`OFFSET` and `LIMIT` in SQL). Given a page size of 10 results, the third page can be fetched with EF Core as follows:
 
 [!code-csharp[Main](../../../samples/core/Querying/Pagination/Program.cs?name=OffsetPagination&highlight=4)]
 
@@ -25,7 +25,7 @@ Unfortunately, while this technique is very intuitive, it also has some severe s
 
 ## Keyset pagination
 
-The recommended alternative to offset-based pagination - sometimes called *keyset pagination* or *seek-based pagination* - is simply use a `WHERE` clause to skip rows, instead of an offset. This means remember the relevant values from the last entry fetched (instead of its offset), and to ask for the next rows after that row. For example, assuming the last entry in the last page we fetched had an ID value of 55, we'd simply do the following:
+The recommended alternative to offset-based pagination - sometimes called *keyset pagination* or *seek-based pagination* - is to simply use a `WHERE` clause to skip rows, instead of an offset. This means remember the relevant values from the last entry fetched (instead of its offset), and to ask for the next rows after that row. For example, assuming the last entry in the last page we fetched had an ID value of 55, we'd simply do the following:
 
 [!code-csharp[Main](../../../samples/core/Querying/Pagination/Program.cs?name=KeySetPagination&highlight=4)]
 

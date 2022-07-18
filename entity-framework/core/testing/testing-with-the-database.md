@@ -46,7 +46,7 @@ Your test class now has a `Fixture` property which can be used by tests to creat
 
 [!code-csharp[Main](../../../samples/core/Testing/TestingWithTheDatabase/BloggingControllerTest.cs?name=GetBlog&highlight=4)]
 
-Finally, you may have noticed some locking in the fixture's creation logic above. If the fixture is only used in a single test class, it is guaranteed to be instantiated exactly once by xUnit; but it's common to use the same database fixture in multiple test classes. xUnit does provide [collection fixtures](https://xunit.net/docs/shared-context#collection-fixture), but that mechanism prevents your test classes from running in parallel, which is important for test performance. To safely manage this with an xUnit class fixture, we take a simple lock around database creation and seeding, and use a static flag to make sure we never to do it twice.
+Finally, you may have noticed some locking in the fixture's creation logic above. If the fixture is only used in a single test class, it is guaranteed to be instantiated exactly once by xUnit; but it's common to use the same database fixture in multiple test classes. xUnit does provide [collection fixtures](https://xunit.net/docs/shared-context#collection-fixture), but that mechanism prevents your test classes from running in parallel, which is important for test performance. To safely manage this with an xUnit class fixture, we take a simple lock around database creation and seeding, and use a static flag to make sure we never have to do it twice.
 
 ## Tests which modify data
 
