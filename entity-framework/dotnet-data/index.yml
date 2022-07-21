@@ -200,9 +200,9 @@ additionalContent:
             - url: /azure/architecture/best-practices/api-design
               text: "RESTful web API design"
             - url: /azure/api-management/
-              test: "Azure API Management (APIM)"
+              text: "Azure API Management (APIM)"
             - url: /aspnet/core/tutorials/web-api-help-pages-using-swagger
-              test: "Document APIs with Swagger (OpenAPI)"
+              text: "Document APIs with Swagger (OpenAPI)"
 
         # Card
         - title: OData
