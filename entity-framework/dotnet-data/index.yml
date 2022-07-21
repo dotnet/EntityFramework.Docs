@@ -6,12 +6,12 @@ brand: dotnet
 
 metadata:
   title: .NET Data documentation
-  description: Learn to use Entity Framework Core, a modern object-database mapper for .NET that supports LINQ queries, change tracking, updates, and schema migrations. Browse tutorials, sample code, fundamentals, API reference and more.
+  description: Welcome to the .NET data hub! What data-related task would you like to perform? This page is your gateway to documentation and tutorials for the various ways you interact with data from .NET. 
   ms.product: entity-framework
   ms.topic: hub-page
   author: JeremyLikness
   ms.author: jeliknes
-  ms.date: 04/22/2022
+  ms.date: 07/20/2022
 
 # highlightedContent section (optional)
 # Maximum of 8 items
@@ -39,12 +39,12 @@ highlightedContent:
       url: /azure/cosmos-db/
 
     # Card
-    - title: "Entity Framework Core"
+    - title: "Entity Framework Core (Overview)"
       itemType: overview
       url: /ef/core/
 
     # Card
-    - title: "Persist and retrieve relational data with Entity Framework Core"
+    - title: "Entity Framework Core (Tutorial)"
       itemType: learn
       url: /learn/modules/persist-data-ef-core/
 
@@ -146,6 +146,7 @@ additionalContent:
               text: "Introduction to LINQ queries"
             - url: /dotnet/csharp/programming-guide/concepts/linq/linq-to-objects
               text: "LINQ over IEnumerable"
+        
         # Card
         - title: Big data
           links:
@@ -194,35 +195,61 @@ additionalContent:
         # Card
         - title: REST
           links:
-            - url: /ef/core/
-              text: "Analyze it!"
+            - url: /aspnet/core/tutorials/min-web-api
+              text: "Minimal Web API tutorial"
+            - url: /azure/architecture/best-practices/api-design
+              text: "RESTful web API design"
+            - url: /azure/api-management/
+              test: "Azure API Management (APIM)"
+            - url: /aspnet/core/tutorials/web-api-help-pages-using-swagger
+              test: "Document APIs with Swagger (OpenAPI)"
 
         # Card
         - title: OData
           links:
-            - url: /ef/core/
-              text: "Analyze it!"
+            - url: /odata/overview
+              text: "OData overview"
+            - url: /odata/client/getting-started
+              text: "Get started with the OData client for .NET"
+            - url: https://youtu.be/Q3Ove-2Uh94
+              text: "Video: OData (.NET Data community standup)"
 
         # Card
         - title: GraphQL
           links:
-            - url: /ef/core/
-              text: "Analyze it!"
+            - url: /shows/graphql/
+              text: "Video series: Learning GraphQL"
+            - url: /azure/api-management/graphql-api
+              text: "Azure API Management support for GraphQL"
+            - url: /shows/on-net/getting-started-with-hotchocolate
+              text: "Video: Getting start with GraphQL on .NET using HotChocolate"
 
         # Card
         - title: CoreWCF
           links:
-            - url: /ef/core/
-              text: "Analyze it!"
+            - url: https://github.com/CoreWCF/CoreWCF
+              text: "CoreWCF overview"
+            - url: https://github.com/CoreWCF/CoreWCF/blob/main/Documentation/Walkthrough.md
+              text: "CoreWCF walkthrough"
 
         # Card
         - title: gRPC
           links:
-            - url: /ef/core/
-              text: "Analyze it!"
+            - url: /aspnet/core/grpc/
+              text: "Overview of gRPC on .NET"
+            - url: /aspnet/core/grpc/basics
+              text: "Write gRPC services with C# and .NET"
+            - url: /aspnet/core/grpc/client
+              text: "Call gRPC services from .NET with C#"
+            - url: /aspnet/core/grpc/why-migrate-wcf-to-dotnet-grpc
+              text: "Why migrate from WCF to gRPC on ASP.NET Core"
 
         # Card
         - title: SignalR
           links:
-            - url: /ef/core/
-              text: "Analyze it!"
+            - url: /aspnet/signalr/overview/getting-started/introduction-to-signalr
+              text: "Introduction to SignalR"
+            - url: /aspnet/signalr/overview/guide-to-the-api/
+              text: "Guide to the SignalR API"
+            - url: /aspnet/core/signalr/api-design
+              text: "SignalR API design considerations"
