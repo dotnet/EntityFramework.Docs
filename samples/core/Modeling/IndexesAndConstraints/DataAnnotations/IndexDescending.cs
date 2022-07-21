@@ -8,7 +8,7 @@ internal class MyContext : DbContext
 }
 
 #region IndexDescending
-[Index(nameof(Url), nameof(Rating), IsDescending = new bool[0])]
+[Index(nameof(Url), nameof(Rating), AllDescending = true)]
 public class Blog
 {
     public int BlogId { get; set; }
