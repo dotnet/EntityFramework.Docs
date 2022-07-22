@@ -2,13 +2,13 @@
 title: Tools & Extensions - EF Core
 description: External tools and extensions for Entity Framework Core
 author: ErikEJ
-ms.date: 02/21/2021
+ms.date: 07/22/2022
 uid: core/extensions/index
 ---
 
 # EF Core Tools & Extensions
 
-These tools and extensions provide additional functionality for Entity Framework Core 2.1 and later.
+These tools and extensions provide additional functionality for Entity Framework Core 3 and later.
 
 > [!IMPORTANT]
 > Extensions are built by a variety of sources and aren't maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate its quality, licensing, compatibility, support, etc. to ensure it meets your requirements. In particular, an extension built for an older version of EF Core may need updating before it will work with the latest versions.
@@ -17,13 +17,13 @@ These tools and extensions provide additional functionality for Entity Framework
 
 ### LLBLGen Pro
 
-LLBLGen Pro is an entity modeling solution with support for Entity Framework and Entity Framework Core. It lets you easily define your entity model and map it to your database, using database first or model first, so you can get started writing queries right away. For EF Core: 2, 3, 5.
+LLBLGen Pro is an entity modeling solution with support for Entity Framework and Entity Framework Core. It lets you easily define your entity model and map it to your database, using database first or model first, so you can get started writing queries right away. For EF Core: 2, 3, 5, 6.
 
 [Website](https://www.llblgen.com/)
 
 ### Devart Entity Developer
 
-Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 2, 3, 5.
+Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 2, 3, 5, 6.
 
 [Website](https://www.devart.com/entitydeveloper/)
 
@@ -44,24 +44,6 @@ EF Core Power Tools is a Visual Studio extension that exposes various EF Core de
 Entity Framework Visual Editor is a Visual Studio extension that adds an O/RM designer for visual design of EF 6, and EF Core classes. Code is generated using T4 templates so can be customized to suit any needs. It supports inheritance, unidirectional and bidirectional associations, enumerations, and the ability to color-code your classes and add text blocks to explain potentially arcane parts of your design. For EF Core: 2, 3, 5.
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner)
-
-### CatFactory
-
-CatFactory is a scaffolding engine for .NET Core that can automate the generation of DbContext classes, entities, mapping configurations, and repository classes from a SQL Server database. For EF Core: 2.
-
-[GitHub repository](https://github.com/hherzl/CatFactory.EntityFrameworkCore)
-
-### LoreSoft's Entity Framework Core Generator
-
-Entity Framework Core Generator (efg) is a .NET Core CLI tool that can generate EF Core models from an existing database, much like `dotnet ef dbcontext scaffold`, but it also supports safe code [regeneration](https://efg.loresoft.com/en/latest/regeneration/) via region replacement or by parsing mapping files. This tool supports generating view models, validation, and object mapper code. For EF Core: 2.
-
-[Tutorial](https://www.loresoft.com/Generate-ASP-NET-Web-API) | [Documentation](https://efg.loresoft.com/en/latest/)
-
-### Geco
-
-Geco (Generator Console) is a simple code generator based on a console project, that runs on .NET Core and uses C# interpolated strings for code generation. Geco includes a reverse model generator for EF Core with support for pluralization, singularization, and editable templates. It also provides a seed data script generator, a script runner, and a database cleaner. For EF Core: 2.
-
-[GitHub repository](https://github.com/iQuarc/Geco)
 
 ### IWAPI
 
@@ -131,12 +113,6 @@ Provides a wrapper around [SQL Server Express LocalDB](/sql/database-engine/conf
 
 [GitHub repository](https://github.com/SimonCropp/LocalDb) | [NuGet](https://www.nuget.org/packages/EfLocalDb)
 
-### EFCore.TemporalSupport
-
-An implementation of temporal support. For EF Core: 2.
-
-[GitHub repository](https://github.com/cpoDesign/EFCore.TemporalSupport) | [NuGet](https://www.nuget.org/packages/EFCoreTemporalSupport)
-
 ### EfCoreTemporalTable
 
 > [!NOTE]
@@ -154,12 +130,6 @@ Easily perform temporal queries on your favorite database using introduced exten
 Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2, 3, 5.
 
 [GitHub repository](https://github.com/findulov/EntityFrameworkCore.TemporalTables) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.TemporalTables)
-
-### EntityFrameworkCore.Cacheable
-
-A high-performance second-level query cache. For EF Core: 2.
-
-[GitHub repository](https://github.com/SteffenMangold/EntityFrameworkCore.Cacheable) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Cacheable)
 
 ### EntityFrameworkCore.NCache
 
@@ -234,6 +204,9 @@ Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types
 
 ### Dabble.EntityFrameworkCore.Temporal.Query
 
+> [!NOTE]
+> SQL Server temporal tables are supported directly within EF Core as of [EF Core 6](/ef/core/what-is-new/ef-core-6.0/whatsnew#sql-server-temporal-tables).
+
 LINQ extensions to Entity Framework Core 3.1 to support Microsoft SQL Server Temporal Table Querying. For EF Core: 3.
 
 [GitHub repository](https://github.com/Adam-Langley/efcore-temporal-query) | [NuGet](https://www.nuget.org/packages/Dabble.EntityFrameworkCore.Temporal.Query)
@@ -301,12 +274,6 @@ When using Entity Framework Core all database exceptions are wrapped in DbUpdate
 Supports SQL Server, Postgres, MySql, SQLite and Oracle. For EF Core: 3, 5.
 
 [GitHub Repository](https://github.com/Giorgi/EntityFramework.Exceptions)
-
-### EFCoreAuditing
-
-A Library for Entity Framework Core to support automatically recording data changes history (audit logging), soft-delete, and snake_case naming convention functionality. For EF Core: 2.
-
-[GitHub Repository](https://github.com/OKTAYKIR/EFCoreAuditing) | [NuGet](https://www.nuget.org/packages/EFCore.Auditing)
 
 ### EntityFrameworkCore.FSharp
 
