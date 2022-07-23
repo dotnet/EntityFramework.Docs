@@ -347,7 +347,7 @@ Cloning entities using EF Core configuration. You can use the `Include` method t
 
 ### Zomp EF Core Extensions
 
-Provides window (analytics) functions and binary functions for EF Core. Providers: SQL Server, SQLite, Postgres. For EF Core: 6, 7.
+Provides window (analytics) functions and binary functions for EF Core. Providers: SQL Server, SQLite, PostgreSQL. For EF Core: 6, 7.
 
 [GitHub repository](https://github.com/zompinc/efcore-extensions) | [NuGet](https://www.nuget.org/packages/Zomp.EFCore.WindowFunctions.SqlServer)
 
