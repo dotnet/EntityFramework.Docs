@@ -345,6 +345,12 @@ Cloning entities using EF Core configuration. You can use the `Include` method t
 
 [GitHub repository](https://github.com/HenkKin/EntityCloner.Microsoft.EntityFrameworkCore) | [NuGet](https://www.nuget.org/packages/EntityCloner.Microsoft.EntityFrameworkCore)
 
+### Zomp EF Core Extensions
+
+Provides window (analytics) functions and binary functions for EF Core. Providers: SQL Server, SQLite, PostgreSQL. For EF Core: 6, 7.
+
+[GitHub repository](https://github.com/zompinc/efcore-extensions) | [NuGet](https://www.nuget.org/packages/Zomp.EFCore.WindowFunctions.SqlServer)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
