@@ -132,9 +132,9 @@ additionalContent:
             - url: /ef/core/
               text: "Overview"
             - url: /ef/core/get-started/overview/first-app
-              text: "Create you first EF Core app"
+              text: "Create your first EF Core app"
             - url: /learn/modules/persist-data-ef-core/
-              text: "Learn: persist and retrieve relational data with EF Core"
+              text: "Learn: Persist and retrieve relational data with EF Core"
             - url: /ef/core/providers/
               text: "Supported databases"
 
