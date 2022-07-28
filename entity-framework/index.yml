@@ -41,7 +41,7 @@ highlightedContent:
     # Card
     - title: "API reference browser"
       itemType: reference
-      url: /dotnet/api/?view=efcore-3.1
+      url: /dotnet/api/?view=efcore-6.0
 
 # Card with summary style
 additionalContent:
