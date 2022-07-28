@@ -152,7 +152,7 @@ additionalContent:
           links:
             - url: /dotnet/spark/what-is-apache-spark-dotnet
               text: "What is .NET for Apache Spark?"
-            - url: /learn/data/spark-tutorial/intro
+            - url: https://dotnet.microsoft.com/learn/data/spark-tutorial/intro
               text: "10-minute .NET for Apache Spark(tm) Tutorial"    
             - url: /azure/synapse-analytics/overview-what-is
               text: "What is Azure Synapse?"
