@@ -199,7 +199,6 @@ additionalContent:
             - url: /dotnet/orleans/overview 
               text: "Distributed .NET apps with Orleans"
               
-        
 
     # Section
     - title: "APIs"
