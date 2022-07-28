@@ -51,7 +51,7 @@ highlightedContent:
     # Card
     - title: "What is ML.NET?"
       itemType: overview
-      url: https://dotnet.microsoft.com/learn/ml-dotnet/what-is-mldotnet     
+      url: https://dotnet.microsoft.com/learn/ml-dotnet/what-is-mldotnet
 
     # Card
     - title: "What is .NET for Apache Spark?"
