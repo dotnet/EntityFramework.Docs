@@ -1,11 +1,11 @@
 ### YamlMime:Hub
 
-title: .NET Data documentation
-summary: .NET is the open source and cross-platform for integrating data, data services and data backends with your applications.
+title: .NET data documentation
+summary: .NET is the open source and cross-platform solution for integrating data, data services, and data backends with your applications.
 brand: dotnet
 
 metadata:
-  title: .NET Data documentation
+  title: .NET data documentation
   description: Welcome to the .NET data hub! What data-related task would you like to perform? This page is your gateway to documentation and tutorials for the various ways you interact with data from .NET. 
   ms.product: entity-framework
   ms.topic: hub-page
@@ -17,17 +17,7 @@ metadata:
 # Maximum of 8 items
 highlightedContent:
   # itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
-  items:
-    # Card
-    - title: "LINQ overview"
-      itemType: overview
-      url: /dotnet/standard/linq
-
-    # Card
-    - title: "SQLite overview"
-      itemType: overview
-      url: /dotnet/standard/data/sqlite
-
+  items:    
     # Card
     - title: "Microsoft SQL documentation"
       itemType: reference
@@ -39,6 +29,11 @@ highlightedContent:
       url: /azure/cosmos-db/
 
     # Card
+    - title: "LINQ overview"
+      itemType: overview
+      url: /dotnet/standard/linq
+    
+    # Card
     - title: "Entity Framework Core (Overview)"
       itemType: overview
       url: /ef/core/
@@ -47,6 +42,11 @@ highlightedContent:
     - title: "Entity Framework Core (Tutorial)"
       itemType: learn
       url: /learn/modules/persist-data-ef-core/
+      
+    # Card
+    - title: "SQLite overview"
+      itemType: overview
+      url: /dotnet/standard/data/sqlite
 
     # Card
     - title: "What is ML.NET?"
@@ -168,6 +168,16 @@ additionalContent:
               text: "ML.NET tutorials"
 
         # Card
+        - title: Mobile apps
+          links:
+            - url: /azure/developer/mobile-apps/azure-mobile-apps/overview
+              text: "Microsoft Datasync Framework (Azure mobile apps)"
+            - url: /azure/developer/mobile-apps/azure-mobile-apps/quickstarts/maui/
+              text: "Build a .NET MAUI mobile app with Azure Mobile Apps"
+            - url: /azure/developer/mobile-apps/azure-mobile-apps/howto/data-sync
+              text: "Offline data sync"
+
+        # Card
         - title: ETL and analytics
           links:
             - url: /azure/architecture/data-guide/relational-data/etl
@@ -188,6 +198,7 @@ additionalContent:
               text: "Send and receive events from .NET using Azure Event Hubs"
             - url: /dotnet/orleans/overview 
               text: "Distributed .NET apps with Orleans"
+              
 
     # Section
     - title: "APIs"
