@@ -37,7 +37,7 @@ Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' 
 
 ### Configuration and User Secrets
 
-If you have a .NET or ASP.NET Core project, you can use the `Name=<connection-string>` syntax to read the connection string from configuration.
+If you have a .NET application that uses the hosting model and configuration system, such as an ASP.NET Core project, then you can use the `Name=<connection-string>` syntax to read the connection string from configuration.
 
 This works well with the [Secret Manager tool](/aspnet/core/security/app-secrets#secret-manager) to keep your database password separate from your codebase.
 
