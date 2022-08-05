@@ -112,28 +112,28 @@ The application will show a list of categories and a list of products. When a ca
 
 The next step is to connect the `Product` and `Category` types from the model to the `DataGridView` controls. This will bind the data loaded by EF Core to the controls, such that the entities tracked by EF Core are kept in sync with those displayed in the controls.
 
-1. Click the **Design Binding Picker** on the first `DataGridView`. This is the tiny button at the top-right corner of the control.
+1. Click the **Designer Action Glyph** on the first `DataGridView`. This is the tiny button at the top-right corner of the control.
 
-   ![The Design Binding Picker](_static/winforms-design-binding-picker.png)
+   ![The Designer Action Glyph](_static/winforms-design-binding-picker.png)
 
-2. Click **Chose Data Source** and then **Add new Object Data Source...**.
+2. This opens the _Action List_, from which the drop-down for **Chose Data Source** can be accessed. We haven't created a data source yet, so go to the bottom and choose **Add new Object Data Source...**.
 
    ![Add new Object Data Source](_static/winforms-add-new-object-data-source.png)
 
-3. Choose **Category** and click **OK**.
+3. Choose **Category** to create an object data source for categories, and click **OK**.
 
    ![Choose Category data source type](_static/winforms-choose-category-type.png)
 
    > [!TIP]
    > If no data source types appear here, then make sure that `Product.cs`, `Category.cs` and `ProductsContext.cs` have been added to the project _**and the solution has been built**_.
 
-4. Back in the **Design Binding Picker**, choose **Choose Data Source**, **Other Data Sources**, **Project Data Sources**, and finally **Category**.
+4. Now the **Choose Data Source** drop-down contains the object data source we just created. Expand **Other Data Sources**, then **Project Data Sources**, and choose **Category**.
 
    ![Choose Category data source](_static/winforms-choose-category.png)
 
    The second `DataGridView` will be bound to products. However, rather than binding to the top-level `Product` type, it will instead be bound to the `Products` navigation from the `Category` binding of the first `DataGridView`. This means that when a category is selected in the first view, the products for that category will automatically be used in the second view.
 
-5. Using the **Design Binding Picker** on the second `DataGridView`, choose **Choose Data Source**, then expand the `categoryBindingSource` and choose `Products`.
+5. Using the **Designer Action Glyph** on the second `DataGridView`, choose **Choose Data Source**, then expand the `categoryBindingSource` and choose `Products`.
 
    ![Choose Products data source](_static/winforms-choose-products.png)
 
@@ -187,7 +187,8 @@ namespace GetStartedWinForms
 
             this.dbContext = new ProductsContext();
 
-            //this.dbContext.Database.EnsureDeleted();
+            // Uncomment the line below to start fresh with a new database.
+            // this.dbContext.Database.EnsureDeleted();
             this.dbContext.Database.EnsureCreated();
 
             this.dbContext.Categories.Load();
