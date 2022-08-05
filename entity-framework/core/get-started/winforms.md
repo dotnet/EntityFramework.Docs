@@ -265,7 +265,7 @@ If the application is now run again, then it should load the appropriate product
 
 ## Saving changes
 
-Finally, the **Save** button con be connected to EF Core so that any changes made to the products and categories are saved to the database.
+Finally, the **Save** button can be connected to EF Core so that any changes made to the products and categories are saved to the database.
 
 1. In the designer for the main form, select the **Save** button.
 2. In the **Properties** for the `Button`, choose the events (the lightning button), and double click the **Click** event.
