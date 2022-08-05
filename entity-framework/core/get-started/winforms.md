@@ -55,7 +55,7 @@ In this walkthrough we will implement a model using "Code First". This means tha
 
 1. Right-click on project and choose **Add**, then **Class...** to add a new class.
 
-   ![Install the Microsoft.EntityFrameworkCore.Sqlite package](_static/winforms-add-class.png)
+   ![Add new class](_static/winforms-add-class.png)
 
 2. Use the filename `Product.cs` and replace the code for the class with:
 
