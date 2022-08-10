@@ -318,6 +318,17 @@ Provides window (analytics) functions and binary functions for EF Core. Provider
 
 [GitHub repository](https://github.com/zompinc/efcore-extensions) | [NuGet](https://www.nuget.org/packages/Zomp.EFCore.WindowFunctions.SqlServer)
 
+### Ainoraz.EFCore.IncludeBuilder
+
+Extension for EF Core that provides alternative `Include` syntax in order to better support the following scenarios:
+
+- Loading multiple entities on the same level (siblings).
+- Writing extension methods that are independent of nesting level.
+
+For EF Core: 6.
+
+[GitHub repository](https://github.com/AinoraZ/EFCore.IncludeBuilder) | [NuGet](https://www.nuget.org/packages/Ainoraz.EFCore.IncludeBuilder/)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
