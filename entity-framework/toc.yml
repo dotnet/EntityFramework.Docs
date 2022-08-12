@@ -53,7 +53,8 @@
         href: /aspnet/core/blazor/blazor-server-ef-core
       - name: WPF .NET Core tutorial
         href: core/get-started/wpf.md
-      #- name: Windows Forms tutorial
+      - name: Windows Forms tutorial
+        href: core/get-started/winforms.md
       - name: Xamarin tutorial
         href: core/get-started/xamarin.md
 

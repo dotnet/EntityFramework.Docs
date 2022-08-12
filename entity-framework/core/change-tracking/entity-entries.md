@@ -592,7 +592,7 @@ For example:
 -->
 [!code-csharp[Using_DbSet_Local_to_query_tracked_entities_4](../../../samples/core/ChangeTracking/AccessingTrackedEntities/Samples.cs?name=Using_DbSet_Local_to_query_tracked_entities_4)]
 
-See [Get Started with WPF](xref:core/get-started/wpf) for more information on WPF data binding with EF Core.
+See [Get Started with WPF](xref:core/get-started/wpf) for more information on WPF data binding with EF Core, and [Get Started with Windows Forms](xref:core/get-started/winforms) for more information on Windows Forms data binding with EF Core.
 
 > [!TIP]
 > The local view for a given DbSet instance is created lazily when first accessed and then cached. LocalView creation itself is fast and it does not use significant memory. However, it does call [DetectChanges](xref:core/change-tracking/change-detection), which can be slow for large numbers of entities. The collections created by `ToObservableCollection` and `ToBindingList` are also created lazily and then cached. Both of these methods create new collections, which can be slow and use a lot of memory when thousands of entities are involved.
