@@ -52,6 +52,9 @@ And this example shows how to configure some facets on all properties of type `s
 > 4. Non-nullable value type
 > 5. Exact type
 
+> [!NOTE]
+> Data annotations do not override pre-convention configuration.
+
 ### Ignoring types
 
 Pre-convention configuration also allows to ignore a type and prevent it from being discovered by conventions either as an entity type or as a property on an entity type:
