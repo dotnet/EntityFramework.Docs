@@ -15,7 +15,7 @@ On Windows, the native mod_spatialite library is distributed as a NuGet package 
 
 ```bash
 # Debian/Ubuntu
-apt-get install libsqlite3-mod-spatialite
+apt install libsqlite3-mod-spatialite
 
 # macOS
 brew install libspatialite
@@ -32,6 +32,13 @@ Unfortunately, newer versions of PROJ (a dependency of SpatiaLite) are incompati
 
   <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="3.1.0" />
 </ItemGroup>
+```
+
+On **Linux**, you may need to install the corresponding development package.
+
+```bash
+# Debian/Ubuntu
+apt install libsqlite3-dev
 ```
 
 On **macOS**, you'll also need set an environment variable before running your app so it uses Homebrew's version of SQLite. In Visual Studio for Mac, you can set this under **Project > Project Options > Run > Configurations > Default**
