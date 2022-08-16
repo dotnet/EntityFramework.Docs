@@ -182,7 +182,7 @@ additionalContent:
             text: "Migration - custom history table"
           - url: core/managing-schemas/ensure-created.md
             text: "Create and drop APIs"
-          - url: core/managing-schemas/scaffolding.md
+          - url: core/managing-schemas/scaffolding/index.md
             text: "Reverse engineering (scaffolding)"
       # Card
       - title: Save data

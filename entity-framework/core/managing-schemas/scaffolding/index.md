@@ -162,6 +162,8 @@ Customize the entity type classes and DbContext class to fit your needs. For exa
 
 You can also add additional constructors, methods, properties, etc. using another partial class in a separate file. This approach works even when you intend to reverse engineer the model again.
 
+Starting in EF7, you can also use T4 text templates to customize the generated code. See [Custom Reverse Engineering Templates](xref:core/managing-schemas/scaffolding/templates) for more details.
+
 ## Updating the model
 
 After making changes to the database, you may need to update your EF Core model to reflect those changes. If the database changes are simple, it may be easiest just to manually make the changes to your EF Core model. For example, renaming a table or column, removing a column, or updating a column's type are trivial changes to make in code.

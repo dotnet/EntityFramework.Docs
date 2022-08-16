@@ -763,3 +763,16 @@ In summary, TPC is a good mapping strategy to use when your code will mostly que
 That being said, TPH is usually fine for most applications, and is a good default for a wide range of scenarios, so don't add the complexity of TPC if you don't need it. Specifically, if your code will mostly query for entities of many types, such as writing queries against the base type, then lean towards TPH over TPC.
 
 Use TPT only if constrained to do so by external factors.
+
+## Custom Reverse Engineering Templates
+
+You can now customize the scaffolded code when reverse engineering an EF model from a database. Get started by adding the default templates to your project:
+
+```dotnetcli
+dotnet new install Microsoft.EntityFrameworkCore.Templates::7.0.0-*
+dotnet new ef-templates
+```
+
+The templates can then be customize and will automatically be used by `dotnet ef dbcontext scaffold` and `Scaffold-DbContext`.
+
+For more details, see [Custom Reverse Engineering Templates](xref:core/managing-schemas/scaffolding/templates).

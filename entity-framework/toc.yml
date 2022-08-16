@@ -193,7 +193,11 @@
       - name: Create and drop APIs
         href: core/managing-schemas/ensure-created.md
       - name: Reverse engineering (scaffolding)
-        href: core/managing-schemas/scaffolding.md
+        items:
+        - name: Overview
+          href: core/managing-schemas/scaffolding/index.md
+        - name: Custom templates
+          href: core/managing-schemas/scaffolding/templates.md
 
     - name: Query data
       items:
