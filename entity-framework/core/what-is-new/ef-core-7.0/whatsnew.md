@@ -113,7 +113,7 @@ public class Author
 > [!TIP]
 > The code shown here comes from [ExecuteDeleteSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ExecuteDeleteSample.cs).
 
-Calling `ExecuteDelete` or `ExecuteDeleteAsync` on a `DbSet` will immediately delete all entities of that `DbSet` from the database. For example, to delete all `Tag` entities:
+Calling `ExecuteDelete` or `ExecuteDeleteAsync` on a `DbSet` immediately deletes all entities of that `DbSet` from the database. For example, to delete all `Tag` entities:
 
 <!--
         await context.Tags.ExecuteDeleteAsync();
