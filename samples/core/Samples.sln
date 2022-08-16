@@ -191,6 +191,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetContextPooling", "Per
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetContextPoolingWithState", "Performance\AspNetContextPoolingWithState\AspNetContextPoolingWithState.csproj", "{EA3B9FAA-AAF2-4EB6-A64D-8C06FEAD33E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewInEFCore7", "Miscellaneous\NewInEFCore7\NewInEFCore7.csproj", "{72C964FF-07C3-4234-B277-D91C3D83BAEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -529,6 +531,10 @@ Global
 		{EA3B9FAA-AAF2-4EB6-A64D-8C06FEAD33E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA3B9FAA-AAF2-4EB6-A64D-8C06FEAD33E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA3B9FAA-AAF2-4EB6-A64D-8C06FEAD33E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C964FF-07C3-4234-B277-D91C3D83BAEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C964FF-07C3-4234-B277-D91C3D83BAEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C964FF-07C3-4234-B277-D91C3D83BAEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C964FF-07C3-4234-B277-D91C3D83BAEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -612,6 +618,7 @@ Global
 		{E6A055CF-9DFF-4E1D-8B04-3B33DD327AB8} = {BA37B31C-DEAC-46C5-976C-F3FDECA236DF}
 		{FD79D5B5-55CE-4564-A031-FB500D1CDBCC} = {BA37B31C-DEAC-46C5-976C-F3FDECA236DF}
 		{EA3B9FAA-AAF2-4EB6-A64D-8C06FEAD33E5} = {BA37B31C-DEAC-46C5-976C-F3FDECA236DF}
+		{72C964FF-07C3-4234-B277-D91C3D83BAEC} = {85AFD7F1-6943-40FE-B8EC-AA9DBB42CCA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C98D35-54EF-46A6-8F3B-1855C1AE4F70}

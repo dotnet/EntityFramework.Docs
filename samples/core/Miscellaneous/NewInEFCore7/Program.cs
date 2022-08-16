@@ -1,0 +1,13 @@
+﻿public class Program
+{
+    public static async Task Main()
+    {
+        await TpcInheritanceSample.Inheritance_with_TPH();
+        await TpcInheritanceSample.Inheritance_with_TPT();
+        await TpcInheritanceSample.Inheritance_with_TPC();
+        await TpcInheritanceSample.Inheritance_with_TPC_using_HiLo();
+
+        // Currently not working: see https://github.com/dotnet/efcore/issues/28195
+        // await TpcInheritanceSample.Inheritance_with_TPC_using_Identity();
+    }
+}
