@@ -101,9 +101,9 @@ public static class ExecuteUpdateSample
         #region UpdateOldPosts
         await context.Posts
             .Where(p => p.PublishedOn.Year < 2022)
-            .ExecuteUpdateAsync(
-                s => s.SetProperty(b => b.Title, b => b.Title + " (" + b.PublishedOn.Year + ")")
-                    .SetProperty(b => b.Content, b => b.Content + " ( This content was published in " + b.PublishedOn.Year + ")"));
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(b => b.Title, b => b.Title + " (" + b.PublishedOn.Year + ")")
+                .SetProperty(b => b.Content, b => b.Content + " ( This content was published in " + b.PublishedOn.Year + ")"));
         #endregion
 
         context.LoggingEnabled = false;

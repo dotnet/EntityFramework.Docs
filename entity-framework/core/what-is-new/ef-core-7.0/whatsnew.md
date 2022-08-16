@@ -185,11 +185,10 @@ FROM [Blogs] AS [b]
 As with `ExecuteDelete`, the query can be used to filter which entities are updated. In addition, multiple calls to `SetProperty` can be used to update more than one property on the target entity. For example, to update the `Title` and `Content` of all posts published before 2022:
 
 <!--
-        await context.Posts
             .Where(p => p.PublishedOn.Year < 2022)
-            .ExecuteUpdateAsync(
-                s => s.SetProperty(b => b.Title, b => b.Title + " (" + b.PublishedOn.Year + ")")
-                    .SetProperty(b => b.Content, b => b.Content + " ( This content was published in " + b.PublishedOn.Year + ")"));
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(b => b.Title, b => b.Title + " (" + b.PublishedOn.Year + ")")
+                .SetProperty(b => b.Content, b => b.Content + " ( This content was published in " + b.PublishedOn.Year + ")"));
 -->
 [!code-csharp[UpdateOldPosts](../../../../samples/core/Miscellaneous/NewInEFCore7/ExecuteUpdateSample.cs?name=UpdateOldPosts)]
 
