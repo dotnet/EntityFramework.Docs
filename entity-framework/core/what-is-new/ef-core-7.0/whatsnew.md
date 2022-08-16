@@ -31,7 +31,7 @@ However, keep in mind that:
 - Any tracked entities will not be kept in sync.
 - Additional commands may need to be sent in the correct order so as not to violate database constraints. For example deleting dependents before a principal can be deleted.
 
-All of this means that the `ExecuteUpdate` and `ExecuteDelete` methods compliment, rather than replace, the existing `SaveChanges` mechanism.
+All of this means that the `ExecuteUpdate` and `ExecuteDelete` methods complement, rather than replace, the existing `SaveChanges` mechanism.
 
 ### Sample model
 
