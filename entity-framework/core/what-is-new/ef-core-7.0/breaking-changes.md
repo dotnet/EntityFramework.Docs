@@ -15,6 +15,7 @@ API and behavior changes have the potential to break existing applications updat
 | **Breaking change**                                                                                          | **Impact**  |
 |:------------------------------------------------------------------------------------------------------------ | ----------- |
 | [SQL Server tables with triggers now require special EF Core configuration](#sqlserver-tables-with-triggers) | High        |
+| [Minimum SQLite version required by EF raised to 3.35](#min-sqlite-version)                                  | Low         |
 
 ## High-impact changes
 
@@ -43,3 +44,29 @@ You can let EF Core know that the target table has a trigger; doing so will reve
 [!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=TriggerConfiguration&highlight=4)]
 
 Note that doing this doesn't actually make EF Core create or manage the trigger in any way - it currently only informs EF Core that triggers are present on the table. As a result, any trigger name can be used.
+
+## Low-impact changes
+
+<a name="min-sqlite-version"></a>
+
+### Minimum SQLite version required by EF raised to 3.35
+
+[Tracking Issue #24835](https://github.com/dotnet/efcore/issues/24835)
+
+#### Old behavior
+
+Previously, the minimum version of SQLite required by EF Core was 3.16.
+
+#### New behavior
+
+The minimum required version of SQLite has been raised to 3.35.
+
+#### Why
+
+EF Core now utilizes the `RETURNING` clause during SaveChanges to reduce the number of SQL statements. Support for this clasuse was added in SQLite version 3.35.
+
+#### Mitigations
+
+The `Microsoft.EntityFrameworkCore.Sqlite` package includes a build of the native SQLite library. If you are using this package, you'll automatically get SQLite version ??? after upgrading to EF7.
+
+If you're using `Microsoft.EntityFrameworkCore.Sqlite.Core`, you are responsible for providing the native SQLite library. Ensure that your native SQLite library is version 3.35 or newer when upgrading to EF7.
