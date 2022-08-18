@@ -67,6 +67,6 @@ EF Core now utilizes the `RETURNING` clause during SaveChanges to reduce the num
 
 #### Mitigations
 
-The `Microsoft.EntityFrameworkCore.Sqlite` package includes a build of the native SQLite library. If you are using this package, you'll automatically get SQLite version ??? after upgrading to EF7.
+The `Microsoft.EntityFrameworkCore.Sqlite` package includes a build of the native SQLite library. If you are using this package, you'll automatically get SQLite version 3.38.3 after upgrading to EF7.
 
 If you're using `Microsoft.EntityFrameworkCore.Sqlite.Core`, you are responsible for providing the native SQLite library. Ensure that your native SQLite library is version 3.35 or newer when upgrading to EF7.
