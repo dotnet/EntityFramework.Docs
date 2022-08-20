@@ -374,13 +374,15 @@ public static class TpcInheritanceSample
         {
             modelBuilder.Entity<Animal>().UseTpcMappingStrategy();
 
-            // Currently not working: see https://github.com/dotnet/efcore/issues/28195
-            modelBuilder.Entity<FarmAnimal>().Property(e => e.Id).ValueGeneratedOnAdd().UseIdentityColumn(1, 4);
-            modelBuilder.Entity<Cat>().Property(e => e.Id).ValueGeneratedOnAdd().UseIdentityColumn(2, 4);
-            modelBuilder.Entity<Dog>().Property(e => e.Id).ValueGeneratedOnAdd().UseIdentityColumn(3, 4);
-            modelBuilder.Entity<Human>().Property(e => e.Id).ValueGeneratedOnAdd().UseIdentityColumn(4, 4);
+            #region UsingIdentity
+            modelBuilder.Entity<Cat>().ToTable("Cats", tb => tb.Property(e => e.Id).UseIdentityColumn(1, 4));
+            modelBuilder.Entity<Dog>().ToTable("Dogs", tb => tb.Property(e => e.Id).UseIdentityColumn(2, 4));
+            modelBuilder.Entity<FarmAnimal>().ToTable("FarmAnimals", tb => tb.Property(e => e.Id).UseIdentityColumn(3, 4));
+            modelBuilder.Entity<Human>().ToTable("Humans", tb => tb.Property(e => e.Id).UseIdentityColumn(4, 4));
+            #endregion
 
             modelBuilder.Entity<Food>().UseTpcMappingStrategy();
+
             base.OnModelCreating(modelBuilder);
         }
     }
