@@ -70,7 +70,7 @@ public class Author
 public class ContactDetails
 {
     public Address Address { get; init; } = null!;
-    public string? Phone { get; init; }
+    public string? Phone { get; set; }
 }
 
 public class Address
@@ -83,10 +83,10 @@ public class Address
         Country = country;
     }
 
-    public string Street { get; init; }
-    public string City { get; init; }
-    public string Postcode { get; init; }
-    public string Country { get; init; }
+    public string Street { get; set; }
+    public string City { get; set; }
+    public string Postcode { get; set; }
+    public string Country { get; set; }
 }
 #endregion
 
