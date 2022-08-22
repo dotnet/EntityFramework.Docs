@@ -411,7 +411,7 @@
         href: core/cli/services.md
 
     - name: EF Core API reference >>
-      href: /dotnet/api/?view=efcore-6.0
+      href: /dotnet/api/?view=efcore-6.0&preserve-view=true
 
   - name: Entity Framework 6
     items:
@@ -720,4 +720,4 @@
           - name: Russian
             href: ef6/resources/licenses/ef6/rus.md
     - name: EF6 API reference >>
-      href: /dotnet/api/?view=entity-framework-6.2.0
+      href: /dotnet/api/?view=entity-framework-6.2.0&preserve-view=true

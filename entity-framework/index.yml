@@ -41,11 +41,11 @@ highlightedContent:
     # Card
     - title: "API reference browser"
       itemType: reference
-      url: /dotnet/api/?view=efcore-6.0
+      url: /dotnet/api/?view=efcore-6.0&preserve-view=true
     # Card
     - title: "Explore other options for .NET Data"
       itemType: reference
-      url: dotnet-data
+      url: dotnet-data/index.yml
 
 # Card with summary style
 additionalContent:
