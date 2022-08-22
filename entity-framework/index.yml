@@ -42,6 +42,10 @@ highlightedContent:
     - title: "API reference browser"
       itemType: reference
       url: /dotnet/api/?view=efcore-6.0
+    # Card
+    - title: "Explore other options for .NET Data"
+      itemType: reference
+      url: dotnet-data
 
 # Card with summary style
 additionalContent:
