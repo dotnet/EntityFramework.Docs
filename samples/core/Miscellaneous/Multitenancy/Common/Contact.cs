@@ -2,18 +2,18 @@
 public class Contact
 {
     public Guid Id { get; set; }
-    public string Name {get; set;}
+    public string Name { get; set; } = null!;
     public bool IsUnicorn {get; set; }
 
     public static Contact[] GeneratedContacts =>
-    new [] 
+    new []
     {
         new Contact
         {
             Name = "Magic Unicorns",
             IsUnicorn = true
         },
-        new Contact 
+        new Contact
         {
             Name =  "Unicorns Running",
             IsUnicorn = true

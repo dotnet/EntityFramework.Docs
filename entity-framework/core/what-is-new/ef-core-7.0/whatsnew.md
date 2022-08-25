@@ -19,6 +19,414 @@ EF7 is also available as [daily builds](https://github.com/dotnet/efcore/blob/ma
 
 EF7 targets .NET 6, and so can be used with either [.NET 6 (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0) or [.NET 7](https://dotnet.microsoft.com/download/dotnet/7.0).
 
+## JSON Columns
+
+Most relational databases support columns that contain JSON documents. The JSON in these columns can be drilled into with queries. This allows, for example, filtering and sorting by the elements of the documents, as well as projection of elements out of the documents into results. JSON columns allow relational databases to take on some of the characteristics of document databases, creating a useful hybrid between the two.
+
+EF7 contains provider-agnostic support for JSON columns, with an implementation for SQL Server. This support allows mapping of aggregates built from .NET types to JSON documents. Normal LINQ queries can be used on the aggregates, and these will be translated to the appropriate query constructs needed to drill into the JSON. EF7 also supports updating and saving changes to the JSON documents.
+
+> [!NOTE]
+> SQLite support for JSON is [planned for post EF7](https://github.com/dotnet/efcore/issues/28816). The PostgreSQL and Pomelo MySQL providers already contain some support for JSON columns. We will be working with the authors of those providers to align JSON support across all providers.
+
+### Mapping to JSON columns
+
+In EF Core, aggregate types are defined using `OwnsOne` and `OwnsMany`. For example, consider an aggregate type to store contact information:
+
+<!--
+public class ContactDetails
+{
+    public Address Address { get; init; } = null!;
+    public string? Phone { get; set; }
+}
+
+public class Address
+{
+    public Address(string street, string city, string postcode, string country)
+    {
+        Street = street;
+        City = city;
+        Postcode = postcode;
+        Country = country;
+    }
+
+    public string Street { get; set; }
+    public string City { get; set; }
+    public string Postcode { get; set; }
+    public string Country { get; set; }
+}
+-->
+[!code-csharp[ContactDetailsAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=ContactDetailsAggregate)]
+
+This can then be used in an "owner" entity type, for example, to store the contact details of an author:
+
+```csharp
+public class Author
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public ContactDetails Contact { get; set; }
+}
+```
+
+The aggregate type is configured  in `OnModelCreating` using `OwnsOne`:
+
+<!--
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Author>().OwnsOne(
+            author => author.Contact, ownedNavigationBuilder =>
+            {
+                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
+            });
+    }
+-->
+[!code-csharp[TableSharingAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=TableSharingAggregate)]
+
+By default, relational database providers map aggregate types like this to the same table as the owning entity type. That is, each property of the `ContactDetails` and `Address` classes are mapped to a column in the `Authors` table.
+
+Some saved authors with contact details will look like this:
+
+**Authors**
+
+| Id  | Name             | Contact\_Address\_Street | Contact\_Address\_City | Contact\_Address\_Postcode | Contact\_Address\_Country | Contact\_Phone |
+|:----|:-----------------|:-------------------------|:-----------------------|:---------------------------|:--------------------------|:---------------|
+| 1   | Maddy Montaquila | 1 Main St                | Camberwick Green       | CW1 5ZH                    | UK                        | 01632 12345    |
+| 2   | Jeremy Likness   | 2 Main St                | Chigley                | CW1 5ZH                    | UK                        | 01632 12346    |
+| 3   | Daniel Roth      | 3 Main St                | Camberwick Green       | CW1 5ZH                    | UK                        | 01632 12347    |
+| 4   | Arthur Vickers   | 15a Main St              | Chigley                | CW1 5ZH                    | United Kingdom            | 01632 22345    |
+| 5   | Brice Lambson    | 4 Main St                | Chigley                | CW1 5ZH                    | UK                        | 01632 12349    |
+
+If desired, each entity type making up the aggregate can be mapped to its own table instead:
+
+<!--
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Author>().OwnsOne(
+            author => author.Contact, ownedNavigationBuilder =>
+            {
+                ownedNavigationBuilder.ToTable("Contacts");
+                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address, ownedOwnedNavigationBuilder =>
+                {
+                    ownedOwnedNavigationBuilder.ToTable("Addresses");
+                });
+            });
+    }
+-->
+[!code-csharp[TableMappedAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=TableMappedAggregate)]
+
+The same data is then stored across three tables:
+
+**Authors**
+
+| Id  | Name             |
+|:----|:-----------------|
+| 1   | Maddy Montaquila |
+| 2   | Jeremy Likness   |
+| 3   | Daniel Roth      |
+| 4   | Arthur Vickers   |
+| 5   | Brice Lambson    |
+
+**Contacts**
+
+| AuthorId | Phone       |
+|:---------|:------------|
+| 1        | 01632 12345 |
+| 2        | 01632 12346 |
+| 3        | 01632 12347 |
+| 4        | 01632 22345 |
+| 5        | 01632 12349 |
+
+**Addresses**
+
+| ContactDetailsAuthorId | Street      | City             | Postcode | Country        |
+|:-----------------------|:------------|:-----------------|:---------|:---------------|
+| 1                      | 1 Main St   | Camberwick Green | CW1 5ZH  | UK             |
+| 2                      | 2 Main St   | Chigley          | CW1 5ZH  | UK             |
+| 3                      | 3 Main St   | Camberwick Green | CW1 5ZH  | UK             |
+| 4                      | 15a Main St | Chigley          | CW1 5ZH  | United Kingdom |
+| 5                      | 4 Main St   | Chigley          | CW1 5ZH  | UK             |
+
+Now, for the interesting part. In EF7, the `ContactDetails` aggregate type can be mapped to a JSON column. This requires just one call to `ToJson()` when configuring the aggregate type:  
+
+<!--
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Author>().OwnsOne(
+            author => author.Contact, ownedNavigationBuilder =>
+            {
+                ownedNavigationBuilder.ToJson();
+                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
+            });
+    }
+-->
+[!code-csharp[JsonColumnAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=JsonColumnAggregate)]
+
+The `Authors` table will now contain a JSON column for `ContactDetails` populated with a JSON document for each author:
+
+**Authors**
+
+| Id  | Name             | Contact                                                                                                                                                                                                                                                                                             |
+|:----|:-----------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1   | Maddy Montaquila | {<br/>&nbsp;&nbsp;"Phone":"01632 12345",<br/>&nbsp;&nbsp;"Address": {<br/>&nbsp;&nbsp;&nbsp;&nbsp;"City":"Camberwick Green",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Country":"UK",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Postcode":"CW1 5ZH",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Street":"1 Main St"<br/>&nbsp;&nbsp;}<br/>} |
+| 2   | Jeremy Likness   | {<br/>&nbsp;&nbsp;"Phone":"01632 12346",<br/>&nbsp;&nbsp;"Address": {<br/>&nbsp;&nbsp;&nbsp;&nbsp;"City":"Chigley",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Country":"UK",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Postcode":"CH1 5ZH",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Street":"2 Main St"<br/>&nbsp;&nbsp;}<br/>}          |
+| 3   | Daniel Roth      | {<br/>&nbsp;&nbsp;"Phone":"01632 12347",<br/>&nbsp;&nbsp;"Address": {<br/>&nbsp;&nbsp;&nbsp;&nbsp;"City":"Camberwick Green",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Country":"UK",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Postcode":"CW1 5ZH",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Street":"3 Main St"<br/>&nbsp;&nbsp;}<br/>} |
+| 4   | Arthur Vickers   | {<br/>&nbsp;&nbsp;"Phone":"01632 12348",<br/>&nbsp;&nbsp;"Address": {<br/>&nbsp;&nbsp;&nbsp;&nbsp;"City":"Chigley",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Country":"UK",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Postcode":"CH1 5ZH",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Street":"15a Main St"<br/>&nbsp;&nbsp;}<br/>}        |
+| 5   | Brice Lambson    | {<br/>&nbsp;&nbsp;"Phone":"01632 12349",<br/>&nbsp;&nbsp;"Address": {<br/>&nbsp;&nbsp;&nbsp;&nbsp;"City":"Chigley",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Country":"UK",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Postcode":"CH1 5ZH",<br/>&nbsp;&nbsp;&nbsp;&nbsp;"Street":"4 Main St"<br/>&nbsp;&nbsp;}<br/>}          |
+
+> [!TIP]
+> This use of aggregates is very similar to the way JSON documents are mapped when using the EF Core provider for Azure Cosmos DB. JSON columns bring the capabilities of using EF Core against document databases to documents embedded in a relational database.
+
+The JSON documents shown above are very simple, but this mapping capability can also be used with more complex document structures. For example, consider an aggregate type used to represent metadata about a post:
+
+<!--
+public class PostMetadata
+{
+    public PostMetadata(int views)
+    {
+        Views = views;
+    }
+
+    public int Views { get; set; }
+    public List<SearchTerm> TopSearches { get; } = new();
+    public List<Visits> TopGeographies { get; } = new();
+    public List<PostUpdate> Updates { get; } = new();
+}
+
+public class SearchTerm
+{
+    public SearchTerm(string term, int count)
+    {
+        Term = term;
+        Count = count;
+    }
+
+    public string Term { get; private set; }
+    public int Count { get; private set; }
+}
+
+public class Visits
+{
+    public Visits(double latitude, double longitude, int count)
+    {
+        Latitude = latitude;
+        Longitude = longitude;
+        Count = count;
+    }
+
+    public double Latitude { get; private set; }
+    public double Longitude { get; private set; }
+    public int Count { get; private set; }
+    public List<string>? Browsers { get; set; }
+}
+
+public class PostUpdate
+{
+    public PostUpdate(IPAddress postedFrom, DateTime updatedOn)
+    {
+        PostedFrom = postedFrom;
+        UpdatedOn = updatedOn;
+    }
+
+    public IPAddress PostedFrom { get; private set; }
+    public string? UpdatedBy { get; init; }
+    public DateTime UpdatedOn { get; private set; }
+    public List<Commit> Commits { get; } = new();
+}
+
+public class Commit
+{
+    public Commit(DateTime committedOn, string comment)
+    {
+        CommittedOn = committedOn;
+        Comment = comment;
+    }
+
+    public DateTime CommittedOn { get; private set; }
+    public string Comment { get; set; }
+}
+-->
+[!code-csharp[PostMetadataAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=PostMetadataAggregate)]
+
+This aggregate type contains several nested types and collections. Calls to `OwnsOne` and `OwnsMany` are used to map this aggregate type:
+
+<!--
+        modelBuilder.Entity<Post>().OwnsOne(
+            post => post.Metadata, ownedNavigationBuilder =>
+            {
+                ownedNavigationBuilder.ToJson();
+                ownedNavigationBuilder.OwnsMany(metadata => metadata.TopSearches);
+                ownedNavigationBuilder.OwnsMany(metadata => metadata.TopGeographies);
+                ownedNavigationBuilder.OwnsMany(
+                    metadata => metadata.Updates,
+                    ownedOwnedNavigationBuilder => ownedOwnedNavigationBuilder.OwnsMany(update => update.Commits));
+            });
+-->
+[!code-csharp[PostMetadataConfig](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=PostMetadataConfig)]
+
+With this mapping, EF7 can create and query into a complex JSON document like this:
+
+```json
+{
+  "Views": 5085,
+  "TopGeographies": [
+    {
+      "Browsers": "Firefox, Netscape",
+      "Count": 924,
+      "Latitude": 110.793,
+      "Longitude": 39.2431
+    },
+    {
+      "Browsers": "Firefox, Netscape",
+      "Count": 885,
+      "Latitude": 133.793,
+      "Longitude": 45.2431
+    }
+  ],
+  "TopSearches": [
+    {
+      "Count": 9359,
+      "Term": "Search #1"
+    }
+  ],
+  "Updates": [
+    {
+      "PostedFrom": "127.0.0.1",
+      "UpdatedBy": "Admin",
+      "UpdatedOn": "1996-02-17T19:24:29.5429092Z",
+      "Commits": []
+    },
+    {
+      "PostedFrom": "127.0.0.1",
+      "UpdatedBy": "Admin",
+      "UpdatedOn": "2019-11-24T19:24:29.5429093Z",
+      "Commits": [
+        {
+          "Comment": "Commit #1",
+          "CommittedOn": "2022-08-21T00:00:00+01:00"
+        }
+      ]
+    },
+    {
+      "PostedFrom": "127.0.0.1",
+      "UpdatedBy": "Admin",
+      "UpdatedOn": "1997-05-28T19:24:29.5429097Z",
+      "Commits": [
+        {
+          "Comment": "Commit #1",
+          "CommittedOn": "2022-08-21T00:00:00+01:00"
+        },
+        {
+          "Comment": "Commit #2",
+          "CommittedOn": "2022-08-21T00:00:00+01:00"
+        }
+      ]
+    }
+  ]
+}
+```
+
+> [!NOTE]
+> Mapping spatial types directly to JSON is not yet supported. The document above uses `double` values as a workaround. Vote for [Support spatial types in JSON columns](https://github.com/dotnet/efcore/issues/28811) if this is something you are interested in.
+
+> [!NOTE]
+> Mapping collections of primitive types to JSON is not yet supported. The document above uses a value converter to transform the collection into a comma-separated string. Vote for [Json: add support for collection of primitive types](https://github.com/dotnet/efcore/issues/28688) if this is something you are interested in.
+
+### Queries into JSON columns
+
+Queries into JSON columns work just the same as querying into any other aggregate type in EF Core. That is, just use LINQ! Here are some examples.
+
+A query for all authors that live in Chigley:
+
+<!--
+        var authorsInChigley = await context.Authors
+            .Where(author => author.Contact.Address.City == "Chigley")
+            .ToListAsync();
+-->
+[!code-csharp[AuthorsInChigley](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=AuthorsInChigley)]
+
+This query generates the following SQL when using SQL Server:
+
+```sql
+SELECT [a].[Id], [a].[Name], JSON_QUERY([a].[Contact],'$')
+FROM [Authors] AS [a]
+WHERE CAST(JSON_VALUE([a].[Contact],'$.Address.City') AS nvarchar(max)) = N'Chigley'
+```
+
+Notice the use of `JSON_VALUE` to get the `City` from the `Address` inside the JSON document.
+
+`Select` can be used to extract and project elements from the JSON document:
+
+<!--
+        var postcodesInChigley = await context.Authors
+            .Where(author => author.Contact.Address.City == "Chigley")
+            .Select(author => author.Contact.Address.Postcode)
+            .ToListAsync();
+-->
+[!code-csharp[PostcodesInChigley](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=PostcodesInChigley)]
+
+This query generates the following SQL:
+
+```sql
+SELECT CAST(JSON_VALUE([a].[Contact],'$.Address.Postcode') AS nvarchar(max))
+FROM [Authors] AS [a]
+WHERE CAST(JSON_VALUE([a].[Contact],'$.Address.City') AS nvarchar(max)) = N'Chigley'
+```
+
+Here's an example that does a bit more in the filter and projection, and also orders by the phone number in the JSON document:
+
+<!--
+        var orderedAddresses = await context.Authors
+            .Where(
+                author => (author.Contact.Address.City == "Chigley"
+                           && author.Contact.Phone != null)
+                          || author.Name.StartsWith("D"))
+            .OrderBy(author => author.Contact.Phone)
+            .Select(
+                author => author.Name + " (" + author.Contact.Address.Street
+                          + ", " + author.Contact.Address.City
+                          + " " + author.Contact.Address.Postcode + ")")
+            .ToListAsync();
+-->
+[!code-csharp[OrderedAddresses](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=OrderedAddresses)]
+
+This query generates the following SQL:
+
+```sql
+SELECT (((((([a].[Name] + N' (') + CAST(JSON_VALUE([a].[Contact],'$.Address.Street') AS nvarchar(max))) + N', ') + CAST(JSON_VALUE([a].[Contact],'$.Address.City') AS nvarchar(max))) + N' ') + CAST(JSON_VALUE([a].[Contact],'$.Address.Postcode') AS nvarchar(max))) + N')'
+FROM [Authors] AS [a]
+WHERE (CAST(JSON_VALUE([a].[Contact],'$.Address.City') AS nvarchar(max)) = N'Chigley' AND CAST(JSON_VALUE([a].[Contact],'$.Phone') AS nvarchar(max)) IS NOT NULL) OR ([a].[Name] LIKE N'D%')
+ORDER BY CAST(JSON_VALUE([a].[Contact],'$.Phone') AS nvarchar(max))
+```
+
+And when the JSON document contains collections, then these can be projected out in the results:
+
+<!--
+        var postsWithViews = await context.Posts.Where(post => post.Metadata!.Views > 3000)
+            .AsNoTracking()
+            .Select(
+                post => new
+                {
+                    post.Author!.Name,
+                    post.Metadata!.Views,
+                    Searches = post.Metadata.TopSearches,
+                    Commits = post.Metadata.Updates
+                })
+            .ToListAsync();
+-->
+[!code-csharp[PostsWithViews](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=PostsWithViews)]
+
+This query generates the following SQL:
+
+```sql
+SELECT [a].[Name], CAST(JSON_VALUE([p].[Metadata],'$.Views') AS int), JSON_QUERY([p].[Metadata],'$.TopSearches'), [p].[Id], JSON_QUERY([p].[Metadata],'$.Updates')
+FROM [Posts] AS [p]
+LEFT JOIN [Authors] AS [a] ON [p].[AuthorId] = [a].[Id]
+WHERE CAST(JSON_VALUE([p].[Metadata],'$.Views') AS int) > 3000
+```
+
+> [!NOTE]
+> More complex queries involving JSON collections require `jsonpath` support. Vote for [Support jsonpath querying](https://github.com/dotnet/efcore/issues/28616) if this is something you are interested in.
+
 ## ExecuteUpdate and ExecuteDelete (Bulk updates)
 
 By default, EF Core [tracks changes to entities](xref:core/change-tracking/index), and then [sends updates to the database](xref:core/saving/index) when one of the `SaveChanges` methods is called. Changes are only sent for properties and relationships that have actually changed. Also, the tracked entities remain in sync with the changes sent to the database. This mechanism is an efficient and convenient way to send general-purpose inserts, updates, and deletes to the database. These changes are also batched to reduce the number of database round-trips.
