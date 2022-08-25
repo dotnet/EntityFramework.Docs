@@ -49,12 +49,13 @@ public class FeaturedPost : Post
 
 public class Tag
 {
-    public Tag(string text)
+    public Tag(string id, string text)
     {
+        Id = id;
         Text = text;
     }
 
-    public int Id { get; private set; }
+    public string Id { get; private set; }
     public string Text { get; set; }
     public List<Post> Posts { get; } = new();
 }
@@ -167,14 +168,14 @@ public class Commit
 
 public abstract class BlogsContext : DbContext
 {
-    protected BlogsContext(bool useSqlite)
+    protected BlogsContext(bool useSqlite = false)
     {
         UseSqlite = useSqlite;
     }
 
     public bool UseSqlite { get; }
     public bool LoggingEnabled { get; set; }
-    public abstract MappingStrategy MappingStrategy { get; }
+    public virtual MappingStrategy MappingStrategy => MappingStrategy.Tph;
 
     public DbSet<Blog> Blogs => Set<Blog>();
     public DbSet<Tag> Tags => Set<Tag>();
@@ -201,21 +202,36 @@ public abstract class BlogsContext : DbContext
         modelBuilder.Entity<FeaturedPost>();
     }
 
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<List<string>>().HaveConversion<StringListConverter>();
+
+        base.ConfigureConventions(configurationBuilder);
+    }
+
+    private class StringListConverter : ValueConverter<List<string>, string>
+    {
+        public StringListConverter()
+            : base(v => string.Join(", ", v!), v => v.Split(',', StringSplitOptions.TrimEntries).ToList())
+        {
+        }
+    }
+
     public async Task Seed()
     {
-        var tagEntityFramework = new Tag("Entity Framework");
-        var tagDotNet = new Tag(".NET");
-        var tagDotNetMaui = new Tag(".NET MAUI");
-        var tagAspDotNet = new Tag("ASP.NET");
-        var tagAspDotNetCore = new Tag("ASP.NET Core");
-        var tagDotNetCore = new Tag(".NET Core");
-        var tagHacking = new Tag("Hacking");
-        var tagLinux = new Tag("Linux");
-        var tagSqlite = new Tag("SQLite");
-        var tagVisualStudio = new Tag("Visual Studio");
-        var tagGraphQl = new Tag("GraphQL");
-        var tagCosmosDb = new Tag("CosmosDB");
-        var tagBlazor = new Tag("Blazor");
+        var tagEntityFramework = new Tag("TagEF", "Entity Framework");
+        var tagDotNet = new Tag("TagNet", ".NET");
+        var tagDotNetMaui = new Tag("TagMaui", ".NET MAUI");
+        var tagAspDotNet = new Tag("TagAsp", "ASP.NET");
+        var tagAspDotNetCore = new Tag("TagAspC", "ASP.NET Core");
+        var tagDotNetCore = new Tag("TagC", ".NET Core");
+        var tagHacking = new Tag("TagHx", "Hacking");
+        var tagLinux = new Tag("TagLin", "Linux");
+        var tagSqlite = new Tag("TagLite", "SQLite");
+        var tagVisualStudio = new Tag("TagVS", "Visual Studio");
+        var tagGraphQl = new Tag("TagQL", "GraphQL");
+        var tagCosmosDb = new Tag("TagCos", "CosmosDB");
+        var tagBlazor = new Tag("TagBl", "Blazor");
 
         var maddy = new Author("Maddy Montaquila")
         {
@@ -409,207 +425,4 @@ public enum MappingStrategy
     Tph,
     Tpt,
     Tpc,
-}
-
-public class TphBlogsContext : BlogsContext
-{
-    public TphBlogsContext()
-        : base(useSqlite: false)
-    {
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
-
-        // https://github.com/dotnet/efcore/issues/28671
-        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
-        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
-
-        base.OnModelCreating(modelBuilder);
-    }
-
-    public override MappingStrategy MappingStrategy => MappingStrategy.Tph;
-}
-
-public class TphSqliteBlogsContext : BlogsContext
-{
-    public TphSqliteBlogsContext()
-        : base(useSqlite: true)
-    {
-    }
-
-    public override MappingStrategy MappingStrategy => MappingStrategy.Tph;
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
-
-        // https://github.com/dotnet/efcore/issues/28671
-        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
-        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
-
-        base.OnModelCreating(modelBuilder);
-    }
-}
-
-public class TptBlogsContext : BlogsContext
-{
-    public TptBlogsContext()
-        : base(useSqlite: false)
-    {
-    }
-
-    public override MappingStrategy MappingStrategy => MappingStrategy.Tpt;
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<FeaturedPost>().ToTable("FeaturedPosts");
-        modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
-
-        // https://github.com/dotnet/efcore/issues/28671
-        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
-        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
-
-        base.OnModelCreating(modelBuilder);
-    }
-}
-
-public class TpcBlogsContext : BlogsContext
-{
-    public TpcBlogsContext()
-        : base(useSqlite: false)
-    {
-    }
-
-    public override MappingStrategy MappingStrategy => MappingStrategy.Tpc;
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Post>().UseTpcMappingStrategy();
-        modelBuilder.Entity<FeaturedPost>().ToTable("FeaturedPosts");
-        modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
-
-        // https://github.com/dotnet/efcore/issues/28671
-        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
-        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
-
-        base.OnModelCreating(modelBuilder);
-    }
-}
-
-public abstract class JsonBlogsContextBase : BlogsContext
-{
-    protected JsonBlogsContextBase(bool useSqlite)
-        : base(useSqlite)
-    {
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Author>().OwnsOne(
-            author => author.Contact, ownedNavigationBuilder =>
-            {
-                ownedNavigationBuilder.ToJson();
-                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
-            });
-
-        #region PostMetadataConfig
-        modelBuilder.Entity<Post>().OwnsOne(
-            post => post.Metadata, ownedNavigationBuilder =>
-            {
-                ownedNavigationBuilder.ToJson();
-                ownedNavigationBuilder.OwnsMany(metadata => metadata.TopSearches);
-                ownedNavigationBuilder.OwnsMany(metadata => metadata.TopGeographies);
-                ownedNavigationBuilder.OwnsMany(
-                    metadata => metadata.Updates,
-                    ownedOwnedNavigationBuilder => ownedOwnedNavigationBuilder.OwnsMany(update => update.Commits));
-            });
-        #endregion
-
-        base.OnModelCreating(modelBuilder);
-    }
-
-    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-    {
-        // Issue https://github.com/dotnet/efcore/issues/28688 (Json: add support for collection of primitive types)
-        configurationBuilder.Properties<List<string>>().HaveConversion<StringListConverter>();
-
-        base.ConfigureConventions(configurationBuilder);
-    }
-
-    private class StringListConverter : ValueConverter<List<string>, string>
-    {
-        public StringListConverter()
-            : base(v => string.Join(", ", v!), v => v.Split(',', StringSplitOptions.TrimEntries).ToList())
-        {
-        }
-    }
-
-    public override MappingStrategy MappingStrategy => MappingStrategy.Tph;
-}
-
-public class JsonBlogsContext : JsonBlogsContextBase
-{
-    public JsonBlogsContext()
-        : base(useSqlite: false)
-    {
-    }
-}
-
-public class JsonBlogsContextSqlite : JsonBlogsContextBase
-{
-    public JsonBlogsContextSqlite()
-        : base(useSqlite: true)
-    {
-    }
-}
-
-// Used only for code snippets:
-
-public abstract class TableSharingAggregateContext : TphBlogsContext
-{
-    #region TableSharingAggregate
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Author>().OwnsOne(
-            author => author.Contact, ownedNavigationBuilder =>
-            {
-                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
-            });
-    }
-    #endregion
-}
-
-public abstract class TableMappedAggregateContext : TphBlogsContext
-{
-    #region TableMappedAggregate
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Author>().OwnsOne(
-            author => author.Contact, ownedNavigationBuilder =>
-            {
-                ownedNavigationBuilder.ToTable("Contacts");
-                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address, ownedOwnedNavigationBuilder =>
-                {
-                    ownedOwnedNavigationBuilder.ToTable("Addresses");
-                });
-            });
-    }
-    #endregion
-}
-
-public abstract class JsonColumnAggregateContext : TphBlogsContext
-{
-    #region JsonColumnAggregate
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Author>().OwnsOne(
-            author => author.Contact, ownedNavigationBuilder =>
-            {
-                ownedNavigationBuilder.ToJson();
-                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
-            });
-    }
-    #endregion
 }

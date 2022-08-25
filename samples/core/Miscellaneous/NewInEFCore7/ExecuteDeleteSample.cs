@@ -275,3 +275,71 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
     }
 }
+
+public class TphBlogsContext : BlogsContext
+{
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
+
+        // https://github.com/dotnet/efcore/issues/28671
+        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
+        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
+
+        base.OnModelCreating(modelBuilder);
+    }
+}
+
+public class TphSqliteBlogsContext : BlogsContext
+{
+    public TphSqliteBlogsContext()
+        : base(useSqlite: true)
+    {
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
+
+        // https://github.com/dotnet/efcore/issues/28671
+        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
+        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
+
+        base.OnModelCreating(modelBuilder);
+    }
+}
+
+public class TptBlogsContext : BlogsContext
+{
+    public override MappingStrategy MappingStrategy => MappingStrategy.Tpt;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<FeaturedPost>().ToTable("FeaturedPosts");
+        modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
+
+        // https://github.com/dotnet/efcore/issues/28671
+        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
+        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
+
+        base.OnModelCreating(modelBuilder);
+    }
+}
+
+public class TpcBlogsContext : BlogsContext
+{
+    public override MappingStrategy MappingStrategy => MappingStrategy.Tpc;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Post>().UseTpcMappingStrategy();
+        modelBuilder.Entity<FeaturedPost>().ToTable("FeaturedPosts");
+        modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
+
+        // https://github.com/dotnet/efcore/issues/28671
+        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
+        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
+
+        base.OnModelCreating(modelBuilder);
+    }
+}
