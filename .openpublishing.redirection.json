@@ -459,6 +459,11 @@
             "source_path": "entity-framework/core/testing/in-memory.md",
             "redirect_url": "/ef/core/testing/index",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/managing-schemas/scaffolding.md",
+            "redirect_url": "/ef/core/managing-schemas/scaffolding/index",
+            "redirect_document_id": false
         }
     ]
 }
