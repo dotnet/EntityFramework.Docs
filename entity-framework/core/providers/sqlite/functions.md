@@ -9,6 +9,19 @@ uid: core/providers/sqlite/functions
 
 This page shows which .NET members are translated into which SQL functions when using the SQLite provider.
 
+## Aggregate functions
+
+.NET                                                  | SQL                                | Added in
+----------------------------------------------------- | ---------------------------------- | --------
+group.Average(x => x.Property)                        | AVG(Property)
+group.Count()                                         | COUNT(*)
+group.LongCount()                                     | COUNT(*)
+group.Max(x => x.Property)                            | MAX(Property)
+group.Min(x => x.Property)                            | MIN(Property)
+group.Sum(x => x.Property)                            | SUM(Property)
+string.Concat(group.Select(x => x.Property))          | group_concat(Property, '')         | EF Core 7.0
+string.Join(separator, group.Select(x => x.Property)) | group_concat(Property, @separator) | EF Core 7.0
+
 ## Binary functions
 
 .NET                                           | SQL                                  | Added in
