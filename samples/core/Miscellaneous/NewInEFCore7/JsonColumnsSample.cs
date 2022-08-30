@@ -138,3 +138,97 @@ public static class JsonColumnsSample
         await context.SaveChangesAsync();
     }
 }
+
+public abstract class JsonBlogsContextBase : BlogsContext
+{
+    protected JsonBlogsContextBase(bool useSqlite = false)
+        : base(useSqlite)
+    {
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Author>().OwnsOne(
+            author => author.Contact, ownedNavigationBuilder =>
+            {
+                ownedNavigationBuilder.ToJson();
+                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
+            });
+
+        #region PostMetadataConfig
+        modelBuilder.Entity<Post>().OwnsOne(
+            post => post.Metadata, ownedNavigationBuilder =>
+            {
+                ownedNavigationBuilder.ToJson();
+                ownedNavigationBuilder.OwnsMany(metadata => metadata.TopSearches);
+                ownedNavigationBuilder.OwnsMany(metadata => metadata.TopGeographies);
+                ownedNavigationBuilder.OwnsMany(
+                    metadata => metadata.Updates,
+                    ownedOwnedNavigationBuilder => ownedOwnedNavigationBuilder.OwnsMany(update => update.Commits));
+            });
+        #endregion
+
+        base.OnModelCreating(modelBuilder);
+    }
+}
+
+public class JsonBlogsContext : JsonBlogsContextBase
+{
+}
+
+public class JsonBlogsContextSqlite : JsonBlogsContextBase
+{
+    public JsonBlogsContextSqlite()
+        : base(useSqlite: true)
+    {
+    }
+}
+
+// Used only for code snippets:
+
+public abstract class TableSharingAggregateContext : TphBlogsContext
+{
+    #region TableSharingAggregate
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Author>().OwnsOne(
+            author => author.Contact, ownedNavigationBuilder =>
+            {
+                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
+            });
+    }
+    #endregion
+}
+
+public abstract class TableMappedAggregateContext : TphBlogsContext
+{
+    #region TableMappedAggregate
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Author>().OwnsOne(
+            author => author.Contact, ownedNavigationBuilder =>
+            {
+                ownedNavigationBuilder.ToTable("Contacts");
+                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address, ownedOwnedNavigationBuilder =>
+                {
+                    ownedOwnedNavigationBuilder.ToTable("Addresses");
+                });
+            });
+    }
+    #endregion
+}
+
+public abstract class JsonColumnAggregateContext : TphBlogsContext
+{
+    #region JsonColumnAggregate
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Author>().OwnsOne(
+            author => author.Contact, ownedNavigationBuilder =>
+            {
+                ownedNavigationBuilder.ToJson();
+                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
+            });
+    }
+    #endregion
+}

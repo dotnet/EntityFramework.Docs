@@ -2,7 +2,7 @@
 title: What's New in EF Core 7.0
 description: Overview of new features in EF Core 7.0
 author: ajcvickers
-ms.date: 08/12/2022
+ms.date: 08/24/2022
 uid: core/what-is-new/ef-core-7
 ---
 
@@ -19,6 +19,23 @@ EF7 is also available as [daily builds](https://github.com/dotnet/efcore/blob/ma
 
 EF7 targets .NET 6, and so can be used with either [.NET 6 (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0) or [.NET 7](https://dotnet.microsoft.com/download/dotnet/7.0).
 
+## Sample model
+
+Many of the examples below use a simple model with blogs, posts, tags, and authors:
+
+[!code-csharp[BlogsModel](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=BlogsModel)]
+
+Some of the examples also use aggregate types, which are mapped in different ways in different samples. There is one aggregate type for contacts:
+
+[!code-csharp[ContactDetailsAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=ContactDetailsAggregate)]
+
+And a second aggregate type for post metadata:
+
+[!code-csharp[PostMetadataAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=PostMetadataAggregate)]
+
+> [!TIP]
+> The sample model can be found in [BlogsContext.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs).
+
 ## JSON Columns
 
 Most relational databases support columns that contain JSON documents. The JSON in these columns can be drilled into with queries. This allows, for example, filtering and sorting by the elements of the documents, as well as projection of elements out of the documents into results. JSON columns allow relational databases to take on some of the characteristics of document databases, creating a useful hybrid between the two.
@@ -30,7 +47,7 @@ EF7 contains provider-agnostic support for JSON columns, with an implementation 
 
 ### Mapping to JSON columns
 
-In EF Core, aggregate types are defined using `OwnsOne` and `OwnsMany`. For example, consider an aggregate type to store contact information:
+In EF Core, aggregate types are defined using `OwnsOne` and `OwnsMany`. For example, consider the aggregate type from our sample model used to store contact information:
 
 <!--
 public class ContactDetails
@@ -80,7 +97,10 @@ The aggregate type is configured  in `OnModelCreating` using `OwnsOne`:
             });
     }
 -->
-[!code-csharp[TableSharingAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=TableSharingAggregate)]
+[!code-csharp[TableSharingAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=TableSharingAggregate)]
+
+> [!TIP]
+> The code shown here comes from [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs).
 
 By default, relational database providers map aggregate types like this to the same table as the owning entity type. That is, each property of the `ContactDetails` and `Address` classes are mapped to a column in the `Authors` table.
 
@@ -112,7 +132,7 @@ If desired, each entity type making up the aggregate can be mapped to its own ta
             });
     }
 -->
-[!code-csharp[TableMappedAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=TableMappedAggregate)]
+[!code-csharp[TableMappedAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=TableMappedAggregate)]
 
 The same data is then stored across three tables:
 
@@ -159,7 +179,7 @@ Now, for the interesting part. In EF7, the `ContactDetails` aggregate type can b
             });
     }
 -->
-[!code-csharp[JsonColumnAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=JsonColumnAggregate)]
+[!code-csharp[JsonColumnAggregate](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=JsonColumnAggregate)]
 
 The `Authors` table will now contain a JSON column for `ContactDetails` populated with a JSON document for each author:
 
@@ -176,7 +196,7 @@ The `Authors` table will now contain a JSON column for `ContactDetails` populate
 > [!TIP]
 > This use of aggregates is very similar to the way JSON documents are mapped when using the EF Core provider for Azure Cosmos DB. JSON columns bring the capabilities of using EF Core against document databases to documents embedded in a relational database.
 
-The JSON documents shown above are very simple, but this mapping capability can also be used with more complex document structures. For example, consider an aggregate type used to represent metadata about a post:
+The JSON documents shown above are very simple, but this mapping capability can also be used with more complex document structures. For example, consider another aggregate type from our sample model, used to represent metadata about a post:
 
 <!--
 public class PostMetadata
@@ -261,7 +281,7 @@ This aggregate type contains several nested types and collections. Calls to `Own
                     ownedOwnedNavigationBuilder => ownedOwnedNavigationBuilder.OwnsMany(update => update.Commits));
             });
 -->
-[!code-csharp[PostMetadataConfig](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=PostMetadataConfig)]
+[!code-csharp[PostMetadataConfig](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=PostMetadataConfig)]
 
 With this mapping, EF7 can create and query into a complex JSON document like this:
 
@@ -440,81 +460,6 @@ However, keep in mind that:
 - Additional commands may need to be sent in the correct order so as not to violate database constraints. For example deleting dependents before a principal can be deleted.
 
 All of this means that the `ExecuteUpdate` and `ExecuteDelete` methods complement, rather than replace, the existing `SaveChanges` mechanism.
-
-### Sample model
-
-The examples below use a simple model with blogs, posts, tags, and authors:
-
-<!--
-public class Blog
-{
-    public Blog(string name)
-    {
-        Name = name;
-    }
-
-    public int Id { get; private set; }
-    public string Name { get; set; }
-    public List<Post> Posts { get; } = new();
-}
-
-public class Post
-{
-    public Post(string title, string content, DateTime publishedOn)
-    {
-        Title = title;
-        Content = content;
-        PublishedOn = publishedOn;
-    }
-
-    public int Id { get; private set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-    public DateTime PublishedOn { get; set; }
-    public Blog Blog { get; set; } = null!;
-    public List<Tag> Tags { get; } = new();
-    public Author? Author { get; set; }
-}
-
-public class FeaturedPost : Post
-{
-    public FeaturedPost(string title, string content, DateTime publishedOn, string promoText)
-        : base(title, content, publishedOn)
-    {
-        PromoText = promoText;
-    }
-
-    public string PromoText { get; set; }
-}
-
-public class Tag
-{
-    public Tag(string text)
-    {
-        Text = text;
-    }
-
-    public int Id { get; private set; }
-    public string Text { get; set; }
-    public List<Post> Posts { get; } = new();
-}
-
-public class Author
-{
-    public Author(string name)
-    {
-        Name = name;
-    }
-
-    public int Id { get; private set; }
-    public string Name { get; set; }
-    public List<Post> Posts { get; } = new();
-}
--->
-[!code-csharp[BlogsModel](../../../../samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs?name=BlogsModel)]
-
-> [!TIP]
-> The sample model can be found in [BlogsContext.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/BlogsContext.cs).
 
 ### Basic `ExecuteDelete` examples
 
@@ -1184,3 +1129,535 @@ dotnet new ef-templates
 The templates can then be customize and will automatically be used by `dotnet ef dbcontext scaffold` and `Scaffold-DbContext`.
 
 For more details, see [Custom Reverse Engineering Templates](xref:core/managing-schemas/scaffolding/templates).
+
+> [!TIP]
+> The EF Team demonstrated and talked in depth about reverse engineering templates in an episode of the .NET Data Community Standup. As with [all Community Standup episodes](https://aka.ms/efstandups), you can [watch the T4 templates episode now on YouTube](https://youtu.be/x2nh1vZBsHE).
+
+## Model building conventions
+
+EF Core uses a metadata "model" to describe how the application's entity types are mapped to the underlying database. This model is built using a set of around 60 "conventions". The model built by conventions can then be customized using [mapping attributes (aka "data annotations")](xref:core/modeling/index#use-data-annotations-to-configure-a-model) and/or calls to the [`DbModelBuilder` API in `OnModelCreating`](xref:core/modeling/index#use-fluent-api-to-configure-a-model).
+
+Starting with EF7, applications can now remove or replace any of these conventions, as well as add new conventions. Model building conventions are a powerful way to control the model configuration, but can be complex and hard to get right. In many case, the existing [pre-convention model configuration](xref:core/modeling/bulk-configuration) can be used instead to easily specify common configuration for properties and types.
+
+Changes to the conventions used by a `DbContext` are made by overriding the `DbContext.ConfigureConventions` method. For example:
+
+```csharp
+protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+{
+    configurationBuilder.Conventions.Remove(typeof(ForeignKeyIndexConvention));
+}
+```
+
+> [!TIP]
+> To find all built-in model building conventions, look for every class that implements the <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IConvention> interface.
+
+> [!TIP]
+> The code shown here comes from [ModelBuildingConventionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs).
+
+### Removing an existing convention
+
+Sometimes one of the built-in conventions may not appropriate for your application, in which case it can be removed.
+
+#### Example: Don't create indexes for foreign key columns
+
+It usually makes sense to create indexes for foreign key (FK) columns, and hence there is a built-in convention for this: <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.ForeignKeyIndexConvention>. Looking at the model debug view for a `Post` entity type with relationships to `Blog` and `Author`, we can see two indexes are created--one for the `BlogId` FK, and the other for the `AuthorId` FK.
+
+```text
+  EntityType: Post
+    Properties:
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+      AuthorId (no field, int?) Shadow FK Index
+      BlogId (no field, int) Shadow Required FK Index
+    Navigations:
+      Author (Author) ToPrincipal Author Inverse: Posts
+      Blog (Blog) ToPrincipal Blog Inverse: Posts
+    Keys:
+      Id PK
+    Foreign keys:
+      Post {'AuthorId'} -> Author {'Id'} ToDependent: Posts ToPrincipal: Author ClientSetNull
+      Post {'BlogId'} -> Blog {'Id'} ToDependent: Posts ToPrincipal: Blog Cascade
+    Indexes:
+      AuthorId
+      BlogId
+```
+
+However, indexes have overhead, and, [as asked here](https://github.com/dotnet/efcore/issues/10855), it may not always be appropriate to create them for all FK columns. To achieve this, the `ForeignKeyIndexConvention` can be removed when building the model:
+
+```csharp
+protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+{
+    configurationBuilder.Conventions.Remove(typeof(ForeignKeyIndexConvention));
+}
+```
+
+Looking at the debug view of the model for `Post` now, we see that the indexes on FKs have not been created:
+
+```text
+  EntityType: Post
+    Properties:
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+      AuthorId (no field, int?) Shadow FK
+      BlogId (no field, int) Shadow Required FK
+    Navigations:
+      Author (Author) ToPrincipal Author Inverse: Posts
+      Blog (Blog) ToPrincipal Blog Inverse: Posts
+    Keys:
+      Id PK
+    Foreign keys:
+      Post {'AuthorId'} -> Author {'Id'} ToDependent: Posts ToPrincipal: Author ClientSetNull
+      Post {'BlogId'} -> Blog {'Id'} ToDependent: Posts ToPrincipal: Blog Cascade
+```
+
+When desired, indexes can still be explicitly created for foreign key columns, either using the <xref:Microsoft.EntityFrameworkCore.IndexAttribute>:
+
+```csharp
+[Index("BlogId")]
+public class Post
+{
+    // ...
+}
+```
+
+Or with configuration in `OnModelCreating`:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Post>(entityTypeBuilder => entityTypeBuilder.HasIndex("BlogId"));
+}
+```
+
+Looking at the `Post` entity type again, it now contains the `BlogId` index, but not the `AuthorId` index:
+
+```text
+  EntityType: Post
+    Properties:
+      Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+      AuthorId (no field, int?) Shadow FK
+      BlogId (no field, int) Shadow Required FK Index
+    Navigations:
+      Author (Author) ToPrincipal Author Inverse: Posts
+      Blog (Blog) ToPrincipal Blog Inverse: Posts
+    Keys:
+      Id PK
+    Foreign keys:
+      Post {'AuthorId'} -> Author {'Id'} ToDependent: Posts ToPrincipal: Author ClientSetNull
+      Post {'BlogId'} -> Blog {'Id'} ToDependent: Posts ToPrincipal: Blog Cascade
+    Indexes:
+      BlogId
+```
+
+> [!TIP]
+> If your model doesn't use mapping attributes (aka data annotations) for configuration, then all conventions ending in `AttributeConvention` can be safely removed to speed up model building.
+
+### Adding a new convention
+
+Removing existing conventions is a start, but what about adding completely new model building conventions? EF7 supports this as well!
+
+#### Example: Constrain length of discriminator properties
+
+The [table-per-hierarchy inheritance mapping strategy](xref:core/modeling/inheritance) requires a discriminator column to specify which type is represented in any given row. By default, EF uses an unbounded string column for the discriminator, which ensures that it will work for any discriminator length. However, constraining the maximum length of discriminator strings can make for more efficient storage and queries. Let's create a new convention that will do that.
+
+EF Core model building conventions are triggered based on changes being made to the model as it is being built. This keeps the model up-to-date as explicit configuration is made, mapping attributes are applied, and other conventions run. To participate in this, every convention implements one or more interfaces which determine when the convention will be triggered. For example, a convention that implements <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IEntityTypeAddedConvention> will be triggered whenever a new entity type is added to the model. Likewise, a convention that implements both <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IForeignKeyAddedConvention> and <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IKeyAddedConvention> will be triggered whenever either a key or a foreign key is added to the model.
+
+Knowing which interfaces to implement can be tricky, since configuration made to the model at one point may be changed or removed at a later point. For example, a key may be created by convention, but then later replaced when a different key is configured explicitly.
+
+Let's make this a bit more concrete by making a first attempt at implementing the discriminator-length convention:
+
+<!--
+public class DiscriminatorLengthConvention1 : IEntityTypeBaseTypeChangedConvention
+{
+    public void ProcessEntityTypeBaseTypeChanged(
+        IConventionEntityTypeBuilder entityTypeBuilder,
+        IConventionEntityType? newBaseType,
+        IConventionEntityType? oldBaseType,
+        IConventionContext<IConventionEntityType> context)
+    {
+        var discriminatorProperty = entityTypeBuilder.Metadata.FindDiscriminatorProperty();
+        if (discriminatorProperty != null
+            && discriminatorProperty.ClrType == typeof(string))
+        {
+            discriminatorProperty.Builder.HasMaxLength(24);
+        }
+    }
+}
+-->
+[!code-csharp[DiscriminatorLengthConvention1](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs?name=DiscriminatorLengthConvention1)]
+
+This convention implements <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IEntityTypeBaseTypeChangedConvention>, which means it will be triggered whenever the mapped inheritance hierarchy for an entity type is changed. The convention then finds and configures the string discriminator property for the hierarchy.
+
+This convention is then used by calling `Add` in `ConfigureConventions`:
+
+```csharp
+protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+{
+    configurationBuilder.Conventions.Add(_ =>  new DiscriminatorLengthConvention1());
+}
+```
+
+> [!TIP]
+> Rather than adding an instance of the convention directly, the `Add` method accepts a factory for creating instances of the convention. This allows the convention to use dependencies from the EF Core internal service provider. Since this convention has no dependencies, the service provider parameter is named `_`, indicating that it is never used.
+
+Building the model and looking at the `Post` entity type shows that this has worked--the discriminator property is now configured to with a maximum length of 24:
+
+```text
+ Discriminator (no field, string) Shadow Required AfterSave:Throw MaxLength(24)
+```
+
+But what happens if we now explicitly configure a different discriminator property? For example:
+
+```csharp
+modelBuilder.Entity<Post>()
+    .HasDiscriminator<string>("PostTypeDiscriminator")
+    .HasValue<Post>("Post")
+    .HasValue<FeaturedPost>("Featured");
+```
+
+Looking at the debug view of the model, we find that the discriminator length is no longer configured!
+
+```text
+ PostTypeDiscriminator (no field, string) Shadow Required AfterSave:Throw
+```
+
+This is because the discriminator property that we configured in our convention was later removed when the custom discriminator was added. We could attempt to fix this by implementing another interface on our convention to react to the discriminator changes, but figuring out which interface to implement is not easy.
+
+Fortunately, there is a different way to approach this that makes things much easier. A lot of the time, it doesn't matter what the model looks like while it is being built, as long as the final model is correct. In addition, the configuration we want to apply often does not need to trigger other conventions to react. Therefore, our convention can implement <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IModelFinalizingConvention>. Model finalizing conventions run after all other model building is complete, and so have access to the final state of the model. A model finalizing convention will typically iterate over the entire model configuring model elements as it goes. So, in this case, we will find every discriminator in the model and configure it:
+
+<!--
+public class DiscriminatorLengthConvention2 : IModelFinalizingConvention
+{
+    public void ProcessModelFinalizing(IConventionModelBuilder modelBuilder, IConventionContext<IConventionModelBuilder> context)
+    {
+        foreach (var entityType in modelBuilder.Metadata.GetEntityTypes()
+                     .Where(entityType => entityType.BaseType == null))
+        {
+            var discriminatorProperty = entityType.FindDiscriminatorProperty();
+            if (discriminatorProperty != null
+                && discriminatorProperty.ClrType == typeof(string))
+            {
+                discriminatorProperty.Builder.HasMaxLength(24);
+            }
+        }
+    }
+}
+-->
+[!code-csharp[DiscriminatorLengthConvention2](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs?name=DiscriminatorLengthConvention2)]
+
+After building the model with this new convention, we find that the discriminator length is now configured correctly even though it has been customized:
+
+```text
+PostTypeDiscriminator (no field, string) Shadow Required AfterSave:Throw MaxLength(24)
+```
+
+Just for fun, let's go one step further and configure the max length to be the length of the longest discriminator value.
+
+<!--
+public class DiscriminatorLengthConvention3 : IModelFinalizingConvention
+{
+    public void ProcessModelFinalizing(IConventionModelBuilder modelBuilder, IConventionContext<IConventionModelBuilder> context)
+    {
+        foreach (var entityType in modelBuilder.Metadata.GetEntityTypes()
+                     .Where(entityType => entityType.BaseType == null))
+        {
+            var discriminatorProperty = entityType.FindDiscriminatorProperty();
+            if (discriminatorProperty != null
+                && discriminatorProperty.ClrType == typeof(string))
+            {
+                var maxDiscriminatorValueLength =
+                    entityType.GetDerivedTypesInclusive().Select(e => ((string)e.GetDiscriminatorValue()!).Length).Max();
+
+                discriminatorProperty.Builder.HasMaxLength(maxDiscriminatorValueLength);
+            }
+        }
+    }
+}
+-->
+[!code-csharp[DiscriminatorLengthConvention3](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs?name=DiscriminatorLengthConvention3)]
+
+Now the discriminator column max length is 8, which is the length of "Featured", the longest discriminator value in use.
+
+```text
+PostTypeDiscriminator (no field, string) Shadow Required AfterSave:Throw MaxLength(8)
+```
+
+> [!TIP]
+> You might be wondering if the convention should also create an index for the discriminator column. There is [a discussion about this on GitHub](https://github.com/dotnet/efcore/issues/4030). The short answer is that sometimes an index might be useful, but most of the time it probably won't be. Therefore, it's best to create appropriate indexes here as needed, rather than have a convention to do it always. But if you disagree with this, then the convention above can easily be modified to create an index as well.
+
+#### Example: Default length for all string properties
+
+Let's look at another example where a finalizing convention can be used--this time, setting a default maximum length for _any_ string property, as [asked for on GitHub](https://github.com/dotnet/EntityFramework.Docs/issues/3756 ). The convention looks quite similar to the previous example:
+
+<!--
+public class MaxStringLengthConvention : IModelFinalizingConvention
+{
+    public void ProcessModelFinalizing(IConventionModelBuilder modelBuilder, IConventionContext<IConventionModelBuilder> context)
+    {
+        foreach (var property in modelBuilder.Metadata.GetEntityTypes()
+                     .SelectMany(
+                         entityType => entityType.GetDeclaredProperties()
+                             .Where(
+                                 property => property.ClrType == typeof(string))))
+        {
+            property.Builder.HasMaxLength(512);
+        }
+    }
+}
+-->
+[!code-csharp[MaxStringLengthConvention](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs?name=MaxStringLengthConvention)]
+
+This convention is pretty simple. It finds every string property in the model and sets its max length to 512. Looking in the debug view at the properties for `Post`, we see that all the string properties now have a max length of 512.
+
+```text
+EntityType: Post
+  Properties:
+    Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+    AuthorId (no field, int?) Shadow FK Index
+    BlogId (no field, int) Shadow Required FK Index
+    Content (string) Required MaxLength(512)
+    Discriminator (no field, string) Shadow Required AfterSave:Throw MaxLength(512)
+    PublishedOn (DateTime) Required
+    Title (string) Required MaxLength(512)
+```
+
+But the `Content` property should probably allow more than 512 characters, or all our posts will be pretty short! This can be done without changing our convention by explicitly configuring the max length for just this property, either using a mapping attribute:
+
+```csharp
+[MaxLength(4000)]
+public string Content { get; set; }
+```
+
+Or with code in `OnModelCreating`:
+
+```csharp
+modelBuilder.Entity<Post>()
+    .Property(post => post.Content)
+    .HasMaxLength(4000);
+```
+
+Now all properties have a max length of 512, except `Content` which was explicitly configured with 4000:
+
+```text
+EntityType: Post
+  Properties:
+    Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+    AuthorId (no field, int?) Shadow FK Index
+    BlogId (no field, int) Shadow Required FK Index
+    Content (string) Required MaxLength(4000)
+    Discriminator (no field, string) Shadow Required AfterSave:Throw MaxLength(512)
+    PublishedOn (DateTime) Required
+    Title (string) Required MaxLength(512)
+```
+
+So why didn't our convention override the explicitly configured max length? The answer is that EF Core keeps track of how every piece of configuration was made. This is represented by the <xref:Microsoft.EntityFrameworkCore.Metadata.ConfigurationSource> enum. The different kinds of configuration are:
+
+- `Explicit`: The model element was explicitly configured in `OnModelCrating`
+- `DataAnnotation`: The model element was configured using a mapping attribute (aka data annotation) on the CLR type
+- `Convention`: The model element was configured by a model building convention
+
+Conventions never override configuration marked as `DataAnnotation` or `Explicit`. This is achieved by using a "convention builder", for example, the <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.IConventionPropertyBuilder>, which is obtained from the <xref:Microsoft.EntityFrameworkCore.Metadata.IConventionProperty.Builder> property. For example:
+
+```csharp
+property.Builder.HasMaxLength(512);
+```
+
+Calling `HasMaxLength` on the convention builder will only set the max length _if it was not already configured by a mapping attribute or in `OnModelCreating`_.
+
+Builder methods like this also have a second parameter: `fromDataAnnotation`. Set this to `true` if the convention is making the configuration on behalf of a mapping attribute. For example:
+
+```csharp
+property.Builder.HasMaxLength(512, fromDataAnnotation: true);
+```
+
+This sets the `ConfigurationSource` to `DataAnnotation`, which means that the value can now be overridden by explicit mapping on `OnModelCreating`, but not by non-mapping attribute conventions.
+
+Finally, before we leave this example, what happens if we use both the `MaxStringLengthConvention` and `DiscriminatorLengthConvention3` at the same time? The answer is that it depends which order they are added, since model finalizing conventions run in the order they are added. So if `MaxStringLengthConvention` is added last, then it will run last, and it will set the max length of the discriminator property to 512. Therefore, in this case, it is better to add `DiscriminatorLengthConvention3` last so that it can override the default max length for just discriminator properties, while leaving all other string properties as 512.
+
+### Replacing an existing convention
+
+Sometimes rather than removing an existing convention completely we instead want to replace it with a convention that does basically the same thing, but with changed behavior. This is useful because the existing convention will already implement the interfaces it needs so as to be triggered appropriately.
+
+#### Example: Opt-in property mapping
+
+EF Core maps all public read-write properties by convention. This [might not be appropriate](https://github.com/dotnet/efcore/issues/16009) for the way your entity types are defined. To change this, we can replace the `PropertyDiscoveryConvention` with our own implementation that doesn't map any property unless it is explicitly mapped in `OnModelCreating` or marked with a new attribute called `Persist`:
+
+<!--
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+public sealed class PersistAttribute : Attribute
+{
+}
+-->
+[!code-csharp[PersistAttribute](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs?name=PersistAttribute)]
+
+Here is the new convention:
+
+<!--
+public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConvention
+{
+    public AttributeBasedPropertyDiscoveryConvention(ProviderConventionSetBuilderDependencies dependencies)
+        : base(dependencies)
+    {
+    }
+
+    public override void ProcessEntityTypeAdded(
+        IConventionEntityTypeBuilder entityTypeBuilder,
+        IConventionContext<IConventionEntityTypeBuilder> context)
+        => Process(entityTypeBuilder);
+
+    public override void ProcessEntityTypeBaseTypeChanged(
+        IConventionEntityTypeBuilder entityTypeBuilder,
+        IConventionEntityType? newBaseType,
+        IConventionEntityType? oldBaseType,
+        IConventionContext<IConventionEntityType> context)
+    {
+        if ((newBaseType == null
+             || oldBaseType != null)
+            && entityTypeBuilder.Metadata.BaseType == newBaseType)
+        {
+            Process(entityTypeBuilder);
+        }
+    }
+
+    private void Process(IConventionEntityTypeBuilder entityTypeBuilder)
+    {
+        foreach (var memberInfo in GetRuntimeMembers())
+        {
+            if (Attribute.IsDefined(memberInfo, typeof(PersistAttribute), inherit: true))
+            {
+                entityTypeBuilder.Property(memberInfo);
+            }
+            else if (memberInfo is PropertyInfo propertyInfo
+                     && Dependencies.TypeMappingSource.FindMapping(propertyInfo) != null)
+            {
+                entityTypeBuilder.Ignore(propertyInfo.Name);
+            }
+        }
+
+        IEnumerable<MemberInfo> GetRuntimeMembers()
+        {
+            var clrType = entityTypeBuilder.Metadata.ClrType;
+
+            foreach (var property in clrType.GetRuntimeProperties()
+                         .Where(p => p.GetMethod != null && !p.GetMethod.IsStatic))
+            {
+                yield return property;
+            }
+
+            foreach (var property in clrType.GetRuntimeFields())
+            {
+                yield return property;
+            }
+        }
+    }
+}
+-->
+[!code-csharp[AttributeBasedPropertyDiscoveryConvention](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs?name=AttributeBasedPropertyDiscoveryConvention)]
+
+> [!TIP]
+> When replacing a built-in convention, the new convention implementation should inherit from the existing convention class. Note that some conventions have relational or provider-specific implementations, in which case the new convention implementation should inherit from the most specific existing convention class for the database provider in use.
+
+The convention is then registered using the `Replace` method in `ConfigureConventions`:
+
+<!--
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Conventions.Replace<PropertyDiscoveryConvention>(
+            serviceProvider => new AttributeBasedPropertyDiscoveryConvention(
+                serviceProvider.GetRequiredService<ProviderConventionSetBuilderDependencies>()));
+    }
+-->
+[!code-csharp[ReplaceConvention](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs?name=ReplaceConvention)]
+
+> [!TIP]
+> This is a case where the existing convention has dependencies, represented by the `ProviderConventionSetBuilderDependencies` dependency object. These are obtained from the internal service provider using `GetRequiredService` and passed to the convention constructor.
+
+This convention works by getting all readable properties and fields from the given entity type. If the member is attributed with `[Persist]`, then it is mapped by calling:
+
+```csharp
+entityTypeBuilder.Property(memberInfo);
+```
+
+On the other hand, if the member is a property that would otherwise have been mapped, then it is excluded from the model using:
+
+```csharp
+entityTypeBuilder.Ignore(propertyInfo.Name);
+```
+
+Notice that this convention allows fields to be mapped (in addition to propeties) so long as they are marked with `[Persist]`. This means we can use private fields as hidden keys in the model.
+
+For example, consider the following entity types:
+
+<!--
+public class LaundryBasket
+{
+    [Persist] [Key]
+    private readonly int _id;
+
+    [Persist]
+    public int TenantId { get; init; }
+
+    public bool IsClean { get; set; }
+
+    public List<Garment> Garments { get; } = new();
+}
+
+public class Garment
+{
+    public Garment(string name, string color)
+    {
+        Name = name;
+        Color = color;
+    }
+
+    [Persist]
+    [Key]
+    private readonly int _id;
+
+    [Persist]
+    public int TenantId { get; init; }
+
+    [Persist]
+    public string Name { get; }
+
+    [Persist]
+    public string Color { get; }
+
+    public bool IsClean { get; set; }
+
+    public LaundryBasket? Basket { get; set; }
+}
+-->
+[!code-csharp[LaundryBasket](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs?name=LaundryBasket)]
+
+The model built from these entity types is:
+
+```text
+Model:
+  EntityType: Garment
+    Properties:
+      _id (_id, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+      Basket_id (no field, int?) Shadow FK Index
+      Color (string) Required
+      Name (string) Required
+      TenantId (int) Required
+    Navigations:
+      Basket (LaundryBasket) ToPrincipal LaundryBasket Inverse: Garments
+    Keys:
+      _id PK
+    Foreign keys:
+      Garment {'Basket_id'} -> LaundryBasket {'_id'} ToDependent: Garments ToPrincipal: Basket ClientSetNull
+    Indexes:
+      Basket_id
+  EntityType: LaundryBasket
+    Properties:
+      _id (_id, int) Required PK AfterSave:Throw ValueGenerated.OnAdd
+      TenantId (int) Required
+    Navigations:
+      Garments (List<Garment>) Collection ToDependent Garment Inverse: Basket
+    Keys:
+      _id PK
+```
+
+Notice that normally, `IsClean` would have been mapped, but since it is not marked with `[Perist]` (presumably because cleanliness is not a persistent property of laundry), it is now treated as an un-mapped property.
+
+> [!TIP]
+> This convention could not be implemented as a model finalizing convention because mapping a property triggers many other conventions to run to further configure the mapped property.
