@@ -161,8 +161,8 @@ public static class ExecuteDeleteSample
         context.LoggingEnabled = true;
 
         #region DeleteAllAuthors
-        await context.Posts.ExecuteDeleteAsync();
-        await context.Authors.ExecuteDeleteAsync();
+        await context.Posts.TagWith("Deleting posts...").ExecuteDeleteAsync();
+        await context.Authors.TagWith("Deleting authors...").ExecuteDeleteAsync();
         #endregion
 
         context.LoggingEnabled = false;
