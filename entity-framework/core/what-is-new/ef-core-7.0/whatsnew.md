@@ -1190,7 +1190,7 @@ protected override void ConfigureConventions(ModelConfigurationBuilder configura
 }
 ```
 
-Looking at the model for `Post` now, we see that the indexes on FKs have not been created:
+Looking at the debug view of the model for `Post` now, we see that the indexes on FKs have not been created:
 
 ```text
   EntityType: Post
@@ -1246,6 +1246,9 @@ Looking at the `Post` entity type again, it now contains the `BlogId` index, but
     Indexes:
       BlogId
 ```
+
+> [!TIP]
+> If your model doesn't use mapping attributes (aka data annotations) for configuration, then all conventions ending in `AttributeConvention` can be safely removed to speed up model building.
 
 ### Adding a new convention
 
@@ -1310,7 +1313,7 @@ modelBuilder.Entity<Post>()
     .HasValue<FeaturedPost>("Featured");
 ```
 
-Looking at the model, we find that the discriminator length is no longer configured!
+Looking at the debug view of the model, we find that the discriminator length is no longer configured!
 
 ```text
  PostTypeDiscriminator (no field, string) Shadow Required AfterSave:Throw
@@ -1550,7 +1553,7 @@ public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConven
 [!code-csharp[AttributeBasedPropertyDiscoveryConvention](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingConventionsSample.cs?name=AttributeBasedPropertyDiscoveryConvention)]
 
 > [!TIP]
-> When replacing a built-in convention, the new convention implementation should inherit from the existing convention class.
+> When replacing a built-in convention, the new convention implementation should inherit from the existing convention class. Note that some conventions have relational or provider-specific implementations, in which case the new convention implementation should inherit from the most specific existing convention class for the database provider in use.
 
 The convention is then registered using the `Replace` method in `ConfigureConventions`:
 
