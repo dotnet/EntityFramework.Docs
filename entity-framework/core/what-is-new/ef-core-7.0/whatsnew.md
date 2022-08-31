@@ -2,7 +2,7 @@
 title: What's New in EF Core 7.0
 description: Overview of new features in EF Core 7.0
 author: ajcvickers
-ms.date: 08/24/2022
+ms.date: 08/30/2022
 uid: core/what-is-new/ef-core-7
 ---
 
@@ -283,6 +283,9 @@ This aggregate type contains several nested types and collections. Calls to `Own
 -->
 [!code-csharp[PostMetadataConfig](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=PostMetadataConfig)]
 
+> [!TIP]
+> `ToJson` is only needed on the aggregate root to map the entire aggregate to a JSON document.
+
 With this mapping, EF7 can create and query into a complex JSON document like this:
 
 ```json
@@ -446,6 +449,95 @@ WHERE CAST(JSON_VALUE([p].[Metadata],'$.Views') AS int) > 3000
 
 > [!NOTE]
 > More complex queries involving JSON collections require `jsonpath` support. Vote for [Support jsonpath querying](https://github.com/dotnet/efcore/issues/28616) if this is something you are interested in.
+
+> [!TIP]
+> Consider creating indexes to improve query performance in JSON documents. For example, see [Index Json data](/sql/relational-databases/json/index-json-data) when using SQL Server.
+
+### Updating JSON columns
+
+[`SaveChanges` and `SaveChangesAsync`](xref:core/saving/basic) work in the normal way to make updates a JSON column. For extensive changes, the entire document will be updated. For example, replacing most of the `Contact` document for an author:
+
+<!--
+        var jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
+
+        jeremy.Contact = new() { Address = new("2 Riverside", "Trimbridge", "TB1 5ZS", "UK"), Phone = "01632 88346" };
+
+        await context.SaveChangesAsync();
+-->
+[!code-csharp[UpdateDocument](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=UpdateDocument)]
+
+In this case, the entire new document is passed as a parameter to the `Update` command:
+
+```text
+info: 8/30/2022 20:21:24.392 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (2ms) [Parameters=[@p0='{"Phone":"01632 88346","Address":{"City":"Trimbridge","Country":"UK","Postcode":"TB1 5ZS","Street":"2 Riverside"}}' (Nullable = false) (Size = 114), @p1='2'], CommandType='Text', CommandTimeout='30']
+```
+
+```sql
+      SET IMPLICIT_TRANSACTIONS OFF;
+      SET NOCOUNT ON;
+      UPDATE [Authors] SET [Contact] = @p0
+      OUTPUT 1
+      WHERE [Id] = @p1;
+```
+
+However, if only a sub-document is changed, then EF Core will use a "JSON_MODIFY" command to update only the sub-document. For example, changing the `Address` inside a `Contact` document:
+
+<!--
+        var brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
+
+        brice.Contact.Address = new("4 Riverside", "Trimbridge", "TB1 5ZS", "UK");
+
+        await context.SaveChangesAsync();
+-->
+[!code-csharp[UpdateSubDocument](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=UpdateSubDocument)]
+
+Generates the following SQL:
+
+```text
+info: 8/30/2022 20:53:01.669 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(2) [a].[Id], [a].[Name], JSON_QUERY([a].[Contact],'$')
+      FROM [Authors] AS [a]
+      WHERE [a].[Name] LIKE N'Brice%'
+```
+
+```sql
+info: 8/30/2022 20:53:01.676 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (2ms) [Parameters=[@p0='{"City":"Trimbridge","Country":"UK","Postcode":"TB1 5ZS","Street":"4 Riverside"}' (Nullable = false) (Size = 80), @p1='5'], CommandType='Text', CommandTimeout='30']
+      SET IMPLICIT_TRANSACTIONS OFF;
+      SET NOCOUNT ON;
+      UPDATE [Authors] SET [Contact] = JSON_MODIFY([Contact], 'strict $.Address', JSON_QUERY(@p0))
+      OUTPUT 1
+      WHERE [Id] = @p1;
+```
+
+Finally, if only a single property is changed, then EF Core will again use a "JSON_MODIFY" command, this time to patch only the changed property value. For example:
+
+<!--
+        var arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
+
+        arthur.Contact.Address.Country = "United Kingdom";
+
+        await context.SaveChangesAsync();
+-->
+[!code-csharp[UpdateProperty](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=UpdateProperty)]
+
+Generates the following SQL:
+
+```text
+info: 8/30/2022 20:24:04.677 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (2ms) [Parameters=[@p0='["United Kingdom"]' (Nullable = false) (Size = 18), @p1='4'], CommandType='Text', CommandTimeout='30']
+```
+
+```sql
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Authors] SET [Contact] = JSON_MODIFY(
+    [Contact], 'strict $.Address.Country', JSON_VALUE(@p0, '$[0]'))
+OUTPUT 1
+WHERE [Id] = @p1;
+```
 
 ## ExecuteUpdate and ExecuteDelete (Bulk updates)
 
@@ -640,14 +732,19 @@ The statement has been terminated.
 To fix this, we must first either delete the posts, or sever the relationship between each post and its author by setting `AuthorId` foreign key property to null. For example, using the delete option:
 
 <!--
-        await context.Posts.ExecuteDeleteAsync();
-        await context.Authors.ExecuteDeleteAsync();
+        await context.Posts.TagWith("Deleting posts...").ExecuteDeleteAsync();
+        await context.Authors.TagWith("Deleting authors...").ExecuteDeleteAsync();
 -->
 [!code-csharp[DeleteAllAuthors](../../../../samples/core/Miscellaneous/NewInEFCore7/ExecuteDeleteSample.cs?name=DeleteAllAuthors)]
+
+> [!TIP]
+> `TagWith` can be used to tag `ExecuteDelete` or `ExecuteUpdate` in the same way as it tags normal queries.
 
 This results in two separate commands; the first to delete the dependents:
 
 ```sql
+-- Deleting posts...
+
 DELETE FROM [p]
 FROM [Posts] AS [p]
 ```
@@ -655,6 +752,8 @@ FROM [Posts] AS [p]
 And the second to delete the principals:
 
 ```sql
+-- Deleting authors...
+
 DELETE FROM [a]
 FROM [Authors] AS [a]
 ```

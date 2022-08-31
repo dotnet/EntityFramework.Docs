@@ -121,12 +121,45 @@ public static class JsonColumnsSample
 
         context.ChangeTracker.Clear();
 
+        Console.WriteLine("Updating a 'Contact' JSON document...");
+        Console.WriteLine();
+
+        #region UpdateDocument
+        var jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
+
+        jeremy.Contact = new() { Address = new("2 Riverside", "Trimbridge", "TB1 5ZS", "UK"), Phone = "01632 88346" };
+
+        await context.SaveChangesAsync();
+        #endregion
+
+        context.ChangeTracker.Clear();
+
+        Console.WriteLine("Updating an 'Address' inside the 'Contact' JSON document...");
+        Console.WriteLine();
+
+        #region UpdateSubDocument
+        var brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
+
+        brice.Contact.Address = new("4 Riverside", "Trimbridge", "TB1 5ZS", "UK");
+
+        await context.SaveChangesAsync();
+        #endregion
+
+        context.ChangeTracker.Clear();
+
+        Console.WriteLine();
+        Console.WriteLine($"Updating only 'Country' in a 'Contact' JSON document...");
+        Console.WriteLine();
+
+        #region UpdateProperty
         var arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
 
-        arthur.Contact.Phone = "01632 22345";
         arthur.Contact.Address.Country = "United Kingdom";
 
         await context.SaveChangesAsync();
+        #endregion
+
+        Console.WriteLine();
 
         context.ChangeTracker.Clear();
 

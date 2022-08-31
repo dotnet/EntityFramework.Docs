@@ -77,7 +77,7 @@ public class Author
 #region ContactDetailsAggregate
 public class ContactDetails
 {
-    public Address Address { get; init; } = null!;
+    public Address Address { get; set; } = null!;
     public string? Phone { get; set; }
 }
 
