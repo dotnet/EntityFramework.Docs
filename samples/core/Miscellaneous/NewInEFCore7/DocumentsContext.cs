@@ -128,6 +128,7 @@ public abstract class DocumentsContext : DbContext
                         {
                             storedProcedureBuilder.HasParameter(person => person.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(person => person.Name);
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
                 }
 
@@ -159,6 +160,7 @@ public abstract class DocumentsContext : DbContext
                                 "Contacts_Delete", storedProcedureBuilder =>
                                 {
                                     storedProcedureBuilder.HasParameter("PersonId");
+                                    storedProcedureBuilder.HasRowsAffectedResultColumn();
                                 });
                         }
 
@@ -196,6 +198,7 @@ public abstract class DocumentsContext : DbContext
                                         "Addresses_Delete", storedProcedureBuilder =>
                                         {
                                             storedProcedureBuilder.HasParameter("ContactDetailsPersonId");
+                                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                                         });
                                 }
                             });
@@ -308,6 +311,7 @@ public class TphDocumentsContext : DocumentsContext
                                 document => document.RetrievedOn, parameterBuilder => parameterBuilder.IsOutput());
                             storedProcedureBuilder.HasParameter(
                                 document => document.RowVersion, parameterBuilder => parameterBuilder.IsOutput());
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
 
                     entityTypeBuilder.DeleteUsingStoredProcedure(
@@ -316,6 +320,7 @@ public class TphDocumentsContext : DocumentsContext
                         {
                             storedProcedureBuilder.HasParameter(document => document.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(document => document.RowVersion);
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
                 }
             });
@@ -348,6 +353,7 @@ public class TphDocumentsContext : DocumentsContext
                                     {
                                         storedProcedureBuilder.HasParameter("AuthorsId");
                                         storedProcedureBuilder.HasParameter("PublishedWorksId");
+                                        storedProcedureBuilder.HasRowsAffectedResultColumn();
                                     });
                             }
                         });
@@ -390,7 +396,7 @@ public class TptDocumentsContext : DocumentsContext
                         {
                             storedProcedureBuilder.HasParameter(document => document.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(
-                                magazine => magazine.RowVersion,
+                                document => document.RowVersion,
                                 parameterBuilder => parameterBuilder.HasName("RowVersion_Original"));
                             storedProcedureBuilder.HasParameter(document => document.Title);
                             storedProcedureBuilder.HasParameter(document => document.NumberOfPages);
@@ -401,6 +407,7 @@ public class TptDocumentsContext : DocumentsContext
                                 magazine => magazine.RetrievedOn, parameterBuilder => parameterBuilder.IsOutput());
                             storedProcedureBuilder.HasParameter(
                                 magazine => magazine.RowVersion, parameterBuilder => parameterBuilder.IsOutput());
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
 
                     entityTypeBuilder.DeleteUsingStoredProcedure(
@@ -409,6 +416,7 @@ public class TptDocumentsContext : DocumentsContext
                         {
                             storedProcedureBuilder.HasParameter(document => document.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(document => document.RowVersion);
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
                 }
             });
@@ -441,6 +449,7 @@ public class TptDocumentsContext : DocumentsContext
                                     {
                                         storedProcedureBuilder.HasParameter("AuthorsId");
                                         storedProcedureBuilder.HasParameter("PublishedWorksId");
+                                        storedProcedureBuilder.HasRowsAffectedResultColumn();
                                     });
                             }
                         });
@@ -461,6 +470,7 @@ public class TptDocumentsContext : DocumentsContext
                         {
                             storedProcedureBuilder.HasParameter(book => book.Id);
                             storedProcedureBuilder.HasParameter(book => book.Isbn);
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
 
                     entityTypeBuilder.DeleteUsingStoredProcedure(
@@ -468,6 +478,7 @@ public class TptDocumentsContext : DocumentsContext
                         storedProcedureBuilder =>
                         {
                             storedProcedureBuilder.HasParameter(book => book.Id);
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
                 }
             });
@@ -495,6 +506,7 @@ public class TptDocumentsContext : DocumentsContext
                             storedProcedureBuilder.HasParameter(magazine => magazine.CoverPrice);
                             storedProcedureBuilder.HasParameter(magazine => magazine.IssueNumber);
                             storedProcedureBuilder.HasParameter("EditorId");
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
 
                     entityTypeBuilder.DeleteUsingStoredProcedure(
@@ -502,6 +514,7 @@ public class TptDocumentsContext : DocumentsContext
                         storedProcedureBuilder =>
                         {
                             storedProcedureBuilder.HasParameter(magazine => magazine.Id);
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
                 }
             });
@@ -546,6 +559,7 @@ public class TpcDocumentsContext : DocumentsContext
                                     {
                                         storedProcedureBuilder.HasParameter("AuthorsId");
                                         storedProcedureBuilder.HasParameter("PublishedWorksId");
+                                        storedProcedureBuilder.HasRowsAffectedResultColumn();
                                     });
                             }
                         });
@@ -585,6 +599,7 @@ public class TpcDocumentsContext : DocumentsContext
                                 magazine => magazine.RetrievedOn, parameterBuilder => parameterBuilder.IsOutput());
                             storedProcedureBuilder.HasParameter(
                                 magazine => magazine.RowVersion, parameterBuilder => parameterBuilder.IsOutput());
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
 
                     entityTypeBuilder.DeleteUsingStoredProcedure(
@@ -593,6 +608,7 @@ public class TpcDocumentsContext : DocumentsContext
                         {
                             storedProcedureBuilder.HasParameter(book => book.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(book => book.RowVersion);
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
                 }
             });
@@ -639,6 +655,7 @@ public class TpcDocumentsContext : DocumentsContext
                                 magazine => magazine.RetrievedOn, parameterBuilder => parameterBuilder.IsOutput());
                             storedProcedureBuilder.HasParameter(
                                 magazine => magazine.RowVersion, parameterBuilder => parameterBuilder.IsOutput());
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
 
                     entityTypeBuilder.DeleteUsingStoredProcedure(
@@ -647,6 +664,7 @@ public class TpcDocumentsContext : DocumentsContext
                         {
                             storedProcedureBuilder.HasParameter(magazine => magazine.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(magazine => magazine.RowVersion);
+                            storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
                 }
             });

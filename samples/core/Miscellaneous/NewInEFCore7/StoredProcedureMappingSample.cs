@@ -26,18 +26,39 @@ public static class StoredProcedureMappingSample
         await using var context = new TContext();
         await context.Database.EnsureDeletedAsync();
         context.LoggingEnabled = true;
+
+        Console.WriteLine("Creating database tables...");
+        Console.WriteLine();
+
         await context.Database.EnsureCreatedAsync();
+
+        Console.WriteLine();
+        Console.WriteLine("Creating stored procedures...");
+        Console.WriteLine();
+
         await context.CreateStoredProcedures();
 
         context.LoggingEnabled = true;
 
+        Console.WriteLine();
+        Console.WriteLine("Seeding the database...");
+        Console.WriteLine();
+
         await context.Seed();
         context.ChangeTracker.Clear();
+
+        Console.WriteLine();
+        Console.WriteLine("Loading data...");
+        Console.WriteLine();
 
         await context.Documents
             .Include(document => ((Book)document).Authors)
             .Include(document => ((Magazine)document).Editor)
             .LoadAsync();
+
+        Console.WriteLine();
+        Console.WriteLine("Updating data...");
+        Console.WriteLine();
 
         context.RemoveRange(context.People.Local.Where(person => person.Contact.Address.City == "Chigley"));
         context.RemoveRange(context.Magazines.Local.Where(magazine => magazine.Title.Contains("Amstrad")));
@@ -60,26 +81,31 @@ public static class StoredProcedureMappingSample
             person.Contact.Address.Country = "United Kingdom";
         }
 
-        // Only fails for TPH now:
-        // https://github.com/dotnet/efcore/issues/28803 (Exception: "Unable to cast object of type" in many stored procs mapping cases)
         await context.SaveChangesAsync();
 
-        // https://github.com/dotnet/efcore/issues/28803 (Exception: "Unable to cast object of type" in many stored procs mapping cases)
-        // try
-        // {
-        //     await using var context2 = new TContext();
-        //     (await context2.Books.SingleAsync(book => book.Title.StartsWith("Test"))).Isbn = "Mod1";
-        //
-        //     context.Books.Local.Single(book => book.Title.StartsWith("Test", StringComparison.Ordinal)).Isbn = null;
-        //     await context.SaveChangesAsync();
-        //
-        //     await context2.SaveChangesAsync();
-        //
-        // }
-        // catch (DbUpdateConcurrencyException exception)
-        // {
-        //     Console.WriteLine($"Caught expected: " + exception.Message);
-        // }
+        Console.WriteLine();
+        Console.WriteLine("Optimistic concurrency test 1...");
+        Console.WriteLine();
+
+        try
+        {
+            await using var context2 = new TContext();
+            (await context2.Books.SingleAsync(book => book.Title.StartsWith("Test"))).Isbn = "Mod1";
+
+            context.Books.Local.Single(book => book.Title.StartsWith("Test", StringComparison.Ordinal)).Isbn = null;
+            await context.SaveChangesAsync();
+
+            await context2.SaveChangesAsync();
+
+        }
+        catch (DbUpdateConcurrencyException exception)
+        {
+            Console.WriteLine($"Caught expected: " + exception.Message);
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Optimistic concurrency test 2...");
+        Console.WriteLine();
 
         try
         {

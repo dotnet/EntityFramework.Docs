@@ -32,7 +32,7 @@ public class Program
         // await ModelBuildingConventionsSample.Custom_model_validation_convention();
         // await ModelBuildingConventionsSample.No_cascade_delete_convention();
 
-        // await StoredProcedureMappingSample.Insert_Update_and_Delete_using_stored_procedures_with_TPH();
+        await StoredProcedureMappingSample.Insert_Update_and_Delete_using_stored_procedures_with_TPH();
         await StoredProcedureMappingSample.Insert_Update_and_Delete_using_stored_procedures_with_TPT();
         await StoredProcedureMappingSample.Insert_Update_and_Delete_using_stored_procedures_with_TPC();
     }
