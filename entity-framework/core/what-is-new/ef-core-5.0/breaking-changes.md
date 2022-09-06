@@ -81,10 +81,31 @@ We marked this method as obsolete to guide users to a more accurate overload - <
 
 #### Mitigations
 
-Use the following code to get the column name for a specific table:
+Provide a `StoreObjectIdentifier` associated with the table the property is located on.
+For example if the table name and schema is known:
+```csharp
+var storeObjectIdentifier = StoreObjectIdentifier.Table("TableName", "Schema")));
+var columnName = property.GetColumnName(storeObjectIdentifier);
+```
+
+Or if the properties are being accessed in a loop:
+```csharp
+foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+{
+    var storeObjectIdentifier = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table);
+    if (table != null)
+    {
+
+        foreach (var property in entityType.GetProperties())
+        {
+            var columnName = property.GetColumnName(storeObjectIdentifier.Value);
+        }
+    }
+}
+```
 
 ```csharp
-var columnName = property.GetColumnName(StoreObjectIdentifier.Table("Users", null)));
+var columnName = property.GetColumnName(storeObjectIdentifier);
 ```
 
 <a name="decimals"></a>
