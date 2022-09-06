@@ -99,7 +99,7 @@ Your feedback is valuable! [File an issue](https://github.com/dotnet/EntityFrame
 
 ## Introducing Planetary Docs
 
-You may (or may not) know that Microsoft's [official documentation](https://docs.microsoft.com) runs entirely on open source. It uses markdown with some metadata enhancements to build the interactive documentation that .NET developers use daily. The hypothetical scenario for Planetary Docs is to provide a web-based tool for authoring the docs. It allows setting up the title, description, the alias of the author, assigning tags, editing markdown and previewing the HTML output.
+You may (or may not) know that Microsoft's [official documentation](/) runs entirely on open source. It uses markdown with some metadata enhancements to build the interactive documentation that .NET developers use daily. The hypothetical scenario for Planetary Docs is to provide a web-based tool for authoring the docs. It allows setting up the title, description, the alias of the author, assigning tags, editing markdown and previewing the HTML output.
 
 It's planetary because Azure Cosmos DB is "planetary scale". The app provides the ability to search documents. Documents are stored under aliases and tags for fast lookup, but full text search is available as well. The app automatically audits the documents (it takes snapshots of the document anytime it is edited and provides a view of the history).
 
