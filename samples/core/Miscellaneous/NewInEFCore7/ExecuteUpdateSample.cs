@@ -171,12 +171,12 @@ public static class ExecuteUpdateSample
             $"Posts before update: {string.Join(", ", await context.Posts.AsNoTracking().Select(e => "'..." + e.Title.Substring(e.Title.Length - 12) + "' " + e.PublishedOn.Date).ToListAsync())}");
         Console.WriteLine();
 
-        context.LoggingEnabled = true;
-        await context.Set<Post>()
-            .ExecuteUpdateAsync(
-                setPropertyCalls => setPropertyCalls
-                    .SetProperty(post => post.PublishedOn, post => EF.Default<DateTime>()));
-        context.LoggingEnabled = false;
+        // context.LoggingEnabled = true;
+        // await context.Set<Post>()
+        //     .ExecuteUpdateAsync(
+        //         setPropertyCalls => setPropertyCalls
+        //             .SetProperty(post => post.PublishedOn, post => EF.Default<DateTime>()));
+        // context.LoggingEnabled = false;
 
         Console.WriteLine();
         Console.WriteLine(
