@@ -31,7 +31,6 @@ END");
                     @"
 CREATE PROCEDURE [dbo].[Document_Update]
     @Id [int],
-    @Discriminator [nvarchar](max),
     @RowVersion_Original [rowversion],
     @Title [nvarchar](max),
     @NumberOfPages [int],
@@ -47,7 +46,6 @@ CREATE PROCEDURE [dbo].[Document_Update]
 AS
 BEGIN
     UPDATE [Documents] SET
-        [Discriminator] = @Discriminator,
         [Title] = @Title,
         [NumberOfPages] = @NumberOfPages,
         [PublicationDate] = @PublicationDate,
