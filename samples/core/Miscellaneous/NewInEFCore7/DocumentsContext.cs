@@ -115,7 +115,7 @@ public abstract class DocumentsContext : DbContext
                         "Person_Update",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(person => person.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(person => person.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(
                                 person => person.Name, parameterBuilder => parameterBuilder.HasName("Name_Original"));
                             storedProcedureBuilder.HasParameter(person => person.Name);
@@ -126,7 +126,7 @@ public abstract class DocumentsContext : DbContext
                         "Person_Delete",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(person => person.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(person => person.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(person => person.Name);
                             storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
@@ -151,7 +151,7 @@ public abstract class DocumentsContext : DbContext
                                 "Contacts_Update",
                                 storedProcedureBuilder =>
                                 {
-                                    storedProcedureBuilder.HasParameter("PersonId");
+                                    storedProcedureBuilder.HasOriginalValueParameter("PersonId");
                                     storedProcedureBuilder.HasParameter(contactDetails => contactDetails.Phone);
                                     storedProcedureBuilder.HasRowsAffectedResultColumn();
                                 });
@@ -159,7 +159,7 @@ public abstract class DocumentsContext : DbContext
                             ownedNavigationBuilder.DeleteUsingStoredProcedure(
                                 "Contacts_Delete", storedProcedureBuilder =>
                                 {
-                                    storedProcedureBuilder.HasParameter("PersonId");
+                                    storedProcedureBuilder.HasOriginalValueParameter("PersonId");
                                     storedProcedureBuilder.HasRowsAffectedResultColumn();
                                 });
                         }
@@ -186,7 +186,7 @@ public abstract class DocumentsContext : DbContext
                                         "Addresses_Update",
                                         storedProcedureBuilder =>
                                         {
-                                            storedProcedureBuilder.HasParameter("ContactDetailsPersonId");
+                                            storedProcedureBuilder.HasOriginalValueParameter("ContactDetailsPersonId");
                                             storedProcedureBuilder.HasParameter(address => address.Street);
                                             storedProcedureBuilder.HasParameter(address => address.City);
                                             storedProcedureBuilder.HasParameter(address => address.Postcode);
@@ -197,7 +197,7 @@ public abstract class DocumentsContext : DbContext
                                     ownedOwnedNavigationBuilder.DeleteUsingStoredProcedure(
                                         "Addresses_Delete", storedProcedureBuilder =>
                                         {
-                                            storedProcedureBuilder.HasParameter("ContactDetailsPersonId");
+                                            storedProcedureBuilder.HasOriginalValueParameter("ContactDetailsPersonId");
                                             storedProcedureBuilder.HasRowsAffectedResultColumn();
                                         });
                                 }
@@ -293,8 +293,7 @@ public class TphDocumentsContext : DocumentsContext
                         "Document_Update",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(document => document.Id);
-                            storedProcedureBuilder.HasParameter("Discriminator");
+                            storedProcedureBuilder.HasOriginalValueParameter(document => document.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(
                                 document => document.RowVersion,
                                 parameterBuilder => parameterBuilder.HasName("RowVersion_Original"));
@@ -318,7 +317,7 @@ public class TphDocumentsContext : DocumentsContext
                         "Document_Delete",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(document => document.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(document => document.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(document => document.RowVersion);
                             storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
@@ -351,8 +350,8 @@ public class TphDocumentsContext : DocumentsContext
                                     "BookPerson_Delete",
                                     storedProcedureBuilder =>
                                     {
-                                        storedProcedureBuilder.HasParameter("AuthorsId");
-                                        storedProcedureBuilder.HasParameter("PublishedWorksId");
+                                        storedProcedureBuilder.HasOriginalValueParameter("AuthorsId");
+                                        storedProcedureBuilder.HasOriginalValueParameter("PublishedWorksId");
                                         storedProcedureBuilder.HasRowsAffectedResultColumn();
                                     });
                             }
@@ -394,7 +393,7 @@ public class TptDocumentsContext : DocumentsContext
                         "Document_Update",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(document => document.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(document => document.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(
                                 document => document.RowVersion,
                                 parameterBuilder => parameterBuilder.HasName("RowVersion_Original"));
@@ -414,7 +413,7 @@ public class TptDocumentsContext : DocumentsContext
                         "Document_Delete",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(document => document.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(document => document.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(document => document.RowVersion);
                             storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
@@ -447,8 +446,8 @@ public class TptDocumentsContext : DocumentsContext
                                     "BookPerson_Delete",
                                     storedProcedureBuilder =>
                                     {
-                                        storedProcedureBuilder.HasParameter("AuthorsId");
-                                        storedProcedureBuilder.HasParameter("PublishedWorksId");
+                                        storedProcedureBuilder.HasOriginalValueParameter("AuthorsId");
+                                        storedProcedureBuilder.HasOriginalValueParameter("PublishedWorksId");
                                         storedProcedureBuilder.HasRowsAffectedResultColumn();
                                     });
                             }
@@ -468,7 +467,7 @@ public class TptDocumentsContext : DocumentsContext
                         "Book_Update",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(book => book.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(book => book.Id);
                             storedProcedureBuilder.HasParameter(book => book.Isbn);
                             storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
@@ -477,7 +476,7 @@ public class TptDocumentsContext : DocumentsContext
                         "Book_Delete",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(book => book.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(book => book.Id);
                             storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
                 }
@@ -502,7 +501,7 @@ public class TptDocumentsContext : DocumentsContext
                         "Magazine_Update",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(magazine => magazine.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(magazine => magazine.Id);
                             storedProcedureBuilder.HasParameter(magazine => magazine.CoverPrice);
                             storedProcedureBuilder.HasParameter(magazine => magazine.IssueNumber);
                             storedProcedureBuilder.HasParameter("EditorId");
@@ -513,7 +512,7 @@ public class TptDocumentsContext : DocumentsContext
                         "Magazine_Delete",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(magazine => magazine.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(magazine => magazine.Id);
                             storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
                 }
@@ -557,8 +556,8 @@ public class TpcDocumentsContext : DocumentsContext
                                     "BookPerson_Delete",
                                     storedProcedureBuilder =>
                                     {
-                                        storedProcedureBuilder.HasParameter("AuthorsId");
-                                        storedProcedureBuilder.HasParameter("PublishedWorksId");
+                                        storedProcedureBuilder.HasOriginalValueParameter("AuthorsId");
+                                        storedProcedureBuilder.HasOriginalValueParameter("PublishedWorksId");
                                         storedProcedureBuilder.HasRowsAffectedResultColumn();
                                     });
                             }
@@ -585,7 +584,7 @@ public class TpcDocumentsContext : DocumentsContext
                         "Book_Update",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(book => book.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(book => book.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(
                                 magazine => magazine.RowVersion,
                                 parameterBuilder => parameterBuilder.HasName("RowVersion_Original"));
@@ -606,7 +605,7 @@ public class TpcDocumentsContext : DocumentsContext
                         "Book_Delete",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(book => book.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(book => book.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(book => book.RowVersion);
                             storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
@@ -639,7 +638,7 @@ public class TpcDocumentsContext : DocumentsContext
                         "Magazine_Update",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(magazine => magazine.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(magazine => magazine.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(
                                 magazine => magazine.RowVersion,
                                 parameterBuilder => parameterBuilder.HasName("RowVersion_Original"));
@@ -662,7 +661,7 @@ public class TpcDocumentsContext : DocumentsContext
                         "Magazine_Delete",
                         storedProcedureBuilder =>
                         {
-                            storedProcedureBuilder.HasParameter(magazine => magazine.Id);
+                            storedProcedureBuilder.HasOriginalValueParameter(magazine => magazine.Id);
                             storedProcedureBuilder.HasOriginalValueParameter(magazine => magazine.RowVersion);
                             storedProcedureBuilder.HasRowsAffectedResultColumn();
                         });
