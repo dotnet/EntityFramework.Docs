@@ -67,7 +67,7 @@ additionalContent:
         # Card
         - title: Relational databases
           links:
-            - url: https://docs.microsoft.com/dotnet/standard/data/sqlite/
+            - url: /dotnet/standard/data/sqlite/
               text: "Microsoft.Data.Sqlite overview"
             - url: /sql/
               text: "Microsoft SQL documentation"

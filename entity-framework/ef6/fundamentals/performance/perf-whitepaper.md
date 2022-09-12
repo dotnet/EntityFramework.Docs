@@ -1221,8 +1221,7 @@ In the example query above, the performance difference was less than 2% in a mic
 
 Entity Framework 6 introduced support of async operations when running on .NET 4.5 or later. For the most part, applications that have IO related contention will benefit the most from using asynchronous query and save operations. If your application does not suffer from IO contention, the use of async will, in the best cases, run synchronously and return the result in the same amount of time as a synchronous call, or in the worst case, simply defer execution to an asynchronous task and add extra time to the completion of your scenario.
 
-For information on how asynchronous programming work that will help you deciding if async will improve the performance of your application visit [http://msdn.microsoft.com/library/hh191443.aspx](https://msdn.microsoft.com/library/hh191443.aspx). For more information on the use of async operations on Entity Framework, see [Async Query and Save](xref:ef6/fundamentals/async
-).
+For information on how asynchronous programming work that will help you deciding if async will improve the performance of your application, see [Asynchronous Programming with Async and Await](https://msdn.microsoft.com/library/hh191443.aspx). For more information on the use of async operations on Entity Framework, see [Async Query and Save](xref:ef6/fundamentals/async).
 
 ### 9.6      NGEN
 
