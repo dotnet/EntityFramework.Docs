@@ -40,7 +40,7 @@ Below, we'll explore what each method means, and compare it with the others. We 
 
 ### SQLite as a database fake
 
-One possible testing approach is to swap your production database (e.g. SQL Server) with SQLite, effectively using it as a testing "fake". Aside from ease of setup, SQLite has a an [in-memory database](https://sqlite.org/inmemorydb.html) feature which is especially useful for testing: each test is naturally isolated in its own in-memory database, and no actual files need to be managed.
+One possible testing approach is to swap your production database (e.g. SQL Server) with SQLite, effectively using it as a testing "fake". Aside from ease of setup, SQLite has an [in-memory database](https://sqlite.org/inmemorydb.html) feature which is especially useful for testing: each test is naturally isolated in its own in-memory database, and no actual files need to be managed.
 
 However, before doing this, it's important to understand that in EF Core, different database providers behave differently - EF Core does not attempt to abstract every aspect of the underlying database system. Fundamentally, this means that testing against SQLite does not guarantee the same results as against SQL Server, or any other database. Here are some examples of possible behavioral differences:
 
