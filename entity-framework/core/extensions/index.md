@@ -351,7 +351,6 @@ GraphQL server with tight EntityFramework integration
 
 [GitHub repository](https://github.com/EntityGraphQL/EntityGraphQL) | [NuGet](https://www.nuget.org/packages/EntityGraphQL)
 
-
 ### OData
 
 A standard for implementing REST APIs with specifications for discovery, filtering, sorting, projections, navigations, bulk operations, and more.
