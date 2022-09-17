@@ -347,7 +347,7 @@ Add Entity Framework `IQueryable` support to GraphQL.
 
 ### EntityGraphQL
 
-GraphQL server with tight EntityFramework integration
+GraphQL server with tight EntityFramework integration.  For EF Core: 5, 6, 7.
 
 [GitHub repository](https://github.com/EntityGraphQL/EntityGraphQL) | [NuGet](https://www.nuget.org/packages/EntityGraphQL)
 
