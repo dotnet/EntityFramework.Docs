@@ -4,33 +4,25 @@ public static class ExecuteDeleteSample
 {
     public static Task ExecuteDelete()
     {
-        Console.WriteLine($">>>> Sample: {nameof(ExecuteDelete)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ExecuteDeleteTest<TphBlogsContext>();
     }
 
     public static Task ExecuteDeleteTpt()
     {
-        Console.WriteLine($">>>> Sample: {nameof(ExecuteDelete)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ExecuteDeleteTest<TptBlogsContext>();
     }
 
     public static Task ExecuteDeleteTpc()
     {
-        Console.WriteLine($">>>> Sample: {nameof(ExecuteDelete)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ExecuteDeleteTest<TpcBlogsContext>();
     }
 
     public static Task ExecuteDeleteSqlite()
     {
-        Console.WriteLine($">>>> Sample: {nameof(ExecuteDelete)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ExecuteDeleteTest<TphSqliteBlogsContext>();
     }
 
@@ -272,6 +264,12 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
         Console.WriteLine(
             $"Authors after delete: {string.Join(", ", await context.Authors.AsNoTracking().Select(e => "'" + e.Name + "'").ToListAsync())}");
+        Console.WriteLine();
+    }
+
+    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    {
+        Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
     }
 }

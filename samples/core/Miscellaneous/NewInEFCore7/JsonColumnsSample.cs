@@ -6,17 +6,13 @@ public static class JsonColumnsSample
 {
     public static Task Json_columns_with_TPH()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Json_columns_with_TPH)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return JsonColumnsTest<JsonBlogsContext>();
     }
 
     public static Task Json_columns_with_TPH_on_SQLite()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Json_columns_with_TPH_on_SQLite)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return JsonColumnsTest<JsonBlogsContextSqlite>();
     }
 
@@ -169,6 +165,12 @@ public static class JsonColumnsSample
         post.Metadata!.TopGeographies.Clear();
 
         await context.SaveChangesAsync();
+    }
+
+    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    {
+        Console.WriteLine($">>>> Sample: {methodName}");
+        Console.WriteLine();
     }
 }
 

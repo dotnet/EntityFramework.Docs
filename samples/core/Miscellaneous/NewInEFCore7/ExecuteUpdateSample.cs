@@ -4,33 +4,25 @@ public static class ExecuteUpdateSample
 {
     public static Task ExecuteUpdate()
     {
-        Console.WriteLine($">>>> Sample: {nameof(ExecuteUpdate)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ExecuteUpdateTest<TphBlogsContext>();
     }
 
     public static Task ExecuteUpdateTpt()
     {
-        Console.WriteLine($">>>> Sample: {nameof(ExecuteUpdate)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ExecuteUpdateTest<TptBlogsContext>();
     }
 
     public static Task ExecuteUpdateTpc()
     {
-        Console.WriteLine($">>>> Sample: {nameof(ExecuteUpdate)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ExecuteUpdateTest<TpcBlogsContext>();
     }
 
     public static Task ExecuteUpdateSqlite()
     {
-        Console.WriteLine($">>>> Sample: {nameof(ExecuteUpdate)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ExecuteUpdateTest<TphSqliteBlogsContext>();
     }
 
@@ -179,16 +171,22 @@ public static class ExecuteUpdateSample
             $"Posts before update: {string.Join(", ", await context.Posts.AsNoTracking().Select(e => "'..." + e.Title.Substring(e.Title.Length - 12) + "' " + e.PublishedOn.Date).ToListAsync())}");
         Console.WriteLine();
 
-        context.LoggingEnabled = true;
-        await context.Set<Post>()
-            .ExecuteUpdateAsync(
-                setPropertyCalls => setPropertyCalls
-                    .SetProperty(post => post.PublishedOn, post => EF.Default<DateTime>()));
-        context.LoggingEnabled = false;
+        // context.LoggingEnabled = true;
+        // await context.Set<Post>()
+        //     .ExecuteUpdateAsync(
+        //         setPropertyCalls => setPropertyCalls
+        //             .SetProperty(post => post.PublishedOn, post => EF.Default<DateTime>()));
+        // context.LoggingEnabled = false;
 
         Console.WriteLine();
         Console.WriteLine(
             $"Posts after update: {string.Join(", ", await context.Posts.AsNoTracking().Select(e => "'..." + e.Title.Substring(e.Title.Length - 12) + "' " + e.PublishedOn.Date).ToListAsync())}");
+        Console.WriteLine();
+    }
+
+    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    {
+        Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
     }
 }

@@ -4,41 +4,31 @@ public static class TpcInheritanceSample
 {
     public static Task Inheritance_with_TPH()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Inheritance_with_TPH)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ManyToManyTest<TphAnimalsContext>();
     }
 
     public static Task Inheritance_with_TPT()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Inheritance_with_TPT)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ManyToManyTest<TptAnimalsContext>();
     }
 
     public static Task Inheritance_with_TPC()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Inheritance_with_TPC)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ManyToManyTest<TpcAnimalsContext>();
     }
 
     public static Task Inheritance_with_TPC_using_HiLo()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Inheritance_with_TPC_using_HiLo)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ManyToManyTest<TpcHiLoAnimalsContext>();
     }
 
     public static Task Inheritance_with_TPC_using_Identity()
     {
-        Console.WriteLine($">>>> Sample: {nameof(Inheritance_with_TPC_using_Identity)}");
-        Console.WriteLine();
-
+        PrintSampleName();
         return ManyToManyTest<TpcIdentityAnimalsContext>();
     }
 
@@ -433,5 +423,11 @@ public static class TpcInheritanceSample
                     r => r.HasOne<Pet>().WithMany().OnDelete(DeleteBehavior.Cascade),
                     l => l.HasOne<Human>().WithMany().OnDelete(DeleteBehavior.ClientCascade));
         }
+    }
+
+    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    {
+        Console.WriteLine($">>>> Sample: {methodName}");
+        Console.WriteLine();
     }
 }
