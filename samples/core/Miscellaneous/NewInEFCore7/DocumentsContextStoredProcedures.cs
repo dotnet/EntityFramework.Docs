@@ -10,7 +10,7 @@ public static class DocumentsContextStoredProcedures
                 // Document
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Document_Insert]
+CREATE PROCEDURE [dbo].[Documents_Insert]
     @Discriminator [nvarchar](max),
     @Title [nvarchar](max),
     @NumberOfPages [int],
@@ -29,7 +29,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Document_Update]
+CREATE PROCEDURE [dbo].[Documents_Update]
     @Id [int],
     @RowVersion_Original [rowversion],
     @Title [nvarchar](max),
@@ -65,7 +65,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Document_Delete]
+CREATE PROCEDURE [dbo].[Documents_Delete]
     @Id [int],
     @RowVersion_Original [rowversion]
 AS
@@ -79,7 +79,7 @@ END");
                 // Document
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Document_Insert]
+CREATE PROCEDURE [dbo].[Document_Insert_TPT]
     @Title [nvarchar](max),
     @NumberOfPages [int],
     @PublicationDate [datetime2],
@@ -93,7 +93,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Document_Update]
+CREATE PROCEDURE [dbo].[Document_Update_TPT]
     @Id [int],
     @RowVersion_Original [rowversion],
     @Title [nvarchar](max),
@@ -121,7 +121,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Document_Delete]
+CREATE PROCEDURE [dbo].[Document_Delete_TPT]
     @Id [int],
     @RowVersion_Original [rowversion]
 AS
@@ -134,7 +134,7 @@ END");
                 // Book
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Book_Insert]
+CREATE PROCEDURE [dbo].[Book_Insert_TPT]
     @Id [int],
     @Isbn [nvarchar](max)
 AS
@@ -145,7 +145,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Book_Update]
+CREATE PROCEDURE [dbo].[Book_Update_TPT]
     @Id [int],
     @Isbn [nvarchar](max)
 AS
@@ -158,7 +158,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Book_Delete]
+CREATE PROCEDURE [dbo].[Book_Delete_TPT]
     @Id [int]
 AS
 BEGIN
@@ -170,7 +170,7 @@ END");
                 // Magazine
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Magazine_Insert]
+CREATE PROCEDURE [dbo].[Magazine_Insert_TPT]
     @Id [int],
     @CoverPrice [decimal](18,2),
     @IssueNumber [int],
@@ -183,7 +183,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Magazine_Update]
+CREATE PROCEDURE [dbo].[Magazine_Update_TPT]
     @Id [int],
     @CoverPrice [decimal](18,2),
     @IssueNumber [int],
@@ -200,7 +200,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Magazine_Delete]
+CREATE PROCEDURE [dbo].[Magazine_Delete_TPT]
     @Id [int]
 AS
 BEGIN
@@ -213,7 +213,7 @@ END");
                 // Book
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Book_Insert]
+CREATE PROCEDURE [dbo].[Book_Insert_TPC]
     @Title [nvarchar](max),
     @NumberOfPages [int],
     @PublicationDate [datetime2],
@@ -228,7 +228,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Book_Update]
+CREATE PROCEDURE [dbo].[Book_Update_TPC]
     @Id [int],
     @RowVersion_Original [rowversion],
     @Title [nvarchar](max),
@@ -258,7 +258,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Book_Delete]
+CREATE PROCEDURE [dbo].[Book_Delete_TPC]
     @Id [int],
     @RowVersion_Original [rowversion]
 AS
@@ -271,7 +271,7 @@ END");
                 // Magazine
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Magazine_Insert]
+CREATE PROCEDURE [dbo].[Magazine_Insert_TPC]
     @Title [nvarchar](max),
     @NumberOfPages [int],
     @PublicationDate [datetime2],
@@ -288,7 +288,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Magazine_Update]
+CREATE PROCEDURE [dbo].[Magazine_Update_TPC]
     @Id [int],
     @RowVersion_Original [rowversion],
     @Title [nvarchar](max),
@@ -322,7 +322,7 @@ END");
 
                 await context.Database.ExecuteSqlRawAsync(
                     @"
-CREATE PROCEDURE [dbo].[Magazine_Delete]
+CREATE PROCEDURE [dbo].[Magazine_Delete_TPC]
     @Id [int],
     @RowVersion_Original [rowversion]
 AS
@@ -339,7 +339,7 @@ END");
         // Person
         await context.Database.ExecuteSqlRawAsync(
             @"
-CREATE PROCEDURE [dbo].[Person_Insert]
+CREATE PROCEDURE [dbo].[People_Insert]
     @Name [nvarchar](max)
 AS
 BEGIN
@@ -350,7 +350,7 @@ END");
 
         await context.Database.ExecuteSqlRawAsync(
             @"
-CREATE PROCEDURE [dbo].[Person_Update]
+CREATE PROCEDURE [dbo].[People_Update]
     @Id [int],
     @Name_Original [nvarchar](max),
     @Name [nvarchar](max)
@@ -363,7 +363,7 @@ END");
 
         await context.Database.ExecuteSqlRawAsync(
             @"
-CREATE PROCEDURE [dbo].[Person_Delete]
+CREATE PROCEDURE [dbo].[People_Delete]
     @Id [int],
     @Name_Original [nvarchar](max)
 AS
