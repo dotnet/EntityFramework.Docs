@@ -81,6 +81,7 @@ public static class StoredProcedureMappingSample
             person.Contact.Address.Country = "United Kingdom";
         }
 
+        context.ChangeTracker.DetectChanges();
         await context.SaveChangesAsync();
 
         Console.WriteLine();
@@ -93,6 +94,7 @@ public static class StoredProcedureMappingSample
             (await context2.Books.SingleAsync(book => book.Title.StartsWith("Test"))).Isbn = "Mod1";
 
             context.Books.Local.Single(book => book.Title.StartsWith("Test", StringComparison.Ordinal)).Isbn = null;
+            context.ChangeTracker.DetectChanges();
             await context.SaveChangesAsync();
 
             await context2.SaveChangesAsync();
@@ -100,7 +102,7 @@ public static class StoredProcedureMappingSample
         }
         catch (DbUpdateConcurrencyException exception)
         {
-            Console.WriteLine($"Caught expected: " + exception.Message);
+            Console.WriteLine($"Caught expected: {exception.Message}");
         }
 
         Console.WriteLine();
@@ -120,7 +122,27 @@ public static class StoredProcedureMappingSample
         }
         catch (DbUpdateConcurrencyException exception)
         {
-            Console.WriteLine($"Caught expected: " + exception.Message);
+            Console.WriteLine($"Caught expected: {exception.Message}");
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Optimistic concurrency test 3...");
+        Console.WriteLine();
+
+        try
+        {
+            await using var context2 = new TContext();
+            (await context2.People.SingleAsync(person => person.Name.StartsWith("Dr. Kent"))).PublishedWorks.Clear();
+
+            context.People.Local.Single(person => person.Name.StartsWith("Dr. Kent", StringComparison.Ordinal)).PublishedWorks.Clear();
+            await context.SaveChangesAsync();
+
+            await context2.SaveChangesAsync();
+
+        }
+        catch (DbUpdateConcurrencyException exception)
+        {
+            Console.WriteLine($"Caught expected: {exception.Message}");
         }
 
         Console.WriteLine();

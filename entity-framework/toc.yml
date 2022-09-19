@@ -30,12 +30,10 @@
     items:
     - name: Welcome!
       href: core/index.md
-    - name: "What's new in EF Core 6.0"
-      href: /ef/core/what-is-new/ef-core-6.0/whatsnew
-    - name: "Breaking changes in EF Core 6.0"
-      href: /ef/core/what-is-new/ef-core-6.0/breaking-changes
-    - name: "Plan for Entity Framework Core 7.0"
-      href: /ef/core/what-is-new/ef-core-7.0/plan
+    - name: "What's new in EF Core 7.0 (EF7)"
+      href: /ef/core/what-is-new/ef-core-7.0/whatsnew
+    - name: "Breaking changes in EF Core 7.0 (EF7)"
+      href: /ef/core/what-is-new/ef-core-7.0/breaking-changes
     - name: Getting started
       items:
       - name: EF Core Overview
