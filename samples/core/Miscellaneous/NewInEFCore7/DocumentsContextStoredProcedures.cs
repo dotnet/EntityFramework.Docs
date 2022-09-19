@@ -45,6 +45,7 @@ CREATE PROCEDURE [dbo].[Document_Update]
     @RowVersion [rowversion] OUT
 AS
 BEGIN
+    DECLARE @TempTable table ([RetrievedOn] datetime2, [RowVersion] varbinary(8));
     UPDATE [Documents] SET
         [Title] = @Title,
         [NumberOfPages] = @NumberOfPages,
@@ -54,11 +55,12 @@ BEGIN
         [Isbn] = @Isbn,
         [CoverPrice] = @CoverPrice,
         [IssueNumber] = @IssueNumber,
-        [EditorId] = @EditorId,
-        @RetrievedOn = [RetrievedOn],
-        @RowVersion = [RowVersion]
+        [EditorId] = @EditorId
+    OUTPUT INSERTED.[RetrievedOn], INSERTED.[RowVersion] INTO @TempTable
     WHERE [Id] = @Id AND [RowVersion] = @RowVersion_Original
     SELECT @@ROWCOUNT;
+    SELECT @RetrievedOn = [RetrievedOn] FROM @TempTable;
+    SELECT @RowVersion = [RowVersion] FROM @TempTable;
 END");
 
                 await context.Database.ExecuteSqlRawAsync(
@@ -103,16 +105,18 @@ CREATE PROCEDURE [dbo].[Document_Update]
     @RowVersion [rowversion] OUT
 AS
 BEGIN
+    DECLARE @TempTable table ([RetrievedOn] datetime2, [RowVersion] varbinary(8));
     UPDATE [Documents] SET
         [Title] = @Title,
         [NumberOfPages] = @NumberOfPages,
         [PublicationDate] = @PublicationDate,
         [CoverArt] = @CoverArt,
-        [FirstRecordedOn] = @FirstRecordedOn,
-        @RetrievedOn = [RetrievedOn],
-        @RowVersion = [RowVersion]
+        [FirstRecordedOn] = @FirstRecordedOn
+    OUTPUT INSERTED.[RetrievedOn], INSERTED.[RowVersion] INTO @TempTable
     WHERE [Id] = @Id AND [RowVersion] = @RowVersion_Original
     SELECT @@ROWCOUNT;
+    SELECT @RetrievedOn = [RetrievedOn] FROM @TempTable;
+    SELECT @RowVersion = [RowVersion] FROM @TempTable;
 END");
 
                 await context.Database.ExecuteSqlRawAsync(
@@ -237,17 +241,19 @@ CREATE PROCEDURE [dbo].[Book_Update]
     @RowVersion [rowversion] OUT
 AS
 BEGIN
+    DECLARE @TempTable table ([RetrievedOn] datetime2, [RowVersion] varbinary(8));
     UPDATE [Books] SET
         [Title] = @Title,
         [NumberOfPages] = @NumberOfPages,
         [PublicationDate] = @PublicationDate,
         [CoverArt] = @CoverArt,
         [FirstRecordedOn] = @FirstRecordedOn,
-        [Isbn] = @Isbn,
-        @RetrievedOn = [RetrievedOn],
-        @RowVersion = [RowVersion]
+        [Isbn] = @Isbn
+    OUTPUT INSERTED.[RetrievedOn], INSERTED.[RowVersion] INTO @TempTable
     WHERE [Id] = @Id AND [RowVersion] = @RowVersion_Original
     SELECT @@ROWCOUNT;
+    SELECT @RetrievedOn = [RetrievedOn] FROM @TempTable;
+    SELECT @RowVersion = [RowVersion] FROM @TempTable;
 END");
 
                 await context.Database.ExecuteSqlRawAsync(
@@ -297,6 +303,7 @@ CREATE PROCEDURE [dbo].[Magazine_Update]
     @RowVersion [rowversion] OUT
 AS
 BEGIN
+    DECLARE @TempTable table ([RetrievedOn] datetime2, [RowVersion] varbinary(8));
     UPDATE [Magazines] SET
         [Title] = @Title,
         [NumberOfPages] = @NumberOfPages,
@@ -305,11 +312,12 @@ BEGIN
         [FirstRecordedOn] = @FirstRecordedOn,
         [CoverPrice] = @CoverPrice,
         [IssueNumber] = @IssueNumber,
-        [EditorId] = @EditorId,
-        @RetrievedOn = [RetrievedOn],
-        @RowVersion = [RowVersion]
+        [EditorId] = @EditorId
+    OUTPUT INSERTED.[RetrievedOn], INSERTED.[RowVersion] INTO @TempTable
     WHERE [Id] = @Id AND [RowVersion] = @RowVersion_Original
     SELECT @@ROWCOUNT;
+    SELECT @RetrievedOn = [RetrievedOn] FROM @TempTable;
+    SELECT @RowVersion = [RowVersion] FROM @TempTable;
 END");
 
                 await context.Database.ExecuteSqlRawAsync(
@@ -348,8 +356,7 @@ CREATE PROCEDURE [dbo].[Person_Update]
     @Name [nvarchar](max)
 AS
 BEGIN
-    UPDATE [People] SET
-        [Name] = @Name
+    UPDATE [People] SET [Name] = @Name
     WHERE [Id] = @Id AND [Name] = @Name_Original
     SELECT @@ROWCOUNT
 END");
