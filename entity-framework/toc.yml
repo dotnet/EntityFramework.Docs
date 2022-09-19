@@ -223,8 +223,8 @@
         href: core/querying/complex-query-operators.md
       - name: Pagination
         href: core/querying/pagination.md
-      - name: Raw SQL queries
-        href: core/querying/raw-sql.md
+      - name: SQL queries
+        href: core/querying/sql-queries.md
       - name: Database functions
         href: core/querying/database-functions.md
       - name: User-defined function mapping

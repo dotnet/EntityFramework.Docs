@@ -48,18 +48,51 @@ internal class Program
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlRaw
+            #region FromSql
             var blogs = context.Blogs
-                .FromSqlRaw("SELECT * FROM dbo.Blogs")
+                .FromSql($"SELECT * FROM dbo.Blogs")
                 .ToList();
             #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlRawStoredProcedure
+            #region FromSqlStoredProcedure
             var blogs = context.Blogs
-                .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogs")
+                .FromSql($"EXECUTE dbo.GetMostPopularBlogs")
+                .ToList();
+            #endregion
+        }
+
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlStoredProcedureParameter
+            var user = "johndoe";
+
+            var blogs = context.Blogs
+                .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
+                .ToList();
+            #endregion
+        }
+
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlStoredProcedureNamedSqlParameter
+            var user = new SqlParameter("user", "johndoe");
+
+            var blogs = context.Blogs
+                .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser @filterByUser={user}")
+                .ToList();
+            #endregion
+        }
+
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlStoredProcedureSqlParameter
+            var user = new SqlParameter("user", "johndoe");
+
+            var blogs = context.Blogs
+                .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
                 .ToList();
             #endregion
         }
@@ -67,54 +100,22 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region FromSqlRawStoredProcedureParameter
-            var user = "johndoe";
+            var propertyName = "User";
+            var propertyValue = new SqlParameter("propertyValue", "johndoe");
 
             var blogs = context.Blogs
-                .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser {0}", user)
+                .FromSqlRaw("SELECT * FROM [Blogs] WHERE {propertyValue} = {propertyValue}", propertyName, propertyValue)
                 .ToList();
             #endregion
         }
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlInterpolatedStoredProcedureParameter
-            var user = "johndoe";
-
-            var blogs = context.Blogs
-                .FromSqlInterpolated($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
-                .ToList();
-            #endregion
-        }
-
-        using (var context = new BloggingContext())
-        {
-            #region FromSqlRawStoredProcedureSqlParameter
-            var user = new SqlParameter("user", "johndoe");
-
-            var blogs = context.Blogs
-                .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
-                .ToList();
-            #endregion
-        }
-
-        using (var context = new BloggingContext())
-        {
-            #region FromSqlRawStoredProcedureNamedSqlParameter
-            var user = new SqlParameter("user", "johndoe");
-
-            var blogs = context.Blogs
-                .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser @filterByUser=@user", user)
-                .ToList();
-            #endregion
-        }
-
-        using (var context = new BloggingContext())
-        {
-            #region FromSqlInterpolatedComposed
+            #region FromSqlComposed
             var searchTerm = "Lorem ipsum";
 
             var blogs = context.Blogs
-                .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
                 .Where(b => b.Rating > 3)
                 .OrderByDescending(b => b.Rating)
                 .ToList();
@@ -123,11 +124,23 @@ internal class Program
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlInterpolatedAsNoTracking
+            #region FromSqlInclude
             var searchTerm = "Lorem ipsum";
 
             var blogs = context.Blogs
-                .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+                .Include(b => b.Posts)
+                .ToList();
+            #endregion
+        }
+
+        using (var context = new BloggingContext())
+        {
+            #region FromSqlAsNoTracking
+            var searchTerm = "Lorem ipsum";
+
+            var blogs = context.Blogs
+                .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
                 .AsNoTracking()
                 .ToList();
             #endregion
@@ -135,14 +148,28 @@ internal class Program
 
         using (var context = new BloggingContext())
         {
-            #region FromSqlInterpolatedInclude
-            var searchTerm = "Lorem ipsum";
-
-            var blogs = context.Blogs
-                .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
-                .Include(b => b.Posts)
+            #region SqlQuery
+            var ids = context.Database
+                .SqlQuery<int>($"SELECT [BlogId] FROM [Blogs]")
                 .ToList();
             #endregion
         }
+
+        using (var context = new BloggingContext())
+        {
+            #region SqlQueryComposed
+            var overAverageIds = context.Database
+                .SqlQuery<int>($"SELECT [BlogId] AS [Value] FROM [Blogs]")
+                .Where(id => id > context.Blogs.Average(b => b.BlogId))
+                .ToList();
+            #endregion
+        }
+
+        #region ExecuteSql
+        using (var context = new BloggingContext())
+        {
+            var rowsModified = context.Database.ExecuteSql($"UPDATE [Blogs] SET [Url] = NULL");
+        }
+        #endregion
     }
 }

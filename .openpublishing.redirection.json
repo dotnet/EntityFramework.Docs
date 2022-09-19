@@ -464,6 +464,11 @@
             "source_path": "entity-framework/core/managing-schemas/scaffolding.md",
             "redirect_url": "/ef/core/managing-schemas/scaffolding/index",
             "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/querying/raw-sql.md",
+            "redirect_url": "/ef/core/querying/sql-queries",
+            "redirect_document_id": false
         }
     ]
 }
