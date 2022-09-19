@@ -25,7 +25,7 @@ highlightedContent:
     # Card
     - title: "Persist and retrieve relational data with Entity Framework Core"
       itemType: learn
-      url: /learn/modules/persist-data-ef-core/
+      url: /training/modules/persist-data-ef-core/
     # Card
     - title: "Releases and platforms"
       itemType: whats-new
