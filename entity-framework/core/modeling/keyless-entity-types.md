@@ -47,7 +47,7 @@ However, they are different from regular entity types in that they:
 
 Some of the main usage scenarios for keyless entity types are:
 
-- Serving as the return type for [raw SQL queries](xref:core/querying/raw-sql).
+- Serving as the return type for [SQL queries](xref:core/querying/sql-queries).
 - Mapping to database views that do not contain a primary key.
 - Mapping to tables that do not have a primary key defined.
 - Mapping to queries defined in the model.

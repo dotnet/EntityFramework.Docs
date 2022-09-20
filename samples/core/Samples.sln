@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientEvaluation", "Queryin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracking", "Querying\Tracking\Tracking.csproj", "{CCD901FE-20C8-4DC0-AD9C-8B8333EE277B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RawSQL", "Querying\RawSQL\RawSQL.csproj", "{63B6747C-470D-4561-A3A2-3C024747BE3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlQueries", "Querying\SqlQueries\SqlQueries.csproj", "{63B6747C-470D-4561-A3A2-3C024747BE3B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplexQuery", "Querying\ComplexQuery\ComplexQuery.csproj", "{AD0BF60E-B46C-4181-BF43-D68801E5D259}"
 EndProject

@@ -189,11 +189,11 @@ Here are the results for a benchmark comparing tracking vs. no-tracking behavior
 
 Finally, it is possible to perform updates without the overhead of change tracking, by utilizing a no-tracking query and then attaching the returned instance to the context, specifying which changes are to be made. This transfers the burden of change tracking from EF to the user, and should only be attempted if the change tracking overhead has been shown to be unacceptable via profiling or benchmarking.
 
-## Using raw SQL
+## Using SQL queries
 
 In some cases, more optimized SQL exists for your query, which EF does not generate. This can happen when the SQL construct is an extension specific to your database that's unsupported, or simply because EF does not translate to it yet. In these cases, writing SQL by hand can provide a substantial performance boost, and EF supports several ways to do this.
 
-* Use raw SQL [directly in your query](xref:core/querying/raw-sql), e.g. via <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A>. EF even lets you compose over the raw SQL with regular LINQ queries, allowing you to express only a part of the query in raw SQL. This is a good technique when the raw SQL only needs to be used in a single query in your codebase.
+* Use SQL queries [directly in your query](xref:core/querying/sql-queries), e.g. via <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A>. EF even lets you compose over the SQL with regular LINQ queries, allowing you to express only a part of the query in SQL. This is a good technique when the SQL only needs to be used in a single query in your codebase.
 * Define a [user-defined function](xref:core/querying/database-functions) (UDF), and then call that from your queries. Note that since 5.0, EF allows UDFs to return full resultsets - these are known as table-valued functions (TVFs) - and also allows mapping a `DbSet` to a function, making it look just like just another table.
 * Define a database view and query from it in your queries. Note that unlike functions, views cannot accept parameters.
 
