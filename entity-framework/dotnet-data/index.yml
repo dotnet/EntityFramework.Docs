@@ -41,7 +41,7 @@ highlightedContent:
     # Card
     - title: "Entity Framework Core (Tutorial)"
       itemType: learn
-      url: /learn/modules/persist-data-ef-core/
+      url: /training/modules/persist-data-ef-core/
       
     # Card
     - title: "SQLite overview"
@@ -133,7 +133,7 @@ additionalContent:
               text: "Overview"
             - url: /ef/core/get-started/overview/first-app
               text: "Create your first EF Core app"
-            - url: /learn/modules/persist-data-ef-core/
+            - url: /training/modules/persist-data-ef-core/
               text: "Learn: Persist and retrieve relational data with EF Core"
             - url: /ef/core/providers/
               text: "Supported databases"

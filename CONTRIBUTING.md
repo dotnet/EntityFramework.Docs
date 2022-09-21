@@ -17,7 +17,7 @@ You'll need a basic understanding of [Git and GitHub.com](https://guides.github.
 
 ## Markdown syntax
 
-Articles are written in [DocFx-flavored Markdown (DFM)](http://dotnet.github.io/docfx/spec/docfx_flavored_markdown.html), a superset of [GitHub-flavored Markdown (GFM)](https://guides.github.com/features/mastering-markdown/). For examples of DFM syntax and metadata for UI features commonly used in the EF documentation, see [Metadata and Markdown Template](https://docs.microsoft.com/contribute/dotnet/dotnet-style-guide).
+Articles are written in [DocFx-flavored Markdown (DFM)](http://dotnet.github.io/docfx/spec/docfx_flavored_markdown.html), a superset of [GitHub-flavored Markdown (GFM)](https://guides.github.com/features/mastering-markdown/). For examples of DFM syntax and metadata for UI features commonly used in the EF documentation, see [Metadata and Markdown Template](https://learn.microsoft.com/contribute/dotnet/dotnet-style-guide).
 
 ## Folder structure conventions
 
@@ -96,4 +96,4 @@ DocFX requires the .NET Framework on Windows, or Mono for Linux or macOS.
 
 ## Voice and tone
 
-Our goal is to write documentation that is easily understandable by the widest possible audience. To that end we have established guidelines for writing style that we ask our contributors to follow. For more information, see [Voice and tone guidelines](https://docs.microsoft.com/contribute/dotnet/dotnet-voice-tone).
+Our goal is to write documentation that is easily understandable by the widest possible audience. To that end we have established guidelines for writing style that we ask our contributors to follow. For more information, see [Voice and tone guidelines](https://learn.microsoft.com/contribute/dotnet/dotnet-voice-tone).

@@ -35,10 +35,10 @@ git clone https://github.com/dotnet/EntityFramework.Docs
 
 ### Create an Azure Cosmos DB instance
 
-To run this demo, you will need to either run the [Azure Cosmos DB emulator](https://docs.microsoft.com/azure/cosmos-db/local-emulator)
+To run this demo, you will need to either run the [Azure Cosmos DB emulator](https://learn.microsoft.com/azure/cosmos-db/local-emulator)
 or create an Azure Cosmos DB account. You can read
-[Create an Azure Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/create-cosmosdb-resources-portal#create-an-azure-cosmos-db-account) to learn how. Be sure to check out the option
-for a [free account](https://docs.microsoft.com/azure/cosmos-db/optimize-dev-test#azure-cosmos-db-free-tier)!
+[Create an Azure Cosmos DB account](https://learn.microsoft.com/azure/cosmos-db/create-cosmosdb-resources-portal#create-an-azure-cosmos-db-account) to learn how. Be sure to check out the option
+for a [free account](https://learn.microsoft.com/azure/cosmos-db/optimize-dev-test#azure-cosmos-db-free-tier)!
 
 Choose the SQL API.
 
