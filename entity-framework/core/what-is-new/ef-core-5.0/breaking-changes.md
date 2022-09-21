@@ -81,7 +81,7 @@ We marked this method as obsolete to guide users to a more accurate overload - <
 
 #### Mitigations
 
-If the entity type is only ever mapped to a single table, and never to views, functions, or multiple tables, the <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnBaseName> can be used in EF Core 5.0 and 6.0 to obtain the table name. For example:
+If the entity type is only ever mapped to a single table, and never to views, functions, or multiple tables, the <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnBaseName(Microsoft.EntityFrameworkCore.Metadata.IReadOnlyProperty)> can be used in EF Core 5.0 and 6.0 to obtain the table name. For example:
 
 ```csharp
 var columnName = property.GetColumnBaseName();
