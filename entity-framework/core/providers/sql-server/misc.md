@@ -2,7 +2,7 @@
 title: Miscellaneous - Microsoft SQL Server Database Provider - EF Core
 description: Miscellaneous for the Microsoft SQL Server database provider
 author: roji
-ms.date: 06/07/2021
+ms.date: 09/20/2022
 uid: core/providers/sql-server/misc
 ---
 # Miscellaneous notes for SQL Server
@@ -16,3 +16,11 @@ You can let EF Core know that the target table has a trigger; doing so will reve
 [!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=TriggerConfiguration&highlight=4)]
 
 Note that doing this doesn't actually make EF Core create or manage the trigger in any way - it currently only informs EF Core that triggers are present on the table. As a result, any trigger name can be used.
+
+A model building convention can be used to configure all tables with triggers:
+
+[!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=BlankTriggerAddingConvention)]
+
+Use the convention on your `DbContext` by overriding `ConfigureConventions`:
+
+[!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=ConfigureConventions)]
