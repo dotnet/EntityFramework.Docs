@@ -50,7 +50,7 @@ EF Core 7.0 targets .NET 6. This means that existing applications that target .N
 - The server must be configured with a valid certificate
 - The client must trust this certificate
 
-If these conditions are nol met, then a `SqlException` will be thrown. For example:
+If these conditions are not met, then a `SqlException` will be thrown. For example:
 
 > A connection was successfully established with the server, but then an error occurred during the login process. (provider: SSL Provider, error: 0 - The certificate chain was issued by an authority that is not trusted.)
 
@@ -67,7 +67,7 @@ There are three ways to proceed:
 3. Explicitly add `Encrypt=False` to the connection string.
 
 > [!WARNING]
-> Options 2 and three both leave the server in a potentially insecure state.
+> Options 2 and 3 both leave the server in a potentially insecure state.
 
 <a name="warnings-as-errors"></a>
 
