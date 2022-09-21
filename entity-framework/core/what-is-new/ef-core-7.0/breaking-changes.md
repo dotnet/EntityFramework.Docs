@@ -88,7 +88,7 @@ In EF Core 6.0, a bug in the SQL Server provider meant that some warnings that a
 
 #### New behavior
 
-Starting with EF Core 7.0, these warnings will again, by default, result in an exception being thrown.
+Starting with EF Core 7.0, these warnings again, by default, result in an exception being thrown.
 
 #### Why
 
