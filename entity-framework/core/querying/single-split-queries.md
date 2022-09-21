@@ -14,7 +14,7 @@ In relational databases, all related entities are loaded by introducing JOINs in
 ```sql
 SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url], [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title]
 FROM [Blogs] AS [b]
-LEFT JOIN [Post] AS [p] ON [b].[BlogId] = [p].[BlogId]
+LEFT JOIN [Posts] AS [p] ON [b].[BlogId] = [p].[BlogId]
 ORDER BY [b].[BlogId], [p].[PostId]
 ```
 

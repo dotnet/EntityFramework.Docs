@@ -78,9 +78,9 @@ If you've decided you do want to dynamically construct your SQL, you'll have to 
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlRawStoredProcedureParameter)]
 
-In the above code, the column name is inserted directly into the SQL, using C# string interpolation. It is your responsibility to make sure the value is safe, sanitizing it if it comes from an unsafe origin; this means detecting special characters such as semicolons, comments, and other SQL constructs, and either escaping them properly or rejecting such inputs.
+In the above code, the column name is inserted directly into the SQL, using C# string interpolation. It is your responsibility to make sure this string value is safe, sanitizing it if it comes from an unsafe origin; this means detecting special characters such as semicolons, comments, and other SQL constructs, and either escaping them properly or rejecting such inputs.
 
-On the other hand, the property value is sent via a `DbParameter`, and is therefore safe in the face of SQL injection.
+On the other hand, the column value is sent via a `DbParameter`, and is therefore safe in the face of SQL injection.
 
 > [!WARNING]
 >
@@ -125,12 +125,12 @@ The following example uses a SQL query that selects from a Table-Valued Function
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlAsNoTracking)]
 
-## Querying primitive (non-entity) types
+## Querying scalar (non-entity) types
 
 > [!NOTE]
 > This feature was introduced in EF Core 7.0.
 
-While <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> is useful for querying entities defined in your model, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery%2A> allows you to easily query for simple, non-entity types via SQL, without needing to drop down to lower-level data access APIs. For example, the following query fetches all the IDs from the `Blogs` table:
+While <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> is useful for querying entities defined in your model, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery%2A> allows you to easily query for scalar, non-entity types via SQL, without needing to drop down to lower-level data access APIs. For example, the following query fetches all the IDs from the `Blogs` table:
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#SqlQuery)]
 
@@ -138,7 +138,7 @@ You can also compose LINQ operators over your SQL query. However, since your SQL
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#SqlQueryComposed)]
 
-<xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> can be used with any primitive type supported by your database provider. If you'd like to use a type not supported by your database provider, you can use [pre-convention configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration) to define a value conversion for it.
+<xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> can be used with any scalar type supported by your database provider. If you'd like to use a type not supported by your database provider, you can use [pre-convention configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration) to define a value conversion for it.
 
 <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQueryRaw%2A> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> does for entity types.
 
