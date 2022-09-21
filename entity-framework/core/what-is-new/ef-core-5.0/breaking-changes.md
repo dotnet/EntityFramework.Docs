@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 5.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 5.0
 author: bricelam
-ms.date: 10/08/2021
+ms.date: 09/21/2022
 uid: core/what-is-new/ef-core-5.0/breaking-changes
 ---
 
@@ -81,7 +81,15 @@ We marked this method as obsolete to guide users to a more accurate overload - <
 
 #### Mitigations
 
-Use the following code to get the column name for a specific table:
+If the entity type is only ever mapped to a single table, and never to views, functions, or multiple tables, the <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnBaseName> can be used in EF Core 5.0 and 6.0 to obtain the table name. For example:
+
+```csharp
+var columnName = property.GetColumnBaseName();
+```
+
+In EF Core 7.0, this can again be replaced with the new `GetColumnName`, which behaves as the original did for simple, single table only mappings.
+
+If the entity type may be mapped to views, functions, or multiple tables, then a <xref:Microsoft.EntityFrameworkCore.Metadata.StoreObjectIdentifier> must be obtained to identity the table, view, or function. This can be then be used to get the column name for that store object. For example:
 
 ```csharp
 var columnName = property.GetColumnName(StoreObjectIdentifier.Table("Users", null)));
