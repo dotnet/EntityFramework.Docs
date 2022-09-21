@@ -160,7 +160,7 @@ Starting with EF Core 7.0, the dependent is no longer deleted. Note that if the 
 
 #### Why
 
-The dependent can live without any relationship to a principal, so severing the relationship should not cause the entity to be deleted.
+The dependent can exist without any relationship to a principal, so severing the relationship should not cause the entity to be deleted.
 
 #### Mitigations
 
