@@ -71,7 +71,7 @@ There are three ways to proceed:
 
 <a name="warnings-as-errors"></a>
 
-### Some warnings will again throw exceptions by default
+### Some warnings throw exceptions by default again
 
 [Tracking Issue #29069](https://github.com/dotnet/efcore/issues/29069)
 
