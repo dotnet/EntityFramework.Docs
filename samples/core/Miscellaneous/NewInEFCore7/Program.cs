@@ -35,5 +35,12 @@ public class Program
         await StoredProcedureMappingSample.Insert_Update_and_Delete_using_stored_procedures_with_TPH();
         await StoredProcedureMappingSample.Insert_Update_and_Delete_using_stored_procedures_with_TPT();
         await StoredProcedureMappingSample.Insert_Update_and_Delete_using_stored_procedures_with_TPC();
+
+        await SimpleMaterializationSample.Simple_actions_on_entity_creation();
+        await QueryInterceptionSample.LINQ_expression_tree_interception();
+        await OptimisticConcurrencyInterceptionSample.Optimistic_concurrency_interception();
+        await InjectLoggerSample.Injecting_services_into_entities();
+        await LazyConnectionStringSample.Lazy_initialization_of_a_connection_string();
+        await QueryStatisticsLoggerSample.Executing_commands_after_consuming_a_result_set();
     }
 }
