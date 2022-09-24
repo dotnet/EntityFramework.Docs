@@ -85,7 +85,7 @@ public static class QueryStatisticsLoggerSample
             CommandEventData eventData,
             InterceptionResult<DbDataReader> result)
         {
-            command.CommandText = "SET STATISTICS IO ON;" + command.CommandText;
+            command.CommandText = "SET STATISTICS IO ON;" + Environment.NewLine + command.CommandText;
 
             return result;
         }
@@ -97,7 +97,7 @@ public static class QueryStatisticsLoggerSample
             InterceptionResult<DbDataReader> result,
             CancellationToken cancellationToken = default)
         {
-            command.CommandText = "SET STATISTICS IO ON;" + command.CommandText;
+            command.CommandText = "SET STATISTICS IO ON;" + Environment.NewLine + command.CommandText;
 
             return new(result);
         }

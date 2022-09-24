@@ -2476,6 +2476,9 @@ One of the `IDbConnectionInterceptor` methods can then be implemented to configu
 services.AddScoped<ITenantConnectionStringFactory, TestTenantConnectionStringFactory>();
 ```
 
+> [!WARNING]
+> Performing a asynchronous lookup for a connection string, access token, or similar every time it is needed can be very slow. Consider caching these things and only refreshing the cached string or token periodically. For example, access tokens can often be used for a significant period of time before needing to be refreshed.
+
 This can be injected into each `DbContext` instance using constructor injection:
 
 ```csharp
@@ -2536,6 +2539,9 @@ Finally, the interceptor uses this service to obtain the connection string async
 -->
 [!code-csharp[ConnectionStringInitializationInterceptor](../../../../samples/core/Miscellaneous/NewInEFCore7/LazyConnectionStringSample.cs?name=ConnectionStringInitializationInterceptor)]
 
+> [!NOTE]
+> The connection string is only obtained the first time that a connection is used. After that, the connection string stored on the `DbConnection` will be used without looking up a new connection string.
+
 > [!TIP]
 > This interceptor overrides the non-async `ConnectionOpening` method to throw since the service to get the connection string must be called from an async code path.
 
@@ -2555,7 +2561,7 @@ First, the interceptor will prefix commands with `SET STATISTICS IO ON`, which t
             InterceptionResult<DbDataReader> result,
             CancellationToken cancellationToken = default)
         {
-            command.CommandText = "SET STATISTICS IO ON;" + command.CommandText;
+            command.CommandText = "SET STATISTICS IO ON;" + Environment.NewLine + command.CommandText;
 
             return new(result);
         }
@@ -2599,8 +2605,9 @@ Running some code that uses these interceptors show SQL Server query statistics 
 
 ```output
 info: Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (26ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
-      SET STATISTICS IO ON;SET IMPLICIT_TRANSACTIONS OFF;
+      Executed DbCommand (4ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+      SET STATISTICS IO ON;
+      SET IMPLICIT_TRANSACTIONS OFF;
       SET NOCOUNT ON;
       MERGE [Customers] USING (
       VALUES (@p0, @p1, 0),
@@ -2612,8 +2619,9 @@ info: Microsoft.EntityFrameworkCore.Database.Command[20101]
 info: InfoMessageLogger[1]
       Table 'Customers'. Scan count 0, logical reads 5, physical reads 0, page server reads 0, read-ahead reads 0, page server read-ahead reads 0, lob logical reads 0, lob physical reads 0, lob page server reads 0, lob read-ahead reads 0, lob page server read-ahead reads 0.
 info: Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      SET STATISTICS IO ON;SELECT TOP(2) [c].[Id], [c].[Name], [c].[PhoneNumber]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SET STATISTICS IO ON;
+      SELECT TOP(2) [c].[Id], [c].[Name], [c].[PhoneNumber]
       FROM [Customers] AS [c]
       WHERE [c].[Name] = N'Alice'
 info: InfoMessageLogger[1]
