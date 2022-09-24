@@ -9,7 +9,7 @@ public class InMemoryContext : DbContext
     #region IsMemoryOptimized
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Blog>().IsMemoryOptimized();
+        modelBuilder.Entity<Blog>().ToTable(b => b.IsMemoryOptimized());
     }
     #endregion
 }
