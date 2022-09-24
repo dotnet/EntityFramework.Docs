@@ -2250,7 +2250,7 @@ This time, the interceptor must implement `IMaterializationInterceptor.Initializ
 -->
 [!code-csharp[LoggerInjectionInterceptor](../../../../samples/core/Miscellaneous/NewInEFCore7/InjectLoggerSample.cs?name=LoggerInjectionInterceptor)]
 
-This time a new instance of the interceptor is used for each `DbContext` instance, since the `ILogger` obtained can change per `DbContext` instance, and the `Ilogger` is cached on the interceptor:
+This time a new instance of the interceptor is used for each `DbContext` instance, since the `ILogger` obtained can change per `DbContext` instance, and the `ILogger` is cached on the interceptor:
 
 <!--
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
