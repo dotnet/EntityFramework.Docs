@@ -2258,7 +2258,7 @@ This time a new instance of the interceptor is used for each `DbContext` instanc
 -->
 [!code-csharp[OnConfiguring](../../../../samples/core/Miscellaneous/NewInEFCore7/InjectLoggerSample.cs?name=OnConfiguring)]
 
-Now, whenever the `Customer.PhoneNumber` is changed, this changed will be logged to the application's log. For example:
+Now, whenever the `Customer.PhoneNumber` is changed, this change will be logged to the application's log. For example:
 
 ```output
 info: CustomersLogger[1]
