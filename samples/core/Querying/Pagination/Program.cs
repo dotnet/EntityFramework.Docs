@@ -10,6 +10,12 @@ internal class Program
     {
         using (var context = new BloggingContext())
         {
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+        }
+
+        using (var context = new BloggingContext())
+        {
             #region OffsetPagination
             var position = 20;
             var nextPage = context.Posts

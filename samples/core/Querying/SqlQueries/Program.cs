@@ -100,8 +100,8 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region FromSqlRawStoredProcedureParameter
-            var columnName = "Name";
-            var columnValue = new SqlParameter("propertyValue", "johndoe");
+            var columnName = "Url";
+            var columnValue = new SqlParameter("columnValue", "http://SomeURL");
 
             var blogs = context.Blogs
                 .FromSqlRaw($"SELECT * FROM [Blogs] WHERE {columnName} = @columnValue", columnValue)
