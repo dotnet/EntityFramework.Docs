@@ -2,7 +2,7 @@
 title: What's New in EF Core 7.0
 description: Overview of new features in EF Core 7.0
 author: ajcvickers
-ms.date: 09/23/2022
+ms.date: 09/27/2022
 uid: core/what-is-new/ef-core-7
 ---
 
@@ -2626,4 +2626,453 @@ info: Microsoft.EntityFrameworkCore.Database.Command[20101]
       WHERE [c].[Name] = N'Alice'
 info: InfoMessageLogger[1]
       Table 'Customers'. Scan count 1, logical reads 2, physical reads 0, page server reads 0, read-ahead reads 0, page server read-ahead reads 0, lob logical reads 0, lob physical reads 0, lob page server reads 0, lob read-ahead reads 0, lob page server read-ahead reads 0.
+```
+
+## Query enhancements
+
+EF7 contains many improvements in the translation of LINQ queries.
+
+### GroupBy as final operator
+
+> [!TIP]
+> The code shown here comes from [GroupByFinalOperatorSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/GroupByFinalOperatorSample.cs).
+
+EF7 supports using `GroupBy` as the final operator in a query. For example, this LINQ query:
+
+<!--
+var query = context.Books.GroupBy(s => s.Price);
+-->
+[!code-csharp[GroupByFinalOperator](../../../../samples/core/Miscellaneous/NewInEFCore7/GroupByFinalOperatorSample.cs?name=GroupByFinalOperator)]
+
+Translates to the following SQL when using SQL Server:
+
+```sql
+SELECT [b].[Price], [b].[Id], [b].[AuthorId]
+FROM [Books] AS [b]
+ORDER BY [b].[Price]
+```
+
+> [!NOTE]
+> This type of `GroupBy` does not translate directly to SQL, so EF Core does the grouping on the returned results. However, this does not result in any additional data being transferred from the server.
+
+### GroupJoin as final operator
+
+> [!TIP]
+> The code shown here comes from [GroupJoinFinalOperatorSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/GroupByFinalOperatorSample.cs).
+
+EF7 supports using `GroupJoin` as the final operator in a query. For example, this LINQ query:
+
+<!--
+            var query = context.Customers.GroupJoin(
+                context.Orders, c => c.Id, o => o.CustomerId, (c, os) => new { Customer = c, Orders = os });
+-->
+[!code-csharp[GroupJoinFinalOperator](../../../../samples/core/Miscellaneous/NewInEFCore7/GroupJoinFinalOperatorSample.cs?name=GroupJoinFinalOperator)]
+
+Translates to the following SQL when using SQL Server:
+
+```sql
+SELECT [c].[Id], [c].[Name], [t].[Id], [t].[Amount], [t].[CustomerId]
+FROM [Customers] AS [c]
+OUTER APPLY (
+    SELECT [o].[Id], [o].[Amount], [o].[CustomerId]
+    FROM [Orders] AS [o]
+    WHERE [c].[Id] = [o].[CustomerId]
+) AS [t]
+ORDER BY [c].[Id]
+```
+
+### GroupBy entity type
+
+> [!TIP]
+> The code shown here comes from [GroupByEntityTypeSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/GroupByEntityTypeSample.cs).
+
+EF7 supports grouping by an entity type. For example, this LINQ query:
+
+<!--
+            var query = context.Books
+                .GroupBy(s => s.Author)
+                .Select(s => new { Author = s.Key, MaxPrice = s.Max(p => p.Price) });
+-->
+[!code-csharp[GroupByEntityType](../../../../samples/core/Miscellaneous/NewInEFCore7/GroupByEntityTypeSample.cs?name=GroupByEntityType)]
+
+Translates to the following SQL when using SQLite:
+
+```sql
+SELECT [a].[Id], [a].[Name], MAX([b].[Price]) AS [MaxPrice]
+FROM [Books] AS [b]
+INNER JOIN [Author] AS [a] ON [b].[AuthorId] = [a].[Id]
+GROUP BY [a].[Id], [a].[Name]
+```
+
+Keep in mind that grouping by a unique property, such as the primary key, will always be more efficient than grouping by an entity type. However, grouping by entity types can be used for both keyed and keyless entity types.
+
+Also, grouping by an entity type with a primary key will always result in one group per entity instance, since every entity must have a unique key value. It is sometimes worth switching the source of the query so that grouping in not required. For example, the following query returns the same results as the previous query:
+<!--
+var query = context.Authors
+    .Select(a => new { Author = a, MaxPrice = a.Books.Max(b => b.Price) });
+-->
+[!code-csharp[GroupByEntityTypeReversed](../../../../samples/core/Miscellaneous/NewInEFCore7/GroupByEntityTypeSample.cs?name=GroupByEntityTypeReversed)]
+
+This query translates to the following SQL when using SQLite:
+
+```sql
+SELECT [a].[Id], [a].[Name], (
+    SELECT MAX([b].[Price])
+    FROM [Books] AS [b]
+    WHERE [a].[Id] = [b].[AuthorId]) AS [MaxPrice]
+FROM [Authors] AS [a]
+```
+
+### Subqueries don't reference ungrouped columns from outer query
+
+> [!TIP]
+> The code shown here comes from [UngroupedColumnsQuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/UngroupedColumnsQuerySample.cs).
+
+In EF Core 6.0, a `GROUP BY` clause would reference columns in the outer query, which fails with some databases and is inefficient in others. For example, consider the following query:
+
+<!--
+            var query = from s in (from i in context.Invoices
+                                   group i by i.History.Month
+                                   into g
+                                   select new { Month = g.Key, Total = g.Sum(p => p.Amount), })
+                        select new
+                        {
+                            s.Month, s.Total, Payment = context.Payments.Where(p => p.History.Month == s.Month).Sum(p => p.Amount)
+                        };
+-->
+[!code-csharp[UngroupedColumns](../../../../samples/core/Miscellaneous/NewInEFCore7/UngroupedColumnsQuerySample.cs?name=UngroupedColumns)]
+
+In EF Core 6.0 on SQL Server, this was translated to:
+
+```sql
+SELECT DATEPART(month, [i].[History]) AS [Month], COALESCE(SUM([i].[Amount]), 0.0) AS [Total], (
+    SELECT COALESCE(SUM([p].[Amount]), 0.0)
+    FROM [Payments] AS [p]
+    WHERE DATEPART(month, [p].[History]) = DATEPART(month, [i].[History])) AS [Payment]
+FROM [Invoices] AS [i]
+GROUP BY DATEPART(month, [i].[History])
+```
+
+On EF7, the translation is:
+
+```sql
+SELECT [t].[Key] AS [Month], COALESCE(SUM([t].[Amount]), 0.0) AS [Total], (
+    SELECT COALESCE(SUM([p].[Amount]), 0.0)
+    FROM [Payments] AS [p]
+    WHERE DATEPART(month, [p].[History]) = [t].[Key]) AS [Payment]
+FROM (
+    SELECT [i].[Amount], DATEPART(month, [i].[History]) AS [Key]
+    FROM [Invoices] AS [i]
+) AS [t]
+GROUP BY [t].[Key]
+```
+
+### Read-only collections can be used for `Contains`
+
+> [!TIP]
+> The code shown here comes from [ReadOnlySetQuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ReadOnlySetQuerySample.cs).
+
+EF7 supports using `Contains` when the items to search for are contained in an `IReadOnlySet` or `IReadOnlyCollection`, or `IReadOnlyList`. For example, this LINQ query:
+
+<!--
+            IReadOnlySet<int> searchIds = new HashSet<int> { 1, 3, 5 };
+            var query = context.Customers.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
+-->
+[!code-csharp[ReadOnlySetQuery](../../../../samples/core/Miscellaneous/NewInEFCore7/ReadOnlySetQuerySample.cs?name=ReadOnlySetQuery)]
+
+Translates to the following SQL when using SQL Server:
+
+```sql
+SELECT [c].[Id], [c].[Name]
+FROM [Customers] AS [c]
+WHERE EXISTS (
+    SELECT 1
+    FROM [Orders] AS [o]
+    WHERE [c].[Id] = [o].[Customer1Id] AND [o].[Id] IN (1, 3, 5))
+```
+
+### Translations for aggregate functions
+
+EF7 introduces better extensibility for providers to translate aggregate functions. This and other work in this area has resulted in several new translations across providers, including:
+
+- [Translation of `String.Join` and `String.Concat`](https://github.com/dotnet/efcore/issues/2981)
+- [Translation of spatial aggregate functions](https://github.com/dotnet/efcore/issues/13278)
+- [Translation of statistics aggregate functions](https://github.com/dotnet/efcore/issues/28104)
+
+> [!NOTE]
+> Aggregate functions that act on `IEnumerable` argument are typically only translated in `GroupBy` queries. Vote for [Support spatial types in JSON columns](https://github.com/dotnet/efcore/issues/29200) if you are interested in getting this limitation removed.
+
+#### String aggregate functions
+
+> [!TIP]
+> The code shown here comes from [StringAggregateFunctionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/StringAggregateFunctionsSample.cs).
+
+Queries using <xref:System.String.Join%2A> and <xref:System.String.Concat%2A> are now translated when appropriate. For example:
+
+<!--
+        var query = context.Posts
+            .GroupBy(post => post.Author)
+            .Select(grouping => new { Author = grouping.Key, Books = string.Join("|", grouping.Select(post => post.Title)) });
+-->
+[!code-csharp[Join](../../../../samples/core/Miscellaneous/NewInEFCore7/StringAggregateFunctionsSample.cs?name=Join)]
+
+This query translates to following when using SQL Server:
+
+```sql
+SELECT [a].[Id], [a].[Name], COALESCE(STRING_AGG([p].[Title], N'|'), N'') AS [Books]
+FROM [Posts] AS [p]
+LEFT JOIN [Authors] AS [a] ON [p].[AuthorId] = [a].[Id]
+GROUP BY [a].[Id], [a].[Name]
+```
+
+When combined with other string functions, these translations allow for some complex string manipulation on the server. For example:
+
+<!--
+        var query = context.Posts
+            .GroupBy(post => post.Author!.Name)
+            .Select(
+                grouping =>
+                    new
+                    {
+                        PostAuthor = grouping.Key,
+                        Blogs = string.Concat(
+                            grouping
+                                .Select(post => post.Blog.Name)
+                                .Distinct()
+                                .Select(postName => "'" + postName + "' ")),
+                        ContentSummaries = string.Join(
+                            " | ",
+                            grouping
+                                .Where(post => post.Content.Length >= 10)
+                                .Select(post => "'" + post.Content.Substring(0, 10) + "' "))
+                    });
+-->
+[!code-csharp[ConcatAndJoin](../../../../samples/core/Miscellaneous/NewInEFCore7/StringAggregateFunctionsSample.cs?name=ConcatAndJoin)]
+
+This query translates to following when using SQL Server:
+
+```sql
+SELECT [t].[Name], (N'''' + [t0].[Name]) + N''' ', [t0].[Name], [t].[c]
+FROM (
+    SELECT [a].[Name], COALESCE(STRING_AGG(CASE
+        WHEN CAST(LEN([p].[Content]) AS int) >= 10 THEN COALESCE((N'''' + COALESCE(SUBSTRING([p].[Content], 0 + 1, 10), N'')) + N''' ', N'')
+    END, N' | '), N'') AS [c]
+    FROM [Posts] AS [p]
+    LEFT JOIN [Authors] AS [a] ON [p].[AuthorId] = [a].[Id]
+    GROUP BY [a].[Name]
+) AS [t]
+OUTER APPLY (
+    SELECT DISTINCT [b].[Name]
+    FROM [Posts] AS [p0]
+    LEFT JOIN [Authors] AS [a0] ON [p0].[AuthorId] = [a0].[Id]
+    INNER JOIN [Blogs] AS [b] ON [p0].[BlogId] = [b].[Id]
+    WHERE [t].[Name] = [a0].[Name] OR ([t].[Name] IS NULL AND [a0].[Name] IS NULL)
+) AS [t0]
+ORDER BY [t].[Name]
+```
+
+#### Spatial aggregate functions
+
+> [!TIP]
+> The code shown here comes from [SpatialAggregateFunctionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/SpatialAggregateFunctionsSample.cs).
+
+It is now possible for [database providers that support for NetTopologySuite](xref:core/modeling/spatial) to translate the following spatial aggregate functions:
+
+- [GeometryCombiner.Combine()](https://nettopologysuite.github.io/NetTopologySuite/api/NetTopologySuite.Geometries.Utilities.GeometryCombiner.html)
+- [UnaryUnionOp.Union()](https://nettopologysuite.github.io/NetTopologySuite/api/NetTopologySuite.Operation.Union.UnaryUnionOp.html)
+- [ConvexHull.Create()](http://nettopologysuite.github.io/NetTopologySuite/api/NetTopologySuite.Algorithm.ConvexHull.html)
+- [EnvelopeCombiner.CombineAsGeometry()](https://nettopologysuite.github.io/NetTopologySuite/api/NetTopologySuite.Geometries.Utilities.EnvelopeCombiner.html)
+
+> [!TIP]
+> These translations have been implemented by the team for SQL Server and SQLite. For other providers, contact the provider maintainer to add support if it has been implemented for that provider.
+
+For example:
+
+<!--
+            var query = context.Caches
+                .Where(cache => cache.Location.X < -90)
+                .GroupBy(cache => cache.Owner)
+                .Select(grouping => new
+                    {
+                        Id = grouping.Key,
+                        Combined = GeometryCombiner.Combine(grouping.Select(cache => cache.Location))
+                    });
+-->
+[!code-csharp[GeometryCombinerCombine](../../../../samples/core/Miscellaneous/NewInEFCore7/SpatialAggregateFunctionsSample.cs?name=GeometryCombinerCombine)]
+
+This query is translated to the following SQL when using SQL Server:
+
+```sql
+SELECT [c].[Owner] AS [Id], geography::CollectionAggregate([c].[Location]) AS [Combined]
+FROM [Caches] AS [c]
+WHERE [c].[Location].Long < -90.0E0
+GROUP BY [c].[Owner]
+```
+
+#### Statistical aggregate functions
+
+> [!TIP]
+> The code shown here comes from [StatisticalAggregateFunctionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/StatisticalAggregateFunctionsSample.cs).
+
+SQL Server translations have been implemented for the following statistical functions:
+
+- [EF.Functions.StandardDeviationSample()](https://github.com/dotnet/efcore/blob/2cfc7c3b9020daf9d2e28d404a78814e69941421/src/EFCore.SqlServer/Extensions/SqlServerDbFunctionsExtensions.cs#L1547)
+- [EF.Functions.StandardDeviationPopulation()](https://github.com/dotnet/efcore/blob/2cfc7c3b9020daf9d2e28d404a78814e69941421/src/EFCore.SqlServer/Extensions/SqlServerDbFunctionsExtensions.cs#L1621)
+- [EF.Functions.VarianceSample()](https://github.com/dotnet/efcore/blob/2cfc7c3b9020daf9d2e28d404a78814e69941421/src/EFCore.SqlServer/Extensions/SqlServerDbFunctionsExtensions.cs#L1695)
+- [EF.Functions. VariancePopulation()](https://github.com/dotnet/efcore/blob/2cfc7c3b9020daf9d2e28d404a78814e69941421/src/EFCore.SqlServer/Extensions/SqlServerDbFunctionsExtensions.cs#L1749)
+
+> [!TIP]
+> These translations have been implemented by the team for SQL Server. For other providers, contact the provider maintainer to add support if it has been implemented for that provider.
+
+For example:
+
+<!--
+            var query = context.Downloads
+                .GroupBy(download => download.Uploader.Id)
+                .Select(
+                    grouping => new
+                    {
+                        Author = grouping.Key,
+                        TotalCost = grouping.Sum(d => d.DownloadCount),
+                        AverageViews = grouping.Average(d => d.DownloadCount),
+                        VariancePopulation = EF.Functions.VariancePopulation(grouping.Select(d => d.DownloadCount)),
+                        VarianceSample = EF.Functions.VarianceSample(grouping.Select(d => d.DownloadCount)),
+                        StandardDeviationPopulation = EF.Functions.StandardDeviationPopulation(grouping.Select(d => d.DownloadCount)),
+                        StandardDeviationSample = EF.Functions.StandardDeviationSample(grouping.Select(d => d.DownloadCount))
+                    });
+-->
+[!code-csharp[StatsForAll](../../../../samples/core/Miscellaneous/NewInEFCore7/StatisticalAggregateFunctionsSample.cs?name=StatsForAll)]
+
+This query is translated to the following SQL when using SQL Server:
+
+```sql
+SELECT [u].[Id] AS [Author], COALESCE(SUM([d].[DownloadCount]), 0) AS [TotalCost], AVG(CAST([d].[DownloadCount] AS float)) AS [AverageViews], VARP([d].[DownloadCount]) AS [VariancePopulation], VAR([d].[DownloadCount]) AS [VarianceSample], STDEVP([d].[DownloadCount]) AS [StandardDeviationPopulation], STDEV([d].[DownloadCount]) AS [StandardDeviationSample]
+FROM [Downloads] AS [d]
+INNER JOIN [Uploader] AS [u] ON [d].[UploaderId] = [u].[Id]
+GROUP BY [u].[Id]
+```
+
+### Translation of `string.IndexOf`
+
+> [!TIP]
+> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
+
+EF7 now translates <xref:System.String.IndexOf%2A?displayProperty=nameWithType> in LINQ queries. For example:
+
+<!--
+            var query = context.Posts
+                .Select(post => new { post.Title, IndexOfEntity = post.Content.IndexOf("Entity") })
+                .Where(post => post.IndexOfEntity > 0);
+-->
+[!code-csharp[StringIndexOf](../../../../samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs?name=StringIndexOf)]
+
+This query translates to the following SQL when using SQL Server:
+
+```sql
+SELECT [p].[Title], CAST(CHARINDEX(N'Entity', [p].[Content]) AS int) - 1 AS [IndexOfEntity]
+FROM [Posts] AS [p]
+WHERE (CAST(CHARINDEX(N'Entity', [p].[Content]) AS int) - 1) > 0
+```
+
+### Translation of `GetType` for entity types
+
+> [!TIP]
+> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
+
+EF7 now translates <xref:System.Object.GetType?displayProperty=nameWithType> in LINQ queries. For example:
+
+<!--
+            var query = context.Posts.Where(post => post.GetType() == typeof(Post));
+-->
+[!code-csharp[GetType](../../../../samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs?name=GetType)]
+
+This query translates to the following SQL when using SQL Server with TPH inheritance:
+
+```sql
+SELECT [p].[Id], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Title], [p].[PromoText]
+FROM [Posts] AS [p]
+WHERE [p].[Discriminator] = N'Post'
+```
+
+Notice that this query returns only `Post` instances that are actually of type `Post`, and not those of any derived types. This is different from a query that uses `is` or `OfType`, which will also return instances of any derived types. For example, consider the query:
+
+<!--
+            var query = context.Posts.OfType<Post>();
+-->
+[!code-csharp[OfType](../../../../samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs?name=OfType)]
+
+Which translates to different SQL:
+
+```sql
+      SELECT [p].[Id], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Title], [p].[PromoText]
+      FROM [Posts] AS [p]
+```
+
+And will return both `Post` and `FeaturedPost` entities.
+
+### Support for `AT TIME ZONE`
+
+> [!TIP]
+> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
+
+EF7 introduces new [EF.Functions.AtTimeZone](https://github.com/dotnet/efcore/blob/2cfc7c3b9020daf9d2e28d404a78814e69941421/src/EFCore.SqlServer/Extensions/SqlServerDbFunctionsExtensions.cs#L1462) functions for <xref:System.DateTime> and <xref:System.DateTimeOffset>. These functions translate to `AT TIME ZONE` clauses in the generated SQL. For example:
+
+<!--
+            var query = context.Posts
+                .Select(post => new
+                {
+                    post.Title,
+                    PacificTime = EF.Functions.AtTimeZone(post.PublishedOn, "Pacific Standard Time"),
+                    UkTime = EF.Functions.AtTimeZone(post.PublishedOn, "GMT Standard Time"),
+                });
+-->
+[!code-csharp[AtTimeZone](../../../../samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs?name=AtTimeZone)]
+
+This query translates to the following SQL when using SQL Server:
+
+```sql
+SELECT [p].[Title], [p].[PublishedOn] AT TIME ZONE 'Pacific Standard Time' AS [PacificTime], [p].[PublishedOn] AT TIME ZONE 'GMT Standard Time' AS [UkTime]
+FROM [Posts] AS [p]
+```
+
+> [!TIP]
+> These translations have been implemented by the team for SQL Server. For other providers, contact the provider maintainer to add support if it has been implemented for that provider.
+
+### Filtered Include on hidden navigations
+
+> [!TIP]
+> The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
+
+The [Include methods](xref:core/querying/related-data/eager) can now be used with <xref:Microsoft.EntityFrameworkCore.EF.Property%2A?displayProperty=nameWithType>. This allows [filtering and ordering](xref:core/querying/related-data/eager#filtered-include) even for private navigation properties, or private navigations represented by fields. For example:
+
+<!--
+            var query = context.Blogs.Include(
+                blog => EF.Property<ICollection<Post>>(blog, "Posts")
+                    .Where(post => post.Content.Contains(".NET"))
+                    .OrderBy(post => post.Title));
+-->
+[!code-csharp[FilteredInclude](../../../../samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs?name=FilteredInclude)]
+
+This is equivalent to:
+
+```csharp
+var query = context.Blogs.Include(
+    blog => Posts
+        .Where(post => post.Content.Contains(".NET"))
+        .OrderBy(post => post.Title));
+```
+
+But does not require `Blog.Posts` to be publicly accessible.
+
+When using SQL Server, the both queries above translate to:
+
+```sql
+SELECT [b].[Id], [b].[Name], [t].[Id], [t].[AuthorId], [t].[BlogId], [t].[Content], [t].[Discriminator], [t].[PublishedOn], [t].[Title], [t].[PromoText]
+FROM [Blogs] AS [b]
+LEFT JOIN (
+    SELECT [p].[Id], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Title], [p].[PromoText]
+    FROM [Posts] AS [p]
+    WHERE [p].[Content] LIKE N'%.NET%'
+) AS [t] ON [b].[Id] = [t].[BlogId]
+ORDER BY [b].[Id], [t].[Title]
 ```

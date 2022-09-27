@@ -42,5 +42,32 @@ public class Program
         await InjectLoggerSample.Injecting_services_into_entities();
         await LazyConnectionStringSample.Lazy_initialization_of_a_connection_string();
         await QueryStatisticsLoggerSample.Executing_commands_after_consuming_a_result_set();
+
+        await UngroupedColumnsQuerySample.Subqueries_dont_reference_ungrouped_columns_from_outer_query_SqlServer();
+
+        await GroupByEntityTypeSample.GroupBy_entity_type_Sqlite();
+        await GroupByEntityTypeSample.GroupBy_entity_type_SqlServer();
+        await GroupByEntityTypeSample.GroupBy_entity_type_InMemory();
+
+        await GroupByFinalOperatorSample.GroupBy_final_operator_SqlServer();
+        await GroupByFinalOperatorSample.GroupBy_final_operator_Sqlite();
+
+        await GroupJoinFinalOperatorSample.GroupJoin_final_operator_SqlServer();
+        await GroupJoinFinalOperatorSample.GroupJoin_final_operator_Sqlite();
+        await GroupJoinFinalOperatorSample.GroupJoin_final_operator_InMemory();
+
+        await ReadOnlySetQuerySample.Use_Contains_with_IReadOnlySet_SqlServer();
+        await ReadOnlySetQuerySample.Use_Contains_with_IReadOnlySet_Sqlite();
+        await ReadOnlySetQuerySample.Use_Contains_with_IReadOnlySet_InMemory();
+
+        await StringAggregateFunctionsSample.Translate_string_Concat_and_string_Join();
+
+        await SpatialAggregateFunctionsSample.Translate_spatial_aggregate_functions_SqlServer();
+        await SpatialAggregateFunctionsSample.Translate_spatial_aggregate_functions_Sqlite();
+        await SpatialAggregateFunctionsSample.Translate_spatial_aggregate_functions_InMemory();
+
+        await StatisticalAggregateFunctionsSample.Translate_statistical_aggregate_functions();
+
+        await MiscellaneousTranslationsSample.Translate_string_IndexOf();
     }
 }
