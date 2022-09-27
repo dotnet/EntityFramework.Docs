@@ -2,7 +2,7 @@
 title: What's New in EF Core 7.0
 description: Overview of new features in EF Core 7.0
 author: ajcvickers
-ms.date: 09/25/2022
+ms.date: 09/27/2022
 uid: core/what-is-new/ef-core-7
 ---
 
@@ -2706,12 +2706,12 @@ GROUP BY [a].[Id], [a].[Name]
 
 Keep in mind that grouping by a unique property, such as the primary key, will always be more efficient than grouping by an entity type. However, grouping by entity types can be used for both keyed and keyless entity types.
 
-Also, grouping by an entity type with a primary key will always result in one group per entity instance, since every entity must have a unique key value. Consider instead switching the source of the query so that grouping in not required. For example, the following query returns the same results as the previous query:
+Also, grouping by an entity type with a primary key will always result in one group per entity instance, since every entity must have a unique key value. It is sometimes worth switching the source of the query so that grouping in not required. For example, the following query returns the same results as the previous query:
 <!--
 var query = context.Authors
     .Select(a => new { Author = a, MaxPrice = a.Books.Max(b => b.Price) });
 -->
-[!code-csharp[GroupByEntityType](../../../../samples/core/Miscellaneous/NewInEFCore7/GroupByEntityTypeSample.cs?name=GroupByEntityType)]
+[!code-csharp[GroupByEntityTypeReversed](../../../../samples/core/Miscellaneous/NewInEFCore7/GroupByEntityTypeSample.cs?name=GroupByEntityTypeReversed)]
 
 This query translates to the following SQL when using SQLite:
 
@@ -2798,6 +2798,9 @@ EF7 introduces better extensibility for providers to translate aggregate functio
 - [Translation of `String.Join` and `String.Concat`](https://github.com/dotnet/efcore/issues/2981)
 - [Translation of spatial aggregate functions](https://github.com/dotnet/efcore/issues/13278)
 - [Translation of statistics aggregate functions](https://github.com/dotnet/efcore/issues/28104)
+
+> [!NOTE]
+> Aggregate functions that act on `IEnumerable` argument are typically only translated in `GroupBy` queries. Vote for [Support spatial types in JSON columns](https://github.com/dotnet/efcore/issues/29200) if you are interested in getting this limitation removed.
 
 #### String aggregate functions
 
