@@ -116,7 +116,7 @@ We saw above that when changes are actually committed to the database, we must c
 This typically isn't the most efficient way to clear out a table. If test speed is a concern, you may want to use raw SQL to delete the table instead:
 
 ```sql
-DELETE FROM [Blogs] WHERE 1=1;
+DELETE FROM [Blogs];
 ```
 
 You may also want to consider using the [respawn](https://github.com/jbogard/respawn) package, which efficiently clears out a database. In addition, it does not require you to specify the tables to be cleared, and so your cleanup code does not need to be updated as tables are added to your model.
