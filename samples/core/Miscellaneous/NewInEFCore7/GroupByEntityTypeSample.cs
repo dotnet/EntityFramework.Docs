@@ -11,7 +11,7 @@ public static class GroupByEntityTypeSample
     public static Task GroupBy_entity_type_Sqlite()
     {
         PrintSampleName();
-        return QueryTest<BookContextSqlServer>();
+        return QueryTest<BookContextSqlite>();
     }
 
     public static Task GroupBy_entity_type_InMemory()

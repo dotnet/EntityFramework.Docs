@@ -13,7 +13,7 @@ public static class ReadOnlySetQuerySample
     public static Task Use_Contains_with_IReadOnlySet_Sqlite()
     {
         PrintSampleName();
-        return QueryTest<ReadOnlySetContextSqlServer>();
+        return QueryTest<ReadOnlySetContextSqlite>();
     }
 
     public static Task Use_Contains_with_IReadOnlySet_InMemory()
