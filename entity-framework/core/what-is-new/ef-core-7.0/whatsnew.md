@@ -3079,7 +3079,7 @@ ORDER BY [b].[Id], [t].[Title]
 
 ## Faster SaveChanges
 
-In EF7, the performance of <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> has been significantly improved. In some scenarios, saving changes is now four times faster than with EF Core 6.0!
+In EF7, the performance of <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync%2A> has been significantly improved. In some scenarios, saving changes is now up to four times faster than with EF Core 6.0!
 
 Most of these improvements come from:
 
