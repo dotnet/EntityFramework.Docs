@@ -3083,8 +3083,8 @@ In EF7, the performance of <xref:Microsoft.EntityFrameworkCore.DbContext.SaveCha
 
 Most of these improvements come from:
 
-- Generating faster SQL
 - Performing fewer roundtrips to the database
+- Generating faster SQL
 
 Some examples of these improvements are shown below.
 
