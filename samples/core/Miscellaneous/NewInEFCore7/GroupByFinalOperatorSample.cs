@@ -11,7 +11,7 @@ public static class GroupByFinalOperatorSample
     public static Task GroupBy_final_operator_Sqlite()
     {
         PrintSampleName();
-        return QueryTest<BookContextSqlServer>();
+        return QueryTest<BookContextSqlite>();
     }
 
     public static Task GroupBy_final_operator_InMemory()

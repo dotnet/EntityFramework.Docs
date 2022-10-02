@@ -15,7 +15,7 @@ public static class SpatialAggregateFunctionsSample
     public static Task Translate_spatial_aggregate_functions_Sqlite()
     {
         PrintSampleName();
-        return QueryTest<GeoCacheContextSqlServer>();
+        return QueryTest<GeoCacheContextSqlite>();
     }
 
     public static Task Translate_spatial_aggregate_functions_InMemory()

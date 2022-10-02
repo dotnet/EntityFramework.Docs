@@ -11,7 +11,7 @@ public static class GroupJoinFinalOperatorSample
     public static Task GroupJoin_final_operator_Sqlite()
     {
         PrintSampleName();
-        return QueryTest<GroupJoinContextSqlServer>();
+        return QueryTest<GroupJoinContextSqlite>();
     }
 
     public static Task GroupJoin_final_operator_InMemory()

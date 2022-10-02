@@ -53,7 +53,6 @@ public class Program
         await GroupByFinalOperatorSample.GroupBy_final_operator_Sqlite();
 
         await GroupJoinFinalOperatorSample.GroupJoin_final_operator_SqlServer();
-        await GroupJoinFinalOperatorSample.GroupJoin_final_operator_Sqlite();
         await GroupJoinFinalOperatorSample.GroupJoin_final_operator_InMemory();
 
         await ReadOnlySetQuerySample.Use_Contains_with_IReadOnlySet_SqlServer();
@@ -63,11 +62,13 @@ public class Program
         await StringAggregateFunctionsSample.Translate_string_Concat_and_string_Join();
 
         await SpatialAggregateFunctionsSample.Translate_spatial_aggregate_functions_SqlServer();
-        await SpatialAggregateFunctionsSample.Translate_spatial_aggregate_functions_Sqlite();
         await SpatialAggregateFunctionsSample.Translate_spatial_aggregate_functions_InMemory();
 
         await StatisticalAggregateFunctionsSample.Translate_statistical_aggregate_functions();
 
         await MiscellaneousTranslationsSample.Translate_string_IndexOf();
+
+        await SaveChangesPerformanceSample.SaveChanges_SQL_generation_samples_SqlServer();
+        await SaveChangesPerformanceSample.SaveChanges_SQL_generation_samples_Sqlite();
     }
 }
