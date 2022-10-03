@@ -22,9 +22,6 @@ public class Program
 
         await JsonColumnsSample.Json_columns_with_TPH();
 
-        // Issue https://github.com/dotnet/efcore/issues/28816 (Json: add support for Sqlite provider)
-        // await JsonColumnsSample.Json_columns_with_TPH_on_SQLite();
-
         await ModelBuildingConventionsSample.No_foreign_key_index_convention();
         await ModelBuildingConventionsSample.Discriminator_length_convention();
         await ModelBuildingConventionsSample.Max_string_length_convention();

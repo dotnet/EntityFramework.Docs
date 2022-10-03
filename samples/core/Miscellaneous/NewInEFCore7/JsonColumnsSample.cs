@@ -74,15 +74,11 @@ public static class JsonColumnsSample
 
         Console.WriteLine();
 
-        // Since query below cannot use Include
-        // Issue: https://github.com/dotnet/efcore/issues/28808
-        await context.Posts.LoadAsync();
-
         var authorsInChigleyWithPosts = await context.Authors
             .Where(
                 author => author.Contact.Address.City == "Chigley"
                           && author.Posts.Count > 1)
-            //.Include(author => author.Posts)
+            .Include(author => author.Posts)
             .ToListAsync();
 
         Console.WriteLine();
