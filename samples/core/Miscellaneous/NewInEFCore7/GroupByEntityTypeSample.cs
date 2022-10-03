@@ -44,11 +44,9 @@ public static class GroupByEntityTypeSample
         await using (var context = new TContext())
         {
             #region GroupByEntityType
-
             var query = context.Books
                 .GroupBy(s => s.Author)
                 .Select(s => new { Author = s.Key, MaxPrice = s.Max(p => p.Price) });
-
             #endregion
 
             await foreach (var group in query.AsAsyncEnumerable())

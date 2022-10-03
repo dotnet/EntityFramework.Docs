@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace NewInEfCore7;
 

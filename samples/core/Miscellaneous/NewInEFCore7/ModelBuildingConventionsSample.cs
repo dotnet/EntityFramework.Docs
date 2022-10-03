@@ -1,11 +1,8 @@
-using System.Net;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
 #pragma warning disable CS0169
 
 namespace NewInEfCore7;
@@ -154,7 +151,7 @@ public class DiscriminatorLengthBlogsContext : ModelBuildingBlogsContextBase
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
-        configurationBuilder.Conventions.Add(_ =>  new DiscriminatorLengthConvention3());
+        configurationBuilder.Conventions.Add(_ => new DiscriminatorLengthConvention3());
 
         base.ConfigureConventions(configurationBuilder);
     }
@@ -233,8 +230,8 @@ public class MaxStringLengthBlogsContext : ModelBuildingBlogsContextBase
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
-        configurationBuilder.Conventions.Add(_ =>  new MaxStringLengthConvention());
-        configurationBuilder.Conventions.Add(_ =>  new DiscriminatorLengthConvention3());
+        configurationBuilder.Conventions.Add(_ => new MaxStringLengthConvention());
+        configurationBuilder.Conventions.Add(_ => new DiscriminatorLengthConvention3());
 
         base.ConfigureConventions(configurationBuilder);
     }
@@ -284,7 +281,8 @@ public sealed class PersistAttribute : Attribute
 #region LaundryBasket
 public class LaundryBasket
 {
-    [Persist] [Key]
+    [Persist]
+    [Key]
     private readonly int _id;
 
     [Persist]

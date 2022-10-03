@@ -1,6 +1,3 @@
-using NetTopologySuite.Geometries.Utilities;
-using NetTopologySuite.Operation.Union;
-
 namespace NewInEfCore7;
 
 public static class StatisticalAggregateFunctionsSample

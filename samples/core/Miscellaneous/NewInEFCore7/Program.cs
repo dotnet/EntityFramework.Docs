@@ -67,5 +67,9 @@ public class Program
 
         await SaveChangesPerformanceSample.SaveChanges_SQL_generation_samples_SqlServer();
         await SaveChangesPerformanceSample.SaveChanges_SQL_generation_samples_Sqlite();
+
+        await DbContextApiSample.Find_siblings();
+        await DbContextApiSample.Get_entry_for_shared_type_entity_type();
+        await DbContextApiSample.Use_IEntityEntryGraphIterator();
     }
 }

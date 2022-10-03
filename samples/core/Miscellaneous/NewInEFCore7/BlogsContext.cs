@@ -1,6 +1,5 @@
 using System.Net;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NetTopologySuite.Geometries;
 
 namespace NewInEfCore7;
 
@@ -185,8 +184,9 @@ public abstract class BlogsContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => (UseSqlite
                 ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}")
-                : optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
-                        sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseNetTopologySuite()))
+                : optionsBuilder.UseSqlServer(
+                    @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
+                    sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseNetTopologySuite()))
             .EnableSensitiveDataLogging()
             .LogTo(
                 s =>

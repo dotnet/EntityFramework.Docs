@@ -15,11 +15,9 @@ public static class StringAggregateFunctionsSample
             context.LoggingEnabled = true;
 
             #region Join
-
             var query = context.Posts
                 .GroupBy(post => post.Author)
                 .Select(grouping => new { Author = grouping.Key, Books = string.Join("|", grouping.Select(post => post.Title)) });
-
             #endregion
 
             await foreach (var author in query.AsAsyncEnumerable())
@@ -33,7 +31,6 @@ public static class StringAggregateFunctionsSample
         await using (var context = new BlogsContext { LoggingEnabled = true })
         {
             #region ConcatAndJoin
-
             var query = context.Posts
                 .GroupBy(post => post.Author!.Name)
                 .Select(
@@ -52,7 +49,6 @@ public static class StringAggregateFunctionsSample
                                     .Where(post => post.Content.Length >= 10)
                                     .Select(post => "'" + post.Content.Substring(0, 10) + "' "))
                         });
-
             #endregion
 
             await foreach (var author in query.AsAsyncEnumerable())
