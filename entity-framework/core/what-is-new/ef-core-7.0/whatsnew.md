@@ -479,8 +479,6 @@ info: 8/30/2022 20:21:24.392 RelationalEventId.CommandExecuted[20101] (Microsoft
 Which is then used in the `UPDATE` SQL:
 
 ```sql
-SET IMPLICIT_TRANSACTIONS OFF;
-SET NOCOUNT ON;
 UPDATE [Authors] SET [Contact] = @p0
 OUTPUT 1
 WHERE [Id] = @p1;
@@ -507,8 +505,6 @@ info: 10/2/2022 15:51:15.895 RelationalEventId.CommandExecuted[20101] (Microsoft
 Which is used in the `UPDATE` via a `JSON_MODIFY` call:
 
 ```sql
-SET IMPLICIT_TRANSACTIONS OFF;
-SET NOCOUNT ON;
 UPDATE [Authors] SET [Contact] = JSON_MODIFY([Contact], 'strict $.Address', JSON_QUERY(@p0))
 OUTPUT 1
 WHERE [Id] = @p1;
@@ -535,8 +531,6 @@ info: 10/2/2022 15:54:05.112 RelationalEventId.CommandExecuted[20101] (Microsoft
 Which are again used with a `JSON_MODIFY`:
 
 ```sql
-SET IMPLICIT_TRANSACTIONS OFF;
-SET NOCOUNT ON;
 UPDATE [Authors] SET [Contact] = JSON_MODIFY([Contact], 'strict $.Address.Country', JSON_VALUE(@p0, '$[0]'))
 OUTPUT 1
 WHERE [Id] = @p1;
