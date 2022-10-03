@@ -279,10 +279,7 @@ public class TphBlogsContext : BlogsContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
-
-        // https://github.com/dotnet/efcore/issues/28671
-        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
-        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
+        modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
 
         base.OnModelCreating(modelBuilder);
     }
@@ -298,10 +295,7 @@ public class TphSqliteBlogsContext : BlogsContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
-
-        // https://github.com/dotnet/efcore/issues/28671
-        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
-        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
+        modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
 
         base.OnModelCreating(modelBuilder);
     }
@@ -315,10 +309,7 @@ public class TptBlogsContext : BlogsContext
     {
         modelBuilder.Entity<FeaturedPost>().ToTable("FeaturedPosts");
         modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
-
-        // https://github.com/dotnet/efcore/issues/28671
-        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
-        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
+        modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
 
         base.OnModelCreating(modelBuilder);
     }
@@ -333,10 +324,7 @@ public class TpcBlogsContext : BlogsContext
         modelBuilder.Entity<Post>().UseTpcMappingStrategy();
         modelBuilder.Entity<FeaturedPost>().ToTable("FeaturedPosts");
         modelBuilder.Entity<Post>().Ignore(e => e.Metadata);
-
-        // https://github.com/dotnet/efcore/issues/28671
-        // modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
-        modelBuilder.Entity<Author>().Ignore(e => e.Contact);
+        modelBuilder.Entity<Author>().OwnsOne(e => e.Contact).OwnsOne(e => e.Address);
 
         base.OnModelCreating(modelBuilder);
     }

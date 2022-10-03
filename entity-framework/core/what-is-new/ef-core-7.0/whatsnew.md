@@ -354,6 +354,9 @@ With this mapping, EF7 can create and query into a complex JSON document like th
 > [!NOTE]
 > Mapping collections of primitive types to JSON is not yet supported. The document above uses a value converter to transform the collection into a comma-separated string. Vote for [Json: add support for collection of primitive types](https://github.com/dotnet/efcore/issues/28688) if this is something you are interested in.
 
+> [!NOTE]
+> Mapping of owned types to JSON is not yet supported in conjunction with TPT or TPC inheritance. Vote for [Support JSON properties with TPT/TPC inheritance mapping](https://github.com/dotnet/efcore/issues/28443) if this is something you are interested in.
+
 ### Queries into JSON columns
 
 Queries into JSON columns work just the same as querying into any other aggregate type in EF Core. That is, just use LINQ! Here are some examples.
@@ -466,22 +469,24 @@ WHERE CAST(JSON_VALUE([p].[Metadata],'$.Views') AS int) > 3000
 -->
 [!code-csharp[UpdateDocument](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=UpdateDocument)]
 
-In this case, the entire new document is passed as a parameter to the `Update` command:
+In this case, the entire new document is passed as a parameter:
 
 ```text
 info: 8/30/2022 20:21:24.392 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
       Executed DbCommand (2ms) [Parameters=[@p0='{"Phone":"01632 88346","Address":{"City":"Trimbridge","Country":"UK","Postcode":"TB1 5ZS","Street":"2 Riverside"}}' (Nullable = false) (Size = 114), @p1='2'], CommandType='Text', CommandTimeout='30']
 ```
 
+Which is then used in the `UPDATE` SQL:
+
 ```sql
-      SET IMPLICIT_TRANSACTIONS OFF;
-      SET NOCOUNT ON;
-      UPDATE [Authors] SET [Contact] = @p0
-      OUTPUT 1
-      WHERE [Id] = @p1;
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Authors] SET [Contact] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
 ```
 
-However, if only a sub-document is changed, then EF Core will use a "JSON_MODIFY" command to update only the sub-document. For example, changing the `Address` inside a `Contact` document:
+However, if only a sub-document is changed, then EF Core will use a `JSON_MODIFY` command to update only the sub-document. For example, changing the `Address` inside a `Contact` document:
 
 <!--
         var brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
@@ -492,24 +497,21 @@ However, if only a sub-document is changed, then EF Core will use a "JSON_MODIFY
 -->
 [!code-csharp[UpdateSubDocument](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=UpdateSubDocument)]
 
-Generates the following SQL:
+Generates the following parameters:
 
 ```text
-info: 8/30/2022 20:53:01.669 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      SELECT TOP(2) [a].[Id], [a].[Name], JSON_QUERY([a].[Contact],'$')
-      FROM [Authors] AS [a]
-      WHERE [a].[Name] LIKE N'Brice%'
+info: 10/2/2022 15:51:15.895 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (2ms) [Parameters=[@p0='{"City":"Trimbridge","Country":"UK","Postcode":"TB1 5ZS","Street":"4 Riverside"}' (Nullable = false) (Size = 80), @p1='5'], CommandType='Text', CommandTimeout='30']
 ```
 
+Which is used in the `UPDATE` via a `JSON_MODIFY` call:
+
 ```sql
-info: 8/30/2022 20:53:01.676 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (2ms) [Parameters=[@p0='{"City":"Trimbridge","Country":"UK","Postcode":"TB1 5ZS","Street":"4 Riverside"}' (Nullable = false) (Size = 80), @p1='5'], CommandType='Text', CommandTimeout='30']
-      SET IMPLICIT_TRANSACTIONS OFF;
-      SET NOCOUNT ON;
-      UPDATE [Authors] SET [Contact] = JSON_MODIFY([Contact], 'strict $.Address', JSON_QUERY(@p0))
-      OUTPUT 1
-      WHERE [Id] = @p1;
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Authors] SET [Contact] = JSON_MODIFY([Contact], 'strict $.Address', JSON_QUERY(@p0))
+OUTPUT 1
+WHERE [Id] = @p1;
 ```
 
 Finally, if only a single property is changed, then EF Core will again use a "JSON_MODIFY" command, this time to patch only the changed property value. For example:
@@ -523,18 +525,19 @@ Finally, if only a single property is changed, then EF Core will again use a "JS
 -->
 [!code-csharp[UpdateProperty](../../../../samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs?name=UpdateProperty)]
 
-Generates the following SQL:
+Generates the following parameters:
 
 ```text
-info: 8/30/2022 20:24:04.677 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+info: 10/2/2022 15:54:05.112 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
       Executed DbCommand (2ms) [Parameters=[@p0='["United Kingdom"]' (Nullable = false) (Size = 18), @p1='4'], CommandType='Text', CommandTimeout='30']
 ```
+
+Which are again used with a `JSON_MODIFY`:
 
 ```sql
 SET IMPLICIT_TRANSACTIONS OFF;
 SET NOCOUNT ON;
-UPDATE [Authors] SET [Contact] = JSON_MODIFY(
-    [Contact], 'strict $.Address.Country', JSON_VALUE(@p0, '$[0]'))
+UPDATE [Authors] SET [Contact] = JSON_MODIFY([Contact], 'strict $.Address.Country', JSON_VALUE(@p0, '$[0]'))
 OUTPUT 1
 WHERE [Id] = @p1;
 ```
