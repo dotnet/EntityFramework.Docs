@@ -13,6 +13,7 @@ Backing fields allow EF to read and/or write to a field rather than a property. 
 
 By convention, the following fields will be discovered as backing fields for a given property (listed in precedence order).
 
+* `<camel-cased property name>`
 * `_<camel-cased property name>`
 * `_<property name>`
 * `m_<camel-cased property name>`
