@@ -5,6 +5,7 @@ author: ajcvickers
 ms.date: 11/15/2021
 uid: core/modeling/backing-field
 ---
+
 # Backing Fields
 
 Backing fields allow EF to read and/or write to a field rather than a property. This can be useful when encapsulation in the class is being used to restrict the use of and/or enhance the semantics around access to the data by application code, but the value should be read from and/or written to the database without using those restrictions/enhancements.
@@ -13,10 +14,11 @@ Backing fields allow EF to read and/or write to a field rather than a property. 
 
 By convention, the following fields will be discovered as backing fields for a given property (listed in precedence order).
 
-* `_<camel-cased property name>`
-* `_<property name>`
-* `m_<camel-cased property name>`
-* `m_<property name>`
+- `<camel-cased property name>`
+- `_<camel-cased property name>`
+- `_<property name>`
+- `m_<camel-cased property name>`
+- `m_<property name>`
 
 In the following sample, the `Url` property is configured to have `_url` as its backing field:
 
@@ -34,7 +36,7 @@ You can also configure backing fields by using a Data Annotation (available in E
 
 [!code-csharp[Main](../../../samples/core/Modeling/BackingFields/FluentAPI/BackingField.cs?name=BackingField&highlight=5)]
 
-***
+---
 
 ## Field and property access
 
