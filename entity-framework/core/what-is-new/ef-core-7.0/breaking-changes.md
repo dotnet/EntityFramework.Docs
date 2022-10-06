@@ -246,8 +246,8 @@ Or to change the implicit relationship created for the TPT mapping:
 
 ```csharp
 modelBuilder
-    .Entity<Post>()
-    .HasOne<FeaturedPost>()
+    .Entity<FeaturedPost>()
+    .HasOne<Post>()
     .WithOne()
     .HasForeignKey<FeaturedPost>(e => e.Id)
     .OnDelete(DeleteBehavior.ClientCascade);
