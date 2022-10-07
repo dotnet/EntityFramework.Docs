@@ -61,12 +61,13 @@ public static class MiscellaneousTranslationsSample
         {
             #region AtTimeZone
             var query = context.Posts
-                .Select(post => new
-                {
-                    post.Title,
-                    PacificTime = EF.Functions.AtTimeZone(post.PublishedOn, "Pacific Standard Time"),
-                    UkTime = EF.Functions.AtTimeZone(post.PublishedOn, "GMT Standard Time"),
-                });
+                .Select(
+                    post => new
+                    {
+                        post.Title,
+                        PacificTime = EF.Functions.AtTimeZone(post.PublishedOn, "Pacific Standard Time"),
+                        UkTime = EF.Functions.AtTimeZone(post.PublishedOn, "GMT Standard Time"),
+                    });
             #endregion
 
             await foreach (var post in query.AsAsyncEnumerable())

@@ -3313,3 +3313,217 @@ LEFT JOIN (
 ) AS [t] ON [b].[Id] = [t].[BlogId]
 ORDER BY [b].[Id], [t].[Title]
 ```
+
+## DbContext API and behavior enhancements
+
+EF7 contains a variety of small improvements to <xref:Microsoft.EntityFrameworkCore.DbContext> and related classes.
+
+> [!TIP]
+> The code for samples in this section comes from [DbContextApiSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs).
+
+### Suppressor for uninitialized DbSet properties
+
+Public, settable `DbSet` properties on a `DbContext` are automatically initialized by EF Core when the `DbContext` is constructed. For example, consider the following `DbContext` definition:
+
+```csharp
+public class SomeDbContext : DbContext
+{
+    public DbSet<Blog> Blogs { get; set; }
+}
+```
+
+The `Blogs` property will be set to a `DbSet<Blog>` instance as part of constructing the `DbContext` instance. This allows the context to be used for queries without any additional steps.
+
+However, following the introduction of [C# nullable reference types](/dotnet/csharp/tutorials/nullable-reference-types), the compiler now warns that the non-nullable property `Blogs` is not initialized:
+
+> `[CS8618] Non-nullable property 'Blogs' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.`
+
+This is a bogus warning; the property is set to a non-null value by EF Core. Also, declaring the property as nullable will make the warning go away, but this is not a good idea because, conceptually, the property is not nullable and will never be null.
+
+EF7 contains a [DiagnosticSuppressor](/dotnet/fundamentals/code-analysis/suppress-warnings) for `DbSet` properties on a `DbContext` which stops the compiler generating this warning.
+
+> [!TIP]
+> This pattern originated in the days when C# auto-properties were very limited. With modern C#, consider making the auto-properties read-only, and then either initialize them explicitly in the `DbContext` constructor, or obtain the cached `DbSet` instance from the context when needed. For example, `public DbSet<Blog> Blogs => Set<Blog>()`.
+
+### Distinguish cancellation from failure in logs
+
+Sometimes an application will explicitly cancel a query or other database operation. This is usually done using a <xref:System.Threading.CancellationToken> passed to the method performing the operation.
+
+In EF Core 6, the events logged when an operation is canceled are the same as those logged when the operation fails for some other reason. EF7 introduces new log events specifically for canceled database operations. These new events are, by default, logged at the <xref:Microsoft.Extensions.Logging.LogLevel.Debug> level. The following table shows the relevant events and their default log levels:
+
+| Event                                                                                                                                    | Description                                                         | Default log level |
+|------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|-------------------|
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.QueryIterationFailed?displayProperty=nameWithType>                           | An error occurred while processing the results of a query.          | `LogLevel.Error`  |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.SaveChangesFailed?displayProperty=nameWithType>                              | An error occurred while attempting to save changes to the database. | `LogLevel.Error`  |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandError?displayProperty=nameWithType>                             | An error occurred while a database command was executing.           | `LogLevel.Error`  |
+| [CoreEventId.QueryCanceled](https://github.com/dotnet/efcore/blob/main/src/EFCore/Diagnostics/CoreEventId.cs)                            | A query was canceled.                                               | `LogLevel.Debug`  |
+| [CoreEventId.SaveChangesCanceled](https://github.com/dotnet/efcore/blob/main/src/EFCore/Diagnostics/CoreEventId.cs)                      | The database command was canceled while attempting to save changes. | `LogLevel.Debug`  |
+| [SaveChangesCanceled.CommandCanceled](https://github.com/dotnet/efcore/blob/main/src/EFCore.Relational/Diagnostics/RelationalEventId.cs) | The execution of a `DbCommand` has been canceled.                   | `LogLevel.Debug`  |
+
+> [!NOTE]
+> Cancellation is detected by looking at the exception rather than checking cancellation token. This means that cancellations not triggered via the cancellation token will still be detected and logged in this way.
+
+### New `IProperty` and `INavigation` overloads for `EntityEntry` methods
+
+Code working with the EF model will often have an <xref:Microsoft.EntityFrameworkCore.Metadata.IProperty> or <xref:Microsoft.EntityFrameworkCore.Metadata.INavigation> representing property or navigation metadata. An [EntityEntry](xref:core/change-tracking/entity-entries) is then used to get the property/navigation value or query its state. However, prior to EF7, this required passing the _name_ of the property or navigation to methods of the `EntityEntry`, which would then re-lookup the `IProperty` or `INavigation`. In EF7, the `IProperty` or `INavigation` can instead be passed directly, avoiding the additional lookup.
+
+For example, consider a method to find all the siblings of a given entity:
+
+<!--
+    public static IEnumerable<TEntity> FindSiblings<TEntity>(
+        this DbContext context, TEntity entity, string navigationToParent)
+        where TEntity : class
+    {
+        var parentEntry = context.Entry(entity).Reference(navigationToParent);
+
+        return context.Entry(parentEntry.CurrentValue!)
+            .Collection(parentEntry.Metadata.Inverse!)
+            .CurrentValue!
+            .OfType<TEntity>()
+            .Where(e => !ReferenceEquals(e, entity));
+    }
+-->
+[!code-csharp[FindSiblings](../../../../samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs?name=FindSiblings)]
+
+This method finds the parent of a given entity, and then passes the inverse `INavigation` to the `Collection` method of the parent entry. This metadata is then used to return all siblings of the given parent. Here's an example of its use:
+
+<!--
+            Console.WriteLine($"Siblings to {post.Id}: '{post.Title}' are...");
+            foreach (var sibling in context.FindSiblings(post, nameof(post.Blog)))
+            {
+                Console.WriteLine($"    {sibling.Id}: '{sibling.Title}'");
+            }
+-->
+[!code-csharp[UseFindSiblings](../../../../samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs?name=UseFindSiblings)]
+
+And the output:
+
+```output
+Siblings to 1: 'Announcing Entity Framework 7 Preview 7: Interceptors!' are...
+    5: 'Productivity comes to .NET MAUI in Visual Studio 2022'
+    6: 'Announcing .NET 7 Preview 7'
+    7: 'ASP.NET Core updates in .NET 7 Preview 7'
+```
+
+### `EntityEntry` for shared-type entity types
+
+EF Core can use the same CLR type for multiple different entity types. These are known as "shared-type entity types", and are often used to map a dictionary type with key/value pairs used for the properties of the entity type. For example, a `BuildMetadata` entity type can be defined without defining a dedicated CLR type:
+
+<!--
+            modelBuilder.SharedTypeEntity<Dictionary<string, object>>(
+                "BuildMetadata", b =>
+                {
+                    b.IndexerProperty<int>("Id");
+                    b.IndexerProperty<string>("Tag");
+                    b.IndexerProperty<Version>("Version");
+                    b.IndexerProperty<string>("Hash");
+                    b.IndexerProperty<bool>("Prerelease");
+                });
+-->
+[!code-csharp[BuildMetadata](../../../../samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs?name=BuildMetadata)]
+
+Notice that the shared-type entity type must be named - in this case, the name is `BuildMetadata`. These entity types are then accessed using a `DbSet` for the entity type which is obtained using the name. For example:
+
+<!--
+        public DbSet<Dictionary<string, object>> BuildMetadata
+            => Set<Dictionary<string, object>>("BuildMetadata");
+-->
+[!code-csharp[BuildMetadataSet](../../../../samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs?name=BuildMetadataSet)]
+
+This `DbSet` can be used to track entity instances:
+
+```csharp
+await context.BuildMetadata.AddAsync(
+    new Dictionary<string, object>
+    {
+        { "Tag", "v7.0.0-rc.1.22426.7" },
+        { "Version", new Version(7, 0, 0) },
+        { "Prerelease", true },
+        { "Hash", "dc0f3e8ef10eb1464b27f0fd4704f53c01226036" }
+    });
+```
+
+And execute queries:
+
+<!--
+            var builds = await context.BuildMetadata
+                .Where(metadata => !EF.Property<bool>(metadata, "Prerelease"))
+                .OrderBy(metadata => EF.Property<string>(metadata, "Tag"))
+                .ToListAsync();
+-->
+[!code-csharp[BuildMetadataQuery](../../../../samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs?name=BuildMetadataQuery)]
+
+Now, in EF7, there is also an `Entry` method on `DbSet` which can be used to obtain state about an instance, _even if it is not yet tracked_. For example:
+
+<!--
+                var state = context.BuildMetadata.Entry(build).State;
+-->
+[!code-csharp[GetEntry](../../../../samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs?name=GetEntry)]
+
+### `ContextInitialized` is now logged as `Debug`
+
+In EF7, the <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.ContextInitialized> event is logged at the <xref:Microsoft.Extensions.Logging.LogLevel.Debug> level. For example:
+
+```output
+dbug: 10/7/2022 12:27:52.379 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 7.0.0-rc.2.22472.11 initialized 'BlogsContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:7.0.0-rc.2.22472.11' with options: SensitiveDataLoggingEnabled using NetTopologySuite
+```
+
+In previous releases it was logged at the <xref:Microsoft.Extensions.Logging.LogLevel.Information> level. For example:
+
+```output
+info: 10/7/2022 12:30:34.757 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 7.0.0-rc.2.22472.11 initialized 'BlogsContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:7.0.0-rc.2.22472.11' with options: SensitiveDataLoggingEnabled using NetTopologySuite
+```
+
+If desired, the log level can be changed back to `Information`:
+
+<!--
+            optionsBuilder.ConfigureWarnings(
+                builder =>
+                {
+                    builder.Log((CoreEventId.ContextInitialized, LogLevel.Information));
+                });
+-->
+[!code-csharp[ContextInitializedLog](../../../../samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs?name=ContextInitializedLog)]
+
+### `IEntityEntryGraphIterator` is publicly usable
+
+In EF7, the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.IEntityEntryGraphIterator> service can be used by applications. This is the service used internally when discovering a graph of entities to track, and also by <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.TrackGraph%2A>. Here's an example that iterates over all entities reachable from some starting entity:
+
+<!--
+        var blogEntry = context.ChangeTracker.Entries<Blog>().First();
+        var found = new HashSet<object>();
+        var iterator = context.GetService<IEntityEntryGraphIterator>();
+        iterator.TraverseGraph(new EntityEntryGraphNode<HashSet<object>>(blogEntry, found, null, null), node =>
+        {
+            if (node.NodeState.Contains(node.Entry.Entity))
+            {
+                return false;
+            }
+
+            Console.Write($"Found with '{node.Entry.Entity.GetType().Name}'");
+
+            if (node.InboundNavigation != null)
+            {
+                Console.Write($" by traversing '{node.InboundNavigation.Name}' from '{node.SourceEntry!.Entity.GetType().Name}'");
+            }
+
+            Console.WriteLine();
+
+            node.NodeState.Add(node.Entry.Entity);
+
+            return true;
+        });
+
+        Console.WriteLine();
+        Console.WriteLine($"Finished iterating. Found {found.Count} entities.");
+        Console.WriteLine();
+-->
+[!code-csharp[IEntityEntryGraphIterator](../../../../samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs?name=IEntityEntryGraphIterator)]
+
+Notice:
+
+- The iterator stops traversing from a given node when the callback delegate returns `false`. This example keeps track of visited entities and returns `false` when the entity has already been visited. This prevents infinite loops resulting from cycles in the graph.
+- The `EntityEntryGraphNode<TState>` object allows state to be passed around without capturing it into the delegate.
+- For every node visited other than the first, the node it was discovered from and the navigation is was discovered via are passed to the callback.

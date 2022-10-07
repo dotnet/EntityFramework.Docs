@@ -95,10 +95,7 @@ public static class JsonColumnsSample
             .Select(
                 post => new
                 {
-                    post.Author!.Name,
-                    post.Metadata!.Views,
-                    Searches = post.Metadata.TopSearches,
-                    Commits = post.Metadata.Updates
+                    post.Author!.Name, post.Metadata!.Views, Searches = post.Metadata.TopSearches, Commits = post.Metadata.Updates
                 })
             .ToListAsync();
         #endregion
@@ -106,7 +103,8 @@ public static class JsonColumnsSample
         Console.WriteLine();
         foreach (var postWithViews in postsWithViews)
         {
-            Console.WriteLine($"Post by {postWithViews.Name} with {postWithViews.Views} views had {postWithViews.Commits.Count} commits with {postWithViews.Searches.Sum(term => term.Count)} searches");
+            Console.WriteLine(
+                $"Post by {postWithViews.Name} with {postWithViews.Views} views had {postWithViews.Commits.Count} commits with {postWithViews.Searches.Sum(term => term.Count)} searches");
         }
 
         Console.WriteLine();
@@ -140,7 +138,7 @@ public static class JsonColumnsSample
         context.ChangeTracker.Clear();
 
         Console.WriteLine();
-        Console.WriteLine($"Updating only 'Country' in a 'Contact' JSON document...");
+        Console.WriteLine("Updating only 'Country' in a 'Contact' JSON document...");
         Console.WriteLine();
 
         #region UpdateProperty
@@ -240,10 +238,11 @@ public abstract class TableMappedAggregateContext : TphBlogsContext
             author => author.Contact, ownedNavigationBuilder =>
             {
                 ownedNavigationBuilder.ToTable("Contacts");
-                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address, ownedOwnedNavigationBuilder =>
-                {
-                    ownedOwnedNavigationBuilder.ToTable("Addresses");
-                });
+                ownedNavigationBuilder.OwnsOne(
+                    contactDetails => contactDetails.Address, ownedOwnedNavigationBuilder =>
+                    {
+                        ownedOwnedNavigationBuilder.ToTable("Addresses");
+                    });
             });
     }
     #endregion

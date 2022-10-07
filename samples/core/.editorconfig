@@ -82,7 +82,7 @@ dotnet_style_null_propagation = true:suggestion
 # CSharp code style settings:
 [*.cs]
 # Modifier preferences
-csharp_preferred_modifier_order = public,private,protected,internal,const,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async:suggestion
+csharp_preferred_modifier_order = public, private, protected, internal, const, static, extern, new, virtual, abstract, sealed, override, readonly, unsafe, volatile, async:suggestion
 
 # Implicit and explicit types
 csharp_style_var_for_built_in_types = true:suggestion

@@ -57,6 +57,7 @@ END");
             {
                 await context.AddAsync(new Blog { Name = "Foo" + i });
             }
+
             await context.SaveChangesAsync();
             #endregion
         }
@@ -73,21 +74,15 @@ END");
             {
                 await context.AddAsync(new BlogWithTrigger { Name = "Foo" + i });
             }
+
             await context.SaveChangesAsync();
         }
 
         await using (var context = new TContext())
         {
             #region InsertGraph
-            await context.AddAsync(new Blog
-            {
-                Name = "MyBlog",
-                Posts =
-                {
-                    new() { Title = "My first post" },
-                    new() { Title = "My second post" }
-                }
-            });
+            await context.AddAsync(
+                new Blog { Name = "MyBlog", Posts = { new() { Title = "My first post" }, new() { Title = "My second post" } } });
             await context.SaveChangesAsync();
             #endregion
         }
@@ -95,15 +90,8 @@ END");
         await using (var context = new TContext())
         {
             #region InsertGraph
-            await context.AddAsync(new Blog
-            {
-                Name = "MyBlog",
-                Posts =
-                {
-                    new() { Title = "My first post" },
-                    new() { Title = "My second post" }
-                }
-            });
+            await context.AddAsync(
+                new Blog { Name = "MyBlog", Posts = { new() { Title = "My first post" }, new() { Title = "My second post" } } });
             await context.SaveChangesAsync();
             #endregion
         }

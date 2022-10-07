@@ -98,7 +98,6 @@ public static class StoredProcedureMappingSample
             await context.SaveChangesAsync();
 
             await context2.SaveChangesAsync();
-
         }
         catch (DbUpdateConcurrencyException exception)
         {
@@ -118,7 +117,6 @@ public static class StoredProcedureMappingSample
             await context.SaveChangesAsync();
 
             await context2.SaveChangesAsync();
-
         }
         catch (DbUpdateConcurrencyException exception)
         {
@@ -138,7 +136,6 @@ public static class StoredProcedureMappingSample
             await context.SaveChangesAsync();
 
             await context2.SaveChangesAsync();
-
         }
         catch (DbUpdateConcurrencyException exception)
         {
