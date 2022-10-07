@@ -3349,7 +3349,7 @@ EF7 contains a [DiagnosticSuppressor](/dotnet/fundamentals/code-analysis/suppres
 
 Sometimes an application will explicitly cancel a query or other database operation. This is usually done using a <xref:System.Threading.CancellationToken> passed to the method performing the operation.
 
-In EF Core 6.0, the events logged when an operation is canceled are the same as those logged when the operation fails for some other reason. EF7 introduces new log events specifically for canceled database operations. These new events are, by default, logged at the <xref:Microsoft.Extensions.Logging.LogLevel.Debug> level. The following table shows the relevant events and their default log levels:
+In EF Core 6, the events logged when an operation is canceled are the same as those logged when the operation fails for some other reason. EF7 introduces new log events specifically for canceled database operations. These new events are, by default, logged at the <xref:Microsoft.Extensions.Logging.LogLevel.Debug> level. The following table shows the relevant events and their default log levels:
 
 | Event                                                                                                                                    | Description                                                         | Default log level |
 |------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|-------------------|
