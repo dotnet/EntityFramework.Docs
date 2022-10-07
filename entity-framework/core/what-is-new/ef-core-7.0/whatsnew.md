@@ -3422,7 +3422,7 @@ EF Core can use the same CLR type for multiple different entity types. These are
 -->
 [!code-csharp[BuildMetadata](../../../../samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs?name=BuildMetadata)]
 
-Notice that the shared-type entity type must be named--in this case, the name is "BuildMetadata". These entity types are then accessed using a `DbSet` for the entity type which is obtained using the name. For example:
+Notice that the shared-type entity type must be named - in this case, the name is `BuildMetadata`. These entity types are then accessed using a `DbSet` for the entity type which is obtained using the name. For example:
 
 <!--
         public DbSet<Dictionary<string, object>> BuildMetadata
