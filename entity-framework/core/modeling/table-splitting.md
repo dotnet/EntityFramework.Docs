@@ -2,7 +2,7 @@
 title: Table Splitting - EF Core
 description: How to configure table splitting using Entity Framework Core
 author: AndriySvyryd
-ms.date: 11/15/2021
+ms.date: 10/10/2022
 uid: core/modeling/table-splitting
 ---
 # Table Splitting
@@ -38,6 +38,8 @@ Saving and querying entities using table splitting is done in the same way as ot
 
 If all of the columns used by a dependent entity are `NULL` in the database, then no instance for it will be created when queried. This allows modeling an optional dependent entity, where the relationship property on the principal would be null. Note that this would also happen if all of the dependent's properties are optional and set to `null`, which might not be expected.
 
+However, the additional check can impact query performance. In addition, if the dependent entity type has dependents of its own, then determining whether an instance should be created becomes non-trivial. To avoid these issues the dependent entity type can be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships#one-to-one) for more information.
+
 ## Concurrency tokens
 
 If any of the entity types sharing a table has a concurrency token then it must be included in all other entity types as well. This is necessary in order to avoid a stale concurrency token value when only one of the entities mapped to the same table is updated.
@@ -45,3 +47,13 @@ If any of the entity types sharing a table has a concurrency token then it must 
 To avoid exposing the concurrency token to the consuming code, it's possible the create one as a [shadow property](xref:core/modeling/shadow-properties):
 
 [!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=ConcurrencyToken&highlight=2)]
+
+## Inheritance
+
+It's recommended to read [the dedicated page on inheritance](xref:core/modeling/inheritance) before continuing with this section.
+
+The dependent types using table splitting can have an inheritance hierarchy, but there are some limitations:
+
+- The dependent entity type __cannot__ use TPC mapping as the derived types wouldn't be able to map to the same table.
+- The dependent entity type __can__ use TPT mapping, but only the root entity type can use table splitting.
+- If the principal entity type uses TPC, then only the entity types that don't have any descendants can use table splitting. Otherwise, the dependent columns would need to be duplicated on the tables corresponding to the derived types, complicating all interactions.

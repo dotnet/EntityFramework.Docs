@@ -146,6 +146,9 @@ After the navigation property has been created, you may need to further configur
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
 
+> [!TIP]
+> Non-collection navigations can also be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships#one-to-one) for more information.
+
 > [!NOTE]
 > This call cannot be used to create a navigation property. It is only used to configure a navigation property which has been previously created by defining a relationship or from a convention.
 

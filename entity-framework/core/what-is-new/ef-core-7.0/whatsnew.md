@@ -1190,11 +1190,11 @@ Notice that:
 
 **Humans table**
 
-| Id  | Name   | FoodId                               | FavoriteAnimalId                                                           |
-|:----|:-------|:-------------------------------------|:---------------------------------------------------------------------------|
-| 5   | Wendy  | 5418fd81-7660-432f-d4b1-08da7aca624f | -2147482646 // See [#28654](https://github.com/dotnet/efcore/issues/28654) |
-| 6   | Arthur | 59b495d4-0414-46bf-d4ad-08da7aca624f | -2147482644 // See [#28654](https://github.com/dotnet/efcore/issues/28654) |
-| 9   | Katie  | null                                 | -2147482640 // See [#28654](https://github.com/dotnet/efcore/issues/28654) |
+| Id  | Name   | FoodId                               | FavoriteAnimalId      |
+|:----|:-------|:-------------------------------------|:----------------------|
+| 5   | Wendy  | 5418fd81-7660-432f-d4b1-08da7aca624f | 2                     |
+| 6   | Arthur | 59b495d4-0414-46bf-d4ad-08da7aca624f | 1                     |
+| 9   | Katie  | null                                 | 8                     |
 
 Notice that, unlike with TPT mapping, all the information for a single object is contained in a single table. And, unlike with TPH mapping, there is no combination of column and row in any table where that is never used by the model. We'll see below how these characteristics can be important for queries and storage.
 

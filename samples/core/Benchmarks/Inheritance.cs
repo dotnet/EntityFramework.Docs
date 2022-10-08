@@ -32,6 +32,17 @@ public class Inheritance
         Console.WriteLine("Setup complete.");
     }
 
+    [GlobalSetup(Target = nameof(TPC))]
+    public void SetupTPC()
+    {
+        Console.WriteLine("Setting up database...");
+        using var context = new TPCContext();
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+        context.SeedData(RowsPerEntityType);
+        Console.WriteLine("Setup complete.");
+    }
+
     [Benchmark]
     public List<Root> TPH()
     {
@@ -48,12 +59,30 @@ public class Inheritance
         return context.Roots.ToList();
     }
 
+    [Benchmark]
+    public List<Root> TPC()
+    {
+        using var context = new TPCContext();
+
+        return context.Roots.ToList();
+    }
+
     public abstract class InheritanceContext : DbContext
     {
         public DbSet<Root> Roots { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True");
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Child1>();
+            modelBuilder.Entity<Child1A>();
+            modelBuilder.Entity<Child1B>();
+            modelBuilder.Entity<Child2>();
+            modelBuilder.Entity<Child2A>();
+            modelBuilder.Entity<Child2B>();
+        }
 
         public void SeedData(int rowsPerEntityType)
         {
@@ -70,27 +99,23 @@ public class Inheritance
 
     public class TPHContext : InheritanceContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Child1>();
-            modelBuilder.Entity<Child1A>();
-            modelBuilder.Entity<Child1B>();
-            modelBuilder.Entity<Child2>();
-            modelBuilder.Entity<Child2A>();
-            modelBuilder.Entity<Child2B>();
-        }
     }
 
     public class TPTContext : InheritanceContext
     {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Child1>().ToTable("Child1");
-            modelBuilder.Entity<Child1A>().ToTable("Child1A");
-            modelBuilder.Entity<Child1B>().ToTable("Child1B");
-            modelBuilder.Entity<Child2>().ToTable("Child2");
-            modelBuilder.Entity<Child2A>().ToTable("Child2A");
-            modelBuilder.Entity<Child2B>().ToTable("Child2B");
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Root>().UseTptMappingStrategy();
+        }
+    }
+
+    public class TPCContext : InheritanceContext
+    {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Root>().UseTpcMappingStrategy();
         }
     }
 
