@@ -205,7 +205,6 @@ public static class TemporalTablesSample
             }
         }
 
-
         using (var context = new EmployeeContext(quiet: true))
         {
             Console.WriteLine();
@@ -244,7 +243,6 @@ public static class TemporalTablesSample
                     $"  Employee {pointInTime.Employee.Name} was '{pointInTime.Employee.Position}' from {pointInTime.ValidFrom} to {pointInTime.ValidTo}");
             }
         }
-
 
         Console.WriteLine();
     }
