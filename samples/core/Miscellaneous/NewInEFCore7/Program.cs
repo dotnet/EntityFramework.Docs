@@ -86,7 +86,7 @@ public class Program
 
         await ValueGenerationSample.Can_use_value_generation_with_converted_types();
 
-        // Requires the Cosmos emulator
-        await CosmosQueriesSample.Cosmos_translations_for_RegEx_Match();
+        // // Requires the Cosmos emulator
+        // await CosmosQueriesSample.Cosmos_translations_for_RegEx_Match();
     }
 }

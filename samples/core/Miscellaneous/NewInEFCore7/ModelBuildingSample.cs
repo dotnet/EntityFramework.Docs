@@ -322,13 +322,14 @@ public static class ModelBuildingSample
 
             #region TwoIndexes
             modelBuilder
-                .Entity<Post>()
-                .HasIndex(post => post.Title, "AscendingIndex");
+                .Entity<Blog>()
+                .HasIndex(blog => new { blog.Name, blog.Owner }, "IX_Blogs_Name_Owner_1")
+                .IsDescending(false, true);
 
             modelBuilder
-                .Entity<Post>()
-                .HasIndex(post => post.Title, "DescendingIndex")
-                .IsDescending();
+                .Entity<Blog>()
+                .HasIndex(blog => new { blog.Name, blog.Owner }, "IX_Blogs_Name_Owner_2")
+                .IsDescending(true, true);
             #endregion
 
             #region ManyToMany
@@ -351,7 +352,8 @@ public static class ModelBuildingSample
     }
 
     #region CompositeIndexByAttribute
-    [Index(nameof(Name), nameof(Owner), IsDescending = new[] { false, true })]
+    [Index(nameof(Name), nameof(Owner), IsDescending = new[] { false, true }, Name = "IX_Blogs_Name_Owner_1")]
+    [Index(nameof(Name), nameof(Owner), IsDescending = new[] { true, true }, Name = "IX_Blogs_Name_Owner_2")]
     public class Blog
     {
         public int Id { get; set; }
@@ -366,9 +368,6 @@ public static class ModelBuildingSample
     }
     #endregion
 
-    #region TwoIndexesByAttribute
-    [Index(nameof(Title), Name = "AscendingIndex")]
-    [Index(nameof(Title), Name = "DescendingIndex", AllDescending = true)]
     public class Post
     {
         public int Id { get; set; }
@@ -381,7 +380,6 @@ public static class ModelBuildingSample
 
         public List<Tag> Tags { get; } = new();
     }
-    #endregion
 
     #region CompositePrimaryKey
     [PrimaryKey(nameof(PostId), nameof(CommentId))]

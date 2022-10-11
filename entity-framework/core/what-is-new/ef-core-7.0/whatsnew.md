@@ -3562,62 +3562,26 @@ EF7 contains a variety of small improvements in model building.
 By default, EF Core creates ascending indexes. EF7 also supports creation of descending indexes. For example:
 
 ```csharp
-            modelBuilder
-                .Entity<Post>()
-                .HasIndex(post => post.Title)
-                .IsDescending();
+modelBuilder
+    .Entity<Post>()
+    .HasIndex(post => post.Title)
+    .IsDescending();
 ```
 
 Or, using the `Index` mapping attribute:
 
 ```csharp
-    [Index(nameof(Title), AllDescending = true)]
-    public class Post
-    {
-        public int Id { get; set; }
+[Index(nameof(Title), AllDescending = true)]
+public class Post
+{
+    public int Id { get; set; }
 
-        [MaxLength(64)]
-        public string? Title { get; set; }
-    }
+    [MaxLength(64)]
+    public string? Title { get; set; }
+}
 ```
 
-Multiple indexes can be created on the same ordered set of columns by giving the indexes names. This allows creating both ascending and descending indexes on the same columns. For example:
-
-<!--
-            modelBuilder
-                .Entity<Post>()
-                .HasIndex(post => post.Title, "AscendingIndex");
-
-            modelBuilder
-                .Entity<Post>()
-                .HasIndex(post => post.Title, "DescendingIndex")
-                .IsDescending();
--->
-[!code-csharp[TwoIndexes](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=TwoIndexes)]
-
-Or, using mapping attributes:
-
-<!--
-    [Index(nameof(Title), Name = "AscendingIndex")]
-    [Index(nameof(Title), Name = "DescendingIndex", AllDescending = true)]
-    public class Post
-    {
-        public int Id { get; set; }
-
-        [MaxLength(64)]
-        public string? Title { get; set; }
-    }
--->
-[!code-csharp[TwoIndexesByAttribute](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=TwoIndexesByAttribute)]
-
-This generates the following SQL on SQL Server:
-
-```sql
-CREATE INDEX [AscendingIndex] ON [Posts] ([Title]);
-CREATE INDEX [DescendingIndex] ON [Posts] ([Title] DESC);
-```
-
-Indexes over multiple columns can also have different ordering defined for each column. For example:
+This is rarely useful for indexes over a single column, since the database can use the same index for ordering in both directions. However, this is not the case for composite indexes over multiple columns where the order on each column can be important. EF Core supports this by allowing multiple columns to have different ordering defined for each column. For example:
 
 <!--
             #region CompositeIndex
@@ -3631,8 +3595,48 @@ Indexes over multiple columns can also have different ordering defined for each 
 
 Or, using a mapping attribute:
 
+```csharp
+[Index(nameof(Name), nameof(Owner), IsDescending = new[] { false, true })]
+public class Blog
+{
+    public int Id { get; set; }
+
+    [MaxLength(64)]
+    public string? Name { get; set; }
+
+    [MaxLength(64)]
+    public string? Owner { get; set; }
+
+    public List<Post> Posts { get; } = new();
+}
+```
+
+This results in the following SQL when using SQL Server:
+
+```sql
+CREATE INDEX [IX_Blogs_Name_Owner] ON [Blogs] ([Name], [Owner] DESC);
+```
+
+Finally, multiple indexes can be created over the same ordered set of columns by giving the indexes names. For example:
+
 <!--
-    [Index(nameof(Name), nameof(Owner), IsDescending = new[] { false, true })]
+            modelBuilder
+                .Entity<Blog>()
+                .HasIndex(blog => new { blog.Name, blog.Owner }, "IX_Blogs_Name_Owner_1")
+                .IsDescending(false, true);
+
+            modelBuilder
+                .Entity<Blog>()
+                .HasIndex(blog => new { blog.Name, blog.Owner }, "IX_Blogs_Name_Owner_2")
+                .IsDescending(true, true);
+-->
+[!code-csharp[TwoIndexes](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=TwoIndexes)]
+
+Or, using mapping attributes:
+
+<!--
+    [Index(nameof(Name), nameof(Owner), IsDescending = new[] { false, true }, Name = "IX_Blogs_Name_Owner_1")]
+    [Index(nameof(Name), nameof(Owner), IsDescending = new[] { true, true }, Name = "IX_Blogs_Name_Owner_2")]
     public class Blog
     {
         public int Id { get; set; }
@@ -3648,10 +3652,11 @@ Or, using a mapping attribute:
 -->
 [!code-csharp[CompositeIndexByAttribute](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=CompositeIndexByAttribute)]
 
-This results in the following SQL when using SQL Server:
+This generates the following SQL on SQL Server:
 
 ```sql
-CREATE INDEX [IX_Blogs_Name_Owner] ON [Blogs] ([Name], [Owner] DESC);
+CREATE INDEX [IX_Blogs_Name_Owner_1] ON [Blogs] ([Name], [Owner] DESC);
+CREATE INDEX [IX_Blogs_Name_Owner_2] ON [Blogs] ([Name] DESC, [Owner] DESC);
 ```
 
 ### Mapping attribute for composite keys
@@ -3659,11 +3664,11 @@ CREATE INDEX [IX_Blogs_Name_Owner] ON [Blogs] ([Name], [Owner] DESC);
 EF7 introduces a new mapping attribute (aka "data annotation") for specifying the primary key property or properties of any entity type. Unlike <xref:System.ComponentModel.DataAnnotations.KeyAttribute?displayProperty=nameWithType>, [PrimaryKeyAttribute](https://github.com/dotnet/efcore/blob/main/src/EFCore.Abstractions/PrimaryKeyAttribute.cs) is placed on the entity type class rather than on the key property. For example:
 
 ```csharp
-    [PrimaryKey(nameof(PostKey))]
-    public class Post
-    {
-        public int PostKey { get; set; }
-    }
+[PrimaryKey(nameof(PostKey))]
+public class Post
+{
+    public int PostKey { get; set; }
+}
 ```
 
 This makes it a natural fit for defining composite keys:
@@ -3693,14 +3698,14 @@ public class Tag
 EF7 introduces a mapping attribute (aka "data annotation") to specify the <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> for a relationship. For example, [required relationships](xref:core/modeling/relationships) are created with <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade?displayProperty=nameWithType> by default. This can be changed to <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction?displayProperty=nameWithType> by default using [DeleteBehavior](https://github.com/dotnet/efcore/blob/main/src/EFCore.Abstractions/DeleteBehaviorAttribute.cs):
 
 ```csharp
-    public class Post
-    {
-        public int Id { get; set; }
-        public string? Title { get; set; }
+public class Post
+{
+    public int Id { get; set; }
+    public string? Title { get; set; }
 
-        [DeleteBehavior(DeleteBehavior.NoAction)]
-        public Blog Blog { get; set; } = null!;
-    }
+    [DeleteBehavior(DeleteBehavior.NoAction)]
+    public Blog Blog { get; set; } = null!;
+}
 ```
 
 This will disable cascade deletes for the Blog-Posts relationship.
@@ -4235,8 +4240,8 @@ EF7 includes two significant improvements when using the [EF Core Migrations com
 It is very common to read a connection string from a configuration file and then pass that connection string to `UseSqlServer`, `UseSqlite`, or the equivalent method for another provider. For example:
 
 ```csharp
-    services.AddDbContext<BloggingContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("BloggingDatabase")));
+services.AddDbContext<BloggingContext>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("BloggingDatabase")));
 ```
 
 It is also common to pass a connection string when [applying migrations](xref:core/managing-schemas/migrations/applying). For example:
