@@ -4288,7 +4288,7 @@ Here are some performance results for model with 449 entity types, 6390 properti
 
 So, in this case, a model with change-tracking proxies can be ready to execute the first query 80 times faster in EF7 than was possible with EF Core 6.0.
 
-## First-class Windows Forms Data Binding
+## First-class Windows Forms data binding
 
 The Windows Forms team have been making some [great improvements to the Visual Studio Designer experience](https://devblogs.microsoft.com/dotnet/state-of-the-windows-forms-designer-for-net-applications/). This includes [new experiences for data binding](https://devblogs.microsoft.com/dotnet/databinding-with-the-oop-windows-forms-designer/) that integrates well with EF Core.
 
