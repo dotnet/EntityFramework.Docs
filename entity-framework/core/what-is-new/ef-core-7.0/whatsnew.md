@@ -3690,7 +3690,7 @@ public class Tag
 
 ### `DeleteBehavior` mapping attribute
 
-EF7 introduces a mapping attribute (aka "data annotation") to specify the <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> for a relationship. For example, [required relationships](xref:core/modeling/relationships) are created with <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade?displayProperty=nameWithType> by default. This can be changed to <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction?displayProperty=nameWithType> by default using [DeleteBehaviorAttribute](https://github.com/dotnet/efcore/blob/main/src/EFCore.Abstractions/DeleteBehaviorAttribute.cs):
+EF7 introduces a mapping attribute (aka "data annotation") to specify the <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> for a relationship. For example, [required relationships](xref:core/modeling/relationships) are created with <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade?displayProperty=nameWithType> by default. This can be changed to <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction?displayProperty=nameWithType> by default using [DeleteBehavior](https://github.com/dotnet/efcore/blob/main/src/EFCore.Abstractions/DeleteBehaviorAttribute.cs):
 
 ```csharp
     public class Post
