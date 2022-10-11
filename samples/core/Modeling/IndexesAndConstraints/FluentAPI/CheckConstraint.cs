@@ -9,8 +9,9 @@ internal class MyContext : DbContext
     #region CheckConstraint
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Product>()
-            .HasCheckConstraint("CK_Prices", "[Price] > [DiscountedPrice]", c => c.HasName("CK_Product_Prices"));
+        modelBuilder
+            .Entity<Product>()
+            .ToTable(b => b.HasCheckConstraint("CK_Prices", "[Price] > [DiscountedPrice]"));
     }
     #endregion
 }

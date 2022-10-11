@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0" />
+        <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.0-rc.2.22472.11" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0-rc.2.22472.11" />
     </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
+using Microsoft.EntityFrameworkCore.Update;
 
 #region snippet_CreateUserOperation
 public class CreateUserOperation : MigrationOperation
@@ -33,8 +34,8 @@ public class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 {
     public MyMigrationsSqlGenerator(
         MigrationsSqlGeneratorDependencies dependencies,
-        IRelationalAnnotationProvider migrationsAnnotations)
-        : base(dependencies, migrationsAnnotations)
+        ICommandBatchPreparer commandBatchPreparer)
+        : base(dependencies, commandBatchPreparer)
     {
     }
 

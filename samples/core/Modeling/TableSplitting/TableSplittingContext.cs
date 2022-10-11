@@ -28,6 +28,7 @@ public class TableSplittingContext : DbContext
                 ob.Property(o => o.Status).HasColumnName("Status");
                 ob.HasOne(o => o.DetailedOrder).WithOne()
                     .HasForeignKey<DetailedOrder>(o => o.Id);
+                ob.Navigation(o => o.DetailedOrder).IsRequired();
             });
         #endregion
 
