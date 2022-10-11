@@ -4251,7 +4251,7 @@ Or when using a [Migrations bundle](xref:core/managing-schemas/migrations/applyi
 ./bundle.exe --connection "Server=(localdb)\mssqllocaldb;Database=MyAppDb"
 ```
 
-In this case, even though the connection string read from configuration will not be used, the application startup code will still attempt to read it from configuration and pass it to `UseSqlServer`. If the configuration is not available, then this results in passing null to `UseSqlServer`. In EF7, this is allowed, as long as the connection string is ultimately set later, such as by passing `--connection` to the command-line tool.
+In this case, even though the connection string read from configuration isn't used, the application startup code still attempts to read it from configuration and to pass it to `UseSqlServer`. If the configuration is not available, then this results in passing null to `UseSqlServer`. In EF7, this is allowed, as long as the connection string is ultimately set later, such as by passing `--connection` to the command-line tool.
 
 > [!NOTE]
 > This change has been made for `UseSqlServer` and `UseSqlite`. For other providers, contact the provider maintainer to make an equivalent change if it has not yet been done for that provider.
