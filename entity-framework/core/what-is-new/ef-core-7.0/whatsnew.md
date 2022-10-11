@@ -2,7 +2,7 @@
 title: What's New in EF Core 7.0
 description: Overview of new features in EF Core 7.0
 author: ajcvickers
-ms.date: 09/27/2022
+ms.date: 10/10/2022
 uid: core/what-is-new/ef-core-7
 ---
 
@@ -3314,6 +3314,28 @@ LEFT JOIN (
 ORDER BY [b].[Id], [t].[Title]
 ```
 
+### Cosmos translation for `Regex.IsMatch`
+
+> [!TIP]
+> The code shown here comes from [CosmosQueriesSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/CosmosQueriesSample.cs).
+
+EF7 supports using <xref:System.Text.RegularExpressions.Regex.IsMatch%2A?displayProperty=nameWithType> in LINQ queries against Azure Cosmos DB. For example:
+
+<!--
+        var containsInnerT = await context.Triangles
+            .Where(o => Regex.IsMatch(o.Name, "[a-z]t[a-z]", RegexOptions.IgnoreCase))
+            .ToListAsync();
+-->
+[!code-csharp[RegexIsMatch](../../../../samples/core/Miscellaneous/NewInEFCore7/CosmosQueriesSample.cs?name=RegexIsMatch)]
+
+Translates to the following SQL:
+
+```sql
+SELECT c
+FROM root c
+WHERE ((c["Discriminator"] = "Triangle") AND RegexMatch(c["Name"], "[a-z]t[a-z]", "i"))
+```
+
 ## DbContext API and behavior enhancements
 
 EF7 contains a variety of small improvements to <xref:Microsoft.EntityFrameworkCore.DbContext> and related classes.
@@ -3527,3 +3549,788 @@ Notice:
 - The iterator stops traversing from a given node when the callback delegate returns `false`. This example keeps track of visited entities and returns `false` when the entity has already been visited. This prevents infinite loops resulting from cycles in the graph.
 - The `EntityEntryGraphNode<TState>` object allows state to be passed around without capturing it into the delegate.
 - For every node visited other than the first, the node it was discovered from and the navigation is was discovered via are passed to the callback.
+
+## Model building enhancements
+
+EF7 contains a variety of small improvements in model building.
+
+> [!TIP]
+> The code for samples in this section comes from [ModelBuildingSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs).
+
+### Indexes can be ascending or descending
+
+By default, EF Core creates ascending indexes. EF7 also supports creation of descending indexes. For example:
+
+```csharp
+modelBuilder
+    .Entity<Post>()
+    .HasIndex(post => post.Title)
+    .IsDescending();
+```
+
+Or, using the `Index` mapping attribute:
+
+```csharp
+[Index(nameof(Title), AllDescending = true)]
+public class Post
+{
+    public int Id { get; set; }
+
+    [MaxLength(64)]
+    public string? Title { get; set; }
+}
+```
+
+This is rarely useful for indexes over a single column, since the database can use the same index for ordering in both directions. However, this is not the case for composite indexes over multiple columns where the order on each column can be important. EF Core supports this by allowing multiple columns to have different ordering defined for each column. For example:
+
+<!--
+            #region CompositeIndex
+            modelBuilder
+                .Entity<Blog>()
+                .HasIndex(blog => new { blog.Name, blog.Owner })
+                .IsDescending(false, true);
+            #endregion
+-->
+[!code-csharp[CompositeIndex](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=CompositeIndex)]
+
+Or, using a mapping attribute:
+
+```csharp
+[Index(nameof(Name), nameof(Owner), IsDescending = new[] { false, true })]
+public class Blog
+{
+    public int Id { get; set; }
+
+    [MaxLength(64)]
+    public string? Name { get; set; }
+
+    [MaxLength(64)]
+    public string? Owner { get; set; }
+
+    public List<Post> Posts { get; } = new();
+}
+```
+
+This results in the following SQL when using SQL Server:
+
+```sql
+CREATE INDEX [IX_Blogs_Name_Owner] ON [Blogs] ([Name], [Owner] DESC);
+```
+
+Finally, multiple indexes can be created over the same ordered set of columns by giving the indexes names. For example:
+
+<!--
+            modelBuilder
+                .Entity<Blog>()
+                .HasIndex(blog => new { blog.Name, blog.Owner }, "IX_Blogs_Name_Owner_1")
+                .IsDescending(false, true);
+
+            modelBuilder
+                .Entity<Blog>()
+                .HasIndex(blog => new { blog.Name, blog.Owner }, "IX_Blogs_Name_Owner_2")
+                .IsDescending(true, true);
+-->
+[!code-csharp[TwoIndexes](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=TwoIndexes)]
+
+Or, using mapping attributes:
+
+<!--
+    [Index(nameof(Name), nameof(Owner), IsDescending = new[] { false, true }, Name = "IX_Blogs_Name_Owner_1")]
+    [Index(nameof(Name), nameof(Owner), IsDescending = new[] { true, true }, Name = "IX_Blogs_Name_Owner_2")]
+    public class Blog
+    {
+        public int Id { get; set; }
+
+        [MaxLength(64)]
+        public string? Name { get; set; }
+
+        [MaxLength(64)]
+        public string? Owner { get; set; }
+
+        public List<Post> Posts { get; } = new();
+    }
+-->
+[!code-csharp[CompositeIndexByAttribute](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=CompositeIndexByAttribute)]
+
+This generates the following SQL on SQL Server:
+
+```sql
+CREATE INDEX [IX_Blogs_Name_Owner_1] ON [Blogs] ([Name], [Owner] DESC);
+CREATE INDEX [IX_Blogs_Name_Owner_2] ON [Blogs] ([Name] DESC, [Owner] DESC);
+```
+
+### Mapping attribute for composite keys
+
+EF7 introduces a new mapping attribute (aka "data annotation") for specifying the primary key property or properties of any entity type. Unlike <xref:System.ComponentModel.DataAnnotations.KeyAttribute?displayProperty=nameWithType>, [PrimaryKeyAttribute](https://github.com/dotnet/efcore/blob/main/src/EFCore.Abstractions/PrimaryKeyAttribute.cs) is placed on the entity type class rather than on the key property. For example:
+
+```csharp
+[PrimaryKey(nameof(PostKey))]
+public class Post
+{
+    public int PostKey { get; set; }
+}
+```
+
+This makes it a natural fit for defining composite keys:
+
+<!--
+    [PrimaryKey(nameof(PostId), nameof(CommentId))]
+    public class Comment
+    {
+        public int PostId { get; set; }
+        public int CommentId { get; set; }
+    }
+-->
+[!code-csharp[CompositePrimaryKey](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=CompositePrimaryKey)]
+
+Defining the index on the class also means it can be used to specify private properties or fields as keys, even though these would usually be ignored when building the EF model. For example:
+
+```csharp
+[PrimaryKey(nameof(_id))]
+public class Tag
+{
+    private readonly int _id;
+}
+```
+
+### `DeleteBehavior` mapping attribute
+
+EF7 introduces a mapping attribute (aka "data annotation") to specify the <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> for a relationship. For example, [required relationships](xref:core/modeling/relationships) are created with <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade?displayProperty=nameWithType> by default. This can be changed to <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction?displayProperty=nameWithType> by default using [DeleteBehavior](https://github.com/dotnet/efcore/blob/main/src/EFCore.Abstractions/DeleteBehaviorAttribute.cs):
+
+```csharp
+public class Post
+{
+    public int Id { get; set; }
+    public string? Title { get; set; }
+
+    [DeleteBehavior(DeleteBehavior.NoAction)]
+    public Blog Blog { get; set; } = null!;
+}
+```
+
+This will disable cascade deletes for the Blog-Posts relationship.
+
+### Properties mapped to different column names
+
+Some mapping patterns result in the same CLR property being mapped to a column in each of multiple different tables. EF7 allows these columns to have different names. For example, consider a simple inheritance hierarchy:
+
+<!--
+    public class Animal
+    {
+        public int Id { get; set; }
+        public string Breed { get; set; } = null!;
+    }
+
+    public class Cat : Animal
+    {
+        public string? EducationalLevel { get; set; }
+    }
+
+    public class Dog : Animal
+    {
+        public string? FavoriteToy { get; set; }
+    }
+-->
+[!code-csharp[Animals](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=Animals)]
+
+With the TPT [inheritance mapping strategy](xref:core/modeling/inheritance), these types will be mapped to three tables. However, the primary key column in each table may have a different name. For example:
+
+```sql
+CREATE TABLE [Animals] (
+    [Id] int NOT NULL IDENTITY,
+    [Breed] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Animals] PRIMARY KEY ([Id])
+);
+
+CREATE TABLE [Cats] (
+    [CatId] int NOT NULL,
+    [EducationalLevel] nvarchar(max) NULL,
+    CONSTRAINT [PK_Cats] PRIMARY KEY ([CatId]),
+    CONSTRAINT [FK_Cats_Animals_CatId] FOREIGN KEY ([CatId]) REFERENCES [Animals] ([Id]) ON DELETE CASCADE
+);
+
+CREATE TABLE [Dogs] (
+    [DogId] int NOT NULL,
+    [FavoriteToy] nvarchar(max) NULL,
+    CONSTRAINT [PK_Dogs] PRIMARY KEY ([DogId]),
+    CONSTRAINT [FK_Dogs_Animals_DogId] FOREIGN KEY ([DogId]) REFERENCES [Animals] ([Id]) ON DELETE CASCADE
+);
+```
+
+EF7 allows this mapping to be configured using a nested table builder:
+
+<!--
+            modelBuilder.Entity<Animal>().ToTable("Animals");
+
+            modelBuilder.Entity<Cat>()
+                .ToTable(
+                    "Cats",
+                    tableBuilder => tableBuilder.Property(cat => cat.Id).HasColumnName("CatId"));
+
+            modelBuilder.Entity<Dog>()
+                .ToTable(
+                    "Dogs",
+                    tableBuilder => tableBuilder.Property(dog => dog.Id).HasColumnName("DogId"));
+-->
+[!code-csharp[AnimalsTpt](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=AnimalsTpt)]
+
+With the TPC inheritance mapping, the `Breed` property can also be mapped to different column names in different tables. For example, consider the following TPC tables:
+
+```sql
+CREATE TABLE [Cats] (
+    [CatId] int NOT NULL DEFAULT (NEXT VALUE FOR [AnimalSequence]),
+    [CatBreed] nvarchar(max) NOT NULL,
+    [EducationalLevel] nvarchar(max) NULL,
+    CONSTRAINT [PK_Cats] PRIMARY KEY ([CatId])
+);
+
+CREATE TABLE [Dogs] (
+    [DogId] int NOT NULL DEFAULT (NEXT VALUE FOR [AnimalSequence]),
+    [DogBreed] nvarchar(max) NOT NULL,
+    [FavoriteToy] nvarchar(max) NULL,
+    CONSTRAINT [PK_Dogs] PRIMARY KEY ([DogId])
+);
+```
+
+EF7 supports this table mapping:
+
+<!--
+            modelBuilder.Entity<Animal>().UseTpcMappingStrategy();
+
+            modelBuilder.Entity<Cat>()
+                .ToTable(
+                    "Cats",
+                    builder =>
+                    {
+                        builder.Property(cat => cat.Id).HasColumnName("CatId");
+                        builder.Property(cat => cat.Breed).HasColumnName("CatBreed");
+                    });
+
+            modelBuilder.Entity<Dog>()
+                .ToTable(
+                    "Dogs",
+                    builder =>
+                    {
+                        builder.Property(dog => dog.Id).HasColumnName("DogId");
+                        builder.Property(dog => dog.Breed).HasColumnName("DogBreed");
+                    });
+-->
+[!code-csharp[AnimalsTpc](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=AnimalsTpc)]
+
+### Unidirectional many-to-many relationships
+
+EF7 supports [many-to-many relationships](xref:core/modeling/relationships#many-to-many) where one side or the other does not have a navigation property. For example, consider `Post` and `Tag` types:
+
+```csharp
+public class Post
+{
+    public int Id { get; set; }
+    public string? Title { get; set; }
+    public Blog Blog { get; set; } = null!;
+    public List<Tag> Tags { get; } = new();
+}
+```
+
+<!--
+    public class Tag
+    {
+        public int Id { get; set; }
+        public string TagName { get; set; } = null!;
+    }
+-->
+[!code-csharp[Tag](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=Tag)]
+
+Notice that the `Post` type has a navigation property for a list of tags, but the `Tag` type does not have a navigation property for posts. In EF7, this can still be configured as a many-to-many relationship, allowing the same `Tag` object to be used for many different posts. For example:
+
+<!--
+            modelBuilder
+                .Entity<Post>()
+                .HasMany(post => post.Tags)
+                .WithMany();
+-->
+[!code-csharp[ManyToMany](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=ManyToMany)]
+
+This results in mapping to the appropriate join table:
+
+```sql
+CREATE TABLE [Tags] (
+    [Id] int NOT NULL IDENTITY,
+    [TagName] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Tags] PRIMARY KEY ([Id])
+);
+
+CREATE TABLE [Posts] (
+    [Id] int NOT NULL IDENTITY,
+    [Title] nvarchar(64) NULL,
+    [BlogId] int NOT NULL,
+    CONSTRAINT [PK_Posts] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Posts_Blogs_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [Blogs] ([Id])
+);
+
+CREATE TABLE [PostTag] (
+    [PostId] int NOT NULL,
+    [TagsId] int NOT NULL,
+    CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostId], [TagsId]),
+    CONSTRAINT [FK_PostTag_Posts_PostId] FOREIGN KEY ([PostId]) REFERENCES [Posts] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PostTag_Tags_TagsId] FOREIGN KEY ([TagsId]) REFERENCES [Tags] ([Id]) ON DELETE CASCADE
+);
+```
+
+And the relationship can be used as a many-to-many in the normal way. For example, inserting some posts which share various tags from a common set:
+
+<!--
+            var tags = new Tag[] { new() { TagName = "Tag1" }, new() { TagName = "Tag2" }, new() { TagName = "Tag2" }, };
+
+            await context.AddRangeAsync(new Blog { Posts =
+            {
+                new Post { Tags = { tags[0], tags[1] } },
+                new Post { Tags = { tags[1], tags[0], tags[2] } },
+                new Post()
+            } });
+
+            await context.SaveChangesAsync();
+-->
+[!code-csharp[InsertPostsAndTags](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=InsertPostsAndTags)]
+
+### Entity splitting
+
+Entity splitting maps a single entity type to multiple tables. For example, consider a database with three tables that hold customer data:
+
+- A `Customers` table for customer information
+- A `PhoneNumbers` table for the customer's phone number
+- A `Addresses` table for the customer's address
+
+Here are definitions for these tables in SQL Server:
+
+```sql
+CREATE TABLE [Customers] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Customers] PRIMARY KEY ([Id])
+);
+    
+CREATE TABLE [PhoneNumbers] (
+    [CustomerId] int NOT NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    CONSTRAINT [PK_PhoneNumbers] PRIMARY KEY ([CustomerId]),
+    CONSTRAINT [FK_PhoneNumbers_Customers_CustomerId] FOREIGN KEY ([CustomerId]) REFERENCES [Customers] ([Id]) ON DELETE CASCADE
+);
+
+CREATE TABLE [Addresses] (
+    [CustomerId] int NOT NULL,
+    [Street] nvarchar(max) NOT NULL,
+    [City] nvarchar(max) NOT NULL,
+    [PostCode] nvarchar(max) NULL,
+    [Country] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Addresses] PRIMARY KEY ([CustomerId]),
+    CONSTRAINT [FK_Addresses_Customers_CustomerId] FOREIGN KEY ([CustomerId]) REFERENCES [Customers] ([Id]) ON DELETE CASCADE
+);
+```
+
+Each of these tables would typically be mapped to their own entity type, with relationships between the types. However, if all three tables are always used together, then it can be more convenient to map them all to a single entity type. For example:
+
+<!--
+    public class Customer
+    {
+        public Customer(string name, string street, string city, string? postCode, string country)
+        {
+            Name = name;
+            Street = street;
+            City = city;
+            PostCode = postCode;
+            Country = country;
+        }
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string? PostCode { get; set; }
+        public string Country { get; set; }
+    }
+-->
+[!code-csharp[CombinedCustomer](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=CombinedCustomer)]
+
+This is achieved in EF7 by calling `SplitToTable` for each split in the entity type. For example, the following code splits the `Customer` entity type to the `Customers`, `PhoneNumbers`, and `Addresses` tables shown above:
+
+<!--
+            modelBuilder.Entity<Customer>(
+                entityBuilder =>
+                {
+                    entityBuilder
+                        .ToTable("Customers")
+                        .SplitToTable(
+                            "PhoneNumbers",
+                            tableBuilder =>
+                            {
+                                tableBuilder.Property(customer => customer.Id).HasColumnName("CustomerId");
+                                tableBuilder.Property(customer => customer.PhoneNumber);
+                            })
+                        .SplitToTable(
+                            "Addresses",
+                            tableBuilder =>
+                            {
+                                tableBuilder.Property(customer => customer.Id).HasColumnName("CustomerId");
+                                tableBuilder.Property(customer => customer.Street);
+                                tableBuilder.Property(customer => customer.City);
+                                tableBuilder.Property(customer => customer.PostCode);
+                                tableBuilder.Property(customer => customer.Country);
+                            });
+                });
+-->
+[!code-csharp[TableSplitting](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=TableSplitting)]
+
+Notice also that, if necessary, different primary key column names can be specified for each of the tables.
+
+### SQL Server UTF-8 strings
+
+SQL Server Unicode strings as represented by the [`nchar` and `nvarchar` data types](/sql/t-sql/data-types/nchar-and-nvarchar-transact-sql) are stored as [UTF-16](https://en.wikipedia.org/wiki/UTF-16). In addition, the [`char` and `varchar` data types](/sql/t-sql/data-types/char-and-varchar-transact-sql) are used to store non-Unicode strings with support for various [character sets](https://en.wikipedia.org/wiki/Extended_ASCII).
+
+Starting with SQL Server 2019, the `char` and `varchar` data types can be used to instead store Unicode strings with [UTF-8](https://en.wikipedia.org/wiki/UTF-8) encoding. The is achieved by setting one of the [UTF-8 collations](/sql/relational-databases/collations/collation-and-unicode-support). For example, the following code configures a variable length SQL Server UTF-8 string for the `CommentText` column:  
+
+<!--
+            modelBuilder
+                .Entity<Comment>()
+                .Property(comment => comment.CommentText)
+                .HasColumnType("varchar(max)")
+                .UseCollation("LATIN1_GENERAL_100_CI_AS_SC_UTF8");
+-->
+[!code-csharp[Utf8](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=Utf8)]
+
+This configuration generates the following SQL Server column definition:
+
+```sql
+CREATE TABLE [Comment] (
+    [PostId] int NOT NULL,
+    [CommentId] int NOT NULL,
+    [CommentText] varchar(max) COLLATE LATIN1_GENERAL_100_CI_AS_SC_UTF8 NOT NULL,
+    CONSTRAINT [PK_Comment] PRIMARY KEY ([PostId], [CommentId])
+);
+ ```
+
+### Temporal tables support owned entities
+
+EF Core [SQL Server temporal tables](xref:core/what-is-new/ef-core-6.0/whatsnew#sql-server-temporal-tables) mapping has been enhanced in EF7 to support [table sharing](xref:core/modeling/table-splitting). Most notably, the default mapping for [owned single entities](xref:core/modeling/owned-entities) uses table sharing.
+
+For example, consider an owner entity type `Employee` and its owned entity type `EmployeeInfo`:
+
+<!--
+    public class Employee
+    {
+        public Guid EmployeeId { get; set; }
+        public string Name { get; set; } = null!;
+
+        public EmployeeInfo Info { get; set; } = null!;
+    }
+
+    public class EmployeeInfo
+    {
+        public string Position { get; set; } = null!;
+        public string Department { get; set; } = null!;
+        public string? Address { get; set; }
+        public decimal? AnnualSalary { get; set; }
+    }
+-->
+[!code-csharp[EmployeeAndEmployeeInfo](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=EmployeeAndEmployeeInfo)]
+
+If these types are mapped to the same table, then in EF7 that table can be made a temporal table:
+
+<!--
+            modelBuilder
+                .Entity<Employee>()
+                .ToTable(
+                    "Employees",
+                    tableBuilder =>
+                    {
+                        tableBuilder.IsTemporal();
+                        tableBuilder.Property<DateTime>("PeriodStart").HasColumnName("PeriodStart");
+                        tableBuilder.Property<DateTime>("PeriodEnd").HasColumnName("PeriodEnd");
+                    })
+                .OwnsOne(
+                    employee => employee.Info,
+                    ownedBuilder => ownedBuilder.ToTable(
+                        "Employees",
+                        tableBuilder =>
+                        {
+                            tableBuilder.IsTemporal();
+                            tableBuilder.Property<DateTime>("PeriodStart").HasColumnName("PeriodStart");
+                            tableBuilder.Property<DateTime>("PeriodEnd").HasColumnName("PeriodEnd");
+                        }));
+-->
+
+[!code-csharp[OwnedTemporalTable](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=OwnedTemporalTable)]
+
+> [!NOTE]
+> Making this configuration easier is tracked by [Issue #29303](https://github.com/dotnet/efcore/issues/29303). Vote for this issue if it's something you would like to see implemented.
+
+## Improved value generation
+
+EF7 includes two significant improvements to the automatic generation of values for key properties.
+
+> [!TIP]
+> The code for samples in this section comes from [ValueGenerationSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/ValueGenerationSample.cs).
+
+### Value generation for DDD guarded types
+
+In domain-driven design (DDD), "guarded keys" can improve the type safety of key properties. This is achieved by wrapping the key type in another type which is specific to the use of the key. For example, the following code defines a `ProductId` type for product keys, and a `CategoryId` type for category keys.
+
+<!--
+    public readonly struct ProductId
+    {
+        public ProductId(int value) => Value = value;
+        public int Value { get; }
+    }
+
+    public readonly struct CategoryId
+    {
+        public CategoryId(int value) => Value = value;
+        public int Value { get; }
+    }
+-->
+[!code-csharp[GuardedKeys](../../../../samples/core/Miscellaneous/NewInEFCore7/ValueGenerationSample.cs?name=GuardedKeys)]
+
+These are then used in `Product` and `Category` entity types:
+
+<!--
+    public class Product
+    {
+        public Product(string name) => Name = name;
+        public ProductId Id { get; set; }
+        public string Name { get; set; }
+        public CategoryId CategoryId { get; set; }
+        public Category Category { get; set; } = null!;
+    }
+
+    public class Category
+    {
+        public Category(string name) => Name = name;
+        public CategoryId Id { get; set; }
+        public string Name { get; set; }
+        public List<Product> Products { get; } = new();
+    }
+-->
+[!code-csharp[ProductAndCategory](../../../../samples/core/Miscellaneous/NewInEFCore7/ValueGenerationSample.cs?name=ProductAndCategory)]
+
+This makes it impossible to accidentally assign the ID for a category to a product, or vice versa.
+
+> [!WARNING]
+> As with many DDD concepts, this improved type safety comes at the expense of additional code complexity. It is worth considering whether, for example, assigning a product ID to a category is something that is ever likely to happen. Keeping things simple may be overall more beneficial to the codebase.
+
+The guarded key types shown here both wrap `int` key values, which means integer values will be used in the mapped database tables. This is achieved by defining [value converters](xref:core/modeling/value-conversions) for the types:
+
+<!--
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<ProductId>().HaveConversion<ProductIdConverter>();
+            configurationBuilder.Properties<CategoryId>().HaveConversion<CategoryIdConverter>();
+        }
+
+        private class ProductIdConverter : ValueConverter<ProductId, int>
+        {
+            public ProductIdConverter()
+                : base(v => v.Value, v => new(v))
+            {
+            }
+        }
+
+        private class CategoryIdConverter : ValueConverter<CategoryId, int>
+        {
+            public CategoryIdConverter()
+                : base(v => v.Value, v => new(v))
+            {
+            }
+        }
+-->
+[!code-csharp[KeyConverters](../../../../samples/core/Miscellaneous/NewInEFCore7/ValueGenerationSample.cs?name=KeyConverters)]
+
+> [!NOTE]
+> The code here uses `struct` types. This means they have appropriate value-type semantics for use as keys. If `class` types are used instead, then they need to either override equality semantics or also specify a [value comparer](xref:core/modeling/value-comparers).
+
+In EF7, key types based on value converters can use automatically generated key values so long as the underlying type supports this. This is configured in the normal way using `ValueGeneratedOnAdd`:
+
+<!--
+            modelBuilder.Entity<Product>().Property(product => product.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Category>().Property(category => category.Id).ValueGeneratedOnAdd();
+-->
+[!code-csharp[ValueGeneratedOnAdd](../../../../samples/core/Miscellaneous/NewInEFCore7/ValueGenerationSample.cs?name=ValueGeneratedOnAdd)]
+
+By default, this results in `IDENTITY` columns when used with SQL Server:
+
+```sql
+CREATE TABLE [Categories] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Categories] PRIMARY KEY ([Id]));
+
+CREATE TABLE [Products] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [CategoryId] int NOT NULL,
+    CONSTRAINT [PK_Products] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Products_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]) ON DELETE CASCADE);
+```
+
+Which are used in the normal way to generate key values when inserting entities:
+
+```sql
+MERGE [Categories] USING (
+VALUES (@p0, 0),
+(@p1, 1)) AS i ([Name], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Name])
+VALUES (i.[Name])
+OUTPUT INSERTED.[Id], i._Position;
+```
+
+### Sequence-based key generation for SQL Server
+
+EF Core supports key value generation using [SQL Server `IDENTITY` columns](/dotnet/api/microsoft.entityframeworkcore.sqlservermodelbuilderextensions.useidentitycolumns), or [a Hi-Lo pattern](/dotnet/api/microsoft.entityframeworkcore.sqlservermodelbuilderextensions.usehilo) based on blocks of keys generated by a database sequence. EF7 introduces support for a database sequence attached to the key's column default constraint. In its simplest form, this just requires telling EF Core to use a sequence for the key property:
+
+```csharp
+modelBuilder.Entity<Product>().Property(product => product.Id).UseSequence();
+```
+
+This results in a sequence being defined in the database:
+
+```sql
+CREATE SEQUENCE [ProductSequence] START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE NO CYCLE;
+```
+
+Which is then used in the key column default constraint:
+
+```sql
+CREATE TABLE [Products] (
+    [Id] int NOT NULL DEFAULT (NEXT VALUE FOR [ProductSequence]),
+    [Name] nvarchar(max) NOT NULL,
+    [CategoryId] int NOT NULL,
+    CONSTRAINT [PK_Products] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Products_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]) ON DELETE CASCADE);
+```
+
+> [!NOTE]
+> This form of key generation is used by default for generated keys in entity type hierarchies using the [TPC mapping strategy](xref:core/modeling/inheritance).
+
+If desired, the sequence can be given a different name and schema. For example:
+
+<!--
+            modelBuilder
+                .Entity<Product>()
+                .Property(product => product.Id)
+                .UseSequence("ProductsSequence", "northwind");
+-->
+[!code-csharp[Sequence](../../../../samples/core/Miscellaneous/NewInEFCore7/ValueGenerationSample.cs?name=Sequence)]
+
+Further configuration of the sequence is formed by configuring it explicitly in the model. For example:
+
+<!--
+            modelBuilder
+                .HasSequence<int>("ProductsSequence", "northwind")
+                .StartsAt(1000)
+                .IncrementsBy(2);
+-->
+[!code-csharp[ConfigureSequence](../../../../samples/core/Miscellaneous/NewInEFCore7/ValueGenerationSample.cs?name=ConfigureSequence)]
+
+## Migrations tooling improvements
+
+EF7 includes two significant improvements when using the [EF Core Migrations command-line tools](xref:core/managing-schemas/migrations/index).
+
+### UseSqlServer etc. accept null
+
+It is very common to read a connection string from a configuration file and then pass that connection string to `UseSqlServer`, `UseSqlite`, or the equivalent method for another provider. For example:
+
+```csharp
+services.AddDbContext<BloggingContext>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("BloggingDatabase")));
+```
+
+It is also common to pass a connection string when [applying migrations](xref:core/managing-schemas/migrations/applying). For example:
+
+```text
+dotnet ef database update --connection "Server=(localdb)\mssqllocaldb;Database=MyAppDb"
+```
+
+Or when using a [Migrations bundle](xref:core/managing-schemas/migrations/applying#bundles).
+
+```dotnetcli
+./bundle.exe --connection "Server=(localdb)\mssqllocaldb;Database=MyAppDb"
+```
+
+In this case, even though the connection string read from configuration isn't used, the application startup code still attempts to read it from configuration and to pass it to `UseSqlServer`. If the configuration is not available, then this results in passing null to `UseSqlServer`. In EF7, this is allowed, as long as the connection string is ultimately set later, such as by passing `--connection` to the command-line tool.
+
+> [!NOTE]
+> This change has been made for `UseSqlServer` and `UseSqlite`. For other providers, contact the provider maintainer to make an equivalent change if it has not yet been done for that provider.
+
+### Detect when tools are running
+
+EF Core runs application code when the [`dotnet-ef`](xref:core/cli/dotnet) or [PowerShell](xref:core/cli/powershell) commands are being used. Sometimes it may be necessary to detect this situation to prevent inappropriate code being executed at design-time. For example, code that automatically applies migrations at startup should probably not do this at design-time. In EF7, this can be detected using the `EF.IsDesignTime` flag:
+
+```csharp
+if (!EF.IsDesignTime)
+{
+    await context.Database.MigrateAsync();
+}
+```
+
+EF Core sets the `IsDesignTime` to `true` when application code is running on behalf of tools.
+
+## Performance enhancements for proxies
+
+EF Core supports dynamically generated proxies for [lazy-loading](xref:core/querying/related-data/lazy) and [change-tracking](xref:core/change-tracking/change-detection#change-tracking-proxies). EF7 contains two performance improvements when using these proxies:
+
+- The proxy types are now created lazily. This means that the initial model building time when using proxies can be massively faster with EF7 than it was with EF Core 6.0.
+- Proxies can now be used with compiled models.
+
+Here are some performance results for model with 449 entity types, 6390 properties, and 720 relationships.
+
+| Scenario                                                    | Method           |    Mean |    Error |   StdDev |
+|-------------------------------------------------------------|------------------|--------:|---------:|---------:|
+| EF Core 6.0 without proxies                                 | TimeToFirstQuery | 1.085 s | 0.0083 s | 0.0167 s |
+| EF Core 6.0 with change-tracking proxies                    | TimeToFirstQuery | 13.01 s | 0.2040 s | 0.4110 s |
+| EF Core 7.0 without proxies                                 | TimeToFirstQuery | 1.442 s | 0.0134 s | 0.0272 s |
+| EF Core 7.0 with change-tracking proxies                    | TimeToFirstQuery | 1.446 s | 0.0160 s | 0.0323 s |
+| EF Core 7.0 with change-tracking proxies and compiled model | TimeToFirstQuery | 0.162 s | 0.0062 s | 0.0125 s |
+
+So, in this case, a model with change-tracking proxies can be ready to execute the first query 80 times faster in EF7 than was possible with EF Core 6.0.
+
+## First-class Windows Forms data binding
+
+The Windows Forms team have been making some [great improvements to the Visual Studio Designer experience](https://devblogs.microsoft.com/dotnet/state-of-the-windows-forms-designer-for-net-applications/). This includes [new experiences for data binding](https://devblogs.microsoft.com/dotnet/databinding-with-the-oop-windows-forms-designer/) that integrates well with EF Core.
+
+In brief, the new experience provides Visual Studio U.I. for creating an <xref:System.Web.UI.WebControls.ObjectDataSource>:
+
+![Choose Category data source type](../../get-started/_static/winforms-choose-category-type.png)
+
+This can then be bound to an EF Core `DbSet` with some simple code:
+
+```csharp
+public partial class MainForm : Form
+{
+    private ProductsContext? dbContext;
+
+    public MainForm()
+    {
+        InitializeComponent();
+    }
+
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+
+        this.dbContext = new ProductsContext();
+
+        this.dbContext.Categories.Load();
+        this.categoryBindingSource.DataSource = dbContext.Categories.Local.ToBindingList();
+    }
+
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        base.OnClosing(e);
+
+        this.dbContext?.Dispose();
+        this.dbContext = null;
+    }
+}
+```
+
+See [Getting Started with Windows Forms](xref:core/get-started/winforms) for a complete walkthrough and [downloadable WinForms sample application](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/WinForms).

@@ -43,7 +43,7 @@ The following example passes a single parameter to a stored procedure by includi
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlStoredProcedureParameter)]
 
-While this syntax may look like regular C# [string interpolation](https://learn.microsoft.com/dotnet/csharp/language-reference/tokens/interpolated), the supplied value is wrapped in a `DbParameter` and the generated parameter name inserted where the `{0}` placeholder was specified. This makes > The <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> safe from SQL injection attacks, and sends the value efficiently and correctly to the database.
+While this syntax may look like regular C# [string interpolation](/dotnet/csharp/language-reference/tokens/interpolated), the supplied value is wrapped in a `DbParameter` and the generated parameter name inserted where the `{0}` placeholder was specified. This makes > The <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> safe from SQL injection attacks, and sends the value efficiently and correctly to the database.
 
 When executing stored procedures, it can be useful to use named parameters in the SQL query string, especially when the stored procedure has optional parameters:
 

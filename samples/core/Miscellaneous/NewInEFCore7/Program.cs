@@ -34,10 +34,15 @@ public class Program
         await StoredProcedureMappingSample.Insert_Update_and_Delete_using_stored_procedures_with_TPC();
 
         await SimpleMaterializationSample.Simple_actions_on_entity_creation();
+
         await QueryInterceptionSample.LINQ_expression_tree_interception();
+
         await OptimisticConcurrencyInterceptionSample.Optimistic_concurrency_interception();
+
         await InjectLoggerSample.Injecting_services_into_entities();
+
         await LazyConnectionStringSample.Lazy_initialization_of_a_connection_string();
+
         await QueryStatisticsLoggerSample.Executing_commands_after_consuming_a_result_set();
 
         await UngroupedColumnsQuerySample.Subqueries_dont_reference_ungrouped_columns_from_outer_query_SqlServer();
@@ -71,5 +76,17 @@ public class Program
         await DbContextApiSample.Find_siblings();
         await DbContextApiSample.Get_entry_for_shared_type_entity_type();
         await DbContextApiSample.Use_IEntityEntryGraphIterator();
+
+        await ModelBuildingSample.Indexes_can_be_ordered();
+        await ModelBuildingSample.Property_can_be_mapped_to_different_column_names_TPT();
+        await ModelBuildingSample.Property_can_be_mapped_to_different_column_names_TPC();
+        await ModelBuildingSample.Unidirectional_many_to_many();
+        await ModelBuildingSample.Entity_splitting();
+        await ModelBuildingSample.Temporal_tables_with_owned_types();
+
+        await ValueGenerationSample.Can_use_value_generation_with_converted_types();
+
+        // // Requires the Cosmos emulator
+        // await CosmosQueriesSample.Cosmos_translations_for_RegEx_Match();
     }
 }
