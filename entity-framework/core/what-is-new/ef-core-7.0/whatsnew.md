@@ -4239,7 +4239,7 @@ It is very common to read a connection string from a configuration file and then
         options.UseSqlServer(Configuration.GetConnectionString("BloggingDatabase")));
 ```
 
-It is also common to pass a connection string [applying migrations](xref:core/managing-schemas/migrations/applying). For example:
+It is also common to pass a connection string when [applying migrations](xref:core/managing-schemas/migrations/applying). For example:
 
 ```text
 dotnet ef database update --connection "Server=(localdb)\mssqllocaldb;Database=MyAppDb"
