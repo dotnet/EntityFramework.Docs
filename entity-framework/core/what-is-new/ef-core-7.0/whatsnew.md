@@ -4296,7 +4296,7 @@ In brief, the new experience provides Visual Studio U.I. for creating an <xref:S
 
 ![Choose Category data source type](../../get-started/_static/winforms-choose-category-type.png)
 
-This can then be bound to an EF Core `DBset` with some simple code:
+This can then be bound to an EF Core `DbSet` with some simple code:
 
 ```csharp
 public partial class MainForm : Form
