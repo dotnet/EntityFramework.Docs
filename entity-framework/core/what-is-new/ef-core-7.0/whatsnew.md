@@ -4140,7 +4140,7 @@ The guarded key types shown here both wrap `int` key values, which means integer
 [!code-csharp[KeyConverters](../../../../samples/core/Miscellaneous/NewInEFCore7/ValueGenerationSample.cs?name=KeyConverters)]
 
 > [!NOTE]
-> The code here uses `struct` types. This means they have appropriate value-type semantics for use as keys. If `class` types are used instead, then they will need to either override equality semantics or also specify a [value comparer](xref:core/modeling/value-comparers).
+> The code here uses `struct` types. This means they have appropriate value-type semantics for use as keys. If `class` types are used instead, then they need to either override equality semantics or also specify a [value comparer](xref:core/modeling/value-comparers).
 
 In EF7, key types based on value converters can use automatically generated key values so long as the underlying type supports this. This is configured in the normal way using `ValueGeneratedOnAdd`:
 
