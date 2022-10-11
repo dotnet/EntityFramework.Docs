@@ -9,8 +9,8 @@ internal class MyContext : DbContext
     #region TableComment
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Blog>()
-            .HasComment("Blogs managed on the website");
+        modelBuilder.Entity<Blog>().ToTable(
+            tableBuilder => tableBuilder.HasComment("Blogs managed on the website"));
     }
     #endregion
 }
