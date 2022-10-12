@@ -23,10 +23,10 @@ The following API and behavior changes have the potential to break existing appl
 | [ToView() is treated differently by migrations](#toview)                                                                              | Medium     |
 | [ToTable(null) marks the entity type as not mapped to a table](#totable)                                                              | Medium     |
 | [Removed HasGeometricDimension method from SQLite NTS extension](#geometric-sqlite)                                                   | Low        |
-| [Cosmos: Partition key is now added to the primary key](#cosmos-partition-key)                                                        | Low        |
-| [Cosmos: `id` property renamed to `__id`](#cosmos-id)                                                                                 | Low        |
-| [Cosmos: byte[] is now stored as a base64 string instead of a number array](#cosmos-byte)                                             | Low        |
-| [Cosmos: GetPropertyName and SetPropertyName were renamed](#cosmos-metadata)                                                          | Low        |
+| [Azure Cosmos DB: Partition key is now added to the primary key](#cosmos-partition-key)                                                        | Low        |
+| [Azure Cosmos DB: `id` property renamed to `__id`](#cosmos-id)                                                                                 | Low        |
+| [Azure Cosmos DB: byte[] is now stored as a base64 string instead of a number array](#cosmos-byte)                                             | Low        |
+| [Azure Cosmos DB: GetPropertyName and SetPropertyName were renamed](#cosmos-metadata)                                                          | Low        |
 | [Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted](#non-added-generation) | Low        |
 | [IMigrationsModelDiffer now uses IRelationalModel](#relational-model)                                                                 | Low        |
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
@@ -336,7 +336,7 @@ modelBuilder.Entity<GeoEntity>(
 
 <a name="cosmos-partition-key"></a>
 
-### Cosmos: Partition key is now added to the primary key
+### Azure Cosmos DB: Partition key is now added to the primary key
 
 [Tracking Issue #15289](https://github.com/dotnet/efcore/issues/15289)
 
@@ -363,7 +363,7 @@ modelBuilder.Entity<Blog>()
 
 <a name="cosmos-id"></a>
 
-### Cosmos: `id` property renamed to `__id`
+### Azure Cosmos DB: `id` property renamed to `__id`
 
 [Tracking Issue #17751](https://github.com/dotnet/efcore/issues/17751)
 
@@ -391,7 +391,7 @@ modelBuilder.Entity<Blog>()
 
 <a name="cosmos-byte"></a>
 
-### Cosmos: byte[] is now stored as a base64 string instead of a number array
+### Azure Cosmos DB: byte[] is now stored as a base64 string instead of a number array
 
 [Tracking Issue #17306](https://github.com/dotnet/efcore/issues/17306)
 
@@ -413,7 +413,7 @@ Existing data stored as number arrays will still be queried correctly, but curre
 
 <a name="cosmos-metadata"></a>
 
-### Cosmos: GetPropertyName and SetPropertyName were renamed
+### Azure Cosmos DB: GetPropertyName and SetPropertyName were renamed
 
 [Tracking Issue #17874](https://github.com/dotnet/efcore/issues/17874)
 

@@ -363,13 +363,13 @@ For further information, [see the full documentation on event counters](xref:cor
 * Scaffolding existing databases now singularizes table names, so tables named `People` and `Addresses` will be scaffolded to entity types called `Person` and `Address`. [Original database names can still be preserved](xref:core/managing-schemas/scaffolding#preserving-names).
 * The new [`--no-onconfiguring`](xref:core/cli/dotnet#dotnet-ef-dbcontext-scaffold) option can instruct EF Core to exclude `OnModelConfiguring` when scaffolding a model.
 
-### Cosmos
+### Azure Cosmos DB
 
-* [Cosmos connection settings](xref:core/providers/cosmos/index#cosmos-options) have been expanded.
-* Optimistic concurrency is now [supported on Cosmos via the use of ETags](xref:core/providers/cosmos/index#optimistic-concurrency-with-etags).
-* The new `WithPartitionKey` method allows the Cosmos [partition key](xref:core/providers/cosmos/index#partition-keys) to be included both in the model and in queries.
-* The string methods [`Contains`](/dotnet/api/system.string.contains), [`StartsWith`](/dotnet/api/system.string.startswith) and [`EndsWith`](/dotnet/api/system.string.endswith) are now translated for Cosmos.
-* The C# `is` operator is now translated on Cosmos.
+* [Azure Cosmos DB connection settings](xref:core/providers/cosmos/index#cosmos-options) have been expanded.
+* Optimistic concurrency is now [supported on Azure Cosmos DB via the use of ETags](xref:core/providers/cosmos/index#optimistic-concurrency-with-etags).
+* The new `WithPartitionKey` method allows the Azure Cosmos DB [partition key](xref:core/providers/cosmos/index#partition-keys) to be included both in the model and in queries.
+* The string methods [`Contains`](/dotnet/api/system.string.contains), [`StartsWith`](/dotnet/api/system.string.startswith) and [`EndsWith`](/dotnet/api/system.string.endswith) are now translated for Azure Cosmos DB.
+* The C# `is` operator is now translated on Azure Cosmos DB.
 
 ### Sqlite
 

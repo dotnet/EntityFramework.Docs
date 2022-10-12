@@ -52,4 +52,4 @@ Apart from mappings provided by EF Core providers, users can also define custom 
 
 - [SqlServer built-in function mappings](xref:core/providers/sql-server/functions)
 - [Sqlite built-in function mappings](xref:core/providers/sqlite/functions)
-- [Cosmos built-in function mappings](xref:core/providers/cosmos/functions)
+- [Azure Cosmos DB built-in function mappings](xref:core/providers/cosmos/functions)

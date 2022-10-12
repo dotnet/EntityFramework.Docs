@@ -26,7 +26,7 @@ In certain cases, databases have a special edition or version which can be helpf
 
 We generally recommend installing SQL Server Developer edition rather than LocalDB, since it provides the full SQL Server feature set and is generally very easy to do.
 
-When using a cloud database, it's usually appropriate to test against a local version of the database, both to improve speed and to decrease costs. For example, when using SQL Azure in production, you can test against a locally-installed SQL Server - the two are extremely similar (though it's still wise to run tests against SQL Azure itself before going into production). When using Cosmos, [the Cosmos emulator](/azure/cosmos-db/local-emulator) is a useful tool both for developing locally and for running tests.
+When using a cloud database, it's usually appropriate to test against a local version of the database, both to improve speed and to decrease costs. For example, when using SQL Azure in production, you can test against a locally-installed SQL Server - the two are extremely similar (though it's still wise to run tests against SQL Azure itself before going into production). When using Azure Cosmos DB, [the Azure Cosmos DB emulator](/azure/cosmos-db/local-emulator) is a useful tool both for developing locally and for running tests.
 
 ## Creating, seeding and managing a test database
 

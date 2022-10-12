@@ -1,6 +1,6 @@
 ---
 title: Azure Cosmos DB Provider - EF Core
-description: Documentation for the database provider that allows Entity Framework Core to be used with the Azure Cosmos DB SQL API
+description: Documentation for the database provider that allows Entity Framework Core to be used with the Azure Cosmos DB for NoSQL
 author: AndriySvyryd
 ms.date: 01/11/2022
 uid: core/providers/cosmos/index
@@ -12,7 +12,7 @@ This database provider allows Entity Framework Core to be used with Azure Cosmos
 It is strongly recommended to familiarize yourself with the [Azure Cosmos DB documentation](/azure/cosmos-db/introduction) before reading this section.
 
 > [!NOTE]
-> This provider only works with the SQL API of Azure Cosmos DB.
+> This provider only works with the Azure Cosmos DB for NoSQL of Azure Cosmos DB.
 
 ## Install
 
@@ -57,9 +57,9 @@ Saving and querying data follows the normal EF pattern:
 > [!IMPORTANT]
 > Calling [EnsureCreatedAsync](/dotnet/api/Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreatedAsync) is necessary to create the required containers and insert the [seed data](xref:core/modeling/data-seeding) if present in the model. However `EnsureCreatedAsync` should only be called during deployment, not normal operation, as it may cause performance issues.
 
-## Cosmos options
+## Azure Cosmos DB options
 
-It is also possible to configure the Cosmos DB provider with a single connection string and to specify other options to customize the connection:
+It is also possible to configure the Azure Cosmos DB provider with a single connection string and to specify other options to customize the connection:
 
 [!code-csharp[Configuration](../../../../samples/core/Cosmos/ModelBuilding/OptionsContext.cs?name=Configuration)]
 
@@ -87,7 +87,7 @@ If no other entity type will ever be stored in the same container the discrimina
 
 ### Partition keys
 
-By default EF Core will create containers with the partition key set to `"__partitionKey"` without supplying any value for it when inserting items. But to fully leverage the performance capabilities of Azure Cosmos a [carefully selected partition key](/azure/cosmos-db/partition-data) should be used. It can be configured by calling [HasPartitionKey](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasPartitionKey):
+By default EF Core will create containers with the partition key set to `"__partitionKey"` without supplying any value for it when inserting items. But to fully leverage the performance capabilities of Azure Cosmos DB a [carefully selected partition key](/azure/cosmos-db/partition-data) should be used. It can be configured by calling [HasPartitionKey](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasPartitionKey):
 
 [!code-csharp[PartitionKey](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=PartitionKey)]
 
@@ -105,7 +105,7 @@ It is generally recommended to add the partition key to the primary key as that 
 
 ### Provisioned throughput
 
-If you use EF Core to create the Azure Cosmos database or containers you can configure [provisioned throughput](/azure/cosmos-db/set-throughput) for the database by calling <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasAutoscaleThroughput%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasManualThroughput%2A?displayProperty=nameWithType>. For example:
+If you use EF Core to create the Azure Cosmos DB database or containers you can configure [provisioned throughput](/azure/cosmos-db/set-throughput) for the database by calling <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasAutoscaleThroughput%2A?displayProperty=nameWithType> or <xref:Microsoft.EntityFrameworkCore.CosmosModelBuilderExtensions.HasManualThroughput%2A?displayProperty=nameWithType>. For example:
 
 <!--
 modelBuilder.HasManualThroughput(2000);
@@ -130,7 +130,7 @@ modelBuilder.Entity<Family>(
 > [!NOTE]
 > Beginning with EF Core 6.0 related entity types are configured as owned by default. To prevent this for a specific entity type call <xref:Microsoft.EntityFrameworkCore.ModelBuilder.Entity%2A?displayProperty=nameWithType>.
 
-For Cosmos, owned entities are embedded in the same item as the owner. To change a property name use [ToJsonProperty](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.ToJsonProperty):
+For Azure Cosmos DB, owned entities are embedded in the same item as the owner. To change a property name use [ToJsonProperty](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.ToJsonProperty):
 
 [!code-csharp[PropertyNames](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=PropertyNames)]
 

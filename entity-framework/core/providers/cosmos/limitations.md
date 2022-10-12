@@ -7,7 +7,7 @@ uid: core/providers/cosmos/limitations
 ---
 # EF Core Azure Cosmos DB Provider Limitations
 
-The Cosmos provider has a number of limitations. Many of these limitations are a result of limitations in the underlying Cosmos database engine and are not specific to EF. But most simply [haven't been implemented yet](https://github.com/dotnet/efcore/issues?page=1&q=is%3Aissue+is%3Aopen+Cosmos+in%3Atitle+label%3Atype-enhancement+sort%3Areactions-%2B1-desc).
+The Azure Cosmos DB provider has a number of limitations. Many of these limitations are a result of limitations in the underlying Azure Cosmos DB database engine and are not specific to EF. But most simply [haven't been implemented yet](https://github.com/dotnet/efcore/issues?page=1&q=is%3Aissue+is%3Aopen+Cosmos+in%3Atitle+label%3Atype-enhancement+sort%3Areactions-%2B1-desc).
 
 These are some of the commonly requested features:
 

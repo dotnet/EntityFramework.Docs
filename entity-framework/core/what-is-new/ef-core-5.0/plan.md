@@ -251,7 +251,7 @@ Tracked by [#1675](https://github.com/dotnet/EntityFramework.Docs/issues/1675)
 
 T-shirt size: M
 
-Status: Completed. The new documentation is [live on the Microsoft docs site](/dotnet/standard/data/sqlite/?tabs=netcore-cli).
+Status: Completed. The new documentation is [live on Microsoft Learn](/dotnet/standard/data/sqlite/?tabs=netcore-cli).
 
 The EF Team also owns the Microsoft.Data.Sqlite ADO.NET provider. We plan to fully document this provider as part of the 5.0 release.
 
@@ -259,7 +259,7 @@ The EF Team also owns the Microsoft.Data.Sqlite ADO.NET provider. We plan to ful
 
 Lead documenter: @ajcvickers
 
-Tracked by [issues in the docs repo in the 5.0 milestone](https://github.com/dotnet/EntityFramework.Docs/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+)
+Tracked by [issues in the documentation repo in the 5.0 milestone](https://github.com/dotnet/EntityFramework.Docs/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+)
 
 T-shirt size: L
 
@@ -267,9 +267,9 @@ Status: In-progress
 
 We are already in the process of updating documentation for the 3.0 and 3.1 releases. We are also working on:
 
-* An overhaul of the getting started docs to make them more approachable/easier to follow
-* Reorganization of docs to make things easier to find and to add cross-references
-* Adding more details and clarifications to existing docs
+* An overhaul of the getting started articles to make them more approachable/easier to follow
+* Reorganization of articles to make things easier to find and to add cross-references
+* Adding more details and clarifications to existing articles
 * Updating the samples and adding more examples
 
 ## Fixing bugs

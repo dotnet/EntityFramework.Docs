@@ -62,7 +62,7 @@ This change was made to ensure that, by default, either the connection is secure
 
 There are three ways to proceed:
 
-1. [Install a valid certificate on the server](/sql/database-engine/configure-windows/enable-encrypted-connections-to-the-database-engine). Note that this is an involved process and requires a obtaining a certificate and ensuring it is signed by an authority trusted by the client.
+1. [Install a valid certificate on the server](/sql/database-engine/configure-windows/enable-encrypted-connections-to-the-database-engine). Note that this is an involved process and requires obtaining a certificate and ensuring it is signed by an authority trusted by the client.
 2. If the server has a certificate, but it is not trusted by the client, then `TrustServerCertificate=True` to allow bypassing the normal trust mechanims.
 3. Explicitly add `Encrypt=False` to the connection string.
 
@@ -396,7 +396,7 @@ Query or attach entities before marking entities as `Deleted`, or manually set n
 
 #### Old behavior
 
-In EF Core 6.0, using the Cosmos <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw%2A> extension method when using a relational provider, or the relational <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> extension method when using the Cosmos provider could silently fail.
+In EF Core 6.0, using the Azure Cosmos DB <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw%2A> extension method when using a relational provider, or the relational <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> extension method when using the Azure Cosmos DB provider could silently fail.
 
 #### New behavior
 

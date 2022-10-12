@@ -181,23 +181,23 @@ Tracked by [issues labeled with 'area-cosmos' and in the 7.0 milestone](https://
 
 Value proposition: Continue to make EF Core the easiest and most productive way to work with [Azure Cosmos DB](https://azure.microsoft.com/services/cosmos-db/#overview).
 
-We made [significant improvements to the EF Core Cosmos database provider for the 6.0 release](/ef/core/what-is-new/ef-core-6.0/whatsnew#cosmos-provider-enhancements). These improvements created a first-class experience for working with Azure Cosmos DB from EF Core, which is reflected by significant growth in adoption. We plan to continue this momentum in EF7 with the following further Cosmos provider enhancements:
+We made [significant improvements to the EF Core Azure Cosmos DB database provider for the 6.0 release](/ef/core/what-is-new/ef-core-6.0/whatsnew#cosmos-provider-enhancements). These improvements created a first-class experience for working with Azure Cosmos DB from EF Core, which is reflected by significant growth in adoption. We plan to continue this momentum in EF7 with the following further Azure Cosmos DB provider enhancements:
 
 - [Issue #16146: Support aggregate operators](https://github.com/dotnet/efcore/issues/16146)
 - [Issue #17306: Allow to use a custom JSON serializer](https://github.com/dotnet/efcore/issues/17306)
 - [Issue #17670: Translate non-persisted property in query when possible](https://github.com/dotnet/efcore/issues/17670)
 - [Issue #19944: Support trigger execution](https://github.com/dotnet/efcore/issues/19944)
 - [Issue #20350: Detect partition key filters in more queries](https://github.com/dotnet/efcore/issues/20350)
-- [Issue #20910: Add translation for string.Compare for Cosmos](https://github.com/dotnet/efcore/issues/20910)
+- [Issue #20910: Add translation for string.Compare for Azure Cosmos DB](https://github.com/dotnet/efcore/issues/20910)
 - [Issue #23538: Improve query tree during translation](https://github.com/dotnet/efcore/issues/23538)
 - [Issue #24571: Allow terminating operators after Skip and Take](https://github.com/dotnet/efcore/issues/24571)
 - [Issue #24513: Add support for pagination (MaxItemCount)](https://github.com/dotnet/efcore/issues/24513)
 - [Issue #25700: translate Length/Count on collections](https://github.com/dotnet/efcore/issues/25700)
 - [Issue #25701: translate indexing into collection](https://github.com/dotnet/efcore/issues/25701)
-- [Issue #26478: Implement interceptors for Cosmos](https://github.com/dotnet/efcore/issues/26478)
+- [Issue #26478: Implement interceptors for Azure Cosmos DB](https://github.com/dotnet/efcore/issues/26478)
 - [Issue #26491: Support AAD RBAC via the ClientSecretCredential](https://github.com/dotnet/efcore/issues/26491)
 
-Please make sure to vote (👍) for the [Cosmos provider features](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-cosmos) that you need so that we can assess where to invest for the most benefit.
+Please make sure to vote (👍) for the [Azure Cosmos DB provider features](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-cosmos) that you need so that we can assess where to invest for the most benefit.
 
 ### Migrations experience
 
