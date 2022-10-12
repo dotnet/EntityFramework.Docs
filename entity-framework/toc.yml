@@ -152,7 +152,7 @@
         href: core/modeling/data-seeding.md
       - name: Entity type constructors
         href: core/modeling/constructors.md
-      - name: Table splitting
+      - name: Advanced table mapping
         href: core/modeling/table-splitting.md
       - name: Owned entity types
         href: core/modeling/owned-entities.md
