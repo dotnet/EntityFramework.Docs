@@ -12,6 +12,7 @@
 
 # SQLite databases
 *.sqlite
+*.db
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

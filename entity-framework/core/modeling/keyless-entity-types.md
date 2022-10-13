@@ -2,7 +2,7 @@
 title: Keyless Entity Types - EF Core
 description: How to configure keyless entity types using Entity Framework Core
 author: AndriySvyryd
-ms.date: 11/15/2021
+ms.date: 10/10/2022
 uid: core/modeling/keyless-entity-types
 ---
 # Keyless Entity Types
@@ -42,6 +42,8 @@ However, they are different from regular entity types in that they:
   - Entities cannot contain navigation properties to keyless entity types.
 - Need to be configured with a `[Keyless]` data annotation or a `.HasNoKey()` method call.
 - May be mapped to a _defining query_. A defining query is a query declared in the model that acts as a data source for a keyless entity type.
+- Can have a hierarchy, but it must be mapped as TPH.
+- Cannot use table splitting or entity splitting.
 
 ## Usage scenarios
 

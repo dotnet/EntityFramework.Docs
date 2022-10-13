@@ -2,7 +2,7 @@
 title: Modeling for Performance - EF Core
 description: Modeling efficiently when using Entity Framework Core
 author: roji
-ms.date: 12/1/2020
+ms.date: 10/10/2022
 uid: core/performance/modeling-for-performance
 ---
 # Modeling for Performance
@@ -39,22 +39,29 @@ EF doesn't currently provide any specific API for creating or maintaining views,
 
 It's recommended to read [the dedicated page on inheritance](xref:core/modeling/inheritance) before continuing with this section.
 
-EF Core currently supports two techniques for mapping an inheritance model to a relational database:
+EF Core currently supports three techniques for mapping an inheritance model to a relational database:
 
-* **Table-per-hierarchy** (TPH), in which an entire .NET hierarchy of classes is mapped to a single database table
+* **Table-per-hierarchy** (TPH), in which an entire .NET hierarchy of classes is mapped to a single database table.
 * **Table-per-type** (TPT), in which each type in the .NET hierarchy is mapped to a different table in the database.
+* **Table-per-concrete-type** (TPC), in which each concrete type in the .NET hierarchy is mapped to a different table in the database, where each table contains columns for all properties of the corresponding type.
 
 The choice of inheritance mapping technique can have a considerable impact on application performance - it's recommended to carefully measure before committing to a choice.
 
-People sometimes choose TPT because it appears to be the "cleaner" technique; a separate table for each .NET type makes the database schema look similar to the .NET type hierarchy. In addition, since TPH must represent the entire hierarchy in a single table, rows have *all* columns regardless of the type actually being held in the row, and unrelated columns are always empty and unused. Aside from seeming to be an "unclean" mapping technique, many believe that these empty columns take up considerable space in the database and may hurt performance as well.
+Intuitively, TPT might seem like the "cleaner" technique; a separate table for each .NET type makes the database schema look similar to the .NET type hierarchy. In addition, since TPH must represent the entire hierarchy in a single table, rows have *all* columns regardless of the type actually being held in the row, and unrelated columns are always empty and unused. Aside from seeming to be an "unclean" mapping technique, many believe that these empty columns take up considerable space in the database and may hurt performance as well.
+
+> [!TIP]
+> If your database system supports it (e.g. SQL Server), then consider using "sparse columns" for TPH columns that will be rarely populated.
 
 However, measuring shows that TPT is in most cases the inferior mapping technique from a performance standpoint; where all data in TPH comes from a single table, TPT queries must join together multiple tables, and joins are one of the primary sources of performance issues in relational databases. Databases also generally tend to deal well with empty columns, and features such as [SQL Server sparse columns](/sql/relational-databases/tables/use-sparse-columns) can reduce this overhead even further.
 
+TPC has similar performance characteristics to TPH, but is slightly slower when selecting entities of all types as this involves several tables. However, TPC really excels when querying for entities of a single leaf type - the query only uses a single table and needs no filtering.
+
 For a concrete example, [see this benchmark](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/Inheritance.cs) which sets up a simple model with a 7-type hierarchy; 5000 rows are seeded for each type - totalling 35000 rows - and the benchmark simply loads all rows from the database:
 
-| Method |     Mean |   Error |  StdDev |     Gen 0 |     Gen 1 |     Gen 2 | Allocated |
-|------- |---------:|--------:|--------:|----------:|----------:|----------:|----------:|
-|    TPH | 132.3 ms | 2.29 ms | 2.03 ms | 8000.0000 | 3000.0000 | 1250.0000 |  44.49 MB |
-|    TPT | 201.3 ms | 3.32 ms | 3.10 ms | 9000.0000 | 4000.0000 |         - |  61.84 MB |
+| Method |     Mean |   Error |   StdDev |     Gen 0 |     Gen 1 | Allocated |
+|------- |---------:|--------:|---------:|----------:|----------:|----------:|
+|    TPH | 149.0 ms | 3.38 ms |  9.80 ms | 4000.0000 | 1000.0000 |     40 MB |
+|    TPT | 312.9 ms | 6.17 ms | 10.81 ms | 9000.0000 | 3000.0000 |     75 MB |
+|    TPC | 158.2 ms | 3.24 ms |  8.88 ms | 5000.0000 | 2000.0000 |     46 MB |
 
-As can be seen, TPH is considerably more efficient than TPT for this scenario. Note that actual results always depend on the specific query being executed and the number of tables in the hierarchy, so other queries may show a different performance gap; you're encouraged to use this benchmark code as a template for testing other queries.
+As can be seen, TPH and TPC are considerably more efficient than TPT for this scenario. Note that actual results always depend on the specific query being executed and the number of tables in the hierarchy, so other queries may show a different performance gap; you're encouraged to use this benchmark code as a template for testing other queries.
