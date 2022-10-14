@@ -2,7 +2,7 @@
 title: Relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
 author: AndriySvyryd
-ms.date: 11/15/2021
+ms.date: 10/14/2022
 uid: core/modeling/relationships
 ---
 # Relationships
@@ -310,6 +310,9 @@ It is common to apply configuration to the join entity type. This action can be 
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=SharedConfiguration)]
 
+> [!TIP]
+> If there is no navigation on the other side `WithMany()` can be called without any arguments.
+
 [Model seed data](xref:core/modeling/data-seeding) can be provided for the join entity type by using anonymous types. You can examine the model debug view to determine the property names created by convention.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Seeding)]
@@ -323,6 +326,9 @@ Additional data can be stored in the join entity type, but for this it's best to
 EF uses two one-to-many relationships on the join entity type to represent the many-to-many relationship. You can configure these relationships in the `UsingEntity` arguments.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Components)]
+
+> [!NOTE]
+> The `UsingEntity` overloads that don't have a `Action<EntityTypeBuilder> configureJoinEntityType` parameter return an `EntityTypeBuilder` for the join entity type, so the configuration can be chained. Also, starting with EF Core 7.0 there are overloads without a `Type` parameter. These will assume that the type is `Dictionary<string, object>`, which is recommended when you don't plan on using the join entity directly.
 
 > [!NOTE]
 > The ability to configure many-to-many relationships was introduced in EF Core 5.0, for previous version use the following approach.

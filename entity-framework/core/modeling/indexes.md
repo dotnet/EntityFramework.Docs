@@ -66,7 +66,7 @@ Attempting to insert more than one entity with the same values for the index's c
 > [!NOTE]
 > This feature is being introduced in EF Core 7.0.
 
-In most databases, each column covered by an index can be either ascending or descending. For indexes covering only one column, this typically does not matter: the database can traverse the index in reverse order asif needed. However, for composite indexes, the ordering can be crucial for good performance, and can mean the difference between an index getting used by a query or not. In general, the index columns' sort orders should correspond to those specified in the `ORDER BY` clause of your query.
+In most databases, each column covered by an index can be either ascending or descending. For indexes covering only one column, this typically does not matter: the database can traverse the index in reverse order as needed. However, for composite indexes, the ordering can be crucial for good performance, and can mean the difference between an index getting used by a query or not. In general, the index columns' sort orders should correspond to those specified in the `ORDER BY` clause of your query.
 
 The index sort order is ascending by default. You can make all columns have descending order as follows:
 
