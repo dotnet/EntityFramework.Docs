@@ -7,6 +7,8 @@ uid: core/modeling/concurrency
 ---
 # Concurrency Tokens
 
+These are not supported on SQLite or Postgress databases (https://github.com/dotnet/efcore/issues/22193, https://github.com/dotnet/efcore/issues/2195)
+
 > [!NOTE]
 > This page documents how to configure concurrency tokens. See [Handling Concurrency Conflicts](xref:core/saving/concurrency) for a detailed explanation of how concurrency control works on EF Core and examples of how to handle concurrency conflicts in your application.
 
