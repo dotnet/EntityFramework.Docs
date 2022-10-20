@@ -19,8 +19,7 @@ EF Core supports many database engines, see [Database Providers](xref:core/provi
 
 ## The model
 
-With EF Core, data access is performed using a model. A model is made up of entity classes and a context object that represents a session with the database. The context object allows querying and saving data. For more information, see [Creating a Model](xref:core/modeling/index).
-
+With EF Core!!!, data access is performed using a model. A model is made up of entity classes and a context object that represents a session with the database. The context object allows querying and saving data. For more information, see [Creating a Model](xref:core/modeling/index).
 EF supports the following model development approaches:
 
 * Generate a model from an existing database.
@@ -59,3 +58,4 @@ While EF Core is good at abstracting many programming details, there are some be
 ## Next steps
 
 For introductory tutorials, see [Getting Started with Entity Framework Core](xref:core/get-started/overview/first-app).
+
