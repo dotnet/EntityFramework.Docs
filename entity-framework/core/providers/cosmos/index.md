@@ -1,6 +1,6 @@
 ---
 title: Azure Cosmos DB Provider - EF Core
-description: Documentation for the database provider that allows Entity Framework Core to be used with the Azure Cosmos DB for NoSQL
+description: Documentation for the database provider that allows Entity Framework Core to be used with Azure Cosmos DB.
 author: AndriySvyryd
 ms.date: 01/11/2022
 uid: core/providers/cosmos/index
@@ -12,7 +12,7 @@ This database provider allows Entity Framework Core to be used with Azure Cosmos
 It is strongly recommended to familiarize yourself with the [Azure Cosmos DB documentation](/azure/cosmos-db/introduction) before reading this section.
 
 > [!NOTE]
-> This provider only works with the Azure Cosmos DB for NoSQL of Azure Cosmos DB.
+> This provider only works with Azure Cosmos DB for NoSQL.
 
 ## Install
 
@@ -84,7 +84,7 @@ If no other entity type will ever be stored in the same container the discrimina
 
 ### Partition keys
 
-By default EF Core will create containers with the partition key set to `"__partitionKey"` without supplying any value for it when inserting items. But to fully leverage the performance capabilities of Azure Cosmos DB a [carefully selected partition key](/azure/cosmos-db/partition-data) should be used. It can be configured by calling [HasPartitionKey](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasPartitionKey):
+By default, EF Core will create containers with the partition key set to `"__partitionKey"` without supplying any value for it when inserting items. But to fully leverage the performance capabilities of Azure Cosmos DB, a [carefully selected partition key](/azure/cosmos-db/partition-data) should be used. It can be configured by calling [HasPartitionKey](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.HasPartitionKey):
 
 [!code-csharp[PartitionKey](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=PartitionKey)]
 

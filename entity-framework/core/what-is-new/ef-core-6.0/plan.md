@@ -206,7 +206,7 @@ Update: We have been doing extensive customer development around the Azure Cosmo
 
 Update: The following issues were cut from the 6.0 release:
 
-- [Find/FindAsync performs Azure Cosmos DB for NoSQL query when entity has embedded entities](https://github.com/dotnet/efcore/issues/24202)
+- [Find/FindAsync performs SQL API query when entity has embedded entities](https://github.com/dotnet/efcore/issues/24202)
 - [Optimize more queries that could use ReadItem](https://github.com/dotnet/efcore/issues/20693)
 - [Detect partition key filters in more queries](https://github.com/dotnet/efcore/issues/20350)
 - [Translate subquery in filter condition](https://github.com/dotnet/efcore/issues/17957)
