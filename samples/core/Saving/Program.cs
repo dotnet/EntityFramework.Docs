@@ -10,7 +10,8 @@ internal class Program
         Sample.Run();
         RelatedData.Sample.Run();
         CascadeDelete.Sample.Run();
-        Concurrency.Sample.Run();
+        Concurrency.BasicSample.Run();
+        Concurrency.ConflictResolutionSample.Run();
         ControllingTransaction.Run();
         ManagingSavepoints.Run();
         SharingTransaction.Run();

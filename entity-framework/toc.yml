@@ -130,8 +130,6 @@
         href: core/modeling/keys.md
       - name: Generated values
         href: core/modeling/generated-properties.md
-      - name: Concurrency tokens
-        href: core/modeling/concurrency.md
       - name: Shadow and indexer properties
         href: core/modeling/shadow-properties.md
       - name: Relationships
