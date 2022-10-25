@@ -49,7 +49,7 @@ Following are the benchmark results for fetching a single row from a SQL Server 
 
 Context pooling works by reusing the same context instance across requests; this means that it's effectively registered as a [Singleton](/aspnet/core/fundamentals/dependency-injection#service-lifetimes), and the same instance is reused across multiple requests (or DI scopes). This means that special care must be taken when the context involves any state that may change between requests. Crucially, the context's `OnConfiguring` is only invoked once - when the instance context is first created - and so cannot be used to set state which needs to vary (e.g. a tenant ID).
 
-A typical scenario involving context state would be a multi-tenant ASP.NET Core application, where the context instance has a *tenant ID* which is taken into account by queries (see [Global Query Filters](xref:core/querying/filters) for more details). Since the tenant ID needs to change with each web request, we need to have go through some extra steps to make it all work with context pooling.
+A typical scenario involving context state would be a multi-tenant ASP.NET Core application, where the context instance has a *tenant ID* which is taken into account by queries (see [Global Query Filters](xref:core/querying/filters) for more details). Since the tenant ID needs to change with each web request, we need to go through some extra steps to make it all work with context pooling.
 
 Let's assume that your application registers a scoped `ITenant` service, which wraps the tenant ID and any other tenant-related information:
 
