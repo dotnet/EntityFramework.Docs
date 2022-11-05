@@ -1786,7 +1786,7 @@ EntityType: Post
 
 So why didn't our convention override the explicitly configured max length? The answer is that EF Core keeps track of how every piece of configuration was made. This is represented by the <xref:Microsoft.EntityFrameworkCore.Metadata.ConfigurationSource> enum. The different kinds of configuration are:
 
-- `Explicit`: The model element was explicitly configured in `OnModelCrating`
+- `Explicit`: The model element was explicitly configured in `OnModelCreating`
 - `DataAnnotation`: The model element was configured using a mapping attribute (aka data annotation) on the CLR type
 - `Convention`: The model element was configured by a model building convention
 
