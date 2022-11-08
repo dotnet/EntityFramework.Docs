@@ -158,7 +158,7 @@ This is achieved in EF7 by calling `SplitToTable` for each split in the entity t
 -->
 [!code-csharp[EntitySplitting](../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=EntitySplitting)]
 
-Notice also that, if necessary, different column names can be specified for each of the tables.
+Notice also that, if necessary, different column names can be specified for each of the tables. To configure the column name for the main table see [Table-specific facet configuration](#table-specific-facet-configuration).
 
 ### Configuring the linking foreign key
 
@@ -177,3 +177,110 @@ The FK linking the mapped tables is targeting the same properties on which it is
 
 - Entity splitting can't be used for entity types in hierarchies.
 - For any row in the main table there must be a row in each of the split tables (the fragments are not optional).
+
+## Table-specific facet configuration
+
+Some mapping patterns result in the same CLR property being mapped to a column in each of multiple different tables. EF7 allows these columns to have different names. For example, consider a simple inheritance hierarchy:
+
+<!--
+    public class Animal
+    {
+        public int Id { get; set; }
+        public string Breed { get; set; } = null!;
+    }
+
+    public class Cat : Animal
+    {
+        public string? EducationalLevel { get; set; }
+    }
+
+    public class Dog : Animal
+    {
+        public string? FavoriteToy { get; set; }
+    }
+-->
+[!code-csharp[Animals](../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=Animals)]
+
+With the TPT [inheritance mapping strategy](xref:core/modeling/inheritance), these types will be mapped to three tables. However, the primary key column in each table may have a different name. For example:
+
+```sql
+CREATE TABLE [Animals] (
+    [Id] int NOT NULL IDENTITY,
+    [Breed] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Animals] PRIMARY KEY ([Id])
+);
+
+CREATE TABLE [Cats] (
+    [CatId] int NOT NULL,
+    [EducationalLevel] nvarchar(max) NULL,
+    CONSTRAINT [PK_Cats] PRIMARY KEY ([CatId]),
+    CONSTRAINT [FK_Cats_Animals_CatId] FOREIGN KEY ([CatId]) REFERENCES [Animals] ([Id]) ON DELETE CASCADE
+);
+
+CREATE TABLE [Dogs] (
+    [DogId] int NOT NULL,
+    [FavoriteToy] nvarchar(max) NULL,
+    CONSTRAINT [PK_Dogs] PRIMARY KEY ([DogId]),
+    CONSTRAINT [FK_Dogs_Animals_DogId] FOREIGN KEY ([DogId]) REFERENCES [Animals] ([Id]) ON DELETE CASCADE
+);
+```
+
+EF7 allows this mapping to be configured using a nested table builder:
+
+<!--
+            modelBuilder.Entity<Animal>().ToTable("Animals");
+
+            modelBuilder.Entity<Cat>()
+                .ToTable(
+                    "Cats",
+                    tableBuilder => tableBuilder.Property(cat => cat.Id).HasColumnName("CatId"));
+
+            modelBuilder.Entity<Dog>()
+                .ToTable(
+                    "Dogs",
+                    tableBuilder => tableBuilder.Property(dog => dog.Id).HasColumnName("DogId"));
+-->
+[!code-csharp[AnimalsTpt](../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=AnimalsTpt)]
+
+With the TPC inheritance mapping, the `Breed` property can also be mapped to different column names in different tables. For example, consider the following TPC tables:
+
+```sql
+CREATE TABLE [Cats] (
+    [CatId] int NOT NULL DEFAULT (NEXT VALUE FOR [AnimalSequence]),
+    [CatBreed] nvarchar(max) NOT NULL,
+    [EducationalLevel] nvarchar(max) NULL,
+    CONSTRAINT [PK_Cats] PRIMARY KEY ([CatId])
+);
+
+CREATE TABLE [Dogs] (
+    [DogId] int NOT NULL DEFAULT (NEXT VALUE FOR [AnimalSequence]),
+    [DogBreed] nvarchar(max) NOT NULL,
+    [FavoriteToy] nvarchar(max) NULL,
+    CONSTRAINT [PK_Dogs] PRIMARY KEY ([DogId])
+);
+```
+
+EF7 supports this table mapping:
+
+<!--
+            modelBuilder.Entity<Animal>().UseTpcMappingStrategy();
+
+            modelBuilder.Entity<Cat>()
+                .ToTable(
+                    "Cats",
+                    builder =>
+                    {
+                        builder.Property(cat => cat.Id).HasColumnName("CatId");
+                        builder.Property(cat => cat.Breed).HasColumnName("CatBreed");
+                    });
+
+            modelBuilder.Entity<Dog>()
+                .ToTable(
+                    "Dogs",
+                    builder =>
+                    {
+                        builder.Property(dog => dog.Id).HasColumnName("DogId");
+                        builder.Property(dog => dog.Breed).HasColumnName("DogBreed");
+                    });
+-->
+[!code-csharp[AnimalsTpc](../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=AnimalsTpc)]
