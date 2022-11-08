@@ -493,7 +493,7 @@ public static class ModelBuildingSample
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region TableSplitting
+            #region EntitySplitting
             modelBuilder.Entity<Customer>(
                 entityBuilder =>
                 {
@@ -517,6 +517,14 @@ public static class ModelBuildingSample
                                 tableBuilder.Property(customer => customer.Country);
                             });
                 });
+            #endregion
+            
+            #region LinkingForeignKey
+            modelBuilder.Entity<Customer>()
+                .HasOne<Customer>()
+                .WithOne()
+                .HasForeignKey<Customer>(a => a.Id)
+                .OnDelete(DeleteBehavior.Restrict);
             #endregion
 
             #region OwnedTemporalTable

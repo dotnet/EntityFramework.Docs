@@ -3979,7 +3979,7 @@ This is achieved in EF7 by calling `SplitToTable` for each split in the entity t
                             });
                 });
 -->
-[!code-csharp[TableSplitting](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=TableSplitting)]
+[!code-csharp[EntitySplitting](../../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=EntitySplitting)]
 
 Notice also that, if necessary, different primary key column names can be specified for each of the tables.
 
