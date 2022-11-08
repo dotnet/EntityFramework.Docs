@@ -3488,14 +3488,14 @@ In EF7, the <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.ContextI
 
 ```output
 dbug: 10/7/2022 12:27:52.379 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
-      Entity Framework Core 7.0.0-rc.2.22472.11 initialized 'BlogsContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:7.0.0-rc.2.22472.11' with options: SensitiveDataLoggingEnabled using NetTopologySuite
+      Entity Framework Core 7.0.0 initialized 'BlogsContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:7.0.0' with options: SensitiveDataLoggingEnabled using NetTopologySuite
 ```
 
 In previous releases it was logged at the <xref:Microsoft.Extensions.Logging.LogLevel.Information> level. For example:
 
 ```output
 info: 10/7/2022 12:30:34.757 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
-      Entity Framework Core 7.0.0-rc.2.22472.11 initialized 'BlogsContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:7.0.0-rc.2.22472.11' with options: SensitiveDataLoggingEnabled using NetTopologySuite
+      Entity Framework Core 7.0.0 initialized 'BlogsContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:7.0.0' with options: SensitiveDataLoggingEnabled using NetTopologySuite
 ```
 
 If desired, the log level can be changed back to `Information`:
