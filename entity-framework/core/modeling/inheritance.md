@@ -23,7 +23,7 @@ The following sample exposes a DbSet for `Blog` and its subclass `RssBlog`. If `
 If you don't want to expose a `DbSet` for one or more entities in the hierarchy, you can also use the Fluent API to ensure they are included in the model.
 
 > [!TIP]
-> If you don't rely on conventions, you can specify the base type explicitly using `HasBaseType`. You can also use `.HasBaseType((Type)null)` to remove an entity type from the hierarchy.
+> If you don't rely on [conventions](xref:core/modeling/index#built-in-conventions), you can specify the base type explicitly using `HasBaseType`. You can also use `.HasBaseType((Type)null)` to remove an entity type from the hierarchy.
 
 ## Table-per-hierarchy and discriminator configuration
 

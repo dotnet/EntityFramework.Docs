@@ -182,7 +182,7 @@ You can use the Data Annotations to configure which property should be used as t
 
 #### Shadow foreign key
 
-You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](xref:core/modeling/shadow-properties) for more information). We recommend explicitly adding the shadow property to the model before using it as a foreign key (as shown below).
+You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](xref:core/modeling/shadow-properties) for more information). The shadow property needs to exist before it can be used, you can explicitly declare it first as shown below.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ShadowForeignKey.cs?name=ShadowForeignKey&highlight=10,16)]
 
@@ -313,7 +313,7 @@ It is common to apply configuration to the join entity type. This action can be 
 > [!TIP]
 > If there is no navigation on the other side `WithMany()` can be called without any arguments.
 
-[Model seed data](xref:core/modeling/data-seeding) can be provided for the join entity type by using anonymous types. You can examine the model debug view to determine the property names created by convention.
+[Model seed data](xref:core/modeling/data-seeding) can be provided for the join entity type by using anonymous types. You can examine the model [debug view](xref:core/modeling/index#debug-view) to determine the property names created by convention.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Seeding)]
 

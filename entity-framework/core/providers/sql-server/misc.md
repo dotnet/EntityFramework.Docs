@@ -17,7 +17,7 @@ You can let EF Core know that the target table has a trigger; doing so will reve
 
 Note that doing this doesn't actually make EF Core create or manage the trigger in any way - it currently only informs EF Core that triggers are present on the table. As a result, any trigger name can be used, and this can also be used if an unsupported computed column is in use (regardless of triggers).
 
-If most or all of your tables have triggers, you can opt out of using the newer, efficient technique for all your model's tables by using the following model building convention:
+If most or all of your tables have triggers, you can opt out of using the newer, efficient technique for all your model's tables by using the following [model building convention](xref:core/modeling/bulk-configuration#conventions):
 
 [!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=BlankTriggerAddingConvention)]
 
