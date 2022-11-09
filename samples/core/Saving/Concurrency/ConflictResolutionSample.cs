@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Concurrency;
 
-public class Sample
+public class ConflictResolutionSample
 {
     public static void Run()
     {
