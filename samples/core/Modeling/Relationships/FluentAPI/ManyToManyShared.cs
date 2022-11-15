@@ -59,13 +59,13 @@ public class MyContext : DbContext
                 j => j
                     .HasOne<Tag>()
                     .WithMany()
-                    .HasForeignKey("TagId")
+                    .HasForeignKey("TagsId")
                     .HasConstraintName("FK_PostTag_Tags_TagId")
                     .OnDelete(DeleteBehavior.Cascade),
                 j => j
                     .HasOne<Post>()
                     .WithMany()
-                    .HasForeignKey("PostId")
+                    .HasForeignKey("PostsId")
                     .HasConstraintName("FK_PostTag_Posts_PostId")
                     .OnDelete(DeleteBehavior.ClientCascade));
         #endregion
