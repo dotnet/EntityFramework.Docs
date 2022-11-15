@@ -16,17 +16,17 @@ EF Core 7.0 targets .NET 6. This means that existing applications that target .N
 
 ## Summary
 
-| **Breaking change**                                                                                          | **Impact** |
-|:-------------------------------------------------------------------------------------------------------------|------------|
-| [`Encrypt` defaults to `true` for SQL Server connections](#encrypt-true)                                     | High       |
-| [Some warnings will again throw exceptions by default](#warnings-as-errors)                                  | High       |
-| [SQL Server tables with triggers now require special EF Core configuration](#sqlserver-tables-with-triggers) | High       |
-| [Orphaned dependents of optional relationships are not automatically deleted](#optional-deletes)             | Medium     |
-| [Cascade delete is configured between tables when using TPT mapping with SQL Server](#tpt-cascade-delete)    | Medium     |
-| [Key properties may need to be configured with a provider value comparer](#provider-value-comparer)          | Low        |
-| [Check constraints and other table facets are now configured on the table](#table-configuration)             | Low        |
-| [Navigations from new entities to deleted entities are not fixed up](#deleted-fixup)                         | Low        |
-| [Using `FromSqlRaw` and related methods from the wrong provider throws](#use-the-correct-method)             | Low        |
+| **Breaking change**                                                                                                                      | **Impact** |
+|:---------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| [`Encrypt` defaults to `true` for SQL Server connections](#encrypt-true)                                                                 | High       |
+| [Some warnings will again throw exceptions by default](#warnings-as-errors)                                                              | High       |
+| [SQL Server tables with triggers or certain computed columns now require special EF Core configuration](#sqlserver-tables-with-triggers) | High       |
+| [Orphaned dependents of optional relationships are not automatically deleted](#optional-deletes)                                         | Medium     |
+| [Cascade delete is configured between tables when using TPT mapping with SQL Server](#tpt-cascade-delete)                                | Medium     |
+| [Key properties may need to be configured with a provider value comparer](#provider-value-comparer)                                      | Low        |
+| [Check constraints and other table facets are now configured on the table](#table-configuration)                                         | Low        |
+| [Navigations from new entities to deleted entities are not fixed up](#deleted-fixup)                                                     | Low        |
+| [Using `FromSqlRaw` and related methods from the wrong provider throws](#use-the-correct-method)                                         | Low        |
 
 ## High-impact changes
 
@@ -108,7 +108,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 <a name="sqlserver-tables-with-triggers"></a>
 
-### SQL Server tables with triggers now require special EF Core configuration
+### SQL Server tables with triggers or certain computed columns now require special EF Core configuration
 
 [Tracking Issue #27372](https://github.com/dotnet/efcore/issues/27372)
 
@@ -118,11 +118,11 @@ Previous versions of the SQL Server saved changes via a less efficient technique
 
 #### New behavior
 
-By default, EF Core now saves changes via a significantly more efficient technique; unfortunately, this technique is not supported on SQL Server if the target table has database triggers.
+By default, EF Core now saves changes via a significantly more efficient technique; unfortunately, this technique is not supported on SQL Server if the target table has database triggers, or certain types of computed columns. See the [SQL Server documentation](/sql/t-sql/queries/output-clause-transact-sql#remarks) for more details.
 
 #### Why
 
-The performance improvements linked to the new method are significant enough that it's important to bring them to users by default. At the same time, we estimate usage of database triggers in EF Core applications to be low enough that the negative breaking change consequences are outweighed by the performance gain.
+The performance improvements linked to the new method are significant enough that it's important to bring them to users by default. At the same time, we estimate usage of database triggers or the affected computed columns in EF Core applications to be low enough that the negative breaking change consequences are outweighed by the performance gain.
 
 #### Mitigations
 
@@ -130,7 +130,7 @@ You can let EF Core know that the target table has a trigger; doing so will reve
 
 [!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=TriggerConfiguration&highlight=4)]
 
-Note that doing this doesn't actually make EF Core create or manage the trigger in any way - it currently only informs EF Core that triggers are present on the table. As a result, any trigger name can be used.
+Note that doing this doesn't actually make EF Core create or manage the trigger in any way - it currently only informs EF Core that triggers are present on the table. As a result, any trigger name can be used, and this can also be used if an unsupported computed column is in use (regardless of triggers).
 
 A model building convention can be used to configure all tables with triggers:
 
