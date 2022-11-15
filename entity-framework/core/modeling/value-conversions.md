@@ -430,7 +430,7 @@ Value converters can currently only convert values to and from a single database
 [!code-csharp[ConfigureCompositeValueObject](../../../samples/core/Modeling/ValueConversions/CompositeValueObject.cs?name=ConfigureCompositeValueObject)]
 
 > [!NOTE]
-> We plan to allow mapping an object to multiple columns in EF Core 6.0, removing the need to use serialization here. This is tracked by [GitHub issue #13947](https://github.com/dotnet/efcore/issues/13947).
+> We plan to allow mapping an object to multiple columns in a future version of EF Core, removing the need to use serialization here. This is tracked by [GitHub issue #13947](https://github.com/dotnet/efcore/issues/13947).
 
 > [!NOTE]
 > As with the previous example, this value object is implemented as a [readonly struct](/dotnet/csharp/language-reference/builtin-types/struct). This means that EF Core can snapshot and compare values without issue. See [Value Comparers](xref:core/modeling/value-comparers) for more information.
@@ -619,7 +619,7 @@ These key properties can then be mapped using value converters:
 [!code-csharp[ConfigureKeyValueObjects](../../../samples/core/Modeling/ValueConversions/KeyValueObjects.cs?name=ConfigureKeyValueObjects)]
 
 > [!NOTE]
-> Currently key properties with conversions cannot use generated key values. Vote for [GitHub issue #11597](https://github.com/dotnet/efcore/issues/11597) to have this limitation removed.
+> Key properties with conversions can only use generated key values starting with EF Core 7.0.
 
 ### Use ulong for timestamp/rowversion
 
