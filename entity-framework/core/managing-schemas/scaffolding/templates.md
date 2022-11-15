@@ -23,11 +23,8 @@ The first step to customizing the scaffolded code is to add the default template
 Start by installing the EF Core template package for `dotnet new`:
 
 ```dotnetcli
-dotnet new install Microsoft.EntityFrameworkCore.Templates::7.0.0-*
+dotnet new install Microsoft.EntityFrameworkCore.Templates
 ```
-
-> [!TIP]
-> The version suffix `::7.0.0-*` installs the latest prerelease version of the template package. It can be omitted once the final version of EF Core 7 is released.
 
 Now you can add the default templates to your project. Do this by running the following command from your project directory.
 

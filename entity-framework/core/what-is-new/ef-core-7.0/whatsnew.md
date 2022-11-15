@@ -1458,7 +1458,7 @@ Use TPT only if constrained to do so by external factors.
 You can now customize the scaffolded code when reverse engineering an EF model from a database. Get started by adding the default templates to your project:
 
 ```dotnetcli
-dotnet new install Microsoft.EntityFrameworkCore.Templates::7.0.0-*
+dotnet new install Microsoft.EntityFrameworkCore.Templates
 dotnet new ef-templates
 ```
 
