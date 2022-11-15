@@ -34,6 +34,9 @@ You can also configure multiple properties to be the key of an entity - this is 
 
 ### [Data Annotations](#tab/data-annotations)
 
+> [!NOTE]
+> The `[PrimaryKey]` attribute was introduced in EF Core 7.0. Use the Fluent API in older versions.
+
 <!--
 [PrimaryKey(nameof(State), nameof(LicensePlate))]
 internal class Car
