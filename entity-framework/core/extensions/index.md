@@ -35,7 +35,7 @@ An O/RM that creates strongly-typed, extendable classes for Entity Framework. Th
 
 ### EF Core Power Tools
 
-EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 3, 5, 6.
+EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 3, 6, 7.
 
 [GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki)
 
@@ -186,19 +186,19 @@ Life cycle hooks (for SaveChanges). For EF Core: 2, 3.
 
 ### EFCore.NamingConventions
 
-This will automatically make all your table and column names have snake_case, all UPPER or all lower case naming. For EF Core: 3, 5, 6.
+This will automatically make all your table and column names have snake_case, all UPPER or all lower case naming. For EF Core: 3, 5, 6, 7.
 
 [GitHub repository](https://github.com/efcore/EFCore.NamingConventions) | [NuGet](https://www.nuget.org/packages/EFCore.NamingConventions)
 
 ### EFCore.CheckConstraints
 
-This plugin allows you to opt into some check constraints - just activate it and they'll automatically get created for you. For EF Core: 5, 6.
+This plugin allows you to opt into some check constraints - just activate it and they'll automatically get created for you. For EF Core: 5, 6, 7.
 
 [GitHub repository](https://github.com/efcore/EFCore.CheckConstraints) | [NuGet](https://www.nuget.org/packages/EFCore.CheckConstraints)
 
 ### SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime
 
-Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3, 5, 6.
+Adds native support to EntityFrameworkCore for SQL Server for the NodaTime types. For EF Core: 3, 5, 6, 7.
 
 [GitHub repository](https://github.com/StevenRasmussen/EFCore.SqlServer.NodaTime) | [NuGet](https://www.nuget.org/packages/SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime)
 
@@ -251,21 +251,21 @@ Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](http
 
 ### ErikEJ.EntityFrameworkCore.SqlServer.Dacpac
 
-Enables reverse engineering an EF Core model from a SQL Server data-tier application package (.dacpac). For EF Core: 3, 5.
+Enables reverse engineering an EF Core model from a SQL Server data-tier application package (.dacpac). For EF Core: 3, 6, 7.
 
-[GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac)
+[GitHub repository](https://github.com/ErikEJ/EFCorePowerTools/tree/master/src/GUI/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac)
 
 ### ErikEJ.EntityFrameworkCore.DgmlBuilder
 
-Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() extension method to the DbContext class. For EF Core: 3, 5.
+Generate DGML (Graph) content that visualizes your DbContext. Adds the AsDgml() extension method to the DbContext class. For EF Core: 3, 6, 7.
 
-[GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki/Inspect-your-DbContext-model) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.DgmlBuilder)
+[GitHub repository](https://github.com/ErikEJ/EFCorePowerTools/tree/master/src/GUI/ErikEJ.EntityFrameworkCore.DgmlBuilder) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.DgmlBuilder)
 
 ### ErikEJ.EntityFrameworkCore.SqlServer.SqlQuery
 
-Provides the `SqlQueryAsync<T>` and `SqlQueryValueAsync<T>` methods to help you populate arbitrary classes or a list of primitive types from a raw SQL query. For EF Core: 5.
+Provides the `SqlQueryAsync<T>` and `SqlQueryValueAsync<T>` methods to help you populate arbitrary classes or a list of primitive types from a raw SQL query. For EF Core: 6, 7.
 
-[GitHub repository](https://github.com/ErikEJ/EFCorePowerTools) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.SqlQuery)
+[GitHub repository](https://github.com/ErikEJ/EFCorePowerTools/tree/master/src/GUI/ErikEJ.EntityFrameworkCore.6.SqlServer.SqlQuery) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.SqlQuery)
 
 ### EntityFramework.Exceptions
 
@@ -289,7 +289,7 @@ Adds VB design-time support to EF Core. For EF Core: 5, 6.
 
 ### Krzysztofz01.EFCore.QueryFilterBuilder
 
-Extension for Entity Framework that allows you to create and manage multiple query filters. For EF Core: 5.
+Extension for Entity Framework that allows you to create and manage multiple query filters. For EF Core: 5, 6.
 
 [GitHub repository](https://github.com/Krzysztofz01/EFCore.QueryFilterBuilder)
 
