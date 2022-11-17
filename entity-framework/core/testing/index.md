@@ -7,7 +7,7 @@ uid: core/testing/index
 ---
 # Testing EF Core Applications
 
-Testing is an important concern to almost all application types - it allows you to be sure your application works correctly, and makes it instantly known if its behavior regresses in the future. Since testing may affect how your code is architected, it's highly recommended to plan for a testing early and to ensure good coverage as your application evolves. This introductory section provides a quick overview of various testing strategies for applications using EF Core.
+Testing is an important concern to almost all application types - it allows you to be sure your application works correctly, and makes it instantly known if its behavior regresses in the future. Since testing may affect how your code is architected, it's highly recommended to plan for testing early and to ensure good coverage as your application evolves. This introductory section provides a quick overview of various testing strategies for applications using EF Core.
 
 ## Involving the database (or not)
 
