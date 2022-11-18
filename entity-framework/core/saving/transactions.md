@@ -112,4 +112,4 @@ It is also possible to enlist in an explicit transaction.
    > [!IMPORTANT]
    > It is recommended that you test that the API behaves correctly with your provider before you rely on it for managing transactions. You are encouraged to contact the maintainer of the database provider if it does not.
 
-2. The .NET Core implementation of System.Transactions does not currently include support for distributed transactions, therefore you cannot use `TransactionScope` or `CommittableTransaction` to coordinate transactions across multiple resource managers. Support is tracked by [this issue](https://github.com/dotnet/runtime/issues/715).
+2. Distributed transaction support in System.Transactions was added to .NET 7.0, and for Windows only. Any attempt to use distributed transactions on older .NET versions or on non-Windows platforms will fail.
