@@ -22,27 +22,43 @@ The main documentation on required and optional properties and their interaction
 
 When nullable reference types are enabled, the C# compiler emits warnings for any uninitialized non-nullable property, as these would contain null. As a result, the following, common way of writing entity types cannot be used:
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithWarning.cs?name=CustomerWithWarning&highlight=5-6)]
+```csharp
+public class Customer
+{
+    public int Id { get; set; }
 
-[Constructor binding](xref:core/modeling/constructors) is a useful technique to ensure that your non-nullable properties are initialized:
+    // Generates CS8618, uninitialized non-nullable property:
+    public string Name { get; set; }
+}
+```
+
+If you're using C# 11 or above, [required members](/dotnet/csharp/whats-new/csharp-11#required-members) provide the perfect solution to this problem:
+
+```csharp
+public required string Name { get; set; }
+```
+
+The compiler now guarantees that when your code instantiates a Customer, it always initializs its Name property. And since the database column mapped to the property is non-nullable, any instances loaded by EF always contain a non-null Name as well.
+
+If you're using an older version of C#, [Constructor binding](xref:core/modeling/constructors) is an alternative technique to ensure that your non-nullable properties are initialized:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithConstructorBinding.cs?name=CustomerWithConstructorBinding&highlight=6-9)]
 
-Unfortunately, in some scenarios constructor binding isn't an option; navigation properties, for example, cannot be initialized in this way.
-
-Required navigation properties present an additional difficulty: although a dependent will always exist for a given principal, it may or may not be loaded by a particular query, depending on the needs at that point in the program ([see the different patterns for loading data](xref:core/querying/related-data)). At the same time, it is undesirable to make these properties nullable, since that would force all access to them to check for null, even if they are required.
-
-One way to deal with these scenarios, is to have a non-nullable property with a nullable [backing field](xref:core/modeling/backing-field):
-
-[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Order.cs?range=10-17)]
-
-Since the navigation property is non-nullable, a required navigation is configured; and as long as the navigation is properly loaded, the dependent will be accessible via the property. If, however, the property is accessed without first properly loading the related entity, an InvalidOperationException is thrown, since the API contract has been used incorrectly. Note that EF must be configured to always access the backing field and not the property, as it relies on being able to read the value even when unset; consult the documentation on [backing fields](xref:core/modeling/backing-field) on how to do this, and consider specifying `PropertyAccessMode.Field` to make sure the configuration is correct.
-
-As a terser alternative, it is possible to simply initialize the property to null with the help of the null-forgiving operator (!):
+Unfortunately, in some scenarios constructor binding isn't an option; navigation properties, for example, cannot be initialized in this way. In those cases, you can simply initialize the property to null with the help of the null-forgiving operator (but see below for more details):
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Order.cs?range=19)]
 
-An actual null value will never be observed except as a result of a programming bug, e.g. accessing the navigation property without properly loading the related entity beforehand.
+### Required navigation properties
+
+Required navigation properties present an additional difficulty: although a dependent will always exist for a given principal, it may or may not be loaded by a particular query, depending on the needs at that point in the program ([see the different patterns for loading data](xref:core/querying/related-data)). At the same time, it is undesirable to make these properties nullable, since that would force all access to them to check for null, even if they are required.
+
+This isn't necessarily a problem! As long as a required dependent is properly loaded (e.g. via `Include`), accessing its navigation property is guaranteed to always return non-null. On the other hand, accessing a navigation property without first loading the dependent is a programmer error; as such, it may be acceptable for the navigation property to return null, and when for the (buggy) code to throw a `NullReferenceException`. After all, the code is using EF incorrectly.
+
+If you'd like a stricter approach, you can have a non-nullable property with a nullable [backing field](xref:core/modeling/backing-field):
+
+[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Order.cs?range=10-17)]
+
+As long as the navigation is properly loaded, the dependent will be accessible via the property. If, however, the property is accessed without first properly loading the related entity, an `InvalidOperationException` is thrown, since the API contract has been used incorrectly.
 
 > [!NOTE]
 > Collection navigations, which contain references to multiple related entities, should always be non-nullable. An empty collection means that no related entities exist, but the list itself should never be null.
