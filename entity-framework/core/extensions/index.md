@@ -329,6 +329,20 @@ For EF Core: 6.
 
 [GitHub repository](https://github.com/AinoraZ/EFCore.IncludeBuilder) | [NuGet](https://www.nuget.org/packages/Ainoraz.EFCore.IncludeBuilder/)
 
+### Entity Framework Ruler
+
+Adds design-time customization of the reverse engineered model including:
+
+- Class, property and navigation naming
+- Skipping the scaffolding of any schema, table, or column.
+- Overriding property types, especially for enums.
+- EF6 EDMX support, providing a smooth 3-step upgrade path from EF6 to EF Core.
+
+For EF Core: 6, 7.
+
+[GitHub repository](https://github.com/R4ND3LL/EntityFrameworkRuler/) | [CLI Tool NuGet](https://www.nuget.org/packages/EntityFrameworkRuler/) | [Design NuGet](https://www.nuget.org/packages/EntityFrameworkRuler.Design/)
+
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
