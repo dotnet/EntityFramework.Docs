@@ -54,6 +54,8 @@ internal class Car
 
 [!code-csharp[KeyComposite](../../../samples/core/Modeling/Keys/FluentAPI/KeyComposite.cs?name=KeyComposite&highlight=4)]
 
+***
+
 ## Value generation
 
 For non-composite numeric and GUID primary keys, EF Core sets up value generation for you by convention. For example, a numeric primary key in SQL Server is automatically set up to be an IDENTITY column. For more information, see [the documentation on value generation](xref:core/modeling/generated-properties) and [guidance for specific inheritance mapping strategies](xref:core/modeling/inheritance#key-generation).
