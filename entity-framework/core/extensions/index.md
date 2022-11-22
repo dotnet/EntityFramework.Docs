@@ -91,7 +91,7 @@ EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 2,
 
 ### Bricelam.EntityFrameworkCore.Pluralizer
 
-Adds design-time pluralization. For EF Core: 2, 3, 5, 6.
+Adds design-time pluralization. For EF Core: 2, 3, 5, 6, 7.
 
 [GitHub repository](https://github.com/bricelam/EFCore.Pluralizer) | [NuGet](https://www.nuget.org/packages/Bricelam.EntityFrameworkCore.Pluralizer)
 
@@ -213,7 +213,7 @@ LINQ extensions to Entity Framework Core 3.1 to support Microsoft SQL Server Tem
 
 ### EntityFrameworkCore.SqlServer.HierarchyId
 
-Adds hierarchyid support to the SQL Server EF Core provider. For EF Core: 3, 5, 6.
+Adds hierarchyid support to the SQL Server EF Core provider. For EF Core: 3, 5, 6, 7.
 
 [GitHub repository](https://github.com/efcore/EFCore.SqlServer.HierarchyId) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.SqlServer.HierarchyId)
 
@@ -233,7 +233,7 @@ An implementation for soft deleting entities. For EF Core: 3, 5, 6.
 
 ### EntityFrameworkCore.ConfigurationManager
 
-Extends EF Core to resolve connection strings from App.config. For EF Core: 3, 5, 6.
+Extends EF Core to resolve connection strings from App.config. For EF Core: 3, 5, 6, 7.
 
 [GitHub repository](https://github.com/efcore/EFCore.ConfigurationManager) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.ConfigurationManager)
 
@@ -277,7 +277,7 @@ Supports SQL Server, Postgres, MySql, SQLite and Oracle. For EF Core: 3, 5.
 
 ### EntityFrameworkCore.FSharp
 
-Adds F# design-time support to EF Core. For EF Core: 5.
+Adds F# design-time support to EF Core. For EF Core: 5, 6.
 
 [GitHub repository](https://github.com/efcore/EFCore.FSharp) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.FSharp)
 
