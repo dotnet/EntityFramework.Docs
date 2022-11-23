@@ -342,7 +342,6 @@ For EF Core: 6, 7.
 
 [GitHub repository](https://github.com/R4ND3LL/EntityFrameworkRuler/) | [CLI Tool NuGet](https://www.nuget.org/packages/EntityFrameworkRuler/) | [Design NuGet](https://www.nuget.org/packages/EntityFrameworkRuler.Design/)
 
-
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
