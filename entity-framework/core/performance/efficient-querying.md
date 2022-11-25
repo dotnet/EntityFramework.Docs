@@ -209,6 +209,9 @@ For more information, see the page on [async programming](xref:core/miscellaneou
 > [!WARNING]
 > Avoid mixing synchronous and asynchronous code in the same application - it's very easy to inadvertently trigger subtle thread-pool starvation issues.
 
+> [!WARNING]
+> The async implementation of [Microsoft.Data.SqlClient](https://github.com/dotnet/SqlClient) unfortunately has some known issues (e.g. [#593](https://github.com/dotnet/SqlClient/issues/593), [#601](https://github.com/dotnet/SqlClient/issues/601), and others). If you're seeing unexpected performance problems, try using sync command execution instead, especially when dealing with large text or binary values.
+
 ## Additional resources
 
 * See the [advanced performance topics page](xref:core/performance/advanced-performance-topics) for additional topics related to efficient querying.
