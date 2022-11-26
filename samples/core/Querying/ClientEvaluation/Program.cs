@@ -40,18 +40,11 @@ internal class Program
 
         using (var context = new BloggingContext())
         {
-            try
-            {
-                #region ClientWhere
-                var blogs = context.Blogs
-                    .Where(blog => StandardizeUrl(blog.Url).Contains("dotnet"))
-                    .ToList();
-                #endregion
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            #region ClientWhere
+            var blogs = context.Blogs
+                .Where(blog => StandardizeUrl(blog.Url).Contains("dotnet"))
+                .ToList();
+            #endregion
         }
 
         using (var context = new BloggingContext())

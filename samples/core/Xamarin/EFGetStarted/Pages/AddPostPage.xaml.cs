@@ -27,18 +27,11 @@ namespace EFGetStarted
                 Title = titleCell.Text
             };
 
-            try
+            using (var blogContext = new BloggingContext())
             {
-                using (var blogContext = new BloggingContext())
-                {
-                    await blogContext.Posts.AddAsync(newPost);
+                await blogContext.Posts.AddAsync(newPost);
 
-                    await blogContext.SaveChangesAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex);
+                await blogContext.SaveChangesAsync();
             }
 
             await Navigation.PopModalAsync();
