@@ -342,6 +342,17 @@ For EF Core: 6, 7.
 
 [GitHub repository](https://github.com/R4ND3LL/EntityFrameworkRuler/) | [CLI Tool NuGet](https://www.nuget.org/packages/EntityFrameworkRuler/) | [Design NuGet](https://www.nuget.org/packages/EntityFrameworkRuler.Design/)
 
+### LessCode.EFCore.StronglyTypedId
+
+A source generator that can generate strongly-typed-id classes automatically for entities in Entity Framework Core.
+
+With this extension, developers just need to add [HasStronglyTypedId] on the entity type, all the related classes will be generated automatically at compile time.
+
+For EF Core: 7.
+
+[GitHub repository]([https://github.com/R4ND3LL/EntityFrameworkRuler/](https://github.com/yangzhongke/LessCode.EFCore.StronglyTypedId))
+
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
