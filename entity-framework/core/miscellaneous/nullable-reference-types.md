@@ -38,7 +38,7 @@ If you're using C# 11 or above, [required members](/dotnet/csharp/whats-new/csha
 public required string Name { get; set; }
 ```
 
-The compiler now guarantees that when your code instantiates a Customer, it always initializs its Name property. And since the database column mapped to the property is non-nullable, any instances loaded by EF always contain a non-null Name as well.
+The compiler now guarantees that when your code instantiates a Customer, it always initializes its Name property. And since the database column mapped to the property is non-nullable, any instances loaded by EF always contain a non-null Name as well.
 
 If you're using an older version of C#, [Constructor binding](xref:core/modeling/constructors) is an alternative technique to ensure that your non-nullable properties are initialized:
 
