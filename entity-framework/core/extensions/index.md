@@ -344,9 +344,7 @@ For EF Core: 6, 7.
 
 ### LessCode.EFCore.StronglyTypedId
 
-A source generator that can generate strongly-typed-id classes automatically for entities.
-
-For EF Core: 7.
+A source generator that can generate strongly-typed-id classes automatically for entities. For EF Core: 7.
 
 [GitHub repository](https://github.com/yangzhongke/LessCode.EFCore.StronglyTypedId)
 
