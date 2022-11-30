@@ -90,7 +90,7 @@ Note that setting the default schema will also affect other database objects, su
 
 Entity types can be mapped to database views using the Fluent API.
 
-> [!Note]
+> [!NOTE]
 > EF will assume that the referenced view already exists in the database, it will not create it automatically in a migration.
 
 [!code-csharp[Main](../../../samples/core/Modeling/EntityTypes/FluentAPI/ViewNameAndSchema.cs?name=ViewNameAndSchema&highlight=1)]

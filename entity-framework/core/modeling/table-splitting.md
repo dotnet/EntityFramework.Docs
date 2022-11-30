@@ -162,7 +162,7 @@ Notice also that, if necessary, different column names can be specified for each
 
 ### Configuring the linking foreign key
 
-The FK linking the mapped tables is targeting the same properties on which it is declared. Normally it wouldn't be created in the database, as it would be redundant. But there's an exception for when the entity type is mapped to more than one table. To change its facets you can use the normal [relationship Fluent API](xref:core/modeling/relationships#foreign-key):
+The FK linking the mapped tables is targeting the same properties on which it is declared. Normally it wouldn't be created in the database, as it would be redundant. But there's an exception for when the entity type is mapped to more than one table. To change its facets you can use the [relationship configuration Fluent API](xref:core/modeling/relationships#foreign-key):
 
 <!--
             modelBuilder.Entity<Customer>()

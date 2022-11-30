@@ -5,6 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>EFModeling.BulkConfiguration</RootNamespace>
     <AssemblyName>EFModeling.BulkConfiguration</AssemblyName>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

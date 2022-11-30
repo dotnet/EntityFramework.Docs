@@ -11,7 +11,7 @@ Each entity type in your model has a set of properties, which EF Core will read 
 
 ## Included and excluded properties
 
-By convention, all public properties with a getter and a setter will be included in the model.
+By [convention](xref:core/modeling/index#built-in-conventions), all public properties with a getter and a setter will be included in the model.
 
 Specific properties can be excluded as follows:
 

@@ -83,7 +83,7 @@ Table and column names are fixed up to better match the .NET naming conventions 
 
 ## Fluent API or Data Annotations
 
-Entity types are configured using the Fluent API by default. Specify `-DataAnnotations` (PMC) or `--data-annotations` (.NET Core CLI) to instead use data annotations when possible.
+Entity types are configured using the [Fluent API](xref:core/modeling/index#use-fluent-api-to-configure-a-model) by default. Specify `-DataAnnotations` (PMC) or `--data-annotations` (.NET Core CLI) to instead use [Data Annotations](xref:core/modeling/index#use-data-annotations-to-configure-a-model) when possible.
 
 For example, using the Fluent API will scaffold this:
 

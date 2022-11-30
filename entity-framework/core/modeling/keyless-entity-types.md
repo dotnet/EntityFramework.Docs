@@ -14,7 +14,7 @@ In addition to regular entity types, an EF Core model can contain _keyless entit
 
 ## Defining Keyless entity types
 
-Keyless entity types can be defined using either the Data Annotation or the Fluent API:
+Keyless entity types can be defined as follows:
 
 ### [Data Annotations](#tab/data-annotations)
 

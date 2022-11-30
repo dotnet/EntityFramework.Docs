@@ -13,9 +13,9 @@ Indexer properties are entity type properties, which are backed by an [indexer](
 
 ## Foreign key shadow properties
 
-Shadow properties are most often used for foreign key properties, where the relationship between two entities is represented by a foreign key value in the database, but the relationship is managed on the entity types using navigation properties between the entity types. By convention, EF will introduce a shadow property when a relationship is discovered but no foreign key property is found in the dependent entity class.
+Shadow properties are most often used for foreign key properties, where they are added to the model by convention when no foreign key property has been found by convention or configured explicitly. The relationship is represented by navigation properties, but in the database it is enforced by a foreign key constraint, and the value for the foreign key column is stored in the corresponding shadow property.
 
-The property will be named `<navigation property name><principal key property name>` (the navigation on the dependent entity, which points to the principal entity, is used for the naming). If the principal key property name includes the name of the navigation property, then the name will just be `<principal key property name>`. If there is no navigation property on the dependent entity, then the principal type name is used in its place.
+The property will be named `<navigation property name><principal key property name>` (the navigation on the dependent entity, which points to the principal entity, is used for the naming). If the principal key property name starts with the name of the navigation property, then the name will just be `<principal key property name>`. If there is no navigation property on the dependent entity, then the principal type name is used in its place.
 
 For example, the following code listing will result in a `BlogId` shadow property being introduced to the `Post` entity:
 
@@ -23,7 +23,7 @@ For example, the following code listing will result in a `BlogId` shadow propert
 
 ## Configuring shadow properties
 
-You can use the Fluent API to configure shadow properties. Once you have called the string overload of `Property`, you can chain any of the configuration calls you would for other properties. In the following sample, since `Blog` has no CLR property named `LastUpdated`, a shadow property is created:
+You can use the [Fluent API](xref:core/modeling/index#use-fluent-api-to-configure-a-model) to configure shadow properties. Once you have called the string overload of <xref:Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder.Property%60%601(System.String)>, you can chain any of the configuration calls you would for other properties. In the following sample, since `Blog` has no CLR property named `LastUpdated`, a shadow property is created:
 
 [!code-csharp[Main](../../../samples/core/Modeling/ShadowAndIndexerProperties/ShadowProperty.cs?name=ShadowProperty&highlight=8)]
 
