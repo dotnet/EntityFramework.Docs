@@ -19,7 +19,7 @@ For more information, see [the general C# asynchronous programming docs](/dotnet
 > EF Core doesn't support multiple parallel operations being run on the same context instance. You should always wait for an operation to complete before beginning the next operation. This is typically done by using the `await` keyword on each async operation.
 
 > [!WARNING]
-> The async implementation of [Microsoft.Data.SqlClient](https://github.com/dotnet/SqlClient) unfortunately has some known issues (e.g. [#593](https://github.com/dotnet/SqlClient/issues/593), [#601](https://github.com/dotnet/SqlClient/issues/601), and others).
+> The async implementation of [Microsoft.Data.SqlClient](https://github.com/dotnet/SqlClient) unfortunately has some known issues (e.g. [#593](https://github.com/dotnet/SqlClient/issues/593), [#601](https://github.com/dotnet/SqlClient/issues/601), and others). If you're seeing unexpected performance problems, try using sync command execution instead, especially when dealing with large text or binary values.
 
 > [!NOTE]
 > EF Core passes cancellation tokens down to the underlying database provider in use (e.g. Microsoft.Data.SqlClient). These tokens may or may not be honored - consult your database provider's documentation.
