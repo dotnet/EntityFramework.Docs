@@ -344,7 +344,7 @@ For EF Core: 6, 7.
 
 ### Moq.EntityFrameworkCore
 
-This library helps you mocking EntityFramework contexts. Now you will be able to test methods that are using `DbSet<TEntity>` or `DbQuery<TEntity>` from `DbContext` in an effective way.
+This library helps you mock EntityFramework contexts. It allows you to test methods that are using `DbSet<TEntity>` or `DbQuery<TEntity>` from `DbContext` in an effective way.
 
 For EF Core: 3, 5, 6, 7.
 
