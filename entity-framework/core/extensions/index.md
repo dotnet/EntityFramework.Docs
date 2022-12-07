@@ -267,6 +267,12 @@ Provides the `SqlQueryAsync<T>` and `SqlQueryValueAsync<T>` methods to help you 
 
 [GitHub repository](https://github.com/ErikEJ/EFCorePowerTools/tree/master/src/GUI/ErikEJ.EntityFrameworkCore.6.SqlServer.SqlQuery) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.SqlQuery)
 
+### ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly
+
+Use the `DateOnly` and `TimeOnly` .NET types with the EF Core SQL Server provider. For EF Core: 6, 7.
+
+[GitHub repository](https://github.com/ErikEJ/EFCore.SqlServer.DateOnlyTimeOnly) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly)
+
 ### EntityFramework.Exceptions
 
 When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`, `CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints.
