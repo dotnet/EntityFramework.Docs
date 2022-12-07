@@ -35,12 +35,12 @@ The EF Core column indicates the product version in which the feature first appe
 | Property value conversions                            |          | 2.1                                   |
 | Mapped types with no keys                             |          | 2.1                                   |
 | Conventions                                           | Yes      | 1.0                                   |
-| Custom conventions                                    | Yes      | 1.0 (partial; [#214](https://github.com/dotnet/efcore/issues/214)) |
+| Custom conventions                                    | Yes      | 7.0                                   |
 | Data annotations                                      | Yes      | 1.0                                   |
 | Fluent API                                            | Yes      | 1.0                                   |
 | Inheritance: Table per hierarchy (TPH)                | Yes      | 1.0                                   |
 | Inheritance: Table per type (TPT)                     | Yes      | 5.0                                   |
-| Inheritance: Table per concrete class (TPC)           | Yes      | On the backlog ([#3170](https://github.com/dotnet/efcore/issues/3170)) |
+| Inheritance: Table per concrete class (TPC)           | Yes      | 7.0                                   |
 | Shadow state properties                               |          | 1.0                                   |
 | Alternate keys                                        |          | 1.0                                   |
 | Many-to-many navigations                              | Yes      | 5.0                                   |
@@ -54,7 +54,7 @@ The EF Core column indicates the product version in which the feature first appe
 | Update model from database                            | Partial  | On the backlog ([#831](https://github.com/dotnet/efcore/issues/831)) |
 | Global query filters                                  |          | 2.0                                   |
 | Table splitting                                       | Yes      | 2.0                                   |
-| Entity splitting                                      | Yes      | On the backlog ([#620](https://github.com/dotnet/efcore/issues/620)) |
+| Entity splitting                                      | Yes      | 7.0                                   |
 | Database scalar function mapping                      | Poor     | 2.0                                   |
 | Database table valued function mapping                | Poor     | 5.0                                   |
 | Field mapping                                         |          | 1.1                                   |
@@ -93,7 +93,7 @@ The EF Core column indicates the product version in which the feature first appe
 | Optimistic concurrency                                | Yes      | 1.0                                   |
 | Transactions                                          | Yes      | 1.0                                   |
 | Batching of statements                                |          | 1.0                                   |
-| Stored procedure mapping                              | Yes      | On the backlog ([#245](https://github.com/dotnet/efcore/issues/245)) |
+| Stored procedure mapping                              | Yes      | 7.0                                   |
 | Disconnected graph low-level APIs                     | Poor     | 1.0                                   |
 | Disconnected graph End-to-end                         |          | 1.0 (partial; [#5536](https://github.com/dotnet/efcore/issues/5536)) |
 
