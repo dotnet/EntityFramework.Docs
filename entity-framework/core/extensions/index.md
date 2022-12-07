@@ -53,9 +53,7 @@ IWAPI (Instant Web API) is a scaffolding engine for .NET Core that can automate 
 
 ### Moq.EntityFrameworkCore
 
-This library helps you mock EntityFramework contexts. It allows you to test methods that are using `DbSet<TEntity>` or `DbQuery<TEntity>` from `DbContext` in an effective way.
-
-For EF Core: 3, 5, 6, 7.
+This library helps you mock EntityFramework contexts. It allows you to test methods that are using `DbSet<TEntity>` or `DbQuery<TEntity>` from `DbContext` in an effective way. For EF Core: 3, 5, 6, 7.
 
 [GitHub repository](https://github.com/MichalJankowskii/Moq.EntityFrameworkCore/) | [NuGet](https://www.nuget.org/packages/Moq.EntityFrameworkCore/)
 
