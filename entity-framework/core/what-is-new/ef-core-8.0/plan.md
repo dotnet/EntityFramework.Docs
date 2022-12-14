@@ -31,7 +31,7 @@ EF8 will contain a small number of [breaking changes](xref:core/what-is-new/ef-c
 
 ## Themes
 
-Large investments for EF8 amd data access in .NET 8 fall under the following themes:
+Large investments for EF8 and data access in .NET 8 fall under the following themes:
 
 - Highly requested features
 - Cloud native and devices
@@ -130,7 +130,7 @@ The [EF Core Power Tools](https://marketplace.visualstudio.com/items?itemName=Er
 
 Creating a great experience for developers has always been a primary driving force for the team. Almost everything in the themes outlined here above relates to this in some way. In addition, a large part of the work planned for EF8 involves improving the developer experience in many small ways across multiple areas.
 
-All the issues that we may potentially work on for EF8 are [tracked on GitHub by the 'consider-for-current-release' label](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aconsider-for-current-release). We will reassess these issues throughout the release and move issues into the [8.0 milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+milestone%3A8.0.0) as we commit to working on them. Make sure to vote for issues that are important to you (👍) so that we can use this information when deciding with issues to work on.
+All the issues that we may potentially work on for EF8 are [tracked on GitHub by the 'consider-for-current-release' label](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aconsider-for-current-release). We will reassess these issues throughout the release and move issues into the [8.0 milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+milestone%3A8.0.0) as we commit to working on them. Make sure to vote for issues that are important to you (👍) so that we can use this information when deciding which issues to work on.
 
 EF Core GitHub issues are all assigned to one or more "areas". The queries below filter issues we are considering for EF8 by major areas:
 
