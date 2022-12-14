@@ -34,6 +34,8 @@
       href: /ef/core/what-is-new/ef-core-7.0/whatsnew
     - name: "Breaking changes in EF Core 7.0 (EF7)"
       href: /ef/core/what-is-new/ef-core-7.0/breaking-changes
+    - name: "The plan for EF Core 8 (EF8)"
+      href: /ef/core/what-is-new/ef-core-8.0/whatsnew
     - name: Getting started
       items:
       - name: EF Core Overview
