@@ -35,7 +35,7 @@
     - name: "Breaking changes in EF Core 7.0 (EF7)"
       href: /ef/core/what-is-new/ef-core-7.0/breaking-changes
     - name: "The plan for EF Core 8 (EF8)"
-      href: /ef/core/what-is-new/ef-core-8.0/whatsnew
+      href: /ef/core/what-is-new/ef-core-8.0/plan
     - name: Getting started
       items:
       - name: EF Core Overview
@@ -64,7 +64,15 @@
         href: core/what-is-new/index.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
-      - name: EF Core 7.0
+      - name: EF Core 8 (EF8)
+        items:
+          - name: High-level plan
+            href: core/what-is-new/ef-core-8.0/plan.md
+          - name: "What's new?"
+            href: core/what-is-new/ef-core-8.0/whatsnew.md
+          - name: Breaking changes
+            href: core/what-is-new/ef-core-8.0/breaking-changes.md
+      - name: EF Core 7.0 (EF7)
         items:
           - name: High-level plan
             href: core/what-is-new/ef-core-7.0/plan.md
