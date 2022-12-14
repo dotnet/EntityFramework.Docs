@@ -2,7 +2,7 @@
 title: Plan for Entity Framework Core 8
 description: The themes and features planned for EF Core 8
 author: ajcvickers
-ms.date: 12/13/2022
+ms.date: 12/14/2022
 uid: core/what-is-new/ef-core-8.0/plan
 ---
 
@@ -157,4 +157,4 @@ EF Core GitHub issues are all assigned to one or more "areas". The queries below
 
 ## Suggestions
 
-Your feedback on planning is important. Please comment on [GitHub Issue #26994](https://github.com/dotnet/efcore/issues/26994) with any feedback or general suggestions about the plan. The best way to indicate the importance of an issue is to vote (👍) for that [issue on GitHub](https://github.com/dotnet/efcore/issues). This data will then feed into the [planning process](xref:core/what-is-new/release-planning) for the next release.
+Your feedback on planning is important. Please comment on [GitHub Issue #29853](https://github.com/dotnet/efcore/issues/29853) with any feedback or general suggestions about the plan. The best way to indicate the importance of an issue is to vote (👍) for that [issue on GitHub](https://github.com/dotnet/efcore/issues). This data will then feed into the [planning process](xref:core/what-is-new/release-planning) for the next release.
