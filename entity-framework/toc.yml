@@ -421,7 +421,7 @@
         href: core/cli/services.md
 
     - name: EF Core API reference >>
-      href: /dotnet/api/?view=efcore-6.0&preserve-view=true
+      href: /dotnet/api/?view=efcore-7.0&preserve-view=true
 
   - name: Entity Framework 6
     items:
