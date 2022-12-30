@@ -50,4 +50,4 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-Another alternative is to ignore the navigation properties that cause the cycle for JSON serialization. If you're using Json.NET, you can decorate one of the navigation properties with the `[JsonIgnore]` attribute, which instructs Json.NET to not traverse that navigation property while serializing. For System.Text.Json, you can use the `[IgnoreDataMember]` attribute to achieve the same effect.
+Another alternative is to ignore the navigation properties that cause the cycle for JSON serialization. If you're using Json.NET, you can decorate one of the navigation properties with the `[JsonIgnore]` attribute, which instructs Json.NET to not traverse that navigation property while serializing. For System.Text.Json, you can use the `[JsonIgnore]` attribute in the `System.Text.Json.Serialization` namespace to achieve the same effect.
