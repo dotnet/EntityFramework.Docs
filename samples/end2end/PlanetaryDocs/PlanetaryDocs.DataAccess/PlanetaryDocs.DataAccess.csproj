@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>10.0</LangVersion>
+    <Description>Data access for Planetary Docs.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="6.0.0-*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlanetaryDocs.Domain\PlanetaryDocs.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

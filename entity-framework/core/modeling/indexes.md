@@ -61,6 +61,37 @@ By default, indexes aren't unique: multiple rows are allowed to have the same va
 
 Attempting to insert more than one entity with the same values for the index's column set will cause an exception to be thrown.
 
+## Index sort order
+
+> [!NOTE]
+> This feature is being introduced in EF Core 7.0.
+
+In most databases, each column covered by an index can be either ascending or descending. For indexes covering only one column, this typically does not matter: the database can traverse the index in reverse order as needed. However, for composite indexes, the ordering can be crucial for good performance, and can mean the difference between an index getting used by a query or not. In general, the index columns' sort orders should correspond to those specified in the `ORDER BY` clause of your query.
+
+The index sort order is ascending by default. You can make all columns have descending order as follows:
+
+### [Data Annotations](#tab/data-annotations)
+
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/DataAnnotations/IndexDescending.cs?name=IndexDescending&highlight=1)]
+
+### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/IndexDescending.cs?name=IndexDescending&highlight=5)]
+
+***
+
+You may also specify the sort order on a column-by-column basis as follows:
+
+### [Data Annotations](#tab/data-annotations)
+
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/DataAnnotations/IndexDescendingAscending.cs?name=IndexDescendingAscending&highlight=1)]
+
+### [Fluent API](#tab/fluent-api)
+
+[!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/IndexDescendingAscending.cs?name=IndexDescendingAscending&highlight=5)]
+
+***
+
 ## Index name
 
 By convention, indexes created in a relational database are named `IX_<type name>_<property name>`. For composite indexes, `<property name>` becomes an underscore separated list of property names.

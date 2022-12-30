@@ -436,8 +436,43 @@
             "redirect_document_id": false
         },
         {
-            "source_path": "core/saving/explicit-values-generated-properties.md",
+            "source_path": "entity-framework/core/saving/explicit-values-generated-properties.md",
             "redirect_url": "/ef/core/modeling/generated-properties#overriding-values",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/testing/testing-sample.md",
+            "redirect_url": "/ef/core/testing/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/testing/sharing-databases.md",
+            "redirect_url": "/ef/core/testing/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/testing/sqlite.md",
+            "redirect_url": "/ef/core/testing/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/testing/in-memory.md",
+            "redirect_url": "/ef/core/testing/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/managing-schemas/scaffolding.md",
+            "redirect_url": "/ef/core/managing-schemas/scaffolding/index",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/querying/raw-sql.md",
+            "redirect_url": "/ef/core/querying/sql-queries",
+            "redirect_document_id": false
+        },
+        {
+            "source_path": "entity-framework/core/modeling/concurrency.md",
+            "redirect_url": "/ef/core/saving/concurrency",
             "redirect_document_id": false
         }
     ]

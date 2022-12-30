@@ -2,7 +2,7 @@
 title: Keyless Entity Types - EF Core
 description: How to configure keyless entity types using Entity Framework Core
 author: AndriySvyryd
-ms.date: 11/15/2021
+ms.date: 10/10/2022
 uid: core/modeling/keyless-entity-types
 ---
 # Keyless Entity Types
@@ -14,7 +14,7 @@ In addition to regular entity types, an EF Core model can contain _keyless entit
 
 ## Defining Keyless entity types
 
-Keyless entity types can be defined using either the Data Annotation or the Fluent API:
+Keyless entity types can be defined as follows:
 
 ### [Data Annotations](#tab/data-annotations)
 
@@ -42,12 +42,14 @@ However, they are different from regular entity types in that they:
   - Entities cannot contain navigation properties to keyless entity types.
 - Need to be configured with a `[Keyless]` data annotation or a `.HasNoKey()` method call.
 - May be mapped to a _defining query_. A defining query is a query declared in the model that acts as a data source for a keyless entity type.
+- Can have a hierarchy, but it must be mapped as TPH.
+- Cannot use table splitting or entity splitting.
 
 ## Usage scenarios
 
 Some of the main usage scenarios for keyless entity types are:
 
-- Serving as the return type for [raw SQL queries](xref:core/querying/raw-sql).
+- Serving as the return type for [SQL queries](xref:core/querying/sql-queries).
 - Mapping to database views that do not contain a primary key.
 - Mapping to tables that do not have a primary key defined.
 - Mapping to queries defined in the model.
@@ -64,7 +66,7 @@ Mapping a keyless entity type to a database object is achieved using the `ToTabl
 The following example shows how to use keyless entity types to query a database view.
 
 > [!TIP]
-> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/KeylessEntityTypes) on GitHub.
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/KeylessEntityTypes) on GitHub.
 
 First, we define a simple Blog and Post model:
 
@@ -95,4 +97,4 @@ Finally, we can query the database view in the standard way:
 > Note we have also defined a context level query property (DbSet) to act as a root for queries against this type.
 
 > [!TIP]
-> To test keyless entity types mapped to views using the in-memory provider map them to a query via `ToInMemoryQuery`. See a [runnable sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/Testing/ItemsWebApi/) using this technique for more details.
+> To test keyless entity types mapped to views using the in-memory provider, map them to a query via <xref:Microsoft.EntityFrameworkCore.InMemoryEntityTypeBuilderExtensions.ToInMemoryQuery%2A>. See the [in-memory provider docs](xref:core/testing/testing-without-the-database#in-memory-provider) for more information.

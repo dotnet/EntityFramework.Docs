@@ -116,12 +116,16 @@ ORDER BY [p].[AuthorId]
 
 The aggregate operators EF Core supports are as follows
 
-- Average
-- Count
-- LongCount
-- Max
-- Min
-- Sum
+.NET                     | SQL
+------------------------ | ---
+Average(x => x.Property) | AVG(Property)
+Count()                  | COUNT(*)
+LongCount()              | COUNT(*)
+Max(x => x.Property)     | MAX(Property)
+Min(x => x.Property)     | MIN(Property)
+Sum(x => x.Property)     | SUM(Property)
+
+Additional aggregate operators may be supported. Check your provider docs for more function mappings.
 
 ## Left Join
 

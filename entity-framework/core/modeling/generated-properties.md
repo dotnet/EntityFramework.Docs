@@ -39,7 +39,7 @@ The above creates a *virtual* computed column, whose value is computed every tim
 
 By convention, non-composite primary keys of type short, int, long, or Guid are set up to have values generated for inserted entities if a value isn't provided by the application. Your database provider typically takes care of the necessary configuration; for example, a numeric primary key in SQL Server is automatically set up to be an IDENTITY column.
 
-For more information, [see the documentation about keys](xref:core/modeling/keys).
+For more information, [see the documentation about keys](xref:core/modeling/keys) and [guidance for specific inheritance mapping strategies](xref:core/modeling/inheritance#key-generation).
 
 ## Explicitly configuring value generation
 

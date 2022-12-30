@@ -11,7 +11,7 @@ Each entity type in your model has a set of properties, which EF Core will read 
 
 ## Included and excluded properties
 
-By convention, all public properties with a getter and a setter will be included in the model.
+By [convention](xref:core/modeling/index#built-in-conventions), all public properties with a getter and a setter will be included in the model.
 
 Specific properties can be excluded as follows:
 
@@ -134,12 +134,12 @@ A property is considered optional if it is valid for it to contain `null`. If `n
 
 By convention, a property whose .NET type can contain null will be configured as optional, whereas properties whose .NET type cannot contain null will be configured as required. For example, all properties with .NET value types (`int`, `decimal`, `bool`, etc.) are configured as required, and all properties with nullable .NET value types (`int?`, `decimal?`, `bool?`, etc.) are configured as optional.
 
-C# 8 introduced a new feature called [nullable reference types (NRT)](/dotnet/csharp/tutorials/nullable-reference-types), which allows reference types to be annotated, indicating whether it is valid for them to contain null or not. This feature is disabled by default, and affects EF Core's behavior in the following way:
+C# 8 introduced a new feature called [nullable reference types (NRT)](/dotnet/csharp/tutorials/nullable-reference-types), which allows reference types to be annotated, indicating whether it is valid for them to contain null or not. This feature is enabled by default in new project templates, but remains disabled in existing projects unless explicitly opted into. Nullable reference types affect EF Core's behavior in the following way:
 
-* If nullable reference types are disabled (the default), all properties with .NET reference types are configured as optional by convention (for example, `string`).
+* If nullable reference types are disabled, all properties with .NET reference types are configured as optional by convention (for example, `string`).
 * If nullable reference types are enabled, properties will be configured based on the C# nullability of their .NET type: `string?` will be configured as optional, but `string` will be configured as required.
 
-The following example shows an entity type with required and optional properties, with the nullable reference feature disabled (the default) and enabled:
+The following example shows an entity type with required and optional properties, with the nullable reference feature disabled and enabled:
 
 #### [Without NRT (default)](#tab/without-nrt)
 

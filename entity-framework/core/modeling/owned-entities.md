@@ -33,7 +33,7 @@ If the `ShippingAddress` property is private in the `Order` type, you can use th
 
 The model above is mapped to the following database schema:
 
-![Sceenshot of the database model for entity containing owned reference](_static/owned-entities-ownsone.png)
+![Screenshot of the database model for entity containing owned reference](_static/owned-entities-ownsone.png)
 
 See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/OwnedEntities) for more context.
 

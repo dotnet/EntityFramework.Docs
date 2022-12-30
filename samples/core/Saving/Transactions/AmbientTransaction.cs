@@ -3,76 +3,75 @@ using System.Transactions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFSaving.Transactions
+namespace EFSaving.Transactions;
+
+public class AmbientTransaction
 {
-    public class AmbientTransaction
+    public static void Run()
     {
-        public static void Run()
+        var connectionString =
+            @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True";
+
+        using (var context = new BloggingContext(
+                   new DbContextOptionsBuilder<BloggingContext>()
+                       .UseSqlServer(connectionString)
+                       .Options))
         {
-            var connectionString =
-                @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True";
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+        }
 
-            using (var context = new BloggingContext(
-                new DbContextOptionsBuilder<BloggingContext>()
-                    .UseSqlServer(connectionString)
-                    .Options))
+        #region Transaction
+        using (var scope = new TransactionScope(
+                   TransactionScopeOption.Required,
+                   new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
+        {
+            using var connection = new SqlConnection(connectionString);
+            connection.Open();
+
+            try
             {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-            }
+                // Run raw ADO.NET command in the transaction
+                var command = connection.CreateCommand();
+                command.CommandText = "DELETE FROM dbo.Blogs";
+                command.ExecuteNonQuery();
 
-            #region Transaction
-            using (var scope = new TransactionScope(
-                TransactionScopeOption.Required,
-                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
-            {
-                using var connection = new SqlConnection(connectionString);
-                connection.Open();
+                // Run an EF Core command in the transaction
+                var options = new DbContextOptionsBuilder<BloggingContext>()
+                    .UseSqlServer(connection)
+                    .Options;
 
-                try
+                using (var context = new BloggingContext(options))
                 {
-                    // Run raw ADO.NET command in the transaction
-                    var command = connection.CreateCommand();
-                    command.CommandText = "DELETE FROM dbo.Blogs";
-                    command.ExecuteNonQuery();
-
-                    // Run an EF Core command in the transaction
-                    var options = new DbContextOptionsBuilder<BloggingContext>()
-                        .UseSqlServer(connection)
-                        .Options;
-
-                    using (var context = new BloggingContext(options))
-                    {
-                        context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                        context.SaveChanges();
-                    }
-
-                    // Commit transaction if all commands succeed, transaction will auto-rollback
-                    // when disposed if either commands fails
-                    scope.Complete();
+                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                    context.SaveChanges();
                 }
-                catch (Exception)
-                {
-                    // TODO: Handle failure
-                }
+
+                // Commit transaction if all commands succeed, transaction will auto-rollback
+                // when disposed if either commands fails
+                scope.Complete();
             }
-            #endregion
-        }
-
-        public class BloggingContext : DbContext
-        {
-            public BloggingContext(DbContextOptions<BloggingContext> options)
-                : base(options)
+            catch (Exception)
             {
+                // TODO: Handle failure
             }
-
-            public DbSet<Blog> Blogs { get; set; }
         }
+        #endregion
+    }
 
-        public class Blog
+    public class BloggingContext : DbContext
+    {
+        public BloggingContext(DbContextOptions<BloggingContext> options)
+            : base(options)
         {
-            public int BlogId { get; set; }
-            public string Url { get; set; }
         }
+
+        public DbSet<Blog> Blogs { get; set; }
+    }
+
+    public class Blog
+    {
+        public int BlogId { get; set; }
+        public string Url { get; set; }
     }
 }

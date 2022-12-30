@@ -1,0 +1,29 @@
+﻿@inherits EditBarBase
+
+<div class="row">
+    <div class="col">
+        <button disabled="@(!IsValid || !IsDirty)"
+                tabindex="2"
+                @onclick="async () => await SaveAsync()"
+                class="btn btn-sm btn-success">
+            <span class="oi oi-cloud-upload"></span>&nbsp;Save
+        </button>
+        <span class="text-sm-left">&nbsp;(@ChangeCount changes detected)&nbsp;</span>
+        <button tabindex="3"
+                disabled="@(!IsDirty)" class="btn btn-sm btn-warning"
+                @onclick="() => Reset()">
+            <span class="oi oi-reload"></span>&nbsp;Reset
+        </button>
+        <span>&nbsp;</span>
+        <button tabindex="4"
+                class="btn btn-danger btn-sm"
+                @onclick="() => Cancel()">
+            <span class="oi oi-x"></span>&nbsp;Cancel
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        &nbsp;
+    </div>
+</div> 

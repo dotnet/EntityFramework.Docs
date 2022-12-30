@@ -1,8 +1,7 @@
-﻿namespace EFModeling.BulkConfiguration
+﻿namespace EFModeling.BulkConfiguration;
+
+public class Product
 {
-    public class Product
-    {
-        public int Id { get; set; }
-        public Currency Price { get; set; }
-    }
+    public int Id { get; set; }
+    public Currency Price { get; set; }
 }

@@ -26,6 +26,9 @@ You can use the `DbContext.Database` API to begin, commit, and rollback transact
 
 While all relational database providers support transactions, other providers types may throw or no-op when transaction APIs are called.
 
+> [!NOTE]
+> Manually controlling transactions in this way is incompatible with implicitly invoked retrying execution strategies. See [Connection Resiliency](xref:core/miscellaneous/connection-resiliency#execution-strategies-and-transactions) for more information.
+
 ## Savepoints
 
 > [!NOTE]
@@ -82,7 +85,7 @@ public class BloggingContext : DbContext
 
 You can now create multiple context instances that share the same connection. Then use the `DbContext.Database.UseTransaction(DbTransaction)` API to enlist both contexts in the same transaction.
 
-[!code-csharp[Main](../../../samples/core/Saving/Transactions/SharingTransaction.cs?name=Transaction&highlight=1-3,6,14,21-23)]
+[!code-csharp[Main](../../../samples/core/Saving/Transactions/SharingTransaction.cs?name=Transaction&highlight=1-4,7,15,22-24)]
 
 ## Using external DbTransactions (relational databases only)
 
@@ -109,4 +112,4 @@ It is also possible to enlist in an explicit transaction.
    > [!IMPORTANT]
    > It is recommended that you test that the API behaves correctly with your provider before you rely on it for managing transactions. You are encouraged to contact the maintainer of the database provider if it does not.
 
-2. The .NET Core implementation of System.Transactions does not currently include support for distributed transactions, therefore you cannot use `TransactionScope` or `CommittableTransaction` to coordinate transactions across multiple resource managers. Support is tracked by [this issue](https://github.com/dotnet/runtime/issues/715).
+2. Distributed transaction support in System.Transactions was added to .NET 7.0 for Windows only. Any attempt to use distributed transactions on older .NET versions or on non-Windows platforms will fail.

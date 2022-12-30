@@ -2,42 +2,48 @@
 title: Breaking changes in EF Core 6.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 6.0
 author: ajcvickers
-ms.date: 01/10/2022
+ms.date: 09/21/2022
 uid: core/what-is-new/ef-core-6.0/breaking-changes
 ---
 
 # Breaking changes in EF Core 6.0
 
-The following API and behavior changes have the potential to break existing applications updating to EF Core 6.0.0.
+The following API and behavior changes have the potential to break existing applications updating to EF Core 6.0.
+
+## Target Framework
+
+EF Core 6.0 targets .NET 6. Applications targeting older .NET, .NET Core, and .NET Framework versions will need to target .NET 6 to use EF Core 6.0.
 
 ## Summary
 
-| **Breaking change**                                                                                                                   | **Impact** |
-|:--------------------------------------------------------------------------------------------------------------------------------------|------------|
-| [Nested optional dependents sharing a table and with no required properties cannot be saved](#nested-optionals)                       | High       |
-| [Changing the owner of an owned entity now throws an exception](#owned-reparenting)                                                   | Medium     |
-| [Cosmos: Related entity types are discovered as owned](#cosmos-owned)                                                                 | Medium     |
-| [SQLite: Connections are pooled](#connection-pool)                                                                                    | Medium     |
-| [Many-to-many relationships without mapped join entities are now scaffolded](#many-to-many)                                           | Medium     |
-| [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                          | Low        |
-| [In-memory database validates required properties do not contain nulls](#in-memory-required)                                          | Low        |
-| [Removed last ORDER BY when joining for collections](#last-order-by)                                                                  | Low        |
-| [DbSet no longer implements IAsyncEnumerable](#dbset-iasyncenumerable)                                                                | Low        |
-| [TVF return entity type is also mapped to a table by default](#tvf-table)                                                             | Low        |
-| [Check constraint name uniqueness is now validated](#unique-check-constraints)                                                        | Low        |
-| [Added IReadOnly Metadata interfaces and removed extension methods](#ireadonly-metadata)                                              | Low        |
-| [IExecutionStrategy is now a singleton service](#iexecutionstrategy)                                                                  | Low        |
-| [SQL Server: More errors are considered transient](#transient-errors)                                                                 | Low        |
-| [Cosmos: More characters are escaped in 'id' values](#cosmos-id)                                                                      | Low        |
-| [Some Singleton services are now Scoped](#query-services)                                                                             | Low*       |
-| [New caching API for extensions that add or replace services](#extensions-caching)                                                    | Low*       |
-| [New snapshot and design-time model initialization procedure](#snapshot-initialization)                                               | Low        |
-| [`OwnedNavigationBuilder.HasIndex` returns a different type now](#owned-index)                                                        | Low        |
-| [`DbFunctionBuilder.HasSchema(null)` overrides `[DbFunction(Schema = "schema")]`](#function-schema)                                   | Low        |
-| [Pre-initialized navigations are overridden by values from database queries](#overwrite-navigations)                                  | Low        |
-| [Unknown enum string values in the database are not converted to the enum default when queried](#unknown-emums)                       | Low        |
-| [DbFunctionBuilder.HasTranslation now provides the function arguments as IReadOnlyList rather than IReadOnlyCollection](#func-args)   | Low        |
-| [Default table mapping is not removed when the entity is mapped to a table-valued function](#tvf-default-mapping)                     | Low        |
+| **Breaking change**                                                                                                                 | **Impact** |
+|:------------------------------------------------------------------------------------------------------------------------------------|------------|
+| [Nested optional dependents sharing a table and with no required properties cannot be saved](#nested-optionals)                     | High       |
+| [Changing the owner of an owned entity now throws an exception](#owned-reparenting)                                                 | Medium     |
+| [Cosmos: Related entity types are discovered as owned](#cosmos-owned)                                                               | Medium     |
+| [SQLite: Connections are pooled](#connection-pool)                                                                                  | Medium     |
+| [Many-to-many relationships without mapped join entities are now scaffolded](#many-to-many)                                         | Medium     |
+| [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                        | Low        |
+| [In-memory database validates required properties do not contain nulls](#in-memory-required)                                        | Low        |
+| [Removed last ORDER BY when joining for collections](#last-order-by)                                                                | Low        |
+| [DbSet no longer implements IAsyncEnumerable](#dbset-iasyncenumerable)                                                              | Low        |
+| [TVF return entity type is also mapped to a table by default](#tvf-table)                                                           | Low        |
+| [Check constraint name uniqueness is now validated](#unique-check-constraints)                                                      | Low        |
+| [Added IReadOnly Metadata interfaces and removed extension methods](#ireadonly-metadata)                                            | Low        |
+| [IExecutionStrategy is now a singleton service](#iexecutionstrategy)                                                                | Low        |
+| [SQL Server: More errors are considered transient](#transient-errors)                                                               | Low        |
+| [Cosmos: More characters are escaped in 'id' values](#cosmos-id)                                                                    | Low        |
+| [Some Singleton services are now Scoped](#query-services)                                                                           | Low*       |
+| [New caching API for extensions that add or replace services](#extensions-caching)                                                  | Low*       |
+| [New snapshot and design-time model initialization procedure](#snapshot-initialization)                                             | Low        |
+| [`OwnedNavigationBuilder.HasIndex` returns a different type now](#owned-index)                                                      | Low        |
+| [`DbFunctionBuilder.HasSchema(null)` overrides `[DbFunction(Schema = "schema")]`](#function-schema)                                 | Low        |
+| [Pre-initialized navigations are overridden by values from database queries](#overwrite-navigations)                                | Low        |
+| [Unknown enum string values in the database are not converted to the enum default when queried](#unknown-emums)                     | Low        |
+| [DbFunctionBuilder.HasTranslation now provides the function arguments as IReadOnlyList rather than IReadOnlyCollection](#func-args) | Low        |
+| [Default table mapping is not removed when the entity is mapped to a table-valued function](#tvf-default-mapping)                   | Low        |
+| [dotnet-ef targets .NET 6](#dotnet-ef)                                                                                              | Low        |
+| [`IModelCacheKeyFactory` implementations may need to be updated to handle design-time caching](#model-cache-key)                    | Low        |
 
 \* These changes are of particular interest to authors of database providers and extensions.
 
@@ -97,9 +103,41 @@ Using models with nested optional dependents sharing a table and with no require
 
 Avoid using optional dependents sharing a table and with no required properties. There are three easy ways to do this:
 
-1. Make the dependents required. This means that the dependent entity will always have a value after it is queried, even if all its properties are null.
+1. Make the dependents required. This means that the dependent entity will always have a value after it is queried, even if all its properties are null. For example:
+
+   ```csharp
+   public class Customer
+   {
+       public int Id { get; set; }
+       public string Name { get; set; }
+   
+       [Required]
+       public Address Address { get; set; }
+   }
+   ```
+
+   Or:
+
+   ```csharp
+   modelBuilder.Entity<Customer>(
+       b =>
+           {
+               b.OwnsOne(e => e.Address);
+               b.Navigation(e => e.Address).IsRequired();
+           });
+   ```
+
 2. Make sure that the dependent contains at least one required property.
-3. Map optional dependents to their own table, instead of sharing a table with the principal.
+3. Map optional dependents to their own table, instead of sharing a table with the principal. For example:
+
+   ```csharp
+   modelBuilder.Entity<Customer>(
+       b =>
+           {
+               b.ToTable("Customers");
+               b.OwnsOne(e => e.Address, b => b.ToTable("CustomerAddresses"));
+           });
+   ```
 
 The problems with optional dependents and examples of these mitigations are included in the documentation for [What's new in EF Core 6.0](xref:core/what-is-new/ef-core-6.0/whatsnew#changes-to-owned-optional-dependent-handling).
 
@@ -548,7 +586,7 @@ Many query services and some design-time services that were registered as `Singl
 
 #### Why
 
-The lifetime had to be changed to allow a new feature - <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping> - to affect queries.
+The lifetime had to be changed to allow a new feature - <xref:Microsoft.EntityFrameworkCore.ModelConfigurationBuilder.DefaultTypeMapping%2A> - to affect queries.
 
 The design-time services lifetimes have been adjusted to match the run-time services lifetimes to avoid errors when using both.
 
@@ -848,4 +886,61 @@ Mapping to a table can be explicitly disabled in the model configuration:
 
 ```csharp
 modelBuilder.Entity<MyEntity>().ToTable((string)null);
+```
+
+<a name="dotnet-ef"></a>
+
+### dotnet-ef targets .NET 6
+
+[Tracking Issue #27787](https://github.com/dotnet/efcore/issues/27787)
+
+#### Old behavior
+
+The dotnet-ef command has targeted .NET Core 3.1 for a while now. This allowed you to use newer version of the tool without installing newer versions of the .NET runtime.
+
+#### New behavior
+
+In EF Core 6.0.6, the dotnet-ef tool now targets .NET 6. You can still use the tool on projects targeting older versions of .NET and .NET Core, but you'll need to install the .NET 6 runtime in order to run the tool.
+
+#### Why
+
+The .NET 6.0.200 SDK updated the behavior of `dotnet tool install` on osx-arm64 to create an osx-x64 shim for tools targeting .NET Core 3.1. In order to maintain a working default experience for dotnet-ef, we had to update it to target .NET 6.
+
+#### Mitigations
+
+To run dotnet-ef without installing the .NET 6 runtime, you can install an older version of the tool:
+
+```dotnetcli
+dotnet tool install dotnet-ef --version 3.1.*
+```
+
+<a name="model-cache-key"></a>
+
+### `IModelCacheKeyFactory` implementations may need to be updated to handle design-time caching
+
+[Tracking Issue #25154](https://github.com/dotnet/efcore/issues/25154)
+
+#### Old behavior
+
+`IModelCacheKeyFactory` did not have an option to cache the design-time model separately from the runtime model.
+
+#### New behavior
+
+`IModelCacheKeyFactory` has a new overload that allows the design-time model to be cached separately from the runtime model. Not implementing this method may result in an exception similar to:
+
+> System.InvalidOperationException: 'The requested configuration is not stored in the read-optimized model, please use 'DbContext.GetService&lt;IDesignTimeModel&gt;().Model'.'
+
+#### Why
+
+Implementation of compiled models required separation of the design-time (used when building the model) and runtime (used when executing queries, etc.) models. If the runtime code needs access to design-time information, then the design-time model must be cached.
+
+#### Mitigations
+
+Implement the new overload. For example:
+
+```csharp
+public object Create(DbContext context, bool designTime)
+    => context is DynamicContext dynamicContext
+        ? (context.GetType(), dynamicContext.UseIntProperty, designTime)
+        : (object)context.GetType();
 ```

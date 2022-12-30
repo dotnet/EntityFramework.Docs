@@ -35,8 +35,9 @@ As mentioned in the main [Spatial Data](xref:core/modeling/spatial) documentatio
 
 This table shows which NTS members are translated into which SQL functions. Note that the translations vary depending on whether the column is of type geography or geometry.
 
-.NET                                      | SQL (geography)                                              | SQL (geometry)
------------------------------------------ | ------------------------------------------------------------ | --------------
+.NET                                      | SQL (geography)                                              | SQL (geometry)                                               | Added in
+----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | --------
+EF.Functions.CurveToLine(geometry)        | @geometry.STCurveToLine()                                    | @geometry.STCurveToLine()                                    | EF Core 7.0
 geometry.Area                             | @geometry.STArea()                                           | @geometry.STArea()
 geometry.AsBinary()                       | @geometry.STAsBinary()                                       | @geometry.STAsBinary()
 geometry.AsText()                         | @geometry.AsTextZM()                                         | @geometry.AsTextZM()
@@ -91,6 +92,15 @@ point.Z                                   | @point.Z                            
 polygon.ExteriorRing                      | @polygon.RingN(1)                                            | @polygon.STExteriorRing()
 polygon.GetInteriorRingN(n)               | @polygon.RingN(@n + 2)                                       | @polygon.STInteriorRingN(@n + 1)
 polygon.NumInteriorRings                  | @polygon.NumRings() - 1                                      | @polygon.STNumInteriorRing()
+
+### Aggregate functions
+
+.NET                                                              | SQL                           | Added in
+----------------------------------------------------------------- | ----------------------------- | --------
+GeometryCombiner.Combine(group.Select(x => x.Property))           | CollectionAggregate(Property) | EF Core 7.0
+ConvexHull.Create(group.Select(x => x.Property))                  | ConvexHullAggregate(Property) | EF Core 7.0
+UnaryUnionOp.Union(group.Select(x => x.Property))                 | UnionAggregate(Property)      | EF Core 7.0
+EnvelopeCombiner.CombineAsGeometry(group.Select(x => x.Property)) | EnvelopeAggregate(Property)   | EF Core 7.0
 
 ## Additional resources
 

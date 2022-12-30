@@ -1,36 +1,25 @@
 ---
 title: Advanced Performance Topics
 description: Advanced performance topics for Entity Framework Core
-author: rick-anderson
-ms.author: riande
-ms.date: 10/21/2021
+author: roji
+ms.date: 1/31/2022
 uid: core/performance/advanced-performance-topics
 ---
 # Advanced Performance Topics
 
 ## DbContext pooling
 
-A `DbContext` is generally a light object: creating and disposing one doesn't involve a database operation, and most applications can do so without any noticeable impact on performance. However, each `DbContext` does set up a various internal services and objects necessary for performing its duties, and the overhead of continuously doing so may be significant in high-performance scenarios. For these cases, EF Core can *pool* your `DbContext` instances: when you dispose your `DbContext`, EF Core resets its state and stores it in an internal pool; when a new instance is next requested, that pooled instance is returned instead of setting up a new one. `DbContext` pooling allows you to pay `DbContext` setup costs only once at program startup, rather than continuously.
+A `DbContext` is generally a light object: creating and disposing one doesn't involve a database operation, and most applications can do so without any noticeable impact on performance. However, each context instance does set up various internal services and objects necessary for performing its duties, and the overhead of continuously doing so may be significant in high-performance scenarios. For these cases, EF Core can *pool* your context instances: when you dispose your context, EF Core resets its state and stores it in an internal pool; when a new instance is next requested, that pooled instance is returned instead of setting up a new one. Context pooling allows you to pay context setup costs only once at program startup, rather than continuously.
 
-Following are the benchmark results for fetching a single row from a SQL Server database running locally on the same machine, with and without `DbContext` pooling. As always, results will change with the number of rows, the latency to your database server and other factors. Importantly, this benchmarks single-threaded pooling performance, while a real-world contended scenario may have different results; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
-
-|                Method | NumBlogs |     Mean |    Error |   StdDev |   Gen 0 | Gen 1 | Gen 2 | Allocated |
-|---------------------- |--------- |---------:|---------:|---------:|--------:|------:|------:|----------:|
-| WithoutContextPooling |        1 | 701.6 us | 26.62 us | 78.48 us | 11.7188 |     - |     - |  50.38 KB |
-|    WithContextPooling |        1 | 350.1 us |  6.80 us | 14.64 us |  0.9766 |     - |     - |   4.63 KB |
-
-Note that `DbContext` pooling is orthogonal to database connection pooling, which is managed at a lower level in the database driver.
+Note that context pooling is orthogonal to database connection pooling, which is managed at a lower level in the database driver.
 
 ### [With dependency injection](#tab/with-di)
 
 The typical pattern in an ASP.NET Core app using EF Core involves registering a custom <xref:Microsoft.EntityFrameworkCore.DbContext> type into the [dependency injection](/aspnet/core/fundamentals/dependency-injection) container via <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext%2A>. Then, instances of that type are obtained through constructor parameters in controllers or Razor Pages.
 
-To enable `DbContext` pooling, simply replace `AddDbContext` with <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A>:
+To enable context pooling, simply replace `AddDbContext` with <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A>:
 
-```csharp
-services.AddDbContextPool<BloggingContext>(
-    options => options.UseSqlServer(connectionString));
-```
+[!code-csharp[Main](../../../samples/core/Performance/AspNetContextPooling/Program.cs#AddDbContextPool)]
 
 The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> sets the maximum number of instances retained by the pool (defaults to 1024 in EF Core 6.0, and to 128 in previous versions). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
 
@@ -39,24 +28,57 @@ The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.Entit
 > [!NOTE]
 > Pooling without dependency injection was introduced in EF Core 6.0.
 
-To use `DbContext` pooling without dependency injection, initialize a `PooledDbContextFactory` and request context instances from it:
+To use context pooling without dependency injection, initialize a `PooledDbContextFactory` and request context instances from it:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#DbContextPoolingWithoutDI)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#DbContextPoolingWithoutDI)]
 
 The `poolSize` parameter of the `PooledDbContextFactory` constructor sets the maximum number of instances retained by the pool (defaults to 1024 in EF Core 6.0, and to 128 in previous versions). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
 
 ***
 
-### Limitations
+### Benchmarks
 
-`DbContext` pooling has a few limitations on what can be done in the `OnConfiguring` method of the context.
+Following are the benchmark results for fetching a single row from a SQL Server database running locally on the same machine, with and without context pooling. As always, results will change with the number of rows, the latency to your database server and other factors. Importantly, this benchmarks single-threaded pooling performance, while a real-world contended scenario may have different results; benchmark on your platform before making any decisions. [The source code is available here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/ContextPooling.cs), feel free to use it as a basis for your own measurements.
 
-> [!WARNING]
-> Avoid using context pooling in apps that maintain state. For example, private fields in the context that shouldn't be shared across requests. EF Core only resets the state that it is aware of before adding a context instance to the pool.
+|                Method | NumBlogs |     Mean |    Error |   StdDev |   Gen 0 | Gen 1 | Gen 2 | Allocated |
+|---------------------- |--------- |---------:|---------:|---------:|--------:|------:|------:|----------:|
+| WithoutContextPooling |        1 | 701.6 us | 26.62 us | 78.48 us | 11.7188 |     - |     - |  50.38 KB |
+|    WithContextPooling |        1 | 350.1 us |  6.80 us | 14.64 us |  0.9766 |     - |     - |   4.63 KB |
 
-Context pooling works by reusing the same context instance across requests. This means that it's effectively registered as a [Singleton](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) in terms of the instance itself so that it's able to persist.
+### Managing state in pooled contexts
 
-Context pooling is intended for scenarios where the context configuration, which includes services resolved, is fixed between requests. For cases where [Scoped](/aspnet/core/fundamentals/dependency-injection#service-lifetimes) services are required, or configuration needs to be changed, don't use pooling.
+Context pooling works by reusing the same context instance across requests; this means that it's effectively registered as a [Singleton](/aspnet/core/fundamentals/dependency-injection#service-lifetimes), and the same instance is reused across multiple requests (or DI scopes). This means that special care must be taken when the context involves any state that may change between requests. Crucially, the context's `OnConfiguring` is only invoked once - when the instance context is first created - and so cannot be used to set state which needs to vary (e.g. a tenant ID).
+
+A typical scenario involving context state would be a multi-tenant ASP.NET Core application, where the context instance has a *tenant ID* which is taken into account by queries (see [Global Query Filters](xref:core/querying/filters) for more details). Since the tenant ID needs to change with each web request, we need to go through some extra steps to make it all work with context pooling.
+
+Let's assume that your application registers a scoped `ITenant` service, which wraps the tenant ID and any other tenant-related information:
+
+[!code-csharp[Main](../../../samples/core/Performance/AspNetContextPoolingWithState/Program.cs#TenantResolution)]
+
+As written above, pay special attention to where you get the tenant ID from - this is an important aspect of your application's security.
+
+Once we have our scoped `ITenant` service, register a pooling context factory as a Singleton service, as usual:
+
+[!code-csharp[Main](../../../samples/core/Performance/AspNetContextPoolingWithState/Program.cs#RegisterSingletonContextFactory)]
+
+Next, write a custom context factory which gets a pooled context from the Singleton factory we registered, and injects the tenant ID into context instances it hands out:
+
+[!code-csharp[Main](../../../samples/core/Performance/AspNetContextPoolingWithState/WeatherForecastScopedFactory.cs#WeatherForecastScopedFactory)]
+
+Once we have our custom context factory, register it as a Scoped service:
+
+[!code-csharp[Main](../../../samples/core/Performance/AspNetContextPoolingWithState/Program.cs#RegisterScopedContextFactory)]
+
+Finally, arrange for a context to get injected from our Scoped factory:
+
+[!code-csharp[Main](../../../samples/core/Performance/AspNetContextPoolingWithState/Program.cs#RegisterDbContext)]
+
+As this point, your controllers automatically get injected with a context instance that has the right tenant ID, without having to know anything about it.
+
+The full source code for this sample is available [here](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Performance/AspNetContextPoolingWithState).
+
+> [!NOTE]
+> Although EF Core takes care of resetting internal state for `DbContext` and its related services, it generally does not reset state in the underlying database driver, which is outside of EF. For example, if you manually open and use a `DbConnection` or otherwise manipulate ADO.NET state, it's up to you to restore that state before returning the context instance to the pool, e.g. by closing the connection. Failure to do so may cause state to get leaked across unrelated requests.
 
 ## Compiled queries
 
@@ -75,11 +97,11 @@ EF supports *compiled queries*, which allow the explicit compilation of a LINQ q
 
 To use compiled queries, first compile a query with <xref:Microsoft.EntityFrameworkCore.EF.CompileAsyncQuery%2A?displayProperty=nameWithType> as follows (use <xref:Microsoft.EntityFrameworkCore.EF.CompileQuery%2A?displayProperty=nameWithType> for synchronous queries):
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#CompiledQueryCompile)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#CompiledQueryCompile)]
 
 In this code sample, we provide EF with a lambda accepting a `DbContext` instance, and an arbitrary parameter to be passed to the query. You can now invoke that delegate whenever you wish to execute the query:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#CompiledQueryExecute)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#CompiledQueryExecute)]
 
 Note that the delegate is thread-safe, and can be invoked concurrently on different context instances.
 
@@ -94,7 +116,7 @@ When EF receives a LINQ query tree for execution, it must first "compile" that t
 
 Consider the following two queries:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#QueriesWithConstants)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#QueriesWithConstants)]
 
 Since the expression trees contains different constants, the expression tree differs and each of these queries will be compiled separately by EF Core. In addition, each query produces a slightly different SQL command:
 
@@ -112,7 +134,7 @@ Because the SQL differs, your database server will likely also need to produce a
 
 A small modification to your queries can change things considerably:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#QueriesWithParameterization)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#QueriesWithParameterization)]
 
 Since the blog name is now *parameterized*, both queries have the same tree shape, and EF only needs to be compiled once. The SQL produced is also parameterized, allowing the database to reuse the same query plan:
 

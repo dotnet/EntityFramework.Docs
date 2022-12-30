@@ -1,0 +1,134 @@
+﻿@inherits EditorBase
+
+@if (DocumentToEdit != null)
+{
+    <div class="container">
+        <div class="row">
+            @if (Insert)
+            {
+                <div class="alert alert-info">
+                    <span class="oi oi-plus"></span>&nbsp;Adding a new document.
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <span class="oi oi-pencil"></span>&nbsp;Editing the document with id '@DocumentToEdit.Uid'.
+                </div>
+            }
+        </div>
+        @if (ValidationStates.Any(vr => !vr.IsValid))
+        {
+            <div class="row">
+                <div class="col-12">
+                    <ul>
+                        @foreach (var vr in ValidationStates.Where
+(v => !v.IsValid))
+                        {
+                            <li><span class="oi oi-warning"></span>&nbsp;@vr.Message</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+        @if (Insert)
+        {
+            <div class="row">
+                <div class="col-12 text-left">
+                    Unique ID:
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <ValidatedInput AutoFocus="@Insert"
+                                    TabIndex="10"
+                                    PlaceHolder="Enter the document id"
+                                    @bind-Value="@Uid"
+                                    @bind-Validation="@UidValidation"
+                                    Validate="value => ValidationRules.ValidateProperty(nameof(Document.Uid), value)" />
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-12 field-label">
+                Title:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <ValidatedInput AutoFocus="@(!Insert)"
+                                TabIndex="20"
+                                PlaceHolder="Enter the document title"
+                                @bind-Value="@Title"
+                                @bind-Validation="@TitleValidation"
+                                Validate="value => ValidationRules.ValidateProperty(nameof(Document.Title), value)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                @if (ExistingAlias)
+                {
+                    <AliasSearch @ref="AliasSearch"
+                                 TabIndex="30"
+                                 @bind-Alias="@Alias" />
+                }
+                else
+                {
+                    <span>Enter new alias:&nbsp;</span>
+                    <ValidatedInput @ref="NewAliasInput"
+                                    TabIndex="30"
+                                    PlaceHolder="Enter the alias"
+                                    @bind-Value="@Alias"
+                                    @bind-Validation="@AliasValidation"
+                                    Validate="value => ValidationRules.ValidateProperty(nameof(Document.AuthorAlias), value)" />
+                }
+                <a href="#"
+                   tabindex="50"
+                   @onclick="async () => await ToggleAliasAsync()"
+                   @onclick:preventDefault>
+                    @AliasButton
+                </a>&nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <span class="field-label">Choose tags:</span>&nbsp;
+                <TagPicker TabIndex="100" @bind-Tags="@TagList" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 field-label">
+                Description:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <ValidatedInput PlaceHolder="Enter the description"
+                                TabIndex="200"
+                                @bind-Value="@Description"
+                                @bind-Validation="@DescriptionValidation"
+                                Validate="value => ValidationRules.ValidateProperty(nameof(Document.Description), value)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5 field-label">
+                Markdown:
+            </div>
+            <div class="col-6 field-label">
+                Preview:&nbsp;
+                <button class="btn btn-link btn-sm"
+                        @onclick="() => MarkdownPreview()">
+                    <span class="oi oi-reload"></span>&nbsp;Refresh preview
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <MultiLineEdit TabIndex="300" @bind-Text="@Markdown" />
+            </div>
+            <div class="col-6">
+                <HtmlPreview @ref="Preview" IsEdit="true" Html="@Html" />
+            </div>
+        </div>
+    </div>
+}

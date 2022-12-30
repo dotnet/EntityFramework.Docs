@@ -9,9 +9,12 @@ uid: core/querying/pagination
 
 Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is shown that allows the user to navigate to the next or previous page of the results.
 
+> [!WARNING]
+> Regardless of the pagination method used, always make sure that your ordering is fully unique. For example, if results are ordered only by date, but there can be multiple results with the same date, then results could be skipped when paginating as they're ordered differently across two paginating queries. Ordering by both date and ID (or any other unique property or combination of properties) makes the ordering fully unique and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key.
+
 ## Offset pagination
 
-A common way to implement pagination with databases is to use the `Skip` and `Take` (`OFFSET` and `LIMIT` in SQL). Given a a page size of 10 results, the third page can be fetched with EF Core as follows:
+A common way to implement pagination with databases is to use the `Skip` and `Take` (`OFFSET` and `LIMIT` in SQL). Given a page size of 10 results, the third page can be fetched with EF Core as follows:
 
 [!code-csharp[Main](../../../samples/core/Querying/Pagination/Program.cs?name=OffsetPagination&highlight=4)]
 
@@ -22,16 +25,13 @@ Unfortunately, while this technique is very intuitive, it also has some severe s
 
 ## Keyset pagination
 
-The recommended alternative to offset-based pagination - sometimes called *keyset pagination* or *seek-based pagination* - is simply use a `WHERE` clause to skip rows, instead of an offset. This means remember the relevant values from the last entry fetched (instead of its offset), and to ask for the next rows after that row. For example, assuming the last entry in the last page we fetched had an ID value of 55, we'd simply do the following:
+The recommended alternative to offset-based pagination - sometimes called *keyset pagination* or *seek-based pagination* - is to simply use a `WHERE` clause to skip rows, instead of an offset. This means remember the relevant values from the last entry fetched (instead of its offset), and to ask for the next rows after that row. For example, assuming the last entry in the last page we fetched had an ID value of 55, we'd simply do the following:
 
 [!code-csharp[Main](../../../samples/core/Querying/Pagination/Program.cs?name=KeySetPagination&highlight=4)]
 
 Assuming an index is defined on `PostId`, this query is very efficient, and also isn't sensitive to any concurrent changes happening in lower Id values.
 
 Keyset pagination is appropriate for pagination interfaces where the user navigates forwards and backwards, but does not support random access, where the user can jump to any specific page. Random access pagination requires using offset pagination as explained above; because of the shortcomings of offset pagination, carefully consider if random access pagination really is required for your use case, or if next/previous page navigation is enough. If random access pagination is necessary, a robust implementation could use keyset pagination when navigation to the next/previous page, and offset navigation when jumping to any other page.
-
-> [!WARNING]
-> Always make sure that your ordering is fully deterministic. For example, if results are ordered only by date, but there can be multiple results with the same date, then results could be skipped when paginating as they're ordered differently across two queries. Ordering by both date and ID (or any other unique property) makes the resultset deterministic and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key; queries without explicit ordering have non-deterministic resultsets.
 
 ### Multiple pagination keys
 
@@ -53,4 +53,6 @@ For more information, [see the documentation page on indexes](xref:core/modeling
 ## Additional resources
 
 * To learn more about the shortcomings of offset-based pagination and about keyset pagination, [see this post](https://use-the-index-luke.com/no-offset).
+* [.NET Data Community Standup session](https://www.youtube.com/watch?v=DIKH-q-gJNU) where we discuss pagination and demo all the above concepts.
 * [A technical deep dive presentation](https://www.slideshare.net/MarkusWinand/p2d2-pagination-done-the-postgresql-way) comparing offset and keyset pagination. While the content deals with the PostgreSQL database, the general information is valid for other relational databases as well.
+* For extensions on top of EF Core which simplify keyset pagination, see [MR.EntityFrameworkCore.KeysetPagination](https://github.com/mrahhal/MR.EntityFrameworkCore.KeysetPagination) and [MR.AspNetCore.Pagination](https://github.com/mrahhal/MR.AspNetCore.Pagination).

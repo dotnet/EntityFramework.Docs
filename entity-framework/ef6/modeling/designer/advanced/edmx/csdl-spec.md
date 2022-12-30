@@ -18,9 +18,9 @@ Versions of CSDL are differentiated by XML namespaces.
 
 | CSDL Version | XML Namespace                                |
 |:-------------|:---------------------------------------------|
-| CSDL v1      | https://schemas.microsoft.com/ado/2006/04/edm |
-| CSDL v2      | https://schemas.microsoft.com/ado/2008/09/edm |
-| CSDL v3      | https://schemas.microsoft.com/ado/2009/11/edm |
+| CSDL v1      | `https://schemas.microsoft.com/ado/2006/04/edm` |
+| CSDL v2      | `https://schemas.microsoft.com/ado/2008/09/edm` |
+| CSDL v3      | `https://schemas.microsoft.com/ado/2009/11/edm` |
 
  
 ## Association Element (CSDL)
@@ -1660,7 +1660,7 @@ A **Schema** element may contain zero or one Annotation elements.
 
 The **Schema** element uses the **Namespace** attribute to define the namespace for the entity type, complex type, and association objects in a conceptual model. Within a namespace, no two objects can have the same name. Namespaces can span multiple **Schema** elements and multiple .csdl files.
 
-A conceptual model namespace is different from the XML namespace of the **Schema** element. A conceptual model namespace (as defined by the **Namespace** attribute) is a logical container for entity types, complex types, and association types. The XML namespace (indicated by the **xmlns** attribute) of a **Schema** element is the default namespace for child elements and attributes of the **Schema** element. XML namespaces of the form https://schemas.microsoft.com/ado/YYYY/MM/edm (where YYYY and MM represent a year and month respectively) are reserved for CSDL. Custom elements and attributes cannot be in namespaces that have this form.
+A conceptual model namespace is different from the XML namespace of the **Schema** element. A conceptual model namespace (as defined by the **Namespace** attribute) is a logical container for entity types, complex types, and association types. The XML namespace (indicated by the **xmlns** attribute) of a **Schema** element is the default namespace for child elements and attributes of the **Schema** element. XML namespaces of the form `https://schemas.microsoft.com/ado/YYYY/MM/edm` (where YYYY and MM represent a year and month respectively) are reserved for CSDL. Custom elements and attributes cannot be in namespaces that have this form.
 
 ### Applicable Attributes
 
@@ -2064,7 +2064,7 @@ The following table describes the facets that are supported in CSDL. All facets 
 | **Unicode**         | Indicates whether the property value is stored as Unicode.                                                                                                                                                                                                    | **Edm.String**                                                                                                                                                                                                                                                                                                                                                                       | Yes                              | Yes                 |
 
 >[!NOTE]
-> When generating a database from a conceptual model, the Generate Database Wizard will recognize the value of the **StoreGeneratedPattern** attribute on a **Property** element if it is in the following namespace: https://schemas.microsoft.com/ado/2009/02/edm/annotation. The supported values for the attribute are **Identity** and **Computed**. A value of **Identity** will produce a database column with an identity value that is generated in the database. A value of **Computed** will produce a column with a value that is computed in the database.
+> When generating a database from a conceptual model, the Generate Database Wizard will recognize the value of the **StoreGeneratedPattern** attribute on a **Property** element if it is in the following namespace: `https://schemas.microsoft.com/ado/2009/02/edm/annotation`. The supported values for the attribute are **Identity** and **Computed**. A value of **Identity** will produce a database column with an identity value that is generated in the database. A value of **Computed** will produce a column with a value that is computed in the database.
 
 ### Example
 

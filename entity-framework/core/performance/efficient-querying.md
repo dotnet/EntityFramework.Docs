@@ -13,7 +13,7 @@ Querying efficiently is a vast subject, that covers subjects as wide-ranging as 
 
 The main deciding factor in whether a query runs fast or not is whether it will properly utilize indexes where appropriate: databases are typically used to hold large amounts of data, and queries which traverse entire tables are typically sources of serious performance issues. Indexing issues aren't easy to spot, because it isn't immediately obvious whether a given query will use an index or not. For example:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#Indexes)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#Indexes)]
 
 A good way to spot indexing issues is to first pinpoint a slow query, and then examine its query plan via your database's favorite tool; see the [performance diagnosis](xref:core/performance/performance-diagnosis) page for more information on how to do that. The query plan displays whether the query traverses the entire table, or uses an index.
 
@@ -28,7 +28,7 @@ As a general rule, there isn't any special EF knowledge to using indexes or diag
 
 EF Core makes it very easy to query out entity instances, and then use those instances in code. However, querying entity instances can frequently pull back more data than necessary from your database. Consider the following:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#ProjectEntities)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#ProjectEntities)]
 
 Although this code only actually needs each Blog's `Url` property, the entire Blog entity is fetched, and unneeded columns are transferred from the database:
 
@@ -39,7 +39,7 @@ FROM [Blogs] AS [b]
 
 This can be optimized by using `Select` to tell EF which columns to project out:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#ProjectSingleProperty)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#ProjectSingleProperty)]
 
 The resulting SQL pulls back only the needed columns:
 
@@ -56,21 +56,21 @@ Note that this technique is very useful for read-only queries, but things get mo
 
 By default, a query returns all rows that matches its filters:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#NoLimit)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#NoLimit)]
 
 Since the number of rows returned depends on actual data in your database, it's impossible to know how much data will be loaded from the database, how much memory will be taken up by the results, and how much additional load will be generated when processing these results (e.g. by sending them to a user browser over the network). Crucially, test databases frequently contain little data, so that everything works well while testing, but performance problems suddenly appear when the query starts running on real-world data and many rows are returned.
 
 As a result, it's usually worth giving thought to limiting the number of results:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#Limit25)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#Limit25)]
 
 At a minimum, your UI could show a message indicating that more rows may exist in the database (and allow retrieving them in some other manner). A full-blown solution would implement *pagination*, where your UI only shows a certain number of rows at a time, and allow users to advance to the next page as needed; see the next section for more details on how to implement this efficiently.
 
 ## Efficient pagination
 
-Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is shown that allows the user to navigate to the next or previous page of the results. A common way to implement pagination with databases is to use the `Skip` and `Take` operators (`OFFSET` and `LIMIT` in SQL); while this is an intuitive implementation, it's also quite inefficient. For pagination that allows moving on page at a time (as opposed to jumping to arbitrary pages), consider using *keyset pagination* instead.
+Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is shown that allows the user to navigate to the next or previous page of the results. A common way to implement pagination with databases is to use the `Skip` and `Take` operators (`OFFSET` and `LIMIT` in SQL); while this is an intuitive implementation, it's also quite inefficient. For pagination that allows moving one page at a time (as opposed to jumping to arbitrary pages), consider using *keyset pagination* instead.
 
-For more information, [eee the documentation page on pagination](xref:core/querying/pagination).
+For more information, [see the documentation page on pagination](xref:core/querying/pagination).
 
 ## Avoid cartesian explosion when loading related entities
 
@@ -106,7 +106,7 @@ In other scenarios, we may not know which related entity we're going to need bef
 
 Consider the following:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#NPlusOne)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#NPlusOne)]
 
 This seemingly innocent piece of code iterates through all the blogs and their posts, printing them out. Turning on EF Core's [statement logging](xref:core/logging-events-diagnostics/index) reveals the following:
 
@@ -138,7 +138,7 @@ What's going on here? Why are all these queries being sent for the simple loops 
 
 Assuming we're going to need all of the blogs' posts, it makes sense to use eager loading here instead. We can use the [Include](xref:core/querying/related-data/eager#eager-loading) operator to perform the loading, but since we only need the Blogs' URLs (and we should only [load what's needed](xref:core/performance/efficient-querying#project-only-properties-you-need)). So we'll use a projection instead:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#EagerlyLoadRelatedAndProject)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#EagerlyLoadRelatedAndProject)]
 
 This will make EF Core fetch all the Blogs - along with their Posts - in a single query. In some cases, it may also be useful to avoid cartesian explosion effects by using [split queries](xref:core/querying/single-split-queries).
 
@@ -151,7 +151,7 @@ Buffering refers to loading all your query results into memory, whereas streamin
 
 Whether a query buffers or streams depends on how it is evaluated:
 
-[!code-csharp[Main](../../../samples/core/Performance/Program.cs#BufferingAndStreaming)]
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#BufferingAndStreaming)]
 
 If your queries return just a few results, then you probably don't have to worry about this. However, if your query might return large numbers of rows, it's worth giving thought to streaming instead of buffering.
 
@@ -163,7 +163,7 @@ If your queries return just a few results, then you probably don't have to worry
 In certain situations, EF will itself buffer the resultset internally, regardless of how you evaluate your query. The two cases where this happens are:
 
 * When a retrying execution strategy is in place. This is done to make sure the same results are returned if the query is retried later.
-* When [split query](xref:core/querying/single-split-queries) is used, the resultsets of all but the last query are buffered - unless MARS is enabled on SQL Server. This is because it is usually impossible to have multiple query resultsets active at the same time.
+* When [split query](xref:core/querying/single-split-queries) is used, the resultsets of all but the last query are buffered - unless MARS (Multiple Active Result Sets) is enabled on SQL Server. This is because it is usually impossible to have multiple query resultsets active at the same time.
 
 Note that this internal buffering occurs in addition to any buffering you cause via LINQ operators. For example, if you use <xref:System.Linq.Enumerable.ToList%2A> on a query and a retrying execution strategy is in place, the resultset is loaded into memory *twice*: once internally by EF, and once by <xref:System.Linq.Enumerable.ToList%2A>.
 
@@ -189,11 +189,11 @@ Here are the results for a benchmark comparing tracking vs. no-tracking behavior
 
 Finally, it is possible to perform updates without the overhead of change tracking, by utilizing a no-tracking query and then attaching the returned instance to the context, specifying which changes are to be made. This transfers the burden of change tracking from EF to the user, and should only be attempted if the change tracking overhead has been shown to be unacceptable via profiling or benchmarking.
 
-## Using raw SQL
+## Using SQL queries
 
 In some cases, more optimized SQL exists for your query, which EF does not generate. This can happen when the SQL construct is an extension specific to your database that's unsupported, or simply because EF does not translate to it yet. In these cases, writing SQL by hand can provide a substantial performance boost, and EF supports several ways to do this.
 
-* Use raw SQL [directly in your query](xref:core/querying/raw-sql), e.g. via <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A>. EF even lets you compose over the raw SQL with regular LINQ queries, allowing you to express only a part of the query in raw SQL. This is a good technique when the raw SQL only needs to be used in a single query in your codebase.
+* Use SQL queries [directly in your query](xref:core/querying/sql-queries), e.g. via <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A>. EF even lets you compose over the SQL with regular LINQ queries, allowing you to express only a part of the query in SQL. This is a good technique when the SQL only needs to be used in a single query in your codebase.
 * Define a [user-defined function](xref:core/querying/database-functions) (UDF), and then call that from your queries. Note that since 5.0, EF allows UDFs to return full resultsets - these are known as table-valued functions (TVFs) - and also allows mapping a `DbSet` to a function, making it look just like just another table.
 * Define a database view and query from it in your queries. Note that unlike functions, views cannot accept parameters.
 
@@ -208,6 +208,9 @@ For more information, see the page on [async programming](xref:core/miscellaneou
 
 > [!WARNING]
 > Avoid mixing synchronous and asynchronous code in the same application - it's very easy to inadvertently trigger subtle thread-pool starvation issues.
+
+> [!WARNING]
+> The async implementation of [Microsoft.Data.SqlClient](https://github.com/dotnet/SqlClient) unfortunately has some known issues (e.g. [#593](https://github.com/dotnet/SqlClient/issues/593), [#601](https://github.com/dotnet/SqlClient/issues/601), and others). If you're seeing unexpected performance problems, try using sync command execution instead, especially when dealing with large text or binary values.
 
 ## Additional resources
 

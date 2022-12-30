@@ -64,6 +64,8 @@ MathF.Truncate(x)     | TRUNC(@x)         | EF Core 6.0
 
 .NET                                                          | SQL                                                        | Added in
 ------------------------------------------------------------- | ---------------------------------------------------------- | --------
+Regex.IsMatch(input, pattern)                                 | RegexMatch(@pattern, @input)                               | EF Core 7.0
+Regex.IsMatch(input, pattern, options)                        | RegexMatch(@input, @pattern, @options)                     | EF Core 7.0
 string.Concat(str0, str1)                                     | @str0 + @str1                                              | EF Core 6.0
 string.Equals(a, b, StringComparison.Ordinal)                 | STRINGEQUALS(@a, @b)                                       | EF Core 6.0
 string.Equals(a, b, StringComparison.OrdinalIgnoreCase)       | STRINGEQUALS(@a, @b, true)                                 | EF Core 6.0

@@ -25,7 +25,7 @@ highlightedContent:
     # Card
     - title: "Persist and retrieve relational data with Entity Framework Core"
       itemType: learn
-      url: /learn/modules/persist-data-ef-core/
+      url: /training/modules/persist-data-ef-core/
     # Card
     - title: "Releases and platforms"
       itemType: whats-new
@@ -41,7 +41,11 @@ highlightedContent:
     # Card
     - title: "API reference browser"
       itemType: reference
-      url: /dotnet/api/?view=efcore-3.1
+      url: /dotnet/api/?view=efcore-6.0&preserve-view=true
+    # Card
+    - title: "Explore other options for .NET Data"
+      itemType: reference
+      url: dotnet-data/index.yml
 
 # Card with summary style
 additionalContent:
@@ -60,6 +64,8 @@ additionalContent:
             text: "ASP.NET Core MVC web app accessing SQL Server with EF Core"
           - url: core/get-started/wpf.md
             text: "WPF .NET Core app accessing SQLite with EF Core"
+          - url: core/get-started/winforms.md
+            text: "Windows Forms .NET Core app accessing SQLite with EF Core"
           - url: core/get-started/xamarin.md
             text: "Xamarin mobile app accessing SQLite with EF Core"
       # Card
@@ -92,7 +98,7 @@ additionalContent:
             text: "Blazor Server"
           - url: core/get-started/wpf.md
             text: "Windows Presentation Foundation (WPF)"
-          - url: ef6/fundamentals/databinding/winforms.md
+          - url: core/get-started/winforms.md
             text: "Windows Forms (WinForms)"
           - url: core/get-started/xamarin.md
             text: "Xamarin"
@@ -176,7 +182,7 @@ additionalContent:
             text: "Migration - custom history table"
           - url: core/managing-schemas/ensure-created.md
             text: "Create and drop APIs"
-          - url: core/managing-schemas/scaffolding.md
+          - url: core/managing-schemas/scaffolding/index.md
             text: "Reverse engineering (scaffolding)"
       # Card
       - title: Save data

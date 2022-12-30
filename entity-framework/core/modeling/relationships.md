@@ -2,7 +2,7 @@
 title: Relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
 author: AndriySvyryd
-ms.date: 11/15/2021
+ms.date: 10/14/2022
 uid: core/modeling/relationships
 ---
 # Relationships
@@ -146,6 +146,9 @@ After the navigation property has been created, you may need to further configur
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
 
+> [!TIP]
+> Non-collection navigations can also be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships#one-to-one) for more information.
+
 > [!NOTE]
 > This call cannot be used to create a navigation property. It is only used to configure a navigation property which has been previously created by defining a relationship or from a convention.
 
@@ -179,7 +182,7 @@ You can use the Data Annotations to configure which property should be used as t
 
 #### Shadow foreign key
 
-You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](xref:core/modeling/shadow-properties) for more information). We recommend explicitly adding the shadow property to the model before using it as a foreign key (as shown below).
+You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](xref:core/modeling/shadow-properties) for more information). The shadow property needs to exist before it can be used, you can explicitly declare it first as shown below.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ShadowForeignKey.cs?name=ShadowForeignKey&highlight=10,16)]
 
@@ -307,7 +310,10 @@ It is common to apply configuration to the join entity type. This action can be 
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=SharedConfiguration)]
 
-[Model seed data](xref:core/modeling/data-seeding) can be provided for the join entity type by using anonymous types. You can examine the model debug view to determine the property names created by convention.
+> [!TIP]
+> If there is no navigation on the other side `WithMany()` can be called without any arguments.
+
+[Model seed data](xref:core/modeling/data-seeding) can be provided for the join entity type by using anonymous types. You can examine the model [debug view](xref:core/modeling/index#debug-view) to determine the property names created by convention.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Seeding)]
 
@@ -320,6 +326,9 @@ Additional data can be stored in the join entity type, but for this it's best to
 EF uses two one-to-many relationships on the join entity type to represent the many-to-many relationship. You can configure these relationships in the `UsingEntity` arguments.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Components)]
+
+> [!NOTE]
+> The `UsingEntity` overloads that don't have a `Action<EntityTypeBuilder> configureJoinEntityType` parameter return an `EntityTypeBuilder` for the join entity type, so the configuration can be chained. Also, starting with EF Core 7.0 there are overloads without a `Type` parameter. These will assume that the type is `Dictionary<string, object>`, which is recommended when you don't plan on using the join entity directly.
 
 > [!NOTE]
 > The ability to configure many-to-many relationships was introduced in EF Core 5.0, for previous version use the following approach.
@@ -335,4 +344,4 @@ You can also represent a many-to-many relationship by just adding the join entit
 
 ## Additional resources
 
-* [EF Core Community Standup session](https://www.youtube.com/watch?v=W1sxepfIMRM&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=32), with a deep dive into Many-to-many and the infrastructure underpinning it.
+* [.NET Data Community Standup session](https://www.youtube.com/watch?v=W1sxepfIMRM&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=32), with a deep dive into Many-to-many and the infrastructure underpinning it.

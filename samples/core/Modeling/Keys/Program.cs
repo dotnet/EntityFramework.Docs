@@ -1,9 +1,8 @@
-namespace EFModeling.Keys
+namespace EFModeling.Keys;
+
+internal class Program
 {
-    internal class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
-        {
-        }
     }
 }

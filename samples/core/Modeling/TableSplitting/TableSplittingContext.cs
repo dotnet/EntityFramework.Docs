@@ -1,43 +1,43 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.TableSplitting
+namespace EFModeling.TableSplitting;
+
+public class TableSplittingContext : DbContext
 {
-    public class TableSplittingContext : DbContext
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<DetailedOrder> DetailedOrders { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFTableSplitting;Trusted_Connection=True");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<DetailedOrder> DetailedOrders { get; set; }
+        #region TableSplitting
+        modelBuilder.Entity<DetailedOrder>(
+            dob =>
+            {
+                dob.ToTable("Orders");
+                dob.Property(o => o.Status).HasColumnName("Status");
+            });
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFTableSplitting;Trusted_Connection=True");
+        modelBuilder.Entity<Order>(
+            ob =>
+            {
+                ob.ToTable("Orders");
+                ob.Property(o => o.Status).HasColumnName("Status");
+                ob.HasOne(o => o.DetailedOrder).WithOne()
+                    .HasForeignKey<DetailedOrder>(o => o.Id);
+                ob.Navigation(o => o.DetailedOrder).IsRequired();
+            });
+        #endregion
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region TableSplitting
-            modelBuilder.Entity<DetailedOrder>(
-                dob =>
-                {
-                    dob.ToTable("Orders");
-                    dob.Property(o => o.Status).HasColumnName("Status");
-                });
+        #region ConcurrencyToken
+        modelBuilder.Entity<Order>()
+            .Property<byte[]>("Version").IsRowVersion().HasColumnName("Version");
 
-            modelBuilder.Entity<Order>(
-                ob =>
-                {
-                    ob.ToTable("Orders");
-                    ob.Property(o => o.Status).HasColumnName("Status");
-                    ob.HasOne(o => o.DetailedOrder).WithOne()
-                        .HasForeignKey<DetailedOrder>(o => o.Id);
-                });
-            #endregion
-
-            #region ConcurrencyToken
-            modelBuilder.Entity<Order>()
-                .Property<byte[]>("Version").IsRowVersion().HasColumnName("Version");
-
-            modelBuilder.Entity<DetailedOrder>()
-                .Property(o => o.Version).IsRowVersion().HasColumnName("Version");
-            #endregion
-        }
+        modelBuilder.Entity<DetailedOrder>()
+            .Property(o => o.Version).IsRowVersion().HasColumnName("Version");
+        #endregion
     }
 }

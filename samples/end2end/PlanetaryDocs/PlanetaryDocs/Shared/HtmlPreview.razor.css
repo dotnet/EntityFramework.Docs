@@ -1,0 +1,18 @@
+﻿.web {
+    padding: 0.5em;
+    height: 60vh;
+    background-color: lightgray;
+    font-size: 0.8em;
+    width: 60vw;
+    overflow: scroll;
+}
+
+.webedit {
+    padding: 0.5em;
+    height: 40vh;
+    background-color: lightgray;
+    font-size: 0.8em;
+    width: 30vw;
+    overflow: scroll;
+}
+

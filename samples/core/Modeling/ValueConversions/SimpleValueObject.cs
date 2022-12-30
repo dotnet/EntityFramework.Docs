@@ -6,74 +6,73 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace EFModeling.ValueConversions
+namespace EFModeling.ValueConversions;
+
+public class SimpleValueObject : Program
 {
-    public class SimpleValueObject : Program
+    public void Run()
     {
-        public void Run()
+        ConsoleWriteLines("Sample showing value conversions for a simple value object...");
+
+        using (var context = new SampleDbContext())
         {
-            ConsoleWriteLines("Sample showing value conversions for a simple value object...");
+            CleanDatabase(context);
 
-            using (var context = new SampleDbContext())
-            {
-                CleanDatabase(context);
+            ConsoleWriteLines("Save a new entity...");
 
-                ConsoleWriteLines("Save a new entity...");
-
-                context.Add(new Order { Price = new Dollars(3.99m) });
-                context.SaveChanges();
-            }
-
-            using (var context = new SampleDbContext())
-            {
-                ConsoleWriteLines("Read the entity back...");
-
-                var entity = context.Set<Order>().Single();
-            }
-
-            ConsoleWriteLines("Sample finished.");
+            context.Add(new Order { Price = new Dollars(3.99m) });
+            context.SaveChanges();
         }
 
-        public class SampleDbContext : DbContext
+        using (var context = new SampleDbContext())
         {
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                #region ConfigureImmutableStructProperty
-                modelBuilder.Entity<Order>()
-                    .Property(e => e.Price)
-                    .HasConversion(
-                        v => v.Amount,
-                        v => new Dollars(v));
-                #endregion
-            }
+            ConsoleWriteLines("Read the entity back...");
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => optionsBuilder
-                    .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
-                    .UseSqlite("DataSource=test.db")
-                    .EnableSensitiveDataLogging();
+            var entity = context.Set<Order>().Single();
         }
 
-        #region SimpleValueObjectModel
-        public class Order
-        {
-            public int Id { get; set; }
-
-            public Dollars Price { get; set; }
-        }
-        #endregion
-
-        #region SimpleValueObject
-        public readonly struct Dollars
-        {
-            public Dollars(decimal amount) 
-                => Amount = amount;
-            
-            public decimal Amount { get; }
-
-            public override string ToString() 
-                => $"${Amount}";
-        }
-        #endregion
+        ConsoleWriteLines("Sample finished.");
     }
+
+    public class SampleDbContext : DbContext
+    {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            #region ConfigureImmutableStructProperty
+            modelBuilder.Entity<Order>()
+                .Property(e => e.Price)
+                .HasConversion(
+                    v => v.Amount,
+                    v => new Dollars(v));
+            #endregion
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            => optionsBuilder
+                .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
+                .UseSqlite("DataSource=test.db")
+                .EnableSensitiveDataLogging();
+    }
+
+    #region SimpleValueObjectModel
+    public class Order
+    {
+        public int Id { get; set; }
+
+        public Dollars Price { get; set; }
+    }
+    #endregion
+
+    #region SimpleValueObject
+    public readonly struct Dollars
+    {
+        public Dollars(decimal amount) 
+            => Amount = amount;
+            
+        public decimal Amount { get; }
+
+        public override string ToString() 
+            => $"${Amount}";
+    }
+    #endregion
 }

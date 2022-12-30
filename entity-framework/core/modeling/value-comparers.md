@@ -36,7 +36,7 @@ Consider byte arrays, which can be arbitrarily large. These could be compared:
 
 By default, EF Core uses the first of these approaches for non-key byte arrays. That is, only references are compared and a change is detected only when an existing byte array is replaced with a new one. This is a pragmatic decision that avoids copying entire arrays and comparing them byte-to-byte when executing <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges%2A>. It means that the common scenario of replacing, say, one image with another is handled in a performant way.
 
-On the other hand, reference equality would not work when byte arrays are used to represent binary keys, since it's very unlikely that an FK property is set to the _same instance_ as a PK property to which it needs to be compared. Therefore, EF Core uses deep comparisons for byte arrays acting as keys; this is unlikely to have a big performance hit since binary keys are usually short.
+On the other hand, reference equality would not work when byte arrays are used to represent binary keys, since it's very unlikely that an FK property is set to the *same instance* as a PK property to which it needs to be compared. Therefore, EF Core uses deep comparisons for byte arrays acting as keys; this is unlikely to have a big performance hit since binary keys are usually short.
 
 Note that the chosen comparison and snapshotting logic must correspond to each other: deep comparison requires deep snapshotting to function correctly.
 

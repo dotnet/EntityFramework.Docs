@@ -45,7 +45,7 @@ Once the data has been added to the model, [migrations](xref:core/managing-schem
 > [!TIP]
 > If you need to apply migrations as part of an automated deployment you can [create a SQL script](xref:core/managing-schemas/migrations/applying#sql-scripts) that can be previewed before execution.
 
-Alternatively, you can use `context.Database.EnsureCreated()` to create a new database containing the seed data, for example for a test database or when using the in-memory provider or any non-relation database. Note that if the database already exists, `EnsureCreated()` will neither update the schema nor seed data in the database. For relational databases you shouldn't call `EnsureCreated()` if you plan to use Migrations.
+Alternatively, you can use `context.Database.EnsureCreated()` to create a new database containing the seed data, for example for a test database or when using the in-memory provider or any non-relational database. Note that if the database already exists, `EnsureCreated()` will neither update the schema nor seed data in the database. For relational databases you shouldn't call `EnsureCreated()` if you plan to use Migrations.
 
 ### Limitations of model seed data
 

@@ -24,11 +24,10 @@ public class AuditingInterceptor : ISaveChangesInterceptor
     {
         _audit = CreateAudit(eventData.Context);
 
-        using (var auditContext = new AuditContext(_connectionString))
-        {
-            auditContext.Add(_audit);
-            await auditContext.SaveChangesAsync();
-        }
+        using var auditContext = new AuditContext(_connectionString);
+
+        auditContext.Add(_audit);
+        await auditContext.SaveChangesAsync();
 
         return result;
     }
@@ -39,11 +38,9 @@ public class AuditingInterceptor : ISaveChangesInterceptor
     {
         _audit = CreateAudit(eventData.Context);
 
-        using (var auditContext = new AuditContext(_connectionString))
-        {
-            auditContext.Add(_audit);
-            auditContext.SaveChanges();
-        }
+        using var auditContext = new AuditContext(_connectionString);
+        auditContext.Add(_audit);
+        auditContext.SaveChanges();
 
         return result;
     }
@@ -52,14 +49,13 @@ public class AuditingInterceptor : ISaveChangesInterceptor
     #region SavedChanges
     public int SavedChanges(SaveChangesCompletedEventData eventData, int result)
     {
-        using (var auditContext = new AuditContext(_connectionString))
-        {
-            auditContext.Attach(_audit);
-            _audit.Succeeded = true;
-            _audit.EndTime = DateTime.UtcNow;
+        using var auditContext = new AuditContext(_connectionString);
 
-            auditContext.SaveChanges();
-        }
+        auditContext.Attach(_audit);
+        _audit.Succeeded = true;
+        _audit.EndTime = DateTime.UtcNow;
+
+        auditContext.SaveChanges();
 
         return result;
     }
@@ -69,14 +65,13 @@ public class AuditingInterceptor : ISaveChangesInterceptor
         int result,
         CancellationToken cancellationToken = default)
     {
-        using (var auditContext = new AuditContext(_connectionString))
-        {
-            auditContext.Attach(_audit);
-            _audit.Succeeded = true;
-            _audit.EndTime = DateTime.UtcNow;
+        using var auditContext = new AuditContext(_connectionString);
 
-            await auditContext.SaveChangesAsync(cancellationToken);
-        }
+        auditContext.Attach(_audit);
+        _audit.Succeeded = true;
+        _audit.EndTime = DateTime.UtcNow;
+
+        await auditContext.SaveChangesAsync(cancellationToken);
 
         return result;
     }
@@ -85,30 +80,28 @@ public class AuditingInterceptor : ISaveChangesInterceptor
     #region SaveChangesFailed
     public void SaveChangesFailed(DbContextErrorEventData eventData)
     {
-        using (var auditContext = new AuditContext(_connectionString))
-        {
-            auditContext.Attach(_audit);
-            _audit.Succeeded = false;
-            _audit.EndTime = DateTime.UtcNow;
-            _audit.ErrorMessage = eventData.Exception.Message;
+        using var auditContext = new AuditContext(_connectionString);
 
-            auditContext.SaveChanges();
-        }
+        auditContext.Attach(_audit);
+        _audit.Succeeded = false;
+        _audit.EndTime = DateTime.UtcNow;
+        _audit.ErrorMessage = eventData.Exception.Message;
+
+        auditContext.SaveChanges();
     }
 
     public async Task SaveChangesFailedAsync(
         DbContextErrorEventData eventData,
         CancellationToken cancellationToken = default)
     {
-        using (var auditContext = new AuditContext(_connectionString))
-        {
-            auditContext.Attach(_audit);
-            _audit.Succeeded = false;
-            _audit.EndTime = DateTime.UtcNow;
-            _audit.ErrorMessage = eventData.Exception.InnerException?.Message;
+        using var auditContext = new AuditContext(_connectionString);
 
-            await auditContext.SaveChangesAsync(cancellationToken);
-        }
+        auditContext.Attach(_audit);
+        _audit.Succeeded = false;
+        _audit.EndTime = DateTime.UtcNow;
+        _audit.ErrorMessage = eventData.Exception.InnerException?.Message;
+
+        await auditContext.SaveChangesAsync(cancellationToken);
     }
     #endregion
 

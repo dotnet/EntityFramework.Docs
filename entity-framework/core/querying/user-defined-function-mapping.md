@@ -167,11 +167,8 @@ And below is the mapping:
 
 [!code-csharp[Main](../../../samples/core/Querying/UserDefinedFunctionMapping/Model.cs#QueryableFunctionConfigurationHasDbFunction)]
 
-> [!CAUTION]
-> Until [issue 23408](https://github.com/dotnet/efcore/issues/23408) is fixed, mapping to an `IQueryable` of entity types overrides the default mapping to a table for the DbSet. If necessary - for example when the entity is not keyless - mapping to the table must be specified explicitly using `ToTable` method.
-
 > [!NOTE]
-> Queryable function must be mapped to a table-valued function and can't use of `HasTranslation`.
+> A queryable function must be mapped to a table-valued function and can't make use of `HasTranslation`.
 
 When the function is mapped, the following query:
 

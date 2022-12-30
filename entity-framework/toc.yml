@@ -1,8 +1,12 @@
+- name: .NET data
+  href: dotnet-data/index.yml
 - name: Entity Framework
   href: index.yml
   items:
   - name: EF Core & EF6
     items:
+    - name: Entity Framework Support Policies
+      href: efcore-and-ef6/support.md
     - name: Compare EF Core & EF6
       href: efcore-and-ef6/index.md
     - name: Port from EF6 to EF Core
@@ -26,12 +30,12 @@
     items:
     - name: Welcome!
       href: core/index.md
-    - name: "What's new in EF Core 6.0"
-      href: /ef/core/what-is-new/ef-core-6.0/whatsnew
-    - name: "Breaking changes in EF Core 6.0"
-      href: /ef/core/what-is-new/ef-core-6.0/breaking-changes
-    - name: "Plan for Entity Framework Core 7.0"
-      href: /ef/core/what-is-new/ef-core-7.0/plan
+    - name: "What's new in EF Core 7.0 (EF7)"
+      href: /ef/core/what-is-new/ef-core-7.0/whatsnew
+    - name: "Breaking changes in EF Core 7.0 (EF7)"
+      href: /ef/core/what-is-new/ef-core-7.0/breaking-changes
+    - name: "The plan for EF Core 8 (EF8)"
+      href: /ef/core/what-is-new/ef-core-8.0/plan
     - name: Getting started
       items:
       - name: EF Core Overview
@@ -49,7 +53,8 @@
         href: /aspnet/core/blazor/blazor-server-ef-core
       - name: WPF .NET Core tutorial
         href: core/get-started/wpf.md
-      #- name: Windows Forms tutorial
+      - name: Windows Forms tutorial
+        href: core/get-started/winforms.md
       - name: Xamarin tutorial
         href: core/get-started/xamarin.md
 
@@ -59,7 +64,15 @@
         href: core/what-is-new/index.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
-      - name: EF Core 7.0
+      - name: EF Core 8 (EF8)
+        items:
+          - name: High-level plan
+            href: core/what-is-new/ef-core-8.0/plan.md
+          - name: "What's new?"
+            href: core/what-is-new/ef-core-8.0/whatsnew.md
+          - name: Breaking changes
+            href: core/what-is-new/ef-core-8.0/breaking-changes.md
+      - name: EF Core 7.0 (EF7)
         items:
           - name: High-level plan
             href: core/what-is-new/ef-core-7.0/plan.md
@@ -127,8 +140,6 @@
         href: core/modeling/keys.md
       - name: Generated values
         href: core/modeling/generated-properties.md
-      - name: Concurrency tokens
-        href: core/modeling/concurrency.md
       - name: Shadow and indexer properties
         href: core/modeling/shadow-properties.md
       - name: Relationships
@@ -149,7 +160,7 @@
         href: core/modeling/data-seeding.md
       - name: Entity type constructors
         href: core/modeling/constructors.md
-      - name: Table splitting
+      - name: Advanced table mapping
         href: core/modeling/table-splitting.md
       - name: Owned entity types
         href: core/modeling/owned-entities.md
@@ -188,7 +199,11 @@
       - name: Create and drop APIs
         href: core/managing-schemas/ensure-created.md
       - name: Reverse engineering (scaffolding)
-        href: core/managing-schemas/scaffolding.md
+        items:
+        - name: Overview
+          href: core/managing-schemas/scaffolding/index.md
+        - name: Custom templates
+          href: core/managing-schemas/scaffolding/templates.md
 
     - name: Query data
       items:
@@ -216,8 +231,8 @@
         href: core/querying/complex-query-operators.md
       - name: Pagination
         href: core/querying/pagination.md
-      - name: Raw SQL queries
-        href: core/querying/raw-sql.md
+      - name: SQL queries
+        href: core/querying/sql-queries.md
       - name: Database functions
         href: core/querying/database-functions.md
       - name: User-defined function mapping
@@ -288,16 +303,14 @@
 
     - name: Testing
       items:
-      - name: Testing code that uses EF Core
+      - name: Introduction to testing
         href: core/testing/index.md
-      - name: EF Core testing sample
-        href: core/testing/testing-sample.md
-      - name: Sharing databases between tests
-        href: core/testing/sharing-databases.md
-      - name: Test with SQLite
-        href: core/testing/sqlite.md
-      - name: Test with InMemory
-        href: core/testing/in-memory.md
+      - name: Choosing a testing strategy
+        href: core/testing/choosing-a-testing-strategy.md
+      - name: Testing against your production database system
+        href: core/testing/testing-with-the-database.md
+      - name: Testing without your production database system
+        href: core/testing/testing-without-the-database.md
 
     - name: Performance
       items:
@@ -329,6 +342,10 @@
         href: core/miscellaneous/connection-resiliency.md
       - name: Connection strings
         href: core/miscellaneous/connection-strings.md
+      - name: Context pooling
+        href: core/miscellaneous/context-pooling.md
+      - name: Support multi-tenant databases
+        href: core/miscellaneous/multitenancy.md
 
     - name: Database providers
       items:
@@ -353,6 +370,8 @@
           href: core/providers/sql-server/spatial.md
         - name: Specify Azure SQL Database options
           href: core/providers/sql-server/azure-sql-database.md
+        - name: Miscellaneous
+          href: core/providers/sql-server/misc.md
       - name: SQLite
         items:
         - name: Overview
@@ -376,6 +395,8 @@
           href: core/providers/cosmos/limitations.md
         - name: Function mappings
           href: core/providers/cosmos/functions.md
+        - name: End-to-end sample
+          href: core/providers/cosmos/planetary-docs-sample.md
       - name: InMemory (for testing)
         href: core/providers/in-memory/index.md
       - name: Write a database provider
@@ -400,7 +421,7 @@
         href: core/cli/services.md
 
     - name: EF Core API reference >>
-      href: /dotnet/api/?view=efcore-5.0
+      href: /dotnet/api/?view=efcore-7.0&preserve-view=true
 
   - name: Entity Framework 6
     items:
@@ -709,4 +730,4 @@
           - name: Russian
             href: ef6/resources/licenses/ef6/rus.md
     - name: EF6 API reference >>
-      href: /dotnet/api/?view=entity-framework-6.2.0
+      href: /dotnet/api/?view=entity-framework-6.2.0&preserve-view=true

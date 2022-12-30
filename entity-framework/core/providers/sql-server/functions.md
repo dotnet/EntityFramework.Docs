@@ -9,6 +9,23 @@ uid: core/providers/sql-server/functions
 
 This page shows which .NET members are translated into which SQL functions when using the SQL Server provider.
 
+## Aggregate functions
+
+.NET                                                                    | SQL                              | Added in
+----------------------------------------------------------------------- | -------------------------------- | --------
+EF.Functions.StandardDeviationSample(group.Select(x => x.Property))     | STDEV(Property)                  | EF Core 7.0
+EF.Functions.StandardDeviationPopulation(group.Select(x => x.Property)) | STDEVP(Property)                 | EF Core 7.0
+EF.Functions.VarianceSample(group.Select(x => x.Property))              | VAR(Property)                    | EF Core 7.0
+EF.Functions.VariancePopulation(group.Select(x => x.Property))          | VARP(Property)                   | EF Core 7.0
+group.Average(x => x.Property)                                          | AVG(Property)
+group.Count()                                                           | COUNT(*)
+group.LongCount()                                                       | COUNT_BIG(*)
+group.Max(x => x.Property)                                              | MAX(Property)
+group.Min(x => x.Property)                                              | MIN(Property)
+group.Sum(x => x.Property)                                              | SUM(Property)
+string.Concat(group.Select(x => x.Property))                            | STRING_AGG(Property, N'')        | EF Core 7.0
+string.Join(separator, group.Select(x => x.Property))                   | STRING_AGG(Property, @separator) | EF Core 7.0
+
 ## Binary functions
 
 .NET                         | SQL                           | Added in
@@ -93,6 +110,7 @@ dateTimeOffset.Month                                        | DATEPART(month, @d
 dateTimeOffset.Second                                       | DATEPART(second, @dateTimeOffset)
 dateTimeOffset.TimeOfDay                                    | CONVERT(time, @dateTimeOffset)
 dateTimeOffset.Year                                         | DATEPART(year, @dateTimeOffset)
+EF.Functions.AtTimeZone(dateTime, timeZone)                 | @dateTime AT TIME ZONE @timeZone                     | EF Core 7.0
 EF.Functions.DateDiffDay(start, end)                        | DATEDIFF(day, @start, @end)
 EF.Functions.DateDiffHour(start, end)                       | DATEDIFF(hour, @start, @end)
 EF.Functions.DateDiffMicrosecond(start, end)                | DATEDIFF(microsecond, @start, @end)
@@ -182,6 +200,7 @@ stringValue.Contains(value)                                             | @strin
 stringValue.EndsWith(value)                                             | @stringValue LIKE N'%' + @value
 stringValue.FirstOrDefault()                                            | SUBSTRING(@stringValue, 1, 1)                                          | EF Core 5.0
 stringValue.IndexOf(value)                                              | CHARINDEX(@value, @stringValue) - 1
+stringValue.IndexOf(value, startIndex)                                  | CHARINDEX(@value, @stringValue, @startIndex) - 1                       | EF Core 7.0
 stringValue.LastOrDefault()                                             | SUBSTRING(@stringValue, LEN(@stringValue), 1)                          | EF Core 5.0
 stringValue.Length                                                      | LEN(@stringValue)
 stringValue.Replace(@oldValue, @newValue)                               | REPLACE(@stringValue, @oldValue, @newValue)

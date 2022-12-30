@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 5.0 - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 5.0
 author: bricelam
-ms.date: 10/08/2021
+ms.date: 09/21/2022
 uid: core/what-is-new/ef-core-5.0/breaking-changes
 ---
 
@@ -81,7 +81,15 @@ We marked this method as obsolete to guide users to a more accurate overload - <
 
 #### Mitigations
 
-Use the following code to get the column name for a specific table:
+If the entity type is only ever mapped to a single table, and never to views, functions, or multiple tables, the <xref:Microsoft.EntityFrameworkCore.RelationalPropertyExtensions.GetColumnBaseName(Microsoft.EntityFrameworkCore.Metadata.IReadOnlyProperty)> can be used in EF Core 5.0 and 6.0 to obtain the table name. For example:
+
+```csharp
+var columnName = property.GetColumnBaseName();
+```
+
+In EF Core 7.0, this can again be replaced with the new `GetColumnName`, which behaves as the original did for simple, single table only mappings.
+
+If the entity type may be mapped to views, functions, or multiple tables, then a <xref:Microsoft.EntityFrameworkCore.Metadata.StoreObjectIdentifier> must be obtained to identity the table, view, or function. This can be then be used to get the column name for that store object. For example:
 
 ```csharp
 var columnName = property.GetColumnName(StoreObjectIdentifier.Table("Users", null)));
@@ -499,7 +507,7 @@ It was possible to change the discriminator value before calling `SaveChanges`
 
 #### New behavior
 
-An exception will be throws in the above case.
+An exception will be thrown in the above case.
 
 #### Why
 
@@ -531,7 +539,7 @@ Provider-specific methods have been updated to throw an exception in their metho
 
 #### Why
 
-Provider-specific methods map to a database function. The computation done by the mapped database function can't always be replicated on the client side in LINQ. It may cause the result from the server to differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database functions, they don't need to be evaluated on client side. As InMemory provider is a different *database*, these methods aren't available for this provider. Trying to execute them for InMemory provider, or any other provider that doesn't translate these methods, throws an exception.
+Provider-specific methods map to a database function. The computation done by the mapped database function can't always be replicated on the client side in LINQ. It may cause the result from the server to differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database functions, they don't need to be evaluated on client side. As InMemory provider is a different _database_, these methods aren't available for this provider. Trying to execute them for InMemory provider, or any other provider that doesn't translate these methods, throws an exception.
 
 #### Mitigations
 

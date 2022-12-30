@@ -13,6 +13,7 @@ Backing fields allow EF to read and/or write to a field rather than a property. 
 
 By convention, the following fields will be discovered as backing fields for a given property (listed in precedence order).
 
+* `<camel-cased property name>`
 * `_<camel-cased property name>`
 * `_<property name>`
 * `m_<camel-cased property name>`
@@ -22,9 +23,9 @@ In the following sample, the `Url` property is configured to have `_url` as its 
 
 [!code-csharp[Main](../../../samples/core/Modeling/BackingFields/BackingField.cs#Sample)]
 
-Note that backing fields are only discovered for properties that are included in the model. For more information on which properties are included in the model, see [Including & Excluding Properties](xref:core/modeling/entity-properties).
+Note that backing fields are only discovered for properties that are included in the model. For more information on which properties are included in the model, see [Including & Excluding Properties](xref:core/modeling/entity-properties#included-and-excluded-properties).
 
-You can also configure backing fields by using a Data Annotation (available in EFCore 5.0) or the Fluent API, e.g. if the field name doesn't correspond to the above conventions:
+You can also configure backing fields by using a [Data Annotations](xref:core/modeling/index#use-data-annotations-to-configure-a-model) (available in EFCore 5.0) or the [Fluent API](xref:core/modeling/index#use-fluent-api-to-configure-a-model), e.g. if the field name doesn't correspond to the above conventions:
 
 ### [Data Annotations](#tab/data-annotations)
 

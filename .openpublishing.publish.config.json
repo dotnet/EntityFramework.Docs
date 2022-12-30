@@ -6,12 +6,12 @@
       "build_source_folder": "entity-framework",
       "build_output_subfolder": "ef",
       "locale": "en-us",
-      "open_to_public_contributors": true,
       "xref_query_tags": [
         "/dotnet",
         "/ef",
         "/aspnet"
       ],
+      "open_to_public_contributors": true,
       "type_mapping": {
         "Conceptual": "Content",
         "ManagedReference": "Content",
@@ -22,7 +22,8 @@
     }
   ],
   "notification_subscribers": [
-    "avickers@microsoft.com"
+    "avickers@microsoft.com",
+    "riande@microsoft.com"
   ],
   "sync_notification_subscribers": [],
   "branches_to_filter": [],
@@ -30,18 +31,17 @@
   "skip_source_output_uploading": false,
   "need_preview_pull_request": true,
   "need_pr_comments": false,
-  "contribution_branch_mappings": {},
   "dependent_repositories": [
     {
       "path_to_root": "_themes",
       "url": "https://github.com/Microsoft/templates.docs.msft",
-      "branch": "master",
+      "branch": "main",
       "branch_mapping": {}
     },
     {
       "path_to_root": "_themes.pdf",
       "url": "https://github.com/Microsoft/templates.docs.msft.pdf",
-      "branch": "master",
+      "branch": "main",
       "branch_mapping": {}
     }
   ],
@@ -61,8 +61,7 @@
       "template_folder": "_themes.pdf"
     }
   },
-  "need_generate_intellisense": false,
-  "docs_build_engine": {
-    "name": "docfx_v3"
-  }
+  "docs_build_engine": {},
+  "contribution_branch_mappings": {},
+  "need_generate_intellisense": false
 }

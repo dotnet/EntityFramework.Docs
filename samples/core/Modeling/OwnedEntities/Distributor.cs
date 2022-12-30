@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace EFModeling.OwnedEntities
+namespace EFModeling.OwnedEntities;
+
+#region Distributor
+public class Distributor
 {
-    #region Distributor
-    public class Distributor
-    {
-        public int Id { get; set; }
-        public ICollection<StreetAddress> ShippingCenters { get; set; }
-    }
-    #endregion
+    public int Id { get; set; }
+    public ICollection<StreetAddress> ShippingCenters { get; set; }
 }
+#endregion

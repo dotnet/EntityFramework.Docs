@@ -29,18 +29,6 @@ The bottom line is that automatic migrations initially look good in team environ
 
 Automatic migrations allows you to have your database schema updated to match the current model without the need to generate code files (code-based migrations). Automatic migrations would work very well in a team environment if you only ever used them and never generated any code-based migrations. The problem is that automatic migrations are limited and don’t handle a number of operations – property/column renames, moving data to another table, etc. To handle these scenarios you end up generating code-based migrations (and editing the scaffolded code) that are mixed in between changes that are handled by automatic migrations. This makes it near on impossible to merge changes when two developers check in migrations.
 
-## Screencasts
-
-If you'd rather watch a screencast than read this article, the following two videos cover the same content as this article.
-
-### Video One: "Migrations - Under the Hood"
-
-[This screencast](https://channel9.msdn.com/blogs/ef/migrations-under-the-hood) covers how migrations tracks and uses information about the model to detect model changes.
-
-### Video Two: "Migrations - Team Environments"
-
-Building on the concepts from the previous video, [this screencast](https://channel9.msdn.com/blogs/ef/migrations-team-environments) covers the issues that arise in a team environment and how to solve them.
-
 ## Understanding how migrations works
 
 The key to successfully using migrations in a team environment is a basic understanding how migrations tracks and uses information about the model to detect model changes.

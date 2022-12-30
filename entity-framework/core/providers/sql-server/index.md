@@ -33,6 +33,9 @@ Install-Package Microsoft.EntityFrameworkCore.SqlServer
 >[!TIP]
 > The Microsoft.Data.SqlClient package ships more frequently than the EF Core provider. If you would like to take advantage of new features and bug fixes, you can add a direct package reference to the latest version of Microsoft.Data.SqlClient.
 
+> [!WARNING]
+> The async implementation of [Microsoft.Data.SqlClient](https://github.com/dotnet/SqlClient) unfortunately has some known issues (e.g. [#593](https://github.com/dotnet/SqlClient/issues/593), [#601](https://github.com/dotnet/SqlClient/issues/601), and others). If you're seeing unexpected performance problems, try using sync command execution instead, especially when dealing with large text or binary values.
+
 ## Supported Database Engines
 
 * Microsoft SQL Server (2012 onwards)
