@@ -37,7 +37,7 @@ These methods are provided as a convenience. Using a "range" method has the same
 
 Many methods, including `Add`, `Update`, `Attach`, and `Remove`, have implementations on both <xref:Microsoft.EntityFrameworkCore.DbSet%601> and <xref:Microsoft.EntityFrameworkCore.DbContext>. These methods have _exactly the same behavior_ for normal entity types. This is because the CLR type of the entity is mapped onto one and only one entity type in the EF Core model. Therefore, the CLR type fully defines where the entity fits in the model, and so the DbSet to use can be determined implicitly.
 
-The exception to this rule is when using shared-type entity types, which were introduced in EF Core 5.0, primarily for many-to-many join entities. When using a shared-type entity type, a DbSet must first be created for the EF Core model type that is being used. Methods like `Add`, `Update`, `Attach`, and `Remove` can then be used on the DbSet without any ambiguity as to which EF Core model type is being used.
+The exception to this rule is when using shared-type entity types, which are primarily used for many-to-many join entities. When using a shared-type entity type, a DbSet must first be created for the EF Core model type that is being used. Methods like `Add`, `Update`, `Attach`, and `Remove` can then be used on the DbSet without any ambiguity as to which EF Core model type is being used.
 
 Shared-type entity types are used by default for the join entities in many-to-many relationships. A shared-type entity type can also be explicitly configured for use in a many-to-many relationship. For example, the code below configures `Dictionary<string, int>` as a join entity type:
 
@@ -127,7 +127,7 @@ EF Core creates temporary key values when tracking new entities that will have r
 
 ### Accessing temporary values
 
-Starting with EF Core 3.0, temporary values are stored in the change tracker and not set onto entity instances directly. However, these temporary values _are_ exposed when using the various mechanisms for [Accessing Tracked Entities](xref:core/change-tracking/entity-entries). For example, the following code accesses a temporary value using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.CurrentValues%2A?displayProperty=nameWithType>:
+Temporary values are stored in the change tracker and not set onto entity instances directly. However, these temporary values _are_ exposed when using the various mechanisms for [Accessing Tracked Entities](xref:core/change-tracking/entity-entries). For example, the following code accesses a temporary value using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry.CurrentValues%2A?displayProperty=nameWithType>:
 
 <!--
         using var context = new BlogsContext();
@@ -385,12 +385,9 @@ This makes the CLR default null, instead of 0, which means 0 will now be inserte
 
 ### Using nullable backing fields
 
-> [!NOTE]
-> This nullable backing field pattern is supported by EF Core 5.0 and later.
-
 The problem with making the property nullable that it may not be conceptually nullable in the domain model. Forcing the property to be nullable therefore compromises the model.
 
-Starting with EF Core 5.0, the property can be left non-nullable, with only the backing field being nullable. For example:
+The property can be left non-nullable, with only the backing field being nullable. For example:
 
 <!--
 public class Foo3

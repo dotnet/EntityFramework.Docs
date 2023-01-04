@@ -626,7 +626,7 @@ In contrast to tracking queries, no-tracking queries do not perform identity res
 
 No-tracking queries do not perform identity resolution because doing so impacts the performance of streaming a large number of entities from a query. This is because identity resolution requires keeping track of each instance returned so that it can be used instead of later creating a duplicate.
 
-Starting with EF Core 5.0, no-tracking queries can be forced to perform identity resolution by using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution%60%601(System.Linq.IQueryable{%60%600})>. The query will then keep track of returned instances (without tracking them in the normal way) and ensure no duplicates are created in the query results.
+No-tracking queries can be forced to perform identity resolution by using <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution%60%601(System.Linq.IQueryable{%60%600})>. The query will then keep track of returned instances (without tracking them in the normal way) and ensure no duplicates are created in the query results.
 
 ## Overriding object equality
 

@@ -32,9 +32,6 @@ The above creates a *virtual* computed column, whose value is computed every tim
 
 [!code-csharp[Main](../../../samples/core/Modeling/GeneratedProperties/FluentAPI/ComputedColumn.cs?name=StoredComputedColumn&highlight=3)]
 
-> [!NOTE]
-> Support for creating stored computed columns was added in EF Core 5.0.
-
 ## Primary keys
 
 By convention, non-composite primary keys of type short, int, long, or Guid are set up to have values generated for inserted entities if a value isn't provided by the application. Your database provider typically takes care of the necessary configuration; for example, a numeric primary key in SQL Server is automatically set up to be an IDENTITY column.

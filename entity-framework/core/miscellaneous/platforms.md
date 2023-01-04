@@ -2,77 +2,53 @@
 title: Supported .NET implementations - EF Core
 description: Information on supported platforms across Entity Framework Core versions
 author: bricelam
-ms.date: 12/14/2021
+ms.date: 12/13/2022
 uid: core/miscellaneous/platforms
 ---
 
 # .NET implementations supported by EF Core
 
-We want EF Core to be available to developers on all modern .NET implementations, and we're still working towards that goal. While EF Core's support on .NET Core is covered by automated testing and many applications known to be using it successfully, Mono, Xamarin and UWP have some issues.
+We want EF Core to be available to developers on all modern .NET implementations. EF Core's support on .NET for Windows, Linux, and macOS is covered by automated testing and many applications are known to be using it successfully, other platforms that leverage trimming and ahead-of-time (AoT) compilation like iOS, Wasm, and Unity have some limitations that we are working to address.
 
-## Overview
+Several older .NET implementations are no longer supported. See the sections below for more guidance.
 
-The following table provides guidance for each .NET implementation:
+EF Core           | .NET & .NET Core | .NET Standard | .NET Framework
+----------------- | ---------------- | ------------- | --------------
+**7.0**           | 6.0
+**6.0**           | 6.0
+~~**5.0**~~ (EOL) | 5.0              | 2.1
+~~**3.1**~~ (EOL) | 3.1              | 2.0           | 4.7.2
 
-EF Core                       | 3.1        | 5.0    | 6.0
------------------------------ | ---------- | ------ | ---
-.NET & .NET Core              | 3.1        | 5.0    | 6.0
-.NET Standard<sup>(1)</sup>   | 2.0        | 2.1    |
-.NET Framework<sup>(2)</sup>  | 4.7.2      |        |
-Mono                          | 5.4        | 6.4    |
-Xamarin.iOS<sup>(3)</sup>     | 10.14      | 12.16  | (use .NET 6)
-Xamarin.Mac<sup>(3)</sup>     | 3.8        | 5.16   | (use .NET 6)
-Xamarin.Android<sup>(3)</sup> | 8.0        | 10.0   | (use .NET 6)
-UWP<sup>(4)</sup>             | 10.0.16299 |        | (use [Windows App SDK](/windows/apps/windows-app-sdk/))
-Unity<sup>(5)</sup>           | 2018.1     | 2021.2 | TBD
-Tizen<sup>(6)</sup>           | 4.0        | 6.0    | (use .NET 6)
+## .NET
 
-<sup>(1)</sup> .NET Standard has been superseded by a new approach to uniformity. For more information, see [The future of .NET Standard](https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/).
+EF Core is a .NET library. Both EF Core versions 6.0 and 7.0 target .NET version 6.0. In general, we target the latest [LTS release](/platform/support/policy/dotnet-core) of .NET. This enables you to upgrade to a newer, STS release of EF Core to take advantage of the latest features without having to upgrade your entire app. There may be exceptions to this, however, as runtime features sometimes get added that require us to depend on the latest version of .NET.
 
-<sup>(2)</sup> See the [.NET Framework](#net-framework) section below.
+.NET supports multiple platforms including Windows, Linux, macOS, iOS, Android, and Wasm. For more details on which version are supported, see the [.NET Supported OS Policy](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
-<sup>(3)</sup> There are issues and known limitations with Xamarin which may prevent some applications developed using EF Core from working correctly. Check the list of [active issues](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-xamarin) for workarounds.
+## .NET Core
 
-<sup>(4)</sup> Install the [.NET Core UWP 6.x package](https://www.nuget.org/packages/Microsoft.NETCore.UniversalWindowsPlatform/). See the [Universal Windows Platform](#universal-windows-platform) section of this article.
+The last release of .NET Core was version 3.1. It was renamed to just .NET in version 5.0. Note, version 4.0 was skipped to avoid confusion with .NET Framework--the original, Windows-only implementation. .NET continues to support multiple platforms including Windows, Linux, and macOS.
 
-<sup>(5)</sup> There are issues and known limitations with Unity. Check the list of [active issues](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-unity).
+## .NET Standard
 
-<sup>(6)</sup> EF Core compatibility with Tizen is largely unknown. If you've tried it, we'd love your feedback.
+.NET Standard has been superseded by a new approach to uniformity. For more information, see [The future of .NET Standard](https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/). The last version of EF Core that supported .NET Standard was version 5.0.
 
 ## .NET Framework
 
-Applications that target .NET Framework may need changes to work with .NET Standard libraries:
+The last version of EF Core that supported .NET Framework was version 3.1. We recommend using .NET instead which continues to support WinForms and WPF applications. The [.NET Upgrade Assistant](/dotnet/core/porting/upgrade-assistant-overview) can help you with the migration process.
 
-Edit the project file and make sure the following entry appears in the initial property group:
+## Xamarin
 
-```xml
-<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-```
-
-For test projects, also make sure the following entry is present:
-
-```xml
-<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-```
-
-If you want to use an older version of Visual Studio, make sure you [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads) to work with .NET Standard 2.0 libraries.
-
-We also recommend migrating from NuGet packages.config to PackageReference if possible. Add the following property to your project file:
-
-```xml
-<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-```
+The last version of EF Core that supported Xamarin was version 5.0. We recommend using .NET and [.NET MAUI](/dotnet/maui/) instead. .NET supports multiple platforms including Android, iOS, macOS, and Windows. .NET MAUI is an evolution of the Xamarin.Forms UI framework.
 
 ## Universal Windows Platform
 
-Earlier versions of EF Core and .NET UWP had numerous compatibility issues, especially with applications compiled with the .NET Native toolchain. The new .NET UWP version adds support for .NET Standard 2.0 and contains .NET Native 2.0, which fixes most of the compatibility issues previously reported. EF Core 2.0.1 has been tested more thoroughly with UWP but testing is not automated.
+The last version of EF Core that supported UWP was version 3.1. We recommend using .NET and the [Windows App SDK](/windows/apps/windows-app-sdk/) instead.
 
-When using EF Core on UWP:
+## Unity
 
-* To optimize query performance, avoid anonymous types in LINQ queries. Deploying a UWP application to the app store requires an application to be compiled with .NET Native. Queries with anonymous types have worse performance on .NET Native.
+Unity currently only supports .NET Standard libraries. The last version of EF Core that supported .NET Standard was version 5.0. Unity is currently working towards an implementation that uses .NET. For more information, see [Unity and .NET, what’s next?](https://blog.unity.com/technology/unity-and-net-whats-next)
 
-* To optimize `SaveChanges()` performance, use [ChangeTrackingStrategy.ChangingAndChangedNotifications](/dotnet/api/microsoft.entityframeworkcore.changetrackingstrategy) and implement [INotifyPropertyChanged](https://msdn.microsoft.com/library/system.componentmodel.inotifypropertychanged.aspx), [INotifyPropertyChanging](https://msdn.microsoft.com/library/system.componentmodel.inotifypropertychanging.aspx), and [INotifyCollectionChanged](https://msdn.microsoft.com/library/system.collections.specialized.inotifycollectionchanged.aspx) in your entity types.
+## Tizen
 
-## Report issues
-
-For any combination that doesn't work as expected, we encourage creating new issues on the [EF Core issue tracker](https://github.com/dotnet/efcore/issues/new). For Xamarin-specific issues use the issue tracker for [Xamarin.Android](https://github.com/xamarin/xamarin-android/issues/new) or [Xamarin.iOS](https://github.com/xamarin/xamarin-macios/issues/new).
+Tizen is an open source operating system that runs on various Samsung devices including phones, tablets, watches, TVs, cameras, and appliances. [Tizen .NET](https://developer.samsung.com/tizen/About-Tizen.NET/Tizen.NET.html) enables you to develop apps for it using .NET and .NET MAUI. EF Core compatibility with Tizen is largely unknown. If you've tried it, we'd love your feedback.

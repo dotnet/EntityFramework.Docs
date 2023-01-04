@@ -50,7 +50,7 @@ It's also possible to use one DbContext type. This currently requires moving the
 > [!TIP]
 > You can view this article's [sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Schemas/TwoProjectMigrations).
 
-Starting in EF Core 5.0, you can pass arguments into the app from the tools. This can enable a more streamlined workflow that avoids having to make manual changes to the project when running the tools.
+You can pass arguments into the app from the tools. This can enable a more streamlined workflow that avoids having to make manual changes to the project when running the tools.
 
 Here's one pattern that works well when using a [Generic Host](/dotnet/core/extensions/generic-host).
 
@@ -76,6 +76,3 @@ Add-Migration MyMigration -Args "--provider Sqlite"
 ```
 
 ***
-
-> [!NOTE]
-> The ability to specify additional arguments for the app was added in EF Core 5.0. If you're using an older version, specify configuration values with environment variables instead.

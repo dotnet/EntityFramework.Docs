@@ -89,9 +89,6 @@ It's worth noting that unlike cartesian explosion, the data duplication caused b
 
 ## Split queries
 
-> [!NOTE]
-> This feature was introduced in EF Core 5.0, where it only worked when using `Include`. EF Core 6.0 added support for split queries when loading related data in projections, without `Include`.
-
 To work around the performance issues described above, EF allows you to specify that a given LINQ query should be *split* into multiple SQL queries. Instead of JOINs, split queries generate an additional SQL query for each included collection navigation:
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Program.cs?name=AsSplitQuery&highlight=5)]

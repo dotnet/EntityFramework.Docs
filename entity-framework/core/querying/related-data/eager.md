@@ -48,9 +48,6 @@ You may want to include multiple related entities for one of the entities that i
 
 ## Filtered include
 
-> [!NOTE]
-> This feature was introduced in EF Core 5.0.
-
 When applying Include to load related data, you can add certain enumerable operations to the included collection navigation, which allows for filtering and sorting of the results.
 
 Supported operations are: `Where`, `OrderBy`, `OrderByDescending`, `ThenBy`, `ThenByDescending`, `Skip`, and `Take`.
@@ -141,9 +138,6 @@ Contents of `School` navigation of all People who are Students can be eagerly lo
   ```
 
 ## Model configuration for auto-including navigations
-
-> [!NOTE]
-> This feature was introduced in EF Core 6.0.
 
 You can configure a navigation in the model to be included every time the entity is loaded from the database using `AutoInclude` method. It has same effect as specifying `Include` with the navigation in every query where the entity type is returned in the results. Following example shows how to configure a navigation to be automatically included.
 

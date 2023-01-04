@@ -139,9 +139,6 @@ If you only have one navigation property then there are parameterless overloads 
 
 ### Configuring navigation properties
 
-> [!NOTE]
-> This feature was introduced in EF Core 5.0.
-
 After the navigation property has been created, you may need to further configure it.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
@@ -262,9 +259,6 @@ With this configuration the columns corresponding to `ShippingAddress` will be m
 > [!NOTE]
 > If you are using [non-nullable reference types](/dotnet/csharp/nullable-references) calling `IsRequired` is not necessary.
 
-> [!NOTE]
-> The ability to configure whether the dependent is required was introduced in EF Core 5.0.
-
 ### Many-to-many
 
 Many-to-many relationships require a collection navigation property on both sides. They will be discovered by convention like other types of relationships.
@@ -329,9 +323,6 @@ EF uses two one-to-many relationships on the join entity type to represent the m
 
 > [!NOTE]
 > The `UsingEntity` overloads that don't have a `Action<EntityTypeBuilder> configureJoinEntityType` parameter return an `EntityTypeBuilder` for the join entity type, so the configuration can be chained. Also, starting with EF Core 7.0 there are overloads without a `Type` parameter. These will assume that the type is `Dictionary<string, object>`, which is recommended when you don't plan on using the join entity directly.
-
-> [!NOTE]
-> The ability to configure many-to-many relationships was introduced in EF Core 5.0, for previous version use the following approach.
 
 #### Indirect many-to-many relationships
 

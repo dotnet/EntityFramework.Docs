@@ -357,9 +357,6 @@ Post {Id: 2} Unchanged
 
 ## Change-tracking proxies
 
-> [!NOTE]
-> Change-tracking proxies were introduced in EF Core 5.0.
-
 EF Core can dynamically generate proxy types that implement <xref:System.ComponentModel.INotifyPropertyChanging> and <xref:System.ComponentModel.INotifyPropertyChanged>. This requires installing the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) NuGet package, and enabling change-tracking proxies with <xref:Microsoft.EntityFrameworkCore.ProxiesExtensions.UseChangeTrackingProxies%2A> For example:
 
 <!--

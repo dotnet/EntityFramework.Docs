@@ -8,7 +8,7 @@ uid: core/modeling/keyless-entity-types
 # Keyless Entity Types
 
 > [!NOTE]
-> This feature was added under the name of query types. It was later renamed to keyless entity types. The `[Keyless]` Data Annotation became available in EFCore 5.0.
+> This feature was added under the name of query types. It was later renamed to keyless entity types.
 
 In addition to regular entity types, an EF Core model can contain _keyless entity types_, which can be used to carry out database queries against data that doesn't contain key values.
 
@@ -57,9 +57,6 @@ Some of the main usage scenarios for keyless entity types are:
 ## Mapping to database objects
 
 Mapping a keyless entity type to a database object is achieved using the `ToTable` or `ToView` fluent API. From the perspective of EF Core, the database object specified in this method is a _view_, meaning that it is treated as a read-only query source and cannot be the target of update, insert or delete operations. However, this does not mean that the database object is actually required to be a database view. It can alternatively be a database table that will be treated as read-only. Conversely, for regular entity types, EF Core assumes that a database object specified in the `ToTable` method can be treated as a _table_, meaning that it can be used as a query source but also targeted by update, delete and insert operations. In fact, you can specify the name of a database view in `ToTable` and everything should work fine as long as the view is configured to be updatable on the database.
-
-> [!NOTE]
-> Until EF Core 5.0 `ToView` assumed that the object already exists in the database and it won't be created by migrations. In EF Core 5.0 and later use `modelBuilder.Entity<ViewType>().ToTable("ViewNameInDatabase", t => t.ExcludeFromMigrations())` to exclude the object from migrations, see [ToView() is treated differently by migrations](xref:core/what-is-new/ef-core-5.0/breaking-changes#toview).
 
 ## Example
 

@@ -2,13 +2,13 @@
 title: Tools & Extensions - EF Core
 description: External tools and extensions for Entity Framework Core
 author: ErikEJ
-ms.date: 07/22/2022
+ms.date: 12/13/2022
 uid: core/extensions/index
 ---
 
 # EF Core Tools & Extensions
 
-These tools and extensions provide additional functionality for Entity Framework Core 3 and later.
+These tools and extensions provide additional functionality for Entity Framework Core.
 
 > [!IMPORTANT]
 > Extensions are built by a variety of sources and aren't maintained as part of the Entity Framework Core project. When considering a third party extension, be sure to evaluate its quality, licensing, compatibility, support, etc. to ensure it meets your requirements. In particular, an extension built for an older version of EF Core may need updating before it will work with the latest versions.
@@ -67,13 +67,13 @@ Second level caching is a query cache. The results of EF commands will be stored
 
 ### EntityFrameworkCore.Scaffolding.Handlebars
 
-Allows customization of classes reverse engineered from an existing database using the Entity Framework Core tool chain with Handlebars templates. For EF Core: 2, 3, 5.
+Allows customization of classes reverse engineered from an existing database using the Entity Framework Core tool chain with Handlebars templates. For EF Core: 2, 3, 5, 6.
 
 [GitHub repository](https://github.com/TrackableEntities/EntityFrameworkCore.Scaffolding.Handlebars) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Scaffolding.Handlebars)
 
 ### NeinLinq.EntityFrameworkCore
 
-NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core: 2, 3, 5.
+NeinLinq extends LINQ providers such as Entity Framework to enable reusing functions, rewriting queries, and building dynamic queries using translatable predicates and selectors. For EF Core: 2, 3, 5, 6, 7.
 
 [GitHub repository](https://github.com/axelheer/nein-linq) | [NuGet](https://www.nuget.org/packages/NeinLinq.EntityFrameworkCore)
 
@@ -85,7 +85,7 @@ A plugin for Microsoft.EntityFrameworkCore to support repository, unit of work p
 
 ### EFCore.BulkExtensions
 
-EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 2, 3, 5.
+EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 2, 3, 5, 6.
 
 [GitHub repository](https://github.com/borisdj/EFCore.BulkExtensions) | [NuGet](https://www.nuget.org/packages/EFCore.BulkExtensions)
 
@@ -103,13 +103,13 @@ Revival of [Index] attribute (with extension for model building). For EF Core: 2
 
 ### Verify.EntityFramework
 
-Extends [Verify](https://github.com/VerifyTests/Verify) to allow snapshot testing with Entity Framework. For EF Core: 3, 5.
+Extends [Verify](https://github.com/VerifyTests/Verify) to allow snapshot testing with Entity Framework. For EF Core: 3, 5, 6, 7.
 
 [GitHub repository](https://github.com/VerifyTests/Verify.EntityFramework) | [NuGet](https://www.nuget.org/packages/Verify.EntityFramework)
 
 ### LocalDb
 
-Provides a wrapper around [SQL Server Express LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb) to simplify running tests against Entity Framework. For EF Core: 3, 5.
+Provides a wrapper around [SQL Server Express LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb) to simplify running tests against Entity Framework. For EF Core: 3, 5, 6, 7.
 
 [GitHub repository](https://github.com/SimonCropp/LocalDb) | [NuGet](https://www.nuget.org/packages/EfLocalDb)
 
@@ -163,7 +163,7 @@ Extends your DbContext with high-performance bulk operations: BulkSaveChanges, B
 
 ### Expressionify
 
-Add support for calling extension methods in LINQ lambdas. For EF Core: 3, 5.
+Add support for calling extension methods in LINQ lambdas. For EF Core: 3, 5, 6.
 
 [GitHub repository](https://github.com/ClaveConsulting/Expressionify) | [NuGet](https://www.nuget.org/packages/Clave.Expressionify)
 
@@ -219,7 +219,7 @@ Adds hierarchyid support to the SQL Server EF Core provider. For EF Core: 3, 5, 
 
 ### linq2db.EntityFrameworkCore
 
-Alternative translator of LINQ queries to SQL expressions. For EF Core: 2, 3, 5, 6.
+Alternative translator of LINQ queries to SQL expressions. For EF Core: 2, 3, 5, 6, 7.
 
 Includes support for advanced SQL features such as CTEs, bulk copy, table hints, windowed functions, temporary tables, and database-side create/update/delete operations.
 
@@ -239,7 +239,7 @@ Extends EF Core to resolve connection strings from App.config. For EF Core: 3, 5
 
 ### Detached Mapper
 
-A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff). For EF Core: 3, 5.
+A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff). For EF Core: 3, 5, 6.
 
 [GitHub repository](https://github.com/leonardoporro/Detached-Mapper) | [NuGet](https://www.nuget.org/packages/Detached.Mappers.EntityFramework)
 
@@ -277,7 +277,7 @@ Use the `DateOnly` and `TimeOnly` .NET types with the EF Core SQL Server provide
 
 When using Entity Framework Core all database exceptions are wrapped in DbUpdateException. EntityFramework.Exceptions handles all the database-specific details to find which constraint was violated and allows you to use typed exceptions such as `UniqueConstraintException`, `CannotInsertNullException`, `MaxLengthExceededException`, `NumericOverflowException`, `ReferenceConstraintException` when your query violates database constraints.
 
-Supports SQL Server, Postgres, MySql, SQLite and Oracle. For EF Core: 3, 5.
+Supports SQL Server, Postgres, MySql, SQLite and Oracle. For EF Core: 3, 5, 6.
 
 [GitHub Repository](https://github.com/Giorgi/EntityFramework.Exceptions)
 
@@ -314,7 +314,7 @@ Fluent API to declare triggers in `Context.OnModelCreating` which are later buil
 
 ### EntityCloner.Microsoft.EntityFrameworkCore
 
-Cloning entities using EF Core configuration. You can use the `Include` method to specify related data to be cloned. For EF Core: 5, 6.
+Cloning entities using EF Core configuration. You can use the `Include` method to specify related data to be cloned. For EF Core: 5, 6, 7.
 
 [GitHub repository](https://github.com/HenkKin/EntityCloner.Microsoft.EntityFrameworkCore) | [NuGet](https://www.nuget.org/packages/EntityCloner.Microsoft.EntityFrameworkCore)
 

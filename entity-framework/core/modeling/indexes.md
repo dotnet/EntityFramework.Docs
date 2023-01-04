@@ -15,9 +15,6 @@ You can specify an index over a column as follows:
 
 [!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/DataAnnotations/Index.cs?name=Index&highlight=1)]
 
-> [!NOTE]
-> Configuring indexes via Data Annotations has been introduced in EF Core 5.0.
-
 ## [Fluent API](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/Index.cs?name=Index&highlight=4)]

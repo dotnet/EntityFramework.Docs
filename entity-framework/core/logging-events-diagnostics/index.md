@@ -26,9 +26,6 @@ The table below provides a quick reference for the differences between the mecha
 
 ## Simple logging
 
-> [!NOTE]
-> This feature was introduced in EF Core 5.0.
-
 EF Core logs can be accessed from any type of application through the use of <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.LogTo%2A> when [configuring a DbContext instance](xref:core/dbcontext-configuration/index). This configuration is commonly done in an override of <xref:Microsoft.EntityFrameworkCore.DbContext.OnConfiguring%2A?displayProperty=nameWithType>. For example:
 
 <!--
@@ -49,9 +46,6 @@ See [Using Microsoft.Extensions.Logging in EF Core](xref:core/logging-events-dia
 
 ## Events
 
-> [!NOTE]
-> Additional events were introduced in EF Core 5.0.
-
 EF Core exposes [.NET events](/dotnet/standard/events/) to act as callbacks when certain things happen in the EF Core code. Events are simpler than interceptors and allow more flexible registration. However, they are sync only and so cannot perform non-blocking async I/O.
 
 Events are registered per DbContext instance and this registration can be done at any time. Use a [diagnostic listener](xref:core/logging-events-diagnostics/diagnostic-listeners) to get the same information but for all DbContext instances in the process.
@@ -59,9 +53,6 @@ Events are registered per DbContext instance and this registration can be done a
 See [.NET Events in EF Core](xref:core/logging-events-diagnostics/events) for more information.
 
 ## Interception
-
-> [!NOTE]
-> Additional interceptors were introduced in EF Core 5.0.
 
 EF Core interceptors enable interception, modification, and/or suppression of EF Core operations. This includes low-level database operations such as executing a command, as well as higher-level operations, such as calls to SaveChanges.
 

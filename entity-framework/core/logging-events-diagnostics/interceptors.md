@@ -52,7 +52,6 @@ Every interceptor instance must implement one or more interface derived from <xr
 
 > [!NOTE]
 > Database interception is only available for relational database providers.
-> Savepoint support was introduced in EF Core 5.0.
 
 Low-level database interception is split into the three interfaces shown in the following table.
 
@@ -389,9 +388,6 @@ Free beer for unicorns
 Notice from the log output that the application continues to use the cached message until the timeout expires, at which point the database is queried again for any new message.
 
 ## SaveChanges interception
-
-> [!NOTE]
-> SaveChanges interception was introduced in EF Core 5.0.
 
 > [!TIP]
 > You can [download the SaveChanges interceptor sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/SaveChangesInterception) from GitHub.

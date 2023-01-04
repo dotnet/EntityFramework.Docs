@@ -51,7 +51,7 @@ dotnet ef migrations add InitialCreate --output-dir Your/Directory
 ```
 
 > [!NOTE]
-> In EF Core 5.0, you can also change the namespace independently of the directory using `--namespace`.
+> You can also change the namespace independently of the directory using `--namespace`.
 
 #### [Visual Studio](#tab/vs)
 
@@ -60,7 +60,7 @@ Add-Migration InitialCreate -OutputDir Your\Directory
 ```
 
 > [!NOTE]
-> In EF Core 5.0, you can also change the namespace independently of the directory using `-Namespace`.
+> You can also change the namespace independently of the directory using `-Namespace`.
 
 ***
 
@@ -200,9 +200,6 @@ dotnet ef migrations list
 ```
 
 ### [Visual Studio](#tab/vs)
-
-> [!NOTE]
-> This command was introduced in EF Core 5.0.
 
 ```powershell
 Get-Migration

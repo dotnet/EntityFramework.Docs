@@ -41,31 +41,31 @@ The SQLite database engine does not support a number of schema operations that a
 
 A rebuild will be attempted in order to perform certain operations. Rebuilds are only possible for database artifacts that are part of your EF Core model. If a database artifact isn't part of the model--for example, if it was created manually inside a migration--then a `NotSupportedException` is still thrown.
 
-| Operation            | Supported?  | Requires version |
-|:---------------------|:------------|:-----------------|
-| AddCheckConstraint   | ✔ (rebuild) | 5.0              |
-| AddColumn            | ✔           |                  |
-| AddForeignKey        | ✔ (rebuild) | 5.0              |
-| AddPrimaryKey        | ✔ (rebuild) | 5.0              |
-| AddUniqueConstraint  | ✔ (rebuild) | 5.0              |
-| AlterColumn          | ✔ (rebuild) | 5.0              |
-| CreateIndex          | ✔           |                  |
-| CreateTable          | ✔           |                  |
-| DropCheckConstraint  | ✔ (rebuild) | 5.0              |
-| DropColumn           | ✔ (rebuild) | 5.0              |
-| DropForeignKey       | ✔ (rebuild) | 5.0              |
-| DropIndex            | ✔           |                  |
-| DropPrimaryKey       | ✔ (rebuild) | 5.0              |
-| DropTable            | ✔           |                  |
-| DropUniqueConstraint | ✔ (rebuild) | 5.0              |
-| RenameColumn         | ✔           |                  |
-| RenameIndex          | ✔ (rebuild) |                  |
-| RenameTable          | ✔           |                  |
-| EnsureSchema         | ✔ (no-op)   |                  |
-| DropSchema           | ✔ (no-op)   |                  |
-| Insert               | ✔           |                  |
-| Update               | ✔           |                  |
-| Delete               | ✔           |                  |
+Operation            | Supported?
+---------------------|:----------
+AddCheckConstraint   | ✔ (rebuild)
+AddColumn            | ✔
+AddForeignKey        | ✔ (rebuild)
+AddPrimaryKey        | ✔ (rebuild)
+AddUniqueConstraint  | ✔ (rebuild)
+AlterColumn          | ✔ (rebuild)
+CreateIndex          | ✔
+CreateTable          | ✔
+DropCheckConstraint  | ✔ (rebuild)
+DropColumn           | ✔ (rebuild)
+DropForeignKey       | ✔ (rebuild)
+DropIndex            | ✔
+DropPrimaryKey       | ✔ (rebuild)
+DropTable            | ✔
+DropUniqueConstraint | ✔ (rebuild)
+RenameColumn         | ✔
+RenameIndex          | ✔ (rebuild)
+RenameTable          | ✔
+EnsureSchema         | ✔ (no-op)
+DropSchema           | ✔ (no-op)
+Insert               | ✔
+Update               | ✔
+Delete               | ✔
 
 ### Migrations limitations workaround
 
@@ -83,7 +83,7 @@ If you know the last migration applied to a database, you can generate a script 
 dotnet ef migrations script CurrentMigration
 ```
 
-Otherwise, we recommend using `dotnet ef database update` to apply migrations. Starting in EF Core 5.0, you can specify the database file when running the command.
+Otherwise, we recommend using `dotnet ef database update` to apply migrations. You can specify the database file when running the command.
 
 ```dotnetcli
 dotnet ef database update --connection "Data Source=My.db"
