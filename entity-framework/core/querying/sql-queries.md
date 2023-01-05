@@ -140,15 +140,15 @@ You can also compose LINQ operators over your SQL query. However, since your SQL
 
 <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> can be used with any scalar type supported by your database provider. If you'd like to use a type not supported by your database provider, you can use [pre-convention configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration) to define a value conversion for it.
 
-<xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQueryRaw> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> does for entity types.
+<xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQueryRaw%2A> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> does for entity types.
 
 ## Executing non-querying SQL
 
-In some scenarios, it may be necessary to execute SQL which does not return any data, typically for modifying data in the database or calling a stored procedure which doesn't return any result sets. This can be done via <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql>:
+In some scenarios, it may be necessary to execute SQL which does not return any data, typically for modifying data in the database or calling a stored procedure which doesn't return any result sets. This can be done via <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql%2A>:
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#ExecuteSql)]
 
-This executes the provided SQL and returns the number of rows modified. <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql> protects against SQL injection by using safe parameterization, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A>, and <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRaw%2A> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> does for queries.
+This executes the provided SQL and returns the number of rows modified. <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSql%2A> protects against SQL injection by using safe parameterization, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A>, and <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRaw%2A> allows for dynamic construction of SQL queries, just like <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> does for queries.
 
 > [!NOTE]
 >
