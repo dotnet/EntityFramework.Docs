@@ -130,7 +130,7 @@ The following example uses a SQL query that selects from a Table-Valued Function
 > [!NOTE]
 > This feature was introduced in EF Core 7.0.
 
-While <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> is useful for querying entities defined in your model, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery> allows you to easily query for scalar, non-entity types via SQL, without needing to drop down to lower-level data access APIs. For example, the following query fetches all the IDs from the `Blogs` table:
+While <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSql%2A> is useful for querying entities defined in your model, <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.SqlQuery%2A> allows you to easily query for scalar, non-entity types via SQL, without needing to drop down to lower-level data access APIs. For example, the following query fetches all the IDs from the `Blogs` table:
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#SqlQuery)]
 
