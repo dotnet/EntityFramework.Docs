@@ -153,7 +153,7 @@ Triggers for EF Core. Respond to changes in your DbContext before and after they
 
 Extends your DbContext with features such as: Include Filter, Auditing, Caching, Query Future, Batch Delete, Batch Update, and more. For EF Core: 2, 3, 5.
 
-[GitHub repository](https://github.com/zzzprojects/EntityFramework-Plus) | [NuGet](https://www.nuget.org/packages/Z.EntityFramework.Plus.EFCore)
+[Website](https://entityframework-plus.net/) | [GitHub repository](https://github.com/zzzprojects/EntityFramework-Plus) | [NuGet](https://www.nuget.org/packages/Z.EntityFramework.Plus.EFCore)
 
 ### Entity Framework Extensions
 
@@ -353,6 +353,12 @@ For EF Core: 6, 7.
 A source generator that can generate strongly-typed-id classes automatically for entities. For EF Core: 7.
 
 [GitHub repository](https://github.com/yangzhongke/LessCode.EFCore.StronglyTypedId)
+
+### Microsoft.EntityFrameworkCore.DynamicLinq
+
+The Dynamic LINQ library let you execute query with dynamic string and provide some utilities methods such as ParseLambda, Parse, and CreateClass.
+
+[Website](https://dynamic-linq.net/) | [GitHub repository](https://github.com/zzzprojects/System.Linq.Dynamic.Core) | [NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.DynamicLinq)
 
 ## API Integrations
 
