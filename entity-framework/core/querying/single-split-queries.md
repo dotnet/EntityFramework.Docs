@@ -1,31 +1,98 @@
 ---
 title: Single vs. Split Queries - EF Core
-description: Translating query into single and split queries in SQL with Entity Framework Core
-author: smitpatel
-ms.date: 10/03/2019
+description: Translating LINQ queries into single and split SQL queries with Entity Framework Core
+author: roji
+ms.date: 09/01/2023
 uid: core/querying/single-split-queries
 ---
-# Split queries
+# Single vs. Split Queries
 
-## Single queries
+## Performance issues with single queries
 
-In relational databases, all related entities are loaded by introducing JOINs in single query.
+When working against relational databases, EF loads related entities by introducing JOINs into a single query. While JOINs are quite standard when using SQL, they can create significant performance issues if used improperly. This page describes these performance issues, and shows an alternative way to load related entities which works around them.
 
-```sql
-SELECT [b].[BlogId], [b].[OwnerId], [b].[Rating], [b].[Url], [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title]
-FROM [Blogs] AS [b]
-LEFT JOIN [Posts] AS [p] ON [b].[BlogId] = [p].[BlogId]
-ORDER BY [b].[BlogId], [p].[PostId]
+### Cartesian explosion
+
+Let's examine the following LINQ query and its translated SQL equivalent:
+
+```c#
+var blogs = ctx.Blogs
+    .Include(b => b.Posts)
+    .Include(b => b.Contributors)
+    .ToList();
 ```
 
-If a typical blog has multiple related posts, rows for these posts will duplicate the blog's information. This duplication leads to the so-called "cartesian explosion" problem. As more one-to-many relationships are loaded, the amount of duplicated data may grow and adversely affect the performance of your application.
+```sql
+SELECT [b].[Id], [b].[Name], [p].[Id], [p].[BlogId], [p].[Title], [c].[Id], [c].[BlogId], [c].[FirstName], [c].[LastName]
+FROM [Blogs] AS [b]
+LEFT JOIN [Posts] AS [p] ON [b].[Id] = [p].[BlogId]
+LEFT JOIN [Contributors] AS [c] ON [b].[Id] = [c].[BlogId]
+ORDER BY [b].[Id], [p].[Id]
+```
+
+In this example, since both `Posts` and `Contributors` are are collection navigations of `Blog` - they're at the same level - relational databases return a *cross product*: each row from `Posts` is joined with each row from `Contributors`. This means that if a given blog has 10 posts and 10 contributors, the database returns 100 rows for that single blog. This phenomenon - sometimes called *cartesian explosion* - can cause huge amounts of data to unintentionally get transferred to the client, especially as more sibling JOINs are added to the query; this can be a major performance issue in database applications.
+
+Note that cartesian explosion does not occur when the two JOINs aren't at the same level:
+
+```c#
+var blogs = ctx.Blogs
+    .Include(b => b.Posts)
+    .ThenInclude(b => b.Comments)
+    .ToList();
+```
+
+```sql
+SELECT [b].[Id], [b].[Name], [t].[Id], [t].[BlogId], [t].[Title], [t].[Id0], [t].[Content], [t].[PostId]
+FROM [Blogs] AS [b]
+LEFT JOIN [Posts] AS [p] ON [b].[Id] = [p].[BlogId]
+LEFT JOIN [Comment] AS [c] ON [p].[Id] = [c].[PostId]
+ORDER BY [b].[Id], [t].[Id]
+```
+
+Note that in this query, `Comments` is a collection navigation of `Post`, unlike `Contributors` in the previous query, which was a collection navigation of `Blog`. In this case, a single row is returned for each comment that a blog has (through its posts), and a cross product does not occur.
+
+### Data duplication
+
+JOINs can have create another type of performance issue. Let's examine the following query, which only loads a single collection navigation:
+
+```c#
+var blogs = ctx.Blogs
+    .Include(b => b.Posts)
+    .ToList();
+```
+
+```sql
+SELECT [b].[Id], [b].[Name], [b].[HugeColumn], [p].[Id], [p].[BlogId], [p].[Title]
+FROM [Blogs] AS [b]
+LEFT JOIN [Posts] AS [p] ON [b].[Id] = [p].[BlogId]
+ORDER BY [b].[Id]
+```
+
+Examining at the projected columns, each row returned by this query contains properties from both the `Blogs` and `Posts` tables; this means that the blog properties are duplicated for each post that the blog has. While this is usually normal and causes no issues, if the `Blogs` table happens to have a very big column (e.g. binary data, or a huge text), that column would get duplicated and sent back to the client multiple times. This can significantly increase network traffic and adversely affect your application's performance.
+
+If you don't actually need the huge column, it's easy to simply not querying for it:
+
+```c#
+var blogs = ctx.Blogs
+    .Select(b => new
+    {
+        b.Id,
+        b.Name,
+        b.Posts
+    })
+    .ToList();
+```
+
+By using a projection to explicitly choose which columns you want, you can omit big columns and improve performance; note that this is a good regardless of data duplication, so consider doing it even when not loading a collection navigation. However, this this projects the blog to an anonymous type, the blog isn't tracked by EF and changes to it can't be saved back as usual.
+
+It's worth noting that unlike cartesian explosion, the data duplication caused by JOINs isn't typically significant, as the duplicated data size is negligible; this really is something to worry on mostly if you have big column in your principal table.
 
 ## Split queries
 
 > [!NOTE]
 > This feature was introduced in EF Core 5.0, where it only worked when using `Include`. EF Core 6.0 added support for split queries when loading related data in projections, without `Include`.
 
-EF allows you to specify that a given LINQ query should be *split* into multiple SQL queries. Instead of JOINs, split queries generate an additional SQL query for each included collection navigation:
+To work around the performance issues described above, EF allows you to specify that a given LINQ query should be *split* into multiple SQL queries. Instead of JOINs, split queries generate an additional SQL query for each included collection navigation:
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Program.cs?name=AsSplitQuery&highlight=5)]
 
@@ -38,7 +105,7 @@ ORDER BY [b].[BlogId]
 
 SELECT [p].[PostId], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Rating], [p].[Title], [b].[BlogId]
 FROM [Blogs] AS [b]
-INNER JOIN [Post] AS [p] ON [b].[BlogId] = [p].[BlogId]
+INNER JOIN [Posts] AS [p] ON [b].[BlogId] = [p].[BlogId]
 ORDER BY [b].[BlogId]
 ```
 
