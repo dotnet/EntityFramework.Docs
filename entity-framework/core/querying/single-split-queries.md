@@ -2,7 +2,7 @@
 title: Single vs. Split Queries - EF Core
 description: Translating LINQ queries into single and split SQL queries with Entity Framework Core
 author: roji
-ms.date: 09/01/2023
+ms.date: 1/9/2023
 uid: core/querying/single-split-queries
 ---
 # Single vs. Split Queries
@@ -49,7 +49,7 @@ LEFT JOIN [Comment] AS [c] ON [p].[Id] = [c].[PostId]
 ORDER BY [b].[Id], [t].[Id]
 ```
 
-Note that in this query, `Comments` is a collection navigation of `Post`, unlike `Contributors` in the previous query, which was a collection navigation of `Blog`. In this case, a single row is returned for each comment that a blog has (through its posts), and a cross product does not occur.
+In this query, `Comments` is a collection navigation of `Post`, unlike `Contributors` in the previous query, which was a collection navigation of `Blog`. In this case, a single row is returned for each comment that a blog has (through its posts), and a cross product does not occur.
 
 ### Data duplication
 
@@ -70,7 +70,7 @@ ORDER BY [b].[Id]
 
 Examining at the projected columns, each row returned by this query contains properties from both the `Blogs` and `Posts` tables; this means that the blog properties are duplicated for each post that the blog has. While this is usually normal and causes no issues, if the `Blogs` table happens to have a very big column (e.g. binary data, or a huge text), that column would get duplicated and sent back to the client multiple times. This can significantly increase network traffic and adversely affect your application's performance.
 
-If you don't actually need the huge column, it's easy to simply not querying for it:
+If you don't actually need the huge column, it's easy to simply not query for it:
 
 ```c#
 var blogs = ctx.Blogs
@@ -83,9 +83,9 @@ var blogs = ctx.Blogs
     .ToList();
 ```
 
-By using a projection to explicitly choose which columns you want, you can omit big columns and improve performance; note that this is a good regardless of data duplication, so consider doing it even when not loading a collection navigation. However, this this projects the blog to an anonymous type, the blog isn't tracked by EF and changes to it can't be saved back as usual.
+By using a projection to explicitly choose which columns you want, you can omit big columns and improve performance; note that this is a good idea regardless of data duplication, so consider doing it even when not loading a collection navigation. However, since this projects the blog to an anonymous type, the blog isn't tracked by EF and changes to it can't be saved back as usual.
 
-It's worth noting that unlike cartesian explosion, the data duplication caused by JOINs isn't typically significant, as the duplicated data size is negligible; this really is something to worry on mostly if you have big column in your principal table.
+It's worth noting that unlike cartesian explosion, the data duplication caused by JOINs isn't typically significant, as the duplicated data size is negligible; this typically is something to worry about only if you have big columns in your principal table.
 
 ## Split queries
 
