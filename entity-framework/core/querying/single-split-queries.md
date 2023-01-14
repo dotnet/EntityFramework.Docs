@@ -37,7 +37,7 @@ Note that cartesian explosion does not occur when the two JOINs aren't at the sa
 ```c#
 var blogs = ctx.Blogs
     .Include(b => b.Posts)
-    .ThenInclude(b => b.Comments)
+    .ThenInclude(p => p.Comments)
     .ToList();
 ```
 
