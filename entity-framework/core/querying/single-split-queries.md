@@ -17,8 +17,8 @@ Let's examine the following LINQ query and its translated SQL equivalent:
 
 ```c#
 var blogs = ctx.Blogs
-    .Include(blog => blog.Posts)
-    .Include(blog => blog.Contributors)
+    .Include(b => b.Posts)
+    .Include(b => b.Contributors)
     .ToList();
 ```
 
@@ -36,8 +36,8 @@ Note that cartesian explosion does not occur when the two JOINs aren't at the sa
 
 ```c#
 var blogs = ctx.Blogs
-    .Include(blog => blog.Posts)
-    .ThenInclude(post => post.Comments)
+    .Include(b => b.Posts)
+    .ThenInclude(p => p.Comments)
     .ToList();
 ```
 
@@ -57,7 +57,7 @@ JOINs can have create another type of performance issue. Let's examine the follo
 
 ```c#
 var blogs = ctx.Blogs
-    .Include(blog => blog.Posts)
+    .Include(b => b.Posts)
     .ToList();
 ```
 
@@ -74,11 +74,11 @@ If you don't actually need the huge column, it's easy to simply not query for it
 
 ```c#
 var blogs = ctx.Blogs
-    .Select(blog => new
+    .Select(b => new
     {
-        blog.Id,
-        blog.Name,
-        blog.Posts
+        b.Id,
+        b.Name,
+        b.Posts
     })
     .ToList();
 ```
