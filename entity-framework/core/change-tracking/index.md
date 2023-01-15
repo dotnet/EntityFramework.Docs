@@ -29,7 +29,7 @@ Entity instances become tracked when they are:
 Entity instances are no longer tracked when:
 
 - The DbContext is disposed
-- The change tracker is cleared (EF Core 5.0 and later)
+- The change tracker is cleared
 - The entities are explicitly detached
 
 DbContext is designed to represent a short-lived unit-of-work, as described in [DbContext Initialization and Configuration](xref:core/dbcontext-configuration/index). This means that disposing the DbContext is _the normal way_ to stop tracking entities. In other words, the lifetime of a DbContext should be:

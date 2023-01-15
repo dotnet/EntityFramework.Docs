@@ -789,7 +789,7 @@ Cascade deletes, as well as deleting orphans, can be forced at any time by calli
 
 ## Many-to-many relationships
 
-Many-to-many relationships in EF Core are implemented using a join entity. Each side of the many-to-many relationship is related to this join entity with a one-to-many relationship. Before EF Core 5.0, this join entity had to explicitly defined and mapped. Starting with EF Core 5.0, it can be created implicitly and hidden. However, in both cases the underlying behavior is the same. We will look at this underlying behavior first to understand how tracking of many-to-many relationships works.
+Many-to-many relationships in EF Core are implemented using a join entity. Each side of the many-to-many relationship is related to this join entity with a one-to-many relationship. This join entity can be explicitly defined and mapped, or it can be created implicitly and hidden. In both cases the underlying behavior is the same. We will look at this underlying behavior first to understand how tracking of many-to-many relationships works.
 
 ### How many-to-many relationships work
 
@@ -873,10 +873,7 @@ This results in exactly the same change to FKs and navigations as in the previou
 
 ### Skip navigations
 
-> [!NOTE]
-> Skip navigations were introduced in EF Core 5.0.
-
-Manipulating the join table manually can be cumbersome. Starting with EF Core 5.0, many-to-many relationships can be manipulated directly using special collection navigations that "skip over" the join entity. For example, two skip navigations can be added to the model above; one from Post to Tags, and the other from Tag to Posts:
+Manipulating the join table manually can be cumbersome. Many-to-many relationships can be manipulated directly using special collection navigations that "skip over" the join entity. For example, two skip navigations can be added to the model above; one from Post to Tags, and the other from Tag to Posts:
 
 <!--
     public class Post

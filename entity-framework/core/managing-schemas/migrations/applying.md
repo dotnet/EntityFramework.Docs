@@ -161,9 +161,6 @@ For more information on applying migrations via the command-line tools, see the 
 
 ## Bundles
 
-> [!NOTE]
-> This feature was introduced in EF Core 6.0.
-
 Migration bundles are single-file executables that can be used to apply migrations to a database. They address some of the shortcomings of the SQL script and command-line tools:
 
 * Executing SQL scripts requires additional tools.

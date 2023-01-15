@@ -2328,7 +2328,7 @@ The following sections show some examples of using these new interception capabi
 > [!TIP]
 > The code shown here comes from [SimpleMaterializationSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/SimpleMaterializationSample.cs).
 
-The new [`IMaterializationInterceptor`](https://github.com/dotnet/efcore/blob/main/src/EFCore/Diagnostics/IMaterializationInterceptor.cs) supports interception before and after an entity instance is created, and before and after properties of that instance are initialized. The interceptor can change or replace the entity instance at each point. This allows:
+The new <xref:Microsoft.EntityFrameworkCore.Diagnostics.IMaterializationInterceptor> supports interception before and after an entity instance is created, and before and after properties of that instance are initialized. The interceptor can change or replace the entity instance at each point. This allows:
 
 - Setting unmapped properties or calling methods needed for validation, computed values, or flags.
 - Using a factory to create instances.
@@ -2558,7 +2558,7 @@ This interface is implemented by the entity types of interest:
 -->
 [!code-csharp[CustomerIHasIntKey](../../../../samples/core/Miscellaneous/NewInEFCore7/QueryInterceptionSample.cs?name=CustomerIHasIntKey)]
 
-We then need an interceptor that implements [`IQueryExpressionInterceptor`](https://github.com/dotnet/efcore/blob/main/src/EFCore/Diagnostics/IQueryExpressionInterceptor.cs):
+We then need an interceptor that implements <xref:Microsoft.EntityFrameworkCore.Diagnostics.IQueryExpressionInterceptor>
 
 <!--
     public class KeyOrderingExpressionInterceptor : IQueryExpressionInterceptor
@@ -2655,7 +2655,7 @@ In this case the `ThenBy` is simply added to the query. Yes, it may need to be d
 
 EF Core supports the [optimistic concurrency pattern](xref:core/saving/concurrency) by checking that the number of rows actually affected by an update or delete is the same as the number of rows expected to be affected. This is often coupled with a concurrency token; that is, a column value that will only match its expected value if the row has not been updated since the expected value was read.
 
-EF signals a violation of optimistic concurrency by throwing a <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException>. In EF7, [`ISaveChangesInterceptor`](https://github.com/dotnet/efcore/blob/main/src/EFCore/Diagnostics/ISaveChangesInterceptor.cs) has new methods `ThrowingConcurrencyException` and `ThrowingConcurrencyExceptionAsync` that are called before the `DbUpdateConcurrencyException` is thrown. These interception points allow the exception to be suppressed, possibly coupled with async database changes to resolve the violation.
+EF signals a violation of optimistic concurrency by throwing a <xref:Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException>. In EF7, <xref:Microsoft.EntityFrameworkCore.Diagnostics.ISaveChangesInterceptor> has new methods `ThrowingConcurrencyException` and `ThrowingConcurrencyExceptionAsync` that are called before the `DbUpdateConcurrencyException` is thrown. These interception points allow the exception to be suppressed, possibly coupled with async database changes to resolve the violation.
 
 For example, if two requests attempt to delete the same entity at almost the same time, then the second delete may fail because the row in the database no longer exists. This may be fine--the end result is that the entity has been deleted anyway. The following interceptor demonstrates how this can be done:
 
@@ -2690,7 +2690,7 @@ There are several things worth noting about this interceptor:
 
 - Both the synchronous and asynchronous interception methods are implemented. This is important if the application may call either `SaveChanges` or `SaveChangesAsync`. However, if all application code is async, then only `ThrowingConcurrencyExceptionAsync` needs to be implemented. Likewise, if the application never uses asynchronous database methods, then only `ThrowingConcurrencyException` needs to be implemented. This is generally true for all interceptors with sync and async methods. (It might be worthwhile implementing the method your application does not use to throw, just in case some sync/async code creeps in.)
 - The interceptor has access to <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry> objects for the entities being saved. In this case, this is used to check whether or not the concurrency violation is happening for a delete operation.
-- If the application is using a relational database provider, then the [`ConcurrencyExceptionEventData`](https://github.com/dotnet/efcore/blob/main/src/EFCore/Diagnostics/ConcurrencyExceptionEventData.cs) object can be cast to a [`RelationalConcurrencyExceptionEventData`](https://github.com/dotnet/efcore/blob/main/src/EFCore.Relational/Diagnostics/RelationalConcurrencyExceptionEventData.cs) object. This provides additional, relational-specific information about the database operation being performed. In this case, the relational command text is printed to the console.
+- If the application is using a relational database provider, then the <xref:Microsoft.EntityFrameworkCore.Diagnostics.ConcurrencyExceptionEventData> object can be cast to a <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalConcurrencyExceptionEventData> object. This provides additional, relational-specific information about the database operation being performed. In this case, the relational command text is printed to the console.
 - Returning `InterceptionResult.Suppress()` tells EF Core to suppress the action it was about to take--in this case, throwing the `DbUpdateConcurrencyException`. This ability to _change the behavior of EF Core_, rather than just observing what EF Core is doing, is one of the most powerful features of interceptors.
 
 ### Lazy initialization of a connection string
@@ -3153,10 +3153,10 @@ GROUP BY [c].[Owner]
 
 SQL Server translations have been implemented for the following statistical functions:
 
-- [EF.Functions.StandardDeviationSample()](https://github.com/dotnet/efcore/blob/2cfc7c3b9020daf9d2e28d404a78814e69941421/src/EFCore.SqlServer/Extensions/SqlServerDbFunctionsExtensions.cs#L1547)
-- [EF.Functions.StandardDeviationPopulation()](https://github.com/dotnet/efcore/blob/2cfc7c3b9020daf9d2e28d404a78814e69941421/src/EFCore.SqlServer/Extensions/SqlServerDbFunctionsExtensions.cs#L1621)
-- [EF.Functions.VarianceSample()](https://github.com/dotnet/efcore/blob/2cfc7c3b9020daf9d2e28d404a78814e69941421/src/EFCore.SqlServer/Extensions/SqlServerDbFunctionsExtensions.cs#L1695)
-- [EF.Functions. VariancePopulation()](https://github.com/dotnet/efcore/blob/2cfc7c3b9020daf9d2e28d404a78814e69941421/src/EFCore.SqlServer/Extensions/SqlServerDbFunctionsExtensions.cs#L1749)
+- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.StandardDeviationSample%2A>
+- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.StandardDeviationPopulation%2A>
+- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.VarianceSample%2A>
+- <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.VariancePopulation%2A>
 
 > [!TIP]
 > These translations have been implemented by the team for SQL Server. For other providers, contact the provider maintainer to add support if it has been implemented for that provider.
@@ -3252,7 +3252,7 @@ And will return both `Post` and `FeaturedPost` entities.
 > [!TIP]
 > The code shown here comes from [MiscellaneousTranslationsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/MiscellaneousTranslationsSample.cs).
 
-EF7 introduces new [EF.Functions.AtTimeZone](https://github.com/dotnet/efcore/blob/2cfc7c3b9020daf9d2e28d404a78814e69941421/src/EFCore.SqlServer/Extensions/SqlServerDbFunctionsExtensions.cs#L1462) functions for <xref:System.DateTime> and <xref:System.DateTimeOffset>. These functions translate to `AT TIME ZONE` clauses in the generated SQL. For example:
+EF7 introduces new <xref:Microsoft.EntityFrameworkCore.SqlServerDbFunctionsExtensions.AtTimeZone%2A> functions for <xref:System.DateTime> and <xref:System.DateTimeOffset>. These functions translate to `AT TIME ZONE` clauses in the generated SQL. For example:
 
 <!--
             var query = context.Posts
@@ -3373,14 +3373,14 @@ Sometimes an application will explicitly cancel a query or other database operat
 
 In EF Core 6, the events logged when an operation is canceled are the same as those logged when the operation fails for some other reason. EF7 introduces new log events specifically for canceled database operations. These new events are, by default, logged at the <xref:Microsoft.Extensions.Logging.LogLevel.Debug> level. The following table shows the relevant events and their default log levels:
 
-| Event                                                                                                                                    | Description                                                         | Default log level |
-|------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|-------------------|
-| <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.QueryIterationFailed?displayProperty=nameWithType>                           | An error occurred while processing the results of a query.          | `LogLevel.Error`  |
-| <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.SaveChangesFailed?displayProperty=nameWithType>                              | An error occurred while attempting to save changes to the database. | `LogLevel.Error`  |
-| <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandError?displayProperty=nameWithType>                             | An error occurred while a database command was executing.           | `LogLevel.Error`  |
-| [CoreEventId.QueryCanceled](https://github.com/dotnet/efcore/blob/main/src/EFCore/Diagnostics/CoreEventId.cs)                            | A query was canceled.                                               | `LogLevel.Debug`  |
-| [CoreEventId.SaveChangesCanceled](https://github.com/dotnet/efcore/blob/main/src/EFCore/Diagnostics/CoreEventId.cs)                      | The database command was canceled while attempting to save changes. | `LogLevel.Debug`  |
-| [SaveChangesCanceled.CommandCanceled](https://github.com/dotnet/efcore/blob/main/src/EFCore.Relational/Diagnostics/RelationalEventId.cs) | The execution of a `DbCommand` has been canceled.                   | `LogLevel.Debug`  |
+| Event                                                                                                           | Description                                                         | Default log level |
+|-----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|-------------------|
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.QueryIterationFailed?displayProperty=nameWithType>  | An error occurred while processing the results of a query.          | `LogLevel.Error`  |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.SaveChangesFailed?displayProperty=nameWithType>     | An error occurred while attempting to save changes to the database. | `LogLevel.Error`  |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandError?displayProperty=nameWithType>    | An error occurred while a database command was executing.           | `LogLevel.Error`  |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.QueryCanceled?displayProperty=nameWithType>         | A query was canceled.                                               | `LogLevel.Debug`  |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.SaveChangesCanceled?displayProperty=nameWithType>   | The database command was canceled while attempting to save changes. | `LogLevel.Debug`  |
+| <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandCanceled?displayProperty=nameWithType> | The execution of a `DbCommand` has been canceled.                   | `LogLevel.Debug`  |
 
 > [!NOTE]
 > Cancellation is detected by looking at the exception rather than checking cancellation token. This means that cancellations not triggered via the cancellation token will still be detected and logged in this way.
@@ -3661,7 +3661,7 @@ CREATE INDEX [IX_Blogs_Name_Owner_2] ON [Blogs] ([Name] DESC, [Owner] DESC);
 
 ### Mapping attribute for composite keys
 
-EF7 introduces a new mapping attribute (aka "data annotation") for specifying the primary key property or properties of any entity type. Unlike <xref:System.ComponentModel.DataAnnotations.KeyAttribute?displayProperty=nameWithType>, [PrimaryKeyAttribute](https://github.com/dotnet/efcore/blob/main/src/EFCore.Abstractions/PrimaryKeyAttribute.cs) is placed on the entity type class rather than on the key property. For example:
+EF7 introduces a new mapping attribute (aka "data annotation") for specifying the primary key property or properties of any entity type. Unlike <xref:System.ComponentModel.DataAnnotations.KeyAttribute?displayProperty=nameWithType>, <xref:Microsoft.EntityFrameworkCore.PrimaryKeyAttribute> is placed on the entity type class rather than on the key property. For example:
 
 ```csharp
 [PrimaryKey(nameof(PostKey))]
@@ -3695,7 +3695,7 @@ public class Tag
 
 ### `DeleteBehavior` mapping attribute
 
-EF7 introduces a mapping attribute (aka "data annotation") to specify the <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> for a relationship. For example, [required relationships](xref:core/modeling/relationships) are created with <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade?displayProperty=nameWithType> by default. This can be changed to <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction?displayProperty=nameWithType> by default using [DeleteBehavior](https://github.com/dotnet/efcore/blob/main/src/EFCore.Abstractions/DeleteBehaviorAttribute.cs):
+EF7 introduces a mapping attribute (aka "data annotation") to specify the <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> for a relationship. For example, [required relationships](xref:core/modeling/relationships) are created with <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade?displayProperty=nameWithType> by default. This can be changed to <xref:Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction?displayProperty=nameWithType> by default using <xref:Microsoft.EntityFrameworkCore.DeleteBehaviorAttribute>:
 
 ```csharp
 public class Post

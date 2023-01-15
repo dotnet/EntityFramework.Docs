@@ -49,9 +49,6 @@ Once you've created the migration for the column, edit it and manually change th
 
 ## Sparse columns
 
-> [!NOTE]
-> Sparse column support was introduced in EF Core 6.0.
-
 Sparse columns are ordinary columns that have an optimized storage for null values, reducing the space requirements for null values at the cost of more overhead to retrieve non-null values.
 
 As an example, consider a type hierarchy mapped via [the table-per-hierarchy (TPH) strategy](xref:core/modeling/inheritance#table-per-hierarchy-and-discriminator-configuration). In TPH, a single database table is used to hold all types in a hierarchy; this means that the table must contain columns for each and every property across the entire hierarchy, and for columns belonging to rare types, most rows will contain a null value for that column. In these cases, it may make sense to configure the column as *sparse*, in order to reduce the space requirements. The decision whether to make a column sparse must be made by the user, and depends on expectations for actual data in the table.

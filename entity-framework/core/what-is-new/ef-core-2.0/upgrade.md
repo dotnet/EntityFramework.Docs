@@ -91,7 +91,7 @@ Note: these changes should not impact most application code.
 
 The event IDs for messages sent to an [ILogger](/dotnet/api/microsoft.extensions.logging.ilogger) have changed in 2.0. The event IDs are now unique across EF Core code. These messages now also follow the standard pattern for structured logging used by, for example, MVC.
 
-Logger categories have also changed. There is now a well-known set of categories accessed through [DbLoggerCategory](https://github.com/dotnet/efcore/blob/rel/2.0.0/src/EFCore/DbLoggerCategory.cs).
+Logger categories have also changed. There is now a well-known set of categories accessed through <xref:Microsoft.EntityFrameworkCore.DbLoggerCategory>.
 
 `DiagnosticSource` events now use the same event ID names as the corresponding `ILogger` messages. The event payloads are all nominal types derived from [EventData](/dotnet/api/microsoft.entityframeworkcore.diagnostics.eventdata).
 

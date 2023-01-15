@@ -94,7 +94,7 @@ EF allows avoiding this effect via the use of "split queries", which load the re
 
 It's recommended to read [the dedicated page on related entities](xref:core/querying/related-data) before continuing with this section.
 
-When dealing with related entities, we usually know in advance what we need to load: a typical example would be loading a certain set of Blogs, along with all their Posts. In these scenarios, it is always better to use [eager loading](xref:core/querying/related-data/eager), so that EF can fetch all the required data in one roundtrip. The [filtered include](xref:core/querying/related-data/eager#filtered-include) feature, introduced in EF Core 5.0, also allows you to limit which related entities you'd like to load, while keeping the loading process eager and therefore doable in a single roundtrip:
+When dealing with related entities, we usually know in advance what we need to load: a typical example would be loading a certain set of Blogs, along with all their Posts. In these scenarios, it is always better to use [eager loading](xref:core/querying/related-data/eager), so that EF can fetch all the required data in one roundtrip. The [filtered include](xref:core/querying/related-data/eager#filtered-include) feature also allows you to limit which related entities you'd like to load, while keeping the loading process eager and therefore doable in a single roundtrip:
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Program.cs#FilteredInclude)]
 
@@ -194,7 +194,7 @@ Finally, it is possible to perform updates without the overhead of change tracki
 In some cases, more optimized SQL exists for your query, which EF does not generate. This can happen when the SQL construct is an extension specific to your database that's unsupported, or simply because EF does not translate to it yet. In these cases, writing SQL by hand can provide a substantial performance boost, and EF supports several ways to do this.
 
 * Use SQL queries [directly in your query](xref:core/querying/sql-queries), e.g. via <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A>. EF even lets you compose over the SQL with regular LINQ queries, allowing you to express only a part of the query in SQL. This is a good technique when the SQL only needs to be used in a single query in your codebase.
-* Define a [user-defined function](xref:core/querying/database-functions) (UDF), and then call that from your queries. Note that since 5.0, EF allows UDFs to return full resultsets - these are known as table-valued functions (TVFs) - and also allows mapping a `DbSet` to a function, making it look just like just another table.
+* Define a [user-defined function](xref:core/querying/database-functions) (UDF), and then call that from your queries. Note that EF allows UDFs to return full resultsets - these are known as table-valued functions (TVFs) - and also allows mapping a `DbSet` to a function, making it look just like just another table.
 * Define a database view and query from it in your queries. Note that unlike functions, views cannot accept parameters.
 
 > [!NOTE]

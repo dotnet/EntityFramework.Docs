@@ -36,6 +36,8 @@
       href: /ef/core/what-is-new/ef-core-7.0/breaking-changes
     - name: "The plan for EF Core 8 (EF8)"
       href: /ef/core/what-is-new/ef-core-8.0/plan
+    - name: "Latest news and progress on EF Core 8 (EF8)"
+      href: https://aka.ms/efnews
     - name: Getting started
       items:
       - name: EF Core Overview
@@ -88,22 +90,22 @@
           href: core/what-is-new/ef-core-6.0/whatsnew.md
         - name: Breaking changes
           href: core/what-is-new/ef-core-6.0/breaking-changes.md
-      - name: EF Core 5.0
-        items:
-        - name: High-level plan
-          href: core/what-is-new/ef-core-5.0/plan.md
-        - name: "What's new?"
-          href: core/what-is-new/ef-core-5.0/whatsnew.md
-        - name: Breaking changes
-          href: core/what-is-new/ef-core-5.0/breaking-changes.md
-      - name: EF Core 3.1
-        items:
-        - name: New features
-          href: core/what-is-new/ef-core-3.x/index.md
-        - name: Breaking changes
-          href: core/what-is-new/ef-core-3.x/breaking-changes.md
       - name: Out of support
         items:
+        - name: EF Core 5.0
+          items:
+            - name: High-level plan
+              href: core/what-is-new/ef-core-5.0/plan.md
+            - name: "What's new?"
+              href: core/what-is-new/ef-core-5.0/whatsnew.md
+            - name: Breaking changes
+              href: core/what-is-new/ef-core-5.0/breaking-changes.md
+        - name: EF Core 3.1
+          items:
+            - name: New features
+              href: core/what-is-new/ef-core-3.x/index.md
+            - name: Breaking changes
+              href: core/what-is-new/ef-core-3.x/breaking-changes.md
         - name: EF Core 3.0
           href: core/what-is-new/ef-core-3.0.md
         - name: EF Core 2.2

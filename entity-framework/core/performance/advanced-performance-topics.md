@@ -21,18 +21,15 @@ To enable context pooling, simply replace `AddDbContext` with <xref:Microsoft.Ex
 
 [!code-csharp[Main](../../../samples/core/Performance/AspNetContextPooling/Program.cs#AddDbContextPool)]
 
-The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> sets the maximum number of instances retained by the pool (defaults to 1024 in EF Core 6.0, and to 128 in previous versions). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
+The `poolSize` parameter of <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextPool%2A> sets the maximum number of instances retained by the pool (defaults to 1024). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
 
 ### [Without dependency injection](#tab/without-di)
-
-> [!NOTE]
-> Pooling without dependency injection was introduced in EF Core 6.0.
 
 To use context pooling without dependency injection, initialize a `PooledDbContextFactory` and request context instances from it:
 
 [!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#DbContextPoolingWithoutDI)]
 
-The `poolSize` parameter of the `PooledDbContextFactory` constructor sets the maximum number of instances retained by the pool (defaults to 1024 in EF Core 6.0, and to 128 in previous versions). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
+The `poolSize` parameter of the `PooledDbContextFactory` constructor sets the maximum number of instances retained by the pool (defaults to 1024). Once `poolSize` is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.
 
 ***
 
@@ -182,9 +179,6 @@ Even if the sub-millisecond difference seems small, keep in mind that the consta
 
 ## Compiled models
 
-> [!NOTE]
-> Compiled models were introduced in EF Core 6.0.
-
 Compiled models can improve EF Core startup time for applications with large models. A large model typically means hundreds to thousands of entity types and relationships. Startup time here is the time to perform the first operation on a `DbContext` when that `DbContext` type is used for the first time in the application. Note that just creating a `DbContext` instance does not cause the EF model to be initialized. Instead, typical first operations that cause the model to be initialized include calling `DbContext.Add` or executing the first query.
 
 Compiled models are created using the `dotnet ef` command-line tool. Ensure that you have [installed the latest version of the tool](xref:core/cli/dotnet#installing-the-tools) before continuing.
@@ -297,9 +291,9 @@ As with any layer, EF Core adds a bit of runtime overhead compared to coding dir
 
 * Turn on [DbContext pooling](#dbcontext-pooling); our benchmarks show that this feature can have a decisive impact on high-perf, low-latency applications.
   * Make sure that the `maxPoolSize` corresponds to your usage scenario; if it is too low, `DbContext` instances will be constantly created and disposed, degrading performance. Setting it too high may needlessly consume memory as unused `DbContext` instances are maintained in the pool.
-  * For an extra tiny perf boost, consider using `PooledDbContextFactory` instead of having DI inject context instances directly (EF Core 6 and above). DI management of `DbContext` pooling incurs a slight overhead.
+  * For an extra tiny perf boost, consider using `PooledDbContextFactory` instead of having DI inject context instances directly. DI management of `DbContext` pooling incurs a slight overhead.
 * Use precompiled queries for hot queries.
   * The more complex the LINQ query - the more operators it contains and the bigger the resulting expression tree - the more gains can be expected from using compiled queries.
-* Consider disabling thread safety checks by setting `EnableThreadSafetyChecks` to false in your context configuration (EF Core 6 and above).
+* Consider disabling thread safety checks by setting `EnableThreadSafetyChecks` to false in your context configuration.
   * Using the same `DbContext` instance concurrently from different threads isn't supported. EF Core has a safety feature which detects this programming bug in many cases (but not all), and immediately throws an informative exception. However, this safety feature adds some runtime overhead.
   * **WARNING:** Only disable thread safety checks after thoroughly testing that your application doesn't contain such concurrency bugs.

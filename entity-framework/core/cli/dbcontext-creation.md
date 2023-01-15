@@ -34,18 +34,13 @@ You can also tell the tools how to create your DbContext by implementing the <xr
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/CommandLine/BloggingContextFactory.cs#BloggingContextFactory)]
 
-> [!NOTE]
-> Prior to EFCore 5.0 the `args` parameter was unused (see [this issue][8]).
-> This is fixed in EFCore 5.0 and any additional design-time arguments
-> are passed into the application through that parameter.
-
 A design-time factory can be especially useful if you need to configure the `DbContext` differently for design time than at run time, if the `DbContext` constructor takes additional parameters are not registered in DI, if you are not using DI at all, or if for some reason you prefer not to have a `CreateHostBuilder` method in your ASP.NET Core application's `Main` class.
 
 ## Args
 
 Both <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory%601.CreateDbContext%2A?displayProperty=nameWithType> and `Program.CreateHostBuilder` accept command line arguments.
 
-Starting in EF Core 5.0, you can specify these arguments from the tools:
+You can specify these arguments from the tools:
 
 ### [.NET Core CLI](#tab/dotnet-core-cli)
 
@@ -70,4 +65,3 @@ Update-Database -Args '--environment Production'
   [5]: xref:core/dbcontext-configuration/index#constructor-argument
   [6]: xref:core/dbcontext-configuration/index#using-dbcontext-with-dependency-injection
   [7]: xref:core/dbcontext-configuration/index#onconfiguring
-  [8]: https://github.com/dotnet/efcore/issues/8332

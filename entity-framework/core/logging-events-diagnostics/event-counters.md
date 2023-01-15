@@ -8,9 +8,6 @@ uid: core/logging-events-diagnostics/event-counters
 
 # Event Counters
 
-> [!NOTE]
-> This feature was added in EF Core 5.0.
-
 Entity Framework Core (EF Core) exposes continuous numeric metrics which can provide a good indication of your program's health. These metrics can be used for the following purposes:
 
 * Track general database load in realtime as the application is running

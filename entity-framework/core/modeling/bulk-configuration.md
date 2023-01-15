@@ -33,9 +33,6 @@ Properties of this type are not discovered by default as the current EF provider
 
 ## Pre-convention configuration
 
-> [!NOTE]
-> Pre-convention configuration was introduced in EF Core 6.0.
-
 EF Core allows the mapping configuration to be specified once for a given CLR type; that configuration is then applied to all properties of that type in the model as they are discovered. This is called "pre-convention model configuration", since it configures aspects of the model before the model building conventions are allowed to run. Such configuration is applied by overriding <xref:Microsoft.EntityFrameworkCore.DbContext.ConfigureConventions%2A> on the type derived from <xref:Microsoft.EntityFrameworkCore.DbContext>.
 
 This example shows how configure all properties of type `Currency` to have a value converter:

@@ -89,17 +89,11 @@ In the following example, configuring the `Score` property to have precision 14 
 
 #### [Data Annotations](#tab/data-annotations)
 
-> [!NOTE]
-> The Data Annotation for configuring precision and scale was introduced in EF Core 6.0.
-
 [!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=4,6)]
 
 Scale is never defined without first defining precision, so the Data Annotation for defining the scale is `[Precision(precision, scale)]`.
 
 #### [Fluent API](#tab/fluent-api)
-
-> [!NOTE]
-> The Fluent API for configuring precision and scale was introduced in EF Core 5.0.
 
 [!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/FluentAPI/PrecisionAndScale.cs?name=PrecisionAndScale&highlight=5,9)]
 
@@ -114,9 +108,6 @@ In some relational databases, different types exist to represent Unicode and non
 Text properties are configured as Unicode by default. You can configure a column as non-Unicode as follows:
 
 #### [Data Annotations](#tab/data-annotations)
-
-> [!NOTE]
-> The Data Annotation for configuring Unicode was introduced in EF Core 6.0.
 
 [!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/Unicode.cs?name=Unicode&highlight=6-7)]
 
@@ -174,9 +165,6 @@ A property that would be optional by convention can be configured to be required
 
 ## Column collations
 
-> [!NOTE]
-> This feature was introduced in EF Core 5.0.
-
 A collation can be defined on text columns, determining how they are compared and ordered. For example, the following code snippet configures a SQL Server column to be case-insensitive:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Collations/Program.cs?name=ColumnCollation)]
@@ -191,9 +179,6 @@ You can set an arbitrary text comment that gets set on the database column, allo
 
 ### [Data Annotations](#tab/data-annotations)
 
-> [!NOTE]
-> Setting comments via data annotations was introduced in EF Core 5.0.
-
 [!code-csharp[Main](../../../samples/core/Modeling/EntityProperties/DataAnnotations/ColumnComment.cs?name=ColumnComment&highlight=5)]
 
 ### [Fluent API](#tab/fluent-api)
@@ -203,9 +188,6 @@ You can set an arbitrary text comment that gets set on the database column, allo
 ***
 
 ## Column order
-
-> [!NOTE]
-> This feature was introduced in EF Core 6.0.
 
 By default when creating a table with [Migrations](xref:core/managing-schemas/migrations/index), EF Core orders primary key columns first, followed by properties of the entity type and owned types, and finally properties from base types. You can, however, specify a different column order:
 

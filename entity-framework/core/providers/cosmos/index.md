@@ -63,9 +63,6 @@ It is also possible to configure the Cosmos DB provider with a single connection
 
 [!code-csharp[Configuration](../../../../samples/core/Cosmos/ModelBuilding/OptionsContext.cs?name=Configuration)]
 
-> [!NOTE]
-> Most of these options were introduced in EF Core 5.0.
-
 > [!TIP]
 > See the [Azure Cosmos DB Options documentation](/dotnet/api/microsoft.azure.cosmos.cosmosclientoptions) for a detailed description of the effect of each option mentioned above.
 
@@ -98,9 +95,6 @@ Once configured the partition key property should always have a non-null value. 
 
 [!code-csharp[PartitionKey](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=PartitionKey&highlight=14)]
 
-> [!NOTE]
-> <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey%2A> was introduced in EF Core 5.0.
-
 It is generally recommended to add the partition key to the primary key as that best reflects the server semantics and allows some optimizations, for example in `FindAsync`.
 
 ### Provisioned throughput
@@ -128,7 +122,7 @@ modelBuilder.Entity<Family>(
 ## Embedded entities
 
 > [!NOTE]
-> Beginning with EF Core 6.0 related entity types are configured as owned by default. To prevent this for a specific entity type call <xref:Microsoft.EntityFrameworkCore.ModelBuilder.Entity%2A?displayProperty=nameWithType>.
+> Related entity types are configured as owned by default. To prevent this for a specific entity type call <xref:Microsoft.EntityFrameworkCore.ModelBuilder.Entity%2A?displayProperty=nameWithType>.
 
 For Cosmos, owned entities are embedded in the same item as the owner. To change a property name use [ToJsonProperty](/dotnet/api/Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.ToJsonProperty):
 
@@ -309,9 +303,6 @@ This is the resulting JSON:
 ```
 
 ## Optimistic concurrency with eTags
-
-> [!NOTE]
-> Support for eTag concurrency was introduced in EF Core 5.0.
 
 To configure an entity type to use [optimistic concurrency](xref:core/saving/concurrency) call <xref:Microsoft.EntityFrameworkCore.CosmosEntityTypeBuilderExtensions.UseETagConcurrency%2A>. This call will create an `_etag` property in [shadow state](xref:core/modeling/shadow-properties) and set it as the concurrency token.
 

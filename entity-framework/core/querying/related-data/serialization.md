@@ -13,7 +13,11 @@ Some serialization frameworks don't allow such cycles. For example, Json.NET wil
 
 > Newtonsoft.Json.JsonSerializationException: Self referencing loop detected for property 'Blog' with type 'MyApplication.Models.Blog'.
 
-If you're using ASP.NET Core, you can configure Json.NET to ignore cycles that it finds in the object graph. This configuration is done in the `ConfigureServices(...)` method in `Startup.cs`.
+System.Text.Json will throw a similar exception if a cycle is found.
+
+> System.Text.Json.JsonException: A possible object cycle was detected. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32. Consider using ReferenceHandler.Preserve on JsonSerializerOptions to support cycles.
+
+If you're using Json.NET in ASP.NET Core, you can configure Json.NET to ignore cycles that it finds in the object graph. This configuration is done in the `ConfigureServices(...)` method in `Startup.cs`.
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -29,4 +33,21 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-Another alternative is to decorate one of the navigation properties with the `[JsonIgnore]` attribute, which instructs Json.NET to not traverse that navigation property while serializing.
+If you're using System.Text.Json, you can configure it like this.
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    ...
+
+    services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
+
+    ...
+}
+```
+
+Another alternative is to ignore the navigation properties that cause the cycle for JSON serialization. If you're using Json.NET, you can decorate one of the navigation properties with the `[JsonIgnore]` attribute, which instructs Json.NET to not traverse that navigation property while serializing. For System.Text.Json, you can use the `[JsonIgnore]` attribute in the `System.Text.Json.Serialization` namespace to achieve the same effect.
