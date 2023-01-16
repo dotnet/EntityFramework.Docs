@@ -38,9 +38,9 @@ And a second aggregate type for post metadata:
 
 ## JSON Columns
 
-Most relational databases support columns that contain JSON documents. The JSON in these columns can be drilled into with queries. This allows, for example, filtering and sorting by the elements of the documents, as well as projection of elements out of the documents into results. JSON columns allow relational databases to take on some of the characteristics of document databases, creating a useful hybrid between the two.
+Most relational databases support columns that contain JSON documents. The JSON in these columns can be drilled into with queries. This allows, for example, filtering and sorting by the elements of the documents, as well as the projection of elements out of the documents into results. JSON columns allow relational databases to take on some of the characteristics of document databases, creating a useful hybrid between the two.
 
-EF7 contains provider-agnostic support for JSON columns, with an implementation for SQL Server. This support allows mapping of aggregates built from .NET types to JSON documents. Normal LINQ queries can be used on the aggregates, and these will be translated to the appropriate query constructs needed to drill into the JSON. EF7 also supports updating and saving changes to the JSON documents.
+EF7 contains provider-agnostic support for JSON columns, with an implementation for SQL Server. This support allows the mapping of aggregates built from .NET types to JSON documents. Normal LINQ queries can be used on the aggregates, and these will be translated to the appropriate query constructs needed to drill into the JSON. EF7 also supports updating and saving changes to JSON documents.
 
 > [!NOTE]
 > SQLite support for JSON is [planned for post EF7](https://github.com/dotnet/efcore/issues/28816). The PostgreSQL and Pomelo MySQL providers already contain some support for JSON columns. We will be working with the authors of those providers to align JSON support across all providers.
@@ -102,7 +102,7 @@ The aggregate type is configured  in `OnModelCreating` using `OwnsOne`:
 > [!TIP]
 > The code shown here comes from [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/JsonColumnsSample.cs).
 
-By default, relational database providers map aggregate types like this to the same table as the owning entity type. That is, each property of the `ContactDetails` and `Address` classes are mapped to a column in the `Authors` table.
+By default, relational database providers map aggregate types like this to the same table as the owning entity type. That is, each property of the `ContactDetails` and `Address` classes is mapped to a column in the `Authors` table.
 
 Some saved authors with contact details will look like this:
 
@@ -458,7 +458,7 @@ WHERE CAST(JSON_VALUE([p].[Metadata],'$.Views') AS int) > 3000
 
 ### Updating JSON columns
 
-[`SaveChanges` and `SaveChangesAsync`](xref:core/saving/basic) work in the normal way to make updates a JSON column. For extensive changes, the entire document will be updated. For example, replacing most of the `Contact` document for an author:
+[`SaveChanges` and `SaveChangesAsync`](xref:core/saving/basic) work in the normal way to make updates to a JSON column. For extensive changes, the entire document will be updated. For example, replacing most of the `Contact` document for an author:
 
 <!--
         var jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
@@ -546,7 +546,7 @@ However, keep in mind that:
 
 - The specific changes to make must be specified explicitly; they are not automatically detected by EF Core.
 - Any tracked entities will not be kept in sync.
-- Additional commands may need to be sent in the correct order so as not to violate database constraints. For example deleting dependents before a principal can be deleted.
+- Additional commands may need to be sent in the correct order so as not to violate database constraints. For example, deleting dependents before a principal can be deleted.
 
 All of this means that the `ExecuteUpdate` and `ExecuteDelete` methods complement, rather than replace, the existing `SaveChanges` mechanism.
 
@@ -761,7 +761,7 @@ FROM [Authors] AS [a]
 > [!TIP]
 > Sending these commands in a single round-trip depends on [Issue #10879](https://github.com/dotnet/efcore/issues/10879). Vote for this issue if it's something you would like to see implemented.
 
-Configuring [cascade deletes](xref:core/saving/cascade-delete) in the database can be very useful here. In our model, the relationship between `Blog` and `Post` is required, which causes EF Core to configure a cascade delete by convention.  This means when a blog is deleted in the database, then all its dependent posts will also be deleted. It then follows that to delete all blogs and posts we need only delete the blogs:
+Configuring [cascade deletes](xref:core/saving/cascade-delete) in the database can be very useful here. In our model, the relationship between `Blog` and `Post` is required, which causes EF Core to configure a cascade delete by convention.  This means when a blog is deleted from the database, then all its dependent posts will also be deleted. It then follows that to delete all blogs and posts we need only delete the blogs:
 
 <!--
         await context.Blogs.ExecuteDeleteAsync();
@@ -969,7 +969,7 @@ dbug: 10/1/2022 13:12:02.531 RelationalEventId.TransactionCommitted[20202] (Micr
       Committed transaction.
 ```
 
-However, in some cases the primary key value is known before the principal is inserted. This includes:
+However, in some cases, the primary key value is known before the principal is inserted. This includes:
 
 - Key values that are not automatically generated
 - Key values that are generated on the client, such as <xref:System.Guid> keys
@@ -1029,7 +1029,7 @@ By default, EF Core maps an inheritance hierarchy of .NET types to a single data
 
 ### TPC database schema
 
-The TPC strategy is similar to the TPT strategy except that a different table is created for every _concrete_ type in the hierarchy, but tables are **not** created for _abstract_ types--hence the name “table-per-concrete-type”. As with TPT, the table itself indicates the type of the object saved. However, unlike TPT mapping, each table contains columns for every property in the concrete type and its base types. TPC database schemas are denormalized.
+The TPC strategy is similar to the TPT strategy except that a different table is created for every _concrete_ type in the hierarchy, but tables are **not** created for _abstract_ types--hence the name “table-per-concrete-type”. As with TPT, the table itself indicates the type of object saved. However, unlike TPT mapping, each table contains columns for every property in the concrete type and its base types. TPC database schemas are denormalized.
 
 For example, consider mapping this hierarchy:
 
@@ -1227,7 +1227,7 @@ Or by using the `Entity` method in `OnModelCreating`:
 > [!IMPORTANT]
 > This is different from the legacy EF6 behavior, where derived types of mapped base types would be automatically discovered if they were contained in the same assembly.
 
-Nothing else needs to be done to map the hierarchy as TPH, since it is the default strategy. However, starting with EF7, TPH can made explicit by calling `UseTphMappingStrategy` on the base type of the hierarchy:
+Nothing else needs to be done to map the hierarchy as TPH, since it is the default strategy. However, starting with EF7, TPH can be made explicit by calling `UseTphMappingStrategy` on the base type of the hierarchy:
 
 <!--
             modelBuilder.Entity<Animal>().UseTphMappingStrategy();
@@ -1407,7 +1407,7 @@ Both TPT and TPC can use less storage than TPH when there are many subtypes with
 
 ### Key generation
 
-The inheritance mapping strategy chosen has consequences for how primary key values are generated and managed. Keys in TPH are easy, since each entity instance is represented by a single row in a single table. Any kind of key value generation can be used, and no additional constraints are needed.
+The inheritance mapping strategy chosen has consequences for how primary key values are generated and managed. Keys in TPH are easy since each entity instance is represented by a single row in a single table. Any kind of key value generation can be used, and no additional constraints are needed.
 
 For the TPT strategy, there is always a row in the table mapped to the base type of the hierarchy. Any kind of key generation can be used on this row, and the keys for other tables are linked to this table using foreign key constraints.
 
@@ -1473,7 +1473,7 @@ For more details, see [Custom Reverse Engineering Templates](xref:core/managing-
 
 EF Core uses a metadata "model" to describe how the application's entity types are mapped to the underlying database. This model is built using a set of around 60 "conventions". The model built by conventions can then be customized using [mapping attributes (aka "data annotations")](xref:core/modeling/index#use-data-annotations-to-configure-a-model) and/or calls to the [`DbModelBuilder` API in `OnModelCreating`](xref:core/modeling/index#use-fluent-api-to-configure-a-model).
 
-Starting with EF7, applications can now remove or replace any of these conventions, as well as add new conventions. Model building conventions are a powerful way to control the model configuration, but can be complex and hard to get right. In many case, the existing [pre-convention model configuration](xref:core/modeling/bulk-configuration) can be used instead to easily specify common configuration for properties and types.
+Starting with EF7, applications can now remove or replace any of these conventions, as well as add new conventions. Model building conventions are a powerful way to control the model configuration, but can be complex and hard to get right. In many cases, the existing [pre-convention model configuration](xref:core/modeling/bulk-configuration) can be used instead to easily specify a common configuration for properties and types.
 
 Changes to the conventions used by a `DbContext` are made by overriding the `DbContext.ConfigureConventions` method. For example:
 
@@ -1492,7 +1492,7 @@ protected override void ConfigureConventions(ModelConfigurationBuilder configura
 
 ### Removing an existing convention
 
-Sometimes one of the built-in conventions may not appropriate for your application, in which case it can be removed.
+Sometimes one of the built-in conventions may not be appropriate for your application, in which case it can be removed.
 
 #### Example: Don't create indexes for foreign key columns
 
@@ -1594,9 +1594,9 @@ Removing existing conventions is a start, but what about adding completely new m
 
 The [table-per-hierarchy inheritance mapping strategy](xref:core/modeling/inheritance) requires a discriminator column to specify which type is represented in any given row. By default, EF uses an unbounded string column for the discriminator, which ensures that it will work for any discriminator length. However, constraining the maximum length of discriminator strings can make for more efficient storage and queries. Let's create a new convention that will do that.
 
-EF Core model building conventions are triggered based on changes being made to the model as it is being built. This keeps the model up-to-date as explicit configuration is made, mapping attributes are applied, and other conventions run. To participate in this, every convention implements one or more interfaces which determine when the convention will be triggered. For example, a convention that implements <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IEntityTypeAddedConvention> will be triggered whenever a new entity type is added to the model. Likewise, a convention that implements both <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IForeignKeyAddedConvention> and <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IKeyAddedConvention> will be triggered whenever either a key or a foreign key is added to the model.
+EF Core model building conventions are triggered based on changes being made to the model as it is being built. This keeps the model up-to-date as the explicit configuration is made, mapping attributes are applied, and other conventions run. To participate in this, every convention implements one or more interfaces which determine when the convention will be triggered. For example, a convention that implements <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IEntityTypeAddedConvention> will be triggered whenever a new entity type is added to the model. Likewise, a convention that implements both <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IForeignKeyAddedConvention> and <xref:Microsoft.EntityFrameworkCore.Metadata.Conventions.IKeyAddedConvention> will be triggered whenever either a key or a foreign key is added to the model.
 
-Knowing which interfaces to implement can be tricky, since configuration made to the model at one point may be changed or removed at a later point. For example, a key may be created by convention, but then later replaced when a different key is configured explicitly.
+Knowing which interfaces to implement can be tricky, since the configuration made to the model at one point may be changed or removed at a later point. For example, a key may be created by convention, but then later replaced when a different key is configured explicitly.
 
 Let's make this a bit more concrete by making a first attempt at implementing the discriminator-length convention:
 
@@ -1784,7 +1784,7 @@ EntityType: Post
     Title (string) Required MaxLength(512)
 ```
 
-So why didn't our convention override the explicitly configured max length? The answer is that EF Core keeps track of how every piece of configuration was made. This is represented by the <xref:Microsoft.EntityFrameworkCore.Metadata.ConfigurationSource> enum. The different kinds of configuration are:
+So why didn't our convention override the explicitly configured max length? The answer is that EF Core keeps track of how every piece of configuration was made. This is represented by the <xref:Microsoft.EntityFrameworkCore.Metadata.ConfigurationSource> enum. The different kinds of configurations are:
 
 - `Explicit`: The model element was explicitly configured in `OnModelCreating`
 - `DataAnnotation`: The model element was configured using a mapping attribute (aka data annotation) on the CLR type
@@ -1806,7 +1806,7 @@ property.Builder.HasMaxLength(512, fromDataAnnotation: true);
 
 This sets the `ConfigurationSource` to `DataAnnotation`, which means that the value can now be overridden by explicit mapping on `OnModelCreating`, but not by non-mapping attribute conventions.
 
-Finally, before we leave this example, what happens if we use both the `MaxStringLengthConvention` and `DiscriminatorLengthConvention3` at the same time? The answer is that it depends which order they are added, since model finalizing conventions run in the order they are added. So if `MaxStringLengthConvention` is added last, then it will run last, and it will set the max length of the discriminator property to 512. Therefore, in this case, it is better to add `DiscriminatorLengthConvention3` last so that it can override the default max length for just discriminator properties, while leaving all other string properties as 512.
+Finally, before we leave this example, what happens if we use both the `MaxStringLengthConvention` and `DiscriminatorLengthConvention3` at the same time? The answer is that it depends on which order they are added, since model finalizing conventions run in the order they are added. So if `MaxStringLengthConvention` is added last, then it will run last, and it will set the max length of the discriminator property to 512. Therefore, in this case, it is better to add `DiscriminatorLengthConvention3` last so that it can override the default max length for just discriminator properties, while leaving all other string properties as 512.
 
 ### Replacing an existing convention
 
@@ -1918,7 +1918,7 @@ On the other hand, if the member is a property that would otherwise have been ma
 entityTypeBuilder.Ignore(propertyInfo.Name);
 ```
 
-Notice that this convention allows fields to be mapped (in addition to propeties) so long as they are marked with `[Persist]`. This means we can use private fields as hidden keys in the model.
+Notice that this convention allows fields to be mapped (in addition to properties) so long as they are marked with `[Persist]`. This means we can use private fields as hidden keys in the model.
 
 For example, consider the following entity types:
 
@@ -2124,7 +2124,7 @@ There are three different builder methods for different flavors of parameters:
 - `HasRowsAffectedParameter` specifies a parameter used to return the number of rows affected by the stored procedure.
 
 > [!TIP]
-> Original value parameters must be used for key values in "update" and "delete" stored procedures. This ensures that correct row will be updated in future versions of EF Core that support mutable key values.
+> Original value parameters must be used for key values in "update" and "delete" stored procedures. This ensures that the correct row will be updated in future versions of EF Core that support mutable key values.
 
 ### Returning values
 
@@ -2698,7 +2698,7 @@ There are several things worth noting about this interceptor:
 > [!TIP]
 > The code shown here comes from [LazyConnectionStringSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore7/LazyConnectionStringSample.cs).
 
-Connection strings are often static assets read from a configuration file. These can easily be passed to `UseSqlServer` or similar when configuring a `DbContext`. However, sometimes the connection string can change for each context instance. For example, each tenant in a multi-tenant system may have different connection string.
+Connection strings are often static assets read from a configuration file. These can easily be passed to `UseSqlServer` or similar when configuring a `DbContext`. However, sometimes the connection string can change for each context instance. For example, each tenant in a multi-tenant system may have a different connection string.
 
 EF7 makes it easier to handle dynamic connections and connection strings through improvements to the <xref:Microsoft.EntityFrameworkCore.Diagnostics.IDbConnectionInterceptor>. This starts with the ability to configure the `DbContext` without any connection string. For example:
 
@@ -2714,7 +2714,7 @@ services.AddScoped<ITenantConnectionStringFactory, TestTenantConnectionStringFac
 ```
 
 > [!WARNING]
-> Performing a asynchronous lookup for a connection string, access token, or similar every time it is needed can be very slow. Consider caching these things and only refreshing the cached string or token periodically. For example, access tokens can often be used for a significant period of time before needing to be refreshed.
+> Performing an asynchronous lookup for a connection string, access token, or similar every time it is needed can be very slow. Consider caching these things and only refreshing the cached string or token periodically. For example, access tokens can often be used for a significant period of time before needing to be refreshed.
 
 This can be injected into each `DbContext` instance using constructor injection:
 
@@ -2836,7 +2836,7 @@ The second interceptor is needed to obtain the statistics from the connection an
 [!code-csharp[InfoMessageInterceptor](../../../../samples/core/Miscellaneous/NewInEFCore7/QueryStatisticsLoggerSample.cs?name=InfoMessageInterceptor)]
 
 > [!IMPORTANT]
-> The `ConnectionCreating` and `ConnectionCreated` methods are only called when EF Core creates a `DbConnection`. They will not be called if the application creates the `DbConnection` and passes to EF Core.
+> The `ConnectionCreating` and `ConnectionCreated` methods are only called when EF Core creates a `DbConnection`. They will not be called if the application creates the `DbConnection` and passes it to EF Core.
 
 Running some code that uses these interceptors show SQL Server query statistics in the log:
 
@@ -3030,7 +3030,7 @@ WHERE EXISTS (
 
 ### Translations for aggregate functions
 
-EF7 introduces better extensibility for providers to translate aggregate functions. This and other work in this area has resulted in several new translations across providers, including:
+EF7 introduces better extensibility for providers to translate aggregate functions. This and other work in this area have resulted in several new translations across providers, including:
 
 - [Translation of `String.Join` and `String.Concat`](https://github.com/dotnet/efcore/issues/2981)
 - [Translation of spatial aggregate functions](https://github.com/dotnet/efcore/issues/13278)
@@ -3053,7 +3053,7 @@ Queries using <xref:System.String.Join%2A> and <xref:System.String.Concat%2A> ar
 -->
 [!code-csharp[Join](../../../../samples/core/Miscellaneous/NewInEFCore7/StringAggregateFunctionsSample.cs?name=Join)]
 
-This query translates to following when using SQL Server:
+This query translates to the following when using SQL Server:
 
 ```sql
 SELECT [a].[Id], [a].[Name], COALESCE(STRING_AGG([p].[Title], N'|'), N'') AS [Books]
@@ -3086,7 +3086,7 @@ When combined with other string functions, these translations allow for some com
 -->
 [!code-csharp[ConcatAndJoin](../../../../samples/core/Miscellaneous/NewInEFCore7/StringAggregateFunctionsSample.cs?name=ConcatAndJoin)]
 
-This query translates to following when using SQL Server:
+This query translates to the following when using SQL Server:
 
 ```sql
 SELECT [t].[Name], (N'''' + [t0].[Name]) + N''' ', [t0].[Name], [t].[c]
@@ -3301,7 +3301,7 @@ var query = context.Blogs.Include(
 
 But does not require `Blog.Posts` to be publicly accessible.
 
-When using SQL Server, the both queries above translate to:
+When using SQL Server, both queries above translate to:
 
 ```sql
 SELECT [b].[Id], [b].[Name], [t].[Id], [t].[AuthorId], [t].[BlogId], [t].[Content], [t].[Discriminator], [t].[PublishedOn], [t].[Title], [t].[PromoText]
@@ -3362,7 +3362,7 @@ However, following the introduction of [C# nullable reference types](/dotnet/csh
 
 This is a bogus warning; the property is set to a non-null value by EF Core. Also, declaring the property as nullable will make the warning go away, but this is not a good idea because, conceptually, the property is not nullable and will never be null.
 
-EF7 contains a [DiagnosticSuppressor](/dotnet/fundamentals/code-analysis/suppress-warnings) for `DbSet` properties on a `DbContext` which stops the compiler generating this warning.
+EF7 contains a [DiagnosticSuppressor](/dotnet/fundamentals/code-analysis/suppress-warnings) for `DbSet` properties on a `DbContext` which stops the compiler from generating this warning.
 
 > [!TIP]
 > This pattern originated in the days when C# auto-properties were very limited. With modern C#, consider making the auto-properties read-only, and then either initialize them explicitly in the `DbContext` constructor, or obtain the cached `DbSet` instance from the context when needed. For example, `public DbSet<Blog> Blogs => Set<Blog>()`.
@@ -3383,7 +3383,7 @@ In EF Core 6, the events logged when an operation is canceled are the same as th
 | <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandCanceled?displayProperty=nameWithType> | The execution of a `DbCommand` has been canceled.                   | `LogLevel.Debug`  |
 
 > [!NOTE]
-> Cancellation is detected by looking at the exception rather than checking cancellation token. This means that cancellations not triggered via the cancellation token will still be detected and logged in this way.
+> Cancellation is detected by looking at the exception rather than checking the cancellation token. This means that cancellations not triggered via the  cancellation token will still be detected and logged in this way.
 
 ### New `IProperty` and `INavigation` overloads for `EntityEntry` methods
 
@@ -3475,7 +3475,7 @@ And execute queries:
 -->
 [!code-csharp[BuildMetadataQuery](../../../../samples/core/Miscellaneous/NewInEFCore7/DbContextApiSample.cs?name=BuildMetadataQuery)]
 
-Now, in EF7, there is also an `Entry` method on `DbSet` which can be used to obtain state about an instance, _even if it is not yet tracked_. For example:
+Now, in EF7, there is also an `Entry` method on `DbSet` which can be used to obtain the state of an instance, _even if it is not yet tracked_. For example:
 
 <!--
                 var state = context.BuildMetadata.Entry(build).State;
@@ -3491,7 +3491,7 @@ dbug: 10/7/2022 12:27:52.379 CoreEventId.ContextInitialized[10403] (Microsoft.En
       Entity Framework Core 7.0.0 initialized 'BlogsContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:7.0.0' with options: SensitiveDataLoggingEnabled using NetTopologySuite
 ```
 
-In previous releases it was logged at the <xref:Microsoft.Extensions.Logging.LogLevel.Information> level. For example:
+In previous releases, it was logged at the <xref:Microsoft.Extensions.Logging.LogLevel.Information> level. For example:
 
 ```output
 info: 10/7/2022 12:30:34.757 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
@@ -3547,8 +3547,8 @@ In EF7, the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.IEntityEntryGraph
 Notice:
 
 - The iterator stops traversing from a given node when the callback delegate returns `false`. This example keeps track of visited entities and returns `false` when the entity has already been visited. This prevents infinite loops resulting from cycles in the graph.
-- The `EntityEntryGraphNode<TState>` object allows state to be passed around without capturing it into the delegate.
-- For every node visited other than the first, the node it was discovered from and the navigation is was discovered via are passed to the callback.
+- The `EntityEntryGraphNode<TState>` object allows the state to be passed around without capturing it into the delegate.
+- For every node visited other than the first, the node it was discovered from and the navigation it was discovered via are passed to the callback.
 
 ## Model building enhancements
 
@@ -3559,7 +3559,7 @@ EF7 contains a variety of small improvements in model building.
 
 ### Indexes can be ascending or descending
 
-By default, EF Core creates ascending indexes. EF7 also supports creation of descending indexes. For example:
+By default, EF Core creates ascending indexes. EF7 also supports the creation of descending indexes. For example:
 
 ```csharp
 modelBuilder
@@ -4256,14 +4256,14 @@ Or when using a [Migrations bundle](xref:core/managing-schemas/migrations/applyi
 ./bundle.exe --connection "Server=(localdb)\mssqllocaldb;Database=MyAppDb"
 ```
 
-In this case, even though the connection string read from configuration isn't used, the application startup code still attempts to read it from configuration and to pass it to `UseSqlServer`. If the configuration is not available, then this results in passing null to `UseSqlServer`. In EF7, this is allowed, as long as the connection string is ultimately set later, such as by passing `--connection` to the command-line tool.
+In this case, even though the connection string read from configuration isn't used, the application startup code still attempts to read it from configuration and pass it to `UseSqlServer`. If the configuration is not available, then this results in passing null to `UseSqlServer`. In EF7, this is allowed, as long as the connection string is ultimately set later, such as by passing `--connection` to the command-line tool.
 
 > [!NOTE]
 > This change has been made for `UseSqlServer` and `UseSqlite`. For other providers, contact the provider maintainer to make an equivalent change if it has not yet been done for that provider.
 
 ### Detect when tools are running
 
-EF Core runs application code when the [`dotnet-ef`](xref:core/cli/dotnet) or [PowerShell](xref:core/cli/powershell) commands are being used. Sometimes it may be necessary to detect this situation to prevent inappropriate code being executed at design-time. For example, code that automatically applies migrations at startup should probably not do this at design-time. In EF7, this can be detected using the `EF.IsDesignTime` flag:
+EF Core runs application code when the [`dotnet-ef`](xref:core/cli/dotnet) or [PowerShell](xref:core/cli/powershell) commands are being used. Sometimes it may be necessary to detect this situation to prevent inappropriate code from being executed at design-time. For example, code that automatically applies migrations at startup should probably not do this at design-time. In EF7, this can be detected using the `EF.IsDesignTime` flag:
 
 ```csharp
 if (!EF.IsDesignTime)
@@ -4281,7 +4281,7 @@ EF Core supports dynamically generated proxies for [lazy-loading](xref:core/quer
 - The proxy types are now created lazily. This means that the initial model building time when using proxies can be massively faster with EF7 than it was with EF Core 6.0.
 - Proxies can now be used with compiled models.
 
-Here are some performance results for model with 449 entity types, 6390 properties, and 720 relationships.
+Here are some performance results for a model with 449 entity types, 6390 properties, and 720 relationships.
 
 | Scenario                                                    | Method           |    Mean |    Error |   StdDev |
 |-------------------------------------------------------------|------------------|--------:|---------:|---------:|
@@ -4295,7 +4295,7 @@ So, in this case, a model with change-tracking proxies can be ready to execute t
 
 ## First-class Windows Forms data binding
 
-The Windows Forms team have been making some [great improvements to the Visual Studio Designer experience](https://devblogs.microsoft.com/dotnet/state-of-the-windows-forms-designer-for-net-applications/). This includes [new experiences for data binding](https://devblogs.microsoft.com/dotnet/databinding-with-the-oop-windows-forms-designer/) that integrates well with EF Core.
+The Windows Forms team has been making some [great improvements to the Visual Studio Designer experience](https://devblogs.microsoft.com/dotnet/state-of-the-windows-forms-designer-for-net-applications/). This includes [new experiences for data binding](https://devblogs.microsoft.com/dotnet/databinding-with-the-oop-windows-forms-designer/) that integrates well with EF Core.
 
 In brief, the new experience provides Visual Studio U.I. for creating an <xref:System.Web.UI.WebControls.ObjectDataSource>:
 
