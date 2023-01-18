@@ -60,7 +60,7 @@ Each included navigation allows only one unique set of filter operations. In cas
 
 [!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#MultipleLeafIncludesFiltered1)]
 
-Instead, identical operations can be applied for each navigation that is included multiple times:
+Alternatively, identical operations can be applied for each navigation that is included multiple times:
 
 [!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#MultipleLeafIncludesFiltered2)]
 
