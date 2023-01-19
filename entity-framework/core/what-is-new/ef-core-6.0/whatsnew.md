@@ -707,7 +707,7 @@ After these improvements, the gap between the popular "micro-ORM" [Dapper](https
 > [!NOTE]
 > See [Announcing Entity Framework Core 6.0 Preview 4: Performance Edition](https://devblogs.microsoft.com/dotnet/announcing-entity-framework-core-6-0-preview-4-performance-edition/) on the .NET Blog for a detailed discussion of query performance improvements in EF Core 6.0.
 
-## Cosmos provider enhancements
+## Azure Cosmos DB provider enhancements
 
 EF Core 6.0 contains many improvements to the Azure Cosmos DB database provider.
 
@@ -718,7 +718,7 @@ EF Core 6.0 contains many improvements to the Azure Cosmos DB database provider.
 
 GitHub Issue: [#24803](https://github.com/dotnet/efcore/issues/24803).
 
-When building a model for the Cosmos provider, EF Core 6.0 will mark child entity types as owned by their parent entity by default. This removes the need for much of the `OwnsMany` and `OwnsOne` calls in the Cosmos model. This makes it easier to embed child types into the document for the parent type, which is usually the appropriate way to model parents and children in a document database.
+When building a model for the Azure Cosmos DB provider, EF Core 6.0 will mark child entity types as owned by their parent entity by default. This removes the need for much of the `OwnsMany` and `OwnsOne` calls in the Azure Cosmos DB model. This makes it easier to embed child types into the document for the parent type, which is usually the appropriate way to model parents and children in a document database.
 
 For example, consider these entity types:
 
@@ -756,7 +756,7 @@ public class Child
 -->
 [!code-csharp[Model](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosImplicitOwnershipSample.cs?name=Model)]
 
-In EF Core 5.0, these types would have been modeled for Cosmos with the following configuration:
+In EF Core 5.0, these types would have been modeled for Azure Cosmos DB with the following configuration:
 
 <!--
 modelBuilder.Entity<Family>()
@@ -779,7 +779,7 @@ modelBuilder.Entity<Family>().HasPartitionKey(e => e.LastName);
 -->
 [!code-csharp[OnModelCreating](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosImplicitOwnershipSample.cs?name=OnModelCreating)]
 
-The resulting Cosmos documents have the family's parents, children, pets, and address embedded in the family document. For example:
+The resulting Azure Cosmos DB documents have the family's parents, children, pets, and address embedded in the family document. For example:
 
 ```json
 {
@@ -841,7 +841,7 @@ The resulting Cosmos documents have the family's parents, children, pets, and ad
 
 GitHub Issue: [#14762](https://github.com/dotnet/efcore/issues/14762).
 
-EF Core 6.0 natively maps collections of primitive types when using the Cosmos database provider. For example, consider this entity type:
+EF Core 6.0 natively maps collections of primitive types when using the Azure Cosmos DB database provider. For example, consider this entity type:
 
 <!--
 public class Book
@@ -928,7 +928,7 @@ Limitations:
 
 GitHub Issue: [#16143](https://github.com/dotnet/efcore/issues/16143).
 
-The Cosmos provider now translates more Base Class Library (BCL) methods to Cosmos built-in-functions. The following tables show translations that are new in EF Core 6.0.
+The Azure Cosmos DB provider now translates more Base Class Library (BCL) methods to Azure Cosmos DB built-in-functions. The following tables show translations that are new in EF Core 6.0.
 
 **String translations**
 
@@ -1046,7 +1046,7 @@ WHERE ((c["Discriminator"] = "Triangle") AND (c["InsertedOn"] <= GetCurrentDateT
 
 GitHub Issue: [#17311](https://github.com/dotnet/efcore/issues/17311).
 
-Sometimes it is necessary to execute a raw SQL query instead of using LINQ. This is now supported with the Cosmos provider through use of the `FromSql` method. This works the same way it always has done with relational providers. For example:
+Sometimes it is necessary to execute a raw SQL query instead of using LINQ. This is now supported with the Azure Cosmos DB provider through use of the `FromSql` method. This works the same way it always has done with relational providers. For example:
 
 <!--
 var maxAngle = 60;
@@ -1095,12 +1095,12 @@ ORDER BY c["Angle1"]
 
 GitHub Issue: [#17298](https://github.com/dotnet/efcore/issues/17298).
 
-The Cosmos provider now logs more diagnostic information, including events for inserting, querying, updating, and deleting data from the database. The request units (RU) are included in these events whenever appropriate.
+The Azure Cosmos DB provider now logs more diagnostic information, including events for inserting, querying, updating, and deleting data from the database. The request units (RU) are included in these events whenever appropriate.
 
 > [!NOTE]
 > The logs show here use `EnableSensitiveDataLogging()` so that ID values are shown.
 
-Inserting an item into the Cosmos database generates the `CosmosEventId.ExecutedCreateItem` event. For example, this code:
+Inserting an item into the Azure Cosmos DB database generates the `CosmosEventId.ExecutedCreateItem` event. For example, this code:
 
 <!--
 var triangle = new Triangle
@@ -1123,7 +1123,7 @@ info: 8/30/2021 14:41:13.356 CosmosEventId.ExecutedCreateItem[30104] (Microsoft.
       Executed CreateItem (5 ms, 7.43 RU) ActivityId='417db46f-fcdd-49d9-a7f0-77210cd06f84', Container='Shapes', Id='Impossible', Partition='TrianglesPartition'
 ```
 
-Retrieving items from the Cosmos database using a query generates the `CosmosEventId.ExecutingSqlQuery` event, and then one or more `CosmosEventId.ExecutedReadNext` events for the items read. For example, this code:
+Retrieving items from the Azure Cosmos DB database using a query generates the `CosmosEventId.ExecutingSqlQuery` event, and then one or more `CosmosEventId.ExecutedReadNext` events for the items read. For example, this code:
 
 <!--
 var equilateral = context.Triangles.Single(e => e.Name == "Equilateral");
@@ -1147,7 +1147,7 @@ info: 8/30/2021 14:41:13.651 CosmosEventId.ExecutedReadNext[30102] (Microsoft.En
       OFFSET 0 LIMIT 2
 ```
 
-Retrieving a single item from the Cosmos database using `Find` with a partition key generates the `CosmosEventId.ExecutingReadItem` and `CosmosEventId.ExecutedReadItem` events. For example, this code:
+Retrieving a single item from the Azure Cosmos DB database using `Find` with a partition key generates the `CosmosEventId.ExecutingReadItem` and `CosmosEventId.ExecutedReadItem` events. For example, this code:
 
 <!--
 var isosceles = context.Triangles.Find("Isosceles", "TrianglesPartition");
@@ -1163,7 +1163,7 @@ info: 8/30/2021 14:53:39.330 CosmosEventId.ExecutedReadItem[30103] (Microsoft.En
       Executed ReadItem (1 ms, 1 RU) ActivityId='3c278643-4e7f-4bb2-9953-6055b5f1288f', Container='Shapes', Id='Isosceles', Partition='TrianglesPartition'
 ```
 
-Saving an updated item to the Cosmos database generates the `CosmosEventId.ExecutedReplaceItem` event. For example, this code:
+Saving an updated item to the Azure Cosmos DB database generates the `CosmosEventId.ExecutedReplaceItem` event. For example, this code:
 
 <!--
 triangle.Angle2 = 89;
@@ -1178,7 +1178,7 @@ info: 8/30/2021 14:53:39.343 CosmosEventId.ExecutedReplaceItem[30105] (Microsoft
       Executed ReplaceItem (6 ms, 10.67 RU) ActivityId='1525b958-fea1-49e8-89f9-d429d0351fdb', Container='Shapes', Id='Impossible', Partition='TrianglesPartition'
 ```
 
-Deleting an item from the Cosmos database generates the `CosmosEventId.ExecutedDeleteItem` event. For example, this code:
+Deleting an item from the Azure Cosmos DB database generates the `CosmosEventId.ExecutedDeleteItem` event. For example, this code:
 
 <!--
 context.Remove(triangle);
@@ -1197,7 +1197,7 @@ info: 8/30/2021 14:53:39.359 CosmosEventId.ExecutedDeleteItem[30106] (Microsoft.
 
 GitHub Issue: [#17301](https://github.com/dotnet/efcore/issues/17301).
 
-The Cosmos model can now be configured with manual or auto-scale throughput. These values provision throughput on the database. For example:
+The Azure Cosmos DB model can now be configured with manual or auto-scale throughput. These values provision throughput on the database. For example:
 
 <!--
 modelBuilder.HasManualThroughput(2000);
@@ -1221,7 +1221,7 @@ modelBuilder.Entity<Family>(
 
 GitHub Issue: [#17307](https://github.com/dotnet/efcore/issues/17307).
 
-Entity types in the Cosmos model can now be configured with the default time-to-live and time-to-live for the analytical store. For example:
+Entity types in the Azure Cosmos DB model can now be configured with the default time-to-live and time-to-live for the analytical store. For example:
 
 <!--
 modelBuilder.Entity<Family>(
@@ -1237,7 +1237,7 @@ modelBuilder.Entity<Family>(
 
 GitHub Issue: [#21274](https://github.com/dotnet/efcore/issues/21274). This feature was contributed by [@dnperfors](https://github.com/dnperfors). Many thanks!
 
-The `HttpClientFactory` used by the Cosmos provider can now be set explicitly. This can be especially useful during testing, for example to bypass certificate validation when using the Cosmos emulator on Linux:
+The `HttpClientFactory` used by the Azure Cosmos DB provider can now be set explicitly. This can be especially useful during testing, for example to bypass certificate validation when using the Azure Cosmos DB emulator on Linux:
 
 <!--
 optionsBuilder
@@ -1260,7 +1260,7 @@ optionsBuilder
 [!code-csharp[HttpClientFactory](../../../../samples/core/Miscellaneous/NewInEFCore6.Cosmos/CosmosPrimitiveTypesSample.cs?name=HttpClientFactory)]
 
 > [!NOTE]
-> See [Taking the EF Core Azure Cosmos DB Provider for a Test Drive](https://devblogs.microsoft.com/dotnet/taking-the-ef-core-azure-cosmos-db-provider-for-a-test-drive/) on the .NET Blog for a detailed example of applying the Cosmos provider improvements to an existing application.
+> See [Taking the EF Core Azure Cosmos DB Provider for a Test Drive](https://devblogs.microsoft.com/dotnet/taking-the-ef-core-azure-cosmos-db-provider-for-a-test-drive/) on the .NET Blog for a detailed example of applying the Azure Cosmos DB provider improvements to an existing application.
 
 ## Improvements to scaffolding from an existing database
 
@@ -2031,7 +2031,7 @@ Note that translation of <xref:System.Object.ToString> for SQL Server is already
 
 GitHub Issue: [#16141](https://github.com/dotnet/efcore/issues/16141). This feature was contributed by [@RaymondHuy](https://github.com/RaymondHuy). Many thanks!
 
-`EF.Functions.Random` maps to a database function returning a pseudo-random number between 0 and 1 exclusive. Translations have been implemented in the EF Core repo for SQL Server, SQLite, and Cosmos. For example, consider a `User` entity type with a `Popularity` property:
+`EF.Functions.Random` maps to a database function returning a pseudo-random number between 0 and 1 exclusive. Translations have been implemented in the EF Core repo for SQL Server, SQLite, and Azure Cosmos DB. For example, consider a `User` entity type with a `Popularity` property:
 
 <!--
     public class User
@@ -2123,7 +2123,7 @@ public class CustomerDensity
 -->
 [!code-csharp[ViewType](../../../../samples/core/Miscellaneous/NewInEFCore6/ToInMemoryQuerySample.cs?name=ViewType)]
 
-And define an DbSet property for it on the DbContext, along with sets for other top-level entity types:
+And define a DbSet property for it on the DbContext, along with sets for other top-level entity types:
 
 <!--
         public DbSet<Customer> Customers { get; set; }

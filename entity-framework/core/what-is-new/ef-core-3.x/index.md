@@ -56,11 +56,11 @@ Another aspect of the design that changed significantly in 3.x is that we now al
 
 Similarly to client evaluation, if EF Core 3.x can't translate a LINQ query into a single SQL statement, it throws a runtime exception. But we made EF Core capable of translating many of the common patterns that used to generate multiple queries to a single query with JOINs.
 
-## Cosmos DB support
+## Azure Cosmos DB support
 
-The Cosmos DB provider for EF Core enables developers familiar with the EF programing model to easily target Azure Cosmos DB as an application database. The goal is to make some of the advantages of Cosmos DB, like global distribution, "always on" availability, elastic scalability, and low latency, even more accessible to .NET developers. The provider enables most EF Core features, like automatic change tracking, LINQ, and value conversions, against the SQL API in Cosmos DB.
+The Azure Cosmos DB provider for EF Core enables developers familiar with the EF programing model to easily target Azure Cosmos DB as an application database. The goal is to make some of the advantages of Azure Cosmos DB, like global distribution, "always on" availability, elastic scalability, and low latency, even more accessible to .NET developers. The provider enables most EF Core features, like automatic change tracking, LINQ, and value conversions, against Azure Cosmos DB for NoSQL.
 
-See the [Cosmos DB provider documentation](xref:core/providers/cosmos/index) for more details.
+See the [Azure Cosmos DB provider documentation](xref:core/providers/cosmos/index) for more details.
 
 ## C# 8.0 support
 

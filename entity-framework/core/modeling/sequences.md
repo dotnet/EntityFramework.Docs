@@ -8,7 +8,7 @@ uid: core/modeling/sequences
 # Sequences
 
 > [!NOTE]
-> Sequences are a feature typically supported only by relational databases. If you're using a non-relational database such as Cosmos, check your database documentation on generating unique values.
+> Sequences are a feature typically supported only by relational databases. If you're using a non-relational database such as Azure Cosmos DB, check your database documentation on generating unique values.
 
 A sequence generates unique, sequential numeric values in the database. Sequences are not associated with a specific table, and multiple tables can be set up to draw values from the same sequence.
 

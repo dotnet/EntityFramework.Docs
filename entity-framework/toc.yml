@@ -387,13 +387,13 @@
           href: core/providers/sqlite/spatial.md
         - name: Microsoft.Data.Sqlite >>
           href: /dotnet/standard/data/sqlite/
-      - name: Cosmos
+      - name: Azure Cosmos DB
         items:
         - name: Overview
           href: core/providers/cosmos/index.md
         - name: Work with unstructured data
           href: core/providers/cosmos/unstructured-data.md
-        - name: Cosmos limitations
+        - name: Azure Cosmos DB limitations
           href: core/providers/cosmos/limitations.md
         - name: Function mappings
           href: core/providers/cosmos/functions.md
