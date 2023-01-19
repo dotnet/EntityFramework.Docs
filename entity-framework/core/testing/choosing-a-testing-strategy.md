@@ -57,7 +57,7 @@ For information on how to use SQLite for testing, [see this section](xref:core/t
 
 As an alternative to SQLite, EF Core also comes with an in-memory provider. Although this provider was originally designed to support internal testing of EF Core itself, some developers use it as a database fake when testing EF Core applications. Doing so is **highly discouraged**: as a database fake, in-memory has the same issues as SQLite (see above), but in addition has the following additional limitations:
 
-* The in-memory provider generally supports less query types than the SQLite provider, since it isn't a relational database. More queries will fail or behave differently in comparison to your production database.
+* The in-memory provider generally supports fewer query types than the SQLite provider, since it isn't a relational database. More queries will fail or behave differently in comparison to your production database.
 * Transactions are not supported.
 * Raw SQL is completely unsupported. Compare this with SQLite, where it's possible to use raw SQL, as long as that SQL works in the same way on SQLite and your production database.
 * The in-memory provider has not been optimized for performance, and will generally work slower than SQLite in in-memory mode (or even your production database system).
