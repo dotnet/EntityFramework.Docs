@@ -289,7 +289,7 @@ Adds F# design-time support to EF Core. For EF Core: 5, 6.
 
 ### EntityFrameworkCore.VisualBasic
 
-Adds VB design-time support to EF Core. For EF Core: 5, 6.
+Adds VB design-time support to EF Core. For EF Core: 5, 6, 7.
 
 [GitHub repository](https://github.com/efcore/EFCore.VisualBasic) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.VisualBasic)
 
