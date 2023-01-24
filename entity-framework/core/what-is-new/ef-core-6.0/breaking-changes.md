@@ -20,7 +20,7 @@ EF Core 6.0 targets .NET 6. Applications targeting older .NET, .NET Core, and .N
 |:------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [Nested optional dependents sharing a table and with no required properties cannot be saved](#nested-optionals)                     | High       |
 | [Changing the owner of an owned entity now throws an exception](#owned-reparenting)                                                 | Medium     |
-| [Azure Cosmos DB: Related entity types are discovered as owned](#cosmos-owned)                                                               | Medium     |
+| [Azure Cosmos DB: Related entity types are discovered as owned](#cosmos-owned)                                                      | Medium     |
 | [SQLite: Connections are pooled](#connection-pool)                                                                                  | Medium     |
 | [Many-to-many relationships without mapped join entities are now scaffolded](#many-to-many)                                         | Medium     |
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                        | Low        |
@@ -32,7 +32,7 @@ EF Core 6.0 targets .NET 6. Applications targeting older .NET, .NET Core, and .N
 | [Added IReadOnly Metadata interfaces and removed extension methods](#ireadonly-metadata)                                            | Low        |
 | [IExecutionStrategy is now a singleton service](#iexecutionstrategy)                                                                | Low        |
 | [SQL Server: More errors are considered transient](#transient-errors)                                                               | Low        |
-| [Azure Cosmos DB: More characters are escaped in 'id' values](#cosmos-id)                                                                    | Low        |
+| [Azure Cosmos DB: More characters are escaped in 'id' values](#cosmos-id)                                                           | Low        |
 | [Some Singleton services are now Scoped](#query-services)                                                                           | Low*       |
 | [New caching API for extensions that add or replace services](#extensions-caching)                                                  | Low*       |
 | [New snapshot and design-time model initialization procedure](#snapshot-initialization)                                             | Low        |

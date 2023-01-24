@@ -23,10 +23,10 @@ The following API and behavior changes have the potential to break existing appl
 | [ToView() is treated differently by migrations](#toview)                                                                              | Medium     |
 | [ToTable(null) marks the entity type as not mapped to a table](#totable)                                                              | Medium     |
 | [Removed HasGeometricDimension method from SQLite NTS extension](#geometric-sqlite)                                                   | Low        |
-| [Azure Cosmos DB: Partition key is now added to the primary key](#cosmos-partition-key)                                                        | Low        |
-| [Azure Cosmos DB: `id` property renamed to `__id`](#cosmos-id)                                                                                 | Low        |
-| [Azure Cosmos DB: byte[] is now stored as a base64 string instead of a number array](#cosmos-byte)                                             | Low        |
-| [Azure Cosmos DB: GetPropertyName and SetPropertyName were renamed](#cosmos-metadata)                                                          | Low        |
+| [Azure Cosmos DB: Partition key is now added to the primary key](#cosmos-partition-key)                                               | Low        |
+| [Azure Cosmos DB: `id` property renamed to `__id`](#cosmos-id)                                                                        | Low        |
+| [Azure Cosmos DB: byte[] is now stored as a base64 string instead of a number array](#cosmos-byte)                                    | Low        |
+| [Azure Cosmos DB: GetPropertyName and SetPropertyName were renamed](#cosmos-metadata)                                                 | Low        |
 | [Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted](#non-added-generation) | Low        |
 | [IMigrationsModelDiffer now uses IRelationalModel](#relational-model)                                                                 | Low        |
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
