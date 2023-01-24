@@ -20,7 +20,7 @@ EF Core 6.0 targets .NET 6. Applications targeting older .NET, .NET Core, and .N
 |:------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [Nested optional dependents sharing a table and with no required properties cannot be saved](#nested-optionals)                     | High       |
 | [Changing the owner of an owned entity now throws an exception](#owned-reparenting)                                                 | Medium     |
-| [Cosmos: Related entity types are discovered as owned](#cosmos-owned)                                                               | Medium     |
+| [Azure Cosmos DB: Related entity types are discovered as owned](#cosmos-owned)                                                      | Medium     |
 | [SQLite: Connections are pooled](#connection-pool)                                                                                  | Medium     |
 | [Many-to-many relationships without mapped join entities are now scaffolded](#many-to-many)                                         | Medium     |
 | [Cleaned up mapping between DeleteBehavior and ON DELETE values](#on-delete)                                                        | Low        |
@@ -32,7 +32,7 @@ EF Core 6.0 targets .NET 6. Applications targeting older .NET, .NET Core, and .N
 | [Added IReadOnly Metadata interfaces and removed extension methods](#ireadonly-metadata)                                            | Low        |
 | [IExecutionStrategy is now a singleton service](#iexecutionstrategy)                                                                | Low        |
 | [SQL Server: More errors are considered transient](#transient-errors)                                                               | Low        |
-| [Cosmos: More characters are escaped in 'id' values](#cosmos-id)                                                                    | Low        |
+| [Azure Cosmos DB: More characters are escaped in 'id' values](#cosmos-id)                                                           | Low        |
 | [Some Singleton services are now Scoped](#query-services)                                                                           | Low*       |
 | [New caching API for extensions that add or replace services](#extensions-caching)                                                  | Low*       |
 | [New snapshot and design-time model initialization procedure](#snapshot-initialization)                                             | Low        |
@@ -169,7 +169,7 @@ Instead of assigning the same owned instance to a new owner you can assign a cop
 
 <a name="cosmos-owned"></a>
 
-### Cosmos: Related entity types are discovered as owned
+### Azure Cosmos DB: Related entity types are discovered as owned
 
 [Tracking Issue #24803](https://github.com/dotnet/efcore/issues/24803)
 [What's new: Default to implicit ownership](xref:core/what-is-new/ef-core-6.0/whatsnew#default-to-implicit-ownership)
@@ -184,7 +184,7 @@ Related entity types will now be owned by the entity type on which they were dis
 
 #### Why
 
-This behavior follows the common pattern of modeling data in Azure Cosmos DB of embedding related data into a single document. Cosmos DB does not natively support joining different documents, so modeling related entities as non-owned has limited usefulness.
+This behavior follows the common pattern of modeling data in Azure Cosmos DB of embedding related data into a single document. Azure Cosmos DB does not natively support joining different documents, so modeling related entities as non-owned has limited usefulness.
 
 #### Mitigations
 
@@ -548,7 +548,7 @@ To change the set of errors that are considered transient, use a custom executio
 
 <a name="cosmos-id"></a>
 
-### Cosmos: More characters are escaped in 'id' values
+### Azure Cosmos DB: More characters are escaped in 'id' values
 
 [Tracking Issue #25100](https://github.com/dotnet/efcore/issues/25100)
 

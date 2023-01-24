@@ -86,7 +86,7 @@ additionalContent:
             - url: /azure/cosmos-db/sql/create-notebook-visualize-data
               text: "Create a notebook in Azure Cosmos DB to analyze and visualize the data"
             - url: /azure/cosmos-db/mongodb/mongodb-introduction
-              text: "Azure Cosmos DB API for MongoDB"
+              text: "Azure Cosmos DB for MongoDB"
             - url: /ef/core/providers/cosmos/
               text: "EF Core Azure Cosmos DB provider"
 
@@ -94,9 +94,9 @@ additionalContent:
         - title: Graph database (Azure Cosmos DB Graph API)
           links:
             - url: /azure/cosmos-db/graph/graph-introduction
-              text: "Introduction to Gremlin API in Azure Cosmos Db"
+              text: "Introduction to Azure Cosmos DB for Apache Gremlin"
             - url: /azure/cosmos-db/graph/create-graph-dotnet
-              text: "Build a .NET Framework or Core application using the Azure Cosmos DB Gremlin API account"
+              text: "Build a .NET Framework or Core application using the Azure Cosmos DB for Apache Gremlin account"
             - url: /sql/relational-databases/graphs/sql-graph-architecture
               text: "SQL Graph Architecture"
 

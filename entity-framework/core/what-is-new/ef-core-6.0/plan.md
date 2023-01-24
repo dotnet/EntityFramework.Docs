@@ -182,7 +182,7 @@ It was previously the team view that owned entities, intended for [aggregate sup
 
 This work is initially scoped to allow [value converters which map to multiple columns](https://github.com/dotnet/efcore/issues/13947). We may pull in additional support based on feedback during the release.
 
-### Cosmos database provider
+### Azure Cosmos DB database provider
 
 Tracked by [issues labeled with 'area-cosmos' and in the 6.0 milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+milestone%3A6.0.0+label%3Aarea-cosmos)
 
@@ -190,9 +190,9 @@ Status: Expanded/Complete
 
 T-shirt size: Large
 
-We are actively gathering feedback on which improvements to make to the Cosmos provider in EF Core 6.0. We will update this document as we learn more. For now, please make sure to vote (👍) for the Cosmos features that you need.
+We are actively gathering feedback on which improvements to make to the Azure Cosmos DB provider in EF Core 6.0. We will update this document as we learn more. For now, please make sure to vote (👍) for the Azure Cosmos DB features that you need.
 
-Update: We have been doing extensive customer development around the Cosmos provider. This has resulted in the following enhancements being pulled into EF Core 6.0:
+Update: We have been doing extensive customer development around the Azure Cosmos DB provider. This has resulted in the following enhancements being pulled into EF Core 6.0:
 
 - [Azure Cosmos DB provider should default to implicit ownership](https://github.com/dotnet/efcore/issues/24803)
 - [Set partition key on join entity type by convention](https://github.com/dotnet/efcore/issues/23491)

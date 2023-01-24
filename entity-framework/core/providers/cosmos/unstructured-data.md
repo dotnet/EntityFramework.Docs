@@ -48,11 +48,11 @@ To decouple completely from EF Core get the [CosmosClient](/dotnet/api/Microsoft
 
 ## Missing property values
 
-In the previous example we removed the `"TrackingNumber"` property from the order. Because of how indexing works in Cosmos DB, queries that reference the missing property somewhere else than in the projection could return unexpected results. For example:
+In the previous example we removed the `"TrackingNumber"` property from the order. Because of how indexing works in Azure Cosmos DB, queries that reference the missing property somewhere else than in the projection could return unexpected results. For example:
 
 [!code-csharp[MissingProperties](../../../../samples/core/Cosmos/UnstructuredData/Sample.cs?name=MissingProperties)]
 
 The sorted query actually returns no results. This means that one should take care to always populate properties mapped by EF Core when working with the store directly.
 
 > [!NOTE]
-> This behavior might change in future versions of Cosmos. For instance, currently if the indexing policy defines the composite index {Id/? ASC, TrackingNumber/? ASC)}, then a query that has 'ORDER BY c.Id ASC, c.Discriminator ASC' __would__ return items that are missing the `"TrackingNumber"` property.
+> This behavior might change in future versions of Azure Cosmos DB. For instance, currently if the indexing policy defines the composite index {Id/? ASC, TrackingNumber/? ASC)}, then a query that has 'ORDER BY c.Id ASC, c.Discriminator ASC' __would__ return items that are missing the `"TrackingNumber"` property.

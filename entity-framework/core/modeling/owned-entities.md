@@ -13,7 +13,7 @@ Owned entities are essentially a part of the owner and cannot exist without it, 
 
 ## Configuring types as owned
 
-In most providers, entity types are never configured as owned by convention - you must explicitly use the `OwnsOne` method in `OnModelCreating` or annotate the type with `OwnedAttribute` to configure the type as owned. The Azure Cosmos DB provider is an exception to this. Because Cosmos DB is a document database, the provider configures all related entity types as owned by default.
+In most providers, entity types are never configured as owned by convention - you must explicitly use the `OwnsOne` method in `OnModelCreating` or annotate the type with `OwnedAttribute` to configure the type as owned. The Azure Cosmos DB provider is an exception to this. Because Azure Cosmos DB is a document database, the provider configures all related entity types as owned by default.
 
 In this example, `StreetAddress` is a type with no identity property. It is used as a property of the Order type to specify the shipping address for a particular order.
 

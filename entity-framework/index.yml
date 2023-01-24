@@ -80,7 +80,7 @@ additionalContent:
           - url: https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql
             text: "MySQL and MariaDB"
           - url: core/providers/cosmos/index.md
-            text: "Cosmos DB SQL API"
+            text: "Azure Cosmos DB for NoSQL"
           - url: core/providers/in-memory/index.md
             text: "In memory (testing)"
           - url: core/providers/index.md
