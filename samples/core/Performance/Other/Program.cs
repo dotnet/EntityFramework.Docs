@@ -207,8 +207,26 @@ internal class Program
 
         using (var context = new EmployeeContext())
         {
-            #region UpdateWithBulk
+            #region UpdateWithRawSql
             context.Database.ExecuteSqlRaw("UPDATE [Employees] SET [Salary] = [Salary] + 1000");
+            #endregion
+        }
+
+        await using (var context = new EmployeeContext())
+        {
+            #region UpdateWithBulk
+            await context.Employees
+                .Where(x => x.Salary < 5000)
+                .ExecuteUpdateAsync(s => s.SetProperty(e => e.Salary, e => e.Salary + 1000));
+            #endregion
+        }
+
+        await using (var context = new EmployeeContext())
+        {
+            #region DeleteWithBulk
+            await context.Employees
+                .Where(x => x.Salary > 5000)
+                .ExecuteDeleteAsync();
             #endregion
         }
 

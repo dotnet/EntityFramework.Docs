@@ -41,6 +41,22 @@ UPDATE [Employees] SET [Salary] = [Salary] + 1000;
 
 This performs the entire operation in a single roundtrip, without loading or sending any actual data to the database, and without making use of EF's change tracking machinery, which imposes an additional overhead.
 
-Unfortunately, EF doesn't currently provide APIs for performing bulk updates. Until these are introduced, you can use raw SQL to perform the operation where performance is sensitive:
+You can use raw SQL to perform the operation where performance is sensitive:
+
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#UpdateWithRawSql)]
+
+However, using raw SQL statements in this way loses strong-type checking, and can be error-prone. From Entity Framework Core 7.0, you can use `ExecuteUpdate` or `ExecuteUpdateAsync` to perform bulk updates, which applies the same optimizations as raw SQL but retains LINQ type checking:
 
 [!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#UpdateWithBulk)]
+
+## Bulk deletes
+
+Similarly, EF provides `ExecuteDelete` and `ExecuteDeleteAsync` for bulk deletes:
+
+[!code-csharp[Main](../../../samples/core/Performance/Other/Program.cs#DeleteWithBulk)]
+
+As shown above, the queries can contain `Where` clauses to filter the rows to be updated/deleted.
+
+Note that `ExecuteUpdate` and `ExecuteDelete` will execute immediately so you do not need to call `SaveChanges` afterward. Also, any tracked entities will not be kept in sync.
+
+For more information, see [ExecuteUpdate and ExecuteDelete (Bulk updates)](xref:core/what-is-new/ef-core-7.0/whatsnew#executeupdate-and-executedelete-bulk-updates).
