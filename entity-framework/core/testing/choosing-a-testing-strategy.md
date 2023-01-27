@@ -36,7 +36,7 @@ The above is not meant to disparage test doubles or to argue against using them.
 3. Mock or stub out `DbContext` and `DbSet`.
 4. Introduce a repository layer between EF Core and your application code, and mock or stub that layer.
 
-Below, we'll explore what each method means, and compare it with the others. We recommend reading through the different methods to gain a full understanding of each one. If you've decided to write tests which don't involve your production database system, than a repository layer is the only approach allowing the comprehensive and reliable stubbing/mocking of the data layer. However, that approach has a significant cost in terms of implementation and maintenance.
+Below, we'll explore what each method means, and compare it with the others. We recommend reading through the different methods to gain a full understanding of each one. If you've decided to write tests which don't involve your production database system, then a repository layer is the only approach allowing the comprehensive and reliable stubbing/mocking of the data layer. However, that approach has a significant cost in terms of implementation and maintenance.
 
 ### SQLite as a database fake
 
