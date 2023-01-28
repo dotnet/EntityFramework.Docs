@@ -30,7 +30,7 @@ LEFT JOIN [Contributors] AS [c] ON [b].[Id] = [c].[BlogId]
 ORDER BY [b].[Id], [p].[Id]
 ```
 
-In this example, since both `Posts` and `Contributors` are are collection navigations of `Blog` - they're at the same level - relational databases return a *cross product*: each row from `Posts` is joined with each row from `Contributors`. This means that if a given blog has 10 posts and 10 contributors, the database returns 100 rows for that single blog. This phenomenon - sometimes called *cartesian explosion* - can cause huge amounts of data to unintentionally get transferred to the client, especially as more sibling JOINs are added to the query; this can be a major performance issue in database applications.
+In this example, since both `Posts` and `Contributors` are collection navigations of `Blog` - they're at the same level - relational databases return a *cross product*: each row from `Posts` is joined with each row from `Contributors`. This means that if a given blog has 10 posts and 10 contributors, the database returns 100 rows for that single blog. This phenomenon - sometimes called *cartesian explosion* - can cause huge amounts of data to unintentionally get transferred to the client, especially as more sibling JOINs are added to the query; this can be a major performance issue in database applications.
 
 Note that cartesian explosion does not occur when the two JOINs aren't at the same level:
 
