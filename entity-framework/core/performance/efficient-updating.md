@@ -31,7 +31,7 @@ While this is perfectly valid code, let's analyze what it does from a performanc
 
 * A database roundtrip is performed, to load all the relevant employees; note that this brings all the Employees' row data to the client, even if only the salary will be needed.
 * EF Core's change tracking creates snapshots when loading the entities, and then compares those snapshots to the instances to find out which properties changed.
-* A second database roundtrip is performed to save all the changes. While all changes are done in a single roundtrip thanks to batching, EF Core still sends an UPDATE statement per employee, which must be executed by the database.
+* Typically, a second database roundtrip is performed to save all the changes (note that some database providers split the changes into multiples roundtrips). Although this batching behavior is far better than doing a roundtrip for each update, EF Core still sends an UPDATE statement per employee, and the database must execute each statement separately.
 
 Relational databases also support *bulk updates*, so the above could be rewritten as the following single SQL statement:
 
