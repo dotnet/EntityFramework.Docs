@@ -2,7 +2,7 @@
 title: What's New in EF Core 8
 description: Overview of new features in EF Core 8
 author: ajcvickers
-ms.date: 01/29/2023
+ms.date: 01/30/2023
 uid: core/what-is-new/ef-core-8
 ---
 
@@ -392,9 +392,9 @@ This can be changed in EF8 to opt-in to the classic EF6 behavior such that a nav
 
 ### Lookup tracked entities by primary, alternate, or foreign key
 
-Internally, EF maintains indexes for finding tracked entities by primary, alternate, or foreign key. These indexes are used for efficient fixup between related entities when new entities are tracked or relationships change.
+Internally, EF maintains data structures for finding tracked entities by primary, alternate, or foreign key. These data structures are used for efficient fixup between related entities when new entities are tracked or relationships change.
 
-EF8 contains new public APIs so that applications can now use these indexes to efficiently lookup tracked entities. These APIs are accessed through the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.LocalView%601> of the entity type. For example, to lookup a tracked entity by its primary key:
+EF8 contains new public APIs so that applications can now use these data structures to efficiently lookup tracked entities. These APIs are accessed through the <xref:Microsoft.EntityFrameworkCore.ChangeTracking.LocalView%601> of the entity type. For example, to lookup a tracked entity by its primary key:
 
 <!--
         var blogEntry = context.Blogs.Local.FindEntry(2)!;
@@ -432,14 +432,14 @@ So far, the lookups have always returned a single entry, or `null`. However, som
 -->
 [!code-csharp[LookupByForeignKey](../../../../samples/core/Miscellaneous/NewInEFCore8/LookupByKeySample.cs?name=LookupByForeignKey)]
 
-In all these cases, the value being used for the lookup is either a primary key, alternate key, or foreign key value. EF uses its internal indexes for these lookups. However, lookups by value can also be used for the value of any property or combination of properties. For example, to find all archived posts:
+In all these cases, the value being used for the lookup is either a primary key, alternate key, or foreign key value. EF uses its internal data structures for these lookups. However, lookups by value can also be used for the value of any property or combination of properties. For example, to find all archived posts:
 
 <!--
         var archivedPostEntries = context.Posts.Local.GetEntries(nameof(Post.Archived), true);
 -->
 [!code-csharp[LookupByAnyProperty](../../../../samples/core/Miscellaneous/NewInEFCore8/LookupByKeySample.cs?name=LookupByAnyProperty)]
 
-This lookup requires a scan of all tracked `Post` instances, and so will be less efficient than indexed lookups. However, it is usually still faster than naive queries using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Entries%60%601?displayProperty=nameWithType>.
+This lookup requires a scan of all tracked `Post` instances, and so will be less efficient than key lookups. However, it is usually still faster than naive queries using <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Entries%60%601?displayProperty=nameWithType>.
 
 Finally, it is also possible to perform lookups against composite keys, other combinations of multiple properties, or when the property type is not known at compile time. For example:
 
@@ -498,7 +498,7 @@ CREATE TABLE [Documents] (
 EF8 reverse engineering (a.k.a. scaffolding from an existing database) now supports [Synapse Serverless SQL Pool](/azure/synapse-analytics/sql/on-demand-workspace-overview) and [Dynamics 365 TDS Endpoint](/power-apps/developer/data-platform/dataverse-sql-query) databases.
 
 > [!WARNING]
-> These database systems have differences from normal SQL Server and Azure SQL databases. These differences mean that not all EF Core functionality is supported when writing queries against or performing other operations with these database types.
+> These database systems have differences from normal SQL Server and Azure SQL databases. These differences mean that not all EF Core functionality is supported when writing queries against or performing other operations with these database systems.
 
 ### Smaller enhancements included in Preview 1
 
