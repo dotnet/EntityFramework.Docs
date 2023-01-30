@@ -2,17 +2,13 @@
 title: What's New in EF Core 7.0
 description: Overview of new features in EF Core 7.0
 author: ajcvickers
-ms.date: 10/10/2022
+ms.date: 01/15/2022
 uid: core/what-is-new/ef-core-7
 ---
 
 # What's New in EF Core 7.0
 
-EF Core 7.0 (EF7) is the next release after EF Core 6.0 and is scheduled for release in November 2022. See [_Plan for Entity Framework Core 7.0_](xref:core/what-is-new/ef-core-7.0/plan) for details and [_.NET Data Biweekly Updates (2022)_](https://github.com/dotnet/efcore/issues/27185) for progress on the plan.
-
-EF7 is currently in preview. The latest release on NuGet is [EF Core 7.0 Preview 7](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/7.0.0-preview.7.22376.2).
-
-EF7 is also available as [daily builds](https://github.com/dotnet/efcore/blob/main/docs/DailyBuilds.md) which contain all the latest EF7 features and API tweaks. The samples here make use of these daily builds.
+EF Core 7.0 (EF7) was [released in November 2022](https://devblogs.microsoft.com/dotnet/announcing-ef7/).
 
 > [!TIP]
 > You can run and debug into the samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs). Each section links to the source code specific to that section.
