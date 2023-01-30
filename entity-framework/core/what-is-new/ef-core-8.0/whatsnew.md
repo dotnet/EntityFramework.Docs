@@ -418,7 +418,7 @@ Looking up an entity by anything other than a primary key requires that the prop
 -->
 [!code-csharp[LookupByAlternateKey](../../../../samples/core/Miscellaneous/NewInEFCore8/LookupByKeySample.cs?name=LookupByAlternateKey)]
 
-Or to lookup by a unique foreign key:
+Or to look up by a unique foreign key:
 
 <!--
         var blogAtSiteEntry = context.Blogs.Local.FindEntry(nameof(Blog.SiteUri), new Uri("https://www.bricelam.net/"))!;
