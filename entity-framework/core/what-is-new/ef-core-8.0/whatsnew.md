@@ -336,7 +336,7 @@ If `Blog.Posts` is configured for lazy-loading, for example, using lazy-loading 
 -->
 [!code-csharp[ChooseABlog](../../../../samples/core/Miscellaneous/NewInEFCore8/LazyLoadingSample.cs?name=ChooseABlog)]
 
-EF8 will also report whether or not a given navigation is loaded for entities not tracked by the context. For example:
+EF8 also reports whether or not a given navigation is loaded for entities not tracked by the context. For example:
 
 <!--
         foreach (var blog in blogs)
