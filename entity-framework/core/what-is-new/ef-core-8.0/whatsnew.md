@@ -15,7 +15,7 @@ EF8 is available as [daily builds](https://github.com/dotnet/efcore/blob/main/do
 > [!TIP]
 > You can run and debug into the samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs). Each section links to the source code specific to that section.
 
-EF8 previews currently target .NET 6, and can therefore be used with either [.NET 6 (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0) or [.NET 7](https://dotnet.microsoft.com/download/dotnet/7.0).
+EF8 previews currently target .NET 6, and can therefore be used with either [.NET 6 (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0) or [.NET 7](https://dotnet.microsoft.com/download/dotnet/7.0). There is a good chance that EF8 will be changed to target .NET 8 before it's released.
 
 ## Sample model
 
