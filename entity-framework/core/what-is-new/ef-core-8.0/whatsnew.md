@@ -360,7 +360,7 @@ Lazy-loading from untracked entities works for both [lazy-loading proxies](xref:
 
 ### Explicit loading from untracked entities
 
-EF8 supports loading of navigations on untracked entities even when the entity or navigation is not configured for lazy-loading. Unlike with lazy-loading, this [explicit loading](xref:core/querying/related-data/explicit) can be done asynchronous. For example:
+EF8 supports loading of navigations on untracked entities even when the entity or navigation is not configured for lazy-loading. Unlike with lazy-loading, this [explicit loading](xref:core/querying/related-data/explicit) can be done asynchronously. For example:
 
 <!--
             await context.Entry(blog).Collection(e => e.Posts).LoadAsync();
