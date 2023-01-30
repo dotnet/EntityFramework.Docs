@@ -369,7 +369,7 @@ EF8 supports loading of navigations on untracked entities even when the entity o
 
 ### Opt-out of lazy-loading for specific navigations
 
-EF8 allows configuration of specific navigations to not lazy-load, even when everything else is setup to do so. For example, to configure the `Post.Author` navigation to not lazy-load:
+EF8 allows configuration of specific navigations to not lazy-load, even when everything else is set up to do so. For example, to configure the `Post.Author` navigation to not lazy-load, do the following:
 
 <!--
         modelBuilder
