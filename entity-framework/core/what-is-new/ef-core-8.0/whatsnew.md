@@ -411,7 +411,7 @@ The [`FindEntry`](https://github.com/dotnet/efcore/blob/81886272a761df8fafe4970b
 -->
 [!code-csharp[UseEntry](../../../../samples/core/Miscellaneous/NewInEFCore8/LookupByKeySample.cs?name=UseEntry)]
 
-Lookups for anything other than by primary key value require that the property name is specified. For example, to lookup by an alternate key:
+Looking up an entity by anything other than a primary key requires that the property name be specified. For example, to look up by an alternate key:
 
 <!--
         var siteEntry = context.Websites.Local.FindEntry(nameof(Website.Uri), new Uri("https://www.bricelam.net/"))!;
