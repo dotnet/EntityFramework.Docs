@@ -296,7 +296,7 @@ Likewise, `SqlQuery` can be used for the results of a function:
 -->
 [!code-csharp[SqlQueryFunction](../../../../samples/core/Miscellaneous/NewInEFCore8/RawSqlSample.cs?name=SqlQueryFunction)]
 
-The returned `IQueryable` can be composed when it is the result of a view or function, just like it can be for the result of a table query. Stored procedures can be also be executed using `SqlQuery`, but in this case the `IQueryable` cannot be further composed. For example:
+The returned `IQueryable` can be composed upon when it is the result of a view or function, just like it can be for the result of a table query. Stored procedures can be also be executed using `SqlQuery`, but most databases do not support composing over them. For example:
 
 <!--
         var summariesFromStoredProc =
