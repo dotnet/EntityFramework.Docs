@@ -352,9 +352,9 @@ EF8 also reports whether or not a given navigation is loaded for entities not tr
 There are a few important considerations when using lazy-loading in this way:
 
 - Lazy-loading will only succeed until the `DbContext` used to query the entity is disposed.
-- Entities query in this way retain a reference to their `DbContext`, even though they are not tracked by it. Care should be taken to avoid memory leaks if the entity instances will have long lifetimes.
-- Explicitly detaching the entity by setting its state to `EntityState.Detached` will sever the reference to the `DbContext` and lazy-loading will no longer work.
-- Remember that all lazy-loading is synchronous, since there is no way to access a property in an async manner.
+- Entities queried in this way a reference to their `DbContext`, even though they are not tracked by it. Care should be taken to avoid memory leaks if the entity instances will have long lifetimes.
+- Explicitly detaching the entity by setting its state to `EntityState.Detached` severs the reference to the `DbContext` and lazy-loading will no longer work.
+- Remember that all lazy-loading uses synchronous I/O, since there is no way to access a property in an asynchronous manner.
 
 Lazy-loading from untracked entities works for both [lazy-loading proxies](xref:core/querying/related-data/lazy#lazy-loading-with-proxies) and [lazy-loading without proxies](xref:core/querying/related-data/lazy#lazy-loading-without-proxies).
 
