@@ -4,7 +4,7 @@ namespace NewInEfCore8;
 
 public abstract class Document
 {
-    protected Document(string title, int numberOfPages, DateTime publicationDate, byte[]? coverArt)
+    protected Document(string title, int numberOfPages, DateOnly publicationDate, byte[]? coverArt)
     {
         Title = title;
         NumberOfPages = numberOfPages;
@@ -19,16 +19,16 @@ public abstract class Document
 
     public string Title { get; set; }
     public int NumberOfPages { get; set; }
-    public DateTime PublicationDate { get; set; }
+    public DateOnly PublicationDate { get; set; }
     public byte[]? CoverArt { get; set; }
 
-    public DateTime FirstRecordedOn { get; private set; }
-    public DateTime RetrievedOn { get; private set; }
+    public DateOnly FirstRecordedOn { get; private set; }
+    public DateOnly RetrievedOn { get; private set; }
 }
 
 public class Book : Document
 {
-    public Book(string title, int numberOfPages, DateTime publicationDate, byte[]? coverArt)
+    public Book(string title, int numberOfPages, DateOnly publicationDate, byte[]? coverArt)
         : base(title, numberOfPages, publicationDate, coverArt)
     {
     }
@@ -40,7 +40,7 @@ public class Book : Document
 
 public class Magazine : Document
 {
-    public Magazine(string title, int numberOfPages, DateTime publicationDate, byte[]? coverArt, int issueNumber)
+    public Magazine(string title, int numberOfPages, DateOnly publicationDate, byte[]? coverArt, int issueNumber)
         : base(title, numberOfPages, publicationDate, coverArt)
     {
         IssueNumber = issueNumber;
@@ -154,27 +154,27 @@ public abstract class DocumentsContext : DbContext
 
         var documents = new List<Document>
         {
-            new Book("Extreme Programming Explained", 190, new DateTime(2000, 1, 1), null)
+            new Book("Extreme Programming Explained", 190, new DateOnly(2000, 1, 1), null)
             {
                 Isbn = "201-61641-6", Authors = { kentBeck }
             },
-            new Book("Java Puzzlers", 283, new DateTime(2005, 1, 1), null)
+            new Book("Java Puzzlers", 283, new DateOnly(2005, 1, 1), null)
             {
                 Isbn = "0-321-33678-X", Authors = { joshuaBloch, nealGafter }
             },
-            new Book("Effective Java", 252, new DateTime(2001, 1, 1), new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
+            new Book("Effective Java", 252, new DateOnly(2001, 1, 1), new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
             {
                 Isbn = "0-201-31005-8", Authors = { joshuaBloch }
             },
-            new Book("Test-Driven Development By Example", 220, new DateTime(2003, 1, 1), null)
+            new Book("Test-Driven Development By Example", 220, new DateOnly(2003, 1, 1), null)
             {
                 Isbn = "0-321-14653-0", Authors = { kentBeck }
             },
-            new Magazine("Amstrad Computer User", 95, new DateTime(1986, 1, 12), new byte[] { 1, 2, 3 }, 15)
+            new Magazine("Amstrad Computer User", 95, new DateOnly(1986, 1, 12), new byte[] { 1, 2, 3 }, 15)
             {
                 CoverPrice = 0.95m, Editor = simonRockman
             },
-            new Magazine("Amiga Computing", 90, new DateTime(1988, 5, 16), null, 1) { CoverPrice = 1.95m, Editor = simonRockman }
+            new Magazine("Amiga Computing", 90, new DateOnly(1988, 5, 16), null, 1) { CoverPrice = 1.95m, Editor = simonRockman }
         };
 
         await AddRangeAsync(documents);

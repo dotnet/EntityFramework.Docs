@@ -26,7 +26,7 @@ public static class JsonColumnsSample
         context.ChangeTracker.Clear();
 
         #region CollectionIndexPredicate
-        var cutoff = DateTime.UtcNow - TimeSpan.FromDays(365);
+        var cutoff = DateOnly.FromDateTime(DateTime.UtcNow - TimeSpan.FromDays(365));
         var updatedPosts = await context.Posts
             .Where(
                 p => p.Metadata!.Updates[0].UpdatedOn < cutoff
@@ -43,7 +43,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region CollectionIndexNestedPredicate
-        var twentyTen = new DateTime(2010, 1, 1);
+        var twentyTen = DateOnly.FromDateTime(new DateTime(2010, 1, 1));
         var postsWithFirstCommit = await context.Posts
             .Where(
                 p => p.Metadata!.Updates[0].UpdatedOn > twentyTen
@@ -64,8 +64,8 @@ public static class JsonColumnsSample
             .Select(p => new
             {
                 p.Title,
-                LatestUpdate = (DateTime?)p.Metadata!.Updates[0].UpdatedOn,
-                SecondLatestUpdate = (DateTime?)p.Metadata.Updates[1].UpdatedOn
+                LatestUpdate = (DateOnly?)p.Metadata!.Updates[0].UpdatedOn,
+                SecondLatestUpdate = (DateOnly?)p.Metadata.Updates[1].UpdatedOn
             })
             .ToListAsync();
         #endregion
