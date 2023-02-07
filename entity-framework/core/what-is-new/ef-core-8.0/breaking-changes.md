@@ -8,7 +8,7 @@ uid: core/what-is-new/ef-core-8.0/breaking-changes
 
 # Breaking changes in EF Core 8.0 (EF8)
 
-This page will dcoument API and behavior changes that have the potential to break existing applications updating to EF Core 8.0.
+This page will document API and behavior changes that have the potential to break existing applications updating to EF Core 8.0.
 
 ## Summary
 
