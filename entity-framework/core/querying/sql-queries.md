@@ -109,7 +109,7 @@ The [`Include`](xref:core/querying/related-data/eager) operator can be used to l
 
 [!code-csharp[Main](../../../samples/core/Querying/SqlQueries/Program.cs#FromSqlInclude)]
 
-Composing with LINQ requires your SQL query to be composable, since EF Core will treat the supplied SQL as a subquery. Comopsable SQL queries generally begin with the `SELECT` keyword, and cannot contain SQL features that aren't valid in a subquery, such as:
+Composing with LINQ requires your SQL query to be composable, since EF Core will treat the supplied SQL as a subquery. Composable SQL queries generally begin with the `SELECT` keyword, and cannot contain SQL features that aren't valid in a subquery, such as:
 
 - A trailing semicolon
 - On SQL Server, a trailing query-level hint (for example, `OPTION (HASH JOIN)`)
