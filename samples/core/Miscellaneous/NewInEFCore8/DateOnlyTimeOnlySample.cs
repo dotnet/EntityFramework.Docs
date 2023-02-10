@@ -112,10 +112,14 @@ public static class DateOnlyTimeOnlySample
         #endregion
 
         // Issue https://github.com/dotnet/efcore/issues/30223
-        // await context.Schools
-        //     .SelectMany(e => e.OpeningHours)
-        //     .Where(e => e.DayOfWeek == DayOfWeek.Friday)
-        //     .ExecuteUpdateAsync(s => s.SetProperty(t => t.OpensAt, t => t.OpensAt!.Value.AddHours(-1)));
+        if (!context.UsesJson
+            && !context.UseSqlite)
+        {
+            await context.Schools
+                .SelectMany(e => e.OpeningHours)
+                .Where(e => e.DayOfWeek == DayOfWeek.Friday)
+                .ExecuteUpdateAsync(s => s.SetProperty(t => t.OpensAt, t => t.OpensAt!.Value.AddHours(-1)));
+        }
 
         Console.WriteLine();
     }
