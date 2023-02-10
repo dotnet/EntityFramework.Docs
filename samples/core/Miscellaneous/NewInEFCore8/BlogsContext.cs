@@ -34,7 +34,7 @@ public class Website
 
 public class Post
 {
-    public Post(string title, string content, DateTime publishedOn)
+    public Post(string title, string content, DateOnly publishedOn)
     {
         Title = title;
         Content = content;
@@ -44,7 +44,7 @@ public class Post
     public int Id { get; private set; }
     public string Title { get; set; }
     public string Content { get; set; }
-    public DateTime PublishedOn { get; set; }
+    public DateOnly PublishedOn { get; set; }
     public bool Archived { get; set; }
     public int BlogId { get; set; }
     public virtual Blog Blog { get; set; } = null!;
@@ -55,7 +55,7 @@ public class Post
 
 public class FeaturedPost : Post
 {
-    public FeaturedPost(string title, string content, DateTime publishedOn, string promoText)
+    public FeaturedPost(string title, string content, DateOnly publishedOn, string promoText)
         : base(title, content, publishedOn)
     {
         PromoText = promoText;
@@ -164,7 +164,7 @@ public class Visits
 
 public class PostUpdate
 {
-    public PostUpdate(IPAddress postedFrom, DateTime updatedOn)
+    public PostUpdate(IPAddress postedFrom, DateOnly updatedOn)
     {
         PostedFrom = postedFrom;
         UpdatedOn = updatedOn;
@@ -172,19 +172,19 @@ public class PostUpdate
 
     public IPAddress PostedFrom { get; private set; }
     public string? UpdatedBy { get; init; }
-    public DateTime UpdatedOn { get; private set; }
+    public DateOnly UpdatedOn { get; private set; }
     public List<Commit> Commits { get; } = new();
 }
 
 public class Commit
 {
-    public Commit(DateTime committedOn, string comment)
+    public Commit(DateOnly committedOn, string comment)
     {
         CommittedOn = committedOn;
         Comment = comment;
     }
 
-    public DateTime CommittedOn { get; private set; }
+    public DateOnly CommittedOn { get; private set; }
     public string Comment { get; set; }
 }
 #endregion
@@ -299,20 +299,20 @@ public abstract class BlogsContext : DbContext
                     new Post(
                         "Productivity comes to .NET MAUI in Visual Studio 2022",
                         "Visual Studio 2022 17.3 is now available and...",
-                        new DateTime(2022, 8, 9)) { Tags = { tagDotNetMaui, tagDotNet }, Author = maddy, Metadata = BuildPostMetadata() },
+                        new DateOnly(2022, 8, 9)) { Tags = { tagDotNetMaui, tagDotNet }, Author = maddy, Metadata = BuildPostMetadata() },
                     new Post(
                         "Announcing .NET 7 Preview 7", ".NET 7 Preview 7 is now available with improvements to System.LINQ, Unix...",
-                        new DateTime(2022, 8, 9)) { Tags = { tagDotNet }, Author = jeremy, Metadata = BuildPostMetadata() },
+                        new DateOnly(2022, 8, 9)) { Tags = { tagDotNet }, Author = jeremy, Metadata = BuildPostMetadata() },
                     new Post(
                         "ASP.NET Core updates in .NET 7 Preview 7", ".NET 7 Preview 7 is now available! Check out what's new in...",
-                        new DateTime(2022, 8, 9))
+                        new DateOnly(2022, 8, 9))
                     {
                         Tags = { tagDotNet, tagAspDotNet, tagAspDotNetCore }, Author = dan, Metadata = BuildPostMetadata()
                     },
                     new FeaturedPost(
                         "Announcing Entity Framework 7 Preview 7: Interceptors!",
                         "Announcing EF7 Preview 7 with new and improved interceptors, and...",
-                        new DateTime(2022, 8, 9),
+                        new DateOnly(2022, 8, 9),
                         "Loads of runnable code!")
                     {
                         Tags = { tagEntityFramework, tagDotNet, tagDotNetCore }, Author = arthur, Metadata = BuildPostMetadata()
@@ -327,18 +327,18 @@ public abstract class BlogsContext : DbContext
                     new Post(
                         "Hacking my Sixth Form College network in 1991",
                         "Back in 1991 I was a student at Franklin Sixth Form College...",
-                        new DateTime(2020, 4, 10)) { Tags = { tagHacking }, Author = arthur, Metadata = BuildPostMetadata() },
+                        new DateOnly(2020, 4, 10)) { Tags = { tagHacking }, Author = arthur, Metadata = BuildPostMetadata() },
                     new FeaturedPost(
                         "All your versions are belong to us",
                         "Totally made up conversations about choosing Entity Framework version numbers...",
-                        new DateTime(2020, 3, 26),
+                        new DateOnly(2020, 3, 26),
                         "Way funny!") { Tags = { tagEntityFramework }, Author = arthur, Metadata = BuildPostMetadata() },
                     new Post(
                         "Moving to Linux", "A few weeks ago, I decided to move from Windows to Linux as...",
-                        new DateTime(2020, 3, 7)) { Tags = { tagLinux }, Author = arthur, Metadata = BuildPostMetadata(), Archived = true },
+                        new DateOnly(2020, 3, 7)) { Tags = { tagLinux }, Author = arthur, Metadata = BuildPostMetadata(), Archived = true },
                     new Post(
                         "Welcome to One Unicorn 2.0!", "I created my first blog back in 2011..",
-                        new DateTime(2020, 2, 29)) { Tags = { tagEntityFramework }, Author = arthur, Metadata = BuildPostMetadata() }
+                        new DateOnly(2020, 2, 29)) { Tags = { tagEntityFramework }, Author = arthur, Metadata = BuildPostMetadata() }
                 },
                 Site = new(new("https://blog.oneunicorn.com/"), "unicorn@example.com")
             },
@@ -348,23 +348,23 @@ public abstract class BlogsContext : DbContext
                 {
                     new FeaturedPost(
                         "SQLite in Visual Studio 2022", "A couple of years ago, I was thinking of ways...",
-                        new DateTime(2022, 7, 26), "Love for VS!")
+                        new DateOnly(2022, 7, 26), "Love for VS!")
                     {
                         Tags = { tagSqlite, tagVisualStudio }, Author = brice, Metadata = BuildPostMetadata()
                     },
                     new Post(
                         "On .NET - Entity Framework Migrations Explained",
                         "This week, @JamesMontemagno invited me onto the On .NET show...",
-                        new DateTime(2022, 5, 4))
+                        new DateOnly(2022, 5, 4))
                     {
                         Tags = { tagEntityFramework, tagDotNet }, Author = brice, Metadata = BuildPostMetadata()
                     },
                     new Post(
                         "Dear DBA: A silly idea", "We have fun on the Entity Framework team...",
-                        new DateTime(2022, 3, 31)) { Tags = { tagEntityFramework }, Author = brice, Metadata = BuildPostMetadata(), Archived = true },
+                        new DateOnly(2022, 3, 31)) { Tags = { tagEntityFramework }, Author = brice, Metadata = BuildPostMetadata(), Archived = true },
                     new Post(
                         "Microsoft.Data.Sqlite 6", "It’s that time of year again. Microsoft.Data.Sqlite version...",
-                        new DateTime(2021, 11, 8)) { Tags = { tagSqlite, tagDotNet }, Author = brice, Metadata = BuildPostMetadata() }
+                        new DateOnly(2021, 11, 8)) { Tags = { tagSqlite, tagDotNet }, Author = brice, Metadata = BuildPostMetadata() }
                 },
                 Site = new(new("https://www.bricelam.net/"), "brice@example.com")
             },
@@ -374,14 +374,14 @@ public abstract class BlogsContext : DbContext
                 {
                     new Post(
                         "GraphQL for .NET Developers", "A comprehensive overview of GraphQL as...",
-                        new DateTime(2021, 7, 1))
+                        new DateOnly(2021, 7, 1))
                     {
                         Tags = { tagDotNet, tagGraphQl, tagAspDotNetCore }, Author = jeremy, Metadata = BuildPostMetadata()
                     },
                     new FeaturedPost(
                         "Azure Cosmos DB With EF Core on Blazor Server",
                         "Learn how to build Azure Cosmos DB apps using Entity Framework Core...",
-                        new DateTime(2021, 5, 16),
+                        new DateOnly(2021, 5, 16),
                         "Blazor FTW!")
                     {
                         Tags =
@@ -398,7 +398,7 @@ public abstract class BlogsContext : DbContext
                     new Post(
                         "Multi-tenancy with EF Core in Blazor Server Apps",
                         "Learn several ways to implement multi-tenant databases in Blazor Server apps...",
-                        new DateTime(2021, 4, 29))
+                        new DateOnly(2021, 4, 29))
                     {
                         Tags = { tagDotNet, tagEntityFramework, tagAspDotNetCore, tagBlazor },
                         Author = jeremy,
@@ -406,7 +406,7 @@ public abstract class BlogsContext : DbContext
                     },
                     new Post(
                         "An Easier Blazor Debounce", "Where I propose a simple method to debounce input without...",
-                        new DateTime(2021, 4, 12))
+                        new DateOnly(2021, 4, 12))
                     {
                         Tags = { tagDotNet, tagAspDotNetCore, tagBlazor }, Author = jeremy, Metadata = BuildPostMetadata()
                     }
@@ -426,14 +426,14 @@ public abstract class BlogsContext : DbContext
 
             for (var i = 0; i < random.Next(5); i++)
             {
-                var update = new PostUpdate(IPAddress.Loopback, DateTime.UtcNow - TimeSpan.FromDays(random.Next(1, 10000)))
+                var update = new PostUpdate(IPAddress.Loopback, DateOnly.FromDateTime(DateTime.UtcNow - TimeSpan.FromDays(random.Next(1, 10000))))
                 {
                     UpdatedBy = "Admin"
                 };
 
                 for (var j = 0; j < random.Next(3); j++)
                 {
-                    update.Commits.Add(new(DateTime.Today, $"Commit #{j + 1}"));
+                    update.Commits.Add(new(DateOnly.FromDateTime(DateTime.Today), $"Commit #{j + 1}"));
                 }
 
                 metadata.Updates.Add(update);

@@ -26,7 +26,7 @@ public static class RawSqlSample
                                                     (
                                                         BlogName nvarchar(max) not null,
                                                         PostTitle nvarchar(max) not null,
-                                                        PublishedOn datetime2 not null
+                                                        PublishedOn date not null
                                                     )
                                                     AS
                                                     BEGIN
@@ -48,8 +48,8 @@ public static class RawSqlSample
         context.ChangeTracker.Clear();
 
         #region SqlQueryAllColumns
-        var start = new DateTime(2022, 1, 1);
-        var end = new DateTime(2023, 1, 1);
+        var start = new DateOnly(2022, 1, 1);
+        var end = new DateOnly(2023, 1, 1);
         var postsIn2022 =
             await context.Database
                 .SqlQuery<BlogPost>($"SELECT * FROM Posts as p WHERE p.PublishedOn >= {start} AND p.PublishedOn < {end}")
@@ -66,7 +66,7 @@ public static class RawSqlSample
 
         #region SqlQueryJoin
 
-        var cutoffDate = new DateTime(2022, 1, 1);
+        var cutoffDate = new DateOnly(2022, 1, 1);
         var summaries =
             await context.Database.SqlQuery<PostSummary>(
                     @$"SELECT b.Name AS BlogName, p.Title AS PostTitle, p.PublishedOn
@@ -175,7 +175,7 @@ public static class RawSqlSample
     #region BlogPost
     public class BlogPost
     {
-        public BlogPost(string blogTitle, string content, DateTime publishedOn)
+        public BlogPost(string blogTitle, string content, DateOnly publishedOn)
         {
             BlogTitle = blogTitle;
             Content = content;
@@ -188,7 +188,7 @@ public static class RawSqlSample
         public string BlogTitle { get; set; }
 
         public string Content { get; set; }
-        public DateTime PublishedOn { get; set; }
+        public DateOnly PublishedOn { get; set; }
         public int BlogId { get; set; }
     }
     #endregion
@@ -198,7 +198,7 @@ public static class RawSqlSample
     {
         public string BlogName { get; set; } = null!;
         public string PostTitle { get; set; } = null!;
-        public DateTime? PublishedOn { get; set; }
+        public DateOnly? PublishedOn { get; set; }
     }
     #endregion
 

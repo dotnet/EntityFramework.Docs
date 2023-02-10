@@ -9,5 +9,8 @@ public class Program
         await LazyLoadingSample.Lazy_loading_for_no_tracking_queries();
         await InheritanceSample.Discriminator_length_TPH();
         await LookupByKeySample.Lookup_tracked_entities_by_key();
+        await DateOnlyTimeOnlySample.Can_use_DateOnly_TimeOnly_on_SQLite();
+        await DateOnlyTimeOnlySample.Can_use_DateOnly_TimeOnly_on_SQL_Server();
+        await DateOnlyTimeOnlySample.Can_use_DateOnly_TimeOnly_on_SQL_Server_with_JSON();
     }
 }

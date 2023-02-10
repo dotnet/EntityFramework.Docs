@@ -2,7 +2,7 @@
 title: What's New in EF Core 8
 description: Overview of new features in EF Core 8
 author: ajcvickers
-ms.date: 01/30/2023
+ms.date: 02/07/2023
 uid: core/what-is-new/ef-core-8
 ---
 
@@ -48,7 +48,7 @@ EF8 includes improvements to the [JSON column mapping support introduced in EF7]
 EF8 supports indexing in JSON arrays when executing queries. For example, the following query checks whether the first two updates were made before a given date.
 
 <!--
-        var cutoff = DateTime.UtcNow - TimeSpan.FromDays(365);
+        var cutoff = DateOnly.FromDateTime(DateTime.UtcNow - TimeSpan.FromDays(365));
         var updatedPosts = await context.Posts
             .Where(
                 p => p.Metadata!.Updates[0].UpdatedOn < cutoff
@@ -62,8 +62,8 @@ This translates into the following SQL when using SQL Server:
 ```sql
 SELECT [p].[Id], [p].[Archived], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Title], [p].[PromoText], [p].[Metadata]
 FROM [Posts] AS [p]
-WHERE CAST(JSON_VALUE([p].[Metadata],'$.Updates[0].UpdatedOn') AS datetime2) < @__cutoff_0
-  AND CAST(JSON_VALUE([p].[Metadata],'$.Updates[1].UpdatedOn') AS datetime2) < @__cutoff_0
+WHERE CAST(JSON_VALUE([p].[Metadata],'$.Updates[0].UpdatedOn') AS date) < @__cutoff_0
+  AND CAST(JSON_VALUE([p].[Metadata],'$.Updates[1].UpdatedOn') AS date) < @__cutoff_0
 ```
 
 > [!NOTE]
@@ -76,8 +76,8 @@ Indexing into JSON arrays can also be used to project elements from an array int
             .Select(p => new
             {
                 p.Title,
-                LatestUpdate = (DateTime?)p.Metadata!.Updates[0].UpdatedOn,
-                SecondLatestUpdate = (DateTime?)p.Metadata.Updates[1].UpdatedOn
+                LatestUpdate = (DateOnly?)p.Metadata!.Updates[0].UpdatedOn,
+                SecondLatestUpdate = (DateOnly?)p.Metadata.Updates[1].UpdatedOn
             })
             .ToListAsync();
 -->
@@ -87,12 +87,12 @@ This translates into the following SQL when using SQL Server:
 
 ```sql
 SELECT [p].[Title],
-       CAST(JSON_VALUE([p].[Metadata],'$.Updates[0].UpdatedOn') AS datetime2) AS [LatestUpdate],
-       CAST(JSON_VALUE([p].[Metadata],'$.Updates[1].UpdatedOn') AS datetime2) AS [SecondLatestUpdate]
+       CAST(JSON_VALUE([p].[Metadata],'$.Updates[0].UpdatedOn') AS date) AS [LatestUpdate],
+       CAST(JSON_VALUE([p].[Metadata],'$.Updates[1].UpdatedOn') AS date) AS [SecondLatestUpdate]
 FROM [Posts] AS [p]
 ```
 
-As noted above, `JSON_VALUE` returns null if the element of the array does not exist. This is handled in the query by casting the projected value to a nullable `DateTime`. An alternative to casting the value is to filter the query results so that `JSON_VALUE` will never return null. For example:
+As noted above, `JSON_VALUE` returns null if the element of the array does not exist. This is handled in the query by casting the projected value to a nullable `DateOnly`. An alternative to casting the value is to filter the query results so that `JSON_VALUE` will never return null. For example:
 
 <!--
         var postsAndRecentUpdates = await context.Posts
@@ -112,11 +112,11 @@ This translates into the following SQL when using SQL Server:
 
 ```sql
 SELECT [p].[Title],
-       CAST(JSON_VALUE([p].[Metadata],'$.Updates[0].UpdatedOn') AS datetime2) AS [LatestUpdate],
-       CAST(JSON_VALUE([p].[Metadata],'$.Updates[1].UpdatedOn') AS datetime2) AS [SecondLatestUpdate]
+       CAST(JSON_VALUE([p].[Metadata],'$.Updates[0].UpdatedOn') AS date) AS [LatestUpdate],
+       CAST(JSON_VALUE([p].[Metadata],'$.Updates[1].UpdatedOn') AS date) AS [SecondLatestUpdate]
 FROM [Posts] AS [p]
-WHERE (CAST(JSON_VALUE([p].[Metadata],'$.Updates[0].UpdatedOn') AS datetime2) IS NOT NULL)
-  AND (CAST(JSON_VALUE([p].[Metadata],'$.Updates[1].UpdatedOn') AS datetime2) IS NOT NULL)
+      WHERE (CAST(JSON_VALUE([p].[Metadata],'$.Updates[0].UpdatedOn') AS date) IS NOT NULL)
+        AND (CAST(JSON_VALUE([p].[Metadata],'$.Updates[1].UpdatedOn') AS date) IS NOT NULL)
 ```
 
 ### Raw SQL queries for unmapped types
@@ -133,7 +133,7 @@ CREATE TABLE [Posts] (
     [Id] int NOT NULL IDENTITY,
     [Title] nvarchar(max) NOT NULL,
     [Content] nvarchar(max) NOT NULL,
-    [PublishedOn] datetime2 NOT NULL,
+    [PublishedOn] date NOT NULL,
     [BlogId] int NOT NULL,
 );
 ```
@@ -148,7 +148,7 @@ public class BlogPost
     public int Id { get; set; }
     public string Title { get; set; }
     public string Content { get; set; }
-    public DateTime PublishedOn { get; set; }
+    public DateOnly PublishedOn { get; set; }
     public int BlogId { get; set; }
 }
 ```
@@ -156,8 +156,8 @@ public class BlogPost
 For example:
 
 <!--
-        var start = new DateTime(2022, 1, 1);
-        var end = new DateTime(2023, 1, 1);
+        var start = new DateOnly(2022, 1, 1);
+        var end = new DateOnly(2023, 1, 1);
         var postsIn2022 =
             await context.Database
                 .SqlQuery<BlogPost>($"SELECT * FROM Posts as p WHERE p.PublishedOn >= {start} AND p.PublishedOn < {end}")
@@ -176,7 +176,7 @@ The type used for query results can contain common mapping constructs supported 
 <!--
     public class BlogPost
     {
-        public BlogPost(string blogTitle, string content, DateTime publishedOn)
+        public BlogPost(string blogTitle, string content, DateOnly publishedOn)
         {
             BlogTitle = blogTitle;
             Content = content;
@@ -189,7 +189,7 @@ The type used for query results can contain common mapping constructs supported 
         public string BlogTitle { get; set; }
 
         public string Content { get; set; }
-        public DateTime PublishedOn { get; set; }
+        public DateOnly PublishedOn { get; set; }
         public int BlogId { get; set; }
     }
 -->
@@ -205,7 +205,7 @@ The type used must have a property for every value in the result set, but do not
     {
         public string BlogName { get; set; }
         public string PostTitle { get; set; }
-        public DateTime PublishedOn { get; set; }
+        public DateOnly PublishedOn { get; set; }
     }
 -->
 [!code-csharp[PostSummary](../../../../samples/core/Miscellaneous/NewInEFCore8/RawSqlSample.cs?name=PostSummary)]
@@ -240,11 +240,11 @@ This is executed as:
 ```sql
 SELECT [n].[BlogName], [n].[PostTitle], [n].[PublishedOn]
 FROM (
-    SELECT b.Name AS BlogName, p.Title AS PostTitle, p.PublishedOn
-                        FROM Posts AS p
-                        INNER JOIN Blogs AS b ON p.BlogId = b.Id
-) AS [n]
-WHERE [n].[PublishedOn] >= @__start_1 AND [n].[PublishedOn] < @__end_2
+         SELECT b.Name AS BlogName, p.Title AS PostTitle, p.PublishedOn
+         FROM Posts AS p
+                  INNER JOIN Blogs AS b ON p.BlogId = b.Id
+     ) AS [n]
+WHERE [n].[PublishedOn] >= @__cutoffDate_1 AND [n].[PublishedOn] < @__end_2
 ```
 
 At this point it is worth remembering that all of the above can be done completely in LINQ without the need to write any SQL. This includes returning instances of an unmapped type like `PostSummary`. For example, the preceding query can be written in LINQ as:
@@ -262,13 +262,13 @@ var summaries =
         .ToListAsync();
 ```
 
-Which translates to the following SQL:
+Which translates to much cleaner SQL:
 
 ```sql
 SELECT [b].[Name] AS [BlogName], [p].[Title] AS [PostTitle], [p].[PublishedOn]
-      FROM [Posts] AS [p]
-      INNER JOIN [Blogs] AS [b] ON [p].[BlogId] = [b].[Id]
-      WHERE [p].[PublishedOn] >= @__start_0 AND [p].[PublishedOn] < @__end_1
+FROM [Posts] AS [p]
+INNER JOIN [Blogs] AS [b] ON [p].[BlogId] = [b].[Id]
+WHERE [p].[PublishedOn] >= @__start_0 AND [p].[PublishedOn] < @__end_1
 ```
 
 > [!TIP]
@@ -492,6 +492,184 @@ CREATE TABLE [Documents] (
 
 > [!TIP]
 > Fibonacci numbers are used to limit the number of times a migration is generated to change the column length as new types are added to the hierarchy.
+
+### DateOnly/TimeOnly supported on SQL Server
+
+The <xref:System.DateOnly> and <xref:System.TimeOnly> types were introduced in .NET 6 and have been supported for several database providers (e.g. SQLite, MySQL, and PostgreSQL) since their introduction. For SQL Server, the recent release of a [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient/) package targeting .NET 6 has allowed [ErikEJ to add support for these types at the ADO.NET level](https://github.com/dotnet/SqlClient/pull/1813). This in turn paved the way for support in EF8 for `DateOnly` and `TimeOnly` as properties in entity types.
+
+> [!TIP]
+> `DateOnly` and `TimeOnly` can be used in EF Core 6 and 7 using the [ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly) community package from [@ErikEJ](https://github.com/ErikEJ).
+
+For example, consider the following EF model for British schools:
+
+<!--
+public class School
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public DateOnly Founded { get; set; }
+    public List<Term> Terms { get; } = new();
+    public List<OpeningHours> OpeningHours { get; } = new();
+}
+
+public class Term
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public DateOnly FirstDay { get; set; }
+    public DateOnly LastDay { get; set; }
+    public School School { get; set; } = null!;
+}
+
+[Owned]
+public class OpeningHours
+{
+    public OpeningHours(DayOfWeek dayOfWeek, TimeOnly? opensAt, TimeOnly? closesAt)
+    {
+        DayOfWeek = dayOfWeek;
+        OpensAt = opensAt;
+        ClosesAt = closesAt;
+    }
+
+    public DayOfWeek DayOfWeek { get; private set; }
+    public TimeOnly? OpensAt { get; set; }
+    public TimeOnly? ClosesAt { get; set; }
+}
+-->
+[!code-csharp[BritishSchools](../../../../samples/core/Miscellaneous/NewInEFCore8/DateOnlyTimeOnlySample.cs?name=BritishSchools)]
+
+> [!TIP]
+> The code shown here comes from [DateOnlyTimeOnlySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/DateOnlyTimeOnlySample.cs).
+
+> [!NOTE]
+> This model represents only British schools and stores times as local (GMT) times. Handling different timezones would complicate this code significantly. Note that using `DateTimeOffset` would not help here, since opening and closing times have different offsets depending whether daylight saving time is active or not.
+
+These entity types map to the following tables when using SQL Server. Notice that the `DateOnly` properties map to `date` columns, and the `TimeOnly` properties map to `time` columns.
+
+```sql
+CREATE TABLE [Schools] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Founded] date NOT NULL,
+    CONSTRAINT [PK_Schools] PRIMARY KEY ([Id]));
+
+CREATE TABLE [OpeningHours] (
+    [SchoolId] int NOT NULL,
+    [Id] int NOT NULL IDENTITY,
+    [DayOfWeek] int NOT NULL,
+    [OpensAt] time NULL,
+    [ClosesAt] time NULL,
+    CONSTRAINT [PK_OpeningHours] PRIMARY KEY ([SchoolId], [Id]),
+    CONSTRAINT [FK_OpeningHours_Schools_SchoolId] FOREIGN KEY ([SchoolId]) REFERENCES [Schools] ([Id]) ON DELETE CASCADE);
+
+CREATE TABLE [Term] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [FirstDay] date NOT NULL,
+    [LastDay] date NOT NULL,
+    [SchoolId] int NOT NULL,
+    CONSTRAINT [PK_Term] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Term_Schools_SchoolId] FOREIGN KEY ([SchoolId]) REFERENCES [Schools] ([Id]) ON DELETE CASCADE);
+```
+
+Queries using `DateOnly` and `TimeOnly` work in the expected manner. For example, the following LINQ query finds schools that are currently open:
+
+<!--
+            openSchools = await context.Schools
+                .Where(
+                    s => s.Terms.Any(
+                             t => t.FirstDay <= today
+                                  && t.LastDay >= today)
+                         && s.OpeningHours.Any(
+                             o => o.DayOfWeek == dayOfWeek
+                                  && o.OpensAt < time && o.ClosesAt >= time))
+                .ToListAsync();
+-->
+[!code-csharp[OpenSchools](../../../../samples/core/Miscellaneous/NewInEFCore8/DateOnlyTimeOnlySample.cs?name=OpenSchools)]
+
+This query translates to the following SQL, as shown by <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToQueryString%2A>:
+
+```sql
+DECLARE @__today_0 date = '2023-02-07';
+DECLARE @__dayOfWeek_1 int = 2;
+DECLARE @__time_2 time = '19:53:40.4798052';
+
+SELECT [s].[Id], [s].[Founded], [s].[Name], [o0].[SchoolId], [o0].[Id], [o0].[ClosesAt], [o0].[DayOfWeek], [o0].[OpensAt]
+FROM [Schools] AS [s]
+LEFT JOIN [OpeningHours] AS [o0] ON [s].[Id] = [o0].[SchoolId]
+WHERE EXISTS (
+    SELECT 1
+    FROM [Term] AS [t]
+    WHERE [s].[Id] = [t].[SchoolId] AND [t].[FirstDay] <= @__today_0 AND [t].[LastDay] >= @__today_0) AND EXISTS (
+    SELECT 1
+    FROM [OpeningHours] AS [o]
+    WHERE [s].[Id] = [o].[SchoolId] AND [o].[DayOfWeek] = @__dayOfWeek_1 AND [o].[OpensAt] < @__time_2 AND [o].[ClosesAt] >= @__time_2)
+ORDER BY [s].[Id], [o0].[SchoolId]
+```
+
+`DateOnly` and `TimeOnly` can also be used in JSON columns. For example, `OpeningHours` can be saved as a JSON document, resulting in data that looks like this:
+
+| Column       | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Id           | 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Name         | Farr High School                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Founded      | 1964-05-01                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| OpeningHours | <pre>[<br>  { "DayOfWeek": "Sunday", "ClosesAt": null, "OpensAt": null },<br>  { "DayOfWeek": "Monday", "ClosesAt": "15:35:00", "OpensAt": "08:45:00" },<br>  { "DayOfWeek": "Tuesday", "ClosesAt": "15:35:00", "OpensAt": "08:45:00" },<br>  { "DayOfWeek": "Wednesday", "ClosesAt": "15:35:00", "OpensAt": "08:45:00" },<br>  { "DayOfWeek": "Thursday", "ClosesAt": "15:35:00", "OpensAt": "08:45:00" },<br>  { "DayOfWeek": "Friday", "ClosesAt": "12:50:00", "OpensAt": "08:45:00" },<br>  { "DayOfWeek": "Saturday", "ClosesAt": null, "OpensAt": null }<br>] |
+
+Combining two features from EF8, we can now query for opening hours by indexing into the JSON collection. For example:
+
+<!--
+            openSchools = await context.Schools
+                .Where(
+                    s => s.Terms.Any(
+                             t => t.FirstDay <= today
+                                  && t.LastDay >= today)
+                         && s.OpeningHours[(int)dayOfWeek].OpensAt < time
+                         && s.OpeningHours[(int)dayOfWeek].ClosesAt >= time)
+                .ToListAsync();
+-->
+[!code-csharp[OpenSchoolsJson](../../../../samples/core/Miscellaneous/NewInEFCore8/DateOnlyTimeOnlySample.cs?name=OpenSchoolsJson)]
+
+This query translates to the following SQL, as shown by <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToQueryString%2A>:
+
+```sql
+DECLARE @__today_0 date = '2023-02-07';
+DECLARE @__dayOfWeek_1 int = 2;
+DECLARE @__time_2 time = '20:14:34.7795877';
+
+SELECT [s].[Id], [s].[Founded], [s].[Name], [s].[OpeningHours]
+FROM [Schools] AS [s]
+WHERE EXISTS (
+    SELECT 1
+    FROM [Term] AS [t]
+    WHERE [s].[Id] = [t].[SchoolId] AND [t].[FirstDay] <= @__today_0
+      AND [t].[LastDay] >= @__today_0)
+      AND CAST(JSON_VALUE([s].[OpeningHours],'$[' + CAST(CAST(@__dayOfWeek_1 AS int) AS nvarchar(max)) + '].OpensAt') AS time) < @__time_2
+      AND CAST(JSON_VALUE([s].[OpeningHours],'$[' + CAST(CAST(@__dayOfWeek_1 AS int) AS nvarchar(max)) + '].ClosesAt') AS time) >= @__time_2
+```
+
+Finally, updates and deletes can be accomplished with [tracking and SaveChanges](xref:core/saving/basic), or using [ExecuteUpdate/ExecuteDelete](xref:core/what-is-new/ef-core-7#executeupdate-and-executedelete-bulk-updates). For example:
+
+<!--
+        await context.Schools
+            .Where(e => e.Terms.Any(t => t.LastDay.Year == 2022))
+            .SelectMany(e => e.Terms)
+            .ExecuteUpdateAsync(s => s.SetProperty(t => t.LastDay, t => t.LastDay.AddDays(1)));
+-->
+[!code-csharp[UpdateForSnowDay](../../../../samples/core/Miscellaneous/NewInEFCore8/DateOnlyTimeOnlySample.cs?name=UpdateForSnowDay)]
+
+This update translates to the following SQL:
+
+```sql
+UPDATE [t0]
+SET [t0].[LastDay] = DATEADD(day, CAST(1 AS int), [t0].[LastDay])
+FROM [Schools] AS [s]
+INNER JOIN [Term] AS [t0] ON [s].[Id] = [t0].[SchoolId]
+WHERE EXISTS (
+    SELECT 1
+    FROM [Term] AS [t]
+    WHERE [s].[Id] = [t].[SchoolId] AND DATEPART(year, [t].[LastDay]) = 2022)
+```
 
 ### Reverse engineer Synapse and Dynamics 365 TDS
 
