@@ -117,6 +117,9 @@ The EF command-line tools can be used to apply migrations to a database. While p
 * The SQL commands are applied directly by the tool, without giving the developer a chance to inspect or modify them. This can be dangerous in a production environment.
 * The .NET SDK and the EF tool must be installed on production servers and requires the project's source code.
 
+> [!NOTE]
+> Each migration is applied in its own transaction. See [GitHub issue #22616](https://github.com/dotnet/efcore/issues/22616) for a discussion of possible future enhancements in this area.
+
 ### [.NET Core CLI](#tab/dotnet-core-cli)
 
 The following updates your database to the latest migration:
@@ -206,24 +209,101 @@ The resulting executable is named `efbundle` by default. It can be used to updat
 
 Arguments:
 
-Argument                   | Description
--------------------------- | -----------
-<nobr>`<MIGRATION>`</nobr> | The target migration. If '0', all migrations will be reverted. Defaults to the last migration.
+| Argument                   | Description                                                                                    |
+|----------------------------|------------------------------------------------------------------------------------------------|
+| <nobr>`<MIGRATION>`</nobr> | The target migration. If '0', all migrations will be reverted. Defaults to the last migration. |
 
 Options:
 
-Option                                   | Short             | Description
----------------------------------------- | ----------------- | -----------
-<nobr>`--connection <CONNECTION>`</nobr> |                   | The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring.
-`--verbose`                              | <nobr>`-v`</nobr> | Show verbose output.
-`--no-color`                             |                   | Don't colorize output.
-`--prefix-output`                        |                   | Prefix output with level.
+| Option                                   | Short             | Description                                                                                            |
+|------------------------------------------|-------------------|--------------------------------------------------------------------------------------------------------|
+| <nobr>`--connection <CONNECTION>`</nobr> |                   | The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring. |
+| `--verbose`                              | <nobr>`-v`</nobr> | Show verbose output.                                                                                   |
+| `--no-color`                             |                   | Don't colorize output.                                                                                 |
+| `--prefix-output`                        |                   | Prefix output with level.                                                                              |
 
 The following example applies migrations to a local SQL Server instance using the specified username and password.
 
 ```powershell
 .\efbundle.exe --connection 'Data Source=(local)\MSSQLSERVER;Initial Catalog=Blogging;User ID=myUsername;Password=myPassword'
 ```
+
+### Migration bundle example
+
+A bundle needs migrations to include. These are created using `dotnet ef migrations add` as described in [_Create your first migration_](xref:core/managing-schemas/migrations/index#create-your-first-migration). Once you have migrations ready to deploy, create a bundle using the `dotnet ef migrations bundle`. For example:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> dotnet ef migrations bundle
+Build started...
+Build succeeded.
+Building bundle...
+Done. Migrations Bundle: C:\local\AllTogetherNow\SixOh\efbundle.exe
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+The output is an executable suitable for your target operating system. In my case this is Windows x64, so I get an `efbundle.exe` dropped in my local folder. Running this executable applies the migrations contained within it:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> .\efbundle.exe
+Applying migration '20210903083845_MyMigration'.
+Done.
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+As with `dotnet ef database update` or `Update-Database`, migrations are applied to the database only if they have not been already applied. For example, running the same bundle again does nothing, since there are no new migrations to apply:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> .\efbundle.exe
+No migrations were applied. The database is already up to date.
+Done.
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+However, if changes are made to the model and more migrations are generated with `dotnet ef migrations add`, then these can be bundled into a new executable ready to apply. For example:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> dotnet ef migrations add SecondMigration
+Build started...
+Build succeeded.
+Done. To undo this action, use 'ef migrations remove'
+PS C:\local\AllTogetherNow\SixOh> dotnet ef migrations add Number3
+Build started...
+Build succeeded.
+Done. To undo this action, use 'ef migrations remove'
+PS C:\local\AllTogetherNow\SixOh> dotnet ef migrations bundle --force
+Build started...
+Build succeeded.
+Building bundle...
+Done. Migrations Bundle: C:\local\AllTogetherNow\SixOh\efbundle.exe
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+> [!TIP]
+> The `--force` option can be used to overwrite the existing bundle with a new one.
+
+Executing this new bundle applies these two new migrations to the database:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> .\efbundle.exe
+Applying migration '20210903084526_SecondMigration'.
+Applying migration '20210903084538_Number3'.
+Done.
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+By default, the bundle uses the database connection string from your application's configuration. However, a different database can be migrated by passing the connection string on the command line. For example:
+
+```dotnetcli
+PS C:\local\AllTogetherNow\SixOh> .\efbundle.exe --connection "Data Source=(LocalDb)\MSSQLLocalDB;Database=SixOhProduction"
+Applying migration '20210903083845_MyMigration'.
+Applying migration '20210903084526_SecondMigration'.
+Applying migration '20210903084538_Number3'.
+Done.
+PS C:\local\AllTogetherNow\SixOh>
+```
+
+> [!NOTE]
+> This time, all three migrations were applied, since none of them had yet been applied to the production database.
 
 ***
 
