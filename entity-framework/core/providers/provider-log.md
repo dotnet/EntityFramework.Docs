@@ -8,6 +8,9 @@ uid: core/providers/provider-log
 
 # Provider-impacting changes
 
+> [!IMPORTANT]
+> This page is no longer being updated. Changes that provider authors need to be aware of are marked with [`providers-beware`](https://github.com/dotnet/efcore/labels/providers-beware).
+
 This page contains links to pull requests made on the EF Core repo that may require authors of other database providers to react. The intention is to provide a starting point for authors of existing third-party database providers when updating their provider to a new version.
 
 We are starting this log with changes from 2.1 to 2.2. Prior to 2.1 we used the [`providers-beware`](https://github.com/dotnet/efcore/labels/providers-beware) and [`providers-fyi`](https://github.com/dotnet/efcore/labels/providers-fyi) labels on our issues and pull requests.
