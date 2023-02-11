@@ -1,16 +1,19 @@
 ---
-title: InMemory Database Provider - EF Core
-description: Information on the Entity Framework Core InMemory database provider
+title: In-memory Database Provider - EF Core
+description: Information on the Entity Framework Core in-memory database provider
 author: ajcvickers
-ms.date: 10/27/2016
+ms.date: 02/11/2023
 uid: core/providers/in-memory/index
 ---
 # EF Core In-Memory Database Provider
 
-This database provider allows Entity Framework Core to be used with an in-memory database. While some users use the in-memory database for testing, this is generally discouraged; the SQLite provider in in-memory mode is a more appropriate test replacement for relational databases. For more information on how to test EF Core applications, see the [testing documentation](xref:core/testing/index). The provider is maintained as part of the [Entity Framework Core Project](https://github.com/dotnet/efcore).
+This database provider allows Entity Framework Core to be used with an in-memory database. While some users use the in-memory database for testing, this is discouraged. For more information on how to test EF Core applications, see the [_Testing EF Core Applications_](xref:core/testing/index). The provider is maintained by Microsoft as part of the [Entity Framework Core Project](https://github.com/dotnet/efcore).
 
 > [!WARNING]
-> The In-Memory provider was not designed for use outside of testing environments and should never be used as such.
+> The EF Core in-memory database is not designed for performance or robustness and should not be used outside of testing environments. It is not designed for production use.
+
+> [!IMPORTANT]
+> New features are not being added to the in-memory database.
 
 ## Install
 
@@ -34,9 +37,9 @@ Install-Package Microsoft.EntityFrameworkCore.InMemory
 
 The following resources will help you get started with this provider.
 
-* [Testing with InMemory](xref:core/testing/testing-without-the-database#inmemory-provider)
+* [Testing with in-memory (not recommended)](xref:core/testing/testing-without-the-database#inmemory-provider)
 * [UnicornStore Sample Application Tests](https://github.com/rowanmiller/UnicornStore/blob/master/UnicornStore/src/UnicornStore.Tests/Controllers/ShippingControllerTests.cs)
 
 ## Supported Database Engines
 
-In-process memory database, designed for testing purposes only.
+In-process naive, non-performant, and non-persisted in-memory database. Not designed for production use.
