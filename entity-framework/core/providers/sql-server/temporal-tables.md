@@ -46,7 +46,7 @@ When using EF Core to create the database, the new table will be configured as a
 -->
 [!code-csharp[Employee](../../../../samples/core/Miscellaneous/NewInEFCore6/TemporalTablesSample.cs?name=Employee)]
 
-The temporal table created will look like this:
+The temporal table created looks like this:
 
 ```sql
 DECLARE @historyTableSchema sysname = SCHEMA_NAME()
