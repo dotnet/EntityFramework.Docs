@@ -176,7 +176,7 @@ Notice that the `ValidTo` column (by default called `PeriodEnd`) contains the `d
 
 ## Querying historical data
 
-EF Core supports queries that include historical data through several new query operators:
+EF Core supports queries that include historical data through several specialized query operators:
 
 * `TemporalAsOf`: Returns rows that were active (current) at the given UTC time. This is a single row from the current table or history table for a given primary key.
 * `TemporalAll`: Returns all rows in the historical data. This is typically many rows from the history table and/or the current table for a given primary key.
