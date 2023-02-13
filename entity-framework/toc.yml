@@ -353,10 +353,12 @@
       items:
       - name: Overview
         href: core/providers/index.md
-      - name: Microsoft SQL Server
+      - name: Microsoft SQL Server and Azure SQL
         items:
         - name: Overview
           href: core/providers/sql-server/index.md
+        - name: Temporal tables
+          href: core/providers/sql-server/temporal-tables.md
         - name: Value generation
           href: core/providers/sql-server/value-generation.md
         - name: Function mappings
