@@ -31,7 +31,7 @@ modelBuilder
 > [!TIP]
 > The code shown here comes from [TemporalTablesSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore6/TemporalTablesSample.cs).
 
-When using EF Core to create the database, the new table will be configured as a temporal table with the SQL Server defaults for the timestamps and history table. For example, consider an `Employee` entity type:
+When using EF Core to create the database, the new table is configured as a temporal table with the SQL Server defaults for the timestamps and history table. For example, consider an `Employee` entity type:
 
 <!--
     public class Employee
