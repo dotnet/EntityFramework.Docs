@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 public static class CosmosModelConfigurationSample
 {
@@ -18,6 +20,30 @@ public static class CosmosModelConfigurationSample
         Console.WriteLine();
     }
 
+    public static async Task Cosmos_configure_time_to_live_per_instance()
+    {
+        Console.WriteLine($">>>> Sample: {nameof(Cosmos_configure_time_to_live_per_instance)}");
+        Console.WriteLine();
+
+        await Helpers.RecreateCleanDatabase();
+        await using var context = new PlacesContext();
+
+        #region SetTtl
+        var village = new Village { Id = "DN41", Name = "Healing", TimeToLive = 60 };
+        context.Add(village);
+        await context.SaveChangesAsync();
+        #endregion
+
+        #region SetTtlShadow
+        var hamlet = new Hamlet { Id = "DN37", Name = "Irby" };
+        context.Add(hamlet);
+        context.Entry(hamlet).Property("TimeToLive").CurrentValue = 60;
+        await context.SaveChangesAsync();
+        #endregion
+
+        Console.WriteLine();
+    }
+
     public class Family
     {
         public string Id { get; set; }
@@ -26,6 +52,19 @@ public static class CosmosModelConfigurationSample
         public IList<Child> Children { get; set; }
         public Address Address { get; set; }
         public bool IsRegistered { get; set; }
+    }
+
+    public class Village
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public int TimeToLive { get; set; }
+    }
+
+    public class Hamlet
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 
     public class Parent
@@ -112,6 +151,46 @@ public static class CosmosModelConfigurationSample
             {
                 optionsBuilder.LogTo(Console.WriteLine, new[] { CosmosEventId.ExecutingSqlQuery });
             }
+        }
+    }
+
+    public class PlacesContext : DbContext
+    {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            #region TimeToLiveProperty
+            modelBuilder.Entity<Village>()
+                .HasDefaultTimeToLive(3600)
+                .Property(e => e.TimeToLive)
+                .ToJsonProperty("ttl");
+            #endregion
+
+            #region TimeToLiveShadowProperty
+            modelBuilder.Entity<Hamlet>()
+                .HasDefaultTimeToLive(3600)
+                .Property<int>("TimeToLive")
+                .ToJsonProperty("ttl");
+            #endregion
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            => optionsBuilder
+                .EnableSensitiveDataLogging()
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .UseCosmos(
+                    "https://localhost:8081",
+                    "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
+                    "Places");
+    }
+
+    public static class Helpers
+    {
+        public static async Task RecreateCleanDatabase()
+        {
+            await using var context = new PlacesContext();
+
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
         }
     }
 }
