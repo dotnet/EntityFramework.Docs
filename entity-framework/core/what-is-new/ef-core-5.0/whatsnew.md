@@ -385,4 +385,4 @@ For further information, [see the full documentation on event counters](xref:cor
 * The EF Core command line tools now automatically configure the `ASPNETCORE_ENVIRONMENT` *and* `DOTNET_ENVIRONMENT` environment variables to "Development". This brings the experience when using the generic host in line with the experience for ASP.NET Core during development.
 * Custom command-line arguments can be flowed into <xref:Microsoft.EntityFrameworkCore.Design.IDesignTimeDbContextFactory%601>, allowing applications to control how the context is created and initialized.
 * The index fill factor can now be [configured on SQL Server](xref:core/providers/sql-server/indexes#fill-factor).
-* The new <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.IsRelational%2A> property can be used to distinguish when using a relational provider and a non-relation provider (such as InMemory).
+* The new <xref:Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.IsRelational%2A> property can be used to distinguish when using a relational provider and a non-relation provider (such as in-memory).

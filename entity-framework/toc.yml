@@ -401,7 +401,7 @@
           href: core/providers/cosmos/functions.md
         - name: End-to-end sample
           href: core/providers/cosmos/planetary-docs-sample.md
-      - name: InMemory (for testing)
+      - name: In-memory (not recommended)
         href: core/providers/in-memory/index.md
       - name: Write a database provider
         href: core/providers/writing-a-provider.md

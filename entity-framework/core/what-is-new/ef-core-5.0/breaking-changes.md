@@ -30,7 +30,7 @@ The following API and behavior changes have the potential to break existing appl
 | [Value generators are called when the entity state is changed from Detached to Unchanged, Updated, or Deleted](#non-added-generation) | Low        |
 | [IMigrationsModelDiffer now uses IRelationalModel](#relational-model)                                                                 | Low        |
 | [Discriminators are read-only](#read-only-discriminators)                                                                             | Low        |
-| [Provider-specific EF.Functions methods throw for InMemory provider](#no-client-methods)                                              | Low        |
+| [Provider-specific EF.Functions methods throw for in-memory provider](#no-client-methods)                                             | Low        |
 | [IndexBuilder.HasName is now obsolete](#index-obsolete)                                                                               | Low        |
 | [A pluralizer is now included for scaffolding reverse engineered models](#pluralizer)                                                 | Low        |
 | [INavigationBase replaces INavigation in some APIs to support skip navigations](#inavigationbase)                                     | Low        |
@@ -525,13 +525,13 @@ modelBuilder.Entity<BaseEntity>()
 
 <a name="no-client-methods"></a>
 
-### Provider-specific EF.Functions methods throw for InMemory provider
+### Provider-specific EF.Functions methods throw for in-memory provider
 
 [Tracking Issue #20294](https://github.com/dotnet/efcore/issues/20294)
 
 #### Old behavior
 
-Provider-specific EF.Functions methods contained implementation for client execution, which allowed them to be executed on the InMemory provider. For example, `EF.Functions.DateDiffDay` is a Sql Server specific method, which worked on InMemory provider.
+Provider-specific EF.Functions methods contained implementation for client execution, which allowed them to be executed on the in-memory provider. For example, `EF.Functions.DateDiffDay` is a Sql Server specific method, which worked on InMemory provider.
 
 #### New behavior
 
@@ -539,7 +539,7 @@ Provider-specific methods have been updated to throw an exception in their metho
 
 #### Why
 
-Provider-specific methods map to a database function. The computation done by the mapped database function can't always be replicated on the client side in LINQ. It may cause the result from the server to differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database functions, they don't need to be evaluated on client side. As InMemory provider is a different _database_, these methods aren't available for this provider. Trying to execute them for InMemory provider, or any other provider that doesn't translate these methods, throws an exception.
+Provider-specific methods map to a database function. The computation done by the mapped database function can't always be replicated on the client side in LINQ. It may cause the result from the server to differ when executing the same method on client. Since these methods are used in LINQ to translate to specific database functions, they don't need to be evaluated on client side. As the in-memory provider is a different _database_, these methods aren't available for this provider. Trying to execute them for InMemory provider, or any other provider that doesn't translate these methods, throws an exception.
 
 #### Mitigations
 
