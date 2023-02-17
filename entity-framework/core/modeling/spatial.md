@@ -33,6 +33,8 @@ To enable mapping to spatial types via NTS, call the UseNetTopologySuite method 
 
 [!code-csharp[](../../../samples/core/Spatial/SqlServer/Models/WideWorldImportersContext.cs?name=snippet_UseNetTopologySuite)]
 
+The method `x => x.UseNetTopologySuite()` requires you to add the Nuget Packages *NetTopologySuite* and *Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite*.
+
 There are several spatial data types. Which type you use depends on the types of shapes you want to allow. Here is the hierarchy of NTS types that you can use for properties in your model. They're located within the `NetTopologySuite.Geometries` namespace.
 
 * Geometry
