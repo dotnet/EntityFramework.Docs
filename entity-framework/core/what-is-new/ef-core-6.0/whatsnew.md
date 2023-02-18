@@ -1063,9 +1063,8 @@ Which is executed as:
 ```sql
 SELECT c
 FROM (
-         SELECT * FROM root c WHERE c["Angle1"] <= @p0 OR c["Angle2"] <= @p0
-     ) c
-WHERE (c["Discriminator"] = "Triangle")
+    SELECT * FROM root c WHERE c["Angle1"] <= @p0 OR c["Angle2"] <= @p0
+) c
 ```
 
 ### Distinct queries
