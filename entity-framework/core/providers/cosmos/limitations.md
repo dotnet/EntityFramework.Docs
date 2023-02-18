@@ -16,13 +16,7 @@ Common EF Core patterns that either do not apply, or are a pit-of-failure, when 
 - Schema concepts defined on the EF model, like indexes and constraints, are ignored when using a document database, since there is no schema. Note that Azure Cosmos DB NoSQL performs [automatic indexing of documents](/azure/cosmos-db/index-overview).
 - Loading graphs of related entities from different documents is not supported. Document databases are not designed to perform joins across many documents; doing so would be very inefficient. Instead, it is more common to denormalize data so that everything needed is in one, or a small number, of documents. However, there are some forms of cross-document relationships that could be handled--see [Limited Include support for Cosmos](https://github.com/dotnet/efcore/issues/16920#issuecomment-989721078).
 
-## Azure Cosmos DB SDK limitations
-
-Some functionality supported by most EF Core database providers are not supported by the Azure Cosmos DB SDK. This includes synchronous APIs.
-
 > [!WARNING]
 > Since there are no sync versions of the low level methods EF Core relies on, the corresponding functionality is currently implemented by calling `.Wait()` on the returned `Task`. This means that using methods like `SaveChanges`, or `ToList` instead of their async counterparts could lead to a deadlock in your application
 
-## EF Core provider limitations
-
-Beyond the differences in relational and document databases, and limitations in the SDK, the EF Core provider for Azure Cosmos DB NoSQL does not include everything that _could_ be implemented using the combination of EF Core and the Cosmos SDK. Poential enhancements in this area are tracked by [issues in the EF Core GitHub repo marked with the label `area-cosmos`](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-cosmos+sort%3Areactions-%2B1-desc+label%3Atype-enhancement) The best way to indicate the importance of an issue is to vote (👍) for it. This data will then feed into the [planning process](xref:core/what-is-new/release-planning) for the next release.
+Beyond the differences in relational and document databases, and limitations in the SDK, the EF Core provider for Azure Cosmos DB NoSQL does not include everything that _could_ be implemented using the combination of EF Core and the Cosmos SDK. Potential enhancements in this area are tracked by [issues in the EF Core GitHub repo marked with the label `area-cosmos`](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aarea-cosmos+sort%3Areactions-%2B1-desc+label%3Atype-enhancement) The best way to indicate the importance of an issue is to vote (👍) for it. This data will then feed into the [planning process](xref:core/what-is-new/release-planning) for the next release.
