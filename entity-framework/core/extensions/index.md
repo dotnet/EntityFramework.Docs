@@ -331,7 +331,7 @@ Extension for EF Core that provides alternative `Include` syntax in order to bet
 - Loading multiple entities on the same level (siblings).
 - Writing extension methods that are independent of nesting level.
 
-For EF Core: 6.
+For EF Core: 6, 7.
 
 [GitHub repository](https://github.com/AinoraZ/EFCore.IncludeBuilder) | [NuGet](https://www.nuget.org/packages/Ainoraz.EFCore.IncludeBuilder/)
 
