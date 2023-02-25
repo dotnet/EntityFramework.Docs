@@ -45,7 +45,7 @@ Saving and querying entities using table splitting is done in the same way as ot
 
 If all of the columns used by a dependent entity are `NULL` in the database, then no instance for it will be created when queried. This allows modeling an optional dependent entity, where the relationship property on the principal would be null. Note that this would also happen if all of the dependent's properties are optional and set to `null`, which might not be expected.
 
-However, the additional check can impact query performance. In addition, if the dependent entity type has dependents of its own, then determining whether an instance should be created becomes non-trivial. To avoid these issues the dependent entity type can be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships#one-to-one) for more information.
+However, the additional check can impact query performance. In addition, if the dependent entity type has dependents of its own, then determining whether an instance should be created becomes non-trivial. To avoid these issues the dependent entity type can be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships/navigations#required-navigations) for more information.
 
 ### Concurrency tokens
 
@@ -162,7 +162,7 @@ Notice also that, if necessary, different column names can be specified for each
 
 ### Configuring the linking foreign key
 
-The FK linking the mapped tables is targeting the same properties on which it is declared. Normally it wouldn't be created in the database, as it would be redundant. But there's an exception for when the entity type is mapped to more than one table. To change its facets you can use the [relationship configuration Fluent API](xref:core/modeling/relationships#foreign-key):
+The FK linking the mapped tables is targeting the same properties on which it is declared. Normally it wouldn't be created in the database, as it would be redundant. But there's an exception for when the entity type is mapped to more than one table. To change its facets you can use the [relationship configuration Fluent API](xref:core/modeling/relationships/foreign-and-principal-keys):
 
 <!--
             modelBuilder.Entity<Customer>()
