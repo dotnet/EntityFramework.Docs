@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 public class DynamicallyConstructedQueries
 {
     private int _blogNumber;
+    private bool _addWhereClause = true;
 
     [GlobalSetup]
     public static void GlobalSetup()
@@ -19,57 +20,86 @@ public class DynamicallyConstructedQueries
         context.Database.EnsureCreated();
     }
 
-    #region WithConstant
+    #region ExpressionApiWithConstant
     [Benchmark]
-    public int WithConstant()
+    public int ExpressionApiWithConstant()
     {
-        return GetBlogCount("blog" + Interlocked.Increment(ref _blogNumber));
+        var url = "blog" + Interlocked.Increment(ref _blogNumber);
+        using var context = new BloggingContext();
 
-        static int GetBlogCount(string url)
+        IQueryable<Blog> query = context.Blogs;
+
+        if (_addWhereClause)
         {
-            using var context = new BloggingContext();
+            var blogParam = Expression.Parameter(typeof(Blog), "b");
+            var whereLambda = Expression.Lambda<Func<Blog, bool>>(
+                Expression.Equal(
+                    Expression.MakeMemberAccess(
+                        blogParam,
+                        typeof(Blog).GetMember(nameof(Blog.Url)).Single()),
+                    Expression.Constant(url)),
+                blogParam);
 
-            IQueryable<Blog> blogs = context.Blogs;
-
-            if (url is not null)
-            {
-                var blogParam = Expression.Parameter(typeof(Blog), "b");
-                var whereLambda = Expression.Lambda<Func<Blog, bool>>(
-                    Expression.Equal(
-                        Expression.MakeMemberAccess(
-                            blogParam,
-                            typeof(Blog).GetMember(nameof(Blog.Url)).Single()
-                        ),
-                        Expression.Constant(url)),
-                    blogParam);
-
-                blogs = blogs.Where(whereLambda);
-            }
-
-            return blogs.Count();
+            query = query.Where(whereLambda);
         }
+
+        return query.Count();
     }
     #endregion
 
-    #region WithParameter
+    #region ExpressionApiWithParameter
     [Benchmark]
-    public int WithParameter()
+    public int ExpressionApiWithParameter()
     {
-        return GetBlogCount("blog" + Interlocked.Increment(ref _blogNumber));
+        var url = "blog" + Interlocked.Increment(ref _blogNumber);
+        using var context = new BloggingContext();
 
-        int GetBlogCount(string url)
+        IQueryable<Blog> query = context.Blogs;
+
+        if (_addWhereClause)
         {
-            using var context = new BloggingContext();
+            var blogParam = Expression.Parameter(typeof(Blog), "b");
 
-            IQueryable<Blog> blogs = context.Blogs;
+            // This creates a lambda expression whose body is identical to the url captured closure variable in the non-dynamic query:
+            // blogs.Where(b => b.Url == url)
+            // This dynamically creates an expression node which EF can properly recognize and parameterize in the database query.
+            // We then extract that body and use it in our dynamically-constructed query.
+            Expression<Func<string>> urlParameterLambda = () => url;
+            var urlParamExpression = urlParameterLambda.Body;
 
-            if (url is not null)
-            {
-                blogs = blogs.Where(b => b.Url == url);
-            }
+            var whereLambda = Expression.Lambda<Func<Blog, bool>>(
+                Expression.Equal(
+                    Expression.MakeMemberAccess(
+                        blogParam,
+                        typeof(Blog).GetMember(nameof(Blog.Url)).Single()),
+                    urlParamExpression),
+                blogParam);
 
-            return blogs.Count();
+            query = query.Where(whereLambda);
         }
+
+        return query.Count();
+    }
+    #endregion
+
+    #region SimpleWithParameter
+    [Benchmark]
+    public int SimpleWithParameter()
+    {
+        var url = "blog" + Interlocked.Increment(ref _blogNumber);
+
+        using var context = new BloggingContext();
+
+        IQueryable<Blog> query = context.Blogs;
+
+        if (_addWhereClause)
+        {
+            Expression<Func<Blog, bool>> whereLambda = b => b.Url == url;
+
+            query = query.Where(whereLambda);
+        }
+
+        return query.Count();
     }
     #endregion
 
