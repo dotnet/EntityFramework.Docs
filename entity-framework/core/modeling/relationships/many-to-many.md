@@ -1038,7 +1038,7 @@ hermione.Friends.Add(ginny);
 
 ### Direct use of join table
 
-ALl of the examples above make use of the EF Core many-to-many mapping patterns. However, it is also possible to map a join table to a normal entity type and just use the two one-to-many relationships for all operations.
+All of the examples above make use of the EF Core many-to-many mapping patterns. However, it is also possible to map a join table to a normal entity type and just use the two one-to-many relationships for all operations.
 
 For example, these entity types represent the mapping of two normal tables and join table without using any many-to-many relationships:
 
