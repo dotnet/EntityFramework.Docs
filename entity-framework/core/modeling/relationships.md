@@ -45,7 +45,7 @@ EF supports three basic forms of relationship between entities:
 
 - In [one-to-many](xref:core/modeling/relationships/one-to-many) relationships, a single entity is associated with any number of other entities. For example, a `Blog` can have many associated `Posts`, but each `Post` is associated with only one `Blog`.
 - In [one-to-one](xref:core/modeling/relationships/one-to-one) relationships, a single entity is associated with another single entity. For example, a `Blog` has one `BlogHeader`, and that `BlogHeader` belongs to a single `Blog`.
-- In [many-to-many](xref:core/modeling/relationships/many-to-many) relationships, any number entities are associated with any number of other entities. For example, a `Post` can have many associated `Tags`, and each `Tag` can in turn be associated with many `Posts`.
+- In [many-to-many](xref:core/modeling/relationships/many-to-many) relationships, any number of entities are associated with any number of other entities. For example, a `Post` can have many associated `Tags`, and each `Tag` can in turn be associated with many `Posts`.
 
 See the linked documentation pages for more details and examples of each of these different kinds of relationships.
 
