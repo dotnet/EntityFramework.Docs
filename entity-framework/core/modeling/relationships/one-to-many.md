@@ -484,7 +484,7 @@ In all the examples so far, the primary or alternate key property of the princip
 -->
 [!code-csharp[OneToManyRequiredWithCompositeKey](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyRequiredWithCompositeKey)]
 
-This relationship is discovered by convention. However, it will only be discovered if the composite key has been configured explicitly, since composite keys are not discovered automatically. For example:
+This relationship is discovered by convention. However, the composite key itself needs to be configured explicitly::
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
