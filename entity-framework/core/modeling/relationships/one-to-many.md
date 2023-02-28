@@ -116,7 +116,7 @@ Neither of these options is better than the other; they both result in exactly t
 -->
 [!code-csharp[OneToManyOptionalShadow](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyOptionalShadow)]
 
-This is the same as the previous example, except that the foreign key property and navigation to the principal are now nullable. This makes the relationship "optional" because a dependent (`Post`) can _not_ be related _any_ principal (`Blog`) by setting its foreign key property and navigation to `null`.
+This is the same as the previous example, except that the foreign key property and navigation to the principal are now nullable. This makes the relationship "optional" because a dependent (`Post`) can exist _without_ being related to any principal (`Blog`).
 
 > [!IMPORTANT]
 > When using [C# nullable reference types](/dotnet/csharp/tutorials/nullable-reference-types), the reference navigation must be nullable if the foreign key property is nullable. In this case, `Post.BlogId` is nullable, so `Post.Blog` must be nullable too. See [_Working with Nullable Reference Types_](xref:core/miscellaneous/nullable-reference-types) for more information.
