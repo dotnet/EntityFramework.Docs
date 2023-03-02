@@ -213,10 +213,16 @@ In some extreme cases, it may be necessary to remove all migrations and start ov
 
 It's also possible to reset all migrations and create a single one without losing your data. This is sometimes called "squashing", and involves some manual work:
 
-* Delete your **Migrations** folder
-* Create a new migration and generate a SQL script for it
-* In your database, delete all rows from the migrations history table
-* Insert a single row into the migrations history, to record that the first migration has already been applied, since your tables are already there. The insert SQL is the last operation in the SQL script generated above.
+1. Back up your database, in case something goes wrong.
+2. In your database, delete all rows from the migrations history table (e.g. `DELETE FROM [__EFMigrationsHistory]` on SQL Server).
+3. Delete your **Migrations** folder.
+4. Create a new migration and generate a SQL script for it (`dotnet ef migrations script`).
+5. Insert a single row into the migrations history, to record that the first migration has already been applied, since your tables are already there. The insert SQL is the last operation in the SQL script generated above, and resembles the following (don't forget to update the values):
+
+```sql
+INSERT INTO [__EFMigrationsHistory] ([MIGRATIONID], [PRODUCTVERSION])
+VALUES (N'<full_migration_timestamp_and_name>', N'<EF_version>');
+```
 
 > [!WARNING]
 > Any [custom migration code](#customize-migration-code) will be lost when the **Migrations** folder is deleted.  Any customizations must be applied to the new initial migration manually in order to be preserved.
