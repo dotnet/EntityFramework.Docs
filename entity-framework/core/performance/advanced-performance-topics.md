@@ -153,26 +153,37 @@ Note that there is no need to parameterize each and every query: it's perfectly 
 
 In some situations, it is necessary to dynamically construct LINQ queries rather than specifying them outright in source code. This can happen, for example, in a website which receives arbitrary query details from a client, with open-ended query operators (sorting, filtering, paging...). In principle, if done correctly, dynamically-constructed queries can be just as efficient as regular ones (although it's not possible to use the compiled query optimization with dynamic queries). In practice, however, they are frequently the source of performance issues, since it's easy to accidentally produce expression trees with shapes that differ every time.
 
-The following example uses two techniques to dynamically construct a query; we add a `Where` operator to the query only if the given parameter is not null. Note that this isn't a good use case for dynamically constructing a query - but we're using it for simplicity:
+The following example uses three techniques to construct a query's `Where` lambda expression:
 
-### [With constant](#tab/with-constant)
+1. **Expression API with constant**: Dynamically build the expression with the Expression API, using a constant node. This is a frequent mistake when dynamically building expression trees, and causes EF to recompile the query each time it's invoked with a different constant value (it also usually causes plan cache pollution at the database server).
+2. **Expression API with parameter**: A better version, which substitutes the constant with a parameter. This ensures that the query is only compiled once regardless of the value provided, and the same (parameterized) SQL is generated.
+3. **Simple with parameter**: A version which doesn't use the Expression API, for comparison, which creates the same tree as the method above but is much simpler. In many cases, it's possible to dynamically build your expression tree without resorting to the Expression API, which is easy to get wrong.
 
-[!code-csharp[Main](../../../samples/core/Benchmarks/DynamicallyConstructedQueries.cs?name=WithConstant&highlight=14-24)]
+; we add a `Where` operator to the query only if the given parameter is not null. Note that this isn't a good use case for dynamically constructing a query - but we're using it for simplicity:
 
-### [With parameter](#tab/with-parameter)
+### [Expression API with constant](#tab/expression-api-with-constant)
 
-[!code-csharp[Main](../../../samples/core/Benchmarks/DynamicallyConstructedQueries.cs?name=WithParameter&highlight=14)]
+[!code-csharp[Main](../../../samples/core/Benchmarks/DynamicallyConstructedQueries.cs?name=ExpressionApiWithConstant&highlight=11-18)]
+
+### [Expression API with parameter](#tab/expression-api-with-parameter)
+
+[!code-csharp[Main](../../../samples/core/Benchmarks/DynamicallyConstructedQueries.cs?name=ExpressionApiWithParameter&highlight=11-26)]
+
+### [Simple with parameter](#tab/simple-with-parameter)
+
+[!code-csharp[Main](../../../samples/core/Benchmarks/DynamicallyConstructedQueries.cs?name=SimpleWithParameter&highlight=12)]
 
 ***
 
 Benchmarking these two techniques gives the following results:
 
-|        Method |       Mean |    Error |    StdDev |   Gen 0 |  Gen 1 | Gen 2 | Allocated |
-|-------------- |-----------:|---------:|----------:|--------:|-------:|------:|----------:|
-|  WithConstant | 1,096.7 us | 12.54 us |  11.12 us | 13.6719 | 1.9531 |     - |  83.91 KB |
-| WithParameter |   570.8 us | 42.43 us | 124.43 us |  5.8594 |      - |     - |  37.16 KB |
+|                     Method |       Mean |    Error |   StdDev |    Gen0 |   Gen1 | Allocated |
+|--------------------------- |-----------:|---------:|---------:|--------:|-------:|----------:|
+|  ExpressionApiWithConstant | 1,665.8 us | 56.99 us | 163.5 us | 15.6250 |      - | 109.92 KB |
+| ExpressionApiWithParameter |   757.1 us | 35.14 us | 103.6 us | 12.6953 | 0.9766 |  54.95 KB |
+|        SimpleWithParameter |   760.3 us | 37.99 us | 112.0 us | 12.6953 |      - |  55.03 KB |
 
-Even if the sub-millisecond difference seems small, keep in mind that the constant version continuously pollutes the cache and causes other queries to be re-compiled, slowing them down as well.
+Even if the sub-millisecond difference seems small, keep in mind that the constant version continuously pollutes the cache and causes other queries to be re-compiled, slowing them down as well and having a general negative impact on your overall performance. It's highly recommended to avoid constant query recompilation.
 
 > [!NOTE]
 > Avoid constructing queries with the expression tree API unless you really need to. Aside from the API's complexity, it's very easy to inadvertently cause significant performance issues when using them.
