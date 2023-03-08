@@ -1,17 +1,16 @@
 ### YamlMime:Hub
 
-title: Entity Framework documentation
-summary: Entity Framework Core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations. EF Core works with many databases, including SQL Database (on-premises and Azure), SQLite, MySQL, PostgreSQL, and Azure Cosmos DB.
+title: Entity Framework documentation hub 
+summary: Entity Framework is a modern object-relation mapper that lets you build a clean, portable, and high-level data access layer with .NET (C#) across a variety of databases, including SQL Database (on-premises and Azure), SQLite, MySQL, PostgreSQL, and Azure Cosmos DB. It supports LINQ queries, change tracking, updates, and schema migrations.
 brand: dotnet
 
 metadata:
-  title: Entity Framework documentation
-  description: Learn to use Entity Framework Core, a modern object-database mapper for .NET that supports LINQ queries, change tracking, updates, and schema migrations. Browse tutorials, sample code, fundamentals, API reference and more.
-  ms.product: entity-framework
+  title: Entity Framework documentation hub
+  description: Entity Framework is a modern object-relation mapper that lets you build a clean, portable, and high-level data access layer with .NET (C#) across a variety of databases, including SQL Database (on-premises and Azure), SQLite, MySQL, PostgreSQL, and Azure Cosmos DB. It supports LINQ queries, change tracking, updates, and schema migrations.
   ms.topic: hub-page
-  author: WadePickett
-  ms.author: wpickett
-  ms.date: 04/15/2020
+  author: jcjiang
+  ms.author: jiacjian
+  ms.date: 03/08/2023
 
 # highlightedContent section (optional)
 # Maximum of 8 items
@@ -19,23 +18,19 @@ highlightedContent:
 # itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
   items:
     # Card
-    - title: "Entity Framework Core"
+    - title: "Tutorial: Access a SQLite database using C# (Entity Framework Core)"
       itemType: get-started
       url: core/get-started/overview/first-app.md
     # Card
-    - title: "Persist and retrieve relational data with Entity Framework Core"
+    - title: "Tutorial: Query and manage data using C# (Entity Framework Core)"
       itemType: learn
       url: /training/modules/persist-data-ef-core/
     # Card
-    - title: "Releases and platforms"
-      itemType: whats-new
-      url: core/what-is-new/index.md
-    # Card
-    - title: "Supported Databases"
+    - title: "Supported database management systems"
       itemType: overview
       url: core/providers/index.md
     # Card
-    - title: "Choose a version that is right for you"
+    - title: "Which version should I use - EF Core or EF 6?"
       itemType: overview
       url: efcore-and-ef6/index.md
     # Card
@@ -43,9 +38,13 @@ highlightedContent:
       itemType: reference
       url: /dotnet/api/?view=efcore-6.0&preserve-view=true
     # Card
-    - title: "Explore other options for .NET Data"
+    - title: ".NET (C#) data documentation hub"
       itemType: reference
       url: dotnet-data/index.yml
+    # Card
+    - title: "Releases and platforms"
+      itemType: whats-new
+      url: core/what-is-new/index.md
 
 # Card with summary style
 additionalContent:
