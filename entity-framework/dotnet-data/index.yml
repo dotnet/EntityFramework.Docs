@@ -9,7 +9,7 @@ metadata:
   description: This page contains resources about how to work with data using .NET (C#). Use our docs and tutorials to choose from our wide variety of available databases & data access approaches and get started quick!
   ms.product: entity-framework
   ms.topic: hub-page
-  author: Jiachen Jiang
+  author: jcjiang
   ms.author: jiacjian
   ms.date: 03/08/2023
 
@@ -18,63 +18,65 @@ metadata:
 highlightedContent:
   # itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
   items:    
-    # Card
-    - title: "Microsoft SQL documentation"
-      itemType: reference
-      url: /sql
 
-    # Card
-    - title: "Azure Cosmos DB documentation"
-      itemType: reference
-      url: /azure/cosmos-db/
-
-    # Card
-    - title: "LINQ overview"
-      itemType: overview
-      url: /dotnet/standard/linq
-    
-    # Card
-    - title: "Entity Framework Core (Overview)"
+      # Card
+    - title: "Accessing your data using C# (Entity Framework Core)"
       itemType: overview
       url: /ef/core/
 
     # Card
-    - title: "Entity Framework Core (Tutorial)"
-      itemType: learn
+    - title: "Tutorial: Query and manage data using C# (Entity Framework Core)"
+      itemType: quickstart
       url: /training/modules/persist-data-ef-core/
-      
+
     # Card
-    - title: "SQLite overview"
+    - title: "Using C# to work with a SQLite database"
       itemType: overview
       url: /dotnet/standard/data/sqlite
+
+    # Card
+    - title: "Tutorial: Access a SQLite database using C# (Entity Framework Core)"
+      itemType: quickstart
+      url: /ef/core/get-started/overview/first-app
+
+    # Card
+    - title: "Using C# to work with a SQL Server database"
+      itemType: overview
+      url: /troubleshoot/developer/visualstudio/csharp/language-compilers/create-sql-server-database-programmatically
+    
+    # Card
+    - title: "Querying data with Language-Integrated Query (LINQ)"
+      itemType: overview
+      url: /dotnet/standard/linq
+
+    # Card
+    - title: "Tutorial: Create a web API that uses a database"
+      itemType: quickstart
+      url: /aspnet/core/tutorials/first-web-api
 
     # Card
     - title: "What is ML.NET?"
       itemType: overview
       url: https://dotnet.microsoft.com/learn/ml-dotnet/what-is-mldotnet
 
-    # Card
-    - title: "What is .NET for Apache Spark?"
-      itemType: overview
-      url: /dotnet/spark/what-is-apache-spark-dotnet
-
 # Card with summary style
 additionalContent:
   # Supports up to 3 sections
   sections:
-    - title: Databases # < 60 chars (optional)
+    - title: Supported database management systems # < 60 chars (optional)
+      description: .NET (C#) supports all of the most common relational database management systems, including SQL Server, MySQL, SQLite, Postgres, Azure SQL, Oracle, and more. We also support Azure Cosmos DB, a document database. 
       items:
         # Card
         - title: Relational databases
           links:
             - url: /dotnet/standard/data/sqlite/
-              text: "Microsoft.Data.Sqlite overview"
+              text: "Use .NET (C#) to connect and query data in SQLite"
             - url: /sql/
-              text: "Microsoft SQL documentation"
+              text: "Use .NET (C#) to connect and query data in Microsoft SQL Server"
             - url: /azure/postgresql/flexible-server/connect-csharp
-              text: "Use C# .NET to connect and query data in Azure Database for PostgreSQL - Flexible Server"
+              text: "Use .NET (C#) to connect and query data in Azure Database for PostgreSQL - Flexible Server"
             - url: /azure/mysql/connect-csharp
-              text: "Use C# .NET to connect and query data in Azure Database for MySQL"
+              text: "Use .NET (C#) to connect and query data in Azure Database for MySQL"
 
         # Card
         - title: Document database (Azure Cosmos DB)
