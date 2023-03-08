@@ -1,17 +1,17 @@
 ### YamlMime:Hub
 
-title: .NET data documentation
-summary: .NET is the open source and cross-platform solution for integrating data, data services, and data backends with your applications.
+title: .NET (C#) data documentation hub
+summary: This page contains resources about how to work with data using .NET (C#). Use our docs and tutorials to choose from our wide variety of available databases & data access approaches and get started quick!
 brand: dotnet
 
 metadata:
-  title: .NET data documentation
-  description: Welcome to the .NET data hub! What data-related task would you like to perform? This page is your gateway to documentation and tutorials for the various ways you interact with data from .NET. 
+  title:  .NET (C#) data documentation hub
+  description: This page contains resources about how to work with data using .NET (C#). Use our docs and tutorials to choose from our wide variety of available databases & data access approaches and get started quick!
   ms.product: entity-framework
   ms.topic: hub-page
-  author: JeremyLikness
-  ms.author: jeliknes
-  ms.date: 07/20/2022
+  author: Jiachen Jiang
+  ms.author: jiacjian
+  ms.date: 03/08/2023
 
 # highlightedContent section (optional)
 # Maximum of 8 items
