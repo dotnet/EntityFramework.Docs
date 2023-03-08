@@ -64,7 +64,6 @@ additionalContent:
   # Supports up to 3 sections
   sections:
     - title: Supported database management systems # < 60 chars (optional)
-      description: .NET (C#) supports all of the most common relational database management systems, including SQL Server, MySQL, SQLite, Postgres, Azure SQL, Oracle, and more. We also support Azure Cosmos DB, a document database. 
       items:
         # Card
         - title: Relational databases
