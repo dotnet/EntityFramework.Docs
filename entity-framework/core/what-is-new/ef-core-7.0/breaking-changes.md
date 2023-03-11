@@ -17,11 +17,11 @@ EF Core 7.0 targets .NET 6. This means that existing applications that target .N
 ## Summary
 
 | **Breaking change**                                                                                                                      | **Impact** |
-|:---------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+|:-----------------------------------------------------------------------------------------------------------------------------------------|------------|
 | [`Encrypt` defaults to `true` for SQL Server connections](#encrypt-true)                                                                 | High       |
 | [Some warnings will again throw exceptions by default](#warnings-as-errors)                                                              | High       |
 | [SQL Server tables with triggers or certain computed columns now require special EF Core configuration](#sqlserver-tables-with-triggers) | High       |
-| [SQLite tables with AFTER triggers and virtual tables now require special EF Core configuration](#sqlite-tables-and-returning-clause)    | High       |
+| [SQLite tables with AFTER triggers and virtual tables now require special EF Core configuration](#sqlitetriggers)                        | High       |
 | [Orphaned dependents of optional relationships are not automatically deleted](#optional-deletes)                                         | Medium     |
 | [Cascade delete is configured between tables when using TPT mapping with SQL Server](#tpt-cascade-delete)                                | Medium     |
 | [Key properties may need to be configured with a provider value comparer](#provider-value-comparer)                                      | Low        |
@@ -142,6 +142,8 @@ Use the convention on your `DbContext` by overriding `ConfigureConventions`:
 [!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=ConfigureConventions)]
 
 This effectively calls `HasTrigger` on all your model's tables, instead of you having to do it manually for each and every table.
+
+<a name="sqlitetriggers"></a>
 
 ### SQLite tables with AFTER triggers and virtual tables now require special EF Core configuration
 
