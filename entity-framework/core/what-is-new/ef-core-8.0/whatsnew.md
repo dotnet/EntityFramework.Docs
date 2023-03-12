@@ -698,7 +698,7 @@ In addition to the enhancements described above, EF8 Preview 1 also [includes ma
 
 ### JSON Columns for SQLite
 
-EF7 introduced support for mapping to JSON columns when using Azure SQL/SQL Server. EF8 extends this support to SQLite databases. As for the SQL Server support, this includes
+EF7 introduced support for mapping to JSON columns when using Azure SQL/SQL Server. EF8 extends this support to SQLite databases. As for the SQL Server support, this includes:
 
 - Mapping of aggregates built from .NET types to JSON documents stored in SQLite columns
 - Queries into JSON columns, such as filtering and sorting by the elements of the documents
