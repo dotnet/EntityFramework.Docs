@@ -21,6 +21,7 @@ Microsoft.EntityFrameworkCore.InMemory  | [NetTopologySuite](https://www.nuget.o
 Npgsql.EntityFrameworkCore.PostgreSQL   | [Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite)
 Pomelo.EntityFrameworkCore.MySql        | [Pomelo.EntityFrameworkCore.MySql.NetTopologySuite](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql.NetTopologySuite)
 Devart.Data.MySql.EFCore                | [Devart.Data.MySql.EFCore.NetTopologySuite](https://www.nuget.org/packages/Devart.Data.MySql.EFCore.NetTopologySuite)
+Devart.Data.Oracle.EFCore | [Devart.Data.Oracle.EFCore.NetTopologySuite](https://www.nuget.org/packages/Devart.Data.Oracle.EFCore.NetTopologySuite)
 Devart.Data.PostgreSql.EFCore           | [Devart.Data.PostgreSql.EFCore.NetTopologySuite](https://www.nuget.org/packages/Devart.Data.PostgreSql.EFCore.NetTopologySuite)
 Devart.Data.SQLite.EFCore               | [Devart.Data.SQLite.EFCore.NetTopologySuite](https://www.nuget.org/packages/Devart.Data.SQLite.EFCore.NetTopologySuite)
 Teradata.EntityFrameworkCore            | [Teradata.EntityFrameworkCore.NetTopologySuite](https://www.nuget.org/packages/Teradata.EntityFrameworkCore.NetTopologySuite)
