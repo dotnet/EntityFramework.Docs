@@ -2,34 +2,19 @@
 title: One-to-one relationships - EF Core
 description: How to configure one-to-one relationships between entity types when using Entity Framework Core
 author: ajcvickers
-ms.date: 02/25/2023
+ms.date: 03/19/2023
 uid: core/modeling/relationships/one-to-one
 ---
 # One-to-one relationships
 
 One-to-one relationships are used when one entity is associated with at most one other entity. For example, a `Blog` has one `BlogHeader`, and that `BlogHeader` belongs to a single `Blog`.
 
-A one-to-one relationship is made up from:
-
-- One or more [primary or alternate key](xref:core/modeling/relationships/foreign-and-principal-keys#principal-keys) properties on the principal entity. For example, `Blog.Id`.
-- One or more [foreign key](xref:core/modeling/relationships/foreign-and-principal-keys#foreign-keys) properties on the dependent entity. For example, `BlogHeader.BlogId`.
-- Optionally, a [reference navigation](xref:core/modeling/relationships/navigations#reference-navigations) on the principal entity referencing the dependent entity. For example, `Blog.Header`.
-- Optionally, a [reference navigation](xref:core/modeling/relationships/navigations#reference-navigations) on the dependent entity referencing the principal entity. For example, `BlogHeader.Blog`.
-
-It is not always obvious which side of a one-to-one relationship should be the principal, and which side should be the dependent. Some considerations are:
-
-- If the database tables for the two types already exist, then the table with the foreign key column(s) must map to the dependent type.
-- A type is usually the dependent type if it cannot logically exist without the other type. For example, it makes no sense to have a header for a blog that does not exist, so `BlogHeader` is naturally the dependent type.
-- If there is a natural parent/child relationship, then the child is usually the dependent type.
-
-## Examples
-
-The following sections contain examples of one-to-one relationships showing different combinations of navigations, foreign keys, and primary or alternate keys.
+This document is structured around lots of examples. The examples start with common cases, which also introduce concepts. Later examples cover less common kinds of configuration. A good approach here is to understand the first few examples and concepts, and then go to the later examples based on your specific needs. Based on this approach, we will start with simple "required" and "optional" one-to-one relationships.
 
 > [!TIP]
 > The code for all the examples below can be found in [OneToOne.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/Relationships/OneToOne.cs).
 
-### Required one-to-one
+## Required one-to-one
 
 <!--
         // Principal (parent)
@@ -49,7 +34,21 @@ The following sections contain examples of one-to-one relationships showing diff
 -->
 [!code-csharp[OneToOneRequired](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequired)]
 
-For this relationship:
+A one-to-one relationship is made up from:
+
+- One or more [primary or alternate key](xref:core/modeling/relationships/foreign-and-principal-keys#principal-keys) properties on the principal entity. For example, `Blog.Id`.
+- One or more [foreign key](xref:core/modeling/relationships/foreign-and-principal-keys#foreign-keys) properties on the dependent entity. For example, `BlogHeader.BlogId`.
+- Optionally, a [reference navigation](xref:core/modeling/relationships/navigations#reference-navigations) on the principal entity referencing the dependent entity. For example, `Blog.Header`.
+- Optionally, a [reference navigation](xref:core/modeling/relationships/navigations#reference-navigations) on the dependent entity referencing the principal entity. For example, `BlogHeader.Blog`.
+
+> [!TIP]
+> It is not always obvious which side of a one-to-one relationship should be the principal, and which side should be the dependent. Some considerations are:
+>
+> - If the database tables for the two types already exist, then the table with the foreign key column(s) must map to the dependent type.
+> - A type is usually the dependent type if it cannot logically exist without the other type. For example, it makes no sense to have a header for a blog that does not exist, so `BlogHeader` is naturally the dependent type.
+> - If there is a natural parent/child relationship, then the child is usually the dependent type.
+
+So, for the relationship in this example:
 
 - The foreign key property `BlogHeader.BlogId` is not nullable. This makes the relationship "required" because every dependent (`BlogHeader`) _must be related to some principal_ (`Blog`), since its foreign key property must be set to some value.
 - Both entities have navigations pointing to the related entity on the other side of the relationship.
@@ -103,7 +102,7 @@ Neither of these options is better than the other; they both result in exactly t
 > [!TIP]
 > It is never necessary to configure a relationship twice, once starting from the principal, and then again starting from the dependent. Also, attempting to configure the principal and dependent halves of a relationship separately generally does not work. Choose to configure each relationship from either one end or the other and then write the configuration code only once.
 
-### Optional one-to-one
+## Optional one-to-one
 
 <!--
         // Principal (parent)
@@ -122,6 +121,8 @@ Neither of these options is better than the other; they both result in exactly t
         }
 -->
 [!code-csharp[OneToOneOptionalShadow](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneOptionalShadow)]
+
+In some cases, you may not want a foreign key property in your model, since foreign keys are a detail of how the relationship is represented in the database, which is not needed whe using the relationship in a purely object-oriented manner. However, if entities are going to be serialized, for example to send over a wire, then the foreign key values can be a useful way to keep the relationship information intact when the entities are not in an object form. It is therefore often pragmatic to keep foreign key properties in the .NET type for this purpose. Foreign key properties can be private, which is often a good compromise to avoid exposing the foreign key while allowing its value to travel with the entity.
 
 This is the same as the previous example, except that the foreign key property and navigation to the principal are now nullable. This makes the relationship "optional" because a dependent (`BlogHeader`) can _not_ be related _any_ principal (`Blog`) by setting its foreign key property and navigation to `null`.
 
@@ -142,7 +143,7 @@ As before, this relationship is [discovered by convention](xref:core/modeling/re
 -->
 [!code-csharp[OneToOneOptionalFromPrincipal](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneOptionalFromPrincipal)]
 
-### Required one-to-one with primary key to primary key relationship
+## Required one-to-one with primary key to primary key relationship
 
 <!--
         // Principal (parent)
@@ -193,7 +194,7 @@ When no property is specified in the call to `HasForeignKey`, and the primary ke
 -->
 [!code-csharp[OneToOneRequiredPkToPkFromPrincipal](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredPkToPkFromPrincipal)]
 
-### Required one-to-one with shadow foreign key
+## Required one-to-one with shadow foreign key
 
 <!--
         // Principal (parent)
@@ -243,7 +244,7 @@ For cases where the navigations, foreign key, or required/optional nature of the
 -->
 [!code-csharp[OneToOneRequiredShadowFromPrincipal](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredShadowFromPrincipal)]
 
-### Optional one-to-one with shadow foreign key
+## Optional one-to-one with shadow foreign key
 
 <!--
         // Principal (parent)
@@ -293,7 +294,7 @@ For cases where the navigations, foreign key, or required/optional nature of the
 -->
 [!code-csharp[OneToOneOptionalShadowFromPrincipal](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneOptionalShadowFromPrincipal)]
 
-### One-to-one without navigation to principal
+## One-to-one without navigation to principal
 
 <!--
         // Principal (parent)
@@ -347,7 +348,7 @@ If configuration starts from the entity with no navigation, then the type of the
 -->
 [!code-csharp[OneToOneRequiredFromDependentNoNavigationToPrincipal](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredFromDependentNoNavigationToPrincipal)]
 
-### One-to-one without navigation to principal and with shadow foreign key
+## One-to-one without navigation to principal and with shadow foreign key
 
 <!--
         // Principal (parent)
@@ -395,7 +396,7 @@ A more complete configuration can be used to explicitly configure the navigation
 -->
 [!code-csharp[OneToOneRequiredShadowFromPrincipalNoNavigationToPrincipal](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredShadowFromPrincipalNoNavigationToPrincipal)]
 
-### One-to-one without navigation to dependents
+## One-to-one without navigation to dependents
 
 <!--
         // Principal (parent)
@@ -458,7 +459,7 @@ If configuration starts from the entity with no navigation, then the type of the
 -->
 [!code-csharp[OneToOneRequiredFromPrincipalNoNavigationToDependents](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredFromPrincipalNoNavigationToDependents)]
 
-### One-to-one with no navigations
+## One-to-one with no navigations
 
 Occasionally, it can be useful to configure a relationship with no navigations. Such a relationship can only be manipulated by changing the foreign key value directly.
 
@@ -506,7 +507,7 @@ A more complete explicit configuration of this relationship is::
 -->
 [!code-csharp[OneToOneRequiredFromPrincipalNoNavigations](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredFromPrincipalNoNavigations)]
 
-### One-to-one with alternate key
+## One-to-one with alternate key
 
 In all the examples so far, the foreign key property on the dependent is constrained to the primary key property on the principal. The foreign key can instead be constrained to a different property, which then becomes an alternate key for the principal entity type. For example:
 
@@ -557,7 +558,7 @@ This relationship is not discovered by convention, since EF will always, by conv
 -->
 [!code-csharp[OneToOneRequiredFromPrincipalWithAlternateKey](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredFromPrincipalWithAlternateKey)]
 
-### One-to-one with composite foreign key
+## One-to-one with composite foreign key
 
 In all the examples so far, the primary or alternate key property of the principal consisted of a single property. Primary or alternate keys can also be formed form more than one property--these are known as ["composite keys"](xref:core/modeling/keys). When the principal of a relationship has a composite key, then the foreign key of the dependent must also be a composite key with the same number of properties. For example:
 
@@ -618,7 +619,7 @@ Both `HasForeignKey` and `HasPrincipalKey` can be used to explicitly specify key
 > [!TIP]
 > In the code above, the calls to `HasKey` and `HasOne` have been grouped together into a nested builder. Nested builders remove the need to call `Entity<>()` multiple times for the same entity type, but are functionally equivalent to calling `Entity<>()` multiple times.
 
-### Required one-to-one without cascade delete
+## Required one-to-one without cascade delete
 
 <!--
         // Principal (parent)
@@ -651,7 +652,7 @@ By convention, required relationships are configured to [cascade delete](xref:co
 -->
 [!code-csharp[RequiredWithoutCascadeDeleteConfig](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=RequiredWithoutCascadeDeleteConfig)]
 
-### Self-referencing one-to-one
+## Self-referencing one-to-one
 
 In all the previous examples, the principal entity type was different from the dependent entity type. This does not have to be the case. For example, in the types below, each `Person` is optionally related to another `Person`.
 

@@ -30,15 +30,15 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public BlogHeader? Header { get; set; }                            // Reference navigation to dependent
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                                    // Required foreign key property
-            public Blog Blog { get; set; } = null!;                            // Required reference navigation to principal
+            public int BlogId { get; set; } // Required foreign key property
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -102,15 +102,15 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public BlogHeader? Header { get; set; }                            // Reference navigation to dependent
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public int? BlogId { get; set; }                                   // Optional foreign key property
-            public Blog? Blog { get; set; }                                    // Optional reference navigation to principal
+            public int? BlogId { get; set; } // Optional foreign key property
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -174,14 +174,14 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public BlogHeader? Header { get; set; }                            // Reference navigation to dependent
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public Blog Blog { get; set; } = null!;                            // Required reference navigation to principal
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -255,14 +255,14 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public BlogHeader? Header { get; set; }                            // Reference navigation to dependent
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public Blog Blog { get; set; } = null!;                            // Required reference navigation to principal
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -336,14 +336,14 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public BlogHeader? Header { get; set; }                            // Reference navigation to dependent
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public Blog? Blog { get; set; }                                    // Optional reference navigation to principal
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -417,14 +417,14 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public BlogHeader? Header { get; set; }                            // Reference navigation to dependent
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                                    // Required foreign key property
+            public int BlogId { get; set; } // Required foreign key property
         }
         #endregion
 
@@ -488,14 +488,14 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public BlogHeader? Header { get; set; }                            // Reference navigation to dependent
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public int? BlogId { get; set; }                                   // Optional foreign key property
+            public int? BlogId { get; set; } // Optional foreign key property
         }
         #endregion
 
@@ -726,8 +726,8 @@ public class OneToOne
         public class BlogHeader
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }           // Required foreign key property
-            public Blog Blog { get; set; } = null!;   // Required reference navigation to principal
+            public int BlogId { get; set; } // Required foreign key property
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -1357,16 +1357,16 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public int AlternateId { get; set; }             // Alternate key as target of the BlogHeader.BlogId foreign key
-            public BlogHeader? Header { get; set; }          // Reference navigation to dependent
+            public int AlternateId { get; set; } // Alternate key as target of the BlogHeader.BlogId foreign key
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                  // Required foreign key property
-            public Blog Blog { get; set; } = null!;          // Required reference navigation to principal
+            public int BlogId { get; set; } // Required foreign key property
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -1442,16 +1442,16 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public int AlternateId { get; set; }       // Alternate key as target of the BlogHeader.BlogId foreign key
-            public BlogHeader? Header { get; set; }    // Reference navigation to dependent
+            public int AlternateId { get; set; } // Alternate key as target of the BlogHeader.BlogId foreign key
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public int? BlogId { get; set; }           // Optional foreign key property
-            public Blog? Blog { get; set; }            // Optional reference navigation to principal
+            public int? BlogId { get; set; } // Optional foreign key property
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -1527,15 +1527,15 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public int AlternateId { get; set; }        // Alternate key as target of the shadow foreign key
-            public BlogHeader? Header { get; set; }     // Reference navigation to dependent
+            public int AlternateId { get; set; } // Alternate key as target of the shadow foreign key
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public Blog Blog { get; set; } = null!;     // Required reference navigation to principal
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -1613,15 +1613,15 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public int AlternateId { get; set; }     // Alternate key as target of the shadow foreign key
-            public BlogHeader? Header { get; set; }  // Reference navigation to dependent
+            public int AlternateId { get; set; } // Alternate key as target of the shadow foreign key
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public Blog? Blog { get; set; }          // Optional reference navigation to principal
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -1698,18 +1698,18 @@ public class OneToOne
         // Principal (parent)
         public class Blog
         {
-            public int Id1 { get; set; }              // Composite key part 1
-            public int Id2 { get; set; }              // Composite key part 2
-            public BlogHeader? Header { get; set; }   // Reference navigation to dependent
+            public int Id1 { get; set; } // Composite key part 1
+            public int Id2 { get; set; } // Composite key part 2
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public int BlogId1 { get; set; }          // Required foreign key property part 1
-            public int BlogId2 { get; set; }          // Required foreign key property part 2
-            public Blog Blog { get; set; } = null!;   // Required reference navigation to principal
+            public int BlogId1 { get; set; } // Required foreign key property part 1
+            public int BlogId2 { get; set; } // Required foreign key property part 2
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -1790,18 +1790,18 @@ public class OneToOne
         // Principal (parent)
         public class Blog
         {
-            public int Id1 { get; set; }             // Composite key part 1
-            public int Id2 { get; set; }             // Composite key part 2
-            public BlogHeader? Header { get; set; }  // Reference navigation to dependent
+            public int Id1 { get; set; } // Composite key part 1
+            public int Id2 { get; set; } // Composite key part 2
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public int BlogId1 { get; set; }         // Optional foreign key property part 1
-            public int? BlogId2 { get; set; }        // Optional foreign key property part 2
-            public Blog? Blog { get; set; }          // Optional reference navigation to principal
+            public int BlogId1 { get; set; } // Optional foreign key property part 1
+            public int? BlogId2 { get; set; } // Optional foreign key property part 2
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -1882,16 +1882,16 @@ public class OneToOne
         // Principal (parent)
         public class Blog
         {
-            public int Id1 { get; set; }             // Composite key part 1
-            public int Id2 { get; set; }             // Composite key part 2
-            public BlogHeader? Header { get; set; }  // Reference navigation to dependent
+            public int Id1 { get; set; } // Composite key part 1
+            public int Id2 { get; set; } // Composite key part 2
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public Blog Blog { get; set; } = null!;  // Required reference navigation to principal
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -1979,16 +1979,16 @@ public class OneToOne
         // Principal (parent)
         public class Blog
         {
-            public int Id1 { get; set; }                  // Composite key part 1
-            public int Id2 { get; set; }                  // Composite key part 2
-            public BlogHeader? Header { get; set; }       // Reference navigation to dependent
+            public int Id1 { get; set; } // Composite key part 1
+            public int Id2 { get; set; } // Composite key part 2
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public Blog? Blog { get; set; }               // Optional reference navigation to principal
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -2074,9 +2074,9 @@ public class OneToOne
         {
             public int Id { get; set; }
 
-            public int? HusbandId { get; set; }      // Optional foreign key property
-            public Person? Husband { get; set; }     // Optional reference navigation to principal
-            public Person? Wife { get; set; }        // Reference navigation to dependent
+            public int? HusbandId { get; set; } // Optional foreign key property
+            public Person? Husband { get; set; } // Optional reference navigation to principal
+            public Person? Wife { get; set; } // Reference navigation to dependent
         }
         #endregion
 
@@ -2125,15 +2125,15 @@ public class OneToOne
         public class Blog
         {
             public int Id { get; set; }
-            public BlogHeader? Header { get; set; }                            // Reference navigation to dependent
+            public BlogHeader? Header { get; set; } // Reference navigation to dependent
         }
 
         // Dependent (child)
         public class BlogHeader
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                                    // Required foreign key property
-            public Blog Blog { get; set; } = null!;                            // Required reference navigation to principal
+            public int BlogId { get; set; } // Required foreign key property
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 

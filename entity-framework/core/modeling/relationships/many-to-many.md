@@ -2,7 +2,7 @@
 title: Many-to-many relationships - EF Core
 description: How to configure many-to-many relationships between entity types when using Entity Framework Core
 author: ajcvickers
-ms.date: 02/25/2023
+ms.date: 03/19/2023
 uid: core/modeling/relationships/many-to-many
 ---
 # Many-to-many relationships
@@ -11,7 +11,7 @@ Many-to-many relationships are used when any number entities of one entity type 
 
 ## Understanding many-to-many relationships
 
-Many-to-many relationships are different from [one-to-many](xref:core/modeling/relationships/one-to-many) and [one-to-one](xref:core/modeling/relationships/one-to-one) relationships in that they cannot be represented in a simple way using just a foreign key. Instead, when foreign key, or common value associations are use, an additional entity type is needed to "join" the two sides of the relationship. This is known as the "join entity type" and maps to a "join table" in a relational database. The entities of this join entity type contain pairs of foreign key values, where one of each pair points to an entity on one side of the relationship, and the other points to an entity on the other side of the relationship. Each join entity, and therefore each row in the join table, therefore represents one association between the entity types in the relationship.
+Many-to-many relationships are different from [one-to-many](xref:core/modeling/relationships/one-to-many) and [one-to-one](xref:core/modeling/relationships/one-to-one) relationships in that they cannot be represented in a simple way using just a foreign key. Instead, an additional entity type is needed to "join" the two sides of the relationship. This is known as the "join entity type" and maps to a "join table" in a relational database. The entities of this join entity type contain pairs of foreign key values, where one of each pair points to an entity on one side of the relationship, and the other points to an entity on the other side of the relationship. Each join entity, and therefore each row in the join table, therefore represents one association between the entity types in the relationship.
 
 EF Core can hide the join entity type and manage it behind the scenes. This allows the navigations of a many-to-many relationship to be used in a natural manner, adding or removing entities from each side as needed. However, it is useful to understand what is happening behind the scenes so that their overall behavior, and in particular the mapping to a relational database, makes sense. Let's start with a relational database schema setup to represent a many-to-many relationship between posts and tags:
 
@@ -115,7 +115,7 @@ The following sections contain examples of many-to-many relationships, including
 > [!TIP]
 > The code for all the examples below can be found in [ManyToMany.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/Relationships/ManyToMany.cs).
 
-### Basic many-to-many
+## Basic many-to-many
 
 In the most basic case for a many-to-many, the entity types on each end of the relationship both have a collection navigation. For example:
 
@@ -189,57 +189,7 @@ CREATE TABLE "PostTag" (
 > [!IMPORTANT]
 > Currently, EF Core uses `Dictionary<string, object>` to represent join entity instances for which no .NET class has been configured. However, to improve performance, a different type may be used in a future EF Core release. Do not depend on the join type being `Dictionary<string, object>` unless this has been explicitly configured.
 
-### Unidirectional many-to-many
-
-> [!NOTE]
-> Unidirectional many-to-many relationships were introduced in EF Core 7. In earlier releases, a private navigation could be used as a workaround.
-
-It is not necessary to include a navigation on both sides of the many-to-many relationship. For example:
-
-<!--
-        public class Post
-        {
-            public int Id { get; set; }
-            public List<Tag> Tags { get; } = new();
-        }
-
-        public class Tag
-        {
-            public int Id { get; set; }
-        }
--->
-[!code-csharp[UnidirectionalManyToMany](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=UnidirectionalManyToMany)]
-
-EF needs some configuration to know that this should be a many-to-many relationship, rather than a one-to-many. This is done using `HasMany` and `WithMany`, but with no argument passed on the side without a navigation. For example:
-
-<!--
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                modelBuilder.Entity<Post>()
-                    .HasMany(e => e.Tags)
-                    .WithMany();
-            }
--->
-[!code-csharp[UnidirectionalManyToManyConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=UnidirectionalManyToManyConfig)]
-
-Removing the navigation does not affect the database schema:
-
-```sql
-CREATE TABLE "Posts" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY AUTOINCREMENT);
-
-CREATE TABLE "Tags" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY AUTOINCREMENT);
-
-CREATE TABLE "PostTag" (
-    "PostId" INTEGER NOT NULL,
-    "TagsId" INTEGER NOT NULL,
-    CONSTRAINT "PK_PostTag" PRIMARY KEY ("PostId", "TagsId"),
-    CONSTRAINT "FK_PostTag_Posts_PostId" FOREIGN KEY ("PostId") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
-    CONSTRAINT "FK_PostTag_Tags_TagsId" FOREIGN KEY ("TagsId") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
-```
-
-### Many-to-many with named join table
+## Many-to-many with named join table
 
 In the previous example, the join table was named `PostTag` by convention. It can be given an explicit name with `UsingEntity`. For example:
 
@@ -265,7 +215,7 @@ CREATE TABLE "PostsToTagsJoinTable" (
     CONSTRAINT "FK_PostsToTagsJoinTable_Tags_TagsId" FOREIGN KEY ("TagsId") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
 ```
 
-### Many-to-many with join table foreign key names
+## Many-to-many with join table foreign key names
 
 Following on from the previous example, the names of the foreign key columns in the join table can also be changed. There are two ways to do this. The first is to explicitly specify the foreign key property names on the join entity. For example:
 
@@ -314,7 +264,7 @@ CREATE TABLE "PostTag" (
 > [!TIP]
 > Although not shown here, the previous two examples can be combined to map change the join table name and its foreign key column names.
 
-### Many-to-many with class for join entity
+## Many-to-many with class for join entity
 
 So far in the examples, the join table has been automatically mapped to a [shared-type entity type](xref:core/modeling/entity-types#shared-type-entity-types). This removes the need for a dedicated class to be created for the entity type. However, it can be useful to have such a class so that it can be referenced easily, especially when navigations or a payload are added to the class, as is shown in later examples below. Do do this, first create a type `PostTag` for the join entity in addition to the existing types for `Post` and `Tag`:
 
@@ -381,7 +331,7 @@ CREATE TABLE "PostTag" (
     CONSTRAINT "FK_PostTag_Tags_TagId" FOREIGN KEY ("TagId") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
 ```
 
-### Many-to-many with navigations to join entity
+## Many-to-many with navigations to join entity
 
 Following on from the previous example, now that there is a class representing the join entity, it becomes easy to add navigations that reference this class. For example:
 
@@ -450,7 +400,7 @@ CREATE TABLE "PostTag" (
     CONSTRAINT "FK_PostTag_Tags_TagId" FOREIGN KEY ("TagId") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
 ```
 
-### Many-to-many with navigations to and from join entity
+## Many-to-many with navigations to and from join entity
 
 The previous example added navigations to the join entity type from the entity types at either end of the many-to-many relationship. Navigations can also be added in the other direction, or in both directions. For example:
 
@@ -518,7 +468,7 @@ CREATE TABLE "PostTag" (
     CONSTRAINT "FK_PostTag_Tags_TagId" FOREIGN KEY ("TagId") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
 ```
 
-### Many-to-many with navigations and changed foreign keys
+## Many-to-many with navigations and changed foreign keys
 
 The previous example showed a many-to-many with navigations to and from the join entity type. This example is the same, except that the foreign key properties used are also changed. For example:
 
@@ -573,7 +523,207 @@ CREATE TABLE "PostTag" (
     CONSTRAINT "FK_PostTag_Tags_TagForeignKey" FOREIGN KEY ("TagForeignKey") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
 ```
 
-### Many-to-many with alternate keys
+## Unidirectional many-to-many
+
+> [!NOTE]
+> Unidirectional many-to-many relationships were introduced in EF Core 7. In earlier releases, a private navigation could be used as a workaround.
+
+It is not necessary to include a navigation on both sides of the many-to-many relationship. For example:
+
+<!--
+        public class Post
+        {
+            public int Id { get; set; }
+            public List<Tag> Tags { get; } = new();
+        }
+
+        public class Tag
+        {
+            public int Id { get; set; }
+        }
+-->
+[!code-csharp[UnidirectionalManyToMany](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=UnidirectionalManyToMany)]
+
+EF needs some configuration to know that this should be a many-to-many relationship, rather than a one-to-many. This is done using `HasMany` and `WithMany`, but with no argument passed on the side without a navigation. For example:
+
+<!--
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                modelBuilder.Entity<Post>()
+                    .HasMany(e => e.Tags)
+                    .WithMany();
+            }
+-->
+[!code-csharp[UnidirectionalManyToManyConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=UnidirectionalManyToManyConfig)]
+
+Removing the navigation does not affect the database schema:
+
+```sql
+CREATE TABLE "Posts" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY AUTOINCREMENT);
+
+CREATE TABLE "Tags" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY AUTOINCREMENT);
+
+CREATE TABLE "PostTag" (
+    "PostId" INTEGER NOT NULL,
+    "TagsId" INTEGER NOT NULL,
+    CONSTRAINT "PK_PostTag" PRIMARY KEY ("PostId", "TagsId"),
+    CONSTRAINT "FK_PostTag_Posts_PostId" FOREIGN KEY ("PostId") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
+    CONSTRAINT "FK_PostTag_Tags_TagsId" FOREIGN KEY ("TagsId") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
+```
+
+## Many-to-many and join table with payload
+
+In the examples so far, the join table has been used only to store the foreign key pairs representing each association. However, it can also be used to store information about the association--for example, the time it was created. In such cases it is best to define a type for the join entity and add the "association payload" properties to this type. It is also common to create navigations to the join entity in addition to the "skip navigations" used for the many-to-many relationship. These additional navigations allow the join entity to be easily referenced from code, thereby facilitating reading and/or changing the payload data. For example:
+
+<!--
+        public class Post
+        {
+            public int Id { get; set; }
+            public List<Tag> Tags { get; } = new();
+            public List<PostTag> PostTags { get; } = new();
+        }
+
+        public class Tag
+        {
+            public int Id { get; set; }
+            public List<Post> Posts { get; } = new();
+            public List<PostTag> PostTags { get; } = new();
+        }
+
+        public class PostTag
+        {
+            public int PostId { get; set; }
+            public int TagId { get; set; }
+            public DateTime CreatedOn { get; set; }
+        }
+-->
+[!code-csharp[ManyToManyWithPayloadAndNavsToJoinClass](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithPayloadAndNavsToJoinClass)]
+
+It is also common to use generated values for payload properties--for example, a database timestamp that is automatically set when the association row is inserted. This requires some minimal configuration. For example:
+
+<!--
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                modelBuilder.Entity<Post>()
+                    .HasMany(e => e.Tags)
+                    .WithMany(e => e.Posts)
+                    .UsingEntity<PostTag>(
+                        j => j.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
+            }
+-->
+[!code-csharp[ManyToManyWithPayloadAndNavsToJoinClassConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithPayloadAndNavsToJoinClassConfig)]
+
+The result maps to a entity type schema with a timestamp set automatically when a row is inserted:
+
+```sql
+CREATE TABLE "PostTag" (
+    "PostId" INTEGER NOT NULL,
+    "TagId" INTEGER NOT NULL,
+    "CreatedOn" TEXT NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+    CONSTRAINT "PK_PostTag" PRIMARY KEY ("PostId", "TagId"),
+    CONSTRAINT "FK_PostTag_Posts_PostId" FOREIGN KEY ("PostId") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
+    CONSTRAINT "FK_PostTag_Tags_TagId" FOREIGN KEY ("TagId") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
+```
+
+> [!TIP]
+> The SQL shown here is for SQLite. On SQL Server/Azure SQL, use `.HasDefaultValueSql("GETUTCDATE()")`.
+
+## Custom shared-type entity type as a join entity
+
+The previous example used the type `PostTag` as the join entity type. This type is specific to the posts-tags relationship. However, if you have multiple join tables with the same shape, then the same CLR type can be used for all of them. For example, imagine that all our join tables have a `CreatedOn` column. We can map these using `JoinType` class mapped as a [shared-type entity type](xref:core/modeling/entity-types#shared-type-entity-types):
+
+```csharp
+public class JoinType
+{
+    public int Id1 { get; set; }
+    public int Id2 { get; set; }
+    public DateTime CreatedOn { get; set; }
+}
+```
+
+This type can then be referenced as the join entity type by multiple different many-to-many relationships. For example:
+
+<!--
+        public class Post
+        {
+            public int Id { get; set; }
+            public List<Tag> Tags { get; } = new();
+            public List<JoinType> PostTags { get; } = new();
+        }
+
+        public class Tag
+        {
+            public int Id { get; set; }
+            public List<Post> Posts { get; } = new();
+            public List<JoinType> PostTags { get; } = new();
+        }
+
+        public class Blog
+        {
+            public int Id { get; set; }
+            public List<Author> Authors { get; } = new();
+            public List<JoinType> BlogAuthors { get; } = new();
+        }
+
+        public class Author
+        {
+            public int Id { get; set; }
+            public List<Blog> Blogs { get; } = new();
+            public List<JoinType> BlogAuthors { get; } = new();
+        }
+-->
+[!code-csharp[ManyToManyWithCustomSharedTypeEntityType](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithCustomSharedTypeEntityType)]
+
+And these relationships can then be configured appropriately to map the join type to a different table for each relationship:
+
+<!--
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                modelBuilder.Entity<Post>()
+                    .HasMany(e => e.Tags)
+                    .WithMany(e => e.Posts)
+                    .UsingEntity<JoinType>(
+                        "PostTag",
+                        l => l.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id1),
+                        r => r.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id2),
+                        j => j.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
+
+                modelBuilder.Entity<Blog>()
+                    .HasMany(e => e.Authors)
+                    .WithMany(e => e.Blogs)
+                    .UsingEntity<JoinType>(
+                        "BlogAuthor",
+                        l => l.HasOne<Author>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id1),
+                        r => r.HasOne<Blog>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id2),
+                        j => j.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
+            }
+-->
+[!code-csharp[ManyToManyWithCustomSharedTypeEntityTypeConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithCustomSharedTypeEntityTypeConfig)]
+
+This results in the following tables in the database schema:
+
+```sql
+CREATE TABLE "BlogAuthor" (
+    "Id1" INTEGER NOT NULL,
+    "Id2" INTEGER NOT NULL,
+    "CreatedOn" TEXT NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+    CONSTRAINT "PK_BlogAuthor" PRIMARY KEY ("Id1", "Id2"),
+    CONSTRAINT "FK_BlogAuthor_Authors_Id1" FOREIGN KEY ("Id1") REFERENCES "Authors" ("Id") ON DELETE CASCADE,
+    CONSTRAINT "FK_BlogAuthor_Blogs_Id2" FOREIGN KEY ("Id2") REFERENCES "Blogs" ("Id") ON DELETE CASCADE);
+
+
+CREATE TABLE "PostTag" (
+    "Id1" INTEGER NOT NULL,
+    "Id2" INTEGER NOT NULL,
+    "CreatedOn" TEXT NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+    CONSTRAINT "PK_PostTag" PRIMARY KEY ("Id1", "Id2"),
+    CONSTRAINT "FK_PostTag_Posts_Id2" FOREIGN KEY ("Id2") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
+    CONSTRAINT "FK_PostTag_Tags_Id1" FOREIGN KEY ("Id1") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
+```
+
+## Many-to-many with alternate keys
 
 So far, all the examples have shown the foreign keys in the join entity type being constrained to the primary keys of the entity types on either side of the relationship. Each foreign key, or both, can instead be constrained to an alternate key. For example, consider this model where`Tag` and `Post` have alternate key properties:
 
@@ -695,7 +845,7 @@ CREATE TABLE "PostTag" (
     CONSTRAINT "FK_PostTag_Tags_TagId" FOREIGN KEY ("TagId") REFERENCES "Tags" ("AlternateKey") ON DELETE CASCADE);
 ```
 
-### Many-to-many and join table with separate primary key
+## Many-to-many and join table with separate primary key
 
 So far, the join entity type in all the examples has a primary key composed of the two foreign key properties. This is because each combination of values for these properties can occur at most once. These properties therefore form a natural primary key.
 
@@ -799,157 +949,7 @@ CREATE TABLE "PostTag" (
     CONSTRAINT "FK_PostTag_Tags_TagsId" FOREIGN KEY ("TagsId") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
 ```
 
-### Many-to-many and join table with payload
-
-In the examples so far, the join table has been used only to store the foreign key pairs representing each association. However, it can also be used to store information about the association--for example, the time it was created. In such cases it is best to define a type for the join entity and add the "association payload" properties to this type. It is also common to create navigations to the join entity in addition to the "skip navigations" used for the many-to-many relationship. These additional navigations allow the join entity to be easily referenced from code, thereby facilitating reading and/or changing the payload data. For example:
-
-<!--
-        public class Post
-        {
-            public int Id { get; set; }
-            public List<Tag> Tags { get; } = new();
-            public List<PostTag> PostTags { get; } = new();
-        }
-
-        public class Tag
-        {
-            public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
-            public List<PostTag> PostTags { get; } = new();
-        }
-
-        public class PostTag
-        {
-            public int PostId { get; set; }
-            public int TagId { get; set; }
-            public DateTime CreatedOn { get; set; }
-        }
--->
-[!code-csharp[ManyToManyWithPayloadAndNavsToJoinClass](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithPayloadAndNavsToJoinClass)]
-
-It is also common to use generated values for payload properties--for example, a database timestamp that is automatically set when the association row is inserted. This requires some minimal configuration. For example:
-
-<!--
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                modelBuilder.Entity<Post>()
-                    .HasMany(e => e.Tags)
-                    .WithMany(e => e.Posts)
-                    .UsingEntity<PostTag>(
-                        j => j.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
-            }
--->
-[!code-csharp[ManyToManyWithPayloadAndNavsToJoinClassConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithPayloadAndNavsToJoinClassConfig)]
-
-The result maps to a entity type schema with a timestamp set automatically when a row is inserted:
-
-```sql
-CREATE TABLE "PostTag" (
-    "PostId" INTEGER NOT NULL,
-    "TagId" INTEGER NOT NULL,
-    "CreatedOn" TEXT NOT NULL DEFAULT (CURRENT_TIMESTAMP),
-    CONSTRAINT "PK_PostTag" PRIMARY KEY ("PostId", "TagId"),
-    CONSTRAINT "FK_PostTag_Posts_PostId" FOREIGN KEY ("PostId") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
-    CONSTRAINT "FK_PostTag_Tags_TagId" FOREIGN KEY ("TagId") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
-```
-
-> [!TIP]
-> The SQL shown here is for SQLite. On SQL Server/Azure SQL, use `.HasDefaultValueSql("GETUTCDATE()")`.
-
-### Custom shared-type entity type as a join entity
-
-The previous example used the type `PostTag` as the join entity type. This type is specific to the posts-tags relationship. However, if you have multiple join tables with the same shape, then the same CLR type can be used for all of them. For example, imagine that all our join tables have a `CreatedOn` column. We can map these using `JoinType` class mapped as a [shared-type entity type](xref:core/modeling/entity-types#shared-type-entity-types):
-
-```csharp
-public class JoinType
-{
-    public int Id1 { get; set; }
-    public int Id2 { get; set; }
-    public DateTime CreatedOn { get; set; }
-}
-```
-
-This type can then be referenced as the join entity type by multiple different many-to-many relationships. For example:
-
-<!--
-        public class Post
-        {
-            public int Id { get; set; }
-            public List<Tag> Tags { get; } = new();
-            public List<JoinType> PostTags { get; } = new();
-        }
-
-        public class Tag
-        {
-            public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
-            public List<JoinType> PostTags { get; } = new();
-        }
-
-        public class Blog
-        {
-            public int Id { get; set; }
-            public List<Author> Authors { get; } = new();
-            public List<JoinType> BlogAuthors { get; } = new();
-        }
-
-        public class Author
-        {
-            public int Id { get; set; }
-            public List<Blog> Blogs { get; } = new();
-            public List<JoinType> BlogAuthors { get; } = new();
-        }
--->
-[!code-csharp[ManyToManyWithCustomSharedTypeEntityType](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithCustomSharedTypeEntityType)]
-
-And these relationships can then be configured appropriately to map the join type to a different table for each relationship:
-
-<!--
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                modelBuilder.Entity<Post>()
-                    .HasMany(e => e.Tags)
-                    .WithMany(e => e.Posts)
-                    .UsingEntity<JoinType>(
-                        "PostTag",
-                        l => l.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id1),
-                        r => r.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id2),
-                        j => j.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
-
-                modelBuilder.Entity<Blog>()
-                    .HasMany(e => e.Authors)
-                    .WithMany(e => e.Blogs)
-                    .UsingEntity<JoinType>(
-                        "BlogAuthor",
-                        l => l.HasOne<Author>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id1),
-                        r => r.HasOne<Blog>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id2),
-                        j => j.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
-            }
--->
-[!code-csharp[ManyToManyWithCustomSharedTypeEntityTypeConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithCustomSharedTypeEntityTypeConfig)]
-
-This results in the following tables in the database schema:
-
-```sql
-CREATE TABLE "BlogAuthor" (
-    "Id1" INTEGER NOT NULL,
-    "Id2" INTEGER NOT NULL,
-    "CreatedOn" TEXT NOT NULL DEFAULT (CURRENT_TIMESTAMP),
-    CONSTRAINT "PK_BlogAuthor" PRIMARY KEY ("Id1", "Id2"),
-    CONSTRAINT "FK_BlogAuthor_Authors_Id1" FOREIGN KEY ("Id1") REFERENCES "Authors" ("Id") ON DELETE CASCADE,
-    CONSTRAINT "FK_BlogAuthor_Blogs_Id2" FOREIGN KEY ("Id2") REFERENCES "Blogs" ("Id") ON DELETE CASCADE);
-
-
-CREATE TABLE "PostTag" (
-    "Id1" INTEGER NOT NULL,
-    "Id2" INTEGER NOT NULL,
-    "CreatedOn" TEXT NOT NULL DEFAULT (CURRENT_TIMESTAMP),
-    CONSTRAINT "PK_PostTag" PRIMARY KEY ("Id1", "Id2"),
-    CONSTRAINT "FK_PostTag_Posts_Id2" FOREIGN KEY ("Id2") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
-    CONSTRAINT "FK_PostTag_Tags_Id1" FOREIGN KEY ("Id1") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
-```
-
-### Many-to-many without cascading delete
+## Many-to-many without cascading delete
 
 In all the examples shown above, the foreign keys created between the join table and the two sides of the many-to-many relationship are created with [cascading delete](xref:core/saving/cascade-delete) behavior. This is very useful because it means that if an entity on either side of the relationship is deleted, then the rows in the join table for that entity are automatically deleted. Or, in other words, when an entity no longer exists, then its relationships to other entities also no longer exist.
 
@@ -979,7 +979,7 @@ CREATE TABLE "PostTag" (
     CONSTRAINT "FK_PostTag_Tags_TagsId" FOREIGN KEY ("TagsId") REFERENCES "Tags" ("Id") ON DELETE RESTRICT);
 ```
 
-### Self-referencing many-to-many
+## Self-referencing many-to-many
 
 The same entity type can be used at both ends of a many-to-many relationship; this is known as a "self-referencing" relationship. For example:
 
@@ -1004,7 +1004,7 @@ CREATE TABLE "PersonPerson" (
     CONSTRAINT "FK_PersonPerson_People_ParentsId" FOREIGN KEY ("ParentsId") REFERENCES "People" ("Id") ON DELETE CASCADE);
 ```
 
-### Symmetrical self-referencing many-to-many
+## Symmetrical self-referencing many-to-many
 
 Sometimes a many-to-many relationship is naturally symmetrical. That is, if entity A is related to entity B, then entity B is also related to entity A. This is naturally modeled using a single navigation. For example, imagine the case where is person A is friends with person B, then person B is friends with person A:
 
@@ -1036,7 +1036,7 @@ ginny.Friends.Add(hermione);
 hermione.Friends.Add(ginny);
 ```
 
-### Direct use of join table
+## Direct use of join table
 
 All of the examples above make use of the EF Core many-to-many mapping patterns. However, it is also possible to map a join table to a normal entity type and just use the two one-to-many relationships for all operations.
 

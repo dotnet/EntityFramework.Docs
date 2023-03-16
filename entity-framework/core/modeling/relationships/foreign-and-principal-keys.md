@@ -2,10 +2,10 @@
 title: Foreign and principal keys in relationships - EF Core
 description: The use and configuration of foreign keys, alternate keys, and primary keys in relationships
 author: ajcvickers
-ms.date: 02/25/2023
+ms.date: 03/19/2023
 uid: core/modeling/relationships/foreign-and-principal-keys
 ---
-# Foreign principal keys in relationships
+# Foreign and principal keys in relationships
 
 All [one-to-one](xref:core/modeling/relationships/one-to-one) and [one-to-many](xref:core/modeling/relationships/one-to-many) relationships are defined by a foreign key on the dependent end that references a primary or alternate key on the principal end. For convenience, this primary or alternate key is known as the "principal key" for the relationship. [Many-to-many](xref:core/modeling/relationships/one-to-many) relationships are composed of two one-to-many relationships, each of which is itself defined by a foreign key referencing a principal key.
 
@@ -192,6 +192,9 @@ This can be changed in the model building API using `HasConstraintName`. For exa
 ### Indexes for foreign keys
 
 By convention, EF creates a database index for the property or properties of a foreign key. See [_Model building conventions_](xref:core/modeling/relationships/conventions) for more information about the types of indexes created by convention.
+
+> [!TP]
+> Relationships are defined in the EF model between entity types included in that model. Some relationships may need to reference an entity type in the model of a different context--for example, when using the [BoundedContext pattern](https://www.martinfowler.com/bliki/BoundedContext.html). In these situation, the foreign key column(s) should be mapped to normal properties, and these properties can then be manipulated manually to handle changes to the relationship.
 
 ## Principal keys
 

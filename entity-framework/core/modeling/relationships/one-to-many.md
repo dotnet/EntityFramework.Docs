@@ -2,28 +2,19 @@
 title: One-to-many relationships - EF Core
 description: How to configure one-to-many relationships between entity types when using Entity Framework Core
 author: ajcvickers
-ms.date: 02/25/2023
+ms.date: 03/19/2023
 uid: core/modeling/relationships/one-to-many
 ---
 # One-to-many relationships
 
 One-to-many relationships are used when a single entity is associated with any number of other entities. For example, a `Blog` can have many associated `Posts`, but each `Post` is associated with only one `Blog`.
 
-A one-to-many relationship is made up from:
-
-- One or more [primary or alternate key](xref:core/modeling/relationships/foreign-and-principal-keys#principal-keys) properties on the principal entity--the "one" end of the relationship. For example, `Blog.Id`.
-- One or more [foreign key](xref:core/modeling/relationships/foreign-and-principal-keys#foreign-keys) properties on the dependent entity--the "many" end of the relationship. For example, `Post.BlogId`.
-- Optionally, a [collection navigation](xref:core/modeling/relationships/navigations#collection-navigations) on the principal entity referencing the dependent entities. For example, `Blog.Posts`.
-- Optionally, a [reference navigation](xref:core/modeling/relationships/navigations#reference-navigations) on the dependent entity referencing the principal entity. For example, `Post.Blog`.
-
-## Examples
-
-The following sections contain examples of one-to-many relationships showing different combinations of navigations, foreign keys, and primary or alternate keys.
+This document is structured around lots of examples. The examples start with common cases, which also introduce concepts. Later examples cover less common kinds of configuration. A good approach here is to understand the first few examples and concepts, and then go to the later examples based on your specific needs. Based on this approach, we will start with simple "required" and "optional" one-to-many relationships.
 
 > [!TIP]
 > The code for all the examples below can be found in [OneToMany.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/Relationships/OneToMany.cs).
 
-### Required one-to-many
+## Required one-to-many
 
 <!--
         // Principal (parent)
@@ -43,7 +34,14 @@ The following sections contain examples of one-to-many relationships showing dif
 -->
 [!code-csharp[OneToManyRequired](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyRequired)]
 
-For this relationship:
+A one-to-many relationship is made up from:
+
+- One or more [primary or alternate key](xref:core/modeling/relationships/foreign-and-principal-keys#principal-keys) properties on the principal entity--the "one" end of the relationship. For example, `Blog.Id`.
+- One or more [foreign key](xref:core/modeling/relationships/foreign-and-principal-keys#foreign-keys) properties on the dependent entity--the "many" end of the relationship. For example, `Post.BlogId`.
+- Optionally, a [collection navigation](xref:core/modeling/relationships/navigations#collection-navigations) on the principal entity referencing the dependent entities. For example, `Blog.Posts`.
+- Optionally, a [reference navigation](xref:core/modeling/relationships/navigations#reference-navigations) on the dependent entity referencing the principal entity. For example, `Post.Blog`.
+
+So, for the relationship in this example:
 
 - The foreign key property `Post.BlogId` is not nullable. This makes the relationship "required" because every dependent (`Post`) _must be related to some principal_ (`Blog`), since its foreign key property must be set to some value.
 - Both entities have navigations pointing to the related entity or entities on the other side of the relationship.
@@ -97,7 +95,7 @@ Neither of these options is better than the other; they both result in exactly t
 > [!TIP]
 > It is never necessary to configure a relationship twice, once starting from the principal, and then again starting from the dependent. Also, attempting to configure the principal and dependent halves of a relationship separately generally does not work. Choose to configure each relationship from either one end or the other and then write the configuration code only once.
 
-### Optional one-to-many
+## Optional one-to-many
 
 <!--
         // Principal (parent)
@@ -135,7 +133,7 @@ As before, this relationship is [discovered by convention](xref:core/modeling/re
 -->
 [!code-csharp[OneToManyOptionalFromPrincipal](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyOptionalFromPrincipal)]
 
-### Required one-to-many with shadow foreign key
+## Required one-to-many with shadow foreign key
 
 <!--
         // Principal (parent)
@@ -153,6 +151,8 @@ As before, this relationship is [discovered by convention](xref:core/modeling/re
         }
 -->
 [!code-csharp[OneToManyRequiredShadow](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyRequiredShadow)]
+
+In some cases, you may not want a foreign key property in your model, since foreign keys are a detail of how the relationship is represented in the database, which is not needed whe using the relationship in a purely object-oriented manner. However, if entities are going to be serialized, for example to send over a wire, then the foreign key values can be a useful way to keep the relationship information intact when the entities are not in an object form. It is therefore often pragmatic to keep foreign key properties in the .NET type for this purpose. Foreign key properties can be private, which is often a good compromise to avoid exposing the foreign key while allowing its value to travel with the entity.
 
 Following on from the previous two examples, this example removes the foreign key property from the dependent entity type. EF therefore creates a [shadow foreign key property](xref:core/modeling/shadow-properties) called `BlogId` of type `int`.
 
@@ -172,7 +172,7 @@ As before, this relationship is [discovered by convention](xref:core/modeling/re
 -->
 [!code-csharp[OneToManyRequiredShadowFromPrincipal](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyRequiredShadowFromPrincipal)]
 
-### Optional one-to-many with shadow foreign key
+## Optional one-to-many with shadow foreign key
 
 <!--
         // Principal (parent)
@@ -209,7 +209,7 @@ As before, this relationship is [discovered by convention](xref:core/modeling/re
 -->
 [!code-csharp[OneToManyOptionalShadowFromPrincipal](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyOptionalShadowFromPrincipal)]
 
-### One-to-many without navigation to principal
+## One-to-many without navigation to principal
 
 <!--
         // Principal (parent)
@@ -263,7 +263,7 @@ If configuration starts from the entity with no navigation, then the type of the
 -->
 [!code-csharp[OneToManyRequiredFromDependentNoNavigationToPrincipal](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyRequiredFromDependentNoNavigationToPrincipal)]
 
-### One-to-many without navigation to principal and with shadow foreign key
+## One-to-many without navigation to principal and with shadow foreign key
 
 <!--
         // Principal (parent)
@@ -310,7 +310,7 @@ A more complete configuration can be used to explicitly configure the navigation
 -->
 [!code-csharp[OneToManyRequiredShadowFromPrincipalNoNavigationToPrincipal](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyRequiredShadowFromPrincipalNoNavigationToPrincipal)]
 
-### One-to-many without navigation to dependents
+## One-to-many without navigation to dependents
 
 <!--
         // Principal (parent)
@@ -361,7 +361,7 @@ If configuration starts from the entity with no navigation, then the type of the
 -->
 [!code-csharp[OneToManyRequiredFromPrincipalNoNavigationToDependents](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyRequiredFromPrincipalNoNavigationToDependents)]
 
-### One-to-many with no navigations
+## One-to-many with no navigations
 
 Occasionally, it can be useful to configure a relationship with no navigations. Such a relationship can only be manipulated by changing the foreign key value directly.
 
@@ -409,7 +409,7 @@ A more complete explicit configuration of this relationship is::
 -->
 [!code-csharp[OneToManyRequiredFromPrincipalNoNavigations](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyRequiredFromPrincipalNoNavigations)]
 
-### One-to-many with alternate key
+## One-to-many with alternate key
 
 In all the examples so far, the foreign key property on the dependent is constrained to the primary key property on the principal. The foreign key can instead be constrained to a different property, which then becomes an alternate key for the principal entity type. For example:
 
@@ -460,7 +460,7 @@ This relationship is not discovered by convention, since EF will always, by conv
 -->
 [!code-csharp[OneToManyRequiredFromPrincipalWithAlternateKey](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyRequiredFromPrincipalWithAlternateKey)]
 
-### One-to-many with composite foreign key
+## One-to-many with composite foreign key
 
 In all the examples so far, the primary or alternate key property of the principal consisted of a single property. Primary or alternate keys can also be formed form more than one property--these are known as ["composite keys"](xref:core/modeling/keys). When the principal of a relationship has a composite key, then the foreign key of the dependent must also be a composite key with the same number of properties. For example:
 
@@ -521,7 +521,7 @@ Both `HasForeignKey` and `HasPrincipalKey` can be used to explicitly specify key
 > [!TIP]
 > In the code above, the calls to `HasKey` and `HasMany` have been grouped together into a nested builder. Nested builders remove the need to call `Entity<>()` multiple times for the same entity type, but are functionally equivalent to calling `Entity<>()` multiple times.
 
-### Required one-to-many without cascade delete
+## Required one-to-many without cascade delete
 
 <!--
         // Principal (parent)
@@ -541,7 +541,7 @@ Both `HasForeignKey` and `HasPrincipalKey` can be used to explicitly specify key
 -->
 [!code-csharp[RequiredWithoutCascadeDelete](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=RequiredWithoutCascadeDelete)]
 
-By convention, required relationships are configured to [cascade delete](xref:core/saving/cascade-delete). This is because the dependent cannot exist in the database once the principal has been deleted. The database can be configured to generate an error, typically crashing the application, instead of automatically deleting dependent rows that can no longer exist. This requires some configuration:
+By convention, required relationships are configured to [cascade delete](xref:core/saving/cascade-delete); this means that when the principal is deleted, all of its dependents are deleted as well, since dependents cannot exist in the database without a principal. It's possible to configure EF to throw an exception instead of automatically deleting dependent rows that can no longer exist:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -554,7 +554,7 @@ By convention, required relationships are configured to [cascade delete](xref:co
 -->
 [!code-csharp[RequiredWithoutCascadeDeleteConfig](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=RequiredWithoutCascadeDeleteConfig)]
 
-### Self-referencing one-to-many
+## Self-referencing one-to-many
 
 In all the previous examples, the principal entity type was different from the dependent entity type. This does not have to be the case. For example, in the types below, each `Employee` is related to other `Employees`.
 

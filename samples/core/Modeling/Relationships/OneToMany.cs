@@ -31,15 +31,15 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                              // Required foreign key property
-            public Blog Blog { get; set; } = null!;                      // Required reference navigation to principal
+            public int BlogId { get; set; } // Required foreign key property
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -103,15 +103,15 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public int? BlogId { get; set; }                             // Optional foreign key property
-            public Blog? Blog { get; set; }                              // Optional reference navigation to principal
+            public int? BlogId { get; set; } // Optional foreign key property
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -175,14 +175,14 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public Blog Blog { get; set; } = null!;                      // Required reference navigation to principal
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -256,14 +256,14 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public Blog? Blog { get; set; }                              // Optional reference navigation to principal
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -327,14 +327,14 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                              // Required foreign key property
+            public int BlogId { get; set; } // Required foreign key property
         }
         #endregion
 
@@ -398,14 +398,14 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public int? BlogId { get; set; }                             // Optional foreign key property
+            public int? BlogId { get; set; } // Optional foreign key property
         }
         #endregion
 
@@ -469,7 +469,7 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
@@ -549,7 +549,7 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
@@ -625,8 +625,8 @@ public class OneToMany
         public class Post
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                              // Required foreign key property
-            public Blog Blog { get; set; } = null!;                      // Required reference navigation to principal
+            public int BlogId { get; set; } // Required foreign key property
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -696,8 +696,8 @@ public class OneToMany
         public class Post
         {
             public int Id { get; set; }
-            public int? BlogId { get; set; }                             // Optional foreign key property
-            public Blog? Blog { get; set; }                              // Optional reference navigation to principal
+            public int? BlogId { get; set; } // Optional foreign key property
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -767,7 +767,7 @@ public class OneToMany
         public class Post
         {
             public int Id { get; set; }
-            public Blog Blog { get; set; } = null!;                      // Required reference navigation to principal
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -837,7 +837,7 @@ public class OneToMany
         public class Post
         {
             public int Id { get; set; }
-            public Blog? Blog { get; set; }                              // Optional reference navigation to principal
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -907,7 +907,7 @@ public class OneToMany
         public class Post
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                              // Required foreign key property
+            public int BlogId { get; set; } // Required foreign key property
         }
         #endregion
 
@@ -986,7 +986,7 @@ public class OneToMany
         public class Post
         {
             public int Id { get; set; }
-            public int? BlogId { get; set; }                             // Optional foreign key property
+            public int? BlogId { get; set; } // Optional foreign key property
         }
         #endregion
 
@@ -1216,16 +1216,16 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public int AlternateId { get; set; }                         // Alternate key as target of the Post.BlogId foreign key
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public int AlternateId { get; set; } // Alternate key as target of the Post.BlogId foreign key
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                              // Required foreign key property
-            public Blog Blog { get; set; } = null!;                      // Required reference navigation to principal
+            public int BlogId { get; set; } // Required foreign key property
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -1301,16 +1301,16 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public int AlternateId { get; set; }                         // Alternate key as target of the Post.BlogId foreign key
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public int AlternateId { get; set; } // Alternate key as target of the Post.BlogId foreign key
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public int? BlogId { get; set; }                             // Optional foreign key property
-            public Blog? Blog { get; set; }                              // Optional reference navigation to principal
+            public int? BlogId { get; set; } // Optional foreign key property
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -1386,15 +1386,15 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public int AlternateId { get; set; }                         // Alternate key as target of the shadow foreign key
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public int AlternateId { get; set; } // Alternate key as target of the shadow foreign key
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public Blog Blog { get; set; } = null!;                      // Required reference navigation to principal
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -1471,15 +1471,15 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public int AlternateId { get; set; }                         // Alternate key as target of the shadow foreign key
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public int AlternateId { get; set; } // Alternate key as target of the shadow foreign key
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public Blog? Blog { get; set; }                              // Optional reference navigation to principal
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -1554,18 +1554,18 @@ public class OneToMany
         // Principal (parent)
         public class Blog
         {
-            public int Id1 { get; set; }                                 // Composite key part 1
-            public int Id2 { get; set; }                                 // Composite key part 2
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public int Id1 { get; set; } // Composite key part 1
+            public int Id2 { get; set; } // Composite key part 2
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public int BlogId1 { get; set; }                             // Required foreign key property part 1
-            public int BlogId2 { get; set; }                             // Required foreign key property part 2
-            public Blog Blog { get; set; } = null!;                      // Required reference navigation to principal
+            public int BlogId1 { get; set; } // Required foreign key property part 1
+            public int BlogId2 { get; set; } // Required foreign key property part 2
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -1646,18 +1646,18 @@ public class OneToMany
         // Principal (parent)
         public class Blog
         {
-            public int Id1 { get; set; }                                 // Composite key part 1
-            public int Id2 { get; set; }                                 // Composite key part 2
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public int Id1 { get; set; } // Composite key part 1
+            public int Id2 { get; set; } // Composite key part 2
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public int BlogId1 { get; set; }                             // Optional foreign key property part 1
-            public int? BlogId2 { get; set; }                            // Optional foreign key property part 2
-            public Blog? Blog { get; set; }                              // Optional reference navigation to principal
+            public int BlogId1 { get; set; } // Optional foreign key property part 1
+            public int? BlogId2 { get; set; } // Optional foreign key property part 2
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -1738,16 +1738,16 @@ public class OneToMany
         // Principal (parent)
         public class Blog
         {
-            public int Id1 { get; set; }                                 // Composite key part 1
-            public int Id2 { get; set; }                                 // Composite key part 2
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public int Id1 { get; set; } // Composite key part 1
+            public int Id2 { get; set; } // Composite key part 2
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public Blog Blog { get; set; } = null!;                      // Required reference navigation to principal
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 
@@ -1828,16 +1828,16 @@ public class OneToMany
         // Principal (parent)
         public class Blog
         {
-            public int Id1 { get; set; }                                 // Composite key part 1
-            public int Id2 { get; set; }                                 // Composite key part 2
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public int Id1 { get; set; } // Composite key part 1
+            public int Id2 { get; set; } // Composite key part 2
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public Blog? Blog { get; set; }                              // Optional reference navigation to principal
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
         #endregion
 
@@ -1916,9 +1916,9 @@ public class OneToMany
         {
             public int Id { get; set; }
 
-            public int? ManagerId { get; set; }                                    // Optional foreign key property
-            public Employee? Manager { get; set; }                                 // Optional reference navigation to principal
-            public ICollection<Employee> Reports { get; } = new List<Employee>();  // Collection navigation containing dependents
+            public int? ManagerId { get; set; } // Optional foreign key property
+            public Employee? Manager { get; set; } // Optional reference navigation to principal
+            public ICollection<Employee> Reports { get; } = new List<Employee>(); // Collection navigation containing dependents
         }
         #endregion
 
@@ -1967,15 +1967,15 @@ public class OneToMany
         public class Blog
         {
             public int Id { get; set; }
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                              // Required foreign key property
-            public Blog Blog { get; set; } = null!;                      // Required reference navigation to principal
+            public int BlogId { get; set; } // Required foreign key property
+            public Blog Blog { get; set; } = null!; // Required reference navigation to principal
         }
         #endregion
 

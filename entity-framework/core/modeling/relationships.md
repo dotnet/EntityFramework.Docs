@@ -1,86 +1,186 @@
 ---
-title: Relationships - EF Core
+title: Introduction to relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
 author: ajcvickers
-ms.date: 02/25/2023
+ms.date: 03/19/2023
 uid: core/modeling/relationships
 ---
-# Relationships
+# Introduction to relationships
 
-A relationship defines how two entities relate to each other. In the EF Core model, a relationship is made up from one or more foreign key properties, together with optional navigation properties ("navigations") that connect the entity types.
+This document provides a simple introduction to the representation of relationships in object models and relational databases, including how EF Core maps between the two.
 
-## Definition of terms
+## Relationships in object models
 
-There are a number of terms used to describe relationships. It is not necessary to understand all these terms up-front. Refer back here as needed when reading the relationships documentation pages.
+A relationship defines how two entities relate to each other. For example, when modeling posts in a blog, each post is related to the blog it is published on, and the blog is related to all the posts published on that blog.
 
-- **Dependent entity:** This is the entity that contains the foreign key property or properties. A dependent is sometimes called a "child".
+In an object-oriented language like C#, the blog and post are typically represented by two classes: `Blog` and `Post`. For example:
 
-- **Principal entity:** This is the entity that contains the primary/alternate key property or properties. A principal is sometimes called the "parent".
+```csharp
+public class Blog
+{
+    public string Name { get; set; }
+    public virtual Uri SiteUri { get; set; }
+}
+```
 
-- **Principal key:** The property or properties whose values uniquely identify the principal entity. The principal key may be the primary key or an alternate key.
+```csharp
+public class Post
+{
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public DateTime PublishedOn { get; set; }
+    public bool Archived { get; set; }
+}
+```
 
-- **Foreign key:** The property or properties of the dependent entity type that are used to store the key values that match the principal key values of the related principal entity.
+In the classes above, there is nothing to indicate that `Blog` and `Post` are related. This can be added to the object model by adding a reference from `Post` to the `Blog` on which it is published:
 
-- **Navigation:** A property on the entity on one side of the relationship that references the related entity or entities at the other end of the relationship.
+```csharp
+public class Post
+{
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public DateOnly PublishedOn { get; set; }
+    public bool Archived { get; set; }
 
-  - **Collection navigation:** A navigation that contains references to many related entities. Used to reference the "many" side(s) of one-to-many and many-to-many relationships.
+    public Blog Blog { get; set; }
+}
+```
 
-  - **Reference navigation:** A navigation that holds a reference to a single related entity. Used to reference the "one" side(s) of one-to-one and one-to-many relationships.
+Likewise, the opposite direction of the same relationship can be represented as a collection of `Post` objects on each `Blog`:
 
-  - **Inverse navigation:** When discussing a particular navigation, this term refers to the navigation on the other end of the relationship.
+```csharp
+public class Blog
+{
+    public string Name { get; set; }
+    public virtual Uri SiteUri { get; set; }
 
-- **Self-referencing relationship:** A relationship in which the dependent and the principal entity types are the same.
+    public ICollection<Post> Posts { get; }
+}
+```
 
-- **Required relationship** A relationship represented by a non-nullable foreign key. A dependent entity in a required relationship cannot exist without a principal entity to which it refers.
+This connection from `Blog` to `Post` and, inversely, from `Post` back to `Blog` is known as a "relationship" in EF Core.
 
-- **Optional relationship** A relationship represented by a nullable foreign key. A dependent entity in an optional relationship can exist without referring to any principal entity.
+> [!IMPORTANT]
+> A **single** relationship can typically traversed in either direction. In this example, that is from `Blog` to `Post` via the `Blog.Posts` property, and from `Post` back to `Blog` via the `Post.Blog` property. This is **one** relationship, not two.
 
-- **Bidirectional relationship** A relationship that has navigations on both sides of the relationship.
+> [!TIP]
+> In EF Core, the `Blog.Posts` and `Post.Blog` properties are called "navigations".
 
-- **Unidirectional relationship** A relationship that has a navigation on one side of the relationship, but no navigation on the other side.
+## Relationships in relational databases
 
-## Cardinality
+Relational databases represent relationships using foreign keys. For example, using SQL Server or Azure SQL, the following tables can be used to represent our `Post` and `Blog` classes:
 
-EF supports three basic forms of relationship between entities:
+```sql
+CREATE TABLE [Posts] (
+    [Id] int NOT NULL IDENTITY,
+    [Title] nvarchar(max) NULL,
+    [Content] nvarchar(max) NULL,
+    [PublishedOn] datetime2 NOT NULL,
+    [Archived] bit NOT NULL,
+    [BlogId] int NOT NULL,
+    CONSTRAINT [PK_Posts] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Posts_Blogs_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [Blogs] ([Id]) ON DELETE CASCADE);
 
-- In [one-to-many](xref:core/modeling/relationships/one-to-many) relationships, a single entity is associated with any number of other entities. For example, a `Blog` can have many associated `Posts`, but each `Post` is associated with only one `Blog`.
-- In [one-to-one](xref:core/modeling/relationships/one-to-one) relationships, a single entity is associated with another single entity. For example, a `Blog` has one `BlogHeader`, and that `BlogHeader` belongs to a single `Blog`.
-- In [many-to-many](xref:core/modeling/relationships/many-to-many) relationships, any number of entities are associated with any number of other entities. For example, a `Post` can have many associated `Tags`, and each `Tag` can in turn be associated with many `Posts`.
+CREATE TABLE [Blogs] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NULL,
+    [SiteUri] nvarchar(max) NULL,
+    CONSTRAINT [PK_Blogs] PRIMARY KEY ([Id]));
+```
 
-See the linked documentation pages for more details and examples of each of these different kinds of relationships.
+In this relational model, the `Posts` and `Blogs` tables are each given a "primary key" column. The value of the primary key uniquely identifies each post or blog. In addition, the `Blogs` table is given a "foreign key" column. The `Blogs` primary key column `Id` is referenced by the `BlogId` foreign key column of the `Posts` table. This column is "constrained" such that any value in the `BlogId` column of `Posts` **must** match a value in the `Id` column of `Blogs`. This match determines which blog every post is related to. For example, if the `BlogId` value in one row of of the `Posts` table is 7, then the the post represented by that row is published in the blog with the primary key 7.
 
-### Optional and required relationships
+## Mapping relationships in EF Core
 
-For one-to-many and one-to-one relationships, the relationship can be either "optional" or "required". In required relationships, for the dependent(s) (child/children) to exist, the principal (parent) of the relationship _must_ exist. In optional relationships, the dependent(s) (child/children) may exist without any principal (parent). This makes optional relationships equivalent to "0..1 to 1" or "0..1 to many", although they are not referred to as such in the EF Core APIs or documentation.
+EF Core relationship mapping is all about mapping the primary key/foreign key representation used in a relational database to the references between objects used in an object model.
+
+In the most basic sense, this involves:
+
+- Adding a primary key property to each entity type.
+- Adding a foreign key property to one entity type.
+- Associating the references between entity types with the primary and foreign keys to form a single relationship configuration.
+
+Once this mapping is made, EF will change the foreign key values as needed when the references between objects change, and change the references between objects as needed when the foreign key values change.
 
 > [!NOTE]
-> EF does not, in general, support required dependents, where the principal entity cannot exist without its dependents. See [_Required navigations_](xref:core/modeling/relationships/navigations#required-navigations) for more information.  
+> Primary keys are used for more than mapping relationships. See [_Keys_](xref:core/modeling/keys) for more information.
 
-## Foreign keys and navigations
+For example, the entity types shown above can updated with primary and foreign key properties:
 
-At the most basic level, EF relationships are defined by foreign keys on a dependent entity type that reference primary or alternate keys on a principal entity type. Examples of how foreign keys are used can be found in the documentation for [one-to-many](xref:core/modeling/relationships/one-to-many), [one-to-one](xref:core/modeling/relationships/one-to-one), and [many-to-many](xref:core/modeling/relationships/many-to-many) relationships. [_Foreign principal keys in relationships_](xref:core/modeling/relationships/foreign-and-principal-keys) covers more specific information about how foreign keys map to the database.
+```csharp
+public class Blog
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public virtual Uri SiteUri { get; set; }
 
-Navigations are layered over a foreign key to provide an object-oriented view of the relationship. Again, there are many examples of navigations in the documentation for the different relationship types. See also [_Relationship navigations_](xref:core/modeling/relationships/navigations) for more information specific to navigations.
+    public ICollection<Post> Posts { get; }
+}
+```
 
-## Relationship configuration
+```csharp
+public class Post
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public DateTime PublishedOn { get; set; }
+    public bool Archived { get; set; }
 
-EF models are built using a combination of three mechanisms: conventions, mapping attributes, and the model builder API. Model building always starts with [conventions](xref:core/modeling/relationships/conventions), which discover entity types, their properties, and the relationships between the types. The behavior of these conventions can be modified or overridden using [mapping attributes](xref:core/modeling/relationships/mapping-attributes), or using the [model building API](xref:core/modeling/index) in `OnModelCreating`.
+    public int BlogId { get; set; }
+    public Blog Blog { get; set; }
+}
+```
 
-The model-building API is the final source of truth for the EF model--it will always take precedence over configuration discovered by convention or specified by mapping attributes. It is also the only mechanism with full fidelity to configure every aspect of the EF model. Many examples of using the model building API are shown in the documentation for [one-to-many](xref:core/modeling/relationships/one-to-many), [one-to-one](xref:core/modeling/relationships/one-to-one), and [many-to-many](xref:core/modeling/relationships/many-to-many) relationships, and when discussing [foreign and principal keys](xref:core/modeling/relationships/foreign-and-principal-keys).
+> [!TIP]
+> Primary and foreign key properties don't need to publicly visible properties of the entity type. However, even when the properties are hidden, it is important to recognize that they still exist in the EF model.
 
-## Cascade deletes and deleting orphans
+The primary key property of `Blog`, `Blog.Id`, and the foreign key property of `Post`, `Post.BlogId`, can then be associated with the references ("navigations") between the entity types (`Blog.Posts` and `Post.Blog`). This is done automatically by EF when building a simple relationship like this, but can also be specified explicitly when overriding the `OnModelCreating` method of your `DbContext`. For example:
 
-Cascading deletes and automatic deletion of orphans are configured by convention for required relationships. Examples showing how to change the cascading behavior are included in the documentation for [one-to-many](xref:core/modeling/relationships/one-to-many), [one-to-one](xref:core/modeling/relationships/one-to-one), and [many-to-many](xref:core/modeling/relationships/many-to-many) relationships.
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>()
+        .HasMany(e => e.Posts)
+        .WithOne(e => e.Blog)
+        .HasForeignKey(e => e.BlogId)
+        .HasPrincipalKey(e => e.Id);
+}
+```
 
-See [_Cascade Delete_](xref:core/saving/cascade-delete) for more information on how cascading behaviors work in `SaveChanges` and `SaveChangesAsync`.
+Now all these properties will behave coherently together as a representation of a single relationship between `Blog` and `Post`.
 
-## Owned entity types
+## Find out more
 
-Aggregates of entity types cane be defined using a special type of "owning" relationship that implies a stronger connection between the two types than the "normal" relationships discussed here. Many of the concepts described here for normal relationships are carried over to owned relationships. However, owned relationships also have their own special behaviors, which are covered in the [owned entity types](xref:core/modeling/owned-entities) documentation.
+EF supports many different types of relationships, with many different ways these relationships can be represented and configured. To jump into examples for different kinds of relationships, see:
 
-## Relationships across context boundaries
+- [_One-to-many relationships_](xref:core/modeling/relationships/one-to-many), in which a single entity is associated with any number of other entities.
+- [_One-to-one relationships_](xref:core/modeling/relationships/one-to-one), in which a single entity is associated with another single entity.
+- [_Many-to-many relationships_](xref:core/modeling/relationships/many-to-many), in which any number of entities are associated with any number of other entities.
 
-Relationships are defined in the EF model between entity types included in that model. Some relationships may need to reference an entity type in the model of a different context--for example, when using the [BoundedContext pattern](https://www.martinfowler.com/bliki/BoundedContext.html). In these situation, the foreign key column(s) should be mapped to normal properties, and these properties can then be manipulated manually to handle changes to the relationship.
+If you are new to EF, then trying the examples linked in in the bullet points above is a good way to get a feel for how relationships work.
+
+To dig deeper into the properties of entity types involved in relationship mapping, see:
+
+- [_Foreign and principal keys in relationships_](xref:core/modeling/relationships/foreign-and-principal-keys), which covers how foreign keys map to the database.
+- [_Relationship navigations_](xref:core/modeling/relationships/navigations), which describes how navigations are layered over a foreign key to provide an object-oriented view of the relationship.
+
+EF models are built using a combination of three mechanisms: conventions, mapping attributes, and the model builder API. Most of the examples show the model building API. To find out more about other options, see:
+
+- [_Relationship conventions_](xref:core/modeling/relationships/conventions), which discover entity types, their properties, and the relationships between the types.
+- [_Relationship mapping attributes_](xref:core/modeling/relationships/mapping-attributes), which can be used an alternative to the model building API for some aspects of relationship configuration.
+
+> [!IMPORTANT]
+> The model-building API is the final source of truth for the EF model--it will always take precedence over configuration discovered by convention or specified by mapping attributes. It is also the only mechanism with full fidelity to configure every aspect of the EF model.
+
+Other topics related to relationships include:
+
+- [_Cascade deletes_](xref:core/saving/cascade-delete), which describe how related entities can be automatically deleted `SaveChanges` or `SaveChangesAsync` is called.
+- [_Owned entity types_](xref:core/modeling/owned-entities) use a special type of "owning" relationship that implies a stronger connection between the two types than the "normal" relationships discussed here. Many of the concepts described here for normal relationships are carried over to owned relationships. However, owned relationships also have their own special behaviors.
+
+> [!TIP]
+> Refer to the [glossary of relationship terms](xref:core/modeling/relationships/glossary) as needed when reading the documentation to help understand the terminology used.
 
 ## Using relationships
 

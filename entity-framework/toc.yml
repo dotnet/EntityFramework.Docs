@@ -162,6 +162,8 @@
           href: core/modeling/relationships/conventions.md
         - name: Mapping attributes
           href: core/modeling/relationships/mapping-attributes.md
+        - name: Glossary
+          href: core/modeling/relationships/glossary.md
       - name: Indexes and constraints
         href: core/modeling/indexes.md
       - name: Inheritance
