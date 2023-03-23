@@ -28,7 +28,7 @@ To install or update NuGet packages, you can use the .NET Core command-line inte
   dotnet add package Microsoft.EntityFrameworkCore.SqlServer
   ```
 
-* You can indicate a specific version in the `dotnet add package` command, using the `-v` modifier. For example, to install EF Core 2.2.0 packages, append `-v 6.0.14` to the command.
+* You can indicate a specific version in the `dotnet add package` command, using the `-v` modifier. For example, to install EF Core 6.0.14 packages, append `-v 6.0.14` to the command.
 
 For more information, see [.NET command-line interface (CLI) tools](/dotnet/core/tools/).
 
@@ -54,7 +54,7 @@ For more information, see [NuGet Package Manager Dialog](/nuget/tools/package-ma
 
 * To update the provider, use the `Update-Package` command.
 
-* To specify a specific version, use the `-Version` modifier. For example, to install EF Core 2.2.0 packages, append `-Version 6.0.14` to the commands
+* To specify a specific version, use the `-Version` modifier. For example, to install EF Core 6.0.14 packages, append `-Version 6.0.14` to the commands
 
 For more information, see [Package Manager Console](/nuget/tools/package-manager-console).
 
