@@ -10,7 +10,7 @@ uid: core/get-started/overview/install
 ## Prerequisites
 
 * EF requires the most recent [.NET SDK](https://dotnet.microsoft.com/en-us/download).
-  * At runtime, EF Core requires a recent version of .NET --see [_EF Core releases)](xref:core/what-is-new/index) to find the minimal .NET version needed for the version of EF Core that you want to use.
+  * At runtime, EF Core requires a recent version of .NET. See [_EF Core releases_)](xref:core/what-is-new/index) to find the minimal .NET version needed for the version of EF Core that you want to use.
 
 * You can use EF Core to develop applications on Windows using Visual Studio. The latest version of [Visual Studio](https://visualstudio.microsoft.com/vs) is recommended.
 
