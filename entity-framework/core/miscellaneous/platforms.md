@@ -12,16 +12,16 @@ We want EF Core to be available to developers on all modern .NET implementations
 
 Several older .NET implementations are no longer supported. See the sections below for more guidance.
 
-EF Core           | .NET & .NET Core | .NET Standard | .NET Framework
------------------ | ---------------- | ------------- | --------------
-**7.0**           | 6.0
-**6.0**           | 6.0
-~~**5.0**~~ (EOL) | 5.0              | 2.1
-~~**3.1**~~ (EOL) | 3.1              | 2.0           | 4.7.2
+| EF Core           | .NET & .NET Core | .NET Standard | .NET Framework |
+|-------------------|------------------|---------------|----------------|
+| **7.0**           | 6.0              |               |                |
+| **6.0**           | 6.0              |               |                |
+| ~~**5.0**~~ (EOL) | 5.0              | 2.1           |                |
+| ~~**3.1**~~ (EOL) | 3.1              | 2.0           | 4.7.2          |
 
 ## .NET
 
-EF Core is a .NET library. Both EF Core versions 6.0 and 7.0 target .NET version 6.0. In general, we target the latest [LTS release](/platform/support/policy/dotnet-core) of .NET. This enables you to upgrade to a newer, STS release of EF Core to take advantage of the latest features without having to upgrade your entire app. There may be exceptions to this, however, as runtime features sometimes get added that require us to depend on the latest version of .NET.
+EF Core is a .NET library. Both EF Core versions 6.0 and 7.0 target .NET version 6.0. In general, we target the latest [LTS release](/lifecycle/products/microsoft-net-and-net-core) of .NET. This enables you to upgrade to a newer, STS release of EF Core to take advantage of the latest features without having to upgrade your entire app. There may be exceptions to this, however, as runtime features sometimes get added that require us to depend on the latest version of .NET.
 
 .NET supports multiple platforms including Windows, Linux, macOS, iOS, Android, and Wasm. For more details on which version are supported, see the [.NET Supported OS Policy](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
