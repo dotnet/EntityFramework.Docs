@@ -90,6 +90,6 @@ This page shows which .NET members are translated into which SQL functions when 
 
 ## Miscellaneous functions
 
-.NET                      | SQL
-------------------------- | ---
-collection.Contains(item) | @item IN @collection
+| .NET                      | SQL                  |
+|---------------------------|----------------------|
+| collection.Contains(item) | @item IN @collection |

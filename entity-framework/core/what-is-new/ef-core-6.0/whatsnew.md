@@ -932,19 +932,19 @@ The Azure Cosmos DB provider now translates more Base Class Library (BCL) method
 
 **String translations**
 
-| BCL method          | Built-in function | Notes
-|:--------------------|-------------------|------
-| `String.Length`     | `LENGTH`          |
-| `String.ToLower`    | `LOWER`           |
-| `String.TrimStart`  | `LTRIM`           |
-| `String.TrimEnd`    | `RTRIM`           |
-| `String.Trim`       | `TRIM`            |
-| `String.ToUpper`    | `UPPER`           |
-| `String.Substring`  | `SUBSTRING`       |
-| `+` operator        | `CONCAT`          |
-| `String.IndexOf`    | `INDEX_OF`        |
-| `String.Replace`    | `REPLACE`         |
-| `String.Equals`     | `STRINGEQUAL`     | Only case-insensitive calls
+| BCL method         | Built-in function | Notes                       |
+|:-------------------|-------------------|-----------------------------|
+| `String.Length`    | `LENGTH`          |                             |
+| `String.ToLower`   | `LOWER`           |                             |
+| `String.TrimStart` | `LTRIM`           |                             |
+| `String.TrimEnd`   | `RTRIM`           |                             |
+| `String.Trim`      | `TRIM`            |                             |
+| `String.ToUpper`   | `UPPER`           |                             |
+| `String.Substring` | `SUBSTRING`       |                             |
+| `+` operator       | `CONCAT`          |                             |
+| `String.IndexOf`   | `INDEX_OF`        |                             |
+| `String.Replace`   | `REPLACE`         |                             |
+| `String.Equals`    | `STRINGEQUAL`     | Only case-insensitive calls |
 
 Translations for `LOWER`, `LTRIM`, `RTRIM`, `TRIM`, `UPPER`, and `SUBSTRING` were contributed by [@Marusyk](https://github.com/Marusyk). Many thanks!
 
@@ -970,27 +970,27 @@ WHERE ((c["Discriminator"] = "Triangle") AND (((LENGTH(c["Name"]) > 4) AND (LOWE
 
 **Math translations**
 
-| BCL method                          | Built-in function
-|:------------------------------------|-------------------
-| `Math.Abs` or `MathF.Abs`           | `ABS`
-| `Math.Acos` or `MathF.Acos`         | `ACOS`
-| `Math.Asin` or `MathF.Asin`         | `ASIN`
-| `Math.Atan` or `MathF.Atan`         | `ATAN`
-| `Math.Atan2` or `MathF.Atan2`       | `ATN2`
-| `Math.Ceiling` or `MathF.Ceiling`   | `CEILING`
-| `Math.Cos` or `MathF.Cos`           | `COS`
-| `Math.Exp` or `MathF.Exp`           | `EXP`
-| `Math.Floor` or `MathF.Floor`       | `FLOOR`
-| `Math.Log` or `MathF.Log`           | `LOG`
-| `Math.Log10` or `MathF.Log10`       | `LOG10`
-| `Math.Pow` or `MathF.Pow`           | `POWER`
-| `Math.Round` or `MathF.Round`       | `ROUND`
-| `Math.Sign` or `MathF.Sign`         | `SIGN`
-| `Math.Sin` or `MathF.Sin`           | `SIN`
-| `Math.Sqrt` or `MathF.Sqrt`         | `SQRT`
-| `Math.Tan` or `MathF.Tan`           | `TAN`
-| `Math.Truncate` or `MathF.Truncate` | `TRUNC`
-| `DbFunctions.Random`                | `RAND`
+| BCL method                          | Built-in function |
+|:------------------------------------|-------------------|
+| `Math.Abs` or `MathF.Abs`           | `ABS`             |
+| `Math.Acos` or `MathF.Acos`         | `ACOS`            |
+| `Math.Asin` or `MathF.Asin`         | `ASIN`            |
+| `Math.Atan` or `MathF.Atan`         | `ATAN`            |
+| `Math.Atan2` or `MathF.Atan2`       | `ATN2`            |
+| `Math.Ceiling` or `MathF.Ceiling`   | `CEILING`         |
+| `Math.Cos` or `MathF.Cos`           | `COS`             |
+| `Math.Exp` or `MathF.Exp`           | `EXP`             |
+| `Math.Floor` or `MathF.Floor`       | `FLOOR`           |
+| `Math.Log` or `MathF.Log`           | `LOG`             |
+| `Math.Log10` or `MathF.Log10`       | `LOG10`           |
+| `Math.Pow` or `MathF.Pow`           | `POWER`           |
+| `Math.Round` or `MathF.Round`       | `ROUND`           |
+| `Math.Sign` or `MathF.Sign`         | `SIGN`            |
+| `Math.Sin` or `MathF.Sin`           | `SIN`             |
+| `Math.Sqrt` or `MathF.Sqrt`         | `SQRT`            |
+| `Math.Tan` or `MathF.Tan`           | `TAN`             |
+| `Math.Truncate` or `MathF.Truncate` | `TRUNC`           |
+| `DbFunctions.Random`                | `RAND`            |
 
 These translations were contributed by [@Marusyk](https://github.com/Marusyk). Many thanks!
 
@@ -1018,9 +1018,9 @@ WHERE ((c["Discriminator"] = "Triangle") AND (((ROUND(c["Angle1"]) = 90.0) OR (R
 
 **DateTime translations**
 
-| BCL method                  | Built-in function
-|:----------------------------|-------------------
-| `DateTime.UtcNow`           | `GetCurrentDateTime`
+| BCL method        | Built-in function    |
+|:------------------|----------------------|
+| `DateTime.UtcNow` | `GetCurrentDateTime` |
 
 These translations were contributed by [@Marusyk](https://github.com/Marusyk). Many thanks!
 

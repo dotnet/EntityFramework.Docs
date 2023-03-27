@@ -49,7 +49,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## Rowversions
 
-SQL Server has the [`rowversion`](/t-sql/data-types/rowversion-transact-sql) data type, which automatically changes whenever the row is updated. This makes it very useful as a concurrency token, for managing cases where the same row is simultaneously updated by multiple transactions.
+SQL Server has the [`rowversion`](/sql/t-sql/data-types/rowversion-transact-sql) data type, which automatically changes whenever the row is updated. This makes it very useful as a concurrency token, for managing cases where the same row is simultaneously updated by multiple transactions.
 
 To fully understand concurrency tokens and how to use them, read the dedicated page on [concurrency conflicts](xref:core/saving/concurrency). To map a `byte[]` property to a `rowversion` column, configure it as follows:
 

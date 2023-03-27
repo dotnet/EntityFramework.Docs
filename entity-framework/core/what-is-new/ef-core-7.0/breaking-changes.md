@@ -28,6 +28,7 @@ EF Core 7.0 targets .NET 6. This means that existing applications that target .N
 | [Check constraints and other table facets are now configured on the table](#table-configuration)                                         | Low        |
 | [Navigations from new entities to deleted entities are not fixed up](#deleted-fixup)                                                     | Low        |
 | [Using `FromSqlRaw` and related methods from the wrong provider throws](#use-the-correct-method)                                         | Low        |
+| [Scaffolded `OnConfiguring` no longer calls `IsConfigured`](#is-configured)                                                              | Low        |
 
 ## High-impact changes
 
@@ -451,3 +452,39 @@ Or:
 ```csharp
 var result = RelationalQueryableExtensions.FromSqlRaw(context.Blogs, "SELECT ...").ToList();
 ```
+
+<a name="is-configured"></a>
+
+### Scaffolded `OnConfiguring` no longer calls `IsConfigured`
+
+[Tracking Issue #4274](https://github.com/dotnet/EntityFramework.Docs/issues/4274)
+
+#### Old behavior
+
+In EF Core 6.0, the `DbContext` type scaffolded from an existing database contained a call to `IsConfigured`. For example:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    if (!optionsBuilder.IsConfigured)
+    {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        optionsBuilder.UseNpgsql("MySecretConnectionString");
+    }
+}
+```
+
+#### New behavior
+
+Starting with EF Core 7.0, the call to `IsConfigured` is no longer included.
+
+#### Why
+
+There are very limited scenarios where the database provider is configured inside your DbContext in some cases, but only if the context is not configured already. Instead, leaving `OnConfiguring` here makes it more likely that a connection string containing sensitive information is left in the code, despite the compile-time warning. Thus the extra safely and cleaner code from removing this was deemed worthwhile, especially given that the `--no-onconfiguring` (.NET CLI) or `-NoOnConfiguring` (Visual Studio Package Manager Console) flag can be used to prevent scaffolding of the `OnConfiguring` method, and that customizable templates exist to add back `IsConfigured` if it is really needed.
+
+#### Mitigations
+
+Either:
+
+- Use the `--no-onconfiguring` (.NET CLI) or `-NoOnConfiguring` (Visual Studio Package Manager Console) argument when scaffolding from an existing database.
+- [Customize the T4 templates](xref:core/managing-schemas/scaffolding/templates) to add back the call to `IsConfigured`.
