@@ -123,7 +123,7 @@ This is done so that the generated code does not crash when first used, which wo
 
 ### Provider name
 
-The second argument is the provider name. The provider name is typically the same as the provider's NuGet package name. For example, for SQL Server or Azure SQL, use "Microsoft.EntityFrameworkCore.SqlServer".
+The second argument is the provider name. The provider name is typically the same as the provider's NuGet package name. For example, for SQL Server or Azure SQL, use `Microsoft.EntityFrameworkCore.SqlServer`.
 
 ## Command line options
 
