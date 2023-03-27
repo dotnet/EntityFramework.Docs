@@ -10,7 +10,7 @@ uid: core/managing-schemas/scaffolding
 Reverse engineering is the process of scaffolding entity type classes and a `DbContext` class based on a database schema. It can be performed using the `Scaffold-DbContext` command of the EF Core Package Manager Console (PMC) tools or the `dotnet ef dbcontext scaffold` command of the .NET Command-line Interface (CLI) tools.
 
 > [!NOTE]
-> The scaffolding of a `DbContext` and entity types documented here is distinct from the [scaffolding of controllers in ASP.NET Core](/aspnet/mvc/overview/getting-started/introduction/adding-a-controller) using Visual Studio, which is not documented here. 
+> The scaffolding of a `DbContext` and entity types documented here is distinct from the [scaffolding of controllers in ASP.NET Core](/aspnet/mvc/overview/getting-started/introduction/adding-a-controller) using Visual Studio, which is not documented here.
 
 > [!TIP]
 > If you use Visual Studio, try out the [EF Core Power Tools](https://github.com/ErikEJ/EFCorePowerTools/) community extension. These tools provide a graphical tool which builds on top of the EF Core command line tools and offers additional workflow and customization options.
