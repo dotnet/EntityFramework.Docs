@@ -28,7 +28,7 @@ The first argument to the command is a connection string to the database. The to
 
 How you quote and escape the connection string depends on which shell you are using to execute the command; refer to your shell's documentation for more information. For example, PowerShell requires you to escape the `$` character, but not `\`.
 
-The following example scaffolds entity types and a `DbContext` from the "Chinook" database located on the machine's SQL Server LocalDB instance, making use of the "Microsoft.EntityFrameworkCore.SqlServer" database provider.
+The following example scaffolds entity types and a `DbContext` from the `Chinook` database located on the machine's SQL Server LocalDB instance, making use of the `Microsoft.EntityFrameworkCore.SqlServer` database provider.
 
 #### [.NET Core CLI](#tab/dotnet-core-cli)
 
