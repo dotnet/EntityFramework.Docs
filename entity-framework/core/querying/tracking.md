@@ -24,7 +24,7 @@ When the results are returned in a tracking query, EF Core checks if the entity 
 
 ## No-tracking queries
 
-No tracking queries are useful when the results are used in a read-only scenario. They're generally quicker to execute because there's no need to set up the change tracking information. If the entities retrieved from the database don't need to be updated, then a no-tracking query should be used. An individual query can be swapped to be no-tracking. A no-tracking query also give results based on what's in the database disregarding any local changes or added entities.
+No-tracking queries are useful when the results are used in a read-only scenario. They're generally quicker to execute because there's no need to set up the change tracking information. If the entities retrieved from the database don't need to be updated, then a no-tracking query should be used. An individual query can be swapped to be no-tracking. A no-tracking query also give results based on what's in the database disregarding any local changes or added entities.
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Program.cs#NoTracking)]
 
