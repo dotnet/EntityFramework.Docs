@@ -20,7 +20,7 @@ By default, queries that return entity types are tracking. A tracking query mean
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Program.cs#Tracking)]
 
-When the results are returned in a tracking query, EF Core checks if the entity is already in the context. If EF Core finds an existing entity, then the same instance is returned, which can potential use less memory and be faster than a no-tracking query. EF Core doesn't overwrite current and original values of the entity's properties in the entry with the database values. If the entity isn't found in the context, EF Core creates a new entity instance and attaches it to the context. Query results don't contain any entity which is added to the context but not yet saved to the database.
+When the results are returned in a tracking query, EF Core checks if the entity is already in the context. If EF Core finds an existing entity, then the same instance is returned, which can potentially use less memory and be faster than a no-tracking query. EF Core doesn't overwrite current and original values of the entity's properties in the entry with the database values. If the entity isn't found in the context, EF Core creates a new entity instance and attaches it to the context. Query results don't contain any entity which is added to the context but not yet saved to the database.
 
 ## No-tracking queries
 
