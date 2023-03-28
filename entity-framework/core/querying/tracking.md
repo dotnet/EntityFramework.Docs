@@ -51,7 +51,7 @@ If you find yourself changing the tracking behavior for many queries, you may wa
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/NonTrackingBloggingContext.cs?name=OnConfiguring&highlight=5)]
 
-This makes all your queries no-tracking by default. You can still add `AsTracking()` to make specific queries tracking.
+This makes all your queries no-tracking by default. You can still add `AsTracking` to make specific queries tracking.
 
 ## Tracking and custom projections
 
