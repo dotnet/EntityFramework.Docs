@@ -44,7 +44,7 @@ It is possible to apply all configuration specified in types implementing `IEnti
 
 #### Using `EntityTypeConfigurationAttribute` on entity types
 
-Rather than explicitly calling `Configure`, an <xref:Microsoft.EntityFrameworkCore.EntityTypeConfigurationAttribute > can instead be placed on the entity type such that EF Core can find and use appropriate configuration. For example:
+Rather than explicitly calling `Configure`, an <xref:Microsoft.EntityFrameworkCore.EntityTypeConfigurationAttribute> can instead be placed on the entity type such that EF Core can find and use appropriate configuration. For example:
 
 <!--
 [EntityTypeConfiguration(typeof(BookConfiguration))]
