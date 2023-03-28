@@ -33,12 +33,52 @@ Then just invoke the `Configure` method from `OnModelCreating`.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Misc/EntityTypeConfiguration.cs?Name=ApplyIEntityTypeConfiguration)]
 
+#### Applying all configurations in an assembly
+
 It is possible to apply all configuration specified in types implementing `IEntityTypeConfiguration` in a given assembly.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Misc/EntityTypeConfiguration.cs?Name=ApplyConfigurationsFromAssembly)]
 
 > [!NOTE]
 > The order in which the configurations will be applied is undefined, therefore this method should only be used when the order doesn't matter.
+
+#### Using `EntityTypeConfigurationAttribute` on entity types
+
+Rather than explicitly calling `Configure`, an <xref:Microsoft.EntityFrameworkCore.EntityTypeConfigurationAttribute> can instead be placed on the entity type such that EF Core can find and use appropriate configuration. For example:
+
+<!--
+[EntityTypeConfiguration(typeof(BookConfiguration))]
+public class Book
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Isbn { get; set; }
+}
+-->
+[!code-csharp[BookEntityType](../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=BookEntityType)]
+
+This attribute means that EF Core will use the specified `IEntityTypeConfiguration` implementation whenever the `Book` entity type is included in a model. The entity type is included in a model using one of the normal mechanisms. For example, by creating a <xref:Microsoft.EntityFrameworkCore.DbSet%601> property for the entity type:
+
+<!--
+public class BooksContext : DbContext
+{
+    public DbSet<Book> Books { get; set; }
+
+    //...
+-->
+[!code-csharp[DbContext](../../../samples/core/Miscellaneous/NewInEFCore6/EntityTypeConfigurationAttributeSample.cs?name=DbContext)]
+
+Or by registering it in <xref:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating%2A>:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Book>();
+}
+```
+
+> [!NOTE]
+> `EntityTypeConfigurationAttribute` types will not be automatically discovered in an assembly. Entity types must be added to the model before the attribute will be discovered on that entity type.
 
 ## Use data annotations to configure a model
 
