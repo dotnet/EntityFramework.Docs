@@ -134,7 +134,7 @@ public class Post
 ```
 
 > [!TIP]
-> Primary and foreign key properties don't need to publicly visible properties of the entity type. However, even when the properties are hidden, it is important to recognize that they still exist in the EF model.
+> Primary and foreign key properties don't need to be publicly visible properties of the entity type. However, even when the properties are hidden, it is important to recognize that they still exist in the EF model.
 
 The primary key property of `Blog`, `Blog.Id`, and the foreign key property of `Post`, `Post.BlogId`, can then be associated with the references ("navigations") between the entity types (`Blog.Posts` and `Post.Blog`). This is done automatically by EF when building a simple relationship like this, but can also be specified explicitly when overriding the `OnModelCreating` method of your `DbContext`. For example:
 
