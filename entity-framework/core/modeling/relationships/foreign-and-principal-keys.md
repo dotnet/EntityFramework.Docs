@@ -198,7 +198,7 @@ By convention, EF creates a database index for the property or properties of a f
 
 ## Principal keys
 
-By convention, foreign keys are constrained to the primary key at the principal end of the relationship. However, an alternate key can be used instead. This is achieved using `HasPrincipalKey` on the model building API. For Example, for a single property foreign key:
+By convention, foreign keys are constrained to the primary key at the principal end of the relationship. However, an alternate key can be used instead. This is achieved using `HasPrincipalKey` on the model building API. For example, for a single property foreign key:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)

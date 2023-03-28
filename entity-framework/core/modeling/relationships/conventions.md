@@ -190,6 +190,7 @@ Once the navigations for a relationship have either been discovered or configure
   - `<navigation property name>Id`
   - `<principal entity type name><principal key property name>`
   - `<principal entity type name>Id`
+- In addition, if the dependent end has been explicitly configured using the model building API, and the dependent primary key is compatible, then the dependent primary key will also be used as the foreign key.
 
 > [!TIP]
 > The "Id" suffix can have any casing.
@@ -297,7 +298,7 @@ If EF has determined the dependent end of the relationship but no foreign key pr
 
 ## Cascade delete
 
-By convention, non-nullable foreign key properties are configured to [cascade delete](xref:core/saving/cascade-delete). Nullable foreign key properties are configured to not cascade delete.
+By convention, required relationships are configured to [cascade delete](xref:core/saving/cascade-delete). Optional relationships are configured to not cascade delete.
 
 ## Many-to-many
 
@@ -427,6 +428,9 @@ For composite foreign keys, an index is created covering all the foreign key col
 ```sql
 CREATE INDEX "IX_Post_ContainingBlogId1_ContainingBlogId2" ON "Post" ("ContainingBlogId1", "ContainingBlogId2");
 ```
+
+> [!NOTE]
+> EF does not create indexes for properties that are already covered by an existing index or primary key constraint.
 
 ### How to stop EF creating indexes for foreign keys
 

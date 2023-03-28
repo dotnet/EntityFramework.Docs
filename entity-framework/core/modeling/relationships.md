@@ -190,7 +190,7 @@ Relationships defined in the model can be used in various ways. For example:
   - [Eagerly](xref:core/querying/related-data/eager) as part of a LINQ query, using `Include`.
   - [Lazily](xref:core/querying/related-data/lazy) using lazy-loading proxies, or lazy-loading without proxies.
   - [Explicitly](xref:core/querying/related-data/explicit) using the `Load` or `LoadAsync` methods.
-- Relationships can be used in [data seeding](xref:core/modeling/data-seeding).
+- Relationships can be used in [data seeding](xref:core/modeling/data-seeding) through matching of PK values to FK values.
 - Relationships can be used to [track graphs of entities](xref:core/change-tracking/index). Relationships are then used by the change tracker to:
   - [Detect changes in relationships and perform fixup](xref:core/change-tracking/relationship-changes)
   - [Send foreign key updates to the database](xref:core/saving/related-data) with `SaveChanges` or `SaveChangesAsync`
