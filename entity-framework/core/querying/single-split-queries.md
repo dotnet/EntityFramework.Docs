@@ -53,7 +53,7 @@ In this query, `Comments` is a collection navigation of `Post`, unlike `Contribu
 
 ### Data duplication
 
-JOINs can have create another type of performance issue. Let's examine the following query, which only loads a single collection navigation:
+JOINs can create another type of performance issue. Let's examine the following query, which only loads a single collection navigation:
 
 ```c#
 var blogs = ctx.Blogs
