@@ -24,7 +24,7 @@ When the results are returned in a tracking query, EF Core checks if the entity 
 
 ## No-tracking queries
 
-No-tracking queries are useful when the results are used in a read-only scenario. They're generally quicker to execute because there's no need to set up the change tracking information. If the entities retrieved from the database don't need to be updated, then a no-tracking query should be used. An individual query can be swapped to be no-tracking. A no-tracking query also give results based on what's in the database disregarding any local changes or added entities.
+No-tracking queries are useful when the results are used in a read-only scenario. They're generally quicker to execute because there's no need to set up the change tracking information. If the entities retrieved from the database don't need to be updated, then a no-tracking query should be used. An individual query can be set to be no-tracking. A no-tracking query also give results based on what's in the database disregarding any local changes or added entities.
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Program.cs#NoTracking)]
 
@@ -41,7 +41,7 @@ Since a tracking query uses the change tracker, EF Core does identity resolution
 * Don't use the change tracker and don't do identity resolution.
 * Return a new instance of the entity even when the same entity is contained in the result multiple times.
 
-Tracking and no-tracking can be combined in the same query. That is, you can have a no-tracking query, which  does identity resolution in the results. Just like `AsNoTracking` queryable operator, we've added another operator <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution%60%601(System.Linq.IQueryable{%60%600})>. There's also associated entry added in the <xref:Microsoft.EntityFrameworkCore.QueryTrackingBehavior> enum. When the query to use identity resolution is configured with no tracking, a stand-alone change tracker is used in the background when generating query results so each instance is materialized only once. Since this change tracker is different from the one in the context, the results are not tracked by the context. After the query is enumerated fully, the change tracker goes out of scope and garbage collected as required.
+Tracking and no-tracking can be combined in the same query. That is, you can have a no-tracking query, which does identity resolution in the results. Just like `AsNoTracking` queryable operator, we've added another operator <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AsNoTrackingWithIdentityResolution%60%601(System.Linq.IQueryable{%60%600})>. There's also associated entry added in the <xref:Microsoft.EntityFrameworkCore.QueryTrackingBehavior> enum. When the query to use identity resolution is configured with no tracking, a stand-alone change tracker is used in the background when generating query results so each instance is materialized only once. Since this change tracker is different from the one in the context, the results are not tracked by the context. After the query is enumerated fully, the change tracker goes out of scope and garbage collected as required.
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Program.cs#NoTrackingWithIdentityResolution)]
 
