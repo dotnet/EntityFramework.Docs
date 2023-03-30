@@ -1,338 +1,196 @@
 ---
-title: Relationships - EF Core
+title: Introduction to relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
-author: AndriySvyryd
-ms.date: 10/14/2022
+author: ajcvickers
+ms.date: 03/30/2023
 uid: core/modeling/relationships
 ---
-# Relationships
+# Introduction to relationships
 
-A relationship defines how two entities relate to each other. In a relational database, this is represented by a foreign key constraint.
+This document provides a simple introduction to the representation of relationships in object models and relational databases, including how EF Core maps between the two.
 
-> [!NOTE]
-> Most of the samples in this article use a one-to-many relationship to demonstrate concepts. For examples of one-to-one and many-to-many relationships see the [Other Relationship Patterns](#other-relationship-patterns) section at the end of the article.
+## Relationships in object models
 
-## Definition of terms
+A relationship defines how two entities relate to each other. For example, when modeling posts in a blog, each post is related to the blog it is published on, and the blog is related to all the posts published on that blog.
 
-There are a number of terms used to describe relationships
+In an object-oriented language like C#, the blog and post are typically represented by two classes: `Blog` and `Post`. For example:
 
-* **Dependent entity:** This is the entity that contains the foreign key properties. Sometimes referred to as the 'child' of the relationship.
+```csharp
+public class Blog
+{
+    public string Name { get; set; }
+    public virtual Uri SiteUri { get; set; }
+}
+```
 
-* **Principal entity:** This is the entity that contains the primary/alternate key properties. Sometimes referred to as the 'parent' of the relationship.
+```csharp
+public class Post
+{
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public DateTime PublishedOn { get; set; }
+    public bool Archived { get; set; }
+}
+```
 
-* **Principal key:** The properties that uniquely identify the principal entity. This may be the primary key or an alternate key.
+In the classes above, there is nothing to indicate that `Blog` and `Post` are related. This can be added to the object model by adding a reference from `Post` to the `Blog` on which it is published:
 
-* **Foreign key:** The properties in the dependent entity that are used to store the principal key values for the related entity.
+```csharp
+public class Post
+{
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public DateOnly PublishedOn { get; set; }
+    public bool Archived { get; set; }
 
-* **Navigation property:** A property defined on the principal and/or dependent entity that references the related entity.
+    public Blog Blog { get; set; }
+}
+```
 
-  * **Collection navigation property:** A navigation property that contains references to many related entities.
+Likewise, the opposite direction of the same relationship can be represented as a collection of `Post` objects on each `Blog`:
 
-  * **Reference navigation property:** A navigation property that holds a reference to a single related entity.
+```csharp
+public class Blog
+{
+    public string Name { get; set; }
+    public virtual Uri SiteUri { get; set; }
 
-  * **Inverse navigation property:** When discussing a particular navigation property, this term refers to the navigation property on the other end of the relationship.
+    public ICollection<Post> Posts { get; }
+}
+```
 
-* **Self-referencing relationship:** A relationship in which the dependent and the principal entity types are the same.
+This connection from `Blog` to `Post` and, inversely, from `Post` back to `Blog` is known as a "relationship" in EF Core.
 
-The following code shows a one-to-many relationship between `Blog` and `Post`
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/Full.cs#Full)]
-
-* `Post` is the dependent entity
-
-* `Blog` is the principal entity
-
-* `Blog.BlogId` is the principal key (in this case it is a primary key rather than an alternate key)
-
-* `Post.BlogId` is the foreign key
-
-* `Post.Blog` is a reference navigation property
-
-* `Blog.Posts` is a collection navigation property
-
-* `Post.Blog` is the inverse navigation property of `Blog.Posts` (and vice versa)
-
-## Conventions
-
-By default, a relationship will be created when there is a navigation property discovered on a type. A property is considered a navigation property if the type it points to cannot be mapped as a scalar type by the current database provider.
-
-> [!NOTE]
-> Relationships that are discovered by convention will always target the primary key of the principal entity. To target an alternate key, additional configuration must be performed using the Fluent API.
-
-### Fully defined relationships
-
-The most common pattern for relationships is to have navigation properties defined on both ends of the relationship and a foreign key property defined in the dependent entity class.
-
-* If a pair of navigation properties is found between two types, then they will be configured as inverse navigation properties of the same relationship.
-
-* If the dependent entity contains a property with a name matching one of these patterns then it will be configured as the foreign key:
-  * `<navigation property name><principal key property name>`
-  * `<navigation property name>Id`
-  * `<principal entity name><principal key property name>`
-  * `<principal entity name>Id`
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/Full.cs?name=Full&highlight=6,15-16)]
-
-In this example the highlighted properties will be used to configure the relationship.
-
-> [!NOTE]
-> If the property is the primary key or is of a type not compatible with the principal key then it won't be configured as the foreign key.
-
-### No foreign key property
-
-While it is recommended to have a foreign key property defined in the dependent entity class, it is not required. If no foreign key property is found, a [shadow foreign key property](xref:core/modeling/shadow-properties) will be introduced with the name `<navigation property name><principal key property name>` or `<principal entity name><principal key property name>` if no navigation is present on the dependent type.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/NoForeignKey.cs?name=NoForeignKey&highlight=6,15)]
-
-In this example, the shadow foreign key is `BlogId` because prepending the navigation name would be redundant.
-
-> [!NOTE]
-> If a property with the same name already exists, then the shadow property name will be suffixed with a number.
-
-### Single navigation property
-
-Including just one navigation property (no inverse navigation, and no foreign key property) is enough to have a relationship defined by convention. You can also have a single navigation property and a foreign key property.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/OneNavigation.cs?name=OneNavigation&highlight=6)]
-
-### Limitations
-
-When there are multiple navigation properties defined between two types (that is, more than just one pair of navigations that point to each other) the relationships represented by the navigation properties are ambiguous. You will need to manually configure them to resolve the ambiguity.
-
-### Cascade delete
-
-By convention, cascade delete will be set to *Cascade* for required relationships and *ClientSetNull* for optional relationships. *Cascade* means dependent entities are also deleted. *ClientSetNull* means that dependent entities that are not loaded into memory will remain unchanged and must be manually deleted, or updated to point to a valid principal entity. For entities that are loaded into memory, EF Core will attempt to set the foreign key properties to null.
-
-See the [Required and Optional Relationships](#required-and-optional-relationships) section for the difference between required and optional relationships.
-
-See [Cascade Delete](xref:core/saving/cascade-delete) for more details about the different delete behaviors and the defaults used by convention.
-
-## Manual configuration
-
-### [Fluent API](#tab/fluent-api)
-
-To configure a relationship in the Fluent API, you start by identifying the navigation properties that make up the relationship. `HasOne` or `HasMany` identifies the navigation property on the entity type you are beginning the configuration on. You then chain a call to `WithOne` or `WithMany` to identify the inverse navigation. `HasOne`/`WithOne` are used for reference navigation properties and `HasMany`/`WithMany` are used for collection navigation properties.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/NoForeignKey.cs?name=NoForeignKey&highlight=8-10)]
-
-### [Data annotations](#tab/data-annotations)
-
-You can use the Data Annotations to configure how navigation properties on the dependent and principal entities pair up. This is typically done when there is more than one pair of navigation properties between two entity types.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/DataAnnotations/InverseProperty.cs?name=InverseProperty&highlight=20,23)]
-
-> [!NOTE]
-> You can only use [Required] on properties on the dependent entity to impact the requiredness of the relationship. [Required] on the navigation from the principal entity is usually ignored, but it may cause the entity to become the dependent one.
-
-> [!NOTE]
-> The data annotations `[ForeignKey]` and `[InverseProperty]` are available in the `System.ComponentModel.DataAnnotations.Schema` namespace. `[Required]` is available in the `System.ComponentModel.DataAnnotations` namespace.
-
----
-
-### Single navigation property
-
-If you only have one navigation property then there are parameterless overloads of `WithOne` and `WithMany`. This indicates that there is conceptually a reference or collection on the other end of the relationship, but there is no navigation property included in the entity class.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/OneNavigation.cs?name=OneNavigation&highlight=8-10)]
-
----
-
-### Configuring navigation properties
-
-After the navigation property has been created, you may need to further configure it.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/NavigationConfiguration.cs?name=NavigationConfiguration&highlight=7-9)]
+> [!IMPORTANT]
+> A **single** relationship can typically traversed in either direction. In this example, that is from `Blog` to `Post` via the `Blog.Posts` property, and from `Post` back to `Blog` via the `Post.Blog` property. This is **one** relationship, not two.
 
 > [!TIP]
-> Non-collection navigations can also be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships#one-to-one) for more information.
+> In EF Core, the `Blog.Posts` and `Post.Blog` properties are called "navigations".
 
-> [!NOTE]
-> This call cannot be used to create a navigation property. It is only used to configure a navigation property which has been previously created by defining a relationship or from a convention.
+## Relationships in relational databases
 
-### Foreign key
-
-#### [Fluent API (simple key)](#tab/fluent-api-simple-key)
-
-You can use the Fluent API to configure which property should be used as the foreign key property for a given relationship:
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ForeignKey.cs?name=ForeignKey&highlight=11)]
-
-#### [Fluent API (composite key)](#tab/fluent-api-composite-key)
-
-You can use the Fluent API to configure which properties should be used as the composite foreign key properties for a given relationship:
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/CompositeForeignKey.cs?name=CompositeForeignKey&highlight=13)]
-
-#### [Data annotations (simple key)](#tab/data-annotations-simple-key)
-
-You can use the Data Annotations to configure which property should be used as the foreign key property for a given relationship. This is typically done when the foreign key property is not discovered by convention:
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/DataAnnotations/ForeignKey.cs?name=ForeignKey&highlight=17)]
-
-> [!TIP]
-> The `[ForeignKey]` annotation can be placed on either navigation property in the relationship. It does not need to go on the navigation property in the dependent entity class.
-
-> [!NOTE]
-> The property specified using `[ForeignKey]` on a navigation property doesn't need to exist on the dependent type. In this case the specified name will be used to create a shadow foreign key.
-
----
-
-#### Shadow foreign key
-
-You can use the string overload of `HasForeignKey(...)` to configure a shadow property as a foreign key (see [Shadow Properties](xref:core/modeling/shadow-properties) for more information). The shadow property needs to exist before it can be used, you can explicitly declare it first as shown below.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ShadowForeignKey.cs?name=ShadowForeignKey&highlight=10,16)]
-
-#### Foreign key constraint name
-
-By convention, when targeting a relational database, foreign key constraints are named FK\_\<dependent type name>\_\<principal type name>\_\<foreign key property name>. For composite foreign keys, \<foreign key property name> becomes an underscore separated list of foreign key property names.
-
-You can also configure the constraint name as follows:
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ConstraintName.cs?name=ConstraintName&highlight=6-7)]
-
-### Without navigation property
-
-You don't necessarily need to provide a navigation property. You can simply provide a foreign key on one side of the relationship.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/NoNavigation.cs?name=NoNavigation&highlight=8-11)]
-
-### Principal key
-
-If you want the foreign key to reference a property other than the primary key, you can use the Fluent API to configure the principal key property for the relationship. The property that you configure as the principal key will automatically be set up as an [alternate key](xref:core/modeling/keys#alternate-keys).
-
-#### [Simple key](#tab/simple-key)
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/PrincipalKey.cs?name=PrincipalKey&highlight=11)]
-
-#### [Composite key](#tab/composite-key)
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/CompositePrincipalKey.cs?name=CompositePrincipalKey&highlight=11)]
-
-> [!WARNING]
-> The order in which you specify principal key properties must match the order in which they are specified for the foreign key.
-
----
-
-### Required and optional relationships
-
-You can use the Fluent API to configure whether the relationship is required or optional. Ultimately this controls whether the foreign key property is required or optional. This is most useful when you are using a shadow state foreign key. If you have a foreign key property in your entity class then the requiredness of the relationship is determined based on whether the foreign key property is required or optional (see [Required and Optional properties](xref:core/modeling/entity-properties#required-and-optional-properties) for more information).
-
-The foreign key properties are located on the dependent entity type, so if they are configured as required it means that every dependent entity is required to have a corresponding principal entity.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/Required.cs?name=Required&highlight=6)]
-
-> [!NOTE]
-> Calling `IsRequired(false)` also makes the foreign key property optional unless it's configured otherwise.
-
-### Cascade delete
-
-You can use the Fluent API to configure the cascade delete behavior for a given relationship explicitly.
-
-See [Cascade Delete](xref:core/saving/cascade-delete) for a detailed discussion of each option.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/CascadeDelete.cs?name=CascadeDelete&highlight=6)]
-
-## Other relationship patterns
-
-### One-to-one
-
-One to one relationships have a reference navigation property on both sides. They follow the same conventions as one-to-many relationships, but a unique index is introduced on the foreign key property to ensure only one dependent is related to each principal.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOne&highlight=6,15-16)]
-
-> [!NOTE]
-> EF will choose one of the entities to be the dependent based on its ability to detect a foreign key property. If the wrong entity is chosen as the dependent, you can use the Fluent API to correct this.
-
-When configuring the relationship with the Fluent API, you use the `HasOne` and `WithOne` methods.
-
-When configuring the foreign key you need to specify the dependent entity type - notice the generic parameter provided to `HasForeignKey` in the listing below. In a one-to-many relationship it is clear that the entity with the reference navigation is the dependent and the one with the collection is the principal. But this is not so in a one-to-one relationship - hence the need to explicitly define it.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/OneToOne.cs?name=OneToOne&highlight=11)]
-
-The dependent side is considered optional by default, but can be configured as required. However EF will not validate whether a dependent entity was provided, so this configuration will only make a difference when the database mapping allows it to be enforced. A common scenario for this are reference owned types that use table splitting by default.
-
-[!code-csharp[Main](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=Required&highlight=12-13)]
-
-With this configuration the columns corresponding to `ShippingAddress` will be marked as non-nullable in the database.
-
-> [!NOTE]
-> If you are using [non-nullable reference types](/dotnet/csharp/nullable-references) calling `IsRequired` is not necessary.
-
-### Many-to-many
-
-Many-to-many relationships require a collection navigation property on both sides. They will be discovered by convention like other types of relationships.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=ManyToManyShared)]
-
-The way this relationship is implemented in the database is by a join table that contains foreign keys to both `Post` and `Tag`. For example this is what EF will create in a relational database for the above model.
+Relational databases represent relationships using foreign keys. For example, using SQL Server or Azure SQL, the following tables can be used to represent our `Post` and `Blog` classes:
 
 ```sql
 CREATE TABLE [Posts] (
-    [PostId] int NOT NULL IDENTITY,
+    [Id] int NOT NULL IDENTITY,
     [Title] nvarchar(max) NULL,
     [Content] nvarchar(max) NULL,
-    CONSTRAINT [PK_Posts] PRIMARY KEY ([PostId])
-);
+    [PublishedOn] datetime2 NOT NULL,
+    [Archived] bit NOT NULL,
+    [BlogId] int NOT NULL,
+    CONSTRAINT [PK_Posts] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Posts_Blogs_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [Blogs] ([Id]) ON DELETE CASCADE);
 
-CREATE TABLE [Tags] (
-    [TagId] nvarchar(450) NOT NULL,
-    CONSTRAINT [PK_Tags] PRIMARY KEY ([TagId])
-);
-
-CREATE TABLE [PostTag] (
-    [PostsId] int NOT NULL,
-    [TagsId] nvarchar(450) NOT NULL,
-    CONSTRAINT [PK_PostTag] PRIMARY KEY ([PostsId], [TagsId]),
-    CONSTRAINT [FK_PostTag_Posts_PostsId] FOREIGN KEY ([PostsId]) REFERENCES [Posts] ([PostId]) ON DELETE CASCADE,
-    CONSTRAINT [FK_PostTag_Tags_TagsId] FOREIGN KEY ([TagsId]) REFERENCES [Tags] ([TagId]) ON DELETE CASCADE
-);
+CREATE TABLE [Blogs] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NULL,
+    [SiteUri] nvarchar(max) NULL,
+    CONSTRAINT [PK_Blogs] PRIMARY KEY ([Id]));
 ```
 
-Internally, EF creates an entity type to represent the join table that will be referred to as the join entity type. `Dictionary<string, object>` is currently used for it to handle any combination of foreign key properties, see [property bag entity types](xref:core/modeling/shadow-properties#property-bag-entity-types) for more information. More than one many-to-many relationships can exist in the model, therefore the join entity type must be given a unique name, in this case `PostTag`. The feature that allows this is called shared-type entity type.
+In this relational model, the `Posts` and `Blogs` tables are each given a "primary key" column. The value of the primary key uniquely identifies each post or blog. In addition, the `Blogs` table is given a "foreign key" column. The `Blogs` primary key column `Id` is referenced by the `BlogId` foreign key column of the `Posts` table. This column is "constrained" such that any value in the `BlogId` column of `Posts` **must** match a value in the `Id` column of `Blogs`. This match determines which blog every post is related to. For example, if the `BlogId` value in one row of of the `Posts` table is 7, then the the post represented by that row is published in the blog with the primary key 7.
 
-> [!IMPORTANT]
-> The CLR type used for join entity types by convention may change in future releases to improve performance. Do not depend on the join type being `Dictionary<string, object>` unless this has been explicitly configured, as described in the next section.
+## Mapping relationships in EF Core
 
-The many-to-many navigations are called skip navigations as they effectively skip over the join entity type. If you are employing bulk configuration all skip navigations can be obtained from <xref:Microsoft.EntityFrameworkCore.Metadata.IEntityType.GetSkipNavigations%2A>.
+EF Core relationship mapping is all about mapping the primary key/foreign key representation used in a relational database to the references between objects used in an object model.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Metadata)]
+In the most basic sense, this involves:
 
-#### Join entity type configuration
+- Adding a primary key property to each entity type.
+- Adding a foreign key property to one entity type.
+- Associating the references between entity types with the primary and foreign keys to form a single relationship configuration.
 
-It is common to apply configuration to the join entity type. This action can be accomplished via `UsingEntity`.
+Once this mapping is made, EF changes the foreign key values as needed when the references between objects change, and changes the references between objects as needed when the foreign key values change.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=SharedConfiguration)]
+> [!NOTE]
+> Primary keys are used for more than mapping relationships. See [_Keys_](xref:core/modeling/keys) for more information.
+
+For example, the entity types shown above can updated with primary and foreign key properties:
+
+```csharp
+public class Blog
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public virtual Uri SiteUri { get; set; }
+
+    public ICollection<Post> Posts { get; }
+}
+```
+
+```csharp
+public class Post
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+    public DateTime PublishedOn { get; set; }
+    public bool Archived { get; set; }
+
+    public int BlogId { get; set; }
+    public Blog Blog { get; set; }
+}
+```
 
 > [!TIP]
-> If there is no navigation on the other side `WithMany()` can be called without any arguments.
+> Primary and foreign key properties don't need to be publicly visible properties of the entity type. However, even when the properties are hidden, it is important to recognize that they still exist in the EF model.
 
-[Model seed data](xref:core/modeling/data-seeding) can be provided for the join entity type by using anonymous types. You can examine the model [debug view](xref:core/modeling/index#debug-view) to determine the property names created by convention.
+The primary key property of `Blog`, `Blog.Id`, and the foreign key property of `Post`, `Post.BlogId`, can then be associated with the references ("navigations") between the entity types (`Blog.Posts` and `Post.Blog`). This is done automatically by EF when building a simple relationship like this, but can also be specified explicitly when overriding the `OnModelCreating` method of your `DbContext`. For example:
 
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Seeding)]
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>()
+        .HasMany(e => e.Posts)
+        .WithOne(e => e.Blog)
+        .HasForeignKey(e => e.BlogId)
+        .HasPrincipalKey(e => e.Id);
+}
+```
 
-Additional data can be stored in the join entity type, but for this it's best to create a bespoke CLR type. When configuring the relationship with a custom join entity type both foreign keys need to be specified explicitly.
+Now all these properties will behave coherently together as a representation of a single relationship between `Blog` and `Post`.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyPayload.cs?name=ManyToManyPayload)]
+## Find out more
 
-#### Joining relationships configuration
+EF supports many different types of relationships, with many different ways these relationships can be represented and configured. To jump into examples for different kinds of relationships, see:
 
-EF uses two one-to-many relationships on the join entity type to represent the many-to-many relationship. You can configure these relationships in the `UsingEntity` arguments.
+- [_One-to-many relationships_](xref:core/modeling/relationships/one-to-many), in which a single entity is associated with any number of other entities.
+- [_One-to-one relationships_](xref:core/modeling/relationships/one-to-one), in which a single entity is associated with another single entity.
+- [_Many-to-many relationships_](xref:core/modeling/relationships/many-to-many), in which any number of entities are associated with any number of other entities.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToManyShared.cs?name=Components)]
+If you are new to EF, then trying the examples linked in in the bullet points above is a good way to get a feel for how relationships work.
 
-> [!NOTE]
-> The `UsingEntity` overloads that don't have a `Action<EntityTypeBuilder> configureJoinEntityType` parameter return an `EntityTypeBuilder` for the join entity type, so the configuration can be chained. Also, starting with EF Core 7.0 there are overloads without a `Type` parameter. These will assume that the type is `Dictionary<string, object>`, which is recommended when you don't plan on using the join entity directly.
+To dig deeper into the properties of entity types involved in relationship mapping, see:
 
-#### Indirect many-to-many relationships
+- [_Foreign and principal keys in relationships_](xref:core/modeling/relationships/foreign-and-principal-keys), which covers how foreign keys map to the database.
+- [_Relationship navigations_](xref:core/modeling/relationships/navigations), which describes how navigations are layered over a foreign key to provide an object-oriented view of the relationship.
 
-You can also represent a many-to-many relationship by just adding the join entity type and mapping two separate one-to-many relationships.
+EF models are built using a combination of three mechanisms: conventions, mapping attributes, and the model builder API. Most of the examples show the model building API. To find out more about other options, see:
 
-[!code-csharp[Main](../../../samples/core/Modeling/Relationships/FluentAPI/ManyToMany.cs?name=ManyToMany&highlight=16-19,21-24)]
+- [_Relationship conventions_](xref:core/modeling/relationships/conventions), which discover entity types, their properties, and the relationships between the types.
+- [_Relationship mapping attributes_](xref:core/modeling/relationships/mapping-attributes), which can be used an alternative to the model building API for some aspects of relationship configuration.
 
-> [!NOTE]
-> Support for scaffolding many-to-many relationships from the database is not yet added. See [tracking issue](https://github.com/dotnet/efcore/issues/22475).
+> [!IMPORTANT]
+> The model-building API is the final source of truth for the EF model--it always takes precedence over configuration discovered by convention or specified by mapping attributes. It is also the only mechanism with full fidelity to configure every aspect of the EF model.
 
-## Additional resources
+Other topics related to relationships include:
 
-* [.NET Data Community Standup session](https://www.youtube.com/watch?v=W1sxepfIMRM&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=32), with a deep dive into Many-to-many and the infrastructure underpinning it.
+- [_Cascade deletes_](xref:core/saving/cascade-delete), which describe how related entities can be automatically deleted `SaveChanges` or `SaveChangesAsync` is called.
+- [_Owned entity types_](xref:core/modeling/owned-entities) use a special type of "owning" relationship that implies a stronger connection between the two types than the "normal" relationships discussed here. Many of the concepts described here for normal relationships are carried over to owned relationships. However, owned relationships also have their own special behaviors.
+
+> [!TIP]
+> Refer to the [glossary of relationship terms](xref:core/modeling/relationships/glossary) as needed when reading the documentation to help understand the terminology used.
+
+## Using relationships
+
+Relationships defined in the model can be used in various ways. For example:
+
+- Relationships can be used to [query related data](xref:core/querying/related-data) in any of three ways:
+  - [Eagerly](xref:core/querying/related-data/eager) as part of a LINQ query, using `Include`.
+  - [Lazily](xref:core/querying/related-data/lazy) using lazy-loading proxies, or lazy-loading without proxies.
+  - [Explicitly](xref:core/querying/related-data/explicit) using the `Load` or `LoadAsync` methods.
+- Relationships can be used in [data seeding](xref:core/modeling/data-seeding) through matching of PK values to FK values.
+- Relationships can be used to [track graphs of entities](xref:core/change-tracking/index). Relationships are then used by the change tracker to:
+  - [Detect changes in relationships and perform fixup](xref:core/change-tracking/relationship-changes)
+  - [Send foreign key updates to the database](xref:core/saving/related-data) with `SaveChanges` or `SaveChangesAsync`

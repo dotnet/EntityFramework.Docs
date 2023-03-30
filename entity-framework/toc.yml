@@ -145,7 +145,25 @@
       - name: Shadow and indexer properties
         href: core/modeling/shadow-properties.md
       - name: Relationships
-        href: core/modeling/relationships.md
+        items:
+        - name: Overview
+          href: core/modeling/relationships.md
+        - name: One-to-many
+          href: core/modeling/relationships/one-to-many.md
+        - name: One-to-one
+          href: core/modeling/relationships/one-to-one.md
+        - name: Many-to-many
+          href: core/modeling/relationships/many-to-many.md
+        - name: Foreign and principal keys
+          href: core/modeling/relationships/foreign-and-principal-keys.md
+        - name: Navigations
+          href: core/modeling/relationships/navigations.md
+        - name: Conventions
+          href: core/modeling/relationships/conventions.md
+        - name: Mapping attributes
+          href: core/modeling/relationships/mapping-attributes.md
+        - name: Glossary
+          href: core/modeling/relationships/glossary.md
       - name: Indexes and constraints
         href: core/modeling/indexes.md
       - name: Inheritance

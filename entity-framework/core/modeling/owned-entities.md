@@ -38,7 +38,7 @@ The model above is mapped to the following database schema:
 See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/OwnedEntities) for more context.
 
 > [!TIP]
-> The owned entity type can be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships#one-to-one) for more information.
+> The owned entity type can be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships/navigations#required-navigations) for more information.
 
 ## Implicit keys
 
@@ -120,7 +120,7 @@ Notice the `WithOwner` call used to define the navigation property pointing back
 
 It is also possible to achieve this result using `OwnedAttribute` on both `OrderDetails` and `StreetAddress`.
 
-In addition, notice the `Navigation` call. Navigation properties to owned types can be further configured [as for non-owned navigation properties](xref:core/modeling/relationships#configuring-navigation-properties).
+In addition, notice the `Navigation` call. Navigation properties to owned types can be further configured [as for non-owned navigation properties](xref:core/modeling/relationships/navigations#required-navigations).
 
 The model above is mapped to the following database schema:
 

@@ -36,7 +36,7 @@ public class Tag
 
 EF Core 5.0 recognizes this as a many-to-many relationship by convention, and automatically creates a `PostTag` join table in the database. Data can be queried and updated without explicitly referencing the join table, considerably simplifying code. The join table can still be customized and queried explicitly if needed.
 
-For further information, [see the full documentation on many-to-many](xref:core/modeling/relationships#many-to-many).
+For further information, [see the full documentation on many-to-many](xref:core/modeling/relationships/many-to-many).
 
 ## Split queries
 
@@ -318,7 +318,7 @@ For further information, [see the full documentation on event counters](xref:cor
 * Model building APIs have been introduced for easier configuration of [value comparers](xref:core/modeling/value-comparers).
 * Computed columns can now be configured as [*stored* or *virtual*](xref:core/modeling/generated-properties#computed-columns).
 * Precision and scale can now be configured [via the Fluent API](xref:core/modeling/entity-properties#precision-and-scale).
-* New model building APIs have been introduced for [navigation properties](xref:core/modeling/relationships#configuring-navigation-properties).
+* New model building APIs have been introduced for [navigation properties](xref:core/modeling/relationships/navigations).
 * New model building APIs have been introduced for fields, similar to properties.
 * The .NET [PhysicalAddress](/dotnet/api/system.net.networkinformation.physicaladdress) and [IPAddress](/dotnet/api/system.net.ipaddress) types can now be mapped to database string columns.
 * A backing field can now be configured via [the new `[BackingField]` attribute](xref:core/modeling/backing-field).

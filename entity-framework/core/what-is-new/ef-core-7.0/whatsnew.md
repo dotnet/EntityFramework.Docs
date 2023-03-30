@@ -3815,7 +3815,7 @@ EF7 supports this table mapping:
 
 ### Unidirectional many-to-many relationships
 
-EF7 supports [many-to-many relationships](xref:core/modeling/relationships#many-to-many) where one side or the other does not have a navigation property. For example, consider `Post` and `Tag` types:
+EF7 supports [many-to-many relationships](xref:core/modeling/relationships/many-to-many) where one side or the other does not have a navigation property. For example, consider `Post` and `Tag` types:
 
 ```csharp
 public class Post

@@ -7,7 +7,7 @@ uid: core/miscellaneous/nullable-reference-types
 ---
 # Working with Nullable Reference Types
 
-C# 8 introduced a new feature called [nullable reference types (NRT)](/dotnet/csharp/tutorials/nullable-reference-types), allowing reference types to be annotated, indicating whether it is valid for them to contain null or not. If you are new to this feature, it is recommended that make yourself familiar with it by reading the C# docs. Nullable reference types are enabled by default in new project templates, but remain disabled in existing projects unless explicitly opted into.
+C# 8 introduced a new feature called [nullable reference types (NRT)](/dotnet/csharp/tutorials/nullable-reference-types), allowing reference types to be annotated, indicating whether it is valid for them to contain `null` or not. If you are new to this feature, it is recommended that make yourself familiar with it by reading the C# docs. Nullable reference types are enabled by default in new project templates, but remain disabled in existing projects unless explicitly opted into.
 
 This page introduces EF Core's support for nullable reference types, and describes best practices for working with them.
 
@@ -20,7 +20,7 @@ The main documentation on required and optional properties and their interaction
 
 ## Non-nullable properties and initialization
 
-When nullable reference types are enabled, the C# compiler emits warnings for any uninitialized non-nullable property, as these would contain null. As a result, the following, common way of writing entity types cannot be used:
+When nullable reference types are enabled, the C# compiler emits warnings for any uninitialized non-nullable property, as these would contain `null`. As a result, the following, common way of writing entity types cannot be used:
 
 ```csharp
 public class Customer
@@ -44,15 +44,18 @@ If you're using an older version of C#, [Constructor binding](xref:core/modeling
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/CustomerWithConstructorBinding.cs?name=CustomerWithConstructorBinding&highlight=6-9)]
 
-Unfortunately, in some scenarios constructor binding isn't an option; navigation properties, for example, cannot be initialized in this way. In those cases, you can simply initialize the property to null with the help of the null-forgiving operator (but see below for more details):
+Unfortunately, in some scenarios constructor binding isn't an option; navigation properties, for example, cannot be initialized in this way. In those cases, you can simply initialize the property to `null` with the help of the null-forgiving operator (but see below for more details):
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Order.cs?range=19)]
 
 ### Required navigation properties
 
-Required navigation properties present an additional difficulty: although a dependent will always exist for a given principal, it may or may not be loaded by a particular query, depending on the needs at that point in the program ([see the different patterns for loading data](xref:core/querying/related-data)). At the same time, it is undesirable to make these properties nullable, since that would force all access to them to check for null, even if they are required.
+Required navigation properties present an additional difficulty: although a dependent will always exist for a given principal, it may or may not be loaded by a particular query, depending on the needs at that point in the program ([see the different patterns for loading data](xref:core/querying/related-data)). At the same time, it may be undesirable to make these properties nullable, since that would force all access to them to check for `null`, even when the navigation is known to be loaded and therefore cannot be `null`.
 
-This isn't necessarily a problem! As long as a required dependent is properly loaded (e.g. via `Include`), accessing its navigation property is guaranteed to always return non-null. On the other hand, accessing a navigation property without first loading the dependent is a programmer error; as such, it may be acceptable for the navigation property to return null, and when for the (buggy) code to throw a `NullReferenceException`. After all, the code is using EF incorrectly.
+This isn't necessarily a problem! As long as a required dependent is properly loaded (e.g. via `Include`), accessing its navigation property is guaranteed to always return non-null. On the other hand, the application may choose to check whether or not the relationship is loaded by checking if the navigation is `null`. In such cases, it is reasonable to make the navigation nullable. This means that required navigations from the dependent to the principal:
+
+- Should be non-nullable if it is considered a programmer error to access a navigation when it is not loaded.
+- Should be nullable if it acceptable for application code to check the navigation to determine whether or not the relationship is loaded.
 
 If you'd like a stricter approach, you can have a non-nullable property with a nullable [backing field](xref:core/modeling/backing-field):
 
@@ -61,7 +64,7 @@ If you'd like a stricter approach, you can have a non-nullable property with a n
 As long as the navigation is properly loaded, the dependent will be accessible via the property. If, however, the property is accessed without first properly loading the related entity, an `InvalidOperationException` is thrown, since the API contract has been used incorrectly.
 
 > [!NOTE]
-> Collection navigations, which contain references to multiple related entities, should always be non-nullable. An empty collection means that no related entities exist, but the list itself should never be null.
+> Collection navigations, which contain references to multiple related entities, should always be non-nullable. An empty collection means that no related entities exist, but the list itself should never be `null`.
 
 ## DbContext and DbSet
 
@@ -69,11 +72,11 @@ The common practice of having uninitialized DbSet properties on context types is
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/NullableReferenceTypesContext.cs?name=Context&highlight=3-4)]
 
-Another strategy is to use non-nullable auto-properties, but to initialize them to null, using the null-forgiving operator (!) to silence the compiler warning. The DbContext base constructor ensures that all DbSet properties will get initialized, and null will never be observed on them.
+Another strategy is to use non-nullable auto-properties, but to initialize them to `null`, using the null-forgiving operator (!) to silence the compiler warning. The DbContext base constructor ensures that all DbSet properties will get initialized, and null will never be observed on them.
 
 ## Navigating and including nullable relationships
 
-When dealing with optional relationships, it's possible to encounter compiler warnings where an actual null reference exception would be impossible. When translating and executing your LINQ queries, EF Core guarantees that if an optional related entity does not exist, any navigation to it will simply be ignored, rather than throwing. However, the compiler is unaware of this EF Core guarantee, and produces warnings as if the LINQ query were executed in memory, with LINQ to Objects. As a result, it is necessary to use the null-forgiving operator (!) to inform the compiler that an actual null value isn't possible:
+When dealing with optional relationships, it's possible to encounter compiler warnings where an actual `null` reference exception would be impossible. When translating and executing your LINQ queries, EF Core guarantees that if an optional related entity does not exist, any navigation to it will simply be ignored, rather than throwing. However, the compiler is unaware of this EF Core guarantee, and produces warnings as if the LINQ query were executed in memory, with LINQ to Objects. As a result, it is necessary to use the null-forgiving operator (!) to inform the compiler that an actual `null` value isn't possible:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Program.cs?name=Navigating)]
 
@@ -81,11 +84,11 @@ A similar issue occurs when including multiple levels of relationships across op
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Program.cs?name=Including&highlight=2)]
 
-If you find yourself doing this a lot, and the entity types in question are predominantly (or exclusively) used in EF Core queries, consider making the navigation properties non-nullable, and to configure them as optional via the Fluent API or Data Annotations. This will remove all compiler warnings while keeping the relationship optional; however, if your entities are traversed outside of EF Core, you may observe null values although the properties are annotated as non-nullable.
+If you find yourself doing this a lot, and the entity types in question are predominantly (or exclusively) used in EF Core queries, consider making the navigation properties non-nullable, and to configure them as optional via the Fluent API or Data Annotations. This will remove all compiler warnings while keeping the relationship optional; however, if your entities are traversed outside of EF Core, you may observe `null` values although the properties are annotated as non-nullable.
 
 ## Limitations in older versions
 
 Prior to EF Core 6.0, the following limitations applied:
 
-* The public API surface wasn't annotated for nullability (the public API was "null-oblivious"), making it sometimes awkward to use when the NRT feature is turned on. This notably includes the async LINQ operators exposed by EF Core, such as [FirstOrDefaultAsync](/dotnet/api/microsoft.entityframeworkcore.entityframeworkqueryableextensions.firstordefaultasync). The public API is fully annotated for nullability starting with EF Core 6.0.
-* Reverse engineering did not support [C# 8 nullable reference types (NRTs)](/dotnet/csharp/tutorials/nullable-reference-types): EF Core always generated C# code that assumed the feature is off. For example, nullable text columns were scaffolded as a property with type `string` , not `string?`, with either the Fluent API or Data Annotations used to configure whether a property is required or not. If using an older version of EF Core, you can still edit the scaffolded code and replace these with C# nullability annotations.
+- The public API surface wasn't annotated for nullability (the public API was "null-oblivious"), making it sometimes awkward to use when the NRT feature is turned on. This notably includes the async LINQ operators exposed by EF Core, such as [FirstOrDefaultAsync](/dotnet/api/microsoft.entityframeworkcore.entityframeworkqueryableextensions.firstordefaultasync). The public API is fully annotated for nullability starting with EF Core 6.0.
+- Reverse engineering did not support [C# 8 nullable reference types (NRTs)](/dotnet/csharp/tutorials/nullable-reference-types): EF Core always generated C# code that assumed the feature is off. For example, nullable text columns were scaffolded as a property with type `string` , not `string?`, with either the Fluent API or Data Annotations used to configure whether a property is required or not. If using an older version of EF Core, you can still edit the scaffolded code and replace these with C# nullability annotations.
