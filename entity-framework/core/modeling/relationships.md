@@ -2,7 +2,7 @@
 title: Introduction to relationships - EF Core
 description: How to configure relationships between entity types when using Entity Framework Core
 author: ajcvickers
-ms.date: 03/19/2023
+ms.date: 03/30/2023
 uid: core/modeling/relationships
 ---
 # Introduction to relationships
@@ -101,7 +101,7 @@ In the most basic sense, this involves:
 - Adding a foreign key property to one entity type.
 - Associating the references between entity types with the primary and foreign keys to form a single relationship configuration.
 
-Once this mapping is made, EF will change the foreign key values as needed when the references between objects change, and change the references between objects as needed when the foreign key values change.
+Once this mapping is made, EF changes the foreign key values as needed when the references between objects change, and changes the references between objects as needed when the foreign key values change.
 
 > [!NOTE]
 > Primary keys are used for more than mapping relationships. See [_Keys_](xref:core/modeling/keys) for more information.
@@ -172,7 +172,7 @@ EF models are built using a combination of three mechanisms: conventions, mappin
 - [_Relationship mapping attributes_](xref:core/modeling/relationships/mapping-attributes), which can be used an alternative to the model building API for some aspects of relationship configuration.
 
 > [!IMPORTANT]
-> The model-building API is the final source of truth for the EF model--it will always take precedence over configuration discovered by convention or specified by mapping attributes. It is also the only mechanism with full fidelity to configure every aspect of the EF model.
+> The model-building API is the final source of truth for the EF model--it always takes precedence over configuration discovered by convention or specified by mapping attributes. It is also the only mechanism with full fidelity to configure every aspect of the EF model.
 
 Other topics related to relationships include:
 

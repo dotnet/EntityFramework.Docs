@@ -2,12 +2,12 @@
 title: Conventions for relationship discovery - EF Core
 description: How navigations, foreign keys, and other aspects of relationships are discovered by EF Core model building conventions
 author: ajcvickers
-ms.date: 02/25/2023
+ms.date: 03/30/2023
 uid: core/modeling/relationships/conventions
 ---
 # Conventions for relationship discovery
 
-EF Core uses a set of [conventions](xref:core/modeling/bulk-configuration#conventions) when discovering and building a [model](xref:core/modeling/index) based on entity type classes. This document summaries the conventions used for discovering and configuring [relationships between entity types](xref:core/modeling/relationships).
+EF Core uses a set of [conventions](xref:core/modeling/bulk-configuration#conventions) when discovering and building a [model](xref:core/modeling/index) based on entity type classes. This document summarizes the conventions used for discovering and configuring [relationships between entity types](xref:core/modeling/relationships).
 
 > [!IMPORTANT]
 > The conventions described here can be overridden by explicit configuration of the relationship using either [mapping attributes](xref:core/modeling/relationships/mapping-attributes) or the model building API.

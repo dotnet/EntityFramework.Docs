@@ -2,7 +2,7 @@
 title: One-to-one relationships - EF Core
 description: How to configure one-to-one relationships between entity types when using Entity Framework Core
 author: ajcvickers
-ms.date: 03/19/2023
+ms.date: 03/30/2023
 uid: core/modeling/relationships/one-to-one
 ---
 # One-to-one relationships
@@ -396,7 +396,7 @@ A more complete configuration can be used to explicitly configure the navigation
 -->
 [!code-csharp[OneToOneRequiredShadowFromPrincipalNoNavigationToPrincipal](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredShadowFromPrincipalNoNavigationToPrincipal)]
 
-## One-to-one without navigation to dependents
+## One-to-one without navigation to dependent
 
 <!--
         // Principal (parent)
@@ -681,3 +681,6 @@ This relationship is [discovered by convention](xref:core/modeling/relationships
             }
 -->
 [!code-csharp[SelfReferencingConfig](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=SelfReferencingConfig)]
+
+> [!NOTE]
+> For one-to-one self referencing relationships, since the principal and dependent entity types are the same, specifying which type contains the foreign key does not clarify the dependent end. In this case, the navigation specified in `HasOne` points from dependent to principal, and the navigation specified in `WithOne` points from principal to dependent.

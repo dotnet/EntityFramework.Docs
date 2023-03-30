@@ -2,7 +2,7 @@
 title: Many-to-many relationships - EF Core
 description: How to configure many-to-many relationships between entity types when using Entity Framework Core
 author: ajcvickers
-ms.date: 03/19/2023
+ms.date: 03/30/2023
 uid: core/modeling/relationships/many-to-many
 ---
 # Many-to-many relationships
@@ -1068,4 +1068,4 @@ This requires no special mapping, since these are normal entity types with norma
 
 ## Additional resources
 
-* [.NET Data Community Standup session](https://www.youtube.com/watch?v=W1sxepfIMRM&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=32), with a deep dive into Many-to-many and the infrastructure underpinning it.
+* [.NET Data Community Standup session](https://www.youtube.com/watch?v=W1sxepfIMRM&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=32), with a deep dive into many-to-many and the infrastructure underpinning it.

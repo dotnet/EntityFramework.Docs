@@ -2,7 +2,7 @@
 title: One-to-many relationships - EF Core
 description: How to configure one-to-many relationships between entity types when using Entity Framework Core
 author: ajcvickers
-ms.date: 03/19/2023
+ms.date: 03/30/2023
 uid: core/modeling/relationships/one-to-many
 ---
 # One-to-many relationships
@@ -36,8 +36,8 @@ This document is structured around lots of examples. The examples start with com
 
 A one-to-many relationship is made up from:
 
-- One or more [primary or alternate key](xref:core/modeling/relationships/foreign-and-principal-keys#principal-keys) properties on the principal entity--the "one" end of the relationship. For example, `Blog.Id`.
-- One or more [foreign key](xref:core/modeling/relationships/foreign-and-principal-keys#foreign-keys) properties on the dependent entity--the "many" end of the relationship. For example, `Post.BlogId`.
+- One or more [primary or alternate key](xref:core/modeling/relationships/foreign-and-principal-keys#principal-keys) properties on the principal entity; that is the "one" end of the relationship. For example, `Blog.Id`.
+- One or more [foreign key](xref:core/modeling/relationships/foreign-and-principal-keys#foreign-keys) properties on the dependent entity; that is the "many" end of the relationship. For example, `Post.BlogId`.
 - Optionally, a [collection navigation](xref:core/modeling/relationships/navigations#collection-navigations) on the principal entity referencing the dependent entities. For example, `Blog.Posts`.
 - Optionally, a [reference navigation](xref:core/modeling/relationships/navigations#reference-navigations) on the dependent entity referencing the principal entity. For example, `Post.Blog`.
 
@@ -50,7 +50,7 @@ So, for the relationship in this example:
 > A required relationship ensures that every dependent entity must be associated with some principal entity. However, a principal entity can _always_ exist without any dependent entities. That is, a required relationship does _not_ indicate that there will always be at least one dependent entity. There is no way in the EF model, and also no standard way in a relational database, to ensure that a principal is associated with a certain number of dependents. If this is needed, then it must be implemented in application (business) logic. See [_Required navigations_](xref:core/modeling/relationships/navigations#required-navigations) for more information.
 
 > [!TIP]
-> A relationship with two navigations--one from dependent to principal and an inverse from principal to dependents--is known as a bidirectional relationship.
+> A relationship with two navigations, one from dependent to principal, and an inverse from principal to dependents, is known as a bidirectional relationship.
 
 This relationship is [discovered by convention](xref:core/modeling/relationships/conventions). That is:
 
@@ -231,7 +231,7 @@ As before, this relationship is [discovered by convention](xref:core/modeling/re
 For this example, the foreign key property has been re-introduced, but the navigation on the dependent has been removed.
 
 > [!TIP]
-> A relationship with only one navigation--one from dependent to principal or one from principal to dependent(s), but not both--is known as a unidirectional relationship.
+> A relationship with only one navigation, one from dependent to principal or one from principal to dependent(s), but not both, is known as a unidirectional relationship.
 
 As before, this relationship is [discovered by convention](xref:core/modeling/relationships/conventions). For cases where the navigations, foreign key, or required/optional nature of the relationship are not discovered by convention, these things can be configured explicitly. For example:
 
@@ -376,7 +376,7 @@ Occasionally, it can be useful to configure a relationship with no navigations. 
         public class Post
         {
             public int Id { get; set; }
-            public int BlogId { get; set; }                              // Required foreign key property
+            public int BlogId { get; set; } // Required foreign key property
         }
 -->
 [!code-csharp[OneToManyRequiredNoNavigations](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyRequiredNoNavigations)]

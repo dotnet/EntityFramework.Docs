@@ -2,7 +2,7 @@
 title: Relationship navigations - EF Core
 description: Reference and collection navigations in Entity Framework Core
 author: ajcvickers
-ms.date: 02/25/2023
+ms.date: 03/30/2023
 uid: core/modeling/relationships/navigations
 ---
 # Relationship navigations
@@ -128,7 +128,7 @@ public class Blog
 
 If EF needs to add an entity to a collection navigation, for example, while executing a query, then it will initialize the collection if it is currently `null`. The instance created depends on the exposed type of the navigation.
 
-- If the navigation is exposed as a `HashSet<T>`, then an instance of `HashSet<T>` using `ReferenceEqualityComparer` is created.
+- If the navigation is exposed as a `HashSet<T>`, then an instance of `HashSet<T>` using <xref:System.Collections.Generic.ReferenceEqualityComparer> is created.
 - Otherwise, if the navigation is exposed as a concrete type with a parameterless constructor, then an instance of that concrete type is created. This applies to `List<T>`, but also to other collection types, including custom collection types.
 - Otherwise, if the navigation is exposed as an `IEnumerable<T>`, an `ICollection<T>`, or an `ISet<T>`, then an instance of `HashSet<T>` using `ReferenceEqualityComparer` is created.
 - Otherwise, if the navigation is exposed as an `IList<T>`, then an instance of `List<T>` is created.
@@ -136,6 +136,9 @@ If EF needs to add an entity to a collection navigation, for example, while exec
 
 > [!NOTE]
 > If [notification entities](xref:core/change-tracking/change-detection#notification-entities), including [change-tracking proxies](xref:core/change-tracking/change-detection#change-tracking-proxies), are being used, then <xref:System.Collections.ObjectModel.ObservableCollection%601> and <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ObservableHashSet%601> are used in place of `List<T>` and `HashSet<T>`.
+
+> [!IMPORTANT]
+> As described in the [change tracking documentation](xref:core/change-tracking/identity-resolution), EF only tracks a single instance of any entity with a given key value. This means that collections used as navigations must use [reference equality semantics](/dotnet/csharp/language-reference/operators/equality-operators). Entity types that don't override object equality will get this by default. Make sure to use <xref:System.Collections.Generic.ReferenceEqualityComparer> when creating a `HashSet<T>` for use as a navigation to ensure it works for all entity types.
 
 ## Configuring navigations
 
