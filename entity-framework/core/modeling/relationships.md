@@ -176,7 +176,7 @@ EF models are built using a combination of three mechanisms: conventions, mappin
 
 Other topics related to relationships include:
 
-- [_Cascade deletes_](xref:core/saving/cascade-delete), which describe how related entities can be automatically deleted `SaveChanges` or `SaveChangesAsync` is called.
+- [_Cascade deletes_](xref:core/saving/cascade-delete), which describe how related entities can be automatically deleted when `SaveChanges` or `SaveChangesAsync` is called.
 - [_Owned entity types_](xref:core/modeling/owned-entities) use a special type of "owning" relationship that implies a stronger connection between the two types than the "normal" relationships discussed here. Many of the concepts described here for normal relationships are carried over to owned relationships. However, owned relationships also have their own special behaviors.
 
 > [!TIP]
