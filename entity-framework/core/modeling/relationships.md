@@ -89,7 +89,7 @@ CREATE TABLE [Blogs] (
     CONSTRAINT [PK_Blogs] PRIMARY KEY ([Id]));
 ```
 
-In this relational model, the `Posts` and `Blogs` tables are each given a "primary key" column. The value of the primary key uniquely identifies each post or blog. In addition, the `Blogs` table is given a "foreign key" column. The `Blogs` primary key column `Id` is referenced by the `BlogId` foreign key column of the `Posts` table. This column is "constrained" such that any value in the `BlogId` column of `Posts` **must** match a value in the `Id` column of `Blogs`. This match determines which blog every post is related to. For example, if the `BlogId` value in one row of of the `Posts` table is 7, then the the post represented by that row is published in the blog with the primary key 7.
+In this relational model, the `Posts` and `Blogs` tables are each given a "primary key" column. The value of the primary key uniquely identifies each post or blog. In addition, the `Blogs` table is given a "foreign key" column. The `Blogs` primary key column `Id` is referenced by the `BlogId` foreign key column of the `Posts` table. This column is "constrained" such that any value in the `BlogId` column of `Posts` **must** match a value in the `Id` column of `Blogs`. This match determines which blog every post is related to. For example, if the `BlogId` value in one row of the `Posts` table is 7, then the post represented by that row is published in the blog with the primary key 7.
 
 ## Mapping relationships in EF Core
 
