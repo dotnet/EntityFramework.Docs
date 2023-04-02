@@ -186,7 +186,7 @@ When `[ForeignKey]` is placed on a navigation and the name provided does not mat
 
 ## DeleteBehaviorAttribute
 
-[By convention](xref:core/modeling/relationships/conventions), EF uses the the `ClientSetNull` <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> for optional relationships, and the `Cascade` behavior for required relationships. This can be changed by placing the <xref:Microsoft.EntityFrameworkCore.DeleteBehaviorAttribute> on one of the navigations of the relationship. For example:
+[By convention](xref:core/modeling/relationships/conventions), EF uses the `ClientSetNull` <xref:Microsoft.EntityFrameworkCore.DeleteBehavior> for optional relationships, and the `Cascade` behavior for required relationships. This can be changed by placing the <xref:Microsoft.EntityFrameworkCore.DeleteBehaviorAttribute> on one of the navigations of the relationship. For example:
 
 <!--
         public class Blog

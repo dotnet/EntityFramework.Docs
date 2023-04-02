@@ -374,7 +374,7 @@ Nothing needs to be changed in the `UsingEntity` call, since the navigations to 
 -->
 [!code-csharp[ManyToManyWithJoinClassConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithJoinClassConfig)]
 
-The navigations can be configured explicitly for cases where the they cannot be determined by convention. For example:
+The navigations can be configured explicitly for cases where they cannot be determined by convention. For example:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -442,7 +442,7 @@ Nothing needs to be changed in the `UsingEntity` call, since the navigations to 
 -->
 [!code-csharp[ManyToManyWithNavsToAndFromJoinClassConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithNavsToAndFromJoinClassConfig)]
 
-The navigations can be configured explicitly for cases where the they cannot be determined by convention. For example:
+The navigations can be configured explicitly for cases where they cannot be determined by convention. For example:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
