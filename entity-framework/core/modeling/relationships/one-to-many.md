@@ -55,7 +55,7 @@ So, for the relationship in this example:
 This relationship is [discovered by convention](xref:core/modeling/relationships/conventions). That is:
 
 - `Blog` is discovered as the principal in the relationship, and `Post` is discovered as the dependent.
-- `Post.BlogId` is discovered as a foreign key of the dependent referencing the `Blog.Id` primary key of the the principal. The relationship is discovered as required because `Post.BlogId` is not nullable.
+- `Post.BlogId` is discovered as a foreign key of the dependent referencing the `Blog.Id` primary key of the principal. The relationship is discovered as required because `Post.BlogId` is not nullable.
 - `Blog.Posts` is discovered as the collection navigation.
 - `Post.Blog` is discovered as the reference navigation.
 
