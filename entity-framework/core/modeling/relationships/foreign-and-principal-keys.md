@@ -193,7 +193,7 @@ This can be changed in the model building API using `HasConstraintName`. For exa
 
 By convention, EF creates a database index for the property or properties of a foreign key. See [_Model building conventions_](xref:core/modeling/relationships/conventions) for more information about the types of indexes created by convention.
 
-> [!TP]
+> [!TIP]
 > Relationships are defined in the EF model between entity types included in that model. Some relationships may need to reference an entity type in the model of a different context--for example, when using the [BoundedContext pattern](https://www.martinfowler.com/bliki/BoundedContext.html). In these situation, the foreign key column(s) should be mapped to normal properties, and these properties can then be manipulated manually to handle changes to the relationship.
 
 ## Principal keys
