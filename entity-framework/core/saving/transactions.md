@@ -110,3 +110,5 @@ It is also possible to enlist in an explicit transaction.
    > It is recommended that you test that the API behaves correctly with your provider before you rely on it for managing transactions. You are encouraged to contact the maintainer of the database provider if it does not.
 
 2. Distributed transaction support in System.Transactions was added to .NET 7.0 for Windows only. Any attempt to use distributed transactions on older .NET versions or on non-Windows platforms will fail.
+
+3. TransactionScope does not support async commit/rollback; that means that disposing it synchronously blocks the executing thread until the operation is complete.
