@@ -445,7 +445,7 @@ For cases where the navigations, foreign key, or required/optional nature of the
 -->
 [!code-csharp[OneToOneRequiredFromDependentNoNavigationToDependents](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredFromDependentNoNavigationToDependents)]
 
-If configuration starts from the entity with no navigation, then the type of the entity on the other end of the relationship must be explicitly specified using the generic `HasMany<>()` call. For example:
+If configuration starts from the entity with no navigation, then the type of the entity on the other end of the relationship must be explicitly specified using the generic `HasOne<>()` call. For example:
 
 <!--
             protected override void OnModelCreating(ModelBuilder modelBuilder)
