@@ -10,7 +10,8 @@ public class MyContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Blog>()
-            .HasDiscriminator(b => b.BlogType);
+            .HasDiscriminator(b => b.BlogType)
+            .HasValue<RssBlog>(BlogTypes.Rss);
 
         modelBuilder.Entity<Blog>()
             .Property(e => e.BlogType)
