@@ -20,7 +20,20 @@ If you've decided to write tests without involving your production database syst
 
 ... and here's a partial sample implementation for production use:
 
-[!code-csharp[Main](../../../samples/core/Testing/BusinessLogic/BloggingRepository.cs?name=BloggingRepository)]
+```csharp
+public class BloggingRepository : IBloggingRepository
+{
+    private readonly BloggingContext _context;
+
+    public BloggingRepository(BloggingContext context)
+        => _context = context;
+
+    public Blog GetBlogByName(string name)
+        => _context.Blogs.FirstOrDefault(b => b.Name == name);
+
+    // Other code...
+}
+```
 
 There's not much to it: the repository simply wraps an EF Core context, and exposes methods which execute the database queries and updates on it. A key point to note is that our `GetAllBlogs` method returns `IEnumerable<Blog>`, and not `IQueryable<Blog>`. Returning the latter would mean that query operators can still be composed over the result, requiring that EF Core still be involved in translating the query; this would defeat the purpose of having a repository in the first place. `IEnumerable<Blog>` allows us to easily stub or mock what the repository returns.
 
