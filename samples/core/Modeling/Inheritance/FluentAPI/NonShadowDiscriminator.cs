@@ -12,8 +12,6 @@ public class MyContext : DbContext
         modelBuilder.Entity<Blog>()
             .HasDiscriminator(b => b.BlogType);
 
-        modelBuilder.Entity<Blog>()
-            .Property(e => e.BlogType)
 
         modelBuilder.Entity<RssBlog>()
             .HasMaxLength(200)
