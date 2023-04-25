@@ -12,10 +12,12 @@ public class MyContext : DbContext
         modelBuilder.Entity<Blog>()
             .HasDiscriminator(b => b.BlogType);
 
-
-        modelBuilder.Entity<RssBlog>()
+        modelBuilder.Entity<Blog>()
+            .Property(e => e.BlogType)
             .HasMaxLength(200)
             .HasColumnName("blog_type");
+            
+        modelBuilder.Entity<RssBlog>();
     }
     #endregion
 }
