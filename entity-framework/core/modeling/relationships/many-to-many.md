@@ -266,7 +266,7 @@ CREATE TABLE "PostTag" (
 
 ## Many-to-many with class for join entity
 
-So far in the examples, the join table has been automatically mapped to a [shared-type entity type](xref:core/modeling/entity-types#shared-type-entity-types). This removes the need for a dedicated class to be created for the entity type. However, it can be useful to have such a class so that it can be referenced easily, especially when navigations or a payload are added to the class, as is shown in later examples below. Do do this, first create a type `PostTag` for the join entity in addition to the existing types for `Post` and `Tag`:
+So far in the examples, the join table has been automatically mapped to a [shared-type entity type](xref:core/modeling/entity-types#shared-type-entity-types). This removes the need for a dedicated class to be created for the entity type. However, it can be useful to have such a class so that it can be referenced easily, especially when navigations or a payload are added to the class, as is shown in later examples below. To do this, first create a type `PostTag` for the join entity in addition to the existing types for `Post` and `Tag`:
 
 <!--
         public class Post
