@@ -30,9 +30,9 @@ highlightedContent:
       url: /training/modules/persist-data-ef-core/
 
     # Card
-    - title: "Using C# to work with a SQLite database"
-      itemType: overview
-      url: /dotnet/standard/data/sqlite
+    - title: "Video: Access a SQL Server/Azure SQL database in 6 minutes with C#"
+      itemType: quickstart
+      url: /learn.microsoft.com/shows/on-net/how-do-i-use-sql-server-with-csharp-and-dotnet
 
     # Card
     - title: "Tutorial: Access a SQLite database using C# (Entity Framework Core)"
@@ -40,7 +40,7 @@ highlightedContent:
       url: /ef/core/get-started/overview/first-app
 
     # Card
-    - title: "Using C# to work with a SQL Server database"
+    - title: "Using C# to work with a SQL Server database (Docs)"
       itemType: overview
       url: /troubleshoot/developer/visualstudio/csharp/language-compilers/create-sql-server-database-programmatically
     

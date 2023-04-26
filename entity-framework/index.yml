@@ -18,7 +18,7 @@ highlightedContent:
 # itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
   items:
     # Card
-    - title: "Tutorial: Access a SQLite database using C# (Entity Framework Core)"
+    - title: "Tutorial: Access a relational database using C# (Entity Framework Core)"
       itemType: get-started
       url: core/get-started/overview/first-app.md
     # Card
