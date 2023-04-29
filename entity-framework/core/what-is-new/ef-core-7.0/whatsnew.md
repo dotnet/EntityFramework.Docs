@@ -536,7 +536,7 @@ WHERE [Id] = @p1;
 
 By default, EF Core [tracks changes to entities](xref:core/change-tracking/index), and then [sends updates to the database](xref:core/saving/index) when one of the `SaveChanges` methods is called. Changes are only sent for properties and relationships that have actually changed. Also, the tracked entities remain in sync with the changes sent to the database. This mechanism is an efficient and convenient way to send general-purpose inserts, updates, and deletes to the database. These changes are also batched to reduce the number of database round-trips.
 
-However, it is sometimes useful to execute update or delete commands on the database without involving the change tracker. EF7 enables this with the new `ExecuteUpdate` and `ExecuteDelete` methods. These methods are applied to a LINQ query and will update or delete entities in the database based on the results of that query. Many entities can be updated with a single command and the entities are not loaded into memory, which means this can result in more efficient updates and deletes.
+However, it is sometimes useful to execute update or delete commands on the database without involving the change tracker. EF7 enables this with the new <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate%2A> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete%2A> methods. These methods are applied to a LINQ query and will update or delete entities in the database based on the results of that query. Many entities can be updated with a single command and the entities are not loaded into memory, which means this can result in more efficient updates and deletes.
 
 However, keep in mind that:
 
@@ -616,7 +616,7 @@ The first parameter of `SetProperty` specifies which property to update; in this
 
 ```sql
 UPDATE [b]
-    SET [b].[Name] = [b].[Name] + N' *Featured!*'
+SET [b].[Name] = [b].[Name] + N' *Featured!*'
 FROM [Blogs] AS [b]
 ```
 
@@ -634,7 +634,7 @@ In this case the generated SQL is a bit more complicated:
 
 ```sql
 UPDATE [p]
-    SET [p].[Content] = (([p].[Content] + N' ( This content was published in ') + COALESCE(CAST(DATEPART(year, [p].[PublishedOn]) AS nvarchar(max)), N'')) + N')',
+SET [p].[Content] = (([p].[Content] + N' ( This content was published in ') + COALESCE(CAST(DATEPART(year, [p].[PublishedOn]) AS nvarchar(max)), N'')) + N')',
     [p].[Title] = (([p].[Title] + N' (') + COALESCE(CAST(DATEPART(year, [p].[PublishedOn]) AS nvarchar(max)), N'')) + N')'
 FROM [Posts] AS [p]
 WHERE DATEPART(year, [p].[PublishedOn]) < 2022
@@ -653,7 +653,7 @@ Which generates:
 
 ```sql
 UPDATE [t]
-    SET [t].[Text] = [t].[Text] + N' (old)'
+SET [t].[Text] = [t].[Text] + N' (old)'
 FROM [Tags] AS [t]
 WHERE NOT EXISTS (
     SELECT 1
@@ -661,6 +661,8 @@ WHERE NOT EXISTS (
     INNER JOIN [Posts] AS [p0] ON [p].[PostsId] = [p0].[Id]
     WHERE [t].[Id] = [p].[TagsId] AND NOT (DATEPART(year, [p0].[PublishedOn]) < 2022))
 ```
+
+For more information and code samples on `ExecuteUpdate` and `ExecuteDelete`, see [ExecuteUpdate and ExecuteDelete](xref:core/saving/execute-insert-update-delete).
 
 ### Inheritance and multiple tables
 
