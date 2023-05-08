@@ -968,7 +968,7 @@ It's hard to imagine when it is useful to change this behavior, but it can be do
 -->
 [!code-csharp[ManyToManyWithNoCascadeDeleteConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithNoCascadeDeleteConfig)]
 
-The result maps to a entity type schema with a timestamp set automatically when a row is inserted:
+The database schema for the join table uses restricted delete behavior on the foreign key constraint:
 
 ```sql
 CREATE TABLE "PostTag" (
