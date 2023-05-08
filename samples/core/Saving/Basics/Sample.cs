@@ -24,7 +24,7 @@ public class Sample
         #region Update
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.First();
+            var blog = context.Blogs.Single(b => b.Url == "http://example.com");
             blog.Url = "http://example.com/blog";
             context.SaveChanges();
         }
@@ -33,7 +33,7 @@ public class Sample
         #region Remove
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.First();
+            var blog = context.Blogs.Single(b => b.Url == "http://example.com/blog");
             context.Blogs.Remove(blog);
             context.SaveChanges();
         }
