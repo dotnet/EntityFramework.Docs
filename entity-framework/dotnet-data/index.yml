@@ -5,8 +5,8 @@ summary: This page contains resources about how to work with data using .NET (C#
 brand: dotnet
 
 metadata:
-  title:  .NET (C#) data documentation hub
-  description: This page contains resources about how to work with data using .NET (C#). Use our docs and tutorials to choose from our wide variety of available databases & data access approaches and get started quick!
+  title:  .NET (C#) data documentation 
+  center  description: This page contains resources about how to work with data using .NET (C#). Use our docs and tutorials to choose from our wide variety of available databases & data access approaches and get started quick!
   ms.product: entity-framework
   ms.topic: hub-page
   author: jcjiang
@@ -30,7 +30,7 @@ highlightedContent:
       url: /training/modules/persist-data-ef-core/
 
     # Card
-    - title: "Video: Access a SQL Server/Azure SQL database in 6 minutes with C#"
+    - title: "Video: Access a SQL Server or Azure SQL database in 6 minutes with C#"
       itemType: quickstart
       url: /learn.microsoft.com/shows/on-net/how-do-i-use-sql-server-with-csharp-and-dotnet
 
@@ -40,7 +40,7 @@ highlightedContent:
       url: /ef/core/get-started/overview/first-app
 
     # Card
-    - title: "Using C# to work with a SQL Server database (Docs)"
+    - title: "Using C# to work with a SQL Server or Azure SQL database (Docs)"
       itemType: overview
       url: /troubleshoot/developer/visualstudio/csharp/language-compilers/create-sql-server-database-programmatically
     
@@ -71,7 +71,7 @@ additionalContent:
             - url: /dotnet/standard/data/sqlite/
               text: "Use .NET (C#) to connect and query data in SQLite"
             - url: /sql/
-              text: "Use .NET (C#) to connect and query data in Microsoft SQL Server"
+              text: "Use .NET (C#) to connect and query data in Microsoft SQL Server or Azure SQL"
             - url: /azure/postgresql/flexible-server/connect-csharp
               text: "Use .NET (C#) to connect and query data in Azure Database for PostgreSQL - Flexible Server"
             - url: /azure/mysql/connect-csharp
