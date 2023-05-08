@@ -147,17 +147,17 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region OrderedAddresses
-        var orderedAddresses = await context.Authors
-            .Where(
-                author => (author.Contact.Address.City == "Chigley"
-                           && author.Contact.Phone != null)
-                          || author.Name.StartsWith("D"))
-            .OrderBy(author => author.Contact.Phone)
-            .Select(
-                author => author.Name + " (" + author.Contact.Address.Street
-                          + ", " + author.Contact.Address.City
-                          + " " + author.Contact.Address.Postcode + ")")
-            .ToListAsync();
+var orderedAddresses = await context.Authors
+    .Where(
+        author => (author.Contact.Address.City == "Chigley"
+                   && author.Contact.Phone != null)
+                  || author.Name.StartsWith("D"))
+    .OrderBy(author => author.Contact.Phone)
+    .Select(
+        author => author.Name + " (" + author.Contact.Address.Street
+                  + ", " + author.Contact.Address.City
+                  + " " + author.Contact.Address.Postcode + ")")
+    .ToListAsync();
         #endregion
 
         Console.WriteLine();
