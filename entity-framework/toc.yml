@@ -278,6 +278,8 @@
         href: core/saving/cascade-delete.md
       - name: Concurrency conflicts
         href: core/saving/concurrency.md
+      - name: ExecuteUpdate and ExecuteDelete
+        href: core/saving/execute-insert-update-delete.md
       - name: Transactions
         href: core/saving/transactions.md
       - name: Disconnected entities
