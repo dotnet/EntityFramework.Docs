@@ -2702,7 +2702,7 @@ EF7 makes it easier to handle dynamic connections and connection strings through
 
 ```csharp
 services.AddDbContext<CustomerContext>(
-    b => b.UseSqlServer();
+    b => b.UseSqlServer());
 ```
 
 One of the `IDbConnectionInterceptor` methods can then be implemented to configure the connection before it is used. `ConnectionOpeningAsync` is a good choice, since it can perform an async operation to obtain the connection string, find an access token, and so on. For example, imagine a service scoped to the current request that understands the current tenant:
