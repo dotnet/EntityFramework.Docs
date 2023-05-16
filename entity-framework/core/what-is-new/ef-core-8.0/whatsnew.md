@@ -1146,7 +1146,7 @@ Starting with Preview 4, EF8 now includes built-in support for the second option
 
 #### Primitive collection properties
 
-EF Core can map any `IEnumerable<T>` property, where `T` is a primitive type, to a JSON column in the database. This is done by convention for public properties which have both a getter and a setter. For example, all properties  in the following entity type are mapped to JSON columns by convention:
+EF Core can map any `IEnumerable<T>` property, where `T` is a primitive type, to a JSON column in the database. This is done by convention for public properties which have both a getter and a setter. For example, all properties in the following entity type are mapped to JSON columns by convention:
 
 ```csharp
 public class PrimitiveCollections
