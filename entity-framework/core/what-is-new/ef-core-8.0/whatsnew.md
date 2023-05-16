@@ -1132,7 +1132,7 @@ In addition to the enhancements described above, EF8 Preview 2 also includes som
 
 ### Collections of primitive types
 
-A persistent question when using relational databases is what to do with collections of primitive types? That is, lists or arrays of integers, date/times, strings, and so on? If you're using PostgreSQL, then its easy to store these things using PostgreSQL's [built-in array type](https://www.postgresql.org/docs/current/arrays.html). For other databases, there are two common approaches:
+A persistent question when using relational databases is what to do with collections of primitive types; that is, lists or arrays of integers, date/times, strings, and so on. If you're using PostgreSQL, then its easy to store these things using PostgreSQL's [built-in array type](https://www.postgresql.org/docs/current/arrays.html). For other databases, there are two common approaches:
 
 - Create a table with a column for the primitive type value and another column to act as a foreign key linking each value to its owner of the collection.
 - Serialize the primitive collection into some column type that is handled by the database--for example, serialize to and from a string.
