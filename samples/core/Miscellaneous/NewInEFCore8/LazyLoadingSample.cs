@@ -99,7 +99,7 @@ public class LazyLoadingBlogsContextBase : JsonBlogsContextBase
         base.OnConfiguring(optionsBuilder);
 
         #region IgnoreNonVirtualNavigations
-        optionsBuilder.UseLazyLoadingProxies(ignoreNonVirtualNavigations: true);
+        optionsBuilder.UseLazyLoadingProxies(b => b.IgnoreNonVirtualNavigations());
         #endregion
     }
 
