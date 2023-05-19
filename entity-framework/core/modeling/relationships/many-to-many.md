@@ -1029,7 +1029,7 @@ Unfortunately, this is not easy to map. The same navigation cannot be used for b
 -->
 [!code-csharp[SelfReferencingUnidirectionalManyToManyConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=SelfReferencingUnidirectionalManyToManyConfig)]
 
-However, to make sure two people are both related to each other, each person will need to be manually added to the other person's `Firends` collection. For example:
+However, to make sure two people are both related to each other, each person will need to be manually added to the other person's `Friends` collection. For example:
 
 ```csharp
 ginny.Friends.Add(hermione);
