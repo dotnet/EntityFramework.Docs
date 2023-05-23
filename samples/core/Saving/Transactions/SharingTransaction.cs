@@ -43,7 +43,7 @@ public class SharingTransaction
                     .OrderBy(b => b.Url)
                     .ToList();
                     
-                context1.Blogs.Add(new Blog { Url = "http://dot.net" });
+                context2.Blogs.Add(new Blog { Url = "http://dot.net" });
                 context2.SaveChanges();
             }
 
