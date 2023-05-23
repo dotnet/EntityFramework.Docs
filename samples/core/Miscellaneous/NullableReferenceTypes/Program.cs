@@ -45,10 +45,6 @@ namespace NullableReferenceTypes
                 // Console.WriteLine(order.ShippingAddress.City);
                 // The following would be a programming bug: we forgot to include Product above; will throw NullReferenceException. It would throw NullReferenceException.
                 // Console.WriteLine(order.Product.Name);
-
-                #region Navigating
-                Console.WriteLine(order.OptionalInfo!.ExtraAdditionalInfo!.SomeExtraAdditionalInfo);
-                #endregion
             }
         }
     }
