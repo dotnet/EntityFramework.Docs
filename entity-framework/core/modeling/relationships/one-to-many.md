@@ -102,17 +102,18 @@ Neither of these options is better than the other; they both result in exactly t
         public class Blog
         {
             public int Id { get; set; }
-            public ICollection<Post> Posts { get; } = new List<Post>();  // Collection navigation containing dependents
+            public ICollection<Post> Posts { get; } = new List<Post>(); // Collection navigation containing dependents
         }
 
         // Dependent (child)
         public class Post
         {
             public int Id { get; set; }
-            public Blog? Blog { get; set; }                               // Optional reference navigation to principal
+            public int? BlogId { get; set; } // Optional foreign key property
+            public Blog? Blog { get; set; } // Optional reference navigation to principal
         }
 -->
-[!code-csharp[OneToManyOptionalShadow](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyOptionalShadow)]
+[!code-csharp[OneToManyOptional](../../../../samples/core/Modeling/Relationships/OneToMany.cs?name=OneToManyOptional)]
 
 This is the same as the previous example, except that the foreign key property and navigation to the principal are now nullable. This makes the relationship "optional" because a dependent (`Post`) can exist _without_ being related to any principal (`Blog`).
 
