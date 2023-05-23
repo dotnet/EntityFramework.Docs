@@ -42,6 +42,8 @@ public class SharingTransaction
                 var blogs = context2.Blogs
                     .OrderBy(b => b.Url)
                     .ToList();
+                    
+                context1.Blogs.Add(new Blog { Url = "http://dot.net" });
                 context2.SaveChanges();
             }
 
