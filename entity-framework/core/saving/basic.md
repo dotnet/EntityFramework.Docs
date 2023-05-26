@@ -31,7 +31,7 @@ Simply modify the values assigned to properties and then call `SaveChanges`:
 
 ## Deleting Data
 
-Use the <xref:Microsoft.EntityFrameworkCore.DbSet%601.Add%2A?displayProperty=nameWithType> method to delete instances of your entity classes:
+Use the <xref:Microsoft.EntityFrameworkCore.DbSet%601.Remove%2A?displayProperty=nameWithType> method to delete instances of your entity classes:
 
 [!code-csharp[Main](../../../samples/core/Saving/Basics/Sample.cs#Remove)]
 
