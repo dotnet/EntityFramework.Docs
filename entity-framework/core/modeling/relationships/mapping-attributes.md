@@ -23,7 +23,7 @@ The use of data annotations across many technologies and for both mapping and va
 
 ## RequiredAttribute
 
-<xref:System.ComponentModel.DataAnnotations.RequiredAttribute> is applied to a property to indicate that the property cannot be `null`. In the context of relationships, `[Required]` is usually used on a foreign key property. Doing do makes the foreign key not nullable, thereby making the relationship required. For example, with the following types, the `Post.BlogId` property is made non-nullable, and the relationship becomes required.
+<xref:System.ComponentModel.DataAnnotations.RequiredAttribute> is applied to a property to indicate that the property cannot be `null`. In the context of relationships, `[Required]` is usually used on a foreign key property. Doing so makes the foreign key not nullable, thereby making the relationship required. For example, with the following types, the `Post.BlogId` property is made non-nullable, and the relationship becomes required.
 
 <!--
         public class Blog
