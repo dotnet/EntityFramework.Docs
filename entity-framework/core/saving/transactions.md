@@ -103,7 +103,7 @@ It is also possible to enlist in an explicit transaction.
 [!code-csharp[Main](../../../samples/core/Saving/Transactions/CommitableTransaction.cs?name=Transaction&highlight=1-2,15,28-30)]
 
 > [!NOTE]
-> If you're using async APIs, be sure to specify [TransactionScopeAsyncFlowOption.Enabled](/dotnet/api/system.transactions.transactionscopeasyncflowoption) in the `TransactionScoped` constructor to ensure that the ambient transaction flows across async calls.
+> If you're using async APIs, be sure to specify [TransactionScopeAsyncFlowOption.Enabled](/dotnet/api/system.transactions.transactionscopeasyncflowoption) in the `TransactionScope` constructor to ensure that the ambient transaction flows across async calls.
 
 For more information on `TransactionScope` and ambient transactions, [see this documentation](/dotnet/framework/data/transactions/implementing-an-implicit-transaction-using-transaction-scope).
 
