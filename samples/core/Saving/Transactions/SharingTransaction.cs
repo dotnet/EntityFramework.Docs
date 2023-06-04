@@ -42,6 +42,9 @@ public class SharingTransaction
                 var blogs = context2.Blogs
                     .OrderBy(b => b.Url)
                     .ToList();
+                    
+                context2.Blogs.Add(new Blog { Url = "http://dot.net" });
+                context2.SaveChanges();
             }
 
             // Commit transaction if all commands succeed, transaction will auto-rollback
