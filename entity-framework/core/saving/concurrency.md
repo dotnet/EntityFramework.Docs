@@ -137,7 +137,7 @@ Regardless of how your concurrency token is set up, to implement optimistic conc
 
 One option is to simply inform the user that the update failed due to conflicting changes; the user can then load the new data and try again. Or if your application is performing an automated update, it can simply loop and retry immediately, after re-querying the data.
 
-A more sophisticated way to resolve concurrency conflilcts is to *merge* the pending changes with the new values in the database. The precise details of which values get merged depend on the application, and the process may be directed by a user interface, where both sets of values are displayed.
+A more sophisticated way to resolve concurrency conflicts is to *merge* the pending changes with the new values in the database. The precise details of which values get merged depend on the application, and the process may be directed by a user interface, where both sets of values are displayed.
 
 There are three sets of values available to help resolve a concurrency conflict:
 
