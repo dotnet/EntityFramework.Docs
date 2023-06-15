@@ -17,7 +17,7 @@ EF Core relationships are defined by [foreign keys](xref:core/modeling/relations
 
 ## Reference navigations
 
-Navigations come in two forms--reference and collection. Reference navigations are simple object references to another entity. They represent the "one" side(s) of [one-to-many](xref:core/modeling/relationships/one-to-many) and [one-to-one](xref:core/modeling/relationships/one-to-one) relationships. For example:
+Navigations come in two forms — reference and collection. Reference navigations are simple object references to another entity. They represent the "one" side(s) of [one-to-many](xref:core/modeling/relationships/one-to-many) and [one-to-one](xref:core/modeling/relationships/one-to-one) relationships. For example:
 
 ```csharp
 public Blog TheBlog { get; set; }
@@ -168,7 +168,7 @@ A navigation from dependent to principal is required if the relationship is requ
 
 Reference navigations from principal to dependent are different. In most cases, a principal entity can _always_ exist without any dependent entities. That is, a required relationship does _not_ indicate that there will always be at least one dependent entity. There is no way in the EF model, and also no standard way in a relational database, to ensure that a principal is associated with a certain number of dependents. If this is needed, then it must be implemented in application (business) logic.
 
-There is one exception to this rule--when the principal and dependent types are sharing the same table in a relational database, or contained in a document. This can happen with [owned types](xref:core/modeling/owned-entities), or non-owned types [sharing the same table](xref:core/modeling/table-splitting). In this case, the navigation property from the principal to the dependent can be marked as required, indicating that the dependent must exist.
+There is one exception to this rule — when the principal and dependent types are sharing the same table in a relational database, or contained in a document. This can happen with [owned types](xref:core/modeling/owned-entities), or non-owned types [sharing the same table](xref:core/modeling/table-splitting). In this case, the navigation property from the principal to the dependent can be marked as required, indicating that the dependent must exist.
 
 Configuration of the navigation property as required is done using the `Navigation` method. For example:
 
