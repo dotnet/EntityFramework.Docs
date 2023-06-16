@@ -32,7 +32,7 @@ You may want to store your migrations in a different project than the one contai
 
    ```xml
    <ItemGroup>
-     <ProjectReference Include="..\WebApplication1.Migrations\WebApplication1.Migrations.csproj">
+     <ProjectReference Include="..\WebApplication1.Migrations\WebApplication1.Migrations.csproj" />
    </ItemGroup>
    ```
 
