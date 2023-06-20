@@ -68,9 +68,25 @@ As long as the navigation is properly loaded, the dependent will be accessible v
 
 ## DbContext and DbSet
 
-The common practice of having uninitialized DbSet properties on context types is also problematic, as the compiler will now emit warnings for them. This can be fixed as follows:
+With EF, it's common practice to have uninitialized DbSet properties on context types:
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/NullableReferenceTypesContext.cs?name=Context&highlight=3-4)]
+```c#
+public class MyContext : DbContext
+{
+    public DbSet<Customer> Customers { get; set;}
+}
+```
+
+Although this generally causes a compiler warning, EF Core 7.0 and above suppress this warning, since EF automatically initializes these properties via reflection.
+
+On older version of EF Core, you can work around this problem as follows:
+
+```c#
+public class MyContext : DbContext
+{
+    public DbSet<Customer> Customers => Set<Customer>();
+}
+```
 
 Another strategy is to use non-nullable auto-properties, but to initialize them to `null`, using the null-forgiving operator (!) to silence the compiler warning. The DbContext base constructor ensures that all DbSet properties will get initialized, and null will never be observed on them.
 
