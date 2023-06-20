@@ -18,6 +18,10 @@ metadata:
 highlightedContent:
   # itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | tutorial | video | whats-new
   items:    
+      # Card
+    - title: "What do you think about our documentation? Take this 5 minute survey!"
+      itemType: whats-new
+      url: https://aka.ms/dochubfeedback
 
       # Card
     - title: "Accessing your data using C# (Entity Framework Core)"
@@ -43,11 +47,6 @@ highlightedContent:
     - title: "Using C# to work with a SQL Server database (Docs)"
       itemType: overview
       url: /troubleshoot/developer/visualstudio/csharp/language-compilers/create-sql-server-database-programmatically
-    
-    # Card
-    - title: "Querying data with Language-Integrated Query (LINQ)"
-      itemType: overview
-      url: /dotnet/standard/linq
 
     # Card
     - title: "Tutorial: Create a web API that uses a database"
