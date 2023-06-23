@@ -104,7 +104,7 @@ public class TaggedQueryCommandInterceptor : DbCommandInterceptor
     {
         ManipulateCommand(command);
 
-        return new ValueTask<InterceptionResult<DbDataReader>>(result);
+        return ValueTask.FromResult(result);
     }
 
     private static void ManipulateCommand(DbCommand command)
