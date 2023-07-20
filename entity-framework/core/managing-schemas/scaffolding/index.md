@@ -145,13 +145,13 @@ For example, to scaffold only the `Artists` and `Albums` tables:
 #### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef dbcontext scaffold ... --table Artist --table Album
+dotnet ef dbcontext scaffold --table Artist --table Album
 ```
 
 #### [Visual Studio PMC](#tab/vs)
 
 ```powershell
-Scaffold-DbContext ... -Tables Artists, Albums
+Scaffold-DbContext -Tables Artists, Albums
 ```
 
 ***
@@ -161,13 +161,13 @@ To scaffold all tables and views from the `Customer` and `Contractor` schemas:
 #### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef dbcontext scaffold ... --schema Customer --schema Contractor
+dotnet ef dbcontext scaffold --schema Customer --schema Contractor
 ```
 
 #### [Visual Studio PMC](#tab/vs)
 
 ```powershell
-Scaffold-DbContext ... -Schemas Customer, Contractor
+Scaffold-DbContext -Schemas Customer, Contractor
 ```
 
 ***
@@ -177,13 +177,13 @@ For example, to scaffold the `Purchases` table from the `Customer` schema, and t
 #### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
-dotnet ef dbcontext scaffold ... --table Customer.Purchases --table Contractor.Accounts --table Contractor.Contracts
+dotnet ef dbcontext scaffold --table Customer.Purchases --table Contractor.Accounts --table Contractor.Contracts
 ```
 
 #### [Visual Studio PMC](#tab/vs)
 
 ```powershell
-Scaffold-DbContext ... -Tables Customer.Purchases, Contractor.Accounts, Contractor.Contracts
+Scaffold-DbContext -Tables Customer.Purchases, Contractor.Accounts, Contractor.Contracts
 ```
 
 ***
@@ -291,13 +291,13 @@ The entity classes and a DbContext class are scaffolded into the project's root 
 You can specify the directory where classes are scaffolded using `--output-dir`, and `--context-dir` can be used to scaffold the DbContext class into a separate directory from the entity type classes:
 
 ```dotnetcli
-dotnet ef dbcontext scaffold ... --context-dir Data --output-dir Models
+dotnet ef dbcontext scaffold --context-dir Data --output-dir Models
 ```
 
 By default, the namespace will be the root namespace plus the names of any subdirectories under the project's root directory. However, you can override the namespace for all output classes by using `--namespace`. You can also override the namespace for just the DbContext class using `--context-namespace`:
 
 ```dotnetcli
-dotnet ef dbcontext scaffold ... --namespace Your.Namespace --context-namespace Your.DbContext.Namespace
+dotnet ef dbcontext scaffold --namespace Your.Namespace --context-namespace Your.DbContext.Namespace
 ```
 
 #### [Visual Studio PMC](#tab/vs)
@@ -305,13 +305,13 @@ dotnet ef dbcontext scaffold ... --namespace Your.Namespace --context-namespace 
 You can specify the directory where classes are scaffolded using `-OutputDir`, and `-ContextDir` can be used to scaffold the DbContext class into a separate directory from the entity type classes:
 
 ```powershell
-Scaffold-DbContext ... -ContextDir Data -OutputDir Models
+Scaffold-DbContext -ContextDir Data -OutputDir Models
 ```
 
 By default, the namespace will be the root namespace plus the names of any subdirectories under the project's root directory. However, you can override the namespace for all output classes by using `-Namespace`. You can also override the namespace for just the DbContext class using `-ContextNamespace`.
 
 ```powershell
-Scaffold-DbContext ... -Namespace Your.Namespace -ContextNamespace Your.DbContext.Namespace
+Scaffold-DbContext -Namespace Your.Namespace -ContextNamespace Your.DbContext.Namespace
 ```
 
 ***
