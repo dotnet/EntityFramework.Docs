@@ -55,7 +55,7 @@ IWAPI (Instant Web API) is a scaffolding engine for .NET Core that can automate 
 
 ### Microsoft.EntityFrameworkCore.AutoHistory
 
-A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 3, 5, 6.
+A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 2, 3, 5, 6.
 
 [GitHub repository](https://github.com/Arch/AutoHistory) | [NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.AutoHistory)
 
@@ -194,7 +194,7 @@ A DTO-Entity mapper with composition/aggregation handling (similar to GraphDiff)
 
 ### EntityFrameworkCore.Sqlite.NodaTime
 
-Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](https://sqlite.org). For EF Core: 6, 7.
+Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](https://sqlite.org). For EF Core: 5, 6, 7.
 
 [GitHub repository](https://github.com/khellang/EFCore.Sqlite.NodaTime) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.Sqlite.NodaTime)
 
@@ -298,7 +298,7 @@ A source generator that can generate strongly-typed-id classes automatically for
 
 ### Microsoft.EntityFrameworkCore.DynamicLinq
 
-The Dynamic LINQ library let you execute query with dynamic string and provide some utilities methods such as ParseLambda, Parse, and CreateClass. For EF Core: 2-  7.
+The Dynamic LINQ library let you execute query with dynamic string and provide some utilities methods such as ParseLambda, Parse, and CreateClass. For EF Core: 2-7.
 
 [Website](https://dynamic-linq.net/) | [GitHub repository](https://github.com/zzzprojects/System.Linq.Dynamic.Core) | [NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.DynamicLinq)
 
