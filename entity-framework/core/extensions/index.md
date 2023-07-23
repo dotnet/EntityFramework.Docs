@@ -200,7 +200,7 @@ Adds support for [NodaTime](https://nodatime.org) types when using [SQLite](http
 
 ### ErikEJ.EntityFrameworkCore.SqlServer.Dacpac
 
-Enables reverse engineering an EF Core model from a SQL Server data-tier application package (.dacpac). For EF Core: 5, 6, 7.
+Enables reverse engineering an EF Core model from a SQL Server data-tier application package (.dacpac). For EF Core: 6, 7.
 
 [GitHub repository](https://github.com/ErikEJ/EFCorePowerTools/tree/master/src/GUI/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac) | [NuGet](https://www.nuget.org/packages/ErikEJ.EntityFrameworkCore.SqlServer.Dacpac)
 
