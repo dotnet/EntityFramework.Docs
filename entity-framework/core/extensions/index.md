@@ -15,18 +15,6 @@ These tools and extensions provide additional functionality for Entity Framework
 
 ## Tools
 
-### LLBLGen Pro
-
-LLBLGen Pro is an entity modeling solution with support for Entity Framework and Entity Framework Core. It lets you easily define your entity model and map it to your database, using database first or model first, so you can get started writing queries right away. For EF Core: 2-7.
-
-[Website](https://www.llblgen.com/)
-
-### Devart Entity Developer
-
-Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 2-7.
-
-[Website](https://www.devart.com/entitydeveloper/)
-
 ### EF Core Power Tools
 
 EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 6, 7.
@@ -38,6 +26,18 @@ EF Core Power Tools is a Visual Studio extension that exposes various EF Core de
 EF Core Power Tools CLI is a .NET global command line tool. It enables advanced reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications). For EF Core: 6, 7.
 
 [GitHub readme](https://github.com/ErikEJ/EFCorePowerTools/blob/master/src/GUI/efcpt/readme.md)
+
+### LLBLGen Pro
+
+LLBLGen Pro is an entity modeling solution with support for Entity Framework and Entity Framework Core. It lets you easily define your entity model and map it to your database, using database first or model first, so you can get started writing queries right away. For EF Core: 2-7.
+
+[Website](https://www.llblgen.com/)
+
+### Devart Entity Developer
+
+Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 2-7.
+
+[Website](https://www.devart.com/entitydeveloper/)
 
 ### Entity Framework Visual Editor
 
@@ -55,7 +55,7 @@ IWAPI (Instant Web API) is a scaffolding engine for .NET Core that can automate 
 
 ### Microsoft.EntityFrameworkCore.AutoHistory
 
-A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 2, 3, 5, 6.
+A plugin library that enables automatically recording the data changes performed by EF Core into a history table. For EF Core: 2-6.
 
 [GitHub repository](https://github.com/Arch/AutoHistory) | [NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.AutoHistory)
 
@@ -248,6 +248,13 @@ Extension for Entity Framework that allows you to create and manage multiple que
 
 [GitHub repository](https://github.com/Krzysztofz01/EFCore.QueryFilterBuilder)
 
+### Pagination.EntityFrameworkCore.Extensions
+
+This is a library for Pagination on EntityFrameworkCore. Works well with Entity Framework Core as an extension, and supports both asynchronous and synchronous.
+It also has many useful features commonly used especially on web development. For EF Core: 2-7.
+
+[GitHub repository](https://github.com/SitholeWB/Pagination.EntityFrameworkCore.Extensions) | [NuGet](https://www.nuget.org/packages/Pagination.EntityFrameworkCore.Extensions)
+
 ### Laraue.EfCoreTriggers
 
 Fluent API to declare triggers in `Context.OnModelCreating` which are later built into migrations. Providers to Postgres, MySQL, SQL Server and SQLite. For EF Core: 5, 6, 7.
@@ -329,3 +336,62 @@ GraphQL server with tight EntityFramework integration. For EF Core: 5, 6, 7.
 A standard for implementing REST APIs with specifications for discovery, filtering, sorting, projections, navigations, bulk operations, and more.
 
 [GitHub repository](https://github.com/OData) | [NuGet](https://www.nuget.org/packages/Microsoft.OData.Core/)
+
+## Extensions for unsupported EF Core versions
+
+### nHydrate ORM for Entity Framework
+
+An O/RM that creates strongly-typed, extendable classes for Entity Framework. The generated code is Entity Framework Core. There is no difference. This is not a replacement for EF or a custom O/RM. It is a visual, modeling layer that allows a team to manage complex database schemas. It works well with SCM software like Git, allowing multi-user access to your model with minimal conflicts. The installer tracks model changes and creates upgrade scripts. For EF Core: 3.
+
+[Github repository](https://github.com/nHydrate/nHydrate)
+
+### Microsoft.EntityFrameworkCore.UnitOfWork
+
+A plugin for Microsoft.EntityFrameworkCore to support repository, unit of work patterns, and multiple databases with distributed transaction supported. For EF Core: 2, 3.
+
+[GitHub repository](https://github.com/Arch/UnitOfWork)
+
+### Toolbelt.EntityFrameworkCore.IndexAttribute
+
+Revival of [Index] attribute (with extension for model building). For EF Core: 2, 3, 5.
+
+[GitHub repository](https://github.com/jsakamoto/EntityFrameworkCore.IndexAttribute) | [NuGet](https://www.nuget.org/packages/Toolbelt.EntityFrameworkCore.IndexAttribute)
+
+### EfCoreTemporalTable
+
+> [!NOTE]
+> SQL Server temporal tables are supported directly within EF Core as of [EF Core 6](/ef/core/what-is-new/ef-core-6.0/whatsnew#sql-server-temporal-tables).
+
+Easily perform temporal queries on your favorite database using introduced extension methods: `AsTemporalAll()`, `AsTemporalAsOf(date)`, `AsTemporalFrom(startDate, endDate)`, `AsTemporalBetween(startDate, endDate)`, `AsTemporalContained(startDate, endDate)`. For EF Core: 3, 5.
+
+[GitHub repository](https://github.com/glautrou/EfCoreTemporalTable) | [NuGet](https://www.nuget.org/packages/EfCoreTemporalTable)
+
+### EntityFrameworkCore.TemporalTables
+
+> [!NOTE]
+> SQL Server temporal tables are supported directly within EF Core as of [EF Core 6](/ef/core/what-is-new/ef-core-6.0/whatsnew#sql-server-temporal-tables).
+
+Extension library for Entity Framework Core which allows developers who use SQL Server to easily use temporal tables. For EF Core: 2, 3, 5.
+
+[GitHub repository](https://github.com/findulov/EntityFrameworkCore.TemporalTables) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.TemporalTables)
+
+### Dabble.EntityFrameworkCore.Temporal.Query
+
+> [!NOTE]
+> SQL Server temporal tables are supported directly within EF Core as of [EF Core 6](/ef/core/what-is-new/ef-core-6.0/whatsnew#sql-server-temporal-tables).
+
+LINQ extensions to Entity Framework Core 3.1 to support Microsoft SQL Server Temporal Table Querying. For EF Core: 3.
+
+[GitHub repository](https://github.com/Adam-Langley/efcore-temporal-query) | [NuGet](https://www.nuget.org/packages/Dabble.EntityFrameworkCore.Temporal.Query)
+
+### EntityFrameworkCore.NCache
+
+NCache Entity Framework Core Provider is a distributed second level cache provider for caching query results. The distributed architecture of NCache makes it more scalable and highly available. For EF Core: 2, 3.
+
+[Website](https://www.alachisoft.com/ncache/ef-core-cache.html) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.NCache)
+
+### Ramses
+
+Life cycle hooks (for SaveChanges). For EF Core: 2, 3.
+
+[GitHub repository](https://github.com/JValck/Ramses) | [NuGet](https://www.nuget.org/packages/Ramses)
