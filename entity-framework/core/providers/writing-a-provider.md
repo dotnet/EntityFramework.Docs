@@ -16,6 +16,16 @@ For information about writing an Entity Framework Core database provider, see [S
 
 The EF Core codebase is open source and contains several database providers that can be used as a reference. You can find the source code at <https://github.com/dotnet/efcore>. It may also be helpful to look at the code for commonly used third-party providers, such as [Npgsql](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL), [Pomelo MySQL](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql), and [SQL Server Compact](https://github.com/ErikEJ/EntityFramework.SqlServerCompact). In particular, these projects are set up to extend from and run functional tests that we publish on NuGet. This kind of setup is strongly recommended.
 
+## Community standup videos
+
+The EF team produces "community standup" videos, where we discuss various aspects of .NET and data access. Some of these have explored EF internals, and can be a good way to understand the general architecture of EF when writing a provider:
+
+* [How to Add a Feature to EF Core](https://www.youtube.com/watch?v=9OMxy1wal1s&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
+* [Internal Dependency Injection](https://www.youtube.com/watch?v=pYhe-Mt0HzI&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
+* [DbContext Configuration and Lifetime](https://www.youtube.com/watch?v=NPgFlqXPbK8&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
+* [IQueryable, LINQ and the EF Core query pipeline](https://www.youtube.com/watch?v=1Ld3dtnTrMw&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
+* [Model Building](https://www.youtube.com/watch?v=FYz0rAxQkC8&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
+
 ## Keeping up-to-date with provider changes
 
 Starting with work after the 2.1 release, we have created a [log of changes](xref:core/providers/provider-log) that may need corresponding changes in provider code. This is intended to help when updating an existing provider to work with a new version of EF Core.
