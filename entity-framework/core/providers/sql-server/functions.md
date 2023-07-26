@@ -2,7 +2,7 @@
 title: Function Mappings - Microsoft SQL Server Database Provider - EF Core
 description: Function Mappings of the Microsoft SQL Server database provider
 author: bricelam
-ms.date: 11/15/2021
+ms.date: 7/26/2023
 uid: core/providers/sql-server/functions
 ---
 # Function Mappings of the Microsoft SQL Server Provider
@@ -28,9 +28,10 @@ string.Join(separator, group.Select(x => x.Property))                   | STRING
 
 ## Binary functions
 
-.NET                         | SQL
----------------------------- | ---
+.NET                         | SQL                           | Added in
+---------------------------- | ----------------------------- | --------
 bytes.Contains(value)        | CHARINDEX(@value, @bytes) > 0
+bytes.ElementAt(i)           | SUBSTRING(@bytes, @i + 1, 1)  | EF Core 8.0
 bytes.First()                | SUBSTRING(@bytes, 1, 1)
 bytes.Length                 | DATALENGTH(@bytes)
 bytes.SequenceEqual(second)  | @bytes = @second
@@ -39,8 +40,8 @@ EF.Functions.DataLength(arg) | DATALENGTH(@arg)
 
 ## Conversion functions
 
-.NET                      | SQL
-------------------------- | ---
+.NET                      | SQL                                    | Added in
+------------------------- | -------------------------------------- | --------
 bytes.ToString()          | CONVERT(varchar(100), @bytes)
 byteValue.ToString()      | CONVERT(varchar(3), @byteValue)
 charValue.ToString()      | CONVERT(varchar(1), @charValue)
@@ -52,6 +53,7 @@ Convert.ToInt16(value)    | CONVERT(smallint, @value)
 Convert.ToInt32(value)    | CONVERT(int, @value)
 Convert.ToInt64(value)    | CONVERT(bigint, @value)
 Convert.ToString(value)   | CONVERT(nvarchar(max), @value)
+dateOnly.ToString()       | CONVERT(varchar(100), @dateOnly)       | EF Core 8.0
 dateTime.ToString()       | CONVERT(varchar(100), @dateTime)
 dateTimeOffset.ToString() | CONVERT(varchar(100), @dateTimeOffset)
 decimalValue.ToString()   | CONVERT(varchar(100), @decimalValue)
@@ -62,6 +64,7 @@ intValue.ToString()       | CONVERT(varchar(11), @intValue)
 longValue.ToString()      | CONVERT(varchar(20), @longValue)
 sbyteValue.ToString()     | CONVERT(varchar(4), @sbyteValue)
 shortValue.ToString()     | CONVERT(varchar(6), @shortValue)
+timeOnly.ToString()       | CONVERT(varchar(100), @timeOnly)       | EF Core 8.0
 timeSpan.ToString()       | CONVERT(varchar(100), @timeSpan)
 uintValue.ToString()      | CONVERT(varchar(10), @uintValue)
 ulongValue.ToString()     | CONVERT(varchar(19), @ulongValue)
@@ -69,8 +72,8 @@ ushortValue.ToString()    | CONVERT(varchar(5), @ushortValue)
 
 ## Date and time functions
 
-.NET                                                        | SQL                                                  | Added in
------------------------------------------------------------ | ---------------------------------------------------- | --------
+.NET                                                        | SQL                                                                             | Added in
+----------------------------------------------------------- | ------------------------------------------------------------------------------- | --------
 DateTime.Now                                                | GETDATE()
 DateTime.Today                                              | CONVERT(date, GETDATE())
 DateTime.UtcNow                                             | GETUTCDATE()
@@ -109,8 +112,18 @@ dateTimeOffset.Minute                                       | DATEPART(minute, @
 dateTimeOffset.Month                                        | DATEPART(month, @dateTimeOffset)
 dateTimeOffset.Second                                       | DATEPART(second, @dateTimeOffset)
 dateTimeOffset.TimeOfDay                                    | CONVERT(time, @dateTimeOffset)
+dateTimeOffset.ToUnixTimeSeconds()                          | DATEDIFF_BIG(second, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset)      | EF Core 8.0
+dateTimeOffset.ToUnixTimeMilliseconds()                     | DATEDIFF_BIG(millisecond, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset) | EF Core 8.0
 dateTimeOffset.Year                                         | DATEPART(year, @dateTimeOffset)
-EF.Functions.AtTimeZone(dateTime, timeZone)                 | @dateTime AT TIME ZONE @timeZone                     | EF Core 7.0
+dateOnly.AddDays(value)                                     | DATEADD(day, @value, @dateOnly)                                                 | EF Core 8.0
+dateOnly.AddMonths(months)                                  | DATEADD(month, @months, @dateOnly)                                              | EF Core 8.0
+dateOnly.AddYears(value)                                    | DATEADD(year, @value, @dateOnly)                                                | EF Core 8.0
+dateOnly.Day                                                | DATEPART(day, @dateOnly)                                                        | EF Core 8.0
+dateOnly.DayOfYear                                          | DATEPART(dayofyear, @dateOnly)                                                  | EF Core 8.0
+DateOnly.FromDateTime(dateTime)                             | CONVERT(date, @dateTime)                                                        | EF Core 8.0
+dateOnly.Month                                              | DATEPART(month, @dateOnly)                                                      | EF Core 8.0
+dateOnly.Year                                               | DATEPART(year, @dateOnly)                                                       | EF Core 8.0
+EF.Functions.AtTimeZone(dateTime, timeZone)                 | @dateTime AT TIME ZONE @timeZone                                                | EF Core 7.0
 EF.Functions.DateDiffDay(start, end)                        | DATEDIFF(day, @start, @end)
 EF.Functions.DateDiffHour(start, end)                       | DATEDIFF(hour, @start, @end)
 EF.Functions.DateDiffMicrosecond(start, end)                | DATEDIFF(microsecond, @start, @end)
@@ -128,6 +141,13 @@ EF.Functions.DateTimeOffsetFromParts(year, month, day, ...) | DATETIMEOFFSETFROM
 EF.Functions.IsDate(expression)                             | ISDATE(@expression)
 EF.Functions.SmallDateTimeFromParts(year, month, day, ...)  | SMALLDATETIMEFROMPARTS(@year, @month, @day, ...)
 EF.Functions.TimeFromParts(hour, minute, second, ...)       | TIMEFROMPARTS(@hour, @minute, @second, ...)
+timeOnly.AddHours(value)                                    | DATEADD(hour, @value, @timeOnly)                                                | EF Core 8.0
+timeOnly.AddMinutes(value)                                  | DATEADD(minute, @value, @timeOnly)                                              | EF Core 8.0
+timeOnly.Hours                                              | DATEPART(hour, @timeOnly)                                                       | EF Core 8.0
+timeOnly.IsBetween(start, end)                              | @timeOnly >= @start AND @timeOnly < @end                                        | EF Core 8.0
+timeOnly.Milliseconds                                       | DATEPART(millisecond, @timeOnly)                                                | EF Core 8.0
+timeOnly.Minutes                                            | DATEPART(minute, @timeOnly)                                                     | EF Core 8.0
+timeOnly.Seconds                                            | DATEPART(second, @timeOnly)                                                     | EF Core 8.0
 timeSpan.Hours                                              | DATEPART(hour, @timeSpan)
 timeSpan.Milliseconds                                       | DATEPART(millisecond, @timeSpan)
 timeSpan.Minutes                                            | DATEPART(minute, @timeSpan)
@@ -135,49 +155,51 @@ timeSpan.Seconds                                            | DATEPART(second, @
 
 ## Numeric functions
 
-.NET                     | SQL
------------------------- | ---
-EF.Functions.Random()    | RAND()
-Math.Abs(value)          | ABS(@value)
-Math.Acos(d)             | ACOS(@d)
-Math.Asin(d)             | ASIN(@d)
-Math.Atan(d)             | ATAN(@d)
-Math.Atan2(y, x)         | ATN2(@y, @x)
-Math.Ceiling(d)          | CEILING(@d)
-Math.Cos(d)              | COS(@d)
-Math.Exp(d)              | EXP(@d)
-Math.Floor(d)            | FLOOR(@d)
-Math.Log(d)              | LOG(@d)
-Math.Log(a, newBase)     | LOG(@a, @newBase)
-Math.Log10(d)            | LOG10(@d)
-Math.Pow(x, y)           | POWER(@x, @y)
-Math.Round(d)            | ROUND(@d, 0)
-Math.Round(d, decimals)  | ROUND(@d, @decimals)
-Math.Sign(value)         | SIGN(@value)
-Math.Sin(a)              | SIN(@a)
-Math.Sqrt(d)             | SQRT(@d)
-Math.Tan(a)              | TAN(@a)
-Math.Truncate(d)         | ROUND(@d, 0, 1)
-MathF.Abs(x)             | ABS(@x)
-MathF.Acos(x)            | ACOS(@x)
-MathF.Asin(x)            | ASIN(@x)
-MathF.Atan(x)            | ATAN(@x)
-MathF.Atan2(y, x)        | ATN2(@y, @x)
-MathF.Ceiling(x)         | CEILING(@x)
-MathF.Cos(x)             | COS(@x)
-MathF.Exp(x)             | EXP(@x)
-MathF.Floor(x)           | FLOOR(@x)
-MathF.Log(x)             | LOG(@x)
-MathF.Log(x, y)          | LOG(@x, @y)
-MathF.Log10(x)           | LOG10(@x)
-MathF.Pow(x, y)          | POWER(@x, @y)
-MathF.Round(x)           | ROUND(@x, 0)
-MathF.Round(x, decimals) | ROUND(@x, @decimals)
-MathF.Sign(x)            | SIGN(@x)
-MathF.Sin(x)             | SIN(@x)
-MathF.Sqrt(x)            | SQRT(@x)
-MathF.Tan(x)             | TAN(@x)
-MathF.Truncate(x)        | ROUND(@x, 0, 1)
+.NET                       | SQL                  | Added in
+-------------------------- | -------------------- | --------
+double.DegreesToRadians(x) | RADIANS(@x)          | EF Core 8.0
+double.RadiansToDegrees(x) | DEGREES(@x)          | EF Core 8.0
+EF.Functions.Random()      | RAND()
+float.DegreesToRadians(x)  | RADIANS(@x)          | EF Core 8.0
+float.RadiansToDegrees(x)  | DEGREES(@x)          | EF Core 8.0
+Math.Abs(value)            | ABS(@value)
+Math.Acos(d)               | ACOS(@d)
+Math.Asin(d)               | ASIN(@d)
+Math.Atan(d)               | ATAN(@d)
+Math.Atan2(y, x)           | ATN2(@y, @x)
+Math.Ceiling(d)            | CEILING(@d)
+Math.Cos(d)                | COS(@d)
+Math.Exp(d)                | EXP(@d)
+Math.Floor(d)              | FLOOR(@d)
+Math.Log(d)                | LOG(@d)
+Math.Log(a, newBase)       | LOG(@a, @newBase)
+Math.Log10(d)              | LOG10(@d)
+Math.Pow(x, y)             | POWER(@x, @y)
+Math.Round(d)              | ROUND(@d, 0)
+Math.Round(d, decimals)    | ROUND(@d, @decimals)
+Math.Sign(value)           | SIGN(@value)
+Math.Sin(a)                | SIN(@a)
+Math.Sqrt(d)               | SQRT(@d)
+Math.Tan(a)                | TAN(@a)
+Math.Truncate(d)           | ROUND(@d, 0, 1)
+MathF.Acos(x)              | ACOS(@x)
+MathF.Asin(x)              | ASIN(@x)
+MathF.Atan(x)              | ATAN(@x)
+MathF.Atan2(y, x)          | ATN2(@y, @x)
+MathF.Ceiling(x)           | CEILING(@x)
+MathF.Cos(x)               | COS(@x)
+MathF.Exp(x)               | EXP(@x)
+MathF.Floor(x)             | FLOOR(@x)
+MathF.Log(x)               | LOG(@x)
+MathF.Log(x, y)            | LOG(@x, @y)
+MathF.Log10(x)             | LOG10(@x)
+MathF.Pow(x, y)            | POWER(@x, @y)
+MathF.Round(x)             | ROUND(@x, 0)
+MathF.Round(x, decimals)   | ROUND(@x, @decimals)
+MathF.Sin(x)               | SIN(@x)
+MathF.Sqrt(x)              | SQRT(@x)
+MathF.Tan(x)               | TAN(@x)
+MathF.Truncate(x)          | ROUND(@x, 0, 1)
 
 ## String functions
 

@@ -2,7 +2,7 @@
 title: Function Mappings - SQLite Database Provider - EF Core
 description: Function Mappings of the SQLite EF Core database provider
 author: bricelam
-ms.date: 11/15/2021
+ms.date: 7/26/2023
 uid: core/providers/sqlite/functions
 ---
 # Function Mappings of the SQLite EF Core Provider
@@ -57,14 +57,15 @@ ushortValue.ToString()    | CAST(@ushortValue AS TEXT)
 
 ## Date and time functions
 
-.NET                            | SQL
-------------------------------- | ---
+.NET                            | SQL                                                                      | Added in
+------------------------------- | ------------------------------------------------------------------------ | --------
 dateOnly.AddDays(value)         | date(@dateOnly, @value \|\| ' days')
 dateOnly.AddMonths(months)      | date(@dateOnly, @months \|\| ' months')
 dateOnly.AddYears(value)        | date(@dateOnly, @value \|\| ' years')
 dateOnly.Day                    | strftime('%d', @dateOnly)
 dateOnly.DayOfWeek              | strftime('%w', @dateOnly)
 dateOnly.DayOfYear              | strftime('%j', @dateOnly)
+DateOnly.FromDateTime(dateTime) | date(@dateTime)                                                          | EF Core 8.0
 dateOnly.Month                  | strftime('%m', @dateOnly)
 dateOnly.Year                   | strftime('%Y', @dateOnly)
 DateTime.Now                    | datetime('now', 'localtime')
@@ -96,8 +97,8 @@ dateTime.Year                   | strftime('%Y', @dateTime)
 
 ## Numeric functions
 
-.NET                   | SQL
----------------------- | ---
+.NET                   | SQL                                  | Added in
+---------------------- | ------------------------------------ | --------
 -decimalValue          | ef_negate(@decimalValue)
 decimalValue - d       | ef_add(@decimalValue, ef_negate(@d))
 decimalValue * d       | ef_multiply(@decimalValue, @d)
@@ -116,9 +117,7 @@ Math.Max(val1, val2)   | max(@val1, @val2)
 Math.Min(val1, val2)   | min(@val1, @val2)
 Math.Round(d)          | round(@d)
 Math.Round(d, digits)  | round(@d, @digits)
-MathF.Abs(x)           | abs(@x)
-MathF.Max(x, y)        | max(@x, @y)
-MathF.Min(x, y)        | min(@x, @y)
+Math.Sign(d)           | sign(@d)                              | EF Core 8.0
 MathF.Round(x)         | round(@x)
 MathF.Round(x, digits) | round(@x, @digits)
 
@@ -132,10 +131,10 @@ MathF.Round(x, digits) | round(@x, @digits)
 char.ToLower(c)                                              | lower(@c)
 char.ToUpper(c)                                              | upper(@c)
 EF.Functions.Collate(operand, collation)                     | @operand COLLATE @collation
-EF.Functions.Glob(matchExpression, pattern)                  | glob(@pattern, @matchExpression)
+EF.Functions.Glob(matchExpression, pattern)                  | @matchExpression GLOB @pattern
 EF.Functions.Like(matchExpression, pattern)                  | @matchExpression LIKE @pattern
 EF.Functions.Like(matchExpression, pattern, escapeCharacter) | @matchExpression LIKE @pattern ESCAPE @escapeCharacter
-Regex.IsMatch(input, pattern)                                | regexp(@pattern, @input)
+Regex.IsMatch(input, pattern)                                | @input REGEXP @pattern
 string.Compare(strA, strB)                                   | CASE WHEN @strA = @strB THEN 0 ... END
 string.Concat(str0, str1)                                    | @str0 \|\| @str1
 string.IsNullOrEmpty(value)                                  | @value IS NULL OR @value = ''
