@@ -299,6 +299,17 @@ Option                                               | Short             | Descr
 
 The [common options](#common-options) are listed above.
 
+## `dotnet ef migrations has-pending-model-changes`
+
+> [!NOTE]
+> This command was added in EF Core 8.0.
+
+Checks if any changes have been made to the model since the last migration.
+
+Options:
+
+The [common options](#common-options) are listed above.
+
 ## `dotnet ef migrations list`
 
 Lists available migrations.
