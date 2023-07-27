@@ -1,20 +1,21 @@
 ---
 title: Breaking changes in EF Core 8.0 (EF8) - EF Core
-description: Complete list of breaking changes introduced in Entity Framework Core 8.0 (EF7)
+description: Complete list of breaking changes introduced in Entity Framework Core 8.0 (EF8)
 author: ajcvickers
-ms.date: 12/13/2022
+ms.date: 8/10/2023
 uid: core/what-is-new/ef-core-8.0/breaking-changes
 ---
 
 # Breaking changes in EF Core 8.0 (EF8)
 
-This page will document API and behavior changes that have the potential to break existing applications updating to EF Core 8.0.
+This page documents API and behavior changes that have the potential to break existing applications updating to EF Core 8.0.
 
 ## Summary
 
 | **Breaking change**                                                                                                                      | **Impact** |
 |:---------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
 | [SQL Server `date` and `time` now scaffold to .NET `DateOnly` and `TimeOnly`](#sqlserver-date-time-only)                                 | Medium     |
+| [SQLite `Math` methods now translate to SQL](#sqlite-math)                                                                               | Low        |
 
 ## Medium-impact changes
 
@@ -59,4 +60,78 @@ It is recommended to react to this change by modifying your code to use the newl
 #>
     public <#= code.Reference(clrType) #><#= needsNullable ? "?" : "" #> <#= property.Name #> { get; set; }<#= needsInitializer ? " = null!;" : "" #>
 <#
+```
+
+## Low-impact changes
+
+<a name="sqlite-math"></a>
+
+### SQLite `Math` methods now translate to SQL
+
+[Tracking Issue #18843](https://github.com/dotnet/efcore/issues/18843)
+
+#### Old Behavior
+
+Previously only the Abs, Max, Min, and Round methods on `Math` were translated to SQL. All other members would be evaluated on the client if they appeared in the final Select expression of a query.
+
+#### New behavior
+
+In EF Core 8.0, all `Math` methods with corresponding [SQLite math functions](https://sqlite.org/lang_mathfunc.html) are translated to SQL.
+
+These math functions have been enabled in the native SQLite library that we provide by default (through our dependency on the SQLitePCLRaw.bundle_e_sqlite3 NuGet package). They have also been enabled in the library provided by SQLitePCLRaw.bundle_e_sqlcipher. If you're using one of these libraries, your application should not be affected by this change.
+
+There is a chance, however, that applications including the native SQLite library by other means may not enable the math functions. In these cases, the `Math` methods will be translated to SQL and encounter *no such function* errors when executed.
+
+#### Why
+
+SQLite added built-in math functions in version 3.35.0. Even though they're disabled by default, they've become pervasive enough that we decided to provide default translations for them in our EF Core SQLite provider.
+
+We also collaborated with Eric Sink on the SQLitePCLRaw project to enable math functions in all of the native SQLite libraries provided as part of that project.
+
+#### Mitigations
+
+The simplest way to fix breaks is, when possible, to enable the math function is the native SQLite library by specifying the [SQLITE_ENABLE_MATH_FUNCTIONS](https://sqlite.org/compile.html#enable_math_functions) compile-time option.
+
+If you don't control compilation of the native library, you can also fix breaks by create the functions yourself at runtime using the [Microsoft.Data.Sqlite](/dotnet/standard/data/sqlite/user-defined-functions) APIs.
+
+```csharp
+sqliteConnection
+    .CreateFunction<double, double, double>(
+        "pow",
+        Math.Pow,
+        isDeterministic: true);
+```
+
+Alternatively, you can force client-evaluation by splitting the Select expression into two parts separated by `AsEnumerable`.
+
+```csharp
+// Before
+var query = dbContext.Cylinders
+    .Select(
+        c => new
+        {
+            Id = c.Id
+            // May throw "no such function: pow"
+            Volume = Math.PI * Math.Pow(c.Radius, 2) * c.Height
+        });
+
+// After
+var query = dbContext.Cylinders
+    // Select the properties you'll need from the database
+    .Select(
+        c => new
+        {
+            c.Id,
+            c.Radius,
+            c.Height
+        })
+    // Switch to client-eval
+    .AsEnumerable()
+    // Select the final results
+    .Select(
+        c => new
+        {
+            Id = c.Id,
+            Volume = Math.PI * Math.Pow(c.Radius, 2) * c.Height
+        });
 ```

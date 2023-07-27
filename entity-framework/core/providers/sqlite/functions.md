@@ -97,29 +97,56 @@ dateTime.Year                   | strftime('%Y', @dateTime)
 
 ## Numeric functions
 
-.NET                   | SQL                                  | Added in
----------------------- | ------------------------------------ | --------
--decimalValue          | ef_negate(@decimalValue)
-decimalValue - d       | ef_add(@decimalValue, ef_negate(@d))
-decimalValue * d       | ef_multiply(@decimalValue, @d)
-decimalValue / d       | ef_divide(@decimalValue, @d)
-decimalValue % d       | ef_mod(@decimalValue, @d)
-decimalValue + d       | ef_add(@decimalValue, @d)
-decimalValue < d       | ef_compare(@decimalValue, @d) < 0
-decimalValue <= d      | ef_compare(@decimalValue, @d) <= 0
-decimalValue > d       | ef_compare(@decimalValue, @d) > 0
-decimalValue >= d      | ef_compare(@decimalValue, @d) >= 0
-doubleValue % d        | ef_mod(@doubleValue, @d)
-EF.Functions.Random()  | abs(random() / 9223372036854780000.0)
-floatValue % d         | ef_mod(@floatValue, @d)
-Math.Abs(value)        | abs(@value)
-Math.Max(val1, val2)   | max(@val1, @val2)
-Math.Min(val1, val2)   | min(@val1, @val2)
-Math.Round(d)          | round(@d)
-Math.Round(d, digits)  | round(@d, @digits)
-Math.Sign(d)           | sign(@d)                              | EF Core 8.0
-MathF.Round(x)         | round(@x)
-MathF.Round(x, digits) | round(@x, @digits)
+.NET                             | SQL                                  | Added in
+-------------------------------- | ------------------------------------ | --------
+-decimalValue                    | ef_negate(@decimalValue)
+decimalValue - d                 | ef_add(@decimalValue, ef_negate(@d))
+decimalValue * d                 | ef_multiply(@decimalValue, @d)
+decimalValue / d                 | ef_divide(@decimalValue, @d)
+decimalValue % d                 | ef_mod(@decimalValue, @d)
+decimalValue + d                 | ef_add(@decimalValue, @d)
+decimalValue < d                 | ef_compare(@decimalValue, @d) < 0
+decimalValue <= d                | ef_compare(@decimalValue, @d) <= 0
+decimalValue > d                 | ef_compare(@decimalValue, @d) > 0
+decimalValue >= d                | ef_compare(@decimalValue, @d) >= 0
+double.DegreesToRadians(degrees) | radians(@degrees)                     | EF Core 8.0
+double.RadiansToDegrees(radians) | degrees(@dradians)                    | EF Core 8.0
+doubleValue % d                  | mod(@doubleValue, @d)
+EF.Functions.Random()            | abs(random() / 9223372036854780000.0)
+Math.Abs(value)                  | abs(@value)
+Math.Acos(value)                 | acos(@value)                          | EF Core 8.0
+Math.Acosh(d)                    | acosh(@d)                             | EF Core 8.0
+Math.Asin(d)                     | asin(@d)                              | EF Core 8.0
+Math.Asinh(d)                    | asinh(@d)                             | EF Core 8.0
+Math.Atan(d)                     | atan(@d)                              | EF Core 8.0
+Math.Atan2(y, x)                 | atan2(@y, @x)                         | EF Core 8.0
+Math.Atanh(d)                    | atanh(@d)                             | EF Core 8.0
+Math.Ceiling(d)                  | ceiling(@d)                           | EF Core 8.0
+Math.Cos(d)                      | cos(@d)                               | EF Core 8.0
+Math.Cosh(value)                 | cosh(@value)                          | EF Core 8.0
+Math.Exp(d)                      | exp(@d)                               | EF Core 8.0
+Math.Floor(d)                    | floor(@d)                             | EF Core 8.0
+Math.Log(d)                      | ln(@d)                                | EF Core 8.0
+Math.Log(a, newBase)             | log(@newBase, @a)                     | EF Core 8.0
+Math.Log2(x)                     | log2(@x)                              | EF Core 8.0
+Math.Log10(d)                    | log10(@d)                             | EF Core 8.0
+Math.Max(val1, val2)             | max(@val1, @val2)
+Math.Min(val1, val2)             | min(@val1, @val2)
+Math.Pow(x, y)                   | pow(@x, @y)                           | EF Core 8.0
+Math.Round(d)                    | round(@d)
+Math.Round(d, digits)            | round(@d, @digits)
+Math.Sign(d)                     | sign(@d)                              | EF Core 8.0
+Math.Sin(a)                      | sin(@a)                               | EF Core 8.0
+Math.Sinh(value)                 | sinh(@value)                          | EF Core 8.0
+Math.Sqrt(d)                     | sqrt(@d)                              | EF Core 8.0
+Math.Tan(a)                      | tan(@a)                               | EF Core 8.0
+Math.Tanh(value)                 | tanh(@value)                          | EF Core 8.0
+Math.Truncate(d)                 | trunc(@d)                             | EF Core 8.0
+
+> [!TIP]
+> In addition to the methods listed here, corresponding [generic math](/dotnet/standard/generics/math) implementations
+> and [MathF](/dotnet/api/system.mathf) methods are also translated. For example, `Math.Sin`, `MathF.Sin`, `double.Sin`,
+> and `float.Sin` all map to the `sin` function in SQL.
 
 > [!TIP]
 > SQL functions prefixed with *ef* are created by EF Core.

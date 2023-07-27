@@ -160,8 +160,6 @@ timeSpan.Seconds                                            | DATEPART(second, @
 double.DegreesToRadians(x) | RADIANS(@x)          | EF Core 8.0
 double.RadiansToDegrees(x) | DEGREES(@x)          | EF Core 8.0
 EF.Functions.Random()      | RAND()
-float.DegreesToRadians(x)  | RADIANS(@x)          | EF Core 8.0
-float.RadiansToDegrees(x)  | DEGREES(@x)          | EF Core 8.0
 Math.Abs(value)            | ABS(@value)
 Math.Acos(d)               | ACOS(@d)
 Math.Asin(d)               | ASIN(@d)
@@ -182,24 +180,11 @@ Math.Sin(a)                | SIN(@a)
 Math.Sqrt(d)               | SQRT(@d)
 Math.Tan(a)                | TAN(@a)
 Math.Truncate(d)           | ROUND(@d, 0, 1)
-MathF.Acos(x)              | ACOS(@x)
-MathF.Asin(x)              | ASIN(@x)
-MathF.Atan(x)              | ATAN(@x)
-MathF.Atan2(y, x)          | ATN2(@y, @x)
-MathF.Ceiling(x)           | CEILING(@x)
-MathF.Cos(x)               | COS(@x)
-MathF.Exp(x)               | EXP(@x)
-MathF.Floor(x)             | FLOOR(@x)
-MathF.Log(x)               | LOG(@x)
-MathF.Log(x, y)            | LOG(@x, @y)
-MathF.Log10(x)             | LOG10(@x)
-MathF.Pow(x, y)            | POWER(@x, @y)
-MathF.Round(x)             | ROUND(@x, 0)
-MathF.Round(x, decimals)   | ROUND(@x, @decimals)
-MathF.Sin(x)               | SIN(@x)
-MathF.Sqrt(x)              | SQRT(@x)
-MathF.Tan(x)               | TAN(@x)
-MathF.Truncate(x)          | ROUND(@x, 0, 1)
+
+> [!TIP]
+> In addition to the methods listed here, corresponding [generic math](/dotnet/standard/generics/math) implementations
+> and [MathF](/dotnet/api/system.mathf) methods are also translated. For example, `Math.Sin`, `MathF.Sin`, `double.Sin`,
+> and `float.Sin` all map to the `SIN` function in SQL.
 
 ## String functions
 
