@@ -251,3 +251,4 @@ nullable.GetValueOrDefault(defaultValue) | COALESCE(@nullable, @defaultValue)
 ## See also
 
 * [Spatial Function Mappings](xref:core/providers/sql-server/spatial#spatial-function-mappings)
+* [HierarchyId Function Mappings](xref:core/providers/sql-server/hierarchyid#function-mappings)

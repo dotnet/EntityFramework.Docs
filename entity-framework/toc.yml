@@ -389,6 +389,8 @@
           href: core/providers/sql-server/indexes.md
         - name: Memory-optimized tables
           href: core/providers/sql-server/memory-optimized-tables.md
+        - name: Hierarchical data
+          href: core/providers/sql-server/hierarchyid.md
         - name: Spatial data
           displayName: GIS
           href: core/providers/sql-server/spatial.md
