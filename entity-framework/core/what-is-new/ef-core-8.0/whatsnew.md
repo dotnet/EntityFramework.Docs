@@ -1307,7 +1307,7 @@ WHERE EXISTS (
 ```
 
 > [!NOTE]
-> `OpenJson` is only available on SQL Server 2016 ([compatibility level 130](/sql/t-sql/statements/alter-database-transact-sql-compatibility-level)) and later. You can tell SQL Server that your using an older version by configuring the compatibility level as part of `UseSqlServer`. For example:
+> `OpenJson` is only available on SQL Server 2016 ([compatibility level 130](/sql/t-sql/statements/alter-database-transact-sql-compatibility-level)) and later. You can tell SQL Server that you're using an older version by configuring the compatibility level as part of `UseSqlServer`. For example:
 >
 > ```csharp
 > protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
