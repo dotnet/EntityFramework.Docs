@@ -24,7 +24,7 @@ Install the following software:
 
 ### [Visual Studio](#tab/visual-studio)
 
-* [Visual Studio 2022 version 17.4 or later](https://www.visualstudio.com/downloads/) with this  workload:
+* [Visual Studio 2022 version 17.4 or later](https://www.visualstudio.com/downloads/) with this workload:
   * **.NET desktop development** (under **Desktop && Mobile**)
 
 ---
