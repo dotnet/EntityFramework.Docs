@@ -10,7 +10,7 @@ uid: core/get-started/overview/first-app
 
 In this tutorial, you create a .NET Core console app that performs data access against a SQLite database using Entity Framework Core.
 
-You can follow the tutorial by using Visual Studio on Windows, or by using the .NET Core CLI on Windows, macOS, or Linux.
+You can follow the tutorial by using Visual Studio on Windows, or by using the .NET CLI on Windows, macOS, or Linux.
 
 [View this article's sample on GitHub](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/GetStarted).
 
@@ -18,20 +18,20 @@ You can follow the tutorial by using Visual Studio on Windows, or by using the .
 
 Install the following software:
 
-### [.NET Core CLI](#tab/netcore-cli)
+### [.NET CLI](#tab/netcore-cli)
 
-* [.NET Core SDK](https://www.microsoft.com/net/download/core).
+* [.NET SDK](https://dotnet.microsoft.com/en-us/download).
 
 ### [Visual Studio](#tab/visual-studio)
 
-* [Visual Studio 2019 version 16.3 or later](https://www.visualstudio.com/downloads/) with this  workload:
-  * **.NET Core cross-platform development** (under **Other Toolsets**)
+* [Visual Studio 2022 version 17.4 or later](https://www.visualstudio.com/downloads/) with this workload:
+  * **.NET desktop development** (under **Desktop && Mobile**)
 
 ---
 
 ## Create a new project
 
-### [.NET Core CLI](#tab/netcore-cli)
+### [.NET CLI](#tab/netcore-cli)
 
 ```dotnetcli
 dotnet new console -o EFGetStarted
@@ -41,15 +41,15 @@ cd EFGetStarted
 ### [Visual Studio](#tab/visual-studio)
 
 * Open Visual Studio
-* Click **Create a new project**
-* Select **Console App (.NET Core)** with the **C#** tag and click **Next**
+* Click **New project**
+* Select **Console App** with the **C#** tag and click **Next**
 * Enter **EFGetStarted** for the name and click **Create**
 
 ---
 
 ## Install Entity Framework Core
 
-To install EF Core, you install the package for the EF Core database provider(s) you want to target. This tutorial uses SQLite because it runs on all platforms that .NET Core supports. For a list of available providers, see [Database Providers](xref:core/providers/index).
+To install EF Core, you install the package for the EF Core database provider(s) you want to target. This tutorial uses SQLite because it runs on all platforms that .NET supports. For a list of available providers, see [Database Providers](xref:core/providers/index).
 
 ### [.NET Core CLI](#tab/netcore-cli)
 
@@ -74,7 +74,7 @@ Tip: You can also install packages by right-clicking on the project and selectin
 
 Define a context class and entity classes that make up the model.
 
-### [.NET Core CLI](#tab/netcore-cli)
+### [.NET CLI](#tab/netcore-cli)
 
 * In the project directory, create **Model.cs** with the following code
 
@@ -96,7 +96,7 @@ Tip: This application intentionally keeps things simple for clarity. [Connection
 
 The following steps use [migrations](xref:core/managing-schemas/migrations/index) to create a database.
 
-### [.NET Core CLI](#tab/netcore-cli)
+### [.NET CLI](#tab/netcore-cli)
 
 * Run the following commands:
 
@@ -131,7 +131,7 @@ The following steps use [migrations](xref:core/managing-schemas/migrations/index
 
 ## Run the app
 
-### [.NET Core CLI](#tab/netcore-cli)
+### [.NET CLI](#tab/netcore-cli)
 
 ```dotnetcli
 dotnet run
