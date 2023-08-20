@@ -12,8 +12,8 @@ namespace NullableReferenceTypes
         [Required] // Data annotations needed to configure as required
         public string FirstName { get; set; }
 
-        [Required]
-        public string LastName { get; set; } // Data annotations needed to configure as required
+        [Required] // Data annotations needed to configure as required
+        public string LastName { get; set; }
 
         public string MiddleName { get; set; } // Optional by convention
     }
