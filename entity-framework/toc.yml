@@ -368,6 +368,13 @@
         href: core/miscellaneous/multitenancy.md
       - name: Plug-in APIs
         href: core/miscellaneous/plugins.md
+      - name: EF Core Architecture
+        displayName: Internals
+        items:
+        - name: Overview
+          href: core/miscellaneous/internals/index.md
+        - name: Design-time tools
+          href: core/miscellaneous/internals/tools.md
 
     - name: Database providers
       items:
