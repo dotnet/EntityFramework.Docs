@@ -368,6 +368,8 @@
         href: core/miscellaneous/context-pooling.md
       - name: Support multi-tenant databases
         href: core/miscellaneous/multitenancy.md
+      - name: Plug-in APIs
+        href: core/miscellaneous/plugins.md
 
     - name: Database providers
       items:
