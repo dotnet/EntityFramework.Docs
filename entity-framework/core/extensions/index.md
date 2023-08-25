@@ -27,11 +27,6 @@ EF Core Power Tools CLI is a .NET global command line tool. It enables advanced 
 
 [GitHub readme](https://github.com/ErikEJ/EFCorePowerTools/blob/master/src/GUI/efcpt/readme.md)
 
-### EF Core Sidekick
-
-EF Core Sidekick is a Visual Studio extension that enhances the power of auto code generation in Visual Studio. It provides a set of tools and templates for generating EF Core entities and derived DbContext from existing database, and then generating services and APIs from the entities. For EF Core: 6, 7.
-
-[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=devmagic.efsidekick)
 
 ### LLBLGen Pro
 
@@ -44,6 +39,12 @@ LLBLGen Pro is an entity modeling solution with support for Entity Framework and
 Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access, and LINQ to SQL. It supports designing EF Core models visually, using model first or database first approaches, and C# or Visual Basic code generation. For EF Core: 2-7.
 
 [Website](https://www.devart.com/entitydeveloper/)
+
+### EF Core Sidekick
+
+EF Core Sidekick is a Visual Studio extension that enhances the power of auto code generation in Visual Studio. It provides a set of tools and templates for generating EF Core entities and derived DbContext from existing database, and then generating services and APIs from the entities. For EF Core: 6, 7.
+
+[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=devmagic.efsidekick)
 
 ### Entity Framework Visual Editor
 
