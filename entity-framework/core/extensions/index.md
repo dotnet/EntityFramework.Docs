@@ -21,6 +21,12 @@ EF Core Power Tools is a Visual Studio extension that exposes various EF Core de
 
 [GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki)
 
+### EF Core Sidekick
+
+EF Core Sidekick is a Visual Studio extension that enhances the power of auto code generation in Visual Studio. It provides a set of tools and templates for generating EF Core entities and derived DbContext from existing database, and then generating services and APIs from the entities. For EF Core: 6, 7.
+
+[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=devmagic.efsidekick)
+
 ### EF Core Power Tools CLI
 
 EF Core Power Tools CLI is a .NET global command line tool. It enables advanced reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications). For EF Core: 6, 7.
