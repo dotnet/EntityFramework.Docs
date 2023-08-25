@@ -27,7 +27,6 @@ EF Core Power Tools CLI is a .NET global command line tool. It enables advanced 
 
 [GitHub readme](https://github.com/ErikEJ/EFCorePowerTools/blob/master/src/GUI/efcpt/readme.md)
 
-
 ### LLBLGen Pro
 
 LLBLGen Pro is an entity modeling solution with support for Entity Framework and Entity Framework Core. It lets you easily define your entity model and map it to your database, using database first or model first, so you can get started writing queries right away. For EF Core: 2-7.
