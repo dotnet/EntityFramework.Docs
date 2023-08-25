@@ -205,7 +205,7 @@ erDiagram
         foreach (var foreignKey in entityType.GetForeignKeys())
         {
 #>
-    <#= entityType.Name #> <#= foreignKey.IsUnique ? "|" : "}" #>o--<#= foreignKey.IsRequired ? "|" : "o" #>| <#= foreignKey.PrincipalEntityType.Name #> : <#= foreignKey.GetConstraintName() #>
+    <#= entityType.Name #> <#= foreignKey.IsUnique ? "|" : "}" #>o--<#= foreignKey.IsRequired ? "|" : "o" #>| <#= foreignKey.PrincipalEntityType.Name #> : "<#= foreignKey.GetConstraintName() #>"
 <#
         }
 
