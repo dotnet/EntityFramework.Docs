@@ -152,7 +152,7 @@ This executes the provided SQL and returns the number of rows modified. <xref:Mi
 
 > [!NOTE]
 >
-> Prior to EF Core 7.0, it was sometimes necessary to use the `ExecuteSql` APIs to perform a "bulk update" on the database, as above; this is considerably more efficient than querying for all matching rows and then using `SaveChanges` to modify them. EF Core 7.0 introduced [ExecuteUpdate and ExecuteDelete](xref:core/what-is-new/ef-core-7#executeupdate-and-executedelete-bulk-updates), which made it possible to express efficient bulk update operations via LINQ. It's recommended to use those APIs whenever possible, instead of `ExecuteSql`.
+> Prior to EF Core 7.0, it was sometimes necessary to use the `ExecuteSql` APIs to perform a "bulk update" on the database, as above; this is considerably more efficient than querying for all matching rows and then using `SaveChanges` to modify them. EF Core 7.0 introduced [ExecuteUpdate and ExecuteDelete](xref:core/what-is-new/ef-core-7.0/whatsnew#executeupdate-and-executedelete-bulk-updates), which made it possible to express efficient bulk update operations via LINQ. It's recommended to use those APIs whenever possible, instead of `ExecuteSql`.
 
 ## Limitations
 

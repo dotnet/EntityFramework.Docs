@@ -32,7 +32,7 @@ highlightedContent:
     # Card
     - title: "Video: Access a SQL Server or Azure SQL database in 6 minutes with C#"
       itemType: quickstart
-      url: /learn.microsoft.com/shows/on-net/how-do-i-use-sql-server-with-csharp-and-dotnet
+      url: /shows/on-net/how-do-i-use-sql-server-with-csharp-and-dotnet
 
     # Card
     - title: "Tutorial: Access a SQLite database using C# (Entity Framework Core)"

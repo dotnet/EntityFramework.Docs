@@ -51,7 +51,7 @@ Tracked by [issues labeled with 'area-json' and 'consider-for-current-release'](
 
 Value proposition: Build on EF7 JSON support to further power the document/relational hybrid pattern.
 
-EF7 introduced mapping of [SQL Server JSON columns to aggregate types](xref:core/what-is-new/ef-core-7#json-columns) in the EF model, but with some limitations. In EF8, we plan to address many of these limitations, and also test and improve performance. In EF7, JSON mapping to aggregates is limited to SQL Server. In EF8, we plan to bring support to SQLite and work with the owners of other providers to align JSON columns support across all providers.
+EF7 introduced mapping of [SQL Server JSON columns to aggregate types](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns) in the EF model, but with some limitations. In EF8, we plan to address many of these limitations, and also test and improve performance. In EF7, JSON mapping to aggregates is limited to SQL Server. In EF8, we plan to bring support to SQLite and work with the owners of other providers to align JSON columns support across all providers.
 
 ### Value objects
 
@@ -118,7 +118,7 @@ EF Core features powerful, cross-platform command line tooling for database migr
 
 Value proposition: Leverage T4 templating across multiple areas in Visual Studio.
 
-EF7 introduced [T4 templates for scaffolding (reverse engineering) an EF model](xref:core/what-is-new/ef-core-7#custom-reverse-engineering-templates) from an existing database. However, editing T4 templates can be difficult without a good editor experience. In the .NET 8 timeframe, we plan to bring a better T4 editing experience to Visual Studio so that it can be used for both EF and other templates.
+EF7 introduced [T4 templates for scaffolding (reverse engineering) an EF model](xref:core/what-is-new/ef-core-7.0/whatsnew#custom-reverse-engineering-templates) from an existing database. However, editing T4 templates can be difficult without a good editor experience. In the .NET 8 timeframe, we plan to bring a better T4 editing experience to Visual Studio so that it can be used for both EF and other templates.
 
 ### EF Core Database First in Visual Studio
 

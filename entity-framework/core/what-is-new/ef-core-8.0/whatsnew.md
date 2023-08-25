@@ -3,7 +3,7 @@ title: What's New in EF Core 8
 description: Overview of new features in EF Core 8
 author: ajcvickers
 ms.date: 05/14/2023
-uid: core/what-is-new/ef-core-8
+uid: core/what-is-new/ef-core-8.0/whatsnew
 ---
 
 # What's New in EF Core 8
@@ -38,7 +38,7 @@ And a second aggregate type for post metadata:
 
 ### Enhancements to JSON column support
 
-EF8 includes improvements to the [JSON column mapping support introduced in EF7](xref:core/what-is-new/ef-core-7#json-columns).
+EF8 includes improvements to the [JSON column mapping support introduced in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns).
 
 > [!TIP]
 > The code shown here comes from [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
@@ -648,7 +648,7 @@ WHERE EXISTS (
       AND CAST(JSON_VALUE([s].[OpeningHours],'$[' + CAST(CAST(@__dayOfWeek_1 AS int) AS nvarchar(max)) + '].ClosesAt') AS time) >= @__time_2
 ```
 
-Finally, updates and deletes can be accomplished with [tracking and SaveChanges](xref:core/saving/basic), or using [ExecuteUpdate/ExecuteDelete](xref:core/what-is-new/ef-core-7#executeupdate-and-executedelete-bulk-updates). For example:
+Finally, updates and deletes can be accomplished with [tracking and SaveChanges](xref:core/saving/basic), or using [ExecuteUpdate/ExecuteDelete](xref:core/what-is-new/ef-core-7.0/whatsnew#executeupdate-and-executedelete-bulk-updates). For example:
 
 <!--
         await context.Schools
@@ -705,7 +705,7 @@ EF7 introduced support for mapping to JSON columns when using Azure SQL/SQL Serv
 - Queries that project elements out of the JSON document into results
 - Updating and saving changes to JSON documents
 
-The existing [documentation from What's New in EF7](xref:core/what-is-new/ef-core-7#json-columns) provides detailed information on JSON mapping, queries, and updates. This documentation now also applies to SQLite.
+The existing [documentation from What's New in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns) provides detailed information on JSON mapping, queries, and updates. This documentation now also applies to SQLite.
 
 > [!TIP]
 > The code shown in the EF7 documentation has been updated to also run on SQLite can can be found in [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
@@ -1470,7 +1470,7 @@ Looks like beer and dog walking are a winning combination!
 
 #### Primitive collections in JSON documents
 
-In all the examples above, column for primitive collection contains JSON. However, this is not the same as mapping [an owned entity type to a column containing a JSON document](xref:core/what-is-new/ef-core-7#json-columns), which was introduced in EF7. But what if that JSON document itself contains a primitive collection? Well, all the queries above still work in the same way! For example, imagine we move the _days visited_ data into an owned type `Visits` mapped to a JSON document:
+In all the examples above, column for primitive collection contains JSON. However, this is not the same as mapping [an owned entity type to a column containing a JSON document](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns), which was introduced in EF7. But what if that JSON document itself contains a primitive collection? Well, all the queries above still work in the same way! For example, imagine we move the _days visited_ data into an owned type `Visits` mapped to a JSON document:
 
 <!--
     public class Pub
