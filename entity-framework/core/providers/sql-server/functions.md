@@ -204,14 +204,14 @@ string.IsNullOrEmpty(value)                                             | @value
 string.IsNullOrWhiteSpace(value)                                        | @value IS NULL OR @value = N''
 stringValue.CompareTo(strB)                                             | CASE WHEN @stringValue = @strB THEN 0 ... END
 stringValue.Contains(value)                                             | @stringValue LIKE N'%' + @value + N'%'
-stringValue.EndsWith(value)                                             | ENDSWITH(@stringValue, @value)
+stringValue.EndsWith(value)                                             | @stringValue LIKE N'%' + @value
 stringValue.FirstOrDefault()                                            | SUBSTRING(@stringValue, 1, 1)
 stringValue.IndexOf(value)                                              | CHARINDEX(@value, @stringValue) - 1
 stringValue.IndexOf(value, startIndex)                                  | CHARINDEX(@value, @stringValue, @startIndex) - 1                       | EF Core 7.0
 stringValue.LastOrDefault()                                             | SUBSTRING(@stringValue, LEN(@stringValue), 1)
 stringValue.Length                                                      | LEN(@stringValue)
 stringValue.Replace(@oldValue, @newValue)                               | REPLACE(@stringValue, @oldValue, @newValue)
-stringValue.StartsWith(value)                                           | STARTSWITH(@stringValue, @value)
+stringValue.StartsWith(value)                                           | @stringValue LIKE @value + N'%'
 stringValue.Substring(startIndex)                                       | SUBSTRING(@stringValue, @startIndex + 1, LEN(@stringValue))
 stringValue.Substring(startIndex, length)                               | SUBSTRING(@stringValue, @startIndex + 1, @length)
 stringValue.ToLower()                                                   | LOWER(@stringValue)
