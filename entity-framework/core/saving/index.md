@@ -89,6 +89,6 @@ Following are a few guidelines for when to use which approach. Note that these a
 * If you wish to change a potentially large number of entities based on some criterion, use `ExecuteUpdate` and `ExecuteDelete`. Example scenarios:
   * "I want to give all employees a raise"
   * "I want to delete all blogs whose name starts with X"
-* If you already know exactly which entities you which to modify and how you wish to change them, use `ExecuteUpdate` and `ExecuteDelete`. Example scenarios:
+* If you already know exactly which entities you wish to modify and how you wish to change them, use `ExecuteUpdate` and `ExecuteDelete`. Example scenarios:
   * "I want to delete the blog whose name is 'Foo'"
   * "I want to change the name of the blog with Id 5 to 'Bar'"
