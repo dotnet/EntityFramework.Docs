@@ -24,14 +24,16 @@ string.Join(separator, group.Select(x => x.Property)) | group_concat(Property, @
 
 ## Binary functions
 
-.NET                                           | SQL
----------------------------------------------- | ---
+.NET                                           | SQL                                  | Added in
+---------------------------------------------- | ------------------------------------ | --------
 bytes.Contains(value)                          | instr(@bytes, char(@value)) > 0
 bytes.Length                                   | length(@bytes)
 bytes.SequenceEqual(second)                    | @bytes = @second
 EF.Functions.Hex(bytes)                        | hex(@bytes)
 EF.Functions.Substr(bytes, startIndex)         | substr(@bytes, @startIndex)
 EF.Functions.Substr(bytes, startIndex, length) | substr(@bytes, @startIndex, @length)
+EF.Functions.Unhex(value)                      | unhex(@value)                        | EF Core 8.0
+EF.Functions.Unhex(value, ignoreChars)         | unhex(@value, @ignoreChars)          | EF Core 8.0
 
 ## Conversion functions
 
