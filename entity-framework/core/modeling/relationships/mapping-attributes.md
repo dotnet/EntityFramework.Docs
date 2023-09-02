@@ -7,7 +7,7 @@ uid: core/modeling/relationships/mapping-attributes
 ---
 # Mapping attributes (aka data annotations) for relationships
 
-Mapping attributes are used to modified or override the configuration discovered by [model building conventions](xref:core/modeling/relationships/conventions). The configuration performed by mapping attributes can itself be overridden by [the model building API used in `OnModelCreating`](xref:core/modeling/index).
+Mapping attributes are used to modify or override the configuration discovered by [model building conventions](xref:core/modeling/relationships/conventions). The configuration performed by mapping attributes can itself be overridden by [the model building API used in `OnModelCreating`](xref:core/modeling/index).
 
 > [!IMPORTANT]
 > This document only covers mapping attributes in the context of relationship configuration. Other uses of mapping attributes are covered in the relevant sections of the wider [modeling documentation](xref:core/modeling/index).
