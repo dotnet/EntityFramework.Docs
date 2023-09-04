@@ -42,7 +42,15 @@ public static class DateOnlyTimeOnlySample
         Console.WriteLine("Current terms:");
         foreach (var school in currentTerms)
         {
-            Console.WriteLine($"  The current term for {school.Name} is '{school.Terms.Single().Name}' ");
+            var term = school.Terms.SingleOrDefault();
+            if (term == null)
+            {
+                Console.WriteLine($"  {school.Name} is not current in term.");
+            }
+            else
+            {
+                Console.WriteLine($"  The current term for {school.Name} is '{term.Name}'.");
+            }
         }
 
         Console.WriteLine();

@@ -2,7 +2,7 @@
 title: What's New in EF Core 8
 description: Overview of new features in EF Core 8
 author: ajcvickers
-ms.date: 05/14/2023
+ms.date: 09/04/2023
 uid: core/what-is-new/ef-core-8.0/whatsnew
 ---
 
@@ -15,35 +15,1129 @@ EF8 is available as [daily builds](https://github.com/dotnet/efcore/blob/main/do
 > [!TIP]
 > You can run and debug into the samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs). Each section links to the source code specific to that section.
 
-EF8 previews currently target .NET 6, and can therefore be used with either [.NET 6 (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0) or [.NET 7](https://dotnet.microsoft.com/download/dotnet/7.0). There is a good chance that EF8 will be changed to target .NET 8 before it's released.
+EF8 requires the [latest .NET 8 Preview SDK](https://dotnet.microsoft.com/download/dotnet/8.0). EF8 will not run on earlier .NET versions, and will not run on .NET Framework.
 
-## Sample model
+## Value objects using Complex Types
 
-Many of the examples below use a simple model with blogs, posts, tags, and authors:
+Objects saved to the database can be split into three broad categories:
 
-[!code-csharp[BlogsModel](../../../../samples/core/Miscellaneous/NewInEFCore8/BlogsContext.cs?name=BlogsModel)]
+- Objects that are unstructured and hold a single value. For example, `int`, `Guid`, `string`, `IPAddress`. These are (somewhat loosely) called "primitive types".
+- Objects that are structured to hold multiple values, and where the identity of the object is defined by a key value. For example, `Blog`, `Post`, `Customer`. These are called "entity types".
+- Objects that are structured to hold multiple values, but the object has no key defining identity. For example, `Address`, `Coordinate`.
 
-Some of the examples also use aggregate types, which are mapped in different ways in different samples. There is one aggregate type for contacts:
+Prior to EF8, there was no good way to map the third type of object. [Owned types](xref:core/modeling/owned-entities) can be used, but since owned types are actually entity types, they have semantics based on a key value, even when that key value is hidden.
 
-[!code-csharp[ContactDetailsAggregate](../../../../samples/core/Miscellaneous/NewInEFCore8/BlogsContext.cs?name=ContactDetailsAggregate)]
+EF8 now supports "Complex Types" to cover this third type of object. Complex type objects:
 
-And a second aggregate type for post metadata:
+- Are not identified or tracked by key value.
+- Must be defined as part of an entity type.
+- Can be either [value types](/dotnet/csharp/language-reference/builtin-types/value-types) or [reference types](/dotnet/csharp/language-reference/keywords/reference-types).
+- Instances can be shared by multiple properties.
 
-[!code-csharp[PostMetadataAggregate](../../../../samples/core/Miscellaneous/NewInEFCore8/BlogsContext.cs?name=PostMetadataAggregate)]
+### Simple example
+
+For example, consider an `Address` type:
+
+<!--
+    public class Address
+    {
+        public string Line1 { get; set; } = null!;
+        public string? Line2 { get; set; }
+        public string City { get; set; } = null!;
+        public string Country { get; set; } = null!;
+        public string PostCode { get; set; } = null!;
+    }
+-->
+[!code-csharp[Address](../../../../samples/core/Miscellaneous/NewInEFCore8/ComplexTypesSample.cs?name=Address)]
+
+`Address` is then used in three places in a simple `Customer`/`Orders` model:
+
+<!--
+    public class Customer
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
+        public Address Address { get; set; } = null!;
+        public List<Order> Orders { get; } = new();
+    }
+
+    public class Order
+    {
+        public int Id { get; set; }
+        public string Contents { get; set; } = null!;
+        public Address ShippingAddress { get; set; } = null!;
+        public Address BillingAddress { get; set; } = null!;
+        public Customer Customer { get; set; } = null!;
+    }
+-->
+[!code-csharp[CustomerOrders](../../../../samples/core/Miscellaneous/NewInEFCore8/ComplexTypesSample.cs?name=CustomerOrders)]
+
+Let's create and save a customer with their address:
+
+<!--
+        #region SaveCustomer
+        var customer = new Customer
+        {
+            Name = "Willow",
+            Address = new() { Line1 = "Barking Gate", City = "Walpole St Peter", Country = "UK", PostCode = "PE14 7AV" }
+        };
+
+        context.Add(customer);
+        await context.SaveChangesAsync();
+
+-->
+[!code-csharp[SaveCustomer](../../../../samples/core/Miscellaneous/NewInEFCore8/ComplexTypesSample.cs?name=SaveCustomer)]
+
+This results in the following row being inserted into the database:
+
+```sql
+INSERT INTO [Customers] ([Name], [Address_City], [Address_Country], [Address_Line1], [Address_Line2], [Address_PostCode])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+```
+
+Notice that the complex types do not get their own tables. Instead, they are saved inline to columns of the `Customers` table. This matches the table sharing behavior of owned types.
+
+> [!NOTE]
+> We don't plan to allow complex types to be mapped to their own table. However, we do plan for a future release to allow the complex type to be saved as a JSON document in a single column. Vote for [Issue #31252](https://github.com/dotnet/efcore/issues/31252) if this is important to you.
+
+Now let's say we want to ship an order to a customer and use the customer's address as both the default billing an shipping address. The natural way to do this is to copy the `Address` object from the `Customer` into the `Order`. For example:
+
+<!--
+        #region CreateOrder
+        customer.Orders.Add(
+            new Order { Contents = "Tesco Tasty Treats", BillingAddress = customer.Address, ShippingAddress = customer.Address, });
+
+        await context.SaveChangesAsync();
+
+-->
+[!code-csharp[CreateOrder](../../../../samples/core/Miscellaneous/NewInEFCore8/ComplexTypesSample.cs?name=CreateOrder)]
+
+With complex types, this works as expected, and the address is inserted into the `Orders` table:
+
+```sql
+INSERT INTO [Orders] ([Contents], [CustomerId],
+    [BillingAddress_City], [BillingAddress_Country], [BillingAddress_Line1], [BillingAddress_Line2], [BillingAddress_PostCode],
+    [ShippingAddress_City], [ShippingAddress_Country], [ShippingAddress_Line1], [ShippingAddress_Line2], [ShippingAddress_PostCode])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);
+```
+
+So far you might be saying, "but I could do this with owned types!" However, the "entity type" semantics of owned types quickly get in th way. For example, running the code above with owned types results in a slew of warnings and then an error:
+
+```text
+warn: 8/20/2023 12:48:01.678 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update) 
+      The same entity is being tracked as different entity types 'Order.BillingAddress#Address' and 'Customer.Address#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
+warn: 8/20/2023 12:48:01.679 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update) 
+      The same entity is being tracked as different entity types 'Order.BillingAddress#Address' and 'Customer.Address#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
+warn: 8/20/2023 12:48:01.687 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update) 
+      The same entity is being tracked as different entity types 'Order.ShippingAddress#Address' and 'Customer.Address#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
+warn: 8/20/2023 12:48:01.687 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update)
+      The same entity is being tracked as different entity types 'Order.ShippingAddress#Address' and 'Order.BillingAddress#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
+warn: 8/20/2023 12:48:01.690 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update)
+      The same entity is being tracked as different entity types 'Order.ShippingAddress#Address' and 'Customer.Address#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
+warn: 8/20/2023 12:48:01.690 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update)
+      The same entity is being tracked as different entity types 'Order.ShippingAddress#Address' and 'Order.BillingAddress#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
+fail: 8/20/2023 12:48:01.709 CoreEventId.SaveChangesFailed[10000] (Microsoft.EntityFrameworkCore.Update) 
+      An exception occurred in the database while saving changes for context type 'NewInEfCore8.ComplexTypesSample+CustomerContext'.
+      System.InvalidOperationException: Cannot save instance of 'Order.ShippingAddress#Address' because it is an owned entity without any reference to its owner. Owned entities can only be saved as part of an aggregate also including the owner entity.
+         at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.InternalEntityEntry.PrepareToSave()
+```
+
+This is because a single instance of the `Address` entity type (with the same hidden key value) is being used for three _different_ entity instances. On the other hand, sharing the same instance between complex properties is allowed, and so the code works as expected when using complex types.
+
+### Configuration of complex types
+
+Complex types must be configured in the model using either [mapping attributes](xref:core/modeling/index#use-data-annotations-to-configure-a-model) or by calling [`ComplexProperty` API in `OnModelCreating`](xref:core/modeling/index#use-fluent-api-to-configure-a-model)
+
+For example, the `Address` type can be configured using the <xref:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute>:
+
+```csharp
+[ComplexType]
+public class Address
+{
+    public string Line1 { get; set; } = null!;
+    public string? Line2 { get; set; }
+    public string City { get; set; } = null!;
+    public string Country { get; set; } = null!;
+    public string PostCode { get; set; } = null!;
+}
+```
+
+Or in `OnModelCreating`:
+
+<!--
+        #region ComplexTypeConfig
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>()
+                .ComplexProperty(e => e.Address);
+
+            modelBuilder.Entity<Order>(b =>
+            {
+                b.ComplexProperty(e => e.BillingAddress);
+                b.ComplexProperty(e => e.ShippingAddress);
+            });
+        }
+-->
+[!code-csharp[ComplexTypeConfig](../../../../samples/core/Miscellaneous/NewInEFCore8/ComplexTypesSample.cs?name=ComplexTypeConfig)]
+
+> [!NOTE]
+> Complex types are not discovered by convention.
+
+### Mutability
+
+In the example above, we ended up with the same `Address` instance used in three places. This is allowed and doesn't cause any issues for EF Core when using complex types. However, sharing instances of the same reference type means that if a property value on the instance is modified, then that change will be reflected in all three usages. For example, following on from above, let's change `Line1` of the customer address and save the changes:
+
+<!--
+        #region ChangeSharedAddress
+        customer.Address.Line1 = "Peacock Lodge";
+        await context.SaveChangesAsync();
+
+        context.ChangeTracker.Clear();
+-->
+[!code-csharp[ChangeSharedAddress](../../../../samples/core/Miscellaneous/NewInEFCore8/ComplexTypesSample.cs?name=ChangeSharedAddress)]
+
+This results in the following update to the database when using SQL Server:
+
+```sql
+UPDATE [Customers] SET [Address_Line1] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+UPDATE [Orders] SET [BillingAddress_Line1] = @p2, [ShippingAddress_Line1] = @p3
+OUTPUT 1
+WHERE [Id] = @p4;
+```
+
+Notice that all three `Line1` columns have changed, since they are all sharing the same instance. This is usually not what we want.
 
 > [!TIP]
-> The sample model can be found in [BlogsContext.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/BlogsContext.cs).
+> If order addresses should change automatically when the customer address changes, then consider mapping the address as an entity type. `Order` and `Customer` can then safely reference the same address instance via a navigation property.
 
-## New in EF8 Preview 1
+A good way to deal with issues like this it to make the type immutable. Indeed, this is often natural when a type is a good candidate for being a complex type. For example, it usually makes sense to supply a complex new `Address` object rather than to just mutate, say, the country while leaving the rest the same.
 
-### Enhancements to JSON column support
+Both reference and value types can be made immutable. We'll look at some examples in the following sections.
+
+### Reference types as complex types
+
+#### Immutable class
+
+We used a simple, mutable `class` in the example above. To prevent the issues with accidental mutation described above, we can make the class immutable. For example:
+
+```csharp
+public class Address
+{
+    public Address(string line1, string? line2, string city, string country, string postCode)
+    {
+        Line1 = line1;
+        Line2 = line2;
+        City = city;
+        Country = country;
+        PostCode = postCode;
+    }
+
+    public string Line1 { get; }
+    public string? Line2 { get; }
+    public string City { get; }
+    public string Country { get; }
+    public string PostCode { get; }
+}
+```
+
+> [!TIP]
+> With C# 12 or above, this class definition can be simplified using a primary constructor:
+> public class Address(string line1, string? line2, string city, string country, string postCo
+>
+> ```csharp
+> public class Address(string line1, string? line2, string city, string country, string postCode)
+> {
+>     public string Line1 { get; } = line1;
+>     public string? Line2 { get; } = line2;
+>     public string City { get; } = city;
+>     public string Country { get; } = country;
+>     public string PostCode { get; } = postCode;
+> }
+> ```
+
+It is now not possible to change t he `Line1` value on an existing address. Instead, we need to create a new instance with the changed value. For example:
+
+<!--
+        #region ChangeImmutableAddress
+        var currentAddress = customer.Address;
+        customer.Address = new Address(
+            "Peacock Lodge", currentAddress.Line2, currentAddress.City, currentAddress.Country, currentAddress.PostCode);
+
+        await context.SaveChangesAsync();
+-->
+[!code-csharp[ChangeImmutableAddress](../../../../samples/core/Miscellaneous/NewInEFCore8/ImmutableComplexTypesSample.cs?name=ChangeImmutableAddress)]
+
+This time the call to `SaveChangesAsync` only updates the customer address:
+
+```sql
+UPDATE [Customers] SET [Address_Line1] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+```
+
+Note that even though the Address object is immutable and the entire object has been changed, EF is still tracking changes to the individual properties, so only the columns with changed values are updated.
+
+#### Immutable record
+
+C# 9 introduced [record types](/dotnet/csharp/language-reference/builtin-types/record), which makes creating and using immutable objects easier. For example, the `Address` object can be made a record type:
+
+```csharp
+public record Address
+{
+    public Address(string line1, string? line2, string city, string country, string postCode)
+    {
+        Line1 = line1;
+        Line2 = line2;
+        City = city;
+        Country = country;
+        PostCode = postCode;
+    }
+
+    public string Line1 { get; init; }
+    public string? Line2 { get; init; }
+    public string City { get; init; }
+    public string Country { get; init; }
+    public string PostCode { get; init; }
+}
+```
+
+> [!TIP]
+> With C# 12, this record definition can be simplified using a primary constructor:
+>
+> ```csharp
+> public record Address(string Line1, string? Line2, string City, string Country, string PostCode);
+> ```
+
+Replacing the mutable object and calling SaveChanges now requires less code:
+
+<!--
+        #region ChangeImmutableRecord
+        customer.Address = customer.Address with { Line1 = "Peacock Lodge" };
+
+        await context.SaveChangesAsync();
+-->
+[!code-csharp[ChangeImmutableRecord](../../../../samples/core/Miscellaneous/NewInEFCore8/RecordComplexTypesSample.cs?name=ChangeImmutableRecord)]
+
+### Value types as complex types
+
+#### Mutable struct
+
+A simple mutable [value type](/dotnet/csharp/language-reference/builtin-types/value-types) can be used as a complex type. For example, `Address` can be defined as a `struct` in C#:
+
+<!--
+    #region AddressStruct
+    public struct Address
+    {
+        public string Line1 { get; set; }
+        public string? Line2 { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public string PostCode { get; set; }
+    }
+-->
+[!code-csharp[AddressStruct](../../../../samples/core/Miscellaneous/NewInEFCore8/StructComplexTypesSample.cs?name=AddressStruct)]
+
+Assigning the customer address to the shipping and billing addresses results in each property getting a copy of the Address, since this is how value types work. This means that modifying the `Address` on the customer will not change the shipping or billing address, so mutable structs don't have the same instance-sharing issues that happen with mutable classes.
+
+However, [mutable structs are generally discouraged in C#](/archive/blogs/ericlippert/mutating-readonly-structs), so think very carefully before using them.
+
+#### Immutable struct
+
+Immutable structs work well as complex types, just like immutable classes do. For example, `Address` can be define such that it can not be modified:
+
+<!--
+    #region AddressImmutableStruct
+    public readonly struct Address(string line1, string? line2, string city, string country, string postCode)
+    {
+        public string Line1 { get; } = line1;
+        public string? Line2 { get; } = line2;
+        public string City { get; } = city;
+        public string Country { get; } = country;
+        public string PostCode { get; } = postCode;
+    }
+-->
+[!code-csharp[AddressImmutableStruct](../../../../samples/core/Miscellaneous/NewInEFCore8/ImmutableStructComplexTypesSample.cs?name=AddressImmutableStruct)]
+
+The code for changing the address now looks the same as when using immutable class:
+
+<!--
+        #region UpdateImmutableStruct
+        var currentAddress = customer.Address;
+        customer.Address = new Address(
+            "Peacock Lodge", currentAddress.Line2, currentAddress.City, currentAddress.Country, currentAddress.PostCode);
+
+        await context.SaveChangesAsync();
+-->
+[!code-csharp[UpdateImmutableStruct](../../../../samples/core/Miscellaneous/NewInEFCore8/ImmutableStructComplexTypesSample.cs?name=UpdateImmutableStruct)]
+
+#### Immutable struct record
+
+C# 10 introduced `struct record` types, which makes it easy to create and work with immutable struct records like it is with immutable class records. For example, we can define `Address` as an immutable struct record:
+
+<!--
+    #region RecordStructAddress
+    public readonly record struct Address(string Line1, string? Line2, string City, string Country, string PostCode);
+-->
+[!code-csharp[RecordStructAddress](../../../../samples/core/Miscellaneous/NewInEFCore8/RecordComplexTypesSample.cs?name=RecordStructAddress)]
+
+The code for changing the address now looks the same as when using immutable class record:
+
+<!--
+        #region ChangeImmutableRecord
+        customer.Address = customer.Address with { Line1 = "Peacock Lodge" };
+
+        await context.SaveChangesAsync();
+-->
+[!code-csharp[ChangeImmutableRecord](../../../../samples/core/Miscellaneous/NewInEFCore8/RecordComplexTypesSample.cs?name=ChangeImmutableRecord)]
+
+### Nested complex types
+
+A complex type can contain properties of other complex types. For example, let's use our `Address` complex type from above together with a `PhoneNumber` complex type, and nest them both inside another complex type:
+
+<!--
+    #region NestedComplexTypes
+    public record Address(string Line1, string? Line2, string City, string Country, string PostCode);
+
+    public record PhoneNumber(int CountryCode, long Number);
+
+    public record Contact
+    {
+        public Address Address { get; init; } = null!;
+        public PhoneNumber HomePhone { get; init; } = null!;
+        public PhoneNumber WorkPhone { get; init; } = null!;
+        public PhoneNumber MobilePhone { get; init; } = null!;
+    }
+-->
+[!code-csharp[NestedComplexTypes](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=NestedComplexTypes)]
+
+We're using immutable records here, since these are a good match for the semantics of our complex types, but nesting of complex types can be done with any flavor of .NET type.
+
+> [!NOTE]
+> We're not using a primary constructor for the `Contact` type because EF Core does not yet support constructor injection of complex type values. Vote for [Issue #31621](https://github.com/dotnet/efcore/issues/31621) if this is important to you.
+
+We will add `Contact` as a property of the `Customer`:
+
+<!--
+    #region CustomerWithContact
+    public class Customer
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
+        public Contact Contact { get; set; } = null!;
+        public List<Order> Orders { get; } = new();
+    }
+-->
+[!code-csharp[CustomerWithContact](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=CustomerWithContact)]
+
+And `PhoneNumber` property of the `Order`:
+
+<!--
+    #region OrderWithPhone
+    public class Order
+    {
+        public int Id { get; set; }
+        public string Contents { get; set; } = null!;
+        public PhoneNumber ContactPhone { get; set; } = null!;
+        public Address ShippingAddress { get; set; } = null!;
+        public Address BillingAddress { get; set; } = null!;
+        public Customer Customer { get; set; } = null!;
+    }
+-->
+[!code-csharp[OrderWithPhone](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=OrderWithPhone)]
+
+Configuration of nested complex types can again be achieved using <xref:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute>:
+
+```csharp
+[ComplexType]
+public record Address(string Line1, string? Line2, string City, string Country, string PostCode);
+
+[ComplexType]
+public record PhoneNumber(int CountryCode, long Number);
+
+[ComplexType]
+public record Contact
+{
+    public Address Address { get; init; } = null!;
+    public PhoneNumber HomePhone { get; init; } = null!;
+    public PhoneNumber WorkPhone { get; init; } = null!;
+    public PhoneNumber MobilePhone { get; init; } = null!;
+}
+```
+
+Or in `OnModelCreating`:
+
+<!--
+        #region ConfigureNestedTypes
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>(
+                b =>
+                {
+                    b.ComplexProperty(
+                        e => e.Contact,
+                        b =>
+                        {
+                            b.ComplexProperty(e => e.Address);
+                            b.ComplexProperty(e => e.HomePhone);
+                            b.ComplexProperty(e => e.WorkPhone);
+                            b.ComplexProperty(e => e.MobilePhone);
+                        });
+                });
+
+            modelBuilder.Entity<Order>(
+                b =>
+                {
+                    b.ComplexProperty(e => e.ContactPhone);
+                    b.ComplexProperty(e => e.BillingAddress);
+                    b.ComplexProperty(e => e.ShippingAddress);
+                });
+        }
+-->
+[!code-csharp[ConfigureNestedTypes](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=ConfigureNestedTypes)]
+
+### Queries
+
+Properties of complex types on entity types are treated like any other non-navigation property of the entity type. This means that they are always loaded when the entity type is loaded. This is also true of any nested complex type properties. For example, querying for a customer:
+
+<!--
+        #region QueryCustomer
+        var customer = await context.Customers.FirstAsync(e => e.Id == customerId);
+-->
+[!code-csharp[QueryCustomer](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=QueryCustomer)]
+
+Is translated to the following SQL when using SQL Server:
+
+```sql
+SELECT TOP(1) [c].[Id], [c].[Name], [c].[Contact_Address_City], [c].[Contact_Address_Country],
+    [c].[Contact_Address_Line1], [c].[Contact_Address_Line2], [c].[Contact_Address_PostCode],
+    [c].[Contact_HomePhone_CountryCode], [c].[Contact_HomePhone_Number], [c].[Contact_MobilePhone_CountryCode],
+    [c].[Contact_MobilePhone_Number], [c].[Contact_WorkPhone_CountryCode], [c].[Contact_WorkPhone_Number]
+FROM [Customers] AS [c]
+WHERE [c].[Id] = @__customerId_0
+```
+
+Notice two things from this SQL:
+
+- Everything is returned to populate the customer _and_ all the nested `Contact`, `Address`, and `PhoneNumber` complex types.
+- All the complex type values are stored as columns in the table for the entity type. Complex types are never mapped to separate tables.
+
+#### Projections
+
+Complex types can be projected from a query. For example, selecting just the shipping address from an order:
+
+<!--
+        #region QueryShippingAddress
+        var shippingAddress = await context.Orders
+            .Where(e => e.Id == orderId)
+            .Select(e => e.ShippingAddress)
+            .SingleAsync();
+-->
+[!code-csharp[QueryShippingAddress](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=QueryShippingAddress)]
+
+This translates to the following when using SQL Server:
+
+```sql
+SELECT TOP(2) [o].[ShippingAddress_City], [o].[ShippingAddress_Country], [o].[ShippingAddress_Line1],
+    [o].[ShippingAddress_Line2], [o].[ShippingAddress_PostCode]
+FROM [Orders] AS [o]
+WHERE [o].[Id] = @__orderId_0
+```
+
+Note that projections of complex types cannot be tracked, since complex type objects have no identity to use for tracking.
+
+### Use in predicates
+
+Members of complex types can be used in predicates. For example, finding all the orders going to a certain city:
+
+<!--
+        #region QueryOrdersInCity
+        var city = "Walpole St Peter";
+        var walpoleOrders = await context.Orders.Where(e => e.ShippingAddress.City == city).ToListAsync();
+-->
+[!code-csharp[QueryOrdersInCity](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=QueryOrdersInCity)]
+
+Which translates to the following SQL on SQL Server:
+
+```sql
+SELECT [o].[Id], [o].[Contents], [o].[CustomerId], [o].[BillingAddress_City], [o].[BillingAddress_Country],
+    [o].[BillingAddress_Line1], [o].[BillingAddress_Line2], [o].[BillingAddress_PostCode],
+    [o].[ContactPhone_CountryCode], [o].[ContactPhone_Number], [o].[ShippingAddress_City],
+    [o].[ShippingAddress_Country], [o].[ShippingAddress_Line1], [o].[ShippingAddress_Line2],
+    [o].[ShippingAddress_PostCode]
+FROM [Orders] AS [o]
+WHERE [o].[ShippingAddress_City] = @__city_0
+```
+
+A full complex type instance can also be used in predicates. For example, finding all customers with a given phone number:
+
+<!--
+        #region QueryWithPhoneNumber
+        var phoneNumber = new PhoneNumber(44, 7777555777);
+        var customersWithNumber = await context.Customers
+            .Where(
+                e => e.Contact.MobilePhone == phoneNumber
+                     || e.Contact.WorkPhone == phoneNumber
+                     || e.Contact.HomePhone == phoneNumber)
+            .ToListAsync();
+-->
+[!code-csharp[QueryWithPhoneNumber](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=QueryWithPhoneNumber)]
+
+This translates to the following SQL when using SQL Server:
+
+```sql
+SELECT [c].[Id], [c].[Name], [c].[Contact_Address_City], [c].[Contact_Address_Country], [c].[Contact_Address_Line1],
+     [c].[Contact_Address_Line2], [c].[Contact_Address_PostCode], [c].[Contact_HomePhone_CountryCode],
+     [c].[Contact_HomePhone_Number], [c].[Contact_MobilePhone_CountryCode], [c].[Contact_MobilePhone_Number],
+     [c].[Contact_WorkPhone_CountryCode], [c].[Contact_WorkPhone_Number]
+FROM [Customers] AS [c]
+WHERE ([c].[Contact_MobilePhone_CountryCode] = @__entity_equality_phoneNumber_0_CountryCode
+    AND [c].[Contact_MobilePhone_Number] = @__entity_equality_phoneNumber_0_Number)
+OR ([c].[Contact_WorkPhone_CountryCode] = @__entity_equality_phoneNumber_0_CountryCode
+    AND [c].[Contact_WorkPhone_Number] = @__entity_equality_phoneNumber_0_Number)
+OR ([c].[Contact_HomePhone_CountryCode] = @__entity_equality_phoneNumber_0_CountryCode
+    AND [c].[Contact_HomePhone_Number] = @__entity_equality_phoneNumber_0_Number)
+```
+
+Notice that equality is performed by expanding out each member of the complex type. This aligns with complex types having no key for identity and hence a complex type instance is equal to another complex type instance if and only if all their members are equal.
+
+### Manipulation of complex type values
+
+EF8 provides access to tracking information such as the current and original values of complex types and whether or not a property value has been modified. The API complex types is an extension of [the change tracking API already used for entity types](xref:core/change-tracking/entity-entries).
+
+The `ComplexProperty` methods of <xref:Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry> return a entry for an entire complex object. For example, to get the current value of the `Order.BillingAddress`:
+
+<!--
+        #region BillingAddressCurrentValue
+        var billingAddress = context.Entry(order)
+            .ComplexProperty(e => e.BillingAddress)
+            .CurrentValue;
+-->
+[!code-csharp[BillingAddressCurrentValue](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=BillingAddressCurrentValue)]
+
+A call to `Property` can be added to access a property of the complex type. For example to get the current value of just the billing post code:
+
+<!--
+        #region PostCodeCurrentValue
+        var postCode = context.Entry(order)
+            .ComplexProperty(e => e.BillingAddress)
+            .Property(e => e.PostCode)
+            .CurrentValue;
+-->
+[!code-csharp[PostCodeCurrentValue](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=PostCodeCurrentValue)]
+
+Nested complex types are accessed using nested calls to `ComplexProperty`. For example, to get the city from the nested `Address` of the `Contact` on a `Customer`:
+
+<!--
+        #region CityCurrentValue
+        var currentCity = context.Entry(customer)
+            .ComplexProperty(e => e.Contact)
+            .ComplexProperty(e => e.Address)
+            .Property(e => e.City)
+            .CurrentValue;
+-->
+[!code-csharp[CityCurrentValue](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=CityCurrentValue)]
+
+Other methods are available for reading and changing state. For example, <xref:Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry.IsModified?displayProperty=nameWithType> can be used to set a property of a complex type as modified:
+
+<!--
+        #region SetPostCodeIsModified
+        context.Entry(customer)
+            .ComplexProperty(e => e.Contact)
+            .ComplexProperty(e => e.Address)
+            .Property(e => e.PostCode)
+            .IsModified = true;
+-->
+[!code-csharp[SetPostCodeIsModified](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=SetPostCodeIsModified)]
+
+### Current limitations
+
+Complex types represent a significant investment across the static. We were not able to make everything work in this release, but we plan to close some of the gaps in a future release. Make sure to vote (👍) on the appropriate GitHub issues if fixing any of these limitations is important to you.
+
+Complex type limitations in EF8 include:
+
+- Support collections of complex types. ([Issue #31237](https://github.com/dotnet/efcore/issues/31237))
+- Allow complex type properties to be null. ([Issue #31376](https://github.com/dotnet/efcore/issues/31376))
+- Map complex type properties to JSON columns. ([Issue #31252](https://github.com/dotnet/efcore/issues/31252))
+- Constructor injection for complex types. ([Issue #31621](https://github.com/dotnet/efcore/issues/31621))
+- Add seed data support for complex types. ([Issue #31254](https://github.com/dotnet/efcore/issues/31254))
+- Map complex type properties for the Cosmos provider. ([Issue #31253](https://github.com/dotnet/efcore/issues/31253))
+- Implement complex types for the in-memory database. ([Issue #31464](https://github.com/dotnet/efcore/issues/31464))
+
+## Primitive collections
+
+A persistent question when using relational databases is what to do with collections of primitive types; that is, lists or arrays of integers, date/times, strings, and so on. If you're using PostgreSQL, then its easy to store these things using PostgreSQL's [built-in array type](https://www.postgresql.org/docs/current/arrays.html). For other databases, there are two common approaches:
+
+- Create a table with a column for the primitive type value and another column to act as a foreign key linking each value to its owner of the collection.
+- Serialize the primitive collection into some column type that is handled by the database--for example, serialize to and from a string.
+
+The first option has advantages in many situations--we'll take a quick look at it at the end of this section. However, it's not a natural representation of the data in the model, and if what you really have is a collection of a primitive type, then the second option can be more effective.
+
+Starting with Preview 4, EF8 now includes built-in support for the second option, using JSON as the serialization format. JSON works well for this since modern relational databases include built-in mechanisms for querying and manipulating JSON, such that the JSON column can, effectively, be treated as a table when needed, without the overhead of actually creating that table. These same mechanisms allow JSON to be passed in parameters and then used in similar way to table-valued parameters in queries--more about this later.
+
+> [!TIP]
+> The code shown here comes from [PrimitiveCollectionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs).
+
+### Primitive collection properties
+
+EF Core can map any `IEnumerable<T>` property, where `T` is a primitive type, to a JSON column in the database. This is done by convention for public properties which have both a getter and a setter. For example, all properties in the following entity type are mapped to JSON columns by convention:
+
+```csharp
+public class PrimitiveCollections
+{
+    public IEnumerable<int> Ints { get; set; }
+    public ICollection<string> Strings { get; set; }
+    public ISet<DateTime> DateTimes { get; set; }
+    public IList<DateOnly> Dates { get; set; }
+    public uint[] UnsignedInts { get; set; }
+    public List<bool> Booleans { get; set; }
+    public List<Uri> Urls { get; set; }
+}
+```
+
+> [!NOTE]
+> What do we mean by "primitive type" in this context? Essentially, something that the database provider knows how to map, using some kind of value conversion if necessary. For example, in the entity type above, the types `int`, `string`, `DateTime`, `DateOnly` and `bool` are all handled without conversion by the database provider. SQL Server does not have native support for unsigned ints or URIs, but `uint` and `Uri` are still treated as primitive types because there are [built-in value converters](xref:core/modeling/value-conversions#built-in-converters) for these types.
+
+By default, EF Core uses an unconstrained Unicode string column type to hold the JSON, since this protects against data loss with large collections. However, on some database systems, such as SQL Server, specifying a maximum length for the string can improve performance. This, along with other column configuration, can be done [in the normal way](xref:core/modeling/entity-properties). For example:
+
+```csharp
+modelBuilder
+    .Entity<PrimitiveCollections>()
+    .Property(e => e.Booleans)
+    .HasMaxLength(1024)
+    .IsUnicode(false);
+```
+
+Or, using mapping attributes:
+
+```csharp
+[MaxLength(2500)]
+[Unicode(false)]
+public uint[] UnsignedInts { get; set; }
+```
+
+A default column configuration can be used for all properties of a certain type using [pre-convention model configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration). For example:
+
+```csharp
+protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+{
+    configurationBuilder
+        .Properties<List<DateOnly>>()
+        .AreUnicode(false)
+        .HaveMaxLength(4000);
+}
+```
+
+### Queries with primitive collections
+
+Let's look at some of the queries that make use of collections of primitive types. For this, we'll need a simple model with two entity types. The first represents a [British public house](https://en.wikipedia.org/wiki/Pub), or "pub":
+
+<!--
+    public class Pub
+    {
+        public Pub(string name, string[] beers)
+        {
+            Name = name;
+            Beers = beers;
+        }
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string[] Beers { get; set; }
+        public List<DateOnly> DaysVisited { get; private set; } = new();
+    }
+-->
+[!code-csharp[Pub](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=Pub)]
+
+The `Pub` type contains two primitive collections:
+
+- `Beers` is an array of strings representing the beer brands available at the pub.
+- `DaysVisited` is a list of the dates on which the pub was visited.
+
+> [!TIP]
+> In a real application, it would probably make more sense to create an entity type for beer, and have a table for beers. We're showing a primitive collection here to illustrate how they work. But remember, just because you can model something as a primitive collection doesn't mean that you necessarily should.
+
+The second entity type represents a dog walk in the British countryside:
+
+<!--
+    public class DogWalk
+    {
+        public DogWalk(string name)
+        {
+            Name = name;
+        }
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Terrain Terrain { get; set; }
+        public List<DateOnly> DaysVisited { get; private set; } = new();
+        public Pub? ClosestPub { get; set; }
+    }
+
+    public enum Terrain
+    {
+        Forest,
+        River,
+        Hills,
+        Village,
+        Park,
+        Beach,
+    }
+-->
+[!code-csharp[DogWalk](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=DogWalk)]
+
+Like `Pub`, `DogWalk` also contains a collection of the dates visited, and a link to the closest pub since, you know, sometimes the dog needs a saucer of beer after a long walk.
+
+Using this model, the first query we will do is a simple `Contains` query to find all walks with one of several different terrains:
+
+<!--
+        var terrains = new[] { Terrain.River, Terrain.Beach, Terrain.Park };
+        var walksWithTerrain = await context.Walks
+            .Where(e => terrains.Contains(e.Terrain))
+            .Select(e => e.Name)
+            .ToListAsync();
+-->
+[!code-csharp[WalksWithTerrain](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=WalksWithTerrain)]
+
+This is already translated by current versions of EF Core by inlining the values to look for. For example, when using SQL Server:
+
+```sql
+SELECT [w].[Name]
+FROM [Walks] AS [w]
+WHERE [w].[Terrain] IN (1, 5, 4)
+```
+
+However, this strategy does not work well with database query caching--see [Announcing EF8 Preview 4](https://devblogs.microsoft.com/dotnet/announcing-ef8-preview-4/) on the .NET Blog for a discussion of this issue.
+
+> [!IMPORTANT]
+> The inlining of values here is done in such a way that there is no chance of a SQL injection attack. The change to use JSON described below is all about performance, and nothing to do with security.
+
+For EF Core 8, the default is now to pass the list of terrains as a single parameter containing a JSON collection. For example:
+
+```none
+@__terrains_0='[1,5,4]'
+```
+
+The query then uses `OpenJson` on SQL Server:
+
+```sql
+SELECT [w].[Name]
+FROM [Walks] AS [w]
+WHERE EXISTS (
+    SELECT 1
+    FROM OpenJson(@__terrains_0) AS [t]
+    WHERE CAST([t].[value] AS int) = [w].[Terrain])
+```
+
+Or `json_each` on SQLite:
+
+```sql
+SELECT "w"."Name"
+FROM "Walks" AS "w"
+WHERE EXISTS (
+    SELECT 1
+    FROM json_each(@__terrains_0) AS "t"
+    WHERE "t"."value" = "w"."Terrain")
+```
+
+> [!NOTE]
+> `OpenJson` is only available on SQL Server 2016 ([compatibility level 130](/sql/t-sql/statements/alter-database-transact-sql-compatibility-level)) and later. You can tell SQL Server that you're using an older version by configuring the compatibility level as part of `UseSqlServer`. For example:
+>
+> ```csharp
+> protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+>     => optionsBuilder
+>         .UseSqlServer(
+>             @"Data Source=(LocalDb)\MSSQLLocalDB;Database=AllTogetherNow",
+>             sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseCompatibilityLevel(120));
+> ```
+
+Let's try a different kind of `Contains` query. In this case, we'll look for a value of the parameter collection in the column. For example, any pub that stocks Heineken:
+
+<!--
+        var beer = "Heineken";
+        var pubsWithHeineken = await context.Pubs
+            .Where(e => e.Beers.Contains(beer))
+            .Select(e => e.Name)
+            .ToListAsync();
+-->
+[!code-csharp[PubsWithHeineken](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=PubsWithHeineken)]
+
+The existing [documentation from What's New in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns) provides detailed information on JSON mapping, queries, and updates. This documentation now also applies to SQLite.
+
+```sql
+SELECT [p].[Name]
+FROM [Pubs] AS [p]
+WHERE EXISTS (
+    SELECT 1
+    FROM OpenJson([p].[Beers]) AS [b]
+    WHERE [b].[value] = @__beer_0)
+```
+
+`OpenJson` is now used to to extract values from JSON column so that each value can be matched to the passed parameter.
+
+We can combine the use of `OpenJson` on the parameter with `OpenJson` on the column. For example, to find pubs that stock any one of a variety of lagers:
+
+<!--
+        var beers = new[] { "Carling", "Heineken", "Stella Artois", "Carlsberg" };
+        var pubsWithLager = await context.Pubs
+            .Where(e => beers.Any(b => e.Beers.Contains(b)))
+            .Select(e => e.Name)
+            .ToListAsync();
+-->
+[!code-csharp[PubsWithLager](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=PubsWithLager)]
+
+This translates to the following on SQL Server:
+
+```sql
+SELECT [p].[Name]
+FROM [Pubs] AS [p]
+WHERE EXISTS (
+    SELECT 1
+    FROM OpenJson(@__beers_0) AS [b]
+    WHERE EXISTS (
+        SELECT 1
+        FROM OpenJson([p].[Beers]) AS [b0]
+        WHERE [b0].[value] = [b].[value] OR ([b0].[value] IS NULL AND [b].[value] IS NULL)))
+```
+
+The `@__beers_0` parameter value here is `["Carling","Heineken","Stella Artois","Carlsberg"]`.
+
+Let's look at a query that makes use of the column containing a collection of dates. For example, to find pubs visited this year:
+
+<!--
+        var thisYear = DateTime.Now.Year;
+        var pubsVisitedThisYear = await context.Pubs
+            .Where(e => e.DaysVisited.Any(v => v.Year == thisYear))
+            .Select(e => e.Name)
+            .ToListAsync();
+-->
+[!code-csharp[PubsVisitedThisYear](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=PubsVisitedThisYear)]
+
+This translates to the following on SQL Server:
+
+```sql
+SELECT [p].[Name]
+FROM [Pubs] AS [p]
+WHERE EXISTS (
+    SELECT 1
+    FROM OpenJson([p].[DaysVisited]) AS [d]
+    WHERE DATEPART(year, CAST([d].[value] AS date)) = @__thisYear_0)
+```
+
+Notice that the query makes use of the date-specific function `DATEPART` here because EF _knows that the primitive collection contains dates_. It might not seem like it, but this is actually really important. Because EF knows what's in the collection, it can generate appropriate SQL to use the typed values with parameters, functions, other columns etc.
+
+Let's use the date collection again, this time to order appropriately for the type and project values extracted from the collection. For example, let's list pubs in the order that they were first visited, and with the first and last date each pub was visited:
+
+<!--
+        var pubsVisitedInOrder = await context.Pubs
+            .Select(e => new
+            {
+                e.Name,
+                FirstVisited = e.DaysVisited.OrderBy(v => v).First(),
+                LastVisited = e.DaysVisited.OrderByDescending(v => v).First(),
+            })
+            .OrderBy(p => p.FirstVisited)
+            .ToListAsync();
+-->
+[!code-csharp[PubsVisitedInOrder](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=PubsVisitedInOrder)]
+
+This translates to the following on SQL Server:
+
+```sql
+SELECT [p].[Name], (
+    SELECT TOP(1) CAST([d0].[value] AS date)
+    FROM OpenJson([p].[DaysVisited]) AS [d0]
+    ORDER BY CAST([d0].[value] AS date)) AS [FirstVisited], (
+    SELECT TOP(1) CAST([d1].[value] AS date)
+    FROM OpenJson([p].[DaysVisited]) AS [d1]
+    ORDER BY CAST([d1].[value] AS date) DESC) AS [LastVisited]
+FROM [Pubs] AS [p]
+ORDER BY (
+    SELECT TOP(1) CAST([d].[value] AS date)
+    FROM OpenJson([p].[DaysVisited]) AS [d]
+    ORDER BY CAST([d].[value] AS date))
+```
+
+And finally, just how often do we end up visiting the closest pub when taking the dog for a walk? Let's find out:
+
+<!--
+        var walksWithADrink = await context.Walks.Select(
+            w => new
+            {
+                WalkName = w.Name,
+                PubName = w.ClosestPub.Name,
+                Count = w.DaysVisited.Count(v => w.ClosestPub.DaysVisited.Contains(v)),
+                TotalCount = w.DaysVisited.Count
+            }).ToListAsync();
+-->
+[!code-csharp[WalksWithADrink](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=WalksWithADrink)]
+
+This translates to the following on SQL Server:
+
+```sql
+SELECT [w].[Name] AS [WalkName], [p].[Name] AS [PubName], (
+    SELECT COUNT(*)
+    FROM OpenJson([w].[DaysVisited]) AS [d]
+    WHERE EXISTS (
+        SELECT 1
+        FROM OpenJson([p].[DaysVisited]) AS [d0]
+        WHERE CAST([d0].[value] AS date) = CAST([d].[value] AS date) OR ([d0].[value] IS NULL AND [d].[value] IS NULL))) AS [Count], (
+    SELECT COUNT(*)
+    FROM OpenJson([w].[DaysVisited]) AS [d1]) AS [TotalCount]
+FROM [Walks] AS [w]
+INNER JOIN [Pubs] AS [p] ON [w].[ClosestPubId] = [p].[Id]
+```
+
+And reveals the following data:
+
+```none
+The Prince of Wales Feathers was visited 5 times in 8 "Ailsworth to Nene" walks.
+The Prince of Wales Feathers was visited 6 times in 9 "Caster Hanglands" walks.
+The Royal Oak was visited 6 times in 8 "Ferry Meadows" walks.
+The White Swan was visited 7 times in 9 "Woodnewton" walks.
+The Eltisley was visited 6 times in 8 "Eltisley" walks.
+Farr Bay Inn was visited 7 times in 11 "Farr Beach" walks.
+Farr Bay Inn was visited 7 times in 9 "Newlands" walks.
+```
+
+Looks like beer and dog walking are a winning combination!
+
+### Primitive collections in JSON documents
+
+In all the examples above, column for primitive collection contains JSON. However, this is not the same as mapping [an owned entity type to a column containing a JSON document](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns), which was introduced in EF7. But what if that JSON document itself contains a primitive collection? Well, all the queries above still work in the same way! For example, imagine we move the _days visited_ data into an owned type `Visits` mapped to a JSON document:
+
+<!--
+    public class Pub
+    {
+        public Pub(string name)
+        {
+            Name = name;
+        }
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public BeerData Beers { get; set; } = null!;
+        public Visits Visits { get; set; } = null!;
+    }
+
+    public class Visits
+    {
+        public string? LocationTag { get; set; }
+        public List<DateOnly> DaysVisited { get; set; } = null!;
+    }
+-->
+[!code-csharp[Pub](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsInJsonSample.cs?name=Pub)]
+
+> [!TIP]
+> The code shown here comes from [PrimitiveCollectionsInJsonSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsInJsonSample.cs).
+
+We can now run a variation of our final query that, this time, extracts data from the JSON document, including queries into the primitive collections contained in the document:
+
+<!--
+        var walksWithADrink = await context.Walks.Select(
+            w => new
+            {
+                WalkName = w.Name,
+                PubName = w.ClosestPub.Name,
+                WalkLocationTag = w.Visits.LocationTag,
+                PubLocationTag = w.ClosestPub.Visits.LocationTag,
+                Count = w.Visits.DaysVisited.Count(v => w.ClosestPub.Visits.DaysVisited.Contains(v)),
+                TotalCount = w.Visits.DaysVisited.Count
+            }).ToListAsync();
+-->
+[!code-csharp[WalksWithADrink](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsInJsonSample.cs?name=WalksWithADrink)]
+
+This translates to the following on SQL Server:
+
+```sql
+SELECT [w].[Name] AS [WalkName], [p].[Name] AS [PubName], JSON_VALUE([w].[Visits], '$.LocationTag') AS [WalkLocationTag], JSON_VALUE([p].[Visits], '$.LocationTag') AS [PubLocationTag], (
+    SELECT COUNT(*)
+    FROM OpenJson(JSON_VALUE([w].[Visits], '$.DaysVisited')) AS [d]
+    WHERE EXISTS (
+        SELECT 1
+        FROM OpenJson(JSON_VALUE([p].[Visits], '$.DaysVisited')) AS [d0]
+        WHERE CAST([d0].[value] AS date) = CAST([d].[value] AS date) OR ([d0].[value] IS NULL AND [d].[value] IS NULL))) AS [Count], (
+    SELECT COUNT(*)
+    FROM OpenJson(JSON_VALUE([w].[Visits], '$.DaysVisited')) AS [d1]) AS [TotalCount]
+FROM [Walks] AS [w]
+INNER JOIN [Pubs] AS [p] ON [w].[ClosestPubId] = [p].[Id]
+```
+
+And to a similar query when using SQLite:
+
+```sql
+SELECT "w"."Name" AS "WalkName", "p"."Name" AS "PubName", "w"."Visits" ->> 'LocationTag' AS "WalkLocationTag", "p"."Visits" ->> 'LocationTag' AS "PubLocationTag", (
+    SELECT COUNT(*)
+    FROM json_each("w"."Visits" ->> 'DaysVisited') AS "d"
+    WHERE EXISTS (
+        SELECT 1
+        FROM json_each("p"."Visits" ->> 'DaysVisited') AS "d0"
+        WHERE "d0"."value" = "d"."value")) AS "Count", json_array_length("w"."Visits" ->> 'DaysVisited') AS "TotalCount"
+FROM "Walks" AS "w"
+INNER JOIN "Pubs" AS "p" ON "w"."ClosestPubId" = "p"."Id"
+```
+
+> [!TIP]
+> Notice that on SQLite EF Core now makes use of the `->>` operator, resulting in queries that are both easier to read and often more performant.
+
+### Mapping primitive collections to a table
+
+We mentioned above that another option for primitive collections is to map them to a different table. First class support for this is tracked by [Issue #25163](https://github.com/dotnet/efcore/issues/25163); make sure to vote for this issue if it is important to you. Until this is implemented, the best approach is to create a wrapping type for the primitive. For example, let's create a type for `Beer`:
+
+<!--
+    [Owned]
+    public class Beer
+    {
+        public Beer(string name)
+        {
+            Name = name;
+        }
+
+        public string Name { get; private set; }
+    }
+-->
+[!code-csharp[Beer](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionToTableSample.cs?name=Beer)]
+
+Notice that the type simply wraps the primitive value--it doesn't have a primary key or any foreign keys defined. This type can then be used in the `Pub` class:
+
+<!--
+    public class Pub
+    {
+        public Pub(string name)
+        {
+            Name = name;
+        }
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<Beer> Beers { get; set; } = new();
+        public List<DateOnly> DaysVisited { get; private set; } = new();
+    }
+-->
+[!code-csharp[Pub](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionToTableSample.cs?name=Pub)]
+
+EF will now create a `Beer` table, synthesizing primary key and foreign key columns back to the `Pubs` table. For example, on SQL Server:
+
+```sql
+CREATE TABLE [Beer] (
+    [PubId] int NOT NULL,
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Beer] PRIMARY KEY ([PubId], [Id]),
+    CONSTRAINT [FK_Beer_Pubs_PubId] FOREIGN KEY ([PubId]) REFERENCES [Pubs] ([Id]) ON DELETE CASCADE
+```
+
+## Enhancements to JSON column mapping
 
 EF8 includes improvements to the [JSON column mapping support introduced in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns).
 
 > [!TIP]
 > The code shown here comes from [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
 
-#### Translate element access into JSON arrays
+### Translate element access into JSON arrays
 
 EF8 supports indexing in JSON arrays when executing queries. For example, the following query checks whether the first two updates were made before a given date.
 
@@ -119,7 +1213,432 @@ FROM [Posts] AS [p]
         AND (CAST(JSON_VALUE([p].[Metadata],'$.Updates[1].UpdatedOn') AS date) IS NOT NULL)
 ```
 
-### Raw SQL queries for unmapped types
+### JSON Columns for SQLite
+
+EF7 introduced support for mapping to JSON columns when using Azure SQL/SQL Server. EF8 extends this support to SQLite databases. As for the SQL Server support, this includes:
+
+- Mapping of aggregates built from .NET types to JSON documents stored in SQLite columns
+- Queries into JSON columns, such as filtering and sorting by the elements of the documents
+- Queries that project elements out of the JSON document into results
+- Updating and saving changes to JSON documents
+
+The existing [documentation from What's New in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns) provides detailed information on JSON mapping, queries, and updates. This documentation now also applies to SQLite.
+
+> [!TIP]
+> The code shown in the EF7 documentation has been updated to also run on SQLite can can be found in [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
+
+#### Queries into JSON columns
+
+Queries into JSON columns on SQLite use the `json_extract` function. For example, the "authors in Chigley" query from the documentation referenced above:
+
+<!--
+        var authorsInChigley = await context.Authors
+            .Where(author => author.Contact.Address.City == "Chigley")
+            .ToListAsync();
+-->
+[!code-csharp[AuthorsInChigley](../../../../samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs?name=AuthorsInChigley)]
+
+Is translated to the following SQL when using SQLite:
+
+```sql
+SELECT "a"."Id", "a"."Name", "a"."Contact"
+FROM "Authors" AS "a"
+WHERE json_extract("a"."Contact", '$.Address.City') = 'Chigley'
+```
+
+#### Updating JSON columns
+
+For updates, EF uses the `json_set` function on SQLite. For example, when updating a single property in a document:
+
+<!--
+        var arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
+
+        arthur.Contact.Address.Country = "United Kingdom";
+
+        await context.SaveChangesAsync();
+-->
+[!code-csharp[UpdateProperty](../../../../samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs?name=UpdateProperty)]
+
+EF generates the following parameters:
+
+```text
+info: 3/10/2023 10:51:33.127 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (0ms) [Parameters=[@p0='["United Kingdom"]' (Nullable = false) (Size = 18), @p1='4'], CommandType='Text', CommandTimeout='30']
+```
+
+Which use the `json_set` function on SQLite:
+
+```sql
+UPDATE "Authors" SET "Contact" = json_set("Contact", '$.Address.Country', json_extract(@p0, '$[0]'))
+WHERE "Id" = @p1
+RETURNING 1;
+```
+
+## HierarchyId in .NET and EF Core
+
+Azure SQL and SQL Server have a special data type called [`hierarchyid`](/sql/t-sql/data-types/hierarchyid-data-type-method-reference) that is used to store [hierarchical data](/sql/relational-databases/hierarchical-data-sql-server). In this case, "hierarchical data" essentially means data that forms a tree structure, where each item can have a parent and/or children. Examples of such data are:
+
+- An organizational structure
+- A file system
+- A set of tasks in a project
+- A taxonomy of language terms
+- A graph of links between Web pages
+
+The database is then able to run queries against this data using its hierarchical structure. For example, a query can find ancestors and dependents of given items, or find all items at a certain depth in the hierarchy.
+
+### Support in .NET and EF Core
+
+Official support for the SQL Server `hierarchyid` type has only recently come to modern .NET platforms (i.e. ".NET Core"). This support is in the form of the [Microsoft.SqlServer.Types](https://www.nuget.org/packages/Microsoft.SqlServer.Types) NuGet package, which brings in low-level SQL Server-specific types. In this case, the low-level type is called `SqlHierarchyId`.
+
+At the next level, a new [Microsoft.EntityFrameworkCore.SqlServer.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.Abstractions) package has been introduced, which includes a higher-level `HierarchyId` type intended for use in entity types.
+
+> [!TIP]
+> The `HierarchyId` type is more idiomatic to the norms of .NET than `SqlHierarchyId`, which is instead modeled after how .NET Framework types are hosted inside the SQL Server database engine.  `HierarchyId` is designed to work with EF Core, but it can also be used outside of EF Core in other applications. The `Microsoft.EntityFrameworkCore.SqlServer.Abstractions` package doesn't reference any other packages, and so has minimal impact on deployed application size and dependencies.
+
+Use of `HierarchyId` for EF Core functionality such as queries and updates requires the [Microsoft.EntityFrameworkCore.SqlServer.HierarchyId](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.HierarchyId) package. This package brings in `Microsoft.EntityFrameworkCore.SqlServer.Abstractions` and `Microsoft.SqlServer.Types` as transitive dependencies, and so is often the only package needed. Once the package is installed, use of `HierarchyId` is enabled by calling `UseHierarchyId` as part of the application's call to `UseSqlServer`. For example:
+
+```csharp
+options.UseSqlServer(
+    connectionString,
+    x => x.UseHierarchyId());
+```
+
+> [!NOTE]
+> Unofficial support for `hierarchyid` in EF Core has been available for many years via the [EntityFrameworkCore.SqlServer.HierarchyId](https://www.nuget.org/packages/EntityFrameworkCore.SqlServer.HierarchyId) package. This package has been maintained as a collaboration between the community and the EF team. Now that there is official support for `hierarchyid` in .NET, the code from this community package forms, with the permission of the original contributors, the basis for the official package described here. Many thanks to all those involved over the years, including [@aljones](https://github.com/aljones), [@cutig3r](https://github.com/cutig3r), [@huan086](https://github.com/huan086), [@kmataru](https://github.com/kmataru), [@mehdihaghshenas](https://github.com/mehdihaghshenas), and [@vyrotek](https://github.com/vyrotek)
+
+### Modeling hierarchies
+
+The `HierarchyId` type can be used for properties of an entity type. For example, assume we want to model the paternal family tree of some fictional [halflings](https://en.wikipedia.org/wiki/Halfling). In the entity type for `Halfling`, a `HierarchyId` property can be used to locate each halfling in the family tree.
+
+<!--
+    public class Halfling
+    {
+        public Halfling(HierarchyId pathFromPatriarch, string name, int? yearOfBirth = null)
+        {
+            PathFromPatriarch = pathFromPatriarch;
+            Name = name;
+            YearOfBirth = yearOfBirth;
+        }
+
+        public int Id { get; private set; }
+        public HierarchyId PathFromPatriarch { get; set; }
+        public string Name { get; set; }
+        public int? YearOfBirth { get; set; }
+    }
+-->
+[!code-csharp[Halfling](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=Halfling)]
+
+> [!TIP]
+> The code shown here and in the examples below comes from [HierarchyIdSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs).
+
+> [!TIP]
+> If desired, `HierarchyId` is suitable for use as a key property type.
+
+In this case, the family tree is rooted with the patriarch of the family. Each halfling can be traced from the patriarch down the tree using its `PathFromPatriarch` property. SQL Server uses a compact binary format for these paths, but it is common to parse to and from a human-readable string representation when when working with code. In this representation, the position at each level is separated by a `/` character. For example, consider the family tree in the diagram below:
+
+![Halfling family tree](familytree.png)
+
+In this tree:
+
+- Balbo is at the root of the tree, represented by `/`.
+- Balbo has five children, represented by `/1/`, `/2/`, `/3/`, `/4/`, and `/5/`.
+- Balbo's first child, Mungo, also has five children, represented by `/1/1/`, `/1/2/`, `/1/3/`, `/1/4/`, and `/1/5/`. Notice that the `HierarchyId` for Balbo (`/1/`) is the prefix for all his children.
+- Similarly, Balbo's third child, Ponto, has two children, represented by `/3/1/` and `/3/2/`. Again the each of these children is prefixed by the `HierarchyId` for Ponto, which is represented as `/3/`.
+- And so on down the tree...
+
+The following code inserts this family tree into a database using EF Core:
+
+<!--
+            await AddRangeAsync(
+                new Halfling(HierarchyId.Parse("/"), "Balbo", 1167),
+                new Halfling(HierarchyId.Parse("/1/"), "Mungo", 1207),
+                new Halfling(HierarchyId.Parse("/2/"), "Pansy", 1212),
+                new Halfling(HierarchyId.Parse("/3/"), "Ponto", 1216),
+                new Halfling(HierarchyId.Parse("/4/"), "Largo", 1220),
+                new Halfling(HierarchyId.Parse("/5/"), "Lily", 1222),
+                new Halfling(HierarchyId.Parse("/1/1/"), "Bungo", 1246),
+                new Halfling(HierarchyId.Parse("/1/2/"), "Belba", 1256),
+                new Halfling(HierarchyId.Parse("/1/3/"), "Longo", 1260),
+                new Halfling(HierarchyId.Parse("/1/4/"), "Linda", 1262),
+                new Halfling(HierarchyId.Parse("/1/5/"), "Bingo", 1264),
+                new Halfling(HierarchyId.Parse("/3/1/"), "Rosa", 1256),
+                new Halfling(HierarchyId.Parse("/3/2/"), "Polo"),
+                new Halfling(HierarchyId.Parse("/4/1/"), "Fosco", 1264),
+                new Halfling(HierarchyId.Parse("/1/1/1/"), "Bilbo", 1290),
+                new Halfling(HierarchyId.Parse("/1/3/1/"), "Otho", 1310),
+                new Halfling(HierarchyId.Parse("/1/5/1/"), "Falco", 1303),
+                new Halfling(HierarchyId.Parse("/3/2/1/"), "Posco", 1302),
+                new Halfling(HierarchyId.Parse("/3/2/2/"), "Prisca", 1306),
+                new Halfling(HierarchyId.Parse("/4/1/1/"), "Dora", 1302),
+                new Halfling(HierarchyId.Parse("/4/1/2/"), "Drogo", 1308),
+                new Halfling(HierarchyId.Parse("/4/1/3/"), "Dudo", 1311),
+                new Halfling(HierarchyId.Parse("/1/3/1/1/"), "Lotho", 1310),
+                new Halfling(HierarchyId.Parse("/1/5/1/1/"), "Poppy", 1344),
+                new Halfling(HierarchyId.Parse("/3/2/1/1/"), "Ponto", 1346),
+                new Halfling(HierarchyId.Parse("/3/2/1/2/"), "Porto", 1348),
+                new Halfling(HierarchyId.Parse("/3/2/1/3/"), "Peony", 1350),
+                new Halfling(HierarchyId.Parse("/4/1/2/1/"), "Frodo", 1368),
+                new Halfling(HierarchyId.Parse("/4/1/3/1/"), "Daisy", 1350),
+                new Halfling(HierarchyId.Parse("/3/2/1/1/1/"), "Angelica", 1381));
+
+            await SaveChangesAsync();
+-->
+[!code-csharp[AddRangeAsync](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=AddRangeAsync)]
+
+> [!TIP]
+> If needed, decimal values can be used to create new nodes between two existing nodes. For example, `/3/2.5/2/` goes between `/3/2/2/` and `/3/3/2/`.
+
+### Querying hierarchies
+
+`HierarchyId` exposes several methods that can be used in LINQ queries.
+
+| Method                                                           | Description                                                                                                                                                                |
+|------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GetAncestor(int n)`                                             | Gets the node `n` levels up the hierarchical tree.                                                                                                                         |
+| `GetDescendant(HierarchyId? child1, HierarchyId? child2)`        | Gets the value of a descendant node that is greater than `child1` and less than `child2`.                                                                                  |
+| `GetLevel()`                                                     | Gets the level of this node in the hierarchical tree.                                                                                                                      |
+| `GetReparentedValue(HierarchyId? oldRoot, HierarchyId? newRoot)` | Gets a value representing the location of a new node that has a path from `newRoot` equal to the path from `oldRoot` to this, effectively moving this to the new location. |
+| `IsDescendantOf(HierarchyId? parent)`                            | Gets a value indicating whether this node is a descendant of `parent`.                                                                                                     |
+
+In addition, the operators `==`, `!=`, `<`, `<=`, `>` and `>=` can be used.
+
+The following are examples of using these methods in LINQ queries.
+
+**Get entities at a given level in the tree**
+
+The following query uses `GetLevel` to return all halflings at a given level in the family tree:
+
+<!--
+            var generation = await context.Halflings.Where(halfling => halfling.PathFromPatriarch.GetLevel() == level).ToListAsync();
+-->
+[!code-csharp[GetLevel](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=GetLevel)]
+
+This translates to the following SQL:
+
+```sql
+SELECT [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
+FROM [Halflings] AS [h]
+WHERE [h].[PathFromPatriarch].GetLevel() = @__level_0
+```
+
+Running this in a loop we can get the halflings for every generation:
+
+```text
+Generation 0: Balbo
+Generation 1: Mungo, Pansy, Ponto, Largo, Lily
+Generation 2: Bungo, Belba, Longo, Linda, Bingo, Rosa, Polo, Fosco
+Generation 3: Bilbo, Otho, Falco, Posco, Prisca, Dora, Drogo, Dudo
+Generation 4: Lotho, Poppy, Ponto, Porto, Peony, Frodo, Daisy
+Generation 5: Angelica
+```
+
+**Get the direct ancestor of an entity**
+
+The following query uses `GetAncestor` to find the direct ancestor of a halfling, given that halfling's name:
+
+<!--
+        async Task<Halfling?> FindDirectAncestor(string name)
+            => await context.Halflings
+                .SingleOrDefaultAsync(
+                    ancestor => ancestor.PathFromPatriarch == context.Halflings
+                        .Single(descendent => descendent.Name == name).PathFromPatriarch
+                        .GetAncestor(1));
+-->
+[!code-csharp[FindDirectAncestor](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=FindDirectAncestor)]
+
+This translates to the following SQL:
+
+```sql
+SELECT TOP(2) [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
+FROM [Halflings] AS [h]
+WHERE [h].[PathFromPatriarch] = (
+    SELECT TOP(1) [h0].[PathFromPatriarch]
+    FROM [Halflings] AS [h0]
+    WHERE [h0].[Name] = @__name_0).GetAncestor(1)
+```
+
+Running this query for the halfling "Bilbo" returns "Bungo".
+
+**Get the direct descendents of an entity**
+
+The following query also uses `GetAncestor`, but this time to find the direct descendents of a halfling, given that halfling's name:
+
+<!--
+        IQueryable<Halfling> FindDirectDescendents(string name)
+            => context.Halflings.Where(
+                descendent => descendent.PathFromPatriarch.GetAncestor(1) == context.Halflings
+                    .Single(ancestor => ancestor.Name == name).PathFromPatriarch);
+-->
+[!code-csharp[FindDirectDescendents](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=FindDirectDescendents)]
+
+This translates to the following SQL:
+
+```sql
+SELECT [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
+FROM [Halflings] AS [h]
+WHERE [h].[PathFromPatriarch].GetAncestor(1) = (
+    SELECT TOP(1) [h0].[PathFromPatriarch]
+    FROM [Halflings] AS [h0]
+    WHERE [h0].[Name] = @__name_0)
+```
+
+Running this query for the halfling "Mungo" returns "Bungo", "Belba", "Longo", and "Linda".
+
+**Get all ancestors of an entity**
+
+`GetAncestor` is useful for searching up or down a single level, or, indeed, a specified number of levels. On the other hand, `IsDescendantOf` is useful for finding all ancestors or dependents. For example, the following query uses `IsDescendantOf` to find the all the ancestors of a halfling, given that halfling's name:
+
+<!--
+        IQueryable<Halfling> FindAllAncestors(string name)
+            => context.Halflings.Where(
+                    ancestor => context.Halflings
+                        .Single(
+                            descendent =>
+                                descendent.Name == name
+                                && ancestor.Id != descendent.Id)
+                        .PathFromPatriarch.IsDescendantOf(ancestor.PathFromPatriarch))
+                .OrderByDescending(ancestor => ancestor.PathFromPatriarch.GetLevel());
+-->
+[!code-csharp[FindAllAncestors](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=FindAllAncestors)]
+
+> [!IMPORTANT]
+> `IsDescendantOf` returns true for itself, which is why it is filtered out in the query above.
+
+This translates to the following SQL:
+
+```sql
+SELECT [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
+FROM [Halflings] AS [h]
+WHERE (
+    SELECT TOP(1) [h0].[PathFromPatriarch]
+    FROM [Halflings] AS [h0]
+    WHERE [h0].[Name] = @__name_0 AND [h].[Id] <> [h0].[Id]).IsDescendantOf([h].[PathFromPatriarch]) = CAST(1 AS bit)
+ORDER BY [h].[PathFromPatriarch].GetLevel() DESC
+```
+
+Running this query for the halfling "Bilbo" returns "Bungo", "Mungo", and "Balbo".
+
+**Get all descendents of an entity**
+
+The following query also uses `IsDescendantOf`, but this time to all the descendents of a halfling, given that halfling's name:
+
+<!--
+        IQueryable<Halfling> FindAllDescendents(string name)
+            => context.Halflings.Where(
+                    descendent => descendent.PathFromPatriarch.IsDescendantOf(
+                        context.Halflings
+                            .Single(
+                                ancestor =>
+                                    ancestor.Name == name
+                                    && descendent.Id != ancestor.Id)
+                            .PathFromPatriarch))
+                .OrderBy(descendent => descendent.PathFromPatriarch.GetLevel());
+-->
+[!code-csharp[FindAllDescendents](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=FindAllDescendents)]
+
+This translates to the following SQL:
+
+```sql
+SELECT [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
+FROM [Halflings] AS [h]
+WHERE [h].[PathFromPatriarch].IsDescendantOf((
+    SELECT TOP(1) [h0].[PathFromPatriarch]
+    FROM [Halflings] AS [h0]
+    WHERE [h0].[Name] = @__name_0 AND [h].[Id] <> [h0].[Id])) = CAST(1 AS bit)
+ORDER BY [h].[PathFromPatriarch].GetLevel()
+```
+
+Running this query for the halfling "Mungo" returns "Bungo", "Belba", "Longo", "Linda", "Bingo", "Bilbo", "Otho", "Falco", "Lotho", and "Poppy".
+
+**Finding a common ancestor**
+
+One of the most common questions asked about this particular family tree is, "who is the common ancestor of Frodo and Bilbo?" We can use `IsDescendantOf` to write such a query:
+
+<!--
+        async Task<Halfling?> FindCommonAncestor(Halfling first, Halfling second)
+            => await context.Halflings
+                .Where(
+                    ancestor => first.PathFromPatriarch.IsDescendantOf(ancestor.PathFromPatriarch)
+                                && second.PathFromPatriarch.IsDescendantOf(ancestor.PathFromPatriarch))
+                .OrderByDescending(ancestor => ancestor.PathFromPatriarch.GetLevel())
+                .FirstOrDefaultAsync();
+-->
+[!code-csharp[FindCommonAncestor](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=FindCommonAncestor)]
+
+This translates to the following SQL:
+
+```sql
+SELECT TOP(1) [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
+FROM [Halflings] AS [h]
+WHERE @__first_PathFromPatriarch_0.IsDescendantOf([h].[PathFromPatriarch]) = CAST(1 AS bit)
+  AND @__second_PathFromPatriarch_1.IsDescendantOf([h].[PathFromPatriarch]) = CAST(1 AS bit)
+ORDER BY [h].[PathFromPatriarch].GetLevel() DESC
+```
+
+Running this query with "Bilbo" and "Frodo" tells us that their common ancestor is "Balbo".
+
+### Updating hierarchies
+
+The normal [change tracking](xref:core/change-tracking/index) and [SaveChanges](xref:core/saving/basic) mechanisms can be used to update `hierarchyid` columns.
+
+**Re-parenting a sub-hierarchy**
+
+For example, I'm sure we all remember the scandal of SR 1752 (a.k.a. "LongoGate") when DNA testing revealed that Longo was not in fact the son of Mungo, but actually the son of Ponto! One fallout from this scandal was that the family tree needed to be re-written. In particular, Longo and all his descendents needed to be re-parented from Mungo to Ponto. `GetReparentedValue` can be used to do this. For example, first "Longo" and all his descendents are queried:
+
+<!--
+        var longoAndDescendents = await context.Halflings.Where(
+                descendent => descendent.PathFromPatriarch.IsDescendantOf(
+                    context.Halflings.Single(ancestor => ancestor.Name == "Longo").PathFromPatriarch))
+            .ToListAsync();
+-->
+[!code-csharp[LongoAndDescendents](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=LongoAndDescendents)]
+
+Then `GetReparentedValue` is used to update the `HierarchyId` for Longo and each descendent, followed by a call to `SaveChangesAsync`:
+
+<!--
+        foreach (var descendent in longoAndDescendents)
+        {
+            descendent.PathFromPatriarch
+                = descendent.PathFromPatriarch.GetReparentedValue(
+                    mungo.PathFromPatriarch, ponto.PathFromPatriarch)!;
+        }
+
+        await context.SaveChangesAsync();
+-->
+[!code-csharp[GetReparentedValue](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=GetReparentedValue)]
+
+This results in the following database update:
+
+```sql
+SET NOCOUNT ON;
+UPDATE [Halflings] SET [PathFromPatriarch] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+UPDATE [Halflings] SET [PathFromPatriarch] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+UPDATE [Halflings] SET [PathFromPatriarch] = @p4
+OUTPUT 1
+WHERE [Id] = @p5;
+```
+
+Using these parameters:
+
+```text
+ @p1='9',
+ @p0='0x7BC0' (Nullable = false) (Size = 2) (DbType = Object),
+ @p3='16',
+ @p2='0x7BD6' (Nullable = false) (Size = 2) (DbType = Object),
+ @p5='23',
+ @p4='0x7BD6B0' (Nullable = false) (Size = 3) (DbType = Object)
+ ```
+
+> [!NOTE]
+> The parameters values for `HierarchyId` properties are sent to the database in their compact, binary format.
+
+Following the update, querying for the descendents of "Mungo" returns "Bungo", "Belba", "Linda", "Bingo", "Bilbo", "Falco", and "Poppy", while querying for the descendents of "Ponto" returns "Longo", "Rosa", "Polo", "Otho", "Posco", "Prisca", "Lotho", "Ponto", "Porto", "Peony", and "Angelica".
+
+## Raw SQL queries for unmapped types
 
 EF7 introduced [raw SQL queries returning scalar types](xref:core/querying/sql-queries#querying-scalar-(non-entity)-types). This is enhanced in EF8 to include raw SQL queries returning any mappable CLR type, without including that type in the EF model.
 
@@ -306,6 +1825,8 @@ The returned `IQueryable` can be composed upon when it is the result of a view o
 -->
 [!code-csharp[SqlQueryStoredProc](../../../../samples/core/Miscellaneous/NewInEFCore8/RawSqlSample.cs?name=SqlQueryStoredProc)]
 
+## Enhancements to lazy-loading
+
 ### Lazy-loading for no-tracking queries
 
 EF8 adds support for [lazy-loading of navigations](xref:core/querying/related-data/lazy) on entities that are not being tracked by the `DbContext`. This means a no-tracking query can be followed by lazy-loading of navigations on the entities returned by the no-tracking query.
@@ -390,6 +1911,8 @@ This can be changed in EF8 to opt-in to the classic EF6 behavior such that a nav
 -->
 [!code-csharp[IgnoreNonVirtualNavigations](../../../../samples/core/Miscellaneous/NewInEFCore8/LazyLoadingSample.cs?name=IgnoreNonVirtualNavigations)]
 
+## Access to tracked entities
+
 ### Lookup tracked entities by primary, alternate, or foreign key
 
 Internally, EF maintains data structures for finding tracked entities by primary, alternate, or foreign key. These data structures are used for efficient fixup between related entities when new entities are tracked or relationships change.
@@ -447,6 +1970,8 @@ Finally, it is also possible to perform lookups against composite keys, other co
         var postTagEntry = context.Set<PostTag>().Local.FindEntryUntyped(new object[] { 4, "TagEF" });
 -->
 [!code-csharp[LookupByCompositePrimaryKey](../../../../samples/core/Miscellaneous/NewInEFCore8/LookupByKeySample.cs?name=LookupByCompositePrimaryKey)]
+
+## Model building
 
 ### Discriminator columns have max length
 
@@ -677,918 +2202,3 @@ EF8 reverse engineering (a.k.a. scaffolding from an existing database) now suppo
 
 > [!WARNING]
 > These database systems have differences from normal SQL Server and Azure SQL databases. These differences mean that not all EF Core functionality is supported when writing queries against or performing other operations with these database systems.
-
-### Smaller enhancements included in Preview 1
-
-In addition to the enhancements described above, EF8 Preview 1 also [includes many smaller enhancements](https://github.com/dotnet/efcore/issues?q=is%3Aissue+label%3Atype-enhancement+milestone%3A8.0.0-preview1+is%3Aclosed). Some of these relate to the internal workings of EF Core, even excluding these, there are many that may be of interest to application developers. These include:
-
-- [Translate ElementAt(OrDefault)](https://github.com/dotnet/efcore/issues/17066)
-- [Translate ToString() on a string column](https://github.com/dotnet/efcore/issues/20839)
-- [Generic overload of ConventionSetBuilder.Remove](https://github.com/dotnet/efcore/issues/29476)
-- [Allow UseSequence and HiLo on non-key properties](https://github.com/dotnet/efcore/issues/29758)
-- [Pass query tracking behavior to materialization interceptor](https://github.com/dotnet/efcore/issues/29910)
-- [Use case-insensitive string key comparisons on SQL Server](https://github.com/dotnet/efcore/issues/27526)
-- [Allow value converters to change the DbType](https://github.com/dotnet/efcore/issues/24771)
-- [Resolve application services in EF services](https://github.com/dotnet/efcore/issues/13540)
-- [Numeric rowersion properties automatically convert to binary](https://github.com/dotnet/efcore/issues/12434)
-- [Allow transfer of ownership of DbConnection from application to DbContext](https://github.com/dotnet/efcore/issues/24199)
-- [Provide more information when 'No DbContext was found' error is generated](https://github.com/dotnet/efcore/issues/18715)
-
-## New in EF8 Preview 2
-
-### JSON Columns for SQLite
-
-EF7 introduced support for mapping to JSON columns when using Azure SQL/SQL Server. EF8 extends this support to SQLite databases. As for the SQL Server support, this includes:
-
-- Mapping of aggregates built from .NET types to JSON documents stored in SQLite columns
-- Queries into JSON columns, such as filtering and sorting by the elements of the documents
-- Queries that project elements out of the JSON document into results
-- Updating and saving changes to JSON documents
-
-The existing [documentation from What's New in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns) provides detailed information on JSON mapping, queries, and updates. This documentation now also applies to SQLite.
-
-> [!TIP]
-> The code shown in the EF7 documentation has been updated to also run on SQLite can can be found in [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs).
-
-#### Queries into JSON columns
-
-Queries into JSON columns on SQLite use the `json_extract` function. For example, the "authors in Chigley" query from the documentation referenced above:
-
-<!--
-        var authorsInChigley = await context.Authors
-            .Where(author => author.Contact.Address.City == "Chigley")
-            .ToListAsync();
--->
-[!code-csharp[AuthorsInChigley](../../../../samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs?name=AuthorsInChigley)]
-
-Is translated to the following SQL when using SQLite:
-
-```sql
-SELECT "a"."Id", "a"."Name", "a"."Contact"
-FROM "Authors" AS "a"
-WHERE json_extract("a"."Contact", '$.Address.City') = 'Chigley'
-```
-
-#### Updating JSON columns
-
-For updates, EF uses the `json_set` function on SQLite. For example, when updating a single property in a document:
-
-<!--
-        var arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
-
-        arthur.Contact.Address.Country = "United Kingdom";
-
-        await context.SaveChangesAsync();
--->
-[!code-csharp[UpdateProperty](../../../../samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs?name=UpdateProperty)]
-
-EF generates the following parameters:
-
-```text
-info: 3/10/2023 10:51:33.127 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
-      Executed DbCommand (0ms) [Parameters=[@p0='["United Kingdom"]' (Nullable = false) (Size = 18), @p1='4'], CommandType='Text', CommandTimeout='30']
-```
-
-Which use the `json_set` function on SQLite:
-
-```sql
-UPDATE "Authors" SET "Contact" = json_set("Contact", '$.Address.Country', json_extract(@p0, '$[0]'))
-WHERE "Id" = @p1
-RETURNING 1;
-```
-
-### SQL Server HierarchyId
-
-Azure SQL and SQL Server have a special data type called [`hierarchyid`](/sql/t-sql/data-types/hierarchyid-data-type-method-reference) that is used to store [hierarchical data](/sql/relational-databases/hierarchical-data-sql-server). In this case, "hierarchical data" essentially means data that forms a tree structure, where each item can have a parent and/or children. Examples of such data are:
-
-- An organizational structure
-- A file system
-- A set of tasks in a project
-- A taxonomy of language terms
-- A graph of links between Web pages
-
-The database is then able to run queries against this data using its hierarchical structure. For example, a query can find ancestors and dependents of given items, or find all items at a certain depth in the hierarchy.
-
-#### HierarchyId support in .NET and EF Core
-
-Official support for the SQL Server `hierarchyid` type has only recently come to modern .NET platforms (i.e. ".NET Core"). This support is in the form of the [Microsoft.SqlServer.Types](https://www.nuget.org/packages/Microsoft.SqlServer.Types) NuGet package, which brings in low-level SQL Server-specific types. In this case, the low-level type is called `SqlHierarchyId`.
-
-At the next level, a new [Microsoft.EntityFrameworkCore.SqlServer.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.Abstractions) package has been introduced, which includes a higher-level `HierarchyId` type intended for use in entity types.
-
-> [!TIP]
-> The `HierarchyId` type is more idiomatic to the norms of .NET than `SqlHierarchyId`, which is instead modeled after how .NET Framework types are hosted inside the SQL Server database engine.  `HierarchyId` is designed to work with EF Core, but it can also be used outside of EF Core in other applications. The `Microsoft.EntityFrameworkCore.SqlServer.Abstractions` package doesn't reference any other packages, and so has minimal impact on deployed application size and dependencies.
-
-Use of `HierarchyId` for EF Core functionality such as queries and updates requires the [Microsoft.EntityFrameworkCore.SqlServer.HierarchyId](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.HierarchyId) package. This package brings in `Microsoft.EntityFrameworkCore.SqlServer.Abstractions` and `Microsoft.SqlServer.Types` as transitive dependencies, and so is often the only package needed. Once the package is installed, use of `HierarchyId` is enabled by calling `UseHierarchyId` as part of the application's call to `UseSqlServer`. For example:
-
-```csharp
-options.UseSqlServer(
-    connectionString,
-    x => x.UseHierarchyId());
-```
-
-> [!NOTE]
-> Unofficial support for `hierarchyid` in EF Core has been available for many years via the [EntityFrameworkCore.SqlServer.HierarchyId](https://www.nuget.org/packages/EntityFrameworkCore.SqlServer.HierarchyId) package. This package has been maintained as a collaboration between the community and the EF team. Now that there is official support for `hierarchyid` in .NET, the code from this community package forms, with the permission of the original contributors, the basis for the official package described here. Many thanks to all those involved over the years, including [@aljones](https://github.com/aljones), [@cutig3r](https://github.com/cutig3r), [@huan086](https://github.com/huan086), [@kmataru](https://github.com/kmataru), [@mehdihaghshenas](https://github.com/mehdihaghshenas), and [@vyrotek](https://github.com/vyrotek)
-
-#### Modeling hierarchies
-
-The `HierarchyId` type can be used for properties of an entity type. For example, assume we want to model the paternal family tree of some fictional [halflings](https://en.wikipedia.org/wiki/Halfling). In the entity type for `Halfling`, a `HierarchyId` property can be used to locate each halfling in the family tree.
-
-<!--
-    public class Halfling
-    {
-        public Halfling(HierarchyId pathFromPatriarch, string name, int? yearOfBirth = null)
-        {
-            PathFromPatriarch = pathFromPatriarch;
-            Name = name;
-            YearOfBirth = yearOfBirth;
-        }
-
-        public int Id { get; private set; }
-        public HierarchyId PathFromPatriarch { get; set; }
-        public string Name { get; set; }
-        public int? YearOfBirth { get; set; }
-    }
--->
-[!code-csharp[Halfling](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=Halfling)]
-
-> [!TIP]
-> The code shown here and in the examples below comes from [HierarchyIdSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs).
-
-> [!TIP]
-> If desired, `HierarchyId` is suitable for use as a key property type.
-
-In this case, the family tree is rooted with the patriarch of the family. Each halfling can be traced from the patriarch down the tree using its `PathFromPatriarch` property. SQL Server uses a compact binary format for these paths, but it is common to parse to and from a human-readable string representation when when working with code. In this representation, the position at each level is separated by a `/` character. For example, consider the family tree in the diagram below:
-
-![Halfling family tree](familytree.png)
-
-In this tree:
-
-- Balbo is at the root of the tree, represented by `/`.
-- Balbo has five children, represented by `/1/`, `/2/`, `/3/`, `/4/`, and `/5/`.
-- Balbo's first child, Mungo, also has five children, represented by `/1/1/`, `/1/2/`, `/1/3/`, `/1/4/`, and `/1/5/`. Notice that the `HierarchyId` for Balbo (`/1/`) is the prefix for all his children.
-- Similarly, Balbo's third child, Ponto, has two children, represented by `/3/1/` and `/3/2/`. Again the each of these children is prefixed by the `HierarchyId` for Ponto, which is represented as `/3/`.
-- And so on down the tree...
-
-The following code inserts this family tree into a database using EF Core:
-
-<!--
-            await AddRangeAsync(
-                new Halfling(HierarchyId.Parse("/"), "Balbo", 1167),
-                new Halfling(HierarchyId.Parse("/1/"), "Mungo", 1207),
-                new Halfling(HierarchyId.Parse("/2/"), "Pansy", 1212),
-                new Halfling(HierarchyId.Parse("/3/"), "Ponto", 1216),
-                new Halfling(HierarchyId.Parse("/4/"), "Largo", 1220),
-                new Halfling(HierarchyId.Parse("/5/"), "Lily", 1222),
-                new Halfling(HierarchyId.Parse("/1/1/"), "Bungo", 1246),
-                new Halfling(HierarchyId.Parse("/1/2/"), "Belba", 1256),
-                new Halfling(HierarchyId.Parse("/1/3/"), "Longo", 1260),
-                new Halfling(HierarchyId.Parse("/1/4/"), "Linda", 1262),
-                new Halfling(HierarchyId.Parse("/1/5/"), "Bingo", 1264),
-                new Halfling(HierarchyId.Parse("/3/1/"), "Rosa", 1256),
-                new Halfling(HierarchyId.Parse("/3/2/"), "Polo"),
-                new Halfling(HierarchyId.Parse("/4/1/"), "Fosco", 1264),
-                new Halfling(HierarchyId.Parse("/1/1/1/"), "Bilbo", 1290),
-                new Halfling(HierarchyId.Parse("/1/3/1/"), "Otho", 1310),
-                new Halfling(HierarchyId.Parse("/1/5/1/"), "Falco", 1303),
-                new Halfling(HierarchyId.Parse("/3/2/1/"), "Posco", 1302),
-                new Halfling(HierarchyId.Parse("/3/2/2/"), "Prisca", 1306),
-                new Halfling(HierarchyId.Parse("/4/1/1/"), "Dora", 1302),
-                new Halfling(HierarchyId.Parse("/4/1/2/"), "Drogo", 1308),
-                new Halfling(HierarchyId.Parse("/4/1/3/"), "Dudo", 1311),
-                new Halfling(HierarchyId.Parse("/1/3/1/1/"), "Lotho", 1310),
-                new Halfling(HierarchyId.Parse("/1/5/1/1/"), "Poppy", 1344),
-                new Halfling(HierarchyId.Parse("/3/2/1/1/"), "Ponto", 1346),
-                new Halfling(HierarchyId.Parse("/3/2/1/2/"), "Porto", 1348),
-                new Halfling(HierarchyId.Parse("/3/2/1/3/"), "Peony", 1350),
-                new Halfling(HierarchyId.Parse("/4/1/2/1/"), "Frodo", 1368),
-                new Halfling(HierarchyId.Parse("/4/1/3/1/"), "Daisy", 1350),
-                new Halfling(HierarchyId.Parse("/3/2/1/1/1/"), "Angelica", 1381));
-
-            await SaveChangesAsync();
--->
-[!code-csharp[AddRangeAsync](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=AddRangeAsync)]
-
-> [!TIP]
-> If needed, decimal values can be used to create new nodes between two existing nodes. For example, `/3/2.5/2/` goes between `/3/2/2/` and `/3/3/2/`.
-
-#### Querying hierarchies
-
-`HierarchyId` exposes several methods that can be used in LINQ queries.
-
-| Method                                                           | Description                                                                                                                                                                |
-|------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GetAncestor(int n)`                                             | Gets the node `n` levels up the hierarchical tree.                                                                                                                         |
-| `GetDescendant(HierarchyId? child1, HierarchyId? child2)`        | Gets the value of a descendant node that is greater than `child1` and less than `child2`.                                                                                  |
-| `GetLevel()`                                                     | Gets the level of this node in the hierarchical tree.                                                                                                                      |
-| `GetReparentedValue(HierarchyId? oldRoot, HierarchyId? newRoot)` | Gets a value representing the location of a new node that has a path from `newRoot` equal to the path from `oldRoot` to this, effectively moving this to the new location. |
-| `IsDescendantOf(HierarchyId? parent)`                            | Gets a value indicating whether this node is a descendant of `parent`.                                                                                                     |
-
-In addition, the operators `==`, `!=`, `<`, `<=`, `>` and `>=` can be used.
-
-The following are examples of using these methods in LINQ queries.
-
-**Get entities at a given level in the tree**
-
-The following query uses `GetLevel` to return all halflings at a given level in the family tree:
-
-<!--
-            var generation = await context.Halflings.Where(halfling => halfling.PathFromPatriarch.GetLevel() == level).ToListAsync();
--->
-[!code-csharp[GetLevel](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=GetLevel)]
-
-This translates to the following SQL:
-
-```sql
-SELECT [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
-FROM [Halflings] AS [h]
-WHERE [h].[PathFromPatriarch].GetLevel() = @__level_0
-```
-
-Running this in a loop we can get the halflings for every generation:
-
-```text
-Generation 0: Balbo
-Generation 1: Mungo, Pansy, Ponto, Largo, Lily
-Generation 2: Bungo, Belba, Longo, Linda, Bingo, Rosa, Polo, Fosco
-Generation 3: Bilbo, Otho, Falco, Posco, Prisca, Dora, Drogo, Dudo
-Generation 4: Lotho, Poppy, Ponto, Porto, Peony, Frodo, Daisy
-Generation 5: Angelica
-```
-
-**Get the direct ancestor of an entity**
-
-The following query uses `GetAncestor` to find the direct ancestor of a halfling, given that halfling's name:
-
-<!--
-        async Task<Halfling?> FindDirectAncestor(string name)
-            => await context.Halflings
-                .SingleOrDefaultAsync(
-                    ancestor => ancestor.PathFromPatriarch == context.Halflings
-                        .Single(descendent => descendent.Name == name).PathFromPatriarch
-                        .GetAncestor(1));
--->
-[!code-csharp[FindDirectAncestor](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=FindDirectAncestor)]
-
-This translates to the following SQL:
-
-```sql
-SELECT TOP(2) [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
-FROM [Halflings] AS [h]
-WHERE [h].[PathFromPatriarch] = (
-    SELECT TOP(1) [h0].[PathFromPatriarch]
-    FROM [Halflings] AS [h0]
-    WHERE [h0].[Name] = @__name_0).GetAncestor(1)
-```
-
-Running this query for the halfling "Bilbo" returns "Bungo".
-
-**Get the direct descendents of an entity**
-
-The following query also uses `GetAncestor`, but this time to find the direct descendents of a halfling, given that halfling's name:
-
-<!--
-        IQueryable<Halfling> FindDirectDescendents(string name)
-            => context.Halflings.Where(
-                descendent => descendent.PathFromPatriarch.GetAncestor(1) == context.Halflings
-                    .Single(ancestor => ancestor.Name == name).PathFromPatriarch);
--->
-[!code-csharp[FindDirectDescendents](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=FindDirectDescendents)]
-
-This translates to the following SQL:
-
-```sql
-SELECT [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
-FROM [Halflings] AS [h]
-WHERE [h].[PathFromPatriarch].GetAncestor(1) = (
-    SELECT TOP(1) [h0].[PathFromPatriarch]
-    FROM [Halflings] AS [h0]
-    WHERE [h0].[Name] = @__name_0)
-```
-
-Running this query for the halfling "Mungo" returns "Bungo", "Belba", "Longo", and "Linda".
-
-**Get all ancestors of an entity**
-
-`GetAncestor` is useful for searching up or down a single level, or, indeed, a specified number of levels. On the other hand, `IsDescendantOf` is useful for finding all ancestors or dependents. For example, the following query uses `IsDescendantOf` to find the all the ancestors of a halfling, given that halfling's name:
-
-<!--
-        IQueryable<Halfling> FindAllAncestors(string name)
-            => context.Halflings.Where(
-                    ancestor => context.Halflings
-                        .Single(
-                            descendent =>
-                                descendent.Name == name
-                                && ancestor.Id != descendent.Id)
-                        .PathFromPatriarch.IsDescendantOf(ancestor.PathFromPatriarch))
-                .OrderByDescending(ancestor => ancestor.PathFromPatriarch.GetLevel());
--->
-[!code-csharp[FindAllAncestors](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=FindAllAncestors)]
-
-> [!IMPORTANT]
-> `IsDescendantOf` returns true for itself, which is why it is filtered out in the query above.
-
-This translates to the following SQL:
-
-```sql
-SELECT [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
-FROM [Halflings] AS [h]
-WHERE (
-    SELECT TOP(1) [h0].[PathFromPatriarch]
-    FROM [Halflings] AS [h0]
-    WHERE [h0].[Name] = @__name_0 AND [h].[Id] <> [h0].[Id]).IsDescendantOf([h].[PathFromPatriarch]) = CAST(1 AS bit)
-ORDER BY [h].[PathFromPatriarch].GetLevel() DESC
-```
-
-Running this query for the halfling "Bilbo" returns "Bungo", "Mungo", and "Balbo".
-
-**Get all descendents of an entity**
-
-The following query also uses `IsDescendantOf`, but this time to all the descendents of a halfling, given that halfling's name:
-
-<!--
-        IQueryable<Halfling> FindAllDescendents(string name)
-            => context.Halflings.Where(
-                    descendent => descendent.PathFromPatriarch.IsDescendantOf(
-                        context.Halflings
-                            .Single(
-                                ancestor =>
-                                    ancestor.Name == name
-                                    && descendent.Id != ancestor.Id)
-                            .PathFromPatriarch))
-                .OrderBy(descendent => descendent.PathFromPatriarch.GetLevel());
--->
-[!code-csharp[FindAllDescendents](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=FindAllDescendents)]
-
-This translates to the following SQL:
-
-```sql
-SELECT [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
-FROM [Halflings] AS [h]
-WHERE [h].[PathFromPatriarch].IsDescendantOf((
-    SELECT TOP(1) [h0].[PathFromPatriarch]
-    FROM [Halflings] AS [h0]
-    WHERE [h0].[Name] = @__name_0 AND [h].[Id] <> [h0].[Id])) = CAST(1 AS bit)
-ORDER BY [h].[PathFromPatriarch].GetLevel()
-```
-
-Running this query for the halfling "Mungo" returns "Bungo", "Belba", "Longo", "Linda", "Bingo", "Bilbo", "Otho", "Falco", "Lotho", and "Poppy".
-
-**Finding a common ancestor**
-
-One of the most common questions asked about this particular family tree is, "who is the common ancestor of Frodo and Bilbo?" We can use `IsDescendantOf` to write such a query:
-
-<!--
-        async Task<Halfling?> FindCommonAncestor(Halfling first, Halfling second)
-            => await context.Halflings
-                .Where(
-                    ancestor => first.PathFromPatriarch.IsDescendantOf(ancestor.PathFromPatriarch)
-                                && second.PathFromPatriarch.IsDescendantOf(ancestor.PathFromPatriarch))
-                .OrderByDescending(ancestor => ancestor.PathFromPatriarch.GetLevel())
-                .FirstOrDefaultAsync();
--->
-[!code-csharp[FindCommonAncestor](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=FindCommonAncestor)]
-
-This translates to the following SQL:
-
-```sql
-SELECT TOP(1) [h].[Id], [h].[Name], [h].[PathFromPatriarch], [h].[YearOfBirth]
-FROM [Halflings] AS [h]
-WHERE @__first_PathFromPatriarch_0.IsDescendantOf([h].[PathFromPatriarch]) = CAST(1 AS bit)
-  AND @__second_PathFromPatriarch_1.IsDescendantOf([h].[PathFromPatriarch]) = CAST(1 AS bit)
-ORDER BY [h].[PathFromPatriarch].GetLevel() DESC
-```
-
-Running this query with "Bilbo" and "Frodo" tells us that their common ancestor is "Balbo".
-
-#### Updating hierarchies
-
-The normal [change tracking](xref:core/change-tracking/index) and [SaveChanges](xref:core/saving/basic) mechanisms can be used to update `hierarchyid` columns.
-
-**Re-parenting a sub-hierarchy**
-
-For example, I'm sure we all remember the scandal of SR 1752 (a.k.a. "LongoGate") when DNA testing revealed that Longo was not in fact the son of Mungo, but actually the son of Ponto! One fallout from this scandal was that the family tree needed to be re-written. In particular, Longo and all his descendents needed to be re-parented from Mungo to Ponto. `GetReparentedValue` can be used to do this. For example, first "Longo" and all his descendents are queried:
-
-<!--
-        var longoAndDescendents = await context.Halflings.Where(
-                descendent => descendent.PathFromPatriarch.IsDescendantOf(
-                    context.Halflings.Single(ancestor => ancestor.Name == "Longo").PathFromPatriarch))
-            .ToListAsync();
--->
-[!code-csharp[LongoAndDescendents](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=LongoAndDescendents)]
-
-Then `GetReparentedValue` is used to update the `HierarchyId` for Longo and each descendent, followed by a call to `SaveChangesAsync`:
-
-<!--
-        foreach (var descendent in longoAndDescendents)
-        {
-            descendent.PathFromPatriarch
-                = descendent.PathFromPatriarch.GetReparentedValue(
-                    mungo.PathFromPatriarch, ponto.PathFromPatriarch)!;
-        }
-
-        await context.SaveChangesAsync();
--->
-[!code-csharp[GetReparentedValue](../../../../samples/core/Miscellaneous/NewInEFCore8/HierarchyIdSample.cs?name=GetReparentedValue)]
-
-This results in the following database update:
-
-```sql
-SET NOCOUNT ON;
-UPDATE [Halflings] SET [PathFromPatriarch] = @p0
-OUTPUT 1
-WHERE [Id] = @p1;
-UPDATE [Halflings] SET [PathFromPatriarch] = @p2
-OUTPUT 1
-WHERE [Id] = @p3;
-UPDATE [Halflings] SET [PathFromPatriarch] = @p4
-OUTPUT 1
-WHERE [Id] = @p5;
-```
-
-Using these parameters:
-
-```text
- @p1='9',
- @p0='0x7BC0' (Nullable = false) (Size = 2) (DbType = Object),
- @p3='16',
- @p2='0x7BD6' (Nullable = false) (Size = 2) (DbType = Object),
- @p5='23',
- @p4='0x7BD6B0' (Nullable = false) (Size = 3) (DbType = Object)
- ```
-
-> [!NOTE]
-> The parameters values for `HierarchyId` properties are sent to the database in their compact, binary format.
-
-Following the update, querying for the descendents of "Mungo" returns "Bungo", "Belba", "Linda", "Bingo", "Bilbo", "Falco", and "Poppy", while querying for the descendents of "Ponto" returns "Longo", "Rosa", "Polo", "Otho", "Posco", "Prisca", "Lotho", "Ponto", "Porto", "Peony", and "Angelica".
-
-### Smaller enhancements included in Preview 2
-
-In addition to the enhancements described above, EF8 Preview 2 also includes some [smaller enhancements](https://github.com/dotnet/efcore/issues?q=is%3Aissue+label%3Atype-enhancement+milestone%3A8.0.0-preview2+is%3Aclosed):
-
-- [Configuration to opt out of occasionally problematic SaveChanges optimizations](https://github.com/dotnet/efcore/issues/29916)
-- [Add convention types for triggers](https://github.com/dotnet/efcore/issues/28687)
-
-## New in EF8 Preview 4
-
-### Collections of primitive types
-
-A persistent question when using relational databases is what to do with collections of primitive types; that is, lists or arrays of integers, date/times, strings, and so on. If you're using PostgreSQL, then its easy to store these things using PostgreSQL's [built-in array type](https://www.postgresql.org/docs/current/arrays.html). For other databases, there are two common approaches:
-
-- Create a table with a column for the primitive type value and another column to act as a foreign key linking each value to its owner of the collection.
-- Serialize the primitive collection into some column type that is handled by the database--for example, serialize to and from a string.
-
-The first option has advantages in many situations--we'll take a quick look at it at the end of this section. However, it's not a natural representation of the data in the model, and if what you really have is a collection of a primitive type, then the second option can be more effective.
-
-Starting with Preview 4, EF8 now includes built-in support for the second option, using JSON as the serialization format. JSON works well for this since modern relational databases include built-in mechanisms for querying and manipulating JSON, such that the JSON column can, effectively, be treated as a table when needed, without the overhead of actually creating that table. These same mechanisms allow JSON to be passed in parameters and then used in similar way to table-valued parameters in queries--more about this later.
-
-> [!TIP]
-> The code shown here comes from [PrimitiveCollectionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs).
-
-#### Primitive collection properties
-
-EF Core can map any `IEnumerable<T>` property, where `T` is a primitive type, to a JSON column in the database. This is done by convention for public properties which have both a getter and a setter. For example, all properties in the following entity type are mapped to JSON columns by convention:
-
-```csharp
-public class PrimitiveCollections
-{
-    public IEnumerable<int> Ints { get; set; }
-    public ICollection<string> Strings { get; set; }
-    public ISet<DateTime> DateTimes { get; set; }
-    public IList<DateOnly> Dates { get; set; }
-    public uint[] UnsignedInts { get; set; }
-    public List<bool> Booleans { get; set; }
-    public List<Uri> Urls { get; set; }
-}
-```
-
-> [!NOTE]
-> What do we mean by "primitive type" in this context? Essentially, something that the database provider knows how to map, using some kind of value conversion if necessary. For example, in the entity type above, the types `int`, `string`, `DateTime`, `DateOnly` and `bool` are all handled without conversion by the database provider. SQL Server does not have native support for unsigned ints or URIs, but `uint` and `Uri` are still treated as primitive types because there are [built-in value converters](xref:core/modeling/value-conversions#built-in-converters) for these types.
-
-By default, EF Core uses an unconstrained Unicode string column type to hold the JSON, since this protects against data loss with large collections. However, on some database systems, such as SQL Server, specifying a maximum length for the string can improve performance. This, along with other column configuration, can be done [in the normal way](xref:core/modeling/entity-properties). For example:
-
-```csharp
-modelBuilder
-    .Entity<PrimitiveCollections>()
-    .Property(e => e.Booleans)
-    .HasMaxLength(1024)
-    .IsUnicode(false);
-```
-
-Or, using mapping attributes:
-
-```csharp
-[MaxLength(2500)]
-[Unicode(false)]
-public uint[] UnsignedInts { get; set; }
-```
-
-A default column configuration can be used for all properties of a certain type using [pre-convention model configuration](xref:core/modeling/bulk-configuration#pre-convention-configuration). For example:
-
-```csharp
-protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-{
-    configurationBuilder
-        .Properties<List<DateOnly>>()
-        .AreUnicode(false)
-        .HaveMaxLength(4000);
-}
-```
-
-#### Queries with primitive collections
-
-Let's look at some of the queries that make use of collections of primitive types. For this, we'll need a simple model with two entity types. The first represents a [British public house](https://en.wikipedia.org/wiki/Pub), or "pub":
-
-<!--
-    public class Pub
-    {
-        public Pub(string name, string[] beers)
-        {
-            Name = name;
-            Beers = beers;
-        }
-
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string[] Beers { get; set; }
-        public List<DateOnly> DaysVisited { get; private set; } = new();
-    }
--->
-[!code-csharp[Pub](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=Pub)]
-
-The `Pub` type contains two primitive collections:
-
-- `Beers` is an array of strings representing the beer brands available at the pub.
-- `DaysVisited` is a list of the dates on which the pub was visited.
-
-> [!TIP]
-> In a real application, it would probably make more sense to create an entity type for beer, and have a table for beers. We're showing a primitive collection here to illustrate how they work. But remember, just because you can model something as a primitive collection doesn't mean that you necessarily should.
-
-The second entity type represents a dog walk in the British countryside:
-
-<!--
-    public class DogWalk
-    {
-        public DogWalk(string name)
-        {
-            Name = name;
-        }
-
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Terrain Terrain { get; set; }
-        public List<DateOnly> DaysVisited { get; private set; } = new();
-        public Pub? ClosestPub { get; set; }
-    }
-
-    public enum Terrain
-    {
-        Forest,
-        River,
-        Hills,
-        Village,
-        Park,
-        Beach,
-    }
--->
-[!code-csharp[DogWalk](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=DogWalk)]
-
-Like `Pub`, `DogWalk` also contains a collection of the dates visited, and a link to the closest pub since, you know, sometimes the dog needs a saucer of beer after a long walk.
-
-Using this model, the first query we will do is a simple `Contains` query to find all walks with one of several different terrains:
-
-<!--
-        var terrains = new[] { Terrain.River, Terrain.Beach, Terrain.Park };
-        var walksWithTerrain = await context.Walks
-            .Where(e => terrains.Contains(e.Terrain))
-            .Select(e => e.Name)
-            .ToListAsync();
--->
-[!code-csharp[WalksWithTerrain](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=WalksWithTerrain)]
-
-This is already translated by current versions of EF Core by inlining the values to look for. For example, when using SQL Server:
-
-```sql
-SELECT [w].[Name]
-FROM [Walks] AS [w]
-WHERE [w].[Terrain] IN (1, 5, 4)
-```
-
-However, this strategy does not work well with database query caching--see [Announcing EF8 Preview 4](https://devblogs.microsoft.com/dotnet/announcing-ef8-preview-4/) on the .NET Blog for a discussion of this issue.
-
-> [!IMPORTANT]
-> The inlining of values here is done in such a way that there is no chance of a SQL injection attack. The change to use JSON described below is all about performance, and nothing to do with security.
-
-For EF Core 8, the default is now to pass the list of terrains as a single parameter containing a JSON collection. For example:
-
-```none
-@__terrains_0='[1,5,4]'
-```
-
-The query then uses `OpenJson` on SQL Server:
-
-```sql
-SELECT [w].[Name]
-FROM [Walks] AS [w]
-WHERE EXISTS (
-    SELECT 1
-    FROM OpenJson(@__terrains_0) AS [t]
-    WHERE CAST([t].[value] AS int) = [w].[Terrain])
-```
-
-Or `json_each` on SQLite:
-
-```sql
-SELECT "w"."Name"
-FROM "Walks" AS "w"
-WHERE EXISTS (
-    SELECT 1
-    FROM json_each(@__terrains_0) AS "t"
-    WHERE "t"."value" = "w"."Terrain")
-```
-
-> [!NOTE]
-> `OpenJson` is only available on SQL Server 2016 ([compatibility level 130](/sql/t-sql/statements/alter-database-transact-sql-compatibility-level)) and later. You can tell SQL Server that you're using an older version by configuring the compatibility level as part of `UseSqlServer`. For example:
->
-> ```csharp
-> protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
->     => optionsBuilder
->         .UseSqlServer(
->             @"Data Source=(LocalDb)\MSSQLLocalDB;Database=AllTogetherNow",
->             sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseCompatibilityLevel(120));
-> ```
-
-Let's try a different kind of `Contains` query. In this case, we'll look for a value of the parameter collection in the column. For example, any pub that stocks Heineken:
-
-<!--
-        var beer = "Heineken";
-        var pubsWithHeineken = await context.Pubs
-            .Where(e => e.Beers.Contains(beer))
-            .Select(e => e.Name)
-            .ToListAsync();
--->
-[!code-csharp[PubsWithHeineken](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=PubsWithHeineken)]
-
-This translates to the following on SQL Server:
-
-```sql
-SELECT [p].[Name]
-FROM [Pubs] AS [p]
-WHERE EXISTS (
-    SELECT 1
-    FROM OpenJson([p].[Beers]) AS [b]
-    WHERE [b].[value] = @__beer_0)
-```
-
-`OpenJson` is now used to to extract values from JSON column so that each value can be matched to the passed parameter.
-
-We can combine the use of `OpenJson` on the parameter with `OpenJson` on the column. For example, to find pubs that stock any one of a variety of lagers:
-
-<!--
-        var beers = new[] { "Carling", "Heineken", "Stella Artois", "Carlsberg" };
-        var pubsWithLager = await context.Pubs
-            .Where(e => beers.Any(b => e.Beers.Contains(b)))
-            .Select(e => e.Name)
-            .ToListAsync();
--->
-[!code-csharp[PubsWithLager](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=PubsWithLager)]
-
-This translates to the following on SQL Server:
-
-```sql
-SELECT [p].[Name]
-FROM [Pubs] AS [p]
-WHERE EXISTS (
-    SELECT 1
-    FROM OpenJson(@__beers_0) AS [b]
-    WHERE EXISTS (
-        SELECT 1
-        FROM OpenJson([p].[Beers]) AS [b0]
-        WHERE [b0].[value] = [b].[value] OR ([b0].[value] IS NULL AND [b].[value] IS NULL)))
-```
-
-The `@__beers_0` parameter value here is `["Carling","Heineken","Stella Artois","Carlsberg"]`.
-
-Let's look at a query that makes use of the column containing a collection of dates. For example, to find pubs visited this year:
-
-<!--
-        var thisYear = DateTime.Now.Year;
-        var pubsVisitedThisYear = await context.Pubs
-            .Where(e => e.DaysVisited.Any(v => v.Year == thisYear))
-            .Select(e => e.Name)
-            .ToListAsync();
--->
-[!code-csharp[PubsVisitedThisYear](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=PubsVisitedThisYear)]
-
-This translates to the following on SQL Server:
-
-```sql
-SELECT [p].[Name]
-FROM [Pubs] AS [p]
-WHERE EXISTS (
-    SELECT 1
-    FROM OpenJson([p].[DaysVisited]) AS [d]
-    WHERE DATEPART(year, CAST([d].[value] AS date)) = @__thisYear_0)
-```
-
-Notice that the query makes use of the date-specific function `DATEPART` here because EF _knows that the primitive collection contains dates_. It might not seem like it, but this is actually really important. Because EF knows what's in the collection, it can generate appropriate SQL to use the typed values with parameters, functions, other columns etc.
-
-Let's use the date collection again, this time to order appropriately for the type and project values extracted from the collection. For example, let's list pubs in the order that they were first visited, and with the first and last date each pub was visited:
-
-<!--
-        var pubsVisitedInOrder = await context.Pubs
-            .Select(e => new
-            {
-                e.Name,
-                FirstVisited = e.DaysVisited.OrderBy(v => v).First(),
-                LastVisited = e.DaysVisited.OrderByDescending(v => v).First(),
-            })
-            .OrderBy(p => p.FirstVisited)
-            .ToListAsync();
--->
-[!code-csharp[PubsVisitedInOrder](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=PubsVisitedInOrder)]
-
-This translates to the following on SQL Server:
-
-```sql
-SELECT [p].[Name], (
-    SELECT TOP(1) CAST([d0].[value] AS date)
-    FROM OpenJson([p].[DaysVisited]) AS [d0]
-    ORDER BY CAST([d0].[value] AS date)) AS [FirstVisited], (
-    SELECT TOP(1) CAST([d1].[value] AS date)
-    FROM OpenJson([p].[DaysVisited]) AS [d1]
-    ORDER BY CAST([d1].[value] AS date) DESC) AS [LastVisited]
-FROM [Pubs] AS [p]
-ORDER BY (
-    SELECT TOP(1) CAST([d].[value] AS date)
-    FROM OpenJson([p].[DaysVisited]) AS [d]
-    ORDER BY CAST([d].[value] AS date))
-```
-
-And finally, just how often do we end up visiting the closest pub when taking the dog for a walk? Let's find out:
-
-<!--
-        var walksWithADrink = await context.Walks.Select(
-            w => new
-            {
-                WalkName = w.Name,
-                PubName = w.ClosestPub.Name,
-                Count = w.DaysVisited.Count(v => w.ClosestPub.DaysVisited.Contains(v)),
-                TotalCount = w.DaysVisited.Count
-            }).ToListAsync();
--->
-[!code-csharp[WalksWithADrink](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsSample.cs?name=WalksWithADrink)]
-
-This translates to the following on SQL Server:
-
-```sql
-SELECT [w].[Name] AS [WalkName], [p].[Name] AS [PubName], (
-    SELECT COUNT(*)
-    FROM OpenJson([w].[DaysVisited]) AS [d]
-    WHERE EXISTS (
-        SELECT 1
-        FROM OpenJson([p].[DaysVisited]) AS [d0]
-        WHERE CAST([d0].[value] AS date) = CAST([d].[value] AS date) OR ([d0].[value] IS NULL AND [d].[value] IS NULL))) AS [Count], (
-    SELECT COUNT(*)
-    FROM OpenJson([w].[DaysVisited]) AS [d1]) AS [TotalCount]
-FROM [Walks] AS [w]
-INNER JOIN [Pubs] AS [p] ON [w].[ClosestPubId] = [p].[Id]
-```
-
-And reveals the following data:
-
-```none
-The Prince of Wales Feathers was visited 5 times in 8 "Ailsworth to Nene" walks.
-The Prince of Wales Feathers was visited 6 times in 9 "Caster Hanglands" walks.
-The Royal Oak was visited 6 times in 8 "Ferry Meadows" walks.
-The White Swan was visited 7 times in 9 "Woodnewton" walks.
-The Eltisley was visited 6 times in 8 "Eltisley" walks.
-Farr Bay Inn was visited 7 times in 11 "Farr Beach" walks.
-Farr Bay Inn was visited 7 times in 9 "Newlands" walks.
-```
-
-Looks like beer and dog walking are a winning combination!
-
-#### Primitive collections in JSON documents
-
-In all the examples above, column for primitive collection contains JSON. However, this is not the same as mapping [an owned entity type to a column containing a JSON document](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns), which was introduced in EF7. But what if that JSON document itself contains a primitive collection? Well, all the queries above still work in the same way! For example, imagine we move the _days visited_ data into an owned type `Visits` mapped to a JSON document:
-
-<!--
-    public class Pub
-    {
-        public Pub(string name)
-        {
-            Name = name;
-        }
-
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public BeerData Beers { get; set; } = null!;
-        public Visits Visits { get; set; } = null!;
-    }
-
-    public class Visits
-    {
-        public string? LocationTag { get; set; }
-        public List<DateOnly> DaysVisited { get; set; } = null!;
-    }
--->
-[!code-csharp[Pub](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsInJsonSample.cs?name=Pub)]
-
-> [!TIP]
-> The code shown here comes from [PrimitiveCollectionsInJsonSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsInJsonSample.cs).
-
-We can now run a variation of our final query that, this time, extracts data from the JSON document, including queries into the primitive collections contained in the document:
-
-<!--
-        var walksWithADrink = await context.Walks.Select(
-            w => new
-            {
-                WalkName = w.Name,
-                PubName = w.ClosestPub.Name,
-                WalkLocationTag = w.Visits.LocationTag,
-                PubLocationTag = w.ClosestPub.Visits.LocationTag,
-                Count = w.Visits.DaysVisited.Count(v => w.ClosestPub.Visits.DaysVisited.Contains(v)),
-                TotalCount = w.Visits.DaysVisited.Count
-            }).ToListAsync();
--->
-[!code-csharp[WalksWithADrink](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionsInJsonSample.cs?name=WalksWithADrink)]
-
-This translates to the following on SQL Server:
-
-```sql
-SELECT [w].[Name] AS [WalkName], [p].[Name] AS [PubName], JSON_VALUE([w].[Visits], '$.LocationTag') AS [WalkLocationTag], JSON_VALUE([p].[Visits], '$.LocationTag') AS [PubLocationTag], (
-    SELECT COUNT(*)
-    FROM OpenJson(JSON_VALUE([w].[Visits], '$.DaysVisited')) AS [d]
-    WHERE EXISTS (
-        SELECT 1
-        FROM OpenJson(JSON_VALUE([p].[Visits], '$.DaysVisited')) AS [d0]
-        WHERE CAST([d0].[value] AS date) = CAST([d].[value] AS date) OR ([d0].[value] IS NULL AND [d].[value] IS NULL))) AS [Count], (
-    SELECT COUNT(*)
-    FROM OpenJson(JSON_VALUE([w].[Visits], '$.DaysVisited')) AS [d1]) AS [TotalCount]
-FROM [Walks] AS [w]
-INNER JOIN [Pubs] AS [p] ON [w].[ClosestPubId] = [p].[Id]
-```
-
-And to a similar query when using SQLite:
-
-```sql
-SELECT "w"."Name" AS "WalkName", "p"."Name" AS "PubName", "w"."Visits" ->> 'LocationTag' AS "WalkLocationTag", "p"."Visits" ->> 'LocationTag' AS "PubLocationTag", (
-    SELECT COUNT(*)
-    FROM json_each("w"."Visits" ->> 'DaysVisited') AS "d"
-    WHERE EXISTS (
-        SELECT 1
-        FROM json_each("p"."Visits" ->> 'DaysVisited') AS "d0"
-        WHERE "d0"."value" = "d"."value")) AS "Count", json_array_length("w"."Visits" ->> 'DaysVisited') AS "TotalCount"
-FROM "Walks" AS "w"
-INNER JOIN "Pubs" AS "p" ON "w"."ClosestPubId" = "p"."Id"
-```
-
-> [!TIP]
-> Notice that on SQLite EF Core now makes use of the `->>` operator, resulting in queries that are both easier to read and often more performant.
-
-#### Mapping primitive collections to a table
-
-We mentioned above that another option for primitive collections is to map them to a different table. First class support for this is tracked by [Issue #25163](https://github.com/dotnet/efcore/issues/25163); make sure to vote for this issue if it is important to you. Until this is implemented, the best approach is to create a wrapping type for the primitive. For example, let's create a type for `Beer`:
-
-<!--
-    [Owned]
-    public class Beer
-    {
-        public Beer(string name)
-        {
-            Name = name;
-        }
-
-        public string Name { get; private set; }
-    }
--->
-[!code-csharp[Beer](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionToTableSample.cs?name=Beer)]
-
-Notice that the type simply wraps the primitive value--it doesn't have a primary key or any foreign keys defined. This type can then be used in the `Pub` class:
-
-<!--
-    public class Pub
-    {
-        public Pub(string name)
-        {
-            Name = name;
-        }
-
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public List<Beer> Beers { get; set; } = new();
-        public List<DateOnly> DaysVisited { get; private set; } = new();
-    }
--->
-[!code-csharp[Pub](../../../../samples/core/Miscellaneous/NewInEFCore8/PrimitiveCollectionToTableSample.cs?name=Pub)]
-
-EF will now create a `Beer` table, synthesizing primary key and foreign key columns back to the `Pubs` table. For example, on SQL Server:
-
-```sql
-CREATE TABLE [Beer] (
-    [PubId] int NOT NULL,
-    [Id] int NOT NULL IDENTITY,
-    [Name] nvarchar(max) NOT NULL,
-    CONSTRAINT [PK_Beer] PRIMARY KEY ([PubId], [Id]),
-    CONSTRAINT [FK_Beer_Pubs_PubId] FOREIGN KEY ([PubId]) REFERENCES [Pubs] ([Id]) ON DELETE CASCADE
-```
