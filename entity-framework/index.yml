@@ -22,10 +22,6 @@ highlightedContent:
       itemType: get-started
       url: core/get-started/overview/first-app.md
     # Card
-    - title: "Tutorial: Query and manage data using C# (Entity Framework Core)"
-      itemType: learn
-      url: /training/modules/persist-data-ef-core/
-    # Card
     - title: "Supported database management systems"
       itemType: overview
       url: core/providers/index.md
@@ -55,6 +51,8 @@ additionalContent:
       # Card
       - title: Develop your first app
         links:
+          - url: /training/modules/persist-data-ef-core/
+            text: "Hands-on Training (44 minutes): Persist and retrieve relational data by using Entity Framework Core"
           - url: core/get-started/overview/first-app.md
             text: ".NET Core console app accessing SQLite with EF Core"
           - url: /aspnet/core/data/ef-rp/
