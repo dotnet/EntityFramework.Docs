@@ -151,8 +151,8 @@ public static class NestedComplexTypesSample
     public class Customer
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public Contact Contact { get; set; } = null!;
+        public required string Name { get; set; }
+        public required Contact Contact { get; set; }
         public List<Order> Orders { get; } = new();
     }
     #endregion
@@ -161,10 +161,10 @@ public static class NestedComplexTypesSample
     public class Order
     {
         public int Id { get; set; }
-        public string Contents { get; set; } = null!;
-        public PhoneNumber ContactPhone { get; set; } = null!;
-        public Address ShippingAddress { get; set; } = null!;
-        public Address BillingAddress { get; set; } = null!;
+        public required string Contents { get; set; }
+        public required PhoneNumber ContactPhone { get; set; }
+        public required Address ShippingAddress { get; set; }
+        public required Address BillingAddress { get; set; }
         public Customer Customer { get; set; } = null!;
     }
     #endregion
@@ -176,10 +176,10 @@ public static class NestedComplexTypesSample
 
     public record Contact
     {
-        public Address Address { get; init; } = null!;
-        public PhoneNumber HomePhone { get; init; } = null!;
-        public PhoneNumber WorkPhone { get; init; } = null!;
-        public PhoneNumber MobilePhone { get; init; } = null!;
+        public required Address Address { get; init; }
+        public required PhoneNumber HomePhone { get; init; }
+        public required PhoneNumber WorkPhone { get; init; }
+        public required PhoneNumber MobilePhone { get; init; }
     }
     #endregion
 

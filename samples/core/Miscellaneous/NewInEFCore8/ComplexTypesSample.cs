@@ -61,17 +61,17 @@ public static class ComplexTypesSample
     public class Customer
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public Address Address { get; set; } = null!;
+        public required string Name { get; set; }
+        public required Address Address { get; set; }
         public List<Order> Orders { get; } = new();
     }
 
     public class Order
     {
         public int Id { get; set; }
-        public string Contents { get; set; } = null!;
-        public Address ShippingAddress { get; set; } = null!;
-        public Address BillingAddress { get; set; } = null!;
+        public required string Contents { get; set; }
+        public required Address ShippingAddress { get; set; }
+        public required Address BillingAddress { get; set; }
         public Customer Customer { get; set; } = null!;
     }
     #endregion
@@ -79,11 +79,11 @@ public static class ComplexTypesSample
     #region Address
     public class Address
     {
-        public string Line1 { get; set; } = null!;
+        public required string Line1 { get; set; }
         public string? Line2 { get; set; }
-        public string City { get; set; } = null!;
-        public string Country { get; set; } = null!;
-        public string PostCode { get; set; } = null!;
+        public required string City { get; set; }
+        public required string Country { get; set; }
+        public required string PostCode { get; set; }
     }
     #endregion
 

@@ -53,17 +53,17 @@ public static class RecordComplexTypesSample
     public class Customer
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public Address Address { get; set; } = null!;
+        public required string Name { get; set; }
+        public required Address Address { get; set; }
         public List<Order> Orders { get; } = new();
     }
 
     public class Order
     {
         public int Id { get; set; }
-        public string Contents { get; set; } = null!;
-        public Address ShippingAddress { get; set; } = null!;
-        public Address BillingAddress { get; set; } = null!;
+        public required string Contents { get; set; }
+        public required Address ShippingAddress { get; set; }
+        public required Address BillingAddress { get; set; }
         public Customer Customer { get; set; } = null!;
     }
 
@@ -203,17 +203,17 @@ public static class StructRecordComplexTypesSample
     public class Customer
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public Address Address { get; set; }
+        public required string Name { get; set; }
+        public required Address Address { get; set; }
         public List<Order> Orders { get; } = new();
     }
 
     public class Order
     {
         public int Id { get; set; }
-        public string Contents { get; set; } = null!;
-        public Address ShippingAddress { get; set; }
-        public Address BillingAddress { get; set; }
+        public required string Contents { get; set; }
+        public required Address ShippingAddress { get; set; }
+        public required Address BillingAddress { get; set; }
         public Customer Customer { get; set; } = null!;
     }
 

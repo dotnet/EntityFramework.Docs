@@ -58,7 +58,7 @@ public static class StructComplexTypesSample
     public class Customer
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public required string Name { get; set; }
         public Address Address { get; set; }
         public List<Order> Orders { get; } = new();
     }
@@ -66,20 +66,20 @@ public static class StructComplexTypesSample
     public class Order
     {
         public int Id { get; set; }
-        public string Contents { get; set; } = null!;
-        public Address ShippingAddress { get; set; }
-        public Address BillingAddress { get; set; }
+        public required string Contents { get; set; }
+        public required Address ShippingAddress { get; set; }
+        public required Address BillingAddress { get; set; }
         public Customer Customer { get; set; } = null!;
     }
 
     #region AddressStruct
     public struct Address
     {
-        public string Line1 { get; set; }
+        public required string Line1 { get; set; }
         public string? Line2 { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
-        public string PostCode { get; set; }
+        public required string City { get; set; }
+        public required string Country { get; set; }
+        public required string PostCode { get; set; }
     }
     #endregion
 

@@ -41,32 +41,32 @@ For example, consider an `Address` type:
 <!--
     public class Address
     {
-        public string Line1 { get; set; } = null!;
+        public required string Line1 { get; set; }
         public string? Line2 { get; set; }
-        public string City { get; set; } = null!;
-        public string Country { get; set; } = null!;
-        public string PostCode { get; set; } = null!;
+        public required string City { get; set; }
+        public required string Country { get; set; }
+        public required string PostCode { get; set; }
     }
 -->
 [!code-csharp[Address](../../../../samples/core/Miscellaneous/NewInEFCore8/ComplexTypesSample.cs?name=Address)]
 
-`Address` is then used in three places in a simple `Customer`/`Orders` model:
+`Address` is then used in three places in a simple customer/orders model:
 
 <!--
     public class Customer
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public Address Address { get; set; } = null!;
+        public required string Name { get; set; }
+        public required Address Address { get; set; }
         public List<Order> Orders { get; } = new();
     }
 
     public class Order
     {
         public int Id { get; set; }
-        public string Contents { get; set; } = null!;
-        public Address ShippingAddress { get; set; } = null!;
-        public Address BillingAddress { get; set; } = null!;
+        public required string Contents { get; set; }
+        public required Address ShippingAddress { get; set; }
+        public required Address BillingAddress { get; set; }
         public Customer Customer { get; set; } = null!;
     }
 -->
@@ -99,7 +99,7 @@ VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
 Notice that the complex types do not get their own tables. Instead, they are saved inline to columns of the `Customers` table. This matches the table sharing behavior of owned types.
 
 > [!NOTE]
-> We don't plan to allow complex types to be mapped to their own table. However, we do plan for a future release to allow the complex type to be saved as a JSON document in a single column. Vote for [Issue #31252](https://github.com/dotnet/efcore/issues/31252) if this is important to you.
+> We don't plan to allow complex types to be mapped to their own table. However, in a future release, we do plan to allow the complex type to be saved as a JSON document in a single column. Vote for [Issue #31252](https://github.com/dotnet/efcore/issues/31252) if this is important to you.
 
 Now let's say we want to ship an order to a customer and use the customer's address as both the default billing an shipping address. The natural way to do this is to copy the `Address` object from the `Customer` into the `Order`. For example:
 
@@ -148,7 +148,7 @@ This is because a single instance of the `Address` entity type (with the same hi
 
 ### Configuration of complex types
 
-Complex types must be configured in the model using either [mapping attributes](xref:core/modeling/index#use-data-annotations-to-configure-a-model) or by calling [`ComplexProperty` API in `OnModelCreating`](xref:core/modeling/index#use-fluent-api-to-configure-a-model)
+Complex types must be configured in the model using either [mapping attributes](xref:core/modeling/index#use-data-annotations-to-configure-a-model) or by calling [`ComplexProperty` API in `OnModelCreating`](xref:core/modeling/index#use-fluent-api-to-configure-a-model). Complex types are not discovered by convention.
 
 For example, the `Address` type can be configured using the <xref:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute>:
 
@@ -156,11 +156,11 @@ For example, the `Address` type can be configured using the <xref:System.Compone
 [ComplexType]
 public class Address
 {
-    public string Line1 { get; set; } = null!;
+    public required string Line1 { get; set; }
     public string? Line2 { get; set; }
-    public string City { get; set; } = null!;
-    public string Country { get; set; } = null!;
-    public string PostCode { get; set; } = null!;
+    public required string City { get; set; }
+    public required string Country { get; set; }
+    public required string PostCode { get; set; }
 }
 ```
 
@@ -182,8 +182,6 @@ Or in `OnModelCreating`:
 -->
 [!code-csharp[ComplexTypeConfig](../../../../samples/core/Miscellaneous/NewInEFCore8/ComplexTypesSample.cs?name=ComplexTypeConfig)]
 
-> [!NOTE]
-> Complex types are not discovered by convention.
 
 ### Mutability
 
@@ -212,9 +210,9 @@ WHERE [Id] = @p4;
 Notice that all three `Line1` columns have changed, since they are all sharing the same instance. This is usually not what we want.
 
 > [!TIP]
-> If order addresses should change automatically when the customer address changes, then consider mapping the address as an entity type. `Order` and `Customer` can then safely reference the same address instance via a navigation property.
+> If order addresses should change automatically when the customer address changes, then consider mapping the address as an entity type. `Order` and `Customer` can then safely reference the same address instance (which is now identified by a key) via a navigation property.
 
-A good way to deal with issues like this it to make the type immutable. Indeed, this is often natural when a type is a good candidate for being a complex type. For example, it usually makes sense to supply a complex new `Address` object rather than to just mutate, say, the country while leaving the rest the same.
+A good way to deal with issues like this it to make the type immutable. Indeed, this immutability often natural when a type is a good candidate for being a complex type. For example, it usually makes sense to supply a complex new `Address` object rather than to just mutate, say, the country while leaving the rest the same.
 
 Both reference and value types can be made immutable. We'll look at some examples in the following sections.
 
@@ -246,7 +244,6 @@ public class Address
 
 > [!TIP]
 > With C# 12 or above, this class definition can be simplified using a primary constructor:
-> public class Address(string line1, string? line2, string city, string country, string postCo
 >
 > ```csharp
 > public class Address(string line1, string? line2, string city, string country, string postCode)
@@ -259,7 +256,7 @@ public class Address
 > }
 > ```
 
-It is now not possible to change t he `Line1` value on an existing address. Instead, we need to create a new instance with the changed value. For example:
+It is now not possible to change the `Line1` value on an existing address. Instead, we need to create a new instance with the changed value. For example:
 
 <!--
         #region ChangeImmutableAddress
@@ -312,7 +309,7 @@ public record Address
 > public record Address(string Line1, string? Line2, string City, string Country, string PostCode);
 > ```
 
-Replacing the mutable object and calling SaveChanges now requires less code:
+Replacing the mutable object and calling `SaveChanges` now requires less code:
 
 <!--
         #region ChangeImmutableRecord
@@ -347,7 +344,7 @@ However, [mutable structs are generally discouraged in C#](/archive/blogs/ericli
 
 #### Immutable struct
 
-Immutable structs work well as complex types, just like immutable classes do. For example, `Address` can be define such that it can not be modified:
+Immutable structs work well as complex types, just like immutable classes do. For example, `Address` can be defined such that it can not be modified:
 
 <!--
     #region AddressImmutableStruct
@@ -406,10 +403,10 @@ A complex type can contain properties of other complex types. For example, let's
 
     public record Contact
     {
-        public Address Address { get; init; } = null!;
-        public PhoneNumber HomePhone { get; init; } = null!;
-        public PhoneNumber WorkPhone { get; init; } = null!;
-        public PhoneNumber MobilePhone { get; init; } = null!;
+        public required Address Address { get; init; }
+        public required PhoneNumber HomePhone { get; init; }
+        public required PhoneNumber WorkPhone { get; init; }
+        public required PhoneNumber MobilePhone { get; init; }
     }
 -->
 [!code-csharp[NestedComplexTypes](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=NestedComplexTypes)]
@@ -426,24 +423,24 @@ We will add `Contact` as a property of the `Customer`:
     public class Customer
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public Contact Contact { get; set; } = null!;
+        public required string Name { get; set; }
+        public required Contact Contact { get; set; }
         public List<Order> Orders { get; } = new();
     }
 -->
 [!code-csharp[CustomerWithContact](../../../../samples/core/Miscellaneous/NewInEFCore8/NestedComplexTypesSample.cs?name=CustomerWithContact)]
 
-And `PhoneNumber` property of the `Order`:
+And `PhoneNumber` as properties of the `Order`:
 
 <!--
     #region OrderWithPhone
     public class Order
     {
         public int Id { get; set; }
-        public string Contents { get; set; } = null!;
-        public PhoneNumber ContactPhone { get; set; } = null!;
-        public Address ShippingAddress { get; set; } = null!;
-        public Address BillingAddress { get; set; } = null!;
+        public required string Contents { get; set; }
+        public required PhoneNumber ContactPhone { get; set; }
+        public required Address ShippingAddress { get; set; }
+        public required Address BillingAddress { get; set; }
         public Customer Customer { get; set; } = null!;
     }
 -->
@@ -461,10 +458,10 @@ public record PhoneNumber(int CountryCode, long Number);
 [ComplexType]
 public record Contact
 {
-    public Address Address { get; init; } = null!;
-    public PhoneNumber HomePhone { get; init; } = null!;
-    public PhoneNumber WorkPhone { get; init; } = null!;
-    public PhoneNumber MobilePhone { get; init; } = null!;
+    public required Address Address { get; init; }
+    public required PhoneNumber HomePhone { get; init; }
+    public required PhoneNumber WorkPhone { get; init; }
+    public PhoneNumrequired ber MobilePhone { get; init; }
 }
 ```
 
