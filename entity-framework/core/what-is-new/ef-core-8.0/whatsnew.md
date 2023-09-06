@@ -182,7 +182,6 @@ Or in `OnModelCreating`:
 -->
 [!code-csharp[ComplexTypeConfig](../../../../samples/core/Miscellaneous/NewInEFCore8/ComplexTypesSample.cs?name=ComplexTypeConfig)]
 
-
 ### Mutability
 
 In the example above, we ended up with the same `Address` instance used in three places. This is allowed and doesn't cause any issues for EF Core when using complex types. However, sharing instances of the same reference type means that if a property value on the instance is modified, then that change will be reflected in all three usages. For example, following on from above, let's change `Line1` of the customer address and save the changes:
