@@ -127,6 +127,21 @@ Sum(x => x.Property)     | SUM(Property)
 
 Additional aggregate operators may be supported. Check your provider docs for more function mappings.
 
+Even though there is no database structure to represent an `IGrouping`, in some cases, EF Core 7.0 and newer can create the groupings after the results are returned from the database. This is similar to how the [`Include`](xref:core/querying/related-data/eager) operator works when including related collections. The following LINQ query uses the GroupBy operator to group the results by the value of their Price property.
+
+<!--
+var query = context.Books.GroupBy(s => s.Price);
+-->
+[!code-csharp[GroupByFinalOperator](../../../../samples/core/Miscellaneous/NewInEFCore7/GroupByFinalOperatorSample.cs?name=GroupByFinalOperator)]
+
+```sql
+SELECT [b].[Price], [b].[Id], [b].[AuthorId]
+FROM [Books] AS [b]
+ORDER BY [b].[Price]
+```
+
+In this case, the GroupBy operator doesn't translate directly to a `GROUP BY` clause in the SQL, but instead, EF Core creates the groupings after the results are returned from the server.
+
 ## Left Join
 
 While Left Join isn't a LINQ operator, relational databases have the concept of a Left Join which is frequently used in queries. A particular pattern in LINQ queries gives the same result as a `LEFT JOIN` on the server. EF Core identifies such patterns and generates the equivalent `LEFT JOIN` on the server side. The pattern involves creating a GroupJoin between both the data sources and then flattening out the grouping by using the SelectMany operator with DefaultIfEmpty on the grouping source to match null when the inner doesn't have a related element. The following example shows what that pattern looks like and what it generates.
