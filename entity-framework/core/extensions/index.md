@@ -39,6 +39,12 @@ Entity Developer is a powerful O/RM designer for ADO.NET Entity Framework, NHibe
 
 [Website](https://www.devart.com/entitydeveloper/)
 
+### EF Core Sidekick
+
+EF Core Sidekick is a Visual Studio extension that enhances the power of auto code generation in Visual Studio. It provides a set of tools and templates for generating EF Core entities and derived DbContext from existing database, and then generating services and APIs from the entities. For EF Core: 6, 7.
+
+[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=devmagic.efsidekick)
+
 ### Entity Framework Visual Editor
 
 Entity Framework Visual Editor is a Visual Studio extension that adds an O/RM designer for visual design of EF 6, and EF Core classes. Code is generated using T4 templates so can be customized to suit any needs. It supports inheritance, unidirectional and bidirectional associations, enumerations, and the ability to color-code your classes and add text blocks to explain potentially arcane parts of your design. For EF Core: 2-7.
