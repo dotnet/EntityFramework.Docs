@@ -46,9 +46,9 @@ public static class ComplexTypesSample
         #region ChangeSharedAddress
         customer.Address.Line1 = "Peacock Lodge";
         await context.SaveChangesAsync();
+        #endregion
 
         context.ChangeTracker.Clear();
-        #endregion
     }
 
     private static void PrintSampleName([CallerMemberName] string? methodName = null)

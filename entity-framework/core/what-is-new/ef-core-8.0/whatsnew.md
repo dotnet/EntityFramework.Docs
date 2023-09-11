@@ -2,7 +2,7 @@
 title: What's New in EF Core 8
 description: Overview of new features in EF Core 8
 author: ajcvickers
-ms.date: 09/04/2023
+ms.date: 09/11/2023
 uid: core/what-is-new/ef-core-8.0/whatsnew
 ---
 
@@ -30,8 +30,8 @@ Prior to EF8, there was no good way to map the third type of object. [Owned type
 EF8 now supports "Complex Types" to cover this third type of object. Complex type objects:
 
 - Are not identified or tracked by key value.
-- Must be defined as part of an entity type.
-- Can be either [value types](/dotnet/csharp/language-reference/builtin-types/value-types) or [reference types](/dotnet/csharp/language-reference/keywords/reference-types).
+- Must be defined as part of an entity type.  (In other words, you cannot have a `DbSet` of a complex type.)
+- Can be either .NET [value types](/dotnet/csharp/language-reference/builtin-types/value-types) or [reference types](/dotnet/csharp/language-reference/keywords/reference-types).
 - Instances can be shared by multiple properties.
 
 ### Simple example
@@ -123,20 +123,14 @@ OUTPUT INSERTED.[Id]
 VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11);
 ```
 
-So far you might be saying, "but I could do this with owned types!" However, the "entity type" semantics of owned types quickly get in th way. For example, running the code above with owned types results in a slew of warnings and then an error:
+So far you might be saying, "but I could do this with owned types!" However, the "entity type" semantics of owned types quickly get in the way. For example, running the code above with owned types results in a slew of warnings and then an error:
 
 ```text
 warn: 8/20/2023 12:48:01.678 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update) 
       The same entity is being tracked as different entity types 'Order.BillingAddress#Address' and 'Customer.Address#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
-warn: 8/20/2023 12:48:01.679 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update) 
-      The same entity is being tracked as different entity types 'Order.BillingAddress#Address' and 'Customer.Address#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
 warn: 8/20/2023 12:48:01.687 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update) 
       The same entity is being tracked as different entity types 'Order.ShippingAddress#Address' and 'Customer.Address#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
 warn: 8/20/2023 12:48:01.687 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update)
-      The same entity is being tracked as different entity types 'Order.ShippingAddress#Address' and 'Order.BillingAddress#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
-warn: 8/20/2023 12:48:01.690 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update)
-      The same entity is being tracked as different entity types 'Order.ShippingAddress#Address' and 'Customer.Address#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
-warn: 8/20/2023 12:48:01.690 CoreEventId.DuplicateDependentEntityTypeInstanceWarning[10001] (Microsoft.EntityFrameworkCore.Update)
       The same entity is being tracked as different entity types 'Order.ShippingAddress#Address' and 'Order.BillingAddress#Address' with defining navigations. If a property value changes, it will result in two store changes, which might not be the desired outcome.
 fail: 8/20/2023 12:48:01.709 CoreEventId.SaveChangesFailed[10000] (Microsoft.EntityFrameworkCore.Update) 
       An exception occurred in the database while saving changes for context type 'NewInEfCore8.ComplexTypesSample+CustomerContext'.
@@ -190,8 +184,6 @@ In the example above, we ended up with the same `Address` instance used in three
         #region ChangeSharedAddress
         customer.Address.Line1 = "Peacock Lodge";
         await context.SaveChangesAsync();
-
-        context.ChangeTracker.Clear();
 -->
 [!code-csharp[ChangeSharedAddress](../../../../samples/core/Miscellaneous/NewInEFCore8/ComplexTypesSample.cs?name=ChangeSharedAddress)]
 
@@ -211,7 +203,7 @@ Notice that all three `Line1` columns have changed, since they are all sharing t
 > [!TIP]
 > If order addresses should change automatically when the customer address changes, then consider mapping the address as an entity type. `Order` and `Customer` can then safely reference the same address instance (which is now identified by a key) via a navigation property.
 
-A good way to deal with issues like this it to make the type immutable. Indeed, this immutability often natural when a type is a good candidate for being a complex type. For example, it usually makes sense to supply a complex new `Address` object rather than to just mutate, say, the country while leaving the rest the same.
+A good way to deal with issues like this is to make the type immutable. Indeed, this immutability often natural when a type is a good candidate for being a complex type. For example, it usually makes sense to supply a complex new `Address` object rather than to just mutate, say, the country while leaving the rest the same.
 
 Both reference and value types can be made immutable. We'll look at some examples in the following sections.
 
@@ -275,7 +267,7 @@ OUTPUT 1
 WHERE [Id] = @p1;
 ```
 
-Note that even though the Address object is immutable and the entire object has been changed, EF is still tracking changes to the individual properties, so only the columns with changed values are updated.
+Note that even though the Address object is immutable, and the entire object has been changed, EF is still tracking changes to the individual properties, so only the columns with changed values are updated.
 
 #### Immutable record
 
@@ -302,7 +294,7 @@ public record Address
 ```
 
 > [!TIP]
-> With C# 12, this record definition can be simplified using a primary constructor:
+> This record definition can be simplified using a primary constructor:
 >
 > ```csharp
 > public record Address(string Line1, string? Line2, string City, string Country, string PostCode);
@@ -337,7 +329,7 @@ A simple mutable [value type](/dotnet/csharp/language-reference/builtin-types/va
 -->
 [!code-csharp[AddressStruct](../../../../samples/core/Miscellaneous/NewInEFCore8/StructComplexTypesSample.cs?name=AddressStruct)]
 
-Assigning the customer address to the shipping and billing addresses results in each property getting a copy of the Address, since this is how value types work. This means that modifying the `Address` on the customer will not change the shipping or billing address, so mutable structs don't have the same instance-sharing issues that happen with mutable classes.
+Assigning the customer `Address` object to the shipping and billing `Address` properties results in each property getting a copy of the `Address`, since this is how value types work. This means that modifying the `Address` on the customer will not change the shipping or billing `Address` instances, so mutable structs don't have the same instance-sharing issues that happen with mutable classes.
 
 However, [mutable structs are generally discouraged in C#](/archive/blogs/ericlippert/mutating-readonly-structs), so think very carefully before using them.
 
@@ -598,7 +590,7 @@ OR ([c].[Contact_HomePhone_CountryCode] = @__entity_equality_phoneNumber_0_Count
     AND [c].[Contact_HomePhone_Number] = @__entity_equality_phoneNumber_0_Number)
 ```
 
-Notice that equality is performed by expanding out each member of the complex type. This aligns with complex types having no key for identity and hence a complex type instance is equal to another complex type instance if and only if all their members are equal.
+Notice that equality is performed by expanding out each member of the complex type. This aligns with complex types having no key for identity and hence a complex type instance is equal to another complex type instance if and only if all their members are equal. This also aligns with the equality defined by .NET for record types.
 
 ### Manipulation of complex type values
 
@@ -651,7 +643,7 @@ Other methods are available for reading and changing state. For example, <xref:M
 
 ### Current limitations
 
-Complex types represent a significant investment across the static. We were not able to make everything work in this release, but we plan to close some of the gaps in a future release. Make sure to vote (👍) on the appropriate GitHub issues if fixing any of these limitations is important to you.
+Complex types represent a significant investment across the EF stack. We were not able to make everything work in this release, but we plan to close some of the gaps in a future release. Make sure to vote (👍) on the appropriate GitHub issues if fixing any of these limitations is important to you.
 
 Complex type limitations in EF8 include:
 
@@ -806,7 +798,7 @@ FROM [Walks] AS [w]
 WHERE [w].[Terrain] IN (1, 5, 4)
 ```
 
-However, this strategy does not work well with database query caching--see [Announcing EF8 Preview 4](https://devblogs.microsoft.com/dotnet/announcing-ef8-preview-4/) on the .NET Blog for a discussion of this issue.
+However, this strategy does not work well with database query caching; see [Announcing EF8 Preview 4](https://devblogs.microsoft.com/dotnet/announcing-ef8-preview-4/) on the .NET Blog for a discussion of the issue.
 
 > [!IMPORTANT]
 > The inlining of values here is done in such a way that there is no chance of a SQL injection attack. The change to use JSON described below is all about performance, and nothing to do with security.

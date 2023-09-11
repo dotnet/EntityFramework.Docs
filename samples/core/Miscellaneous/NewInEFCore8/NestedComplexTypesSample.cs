@@ -128,17 +128,17 @@ public static class NestedComplexTypesSample
             .ToListAsync();
         #endregion
 
-        // await context.Customers
-        //     .Where(
-        //         e => e.Contact.MobilePhone == phoneNumber
-        //              || e.Contact.WorkPhone == phoneNumber
-        //              || e.Contact.HomePhone == phoneNumber)
-        //     .ExecuteDeleteAsync();
-        //
-        // var allNumbers = await context.Customers
-        //     .Select(e => e.Contact.MobilePhone)
-        //     .Distinct()
-        //     .ToListAsync();
+        await context.Customers
+            .Where(
+                e => e.Contact.MobilePhone == phoneNumber
+                     || e.Contact.WorkPhone == phoneNumber
+                     || e.Contact.HomePhone == phoneNumber)
+            .ExecuteDeleteAsync();
+
+        var allNumbers = await context.Customers
+            .Select(e => e.Contact.MobilePhone)
+            .Distinct()
+            .ToListAsync();
     }
 
     private static void PrintSampleName([CallerMemberName] string? methodName = null)
