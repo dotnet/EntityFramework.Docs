@@ -207,6 +207,19 @@ Get-Migration
 
 ***
 
+## Checking for pending model changes
+
+> [!NOTE]
+> This feature was added in EF Core 8.0.
+
+Sometimes you may want to check if there have been any model changes made since the last migration. This can help you know when you or a teammate forgot to add a migration. One way to do that is using this command.
+
+```dotnetcli
+dotnet ef migrations has-pending-model-changes
+```
+
+You can also perform this check programmatically using `context.Database.HasPendingModelChanges()`. This can be used to write a unit test that fails when you forget to add a migration.
+
 ## Resetting all migrations
 
 In some extreme cases, it may be necessary to remove all migrations and start over. This can be easily done by deleting your **Migrations** folder and dropping your database; at that point you can create a new initial migration, which will contain your entire current schema.
