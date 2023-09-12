@@ -12,11 +12,11 @@ This page documents API and behavior changes that have the potential to break ex
 
 ## Summary
 
-| **Breaking change**                                                                                                                      | **Impact** |
-|:---------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| [`Contains` in LINQ queries may stop working on older SQL Server versions                                                                | High       |
-| [SQL Server `date` and `time` now scaffold to .NET `DateOnly` and `TimeOnly`](#sqlserver-date-time-only)                                 | Medium     |
-| [SQLite `Math` methods now translate to SQL](#sqlite-math)                                                                               | Low        |
+| **Breaking change**                                                                                      | **Impact** |
+|:---------------------------------------------------------------------------------------------------------|------------|
+| [`Contains` in LINQ queries may stop working on older SQL Server versions                                | High       |
+| [SQL Server `date` and `time` now scaffold to .NET `DateOnly` and `TimeOnly`](#sqlserver-date-time-only) | Medium     |
+| [SQLite `Math` methods now translate to SQL](#sqlite-math)                                               | Low        |
 
 ## High-impact changes
 
@@ -34,7 +34,7 @@ Previously, when the `Contains` operator was used in LINQ queries with a paramet
 
 Starting with EF Core 8.0, EF now generates SQL that is more efficient, but is unsupported on SQL Server 2014 and below.
 
-Note that newer SQL Server versions may be configured with an older [compatibility level](https://learn.microsoft.com/en-us/sql/t-sql/statements/alter-database-transact-sql-compatibility-level), also making them incompatible with the new SQL. This can also occur with an Azure SQL database which was migrated from a previous on-premises SQL Server instance, carrying over the old compatibility level.
+Note that newer SQL Server versions may be configured with an older [compatibility level](/sql/t-sql/statements/alter-database-transact-sql-compatibility-level), also making them incompatible with the new SQL. This can also occur with an Azure SQL database which was migrated from a previous on-premises SQL Server instance, carrying over the old compatibility level.
 
 #### Why
 
@@ -56,7 +56,7 @@ FROM [Blogs] AS [b]
 WHERE [b].[Name] IN (N'Blog1', N'Blog2')
 ```
 
-Such insertion of constant values into the SQL creates many performance problems, defeating query plan caching and causing unneeded evictions of other queries. The new EF Core 8.0 translation uses the SQL Server [`OPENJSON`](https://learn.microsoft.com/sql/t-sql/functions/openjson-transact-sql) function to instead transfer the values as a JSON array. This solves the performance issues inherent in the previous technique; however, the `OPENJSON` function is unavailable in SQL Server 2014 and below.
+Such insertion of constant values into the SQL creates many performance problems, defeating query plan caching and causing unneeded evictions of other queries. The new EF Core 8.0 translation uses the SQL Server [`OPENJSON`](/sql/t-sql/functions/openjson-transact-sql) function to instead transfer the values as a JSON array. This solves the performance issues inherent in the previous technique; however, the `OPENJSON` function is unavailable in SQL Server 2014 and below.
 
 For more information about this change, [see this blog post](https://devblogs.microsoft.com/dotnet/announcing-ef8-preview-4/).
 
@@ -68,7 +68,7 @@ If your database is SQL Server 2016 (13.x) or newer, or if you're using Azure SQ
 SELECT name, compatibility_level FROM sys.databases;
 ```
 
-If the compatibility level is below 130 (SQL Server 2016), consider modifying it to a newer value ([documentation]( https://learn.microsoft.com/sql/t-sql/statements/alter-database-transact-sql-compatibility-level#best-practices-for-upgrading-database-compatibility-leve).
+If the compatibility level is below 130 (SQL Server 2016), consider modifying it to a newer value ([documentation](/sql/t-sql/statements/alter-database-transact-sql-compatibility-level#best-practices-for-upgrading-database-compatibility-leve).
 
 Otherwise, if your database version really is older than SQL Server 2016, or is set to an old compatibility level which you cannot change for some reason, configure EF Core to revert to the older, less efficient SQL as follows:
 
