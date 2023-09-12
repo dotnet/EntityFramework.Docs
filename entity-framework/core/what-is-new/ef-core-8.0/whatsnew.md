@@ -2190,3 +2190,46 @@ EF8 reverse engineering (a.k.a. scaffolding from an existing database) now suppo
 
 > [!WARNING]
 > These database systems have differences from normal SQL Server and Azure SQL databases. These differences mean that not all EF Core functionality is supported when writing queries against or performing other operations with these database systems.
+
+## Enhancements to Math translations
+
+[Generic math](/dotnet/standard/generics/math) interfaces were introduced in .NET 7. Concrete types like `double` and `float` implemented these interfaces adding new APIs mirroring the existing functionality of [Math](/dotnet/api/system.math) and [MathF](/dotnet/api/system.mathf).
+
+EF Core 8 translates calls to these generic math APIs in LINQ using providers' existing SQL translations for `Math` and `MathF`. This means you're now free to choose between calls either like `Math.Sin` or `double.Sin` in your EF queries.
+
+We worked with the .NET team to add two new generic math methods in .NET 8 that are implemented on `double` and `float`. These are also translated to SQL in EF Core 8.
+
+| .NET             | SQL     |
+|------------------|---------|
+| DegreesToRadians | RADIANS |
+| RadiansToDegrees | DEGREES |
+
+Finally, we worked with Eric Sink in the [SQLitePCLRaw project](https://github.com/ericsink/SQLitePCL.raw) to enable the [SQLite math functions](https://sqlite.org/lang_mathfunc.html) in their builds of the native SQLite library. This includes the native library you get by default when you install the EF Core SQLite provider. This enables several new SQL translations in LINQ.
+
+| .NET             | SQLite        |
+|------------------|---------------|
+| DegreesToRadians | radians       |
+| RadiansToDegrees | degrees       |
+| Acos             | acos          |
+| Acosh            | acosh         |
+| Asin             | asin          |
+| Asinh            | asinh         |
+| Atan             | atan          |
+| Atan2            | atan2         |
+| Atanh            | atanh         |
+| Ceiling          | ceiling       |
+| Cos              | cos           |
+| Cosh             | cosh          |
+| Exp              | exp           |
+| Floor            | floor         |
+| Log              | `ln` or `log` |
+| Log2             | log2          |
+| Log10            | log10         |
+| Pow              | pow           |
+| Sign             | sign          |
+| Sin              | sin           |
+| Sinh             | sinh          |
+| Sqrt             | sqrt          |
+| Tan              | tan           |
+| Tanh             | tanh          |
+| Truncate         | trunc         |
