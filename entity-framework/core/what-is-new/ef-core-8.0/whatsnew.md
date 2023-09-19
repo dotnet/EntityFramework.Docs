@@ -2,7 +2,7 @@
 title: What's New in EF Core 8
 description: Overview of new features in EF Core 8
 author: ajcvickers
-ms.date: 09/11/2023
+ms.date: 09/19/2023
 uid: core/what-is-new/ef-core-8.0/whatsnew
 ---
 
@@ -2233,3 +2233,35 @@ Finally, we worked with Eric Sink in the [SQLitePCLRaw project](https://github.c
 | Tan              | tan           |
 | Tanh             | tanh          |
 | Truncate         | trunc         |
+
+## Checking for pending model changes
+
+We've added a new `dotnet ef` command to check whether any model changes have been made since the last migration. This can be useful in CI/CD scenarios to ensure you or a teammate didn't forgot to add a migration.
+
+```dotnetcli
+dotnet ef migrations has-pending-model-changes
+```
+
+You can also perform this check programmatically in your application or tests using the new `dbContext.Database.HasPendingModelChanges()` method.
+
+## Enhancements to SQLite scaffolding
+
+SQLite only supports four primitive data types--INTEGER, REAL, TEXT, and BLOB. Previously, this meant that when you reverse engineerd a SQLite database to [scaffold an EF Core model](xref:core/managing-schemas/scaffolding), the resulting entity types would only included properties of type `long`, `double`, `string`, and `byte[]`. Additional .NET types are supported by the EF Core SQLite provider by converting between them and one of the four primitive SQLite types.
+
+In EF Core 8, we now use the data format and column type name in addition to the SQLite type in order to determine a more appropriate .NET type to use in the model. The following tables show some of the cases where the additional information leads to better property types in the model.
+
+| Column type name | .NET type                  |
+| ---------------- | -------------------------- |
+| BOOLEAN          | ~~byte[]~~&nbsp;**bool**   |
+| SMALLINT         | ~~long~~&nbsp;**short**    |
+| INT              | ~~long~~&nbsp;**int**      |
+| BIGINT           | long                       |
+| STRING           | ~~byte[]~~&nbsp;**string** |
+
+| Data format                            | .NET type                    |
+| -------------------------------------- | ---------------------------- |
+| '0.0'                                  | ~~string~~&nbsp;**decimal**  |
+| '1970-01-01'                           | ~~string~~&nbsp;**DateOnly** |
+| '1970-01-01 00:00:00'                  | ~~string~~&nbsp;**DateTime** |
+| '00:00:00'                             | ~~string~~&nbsp;**TimeSpan** |
+| '00000000-0000-0000-0000-000000000000' | ~~string~~&nbsp;**Guid**     |
