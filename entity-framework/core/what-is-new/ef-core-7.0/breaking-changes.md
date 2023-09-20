@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 7.0 (EF7) - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 7.0 (EF7)
 author: ajcvickers
-ms.date: 09/20/2022
+ms.date: 09/20/2023
 uid: core/what-is-new/ef-core-7.0/breaking-changes
 ---
 
@@ -24,6 +24,7 @@ EF Core 7.0 targets .NET 6. This means that existing applications that target .N
 | [SQLite tables with AFTER triggers and virtual tables now require special EF Core configuration](#sqlitetriggers)                        | High       |
 | [Orphaned dependents of optional relationships are not automatically deleted](#optional-deletes)                                         | Medium     |
 | [Cascade delete is configured between tables when using TPT mapping with SQL Server](#tpt-cascade-delete)                                | Medium     |
+| [Higher chance of busy/locked errors on SQLite when not using write-ahead logging](#sqliteretries)                                       | Medium     |
 | [Key properties may need to be configured with a provider value comparer](#provider-value-comparer)                                      | Low        |
 | [Check constraints and other table facets are now configured on the table](#table-configuration)                                         | Low        |
 | [Navigations from new entities to deleted entities are not fixed up](#deleted-fixup)                                                     | Low        |
@@ -285,6 +286,67 @@ modelBuilder
     .HasForeignKey<FeaturedPost>(e => e.Id)
     .OnDelete(DeleteBehavior.ClientCascade);
 ```
+
+<a name="sqliteretries"></a>
+
+### Higher chance of busy/locked errors on SQLite when not using write-ahead logging
+
+#### Old behavior
+
+Previous versions of the SQLite provider saved changes via a less efficient technique which was able to automatically retry when the table was locked/busy and write-ahead logging (WAL) was not enabled.
+
+#### New behavior
+
+By default, EF Core now saves changes via a more efficient technique, using the RETURNING clause. Unfortunately, this technique is not able to automatically retry when busy/locked. In a multi-threaded application (like a web app) not using write-ahead logging, it is common to encounter these errors.
+
+#### Why
+
+The simplifications and performance improvements linked to the new method are significant enough that it's important to bring them to users by default. Databases created by EF Core also enable write-ahead logging by default. The SQLite team also recommends enabling write-ahead logging by default.
+
+#### Mitigations
+
+If possible, you should enable write-ahead logging on your database. If your database was created by EF, this should already be the case. If not, you can enable write-ahead logging by executing the following command.
+
+```sql
+PRAGMA journal_mode = 'wal';
+```
+
+If, for some reason, you can't enable write-ahead logging, it's possible to revert to the old mechanism for the entire application by inserting the following code in your context configuration:
+
+##### [EF Core 7.0](#tab/v7)
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlite(...)
+        .ReplaceService<IUpdateSqlGenerator, SqliteLegacyUpdateSqlGenerator>();
+```
+
+##### [EF Core 8.0 and above](#tab/v8)
+
+```csharp
+protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+{
+    configurationBuilder.Conventions.Add(_ => new DoNotUseReturningClauseConvention());
+}
+```
+
+```csharp
+class DoNotUseReturningClauseConvention : IModelFinalizingConvention
+{
+    public void ProcessModelFinalizing(
+        IConventionModelBuilder modelBuilder,
+        IConventionContext<IConventionModelBuilder> context)
+    {
+        foreach (var entityType in modelBuilder.Metadata.GetEntityTypes())
+        {
+            entityType.UseSqlReturningClause(false);
+        }
+    }
+}
+```
+
+---
 
 ## Low-impact changes
 
