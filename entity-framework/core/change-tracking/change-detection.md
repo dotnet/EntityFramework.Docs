@@ -97,7 +97,7 @@ Post {Id: 2} Unchanged
 
 Now the blog is correctly marked as `Modified` and the new post has been detected and is tracked as `Added`.
 
-At the start of this section we stated that detecting changes is needed when not using _using EF Core to make the change_. This is what is happening in the code above. That is, the changes to the property and navigation are made _directly on the entity instances_, and not by using any EF Core methods.
+At the start of this section we stated that detecting changes is needed when not _using EF Core to make the change_. This is what is happening in the code above. That is, the changes to the property and navigation are made _directly on the entity instances_, and not by using any EF Core methods.
 
 Contrast this to the following code which modifies the entities in the same way, but this time using EF Core methods:
 
