@@ -2,7 +2,7 @@
 title: Advanced Performance Topics
 description: Advanced performance topics for Entity Framework Core
 author: roji
-ms.date: 1/31/2022
+ms.date: 9/26/2023
 uid: core/performance/advanced-performance-topics
 ---
 # Advanced Performance Topics
@@ -159,7 +159,7 @@ The following example uses three techniques to construct a query's `Where` lambd
 2. **Expression API with parameter**: A better version, which substitutes the constant with a parameter. This ensures that the query is only compiled once regardless of the value provided, and the same (parameterized) SQL is generated.
 3. **Simple with parameter**: A version which doesn't use the Expression API, for comparison, which creates the same tree as the method above but is much simpler. In many cases, it's possible to dynamically build your expression tree without resorting to the Expression API, which is easy to get wrong.
 
-; we add a `Where` operator to the query only if the given parameter is not null. Note that this isn't a good use case for dynamically constructing a query - but we're using it for simplicity:
+We add a `Where` operator to the query only if the given parameter is not null. Note that this isn't a good use case for dynamically constructing a query - but we're using it for simplicity:
 
 ### [Expression API with constant](#tab/expression-api-with-constant)
 
