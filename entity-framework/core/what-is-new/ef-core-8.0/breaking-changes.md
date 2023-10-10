@@ -12,11 +12,17 @@ This page documents API and behavior changes that have the potential to break ex
 
 ## Summary
 
-| **Breaking change**                                                                                      | **Impact** |
-|:---------------------------------------------------------------------------------------------------------|------------|
-| [`Contains` in LINQ queries may stop working on older SQL Server versions                                | High       |
-| [SQL Server `date` and `time` now scaffold to .NET `DateOnly` and `TimeOnly`](#sqlserver-date-time-only) | Medium     |
-| [SQLite `Math` methods now translate to SQL](#sqlite-math)                                               | Low        |
+| **Breaking change**                                                                                           | **Impact** |
+|:--------------------------------------------------------------------------------------------------------------|------------|
+| [`Contains` in LINQ queries may stop working on older SQL Server versions](#sqlserver-contains-compatibility) | High       |
+| [Enums in JSON are stored as ints instead of strings by default](#enums-as-ints)                              | High       |
+| [SQL Server `date` and `time` now scaffold to .NET `DateOnly` and `TimeOnly`](#sqlserver-date-time-only)      | Medium     |
+| [Boolean columns with a database generated value are no longer scaffolded as nullable](#scaffold-bools)       | Medium     |
+| [SQLite `Math` methods now translate to SQL](#sqlite-math)                                                    | Low        |
+| [ITypeBase replaces IEntityType in some APIs](#type-base)                                                     | Low        |
+| [ValueGenerator expressions must use public APIs](#value-converters)                                          | Low        |
+| [ExcludeFromMigrations no longer excludes other tables in a TPC hierarchy](#exclude-from-migrations)          | Low        |
+| [Non-shadow integer keys are persisted to Cosmos documents](#persist-to-cosmos)                               | Low        |
 
 ## High-impact changes
 
@@ -78,6 +84,32 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         .UseSqlServer(@"<CONNECTION STRING>", o => o.UseCompatibilityLevel(120));
 ```
 
+<a name="enums-as-ints"></a>
+
+### Enums in JSON are stored as ints instead of strings by default
+
+[Tracking Issue #13617](https://github.com/dotnet/efcore/issues/31100)
+
+#### Old behavior
+
+In EF7, [enums mapped to JSON](xref:core/what-is-new/ef-core-7.0/whatsnew#json-columns) are, by default, stored as string values in the JSON document.
+
+#### New behavior
+
+Starting with EF Core 8.0, EF now, by default, maps enums to integer values in the JSON document.
+
+#### Why
+
+EF has always, by default, mapped enums to a numeric column in relational databases. Since EF supports queries where values from JSON interact with values from columns and parameters, it is important that the values in JSON match the values in the non-JSON column.
+
+#### Mitigations
+
+To continue using strings, configure the enum property with a conversion. For example:
+
+```csharp
+modelBuilder.Entity<User>().Property(e => e.Status).HasConversion<string>();
+```
+
 ## Medium-impact changes
 
 <a name="sqlserver-date-time-only"></a>
@@ -120,6 +152,42 @@ It is recommended to react to this change by modifying your code to use the newl
         var needsInitializer = Options.UseNullableReferenceTypes && !property.IsNullable && !clrType.IsValueType;
 #>
     public <#= code.Reference(clrType) #><#= needsNullable ? "?" : "" #> <#= property.Name #> { get; set; }<#= needsInitializer ? " = null!;" : "" #>
+<#
+```
+
+<a name="scaffold-bools"></a>
+
+### Boolean columns with a database generated value are no longer scaffolded as nullable
+
+[Tracking Issue #15070](https://github.com/dotnet/efcore/issues/15070)
+
+#### Old behavior
+
+Previously, non-nullable `bool` columns with a database default constraint were scaffolded as nullable `bool?` properties.
+
+#### New behavior
+
+Starting with EF Core 8.0, non-nullable `bool` columns are always scaffolded as non-nullable properties.
+
+#### Why
+
+A `bool` property will not have its value sent to the database if that value is `false`, which is the CLR default. If the database has a default value of `true` for the column, then even though the value of the property is `false`, the value in the database ends up as `true`. However, in EF8, the sentinel used to determine if a property has a value or not can be changed. This is done automatically for `bool` properties with a database generated value of `true`, which means that it is no longer necessary to scaffold the properties as nullable.
+
+#### Mitigations
+
+This change only affects users which regularly re-scaffold their database into an EF code model ("database-first" flow).
+
+It is recommended to react to this change by modifying your code to use the non-nullable bool property. However, if that isn't possible, you can edit the scaffolding templates to revert to the previous mapping. To do this, set up the templates as described on [this page](xref:core/managing-schemas/scaffolding/templates). Then, edit the `EntityType.t4` file, find where the entity properties get generated (search for `property.ClrType`), and change the code to the following:
+
+```c#
+#>
+        var propertyClrType = property.ClrType != typeof(bool)
+                              || (property.GetDefaultValueSql() == null && property.GetDefaultValue() != null)
+            ? property.ClrType
+            : typeof(bool?);
+#>
+    public <#= code.Reference(propertyClrType) #><#= needsNullable ? "?" : "" #> <#= property.Name #> { get; set; }<#= needsInitializer ? " = null!;" : "" #>
+<#
 <#
 ```
 
@@ -196,3 +264,128 @@ var query = dbContext.Cylinders
             Volume = Math.PI * Math.Pow(c.Radius, 2) * c.Height
         });
 ```
+
+<a name="type-base"></a>
+
+### ITypeBase replaces IEntityType in some APIs
+
+[Tracking Issue #13947](https://github.com/dotnet/efcore/issues/13947)
+
+#### Old behavior
+
+Previously, all mapped structural types were entity types.
+
+#### New behavior
+
+With the introduction of complex types in EF8, some APIs that were previously use an `IEntityType` now use `ITypeBase` so that the APIs can be used with either entity or complex types. This includes:
+
+- `IProperty.DeclaringEntityType` is now obsolete and `IProperty.DeclaringType` should be used instead.
+- `IEntityTypeIgnoredConvention` is now obsolete and `ITypeIgnoredConvention` should be used instead.
+
+#### Why
+
+With the introduction of complex types in EF8, these APIs can be used with either `IEntityType` or `IComplexType`.
+
+#### Mitigations
+
+The old APIs are obsoleted, but will not be removed until EF10. Code should be updated to use the new APIs ASAP.
+
+<a name="value-converters"></a>
+
+### ValueConverter and ValueComparer expressions must use public APIs for the compiled model
+
+[Tracking Issue #24896](https://github.com/dotnet/efcore/issues/24896)
+
+#### Old behavior
+
+Previously, `ValueConverter` and `ValueComparer` definitions where not included in the compiled model, and so could contain arbitrary code.
+
+#### New behavior
+
+EF now extracts the expressions from the `ValueConverter` and `ValueComparer` objects and includes these C# in the compiled model. This means that these expressions must only use public API.
+
+#### Why
+
+The EF team is gradually moving more constructs into the compiled model to support using EF Core with AOT in the future.
+
+#### Mitigations
+
+Make the APIs used by the comparer public. For example, consider this simple converter:
+
+```csharp
+public class MyValueConverter : ValueConverter<string, byte[]>
+{
+    public MyValueConverter()
+        : base(v => ConvertToBytes(v), v => ConvertToString(v))
+    {
+    }
+
+    private static string ConvertToString(byte[] bytes)
+        => ""; // ... TODO: Conversion code
+
+    private static byte[] ConvertToBytes(string chars)
+        => Array.Empty<byte>(); // ... TODO: Conversion code
+}
+```
+
+To use this converter in a compiled model with EF8, the `ConvertToString` and `ConvertToBytes` methods must be made public. For example:
+
+```csharp
+public class MyValueConverter : ValueConverter<string, byte[]>
+{
+    public MyValueConverter()
+        : base(v => ConvertToBytes(v), v => ConvertToString(v))
+    {
+    }
+
+    public static string ConvertToString(byte[] bytes)
+        => ""; // ... TODO: Conversion code
+
+    public static byte[] ConvertToBytes(string chars)
+        => Array.Empty<byte>(); // ... TODO: Conversion code
+}
+```
+
+<a name="exclude-from-migrations"></a>
+
+### ExcludeFromMigrations no longer excludes other tables in a TPC hierarchy
+
+[Tracking Issue #30079](https://github.com/dotnet/efcore/issues/30079)
+
+#### Old behavior
+
+Previously, using `ExcludeFromMigrations` on a table in a TPC hierarchy would also exclude other tables in the hierarchy.
+
+#### New behavior
+
+Starting with EF Core 8.0, `ExcludeFromMigrations` does not impact other tables.
+
+#### Why
+
+The old behavior was a bug and prevented migrations from being used to manage hierarchies across projects.
+
+#### Mitigations
+
+Use `ExcludeFromMigrations` explicitly on any other table that should be excluded.<a name="exclude-from-migrations"></a>
+
+<a name="persist-to-cosmos"></a>
+
+### Non-shadow integer keys are persisted to Cosmos documents
+
+[Tracking Issue #31664](https://github.com/dotnet/efcore/issues/31664)
+
+#### Old behavior
+
+Previously, non-shadow integer properties that match the criteria to be a synthesized key property would not be persisted into the JSON document, but were instead re-synthesized on the way out.
+
+#### New behavior
+
+Starting with EF Core 8.0, these properties are now persisted.
+
+#### Why
+
+The old behavior was a bug and prevented properties that match the synthesized key criteria from being persisted to Cosmos.
+
+#### Mitigations
+
+[Exclude the property from the model](xref:core/modeling/entity-properties#included-and-excluded-properties) if its value should not be persisted.
