@@ -92,7 +92,7 @@ EF Core extensions for Bulk operations (Insert, Update, Delete). For EF Core: 2-
 
 ### Bricelam.EntityFrameworkCore.Pluralizer
 
-Adds design-time pluralization. For EF Core: 2-7.
+Adds design-time pluralization. For EF Core: 2-8.
 
 [GitHub repository](https://github.com/bricelam/EFCore.Pluralizer) | [NuGet](https://www.nuget.org/packages/Bricelam.EntityFrameworkCore.Pluralizer)
 
@@ -151,13 +151,13 @@ As a result SQL becomes just "another" class library exposing its API locally, l
 
 ### EFCore.NamingConventions
 
-This will automatically make all your table and column names have snake_case, all UPPER or all lower case naming. For EF Core: 3-7.
+This will automatically make all your table and column names have snake_case, all UPPER or all lower case naming. For EF Core: 3-8.
 
 [GitHub repository](https://github.com/efcore/EFCore.NamingConventions) | [NuGet](https://www.nuget.org/packages/EFCore.NamingConventions)
 
 ### EFCore.CheckConstraints
 
-This plugin allows you to opt into some check constraints - just activate it and they'll automatically get created for you. For EF Core: 5, 6, 7.
+This plugin allows you to opt into some check constraints - just activate it and they'll automatically get created for you. For EF Core: 5-8.
 
 [GitHub repository](https://github.com/efcore/EFCore.CheckConstraints) | [NuGet](https://www.nuget.org/packages/EFCore.CheckConstraints)
 
@@ -189,7 +189,7 @@ An implementation for soft deleting entities. For EF Core: 3, 5, 6.
 
 ### EntityFrameworkCore.ConfigurationManager
 
-Extends EF Core to resolve connection strings from App.config. For EF Core: 3-7.
+Extends EF Core to resolve connection strings from App.config. For EF Core: 3-8.
 
 [GitHub repository](https://github.com/efcore/EFCore.ConfigurationManager) | [NuGet](https://www.nuget.org/packages/EntityFrameworkCore.ConfigurationManager)
 
