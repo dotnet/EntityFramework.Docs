@@ -171,7 +171,7 @@ Starting with EF Core 8.0, non-nullable `bool` columns are always scaffolded as 
 
 #### Why
 
-A `bool` property will not have its value sent to the database if that value is `false`, which is the CLR default. If the database has a default value of `true` for the column, then even though the value of the property is `false`, the value in the database ends up as `true`. However, in EF8, the sentinel used to determine if a property has a value or not can be changed. This is done automatically for `bool` properties with a database generated value of `true`, which means that it is no longer necessary to scaffold the properties as nullable.
+A `bool` property will not have its value sent to the database if that value is `false`, which is the CLR default. If the database has a default value of `true` for the column, then even though the value of the property is `false`, the value in the database ends up as `true`. However, in EF8, the sentinel used to determine whether a property has a value can be changed. This is done automatically for `bool` properties with a database generated value of `true`, which means that it is no longer necessary to scaffold the properties as nullable.
 
 #### Mitigations
 
