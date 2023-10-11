@@ -107,7 +107,19 @@ EF has always, by default, mapped enums to a numeric column in relational databa
 To continue using strings, configure the enum property with a conversion. For example:
 
 ```csharp
-modelBuilder.Entity<User>().Property(e => e.Status).HasConversion<string>();
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<User>().Property(e => e.Status).HasConversion<string>();
+}
+```
+
+Or, for all properties of the enum type::
+
+```csharp
+protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+{
+    configurationBuilder.Properties<StatusEnum>().HaveConversion<string>();
+}
 ```
 
 ## Medium-impact changes
@@ -281,6 +293,7 @@ With the introduction of complex types in EF8, some APIs that were previously us
 
 - `IProperty.DeclaringEntityType` is now obsolete and `IProperty.DeclaringType` should be used instead.
 - `IEntityTypeIgnoredConvention` is now obsolete and `ITypeIgnoredConvention` should be used instead.
+- `IValueGeneratorSelector.Select` now accepts an `ITypeBase` which may be, but does not have to be an `IEntityType`.
 
 #### Why
 
