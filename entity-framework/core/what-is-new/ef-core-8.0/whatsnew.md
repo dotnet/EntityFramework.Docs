@@ -203,7 +203,7 @@ Notice that all three `Line1` columns have changed, since they are all sharing t
 > [!TIP]
 > If order addresses should change automatically when the customer address changes, then consider mapping the address as an entity type. `Order` and `Customer` can then safely reference the same address instance (which is now identified by a key) via a navigation property.
 
-A good way to deal with issues like this is to make the type immutable. Indeed, this immutability often natural when a type is a good candidate for being a complex type. For example, it usually makes sense to supply a complex new `Address` object rather than to just mutate, say, the country while leaving the rest the same.
+A good way to deal with issues like this is to make the type immutable. Indeed, this immutability is often natural when a type is a good candidate for being a complex type. For example, it usually makes sense to supply a complex new `Address` object rather than to just mutate, say, the country while leaving the rest the same.
 
 Both reference and value types can be made immutable. We'll look at some examples in the following sections.
 
