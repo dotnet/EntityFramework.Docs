@@ -17,13 +17,13 @@ These tools and extensions provide additional functionality for Entity Framework
 
 ### EF Core Power Tools
 
-EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 6, 7.
+EF Core Power Tools is a Visual Studio extension that exposes various EF Core design-time tasks in a simple user interface. It includes reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications), management of database migrations, and model visualizations. For EF Core: 6, 7, 8.
 
 [GitHub wiki](https://github.com/ErikEJ/EFCorePowerTools/wiki)
 
 ### EF Core Power Tools CLI
 
-EF Core Power Tools CLI is a .NET global command line tool. It enables advanced reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications). For EF Core: 6, 7.
+EF Core Power Tools CLI is a .NET global command line tool. It enables advanced reverse engineering of DbContext and entity classes from existing databases and [SQL Server DACPACs](/sql/relational-databases/data-tier-applications/data-tier-applications). For EF Core: 6, 7, 8.
 
 [GitHub readme](https://github.com/ErikEJ/EFCorePowerTools/blob/master/src/GUI/efcpt/readme.md)
 
