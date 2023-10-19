@@ -38,7 +38,9 @@ public class BlankTriggerAddingConvention : IModelFinalizingConvention
         {
             var table = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table);
             if (table != null
-                && entityType.GetDeclaredTriggers().All(t => t.GetDatabaseName(table.Value) == null))
+                && entityType.GetDeclaredTriggers().All(t => t.GetDatabaseName(table.Value) == null)
+                && (entityType.BaseType == null
+                    || entityType.GetMappingStrategy() != RelationalAnnotationNames.TphMappingStrategy))
             {
                 entityType.Builder.HasTrigger(table.Value.Name + "_Trigger");
             }
