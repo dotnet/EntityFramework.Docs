@@ -23,8 +23,7 @@ public class Program
 
         await RawSqlSample.SqlQuery_for_unmapped_types();
 
-        // https://github.com/dotnet/efcore/issues/31597
-        // await LazyLoadingSample.Lazy_loading_for_no_tracking_queries();
+        await LazyLoadingSample.Lazy_loading_for_no_tracking_queries();
 
         await InheritanceSample.Discriminator_length_TPH();
 
@@ -43,5 +42,11 @@ public class Program
         await PrimitiveCollectionsInJsonSample.Queries_using_primitive_collections_in_JSON_documents_SQLite();
 
         await PrimitiveCollectionToTableSample.Queries_against_a_table_wrapping_a_primitive_type();
+
+        await DefaultConstraintSample.Insert_rows_using_database_default_constraint();
+        await DefaultConstraintSample.Insert_rows_using_database_default_constraint_SQLite();
+
+        await ExecuteUpdateDeleteSample.ExecuteUpdate_ExecuteDelete_with_multiple_entities_targeting_one_table();
+        await ExecuteUpdateDeleteSample.ExecuteUpdate_ExecuteDelete_with_multiple_entities_targeting_one_table_SQLite();
     }
 }

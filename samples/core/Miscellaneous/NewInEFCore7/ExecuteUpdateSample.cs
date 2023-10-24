@@ -48,9 +48,6 @@ public static class ExecuteUpdateSample
 
         await UpdateTagsOnOldPosts<TContext>();
 
-        // https://github.com/dotnet/efcore/issues/28921 (EF.Default doesn't work for value types)
-        // await ResetPostPublishedOnToDefault<TContext>();
-
         Console.WriteLine();
     }
 
@@ -157,30 +154,6 @@ public static class ExecuteUpdateSample
         Console.WriteLine();
         Console.WriteLine(
             $"Tags after update: {string.Join(", ", await context.Tags.AsNoTracking().Select(e => "'" + e.Text + "'").ToListAsync())}");
-        Console.WriteLine();
-    }
-
-    private static async Task ResetPostPublishedOnToDefault<TContext>()
-        where TContext : BlogsContext, new()
-    {
-        await using var context = new TContext();
-        await context.Database.BeginTransactionAsync();
-
-        Console.WriteLine("Reset PublishedOn on posts to its default value");
-        Console.WriteLine(
-            $"Posts before update: {string.Join(", ", await context.Posts.AsNoTracking().Select(e => "'..." + e.Title.Substring(e.Title.Length - 12) + "' " + e.PublishedOn.Date).ToListAsync())}");
-        Console.WriteLine();
-
-        // context.LoggingEnabled = true;
-        // await context.Set<Post>()
-        //     .ExecuteUpdateAsync(
-        //         setPropertyCalls => setPropertyCalls
-        //             .SetProperty(post => post.PublishedOn, post => EF.Default<DateTime>()));
-        // context.LoggingEnabled = false;
-
-        Console.WriteLine();
-        Console.WriteLine(
-            $"Posts after update: {string.Join(", ", await context.Posts.AsNoTracking().Select(e => "'..." + e.Title.Substring(e.Title.Length - 12) + "' " + e.PublishedOn.Date).ToListAsync())}");
         Console.WriteLine();
     }
 
