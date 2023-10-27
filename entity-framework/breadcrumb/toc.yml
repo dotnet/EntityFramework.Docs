@@ -1,7 +1,14 @@
-- name: Docs
-  tocHref: /
-  topicHref: /
+- name: .NET
+  tocHref: /ef/
+  topicHref: /dotnet/index
   items:
   - name: Entity Framework
     tocHref: /ef/
-    topicHref: /ef/
+    topicHref: /ef/index
+    items:
+    - name: Entity Framework Core
+      tocHref: /ef/core/
+      topicHref: /ef/core/index
+    - name: Entity Framework 6
+      tocHref: /ef/ef6/
+      topicHref: /ef/ef6/index
