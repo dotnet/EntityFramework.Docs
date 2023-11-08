@@ -120,9 +120,7 @@ Neither of these options is better than the other; they both result in exactly t
             public Blog? Blog { get; set; }                                    // Optional reference navigation to principal
         }
 -->
-[!code-csharp[OneToOneOptionalShadow](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneOptionalShadow)]
-
-In some cases, you may not want a foreign key property in your model, since foreign keys are a detail of how the relationship is represented in the database, which is not needed when using the relationship in a purely object-oriented manner. However, if entities are going to be serialized, for example to send over a wire, then the foreign key values can be a useful way to keep the relationship information intact when the entities are not in an object form. It is therefore often pragmatic to keep foreign key properties in the .NET type for this purpose. Foreign key properties can be private, which is often a good compromise to avoid exposing the foreign key while allowing its value to travel with the entity.
+[!code-csharp[OneToOneOptional](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneOptional)]
 
 This is the same as the previous example, except that the foreign key property and navigation to the principal are now nullable. This makes the relationship "optional" because a dependent (`BlogHeader`) can _not_ be related _any_ principal (`Blog`) by setting its foreign key property and navigation to `null`.
 
@@ -212,6 +210,8 @@ When no property is specified in the call to `HasForeignKey`, and the primary ke
         }
 -->
 [!code-csharp[OneToOneRequiredShadow](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneRequiredShadow)]
+
+In some cases, you may not want a foreign key property in your model, since foreign keys are a detail of how the relationship is represented in the database, which is not needed when using the relationship in a purely object-oriented manner. However, if entities are going to be serialized, for example to send over a wire, then the foreign key values can be a useful way to keep the relationship information intact when the entities are not in an object form. It is therefore often pragmatic to keep foreign key properties in the .NET type for this purpose. Foreign key properties can be private, which is often a good compromise to avoid exposing the foreign key while allowing its value to travel with the entity.
 
 Following on from the previous example, this example removes the foreign key property from the dependent entity type. However, instead of using the primary key, EF is instead instructed to create a [shadow foreign key property](xref:core/modeling/shadow-properties) called `BlogId` of type `int`.
 
