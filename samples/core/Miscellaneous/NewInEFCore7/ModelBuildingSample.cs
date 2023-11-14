@@ -193,58 +193,56 @@ public static class ModelBuildingSample
             Console.WriteLine();
             Console.WriteLine("Historical data for Rainbow Dash:");
 
-            // GitHub Issue https://github.com/dotnet/efcore/issues/29156
-            // #region TemporalAll
-            // var history = await context
-            //     .Employees
-            //     .TemporalAll()
-            //     .Where(e => e.Name == "Rainbow Dash")
-            //     .OrderBy(e => EF.Property<DateTime>(e, "PeriodStart"))
-            //     .Select(
-            //         e => new
-            //         {
-            //             Employee = e,
-            //             PeriodStart = EF.Property<DateTime>(e, "PeriodStart"),
-            //             PeriodEnd = EF.Property<DateTime>(e, "PeriodEnd")
-            //         })
-            //     .ToListAsync();
-            //
-            // foreach (var pointInTime in history)
-            // {
-            //     Console.WriteLine(
-            //         $"  Employee {pointInTime.Employee.Name} was '{pointInTime.Employee.Info.Position}' from {pointInTime.PeriodStart} to {pointInTime.PeriodEnd}");
-            // }
-            // #endregion
+            #region TemporalAll
+            var history = await context
+                .Employees
+                .TemporalAll()
+                .Where(e => e.Name == "Rainbow Dash")
+                .OrderBy(e => EF.Property<DateTime>(e, "PeriodStart"))
+                .Select(
+                    e => new
+                    {
+                        Employee = e,
+                        PeriodStart = EF.Property<DateTime>(e, "PeriodStart"),
+                        PeriodEnd = EF.Property<DateTime>(e, "PeriodEnd")
+                    })
+                .ToListAsync();
+
+            foreach (var pointInTime in history)
+            {
+                Console.WriteLine(
+                    $"  Employee {pointInTime.Employee.Name} was '{pointInTime.Employee.Info.Position}' from {pointInTime.PeriodStart} to {pointInTime.PeriodEnd}");
+            }
+            #endregion
         }
 
-        // GitHub Issue https://github.com/dotnet/efcore/issues/29156
-        // await using (var context = new EntitySplittingContext())
-        // {
-        //     Console.WriteLine();
-        //     Console.WriteLine($"Historical data for Rainbow Dash between {timeStamp2} and {timeStamp3}:");
-        //
-        //     #region TemporalBetween
-        //     var history = await context
-        //         .Employees
-        //         .TemporalBetween(timeStamp2, timeStamp3)
-        //         .Where(e => e.Name == "Rainbow Dash")
-        //         .OrderBy(e => EF.Property<DateTime>(e, "PeriodStart"))
-        //         .Select(
-        //             e => new
-        //             {
-        //                 Employee = e,
-        //                 PeriodStart = EF.Property<DateTime>(e, "PeriodStart"),
-        //                 PeriodEnd = EF.Property<DateTime>(e, "PeriodEnd")
-        //             })
-        //         .ToListAsync();
-        //     #endregion
-        //
-        //     foreach (var pointInTime in history)
-        //     {
-        //         Console.WriteLine(
-        //             $"  Employee {pointInTime.Employee.Name} was '{pointInTime.Employee.Info.Position}' from {pointInTime.PeriodStart} to {pointInTime.PeriodEnd}");
-        //     }
-        // }
+        await using (var context = new EntitySplittingContext())
+        {
+            Console.WriteLine();
+            Console.WriteLine($"Historical data for Rainbow Dash between {timeStamp2} and {timeStamp3}:");
+
+            #region TemporalBetween
+            var history = await context
+                .Employees
+                .TemporalBetween(timeStamp2, timeStamp3)
+                .Where(e => e.Name == "Rainbow Dash")
+                .OrderBy(e => EF.Property<DateTime>(e, "PeriodStart"))
+                .Select(
+                    e => new
+                    {
+                        Employee = e,
+                        PeriodStart = EF.Property<DateTime>(e, "PeriodStart"),
+                        PeriodEnd = EF.Property<DateTime>(e, "PeriodEnd")
+                    })
+                .ToListAsync();
+            #endregion
+
+            foreach (var pointInTime in history)
+            {
+                Console.WriteLine(
+                    $"  Employee {pointInTime.Employee.Name} was '{pointInTime.Employee.Info.Position}' from {pointInTime.PeriodStart} to {pointInTime.PeriodEnd}");
+            }
+        }
 
         await using (var context = new EntitySplittingContext())
         {
@@ -518,7 +516,7 @@ public static class ModelBuildingSample
                             });
                 });
             #endregion
-            
+
             #region LinkingForeignKey
             modelBuilder.Entity<Customer>()
                 .HasOne<Customer>()

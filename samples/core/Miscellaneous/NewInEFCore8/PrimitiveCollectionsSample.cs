@@ -148,7 +148,8 @@ public static class PrimitiveCollectionsSample
         public List<bool> Booleans { get; set; } = null!;
         public List<Uri> Urls { get; set; } = null!;
 
-        public MyCollection SomeInts { get; set; } = null!;
+        // https://github.com/dotnet/efcore/issues/32055
+        // public MyCollection SomeInts { get; set; } = null!;
 
         public List<int> GetOnlyInts { get; } = new();
 
@@ -316,7 +317,7 @@ public static class PrimitiveCollectionsSample
                     Guids = new() { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() },
                     Booleans = new() { true, false, true },
                     Urls = new() { new("https://127.0.0.1/"), new("http://192.168.0.1/"), new("https://devblogs.microsoft.com/dotnet/") },
-                    SomeInts = new() { 1, 2, 3 },
+                    //SomeInts = new() { 1, 2, 3 },
                     // DddIds = new() { new(1), new(2), new(3) }
                 });
 

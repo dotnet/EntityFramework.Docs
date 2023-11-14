@@ -32,9 +32,9 @@
       href: core/index.md
     - name: "The plan for EF Core 8 (EF8)"
       href: /ef/core/what-is-new/ef-core-8.0/plan
-    - name: "What's new in EF Core 8.0 (EF8)"
+    - name: "What's new in EF Core 8 (EF8)"
       href: /ef/core/what-is-new/ef-core-8.0/whatsnew
-    - name: "Breaking changes in EF Core 8.0 (EF8)"
+    - name: "Breaking changes in EF Core 8 (EF8)"
       href: /ef/core/what-is-new/ef-core-8.0/breaking-changes
     - name: Getting started
       items:
