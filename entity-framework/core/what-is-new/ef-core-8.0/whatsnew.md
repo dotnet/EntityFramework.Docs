@@ -13,7 +13,7 @@ EF Core 8.0 (EF8) was [released in November 2023](https://devblogs.microsoft.com
 > [!TIP]
 > You can run and debug into the samples by [downloading the sample code from GitHub](https://github.com/dotnet/EntityFramework.Docs). Each section links to the source code specific to that section.
 
-EF8 requires the [.NET 8 SDK](https://aka.ms/get-dotnet-8) and required .NET 8 to run. EF8 will not run on earlier .NET versions, and will not run on .NET Framework.
+EF8 requires the [.NET 8 SDK](https://aka.ms/get-dotnet-8) to build and requires the .NET 8 runtime to run. EF8 will not run on earlier .NET versions, and will not run on .NET Framework.
 
 ## Value objects using Complex Types
 
@@ -676,7 +676,6 @@ public class PrimitiveCollections
 {
     public IEnumerable<int> Ints { get; set; }
     public ICollection<string> Strings { get; set; }
-    public ISet<DateTime> DateTimes { get; set; }
     public IList<DateOnly> Dates { get; set; }
     public uint[] UnsignedInts { get; set; }
     public List<bool> Booleans { get; set; }
@@ -1197,6 +1196,37 @@ SELECT [p].[Title],
 FROM [Posts] AS [p]
       WHERE (CAST(JSON_VALUE([p].[Metadata],'$.Updates[0].UpdatedOn') AS date) IS NOT NULL)
         AND (CAST(JSON_VALUE([p].[Metadata],'$.Updates[1].UpdatedOn') AS date) IS NOT NULL)
+```
+
+### Translate queries into embedded collections
+
+EF8 supports queries against collections of both primitive (discussed above) and non-primitive types embedded in the JSON document. For example, the following query returns all posts with any of an arbitrary list of search terms:
+
+<!--
+        #region PostsWithSearchTerms
+        var searchTerms = new[] { "Search #2", "Search #3", "Search #5", "Search #8", "Search #13", "Search #21", "Search #34" };
+
+        var postsWithSearchTerms = await context.Posts
+            .Where(post => post.Metadata!.TopSearches.Any(s => searchTerms.Contains(s.Term)))
+            .ToListAsync();
+-->
+[!code-csharp[PostsWithSearchTerms](../../../../samples/core/Miscellaneous/NewInEFCore8/JsonColumnsSample.cs?name=PostsWithSearchTerms)]
+
+This translates into the following SQL when using SQL Server:
+
+```sql
+SELECT [p].[Id], [p].[Archived], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Title], [p].[PromoText], [p].[Metadata]
+FROM [Posts] AS [p]
+WHERE EXISTS (
+    SELECT 1
+    FROM OPENJSON([p].[Metadata], '$.TopSearches') WITH (
+        [Count] int '$.Count',
+        [Term] nvarchar(max) '$.Term'
+    ) AS [t]
+    WHERE EXISTS (
+        SELECT 1
+        FROM OPENJSON(@__searchTerms_0) WITH ([value] nvarchar(max) '$') AS [s]
+        WHERE [s].[value] = [t].[Term]))
 ```
 
 ### JSON Columns for SQLite
@@ -2517,7 +2547,7 @@ The LINQ expression 'DbSet<SpecialCustomerTpt>()
 
 ## Better use of `IN` queries
 
-When the Contains operator is used with a subquery, EF Core now generates better queries using SQL `IN` instead of `EXISTS`; aside from producing more readable SQL, in some cases this can result in dramatically faster queries. For example, consider the following LINQ query:
+When the `Contains` LINQ operator is used with a subquery, EF Core now generates better queries using SQL `IN` instead of `EXISTS`; aside from producing more readable SQL, in some cases this can result in dramatically faster queries. For example, consider the following LINQ query:
 
 ```csharp
 var blogsWithPosts = await context.Blogs
@@ -2585,3 +2615,41 @@ SELECT [c].[Id], [c].[City], [c].[FirstName], [c].[LastName], [c].[Street]
 FROM [Customers] AS [c]
 WHERE ([c].[Id] * 3 + 2 > 0 AND [c].[FirstName] IS NOT NULL) OR [c].[LastName] IS NOT NULL
 ```
+
+## Specific opt-out for RETURNING/OUTPUT clause
+
+EF7 changed the default update SQL to use `RETURNING`/`OUTPUT` for fetching back database-generated columns. Some cases where identified where this does not work, and so EF8 introduces explicit opt-outs for this behavior.
+
+For example, to opt-out of `OUTPUT` when using the SQL Server/Azure SQL provider:
+
+```csharp
+ modelBuilder.Entity<Customer>().ToTable(tb => tb.UseSqlOutputClause(false));
+```
+
+Or to opt-out of `RETURNING` when using the SQLite provider:
+
+```csharp
+ modelBuilder.Entity<Customer>().ToTable(tb => tb.UseSqlReturningClause(false));
+```
+
+## Other minor changes
+
+In addition to the enhancements described above, there have been many smaller changes made to EF8. This includes:
+
+- [NativeAOT/trimming compatibility for Microsoft.Data.Sqlite](https://github.com/dotnet/efcore/issues/29725)
+- [Allow Multi-region or Application Preferred Regions in EF Core Cosmos](https://github.com/dotnet/efcore/issues/29424)
+- [SQLite: Add EF.Functions.Unhex](https://github.com/dotnet/efcore/issues/31355)
+- [SQL Server Index options SortInTempDB and DataCompression](https://github.com/dotnet/efcore/issues/30408)
+- [Allow 'unsharing' connection between contexts](https://github.com/dotnet/efcore/issues/30704)
+- [Add Generic version of EntityTypeConfiguration Attribute](https://github.com/dotnet/efcore/issues/30072)
+- [Query: add support for projecting JSON entities that have been composed on](https://github.com/dotnet/efcore/issues/31365)
+- [Remove unneeded subquery and projection when using ordering without limit/offset in set operations](https://github.com/dotnet/efcore/issues/30684)
+- [Allow pooling DbContext with singleton services](https://github.com/dotnet/efcore/issues/27752)
+- [Optional RestartSequenceOperation.StartValue](https://github.com/dotnet/efcore/issues/26560)
+- [Allow UseSequence and HiLo on non-key properties](https://github.com/dotnet/efcore/issues/29758)
+- [Provide more information when 'No DbContext was found' error is generated](https://github.com/dotnet/efcore/issues/18715)
+- [Pass query tracking behavior to materialization interceptor](https://github.com/dotnet/efcore/issues/29910)
+- [Use case-insensitive string key comparisons on SQL Server](https://github.com/dotnet/efcore/issues/27526)
+- [Allow value converters to change the DbType](https://github.com/dotnet/efcore/issues/24771)
+- [Resolve application services in EF services](https://github.com/dotnet/efcore/issues/13540)
+- [Allow transfer of ownership of DbConnection from application to DbContext](https://github.com/dotnet/efcore/issues/24199)

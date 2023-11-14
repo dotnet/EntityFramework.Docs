@@ -203,6 +203,23 @@ public static class JsonColumnsSample
 
         Console.WriteLine();
 
+        #region PostsWithSearchTerms
+        var searchTerms = new[] { "Search #2", "Search #3", "Search #5", "Search #8", "Search #13", "Search #21", "Search #34" };
+
+        var postsWithSearchTerms = await context.Posts
+            .Where(post => post.Metadata!.TopSearches.Any(s => searchTerms.Contains(s.Term)))
+            .ToListAsync();
+        #endregion
+
+        Console.WriteLine();
+        foreach (var postWithTerm in postsWithSearchTerms)
+        {
+            Console.WriteLine(
+                $"Post {postWithTerm.Id} with terms '{string.Join("', '", postWithTerm.Metadata!.TopSearches.Select(s => s.Term))}'");
+        }
+
+        Console.WriteLine();
+
         context.ChangeTracker.Clear();
 
         Console.WriteLine("Updating a 'Contact' JSON document...");
