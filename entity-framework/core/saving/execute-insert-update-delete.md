@@ -202,7 +202,7 @@ if (numUpdated == 0)
 }
 ```
 
-In this code, we use a LINQ `Where` operator to apply an update to a specific Blog, and only if its concurrency token has a specific value (e.g. the one we saw when querying the Blog from the database). We the check how many rows were actually updated by `ExecuteUpdate`; if the result is zero, no rows were updated and the concurrency token was likely changed as a result of a concurrent update.
+In this code, we use a LINQ `Where` operator to apply an update to a specific Blog, and only if its concurrency token has a specific value (e.g. the one we saw when querying the Blog from the database). We then check how many rows were actually updated by `ExecuteUpdate`; if the result is zero, no rows were updated and the concurrency token was likely changed as a result of a concurrent update.
 
 ## Limitations
 
