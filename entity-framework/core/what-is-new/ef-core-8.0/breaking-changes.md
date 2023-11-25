@@ -311,7 +311,7 @@ The old APIs are obsoleted, but will not be removed until EF10. Code should be u
 
 #### Old behavior
 
-Previously, `ValueConverter` and `ValueComparer` definitions where not included in the compiled model, and so could contain arbitrary code.
+Previously, `ValueConverter` and `ValueComparer` definitions were not included in the compiled model, and so could contain arbitrary code.
 
 #### New behavior
 
