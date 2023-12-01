@@ -210,7 +210,7 @@ In this code, we use a LINQ `Where` operator to apply an update to a specific Bl
 * While the SQL UPDATE and DELETE statements allow retrieving original column values for the rows affected, this isn't currently supported by `ExecuteUpdate` and `ExecuteDelete`.
 * Multiple invocations of these methods cannot be batched. Each invocation performs its own roundtrip to the database.
 * Databases typically allow only a single table to be modified with UPDATE or DELETE.
-* These methods can only be executed with relational database providers.
+* These methods currently only work with relational database providers.
 
 ## Additional resources
 
