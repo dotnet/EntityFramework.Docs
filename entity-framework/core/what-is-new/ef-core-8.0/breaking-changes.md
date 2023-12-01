@@ -6,9 +6,16 @@ ms.date: 8/10/2023
 uid: core/what-is-new/ef-core-8.0/breaking-changes
 ---
 
-# Breaking changes in EF Core 8.0 (EF8)
+# Breaking changes in EF Core 8 (EF8)
 
-This page documents API and behavior changes that have the potential to break existing applications updating to EF Core 8.0.
+This page documents API and behavior changes that have the potential to break existing applications updating from EF Core 7 to EF Core 8. Make sure to review earlier breaking changes if updating from an earlier version of EF Core:
+
+- [Breaking changes in EF Core 7](xref:core/what-is-new/ef-core-7.0/breaking-changes)
+- [Breaking changes in EF Core 6](xref:core/what-is-new/ef-core-6.0/breaking-changes)
+
+## Target Framework
+
+EF Core 8 targets .NET 8. Applications targeting older .NET, .NET Core, and .NET Framework versions will need to update to target .NET 8.
 
 ## Summary
 
