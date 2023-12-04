@@ -23,8 +23,6 @@ You can specify an index over a column as follows:
 
 > [!NOTE]
 > By convention, an index is created in each property (or set of properties) that are used as a foreign key.
->
-> EF Core only supports one index per distinct set of properties. If you configure an index on a set of properties that already has an index defined, either by convention or previous configuration, then you will be changing the definition of that index. This is useful if you want to further configure an index that was created by convention.
 
 ## Composite index
 
@@ -89,7 +87,7 @@ You may also specify the sort order on a column-by-column basis as follows:
 
 ***
 
-## Index name
+## Index naming and multiple indexes
 
 By convention, indexes created in a relational database are named `IX_<type name>_<property name>`. For composite indexes, `<property name>` becomes an underscore separated list of property names.
 
@@ -104,6 +102,34 @@ You can set the name of the index created in the database:
 [!code-csharp[Main](../../../samples/core/Modeling/IndexesAndConstraints/FluentAPI/IndexName.cs?name=IndexName&highlight=5)]
 
 ***
+
+Note that if you call `HasIndex` more than once on the same set of properties, that continues to configure a single index rather than create a new one:
+
+```csharp
+modelBuilder.Entity<Blog>()
+    .HasIndex(b => new { b.FirstName, b.LastName })
+    .HasDatabaseName("IX_Names_Ascending");
+
+modelBuilder.Entity<Blog>()
+    .HasIndex(b => new { b.FirstName, b.LastName })
+    .HasDatabaseName("IX_Names_Descending")
+    .IsDescending();
+```
+
+Since the second `HasIndex` call overrides the first one, this creates only a single, descending index. This can be useful for further configuring an index that was created by convention.
+
+To create multiple indexes over the same set of properties, pass a name to the `HasIndex`, which will be used to identify the index in the EF model, and to distinguish it from other indexes over the same properties:
+
+```c#
+modelBuilder.Entity<Blog>()
+    .HasIndex(b => new { b.FirstName, b.LastName }, "IX_Names_Ascending");
+
+modelBuilder.Entity<Blog>()
+    .HasIndex(b => new { b.FirstName, b.LastName }, "IX_Names_Descending")
+    .IsDescending();
+```
+
+Note that this name is also used as a default for the database name, so explicitly calling `HasDatabaseName` isn't required.
 
 ## Index filter
 
