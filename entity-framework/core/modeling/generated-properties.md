@@ -74,7 +74,7 @@ Consult your provider's documentation for the specific value generation techniqu
 
 ## Date/time value generation
 
-A common request is to have a database column which contains the date/time for when the column was first inserted (value generated on add), or for when it was last updated (value generated on add or update). As there are various strategies to do this, EF Core providers usually don't set up value generation automatically for date/time columns - you have to configure this yourself.
+A common request is to have a database column which contains the date/time for when the row was first inserted (value generated on add), or for when it was last updated (value generated on add or update). As there are various strategies to do this, EF Core providers usually don't set up value generation automatically for date/time columns - you have to configure this yourself.
 
 ### Creation timestamp
 
