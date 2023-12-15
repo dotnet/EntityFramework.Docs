@@ -2,7 +2,7 @@
 title: Breaking changes in EF Core 8.0 (EF8) - EF Core
 description: Complete list of breaking changes introduced in Entity Framework Core 8.0 (EF8)
 author: ajcvickers
-ms.date: 8/10/2023
+ms.date: 12/18/2023
 uid: core/what-is-new/ef-core-8.0/breaking-changes
 ---
 
@@ -30,6 +30,7 @@ EF Core 8 targets .NET 8. Applications targeting older .NET, .NET Core, and .NET
 | [ValueGenerator expressions must use public APIs](#value-converters)                                          | Low        |
 | [ExcludeFromMigrations no longer excludes other tables in a TPC hierarchy](#exclude-from-migrations)          | Low        |
 | [Non-shadow integer keys are persisted to Cosmos documents](#persist-to-cosmos)                               | Low        |
+| [Relational model is generated in the compiled model](#compiled-relational-model)                             | Low        |
 
 ## High-impact changes
 
@@ -409,3 +410,30 @@ The old behavior was a bug and prevented properties that match the synthesized k
 #### Mitigations
 
 [Exclude the property from the model](xref:core/modeling/entity-properties#included-and-excluded-properties) if its value should not be persisted.
+Additionally, you can disable this behavior entirely by setting `Microsoft.EntityFrameworkCore.Issue31664` AppContext switch to `true`, see [AppContext for library consumers](/dotnet/api/system.appcontext#ForConsumers) for more details.
+
+```C#
+AppContext.SetSwitch("Microsoft.EntityFrameworkCore.Issue31664", isEnabled: true);
+```
+
+<a name="compiled-relational-model"></a>
+
+### Relational model is generated in the compiled model
+
+[Tracking Issue #24896](https://github.com/dotnet/efcore/issues/24896)
+
+#### Old behavior
+
+Previously, the relational model was computed at run-time even when using a compiled model.
+
+#### New behavior
+
+Starting with EF Core 8.0, the relational model is part of the generated compied model. However, for particularly large models the generated file may fail to compile.
+
+#### Why
+
+This was done to further improve startup time.
+
+#### Mitigations
+
+Edit the generated `*ModelBuilder.cs` file and remove the line `AddRuntimeAnnotation("Relational:RelationalModel", CreateRelationalModel());` as well as the method `CreateRelationalModel()`.
