@@ -58,6 +58,12 @@ IWAPI (Instant Web API) is a scaffolding engine for .NET Core that can automate 
 
 [Website](https://instantwebapi.com/)
 
+### efmig
+
+efmig is a multi-platform GUI application that speeds up daily development when working with Entity Framework Core. It covers the most popular use cases such as migration code and script generation with simple, one-click interface. For EF Core: 2-8.
+
+[GitHub repository](https://github.com/stil/efmig)
+
 ## Extensions
 
 ### Microsoft.EntityFrameworkCore.AutoHistory
