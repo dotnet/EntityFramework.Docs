@@ -15,7 +15,7 @@ Indexer properties are entity type properties, which are backed by an [indexer](
 
 Shadow properties are most often used for foreign key properties, where they are added to the model by convention when no foreign key property has been found by convention or configured explicitly. The relationship is represented by navigation properties, but in the database it is enforced by a foreign key constraint, and the value for the foreign key column is stored in the corresponding shadow property.
 
-The property will be named `<navigation property name><principal key property name>` (the navigation on the dependent entity, which points to the principal entity, is used for the naming). If the principal key property name starts with the name of the navigation property, then the name will just be `<principal key property name>`. If there is no navigation property on the dependent entity, then the principal type name is used in its place.
+The property will be named `<navigation property name><principal key property name>` (the navigation on the dependent entity, which points to the principal entity, is used for the naming). If the principal key property name starts with the name of the navigation property, then the name will just be `<principal key property name>`. If there is no navigation property on the dependent entity, then the principal type name concatenated with the primary or alternate key property name is used in its place `<principal type name><principal key property name>`.
 
 For example, the following code listing will result in a `BlogId` shadow property being introduced to the `Post` entity:
 
