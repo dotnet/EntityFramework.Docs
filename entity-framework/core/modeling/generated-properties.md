@@ -95,16 +95,11 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF ((SELECT TRIGGER_NESTLEVEL()) > 1) RETURN;
-
-    DECLARE @Id INT
-
-    SELECT @Id = INSERTED.BlogId
-    FROM INSERTED
-
-    UPDATE dbo.Blogs
+    UPDATE B
     SET LastUpdated = GETDATE()
-    WHERE BlogId = @Id
+    FROM dbo.Blogs AS B
+    INNER JOIN INSERTED AS I
+        ON B.BlogId = I.BlogId
 END
 ```
 
