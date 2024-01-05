@@ -228,6 +228,9 @@ The following example applies migrations to a local SQL Server instance using th
 .\efbundle.exe --connection 'Data Source=(local)\MSSQLSERVER;Initial Catalog=Blogging;User ID=myUsername;Password=myPassword'
 ```
 
+> [!WARNING]
+> Don't forget to copy appsettings.json alongside your bundle. The bundle relies on the presence of appsettings.json in the execution directory.
+
 ### Migration bundle example
 
 A bundle needs migrations to include. These are created using `dotnet ef migrations add` as described in [_Create your first migration_](xref:core/managing-schemas/migrations/index#create-your-first-migration). Once you have migrations ready to deploy, create a bundle using the `dotnet ef migrations bundle`. For example:
