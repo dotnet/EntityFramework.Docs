@@ -230,6 +230,7 @@ public partial class Post
     public DateTime? _2DeletedOn { get; set; }
     public int BlogId { get; set; }
     public virtual Blog Blog { get; set; } = null!;
+    public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
 }
 ```
 
@@ -400,7 +401,7 @@ public partial class Post
 
     public virtual Blog Blog { get; set; } = null!;
 
-    public virtual ICollection<Tag> Tags { get; set; }
+    public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
 }
 -->
 [!code-csharp[Post](../../../../samples/core/Miscellaneous/NewInEFCore6/ScaffoldingSample.cs?name=Post)]
@@ -446,7 +447,7 @@ public partial class Post
 
     public virtual Blog Blog { get; set; } = null!;
 
-    public virtual ICollection<Tag> Tags { get; set; }
+    public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
 }
 -->
 [!code-csharp[Post](../../../../samples/core/Miscellaneous/NewInEFCore6/ScaffoldingSample.cs?name=Post)]
@@ -460,7 +461,7 @@ And a class for Tag:
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
 
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
     }
 -->
 [!code-csharp[Tag](../../../../samples/core/Miscellaneous/NewInEFCore6/ScaffoldingSample.cs?name=Tag)]
