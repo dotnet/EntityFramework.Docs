@@ -8,9 +8,8 @@ uid: core/what-is-new/ef-core-7.0/breaking-changes
 
 # Breaking changes in EF Core 7.0 (EF7)
 
-This page documents API and behavior changes that have the potential to break existing applications updating from EF Core 8 to EF Core 9. Make sure to review earlier breaking changes if updating from an earlier version of EF Core:
+This page documents API and behavior changes that have the potential to break existing applications updating from EF Core 6 to EF Core 7. Make sure to review earlier breaking changes if updating from an earlier version of EF Core:
 
-- [Breaking changes in EF Core 7](xref:core/what-is-new/ef-core-7.0/breaking-changes)
 - [Breaking changes in EF Core 6](xref:core/what-is-new/ef-core-6.0/breaking-changes)
 
 ## Target Framework
