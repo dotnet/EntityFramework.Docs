@@ -156,8 +156,8 @@ Even with this explicit configuration, many aspects of the relationship are stil
                     .WithMany(e => e.Posts)
                     .UsingEntity(
                         "PostTag",
-                        l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)),
-                        r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)),
+                        r => r.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagsId").HasPrincipalKey(nameof(Tag.Id)),
+                        l => l.HasOne(typeof(Post)).WithMany().HasForeignKey("PostsId").HasPrincipalKey(nameof(Post.Id)),
                         j => j.HasKey("PostsId", "TagsId"));
             }
 -->
@@ -226,8 +226,8 @@ Following on from the previous example, the names of the foreign key columns in 
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity(
-                        l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagForeignKey"),
-                        r => r.HasOne(typeof(Post)).WithMany().HasForeignKey("PostForeignKey"));
+                        r => r.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagForeignKey"),
+                        l => l.HasOne(typeof(Post)).WithMany().HasForeignKey("PostForeignKey"));
             }
 -->
 [!code-csharp[ManyToManyNamedForeignKeyColumnsConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyNamedForeignKeyColumnsConfig)]
@@ -314,8 +314,8 @@ The `PostId` and `TagId` are automatically picked up as the foreign keys and are
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne<Tag>().WithMany().HasForeignKey(e => e.TagId),
-                        r => r.HasOne<Post>().WithMany().HasForeignKey(e => e.PostId));
+                        r => r.HasOne<Tag>().WithMany().HasForeignKey(e => e.TagId),
+                        l => l.HasOne<Post>().WithMany().HasForeignKey(e => e.PostId));
             }
 -->
 [!code-csharp[ManyToManyWithJoinClassFkConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithJoinClassFkConfig)]
@@ -383,8 +383,8 @@ The navigations can be configured explicitly for cases where they cannot be dete
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne<Tag>().WithMany(e => e.PostTags),
-                        r => r.HasOne<Post>().WithMany(e => e.PostTags));
+                        r => r.HasOne<Tag>().WithMany(e => e.PostTags),
+                        l => l.HasOne<Post>().WithMany(e => e.PostTags));
             }
 -->
 [!code-csharp[ManyToManyWithNavsToJoinClassWithNavConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithNavsToJoinClassWithNavConfig)]
@@ -451,8 +451,8 @@ The navigations can be configured explicitly for cases where they cannot be dete
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags),
-                        r => r.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags));
+                        r => r.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags),
+                        l => l.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags));
             }
 -->
 [!code-csharp[ManyToManyWithNavsToAndFromJoinClassWithNavConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithNavsToAndFromJoinClassWithNavConfig)]
@@ -506,8 +506,8 @@ Again, the `UsingEntity` method is used to configure this:
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasForeignKey(e => e.TagForeignKey),
-                        r => r.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasForeignKey(e => e.PostForeignKey));
+                        r => r.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasForeignKey(e => e.TagForeignKey),
+                        l => l.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasForeignKey(e => e.PostForeignKey));
             }
 -->
 [!code-csharp[ManyToManyWithNamedFksAndNavsToAndFromJoinClassConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithNamedFksAndNavsToAndFromJoinClassConfig)]
@@ -628,7 +628,7 @@ CREATE TABLE "PostTag" (
 ```
 
 > [!TIP]
-> The SQL shown here is for SQLite. On SQL Server/Azure SQL, use `.HasDefaultValueSql("GETUTCDATE()")`.
+> The SQL shown here is for SQLite. On SQL Server/Azure SQL, use `.HasDefaultValueSql("GETUTCDATE()")` and for `TEXT` read `datetime`.
 
 ## Custom shared-type entity type as a join entity
 
@@ -686,8 +686,8 @@ And these relationships can then be configured appropriately to map the join typ
                     .WithMany(e => e.Posts)
                     .UsingEntity<JoinType>(
                         "PostTag",
-                        l => l.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id1),
-                        r => r.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id2),
+                        r => r.HasOne<Tag>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id1),
+                        l => l.HasOne<Post>().WithMany(e => e.PostTags).HasForeignKey(e => e.Id2),
                         j => j.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
 
                 modelBuilder.Entity<Blog>()
@@ -695,8 +695,8 @@ And these relationships can then be configured appropriately to map the join typ
                     .WithMany(e => e.Blogs)
                     .UsingEntity<JoinType>(
                         "BlogAuthor",
-                        l => l.HasOne<Author>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id1),
-                        r => r.HasOne<Blog>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id2),
+                        r => r.HasOne<Author>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id1),
+                        l => l.HasOne<Blog>().WithMany(e => e.BlogAuthors).HasForeignKey(e => e.Id2),
                         j => j.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
             }
 -->
@@ -753,8 +753,8 @@ The configuration for this model is:
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity(
-                        l => l.HasOne(typeof(Tag)).WithMany().HasPrincipalKey(nameof(Tag.AlternateKey)),
-                        r => r.HasOne(typeof(Post)).WithMany().HasPrincipalKey(nameof(Post.AlternateKey)));
+                        r => r.HasOne(typeof(Tag)).WithMany().HasPrincipalKey(nameof(Tag.AlternateKey)),
+                        l => l.HasOne(typeof(Post)).WithMany().HasPrincipalKey(nameof(Post.AlternateKey)));
             }
 -->
 [!code-csharp[ManyToManyAlternateKeysConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyAlternateKeysConfig)]
@@ -818,8 +818,8 @@ The configuration can now use the generic `UsingEntity<>` method:
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity<PostTag>(
-                        l => l.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasPrincipalKey(e => e.AlternateKey),
-                        r => r.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasPrincipalKey(e => e.AlternateKey));
+                        r => r.HasOne<Tag>(e => e.Tag).WithMany(e => e.PostTags).HasPrincipalKey(e => e.AlternateKey),
+                        l => l.HasOne<Post>(e => e.Post).WithMany(e => e.PostTags).HasPrincipalKey(e => e.AlternateKey));
             }
 -->
 [!code-csharp[ManyToManyWithNavsAndAlternateKeysConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithNavsAndAlternateKeysConfig)]
@@ -962,8 +962,8 @@ It's hard to imagine when it is useful to change this behavior, but it can be do
                     .HasMany(e => e.Tags)
                     .WithMany(e => e.Posts)
                     .UsingEntity(
-                        l => l.HasOne(typeof(Tag)).WithMany().OnDelete(DeleteBehavior.Restrict),
-                        r => r.HasOne(typeof(Post)).WithMany().OnDelete(DeleteBehavior.Restrict));
+                        r => r.HasOne(typeof(Tag)).WithMany().OnDelete(DeleteBehavior.Restrict),
+                        l => l.HasOne(typeof(Post)).WithMany().OnDelete(DeleteBehavior.Restrict));
             }
 -->
 [!code-csharp[ManyToManyWithNoCascadeDeleteConfig](../../../../samples/core/Modeling/Relationships/ManyToMany.cs?name=ManyToManyWithNoCascadeDeleteConfig)]
