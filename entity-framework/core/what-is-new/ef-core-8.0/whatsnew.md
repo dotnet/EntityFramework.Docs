@@ -450,7 +450,7 @@ public record Contact
     public required Address Address { get; init; }
     public required PhoneNumber HomePhone { get; init; }
     public required PhoneNumber WorkPhone { get; init; }
-    public PhoneNumrequired ber MobilePhone { get; init; }
+    public required PhoneNumber MobilePhone { get; init; }
 }
 ```
 
