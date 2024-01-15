@@ -40,9 +40,9 @@ public class Program
                     Url = "http://sample.com/blogs/fish",
                     Posts = new List<Post>
                     {
-                        new Post { Title = "Fish care 101" },
-                        new Post { Title = "Caring for tropical fish" },
-                        new Post { Title = "Types of ornamental fish" }
+                        new() { Title = "Fish care 101" },
+                        new() { Title = "Caring for tropical fish" },
+                        new() { Title = "Types of ornamental fish" }
                     }
                 });
 
@@ -53,9 +53,9 @@ public class Program
                     Url = "http://sample.com/blogs/cats",
                     Posts = new List<Post>
                     {
-                        new Post { Title = "Cat care 101" },
-                        new Post { Title = "Caring for tropical cats" },
-                        new Post { Title = "Types of ornamental cats" }
+                        new() { Title = "Cat care 101" },
+                        new() { Title = "Caring for tropical cats" },
+                        new() { Title = "Types of ornamental cats" }
                     }
                 });
 
@@ -66,7 +66,7 @@ public class Program
                     Url = "http://sample.com/blogs/catfish",
                     Posts = new List<Post>
                     {
-                        new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
+                        new() { Title = "Catfish care 101" }, new() { Title = "History of the catfish name" }
                     }
                 });
 

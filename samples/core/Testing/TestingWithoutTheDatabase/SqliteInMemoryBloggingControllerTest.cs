@@ -9,9 +9,9 @@ using Xunit;
 
 namespace EF.Testing.UnitTests;
 
-public class SqliteInMemoryBloggingControllerTest : IDisposable
+public sealed class SqliteInMemoryBloggingControllerTest : IDisposable
 {
-    private readonly DbConnection _connection;
+    private readonly SqliteConnection _connection;
     private readonly DbContextOptions<BloggingContext> _contextOptions;
 
     #region ConstructorAndDispose
@@ -46,7 +46,7 @@ FROM Blogs;";
         context.SaveChanges();
     }
 
-    BloggingContext CreateContext() => new BloggingContext(_contextOptions);
+    BloggingContext CreateContext() => new(_contextOptions);
 
     public void Dispose() => _connection.Dispose();
     #endregion

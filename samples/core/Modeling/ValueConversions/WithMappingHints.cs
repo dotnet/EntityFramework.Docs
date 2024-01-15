@@ -11,7 +11,7 @@ namespace EFModeling.ValueConversions;
 
 public class WithMappingHints : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions with mapping hints for facets...");
 

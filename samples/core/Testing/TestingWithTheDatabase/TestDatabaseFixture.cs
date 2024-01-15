@@ -33,8 +33,8 @@ public class TestDatabaseFixture
         }
     }
 
-    public BloggingContext CreateContext()
-        => new BloggingContext(
+    public static BloggingContext CreateContext()
+        => new(
             new DbContextOptionsBuilder<BloggingContext>()
                 .UseSqlServer(ConnectionString)
                 .Options);

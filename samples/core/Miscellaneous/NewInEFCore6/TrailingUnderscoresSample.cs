@@ -36,17 +36,14 @@ public static class TrailingUnderscoresSample
 
     public class User
     {
-        private readonly int id_;
-        private readonly int name_;
-
         public User(int id, int name)
         {
-            id_ = id;
-            name_ = name;
+            Id = id;
+            Name = name;
         }
 
-        public int Id => id_;
-        public int Name => name_;
+        public int Id { get; }
+        public int Name { get; }
     }
 
     public class SomeDbContext : DbContext

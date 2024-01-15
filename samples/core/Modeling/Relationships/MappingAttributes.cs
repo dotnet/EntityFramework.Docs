@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Relationships;
 
-public class MappingAttributes
+public static class MappingAttributes
 {
-    public class RequiredOnForeignKey
+    public static class RequiredOnForeignKey
     {
         public static void BuildModels()
         {
@@ -24,7 +24,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -48,7 +48,7 @@ public class MappingAttributes
         }
     }
 
-    public class RequiredOnDependentNavigation
+    public static class RequiredOnDependentNavigation
     {
         public static void BuildModels()
         {
@@ -62,7 +62,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -86,7 +86,7 @@ public class MappingAttributes
         }
     }
 
-    public class RequiredOnDependentNavigationShadowFk
+    public static class RequiredOnDependentNavigationShadowFk
     {
         public static void BuildModels()
         {
@@ -100,7 +100,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -122,7 +122,7 @@ public class MappingAttributes
         }
     }
 
-    public class ForeignKeyOnProperty
+    public static class ForeignKeyOnProperty
     {
         public static void BuildModels()
         {
@@ -136,7 +136,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -160,7 +160,7 @@ public class MappingAttributes
         }
     }
 
-    public class ForeignKeyOnDependentNavigation
+    public static class ForeignKeyOnDependentNavigation
     {
         public static void BuildModels()
         {
@@ -174,7 +174,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -198,7 +198,7 @@ public class MappingAttributes
         }
     }
 
-    public class ForeignKeyOnPrincipalNavigation
+    public static class ForeignKeyOnPrincipalNavigation
     {
         public static void BuildModels()
         {
@@ -214,7 +214,7 @@ public class MappingAttributes
             public string Id { get; set; }
 
             [ForeignKey(nameof(Post.BlogKey))]
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -235,7 +235,7 @@ public class MappingAttributes
         }
     }
 
-    public class ForeignKeyOnDependentNavigationShadowFk
+    public static class ForeignKeyOnDependentNavigationShadowFk
     {
         public static void BuildModels()
         {
@@ -249,7 +249,7 @@ public class MappingAttributes
         public class Blog
         {
             public string Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -271,7 +271,7 @@ public class MappingAttributes
         }
     }
 
-    public class ForeignKeyOnPrincipalNavigationShadowFk
+    public static class ForeignKeyOnPrincipalNavigationShadowFk
     {
         public static void BuildModels()
         {
@@ -287,7 +287,7 @@ public class MappingAttributes
             public string Id { get; set; }
 
             [ForeignKey("BlogKey")]
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -307,7 +307,7 @@ public class MappingAttributes
         }
     }
 
-    public class InverseOnDependentNavigation
+    public static class InverseOnDependentNavigation
     {
         public static void BuildModels()
         {
@@ -322,7 +322,7 @@ public class MappingAttributes
         {
             public int Id { get; set; }
 
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
 
             public int FeaturedPostId { get; set; }
             public Post FeaturedPost { get; set; }
@@ -348,7 +348,7 @@ public class MappingAttributes
         }
     }
 
-    public class InverseOnPrincipalNavigation
+    public static class InverseOnPrincipalNavigation
     {
         public static void BuildModels()
         {
@@ -364,7 +364,7 @@ public class MappingAttributes
             public int Id { get; set; }
 
             [InverseProperty("Blog")]
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
 
             public int FeaturedPostId { get; set; }
             public Post FeaturedPost { get; set; }
@@ -389,7 +389,7 @@ public class MappingAttributes
         }
     }
 
-    public class DeleteBehaviorOnDependentNavigation
+    public static class DeleteBehaviorOnDependentNavigation
     {
         public static void BuildModels()
         {
@@ -403,7 +403,7 @@ public class MappingAttributes
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -426,7 +426,7 @@ public class MappingAttributes
         }
     }
 
-    public class DeleteBehaviorOnPrincipalNavigation
+    public static class DeleteBehaviorOnPrincipalNavigation
     {
         public static void BuildModels()
         {
@@ -440,7 +440,7 @@ public class MappingAttributes
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post

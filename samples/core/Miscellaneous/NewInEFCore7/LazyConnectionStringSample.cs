@@ -19,24 +19,22 @@ public static class LazyConnectionStringSample
 
         var serviceProvider = services.BuildServiceProvider();
 
-        using (var scope = serviceProvider.CreateScope())
-        {
-            var context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
+        using var scope = serviceProvider.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
 
-            await context.Database.EnsureDeletedAsync();
-            await context.Database.EnsureCreatedAsync();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
 
-            await context.AddRangeAsync(
-                new Customer { Name = "Alice" },
-                new Customer { Name = "Mac" });
+        await context.AddRangeAsync(
+            new Customer { Name = "Alice" },
+            new Customer { Name = "Mac" });
 
-            await context.SaveChangesAsync();
+        await context.SaveChangesAsync();
 
-            var customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
-            Console.WriteLine();
-            Console.WriteLine($"Loaded {customer.Name}");
-            Console.WriteLine();
-        }
+        var customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
+        Console.WriteLine();
+        Console.WriteLine($"Loaded {customer.Name}");
+        Console.WriteLine();
     }
 
     private static void PrintSampleName([CallerMemberName] string? methodName = null)

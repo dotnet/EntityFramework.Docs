@@ -7,7 +7,7 @@ namespace EFConnectionResiliency;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static void Main()
     {
         using (var db = new BloggingContext())
         {
@@ -87,7 +87,7 @@ public class Program
 
         strategy.ExecuteInTransaction(
             db,
-            operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
+            operation: context => context.SaveChanges(acceptAllChangesOnSuccess: false),
             verifySucceeded: context => context.Blogs.AsNoTracking().Any(b => b.BlogId == blogToAdd.BlogId));
 
         db.ChangeTracker.AcceptAllChanges();
@@ -109,7 +109,7 @@ public class Program
 
         strategy.ExecuteInTransaction(
             db,
-            operation: context => { context.SaveChanges(acceptAllChangesOnSuccess: false); },
+            operation: context => context.SaveChanges(acceptAllChangesOnSuccess: false),
             verifySucceeded: context => context.Transactions.AsNoTracking().Any(t => t.Id == transaction.Id));
 
         db.ChangeTracker.AcceptAllChanges();

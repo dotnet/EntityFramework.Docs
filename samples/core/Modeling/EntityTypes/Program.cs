@@ -5,7 +5,7 @@ namespace EFModeling.EntityTypes;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         using var context = new MyContextWithFunctionMapping();
         context.Database.EnsureDeleted();

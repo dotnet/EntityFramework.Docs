@@ -17,12 +17,12 @@ using (var context = new WideWorldImportersContext())
             CountryName = "'Merica",
             Border = new Polygon(
                 new LinearRing(
-                    new[]
-                    {
+                    [
                         new Coordinate(-123.128822, 46.643703), new Coordinate(-121.128822, 46.643703),
                         new Coordinate(-121.128822, 48.643703), new Coordinate(-123.128822, 48.643703),
                         new Coordinate(-123.128822, 46.643703)
-                    })) { SRID = 4326 }
+                    ]))
+            { SRID = 4326 }
         });
 
     context.SaveChanges();

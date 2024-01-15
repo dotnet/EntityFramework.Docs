@@ -5,7 +5,7 @@ namespace EFSaving;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         Sample.Run();
         RelatedData.Sample.Run();

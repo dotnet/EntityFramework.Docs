@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 public class DailyMessageContext : DbContext
 {
     private static readonly CachingCommandInterceptor _cachingInterceptor
-        = new CachingCommandInterceptor();
+        = new();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder

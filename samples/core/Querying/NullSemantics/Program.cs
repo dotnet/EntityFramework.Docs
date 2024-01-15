@@ -4,7 +4,7 @@ namespace NullSemantics;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         using var context = new NullSemanticsContext();
         context.Database.EnsureDeleted();
@@ -20,9 +20,9 @@ internal class Program
         //        end");
         //#endregion
 
-        //BasicExamples();
+        BasicExamples();
         Functions();
-        //ManualOptimization();
+        ManualOptimization();
     }
 
     private static void BasicExamples()

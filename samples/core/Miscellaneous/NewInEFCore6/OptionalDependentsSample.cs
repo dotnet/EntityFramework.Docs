@@ -98,13 +98,13 @@ public static class OptionalDependentsSample
             using var command = connection.CreateCommand();
             command.CommandText = "SELECT Id, Name, Address_House, Address_Street, Address_City, Address_Postcode FROM Customers2";
 
-            Console.WriteLine($"Id  Name               House   Street  City    Postcode");
+            Console.WriteLine("Id  Name               House   Street  City    Postcode");
 
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                Console.Write($"{reader.GetInt32(0)}   {reader.GetString(1).PadRight(17)}  ");
-                for (int i = 2; i <= 5; i++)
+                Console.Write($"{reader.GetInt32(0)}   {reader.GetString(1),-17}  ");
+                for (var i = 2; i <= 5; i++)
                 {
                     Console.Write(reader.IsDBNull(i) ? "NULL    " : reader.GetString(i).PadRight(8));
                 }
@@ -251,7 +251,6 @@ public static class OptionalDependentsSample
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOptionalNestedDependents != null ? "not " : "")}null.");
             Console.WriteLine($"  Nested dependent with only optional properties is {(principal.DependentWithOptionalNestedDependents?.Nested != null ? "not " : "")}null.");
 
-
             Console.WriteLine();
             Console.WriteLine("SaveChanges will warn:");
             Console.WriteLine();
@@ -378,7 +377,7 @@ public static class OptionalDependentsSample
         public DependentWithOnlyOptionalProperties Nested { get; set; }
     }
 
-    public class WithRequiredProperty
+    public static class WithRequiredProperty
     {
         #region AddressWithRequiredProperty
         public class Customer
@@ -400,7 +399,7 @@ public static class OptionalDependentsSample
         #endregion
     }
 
-    public class WithoutRequiredProperty
+    public static class WithoutRequiredProperty
     {
         #region AddressWithoutRequiredProperty
         public class Customer
@@ -420,7 +419,7 @@ public static class OptionalDependentsSample
         #endregion
     }
 
-    public class WithRequiredNavigation
+    public static class WithRequiredNavigation
     {
         #region AddressWithRequiredNavigation
         public class Customer
@@ -442,7 +441,7 @@ public static class OptionalDependentsSample
         #endregion
     }
 
-    public class WithDifferentTable
+    public static class WithDifferentTable
     {
         #region AddressWithDifferentTable
         public class Customer
@@ -462,7 +461,7 @@ public static class OptionalDependentsSample
         #endregion
     }
 
-    public class NestedWithoutRequiredProperty
+    public static class NestedWithoutRequiredProperty
     {
         #region NestedWithoutRequiredProperty
         public class Customer
@@ -556,13 +555,7 @@ public static class OptionalDependentsSample
                 });
 
             modelBuilder.Entity<PrincipalWithNestedOptionalDependents>(
-                b =>
-                {
-                    b.OwnsOne(e => e.DependentWithOptionalNestedDependents, b =>
-                    {
-                        b.OwnsOne(e => e.Nested);
-                    });
-                });
+                b => b.OwnsOne(e => e.DependentWithOptionalNestedDependents, b => b.OwnsOne(e => e.Nested)));
 
             modelBuilder.Entity<PrincipalWithNestedRequiredDependents>(
                 b =>

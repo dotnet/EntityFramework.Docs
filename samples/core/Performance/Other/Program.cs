@@ -16,9 +16,9 @@ internal class Program
             (BloggingContext context, int length) => context.Blogs.Where(b => b.Url.StartsWith("http://") && b.Url.Length == length));
     #endregion
 
-    private static async Task Main(string[] args)
+    private static async Task Main()
     {
-        using (var context = new BloggingContext())
+        await using (var context = new BloggingContext())
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
@@ -28,27 +28,27 @@ internal class Program
                 {
                     Url = "http://someblog.microsoft.com",
                     Rating = 0,
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Post 1", Content = "Sometimes..." },
-                        new Post { Title = "Post 2", Content = "Other times..." }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Post 1", Content = "Sometimes..." },
+                        new() { Title = "Post 2", Content = "Other times..." }
+                    ]
                 });
 
             context.SaveChanges();
         }
 
-        using (var context = new BloggingContext())
+        await using (var context = new BloggingContext())
         {
             #region Indexes
             // Matches on start, so uses an index (on SQL Server)
-            var posts1 = context.Posts.Where(p => p.Title.StartsWith("A")).ToList();
+            var posts1 = context.Posts.Where(p => p.Title.StartsWith('A')).ToList();
             // Matches on end, so does not use the index
-            var posts2 = context.Posts.Where(p => p.Title.EndsWith("A")).ToList();
+            var posts2 = context.Posts.Where(p => p.Title.EndsWith('A')).ToList();
             #endregion
         }
 
-        using (var context = new BloggingContext())
+        await using (var context = new BloggingContext())
         {
             #region ProjectEntities
             foreach (var blog in context.Blogs)
@@ -65,23 +65,23 @@ internal class Program
             #endregion
         }
 
-        using (var context = new BloggingContext())
+        await using (var context = new BloggingContext())
         {
             #region NoLimit
             var blogsAll = context.Posts
-                .Where(p => p.Title.StartsWith("A"))
+                .Where(p => p.Title.StartsWith('A'))
                 .ToList();
             #endregion
 
             #region Limit25
             var blogs25 = context.Posts
-                .Where(p => p.Title.StartsWith("A"))
+                .Where(p => p.Title.StartsWith('A'))
                 .Take(25)
                 .ToList();
             #endregion
         }
 
-        using (var context = new BloggingContext())
+        await using (var context = new BloggingContext())
         {
             #region EagerlyLoadRelatedAndProject
             foreach (var blog in context.Blogs.Select(b => new { b.Url, b.Posts }).ToList())
@@ -94,32 +94,32 @@ internal class Program
             #endregion
         }
 
-        using (var context = new BloggingContext())
+        await using (var context = new BloggingContext())
         {
             #region BufferingAndStreaming
             // ToList and ToArray cause the entire resultset to be buffered:
-            var blogsList = context.Posts.Where(p => p.Title.StartsWith("A")).ToList();
-            var blogsArray = context.Posts.Where(p => p.Title.StartsWith("A")).ToArray();
+            var blogsList = context.Posts.Where(p => p.Title.StartsWith('A')).ToList();
+            var blogsArray = context.Posts.Where(p => p.Title.StartsWith('A')).ToArray();
 
             // Foreach streams, processing one row at a time:
-            foreach (var blog in context.Posts.Where(p => p.Title.StartsWith("A")))
+            foreach (var blog in context.Posts.Where(p => p.Title.StartsWith('A')))
             {
                 // ...
             }
 
             // AsEnumerable also streams, allowing you to execute LINQ operators on the client-side:
             var doubleFilteredBlogs = context.Posts
-                .Where(p => p.Title.StartsWith("A")) // Translated to SQL and executed in the database
+                .Where(p => p.Title.StartsWith('A')) // Translated to SQL and executed in the database
                 .AsEnumerable()
                 .Where(p => SomeDotNetMethod(p)); // Executed at the client on all database results
             #endregion
 
             // This method represents a filter that cannot be translated to SQL for execution in the
             // database, and must be run on the client as a .NET method
-            static bool SomeDotNetMethod(Post post) => true;
+            static bool SomeDotNetMethod(Post _) => true;
         }
 
-        using (var context = new BloggingContext())
+        await using (var context = new BloggingContext())
         {
             #region SaveChangesBatching
             var blog = context.Blogs.Single(b => b.Url == "http://someblog.microsoft.com");
@@ -130,7 +130,7 @@ internal class Program
             #endregion
         }
 
-        using (var context = new BloggingContext())
+        await using (var context = new BloggingContext())
         {
             #region QueriesWithConstants
             var post1 = context.Posts.FirstOrDefault(p => p.Title == "post1");
@@ -138,7 +138,7 @@ internal class Program
             #endregion
         }
 
-        using (var context = new BloggingContext())
+        await using (var context = new BloggingContext())
         {
             #region QueriesWithParameterization
             var postTitle = "post1";
@@ -148,7 +148,7 @@ internal class Program
             #endregion
         }
 
-        using (var context = new LazyBloggingContext())
+        await using (var context = new LazyBloggingContext())
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
@@ -159,17 +159,17 @@ internal class Program
                     new LazyLoading.Blog
                     {
                         Url = $"http://blog{i}.microsoft.com",
-                        Posts = new List<LazyLoading.Post>
-                        {
+                        Posts =
+                        [
                             new() { Title = $"1st post of blog{i}" }, new() { Title = $"2nd post of blog{i}" }
-                        }
+                        ]
                     });
             }
 
             context.SaveChanges();
         }
 
-        using (var context = new LazyBloggingContext())
+        await using (var context = new LazyBloggingContext())
         {
             #region NPlusOne
             foreach (var blog in context.Blogs.ToList())
@@ -182,7 +182,7 @@ internal class Program
             #endregion
         }
 
-        using (var context = new EmployeeContext())
+        await using (var context = new EmployeeContext())
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
@@ -193,7 +193,7 @@ internal class Program
             }
         }
 
-        using (var context = new EmployeeContext())
+        await using (var context = new EmployeeContext())
         {
             #region UpdateWithoutBulk
             foreach (var employee in context.Employees)
@@ -205,14 +205,14 @@ internal class Program
             #endregion
         }
 
-        using (var context = new EmployeeContext())
+        await using (var context = new EmployeeContext())
         {
             #region UpdateWithBulk
             context.Database.ExecuteSqlRaw("UPDATE [Employees] SET [Salary] = [Salary] + 1000");
             #endregion
         }
 
-        using (var context = new PooledBloggingContext(
+        await using (var context = new PooledBloggingContext(
                    new DbContextOptionsBuilder()
                        .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
                        .Options))
@@ -228,13 +228,13 @@ internal class Program
 
         var factory = new PooledDbContextFactory<PooledBloggingContext>(options);
 
-        using (var context = factory.CreateDbContext())
+        await using (var context = factory.CreateDbContext())
         {
             var allPosts = context.Posts.ToList();
         }
         #endregion
 
-        using (var context = new BloggingContext())
+        await using (var context = new BloggingContext())
         {
             #region CompiledQueryExecute
             await foreach (var blog in _compiledQuery(context, 8))

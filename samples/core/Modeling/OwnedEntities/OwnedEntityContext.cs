@@ -60,7 +60,7 @@ public class OwnedEntityContext : DbContext
         #endregion
 
         #region OwnsOneTable
-        modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od => { od.ToTable("OrderDetails"); });
+        modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od => od.ToTable("OrderDetails"));
         #endregion
 
         #region OwnsMany

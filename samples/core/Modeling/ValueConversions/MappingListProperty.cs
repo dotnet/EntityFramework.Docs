@@ -11,7 +11,7 @@ namespace EFModeling.ValueConversions;
 
 public class MappingListProperty : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a List<int>...");
 
@@ -21,7 +21,7 @@ public class MappingListProperty : Program
 
             ConsoleWriteLines("Save a new entity...");
 
-            var entity = new EntityType { MyListProperty = new List<int> { 1, 2, 3 } };
+            var entity = new EntityType { MyListProperty = [1, 2, 3] };
             context.Add(entity);
             context.SaveChanges();
 
@@ -48,7 +48,7 @@ public class MappingListProperty : Program
     public class SampleDbContext : DbContext
     {
         private static readonly ILoggerFactory
-            Logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
+            _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,7 +68,7 @@ public class MappingListProperty : Program
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseLoggerFactory(Logger)
+                .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
     }

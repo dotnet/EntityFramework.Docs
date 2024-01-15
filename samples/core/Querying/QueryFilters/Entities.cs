@@ -6,7 +6,7 @@ namespace EFQuerying.QueryFilters;
 public class Blog
 {
 #pragma warning disable IDE0051, CS0169 // Remove unused private members
-    private string _tenantId;
+    private readonly string _tenantId;
 #pragma warning restore IDE0051, CS0169 // Remove unused private members
 
     public int BlogId { get; set; }

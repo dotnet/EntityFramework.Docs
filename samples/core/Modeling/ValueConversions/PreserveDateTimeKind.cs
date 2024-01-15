@@ -10,7 +10,7 @@ namespace EFModeling.ValueConversions;
 
 public class PreserveDateTimeKind : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for preserving/setting DateTime.Kind...");
 

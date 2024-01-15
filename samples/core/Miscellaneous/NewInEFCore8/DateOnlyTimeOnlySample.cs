@@ -154,7 +154,7 @@ public abstract class BritishSchoolsContextBase : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => (UseSqlite
-                ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                 : optionsBuilder.UseSqlServer(
                     @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
                     sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseNetTopologySuite()))
@@ -226,13 +226,10 @@ public abstract class BritishSchoolsContextBase : DbContext
     }
 }
 
-public class BritishSchoolsContext : BritishSchoolsContextBase
-{
-}
+public class BritishSchoolsContext : BritishSchoolsContextBase;
 
 public class BritishSchoolsContextJson : BritishSchoolsContextBase
 {
-
     public override bool UsesJson => true;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -269,8 +266,8 @@ public class School
     public int Id { get; set; }
     public string Name { get; set; } = null!;
     public DateOnly Founded { get; set; }
-    public List<Term> Terms { get; } = new();
-    public List<OpeningHours> OpeningHours { get; } = new();
+    public List<Term> Terms { get; } = [];
+    public List<OpeningHours> OpeningHours { get; } = [];
 }
 
 public class Term
@@ -292,7 +289,7 @@ public class OpeningHours
         ClosesAt = closesAt;
     }
 
-    public DayOfWeek DayOfWeek { get; private set; }
+    public DayOfWeek DayOfWeek { get; }
     public TimeOnly? OpensAt { get; set; }
     public TimeOnly? ClosesAt { get; set; }
 }

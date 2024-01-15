@@ -6,7 +6,7 @@ namespace EFAsync;
 
 public class Program
 {
-    public static async Task Main(string[] args)
+    public static async Task Main()
     {
         await using var context = new BloggingContext();
         await context.Database.EnsureDeletedAsync();

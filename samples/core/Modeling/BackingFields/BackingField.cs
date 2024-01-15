@@ -10,14 +10,8 @@ internal class MyContext : DbContext
 #region Sample
 public class Blog
 {
-    private string _url;
-
     public int BlogId { get; set; }
 
-    public string Url
-    {
-        get { return _url; }
-        set { _url = value; }
-    }
+    public string Url { get; set; }
 }
 #endregion

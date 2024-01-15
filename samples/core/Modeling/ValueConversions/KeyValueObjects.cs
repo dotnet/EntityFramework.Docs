@@ -12,7 +12,7 @@ namespace EFModeling.ValueConversions;
 
 public class KeyValueObjects : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a value objects used as keys...");
 
@@ -27,12 +27,10 @@ public class KeyValueObjects : Program
                 Id = new BlogKey(1),
                 Posts = new List<Post>
                 {
-                    new Post
-                    {
+                    new() {
                         Id = new PostKey(1)
                     },
-                    new Post
-                    {
+                    new() {
                         Id = new PostKey(2)
                     },
                 }

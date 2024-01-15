@@ -17,12 +17,12 @@ public static class RequiredDependentsSamples
         var severResults = Helpers.GatherData(c => c.Blogs.Include(e => e.Posts).Single().Posts.Clear());
 
         Console.WriteLine(
-            $"| `{"DeleteBehavior".PadRight(16)} | {"On deleting principal/parent".PadRight(40)} | On severing from principal/parent");
+            $"| `{"DeleteBehavior",-16} | {"On deleting principal/parent",-40} | On severing from principal/parent");
         Console.WriteLine("|:------------------|------------------------------------------|----------------------------------------");
         foreach (var deleteBehavior in DeleteBehaviors)
         {
             Console.WriteLine(
-                $"| `{(deleteBehavior + "`").PadRight(16)} | {deleteResults[deleteBehavior].PadRight(40)} | {severResults[deleteBehavior]}");
+                $"| `{deleteBehavior + "`",-16} | {deleteResults[deleteBehavior],-40} | {severResults[deleteBehavior]}");
         }
 
         Console.WriteLine();
@@ -36,11 +36,11 @@ public static class RequiredDependentsSamples
         var deleteResults = Helpers.GatherData(c => c.Remove(c.Blogs.Single()));
 
         Console.WriteLine(
-            $"| `{"DeleteBehavior".PadRight(16)} | {"On deleting principal/parent".PadRight(40)} | On severing from principal/parent");
+            $"| `{"DeleteBehavior",-16} | {"On deleting principal/parent",-40} | On severing from principal/parent");
         Console.WriteLine("|:------------------|------------------------------------------|----------------------------------------");
         foreach (var deleteBehavior in DeleteBehaviors)
         {
-            Console.WriteLine($"| `{(deleteBehavior + "`").PadRight(16)} | {deleteResults[deleteBehavior].PadRight(40)} | N/A");
+            Console.WriteLine($"| `{deleteBehavior + "`",-16} | {deleteResults[deleteBehavior],-40} | N/A");
         }
 
         Console.WriteLine();
@@ -48,10 +48,10 @@ public static class RequiredDependentsSamples
 
     public static DeleteBehavior[] DeleteBehaviors { get; }
         =
-        {
+        [
             DeleteBehavior.Cascade, DeleteBehavior.Restrict, DeleteBehavior.NoAction, DeleteBehavior.SetNull,
             DeleteBehavior.ClientSetNull, DeleteBehavior.ClientCascade, DeleteBehavior.ClientNoAction
-        };
+        ];
 
     #region Model
     public class Blog

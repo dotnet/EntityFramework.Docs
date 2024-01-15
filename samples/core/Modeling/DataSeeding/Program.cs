@@ -6,7 +6,7 @@ namespace EFModeling.DataSeeding;
 
 internal static class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         #region CustomSeeding
         using (var context = new DataSeedingContext())

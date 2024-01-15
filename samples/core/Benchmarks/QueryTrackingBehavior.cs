@@ -27,19 +27,23 @@ public class QueryTrackingBehavior
     }
 
     [Benchmark(Baseline = true)]
-    public List<Post> AsTracking()
+    public static List<Post> AsTracking()
     {
         using var context = new BloggingContext();
 
-        return context.Posts.AsTracking().Include(p => p.Blog).ToList();
+        return context.Posts.AsTracking()
+            .Include(p => p.Blog)
+            .ToList();
     }
 
     [Benchmark]
-    public List<Post> AsNoTracking()
+    public static List<Post> AsNoTracking()
     {
         using var context = new BloggingContext();
 
-        return context.Posts.AsNoTracking().Include(p => p.Blog).ToList();
+        return context.Posts.AsNoTracking()
+            .Include(p => p.Blog)
+            .ToList();
     }
 
     public class BloggingContext : DbContext

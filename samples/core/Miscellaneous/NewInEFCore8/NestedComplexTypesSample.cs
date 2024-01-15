@@ -25,7 +25,7 @@ public static class NestedComplexTypesSample
         context.LoggingEnabled = true;
         context.ChangeTracker.Clear();
 
-        var customerId = 1;
+        const int customerId = 1;
 
         #region QueryCustomer
         var customer = await context.Customers.FirstAsync(e => e.Id == customerId);
@@ -47,8 +47,8 @@ public static class NestedComplexTypesSample
 
         var customers = await context.Customers.Where(e => e.Id == customerId).Include(e => e.Orders).ToListAsync();
 
-        customer = customers.First();
-        order = customer.Orders.First();
+        customer = customers[0];
+        order = customer.Orders[0];
 
         #region BillingAddressCurrentValue
         var billingAddress = context.Entry(order)
@@ -95,7 +95,7 @@ public static class NestedComplexTypesSample
             .IsModified = true;
         #endregion
 
-        var orderId = 1;
+        const int orderId = 1;
 
         #region QueryShippingAddress
         var shippingAddress = await context.Orders
@@ -109,14 +109,15 @@ public static class NestedComplexTypesSample
         var addresses = await context.Orders.Select(e => new { e.ShippingAddress, e.BillingAddress }).ToListAsync();
 
         #region QueryOrdersInCity
-        var city = "Walpole St Peter";
+        const string city = "Walpole St Peter";
         var walpoleOrders = await context.Orders.Where(e => e.ShippingAddress.City == city).ToListAsync();
         #endregion
 
-        var countryCode = 44;
+        const int countryCode = 44;
         var customersWithUkOrders = await context.Customers
             .Where(e => e.Orders.Select(e => e.ContactPhone.CountryCode == countryCode).Any())
-            .Select(e => new { e.Name, Phone = e.Orders.FirstOrDefault(e => e.ContactPhone.CountryCode == countryCode) }).ToListAsync();
+            .Select(e => new { e.Name, Phone = e.Orders.Find(e => e.ContactPhone.CountryCode == countryCode) })
+            .ToListAsync();
 
         #region QueryWithPhoneNumber
         var phoneNumber = new PhoneNumber(44, 7777555777);
@@ -153,7 +154,7 @@ public static class NestedComplexTypesSample
         public int Id { get; set; }
         public required string Name { get; set; }
         public required Contact Contact { get; set; }
-        public List<Order> Orders { get; } = new();
+        public List<Order> Orders { get; } = [];
     }
     #endregion
 
@@ -183,9 +184,7 @@ public static class NestedComplexTypesSample
     }
     #endregion
 
-    public class CustomerContext : CustomerContextBase
-    {
-    }
+    public class CustomerContext : CustomerContextBase;
 
     public class CustomerContextSqlite : CustomerContextBase
     {
@@ -205,7 +204,7 @@ public static class NestedComplexTypesSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
                 .EnableSensitiveDataLogging()
                 .LogTo(
@@ -221,9 +220,7 @@ public static class NestedComplexTypesSample
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>(
-                b =>
-                {
-                    b.ComplexProperty(
+                b => b.ComplexProperty(
                         e => e.Contact,
                         b =>
                         {
@@ -231,8 +228,7 @@ public static class NestedComplexTypesSample
                             b.ComplexProperty(e => e.HomePhone);
                             b.ComplexProperty(e => e.WorkPhone);
                             b.ComplexProperty(e => e.MobilePhone);
-                        });
-                });
+                        }));
 
             modelBuilder.Entity<Order>(
                 b =>

@@ -40,7 +40,7 @@ public static class PrimitiveCollectionsSample
         Console.WriteLine($"\nWalks with given terrain are {string.Join(", ", walksWithTerrain.Select(w => $"\"{w}\""))}");
 
         #region PubsWithHeineken
-        var beer = "Heineken";
+        const string beer = "Heineken";
         var pubsWithHeineken = await context.Pubs
             .Where(e => e.Beers.Contains(beer))
             .Select(e => e.Name)
@@ -112,7 +112,7 @@ public static class PrimitiveCollectionsSample
 
     public class MyCollection : IList<int>
     {
-        private readonly List<int> _list = new();
+        private readonly List<int> _list = [];
         public IEnumerator<int> GetEnumerator() => _list.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public void Add(int item) => _list.Add(item);
@@ -151,10 +151,10 @@ public static class PrimitiveCollectionsSample
         // https://github.com/dotnet/efcore/issues/32055
         // public MyCollection SomeInts { get; set; } = null!;
 
-        public List<int> GetOnlyInts { get; } = new();
+        public List<int> GetOnlyInts { get; } = [];
 
         // ReSharper disable once CollectionNeverUpdated.Local
-        private readonly List<int> _intsField = new();
+        private readonly List<int> _intsField = [];
 
         // public List<DddId> DddIds { get; set; } = null!;
     }
@@ -172,7 +172,7 @@ public static class PrimitiveCollectionsSample
     public class DddIdConverter : ValueConverter<DddId, int>
     {
         public DddIdConverter()
-            : base(v => v.Value, v => new DddId())
+            : base(v => v.Value, _ => new DddId())
         {
         }
     }
@@ -188,7 +188,7 @@ public static class PrimitiveCollectionsSample
         public int Id { get; set; }
         public string Name { get; set; }
         public Terrain Terrain { get; set; }
-        public List<DateOnly> DaysVisited { get; private set; } = new();
+        public List<DateOnly> DaysVisited { get; } = [];
         public Pub ClosestPub { get; set; } = null!;
     }
 
@@ -215,13 +215,11 @@ public static class PrimitiveCollectionsSample
         public int Id { get; set; }
         public string Name { get; set; }
         public string[] Beers { get; set; }
-        public List<DateOnly> DaysVisited { get; private set; } = new();
+        public List<DateOnly> DaysVisited { get; } = [];
     }
     #endregion
 
-    public class PubsAndWalksContext : PubsAndWalksContextBase
-    {
-    }
+    public class PubsAndWalksContext : PubsAndWalksContextBase;
 
     public class PubsAndWalksContextSqlite : PubsAndWalksContextBase
     {
@@ -246,10 +244,10 @@ public static class PrimitiveCollectionsSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
-                        //sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseCompatibilityLevel(120)))
+                //sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseCompatibilityLevel(120)))
                 .EnableSensitiveDataLogging()
                 .LogTo(
                     s =>
@@ -311,17 +309,17 @@ public static class PrimitiveCollectionsSample
                 {
                     Ints = new[] { 1, 2, 3 },
                     Strings = new List<string> { "One", "Two", "Three" },
-                    DateTimes = new Collection<DateTime> { new(2023, 1, 1, 1, 1, 1), new(2023, 2, 2, 2, 2, 2), new(2023, 3, 3, 3, 3, 3) },
+                    DateTimes = [new(2023, 1, 1, 1, 1, 1), new(2023, 2, 2, 2, 2, 2), new(2023, 3, 3, 3, 3, 3)],
                     Dates = new List<DateOnly> { new(2023, 1, 1), new(2023, 2, 2), new(2023, 3, 3) },
-                    UnsignedInts = new uint[] { 1, 2, 3 },
-                    Guids = new() { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() },
-                    Booleans = new() { true, false, true },
-                    Urls = new() { new("https://127.0.0.1/"), new("http://192.168.0.1/"), new("https://devblogs.microsoft.com/dotnet/") },
+                    UnsignedInts = [1, 2, 3],
+                    Guids = [Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()],
+                    Booleans = [true, false, true],
+                    Urls = [new("https://127.0.0.1/"), new("http://192.168.0.1/"), new("https://devblogs.microsoft.com/dotnet/")],
                     //SomeInts = new() { 1, 2, 3 },
                     // DddIds = new() { new(1), new(2), new(3) }
                 });
 
-            var oak = new Pub("The Royal Oak", new[] { "Oakham", "Carling", "Guinness", "John Smiths", "Bathams", "Tennents" })
+            var oak = new Pub("The Royal Oak", ["Oakham", "Carling", "Guinness", "John Smiths", "Bathams", "Tennents"])
             {
                 DaysVisited =
                 {
@@ -334,7 +332,7 @@ public static class PrimitiveCollectionsSample
                 }
             };
 
-            var feathers = new Pub("The Prince of Wales Feathers", new[] { "Heineken", "John Smiths", "Stella Artois", "Carlsberg" })
+            var feathers = new Pub("The Prince of Wales Feathers", ["Heineken", "John Smiths", "Stella Artois", "Carlsberg"])
             {
                 DaysVisited =
                 {
@@ -353,7 +351,7 @@ public static class PrimitiveCollectionsSample
             };
 
             var swan = new Pub(
-                "The White Swan", new[] { "Oakham", "Carling", "Guinness", "Heineken", "Stella Artois", "Carlsberg", "Bathams" })
+                "The White Swan", ["Oakham", "Carling", "Guinness", "Heineken", "Stella Artois", "Carlsberg", "Bathams"])
             {
                 DaysVisited =
                 {
@@ -367,7 +365,7 @@ public static class PrimitiveCollectionsSample
                 }
             };
 
-            var fbi = new Pub("Farr Bay Inn", new[] { "Guinness", "Heineken", "Carlsberg", "Bathams", "Tennents" })
+            var fbi = new Pub("Farr Bay Inn", ["Guinness", "Heineken", "Carlsberg", "Bathams", "Tennents"])
             {
                 DaysVisited =
                 {
@@ -390,7 +388,7 @@ public static class PrimitiveCollectionsSample
 
             var eltisley = new Pub(
                 "The Eltisley",
-                new[] { "Oakham", "Carling", "Guinness", "Heineken", "John Smiths", "Stella Artois", "Carlsberg", "Bathams", "Tennents" })
+                ["Oakham", "Carling", "Guinness", "Heineken", "John Smiths", "Stella Artois", "Carlsberg", "Bathams", "Tennents"])
             {
                 DaysVisited =
                 {

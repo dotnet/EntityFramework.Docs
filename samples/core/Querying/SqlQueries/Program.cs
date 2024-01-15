@@ -6,7 +6,7 @@ namespace EFQuerying.RawSQL;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         using (var context = new BloggingContext())
         {
@@ -67,7 +67,7 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region FromSqlStoredProcedureParameter
-            var user = "johndoe";
+            const string user = "johndoe";
 
             var blogs = context.Blogs
                 .FromSql($"EXECUTE dbo.GetMostPopularBlogsForUser {user}")
@@ -100,11 +100,11 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region FromSqlRawStoredProcedureParameter
-            var columnName = "Url";
+            const string columnName = "Url";
             var columnValue = new SqlParameter("columnValue", "http://SomeURL");
 
             var blogs = context.Blogs
-                .FromSqlRaw($"SELECT * FROM [Blogs] WHERE {columnName} = @columnValue", columnValue)
+                .FromSql($"SELECT * FROM [Blogs] WHERE {columnName} = {columnValue}")
                 .ToList();
             #endregion
         }
@@ -112,7 +112,7 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region FromSqlComposed
-            var searchTerm = "Lorem ipsum";
+            const string searchTerm = "Lorem ipsum";
 
             var blogs = context.Blogs
                 .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
@@ -125,7 +125,7 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region FromSqlInclude
-            var searchTerm = "Lorem ipsum";
+            const string searchTerm = "Lorem ipsum";
 
             var blogs = context.Blogs
                 .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
@@ -137,7 +137,7 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region FromSqlAsNoTracking
-            var searchTerm = "Lorem ipsum";
+            const string searchTerm = "Lorem ipsum";
 
             var blogs = context.Blogs
                 .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")

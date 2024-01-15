@@ -60,7 +60,7 @@ public sealed class BloggingContext : DbContext
         }
     }
 
-    public static IList<string> LogMessages;
+    public static IList<string> LogMessages { get; private set; }
 
     private class MyLoggerProvider : ILoggerProvider
     {
@@ -84,7 +84,7 @@ public sealed class BloggingContext : DbContext
                     var commandIndex = Math.Max(message.IndexOf("UPDATE"), message.IndexOf("DELETE"));
                     if (commandIndex >= 0)
                     {
-                        var truncatedMessage = message.Substring(commandIndex, message.IndexOf(";", commandIndex) - commandIndex)
+                        var truncatedMessage = message[commandIndex..message.IndexOf(';', commandIndex)]
                             .Replace(Environment.NewLine, " ");
 
                         for (var i = 0; i < 4; i++)

@@ -17,10 +17,8 @@ public class MyController
     #region DoSomething
     public void DoSomething()
     {
-        using (var context = _contextFactory.CreateDbContext())
-        {
-            // ...
-        }
+        using var context = _contextFactory.CreateDbContext();
+        // ...
     }
     #endregion
 }

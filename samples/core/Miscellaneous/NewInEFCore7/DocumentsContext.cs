@@ -12,7 +12,7 @@ public abstract class Document
         CoverArt = coverArt;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
 
     [Timestamp]
     public byte[]? RowVersion { get; set; }
@@ -22,8 +22,8 @@ public abstract class Document
     public DateTime PublicationDate { get; set; }
     public byte[]? CoverArt { get; set; }
 
-    public DateTime FirstRecordedOn { get; private set; }
-    public DateTime RetrievedOn { get; private set; }
+    public DateTime FirstRecordedOn { get; }
+    public DateTime RetrievedOn { get; }
 }
 
 public class Book : Document
@@ -58,7 +58,7 @@ public class Person
         Name = name;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
 
     [ConcurrencyCheck]
     public string Name { get; set; }

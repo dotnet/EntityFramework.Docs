@@ -9,7 +9,6 @@ namespace SqlServerMigrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -126,10 +125,9 @@ namespace SqlServerMigrations
                     b.Navigation("Blog");
                 });
 
-            modelBuilder.Entity("WorkerService1.Blog", b => { b.Navigation("Posts"); });
+            modelBuilder.Entity("WorkerService1.Blog", b => b.Navigation("Posts"));
 
-            modelBuilder.Entity("WorkerService1.Person", b => { b.Navigation("AuthoredPosts"); });
-#pragma warning restore 612, 618
+            modelBuilder.Entity("WorkerService1.Person", b => b.Navigation("AuthoredPosts"));
         }
     }
 }

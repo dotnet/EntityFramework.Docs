@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Disconnected;
 
-public class Sample
+public static class Sample
 {
     public static void Run()
     {
@@ -427,7 +427,8 @@ public class Sample
         #region CreateBlogAndPosts
         var blog = new Blog
         {
-            Url = "http://sample.com", Posts = new List<Post> { new Post { Title = "Post 1" }, new Post { Title = "Post 2" }, }
+            Url = "http://sample.com",
+            Posts = [new() { Title = "Post 1" }, new() { Title = "Post 2" },]
         };
         #endregion
 
@@ -475,7 +476,7 @@ public class Sample
             foreach (var post in blog.Posts)
             {
                 var existingPost = existingBlog.Posts
-                    .FirstOrDefault(p => p.PostId == post.PostId);
+                    .Find(p => p.PostId == post.PostId);
 
                 if (existingPost == null)
                 {
@@ -509,7 +510,7 @@ public class Sample
             foreach (var post in blog.Posts)
             {
                 var existingPost = existingBlog.Posts
-                    .FirstOrDefault(p => p.PostId == post.PostId);
+                    .Find(p => p.PostId == post.PostId);
 
                 if (existingPost == null)
                 {

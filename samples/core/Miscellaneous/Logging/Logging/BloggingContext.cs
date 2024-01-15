@@ -8,7 +8,7 @@ public class BloggingContext : DbContext
 {
     #region DefineLoggerFactory
     public static readonly ILoggerFactory MyLoggerFactory
-        = LoggerFactory.Create(builder => { builder.AddConsole(); });
+        = LoggerFactory.Create(builder => builder.AddConsole());
     #endregion
 
     public DbSet<Blog> Blogs { get; set; }

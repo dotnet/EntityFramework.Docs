@@ -44,7 +44,7 @@ public class Inheritance
     }
 
     [Benchmark]
-    public List<Root> TPH()
+    public static List<Root> TPH()
     {
         using var context = new TPHContext();
 
@@ -52,7 +52,7 @@ public class Inheritance
     }
 
     [Benchmark]
-    public List<Root> TPT()
+    public static List<Root> TPT()
     {
         using var context = new TPTContext();
 
@@ -60,7 +60,7 @@ public class Inheritance
     }
 
     [Benchmark]
-    public List<Root> TPC()
+    public static List<Root> TPC()
     {
         using var context = new TPCContext();
 
@@ -97,9 +97,7 @@ public class Inheritance
         }
     }
 
-    public class TPHContext : InheritanceContext
-    {
-    }
+    public class TPHContext : InheritanceContext;
 
     public class TPTContext : InheritanceContext
     {

@@ -5,7 +5,7 @@ namespace EFQuerying.Tracking;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         using (var context = new BloggingContext())
         {
@@ -63,7 +63,7 @@ internal class Program
             var blog = context.Blogs
                 .Select(
                     b =>
-                        new { Blog = b, PostCount = b.Posts.Count() });
+                        new { Blog = b, PostCount = b.Posts.Count });
             #endregion
         }
 

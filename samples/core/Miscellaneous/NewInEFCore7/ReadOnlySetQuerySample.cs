@@ -47,7 +47,7 @@ public static class ReadOnlySetQuerySample
         await using (var context = new TContext())
         {
             #region ReadOnlySetQuery
-            IReadOnlySet<int> searchIds = new HashSet<int> { 1, 3, 5 };
+            var searchIds = new HashSet<int> { 1, 3, 5 };
             var query = context.Customers.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
             #endregion
 

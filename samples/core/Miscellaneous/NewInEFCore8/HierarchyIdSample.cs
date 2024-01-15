@@ -26,7 +26,7 @@ public static class HierarchyIdSample
             var generation = await context.Halflings.Where(halfling => halfling.PathFromPatriarch.GetLevel() == level).ToListAsync();
             #endregion
 
-            if (!generation.Any())
+            if (generation.Count == 0)
             {
                 break;
             }
@@ -215,7 +215,7 @@ public static class HierarchyIdSample
             YearOfBirth = yearOfBirth;
         }
 
-        public int Id { get; private set; }
+        public int Id { get; }
         public HierarchyId PathFromPatriarch { get; set; }
         public string Name { get; set; }
         public int? YearOfBirth { get; set; }

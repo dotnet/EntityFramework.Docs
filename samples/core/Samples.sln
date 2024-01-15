@@ -175,25 +175,32 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SingleDbSingleTable", "Misc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{06678E46-B4E2-432B-A46E-56DEEF43F6CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "Testing\BusinessLogic\BusinessLogic.csproj", "{487B9A76-363D-441F-84B6-ADEDEA1F2E39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "Testing\BusinessLogic\BusinessLogic.csproj", "{487B9A76-363D-441F-84B6-ADEDEA1F2E39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingWithTheDatabase", "Testing\TestingWithTheDatabase\TestingWithTheDatabase.csproj", "{E056C05D-9BAD-4B69-9751-5C26D76319A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingWithTheDatabase", "Testing\TestingWithTheDatabase\TestingWithTheDatabase.csproj", "{E056C05D-9BAD-4B69-9751-5C26D76319A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloggingWebApi", "Testing\BloggingWebApi\BloggingWebApi.csproj", "{046C7454-643D-4C83-A2C7-50E060446B18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloggingWebApi", "Testing\BloggingWebApi\BloggingWebApi.csproj", "{046C7454-643D-4C83-A2C7-50E060446B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingWithoutTheDatabase", "Testing\TestingWithoutTheDatabase\TestingWithoutTheDatabase.csproj", "{937DD70A-FF53-4129-A7C5-FD5F0758591D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingWithoutTheDatabase", "Testing\TestingWithoutTheDatabase\TestingWithoutTheDatabase.csproj", "{937DD70A-FF53-4129-A7C5-FD5F0758591D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Performance", "Performance", "{BA37B31C-DEAC-46C5-976C-F3FDECA236DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Other", "Performance\Other\Other.csproj", "{E6A055CF-9DFF-4E1D-8B04-3B33DD327AB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Other", "Performance\Other\Other.csproj", "{E6A055CF-9DFF-4E1D-8B04-3B33DD327AB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetContextPooling", "Performance\AspNetContextPooling\AspNetContextPooling.csproj", "{FD79D5B5-55CE-4564-A031-FB500D1CDBCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetContextPooling", "Performance\AspNetContextPooling\AspNetContextPooling.csproj", "{FD79D5B5-55CE-4564-A031-FB500D1CDBCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetContextPoolingWithState", "Performance\AspNetContextPoolingWithState\AspNetContextPoolingWithState.csproj", "{EA3B9FAA-AAF2-4EB6-A64D-8C06FEAD33E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetContextPoolingWithState", "Performance\AspNetContextPoolingWithState\AspNetContextPoolingWithState.csproj", "{EA3B9FAA-AAF2-4EB6-A64D-8C06FEAD33E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewInEFCore7", "Miscellaneous\NewInEFCore7\NewInEFCore7.csproj", "{72C964FF-07C3-4234-B277-D91C3D83BAEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewInEFCore7", "Miscellaneous\NewInEFCore7\NewInEFCore7.csproj", "{72C964FF-07C3-4234-B277-D91C3D83BAEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewInEFCore8", "Miscellaneous\NewInEFCore8\NewInEFCore8.csproj", "{F9CA30FF-70A9-4EA5-8F12-7B08A695AB8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewInEFCore8", "Miscellaneous\NewInEFCore8\NewInEFCore8.csproj", "{F9CA30FF-70A9-4EA5-8F12-7B08A695AB8F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8DD05FD1-E71A-465B-BB14-CE66971CA26C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		C:\Users\DickB\OneDrive\Documents\EfSamples.csv = C:\Users\DickB\OneDrive\Documents\EfSamples.csv
+		C:\Users\DickB\OneDrive\Documents\EfSamples.md = C:\Users\DickB\OneDrive\Documents\EfSamples.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -9,7 +9,6 @@ internal class DataSeedingContextModelSnapshot : ModelSnapshot
 {
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
-#pragma warning disable 612, 618
         modelBuilder
             .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
             .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -91,6 +90,5 @@ internal class DataSeedingContextModelSnapshot : ModelSnapshot
                         );
                     });
             });
-#pragma warning restore 612, 618
     }
 }

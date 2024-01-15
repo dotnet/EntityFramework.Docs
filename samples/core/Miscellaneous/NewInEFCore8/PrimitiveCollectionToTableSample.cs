@@ -26,7 +26,7 @@ public static class PrimitiveCollectionToTableSample
         context.ChangeTracker.Clear();
 
         #region PubsWithHeineken
-        var beer = "Heineken";
+        const string beer = "Heineken";
         var pubsWithHeineken = await context.Pubs
             .Where(e => e.Beers.Any(e => e.Name == beer))
             .Select(e => e.Name)
@@ -62,8 +62,8 @@ public static class PrimitiveCollectionToTableSample
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Beer> Beers { get; set; } = new();
-        public List<DateOnly> DaysVisited { get; private set; } = new();
+        public List<Beer> Beers { get; set; } = [];
+        public List<DateOnly> DaysVisited { get; } = [];
     }
     #endregion
 
@@ -76,13 +76,11 @@ public static class PrimitiveCollectionToTableSample
             Name = name;
         }
 
-        public string Name { get; private set; }
+        public string Name { get; }
     }
     #endregion
 
-    public class PubsAndWalksContext : PubsAndWalksContextBase
-    {
-    }
+    public class PubsAndWalksContext : PubsAndWalksContextBase;
 
     public class PubsAndWalksContextSqlite : PubsAndWalksContextBase
     {
@@ -106,7 +104,7 @@ public static class PrimitiveCollectionToTableSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
                 .EnableSensitiveDataLogging()

@@ -11,11 +11,11 @@ public class Blog
         Name = name;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
     public string Name { get; set; }
     public virtual Uri SiteUri { get; set; } = null!;
     public virtual Website Site { get; set; } = null!;
-    public virtual List<Post> Posts { get; } = new();
+    public virtual List<Post> Posts { get; } = [];
 }
 
 public class Website
@@ -26,9 +26,9 @@ public class Website
         Email = email;
     }
 
-    public Guid Id { get; private set; }
-    public Uri Uri { get; private set; }
-    public string Email { get; private set; }
+    public Guid Id { get; }
+    public Uri Uri { get; }
+    public string Email { get; }
     public virtual Blog Blog { get; set; } = null!;
 }
 
@@ -41,14 +41,14 @@ public class Post
         PublishedOn = publishedOn;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
     public string Title { get; set; }
     public string Content { get; set; }
     public DateOnly PublishedOn { get; set; }
     public bool Archived { get; set; }
     public int BlogId { get; set; }
     public virtual Blog Blog { get; set; } = null!;
-    public virtual List<Tag> Tags { get; } = new();
+    public virtual List<Tag> Tags { get; } = [];
     public virtual Author? Author { get; set; }
     public PostMetadata? Metadata { get; set; }
 }
@@ -72,15 +72,15 @@ public class Tag
         Text = text;
     }
 
-    public string Id { get; private set; }
+    public string Id { get; }
     public string Text { get; set; }
-    public virtual List<Post> Posts { get; } = new();
+    public virtual List<Post> Posts { get; } = [];
 }
 
 public class PostTag
 {
-    public int PostId { get; private set; }
-    public string TagId { get; private set; } = null!;
+    public int PostId { get; }
+    public string TagId { get; } = null!;
 }
 
 public class Author
@@ -90,10 +90,10 @@ public class Author
         Name = name;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
     public string Name { get; set; }
     public ContactDetails Contact { get; set; } = null!;
-    public virtual List<Post> Posts { get; } = new();
+    public virtual List<Post> Posts { get; } = [];
 }
 #endregion
 
@@ -130,9 +130,9 @@ public class PostMetadata
     }
 
     public int Views { get; set; }
-    public List<SearchTerm> TopSearches { get; } = new();
-    public List<Visits> TopGeographies { get; } = new();
-    public List<PostUpdate> Updates { get; } = new();
+    public List<SearchTerm> TopSearches { get; } = [];
+    public List<Visits> TopGeographies { get; } = [];
+    public List<PostUpdate> Updates { get; } = [];
 }
 
 public class SearchTerm
@@ -143,8 +143,8 @@ public class SearchTerm
         Count = count;
     }
 
-    public string Term { get; private set; }
-    public int Count { get; private set; }
+    public string Term { get; }
+    public int Count { get; }
 }
 
 public class Visits
@@ -156,9 +156,9 @@ public class Visits
         Count = count;
     }
 
-    public double Latitude { get; private set; }
-    public double Longitude { get; private set; }
-    public int Count { get; private set; }
+    public double Latitude { get; }
+    public double Longitude { get; }
+    public int Count { get; }
     public List<string>? Browsers { get; set; }
 }
 
@@ -170,10 +170,10 @@ public class PostUpdate
         UpdatedOn = updatedOn;
     }
 
-    public IPAddress PostedFrom { get; private set; }
+    public IPAddress PostedFrom { get; }
     public string? UpdatedBy { get; set; }
-    public DateOnly UpdatedOn { get; private set; }
-    public List<Commit> Commits { get; } = new();
+    public DateOnly UpdatedOn { get; }
+    public List<Commit> Commits { get; } = [];
 }
 
 public class Commit
@@ -184,7 +184,7 @@ public class Commit
         Comment = comment;
     }
 
-    public DateOnly CommittedOn { get; private set; }
+    public DateOnly CommittedOn { get; }
     public string Comment { get; set; }
 }
 #endregion
@@ -208,7 +208,7 @@ public abstract class BlogsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => (UseSqlite
-                ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                 : optionsBuilder.UseSqlServer(
                     @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
                     sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseNetTopologySuite()))
@@ -418,7 +418,7 @@ public abstract class BlogsContext : DbContext
         await AddRangeAsync(blogs);
         await SaveChangesAsync();
 
-        PostMetadata BuildPostMetadata()
+        static PostMetadata BuildPostMetadata()
         {
             var random = new Random(Guid.NewGuid().GetHashCode());
 
@@ -452,7 +452,8 @@ public abstract class BlogsContext : DbContext
                         // new Point(115.7930 + 20 - random.Next(40), 37.2431 + 10 - random.Next(20)) { SRID = 4326 },
                         115.7930 + 20 - random.Next(40),
                         37.2431 + 10 - random.Next(20),
-                        1000 - random.Next(i * 100, i * 100 + 90)) { Browsers = new() { "Firefox", "Netscape" } });
+                        1000 - random.Next(i * 100, i * 100 + 90))
+                    { Browsers = ["Firefox", "Netscape"] });
             }
 
             return metadata;

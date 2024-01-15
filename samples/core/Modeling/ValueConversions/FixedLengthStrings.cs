@@ -13,7 +13,7 @@ namespace EFModeling.ValueConversions;
 
 public class FixedLengthStrings : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for fixed-length, case-insensitive string keys...");
 
@@ -64,7 +64,7 @@ public class FixedLengthStrings : Program
             var converter = new ValueConverter<string, string>(
                 v => v,
                 v => v.Trim());
-                
+
             var comparer = new ValueComparer<string>(
                 (l, r) => string.Equals(l, r, StringComparison.OrdinalIgnoreCase),
                 v => v.ToUpper().GetHashCode(),

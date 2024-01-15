@@ -12,7 +12,7 @@ namespace EFModeling.ValueConversions;
 
 public class CaseInsensitiveStrings : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for case-insensitive string keys...");
 

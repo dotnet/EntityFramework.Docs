@@ -4,7 +4,7 @@ namespace EFQuerying.ComplexQuery;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         using (var context = new BloggingContext())
         {
@@ -98,7 +98,7 @@ internal class Program
             var query = from p in context.Set<Post>()
                         group p by p.AuthorId
                         into g
-                        where g.Count() > 0
+                        where g.Any()
                         orderby g.Key
                         select new { g.Key, Count = g.Count() };
             #endregion

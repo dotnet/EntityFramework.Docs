@@ -137,12 +137,12 @@ public static class TpcInheritanceSample
                 Console.Write($"  >> {animal}");
 
                 if (animal is Pet pet
-                    && pet.Humans.Any())
+                    && pet.Humans.Count != 0)
                 {
                     Console.WriteLine($" has humans {string.Join(", ", pet.Humans.Select(e => e.Name))}");
                 }
                 else if (animal is Human human
-                         && human.Pets.Any())
+                         && human.Pets.Count != 0)
                 {
                     Console.WriteLine($" has pets {string.Join(", ", human.Pets.Select(e => e.Name))}");
                 }

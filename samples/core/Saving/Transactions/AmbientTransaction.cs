@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Transactions;
 
-public class AmbientTransaction
+public static class AmbientTransaction
 {
     public static void Run()
     {
-        var connectionString =
+        const string connectionString =
             @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True";
 
         using (var context = new BloggingContext(
@@ -22,39 +22,37 @@ public class AmbientTransaction
         }
 
         #region Transaction
-        using (var scope = new TransactionScope(
+        using var scope = new TransactionScope(
                    TransactionScopeOption.Required,
-                   new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
+                   new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted });
+        using var connection = new SqlConnection(connectionString);
+        connection.Open();
+
+        try
         {
-            using var connection = new SqlConnection(connectionString);
-            connection.Open();
+            // Run raw ADO.NET command in the transaction
+            var command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM dbo.Blogs";
+            command.ExecuteNonQuery();
 
-            try
+            // Run an EF Core command in the transaction
+            var options = new DbContextOptionsBuilder<BloggingContext>()
+                .UseSqlServer(connection)
+                .Options;
+
+            using (var context = new BloggingContext(options))
             {
-                // Run raw ADO.NET command in the transaction
-                var command = connection.CreateCommand();
-                command.CommandText = "DELETE FROM dbo.Blogs";
-                command.ExecuteNonQuery();
-
-                // Run an EF Core command in the transaction
-                var options = new DbContextOptionsBuilder<BloggingContext>()
-                    .UseSqlServer(connection)
-                    .Options;
-
-                using (var context = new BloggingContext(options))
-                {
-                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                    context.SaveChanges();
-                }
-
-                // Commit transaction if all commands succeed, transaction will auto-rollback
-                // when disposed if either commands fails
-                scope.Complete();
+                context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                context.SaveChanges();
             }
-            catch (Exception)
-            {
-                // TODO: Handle failure
-            }
+
+            // Commit transaction if all commands succeed, transaction will auto-rollback
+            // when disposed if either commands fails
+            scope.Complete();
+        }
+        catch (Exception)
+        {
+            // TODO: Handle failure
         }
         #endregion
     }

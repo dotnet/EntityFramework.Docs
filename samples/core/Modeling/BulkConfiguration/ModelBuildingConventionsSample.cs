@@ -93,10 +93,9 @@ public abstract class ModelBuildingBlogsContextBase : BlogsContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Author>().OwnsOne(
-            author => author.Contact, ownedNavigationBuilder =>
-            {
-                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
-            });
+            author => author.Contact,
+            ownedNavigationBuilder =>
+                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address));
 
         modelBuilder.Entity<Post>().OwnsOne(
             post => post.Metadata, ownedNavigationBuilder =>
@@ -200,7 +199,7 @@ public class DiscriminatorLengthConvention3 : IModelFinalizingConvention
                 && discriminatorProperty.ClrType == typeof(string))
             {
                 var maxDiscriminatorValueLength =
-                    entityType.GetDerivedTypesInclusive().Select(e => ((string)e.GetDiscriminatorValue()!).Length).Max();
+                    entityType.GetDerivedTypesInclusive().Max(e => ((string)e.GetDiscriminatorValue()!).Length);
 
                 discriminatorProperty.Builder.HasMaxLength(maxDiscriminatorValueLength);
             }
@@ -287,9 +286,7 @@ public class LaundryContext : DbContext
 
 #region PersistAttribute
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-public sealed class PersistAttribute : Attribute
-{
-}
+public sealed class PersistAttribute : Attribute;
 #endregion
 
 #region LaundryBasket
@@ -297,14 +294,14 @@ public class LaundryBasket
 {
     [Persist]
     [Key]
-    private readonly int _id;
+    public int Id { get; }
 
     [Persist]
     public int TenantId { get; init; }
 
     public bool IsClean { get; set; }
 
-    public List<Garment> Garments { get; } = new();
+    public List<Garment> Garments { get; } = [];
 }
 
 public class Garment
@@ -317,7 +314,7 @@ public class Garment
 
     [Persist]
     [Key]
-    private readonly int _id;
+    public int Id { get; }
 
     [Persist]
     public int TenantId { get; init; }
@@ -381,7 +378,7 @@ public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConven
             var clrType = entityTypeBuilder.Metadata.ClrType;
 
             foreach (var property in clrType.GetRuntimeProperties()
-                         .Where(p => p.GetMethod != null && !p.GetMethod.IsStatic))
+                         .Where(p => p.GetMethod?.IsStatic == false))
             {
                 yield return property;
             }

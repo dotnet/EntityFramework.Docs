@@ -64,10 +64,10 @@ public class BloggingContext : DbContext
     #endregion
 
     #region NullabilityPropagationFunctionDefinition
-    public string ConcatStrings(string prm1, string prm2)
+    public static string ConcatStrings(string prm1, string prm2)
         => throw new InvalidOperationException();
 
-    public string ConcatStringsOptimized(string prm1, string prm2)
+    public static string ConcatStringsOptimized(string prm1, string prm2)
         => throw new InvalidOperationException();
     #endregion
 
@@ -85,8 +85,8 @@ public class BloggingContext : DbContext
 
         modelBuilder.Entity<Blog>()
             .HasData(
-                new Blog { BlogId = 1, Url = @"https://devblogs.microsoft.com/dotnet", Rating = 5 },
-                new Blog { BlogId = 2, Url = @"https://mytravelblog.com/", Rating = 4 });
+                new Blog { BlogId = 1, Url = "https://devblogs.microsoft.com/dotnet", Rating = 5 },
+                new Blog { BlogId = 2, Url = "https://mytravelblog.com/", Rating = 4 });
 
         modelBuilder.Entity<Post>()
             .HasData(
@@ -139,14 +139,14 @@ public class BloggingContext : DbContext
                 new Comment { CommentId = 6, PostId = 3, Text = "I couldn't agree with you more", Likes = 2 });
 
         #region BasicFunctionConfiguration
-        modelBuilder.HasDbFunction(typeof(BloggingContext).GetMethod(nameof(ActivePostCountForBlog), new[] { typeof(int) }))
+        modelBuilder.HasDbFunction(typeof(BloggingContext).GetMethod(nameof(ActivePostCountForBlog), [typeof(int)]))
             .HasName("CommentedPostCountForBlog");
         #endregion
 
         #region HasTranslationFunctionConfiguration
         // 100 * ABS(first - second) / ((first + second) / 2)
         modelBuilder.HasDbFunction(
-                typeof(BloggingContext).GetMethod(nameof(PercentageDifference), new[] { typeof(double), typeof(int) }))
+                typeof(BloggingContext).GetMethod(nameof(PercentageDifference), [typeof(double), typeof(int)]))
             .HasTranslation(
                 args =>
                     new SqlBinaryExpression(
@@ -162,41 +162,41 @@ public class BloggingContext : DbContext
                                 {
                                     new SqlBinaryExpression(
                                         ExpressionType.Subtract,
-                                        args.First(),
+                                        args[0],
                                         args.Skip(1).First(),
-                                        args.First().Type,
-                                        args.First().TypeMapping)
+                                        args[0].Type,
+                                        args[0].TypeMapping)
                                 },
                                 nullable: true,
                                 argumentsPropagateNullability: new[] { true, true },
-                                type: args.First().Type,
-                                typeMapping: args.First().TypeMapping),
+                                type: args[0].Type,
+                                typeMapping: args[0].TypeMapping),
                             new SqlBinaryExpression(
                                 ExpressionType.Divide,
                                 new SqlBinaryExpression(
                                     ExpressionType.Add,
-                                    args.First(),
+                                    args[0],
                                     args.Skip(1).First(),
-                                    args.First().Type,
-                                    args.First().TypeMapping),
+                                    args[0].Type,
+                                    args[0].TypeMapping),
                                 new SqlConstantExpression(
                                     Expression.Constant(2),
                                     new IntTypeMapping("int", DbType.Int32)),
-                                args.First().Type,
-                                args.First().TypeMapping),
-                            args.First().Type,
-                            args.First().TypeMapping),
-                        args.First().Type,
-                        args.First().TypeMapping));
+                                args[0].Type,
+                                args[0].TypeMapping),
+                            args[0].Type,
+                            args[0].TypeMapping),
+                        args[0].Type,
+                        args[0].TypeMapping));
         #endregion
 
         #region NullabilityPropagationModelConfiguration
         modelBuilder
-            .HasDbFunction(typeof(BloggingContext).GetMethod(nameof(ConcatStrings), new[] { typeof(string), typeof(string) }))
+            .HasDbFunction(typeof(BloggingContext).GetMethod(nameof(ConcatStrings), [typeof(string), typeof(string)]))
             .HasName("ConcatStrings");
 
         modelBuilder.HasDbFunction(
-            typeof(BloggingContext).GetMethod(nameof(ConcatStringsOptimized), new[] { typeof(string), typeof(string) }),
+            typeof(BloggingContext).GetMethod(nameof(ConcatStringsOptimized), [typeof(string), typeof(string)]),
             b =>
             {
                 b.HasName("ConcatStrings");
@@ -207,7 +207,7 @@ public class BloggingContext : DbContext
 
         #region QueryableFunctionConfigurationHasDbFunction
         modelBuilder.Entity<Post>().ToTable("Posts");
-        modelBuilder.HasDbFunction(typeof(BloggingContext).GetMethod(nameof(PostsWithPopularComments), new[] { typeof(int) }));
+        modelBuilder.HasDbFunction(typeof(BloggingContext).GetMethod(nameof(PostsWithPopularComments), [typeof(int)]));
         #endregion
     }
 

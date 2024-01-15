@@ -15,10 +15,7 @@ public class Blog
     public int BlogId { get; set; }
 
     [BackingField(nameof(_validatedUrl))]
-    public string Url
-    {
-        get { return _validatedUrl; }
-    }
+    public string Url => _validatedUrl;
 
     public void SetUrl(string url)
     {

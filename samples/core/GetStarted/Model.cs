@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using static System.Environment;
 
 public class BloggingContext : DbContext
 {
@@ -11,7 +12,7 @@ public class BloggingContext : DbContext
 
     public BloggingContext()
     {
-        var folder = Environment.SpecialFolder.LocalApplicationData;
+        const SpecialFolder folder = SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
         DbPath = System.IO.Path.Join(path, "blogging.db");
     }
@@ -27,7 +28,7 @@ public class Blog
     public int BlogId { get; set; }
     public string Url { get; set; }
 
-    public List<Post> Posts { get; } = new();
+    public List<Post> Posts { get; } = [];
 }
 
 public class Post

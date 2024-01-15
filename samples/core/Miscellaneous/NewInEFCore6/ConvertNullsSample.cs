@@ -236,7 +236,7 @@ namespace CarsMigrations
 {
     [DbContext(typeof(ConvertNullsSample.CarsContext))]
     [Migration("20210927174004_Cars")]
-    public partial class Cars : Migration
+    public class Cars : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -248,10 +248,7 @@ namespace CarsMigrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
-                constraints: table =>
-                    {
-                        table.PrimaryKey("PK_Person", x => x.Id);
-                    });
+                constraints: table => table.PrimaryKey("PK_Person", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Cars",
@@ -262,10 +259,7 @@ namespace CarsMigrations
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OwnerId = table.Column<int>(type: "int", nullable: true)
                 },
-                constraints: table =>
-                    {
-                        table.PrimaryKey("PK_Cars", x => x.Id);
-                    });
+                constraints: table => table.PrimaryKey("PK_Cars", x => x.Id));
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_OwnerId",
@@ -284,16 +278,15 @@ namespace CarsMigrations
     }
 
     [DbContext(typeof(ConvertNullsSample.CarsContext))]
-    partial class CarsContextModelSnapshot : ModelSnapshot
+    internal class CarsContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.0-rc.1.21452.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            modelBuilder.UseIdentityColumns(1L, 1);
 
             modelBuilder.Entity("ConvertNullsSample+Car", b =>
                 {
@@ -301,7 +294,7 @@ namespace CarsMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<int>("Id").UseIdentityColumn(1L, 1);
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
@@ -322,7 +315,7 @@ namespace CarsMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<int>("Id").UseIdentityColumn(1L, 1);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -341,11 +334,7 @@ namespace CarsMigrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("ConvertNullsSample+Person", b =>
-                {
-                    b.Navigation("Cars");
-                });
-#pragma warning restore 612, 618
+            modelBuilder.Entity("ConvertNullsSample+Person", b => b.Navigation("Cars"));
         }
     }
 }

@@ -9,7 +9,7 @@ namespace EFModeling.ValueConversions;
 
 public class OverridingByteArrayComparisons : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing overriding byte array comparisons...");
 
@@ -19,7 +19,7 @@ public class OverridingByteArrayComparisons : Program
 
             ConsoleWriteLines("Save a new entity...");
 
-            var entity = new EntityType { MyBytes = new byte[] { 1, 2, 3 } };
+            var entity = new EntityType { MyBytes = [1, 2, 3] };
             context.Add(entity);
             context.SaveChanges();
 
@@ -47,7 +47,7 @@ public class OverridingByteArrayComparisons : Program
     public class SampleDbContext : DbContext
     {
         private static readonly ILoggerFactory
-            Logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
+            _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -66,7 +66,7 @@ public class OverridingByteArrayComparisons : Program
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseLoggerFactory(Logger)
+                .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
     }

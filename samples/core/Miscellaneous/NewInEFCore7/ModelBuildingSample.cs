@@ -257,7 +257,9 @@ public static class ModelBuildingSample
                 .Select(
                     e => new
                     {
-                        Employee = e, PeriodStart = EF.Property<DateTime>(e, "PeriodStart"), PeriodEnd = EF.Property<DateTime>(e, "PeriodEnd")
+                        Employee = e,
+                        PeriodStart = EF.Property<DateTime>(e, "PeriodStart"),
+                        PeriodEnd = EF.Property<DateTime>(e, "PeriodEnd")
                     })
                 .ToListAsync();
 
@@ -281,12 +283,15 @@ public static class ModelBuildingSample
         #region InsertPostsAndTags
         var tags = new Tag[] { new() { TagName = "Tag1" }, new() { TagName = "Tag2" }, new() { TagName = "Tag2" }, };
 
-        await context.AddRangeAsync(new Blog { Posts =
+        await context.AddRangeAsync(new Blog
+        {
+            Posts =
         {
             new Post { Tags = { tags[0], tags[1] } },
             new Post { Tags = { tags[1], tags[0], tags[2] } },
             new Post()
-        } });
+        }
+        });
 
         await context.SaveChangesAsync();
         #endregion
@@ -305,7 +310,7 @@ public static class ModelBuildingSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=Blogs")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogs")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
@@ -401,7 +406,7 @@ public static class ModelBuildingSample
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=AnimalsTpt")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AnimalsTpt")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
@@ -427,7 +432,7 @@ public static class ModelBuildingSample
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=AnimalsTpc")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AnimalsTpc")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
@@ -485,7 +490,7 @@ public static class ModelBuildingSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database=Images")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Images")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 

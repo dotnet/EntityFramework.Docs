@@ -19,7 +19,7 @@ public static class TagWithFileAndLineSample
         var results1 = context
             .Customers
             .TagWithCallSite()
-            .Where(c => c.Name.StartsWith("A"))
+            .Where(c => c.Name.StartsWith('A'))
             .ToList();
         #endregion
 

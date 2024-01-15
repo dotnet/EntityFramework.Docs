@@ -21,7 +21,7 @@ public static class SplitQuerySample
         Console.WriteLine("Executed as a single query:");
 
         #region SplitQuery1
-        context.Customers
+        var reorders = context.Customers
             .Select(
                 c => new
                 {
@@ -34,7 +34,7 @@ public static class SplitQuerySample
 
         Console.WriteLine();
         Console.WriteLine("Executed as split queries:");
-        context.Customers.AsSplitQuery().Select(c => new { c, Orders = c.Orders.Where(o => o.Id > 1) }).ToList();
+        var reorderdates = context.Customers.AsSplitQuery().Select(c => new { c, Orders = c.Orders.Where(o => o.Id > 1) }).ToList();
 
         Console.WriteLine();
         Console.WriteLine("LINQ query: 'context.Customers.Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate) })'");
@@ -42,7 +42,7 @@ public static class SplitQuerySample
         Console.WriteLine("Executed as a single query:");
 
         #region SplitQuery2
-        context.Customers
+        var reorderdates2 = context.Customers
             .Select(
                 c => new
                 {
@@ -56,15 +56,21 @@ public static class SplitQuerySample
 
         Console.WriteLine();
         Console.WriteLine("Executed as split queries:");
-        context.Customers.AsSplitQuery().Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate) }).ToList();
+        var reorderdates3 = context.Customers.AsSplitQuery()
+            .Select(c => new
+            {
+                c,
+                OrderDates = c.Orders.Where(o =>
+                o.Id > 1).Select(o => o.OrderDate)
+            }).ToList();
 
         Console.WriteLine();
-        Console.WriteLine("LINQ query: 'context.Customers.Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate).Distinct() })'");
+        Console.WriteLine("LINQ query: 'context.Customers.Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate) })'");
         Console.WriteLine();
         Console.WriteLine("Executed as a single query:");
 
         #region SplitQuery3
-        context.Customers
+        var reorderdates4 = context.Customers
             .Select(
                 c => new
                 {
@@ -79,7 +85,15 @@ public static class SplitQuerySample
 
         Console.WriteLine();
         Console.WriteLine("Executed as split queries:");
-        context.Customers.AsSplitQuery().Select(c => new { c, OrderDates = c.Orders.Where(o => o.Id > 1).Select(o => o.OrderDate).Distinct() }).ToList();
+        var reorders6 = context.Customers.AsSplitQuery()
+            .Select(c =>
+                new
+                {
+                    c,
+                    OrderDates = c.Orders.Where(o => o.Id > 1)
+                    .Select(o => o.OrderDate).Distinct()
+                })
+            .ToList();
 
         Console.WriteLine();
     }
@@ -95,7 +109,7 @@ public static class SplitQuerySample
         using var context = new CustomersContext();
 
         #region OrderBy
-        context.Customers
+        var firstorders = context.Customers
             .Select(
                 e => new
                 {
@@ -105,7 +119,7 @@ public static class SplitQuerySample
             .ToList();
         #endregion
 
-        Console.WriteLine();
+        Console.WriteLine(firstorders.Count);
     }
 
     public static class Helpers

@@ -17,7 +17,7 @@ internal class MyContext : DbContext
 
 public class Blog
 {
-    private readonly Dictionary<string, object> _data = new Dictionary<string, object>();
+    private readonly Dictionary<string, object> _data = [];
     public int BlogId { get; set; }
 
     public object this[string key]

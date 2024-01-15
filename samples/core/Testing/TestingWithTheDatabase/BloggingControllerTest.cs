@@ -17,7 +17,7 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
     [Fact]
     public void GetBlog()
     {
-        using var context = Fixture.CreateContext();
+        using var context = TestDatabaseFixture.CreateContext();
         var controller = new BloggingController(context);
 
         var blog = controller.GetBlog("Blog2").Value;
@@ -30,7 +30,7 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
     [Fact]
     public void GetAllBlogs()
     {
-        using var context = Fixture.CreateContext();
+        using var context = TestDatabaseFixture.CreateContext();
         var controller = new BloggingController(context);
 
         var blogs = controller.GetAllBlogs().Value;
@@ -46,7 +46,7 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
     [Fact]
     public void AddBlog()
     {
-        using var context = Fixture.CreateContext();
+        using var context = TestDatabaseFixture.CreateContext();
         context.Database.BeginTransaction();
 
         var controller = new BloggingController(context);
@@ -56,7 +56,6 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
 
         var blog = context.Blogs.Single(b => b.Name == "Blog3");
         Assert.Equal("http://blog3.com", blog.Url);
-
     }
     #endregion
 }

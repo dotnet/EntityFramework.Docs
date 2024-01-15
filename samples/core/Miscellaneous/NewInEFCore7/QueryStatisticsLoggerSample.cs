@@ -10,7 +10,7 @@ public static class QueryStatisticsLoggerSample
     {
         PrintSampleName();
 
-        var loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
+        var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
 
         var serviceProvider = new ServiceCollection()
             .AddDbContext<CustomerContext>(
@@ -69,10 +69,7 @@ public static class QueryStatisticsLoggerSample
         public override DbConnection ConnectionCreated(ConnectionCreatedEventData eventData, DbConnection result)
         {
             var logger = eventData.Context!.GetService<ILoggerFactory>().CreateLogger("InfoMessageLogger");
-            ((SqlConnection)eventData.Connection).InfoMessage += (_, args) =>
-            {
-                logger.LogInformation(1, args.Message);
-            };
+            ((SqlConnection)eventData.Connection).InfoMessage += (_, args) => logger.LogInformation(1, "SqlInfoMessageEventArgs : {msg}", args.Message);
             return result;
         }
         #endregion

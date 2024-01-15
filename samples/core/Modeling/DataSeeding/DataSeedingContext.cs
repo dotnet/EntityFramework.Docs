@@ -13,19 +13,16 @@ public class DataSeedingContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Blog>(entity => { entity.Property(e => e.Url).IsRequired(); });
+        modelBuilder.Entity<Blog>(entity => entity.Property(e => e.Url).IsRequired());
 
         #region BlogSeed
         modelBuilder.Entity<Blog>().HasData(new Blog { BlogId = 1, Url = "http://sample.com" });
         #endregion
 
         modelBuilder.Entity<Post>(
-            entity =>
-            {
-                entity.HasOne(d => d.Blog)
+            entity => entity.HasOne(d => d.Blog)
                     .WithMany(p => p.Posts)
-                    .HasForeignKey("BlogId");
-            });
+                    .HasForeignKey("BlogId"));
 
         #region PostSeed
         modelBuilder.Entity<Post>().HasData(

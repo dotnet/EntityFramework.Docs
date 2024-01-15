@@ -2,14 +2,11 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-#pragma warning disable 219, 612, 618
-#nullable disable
-
 namespace SingleRuntimeModel;
 
 #region RuntimeModel
 [DbContext(typeof(BlogsContext))]
-partial class BlogsContextModel : RuntimeModel
+internal partial class BlogsContextModel : RuntimeModel
 {
     private static BlogsContextModel _instance;
     public static IModel Instance

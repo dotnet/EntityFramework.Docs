@@ -333,7 +333,7 @@ BEGIN
 END");
                 break;
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException($"unknown {context.MappingStrategy} is not TPH/TPT/TPC");
         }
 
         // Person

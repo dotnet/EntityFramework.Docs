@@ -7,7 +7,7 @@ namespace EF.Testing.IntegrationTests;
 
 #region UsingTheFixture
 [Collection("TransactionalTests")]
-public class TransactionalBloggingControllerTest : IDisposable
+public sealed class TransactionalBloggingControllerTest : IDisposable
 {
     public TransactionalBloggingControllerTest(TransactionalTestDatabaseFixture fixture)
         => Fixture = fixture;
@@ -19,13 +19,13 @@ public class TransactionalBloggingControllerTest : IDisposable
     [Fact]
     public void UpdateBlogUrl()
     {
-        using (var context = Fixture.CreateContext())
+        using (var context = TransactionalTestDatabaseFixture.CreateContext())
         {
             var controller = new BloggingController(context);
             controller.UpdateBlogUrl("Blog2", "http://blog2_updated.com");
         }
 
-        using (var context = Fixture.CreateContext())
+        using (var context = TransactionalTestDatabaseFixture.CreateContext())
         {
             var blog = context.Blogs.Single(b => b.Name == "Blog2");
             Assert.Equal("http://blog2_updated.com", blog.Url);
@@ -35,6 +35,6 @@ public class TransactionalBloggingControllerTest : IDisposable
 
     #region Dispose
     public void Dispose()
-        => Fixture.Cleanup();
+        => TransactionalTestDatabaseFixture.Cleanup();
     #endregion
 }

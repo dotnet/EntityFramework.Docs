@@ -55,7 +55,7 @@ public static class RecordComplexTypesSample
         public int Id { get; set; }
         public required string Name { get; set; }
         public required Address Address { get; set; }
-        public List<Order> Orders { get; } = new();
+        public List<Order> Orders { get; } = [];
     }
 
     public class Order
@@ -69,9 +69,7 @@ public static class RecordComplexTypesSample
 
     public record Address(string Line1, string? Line2, string City, string Country, string PostCode);
 
-    public class CustomerContext : CustomerContextBase
-    {
-    }
+    public class CustomerContext : CustomerContextBase;
 
     public class CustomerContextSqlite : CustomerContextBase
     {
@@ -91,7 +89,7 @@ public static class RecordComplexTypesSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
                 //sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseCompatibilityLevel(120)))
@@ -205,7 +203,7 @@ public static class StructRecordComplexTypesSample
         public int Id { get; set; }
         public required string Name { get; set; }
         public required Address Address { get; set; }
-        public List<Order> Orders { get; } = new();
+        public List<Order> Orders { get; } = [];
     }
 
     public class Order
@@ -221,9 +219,7 @@ public static class StructRecordComplexTypesSample
     public readonly record struct Address(string Line1, string? Line2, string City, string Country, string PostCode);
     #endregion
 
-    public class CustomerContext : CustomerContextBase
-    {
-    }
+    public class CustomerContext : CustomerContextBase;
 
     public class CustomerContextSqlite : CustomerContextBase
     {
@@ -243,7 +239,7 @@ public static class StructRecordComplexTypesSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
                 //sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseCompatibilityLevel(120)))

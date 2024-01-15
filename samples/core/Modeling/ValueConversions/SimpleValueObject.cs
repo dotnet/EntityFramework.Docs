@@ -10,7 +10,7 @@ namespace EFModeling.ValueConversions;
 
 public class SimpleValueObject : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a simple value object...");
 
@@ -66,12 +66,12 @@ public class SimpleValueObject : Program
     #region SimpleValueObject
     public readonly struct Dollars
     {
-        public Dollars(decimal amount) 
+        public Dollars(decimal amount)
             => Amount = amount;
-            
+
         public decimal Amount { get; }
 
-        public override string ToString() 
+        public override string ToString()
             => $"${Amount}";
     }
     #endregion

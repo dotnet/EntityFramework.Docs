@@ -78,7 +78,7 @@ public static class GroupJoinFinalOperatorSample
 
             await foreach (var group in query.AsAsyncEnumerable())
             {
-                Console.WriteLine($"Customer: {group.Customer.Name}; Count = {group.Orders.Count()}");
+                Console.WriteLine($"Customer: {group.Customer.Name}; Count = {group.Orders.Count}");
             }
         }
     }

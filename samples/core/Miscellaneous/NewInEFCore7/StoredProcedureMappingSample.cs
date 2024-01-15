@@ -77,7 +77,7 @@ public static class StoredProcedureMappingSample
         foreach (var person in context.People.Local.Where(person => person.Contact.Address.Country == "UK"))
         {
             person.Name = "Dr. " + person.Name;
-            person.Contact.Phone = "+44 " + person.Contact.Phone!.Substring(1);
+            person.Contact.Phone = "+44 " + person.Contact.Phone![1..];
             person.Contact.Address.Country = "United Kingdom";
         }
 

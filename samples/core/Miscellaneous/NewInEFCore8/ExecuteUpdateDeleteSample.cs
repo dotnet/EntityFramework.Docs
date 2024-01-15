@@ -28,7 +28,7 @@ public static class ExecuteUpdateDeleteSample
         Console.WriteLine();
         Console.WriteLine("Update properties of owner and owned type mapped to the same table:");
 
-        var name = "Smokey";
+        const string name = "Smokey";
 
         #region UpdateWithOwned
         await context.Customers
@@ -47,7 +47,6 @@ public static class ExecuteUpdateDeleteSample
             .Union(context.Stores.Where(e => e.Region == "France").SelectMany(e => e.Customers))
             .ExecuteUpdateAsync(s => s.SetProperty(b => b.Tag, "The French Connection"));
         #endregion
-
 
         Console.WriteLine();
         Console.WriteLine("Update properties of a single table in a TPT hierarchy:");
@@ -97,7 +96,6 @@ public static class ExecuteUpdateDeleteSample
         Console.WriteLine();
     }
 
-
     private static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
@@ -145,7 +143,7 @@ public static class ExecuteUpdateDeleteSample
     public class Store
     {
         public int Id { get; set; }
-        public List<CustomerWithStores> Customers { get; } = new();
+        public List<CustomerWithStores> Customers { get; } = [];
         public string? Region { get; set; }
     }
 
@@ -155,7 +153,7 @@ public static class ExecuteUpdateDeleteSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
                         sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseNetTopologySuite()))

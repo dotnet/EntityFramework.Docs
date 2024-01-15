@@ -55,7 +55,7 @@ public static class ImmutableComplexTypesSample
         public int Id { get; set; }
         public required string Name { get; set; }
         public required Address Address { get; set; }
-        public List<Order> Orders { get; } = new();
+        public List<Order> Orders { get; } = [];
     }
 
     public class Order
@@ -76,9 +76,7 @@ public static class ImmutableComplexTypesSample
         public string PostCode { get; } = postCode;
     }
 
-    public class CustomerContext : CustomerContextBase
-    {
-    }
+    public class CustomerContext : CustomerContextBase;
 
     public class CustomerContextSqlite : CustomerContextBase
     {
@@ -98,7 +96,7 @@ public static class ImmutableComplexTypesSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
                 //sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseCompatibilityLevel(120)))

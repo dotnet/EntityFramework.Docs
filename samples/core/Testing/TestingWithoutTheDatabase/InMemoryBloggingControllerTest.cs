@@ -83,11 +83,11 @@ public class InMemoryBloggingControllerTest
         Assert.Equal("http://blog2_updated.com", blog.Url);
     }
 
-    BloggingContext CreateContext() => new BloggingContext(_contextOptions, (context, modelBuilder) =>
-    {
-        #region ToInMemoryQuery
-        modelBuilder.Entity<UrlResource>()
-            .ToInMemoryQuery(() => context.Blogs.Select(b => new UrlResource { Url = b.Url }));
-        #endregion
-    });
+    private BloggingContext CreateContext() =>
+        new(_contextOptions,
+            (context,
+             modelBuilder) =>
+                modelBuilder.Entity<UrlResource>()
+                .ToInMemoryQuery(() =>
+                    context.Blogs.Select(b => new UrlResource { Url = b.Url })));
 }

@@ -15,7 +15,7 @@ public static class Sample
         Console.WriteLine();
 
         #region HelloCosmos
-        using (var context = new OrderContext())
+        await using (var context = new OrderContext())
         {
             await context.Database.EnsureDeletedAsync();
             await context.Database.EnsureCreatedAsync();
@@ -23,13 +23,15 @@ public static class Sample
             context.Add(
                 new Order
                 {
-                    Id = 1, ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" }, PartitionKey = "1"
+                    Id = 1,
+                    ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" },
+                    PartitionKey = "1"
                 });
 
             await context.SaveChangesAsync();
         }
 
-        using (var context = new OrderContext())
+        await using (var context = new OrderContext())
         {
             var order = await context.Orders.FirstAsync();
             Console.WriteLine($"First order will ship to: {order.ShippingAddress.Street}, {order.ShippingAddress.City}");
@@ -38,18 +40,20 @@ public static class Sample
         #endregion
 
         #region PartitionKey
-        using (var context = new OrderContext())
+        await using (var context = new OrderContext())
         {
             context.Add(
                 new Order
                 {
-                    Id = 2, ShippingAddress = new StreetAddress { City = "New York", Street = "11 Wall Street" }, PartitionKey = "2"
+                    Id = 2,
+                    ShippingAddress = new StreetAddress { City = "New York", Street = "11 Wall Street" },
+                    PartitionKey = "2"
                 });
 
             await context.SaveChangesAsync();
         }
 
-        using (var context = new OrderContext())
+        await using (var context = new OrderContext())
         {
             var order = await context.Orders.WithPartitionKey("2").LastAsync();
             Console.WriteLine($"Last order will ship to: {order.ShippingAddress.Street}, {order.ShippingAddress.City}");
@@ -63,12 +67,12 @@ public static class Sample
             Id = 1,
             ShippingCenters = new HashSet<StreetAddress>
             {
-                new StreetAddress { City = "Phoenix", Street = "500 S 48th Street" },
-                new StreetAddress { City = "Anaheim", Street = "5650 Dolly Ave" }
+                new() { City = "Phoenix", Street = "500 S 48th Street" },
+                new() { City = "Anaheim", Street = "5650 Dolly Ave" }
             }
         };
 
-        using (var context = new OrderContext())
+        await using (var context = new OrderContext())
         {
             context.Add(distributor);
 
@@ -77,7 +81,7 @@ public static class Sample
         #endregion
 
         #region ImpliedProperties
-        using (var context = new OrderContext())
+        await using (var context = new OrderContext())
         {
             var firstDistributor = await context.Distributors.FirstAsync();
             Console.WriteLine($"Number of shipping centers: {firstDistributor.ShippingCenters.Count}");
@@ -92,7 +96,7 @@ public static class Sample
         #endregion
 
         #region Attach
-        using (var context = new OrderContext())
+        await using (var context = new OrderContext())
         {
             var distributorEntry = context.Add(distributor);
             distributorEntry.State = EntityState.Unchanged;
@@ -102,7 +106,7 @@ public static class Sample
             await context.SaveChangesAsync();
         }
 
-        using (var context = new OrderContext())
+        await using (var context = new OrderContext())
         {
             var firstDistributor = await context.Distributors.FirstAsync();
             Console.WriteLine($"Number of shipping centers is now: {firstDistributor.ShippingCenters.Count}");

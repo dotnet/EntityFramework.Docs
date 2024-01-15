@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace EFModeling.Relationships;
 
-public class ForeignAndPrincipalKeys
+public static class ForeignAndPrincipalKeys
 {
-    public class ForeignKeyConfigurationByLambda
+    public static class ForeignKeyConfigurationByLambda
     {
         public static void BuildModels()
         {
@@ -22,7 +22,7 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -51,7 +51,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class ForeignKeyConfigurationByString
+    public static class ForeignKeyConfigurationByString
     {
         public static void BuildModels()
         {
@@ -64,13 +64,13 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
         {
             public int Id { get; set; }
-            private int? ContainingBlogId { get; set; }
+            public int? ContainingBlogId { get; set; }
             public Blog? Blog { get; init; }
         }
 
@@ -93,7 +93,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class CompositeForeignKeyConfigurationByLambda
+    public static class CompositeForeignKeyConfigurationByLambda
     {
         public static void BuildModels()
         {
@@ -108,7 +108,7 @@ public class ForeignAndPrincipalKeys
         {
             public int Id1 { get; set; }
             public int Id2 { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -138,7 +138,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class CompositeForeignKeyConfigurationByString
+    public static class CompositeForeignKeyConfigurationByString
     {
         public static void BuildModels()
         {
@@ -153,7 +153,7 @@ public class ForeignAndPrincipalKeys
         {
             public int Id1 { get; set; }
             public int Id2 { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -181,7 +181,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class RequiredForeignKey
+    public static class RequiredForeignKey
     {
         public static void BuildModels()
         {
@@ -202,7 +202,7 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -257,7 +257,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class ShadowForeignKey
+    public static class ShadowForeignKey
     {
         public static void BuildModels()
         {
@@ -276,7 +276,7 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public string Id { get; set; } = null!;
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -321,7 +321,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class ForeignKeyConstraintName
+    public static class ForeignKeyConstraintName
     {
         public static void BuildModels()
         {
@@ -338,7 +338,7 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -368,7 +368,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class AlternateKeyConfigurationByLambda
+    public static class AlternateKeyConfigurationByLambda
     {
         public static void BuildModels()
         {
@@ -387,7 +387,7 @@ public class ForeignAndPrincipalKeys
         {
             public int Id { get; set; }
             public int AlternateId { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -428,7 +428,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class AlternateKeyConfigurationByString
+    public static class AlternateKeyConfigurationByString
     {
         public static void BuildModels()
         {
@@ -446,8 +446,8 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            private int AlternateId { get; set; }
-            public List<Post> Posts { get; } = new();
+            private int AlternateId { get; }
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -488,7 +488,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class CompositeAlternateKeyConfigurationByLambda
+    public static class CompositeAlternateKeyConfigurationByLambda
     {
         public static void BuildModels()
         {
@@ -508,7 +508,7 @@ public class ForeignAndPrincipalKeys
             public int Id { get; set; }
             public int AlternateId1 { get; set; }
             public int AlternateId2 { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -550,7 +550,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class CompositeAlternateKeyConfigurationByString
+    public static class CompositeAlternateKeyConfigurationByString
     {
         public static void BuildModels()
         {
@@ -570,7 +570,7 @@ public class ForeignAndPrincipalKeys
             public int Id { get; set; }
             public int AlternateId1 { get; set; }
             public int AlternateId2 { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post
@@ -610,7 +610,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class ForeignKeyInKeylessType
+    public static class ForeignKeyInKeylessType
     {
         public static void BuildModels()
         {
@@ -655,7 +655,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class ManyToManyForeignKeyConstraintNames
+    public static class ManyToManyForeignKeyConstraintNames
     {
         public static void BuildModels()
         {
@@ -677,13 +677,13 @@ public class ForeignAndPrincipalKeys
         public class Post
         {
             public int Id { get; set; }
-            public List<Tag> Tags { get; } = new();
+            public List<Tag> Tags { get; } = [];
         }
 
         public class Tag
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
         #endregion
 
@@ -724,7 +724,7 @@ public class ForeignAndPrincipalKeys
         }
     }
 
-    public class NavigationConfiguration
+    public static class NavigationConfiguration
     {
         public static void BuildModels()
         {
@@ -737,7 +737,7 @@ public class ForeignAndPrincipalKeys
         public class Blog
         {
             public int Id { get; set; }
-            public List<Post> Posts { get; } = new();
+            public List<Post> Posts { get; } = [];
         }
 
         public class Post

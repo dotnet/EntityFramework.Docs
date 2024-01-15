@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 public class DynamicallyConstructedQueries
 {
     private int _blogNumber;
-    private bool _addWhereClause = true;
+    private readonly bool _addWhereClause = true;
 
     [GlobalSetup]
     public static void GlobalSetup()

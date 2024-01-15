@@ -60,7 +60,7 @@ public static class StructComplexTypesSample
         public int Id { get; set; }
         public required string Name { get; set; }
         public Address Address { get; set; }
-        public List<Order> Orders { get; } = new();
+        public List<Order> Orders { get; } = [];
     }
 
     public class Order
@@ -83,9 +83,7 @@ public static class StructComplexTypesSample
     }
     #endregion
 
-    public class CustomerContext : CustomerContextBase
-    {
-    }
+    public class CustomerContext : CustomerContextBase;
 
     public class CustomerContextSqlite : CustomerContextBase
     {
@@ -105,7 +103,7 @@ public static class StructComplexTypesSample
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => (UseSqlite
-                    ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
+                    ? optionsBuilder.UseSqlite($"DataSource={GetType().Name}.db")
                     : optionsBuilder.UseSqlServer(
                         @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
                 //sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseCompatibilityLevel(120)))

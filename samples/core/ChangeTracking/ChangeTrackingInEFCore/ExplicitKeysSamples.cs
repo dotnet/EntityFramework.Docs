@@ -273,7 +273,7 @@ public static class ExplicitKeysSamples
 
         Console.WriteLine();
 
-        Post GetDisconnectedPost()
+        static Post GetDisconnectedPost()
         {
             using var tempContext = new BlogsContext();
             return tempContext.Posts.Find(2);
@@ -310,7 +310,7 @@ public static class ExplicitKeysSamples
 
         Console.WriteLine();
 
-        Blog GetDisconnectedBlogAndPosts()
+        static Blog GetDisconnectedBlogAndPosts()
         {
             using var tempContext = new BlogsContext();
             return tempContext.Blogs.Include(e => e.Posts).Single();
@@ -347,7 +347,7 @@ public static class ExplicitKeysSamples
 
         Console.WriteLine();
 
-        Blog GetDisconnectedBlogAndPosts()
+        static Blog GetDisconnectedBlogAndPosts()
         {
             using var tempContext = new BlogsContext();
             return tempContext.Blogs.Include(e => e.Posts).Single();

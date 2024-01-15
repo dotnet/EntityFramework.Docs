@@ -14,12 +14,12 @@ public static class CosmosQueriesSample
         await Helpers.RecreateCleanDatabase();
         await Helpers.PopulateDatabase();
 
-        using var context = new ShapesContext();
+        await using var context = new ShapesContext();
 
         #region StringTranslations
         var stringResults = await context.Triangles.Where(
                 e => e.Name.Length > 4
-                     && e.Name.Trim().ToLower() != "obtuse"
+                     && !e.Name.Trim().Equals("obtuse", StringComparison.InvariantCultureIgnoreCase)
                      && e.Name.TrimStart().Substring(2, 2).Equals("uT", StringComparison.OrdinalIgnoreCase))
             .ToListAsync();
         #endregion
@@ -32,7 +32,7 @@ public static class CosmosQueriesSample
         Console.WriteLine();
 
         #region MathTranslations
-        var hypotenuse = 42.42;
+        const double hypotenuse = 42.42;
         var mathResults = await context.Triangles.Where(
                 e => (Math.Round(e.Angle1) == 90.0
                       || Math.Round(e.Angle2) == 90.0)
@@ -76,7 +76,7 @@ public static class CosmosQueriesSample
 
         {
             #region FromSql
-            var maxAngle = 60;
+            const int maxAngle = 60;
             var results = await context.Triangles.FromSqlRaw(
                     @"SELECT * FROM root c WHERE c[""Angle1""] <= {0} OR c[""Angle2""] <= {0}", maxAngle)
                 .ToListAsync();
@@ -93,7 +93,7 @@ public static class CosmosQueriesSample
 
         {
             #region FromSqlComposed
-            var maxAngle = 60;
+            const int maxAngle = 60;
             var results = await context.Triangles.FromSqlRaw(
                     @"SELECT * FROM root c WHERE c[""Angle1""] <= {0} OR c[""Angle2""] <= {0}", maxAngle)
                 .Where(e => e.InsertedOn <= DateTime.UtcNow)

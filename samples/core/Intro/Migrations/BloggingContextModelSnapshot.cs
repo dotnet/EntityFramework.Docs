@@ -9,7 +9,6 @@ internal class BloggingContextModelSnapshot : ModelSnapshot
 {
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
-#pragma warning disable 612, 618
         modelBuilder
             .HasAnnotation("ProductVersion", "3.0.0")
             .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -59,14 +58,10 @@ internal class BloggingContextModelSnapshot : ModelSnapshot
             });
 
         modelBuilder.Entity(
-            "Intro.Post", b =>
-            {
-                b.HasOne("Intro.Blog", "Blog")
+            "Intro.Post", b => b.HasOne("Intro.Blog", "Blog")
                     .WithMany("Posts")
                     .HasForeignKey("BlogId")
                     .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-            });
-#pragma warning restore 612, 618
+                    .IsRequired());
     }
 }

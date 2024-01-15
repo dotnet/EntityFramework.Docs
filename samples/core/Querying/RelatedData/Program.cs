@@ -5,7 +5,7 @@ namespace EFQuerying.RelatedData;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         using (var context = new BloggingContext())
         {

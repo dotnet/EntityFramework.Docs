@@ -20,20 +20,18 @@ public static class OptimisticConcurrencyInterceptionSample
             await context.SaveChangesAsync();
         }
 
-        await using (var context1 = new CustomerContext())
+        await using var context1 = new CustomerContext();
+        var customer1 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
+
+        await using (var context2 = new CustomerContext())
         {
-            var customer1 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
-
-            await using (var context2 = new CustomerContext())
-            {
-                var customer2 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
-                context2.Entry(customer2).State = EntityState.Deleted;
-                await context2.SaveChangesAsync();
-            }
-
-            context1.Entry(customer1).State = EntityState.Deleted;
-            await context1.SaveChangesAsync();
+            var customer2 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
+            context2.Entry(customer2).State = EntityState.Deleted;
+            await context2.SaveChangesAsync();
         }
+
+        context1.Entry(customer1).State = EntityState.Deleted;
+        await context1.SaveChangesAsync();
     }
 
     private static void PrintSampleName([CallerMemberName] string? methodName = null)

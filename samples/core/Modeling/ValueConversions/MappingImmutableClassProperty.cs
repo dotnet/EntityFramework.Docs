@@ -7,7 +7,7 @@ namespace EFModeling.ValueConversions;
 
 public class MappingImmutableClassProperty : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a simple immutable class...");
 
@@ -44,7 +44,7 @@ public class MappingImmutableClassProperty : Program
     public class SampleDbContext : DbContext
     {
         private static readonly ILoggerFactory
-            Logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
+            _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,7 +60,7 @@ public class MappingImmutableClassProperty : Program
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseLoggerFactory(Logger)
+                .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
     }

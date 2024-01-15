@@ -9,7 +9,7 @@ namespace NetTopologySuite.Geometries;
 public static class GeometryExtensions
 {
     private static readonly CoordinateSystemServices _coordinateSystemServices
-        = new CoordinateSystemServices(
+        = new(
             new Dictionary<int, string>
             {
                 // Coordinate systems:

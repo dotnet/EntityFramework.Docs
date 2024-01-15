@@ -39,7 +39,7 @@ public static class ExplicitKeysRequiredSamples
 
         Console.WriteLine();
 
-        Blog GetDisconnectedBlogAndPosts()
+        static Blog GetDisconnectedBlogAndPosts()
         {
             using var tempContext = new BlogsContext();
             return tempContext.Blogs.Include(e => e.Posts).Single();

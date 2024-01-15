@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.CascadeDelete;
 
-public class Sample
+public static class Sample
 {
     public static void Run()
     {
@@ -126,7 +126,7 @@ public class Sample
             new Blog
             {
                 Url = "http://sample.com",
-                Posts = new List<Post> { new Post { Title = "Saving Data with EF" }, new Post { Title = "Cascade Delete with EF" } }
+                Posts = [new() { Title = "Saving Data with EF" }, new() { Title = "Cascade Delete with EF" }]
             });
 
         context.SaveChanges();

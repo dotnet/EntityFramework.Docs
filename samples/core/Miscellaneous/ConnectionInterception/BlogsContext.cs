@@ -7,7 +7,7 @@ public class BlogsContext : DbContext
     private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=InterceptionTest;Trusted_Connection=True";
 
     private static readonly AadAuthenticationInterceptor _interceptor
-        = new AadAuthenticationInterceptor();
+        = new();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information)

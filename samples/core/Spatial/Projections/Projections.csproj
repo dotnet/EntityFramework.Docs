@@ -8,6 +8,10 @@
   <ItemGroup>
     <PackageReference Include="NetTopologySuite" Version="2.5.0" />
     <PackageReference Include="ProjNet" Version="2.0.0" />
+    <PackageReference Include="Roslynator.Analyzers" Version="4.8.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

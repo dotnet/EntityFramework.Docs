@@ -154,7 +154,7 @@ public static class GroupBySample
         using (var context = new ShoesContext())
         {
             #region GroupBy7
-            var size = 11;
+            const int size = 11;
             var results
                 = context.People
                     .Where(
@@ -298,7 +298,7 @@ public static class GroupBySample
             #region GroupBy11
             var grouping = context.People
                 .GroupBy(i => i.LastName)
-                .Select(g => new { LastName = g.Key, Count = g.Count() , First = g.FirstOrDefault(), Take = g.Take(2)})
+                .Select(g => new { LastName = g.Key, Count = g.Count(), First = g.FirstOrDefault(), Take = g.Take(2) })
                 .OrderByDescending(e => e.LastName)
                 .ToList();
             #endregion
@@ -327,7 +327,7 @@ public static class GroupBySample
                 .OrderBy(e => e.FirstName)
                 .ThenBy(e => e.LastName)
                 .GroupBy(e => e.FirstName)
-                .Select(g => new { Name = g.Key, People = g.ToList()})
+                .Select(g => new { Name = g.Key, People = g.ToList() })
                 .ToList();
             #endregion
 
@@ -349,10 +349,10 @@ public static class GroupBySample
         {
             #region GroupBy13
             var grouping = context.People
-                .GroupBy(m => new {m.FirstName, m.MiddleInitial })
+                .GroupBy(m => new { m.FirstName, m.MiddleInitial })
                 .Select(am => new
                 {
-                    Key = am.Key,
+                    am.Key,
                     Items = am.ToList()
                 })
                 .ToList();

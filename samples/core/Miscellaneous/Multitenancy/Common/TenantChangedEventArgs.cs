@@ -8,8 +8,8 @@
             NewTenant = newTenant;
         }
 
-        public string? OldTenant { get; private set; }
+        public string? OldTenant { get; }
 
-        public string NewTenant { get; private set; }
+        public string NewTenant { get; }
     }
 }

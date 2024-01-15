@@ -31,7 +31,7 @@ public class Program
 public class TaggedQueryCommandInterceptorContext : BlogsContext
 {
     private static readonly TaggedQueryCommandInterceptor _interceptor
-        = new TaggedQueryCommandInterceptor();
+        = new();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.AddInterceptors(_interceptor);

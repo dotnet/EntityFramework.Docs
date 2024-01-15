@@ -9,7 +9,7 @@ namespace EFModeling.ValueConversions;
 
 public class EnumToStringConversions : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing explicitly configured value converter");
 

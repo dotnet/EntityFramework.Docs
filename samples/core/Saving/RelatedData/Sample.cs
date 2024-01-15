@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.RelatedData;
 
-public class Sample
+public static class Sample
 {
     public static void Run()
     {
@@ -20,12 +20,12 @@ public class Sample
             var blog = new Blog
             {
                 Url = "http://blogs.msdn.com/dotnet",
-                Posts = new List<Post>
-                {
-                    new Post { Title = "Intro to C#" },
-                    new Post { Title = "Intro to VB.NET" },
-                    new Post { Title = "Intro to F#" }
-                }
+                Posts =
+                [
+                    new() { Title = "Intro to C#" },
+                    new() { Title = "Intro to VB.NET" },
+                    new() { Title = "Intro to F#" }
+                ]
             };
 
             context.Blogs.Add(blog);
@@ -59,7 +59,7 @@ public class Sample
         using (var context = new BloggingContext())
         {
             var blog = context.Blogs.Include(b => b.Posts).First();
-            var post = blog.Posts.First();
+            var post = blog.Posts[0];
 
             blog.Posts.Remove(post);
             context.SaveChanges();

@@ -9,7 +9,7 @@
 
         private string _tenant;
 
-        public event TenantChangedEventHandler OnTenantChanged = null!;
+        public event EventHandler<TenantChangedEventArgs> OnTenantChanged = null!;
 
         public string Tenant => _tenant;
 
@@ -22,11 +22,11 @@
                 OnTenantChanged?.Invoke(this, new TenantChangedEventArgs(old, _tenant));
             }
         }
-        
-        public string[] GetTenants() => new[]
-        {
+
+        public string[] GetTenants() =>
+        [
             "TenantA",
             "TenantB",
-        };
+        ];
     }
 }

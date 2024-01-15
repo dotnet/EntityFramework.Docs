@@ -17,11 +17,12 @@ public class Blog
 
 public class BloggingContext : DbContext
 {
-    public static long InstanceCount;
+    private static long _instanceCount;
+    public static long InstanceCount => _instanceCount;
 
     public BloggingContext(DbContextOptions options)
         : base(options)
-        => Interlocked.Increment(ref InstanceCount);
+        => Interlocked.Increment(ref _instanceCount);
 
     public DbSet<Blog> Blogs { get; set; }
 }
@@ -50,8 +51,7 @@ public class Startup
 
 public class Program
 {
-    private const int Threads = 32;
-    private const int Seconds = 10;
+    private const int Threads = 32, Seconds = 10;
 
     private static long _requestsProcessed;
 

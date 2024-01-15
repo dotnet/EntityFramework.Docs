@@ -44,7 +44,7 @@ public static class CosmosImplicitOwnershipSample
                     LastName = "Wakefield",
                     Parents =
                     {
-                        new() { FamilyName = "Wakefield", FirstName = "Robin" }, 
+                        new() { FamilyName = "Wakefield", FirstName = "Robin" },
                         new() { FamilyName = "Miller", FirstName = "Ben" }
                     },
                     Children =
@@ -84,7 +84,7 @@ public static class CosmosImplicitOwnershipSample
             {
                 Console.WriteLine($"{family.LastName} family:");
                 Console.WriteLine($"    From {family.Address.City}, {family.Address.State}");
-                Console.WriteLine($"    With {family.Children.Count} children and {family.Children.SelectMany(e => e.Pets).Count()} pets.");
+                Console.WriteLine($"    With {family.Children.Count} children and {family.Children.Sum(e => e.Pets.Count)} pets.");
             }
         }
 
@@ -96,10 +96,10 @@ public static class CosmosImplicitOwnershipSample
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }
-        
+
         public string LastName { get; set; }
         public bool IsRegistered { get; set; }
-        
+
         public Address Address { get; set; }
 
         public IList<Parent> Parents { get; } = new List<Parent>();
@@ -150,12 +150,13 @@ public static class CosmosImplicitOwnershipSample
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region OnModelCreating
-            modelBuilder.Entity<Family>().HasPartitionKey(e => e.LastName);
+            modelBuilder.Entity<Family>()
+                .HasPartitionKey(e => e.LastName);
             #endregion
         }
-        
+
         // Never called; just for documentation.
-        private void OldOnModelCreating(ModelBuilder modelBuilder)
+        protected void OldOnModelCreating(ModelBuilder modelBuilder)
         {
             #region OldOnModelCreating
             modelBuilder.Entity<Family>()
@@ -167,7 +168,7 @@ public static class CosmosImplicitOwnershipSample
                 .OwnsMany(c => c.Pets);
 
             modelBuilder.Entity<Family>()
-                .OwnsOne(f => f.Address);        
+                .OwnsOne(f => f.Address);
             #endregion
         }
 

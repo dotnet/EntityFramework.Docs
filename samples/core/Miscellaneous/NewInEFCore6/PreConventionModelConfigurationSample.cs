@@ -146,7 +146,7 @@ public static class PreConventionModelConfigurationSample
                 .EnableSensitiveDataLogging()
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample");
 
-            //if (!_quiet)
+            if (!_quiet)
             {
                 optionsBuilder.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted });
             }

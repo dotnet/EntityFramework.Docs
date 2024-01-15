@@ -39,7 +39,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
         foreach (var post in updatedPosts)
         {
-            Console.WriteLine($"Post '{post.Title.Substring(0, 10)}...' with updates on {post.Metadata!.Updates[0].UpdatedOn} and {post.Metadata.Updates[1].UpdatedOn}.");
+            Console.WriteLine($"Post '{post.Title[..10]}...' with updates on {post.Metadata!.Updates[0].UpdatedOn} and {post.Metadata.Updates[1].UpdatedOn}.");
         }
 
         Console.WriteLine();
@@ -56,7 +56,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
         foreach (var post in postsWithFirstCommit)
         {
-            Console.WriteLine($"Post '{post.Title.Substring(0, 10)}...' with first commit on {post.Metadata!.Updates[0].Commits[0].CommittedOn}.");
+            Console.WriteLine($"Post '{post.Title[..10]}...' with first commit on {post.Metadata!.Updates[0].Commits[0].CommittedOn}.");
         }
 
         Console.WriteLine();
@@ -75,16 +75,13 @@ public static class JsonColumnsSample
         Console.WriteLine();
         foreach (var post in postsAndRecentUpdatesNullable)
         {
-            Console.WriteLine($"Post '{post.Title.Substring(0, 10)}...' with updates on {post.LatestUpdate?.ToString() ?? "<none>"} and {post.SecondLatestUpdate?.ToString() ?? "<none>"}.");
+            Console.WriteLine($"Post '{post.Title[..10]}...' with updates on {post.LatestUpdate?.ToString() ?? "<none>"} and {post.SecondLatestUpdate?.ToString() ?? "<none>"}.");
         }
 
         Console.WriteLine();
 
-#pragma warning disable CS8073
         #region CollectionIndexProjection
         var postsAndRecentUpdates = await context.Posts
-            .Where(p => p.Metadata!.Updates[0].UpdatedOn != null
-                        && p.Metadata!.Updates[1].UpdatedOn != null)
             .Select(p => new
             {
                 p.Title,
@@ -93,12 +90,11 @@ public static class JsonColumnsSample
             })
             .ToListAsync();
         #endregion
-#pragma warning restore CS8073
 
         Console.WriteLine();
         foreach (var post in postsAndRecentUpdates)
         {
-            Console.WriteLine($"Post '{post.Title.Substring(0, 10)}...' with updates on {post.LatestUpdate} and {post.SecondLatestUpdate}.");
+            Console.WriteLine($"Post '{post.Title[..10]}...' with updates on {post.LatestUpdate} and {post.SecondLatestUpdate}.");
         }
 
         Console.WriteLine();
@@ -116,7 +112,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
         foreach (var post in postsAndFirstCommit)
         {
-            Console.WriteLine($"Post '{post.Title.Substring(0, 10)}...' with commit '{post.CommitComment?.ToString() ?? "<none>"}'.");
+            Console.WriteLine($"Post '{post.Title[..10]}...' with commit '{post.CommitComment?.ToString() ?? "<none>"}'.");
         }
 
         Console.WriteLine();
@@ -151,7 +147,7 @@ public static class JsonColumnsSample
             .Where(
                 author => (author.Contact.Address.City == "Chigley"
                            && author.Contact.Phone != null)
-                          || author.Name.StartsWith("D"))
+                          || author.Name.StartsWith('D'))
             .OrderBy(author => author.Contact.Phone)
             .Select(
                 author => author.Name + " (" + author.Contact.Address.Street
@@ -189,7 +185,10 @@ public static class JsonColumnsSample
             .Select(
                 post => new
                 {
-                    post.Author!.Name, post.Metadata!.Views, Searches = post.Metadata.TopSearches, Commits = post.Metadata.Updates
+                    post.Author!.Name,
+                    post.Metadata!.Views,
+                    Searches = post.Metadata.TopSearches,
+                    Commits = post.Metadata.Updates
                 })
             .ToListAsync();
         #endregion
@@ -312,9 +311,7 @@ public abstract class JsonBlogsContextBase : BlogsContext
     }
 }
 
-public class JsonBlogsContext : JsonBlogsContextBase
-{
-}
+public class JsonBlogsContext : JsonBlogsContextBase;
 
 public class JsonBlogsContextSqlite : JsonBlogsContextBase
 {

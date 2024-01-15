@@ -10,7 +10,7 @@ namespace EFModeling.ValueConversions;
 
 public class ULongConcurrency : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing how to map rowversion to ulong...");
 

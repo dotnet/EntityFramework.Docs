@@ -19,7 +19,7 @@ internal class Program
     }
     #endregion
 
-    private static void Main(string[] args)
+    private static void Main()
     {
         using (var context = new BloggingContext())
         {

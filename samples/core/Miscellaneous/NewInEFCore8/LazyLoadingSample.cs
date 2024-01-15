@@ -74,10 +74,7 @@ public static class LazyLoadingSample
         }
         #endregion
 
-        string ReadLine()
-        {
-            return (x++).ToString(); // Console.ReadLine();
-        }
+        string ReadLine() => (x++).ToString(); // Console.ReadLine();
     }
 
     private static void PrintSampleName([CallerMemberName] string? methodName = null)
@@ -116,9 +113,7 @@ public class LazyLoadingBlogsContextBase : JsonBlogsContextBase
     }
 }
 
-public class LazyLoadingBlogsContext : LazyLoadingBlogsContextBase
-{
-}
+public class LazyLoadingBlogsContext : LazyLoadingBlogsContextBase;
 
 public class LazyLoadingBlogsContextSqlite : LazyLoadingBlogsContextBase
 {

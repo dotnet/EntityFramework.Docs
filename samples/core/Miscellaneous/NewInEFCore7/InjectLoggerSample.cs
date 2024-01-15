@@ -9,7 +9,7 @@ public static class InjectLoggerSample
     {
         PrintSampleName();
 
-        var loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
+        var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
 
         var serviceProvider = new ServiceCollection()
             .AddDbContext<CustomerContext>(
@@ -100,8 +100,7 @@ public static class InjectLoggerSample
             get => _phoneNumber;
             set
             {
-                Logger?.LogInformation(1, $"Updating phone number for '{Name}' from '{_phoneNumber}' to '{value}'.");
-
+                Logger?.LogInformation(1, "Updating phone number for '{Name}' from '{oldNumber}' to '{newNumber}'.", Name, _phoneNumber, value);
                 _phoneNumber = value;
             }
         }

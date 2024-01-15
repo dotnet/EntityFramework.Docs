@@ -57,7 +57,7 @@ public static class JsonColumnsSample
             .Where(
                 author => (author.Contact.Address.City == "Chigley"
                            && author.Contact.Phone != null)
-                          || author.Name.StartsWith("D"))
+                          || author.Name.StartsWith('D'))
             .OrderBy(author => author.Contact.Phone)
             .Select(
                 author => author.Name + " (" + author.Contact.Address.Street
@@ -95,7 +95,10 @@ public static class JsonColumnsSample
             .Select(
                 post => new
                 {
-                    post.Author!.Name, post.Metadata!.Views, Searches = post.Metadata.TopSearches, Commits = post.Metadata.Updates
+                    post.Author!.Name,
+                    post.Metadata!.Views,
+                    Searches = post.Metadata.TopSearches,
+                    Commits = post.Metadata.Updates
                 })
             .ToListAsync();
         #endregion
@@ -221,10 +224,7 @@ public abstract class TableSharingAggregateContext : TphBlogsContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Author>().OwnsOne(
-            author => author.Contact, ownedNavigationBuilder =>
-            {
-                ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
-            });
+            author => author.Contact, ownedNavigationBuilder => ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address));
     }
     #endregion
 }
@@ -239,10 +239,7 @@ public abstract class TableMappedAggregateContext : TphBlogsContext
             {
                 ownedNavigationBuilder.ToTable("Contacts");
                 ownedNavigationBuilder.OwnsOne(
-                    contactDetails => contactDetails.Address, ownedOwnedNavigationBuilder =>
-                    {
-                        ownedOwnedNavigationBuilder.ToTable("Addresses");
-                    });
+                    contactDetails => contactDetails.Address, ownedOwnedNavigationBuilder => ownedOwnedNavigationBuilder.ToTable("Addresses"));
             });
     }
     #endregion

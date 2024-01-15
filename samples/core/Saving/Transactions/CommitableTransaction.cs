@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFSaving.Transactions;
 
-public class CommitableTransaction
+public static class CommitableTransaction
 {
     public static void Run()
     {
-        var connectionString =
+        const string connectionString =
             @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True";
 
         using (var context = new BloggingContext(
@@ -22,41 +22,39 @@ public class CommitableTransaction
         }
 
         #region Transaction
-        using (var transaction = new CommittableTransaction(
-                   new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
+        using var transaction = new CommittableTransaction(
+                   new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted });
+        var connection = new SqlConnection(connectionString);
+
+        try
         {
-            var connection = new SqlConnection(connectionString);
+            var options = new DbContextOptionsBuilder<BloggingContext>()
+                .UseSqlServer(connection)
+                .Options;
 
-            try
+            using (var context = new BloggingContext(options))
             {
-                var options = new DbContextOptionsBuilder<BloggingContext>()
-                    .UseSqlServer(connection)
-                    .Options;
+                context.Database.OpenConnection();
+                context.Database.EnlistTransaction(transaction);
 
-                using (var context = new BloggingContext(options))
-                {
-                    context.Database.OpenConnection();
-                    context.Database.EnlistTransaction(transaction);
+                // Run raw ADO.NET command in the transaction
+                var command = connection.CreateCommand();
+                command.CommandText = "DELETE FROM dbo.Blogs";
+                command.ExecuteNonQuery();
 
-                    // Run raw ADO.NET command in the transaction
-                    var command = connection.CreateCommand();
-                    command.CommandText = "DELETE FROM dbo.Blogs";
-                    command.ExecuteNonQuery();
-
-                    // Run an EF Core command in the transaction
-                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                    context.SaveChanges();
-                    context.Database.CloseConnection();
-                }
-
-                // Commit transaction if all commands succeed, transaction will auto-rollback
-                // when disposed if either commands fails
-                transaction.Commit();
+                // Run an EF Core command in the transaction
+                context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+                context.SaveChanges();
+                context.Database.CloseConnection();
             }
-            catch (Exception)
-            {
-                // TODO: Handle failure
-            }
+
+            // Commit transaction if all commands succeed, transaction will auto-rollback
+            // when disposed if either commands fails
+            transaction.Commit();
+        }
+        catch (Exception)
+        {
+            // TODO: Handle failure
         }
         #endregion
     }

@@ -5,7 +5,7 @@ namespace EFQuerying.UserDefinedFunctionMapping;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         using var context = new BloggingContext();
         context.Database.EnsureDeleted();
@@ -60,16 +60,16 @@ internal class Program
         var result2 = query2.ToList();
 
         #region NullabilityPropagationExamples
-        var query3 = context.Blogs.Where(e => context.ConcatStrings(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
+        var query3 = context.Blogs.Where(e => BloggingContext.ConcatStrings(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
         var query4 = context.Blogs.Where(
-            e => context.ConcatStringsOptimized(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
+            e => BloggingContext.ConcatStringsOptimized(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
         #endregion
 
         var result3 = query3.ToList();
         var result4 = query4.ToList();
 
         #region TableValuedFunctionQuery
-        var likeThreshold = 3;
+        const int likeThreshold = 3;
         var query5 = from p in context.PostsWithPopularComments(likeThreshold)
                      orderby p.Rating
                      select p;

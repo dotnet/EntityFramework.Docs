@@ -8,17 +8,16 @@ namespace CompiledModelTest;
 public class BlogsContext : DbContext
 {
 
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var currentDirectory = Environment.CurrentDirectory;
-        var location = currentDirectory.Substring(
-            0, currentDirectory.IndexOf("CompiledModels", StringComparison.Ordinal) + "CompiledModels".Length);
+        var location = currentDirectory[
+            ..(currentDirectory.IndexOf("CompiledModels", StringComparison.Ordinal) + "CompiledModels".Length)];
 
         optionsBuilder
             //.UseModel(MyCompiledModels.BlogsContextModel.Instance)
             .EnableServiceProviderCaching(false)
-            .UseSqlite(@$"Data Source={Path.Combine(location, "compiled_model.db")}");
+            .UseSqlite($"Data Source={Path.Combine(location, "compiled_model.db")}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

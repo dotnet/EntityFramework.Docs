@@ -21,7 +21,7 @@ public static class DbContextApiSample
         context.ChangeTracker.Clear();
 
         var blogs = await context.Blogs.Include(blog => blog.Posts).ToListAsync();
-        var post = blogs.First().Posts.First();
+        var post = blogs[0].Posts[0];
 
         #region UseFindSiblings
 
@@ -89,7 +89,7 @@ public static class DbContextApiSample
             ListBuilds(context, builds);
         }
 
-        void ListBuilds(BlogsContext context, List<Dictionary<string, object>> builds)
+        static void ListBuilds(BlogsContext context, List<Dictionary<string, object>> builds)
         {
             Console.WriteLine();
             Console.WriteLine("Builds:");
@@ -166,10 +166,7 @@ public static class DbContextApiSample
         {
             #region ContextInitializedLog
             optionsBuilder.ConfigureWarnings(
-                builder =>
-                {
-                    builder.Log((CoreEventId.ContextInitialized, LogLevel.Information));
-                });
+                builder => builder.Log((CoreEventId.ContextInitialized, LogLevel.Information)));
             #endregion
 
             base.OnConfiguring(optionsBuilder);

@@ -12,7 +12,7 @@ namespace EFModeling.ValueConversions;
 
 public class CompositeValueObject : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a composite value object...");
 

@@ -257,7 +257,7 @@ public static class ExecuteDeleteSample
 
         context.LoggingEnabled = true;
         await context.Posts.Where(p => p.Author!.Posts.Count <= 1)
-            .ExecuteUpdateAsync(s => s.SetProperty(p => EF.Property<int?>(p, "AuthorId"), p => null));
+            .ExecuteUpdateAsync(s => s.SetProperty(p => EF.Property<int?>(p, "AuthorId"), _ => null));
         await context.Authors.Where(a => a.Posts.Count <= 1).ExecuteDeleteAsync();
         context.LoggingEnabled = false;
 

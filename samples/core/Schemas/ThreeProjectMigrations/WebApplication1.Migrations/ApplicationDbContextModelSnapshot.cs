@@ -225,34 +225,25 @@ namespace WebApplication1.Migrations
                 });
 
             modelBuilder.Entity(
-                "Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                "Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b => b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                        .IsRequired());
 
             modelBuilder.Entity(
-                "Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                "Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b => b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                        .IsRequired());
 
             modelBuilder.Entity(
-                "Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                "Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b => b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                        .IsRequired());
 
             modelBuilder.Entity(
                 "Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -271,14 +262,11 @@ namespace WebApplication1.Migrations
                 });
 
             modelBuilder.Entity(
-                "Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                "Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b => b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                        .IsRequired());
 #pragma warning restore 612, 618
         }
     }

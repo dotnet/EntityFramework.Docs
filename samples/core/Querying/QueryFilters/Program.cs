@@ -7,7 +7,7 @@ namespace EFQuerying.QueryFilters;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         QueryFiltersBasicExample();
         QueryFiltersWithNavigationsExample();
@@ -25,24 +25,24 @@ internal class Program
                     new Blog
                     {
                         Url = "http://sample.com/blogs/fish",
-                        Posts = new List<Post>
-                        {
-                            new Post { Title = "Fish care 101" },
-                            new Post { Title = "Caring for tropical fish" },
-                            new Post { Title = "Types of ornamental fish" }
-                        }
+                        Posts =
+                        [
+                            new() { Title = "Fish care 101" },
+                            new() { Title = "Caring for tropical fish" },
+                            new() { Title = "Types of ornamental fish" }
+                        ]
                     });
 
                 db.Blogs.Add(
                     new Blog
                     {
                         Url = "http://sample.com/blogs/cats",
-                        Posts = new List<Post>
-                        {
-                            new Post { Title = "Cat care 101" },
-                            new Post { Title = "Caring for tropical cats" },
-                            new Post { Title = "Types of ornamental cats" }
-                        }
+                        Posts =
+                        [
+                            new() { Title = "Cat care 101" },
+                            new() { Title = "Caring for tropical cats" },
+                            new() { Title = "Types of ornamental cats" }
+                        ]
                     });
 
                 db.SaveChanges();
@@ -53,10 +53,10 @@ internal class Program
                         new Blog
                         {
                             Url = "http://sample.com/blogs/catfish",
-                            Posts = new List<Post>
-                            {
-                                new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
-                            }
+                            Posts =
+                            [
+                                new() { Title = "Catfish care 101" }, new() { Title = "History of the catfish name" }
+                            ]
                         });
 
                     andrewDb.SaveChanges();
@@ -215,24 +215,24 @@ internal class Program
                 new Blog
                 {
                     Url = "http://sample.com/blogs/fish",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Fish care 101" },
-                        new Post { Title = "Caring for tropical fish" },
-                        new Post { Title = "Types of ornamental fish" }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Fish care 101" },
+                        new() { Title = "Caring for tropical fish" },
+                        new() { Title = "Types of ornamental fish" }
+                    ]
                 });
 
             db.Blogs.Add(
                 new Blog
                 {
                     Url = "http://sample.com/blogs/cats",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Cat care 101" },
-                        new Post { Title = "Caring for tropical cats" },
-                        new Post { Title = "Types of ornamental cats" }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Cat care 101" },
+                        new() { Title = "Caring for tropical cats" },
+                        new() { Title = "Types of ornamental cats" }
+                    ]
                 });
             #endregion
 
@@ -272,34 +272,34 @@ internal class Program
                 new Blog
                 {
                     Url = "http://sample.com/blogs/fish",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Fish care 101" },
-                        new Post { Title = "Caring for tropical fish" },
-                        new Post { Title = "Types of ornamental fish" }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Fish care 101" },
+                        new() { Title = "Caring for tropical fish" },
+                        new() { Title = "Types of ornamental fish" }
+                    ]
                 });
 
             db.Blogs.Add(
                 new Blog
                 {
                     Url = "http://sample.com/blogs/cats",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Cat care 101" },
-                        new Post { Title = "Caring for tropical cats" },
-                        new Post { Title = "Types of ornamental cats" }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Cat care 101" },
+                        new() { Title = "Caring for tropical cats" },
+                        new() { Title = "Types of ornamental cats" }
+                    ]
                 });
 
             db.Blogs.Add(
                 new Blog
                 {
                     Url = "http://sample.com/blogs/catfish",
-                    Posts = new List<Post>
-                    {
-                        new Post { Title = "Catfish care 101" }, new Post { Title = "History of the catfish name" }
-                    }
+                    Posts =
+                    [
+                        new() { Title = "Catfish care 101" }, new() { Title = "History of the catfish name" }
+                    ]
                 });
             #endregion
 

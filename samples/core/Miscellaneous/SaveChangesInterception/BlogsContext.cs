@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 #region BlogsContext
 public class BlogsContext : DbContext
 {
-    private readonly AuditingInterceptor _auditingInterceptor = new AuditingInterceptor("DataSource=audit.db");
+    private readonly AuditingInterceptor _auditingInterceptor = new("DataSource=audit.db");
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder

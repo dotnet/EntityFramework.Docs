@@ -32,7 +32,7 @@ public static class PublicPooledDbContextFactorySample
         Console.WriteLine();
     }
 
-    public class SomeDbContext : DbContext
+    public sealed class SomeDbContext : DbContext
     {
         public SomeDbContext(DbContextOptions<SomeDbContext> options)
             : base(options)

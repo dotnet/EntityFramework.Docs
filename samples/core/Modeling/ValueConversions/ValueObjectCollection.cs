@@ -14,7 +14,7 @@ namespace EFModeling.ValueConversions;
 
 public class ValueObjectCollection : Program
 {
-    public void Run()
+    public static void Run()
     {
         ConsoleWriteLines("Sample showing value conversions for a collection of value objects...");
 
@@ -29,9 +29,9 @@ public class ValueObjectCollection : Program
                 {
                     Finances = new List<AnnualFinance>
                     {
-                        new AnnualFinance(2018, new Money(326.65m, Currency.UsDollars), new Money(125m, Currency.UsDollars)),
-                        new AnnualFinance(2019, new Money(112.20m, Currency.UsDollars), new Money(125m, Currency.UsDollars)),
-                        new AnnualFinance(2020, new Money(25.77m, Currency.UsDollars), new Money(125m, Currency.UsDollars))
+                        new(2018, new Money(326.65m, Currency.UsDollars), new Money(125m, Currency.UsDollars)),
+                        new(2019, new Money(112.20m, Currency.UsDollars), new Money(125m, Currency.UsDollars)),
+                        new(2020, new Money(25.77m, Currency.UsDollars), new Money(125m, Currency.UsDollars))
                     }
                 });
             context.SaveChanges();
@@ -92,7 +92,7 @@ public class ValueObjectCollection : Program
         public int Year { get; }
         public Money Income { get; }
         public Money Expenses { get; }
-        public Money Revenue => new Money(Income.Amount - Expenses.Amount, Income.Currency);
+        public Money Revenue => new(Income.Amount - Expenses.Amount, Income.Currency);
     }
     #endregion
 

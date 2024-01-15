@@ -12,7 +12,7 @@ public abstract class Document
         CoverArt = coverArt;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
 
     [Timestamp]
     public byte[]? RowVersion { get; set; }
@@ -22,8 +22,8 @@ public abstract class Document
     public DateOnly PublicationDate { get; set; }
     public byte[]? CoverArt { get; set; }
 
-    public DateOnly FirstRecordedOn { get; private set; }
-    public DateOnly RetrievedOn { get; private set; }
+    public DateOnly FirstRecordedOn { get; }
+    public DateOnly RetrievedOn { get; }
 }
 
 public class Book : Document
@@ -35,7 +35,7 @@ public class Book : Document
 
     public string? Isbn { get; set; }
 
-    public List<Person> Authors { get; } = new();
+    public List<Person> Authors { get; } = [];
 }
 
 public class Magazine : Document
@@ -58,15 +58,15 @@ public class Person
         Name = name;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
 
     [ConcurrencyCheck]
     public string Name { get; set; }
 
     public ContactDetails Contact { get; set; } = null!;
 
-    public List<Book> PublishedWorks { get; } = new();
-    public List<Magazine> Edited { get; } = new();
+    public List<Book> PublishedWorks { get; } = [];
+    public List<Magazine> Edited { get; } = [];
 }
 
 public abstract class DocumentsContext : DbContext
@@ -101,33 +101,24 @@ public abstract class DocumentsContext : DbContext
             });
 
         modelBuilder.Entity<Person>(
-            entityTypeBuilder =>
-            {
-                entityTypeBuilder.OwnsOne(
+            entityTypeBuilder => entityTypeBuilder.OwnsOne(
                     author => author.Contact,
                     ownedNavigationBuilder =>
                     {
                         ownedNavigationBuilder.ToTable("Contacts");
                         ownedNavigationBuilder.OwnsOne(
                             contactDetails => contactDetails.Address,
-                            ownedOwnedNavigationBuilder =>
-                            {
-                                ownedOwnedNavigationBuilder.ToTable("Addresses");
-                            });
-                    });
-            });
+                            ownedOwnedNavigationBuilder => ownedOwnedNavigationBuilder.ToTable("Addresses"));
+                    }));
 
         modelBuilder.Entity<Book>(
-            entityTypeBuilder =>
-            {
-                entityTypeBuilder
+            entityTypeBuilder => entityTypeBuilder
                     .HasMany(document => document.Authors)
                     .WithMany(author => author.PublishedWorks)
                     .UsingEntity<Dictionary<string, object>>(
                         "BookPerson",
                         builder => builder.HasOne<Person>().WithMany().OnDelete(DeleteBehavior.Cascade),
-                        builder => builder.HasOne<Book>().WithMany().OnDelete(DeleteBehavior.ClientCascade));
-            });
+                        builder => builder.HasOne<Book>().WithMany().OnDelete(DeleteBehavior.ClientCascade)));
     }
 
     public async Task Seed()
@@ -162,7 +153,7 @@ public abstract class DocumentsContext : DbContext
             {
                 Isbn = "0-321-33678-X", Authors = { joshuaBloch, nealGafter }
             },
-            new Book("Effective Java", 252, new DateOnly(2001, 1, 1), new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
+            new Book("Effective Java", 252, new DateOnly(2001, 1, 1), [1, 2, 3, 4, 5, 6, 7, 8, 9])
             {
                 Isbn = "0-201-31005-8", Authors = { joshuaBloch }
             },
@@ -170,7 +161,7 @@ public abstract class DocumentsContext : DbContext
             {
                 Isbn = "0-321-14653-0", Authors = { kentBeck }
             },
-            new Magazine("Amstrad Computer User", 95, new DateOnly(1986, 1, 12), new byte[] { 1, 2, 3 }, 15)
+            new Magazine("Amstrad Computer User", 95, new DateOnly(1986, 1, 12), [1, 2, 3], 15)
             {
                 CoverPrice = 0.95m, Editor = simonRockman
             },

@@ -59,7 +59,7 @@ public static class RawSqlSample
         Console.WriteLine();
         foreach (var post in postsIn2022)
         {
-            Console.WriteLine($"Post '{post.BlogTitle.Substring(0, 10)}...' published on {post.PublishedOn} with FK to Blog '{post.BlogId}'.");
+            Console.WriteLine($"Post '{post.BlogTitle[..10]}...' published on {post.PublishedOn} with FK to Blog '{post.BlogId}'.");
         }
 
         Console.WriteLine();
@@ -80,7 +80,7 @@ public static class RawSqlSample
         Console.WriteLine();
         foreach (var post in summaries)
         {
-            Console.WriteLine($"Post '{post.PostTitle.Substring(0, 10)}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
+            Console.WriteLine($"Post '{post.PostTitle[..10]}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
         }
 
         Console.WriteLine();
@@ -98,7 +98,7 @@ public static class RawSqlSample
         Console.WriteLine();
         foreach (var post in summariesIn2022)
         {
-            Console.WriteLine($"Post '{post.PostTitle.Substring(0, 10)}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
+            Console.WriteLine($"Post '{post.PostTitle[..10]}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
         }
 
         Console.WriteLine();
@@ -119,7 +119,7 @@ public static class RawSqlSample
         Console.WriteLine();
         foreach (var post in summariesByLinq)
         {
-            Console.WriteLine($"Post '{post.PostTitle.Substring(0, 10)}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
+            Console.WriteLine($"Post '{post.PostTitle[..10]}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
         }
 
         Console.WriteLine();
@@ -127,7 +127,7 @@ public static class RawSqlSample
         #region SqlQueryView
         var summariesFromView =
             await context.Database.SqlQuery<PostSummary>(
-                    @$"SELECT * FROM PostAndBlogSummariesView")
+                    $"SELECT * FROM PostAndBlogSummariesView")
                 .Where(p => p.PublishedOn >= cutoffDate && p.PublishedOn < end)
                 .ToListAsync();
         #endregion
@@ -135,7 +135,7 @@ public static class RawSqlSample
         Console.WriteLine();
         foreach (var post in summariesFromView)
         {
-            Console.WriteLine($"Post '{post.PostTitle.Substring(0, 10)}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
+            Console.WriteLine($"Post '{post.PostTitle[..10]}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
         }
 
         Console.WriteLine();
@@ -143,7 +143,7 @@ public static class RawSqlSample
         #region SqlQueryFunction
         var summariesFromFunc =
             await context.Database.SqlQuery<PostSummary>(
-                    @$"SELECT * FROM GetPostsPublishedAfter({cutoffDate})")
+                    $"SELECT * FROM GetPostsPublishedAfter({cutoffDate})")
                 .Where(p => p.PublishedOn < end)
                 .ToListAsync();
         #endregion
@@ -151,7 +151,7 @@ public static class RawSqlSample
         Console.WriteLine();
         foreach (var post in summariesFromFunc)
         {
-            Console.WriteLine($"Post '{post.PostTitle.Substring(0, 10)}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
+            Console.WriteLine($"Post '{post.PostTitle[..10]}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
         }
 
         Console.WriteLine();
@@ -159,14 +159,14 @@ public static class RawSqlSample
         #region SqlQueryStoredProc
         var summariesFromStoredProc =
             await context.Database.SqlQuery<PostSummary>(
-                    @$"exec GetRecentPostSummariesProc")
+                    $"exec GetRecentPostSummariesProc")
                 .ToListAsync();
         #endregion
 
         Console.WriteLine();
         foreach (var post in summariesFromStoredProc)
         {
-            Console.WriteLine($"Post '{post.PostTitle.Substring(0, 10)}...' published on {post.PublishedOn}.");
+            Console.WriteLine($"Post '{post.PostTitle[..10]}...' published on {post.PublishedOn}.");
         }
 
         Console.WriteLine();
@@ -182,7 +182,7 @@ public static class RawSqlSample
             PublishedOn = publishedOn;
         }
 
-        public int Id { get; private set; }
+        public int Id { get; }
 
         [Column("Title")]
         public string BlogTitle { get; set; }

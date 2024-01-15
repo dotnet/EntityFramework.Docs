@@ -1,5 +1,7 @@
 ﻿using System;
 
+namespace EF_samples;
+
 public class Program
 {
     public static void Main()

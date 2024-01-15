@@ -17,9 +17,9 @@ public class Blog
         Name = name;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
     public string Name { get; set; }
-    public List<Post> Posts { get; } = new();
+    public List<Post> Posts { get; } = [];
 }
 
 public class Post
@@ -31,12 +31,12 @@ public class Post
         PublishedOn = publishedOn;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
     public string Title { get; set; }
     public string Content { get; set; }
     public DateTime PublishedOn { get; set; }
     public Blog Blog { get; set; } = null!;
-    public List<Tag> Tags { get; } = new();
+    public List<Tag> Tags { get; } = [];
     public Author? Author { get; set; }
     public PostMetadata? Metadata { get; set; }
 }
@@ -60,9 +60,9 @@ public class Tag
         Text = text;
     }
 
-    public string Id { get; private set; }
+    public string Id { get; }
     public string Text { get; set; }
-    public List<Post> Posts { get; } = new();
+    public List<Post> Posts { get; } = [];
 }
 
 public class Author
@@ -72,10 +72,10 @@ public class Author
         Name = name;
     }
 
-    public int Id { get; private set; }
+    public int Id { get; }
     public string Name { get; set; }
     public ContactDetails Contact { get; set; } = null!;
-    public List<Post> Posts { get; } = new();
+    public List<Post> Posts { get; } = [];
 }
 #endregion
 
@@ -112,9 +112,9 @@ public class PostMetadata
     }
 
     public int Views { get; set; }
-    public List<SearchTerm> TopSearches { get; } = new();
-    public List<Visits> TopGeographies { get; } = new();
-    public List<PostUpdate> Updates { get; } = new();
+    public List<SearchTerm> TopSearches { get; } = [];
+    public List<Visits> TopGeographies { get; } = [];
+    public List<PostUpdate> Updates { get; } = [];
 }
 
 public class SearchTerm
@@ -125,8 +125,8 @@ public class SearchTerm
         Count = count;
     }
 
-    public string Term { get; private set; }
-    public int Count { get; private set; }
+    public string Term { get; }
+    public int Count { get; }
 }
 
 public class Visits
@@ -138,9 +138,9 @@ public class Visits
         Count = count;
     }
 
-    public double Latitude { get; private set; }
-    public double Longitude { get; private set; }
-    public int Count { get; private set; }
+    public double Latitude { get; }
+    public double Longitude { get; }
+    public int Count { get; }
     public List<string>? Browsers { get; set; }
 }
 
@@ -152,10 +152,10 @@ public class PostUpdate
         UpdatedOn = updatedOn;
     }
 
-    public IPAddress PostedFrom { get; private set; }
+    public IPAddress PostedFrom { get; }
     public string? UpdatedBy { get; init; }
-    public DateTime UpdatedOn { get; private set; }
-    public List<Commit> Commits { get; } = new();
+    public DateTime UpdatedOn { get; }
+    public List<Commit> Commits { get; } = [];
 }
 
 public class Commit
@@ -166,7 +166,7 @@ public class Commit
         Comment = comment;
     }
 
-    public DateTime CommittedOn { get; private set; }
+    public DateTime CommittedOn { get; }
     public string Comment { get; set; }
 }
 #endregion
@@ -375,7 +375,7 @@ public abstract class BlogsContext : DbContext
         await AddRangeAsync(blogs);
         await SaveChangesAsync();
 
-        PostMetadata BuildPostMetadata()
+        static PostMetadata BuildPostMetadata()
         {
             var random = new Random(Guid.NewGuid().GetHashCode());
 
@@ -409,7 +409,8 @@ public abstract class BlogsContext : DbContext
                         // new Point(115.7930 + 20 - random.Next(40), 37.2431 + 10 - random.Next(20)) { SRID = 4326 },
                         115.7930 + 20 - random.Next(40),
                         37.2431 + 10 - random.Next(20),
-                        1000 - random.Next(i * 100, i * 100 + 90)) { Browsers = new() { "Firefox", "Netscape" } });
+                        1000 - random.Next(i * 100, i * 100 + 90))
+                    { Browsers = ["Firefox", "Netscape"] });
             }
 
             return metadata;

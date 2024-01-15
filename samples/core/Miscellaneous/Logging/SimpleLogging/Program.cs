@@ -81,10 +81,10 @@ public class LogToDebugContext : BlogsContext
     #endregion
 }
 
-public class LogToFileContext : BlogsContext
+public sealed class LogToFileContext : BlogsContext
 {
     #region LogToFile
-    private readonly StreamWriter _logStream = new StreamWriter("mylog.txt", append: true);
+    private readonly StreamWriter _logStream = new("mylog.txt", append: true);
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.LogTo(_logStream.WriteLine);

@@ -24,10 +24,10 @@ public class AuditingInterceptor : ISaveChangesInterceptor
     {
         _audit = CreateAudit(eventData.Context);
 
-        using var auditContext = new AuditContext(_connectionString);
+        await using var auditContext = new AuditContext(_connectionString);
 
         auditContext.Add(_audit);
-        await auditContext.SaveChangesAsync();
+        await auditContext.SaveChangesAsync(cancellationToken);
 
         return result;
     }
@@ -65,7 +65,7 @@ public class AuditingInterceptor : ISaveChangesInterceptor
         int result,
         CancellationToken cancellationToken = default)
     {
-        using var auditContext = new AuditContext(_connectionString);
+        await using var auditContext = new AuditContext(_connectionString);
 
         auditContext.Attach(_audit);
         _audit.Succeeded = true;
@@ -94,7 +94,7 @@ public class AuditingInterceptor : ISaveChangesInterceptor
         DbContextErrorEventData eventData,
         CancellationToken cancellationToken = default)
     {
-        using var auditContext = new AuditContext(_connectionString);
+        await using var auditContext = new AuditContext(_connectionString);
 
         auditContext.Attach(_audit);
         _audit.Succeeded = false;
