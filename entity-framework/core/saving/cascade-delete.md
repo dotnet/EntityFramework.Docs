@@ -267,14 +267,14 @@ There are two ways to handle this situation:
 1. Change one or more of the relationships to not cascade delete.
 2. Configure the database without one or more of these cascade deletes, then ensure all dependent entities are loaded so that EF Core can perform the cascading behavior.
 
-Taking the first approach with our example, we could make the blog-owner relationship optional by giving it a nullable foreign key property:
+Taking the first approach with our example, we could make the post-blog relationship optional by giving it a nullable foreign key property:
 
 <!--
             public int? BlogId { get; set; }
 -->
 [!code-csharp[NullableBlogId](../../../samples/core/CascadeDeletes/OptionalDependentsSamples.cs?name=NullableBlogId)]
 
-An optional relationship allows the blog to exist without an owner, which means cascade delete will no longer be configured by default. This means there is no longer a cycle in cascading actions, and the database can be created without error on SQL Server.
+An optional relationship allows the post to exist without a blog, which means cascade delete will no longer be configured by default. This means there is no longer a cycle in cascading actions, and the database can be created without error on SQL Server.
 
 Taking the second approach instead, we can keep the blog-owner relationship required and configured for cascade delete, but make this configuration only apply to tracked entities, not the database:
 
