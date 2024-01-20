@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace CompiledModelTest;
 

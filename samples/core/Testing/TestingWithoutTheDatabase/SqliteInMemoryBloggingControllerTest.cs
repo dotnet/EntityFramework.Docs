@@ -1,5 +1,4 @@
 using System;
-using System.Data.Common;
 using System.Linq;
 using EF.Testing.BloggingWebApi.Controllers;
 using EF.Testing.BusinessLogic;

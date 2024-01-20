@@ -9,7 +9,7 @@
 
         private string _tenant;
 
-        public event EventHandler<TenantChangedEventArgs> OnTenantChanged = null!;
+        public event TenantChangedEventHandler OnTenantChanged = null!;
 
         public string Tenant => _tenant;
 
