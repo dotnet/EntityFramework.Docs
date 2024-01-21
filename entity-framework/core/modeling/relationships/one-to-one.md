@@ -122,7 +122,7 @@ Neither of these options is better than the other; they both result in exactly t
 -->
 [!code-csharp[OneToOneOptional](../../../../samples/core/Modeling/Relationships/OneToOne.cs?name=OneToOneOptional)]
 
-This is the same as the previous example, except that the foreign key property and navigation to the principal are now nullable. This makes the relationship "optional" because a dependent (`BlogHeader`) can _not_ be related _any_ principal (`Blog`) by setting its foreign key property and navigation to `null`.
+This is the same as the previous example, except that the foreign key property and navigation to the principal are now nullable. This makes the relationship "optional" because a dependent (`BlogHeader`) can _not_ be related to _any_ principal (`Blog`) by setting its foreign key property and navigation to `null`.
 
 > [!IMPORTANT]
 > When using [C# nullable reference types](/dotnet/csharp/tutorials/nullable-reference-types), the navigation property from dependent to principal must be nullable if the foreign key property is nullable. In this case, `BlogHeader.BlogId` is nullable, so `BlogHeader.Blog` must be nullable too. See [_Working with Nullable Reference Types_](xref:core/miscellaneous/nullable-reference-types) for more information.
