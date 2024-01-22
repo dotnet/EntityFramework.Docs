@@ -37,7 +37,7 @@ public class MappingListProperty : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<EntityType>().Single();
+            EntityType entity = context.Set<EntityType>().Single();
 
             Debug.Assert(entity.MyListProperty.SequenceEqual(new List<int> { 1, 2, 3, 4 }));
         }

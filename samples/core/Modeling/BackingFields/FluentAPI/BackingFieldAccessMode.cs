@@ -28,7 +28,7 @@ public class Blog
     {
         using (var client = new HttpClient())
         {
-            var response = client.GetAsync(url).Result;
+            HttpResponseMessage response = client.GetAsync(url).Result;
             response.EnsureSuccessStatusCode();
         }
 

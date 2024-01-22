@@ -41,7 +41,7 @@ public class ValueObjectCollection : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var blog = context.Set<Blog>().Single();
+            Blog blog = context.Set<Blog>().Single();
 
             ConsoleWriteLines($"Blog with finances {string.Join(", ", blog.Finances.Select(f => $"{f.Year}: I={f.Income} E={f.Expenses} R={f.Revenue}"))}.");
 

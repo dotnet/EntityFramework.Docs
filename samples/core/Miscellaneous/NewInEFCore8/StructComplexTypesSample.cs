@@ -39,7 +39,7 @@ public static class StructComplexTypesSample
 
         await context.SaveChangesAsync();
 
-        var currentAddress = customer.Address;
+        Address currentAddress = customer.Address;
         currentAddress.Line1 = "Peacock Lodge";
         customer.Address = currentAddress;
         await context.SaveChangesAsync();

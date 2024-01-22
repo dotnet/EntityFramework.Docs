@@ -17,7 +17,7 @@ public class TestDatabaseFixture
         {
             if (!_databaseInitialized)
             {
-                using (var context = CreateContext())
+                using (BloggingContext context = CreateContext())
                 {
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();

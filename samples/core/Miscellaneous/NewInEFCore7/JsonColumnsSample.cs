@@ -28,7 +28,7 @@ public static class JsonColumnsSample
         context.ChangeTracker.Clear();
 
         #region AuthorsInChigley
-        var authorsInChigley = await context.Authors
+        List<Author> authorsInChigley = await context.Authors
             .Where(author => author.Contact.Address.City == "Chigley")
             .ToListAsync();
         #endregion
@@ -42,7 +42,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region PostcodesInChigley
-        var postcodesInChigley = await context.Authors
+        List<string> postcodesInChigley = await context.Authors
             .Where(author => author.Contact.Address.City == "Chigley")
             .Select(author => author.Contact.Address.Postcode)
             .ToListAsync();
@@ -53,7 +53,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region OrderedAddresses
-        var orderedAddresses = await context.Authors
+        List<string> orderedAddresses = await context.Authors
             .Where(
                 author => (author.Contact.Address.City == "Chigley"
                            && author.Contact.Phone != null)
@@ -74,7 +74,7 @@ public static class JsonColumnsSample
 
         Console.WriteLine();
 
-        var authorsInChigleyWithPosts = await context.Authors
+        List<Author> authorsInChigleyWithPosts = await context.Authors
             .Where(
                 author => author.Contact.Address.City == "Chigley"
                           && author.Posts.Count > 1)
@@ -118,7 +118,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateDocument
-        var jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
+        Author jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
 
         jeremy.Contact = new() { Address = new("2 Riverside", "Trimbridge", "TB1 5ZS", "UK"), Phone = "01632 88346" };
 
@@ -131,7 +131,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateSubDocument
-        var brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
+        Author brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
 
         brice.Contact.Address = new("4 Riverside", "Trimbridge", "TB1 5ZS", "UK");
 
@@ -145,7 +145,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateProperty
-        var arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
+        Author arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
 
         arthur.Contact.Address.Country = "United Kingdom";
 
@@ -156,7 +156,7 @@ public static class JsonColumnsSample
 
         context.ChangeTracker.Clear();
 
-        var post = await context.Posts.SingleAsync(post => post.Title.StartsWith("Hacking"));
+        Post post = await context.Posts.SingleAsync(post => post.Title.StartsWith("Hacking"));
 
         post.Metadata!.Updates.Add(new PostUpdate(IPAddress.Broadcast, DateTime.UtcNow) { UpdatedBy = "User" });
         post.Metadata!.TopGeographies.Clear();

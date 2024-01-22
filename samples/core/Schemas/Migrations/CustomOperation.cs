@@ -58,8 +58,8 @@ public class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
         CreateUserOperation operation,
         MigrationCommandListBuilder builder)
     {
-        var sqlHelper = Dependencies.SqlGenerationHelper;
-        var stringMapping = Dependencies.TypeMappingSource.FindMapping(typeof(string));
+        Microsoft.EntityFrameworkCore.Storage.ISqlGenerationHelper sqlHelper = Dependencies.SqlGenerationHelper;
+        Microsoft.EntityFrameworkCore.Storage.RelationalTypeMapping stringMapping = Dependencies.TypeMappingSource.FindMapping(typeof(string));
 
         builder
             .Append("CREATE USER ")

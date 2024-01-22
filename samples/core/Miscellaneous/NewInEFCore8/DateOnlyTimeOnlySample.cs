@@ -31,16 +31,16 @@ public static class DateOnlyTimeOnlySample
         context.LoggingEnabled = true;
         context.ChangeTracker.Clear();
 
-        var now = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "UTC", "GMT");
+        DateTime now = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "UTC", "GMT");
 
         var today = DateOnly.FromDateTime(now);
-        var currentTerms = await context.Schools
+        List<School> currentTerms = await context.Schools
             .Include(s => s.Terms.Where(t => t.FirstDay <= today && t.LastDay >= today))
             .ToListAsync();
 
         Console.WriteLine();
         Console.WriteLine("Current terms:");
-        foreach (var school in currentTerms)
+        foreach (School? school in currentTerms)
         {
             var term = school.Terms.SingleOrDefault();
             if (term == null)
@@ -56,7 +56,7 @@ public static class DateOnlyTimeOnlySample
         Console.WriteLine();
 
         var time = TimeOnly.FromDateTime(now);
-        var dayOfWeek = today.DayOfWeek;
+        DayOfWeek dayOfWeek = today.DayOfWeek;
         List<School> openSchools;
 
         if (context.UsesJson)
@@ -89,7 +89,7 @@ public static class DateOnlyTimeOnlySample
 
         Console.WriteLine();
         Console.WriteLine("Open schools:");
-        foreach (var school in openSchools)
+        foreach (School school in openSchools)
         {
             Console.WriteLine($"  {school.Name} is open and closes at {school.OpeningHours.Single(e => e.DayOfWeek == dayOfWeek).ClosesAt}.");
         }
@@ -100,9 +100,9 @@ public static class DateOnlyTimeOnlySample
 
         foreach (var school in await context.Schools.Include(e => e.Terms).ToListAsync())
         {
-            var winter = school.Terms.Single(e => e.LastDay.Year == 2022);
+            Term winter = school.Terms.Single(e => e.LastDay.Year == 2022);
             winter.LastDay = winter.LastDay.AddDays(1);
-            var friday = school.OpeningHours.Single(e => e.DayOfWeek == DayOfWeek.Friday);
+            OpeningHours friday = school.OpeningHours.Single(e => e.DayOfWeek == DayOfWeek.Friday);
             friday.OpensAt = friday.OpensAt?.AddHours(-1);
         }
 

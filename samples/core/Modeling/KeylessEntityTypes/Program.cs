@@ -19,7 +19,7 @@ public class Program
         #region Query
         var postCounts = db.BlogPostCounts.ToList();
 
-        foreach (var postCount in postCounts)
+        foreach (BlogPostsCount postCount in postCounts)
         {
             Console.WriteLine($"{postCount.BlogName} has {postCount.PostCount} posts.");
             Console.WriteLine();

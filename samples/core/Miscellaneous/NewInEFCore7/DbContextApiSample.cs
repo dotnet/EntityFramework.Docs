@@ -18,13 +18,13 @@ public static class DbContextApiSample
         await context.Seed();
         context.ChangeTracker.Clear();
 
-        var blogs = await context.Blogs.Include(blog => blog.Posts).ToListAsync();
-        var post = blogs[0].Posts[0];
+        List<Blog> blogs = await context.Blogs.Include(blog => blog.Posts).ToListAsync();
+        Post post = blogs[0].Posts[0];
 
         #region UseFindSiblings
 
         Console.WriteLine($"Siblings to {post.Id}: '{post.Title}' are...");
-        foreach (var sibling in context.FindSiblings(post, nameof(post.Blog)))
+        foreach (Post sibling in context.FindSiblings(post, nameof(post.Blog)))
         {
             Console.WriteLine($"    {sibling.Id}: '{sibling.Title}'");
         }
@@ -78,7 +78,7 @@ public static class DbContextApiSample
         await using (var context = new BlogsContext { LoggingEnabled = true })
         {
             #region BuildMetadataQuery
-            var builds = await context.BuildMetadata
+            List<Dictionary<string, object>> builds = await context.BuildMetadata
                 .Where(metadata => !EF.Property<bool>(metadata, "Prerelease"))
                 .OrderBy(metadata => EF.Property<string>(metadata, "Tag"))
                 .ToListAsync();
@@ -92,10 +92,10 @@ public static class DbContextApiSample
             Console.WriteLine();
             Console.WriteLine("Builds:");
 
-            foreach (var build in builds)
+            foreach (Dictionary<string, object> build in builds)
             {
                 #region GetEntry
-                var state = context.BuildMetadata.Entry(build).State;
+                EntityState state = context.BuildMetadata.Entry(build).State;
                 #endregion
 
                 Console.WriteLine(
@@ -117,9 +117,9 @@ public static class DbContextApiSample
         await context.Seed();
 
         #region IEntityEntryGraphIterator
-        var blogEntry = context.ChangeTracker.Entries<Blog>().First();
+        EntityEntry<Blog> blogEntry = context.ChangeTracker.Entries<Blog>().First();
         var found = new HashSet<object>();
-        var iterator = context.GetService<IEntityEntryGraphIterator>();
+        IEntityEntryGraphIterator iterator = context.GetService<IEntityEntryGraphIterator>();
         iterator.TraverseGraph(new EntityEntryGraphNode<HashSet<object>>(blogEntry, found, null, null), node =>
         {
             if (node.NodeState.Contains(node.Entry.Entity))
@@ -211,7 +211,7 @@ public static class BlogsContextExtensions
         this DbContext context, TEntity entity, string navigationToParent)
         where TEntity : class
     {
-        var parentEntry = context.Entry(entity).Reference(navigationToParent);
+        ReferenceEntry parentEntry = context.Entry(entity).Reference(navigationToParent);
 
         return context.Entry(parentEntry.CurrentValue!)
             .Collection(parentEntry.Metadata.Inverse!)

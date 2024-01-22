@@ -19,15 +19,15 @@ public sealed class TransactionalBloggingControllerTest : IDisposable
     [Fact]
     public void UpdateBlogUrl()
     {
-        using (var context = TransactionalTestDatabaseFixture.CreateContext())
+        using (BusinessLogic.BloggingContext context = TransactionalTestDatabaseFixture.CreateContext())
         {
             var controller = new BloggingController(context);
             controller.UpdateBlogUrl("Blog2", "http://blog2_updated.com");
         }
 
-        using (var context = TransactionalTestDatabaseFixture.CreateContext())
+        using (BusinessLogic.BloggingContext context = TransactionalTestDatabaseFixture.CreateContext())
         {
-            var blog = context.Blogs.Single(b => b.Name == "Blog2");
+            BusinessLogic.Blog blog = context.Blogs.Single(b => b.Name == "Blog2");
             Assert.Equal("http://blog2_updated.com", blog.Url);
         }
     }

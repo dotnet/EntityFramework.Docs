@@ -17,7 +17,7 @@ public class TransactionalTestDatabaseFixture
 
     public TransactionalTestDatabaseFixture()
     {
-        using var context = CreateContext();
+        using BloggingContext context = CreateContext();
         context.Database.EnsureDeleted();
         context.Database.EnsureCreated();
 
@@ -27,7 +27,7 @@ public class TransactionalTestDatabaseFixture
     public static void Cleanup()
     {
         #region Cleanup
-        using var context = CreateContext();
+        using BloggingContext context = CreateContext();
 
         context.Blogs.RemoveRange(context.Blogs);
 

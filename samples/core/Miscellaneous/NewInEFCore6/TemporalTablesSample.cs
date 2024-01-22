@@ -57,11 +57,11 @@ public static class TemporalTablesSample
             Console.WriteLine("Starting data:");
 
             var employees = context.Employees.ToList();
-            foreach (var employee in employees)
+            foreach (Employee employee in employees)
             {
-                var employeeEntry = context.Entry(employee);
-                var validFrom = employeeEntry.Property<DateTime>("ValidFrom").CurrentValue;
-                var validTo = employeeEntry.Property<DateTime>("ValidTo").CurrentValue;
+                Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Employee> employeeEntry = context.Entry(employee);
+                DateTime validFrom = employeeEntry.Property<DateTime>("ValidFrom").CurrentValue;
+                DateTime validTo = employeeEntry.Property<DateTime>("ValidTo").CurrentValue;
 
                 Console.WriteLine($"  Employee {employee.Name} valid from {validFrom} to {validTo}");
             }
@@ -76,7 +76,7 @@ public static class TemporalTablesSample
             timeStamp1 = DateTime.UtcNow;
             Thread.Sleep(millisecondsDelay);
 
-            var employee = context.Employees.Single(e => e.Name == "Rainbow Dash");
+            Employee employee = context.Employees.Single(e => e.Name == "Rainbow Dash");
             employee.Position = "Wonderbolt Trainee";
             context.SaveChanges();
 
@@ -102,7 +102,7 @@ public static class TemporalTablesSample
         using (var context = new EmployeeContext(quiet: true))
         {
             #region NormalQuery
-            var employee = context.Employees.Single(e => e.Name == "Rainbow Dash");
+            Employee employee = context.Employees.Single(e => e.Name == "Rainbow Dash");
             context.Remove(employee);
             context.SaveChanges();
             #endregion
@@ -115,11 +115,11 @@ public static class TemporalTablesSample
 
             #region TrackingQuery
             var employees = context.Employees.ToList();
-            foreach (var employee in employees)
+            foreach (Employee employee in employees)
             {
-                var employeeEntry = context.Entry(employee);
-                var validFrom = employeeEntry.Property<DateTime>("ValidFrom").CurrentValue;
-                var validTo = employeeEntry.Property<DateTime>("ValidTo").CurrentValue;
+                Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Employee> employeeEntry = context.Entry(employee);
+                DateTime validFrom = employeeEntry.Property<DateTime>("ValidFrom").CurrentValue;
+                DateTime validTo = employeeEntry.Property<DateTime>("ValidTo").CurrentValue;
 
                 Console.WriteLine($"  Employee {employee.Name} valid from {validFrom} to {validTo}");
             }
@@ -211,7 +211,7 @@ public static class TemporalTablesSample
             Console.WriteLine($"Restoring Rainbow Dash from {timeStamp2}...");
 
             #region RestoreData
-            var employee = context
+            Employee employee = context
                 .Employees
                 .TemporalAsOf(timeStamp2)
                 .Single(e => e.Name == "Rainbow Dash");

@@ -13,13 +13,13 @@ public static class OptionalDependentsSamples
         Console.WriteLine("#### Optional relationship with dependents/children loaded");
         Console.WriteLine();
 
-        var deleteResults = Helpers.GatherData(c => c.Remove(c.Blogs.Include(e => e.Posts).Single()));
-        var severResults = Helpers.GatherData(c => c.Blogs.Include(e => e.Posts).Single().Posts.Clear());
+        Dictionary<DeleteBehavior, string> deleteResults = Helpers.GatherData(c => c.Remove(c.Blogs.Include(e => e.Posts).Single()));
+        Dictionary<DeleteBehavior, string> severResults = Helpers.GatherData(c => c.Blogs.Include(e => e.Posts).Single().Posts.Clear());
 
         Console.WriteLine(
             $"| `{"DeleteBehavior",-16} | {"On deleting principal/parent",-40} | On severing from principal/parent");
         Console.WriteLine("|:------------------|------------------------------------------|----------------------------------------");
-        foreach (var deleteBehavior in DeleteBehaviors)
+        foreach (DeleteBehavior deleteBehavior in DeleteBehaviors)
         {
             Console.WriteLine(
                 $"| `{deleteBehavior + "`",-16} | {deleteResults[deleteBehavior],-40} | {severResults[deleteBehavior]}");
@@ -33,12 +33,12 @@ public static class OptionalDependentsSamples
         Console.WriteLine("#### Optional relationship with dependents/children not loaded");
         Console.WriteLine();
 
-        var deleteResults = Helpers.GatherData(c => c.Remove(c.Blogs.Single()));
+        Dictionary<DeleteBehavior, string> deleteResults = Helpers.GatherData(c => c.Remove(c.Blogs.Single()));
 
         Console.WriteLine(
             $"| `{"DeleteBehavior",-16} | {"On deleting principal/parent",-40} | On severing from principal/parent");
         Console.WriteLine("|:------------------|------------------------------------------|----------------------------------------");
-        foreach (var deleteBehavior in DeleteBehaviors)
+        foreach (DeleteBehavior deleteBehavior in DeleteBehaviors)
         {
             Console.WriteLine($"| `{deleteBehavior + "`",-16} | {deleteResults[deleteBehavior],-40} | N/A");
         }
@@ -120,7 +120,7 @@ public static class OptionalDependentsSamples
         {
             var results = new Dictionary<DeleteBehavior, string>();
 
-            foreach (var deleteBehavior in DeleteBehaviors)
+            foreach (DeleteBehavior deleteBehavior in DeleteBehaviors)
             {
                 RecreateCleanDatabase(new OptionalBlogsContext(deleteBehavior));
                 PopulateDatabase(new OptionalBlogsContext(deleteBehavior));

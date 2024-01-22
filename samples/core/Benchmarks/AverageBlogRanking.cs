@@ -27,7 +27,7 @@ public class AverageBlogRanking
         var sum = 0;
         var count = 0;
         using var ctx = new BloggingContext();
-        foreach (var blog in ctx.Blogs)
+        foreach (Blog blog in ctx.Blogs)
         {
             sum += blog.Rating;
             count++;
@@ -44,7 +44,7 @@ public class AverageBlogRanking
         var sum = 0;
         var count = 0;
         using var ctx = new BloggingContext();
-        foreach (var blog in ctx.Blogs.AsNoTracking())
+        foreach (Blog blog in ctx.Blogs.AsNoTracking())
         {
             sum += blog.Rating;
             count++;

@@ -27,7 +27,7 @@ public static class PrimitiveCollectionToTableSample
 
         #region PubsWithHeineken
         const string beer = "Heineken";
-        var pubsWithHeineken = await context.Pubs
+        List<string> pubsWithHeineken = await context.Pubs
             .Where(e => e.Beers.Any(e => e.Name == beer))
             .Select(e => e.Name)
             .ToListAsync();
@@ -37,7 +37,7 @@ public static class PrimitiveCollectionToTableSample
 
         #region PubsWithLager
         var beers = new[] { "Carling", "Heineken", "Stella Artois", "Carlsberg" };
-        var pubsWithLager = await context.Pubs
+        List<string> pubsWithLager = await context.Pubs
             .Where(e => beers.Any(b => e.Beers.Any(t => t.Name == b)))
             .Select(e => e.Name)
             .ToListAsync();

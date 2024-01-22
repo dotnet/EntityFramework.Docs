@@ -21,11 +21,11 @@ public class CustomTools
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddEntityFrameworkDesignTimeServices();
         serviceCollection.AddDbContextDesignTimeServices(db);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+        ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
         // Add a migration
-        var migrationsScaffolder = serviceProvider.GetService<IMigrationsScaffolder>();
-        var migration = migrationsScaffolder.ScaffoldMigration(migrationName, rootNamespace);
+        IMigrationsScaffolder migrationsScaffolder = serviceProvider.GetService<IMigrationsScaffolder>();
+        ScaffoldedMigration migration = migrationsScaffolder.ScaffoldMigration(migrationName, rootNamespace);
         migrationsScaffolder.Save(projectDir, migration, outputDir);
         #endregion
     }

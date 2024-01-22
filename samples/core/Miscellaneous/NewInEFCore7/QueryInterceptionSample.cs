@@ -22,7 +22,7 @@ public static class QueryInterceptionSample
             await context.SaveChangesAsync();
         }
 
-        foreach (var customer in await GetPageOfCustomers("City", 0))
+        foreach (Customer customer in await GetPageOfCustomers("City", 0))
         {
             Console.WriteLine($"{customer.Name}");
         }
@@ -38,7 +38,7 @@ public static class QueryInterceptionSample
         }
         #endregion
 
-        foreach (var customer in await GetPageOfCustomers2("City", 0))
+        foreach (Customer customer in await GetPageOfCustomers2("City", 0))
         {
             Console.WriteLine($"{customer.Name}");
         }
@@ -90,16 +90,16 @@ public static class QueryInterceptionSample
 
             protected override Expression VisitMethodCall(MethodCallExpression? methodCallExpression)
             {
-                var methodInfo = methodCallExpression!.Method;
+                MethodInfo methodInfo = methodCallExpression!.Method;
                 if (methodInfo.DeclaringType == typeof(Queryable)
                     && methodInfo.Name == nameof(Queryable.OrderBy)
                     && methodInfo.GetParameters().Length == 2)
                 {
-                    var sourceType = methodCallExpression.Type.GetGenericArguments()[0];
+                    Type sourceType = methodCallExpression.Type.GetGenericArguments()[0];
                     if (typeof(IHasIntKey).IsAssignableFrom(sourceType))
                     {
                         var lambdaExpression = (LambdaExpression)((UnaryExpression)methodCallExpression.Arguments[1]).Operand;
-                        var entityParameterExpression = lambdaExpression.Parameters[0];
+                        ParameterExpression entityParameterExpression = lambdaExpression.Parameters[0];
 
                         return Expression.Call(
                             ThenByMethod.MakeGenericMethod(

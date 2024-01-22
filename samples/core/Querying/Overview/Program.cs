@@ -22,7 +22,7 @@ internal class Program
         #region LoadingSingleEntity
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs
+            Blog blog = context.Blogs
                 .Single(b => b.BlogId == 1);
         }
         #endregion

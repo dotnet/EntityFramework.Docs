@@ -29,7 +29,7 @@ public static class JsonColumnsSample
 
         #region CollectionIndexPredicate
         var cutoff = DateOnly.FromDateTime(DateTime.UtcNow - TimeSpan.FromDays(365));
-        var updatedPosts = await context.Posts
+        List<Post> updatedPosts = await context.Posts
             .Where(
                 p => p.Metadata!.Updates[0].UpdatedOn < cutoff
                      && p.Metadata!.Updates[1].UpdatedOn < cutoff)
@@ -46,7 +46,7 @@ public static class JsonColumnsSample
 
         #region CollectionIndexNestedPredicate
         var twentyTen = DateOnly.FromDateTime(new DateTime(2010, 1, 1));
-        var postsWithFirstCommit = await context.Posts
+        List<Post> postsWithFirstCommit = await context.Posts
             .Where(
                 p => p.Metadata!.Updates[0].UpdatedOn > twentyTen
                      && p.Metadata!.Updates[0].Commits[0].Comment == "Commit #1")
@@ -118,7 +118,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region AuthorsInChigley
-        var authorsInChigley = await context.Authors
+        List<Author> authorsInChigley = await context.Authors
             .Where(author => author.Contact.Address.City == "Chigley")
             .ToListAsync();
         #endregion
@@ -132,7 +132,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region PostcodesInChigley
-        var postcodesInChigley = await context.Authors
+        List<string> postcodesInChigley = await context.Authors
             .Where(author => author.Contact.Address.City == "Chigley")
             .Select(author => author.Contact.Address.Postcode)
             .ToListAsync();
@@ -143,7 +143,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region OrderedAddresses
-        var orderedAddresses = await context.Authors
+        List<string> orderedAddresses = await context.Authors
             .Where(
                 author => (author.Contact.Address.City == "Chigley"
                            && author.Contact.Phone != null)
@@ -164,7 +164,7 @@ public static class JsonColumnsSample
 
         Console.WriteLine();
 
-        var authorsInChigleyWithPosts = await context.Authors
+        List<Author> authorsInChigleyWithPosts = await context.Authors
             .Where(
                 author => author.Contact.Address.City == "Chigley"
                           && author.Posts.Count > 1)
@@ -205,7 +205,7 @@ public static class JsonColumnsSample
         #region PostsWithSearchTerms
         var searchTerms = new[] { "Search #2", "Search #3", "Search #5", "Search #8", "Search #13", "Search #21", "Search #34" };
 
-        var postsWithSearchTerms = await context.Posts
+        List<Post> postsWithSearchTerms = await context.Posts
             .Where(post => post.Metadata!.TopSearches.Any(s => searchTerms.Contains(s.Term)))
             .ToListAsync();
         #endregion
@@ -225,7 +225,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateDocument
-        var jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
+        Author jeremy = await context.Authors.SingleAsync(author => author.Name.StartsWith("Jeremy"));
 
         jeremy.Contact = new() { Address = new("2 Riverside", "Trimbridge", "TB1 5ZS", "UK"), Phone = "01632 88346" };
 
@@ -238,7 +238,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateSubDocument
-        var brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
+        Author brice = await context.Authors.SingleAsync(author => author.Name.StartsWith("Brice"));
 
         brice.Contact.Address = new("4 Riverside", "Trimbridge", "TB1 5ZS", "UK");
 
@@ -252,7 +252,7 @@ public static class JsonColumnsSample
         Console.WriteLine();
 
         #region UpdateProperty
-        var arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
+        Author arthur = await context.Authors.SingleAsync(author => author.Name.StartsWith("Arthur"));
 
         arthur.Contact.Address.Country = "United Kingdom";
 
@@ -263,7 +263,7 @@ public static class JsonColumnsSample
 
         context.ChangeTracker.Clear();
 
-        var hackingPost = await context.Posts.SingleAsync(post => post.Title.StartsWith("Hacking"));
+        Post hackingPost = await context.Posts.SingleAsync(post => post.Title.StartsWith("Hacking"));
 
         hackingPost.Metadata!.Updates.Add(new PostUpdate(IPAddress.Broadcast, DateOnly.FromDateTime(DateTime.UtcNow)) { UpdatedBy = "User" });
         hackingPost.Metadata!.TopGeographies.Clear();

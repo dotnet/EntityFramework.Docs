@@ -13,7 +13,7 @@ internal static class Program
         {
             context.Database.EnsureCreated();
 
-            var testBlog = context.Blogs.FirstOrDefault(b => b.Url == "http://test.com");
+            Blog testBlog = context.Blogs.FirstOrDefault(b => b.Url == "http://test.com");
             if (testBlog == null)
             {
                 context.Blogs.Add(new Blog { Url = "http://test.com" });
@@ -25,11 +25,11 @@ internal static class Program
 
         using (var context = new DataSeedingContext())
         {
-            foreach (var blog in context.Blogs.Include(b => b.Posts))
+            foreach (Blog blog in context.Blogs.Include(b => b.Posts))
             {
                 Console.WriteLine($"Blog {blog.Url}");
 
-                foreach (var post in blog.Posts)
+                foreach (Post post in blog.Posts)
                 {
                     Console.WriteLine($"\t{post.Title}: {post.Content} by {post.AuthorName.First} {post.AuthorName.Last}");
                 }

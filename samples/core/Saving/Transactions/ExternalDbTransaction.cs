@@ -24,17 +24,17 @@ public class ExternalDbTransaction
         using var connection = new SqlConnection(connectionString);
         connection.Open();
 
-        using var transaction = connection.BeginTransaction();
+        using SqlTransaction transaction = connection.BeginTransaction();
         try
         {
             // Run raw ADO.NET command in the transaction
-            var command = connection.CreateCommand();
+            SqlCommand command = connection.CreateCommand();
             command.Transaction = transaction;
             command.CommandText = "DELETE FROM dbo.Blogs";
             command.ExecuteNonQuery();
 
             // Run an EF Core command in the transaction
-            var options = new DbContextOptionsBuilder<BloggingContext>()
+            DbContextOptions<BloggingContext> options = new DbContextOptionsBuilder<BloggingContext>()
                 .UseSqlServer(connection)
                 .Options;
 

@@ -65,12 +65,12 @@ public class OptionalRelationshipsSamples
         #region Changing_relationships_using_navigations_1
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        Blog dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        Blog vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
-        var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
+        Post post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
         vsBlog.Posts.Remove(post);
         dotNetBlog.Posts.Add(post);
 
@@ -93,13 +93,13 @@ public class OptionalRelationshipsSamples
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        Blog dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        Blog vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
         #region Changing_relationships_using_navigations_2
-        var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
+        Post post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
         post.Blog = dotNetBlog;
         #endregion
 
@@ -121,13 +121,13 @@ public class OptionalRelationshipsSamples
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        Blog dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        Blog vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
         #region Changing_relationships_using_foreign_key_values_1
-        var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
+        Post post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
         post.BlogId = dotNetBlog.Id;
         #endregion
 
@@ -149,13 +149,13 @@ public class OptionalRelationshipsSamples
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        Blog dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        Blog vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
         #region Fixup_for_added_or_deleted_entities_1
-        var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
+        Post post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
         vsBlog.Posts.Remove(post);
         dotNetBlog.Posts.Add(post);
         #endregion
@@ -178,13 +178,13 @@ public class OptionalRelationshipsSamples
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        Blog dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        Blog vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
         #region Fixup_for_added_or_deleted_entities_2
-        var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
+        Post post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
         dotNetBlog.Posts.Add(post);
         #endregion
 
@@ -206,12 +206,12 @@ public class OptionalRelationshipsSamples
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        Blog dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
         #region Fixup_for_added_or_deleted_entities_3
-        var post = dotNetBlog.Posts.Single(e => e.Title == "Announcing F# 5");
+        Post post = dotNetBlog.Posts.Single(e => e.Title == "Announcing F# 5");
         dotNetBlog.Posts.Remove(post);
         #endregion
 
@@ -234,7 +234,7 @@ public class OptionalRelationshipsSamples
         #region Fixup_for_added_or_deleted_entities_7
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Assets).Single(e => e.Name == ".NET Blog");
+        Blog dotNetBlog = context.Blogs.Include(e => e.Assets).Single(e => e.Name == ".NET Blog");
         dotNetBlog.Assets = new BlogAssets();
 
         context.ChangeTracker.DetectChanges();
@@ -257,7 +257,7 @@ public class OptionalRelationshipsSamples
         #region Deleting_an_entity_1
         using var context = new BlogsContext();
 
-        var vsBlog = context.Blogs
+        Blog vsBlog = context.Blogs
             .Include(e => e.Posts)
             .Include(e => e.Assets)
             .Single(e => e.Name == "Visual Studio Blog");
@@ -283,8 +283,8 @@ public class OptionalRelationshipsSamples
         #region Many_to_many_relationships_6
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        Post post = context.Posts.Single(e => e.Id == 3);
+        Tag tag = context.Tags.Single(e => e.Id == 1);
 
         post.Tags.Add(tag);
 

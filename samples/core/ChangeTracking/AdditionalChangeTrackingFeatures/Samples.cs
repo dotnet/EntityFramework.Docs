@@ -19,10 +19,10 @@ public static class Samples
         #region DbContext_versus_DbSet_methods_1
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        Post post = context.Posts.Single(e => e.Id == 3);
+        Tag tag = context.Tags.Single(e => e.Id == 1);
 
-        var joinEntitySet = context.Set<Dictionary<string, int>>("PostTag");
+        DbSet<Dictionary<string, int>> joinEntitySet = context.Set<Dictionary<string, int>>("PostTag");
         var joinEntity = new Dictionary<string, int> { ["PostId"] = post.Id, ["TagId"] = tag.Id };
         joinEntitySet.Add(joinEntity);
 
@@ -84,12 +84,12 @@ public static class Samples
 
         using var context = new BlogsContext();
 
-        foreach (var blog in blogs)
+        foreach (Blog blog in blogs)
         {
             context.Add(blog).Property(e => e.Id).IsTemporary = true;
         }
 
-        foreach (var post in posts)
+        foreach (Post post in posts)
         {
             context.Add(post).Property(e => e.Id).IsTemporary = true;
         }

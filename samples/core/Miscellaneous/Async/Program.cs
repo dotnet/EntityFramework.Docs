@@ -19,7 +19,7 @@ public class Program
         #endregion
 
         #region ToListAsync
-        var blogs = await context.Blogs.Where(b => b.Rating > 3).ToListAsync();
+        System.Collections.Generic.List<Blog> blogs = await context.Blogs.Where(b => b.Rating > 3).ToListAsync();
         #endregion
     }
 }

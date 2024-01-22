@@ -16,7 +16,7 @@ public static class EntityTypeConfigurationAttributeSample
 
         using var context = new BooksContext();
 
-        var book = context.Books.Single(e => e.Id == 1);
+        Book book = context.Books.Single(e => e.Id == 1);
 
         Console.WriteLine();
     }

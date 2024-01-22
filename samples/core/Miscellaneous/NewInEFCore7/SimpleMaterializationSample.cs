@@ -23,7 +23,7 @@ public static class SimpleMaterializationSample
         #region QueryCustomer
         await using (var context = new CustomerContext())
         {
-            var customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
+            Customer customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
             Console.WriteLine($"Customer '{customer.Name}' was retrieved at '{customer.Retrieved.ToLocalTime()}'");
         }
         #endregion

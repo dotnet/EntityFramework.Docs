@@ -29,11 +29,11 @@ internal class Program
     {
         using var context = new NullSemanticsContext();
         #region BasicExamples
-        var query1 = context.Entities.Where(e => e.Id == e.Int);
-        var query2 = context.Entities.Where(e => e.Id == e.NullableInt);
-        var query3 = context.Entities.Where(e => e.Id != e.NullableInt);
-        var query4 = context.Entities.Where(e => e.String1 == e.String2);
-        var query5 = context.Entities.Where(e => e.String1 != e.String2);
+        IQueryable<NullSemanticsEntity> query1 = context.Entities.Where(e => e.Id == e.Int);
+        IQueryable<NullSemanticsEntity> query2 = context.Entities.Where(e => e.Id == e.NullableInt);
+        IQueryable<NullSemanticsEntity> query3 = context.Entities.Where(e => e.Id != e.NullableInt);
+        IQueryable<NullSemanticsEntity> query4 = context.Entities.Where(e => e.String1 == e.String2);
+        IQueryable<NullSemanticsEntity> query5 = context.Entities.Where(e => e.String1 != e.String2);
         #endregion
 
         var result1 = query1.ToList();
@@ -48,7 +48,7 @@ internal class Program
         using var context = new NullSemanticsContext();
 
         #region Functions
-        var query = context.Entities.Where(e => e.String1.Substring(0, e.String2.Length) == null);
+        IQueryable<NullSemanticsEntity> query = context.Entities.Where(e => e.String1.Substring(0, e.String2.Length) == null);
         #endregion
 
         var result = query.ToList();
@@ -59,8 +59,8 @@ internal class Program
         using var context = new NullSemanticsContext();
 
         #region ManualOptimization
-        var query1 = context.Entities.Where(e => e.String1 != e.String2 || e.String1.Length == e.String2.Length);
-        var query2 = context.Entities.Where(
+        IQueryable<NullSemanticsEntity> query1 = context.Entities.Where(e => e.String1 != e.String2 || e.String1.Length == e.String2.Length);
+        IQueryable<NullSemanticsEntity> query2 = context.Entities.Where(
             e => e.String1 != null && e.String2 != null && (e.String1 != e.String2 || e.String1.Length == e.String2.Length));
         #endregion
 

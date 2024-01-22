@@ -18,7 +18,7 @@ namespace SingleDbSingleTable.Data
         {
             if (Database.EnsureCreated())
             {
-                foreach (var contact in Contact.GeneratedContacts)
+                foreach (Contact contact in Contact.GeneratedContacts)
                 {
                     var tenant = contact.IsUnicorn ? "TenantA" : "TenantB";
                     Contacts.Add(new MultitenantContact(contact, tenant));

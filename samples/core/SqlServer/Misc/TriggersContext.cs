@@ -34,7 +34,7 @@ public class BlankTriggerAddingConvention : IModelFinalizingConvention
         IConventionModelBuilder modelBuilder,
         IConventionContext<IConventionModelBuilder> context)
     {
-        foreach (var entityType in modelBuilder.Metadata.GetEntityTypes())
+        foreach (IConventionEntityType entityType in modelBuilder.Metadata.GetEntityTypes())
         {
             var table = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table);
             if (table != null
@@ -45,7 +45,7 @@ public class BlankTriggerAddingConvention : IModelFinalizingConvention
                 entityType.Builder.HasTrigger(table.Value.Name + "_Trigger");
             }
 
-            foreach (var fragment in entityType.GetMappingFragments(StoreObjectType.Table))
+            foreach (IConventionEntityTypeMappingFragment fragment in entityType.GetMappingFragments(StoreObjectType.Table))
             {
                 if (entityType.GetDeclaredTriggers().All(t => t.GetDatabaseName(fragment.StoreObject) == null))
                 {

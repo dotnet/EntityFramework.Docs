@@ -30,7 +30,7 @@ public static class GroupBySample
 
             Console.WriteLine();
 
-            foreach (var person in people)
+            foreach (Person person in people)
             {
                 Console.WriteLine($"{person.FirstName} {person.MiddleInitial} {person.LastName} has {person.Shoes.Count} pairs of shoes.");
             }
@@ -309,7 +309,7 @@ public static class GroupBySample
             {
                 Console.WriteLine($"LastName: {group.LastName} Count: {group.Count} First: {group.First.FirstName} {group.First.MiddleInitial} {group.First.LastName}");
 
-                foreach (var person in group.Take)
+                foreach (Person person in group.Take)
                 {
                     Console.WriteLine($"    {person.FirstName} {person.MiddleInitial} {person.LastName}");
                 }
@@ -335,7 +335,7 @@ public static class GroupBySample
 
             foreach (var group in grouping)
             {
-                foreach (var person in group.People)
+                foreach (Person person in group.People)
                 {
                     Console.WriteLine($"{person.FirstName} {person.LastName} has {person.Shoes.Count} pairs of shoes.");
                 }
@@ -364,7 +364,7 @@ public static class GroupBySample
             {
                 Console.WriteLine($"Group: {group.Key}");
 
-                foreach (var person in group.Items)
+                foreach (Person person in group.Items)
                 {
                     Console.WriteLine($"    {person.FirstName} {person.MiddleInitial} {person.LastName}");
                 }

@@ -20,7 +20,7 @@ public static class IdentityResolutionSamples
         #region Identity_Resolution_in_EF_Core_1
         using var context = new BlogsContext();
 
-        var blogA = context.Blogs.Single(e => e.Id == 1);
+        Blog blogA = context.Blogs.Single(e => e.Id == 1);
         var blogB = new Blog { Id = 1, Name = ".NET Blog (All new!)" };
 
         try
@@ -80,7 +80,7 @@ public static class IdentityResolutionSamples
     {
         using var context = new BlogsContext();
 
-        var trackedBlog = context.Blogs.Find(blog.Id);
+        Blog trackedBlog = context.Blogs.Find(blog.Id);
 
         trackedBlog.Name = blog.Name;
         trackedBlog.Summary = blog.Summary;
@@ -108,7 +108,7 @@ public static class IdentityResolutionSamples
     {
         using var context = new BlogsContext();
 
-        var trackedBlog = context.Blogs.Find(blog.Id);
+        Blog trackedBlog = context.Blogs.Find(blog.Id);
 
         context.Entry(trackedBlog).CurrentValues.SetValues(blog);
 
@@ -135,7 +135,7 @@ public static class IdentityResolutionSamples
     {
         using var context = new BlogsContext();
 
-        var trackedBlog = context.Blogs.Find(dto.Id);
+        Blog trackedBlog = context.Blogs.Find(dto.Id);
 
         context.Entry(trackedBlog).CurrentValues.SetValues(dto);
 
@@ -162,7 +162,7 @@ public static class IdentityResolutionSamples
     {
         using var context = new BlogsContext();
 
-        var trackedBlog = context.Blogs.Find(propertyValues["Id"]);
+        Blog trackedBlog = context.Blogs.Find(propertyValues["Id"]);
 
         context.Entry(trackedBlog).CurrentValues.SetValues(propertyValues);
 

@@ -24,7 +24,7 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region Tracking
-            var blog = context.Blogs.SingleOrDefault(b => b.BlogId == 1);
+            Blog blog = context.Blogs.SingleOrDefault(b => b.BlogId == 1);
             blog.Rating = 5;
             context.SaveChanges();
             #endregion

@@ -18,7 +18,7 @@ public static class SqliteSamples
 
         using (var context = new UsersContext())
         {
-            foreach (var user in context.Users)
+            foreach (User user in context.Users)
             {
                 Console.WriteLine($"  Found '{user.Username}'");
             }
@@ -31,7 +31,7 @@ public static class SqliteSamples
 
         using (var context = new UsersContext())
         {
-            foreach (var user in context.Users)
+            foreach (User user in context.Users)
             {
                 Console.WriteLine($"  Found '{user.Username}'");
             }
@@ -54,7 +54,7 @@ public static class SqliteSamples
             
         Console.WriteLine();
 
-        foreach (var user in users)
+        foreach (User user in users)
         {
             Console.WriteLine($"  Found '{user.Username}'");
             user.Birthday = new(user.Birthday.Year + 100, user.Birthday.Month, user.Birthday.Day);
@@ -71,9 +71,9 @@ public static class SqliteSamples
         using var connection = new SqliteConnection("Command Timeout=60;DataSource=test.db");
         connection.Open();
 
-        using var transaction = connection.BeginTransaction();
+        using SqliteTransaction transaction = connection.BeginTransaction();
 
-        using (var command = connection.CreateCommand())
+        using (SqliteCommand command = connection.CreateCommand())
         {
             command.CommandText = @"UPDATE Users SET Username = 'ajcvickers' WHERE Id = 1";
             command.ExecuteNonQuery();
@@ -81,7 +81,7 @@ public static class SqliteSamples
 
         transaction.Save("MySavepoint");
 
-        using (var command = connection.CreateCommand())
+        using (SqliteCommand command = connection.CreateCommand())
         {
             command.CommandText = @"UPDATE Users SET Username = 'wfvickers' WHERE Id = 2";
             command.ExecuteNonQuery();
@@ -113,7 +113,7 @@ public static class SqliteSamples
             Console.WriteLine("Query finished.");
             Console.WriteLine();
 
-            foreach (var user in users)
+            foreach (User user in users)
             {
                 if (user.Username.Contains("microsoft"))
                 {

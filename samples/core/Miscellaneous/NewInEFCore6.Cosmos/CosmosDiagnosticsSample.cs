@@ -38,7 +38,7 @@ public static class CosmosDiagnosticsSample
         Console.WriteLine();
 
         #region QueryEvents
-        var equilateral = context.Triangles.Single(e => e.Name == "Equilateral");
+        Triangle equilateral = context.Triangles.Single(e => e.Name == "Equilateral");
         #endregion
 
         Console.WriteLine();
@@ -46,7 +46,7 @@ public static class CosmosDiagnosticsSample
         Console.WriteLine();
 
         #region FindEvents
-        var isosceles = context.Triangles.Find("Isosceles", "TrianglesPartition");
+        Triangle isosceles = context.Triangles.Find("Isosceles", "TrianglesPartition");
         #endregion
 
         Console.WriteLine();

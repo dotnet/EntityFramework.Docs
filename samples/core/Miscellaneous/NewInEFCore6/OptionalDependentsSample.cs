@@ -41,7 +41,7 @@ public static class OptionalDependentsSample
         using (var context = new SomeDbContext())
         {
             #region CheckForNullAddress
-            foreach (var customer in context.Customers1)
+            foreach (WithRequiredProperty.Customer customer in context.Customers1)
             {
                 Console.Write(customer.Name);
 
@@ -92,15 +92,15 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var connection = context.Database.GetDbConnection();
+            System.Data.Common.DbConnection connection = context.Database.GetDbConnection();
             connection.Open();
 
-            using var command = connection.CreateCommand();
+            using System.Data.Common.DbCommand command = connection.CreateCommand();
             command.CommandText = "SELECT Id, Name, Address_House, Address_Street, Address_City, Address_Postcode FROM Customers2";
 
             Console.WriteLine("Id  Name               House   Street  City    Postcode");
 
-            using var reader = command.ExecuteReader();
+            using System.Data.Common.DbDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 Console.Write($"{reader.GetInt32(0)}   {reader.GetString(1),-17}  ");
@@ -139,7 +139,7 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithOptionalDependents.Single();
+            PrincipalWithOptionalDependents principal = context.PrincipalsWithOptionalDependents.Single();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOnlyOptionalProperties != null ? "not " : "")}null.");
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
@@ -181,7 +181,7 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithOptionalDependents.Single();
+            PrincipalWithOptionalDependents principal = context.PrincipalsWithOptionalDependents.Single();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOnlyOptionalProperties != null ? "not " : "")}null. <-- Note dependent is null here.");
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
@@ -218,7 +218,7 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithRequiredDependents.Single();
+            PrincipalWithRequiredDependents principal = context.PrincipalsWithRequiredDependents.Single();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOnlyOptionalProperties != null ? "not " : "")}null.");
             Console.WriteLine($"  Dependent with only required properties is {(principal.DependentWithOnlyRequiredProperties != null ? "not " : "")}null.");
@@ -260,7 +260,7 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithNestedOptionalDependents.Single();
+            PrincipalWithNestedOptionalDependents principal = context.PrincipalsWithNestedOptionalDependents.Single();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithOptionalNestedDependents != null ? "not " : "")}null.");
             Console.WriteLine($"  Nested dependent with only optional properties is {(principal.DependentWithOptionalNestedDependents?.Nested != null ? "not " : "")}null. <-- Note nested dependent is null here.");
@@ -297,7 +297,7 @@ public static class OptionalDependentsSample
 
         using (var context = new SomeDbContext())
         {
-            var principal = context.PrincipalsWithNestedRequiredDependents.Single();
+            PrincipalWithNestedRequiredDependents principal = context.PrincipalsWithNestedRequiredDependents.Single();
             Console.WriteLine("After querying back principal and dependents saved above:");
             Console.WriteLine($"  Dependent with only optional properties is {(principal.DependentWithRequiredNestedDependents != null ? "not " : "")}null.");
             Console.WriteLine($"  Nested dependent with only optional properties is {(principal.DependentWithRequiredNestedDependents?.Nested != null ? "not " : "")}null.");

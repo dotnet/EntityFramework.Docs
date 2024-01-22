@@ -10,14 +10,14 @@ public static class DbContextFactorySample
         Console.WriteLine($">>>> Sample: {nameof(Ignore_parameterless_constructor_when_creating_DbContext_from_factory)}");
         Console.WriteLine();
 
-        var services = new ServiceCollection()
+        ServiceProvider services = new ServiceCollection()
             .AddDbContextFactory<SomeDbContext>(
                 builder => builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample"))
             .BuildServiceProvider();
 
-        var factory = services.GetService<IDbContextFactory<SomeDbContext>>();
+        IDbContextFactory<SomeDbContext> factory = services.GetService<IDbContextFactory<SomeDbContext>>();
 
-        using var context = factory.CreateDbContext();
+        using SomeDbContext context = factory.CreateDbContext();
 
         Console.WriteLine();
     }
@@ -30,7 +30,7 @@ public static class DbContextFactorySample
         var services = new ServiceCollection();
 
         #region Registration
-        var container = services
+        ServiceProvider container = services
             .AddDbContextFactory<SomeDbContext>(
                 builder => builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample"))
             .BuildServiceProvider();
@@ -38,8 +38,8 @@ public static class DbContextFactorySample
 
         // Factory can be obtained from the root container
         #region ResolveFactory
-        var factory = container.GetService<IDbContextFactory<SomeDbContext>>();
-        using (var context = factory.CreateDbContext())
+        IDbContextFactory<SomeDbContext> factory = container.GetService<IDbContextFactory<SomeDbContext>>();
+        using (SomeDbContext context = factory.CreateDbContext())
         {
             // Contexts obtained from the factory must be explicitly disposed
         }
@@ -47,9 +47,9 @@ public static class DbContextFactorySample
 
         // DbContext can only be obtained from a container scope
         #region ResolveContext
-        using (var scope = container.CreateScope())
+        using (IServiceScope scope = container.CreateScope())
         {
-            var context = scope.ServiceProvider.GetService<SomeDbContext>();
+            SomeDbContext context = scope.ServiceProvider.GetService<SomeDbContext>();
             // Context is disposed when the scope is disposed
         }
         #endregion
@@ -88,8 +88,8 @@ public static class DbContextFactorySample
 
         public void DoSomething()
         {
-            using var context1 = _contextFactory.CreateDbContext();
-            using var context2 = _contextFactory.CreateDbContext();
+            using SomeDbContext context1 = _contextFactory.CreateDbContext();
+            using SomeDbContext context2 = _contextFactory.CreateDbContext();
 
             var results1 = context1.Blogs.ToList();
             var results2 = context2.Blogs.ToList();

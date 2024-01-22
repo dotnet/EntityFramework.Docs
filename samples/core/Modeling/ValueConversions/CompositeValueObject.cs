@@ -30,7 +30,7 @@ public class CompositeValueObject : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var order = context.Set<Order>().Single();
+            Order order = context.Set<Order>().Single();
 
             ConsoleWriteLines($"Order with price {order.Price.Amount} in {order.Price.Currency}.");
         }

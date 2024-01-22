@@ -19,12 +19,12 @@ public class RequiredRelationshipsSamples
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        Blog dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 
         #region Fixup_for_added_or_deleted_entities_4
-        var post = dotNetBlog.Posts.Single(e => e.Title == "Announcing F# 5");
+        Post post = dotNetBlog.Posts.Single(e => e.Title == "Announcing F# 5");
         dotNetBlog.Posts.Remove(post);
         #endregion
 
@@ -46,13 +46,13 @@ public class RequiredRelationshipsSamples
 
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
-        var vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
+        Blog dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+        Blog vsBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == "Visual Studio Blog");
 
         #region Fixup_for_added_or_deleted_entities_5
         context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 
-        var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
+        Post post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));
         vsBlog.Posts.Remove(post);
 
         context.ChangeTracker.DetectChanges();
@@ -82,11 +82,11 @@ public class RequiredRelationshipsSamples
         try
         {
             #region Fixup_for_added_or_deleted_entities_6
-            var dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
+            Blog dotNetBlog = context.Blogs.Include(e => e.Posts).Single(e => e.Name == ".NET Blog");
 
             context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.Never;
 
-            var post = dotNetBlog.Posts.Single(e => e.Title == "Announcing F# 5");
+            Post post = dotNetBlog.Posts.Single(e => e.Title == "Announcing F# 5");
             dotNetBlog.Posts.Remove(post);
 
             context.SaveChanges(); // Throws
@@ -111,7 +111,7 @@ public class RequiredRelationshipsSamples
         #region Fixup_for_added_or_deleted_entities_8
         using var context = new BlogsContext();
 
-        var dotNetBlog = context.Blogs.Include(e => e.Assets).Single(e => e.Name == ".NET Blog");
+        Blog dotNetBlog = context.Blogs.Include(e => e.Assets).Single(e => e.Name == ".NET Blog");
         dotNetBlog.Assets = new BlogAssets();
 
         context.ChangeTracker.DetectChanges();
@@ -134,7 +134,7 @@ public class RequiredRelationshipsSamples
         #region Deleting_an_entity_2
         using var context = new BlogsContext();
 
-        var vsBlog = context.Blogs
+        Blog vsBlog = context.Blogs
             .Include(e => e.Posts)
             .Include(e => e.Assets)
             .Single(e => e.Name == "Visual Studio Blog");

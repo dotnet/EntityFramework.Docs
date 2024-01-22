@@ -18,7 +18,7 @@ public static class MinimalApiSample
     private static void SqliteMinimal(string[] args)
     {
         #region SqliteMinimal
-        var builder = WebApplication.CreateBuilder(args);
+        FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddSqlite<MyDbContext>("Data Source=mydatabase.db");
         #endregion
@@ -27,7 +27,7 @@ public static class MinimalApiSample
     private static void SqliteNormal(string[] args)
     {
         #region SqliteNormal
-        var builder = WebApplication.CreateBuilder(args);
+        FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddDbContext<MyDbContext>(
             options => options.UseSqlite("Data Source=mydatabase.db"));
@@ -37,7 +37,7 @@ public static class MinimalApiSample
     private static void SqlServerMinimal(string[] args)
     {
         #region SqlServerMinimal
-        var builder = WebApplication.CreateBuilder(args);
+        FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddSqlServer<MyDbContext>(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase");
         #endregion
@@ -46,7 +46,7 @@ public static class MinimalApiSample
     private static void SqlServerNormal(string[] args)
     {
         #region SqlServerNormal
-        var builder = WebApplication.CreateBuilder(args);
+        FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddDbContext<MyDbContext>(
             options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase"));

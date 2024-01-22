@@ -12,12 +12,12 @@ public static class TrailingUnderscoresSample
 
         using var context = new SomeDbContext();
 
-        var userEntityType = context.Model.FindEntityType(typeof(User));
+        Microsoft.EntityFrameworkCore.Metadata.IEntityType userEntityType = context.Model.FindEntityType(typeof(User));
 
-        var idProperty = userEntityType.FindProperty(nameof(User.Id));
+        Microsoft.EntityFrameworkCore.Metadata.IProperty idProperty = userEntityType.FindProperty(nameof(User.Id));
         Console.WriteLine($"User entity detected backing field '{idProperty.FieldInfo.Name}' for property '{idProperty.Name}'");
 
-        var nameProperty = userEntityType.FindProperty(nameof(User.Name));
+        Microsoft.EntityFrameworkCore.Metadata.IProperty nameProperty = userEntityType.FindProperty(nameof(User.Name));
         Console.WriteLine($"User entity detected backing field '{nameProperty.FieldInfo.Name}' for property '{nameProperty.Name}'");
 
         Console.WriteLine();

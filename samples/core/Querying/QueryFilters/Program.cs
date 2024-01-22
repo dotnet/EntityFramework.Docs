@@ -79,12 +79,12 @@ internal class Program
                 .Include(b => b.Posts)
                 .ToList();
 
-            foreach (var blog in blogs)
+            foreach (Blog blog in blogs)
             {
                 Console.WriteLine(
                     $"{blog.Url,-33} [Tenant: {db.Entry(blog).Property("_tenantId").CurrentValue}]");
 
-                foreach (var post in blog.Posts)
+                foreach (Post post in blog.Posts)
                 {
                     Console.WriteLine($" - {post.Title,-30} [IsDeleted: {post.IsDeleted}]");
                 }
@@ -99,12 +99,12 @@ internal class Program
                 .ToList();
             #endregion
 
-            foreach (var blog in blogs)
+            foreach (Blog blog in blogs)
             {
                 Console.WriteLine(
                     $"{blog.Url,-33} [Tenant: {db.Entry(blog).Property("_tenantId").CurrentValue}]");
 
-                foreach (var post in blog.Posts)
+                foreach (Post post in blog.Posts)
                 {
                     Console.WriteLine($" - {post.Title,-30} [IsDeleted: {post.IsDeleted}]");
                 }
@@ -179,12 +179,12 @@ internal class Program
 
         static void DisplayResults(List<Person> people)
         {
-            foreach (var person in people)
+            foreach (Person person in people)
             {
                 Console.WriteLine($"{person.Name}");
                 if (person.Pets != null)
                 {
-                    foreach (var pet in person.Pets)
+                    foreach (Animal pet in person.Pets)
                     {
                         Console.Write($" - {pet.Name} [{pet.GetType().Name}] ");
                         if (pet is Cat cat)

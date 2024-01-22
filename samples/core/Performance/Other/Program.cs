@@ -51,7 +51,7 @@ internal class Program
         await using (var context = new BloggingContext())
         {
             #region ProjectEntities
-            foreach (var blog in context.Blogs)
+            foreach (Blog blog in context.Blogs)
             {
                 Console.WriteLine("Blog: " + blog.Url);
             }
@@ -86,7 +86,7 @@ internal class Program
             #region EagerlyLoadRelatedAndProject
             foreach (var blog in context.Blogs.Select(b => new { b.Url, b.Posts }).ToList())
             {
-                foreach (var post in blog.Posts)
+                foreach (Post post in blog.Posts)
                 {
                     Console.WriteLine($"Blog {blog.Url}, Post: {post.Title}");
                 }
@@ -99,16 +99,16 @@ internal class Program
             #region BufferingAndStreaming
             // ToList and ToArray cause the entire resultset to be buffered:
             var blogsList = context.Posts.Where(p => p.Title.StartsWith('A')).ToList();
-            var blogsArray = context.Posts.Where(p => p.Title.StartsWith('A')).ToArray();
+            Post[] blogsArray = context.Posts.Where(p => p.Title.StartsWith('A')).ToArray();
 
             // Foreach streams, processing one row at a time:
-            foreach (var blog in context.Posts.Where(p => p.Title.StartsWith('A')))
+            foreach (Post blog in context.Posts.Where(p => p.Title.StartsWith('A')))
             {
                 // ...
             }
 
             // AsEnumerable also streams, allowing you to execute LINQ operators on the client-side:
-            var doubleFilteredBlogs = context.Posts
+            IEnumerable<Post> doubleFilteredBlogs = context.Posts
                 .Where(p => p.Title.StartsWith('A')) // Translated to SQL and executed in the database
                 .AsEnumerable()
                 .Where(p => SomeDotNetMethod(p)); // Executed at the client on all database results
@@ -122,7 +122,7 @@ internal class Program
         await using (var context = new BloggingContext())
         {
             #region SaveChangesBatching
-            var blog = context.Blogs.Single(b => b.Url == "http://someblog.microsoft.com");
+            Blog blog = context.Blogs.Single(b => b.Url == "http://someblog.microsoft.com");
             blog.Url = "http://someotherblog.microsoft.com";
             context.Add(new Blog { Url = "http://newblog1.microsoft.com" });
             context.Add(new Blog { Url = "http://newblog2.microsoft.com" });
@@ -133,8 +133,8 @@ internal class Program
         await using (var context = new BloggingContext())
         {
             #region QueriesWithConstants
-            var post1 = context.Posts.FirstOrDefault(p => p.Title == "post1");
-            var post2 = context.Posts.FirstOrDefault(p => p.Title == "post2");
+            Post post1 = context.Posts.FirstOrDefault(p => p.Title == "post1");
+            Post post2 = context.Posts.FirstOrDefault(p => p.Title == "post2");
             #endregion
         }
 
@@ -142,9 +142,9 @@ internal class Program
         {
             #region QueriesWithParameterization
             var postTitle = "post1";
-            var post1 = context.Posts.FirstOrDefault(p => p.Title == postTitle);
+            Post post1 = context.Posts.FirstOrDefault(p => p.Title == postTitle);
             postTitle = "post2";
-            var post2 = context.Posts.FirstOrDefault(p => p.Title == postTitle);
+            Post post2 = context.Posts.FirstOrDefault(p => p.Title == postTitle);
             #endregion
         }
 
@@ -172,9 +172,9 @@ internal class Program
         await using (var context = new LazyBloggingContext())
         {
             #region NPlusOne
-            foreach (var blog in context.Blogs.ToList())
+            foreach (LazyLoading.Blog blog in context.Blogs.ToList())
             {
-                foreach (var post in blog.Posts)
+                foreach (LazyLoading.Post post in blog.Posts)
                 {
                     Console.WriteLine($"Blog {blog.Url}, Post: {post.Title}");
                 }
@@ -196,7 +196,7 @@ internal class Program
         await using (var context = new EmployeeContext())
         {
             #region UpdateWithoutBulk
-            foreach (var employee in context.Employees)
+            foreach (Employee employee in context.Employees)
             {
                 employee.Salary += 1000;
             }
@@ -222,13 +222,13 @@ internal class Program
         }
 
         #region DbContextPoolingWithoutDI
-        var options = new DbContextOptionsBuilder<PooledBloggingContext>()
+        DbContextOptions<PooledBloggingContext> options = new DbContextOptionsBuilder<PooledBloggingContext>()
             .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
             .Options;
 
         var factory = new PooledDbContextFactory<PooledBloggingContext>(options);
 
-        await using (var context = factory.CreateDbContext())
+        await using (PooledBloggingContext context = factory.CreateDbContext())
         {
             var allPosts = context.Posts.ToList();
         }
@@ -237,7 +237,7 @@ internal class Program
         await using (var context = new BloggingContext())
         {
             #region CompiledQueryExecute
-            await foreach (var blog in _compiledQuery(context, 8))
+            await foreach (Blog blog in _compiledQuery(context, 8))
             {
                 // Do something with the results
             }

@@ -31,7 +31,7 @@ public class PrimitiveCollection : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var post = context.Set<Post>().Single();
+            Post post = context.Set<Post>().Single();
 
             ConsoleWriteLines($"Post with tags {string.Join(", ", post.Tags)}.");
 

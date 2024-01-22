@@ -46,9 +46,9 @@ public static class GeometryExtensions
 
     public static Geometry ProjectTo(this Geometry geometry, int srid)
     {
-        var transformation = _coordinateSystemServices.CreateTransformation(geometry.SRID, srid);
+        ICoordinateTransformation transformation = _coordinateSystemServices.CreateTransformation(geometry.SRID, srid);
 
-        var result = geometry.Copy();
+        Geometry result = geometry.Copy();
         result.Apply(new MathTransformFilter(transformation.MathTransform));
 
         return result;

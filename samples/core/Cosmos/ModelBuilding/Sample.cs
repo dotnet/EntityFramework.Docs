@@ -33,7 +33,7 @@ public static class Sample
 
         await using (var context = new OrderContext())
         {
-            var order = await context.Orders.FirstAsync();
+            Order order = await context.Orders.FirstAsync();
             Console.WriteLine($"First order will ship to: {order.ShippingAddress.Street}, {order.ShippingAddress.City}");
             Console.WriteLine();
         }
@@ -55,7 +55,7 @@ public static class Sample
 
         await using (var context = new OrderContext())
         {
-            var order = await context.Orders.WithPartitionKey("2").LastAsync();
+            Order order = await context.Orders.WithPartitionKey("2").LastAsync();
             Console.WriteLine($"Last order will ship to: {order.ShippingAddress.Street}, {order.ShippingAddress.City}");
             Console.WriteLine();
         }
@@ -83,11 +83,11 @@ public static class Sample
         #region ImpliedProperties
         await using (var context = new OrderContext())
         {
-            var firstDistributor = await context.Distributors.FirstAsync();
+            Distributor firstDistributor = await context.Distributors.FirstAsync();
             Console.WriteLine($"Number of shipping centers: {firstDistributor.ShippingCenters.Count}");
 
-            var addressEntry = context.Entry(firstDistributor.ShippingCenters.First());
-            var addressPKProperties = addressEntry.Metadata.FindPrimaryKey().Properties;
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<StreetAddress> addressEntry = context.Entry(firstDistributor.ShippingCenters.First());
+            IReadOnlyList<Microsoft.EntityFrameworkCore.Metadata.IProperty> addressPKProperties = addressEntry.Metadata.FindPrimaryKey().Properties;
 
             Console.WriteLine(
                 $"First shipping center PK: ({addressEntry.Property(addressPKProperties[0].Name).CurrentValue}, {addressEntry.Property(addressPKProperties[1].Name).CurrentValue})");
@@ -98,7 +98,7 @@ public static class Sample
         #region Attach
         await using (var context = new OrderContext())
         {
-            var distributorEntry = context.Add(distributor);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Distributor> distributorEntry = context.Add(distributor);
             distributorEntry.State = EntityState.Unchanged;
 
             distributor.ShippingCenters.Remove(distributor.ShippingCenters.Last());
@@ -108,11 +108,11 @@ public static class Sample
 
         await using (var context = new OrderContext())
         {
-            var firstDistributor = await context.Distributors.FirstAsync();
+            Distributor firstDistributor = await context.Distributors.FirstAsync();
             Console.WriteLine($"Number of shipping centers is now: {firstDistributor.ShippingCenters.Count}");
 
-            var distributorEntry = context.Entry(firstDistributor);
-            var idProperty = distributorEntry.Property<string>("__id");
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Distributor> distributorEntry = context.Entry(firstDistributor);
+            Microsoft.EntityFrameworkCore.ChangeTracking.PropertyEntry<Distributor, string> idProperty = distributorEntry.Property<string>("__id");
             Console.WriteLine($"The distributor 'id' is: {idProperty.CurrentValue}");
         }
         #endregion

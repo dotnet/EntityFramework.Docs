@@ -21,11 +21,11 @@ public static class OptimisticConcurrencyInterceptionSample
         }
 
         await using var context1 = new CustomerContext();
-        var customer1 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
+        Customer customer1 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
 
         await using (var context2 = new CustomerContext())
         {
-            var customer2 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
+            Customer customer2 = await context1.Customers.SingleAsync(e => e.Name == "Bill");
             context2.Entry(customer2).State = EntityState.Deleted;
             await context2.SaveChangesAsync();
         }

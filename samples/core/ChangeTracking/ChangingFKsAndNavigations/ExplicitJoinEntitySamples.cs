@@ -19,8 +19,8 @@ public class ExplicitJoinEntitySamples
         #region Many_to_many_relationships_1
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        Post post = context.Posts.Single(e => e.Id == 3);
+        Tag tag = context.Tags.Single(e => e.Id == 1);
 
         context.Add(new PostTag { PostId = post.Id, TagId = tag.Id });
 
@@ -42,8 +42,8 @@ public class ExplicitJoinEntitySamples
 
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        Post post = context.Posts.Single(e => e.Id == 3);
+        Tag tag = context.Tags.Single(e => e.Id == 1);
 
         #region Many_to_many_relationships_2
         context.Add(new PostTag { Post = post, Tag = tag });

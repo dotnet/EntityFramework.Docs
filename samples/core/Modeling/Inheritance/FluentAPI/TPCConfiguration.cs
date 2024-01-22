@@ -23,14 +23,14 @@ public class MyContext : DbContext
         #endregion
 
         #region Metadata
-        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
         {
-            var tableIdentifier = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table);
+            StoreObjectIdentifier? tableIdentifier = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table);
 
             Console.WriteLine($"{entityType.DisplayName()}\t\t{tableIdentifier}");
             Console.WriteLine(" Property\tColumn");
 
-            foreach (var property in entityType.GetProperties())
+            foreach (IMutableProperty property in entityType.GetProperties())
             {
                 var columnName = property.GetColumnName(tableIdentifier.Value);
                 Console.WriteLine($" {property.Name,-10}\t{columnName}");

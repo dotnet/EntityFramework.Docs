@@ -28,10 +28,10 @@ internal class Worker : IHostedService, IDisposable
 
     private void Execute()
     {
-        using var scope = _services.CreateScope();
-        var services = scope.ServiceProvider;
+        using IServiceScope scope = _services.CreateScope();
+        IServiceProvider services = scope.ServiceProvider;
 
-        var db = services.GetService<BlogContext>();
+        BlogContext db = services.GetService<BlogContext>();
 
         // TODO: Something interesting
     }

@@ -9,17 +9,17 @@ public static class InjectLoggerSample
     {
         PrintSampleName();
 
-        var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
 
-        var serviceProvider = new ServiceCollection()
+        ServiceProvider serviceProvider = new ServiceCollection()
             .AddDbContext<CustomerContext>(
                 b => b.UseLoggerFactory(loggerFactory)
                     .UseSqlite("Data Source = customers.db"))
             .BuildServiceProvider();
 
-        using (var scope = serviceProvider.CreateScope())
+        using (IServiceScope scope = serviceProvider.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
+            CustomerContext context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
 
             await context.Database.EnsureDeletedAsync();
             await context.Database.EnsureCreatedAsync();
@@ -31,11 +31,11 @@ public static class InjectLoggerSample
             await context.SaveChangesAsync();
         }
 
-        using (var scope = serviceProvider.CreateScope())
+        using (IServiceScope scope = serviceProvider.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
+            CustomerContext context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
 
-            var customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
+            Customer customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
             customer.PhoneNumber = "+1 515 555 0125";
         }
     }

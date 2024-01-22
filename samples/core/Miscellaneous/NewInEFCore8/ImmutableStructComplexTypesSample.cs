@@ -40,7 +40,7 @@ public static class ImmutableStructComplexTypesSample
         await context.SaveChangesAsync();
 
         #region UpdateImmutableStruct
-        var currentAddress = customer.Address;
+        Address currentAddress = customer.Address;
         customer.Address = new Address(
             "Peacock Lodge", currentAddress.Line2, currentAddress.City, currentAddress.Country, currentAddress.PostCode);
 

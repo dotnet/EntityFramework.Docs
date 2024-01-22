@@ -36,7 +36,7 @@ public static class Sample
         #region AddingRelatedEntity
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.Include(b => b.Posts).First();
+            Blog blog = context.Blogs.Include(b => b.Posts).First();
             var post = new Post { Title = "Intro to EF Core" };
 
             blog.Posts.Add(post);
@@ -48,7 +48,7 @@ public static class Sample
         using (var context = new BloggingContext())
         {
             var blog = new Blog { Url = "http://blogs.msdn.com/visualstudio" };
-            var post = context.Posts.First();
+            Post post = context.Posts.First();
 
             post.Blog = blog;
             context.SaveChanges();
@@ -58,8 +58,8 @@ public static class Sample
         #region RemovingRelationships
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs.Include(b => b.Posts).First();
-            var post = blog.Posts[0];
+            Blog blog = context.Blogs.Include(b => b.Posts).First();
+            Post post = blog.Posts[0];
 
             blog.Posts.Remove(post);
             context.SaveChanges();

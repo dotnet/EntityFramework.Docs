@@ -19,14 +19,14 @@ public class ExplicitJoinEntityWithStringPayloadSamples
         #region Many_to_many_relationships_8
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        Post post = context.Posts.Single(e => e.Id == 3);
+        Tag tag = context.Tags.Single(e => e.Id == 1);
 
         post.Tags.Add(tag);
 
         context.ChangeTracker.DetectChanges();
 
-        var joinEntity = context.Set<PostTag>().Find(post.Id, tag.Id);
+        PostTag joinEntity = context.Set<PostTag>().Find(post.Id, tag.Id);
 
         joinEntity.TaggedBy = "ajcvickers";
 
@@ -49,8 +49,8 @@ public class ExplicitJoinEntityWithStringPayloadSamples
         #region Many_to_many_relationships_9
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        Post post = context.Posts.Single(e => e.Id == 3);
+        Tag tag = context.Tags.Single(e => e.Id == 1);
 
         context.Add(
             new PostTag { PostId = post.Id, TagId = tag.Id, TaggedBy = "ajcvickers" });
@@ -202,7 +202,7 @@ public class BlogsContext : DbContext
     #region SaveChanges
     public override int SaveChanges()
     {
-        foreach (var entityEntry in ChangeTracker.Entries<PostTag>())
+        foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<PostTag> entityEntry in ChangeTracker.Entries<PostTag>())
         {
             if (entityEntry.State == EntityState.Added)
             {

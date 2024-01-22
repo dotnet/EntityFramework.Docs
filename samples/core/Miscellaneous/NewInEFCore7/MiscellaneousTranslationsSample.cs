@@ -32,7 +32,7 @@ public static class MiscellaneousTranslationsSample
         await using (var context = new BlogsContext { LoggingEnabled = true })
         {
             #region GetType
-            var query = context.Posts.Where(post => post.GetType() == typeof(Post));
+            IQueryable<Post> query = context.Posts.Where(post => post.GetType() == typeof(Post));
             #endregion
 
             await foreach (var post in query.AsAsyncEnumerable())
@@ -46,7 +46,7 @@ public static class MiscellaneousTranslationsSample
         await using (var context = new BlogsContext { LoggingEnabled = true })
         {
             #region OfType
-            var query = context.Posts.OfType<Post>();
+            IQueryable<Post> query = context.Posts.OfType<Post>();
             #endregion
 
             await foreach (var post in query.AsAsyncEnumerable())
@@ -81,7 +81,7 @@ public static class MiscellaneousTranslationsSample
         await using (var context = new BlogsContext { LoggingEnabled = true })
         {
             #region FilteredInclude
-            var query = context.Blogs.Include(
+            Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Blog, IOrderedEnumerable<Post>> query = context.Blogs.Include(
                 blog => EF.Property<ICollection<Post>>(blog, "Posts")
                     .Where(post => post.Content.Contains(".NET"))
                     .OrderBy(post => post.Title));
@@ -91,7 +91,7 @@ public static class MiscellaneousTranslationsSample
             {
                 Console.WriteLine($"Blog {blog.Name}:");
 
-                foreach (var post in blog.Posts)
+                foreach (Post post in blog.Posts)
                 {
                     Console.WriteLine($"  Post {post.Title}");
                 }

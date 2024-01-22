@@ -24,12 +24,12 @@ public class SharingTransaction
 
         #region Transaction
         using var connection = new SqlConnection(connectionString);
-        var options = new DbContextOptionsBuilder<BloggingContext>()
+        DbContextOptions<BloggingContext> options = new DbContextOptionsBuilder<BloggingContext>()
             .UseSqlServer(connection)
             .Options;
 
         using var context1 = new BloggingContext(options);
-        using var transaction = context1.Database.BeginTransaction();
+        using IDbContextTransaction transaction = context1.Database.BeginTransaction();
         try
         {
             context1.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });

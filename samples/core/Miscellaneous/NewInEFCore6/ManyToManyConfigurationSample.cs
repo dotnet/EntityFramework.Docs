@@ -56,7 +56,7 @@ public static class ManyToManyConfigurationSample
         using (var context = new TContext())
         {
             var cats = context.Cats.Include(e => e.Humans).ToList();
-            foreach (var cat in cats)
+            foreach (Cat cat in cats)
             {
                 Console.WriteLine($"{cat.Name} has {cat.Humans.Count} humans.");
             }

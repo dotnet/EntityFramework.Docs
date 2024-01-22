@@ -40,7 +40,7 @@ public static class Sample
         using var context = new BloggingContext(deleteBehavior, requiredRelationship);
 
         #region DeleteBehaviorVariations
-        var blog = context.Blogs.Include(b => b.Posts).First();
+        Blog blog = context.Blogs.Include(b => b.Posts).First();
         var posts = blog.Posts.ToList();
 
         DumpEntities("  After loading entities:", context, blog, posts);
@@ -83,7 +83,7 @@ public static class Sample
         using var context = new BloggingContext(deleteBehavior, requiredRelationship);
 
         #region DeleteOrphansVariations
-        var blog = context.Blogs.Include(b => b.Posts).First();
+        Blog blog = context.Blogs.Include(b => b.Posts).First();
         var posts = blog.Posts.ToList();
 
         DumpEntities("  After loading entities:", context, blog, posts);
@@ -137,13 +137,13 @@ public static class Sample
         Console.WriteLine();
         Console.WriteLine(message);
 
-        var blogEntry = context.Entry(blog);
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Blog> blogEntry = context.Entry(blog);
 
         Console.WriteLine($"    Blog '{blog.BlogId}' is in state {blogEntry.State} with {posts.Count} posts referenced.");
 
-        foreach (var post in posts)
+        foreach (Post post in posts)
         {
-            var postEntry = context.Entry(post);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Post> postEntry = context.Entry(post);
 
             Console.WriteLine(
                 $"      Post '{post.PostId}' is in state {postEntry.State} " +

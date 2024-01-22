@@ -51,7 +51,7 @@ public static class ModelBuildingSample
 
         await using (var context = new EntitySplittingContext())
         {
-            var customers = await context.Customers
+            List<Customer> customers = await context.Customers
                 .Where(customer => customer.PhoneNumber!.StartsWith("01632") && customer.City == "Chigley")
                 .OrderBy(customer => customer.PostCode)
                 .ThenBy(customer => customer.Name)
@@ -121,12 +121,12 @@ public static class ModelBuildingSample
             Console.WriteLine();
             Console.WriteLine("Starting data:");
 
-            var employees = await context.Employees.ToListAsync();
-            foreach (var employee in employees)
+            List<Employee> employees = await context.Employees.ToListAsync();
+            foreach (Employee? employee in employees)
             {
-                var employeeEntry = context.Entry(employee);
-                var periodStart = employeeEntry.Property<DateTime>("PeriodStart").CurrentValue;
-                var periodEnd = employeeEntry.Property<DateTime>("PeriodEnd").CurrentValue;
+                Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Employee> employeeEntry = context.Entry(employee);
+                DateTime periodStart = employeeEntry.Property<DateTime>("PeriodStart").CurrentValue;
+                DateTime periodEnd = employeeEntry.Property<DateTime>("PeriodEnd").CurrentValue;
 
                 Console.WriteLine($"  Employee {employee.Name} valid from {periodStart} to {periodEnd}");
             }
@@ -141,7 +141,7 @@ public static class ModelBuildingSample
             timeStamp1 = DateTime.UtcNow;
             Thread.Sleep(millisecondsDelay);
 
-            var employee = await context.Employees.SingleAsync(e => e.Name == "Rainbow Dash");
+            Employee employee = await context.Employees.SingleAsync(e => e.Name == "Rainbow Dash");
             employee.Info.Position = "Wonderbolt Trainee";
             await context.SaveChangesAsync();
 
@@ -167,7 +167,7 @@ public static class ModelBuildingSample
         await using (var context = new EntitySplittingContext())
         {
             #region NormalQuery
-            var employee = await context.Employees.SingleAsync(e => e.Name == "Rainbow Dash");
+            Employee employee = await context.Employees.SingleAsync(e => e.Name == "Rainbow Dash");
             context.Remove(employee);
             await context.SaveChangesAsync();
             #endregion
@@ -179,12 +179,12 @@ public static class ModelBuildingSample
             Console.WriteLine("After updates and delete:");
 
             #region TrackingQuery
-            var employees = await context.Employees.ToListAsync();
-            foreach (var employee in employees)
+            List<Employee> employees = await context.Employees.ToListAsync();
+            foreach (Employee? employee in employees)
             {
-                var employeeEntry = context.Entry(employee);
-                var periodStart = employeeEntry.Property<DateTime>("PeriodStart").CurrentValue;
-                var periodEnd = employeeEntry.Property<DateTime>("PeriodEnd").CurrentValue;
+                Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Employee> employeeEntry = context.Entry(employee);
+                DateTime periodStart = employeeEntry.Property<DateTime>("PeriodStart").CurrentValue;
+                DateTime periodEnd = employeeEntry.Property<DateTime>("PeriodEnd").CurrentValue;
 
                 Console.WriteLine($"  Employee {employee.Name} valid from {periodStart} to {periodEnd}");
             }

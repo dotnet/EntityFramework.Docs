@@ -33,7 +33,7 @@ public class MappingImmutableStructProperty : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<EntityType>().Single();
+            EntityType entity = context.Set<EntityType>().Single();
 
             Debug.Assert(entity.MyProperty.Value == 66);
         }

@@ -107,7 +107,7 @@ public static class TpcInheritanceSample
 
             Console.WriteLine("Make some changes and save to the database.");
 
-            var baxter = context.Add(
+            Cat baxter = context.Add(
                 new Cat("Baxter", "BSc") { Vet = "Bothell Pet Hospital", Food = new HumanFood("Blueberry scones", 900) }).Entity;
 
             context.Add(new Human("Katie") { Pets = { baxter }, FavoriteAnimal = baxter });
@@ -115,7 +115,7 @@ public static class TpcInheritanceSample
             context.Remove(context.Animals.Local.Single(e => e.Name == "Christi"));
             context.Humans.Local.Single(e => e.Name == "Wendy").Food = new HumanFood("White pizza", 400);
 
-            var sushi = context.Foods.OfType<HumanFood>().Single(e => e.Name == "Sushi");
+            HumanFood sushi = context.Foods.OfType<HumanFood>().Single(e => e.Name == "Sushi");
             sushi.Calories -= 100;
 
             await context.SaveChangesAsync();

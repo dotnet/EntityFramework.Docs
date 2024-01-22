@@ -23,7 +23,7 @@ public static class HierarchyIdSample
         while (true)
         {
             #region GetLevel
-            var generation = await context.Halflings.Where(halfling => halfling.PathFromPatriarch.GetLevel() == level).ToListAsync();
+            List<Halfling> generation = await context.Halflings.Where(halfling => halfling.PathFromPatriarch.GetLevel() == level).ToListAsync();
             #endregion
 
             if (generation.Count == 0)
@@ -35,7 +35,7 @@ public static class HierarchyIdSample
 
             for (var i = 0; i < generation.Count; i++)
             {
-                var halfling = generation[i];
+                Halfling halfling = generation[i];
                 Console.Write($"{halfling.Name}");
                 if (i < generation.Count - 1)
                 {
@@ -51,7 +51,7 @@ public static class HierarchyIdSample
         Console.WriteLine();
         context.LoggingEnabled = true;
 
-        var directAncestor = (await FindDirectAncestor("Bilbo"))!;
+        Halfling directAncestor = (await FindDirectAncestor("Bilbo"))!;
         Console.WriteLine();
         Console.WriteLine($"The direct ancestor of Bilbo is {directAncestor.Name}");
 
@@ -65,7 +65,7 @@ public static class HierarchyIdSample
         #endregion
 
         Console.WriteLine();
-        var ancestors = await FindAllAncestors("Bilbo").AsNoTracking().ToListAsync();
+        List<Halfling> ancestors = await FindAllAncestors("Bilbo").AsNoTracking().ToListAsync();
 
         Console.WriteLine();
         Console.WriteLine("Ancestors of Bilbo are:");
@@ -87,7 +87,7 @@ public static class HierarchyIdSample
         #endregion
 
         Console.WriteLine();
-        var directDescendents = await FindDirectDescendents("Mungo").AsNoTracking().ToListAsync();
+        List<Halfling> directDescendents = await FindDirectDescendents("Mungo").AsNoTracking().ToListAsync();
 
         Console.WriteLine();
         Console.WriteLine("Direct descendents of Mungo:");
@@ -104,7 +104,7 @@ public static class HierarchyIdSample
         #endregion
 
         Console.WriteLine();
-        var descendents = await FindAllDescendents("Mungo").AsNoTracking().ToListAsync();
+        List<Halfling> descendents = await FindAllDescendents("Mungo").AsNoTracking().ToListAsync();
 
         Console.WriteLine();
         Console.WriteLine("All descendents of Mungo:");
@@ -135,11 +135,11 @@ public static class HierarchyIdSample
             Console.WriteLine($"  {descendent.Name}");
         }
 
-        var mungo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Mungo");
-        var ponto = await context.Halflings.SingleAsync(halfling => halfling.Name == "Ponto" && halfling.YearOfBirth == 1216);
+        Halfling mungo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Mungo");
+        Halfling ponto = await context.Halflings.SingleAsync(halfling => halfling.Name == "Ponto" && halfling.YearOfBirth == 1216);
 
         #region LongoAndDescendents
-        var longoAndDescendents = await context.Halflings.Where(
+        List<Halfling> longoAndDescendents = await context.Halflings.Where(
                 descendent => descendent.PathFromPatriarch.IsDescendantOf(
                     context.Halflings.Single(ancestor => ancestor.Name == "Longo").PathFromPatriarch))
             .ToListAsync();
@@ -181,10 +181,10 @@ public static class HierarchyIdSample
         Console.WriteLine();
         context.LoggingEnabled = true;
 
-        var bilbo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Bilbo");
-        var frodo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Frodo");
+        Halfling bilbo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Bilbo");
+        Halfling frodo = await context.Halflings.SingleAsync(halfling => halfling.Name == "Frodo");
 
-        var commonAncestor = (await FindCommonAncestor(bilbo, frodo))!;
+        Halfling commonAncestor = (await FindCommonAncestor(bilbo, frodo))!;
         Console.WriteLine();
         Console.WriteLine($"The common ancestor of Bilbo and Frodo is {commonAncestor.Name}");
 

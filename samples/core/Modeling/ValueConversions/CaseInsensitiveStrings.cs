@@ -47,7 +47,7 @@ public class CaseInsensitiveStrings : Program
         {
             ConsoleWriteLines("Read the entities back...");
 
-            var blog = context.Set<Blog>().Include(e => e.Posts).Single();
+            Blog blog = context.Set<Blog>().Include(e => e.Posts).Single();
 
             ConsoleWriteLines($"The blog has {blog.Posts.Count} posts with foreign keys '{blog.Posts.First().BlogId}' and '{blog.Posts.Skip(1).First().BlogId}'");
         }

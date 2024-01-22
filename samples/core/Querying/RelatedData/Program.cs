@@ -137,7 +137,7 @@ internal class Program
         #region Explicit
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs
+            Blog blog = context.Blogs
                 .Single(b => b.BlogId == 1);
 
             context.Entry(blog)
@@ -153,7 +153,7 @@ internal class Program
         #region NavQueryAggregate
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs
+            Blog blog = context.Blogs
                 .Single(b => b.BlogId == 1);
 
             var postCount = context.Entry(blog)
@@ -166,7 +166,7 @@ internal class Program
         #region NavQueryFiltered
         using (var context = new BloggingContext())
         {
-            var blog = context.Blogs
+            Blog blog = context.Blogs
                 .Single(b => b.BlogId == 1);
 
             var goodPosts = context.Entry(blog)

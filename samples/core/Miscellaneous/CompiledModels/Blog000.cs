@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+#nullable disable
 
 namespace CompiledModelTest;
 
@@ -7,7 +8,7 @@ public class Blog0000
 {
     public int Id { get; set; }
 
-    public ICollection<Tag0000> Tags { get; set; }
+    public ICollection<Tag0000> Tags { get; set; } = new List<Tag0000>();
 
     public ICollection<Post0000> Posts00 { get; } = new List<Post0000>();
     public ICollection<Post0000> Posts01 { get; } = new List<Post0000>();

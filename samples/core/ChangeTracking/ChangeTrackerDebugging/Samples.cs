@@ -104,7 +104,7 @@ public static class Helpers
     {
         using var context = new BlogsContext(LogLevel.Error);
 
-        var blogs = new[]
+        Blog[] blogs = new[]
         {
             new Blog
             {
@@ -145,7 +145,7 @@ public static class Helpers
             }
         };
 
-        var tags = new[]
+        Tag[] tags = new[]
         {
             new Tag { Text = ".NET", Posts = { blogs[0].Posts[0], blogs[0].Posts[1] } },
             new Tag { Text = "Visual Studio", Posts = { blogs[1].Posts[0], blogs[1].Posts[1] } },

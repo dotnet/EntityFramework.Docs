@@ -22,7 +22,7 @@ public static class LookupByKeySample
         context.LoggingEnabled = true;
 
         #region LookupByPrimaryKey
-        var blogEntry = context.Blogs.Local.FindEntry(2)!;
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Blog> blogEntry = context.Blogs.Local.FindEntry(2)!;
         #endregion
 
         #region UseEntry
@@ -30,19 +30,19 @@ public static class LookupByKeySample
         #endregion
 
         #region LookupByAlternateKey
-        var siteEntry = context.Websites.Local.FindEntry(nameof(Website.Uri), new Uri("https://www.bricelam.net/"))!;
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Website> siteEntry = context.Websites.Local.FindEntry(nameof(Website.Uri), new Uri("https://www.bricelam.net/"))!;
         #endregion
 
         Console.WriteLine($"Website '{siteEntry.Entity.Uri}' can be contacted at '{siteEntry.Entity.Email}'.");
 
         #region LookupByUniqueForeignKey
-        var blogAtSiteEntry = context.Blogs.Local.FindEntry(nameof(Blog.SiteUri), new Uri("https://www.bricelam.net/"))!;
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Blog> blogAtSiteEntry = context.Blogs.Local.FindEntry(nameof(Blog.SiteUri), new Uri("https://www.bricelam.net/"))!;
         #endregion
 
         Console.WriteLine($"Website '{blogAtSiteEntry.Entity.SiteUri}' hosts blog '{blogAtSiteEntry.Entity.Name}'.");
 
         #region LookupByCompositePrimaryKey
-        var postTagEntry = context.Set<PostTag>().Local.FindEntryUntyped(new object[] { 4, "TagEF" });
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<PostTag>? postTagEntry = context.Set<PostTag>().Local.FindEntryUntyped(new object[] { 4, "TagEF" });
         #endregion
 
         Console.WriteLine($"Found PostTag linking post {postTagEntry!.Entity.PostId} with '{postTagEntry.Entity.TagId}'.");
@@ -50,11 +50,11 @@ public static class LookupByKeySample
         Console.WriteLine();
 
         #region LookupByForeignKey
-        var postEntries = context.Posts.Local.GetEntries(nameof(Post.BlogId), 2);
+        IEnumerable<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Post>> postEntries = context.Posts.Local.GetEntries(nameof(Post.BlogId), 2);
         #endregion
 
         Console.WriteLine("Blog with ID 2 has posts:");
-        foreach (var postEntry in postEntries)
+        foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Post> postEntry in postEntries)
         {
             Console.WriteLine($"  {postEntry.Entity.Title}");
         }
@@ -62,11 +62,11 @@ public static class LookupByKeySample
         Console.WriteLine();
 
         #region LookupByAnyProperty
-        var archivedPostEntries = context.Posts.Local.GetEntries(nameof(Post.Archived), true);
+        IEnumerable<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Post>> archivedPostEntries = context.Posts.Local.GetEntries(nameof(Post.Archived), true);
         #endregion
 
         Console.WriteLine("Archived posts:");
-        foreach (var postEntry in archivedPostEntries)
+        foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Post> postEntry in archivedPostEntries)
         {
             Console.WriteLine($"  {postEntry.Entity.Title}");
         }

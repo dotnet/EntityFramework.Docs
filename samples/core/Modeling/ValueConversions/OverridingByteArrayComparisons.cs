@@ -36,7 +36,7 @@ public class OverridingByteArrayComparisons : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<EntityType>().Single();
+            EntityType entity = context.Set<EntityType>().Single();
 
             Debug.Assert(entity.MyBytes.SequenceEqual(new byte[] { 1, 4, 3 }));
         }

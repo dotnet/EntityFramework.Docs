@@ -15,7 +15,7 @@ public static class CosmosMinimalApiSample
     private static void CosmosMinimal(string[] args)
     {
         #region CosmosMinimal
-        var builder = WebApplication.CreateBuilder(args);
+        FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddCosmos<MyDbContext>(
             "https://localhost:8081",
@@ -26,7 +26,7 @@ public static class CosmosMinimalApiSample
     private static void CosmosNormal(string[] args)
     {
         #region CosmosNormal
-        var builder = WebApplication.CreateBuilder(args);
+        FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddDbContext<MyDbContext>(
             options => options.UseCosmos(

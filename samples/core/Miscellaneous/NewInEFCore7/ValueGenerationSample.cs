@@ -20,13 +20,13 @@ public static class ValueGenerationSample
         await context.SaveChangesAsync();
         context.ChangeTracker.Clear();
 
-        var categoriesAndProducts = await context.Categories.Include(category => category.Products).ToListAsync();
+        List<Category> categoriesAndProducts = await context.Categories.Include(category => category.Products).ToListAsync();
 
         Console.WriteLine();
         foreach (var category in categoriesAndProducts)
         {
             Console.WriteLine($"Category {category.Id.Value} is '{category.Name}'");
-            foreach (var product in category.Products)
+            foreach (Product product in category.Products)
             {
                 Console.WriteLine($"   Product {product.Id.Value} is '{product.Name}'");
             }

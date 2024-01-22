@@ -28,7 +28,7 @@ public static class CommitableTransaction
 
         try
         {
-            var options = new DbContextOptionsBuilder<BloggingContext>()
+            DbContextOptions<BloggingContext> options = new DbContextOptionsBuilder<BloggingContext>()
                 .UseSqlServer(connection)
                 .Options;
 
@@ -38,7 +38,7 @@ public static class CommitableTransaction
                 context.Database.EnlistTransaction(transaction);
 
                 // Run raw ADO.NET command in the transaction
-                var command = connection.CreateCommand();
+                SqlCommand command = connection.CreateCommand();
                 command.CommandText = "DELETE FROM dbo.Blogs";
                 command.ExecuteNonQuery();
 

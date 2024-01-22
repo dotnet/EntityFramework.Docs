@@ -19,8 +19,8 @@ public class ExplicitJoinEntityWithPayloadSamples
         #region Many_to_many_relationships_7
         using var context = new BlogsContext();
 
-        var post = context.Posts.Single(e => e.Id == 3);
-        var tag = context.Tags.Single(e => e.Id == 1);
+        Post post = context.Posts.Single(e => e.Id == 3);
+        Tag tag = context.Tags.Single(e => e.Id == 1);
 
         post.Tags.Add(tag);
 

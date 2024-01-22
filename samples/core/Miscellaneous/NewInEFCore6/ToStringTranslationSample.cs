@@ -19,7 +19,7 @@ public static class ToStringTranslationSample
         var users = context.Users.Where(u => EF.Functions.Like(u.PhoneNumber.ToString(), "%555%")).ToList();
         #endregion
 
-        foreach (var user in users)
+        foreach (User user in users)
         {
             Console.WriteLine($"  Found '{user.Username}' with phone number '{user.PhoneNumber}'");
         }

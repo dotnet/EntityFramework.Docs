@@ -29,7 +29,7 @@ public class BasicSample
     {
         using var context = new PersonContext();
 
-        var person = context.People.Single(b => b.FirstName == "John");
+        Person person = context.People.Single(b => b.FirstName == "John");
         person.FirstName = "Paul";
         context.SaveChanges();
 
@@ -41,14 +41,14 @@ public class BasicSample
     {
         using var context1 = new PersonContext();
 
-        var person = context1.People.Single(b => b.FirstName == "Marie");
+        Person person = context1.People.Single(b => b.FirstName == "Marie");
         person.FirstName = "Stephanie";
 
         // We loaded the Blog instance - along with its concurrency token - and made a change on it.
         // Let's simulate a concurrent change by updating the row from another context
         using (var context2 = new PersonContext())
         {
-            var person2 = context2.People.Single(b => b.FirstName == "Marie");
+            Person person2 = context2.People.Single(b => b.FirstName == "Marie");
             person2.FirstName = "Rachel";
             context2.SaveChanges();
         }

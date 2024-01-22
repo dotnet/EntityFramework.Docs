@@ -17,7 +17,7 @@ public static class ToInMemoryQuerySample
         var results = context.CustomerDensities.ToList();
         #endregion
 
-        foreach (var customerDensity in results)
+        foreach (CustomerDensity customerDensity in results)
         {
             Console.WriteLine($"Postcodes in {customerDensity.Postcode} have {customerDensity.CustomerCount} customers.");
         }

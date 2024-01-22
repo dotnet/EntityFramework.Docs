@@ -80,7 +80,7 @@ public static class CosmosImplicitOwnershipSample
 
             Console.WriteLine();
 
-            foreach (var family in families)
+            foreach (Family family in families)
             {
                 Console.WriteLine($"{family.LastName} family:");
                 Console.WriteLine($"    From {family.Address.City}, {family.Address.State}");
@@ -156,7 +156,7 @@ public static class CosmosImplicitOwnershipSample
         }
 
         // Never called; just for documentation.
-        protected void OldOnModelCreating(ModelBuilder modelBuilder)
+        protected static void OldOnModelCreating(ModelBuilder modelBuilder)
         {
             #region OldOnModelCreating
             modelBuilder.Entity<Family>()

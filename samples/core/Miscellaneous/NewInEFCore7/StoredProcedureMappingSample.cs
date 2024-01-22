@@ -64,12 +64,12 @@ public static class StoredProcedureMappingSample
         context.RemoveRange(context.Magazines.Local.Where(magazine => magazine.Title.Contains("Amstrad")));
         context.RemoveRange(context.Books.Local.Where(book => book.NumberOfPages < 200));
 
-        foreach (var magazine in context.Magazines.Local)
+        foreach (Magazine magazine in context.Magazines.Local)
         {
             magazine.CoverPrice += 1.0m;
         }
 
-        foreach (var book in context.Books.Local)
+        foreach (Book book in context.Books.Local)
         {
             book.Title += " (New Edition!)";
         }

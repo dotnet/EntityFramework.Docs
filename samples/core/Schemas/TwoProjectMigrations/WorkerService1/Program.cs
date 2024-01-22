@@ -20,7 +20,7 @@ internal class Program
                     services.AddHostedService<Worker>();
 
                     // Set the active provider via configuration
-                    var configuration = hostContext.Configuration;
+                    IConfiguration configuration = hostContext.Configuration;
                     var provider = configuration.GetValue("Provider", "SqlServer");
 
                     services.AddDbContext<BlogContext>(

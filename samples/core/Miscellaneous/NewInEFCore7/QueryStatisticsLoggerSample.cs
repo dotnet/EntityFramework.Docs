@@ -10,17 +10,17 @@ public static class QueryStatisticsLoggerSample
     {
         PrintSampleName();
 
-        var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
 
-        var serviceProvider = new ServiceCollection()
+        ServiceProvider serviceProvider = new ServiceCollection()
             .AddDbContext<CustomerContext>(
                 b => b.UseLoggerFactory(loggerFactory)
                     .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ConsumedDataReaderSample"))
             .BuildServiceProvider();
 
-        using (var scope = serviceProvider.CreateScope())
+        using (IServiceScope scope = serviceProvider.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
+            CustomerContext context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
 
             await context.Database.EnsureDeletedAsync();
             await context.Database.EnsureCreatedAsync();
@@ -32,9 +32,9 @@ public static class QueryStatisticsLoggerSample
             await context.SaveChangesAsync();
         }
 
-        using (var scope = serviceProvider.CreateScope())
+        using (IServiceScope scope = serviceProvider.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
+            CustomerContext context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
 
             _ = await context.Customers.SingleAsync(e => e.Name == "Alice");
         }
@@ -68,7 +68,7 @@ public static class QueryStatisticsLoggerSample
         #region InfoMessageInterceptor
         public override DbConnection ConnectionCreated(ConnectionCreatedEventData eventData, DbConnection result)
         {
-            var logger = eventData.Context!.GetService<ILoggerFactory>().CreateLogger("InfoMessageLogger");
+            ILogger logger = eventData.Context!.GetService<ILoggerFactory>().CreateLogger("InfoMessageLogger");
             ((SqlConnection)eventData.Connection).InfoMessage += (_, args) => logger.LogInformation(1, "SqlInfoMessageEventArgs : {msg}", args.Message);
             return result;
         }

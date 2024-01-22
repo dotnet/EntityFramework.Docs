@@ -256,7 +256,7 @@ public class MaxStringLengthNonUnicodeConvention : IModelFinalizingConvention
                              .Where(
                                  property => property.ClrType == typeof(string))))
         {
-            var propertyBuilder = property.Builder;
+            IConventionPropertyBuilder propertyBuilder = property.Builder;
             if (propertyBuilder.CanSetMaxLength(512)
                 && propertyBuilder.CanSetIsUnicode(false))
             {
@@ -360,7 +360,7 @@ public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConven
 
     private void Process(IConventionEntityTypeBuilder entityTypeBuilder)
     {
-        foreach (var memberInfo in GetRuntimeMembers())
+        foreach (MemberInfo memberInfo in GetRuntimeMembers())
         {
             if (Attribute.IsDefined(memberInfo, typeof(PersistAttribute), inherit: true))
             {
@@ -375,7 +375,7 @@ public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConven
 
         IEnumerable<MemberInfo> GetRuntimeMembers()
         {
-            var clrType = entityTypeBuilder.Metadata.ClrType;
+            Type clrType = entityTypeBuilder.Metadata.ClrType;
 
             foreach (var property in clrType.GetRuntimeProperties()
                          .Where(p => p.GetMethod?.IsStatic == false))
@@ -383,7 +383,7 @@ public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConven
                 yield return property;
             }
 
-            foreach (var property in clrType.GetRuntimeFields())
+            foreach (FieldInfo property in clrType.GetRuntimeFields())
             {
                 yield return property;
             }

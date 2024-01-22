@@ -35,7 +35,7 @@ public class BloggingControllerWithRepository : ControllerBase
     [HttpPost]
     public ActionResult UpdateBlogUrl(string name, string url)
     {
-        var blog = _repository.GetBlogByName(name);
+        Blog blog = _repository.GetBlogByName(name);
         if (blog is null)
         {
             return NotFound();

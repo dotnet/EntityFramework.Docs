@@ -20,7 +20,7 @@ public class WeatherForecastScopedFactory : IDbContextFactory<WeatherForecastCon
 
     public WeatherForecastContext CreateDbContext()
     {
-        var context = _pooledFactory.CreateDbContext();
+        WeatherForecastContext context = _pooledFactory.CreateDbContext();
         context.TenantId = _tenantId;
         return context;
     }

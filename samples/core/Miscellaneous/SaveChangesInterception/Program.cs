@@ -22,7 +22,7 @@ public class Program
 
         using (var context = new BlogsContext())
         {
-            var blog = context.Blogs.Include(e => e.Posts).Single();
+            Blog blog = context.Blogs.Include(e => e.Posts).Single();
 
             blog.Name = "EF Core Blog";
             context.Remove(blog.Posts.First());
@@ -50,12 +50,12 @@ public class Program
 
         using (var context = new AuditContext("DataSource=audit.db"))
         {
-            foreach (var audit in context.SaveChangesAudits.Include(e => e.Entities).ToList())
+            foreach (SaveChangesAudit audit in context.SaveChangesAudits.Include(e => e.Entities).ToList())
             {
                 Console.WriteLine(
                     $"Audit {audit.AuditId} from {audit.StartTime} to {audit.EndTime} was{(audit.Succeeded ? "" : " not")} successful.");
 
-                foreach (var entity in audit.Entities)
+                foreach (EntityAudit entity in audit.Entities)
                 {
                     Console.WriteLine($"  {entity.AuditMessage}");
                 }

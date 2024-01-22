@@ -19,8 +19,8 @@ public static class WithDatabaseCycleSamples
         #region Database_cascade_limitations_1
         using var context = new BlogsContext();
 
-        var owner = context.People.Single(e => e.Name == "ajcvickers");
-        var blog = context.Blogs.Single(e => e.Owner == owner);
+        Person owner = context.People.Single(e => e.Name == "ajcvickers");
+        Blog blog = context.Blogs.Single(e => e.Owner == owner);
 
         context.Remove(owner);
 
@@ -43,7 +43,7 @@ public static class WithDatabaseCycleSamples
             #region Database_cascade_limitations_2
             using var context = new BlogsContext();
 
-            var owner = context.People.Single(e => e.Name == "ajcvickers");
+            Person owner = context.People.Single(e => e.Name == "ajcvickers");
 
             context.Remove(owner);
 

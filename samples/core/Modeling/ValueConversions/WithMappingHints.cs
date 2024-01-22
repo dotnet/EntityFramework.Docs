@@ -30,8 +30,8 @@ public class WithMappingHints : Program
         {
             ConsoleWriteLines("Read the entities back...");
 
-            var entity1 = context.Set<Order1>().Single();
-            var entity2 = context.Set<Order2>().Single();
+            Order1 entity1 = context.Set<Order1>().Single();
+            Order2 entity2 = context.Set<Order2>().Single();
         }
 
         ConsoleWriteLines("Sample finished.");

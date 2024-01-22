@@ -36,7 +36,7 @@ public static class ConvertNullsSample
 
             Console.WriteLine();
 
-            foreach (var cat in cats)
+            foreach (Cat cat in cats)
             {
                 Console.WriteLine($"{cat.Name} has breed '{cat.Breed}'.");
             }
@@ -77,7 +77,7 @@ public static class ConvertNullsSample
 
             Console.WriteLine();
 
-            foreach (var car in cars)
+            foreach (Car car in cars)
             {
                 Console.WriteLine($"The {car.Model} does not have an owner.");
             }

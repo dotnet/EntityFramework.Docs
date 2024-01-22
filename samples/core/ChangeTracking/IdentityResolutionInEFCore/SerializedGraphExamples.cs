@@ -40,9 +40,9 @@ public static class SerializedGraphExamples
     {
         using var context = new BlogsContext();
 
-        var blogs = JsonConvert.DeserializeObject<List<Blog>>(json);
+        List<Blog> blogs = JsonConvert.DeserializeObject<List<Blog>>(json);
 
-        foreach (var blog in blogs)
+        foreach (Blog blog in blogs)
         {
             context.Update(blog);
         }
@@ -78,11 +78,11 @@ public static class SerializedGraphExamples
     {
         using var context = new BlogsContext();
 
-        var posts = JsonConvert.DeserializeObject<List<Post>>(json);
+        List<Post> posts = JsonConvert.DeserializeObject<List<Post>>(json);
 
         try
         {
-            foreach (var post in posts)
+            foreach (Post post in posts)
             {
                 context.Update(post); // Will throw
             }
@@ -125,9 +125,9 @@ public static class SerializedGraphExamples
     {
         using var context = new BlogsContext();
 
-        var posts = JsonConvert.DeserializeObject<List<Post>>(json);
+        List<Post> posts = JsonConvert.DeserializeObject<List<Post>>(json);
 
-        foreach (var post in posts)
+        foreach (Post post in posts)
         {
             context.Update(post);
         }
@@ -185,17 +185,17 @@ public static class SerializedGraphExamples
     {
         using var context = new BlogsContext();
 
-        var posts = JsonConvert.DeserializeObject<List<Post>>(json);
+        List<Post> posts = JsonConvert.DeserializeObject<List<Post>>(json);
 
-        foreach (var post in posts)
+        foreach (Post post in posts)
         {
             context.ChangeTracker.TrackGraph(
                 post, node =>
                 {
                     var keyValue = node.Entry.Property("Id").CurrentValue;
-                    var entityType = node.Entry.Metadata;
+                    Microsoft.EntityFrameworkCore.Metadata.IEntityType entityType = node.Entry.Metadata;
 
-                    var existingEntity = node.Entry.Context.ChangeTracker.Entries()
+                    Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry existingEntity = node.Entry.Context.ChangeTracker.Entries()
                         .FirstOrDefault(
                             e => Equals(e.Metadata, entityType)
                                  && Equals(e.Property("Id").CurrentValue, keyValue));

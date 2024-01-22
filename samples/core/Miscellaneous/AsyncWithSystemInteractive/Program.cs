@@ -13,7 +13,7 @@ public class Program
         await context.Database.EnsureCreatedAsync();
 
         #region SystemInteractiveAsync
-        var groupedHighlyRatedBlogs = await context.Blogs
+        System.Collections.Generic.List<IAsyncGrouping<int, Blog>> groupedHighlyRatedBlogs = await context.Blogs
             .AsQueryable()
             .Where(b => b.Rating > 3) // server-evaluated
             .AsAsyncEnumerable()

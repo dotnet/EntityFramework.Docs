@@ -28,11 +28,11 @@ public static class NestedComplexTypesSample
         const int customerId = 1;
 
         #region QueryCustomer
-        var customer = await context.Customers.FirstAsync(e => e.Id == customerId);
+        Customer customer = await context.Customers.FirstAsync(e => e.Id == customerId);
         #endregion
 
-        var address = customer.Contact.Address;
-        var phone = customer.Contact.MobilePhone;
+        Address address = customer.Contact.Address;
+        PhoneNumber phone = customer.Contact.MobilePhone;
 
         var order = new Order { Contents = "Tesco Tasty Treats", BillingAddress = address, ShippingAddress = address, ContactPhone = phone };
         customer.Orders.Add(order);
@@ -45,13 +45,13 @@ public static class NestedComplexTypesSample
 
         context.ChangeTracker.Clear();
 
-        var customers = await context.Customers.Where(e => e.Id == customerId).Include(e => e.Orders).ToListAsync();
+        List<Customer> customers = await context.Customers.Where(e => e.Id == customerId).Include(e => e.Orders).ToListAsync();
 
         customer = customers[0];
         order = customer.Orders[0];
 
         #region BillingAddressCurrentValue
-        var billingAddress = context.Entry(order)
+        Address billingAddress = context.Entry(order)
             .ComplexProperty(e => e.BillingAddress)
             .CurrentValue;
         #endregion
@@ -98,7 +98,7 @@ public static class NestedComplexTypesSample
         const int orderId = 1;
 
         #region QueryShippingAddress
-        var shippingAddress = await context.Orders
+        Address shippingAddress = await context.Orders
             .Where(e => e.Id == orderId)
             .Select(e => e.ShippingAddress)
             .SingleAsync();
@@ -110,7 +110,7 @@ public static class NestedComplexTypesSample
 
         #region QueryOrdersInCity
         const string city = "Walpole St Peter";
-        var walpoleOrders = await context.Orders.Where(e => e.ShippingAddress.City == city).ToListAsync();
+        List<Order> walpoleOrders = await context.Orders.Where(e => e.ShippingAddress.City == city).ToListAsync();
         #endregion
 
         const int countryCode = 44;
@@ -121,7 +121,7 @@ public static class NestedComplexTypesSample
 
         #region QueryWithPhoneNumber
         var phoneNumber = new PhoneNumber(44, 7777555777);
-        var customersWithNumber = await context.Customers
+        List<Customer> customersWithNumber = await context.Customers
             .Where(
                 e => e.Contact.MobilePhone == phoneNumber
                      || e.Contact.WorkPhone == phoneNumber
@@ -136,7 +136,7 @@ public static class NestedComplexTypesSample
                      || e.Contact.HomePhone == phoneNumber)
             .ExecuteDeleteAsync();
 
-        var allNumbers = await context.Customers
+        List<PhoneNumber> allNumbers = await context.Customers
             .Select(e => e.Contact.MobilePhone)
             .Distinct()
             .ToListAsync();

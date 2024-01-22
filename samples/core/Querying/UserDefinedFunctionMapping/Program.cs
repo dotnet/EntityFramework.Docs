@@ -47,21 +47,21 @@ internal class Program
                     )");
 
         #region BasicQuery
-        var query1 = from b in context.Blogs
+        IQueryable<Blog> query1 = from b in context.Blogs
                      where context.ActivePostCountForBlog(b.BlogId) > 1
                      select b;
         #endregion
         var result1 = query1.ToList();
 
         #region HasTranslationQuery
-        var query2 = from p in context.Posts
+        IQueryable<double> query2 = from p in context.Posts
                      select context.PercentageDifference(p.BlogId, 3);
         #endregion
         var result2 = query2.ToList();
 
         #region NullabilityPropagationExamples
-        var query3 = context.Blogs.Where(e => BloggingContext.ConcatStrings(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
-        var query4 = context.Blogs.Where(
+        IQueryable<Blog> query3 = context.Blogs.Where(e => BloggingContext.ConcatStrings(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
+        IQueryable<Blog> query4 = context.Blogs.Where(
             e => BloggingContext.ConcatStringsOptimized(e.Url, e.Rating.ToString()) != "https://mytravelblog.com/4");
         #endregion
 
@@ -70,7 +70,7 @@ internal class Program
 
         #region TableValuedFunctionQuery
         const int likeThreshold = 3;
-        var query5 = from p in context.PostsWithPopularComments(likeThreshold)
+        IOrderedQueryable<Post> query5 = from p in context.PostsWithPopularComments(likeThreshold)
                      orderby p.Rating
                      select p;
         #endregion

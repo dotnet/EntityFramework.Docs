@@ -19,7 +19,7 @@ public static class IntroRequiredSamples
         #region Deleting_principal_parent_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+        Blog blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
 
         context.Remove(blog);
 
@@ -40,9 +40,9 @@ public static class IntroRequiredSamples
         #region Severing_a_relationship_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+        Blog blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
 
-        foreach (var post in blog.Posts)
+        foreach (Post post in blog.Posts)
         {
             post.Blog = null;
         }
@@ -64,7 +64,7 @@ public static class IntroRequiredSamples
         #region Severing_a_relationship_2
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
+        Blog blog = context.Blogs.OrderBy(e => e.Name).Include(e => e.Posts).First();
 
         blog.Posts.Clear();
 
@@ -85,7 +85,7 @@ public static class IntroRequiredSamples
         #region Where_cascading_behaviors_happen_1
         using var context = new BlogsContext();
 
-        var blog = context.Blogs.OrderBy(e => e.Name).First();
+        Blog blog = context.Blogs.OrderBy(e => e.Name).First();
 
         context.Remove(blog);
 

@@ -21,7 +21,7 @@ public static class StringConcatSample
             .Where(e => string.Concat(e.Token1, e.Token2, e.Token3) != e.TokensProcessed).ToList();
         #endregion
 
-        foreach (var shard in shards)
+        foreach (Shard shard in shards)
         {
             Console.WriteLine($"Found shard {shard.Id} with unprocessed tokens.");
         }

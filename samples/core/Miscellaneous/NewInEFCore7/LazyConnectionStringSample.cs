@@ -17,10 +17,10 @@ public static class LazyConnectionStringSample
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging());
 
-        var serviceProvider = services.BuildServiceProvider();
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
 
-        using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
+        using IServiceScope scope = serviceProvider.CreateScope();
+        CustomerContext context = scope.ServiceProvider.GetRequiredService<CustomerContext>();
 
         await context.Database.EnsureDeletedAsync();
         await context.Database.EnsureCreatedAsync();
@@ -31,7 +31,7 @@ public static class LazyConnectionStringSample
 
         await context.SaveChangesAsync();
 
-        var customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
+        Customer customer = await context.Customers.SingleAsync(e => e.Name == "Alice");
         Console.WriteLine();
         Console.WriteLine($"Loaded {customer.Name}");
         Console.WriteLine();

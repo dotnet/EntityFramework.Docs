@@ -31,7 +31,7 @@ public sealed class SqliteInMemoryBloggingControllerTest : IDisposable
 
         if (context.Database.EnsureCreated())
         {
-            using var viewCommand = context.Database.GetDbConnection().CreateCommand();
+            using System.Data.Common.DbCommand viewCommand = context.Database.GetDbConnection().CreateCommand();
             viewCommand.CommandText = @"
 CREATE VIEW AllResources AS
 SELECT Url
@@ -54,10 +54,10 @@ FROM Blogs;";
     [Fact]
     public void GetBlog()
     {
-        using var context = CreateContext();
+        using BloggingContext context = CreateContext();
         var controller = new BloggingController(context);
 
-        var blog = controller.GetBlog("Blog2").Value;
+        Blog blog = controller.GetBlog("Blog2").Value;
 
         Assert.Equal("http://blog2.com", blog.Url);
     }
@@ -66,10 +66,10 @@ FROM Blogs;";
     [Fact]
     public void GetAllBlogs()
     {
-        using var context = CreateContext();
+        using BloggingContext context = CreateContext();
         var controller = new BloggingController(context);
 
-        var blogs = controller.GetAllBlogs().Value;
+        Blog[] blogs = controller.GetAllBlogs().Value;
 
         Assert.Collection(
             blogs,
@@ -80,24 +80,24 @@ FROM Blogs;";
     [Fact]
     public void AddBlog()
     {
-        using var context = CreateContext();
+        using BloggingContext context = CreateContext();
         var controller = new BloggingController(context);
 
         controller.AddBlog("Blog3", "http://blog3.com");
 
-        var blog = context.Blogs.Single(b => b.Name == "Blog3");
+        Blog blog = context.Blogs.Single(b => b.Name == "Blog3");
         Assert.Equal("http://blog3.com", blog.Url);
     }
 
     [Fact]
     public void UpdateBlogUrl()
     {
-        using var context = CreateContext();
+        using BloggingContext context = CreateContext();
         var controller = new BloggingController(context);
 
         controller.UpdateBlogUrl("Blog2", "http://blog2_updated.com");
 
-        var blog = context.Blogs.Single(b => b.Name == "Blog2");
+        Blog blog = context.Blogs.Single(b => b.Name == "Blog2");
         Assert.Equal("http://blog2_updated.com", blog.Url);
     }
 }

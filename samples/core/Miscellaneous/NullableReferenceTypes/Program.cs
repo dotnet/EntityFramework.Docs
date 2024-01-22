@@ -31,11 +31,11 @@ namespace NullableReferenceTypes
 
             using (var context = new NullableReferenceTypesContext())
             {
-                var john = context.Customers.First(c => c.FirstName == "John");
+                Customer john = context.Customers.First(c => c.FirstName == "John");
                 Console.WriteLine("John's last name: " + john.LastName);
 
                 #region Including
-                var order = context.Orders
+                Order order = context.Orders
                     .Include(o => o.OptionalInfo!)
                     .ThenInclude(op => op.ExtraAdditionalInfo)
                     .Single();

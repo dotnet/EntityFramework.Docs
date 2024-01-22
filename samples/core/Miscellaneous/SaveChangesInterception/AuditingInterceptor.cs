@@ -112,7 +112,7 @@ public class AuditingInterceptor : ISaveChangesInterceptor
 
         var audit = new SaveChangesAudit { AuditId = Guid.NewGuid(), StartTime = DateTime.UtcNow };
 
-        foreach (var entry in context.ChangeTracker.Entries())
+        foreach (EntityEntry entry in context.ChangeTracker.Entries())
         {
             var auditMessage = entry.State switch
             {

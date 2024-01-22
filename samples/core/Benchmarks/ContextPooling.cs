@@ -33,13 +33,13 @@ public class ContextPooling
     {
         using var context = new BloggingContext(_options);
 
-        return context.Blogs.ToList();
+        return [.. context.Blogs];
     }
 
     [Benchmark]
     public List<Blog> WithContextPooling()
     {
-        using var context = _poolingFactory.CreateDbContext();
+        using BloggingContext context = _poolingFactory.CreateDbContext();
 
         return context.Blogs.ToList();
     }

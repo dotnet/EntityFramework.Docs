@@ -48,7 +48,7 @@ public static class ReadOnlySetQuerySample
         {
             #region ReadOnlySetQuery
             var searchIds = new HashSet<int> { 1, 3, 5 };
-            var query = context.Customers.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
+            IQueryable<Customer1> query = context.Customers.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
             #endregion
 
             await foreach (var customer in query.AsAsyncEnumerable())
@@ -60,7 +60,7 @@ public static class ReadOnlySetQuerySample
         await using (var context = new TContext())
         {
             IReadOnlyCollection<int> searchIds = new ReadOnlyCollection<int>(new Collection<int> { 1, 3, 5 });
-            var query = context.Customers.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
+            IQueryable<Customer1> query = context.Customers.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
 
             await foreach (var customer in query.AsAsyncEnumerable())
             {
@@ -71,7 +71,7 @@ public static class ReadOnlySetQuerySample
         await using (var context = new TContext())
         {
             var searchIds = new ReadOnlyCollection<int>(new Collection<int> { 1, 3, 5 });
-            var query = context.Customer2s.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
+            IQueryable<Customer2> query = context.Customer2s.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
 
             await foreach (var customer in query.AsAsyncEnumerable())
             {
@@ -82,7 +82,7 @@ public static class ReadOnlySetQuerySample
         await using (var context = new TContext())
         {
             IReadOnlyList<int> searchIds = new List<int> { 1, 3, 5 };
-            var query = context.Customer3s.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
+            IQueryable<Customer3> query = context.Customer3s.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
 
             await foreach (var customer in query.AsAsyncEnumerable())
             {

@@ -183,7 +183,7 @@ public static class Sample
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with explicit insert or update:");
-        var blog = CreateBlogAndPosts();
+        Blog blog = CreateBlogAndPosts();
 
         using (var context = new BloggingContext())
         {
@@ -193,7 +193,7 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
 
@@ -209,7 +209,7 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
     }
@@ -218,7 +218,7 @@ public static class Sample
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with auto-generated key:");
-        var blog = CreateBlogAndPosts();
+        Blog blog = CreateBlogAndPosts();
 
         using (var context = new BloggingContext())
         {
@@ -228,7 +228,7 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
 
@@ -245,7 +245,7 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}, {read.Posts[2].Title}");
         }
     }
@@ -254,7 +254,7 @@ public static class Sample
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with any kind of key:");
-        var blog = CreateBlogAndPosts();
+        Blog blog = CreateBlogAndPosts();
 
         using (var context = new BloggingContext())
         {
@@ -264,7 +264,7 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
 
@@ -281,7 +281,7 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}, {read.Posts[2].Title}");
         }
     }
@@ -290,7 +290,7 @@ public static class Sample
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with deletes and any kind of key:");
-        var blog = CreateBlogAndPosts();
+        Blog blog = CreateBlogAndPosts();
 
         using (var context = new BloggingContext())
         {
@@ -300,7 +300,7 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
 
@@ -317,7 +317,7 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
     }
@@ -326,7 +326,7 @@ public static class Sample
     {
         Console.WriteLine();
         Console.WriteLine("Save graph using TrackGraph:");
-        var blog = CreateBlogAndPosts();
+        Blog blog = CreateBlogAndPosts();
         blog.IsNew = true;
         blog.Posts[0].IsNew = true;
         blog.Posts[1].IsNew = true;
@@ -339,7 +339,7 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
 
@@ -362,7 +362,7 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            var read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
+            Blog read = context.Blogs.Include(b => b.Posts).Single(b => b.BlogId == blog.BlogId);
             Console.WriteLine($"  Found with URL {read.Url} and {read.Posts[0].Title}, {read.Posts[1].Title}");
         }
     }
@@ -407,7 +407,7 @@ public static class Sample
     #region InsertOrUpdateSingleEntityWithFind
     public static void InsertOrUpdate(BloggingContext context, Blog blog)
     {
-        var existingBlog = context.Blogs.Find(blog.BlogId);
+        Blog existingBlog = context.Blogs.Find(blog.BlogId);
         if (existingBlog == null)
         {
             context.Add(blog);
@@ -461,7 +461,7 @@ public static class Sample
     #region InsertOrUpdateGraphWithFind
     public static void InsertOrUpdateGraph(BloggingContext context, Blog blog)
     {
-        var existingBlog = context.Blogs
+        Blog existingBlog = context.Blogs
             .Include(b => b.Posts)
             .FirstOrDefault(b => b.BlogId == blog.BlogId);
 
@@ -472,9 +472,9 @@ public static class Sample
         else
         {
             context.Entry(existingBlog).CurrentValues.SetValues(blog);
-            foreach (var post in blog.Posts)
+            foreach (Post post in blog.Posts)
             {
-                var existingPost = existingBlog.Posts
+                Post existingPost = existingBlog.Posts
                     .Find(p => p.PostId == post.PostId);
 
                 if (existingPost == null)
@@ -495,7 +495,7 @@ public static class Sample
     #region InsertUpdateOrDeleteGraphWithFind
     public static void InsertUpdateOrDeleteGraph(BloggingContext context, Blog blog)
     {
-        var existingBlog = context.Blogs
+        Blog existingBlog = context.Blogs
             .Include(b => b.Posts)
             .FirstOrDefault(b => b.BlogId == blog.BlogId);
 
@@ -506,9 +506,9 @@ public static class Sample
         else
         {
             context.Entry(existingBlog).CurrentValues.SetValues(blog);
-            foreach (var post in blog.Posts)
+            foreach (Post post in blog.Posts)
             {
-                var existingPost = existingBlog.Posts
+                Post existingPost = existingBlog.Posts
                     .Find(p => p.PostId == post.PostId);
 
                 if (existingPost == null)
@@ -521,7 +521,7 @@ public static class Sample
                 }
             }
 
-            foreach (var post in existingBlog.Posts)
+            foreach (Post post in existingBlog.Posts)
             {
                 if (!blog.Posts.Any(p => p.PostId == post.PostId))
                 {

@@ -17,7 +17,7 @@ public static class CosmosQueriesSample
         await using var context = new ShapesContext();
 
         #region StringTranslations
-        var stringResults = await context.Triangles.Where(
+        System.Collections.Generic.List<Triangle> stringResults = await context.Triangles.Where(
                 e => e.Name.Length > 4
                      && !e.Name.Trim().Equals("obtuse", StringComparison.InvariantCultureIgnoreCase)
                      && e.Name.TrimStart().Substring(2, 2).Equals("uT", StringComparison.OrdinalIgnoreCase))
@@ -25,7 +25,7 @@ public static class CosmosQueriesSample
         #endregion
 
         Console.WriteLine();
-        foreach (var result in stringResults)
+        foreach (Triangle result in stringResults)
         {
             Console.WriteLine($" {result.Name}");
         }
@@ -33,7 +33,7 @@ public static class CosmosQueriesSample
 
         #region MathTranslations
         const double hypotenuse = 42.42;
-        var mathResults = await context.Triangles.Where(
+        System.Collections.Generic.List<Triangle> mathResults = await context.Triangles.Where(
                 e => (Math.Round(e.Angle1) == 90.0
                       || Math.Round(e.Angle2) == 90.0)
                      && (hypotenuse * Math.Sin(e.Angle1) > 30.0
@@ -42,27 +42,27 @@ public static class CosmosQueriesSample
         #endregion
 
         Console.WriteLine();
-        foreach (var result in mathResults)
+        foreach (Triangle result in mathResults)
         {
             Console.WriteLine($" {result.Name}");
         }
         Console.WriteLine();
 
         #region TimeTranslations
-        var timeResults = await context.Triangles.Where(
+        System.Collections.Generic.List<Triangle> timeResults = await context.Triangles.Where(
                 e => e.InsertedOn <= DateTime.UtcNow)
             .ToListAsync();
         #endregion
 
         Console.WriteLine();
-        foreach (var result in timeResults)
+        foreach (Triangle result in timeResults)
         {
             Console.WriteLine($" {result.Name}");
         }
         Console.WriteLine();
 
         #region DistictTranslation
-        var distinctResults = await context.Triangles
+        System.Collections.Generic.List<double> distinctResults = await context.Triangles
             .Select(e => e.Angle1).OrderBy(e => e).Distinct()
             .ToListAsync();
         #endregion
@@ -77,13 +77,13 @@ public static class CosmosQueriesSample
         {
             #region FromSql
             const int maxAngle = 60;
-            var results = await context.Triangles.FromSqlRaw(
+            System.Collections.Generic.List<Triangle> results = await context.Triangles.FromSqlRaw(
                     @"SELECT * FROM root c WHERE c[""Angle1""] <= {0} OR c[""Angle2""] <= {0}", maxAngle)
                 .ToListAsync();
             #endregion
 
             Console.WriteLine();
-            foreach (var result in results)
+            foreach (Triangle result in results)
             {
                 Console.WriteLine($" {result.Name}");
             }
@@ -94,7 +94,7 @@ public static class CosmosQueriesSample
         {
             #region FromSqlComposed
             const int maxAngle = 60;
-            var results = await context.Triangles.FromSqlRaw(
+            System.Collections.Generic.List<double> results = await context.Triangles.FromSqlRaw(
                     @"SELECT * FROM root c WHERE c[""Angle1""] <= {0} OR c[""Angle2""] <= {0}", maxAngle)
                 .Where(e => e.InsertedOn <= DateTime.UtcNow)
                 .Select(e => e.Angle1).Distinct()

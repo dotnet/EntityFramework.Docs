@@ -21,7 +21,7 @@ public static class IsNullOrWhitespaceSample
                  || string.IsNullOrWhiteSpace(e.LastName)).ToList();
         #endregion
 
-        foreach (var user in users)
+        foreach (User user in users)
         {
             Console.WriteLine($"Found '{user.FirstName}' '{user.LastName}'");
         }

@@ -19,7 +19,7 @@ public static class RandomFunctionSample
         var users = context.Users.Where(u => u.Popularity == (int)(EF.Functions.Random() * 4.0) + 1).ToList();
         #endregion
 
-        foreach (var user in users)
+        foreach (User user in users)
         {
             Console.WriteLine($"  Found '{user.Username}' with popularity '{user.Popularity}'");
         }

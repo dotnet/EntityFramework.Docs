@@ -28,7 +28,7 @@ public class Program
 
         using (var context = new BlogsContext())
         {
-            var blog = context.Blogs.Include(e => e.Posts).Single();
+            Blog blog = context.Blogs.Include(e => e.Posts).Single();
 
             blog.Name = "EF Core Blog";
             context.Remove(blog.Posts.First());

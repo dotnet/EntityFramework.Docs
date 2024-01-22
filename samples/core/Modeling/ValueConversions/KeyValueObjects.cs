@@ -43,7 +43,7 @@ public class KeyValueObjects : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var blog = context.Set<Blog>().Include(e => e.Posts).Single();
+            Blog blog = context.Set<Blog>().Include(e => e.Posts).Single();
         }
 
         ConsoleWriteLines("Sample finished.");

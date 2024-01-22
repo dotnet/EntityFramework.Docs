@@ -31,12 +31,12 @@ public static class AmbientTransaction
         try
         {
             // Run raw ADO.NET command in the transaction
-            var command = connection.CreateCommand();
+            SqlCommand command = connection.CreateCommand();
             command.CommandText = "DELETE FROM dbo.Blogs";
             command.ExecuteNonQuery();
 
             // Run an EF Core command in the transaction
-            var options = new DbContextOptionsBuilder<BloggingContext>()
+            DbContextOptions<BloggingContext> options = new DbContextOptionsBuilder<BloggingContext>()
                 .UseSqlServer(connection)
                 .Options;
 

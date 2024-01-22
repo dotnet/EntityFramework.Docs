@@ -2,7 +2,7 @@ using Common;
 using Microsoft.EntityFrameworkCore;
 using SingleDbSingleTable.Data;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -11,10 +11,10 @@ builder.Services.AddScoped<ITenantService, TenantService>();
 builder.Services.AddDbContextFactory<ContactContext>(
     opt => opt.UseSqlite("Data Source=singledb.sqlite"), ServiceLifetime.Scoped);
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // seed the database so demo is simple and doesn't require migrations
-using var ctx = app.Services.CreateScope().ServiceProvider.GetRequiredService<ContactContext>();
+using ContactContext ctx = app.Services.CreateScope().ServiceProvider.GetRequiredService<ContactContext>();
 ctx.CheckAndSeed();
 
 // Configure the HTTP request pipeline.

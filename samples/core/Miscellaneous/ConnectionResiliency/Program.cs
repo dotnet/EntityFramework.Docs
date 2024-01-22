@@ -29,13 +29,13 @@ public class Program
         #region ManualTransaction
 
         using var db = new BloggingContext();
-        var strategy = db.Database.CreateExecutionStrategy();
+        Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy strategy = db.Database.CreateExecutionStrategy();
 
         strategy.Execute(
             () =>
             {
                 using var context = new BloggingContext();
-                using var transaction = context.Database.BeginTransaction();
+                using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = context.Database.BeginTransaction();
 
                 context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
                 context.SaveChanges();
@@ -56,7 +56,7 @@ public class Program
         using var context1 = new BloggingContext();
         context1.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
 
-        var strategy = context1.Database.CreateExecutionStrategy();
+        Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy strategy = context1.Database.CreateExecutionStrategy();
 
         strategy.Execute(
             () =>
@@ -80,7 +80,7 @@ public class Program
         #region Verification
 
         using var db = new BloggingContext();
-        var strategy = db.Database.CreateExecutionStrategy();
+        Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy strategy = db.Database.CreateExecutionStrategy();
 
         var blogToAdd = new Blog { Url = "http://blogs.msdn.com/dotnet" };
         db.Blogs.Add(blogToAdd);
@@ -100,7 +100,7 @@ public class Program
         #region Tracking
 
         using var db = new BloggingContext();
-        var strategy = db.Database.CreateExecutionStrategy();
+        Microsoft.EntityFrameworkCore.Storage.IExecutionStrategy strategy = db.Database.CreateExecutionStrategy();
 
         db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
 

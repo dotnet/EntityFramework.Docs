@@ -15,7 +15,7 @@ public class ManagingSavepoints
 
         #region Savepoints
         using var context = new BloggingContext();
-        using var transaction = context.Database.BeginTransaction();
+        using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = context.Database.BeginTransaction();
 
         try
         {

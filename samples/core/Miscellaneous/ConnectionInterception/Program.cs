@@ -19,7 +19,7 @@ public class Program
 
         using (var context = new BlogsContext())
         {
-            var blogs = await context.Blogs.ToListAsync();
+            System.Collections.Generic.List<Blog> blogs = await context.Blogs.ToListAsync();
         }
     }
 }

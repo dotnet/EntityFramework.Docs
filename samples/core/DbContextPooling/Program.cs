@@ -59,13 +59,13 @@ public class Program
     {
         var serviceCollection = new ServiceCollection();
         new Startup().ConfigureServices(serviceCollection);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+        ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
         SetupDatabase(serviceProvider);
 
         var stopwatch = new Stopwatch();
 
-        var monitorTask = MonitorResults(TimeSpan.FromSeconds(Seconds), stopwatch);
+        Task monitorTask = MonitorResults(TimeSpan.FromSeconds(Seconds), stopwatch);
 
         await Task.WhenAll(
             Enumerable
@@ -77,8 +77,8 @@ public class Program
 
     private static void SetupDatabase(IServiceProvider serviceProvider)
     {
-        using var serviceScope = serviceProvider.CreateScope();
-        var context = serviceScope.ServiceProvider.GetService<BloggingContext>();
+        using IServiceScope serviceScope = serviceProvider.CreateScope();
+        BloggingContext context = serviceScope.ServiceProvider.GetService<BloggingContext>();
 
         if (context.Database.EnsureCreated())
         {
@@ -92,7 +92,7 @@ public class Program
     {
         while (stopwatch.IsRunning)
         {
-            using (var serviceScope = serviceProvider.CreateScope())
+            using (IServiceScope serviceScope = serviceProvider.CreateScope())
             {
                 await new BlogController(serviceScope.ServiceProvider.GetService<BloggingContext>()).ActionAsync();
             }
@@ -105,7 +105,7 @@ public class Program
     {
         var lastInstanceCount = 0L;
         var lastRequestCount = 0L;
-        var lastElapsed = TimeSpan.Zero;
+        TimeSpan lastElapsed = TimeSpan.Zero;
 
         stopwatch.Start();
 
@@ -115,8 +115,8 @@ public class Program
 
             var instanceCount = BloggingContext.InstanceCount;
             var requestCount = _requestsProcessed;
-            var elapsed = stopwatch.Elapsed;
-            var currentElapsed = elapsed - lastElapsed;
+            TimeSpan elapsed = stopwatch.Elapsed;
+            TimeSpan currentElapsed = elapsed - lastElapsed;
             var currentRequests = requestCount - lastRequestCount;
 
             Console.WriteLine(

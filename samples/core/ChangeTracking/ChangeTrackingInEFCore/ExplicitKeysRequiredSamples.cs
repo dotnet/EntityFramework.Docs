@@ -19,7 +19,7 @@ public static class ExplicitKeysRequiredSamples
 
         using var context = new BlogsContext();
 
-        var blog = GetDisconnectedBlogAndPosts();
+        Blog blog = GetDisconnectedBlogAndPosts();
 
         #region Deleting_principal_parent_entities_1
         // Attach a blog and associated posts

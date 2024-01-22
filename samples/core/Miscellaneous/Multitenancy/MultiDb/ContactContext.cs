@@ -24,7 +24,7 @@ namespace MultiDb
         {
             if (Database.EnsureCreated())
             {
-                foreach (var contact in Contact.GeneratedContacts)
+                foreach (Contact contact in Contact.GeneratedContacts)
                 {
                     var isTenantA = _tenantService.Tenant == "TenantA";
                     if (isTenantA == contact.IsUnicorn)

@@ -28,7 +28,7 @@ public class EncryptPropertyValues : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var user = context.Set<User>().Single();
+            User user = context.Set<User>().Single();
 
             ConsoleWriteLines($"User {user.Name} has password '{user.Password}'");
         }

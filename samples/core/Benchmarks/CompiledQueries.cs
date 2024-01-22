@@ -32,7 +32,7 @@ public class CompiledQueries
     {
         var idSum = 0;
 
-        await foreach (var blog in _compiledQuery(_context))
+        await foreach (Blog blog in _compiledQuery(_context))
         {
             idSum += blog.Id;
         }
@@ -45,7 +45,7 @@ public class CompiledQueries
     {
         var idSum = 0;
 
-        await foreach (var blog in _context.Blogs.Where(b => b.Url.StartsWith("http://")).AsAsyncEnumerable())
+        await foreach (Blog blog in _context.Blogs.Where(b => b.Url.StartsWith("http://")).AsAsyncEnumerable())
         {
             idSum += blog.Id;
         }

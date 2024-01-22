@@ -32,7 +32,7 @@ public class ULongConcurrency : Program
         {
             ConsoleWriteLines("Read the entity back in one context...");
 
-            var blog = context.Set<Blog>().Single();
+            Blog blog = context.Set<Blog>().Single();
             blog.Name = "TwoUnicorns";
 
             using (var context2 = new SampleDbContext())
@@ -53,7 +53,7 @@ public class ULongConcurrency : Program
             {
                 ConsoleWriteLines($"{e.GetType().FullName}: {e.Message}");
 
-                var databaseValues = context.Entry(blog).GetDatabaseValues();
+                Microsoft.EntityFrameworkCore.ChangeTracking.PropertyValues databaseValues = context.Entry(blog).GetDatabaseValues();
                 context.Entry(blog).OriginalValues.SetValues(databaseValues);
 
                 ConsoleWriteLines("Refresh original values and save again...");

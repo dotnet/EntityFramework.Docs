@@ -33,7 +33,7 @@ public static class CosmosQueriesSample
         context.ChangeTracker.Clear();
 
         #region RegexIsMatch
-        var containsInnerT = await context.Triangles
+        List<Triangle> containsInnerT = await context.Triangles
             .Where(o => Regex.IsMatch(o.Name, "[a-z]t[a-z]", RegexOptions.IgnoreCase))
             .ToListAsync();
         #endregion

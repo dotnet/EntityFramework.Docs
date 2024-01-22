@@ -30,8 +30,8 @@ public static class PrimitiveCollectionsSample
         context.ChangeTracker.Clear();
 
         #region WalksWithTerrain
-        var terrains = new[] { Terrain.River, Terrain.Beach, Terrain.Park };
-        var walksWithTerrain = await context.Walks
+        Terrain[] terrains = new[] { Terrain.River, Terrain.Beach, Terrain.Park };
+        List<string> walksWithTerrain = await context.Walks
             .Where(e => terrains.Contains(e.Terrain))
             .Select(e => e.Name)
             .ToListAsync();
@@ -41,7 +41,7 @@ public static class PrimitiveCollectionsSample
 
         #region PubsWithHeineken
         const string beer = "Heineken";
-        var pubsWithHeineken = await context.Pubs
+        List<string> pubsWithHeineken = await context.Pubs
             .Where(e => e.Beers.Contains(beer))
             .Select(e => e.Name)
             .ToListAsync();
@@ -51,7 +51,7 @@ public static class PrimitiveCollectionsSample
 
         #region PubsWithLager
         var beers = new[] { "Carling", "Heineken", "Stella Artois", "Carlsberg" };
-        var pubsWithLager = await context.Pubs
+        List<string> pubsWithLager = await context.Pubs
             .Where(e => beers.Any(b => e.Beers.Contains(b)))
             .Select(e => e.Name)
             .ToListAsync();
@@ -61,7 +61,7 @@ public static class PrimitiveCollectionsSample
 
         #region PubsVisitedThisYear
         var thisYear = DateTime.Now.Year;
-        var pubsVisitedThisYear = await context.Pubs
+        List<string> pubsVisitedThisYear = await context.Pubs
             .Where(e => e.DaysVisited.Any(v => v.Year == thisYear))
             .Select(e => e.Name)
             .ToListAsync();

@@ -14,7 +14,7 @@ public class Program
     public static void PrintSomeStuff()
     {
         using var context = new BlogsContext();
-        var model = context.Model;
+        Microsoft.EntityFrameworkCore.Metadata.IModel model = context.Model;
 
         Console.WriteLine("Model has:");
         Console.WriteLine($"  {model.GetEntityTypes().Count()} entity types");

@@ -10,9 +10,9 @@ public class MetadataAPIContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         #region MetadataAPI
-        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
         {
-            foreach (var propertyInfo in entityType.ClrType.GetProperties())
+            foreach (System.Reflection.PropertyInfo propertyInfo in entityType.ClrType.GetProperties())
             {
                 if (propertyInfo.PropertyType == typeof(Currency))
                 {

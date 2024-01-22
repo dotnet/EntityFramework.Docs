@@ -17,10 +17,10 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
     [Fact]
     public void GetBlog()
     {
-        using var context = TestDatabaseFixture.CreateContext();
+        using BusinessLogic.BloggingContext context = TestDatabaseFixture.CreateContext();
         var controller = new BloggingController(context);
 
-        var blog = controller.GetBlog("Blog2").Value;
+        BusinessLogic.Blog blog = controller.GetBlog("Blog2").Value;
 
         Assert.Equal("http://blog2.com", blog.Url);
     }
@@ -30,10 +30,10 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
     [Fact]
     public void GetAllBlogs()
     {
-        using var context = TestDatabaseFixture.CreateContext();
+        using BusinessLogic.BloggingContext context = TestDatabaseFixture.CreateContext();
         var controller = new BloggingController(context);
 
-        var blogs = controller.GetAllBlogs().Value;
+        BusinessLogic.Blog[] blogs = controller.GetAllBlogs().Value;
 
         Assert.Collection(
             blogs,
@@ -46,7 +46,7 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
     [Fact]
     public void AddBlog()
     {
-        using var context = TestDatabaseFixture.CreateContext();
+        using BusinessLogic.BloggingContext context = TestDatabaseFixture.CreateContext();
         context.Database.BeginTransaction();
 
         var controller = new BloggingController(context);
@@ -54,7 +54,7 @@ public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
 
         context.ChangeTracker.Clear();
 
-        var blog = context.Blogs.Single(b => b.Name == "Blog3");
+        BusinessLogic.Blog blog = context.Blogs.Single(b => b.Name == "Blog3");
         Assert.Equal("http://blog3.com", blog.Url);
     }
     #endregion

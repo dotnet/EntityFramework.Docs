@@ -37,14 +37,14 @@ public class BloggingContext : DbContext
     {
         ChangeTracker.DetectChanges();
 
-        foreach (var item in ChangeTracker.Entries().Where(
+        foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry item in ChangeTracker.Entries().Where(
                      e =>
                          e.State == EntityState.Added && e.Metadata.GetProperties().Any(p => p.Name == "_tenantId")))
         {
             item.CurrentValues["_tenantId"] = _tenantId;
         }
 
-        foreach (var item in ChangeTracker.Entries<Post>().Where(e => e.State == EntityState.Deleted))
+        foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Post> item in ChangeTracker.Entries<Post>().Where(e => e.State == EntityState.Deleted))
         {
             item.State = EntityState.Modified;
             item.CurrentValues["IsDeleted"] = true;

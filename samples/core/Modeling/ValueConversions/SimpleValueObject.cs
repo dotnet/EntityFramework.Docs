@@ -28,7 +28,7 @@ public class SimpleValueObject : Program
         {
             ConsoleWriteLines("Read the entity back...");
 
-            var entity = context.Set<Order>().Single();
+            Order entity = context.Set<Order>().Single();
         }
 
         ConsoleWriteLines("Sample finished.");

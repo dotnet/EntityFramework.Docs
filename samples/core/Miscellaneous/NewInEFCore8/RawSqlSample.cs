@@ -50,14 +50,14 @@ public static class RawSqlSample
         #region SqlQueryAllColumns
         var start = new DateOnly(2022, 1, 1);
         var end = new DateOnly(2023, 1, 1);
-        var postsIn2022 =
+        List<BlogPost> postsIn2022 =
             await context.Database
                 .SqlQuery<BlogPost>($"SELECT * FROM Posts as p WHERE p.PublishedOn >= {start} AND p.PublishedOn < {end}")
                 .ToListAsync();
         #endregion
 
         Console.WriteLine();
-        foreach (var post in postsIn2022)
+        foreach (BlogPost? post in postsIn2022)
         {
             Console.WriteLine($"Post '{post.BlogTitle[..10]}...' published on {post.PublishedOn} with FK to Blog '{post.BlogId}'.");
         }
@@ -67,7 +67,7 @@ public static class RawSqlSample
         #region SqlQueryJoin
 
         var cutoffDate = new DateOnly(2022, 1, 1);
-        var summaries =
+        List<PostSummary> summaries =
             await context.Database.SqlQuery<PostSummary>(
                     @$"SELECT b.Name AS BlogName, p.Title AS PostTitle, p.PublishedOn
                        FROM Posts AS p
@@ -86,7 +86,7 @@ public static class RawSqlSample
         Console.WriteLine();
 
         #region SqlQueryJoinComposed
-        var summariesIn2022 =
+        List<PostSummary> summariesIn2022 =
             await context.Database.SqlQuery<PostSummary>(
                     @$"SELECT b.Name AS BlogName, p.Title AS PostTitle, p.PublishedOn
                        FROM Posts AS p
@@ -104,7 +104,7 @@ public static class RawSqlSample
         Console.WriteLine();
 
         #region SqlQueryJoinComposedLinq
-        var summariesByLinq =
+        List<PostSummary> summariesByLinq =
             await context.Posts.Select(
                     p => new PostSummary
                     {
@@ -125,7 +125,7 @@ public static class RawSqlSample
         Console.WriteLine();
 
         #region SqlQueryView
-        var summariesFromView =
+        List<PostSummary> summariesFromView =
             await context.Database.SqlQuery<PostSummary>(
                     $"SELECT * FROM PostAndBlogSummariesView")
                 .Where(p => p.PublishedOn >= cutoffDate && p.PublishedOn < end)
@@ -133,7 +133,7 @@ public static class RawSqlSample
         #endregion
 
         Console.WriteLine();
-        foreach (var post in summariesFromView)
+        foreach (PostSummary? post in summariesFromView)
         {
             Console.WriteLine($"Post '{post.PostTitle[..10]}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
         }
@@ -141,7 +141,7 @@ public static class RawSqlSample
         Console.WriteLine();
 
         #region SqlQueryFunction
-        var summariesFromFunc =
+        List<PostSummary> summariesFromFunc =
             await context.Database.SqlQuery<PostSummary>(
                     $"SELECT * FROM GetPostsPublishedAfter({cutoffDate})")
                 .Where(p => p.PublishedOn < end)
@@ -157,14 +157,14 @@ public static class RawSqlSample
         Console.WriteLine();
 
         #region SqlQueryStoredProc
-        var summariesFromStoredProc =
+        List<PostSummary> summariesFromStoredProc =
             await context.Database.SqlQuery<PostSummary>(
                     $"exec GetRecentPostSummariesProc")
                 .ToListAsync();
         #endregion
 
         Console.WriteLine();
-        foreach (var post in summariesFromStoredProc)
+        foreach (PostSummary? post in summariesFromStoredProc)
         {
             Console.WriteLine($"Post '{post.PostTitle[..10]}...' published on {post.PublishedOn}.");
         }

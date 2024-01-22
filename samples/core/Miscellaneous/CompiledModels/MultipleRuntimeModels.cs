@@ -34,7 +34,7 @@ public static class RuntimeModelCache
 [DbContext(typeof(BlogsContext))]
 internal partial class BlogsContextModel1 : RuntimeModel
 {
-    private static BlogsContextModel1 _instance;
+    private static BlogsContextModel1? _instance;
     public static IModel Instance
     {
         get
@@ -58,7 +58,7 @@ internal partial class BlogsContextModel1 : RuntimeModel
 [DbContext(typeof(BlogsContext))]
 internal partial class BlogsContextModel2 : RuntimeModel
 {
-    private static BlogsContextModel2 _instance;
+    private static BlogsContextModel2? _instance;
     public static IModel Instance
     {
         get

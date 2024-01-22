@@ -30,7 +30,7 @@ public static class BoolToStringTranslationSample
 
         Console.WriteLine();
 
-        foreach (var customer in results2)
+        foreach (Customer customer in results2)
         {
             Console.WriteLine($"{customer.Name} is active: {customer.IsActive}");
         }

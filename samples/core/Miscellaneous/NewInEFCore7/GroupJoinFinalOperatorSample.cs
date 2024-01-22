@@ -71,12 +71,12 @@ public static class GroupJoinFinalOperatorSample
 
         await using (var context = new TContext())
         {
-            var query =
+            IQueryable<CustomerWithNavigationProperties> query =
                 from customer in context.Customers
                 join order in context.Orders on customer.Id equals order.CustomerId into orderDetails
                 select new CustomerWithNavigationProperties { Customer = customer, Orders = orderDetails.ToList() };
 
-            await foreach (var group in query.AsAsyncEnumerable())
+            await foreach (CustomerWithNavigationProperties? group in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"Customer: {group.Customer.Name}; Count = {group.Orders.Count}");
             }
