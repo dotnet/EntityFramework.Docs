@@ -5,25 +5,20 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
-namespace SqlServer.Faq;
+namespace SqlServer.Misc;
 
 public class TriggersContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region TriggerConfiguration
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .ToTable(tb => tb.HasTrigger("SomeTrigger"));
-    }
     #endregion
 
     #region ConfigureConventions
-    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-    {
-        configurationBuilder.Conventions.Add(_ => new BlankTriggerAddingConvention());
-    }
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder) => configurationBuilder.Conventions.Add(_ => new BlankTriggerAddingConvention());
     #endregion
 }
 
@@ -36,7 +31,7 @@ public class BlankTriggerAddingConvention : IModelFinalizingConvention
     {
         foreach (IConventionEntityType entityType in modelBuilder.Metadata.GetEntityTypes())
         {
-            var table = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table);
+            StoreObjectIdentifier? table = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table);
             if (table != null
                 && entityType.GetDeclaredTriggers().All(t => t.GetDatabaseName(table.Value) == null)
                 && (entityType.BaseType == null

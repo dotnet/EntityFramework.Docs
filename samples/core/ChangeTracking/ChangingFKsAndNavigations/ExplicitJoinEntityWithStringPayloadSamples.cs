@@ -163,12 +163,9 @@ public class PostTag
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
@@ -187,8 +184,7 @@ public class BlogsContext : DbContext
     }
 
     #region OnModelCreating
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Post>()
             .HasMany(p => p.Tags)
             .WithMany(p => p.Posts)
@@ -196,7 +192,6 @@ public class BlogsContext : DbContext
                 j => j.HasOne<Tag>().WithMany(),
                 j => j.HasOne<Post>().WithMany(),
                 j => j.Property(e => e.TaggedOn).HasDefaultValueSql("CURRENT_TIMESTAMP"));
-    }
     #endregion
 
     #region SaveChanges

@@ -112,7 +112,8 @@ public static class SerializedGraphExamples
             posts,
             new JsonSerializerSettings
             {
-                PreserveReferencesHandling = PreserveReferencesHandling.All, Formatting = Formatting.Indented
+                PreserveReferencesHandling = PreserveReferencesHandling.All,
+                Formatting = Formatting.Indented
             });
         #endregion
 
@@ -296,12 +297,9 @@ public class Post
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }

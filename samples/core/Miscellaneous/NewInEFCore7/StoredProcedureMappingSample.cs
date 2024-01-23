@@ -20,7 +20,7 @@ public static class StoredProcedureMappingSample
         return SprocMappingTest<TpcDocumentsContext>();
     }
 
-    private static async Task SprocMappingTest<TContext>()
+    static async Task SprocMappingTest<TContext>()
         where TContext : DocumentsContext, new()
     {
         await using var context = new TContext();
@@ -74,7 +74,7 @@ public static class StoredProcedureMappingSample
             book.Title += " (New Edition!)";
         }
 
-        foreach (var person in context.People.Local.Where(person => person.Contact.Address.Country == "UK"))
+        foreach (Person? person in context.People.Local.Where(person => person.Contact.Address.Country == "UK"))
         {
             person.Name = "Dr. " + person.Name;
             person.Contact.Phone = "+44 " + person.Contact.Phone![1..];
@@ -145,7 +145,7 @@ public static class StoredProcedureMappingSample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

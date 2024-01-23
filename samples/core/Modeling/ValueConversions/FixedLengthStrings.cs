@@ -84,8 +84,8 @@ public class FixedLengthStrings : Program
         }
         #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FixedLengthStrings;Trusted_Connection=True")
                 .EnableSensitiveDataLogging();

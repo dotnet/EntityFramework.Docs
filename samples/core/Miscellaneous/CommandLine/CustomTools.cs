@@ -11,8 +11,8 @@ public class CustomTools
     public static void AddMigration(string migrationName)
     {
         var projectDir = Directory.GetCurrentDirectory();
-        var rootNamespace = "ConsoleApp1";
-        var outputDir = "Migraitons";
+        const string rootNamespace = "ConsoleApp1";
+        const string outputDir = "Migrations";
 
         #region CustomTools
         var db = new MyDbContext();
@@ -31,6 +31,4 @@ public class CustomTools
     }
 }
 
-internal class MyDbContext : DbContext
-{
-}
+class MyDbContext : DbContext;

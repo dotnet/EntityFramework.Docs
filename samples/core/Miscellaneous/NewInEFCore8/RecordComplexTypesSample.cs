@@ -14,7 +14,7 @@ public static class RecordComplexTypesSample
         return ComplexTypeTest<CustomerContextSqlite>();
     }
 
-    private static async Task ComplexTypeTest<TContext>()
+    static async Task ComplexTypeTest<TContext>()
         where TContext : CustomerContextBase, new()
     {
         await using var context = new TContext();
@@ -44,7 +44,7 @@ public static class RecordComplexTypesSample
         await context.SaveChangesAsync();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -139,10 +139,7 @@ public static class RecordComplexTypesSample
             });
         }
 
-        public async Task Seed()
-        {
-            await SaveChangesAsync();
-        }
+        public async Task Seed() => await SaveChangesAsync();
     }
 }
 
@@ -160,7 +157,7 @@ public static class StructRecordComplexTypesSample
         return ComplexTypeTest<CustomerContextSqlite>();
     }
 
-    private static async Task ComplexTypeTest<TContext>()
+    static async Task ComplexTypeTest<TContext>()
         where TContext : CustomerContextBase, new()
     {
         await using var context = new TContext();
@@ -192,7 +189,7 @@ public static class StructRecordComplexTypesSample
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -289,9 +286,6 @@ public static class StructRecordComplexTypesSample
             });
         }
 
-        public async Task Seed()
-        {
-            await SaveChangesAsync();
-        }
+        public async Task Seed() => await SaveChangesAsync();
     }
 }

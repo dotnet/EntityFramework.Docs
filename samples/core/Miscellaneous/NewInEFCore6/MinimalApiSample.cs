@@ -7,15 +7,15 @@ public static class MinimalApiSample
     public static void Add_a_DbContext_and_provider()
     {
         Console.WriteLine($">>>> Sample: {nameof(Add_a_DbContext_and_provider)}");
-        
+
         SqliteMinimal(null);
         SqliteNormal(null);
-        
+
         SqlServerMinimal(null);
         SqlServerNormal(null);
     }
 
-    private static void SqliteMinimal(string[] args)
+    static void SqliteMinimal(string[] args)
     {
         #region SqliteMinimal
         FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -24,7 +24,7 @@ public static class MinimalApiSample
         #endregion
     }
 
-    private static void SqliteNormal(string[] args)
+    static void SqliteNormal(string[] args)
     {
         #region SqliteNormal
         FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -34,7 +34,7 @@ public static class MinimalApiSample
         #endregion
     }
 
-    private static void SqlServerMinimal(string[] args)
+    static void SqlServerMinimal(string[] args)
     {
         #region SqlServerMinimal
         FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -43,7 +43,7 @@ public static class MinimalApiSample
         #endregion
     }
 
-    private static void SqlServerNormal(string[] args)
+    static void SqlServerNormal(string[] args)
     {
         #region SqlServerNormal
         FakeWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -54,13 +54,13 @@ public static class MinimalApiSample
     }
 
     // This is a fake implementation of WebApplicationBuilder  uses to show the EF Core minimal APIs
-    private class FakeWebApplicationBuilder
+    class FakeWebApplicationBuilder
     {
         public ServiceCollection Services { get; } = new();
     }
 
     // This is a fake implementation of WebApplication uses to show the EF Core minimal APIs
-    private static class WebApplication
+    static class WebApplication
     {
         public static FakeWebApplicationBuilder CreateBuilder(string[] args)
             => new();

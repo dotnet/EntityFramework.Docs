@@ -47,7 +47,7 @@ public static class ModelBuildingConventionsSample
         Console.WriteLine();
     }
 
-    private static async Task ConventionsTest<TContext>()
+    static async Task ConventionsTest<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -74,7 +74,7 @@ public static class ModelBuildingConventionsSample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -157,7 +157,7 @@ public class DiscriminatorLengthConvention1 : IEntityTypeBaseTypeChangedConventi
         IConventionEntityType? oldBaseType,
         IConventionContext<IConventionEntityType> context)
     {
-        var discriminatorProperty = entityTypeBuilder.Metadata.FindDiscriminatorProperty();
+        IConventionProperty? discriminatorProperty = entityTypeBuilder.Metadata.FindDiscriminatorProperty();
         if (discriminatorProperty != null
             && discriminatorProperty.ClrType == typeof(string))
         {
@@ -172,10 +172,10 @@ public class DiscriminatorLengthConvention2 : IModelFinalizingConvention
 {
     public void ProcessModelFinalizing(IConventionModelBuilder modelBuilder, IConventionContext<IConventionModelBuilder> context)
     {
-        foreach (var entityType in modelBuilder.Metadata.GetEntityTypes()
+        foreach (IConventionEntityType? entityType in modelBuilder.Metadata.GetEntityTypes()
                      .Where(entityType => entityType.BaseType == null))
         {
-            var discriminatorProperty = entityType.FindDiscriminatorProperty();
+            IConventionProperty? discriminatorProperty = entityType.FindDiscriminatorProperty();
             if (discriminatorProperty != null
                 && discriminatorProperty.ClrType == typeof(string))
             {
@@ -191,10 +191,10 @@ public class DiscriminatorLengthConvention3 : IModelFinalizingConvention
 {
     public void ProcessModelFinalizing(IConventionModelBuilder modelBuilder, IConventionContext<IConventionModelBuilder> context)
     {
-        foreach (var entityType in modelBuilder.Metadata.GetEntityTypes()
+        foreach (IConventionEntityType? entityType in modelBuilder.Metadata.GetEntityTypes()
                      .Where(entityType => entityType.BaseType == null))
         {
-            var discriminatorProperty = entityType.FindDiscriminatorProperty();
+            IConventionProperty? discriminatorProperty = entityType.FindDiscriminatorProperty();
             if (discriminatorProperty != null
                 && discriminatorProperty.ClrType == typeof(string))
             {
@@ -233,7 +233,7 @@ public class MaxStringLengthConvention : IModelFinalizingConvention
 {
     public void ProcessModelFinalizing(IConventionModelBuilder modelBuilder, IConventionContext<IConventionModelBuilder> context)
     {
-        foreach (var property in modelBuilder.Metadata.GetEntityTypes()
+        foreach (IConventionProperty? property in modelBuilder.Metadata.GetEntityTypes()
                      .SelectMany(
                          entityType => entityType.GetDeclaredProperties()
                              .Where(
@@ -250,7 +250,7 @@ public class MaxStringLengthNonUnicodeConvention : IModelFinalizingConvention
 {
     public void ProcessModelFinalizing(IConventionModelBuilder modelBuilder, IConventionContext<IConventionModelBuilder> context)
     {
-        foreach (var property in modelBuilder.Metadata.GetEntityTypes()
+        foreach (IConventionProperty? property in modelBuilder.Metadata.GetEntityTypes()
                      .SelectMany(
                          entityType => entityType.GetDeclaredProperties()
                              .Where(
@@ -271,16 +271,14 @@ public class LaundryContext : DbContext
 {
     public DbSet<LaundryBasket> LaundryBaskets => Set<LaundryBasket>();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}");
 
     #region ReplaceConvention
-    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-    {
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder) =>
         configurationBuilder.Conventions.Replace<PropertyDiscoveryConvention>(
             serviceProvider => new AttributeBasedPropertyDiscoveryConvention(
                 serviceProvider.GetRequiredService<ProviderConventionSetBuilderDependencies>()));
-    }
     #endregion
 }
 
@@ -358,7 +356,7 @@ public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConven
         }
     }
 
-    private void Process(IConventionEntityTypeBuilder entityTypeBuilder)
+    void Process(IConventionEntityTypeBuilder entityTypeBuilder)
     {
         foreach (MemberInfo memberInfo in GetRuntimeMembers())
         {
@@ -377,7 +375,7 @@ public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConven
         {
             Type clrType = entityTypeBuilder.Metadata.ClrType;
 
-            foreach (var property in clrType.GetRuntimeProperties()
+            foreach (PropertyInfo? property in clrType.GetRuntimeProperties()
                          .Where(p => p.GetMethod?.IsStatic == false))
             {
                 yield return property;

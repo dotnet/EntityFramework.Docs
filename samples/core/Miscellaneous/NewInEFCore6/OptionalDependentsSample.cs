@@ -497,12 +497,9 @@ public static class OptionalDependentsSample
         public DbSet<WithRequiredProperty.Customer> Customers1 { get; set; }
         public DbSet<WithoutRequiredProperty.Customer> Customers2 { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public SomeDbContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public SomeDbContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

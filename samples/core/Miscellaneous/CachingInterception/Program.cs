@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class Program
 {
-    private static async Task Main()
+    static async Task Main()
     {
         #region Main
         // 1. Initialize the database with some daily messages.

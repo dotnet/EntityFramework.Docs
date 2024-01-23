@@ -23,7 +23,7 @@ public static class CommandSourceSample
             });
 
         context.SaveChanges();
-        
+
         context.ChangeTracker.Clear();
 
         var customers = context.Customers.ToList();
@@ -59,12 +59,10 @@ public static class CommandSourceSample
     {
         public DbSet<Customer> Customers { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder
                 .EnableSensitiveDataLogging()
                 .AddInterceptors(new CommandSourceInterceptor())
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample");
-        }
     }
 }

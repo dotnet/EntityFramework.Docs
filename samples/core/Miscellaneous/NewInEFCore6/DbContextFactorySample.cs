@@ -58,14 +58,11 @@ public static class DbContextFactorySample
     }
 
     #region InjectContext
-    private class MyController1
+    class MyController1
     {
-        private readonly SomeDbContext _context;
+        readonly SomeDbContext _context;
 
-        public MyController1(SomeDbContext context)
-        {
-            _context = context;
-        }
+        public MyController1(SomeDbContext context) => _context = context;
 
         public void DoSomething()
         {
@@ -77,14 +74,11 @@ public static class DbContextFactorySample
     #endregion
 
     #region InjectFactory
-    private class MyController2
+    class MyController2
     {
-        private readonly IDbContextFactory<SomeDbContext> _contextFactory;
+        readonly IDbContextFactory<SomeDbContext> _contextFactory;
 
-        public MyController2(IDbContextFactory<SomeDbContext> contextFactory)
-        {
-            _contextFactory = contextFactory;
-        }
+        public MyController2(IDbContextFactory<SomeDbContext> contextFactory) => _contextFactory = contextFactory;
 
         public void DoSomething()
         {
@@ -93,7 +87,7 @@ public static class DbContextFactorySample
 
             var results1 = context1.Blogs.ToList();
             var results2 = context2.Blogs.ToList();
-            
+
             // Contexts obtained from the factory must be explicitly disposed
         }
     }
@@ -115,7 +109,7 @@ public static class DbContextFactorySample
             : base(options)
         {
         }
-        
+
         public DbSet<Blog> Blogs { get; set; }
     }
     #endregion

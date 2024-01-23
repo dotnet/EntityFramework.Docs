@@ -10,8 +10,8 @@ namespace EF.Testing.UnitTests;
 
 public sealed class SqliteInMemoryBloggingControllerTest : IDisposable
 {
-    private readonly SqliteConnection _connection;
-    private readonly DbContextOptions<BloggingContext> _contextOptions;
+    readonly SqliteConnection _connection;
+    readonly DbContextOptions<BloggingContext> _contextOptions;
 
     #region ConstructorAndDispose
     public SqliteInMemoryBloggingControllerTest()

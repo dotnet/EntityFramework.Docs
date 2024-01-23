@@ -75,19 +75,19 @@ public static class HasConversionSample
     public class TestEntity1
     {
         public int Id { get; set; }
-        public Currency Currency{ get; set; }
+        public Currency Currency { get; set; }
     }
 
     public class TestEntity2
     {
         public int Id { get; set; }
-        public Currency Currency{ get; set; }
+        public Currency Currency { get; set; }
     }
 
     public class TestEntity3
     {
         public int Id { get; set; }
-        public Currency Currency{ get; set; }
+        public Currency Currency { get; set; }
     }
 
     #region CurrencyEnum
@@ -113,12 +113,9 @@ public static class HasConversionSample
 
     public class CurrencyContext : DbContext
     {
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public CurrencyContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public CurrencyContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

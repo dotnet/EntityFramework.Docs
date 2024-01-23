@@ -48,7 +48,7 @@ public static class StatisticalAggregateFunctionsSample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -58,8 +58,8 @@ public static class StatisticalAggregateFunctionsSample
     {
         public DbSet<Download> Downloads => Set<Download>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Downloads")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();

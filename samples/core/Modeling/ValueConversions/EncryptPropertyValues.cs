@@ -38,17 +38,15 @@ public class EncryptPropertyValues : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureEncryptPropertyValues
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureEncryptPropertyValues
             modelBuilder.Entity<User>().Property(e => e.Password).HasConversion(
                 v => new string(v.Reverse().ToArray()),
                 v => new string(v.Reverse().ToArray()));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EncryptPropertyValues;Trusted_Connection=True")
                 .EnableSensitiveDataLogging();

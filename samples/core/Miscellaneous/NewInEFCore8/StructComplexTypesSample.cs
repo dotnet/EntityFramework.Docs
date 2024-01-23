@@ -14,7 +14,7 @@ public static class StructComplexTypesSample
         return ComplexTypeTest<CustomerContextSqlite>();
     }
 
-    private static async Task ComplexTypeTest<TContext>()
+    static async Task ComplexTypeTest<TContext>()
         where TContext : CustomerContextBase, new()
     {
         await using var context = new TContext();
@@ -49,7 +49,7 @@ public static class StructComplexTypesSample
         await context.SaveChangesAsync();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -153,9 +153,6 @@ public static class StructComplexTypesSample
             });
         }
 
-        public async Task Seed()
-        {
-            await SaveChangesAsync();
-        }
+        public async Task Seed() => await SaveChangesAsync();
     }
 }

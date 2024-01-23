@@ -42,7 +42,7 @@ public static class SparseColumnsSample
                 new ForumUser { Username = "smokey" },
                 new ForumUser { Username = "alice" },
                 new ForumUser { Username = "mac" },
-                new ForumModerator { Username = "baxter", ForumName = "Viral Cats"},
+                new ForumModerator { Username = "baxter", ForumName = "Viral Cats" },
                 new ForumUser { Username = "olive" },
                 new ForumUser { Username = "toast" });
 
@@ -67,12 +67,9 @@ public static class SparseColumnsSample
     {
         public DbSet<ForumUser> Users { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public BooksContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public BooksContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -87,13 +84,11 @@ public static class SparseColumnsSample
         }
 
         #region OnModelCreating
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder
                 .Entity<ForumModerator>()
                 .Property(e => e.ForumName)
                 .IsSparse();
-        }
         #endregion
     }
 }

@@ -20,7 +20,7 @@ public static class GroupJoinFinalOperatorSample
         return QueryTest<GroupJoinContextInMemory>();
     }
 
-    private static async Task QueryTest<TContext>()
+    static async Task QueryTest<TContext>()
         where TContext : GroupJoinContext, new()
     {
         await using (var context = new TContext())
@@ -83,7 +83,7 @@ public static class GroupJoinFinalOperatorSample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -94,8 +94,8 @@ public static class GroupJoinFinalOperatorSample
         public DbSet<Customer> Customers => Set<Customer>();
         public DbSet<Order> Orders => Set<Order>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
     }

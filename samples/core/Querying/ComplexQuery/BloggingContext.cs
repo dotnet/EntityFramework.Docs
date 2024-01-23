@@ -103,9 +103,7 @@ public class BloggingContext : DbContext
                 new PostTag { PostTagId = 6, PostId = 4, TagId = "informative" });
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseSqlServer(
             @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.ComplexQuery;Trusted_Connection=True");
-    }
 }

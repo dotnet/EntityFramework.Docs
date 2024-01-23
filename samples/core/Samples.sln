@@ -198,8 +198,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8DD05FD1-E71A-465B-BB14-CE66971CA26C}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		C:\Users\DickB\OneDrive\Documents\EfSamples.csv = C:\Users\DickB\OneDrive\Documents\EfSamples.csv
-		C:\Users\DickB\OneDrive\Documents\EfSamples.md = C:\Users\DickB\OneDrive\Documents\EfSamples.md
 	EndProjectSection
 EndProject
 Global

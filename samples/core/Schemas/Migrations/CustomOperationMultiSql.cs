@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 
-internal static class MultiSqlMigrationBuilderExtensions
+static class MultiSqlMigrationBuilderExtensions
 {
     #region snippet_CustomOperationMultiSql
     public static OperationBuilder<SqlOperation> CreateUser(

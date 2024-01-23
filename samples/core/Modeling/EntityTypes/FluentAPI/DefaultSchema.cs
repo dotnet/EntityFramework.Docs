@@ -1,16 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.EntityTypes.FluentAPI.DefaultSchema;
+namespace EFModeling.EntityTypes.FluentAPI;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region DefaultSchema
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.HasDefaultSchema("blogging");
-    }
     #endregion
 }
 

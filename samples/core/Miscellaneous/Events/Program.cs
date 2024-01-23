@@ -51,13 +51,13 @@ public class BlogsContext : DbContext
     }
     #endregion
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("DataSource=blogs.db");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.UseSqlite("DataSource=blogs.db");
 
     public DbSet<Blog> Blogs { get; set; }
 
     #region UpdateTimestamps
-    private static void UpdateTimestamps(object sender, EntityEntryEventArgs e)
+    static void UpdateTimestamps(object sender, EntityEntryEventArgs e)
     {
         if (e.Entry.Entity is IHasTimestamps entityWithTimestamps)
         {

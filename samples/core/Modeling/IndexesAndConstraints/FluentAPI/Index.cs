@@ -2,16 +2,14 @@
 
 namespace EFModeling.IndexesAndConstraints.FluentAPI.Index;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region Index
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .HasIndex(b => b.Url);
-    }
     #endregion
 }
 

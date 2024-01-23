@@ -3,17 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.GeneratedProperties.FluentAPI.ValueGeneratedOnAddOrUpdate;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region ValueGeneratedOnAddOrUpdate
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .Property(b => b.LastUpdated)
             .ValueGeneratedOnAddOrUpdate();
-    }
     #endregion
 }
 

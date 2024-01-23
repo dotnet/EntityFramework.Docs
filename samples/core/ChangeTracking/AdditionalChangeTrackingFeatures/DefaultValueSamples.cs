@@ -168,7 +168,7 @@ public class Foo3
 {
     public int Id { get; set; }
 
-    private int? _count;
+    int? _count;
 
     public int Count
     {
@@ -192,7 +192,7 @@ public class User
     public int Id { get; set; }
     public string Name { get; set; }
 
-    private bool? _isAuthorized;
+    bool? _isAuthorized;
 
     public bool IsAuthorized
     {
@@ -204,12 +204,9 @@ public class User
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

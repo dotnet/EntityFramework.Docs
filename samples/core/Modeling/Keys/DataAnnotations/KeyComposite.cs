@@ -2,14 +2,14 @@
 
 namespace EFModeling.Keys.DataAnnotations.KeyComposite;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Car> Cars { get; set; }
 }
 
 #region KeyComposite
 [PrimaryKey(nameof(State), nameof(LicensePlate))]
-internal class Car
+class Car
 {
     public string State { get; set; }
     public string LicensePlate { get; set; }

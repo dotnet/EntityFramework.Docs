@@ -2,13 +2,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityProperties.FluentAPI.ColumnOrder;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Employee> Employees { get; set; }
 
     #region snippet_HasColumnOrder
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Employee>(x =>
         {
             x.Property(b => b.Id)
@@ -20,7 +19,6 @@ internal class MyContext : DbContext
             x.Property(b => b.LastName)
                 .HasColumnOrder(2);
         });
-    }
     #endregion
 }
 

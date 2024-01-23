@@ -14,7 +14,7 @@ public static class LazyLoadingSample
         return LazyLoadingTest<LazyLoadingBlogsContextSqlite>();
     }
 
-    private static async Task LazyLoadingTest<TContext>()
+    static async Task LazyLoadingTest<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -65,7 +65,7 @@ public static class LazyLoadingSample
         }
 
         #region IsLoaded
-        foreach (var blog in blogs)
+        foreach (Blog blog in blogs)
         {
             if (context.Entry(blog).Collection(e => e.Posts).IsLoaded)
             {
@@ -74,10 +74,10 @@ public static class LazyLoadingSample
         }
         #endregion
 
-        string ReadLine() => (x++).ToString(); // Console.ReadLine();
+        string ReadLine() => x++.ToString(); // Console.ReadLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

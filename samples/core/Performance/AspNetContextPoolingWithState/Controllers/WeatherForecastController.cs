@@ -6,7 +6,7 @@ namespace Performance.AspNetContextPoolingWithState.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private readonly WeatherForecastContext _dbContext;
+    readonly WeatherForecastContext _dbContext;
 
     public WeatherForecastController(WeatherForecastContext dbContext)
         => _dbContext = dbContext;

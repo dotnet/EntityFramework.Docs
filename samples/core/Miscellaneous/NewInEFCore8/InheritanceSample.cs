@@ -7,7 +7,7 @@ public static class InheritanceSample
         PrintSampleName();
         return DiscriminatorLengthTest<TphDocumentsContext>();
     }
-    private static async Task DiscriminatorLengthTest<TContext>()
+    static async Task DiscriminatorLengthTest<TContext>()
         where TContext : DocumentsContext, new()
     {
         await using var context = new TContext();
@@ -22,7 +22,7 @@ public static class InheritanceSample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

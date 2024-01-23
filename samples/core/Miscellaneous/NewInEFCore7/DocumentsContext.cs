@@ -41,10 +41,7 @@ public class Book : Document
 public class Magazine : Document
 {
     public Magazine(string title, int numberOfPages, DateTime publicationDate, byte[]? coverArt, int issueNumber)
-        : base(title, numberOfPages, publicationDate, coverArt)
-    {
-        IssueNumber = issueNumber;
-    }
+        : base(title, numberOfPages, publicationDate, coverArt) => IssueNumber = issueNumber;
 
     public int IssueNumber { get; set; }
     public decimal? CoverPrice { get; set; }
@@ -53,10 +50,7 @@ public class Magazine : Document
 
 public class Person
 {
-    public Person(string name)
-    {
-        Name = name;
-    }
+    public Person(string name) => Name = name;
 
     public int Id { get; }
 
@@ -80,8 +74,8 @@ public abstract class DocumentsContext : DbContext
     public DbSet<Magazine> Magazines => Set<Magazine>();
     public DbSet<Person> People => Set<Person>();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}")
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}")
             .EnableSensitiveDataLogging()
             .LogTo(
                 s =>
@@ -133,9 +127,7 @@ public abstract class DocumentsContext : DbContext
         }
 
         modelBuilder.Entity<Person>(
-            entityTypeBuilder =>
-            {
-                entityTypeBuilder.OwnsOne(
+            entityTypeBuilder => entityTypeBuilder.OwnsOne(
                     author => author.Contact,
                     ownedNavigationBuilder =>
                     {
@@ -201,8 +193,7 @@ public abstract class DocumentsContext : DbContext
                                             });
                                 }
                             });
-                    });
-            });
+                    }));
     }
 
     public async Task Seed()
@@ -319,18 +310,14 @@ public class TphDocumentsContext : DocumentsContext
         {
             #region JoinSprocs
             modelBuilder.Entity<Book>(
-                entityTypeBuilder =>
-                {
-                    entityTypeBuilder
+                entityTypeBuilder => entityTypeBuilder
                         .HasMany(document => document.Authors)
                         .WithMany(author => author.PublishedWorks)
                         .UsingEntity<Dictionary<string, object>>(
                             "BookPerson",
                             builder => builder.HasOne<Person>().WithMany().OnDelete(DeleteBehavior.Cascade),
                             builder => builder.HasOne<Book>().WithMany().OnDelete(DeleteBehavior.ClientCascade),
-                            joinTypeBuilder =>
-                            {
-                                joinTypeBuilder
+                            joinTypeBuilder => joinTypeBuilder
                                     .InsertUsingStoredProcedure(
                                         storedProcedureBuilder =>
                                         {
@@ -343,9 +330,7 @@ public class TphDocumentsContext : DocumentsContext
                                             storedProcedureBuilder.HasOriginalValueParameter("AuthorsId");
                                             storedProcedureBuilder.HasOriginalValueParameter("PublishedWorksId");
                                             storedProcedureBuilder.HasRowsAffectedResultColumn();
-                                        });
-                            });
-                });
+                                        })));
             #endregion
         }
 

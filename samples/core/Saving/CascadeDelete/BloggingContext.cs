@@ -27,16 +27,16 @@ public sealed class BloggingContext : DbContext
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder
             .ReplaceService<IModelCacheKeyFactory, DeleteBehaviorCacheKeyFactory>()
             .EnableSensitiveDataLogging()
             .UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=EFSaving.CascadeDelete;Trusted_Connection=True",
                 b => b.MaxBatchSize(1));
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-        => modelBuilder
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        modelBuilder
             .Entity<Blog>()
             .HasMany(e => e.Posts)
             .WithOne(e => e.Blog)
@@ -62,7 +62,7 @@ public sealed class BloggingContext : DbContext
 
     public static IList<string> LogMessages { get; private set; }
 
-    private class MyLoggerProvider : ILoggerProvider
+    class MyLoggerProvider : ILoggerProvider
     {
         public ILogger CreateLogger(string categoryName) => new SampleLogger();
 
@@ -70,7 +70,7 @@ public sealed class BloggingContext : DbContext
         {
         }
 
-        private class SampleLogger : ILogger
+        class SampleLogger : ILogger
         {
             public bool IsEnabled(LogLevel logLevel) => true;
 

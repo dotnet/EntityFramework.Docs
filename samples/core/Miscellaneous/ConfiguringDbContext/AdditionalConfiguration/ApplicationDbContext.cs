@@ -5,11 +5,9 @@ namespace AdditionalConfiguration;
 #region ApplicationDbContext
 public class ApplicationDbContext : DbContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .EnableSensitiveDataLogging()
             .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test");
-    }
 }
 #endregion

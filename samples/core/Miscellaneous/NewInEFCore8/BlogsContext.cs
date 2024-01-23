@@ -6,10 +6,7 @@ namespace NewInEfCore8;
 #region BlogsModel
 public class Blog
 {
-    public Blog(string name)
-    {
-        Name = name;
-    }
+    public Blog(string name) => Name = name;
 
     public int Id { get; }
     public string Name { get; set; }
@@ -56,10 +53,7 @@ public class Post
 public class FeaturedPost : Post
 {
     public FeaturedPost(string title, string content, DateOnly publishedOn, string promoText)
-        : base(title, content, publishedOn)
-    {
-        PromoText = promoText;
-    }
+        : base(title, content, publishedOn) => PromoText = promoText;
 
     public string PromoText { get; set; }
 }
@@ -85,10 +79,7 @@ public class PostTag
 
 public class Author
 {
-    public Author(string name)
-    {
-        Name = name;
-    }
+    public Author(string name) => Name = name;
 
     public int Id { get; }
     public string Name { get; set; }
@@ -124,10 +115,7 @@ public class Address
 #region PostMetadataAggregate
 public class PostMetadata
 {
-    public PostMetadata(int views)
-    {
-        Views = views;
-    }
+    public PostMetadata(int views) => Views = views;
 
     public int Views { get; set; }
     public List<SearchTerm> TopSearches { get; } = [];
@@ -191,10 +179,7 @@ public class Commit
 
 public abstract class BlogsContext : DbContext
 {
-    protected BlogsContext(bool useSqlite = false)
-    {
-        UseSqlite = useSqlite;
-    }
+    protected BlogsContext(bool useSqlite = false) => UseSqlite = useSqlite;
 
     public bool UseSqlite { get; }
     public bool LoggingEnabled { get; set; }
@@ -245,7 +230,7 @@ public abstract class BlogsContext : DbContext
         base.ConfigureConventions(configurationBuilder);
     }
 
-    private class StringListConverter : ValueConverter<List<string>, string>
+    class StringListConverter : ValueConverter<List<string>, string>
     {
         public StringListConverter()
             : base(v => string.Join(", ", v!), v => v.Split(',', StringSplitOptions.TrimEntries).ToList())
@@ -441,7 +426,7 @@ public abstract class BlogsContext : DbContext
 
             for (var i = 0; i < random.Next(5); i++)
             {
-                metadata.TopSearches.Add(new($"Search #{i + 1}", 10000 - random.Next(i * 1000, i * 1000 + 900)));
+                metadata.TopSearches.Add(new($"Search #{i + 1}", 10000 - random.Next(i * 1000, (i * 1000) + 900)));
             }
 
             for (var i = 0; i < random.Next(5); i++)
@@ -452,7 +437,7 @@ public abstract class BlogsContext : DbContext
                         // new Point(115.7930 + 20 - random.Next(40), 37.2431 + 10 - random.Next(20)) { SRID = 4326 },
                         115.7930 + 20 - random.Next(40),
                         37.2431 + 10 - random.Next(20),
-                        1000 - random.Next(i * 100, i * 100 + 90))
+                        1000 - random.Next(i * 100, (i * 100) + 90))
                     { Browsers = ["Firefox", "Netscape"] });
             }
 

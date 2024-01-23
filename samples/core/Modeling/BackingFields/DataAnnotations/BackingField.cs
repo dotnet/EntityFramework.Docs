@@ -2,7 +2,7 @@
 
 namespace EFModeling.BackingFields.DataAnnotations.BackingField;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 }
@@ -10,7 +10,7 @@ internal class MyContext : DbContext
 #region BackingField
 public class Blog
 {
-    private string _validatedUrl;
+    string _validatedUrl;
 
     public int BlogId { get; set; }
 

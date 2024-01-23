@@ -4,19 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Performance.LazyLoading;
+using Performance.Other.LazyLoading;
 
-namespace Performance;
+namespace Performance.Other;
 
-internal class Program
+class Program
 {
     #region CompiledQueryCompile
-    private static readonly Func<BloggingContext, int, IAsyncEnumerable<Blog>> _compiledQuery
+    static readonly Func<BloggingContext, int, IAsyncEnumerable<Blog>> _compiledQuery
         = EF.CompileAsyncQuery(
             (BloggingContext context, int length) => context.Blogs.Where(b => b.Url.StartsWith("http://") && b.Url.Length == length));
     #endregion
 
-    private static async Task Main()
+    static async Task Main()
     {
         await using (var context = new BloggingContext())
         {

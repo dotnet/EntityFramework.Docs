@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.Relationships.FluentAPI.CompositeForeignKey;
 
 #region CompositeForeignKey
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Car> Cars { get; set; }
 

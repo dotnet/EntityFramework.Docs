@@ -74,7 +74,7 @@ public static class TpcInheritanceSample
         using (var context = new TContext())
         {
             Console.WriteLine("All foods:");
-            foreach (var food in await context.Foods.ToListAsync())
+            foreach (Food? food in await context.Foods.ToListAsync())
             {
                 Console.WriteLine($"  >> {food}");
             }
@@ -82,7 +82,7 @@ public static class TpcInheritanceSample
             Console.WriteLine();
 
             Console.WriteLine("All animals:");
-            foreach (var animal in await context.Animals.ToListAsync())
+            foreach (Animal? animal in await context.Animals.ToListAsync())
             {
                 Console.WriteLine($"  >> {animal}");
             }
@@ -90,7 +90,7 @@ public static class TpcInheritanceSample
             Console.WriteLine();
 
             Console.WriteLine("Only pets:");
-            foreach (var pet in await context.Pets.ToListAsync())
+            foreach (Pet? pet in await context.Pets.ToListAsync())
             {
                 Console.WriteLine($"  >> {pet}");
             }
@@ -98,7 +98,7 @@ public static class TpcInheritanceSample
             Console.WriteLine();
 
             Console.WriteLine("Only cats:");
-            foreach (var cat in await context.Cats.ToListAsync())
+            foreach (Cat? cat in await context.Cats.ToListAsync())
             {
                 Console.WriteLine($"  >> {cat}");
             }
@@ -126,7 +126,7 @@ public static class TpcInheritanceSample
         using (var context = new TContext())
         {
             Console.WriteLine("All animals including foods, pets, humans, and favorite animals:");
-            foreach (var animal in await context.Animals
+            foreach (Animal? animal in await context.Animals
                          .AsNoTracking()
                          .Include(e => e.Food)
                          .Include(e => ((Human)e).Pets).ThenInclude(e => e.Food)
@@ -161,10 +161,7 @@ public static class TpcInheritanceSample
     #region AnimalsHierarchy
     public abstract class Animal
     {
-        protected Animal(string name)
-        {
-            Name = name;
-        }
+        protected Animal(string name) => Name = name;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -188,10 +185,7 @@ public static class TpcInheritanceSample
     public class FarmAnimal : Animal
     {
         public FarmAnimal(string name, string species)
-            : base(name)
-        {
-            Species = species;
-        }
+            : base(name) => Species = species;
 
         public override string Species { get; }
 
@@ -205,10 +199,7 @@ public static class TpcInheritanceSample
     public class Cat : Pet
     {
         public Cat(string name, string educationLevel)
-            : base(name)
-        {
-            EducationLevel = educationLevel;
-        }
+            : base(name) => EducationLevel = educationLevel;
 
         public string EducationLevel { get; set; }
         public override string Species => "Felis catus";
@@ -220,10 +211,7 @@ public static class TpcInheritanceSample
     public class Dog : Pet
     {
         public Dog(string name, string favoriteToy)
-            : base(name)
-        {
-            FavoriteToy = favoriteToy;
-        }
+            : base(name) => FavoriteToy = favoriteToy;
 
         public string FavoriteToy { get; set; }
         public override string Species => "Canis familiaris";
@@ -296,10 +284,7 @@ public static class TpcInheritanceSample
 
     public class FarmFood : Food
     {
-        public FarmFood(string name)
-        {
-            Name = name;
-        }
+        public FarmFood(string name) => Name = name;
 
         [Column("Name")]
         public string Name { get; set; }
@@ -425,7 +410,7 @@ public static class TpcInheritanceSample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

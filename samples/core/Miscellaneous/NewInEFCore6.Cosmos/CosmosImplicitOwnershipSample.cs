@@ -140,20 +140,15 @@ public static class CosmosImplicitOwnershipSample
     {
         public DbSet<Family> Families { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public FamilyContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public FamilyContext(bool quiet = false) => _quiet = quiet;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region OnModelCreating
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region OnModelCreating
             modelBuilder.Entity<Family>()
                 .HasPartitionKey(e => e.LastName);
-            #endregion
-        }
+        #endregion
 
         // Never called; just for documentation.
         protected static void OldOnModelCreating(ModelBuilder modelBuilder)

@@ -5,19 +5,17 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.ShadowAndIndexerProperties.IndexerProperty;
 
 #region IndexerProperty
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>().IndexerProperty<DateTime>("LastUpdated");
-    }
 }
 
 public class Blog
 {
-    private readonly Dictionary<string, object> _data = [];
+    readonly Dictionary<string, object> _data = [];
     public int BlogId { get; set; }
 
     public object this[string key]

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.ConcurrencyTokens.DataAnnotations.Timestamp;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 }

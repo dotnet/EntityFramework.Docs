@@ -5,7 +5,7 @@ namespace EFModeling.DynamicModel;
 
 public class Program
 {
-    private static void Main()
+    static void Main()
     {
         // Note that because this sample uses InMemory as its provider, each model gets it's own separate store.
 

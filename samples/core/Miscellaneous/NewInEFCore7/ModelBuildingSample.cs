@@ -57,7 +57,7 @@ public static class ModelBuildingSample
                 .ThenBy(customer => customer.Name)
                 .ToListAsync();
 
-            foreach (var customer in customers)
+            foreach (Customer customer in customers)
             {
                 Console.WriteLine($"{customer.Name} from {customer.City} with phone {customer.PhoneNumber}");
             }
@@ -297,7 +297,7 @@ public static class ModelBuildingSample
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -308,8 +308,8 @@ public static class ModelBuildingSample
         public DbSet<Blog> Blogs => Set<Blog>();
         public DbSet<Post> Posts => Set<Post>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogs")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
@@ -404,8 +404,8 @@ public static class ModelBuildingSample
 
     public class AnimalsTptContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AnimalsTpt")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
@@ -430,8 +430,8 @@ public static class ModelBuildingSample
 
     public class AnimalsTpcContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AnimalsTpc")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
@@ -488,8 +488,8 @@ public static class ModelBuildingSample
         public DbSet<Employee> Employees
             => Set<Employee>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Images")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
@@ -498,9 +498,7 @@ public static class ModelBuildingSample
         {
             #region EntitySplitting
             modelBuilder.Entity<Customer>(
-                entityBuilder =>
-                {
-                    entityBuilder
+                entityBuilder => entityBuilder
                         .ToTable("Customers")
                         .SplitToTable(
                             "PhoneNumbers",
@@ -518,8 +516,7 @@ public static class ModelBuildingSample
                                 tableBuilder.Property(customer => customer.City);
                                 tableBuilder.Property(customer => customer.PostCode);
                                 tableBuilder.Property(customer => customer.Country);
-                            });
-                });
+                            }));
             #endregion
 
             #region LinkingForeignKey

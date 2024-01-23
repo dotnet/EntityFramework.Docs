@@ -30,7 +30,7 @@ public static class Sample
         DeleteOrphansSample(DeleteBehavior.Restrict, false);
     }
 
-    private static void DeleteBehaviorSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
+    static void DeleteBehaviorSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
     {
         Console.WriteLine(
             $"Test using DeleteBehavior.{deleteBehavior} with {(requiredRelationship ? "required" : "optional")} relationship:");
@@ -73,7 +73,7 @@ public static class Sample
         Console.WriteLine();
     }
 
-    private static void DeleteOrphansSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
+    static void DeleteOrphansSample(DeleteBehavior deleteBehavior, bool requiredRelationship)
     {
         Console.WriteLine(
             $"Test deleting orphans with DeleteBehavior.{deleteBehavior} and {(requiredRelationship ? "a required" : "an optional")} relationship:");
@@ -116,7 +116,7 @@ public static class Sample
         Console.WriteLine();
     }
 
-    private static void InitializeDatabase(bool requiredRelationship)
+    static void InitializeDatabase(bool requiredRelationship)
     {
         using var context = new BloggingContext(DeleteBehavior.ClientSetNull, requiredRelationship);
         context.Database.EnsureDeleted();
@@ -132,7 +132,7 @@ public static class Sample
         context.SaveChanges();
     }
 
-    private static void DumpEntities(string message, BloggingContext context, Blog blog, IList<Post> posts)
+    static void DumpEntities(string message, BloggingContext context, Blog blog, IList<Post> posts)
     {
         Console.WriteLine();
         Console.WriteLine(message);
@@ -151,7 +151,7 @@ public static class Sample
         }
     }
 
-    private static void DumpSql()
+    static void DumpSql()
     {
         foreach (var logMessage in BloggingContext.LogMessages)
         {

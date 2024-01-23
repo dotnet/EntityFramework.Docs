@@ -40,19 +40,17 @@ public class CompositeValueObject : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureCompositeValueObject
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureCompositeValueObject
             modelBuilder.Entity<Order>()
                 .Property(e => e.Price)
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                     v => JsonSerializer.Deserialize<Money>(v, (JsonSerializerOptions)null));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();

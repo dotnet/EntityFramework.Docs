@@ -47,12 +47,11 @@ public class MappingListProperty : Program
 
     public class SampleDbContext : DbContext
     {
-        private static readonly ILoggerFactory
+        static readonly ILoggerFactory
             _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureListProperty
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureListProperty
             modelBuilder
                 .Entity<EntityType>()
                 .Property(e => e.MyListProperty)
@@ -63,11 +62,10 @@ public class MappingListProperty : Program
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                         c => c.ToList()));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();

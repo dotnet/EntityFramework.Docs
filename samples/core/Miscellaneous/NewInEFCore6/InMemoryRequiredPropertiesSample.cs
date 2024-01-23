@@ -54,13 +54,11 @@ public static class InMemoryRequiredPropertiesSample
     {
         public DbSet<User> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder
                 .LogTo(Console.WriteLine, new[] { InMemoryEventId.ChangesSaved })
                 .EnableSensitiveDataLogging()
                 .UseInMemoryDatabase("UserContext");
-        }
     }
 
     public class UserContextWithNullCheckingDisabled : DbContext
@@ -68,12 +66,10 @@ public static class InMemoryRequiredPropertiesSample
         public DbSet<User> Users { get; set; }
 
         #region OnConfiguring
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder
                 .LogTo(Console.WriteLine, new[] { InMemoryEventId.ChangesSaved })
                 .UseInMemoryDatabase("UserContextWithNullCheckingDisabled", b => b.EnableNullChecks(false));
-        }
         #endregion
     }
 }

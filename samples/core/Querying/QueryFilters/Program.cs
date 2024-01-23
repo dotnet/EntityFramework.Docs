@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.QueryFilters;
 
-internal class Program
+class Program
 {
-    private static void Main()
+    static void Main()
     {
         QueryFiltersBasicExample();
         QueryFiltersWithNavigationsExample();
@@ -15,7 +15,7 @@ internal class Program
         QueryFiltersUsingNavigationExample();
     }
 
-    private static void QueryFiltersBasicExample()
+    static void QueryFiltersBasicExample()
     {
         using (var db = new BloggingContext("diego"))
         {
@@ -112,7 +112,7 @@ internal class Program
         }
     }
 
-    private static void QueryFiltersWithNavigationsExample()
+    static void QueryFiltersWithNavigationsExample()
     {
         using (var animalContext = new AnimalContext())
         {
@@ -203,7 +203,7 @@ internal class Program
         }
     }
 
-    private static void QueryFiltersWithRequiredNavigationExample()
+    static void QueryFiltersWithRequiredNavigationExample()
     {
         using (var db = new FilteredBloggingContextRequired())
         {
@@ -260,7 +260,7 @@ internal class Program
         }
     }
 
-    private static void QueryFiltersUsingNavigationExample()
+    static void QueryFiltersUsingNavigationExample()
     {
         using (var db = new FilteredBloggingContextRequired())
         {

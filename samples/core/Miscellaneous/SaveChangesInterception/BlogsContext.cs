@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 #region BlogsContext
 public class BlogsContext : DbContext
 {
-    private readonly AuditingInterceptor _auditingInterceptor = new("DataSource=audit.db");
+    readonly AuditingInterceptor _auditingInterceptor = new("DataSource=audit.db");
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder
             .AddInterceptors(_auditingInterceptor)
             .UseSqlite("DataSource=blogs.db");
 

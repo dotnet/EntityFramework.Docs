@@ -9,32 +9,21 @@ namespace MultipleRuntimeModels;
 #region RuntimeModelCache
 public static class RuntimeModelCache
 {
-    private static readonly ConcurrentDictionary<string, IModel> _runtimeModels
+    static readonly ConcurrentDictionary<string, IModel> _runtimeModels
         = new();
 
     public static IModel GetOrCreateModel(string connectionString)
         => _runtimeModels.GetOrAdd(
-            connectionString, cs =>
-            {
-                if (cs.Contains('X'))
-                {
-                    return BlogsContextModel1.Instance;
-                }
-
-                if (cs.Contains('Y'))
-                {
-                    return BlogsContextModel2.Instance;
-                }
-
-                throw new InvalidOperationException("No appropriate compiled model found.");
-            });
+            connectionString, cs => cs.Contains('X')
+                    ? BlogsContextModel1.Instance
+                    : cs.Contains('Y') ? BlogsContextModel2.Instance : throw new InvalidOperationException("No appropriate compiled model found."));
 }
 #endregion
 
 [DbContext(typeof(BlogsContext))]
-internal partial class BlogsContextModel1 : RuntimeModel
+partial class BlogsContextModel1 : RuntimeModel
 {
-    private static BlogsContextModel1? _instance;
+    static BlogsContextModel1? _instance;
     public static IModel Instance
     {
         get
@@ -56,9 +45,9 @@ internal partial class BlogsContextModel1 : RuntimeModel
 }
 
 [DbContext(typeof(BlogsContext))]
-internal partial class BlogsContextModel2 : RuntimeModel
+partial class BlogsContextModel2 : RuntimeModel
 {
-    private static BlogsContextModel2? _instance;
+    static BlogsContextModel2? _instance;
     public static IModel Instance
     {
         get

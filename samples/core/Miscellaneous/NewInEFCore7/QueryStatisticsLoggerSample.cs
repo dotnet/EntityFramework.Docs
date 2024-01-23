@@ -40,7 +40,7 @@ public static class QueryStatisticsLoggerSample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -48,8 +48,8 @@ public static class QueryStatisticsLoggerSample
 
     public class CustomerContext : DbContext
     {
-        private static readonly StatisticsCommandInterceptor _statisticsCommandInterceptor = new();
-        private static readonly InfoMessageInterceptor _infoMessageInterceptor = new();
+        static readonly StatisticsCommandInterceptor _statisticsCommandInterceptor = new();
+        static readonly InfoMessageInterceptor _infoMessageInterceptor = new();
 
         public CustomerContext(DbContextOptions<CustomerContext> options)
             : base(options)
@@ -59,8 +59,8 @@ public static class QueryStatisticsLoggerSample
         public DbSet<Customer> Customers
             => Set<Customer>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.AddInterceptors(_statisticsCommandInterceptor, _infoMessageInterceptor);
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder.AddInterceptors(_statisticsCommandInterceptor, _infoMessageInterceptor);
     }
 
     public class InfoMessageInterceptor : DbConnectionInterceptor

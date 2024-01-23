@@ -86,8 +86,8 @@ public class Program
 
 public class BlogsContext : DbContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("DataSource=blogs.db");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.UseSqlite("DataSource=blogs.db");
 
     public DbSet<Blog> Blogs { get; set; }
 }

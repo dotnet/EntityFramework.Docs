@@ -14,8 +14,8 @@ public class BloggingContext : DbContext
     public DbSet<Blog> Blogs { get; set; }
 
     #region RegisterLoggerFactory
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder
             .UseLoggerFactory(MyLoggerFactory)
             .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFLogging;Trusted_Connection=True");
     #endregion
@@ -24,24 +24,24 @@ public class BloggingContext : DbContext
 public class EnableSensitiveDataLoggingContext : BloggingContext
 {
     #region EnableSensitiveDataLogging
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.EnableSensitiveDataLogging();
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.EnableSensitiveDataLogging();
     #endregion
 }
 
 public class EnableDetailedErrorsContext : BloggingContext
 {
     #region EnableDetailedErrors
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.EnableDetailedErrors();
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.EnableDetailedErrors();
     #endregion
 }
 
 public class ChangeLogLevelContext : BloggingContext
 {
     #region ChangeLogLevel
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder
             .ConfigureWarnings(
                 b => b.Log(
                     (RelationalEventId.ConnectionOpened, LogLevel.Information),
@@ -52,8 +52,8 @@ public class ChangeLogLevelContext : BloggingContext
 public class SuppressMessageContext : BloggingContext
 {
     #region SuppressMessage
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder
             .ConfigureWarnings(b => b.Ignore(CoreEventId.DetachedLazyLoadingWarning));
     #endregion
 }
@@ -61,8 +61,8 @@ public class SuppressMessageContext : BloggingContext
 public class ThrowForEventContext : BloggingContext
 {
     #region ThrowForEvent
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder
             .ConfigureWarnings(b => b.Throw(RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning));
     #endregion
 }

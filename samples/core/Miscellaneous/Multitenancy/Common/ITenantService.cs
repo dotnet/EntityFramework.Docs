@@ -1,13 +1,12 @@
-﻿namespace Common
+﻿namespace Common;
+
+public interface ITenantService
 {
-    public interface ITenantService
-    {
-        string Tenant { get; }
+    string Tenant { get; }
 
-        void SetTenant(string tenant);
+    void SetTenant(string tenant);
 
-        string[] GetTenants();
+    string[] GetTenants();
 
-        event TenantChangedEventHandler OnTenantChanged;
-    }
+    event EventHandler<TenantChangedEventArgs> OnTenantChanged;
 }

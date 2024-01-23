@@ -13,7 +13,7 @@ public class CreateUserOperation : MigrationOperation
 }
 #endregion
 
-internal static class MigrationBuilderExtensions
+static class MigrationBuilderExtensions
 {
     #region snippet_MigrationBuilderExtension
     public static OperationBuilder<CreateUserOperation> CreateUser(
@@ -54,7 +54,7 @@ public class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
         }
     }
 
-    private void Generate(
+    void Generate(
         CreateUserOperation operation,
         MigrationCommandListBuilder builder)
     {
@@ -72,9 +72,9 @@ public class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
 }
 #endregion
 
-internal class CustomOperationContext : DbContext
+class CustomOperationContext : DbContext
 {
-    private readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
+    readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Sample";
 
     #region snippet_OnConfiguring
     protected override void OnConfiguring(DbContextOptionsBuilder options)

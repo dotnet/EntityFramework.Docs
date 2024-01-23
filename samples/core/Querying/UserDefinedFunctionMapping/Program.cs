@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFQuerying.UserDefinedFunctionMapping;
 
-internal class Program
+class Program
 {
-    private static void Main()
+    static void Main()
     {
         using var context = new BloggingContext();
         context.Database.EnsureDeleted();
@@ -48,14 +48,14 @@ internal class Program
 
         #region BasicQuery
         IQueryable<Blog> query1 = from b in context.Blogs
-                     where context.ActivePostCountForBlog(b.BlogId) > 1
-                     select b;
+                                  where context.ActivePostCountForBlog(b.BlogId) > 1
+                                  select b;
         #endregion
         var result1 = query1.ToList();
 
         #region HasTranslationQuery
         IQueryable<double> query2 = from p in context.Posts
-                     select context.PercentageDifference(p.BlogId, 3);
+                                    select context.PercentageDifference(p.BlogId, 3);
         #endregion
         var result2 = query2.ToList();
 
@@ -71,8 +71,8 @@ internal class Program
         #region TableValuedFunctionQuery
         const int likeThreshold = 3;
         IOrderedQueryable<Post> query5 = from p in context.PostsWithPopularComments(likeThreshold)
-                     orderby p.Rating
-                     select p;
+                                         orderby p.Rating
+                                         select p;
         #endregion
         var result5 = query5.ToList();
     }

@@ -20,7 +20,7 @@ public static class DateOnlyTimeOnlySample
         return DateOnlyTimeOnlyTest<BritishSchoolsContextSqlite>();
     }
 
-    private static async Task DateOnlyTimeOnlyTest<TContext>()
+    static async Task DateOnlyTimeOnlyTest<TContext>()
         where TContext : BritishSchoolsContextBase, new()
     {
         await using var context = new TContext();
@@ -42,7 +42,7 @@ public static class DateOnlyTimeOnlySample
         Console.WriteLine("Current terms:");
         foreach (School? school in currentTerms)
         {
-            var term = school.Terms.SingleOrDefault();
+            Term? term = school.Terms.SingleOrDefault();
             if (term == null)
             {
                 Console.WriteLine($"  {school.Name} is not current in term.");
@@ -98,7 +98,7 @@ public static class DateOnlyTimeOnlySample
 
         context.ChangeTracker.Clear();
 
-        foreach (var school in await context.Schools.Include(e => e.Terms).ToListAsync())
+        foreach (School? school in await context.Schools.Include(e => e.Terms).ToListAsync())
         {
             Term winter = school.Terms.Single(e => e.LastDay.Year == 2022);
             winter.LastDay = winter.LastDay.AddDays(1);
@@ -132,7 +132,7 @@ public static class DateOnlyTimeOnlySample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -141,10 +141,7 @@ public static class DateOnlyTimeOnlySample
 
 public abstract class BritishSchoolsContextBase : DbContext
 {
-    protected BritishSchoolsContextBase(bool useSqlite = false)
-    {
-        UseSqlite = useSqlite;
-    }
+    protected BritishSchoolsContextBase(bool useSqlite = false) => UseSqlite = useSqlite;
 
     public bool UseSqlite { get; }
     public virtual bool UsesJson => false;

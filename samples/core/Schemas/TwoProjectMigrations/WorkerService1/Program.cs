@@ -6,9 +6,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace WorkerService1;
 
-internal class Program
+class Program
 {
-    private static void Main(string[] args)
+    static void Main(string[] args)
         => CreateHostBuilder(args).Build().Run();
 
     #region snippet_CreateHostBuilder

@@ -8,13 +8,11 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public class AuditingInterceptor : ISaveChangesInterceptor
 {
-    private readonly string _connectionString;
-    private SaveChangesAudit _audit;
+    readonly string _connectionString;
+    SaveChangesAudit _audit;
 
-    public AuditingInterceptor(string connectionString)
-    {
+    public AuditingInterceptor(string connectionString) =>
         _connectionString = connectionString;
-    }
 
     #region SavingChanges
     public async ValueTask<InterceptionResult<int>> SavingChangesAsync(
@@ -106,7 +104,7 @@ public class AuditingInterceptor : ISaveChangesInterceptor
     #endregion
 
     #region CreateAudit
-    private static SaveChangesAudit CreateAudit(DbContext context)
+    static SaveChangesAudit CreateAudit(DbContext context)
     {
         context.ChangeTracker.DetectChanges();
 

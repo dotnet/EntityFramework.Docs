@@ -24,7 +24,7 @@ public class Program
         ExecuteInTransactionWithTracking();
     }
 
-    private static void ExecuteWithManualTransaction()
+    static void ExecuteWithManualTransaction()
     {
         #region ManualTransaction
 
@@ -49,7 +49,7 @@ public class Program
         #endregion
     }
 
-    private static void ExecuteWithManualAmbientTransaction()
+    static void ExecuteWithManualAmbientTransaction()
     {
         #region AmbientTransaction
 
@@ -75,7 +75,7 @@ public class Program
         #endregion
     }
 
-    private static void ExecuteInTransactionWithVerification()
+    static void ExecuteInTransactionWithVerification()
     {
         #region Verification
 
@@ -95,7 +95,7 @@ public class Program
         #endregion
     }
 
-    private static void ExecuteInTransactionWithTracking()
+    static void ExecuteInTransactionWithTracking()
     {
         #region Tracking
 
@@ -126,19 +126,15 @@ public class BloggingContext : DbContext
     public DbSet<TransactionRow> Transactions { get; set; }
 
     #region OnConfiguring
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=EFMiscellanous.ConnectionResiliency;Trusted_Connection=True",
                 options => options.EnableRetryOnFailure());
-    }
     #endregion
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>().Property(b => b.BlogId).UseHiLo();
-    }
 }
 
 public class Blog

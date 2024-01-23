@@ -152,17 +152,12 @@ public static class CosmosQueriesSample
     {
         public DbSet<Triangle> Triangles { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public ShapesContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public ShapesContext(bool quiet = false) => _quiet = quiet;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder.Entity<Triangle>().ToContainer("Shapes");
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

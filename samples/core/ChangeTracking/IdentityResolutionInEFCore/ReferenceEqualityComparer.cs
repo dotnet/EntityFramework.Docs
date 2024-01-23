@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 #region ReferenceEqualityComparer
 public sealed class ReferenceEqualityComparer : IEqualityComparer<object>
 {
-    private ReferenceEqualityComparer()
+    ReferenceEqualityComparer()
     {
     }
 

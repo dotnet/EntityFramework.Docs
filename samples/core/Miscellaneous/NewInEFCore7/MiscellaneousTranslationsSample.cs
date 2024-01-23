@@ -35,7 +35,7 @@ public static class MiscellaneousTranslationsSample
             IQueryable<Post> query = context.Posts.Where(post => post.GetType() == typeof(Post));
             #endregion
 
-            await foreach (var post in query.AsAsyncEnumerable())
+            await foreach (Post? post in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"{post.GetType().Name} : {post.Title}");
             }
@@ -49,7 +49,7 @@ public static class MiscellaneousTranslationsSample
             IQueryable<Post> query = context.Posts.OfType<Post>();
             #endregion
 
-            await foreach (var post in query.AsAsyncEnumerable())
+            await foreach (Post? post in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"{post.GetType().Name} : {post.Title}");
             }
@@ -87,7 +87,7 @@ public static class MiscellaneousTranslationsSample
                     .OrderBy(post => post.Title));
             #endregion
 
-            await foreach (var blog in query.AsAsyncEnumerable())
+            await foreach (Blog? blog in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"Blog {blog.Name}:");
 
@@ -101,7 +101,7 @@ public static class MiscellaneousTranslationsSample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

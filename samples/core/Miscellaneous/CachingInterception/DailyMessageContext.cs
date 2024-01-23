@@ -4,11 +4,11 @@ using Microsoft.Extensions.Logging;
 
 public class DailyMessageContext : DbContext
 {
-    private static readonly CachingCommandInterceptor _cachingInterceptor
+    static readonly CachingCommandInterceptor _cachingInterceptor
         = new();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder
             .EnableSensitiveDataLogging()
             .AddInterceptors(_cachingInterceptor)
             .LogTo(Console.WriteLine, LogLevel.Information)

@@ -25,7 +25,7 @@ public class BasicSample
     }
 
     // This shows a successful update, where no concurrent change happens
-    private static void SuccessfulUpdate()
+    static void SuccessfulUpdate()
     {
         using var context = new PersonContext();
 
@@ -37,7 +37,7 @@ public class BasicSample
     }
 
     // This simulates a concurrency failure by modifying the row via another context after it was loaded.
-    private static void ConcurrencyFailure()
+    static void ConcurrencyFailure()
     {
         using var context1 = new PersonContext();
 
@@ -63,12 +63,10 @@ public class BasicSample
     {
         public DbSet<Person> People { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             // Requires NuGet package Microsoft.EntityFrameworkCore.SqlServer
             optionsBuilder.UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True");
-        }
     }
 
     public class Person

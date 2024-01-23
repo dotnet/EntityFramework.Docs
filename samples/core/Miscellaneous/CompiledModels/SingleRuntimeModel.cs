@@ -6,9 +6,9 @@ namespace SingleRuntimeModel;
 
 #region RuntimeModel
 [DbContext(typeof(BlogsContext))]
-internal partial class BlogsContextModel : RuntimeModel
+partial class BlogsContextModel : RuntimeModel
 {
-    private static BlogsContextModel? _instance;
+    static BlogsContextModel? _instance;
     public static IModel Instance
     {
         get

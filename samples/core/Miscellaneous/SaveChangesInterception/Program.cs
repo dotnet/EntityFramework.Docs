@@ -69,7 +69,7 @@ public class Program
         #endregion
     }
 
-    private static async Task CreateDatabases()
+    static async Task CreateDatabases()
     {
         using (var context = new AuditContext("DataSource=audit.db"))
         {

@@ -5,10 +5,10 @@ namespace Performance.AspNetContextPoolingWithState;
 #region WeatherForecastScopedFactory
 public class WeatherForecastScopedFactory : IDbContextFactory<WeatherForecastContext>
 {
-    private const int DefaultTenantId = -1;
+    const int DefaultTenantId = -1;
 
-    private readonly IDbContextFactory<WeatherForecastContext> _pooledFactory;
-    private readonly int _tenantId;
+    readonly IDbContextFactory<WeatherForecastContext> _pooledFactory;
+    readonly int _tenantId;
 
     public WeatherForecastScopedFactory(
         IDbContextFactory<WeatherForecastContext> pooledFactory,

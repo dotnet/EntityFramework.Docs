@@ -18,7 +18,7 @@ public static class PrimitiveCollectionsSample
         return ContainsTest<PubsAndWalksContextSqlite>();
     }
 
-    private static async Task ContainsTest<TContext>()
+    static async Task ContainsTest<TContext>()
         where TContext : PubsAndWalksContextBase, new()
     {
         await using var context = new TContext();
@@ -30,7 +30,7 @@ public static class PrimitiveCollectionsSample
         context.ChangeTracker.Clear();
 
         #region WalksWithTerrain
-        Terrain[] terrains = new[] { Terrain.River, Terrain.Beach, Terrain.Park };
+        Terrain[] terrains = [Terrain.River, Terrain.Beach, Terrain.Park];
         List<string> walksWithTerrain = await context.Walks
             .Where(e => terrains.Contains(e.Terrain))
             .Select(e => e.Name)
@@ -104,7 +104,7 @@ public static class PrimitiveCollectionsSample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -112,7 +112,7 @@ public static class PrimitiveCollectionsSample
 
     public class MyCollection : IList<int>
     {
-        private readonly List<int> _list = [];
+        readonly List<int> _list = [];
         public IEnumerator<int> GetEnumerator() => _list.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public void Add(int item) => _list.Add(item);
@@ -154,17 +154,14 @@ public static class PrimitiveCollectionsSample
         public List<int> GetOnlyInts { get; } = [];
 
         // ReSharper disable once CollectionNeverUpdated.Local
-        private readonly List<int> _intsField = [];
+        readonly List<int> _intsField = [];
 
         // public List<DddId> DddIds { get; set; } = null!;
     }
 
     public readonly struct DddId
     {
-        public DddId(int value)
-        {
-            Value = value;
-        }
+        public DddId(int value) => Value = value;
 
         public int Value { get; }
     }
@@ -180,10 +177,7 @@ public static class PrimitiveCollectionsSample
     #region DogWalk
     public class DogWalk
     {
-        public DogWalk(string name)
-        {
-            Name = name;
-        }
+        public DogWalk(string name) => Name = name;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -231,10 +225,7 @@ public static class PrimitiveCollectionsSample
 
     public abstract class PubsAndWalksContextBase : DbContext
     {
-        protected PubsAndWalksContextBase(bool useSqlite = false)
-        {
-            UseSqlite = useSqlite;
-        }
+        protected PubsAndWalksContextBase(bool useSqlite = false) => UseSqlite = useSqlite;
 
         public bool UseSqlite { get; }
         public bool LoggingEnabled { get; set; }

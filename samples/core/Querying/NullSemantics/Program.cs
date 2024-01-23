@@ -2,9 +2,9 @@
 
 namespace NullSemantics;
 
-internal class Program
+class Program
 {
-    private static void Main()
+    static void Main()
     {
         using var context = new NullSemanticsContext();
         context.Database.EnsureDeleted();
@@ -25,7 +25,7 @@ internal class Program
         ManualOptimization();
     }
 
-    private static void BasicExamples()
+    static void BasicExamples()
     {
         using var context = new NullSemanticsContext();
         #region BasicExamples
@@ -43,7 +43,7 @@ internal class Program
         var result5 = query5.ToList();
     }
 
-    private static void Functions()
+    static void Functions()
     {
         using var context = new NullSemanticsContext();
 
@@ -54,7 +54,7 @@ internal class Program
         var result = query.ToList();
     }
 
-    private static void ManualOptimization()
+    static void ManualOptimization()
     {
         using var context = new NullSemanticsContext();
 

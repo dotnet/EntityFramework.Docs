@@ -23,7 +23,7 @@ public static class ValueGenerationSample
         List<Category> categoriesAndProducts = await context.Categories.Include(category => category.Products).ToListAsync();
 
         Console.WriteLine();
-        foreach (var category in categoriesAndProducts)
+        foreach (Category category in categoriesAndProducts)
         {
             Console.WriteLine($"Category {category.Id.Value} is '{category.Name}'");
             foreach (Product product in category.Products)
@@ -34,7 +34,7 @@ public static class ValueGenerationSample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -45,8 +45,8 @@ public static class ValueGenerationSample
         public DbSet<Product> Products => Set<Product>();
         public DbSet<Category> Categories => Set<Category>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Products")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
@@ -80,7 +80,7 @@ public static class ValueGenerationSample
             configurationBuilder.Properties<CategoryId>().HaveConversion<CategoryIdConverter>();
         }
 
-        private class ProductIdConverter : ValueConverter<ProductId, int>
+        class ProductIdConverter : ValueConverter<ProductId, int>
         {
             public ProductIdConverter()
                 : base(v => v.Value, v => new(v))
@@ -88,7 +88,7 @@ public static class ValueGenerationSample
             }
         }
 
-        private class CategoryIdConverter : ValueConverter<CategoryId, int>
+        class CategoryIdConverter : ValueConverter<CategoryId, int>
         {
             public CategoryIdConverter()
                 : base(v => v.Value, v => new(v))

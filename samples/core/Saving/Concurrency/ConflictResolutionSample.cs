@@ -75,12 +75,10 @@ public class ConflictResolutionSample
     {
         public DbSet<Person> People { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             // Requires NuGet package Microsoft.EntityFrameworkCore.SqlServer
             optionsBuilder.UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True");
-        }
     }
 
     public class Person

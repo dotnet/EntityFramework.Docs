@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.BulkConfiguration;
 
-internal class Program
+class Program
 {
-    private static async Task Main()
+    static async Task Main()
     {
         Console.WriteLine("Samples showing bulk configuration of the model");
         Console.WriteLine();
@@ -31,7 +31,7 @@ internal class Program
         Console.WriteLine("Sample finished.");
     }
 
-    private static void RoundtripValue(DbContext context)
+    static void RoundtripValue(DbContext context)
     {
         Console.WriteLine("Using " + context.GetType().Name);
         Console.WriteLine("Deleting and re-creating database...");

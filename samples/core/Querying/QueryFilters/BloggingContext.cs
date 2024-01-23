@@ -5,22 +5,17 @@ namespace EFQuerying.QueryFilters;
 
 public class BloggingContext : DbContext
 {
-    private readonly string _tenantId;
+    readonly string _tenantId;
 
-    public BloggingContext(string tenant)
-    {
-        _tenantId = tenant;
-    }
+    public BloggingContext(string tenant) => _tenantId = tenant;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=Querying.QueryFilters.Blogging;Trusted_Connection=True");
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

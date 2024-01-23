@@ -3,17 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.BackingFields.FluentAPI.BackingField;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region BackingField
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .Property(b => b.Url)
             .HasField("_validatedUrl");
-    }
     #endregion
 }
 

@@ -34,7 +34,7 @@ public static class OptimisticConcurrencyInterceptionSample
         await context1.SaveChangesAsync();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -42,13 +42,13 @@ public static class OptimisticConcurrencyInterceptionSample
 
     public class CustomerContext : DbContext
     {
-        private static readonly SuppressDeleteConcurrencyInterceptor _concurrencyInterceptor = new();
+        static readonly SuppressDeleteConcurrencyInterceptor _concurrencyInterceptor = new();
 
         public DbSet<Customer> Customers
             => Set<Customer>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .AddInterceptors(_concurrencyInterceptor)
                 .UseSqlite("Data Source = customers.db")
                 .LogTo(Console.WriteLine, LogLevel.Information);

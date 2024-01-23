@@ -119,9 +119,7 @@ public class BloggingContext : DbContext
             );
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseSqlServer(
             @"Server=(localdb)\mssqllocaldb;Database=EFQuerying.ComplexQuery;Trusted_Connection=True");
-    }
 }

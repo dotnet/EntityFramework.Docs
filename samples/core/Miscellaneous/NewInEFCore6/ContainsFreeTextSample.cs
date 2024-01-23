@@ -9,7 +9,7 @@ public static class ContainsFreeTextSample
     public static void Contains_with_non_string()
     {
         Console.WriteLine($">>>> Sample: {nameof(Contains_with_non_string)}");
-        Console.WriteLine($">>>> Note: does not work with SQL Server LocalDb");
+        Console.WriteLine(">>>> Note: does not work with SQL Server LocalDb");
         Console.WriteLine();
 
         Helpers.RecreateCleanDatabase();
@@ -87,7 +87,7 @@ public static class ContainsFreeTextSample
     {
         public int Id { get; set; }
 
-        public Name Name{ get; set; }
+        public Name Name { get; set; }
     }
 
     public class Name
@@ -102,23 +102,18 @@ public static class ContainsFreeTextSample
     {
         public DbSet<Customer> Customers { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public CustomerContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public CustomerContext(bool quiet = false) => _quiet = quiet;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureCompositeValueObject
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureCompositeValueObject
             modelBuilder.Entity<Customer>()
                 .Property(e => e.Name)
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                     v => JsonSerializer.Deserialize<Name>(v, (JsonSerializerOptions)null));
-            #endregion
-        }
+        #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

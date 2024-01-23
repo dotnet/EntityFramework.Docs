@@ -37,7 +37,7 @@ public static class LazyConnectionStringSample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -45,21 +45,18 @@ public static class LazyConnectionStringSample
 
     public class CustomerContext : DbContext
     {
-        private readonly IClientConnectionStringFactory _connectionStringFactory;
+        readonly IClientConnectionStringFactory _connectionStringFactory;
 
         public CustomerContext(
             DbContextOptions<CustomerContext> options,
             IClientConnectionStringFactory connectionStringFactory)
-            : base(options)
-        {
-            _connectionStringFactory = connectionStringFactory;
-        }
+            : base(options) => _connectionStringFactory = connectionStringFactory;
 
         public DbSet<Customer> Customers
             => Set<Customer>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.AddInterceptors(
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder.AddInterceptors(
                 new ConnectionStringInitializationInterceptor(_connectionStringFactory));
     }
 
@@ -82,12 +79,10 @@ public static class LazyConnectionStringSample
     #region ConnectionStringInitializationInterceptor
     public class ConnectionStringInitializationInterceptor : DbConnectionInterceptor
     {
-        private readonly IClientConnectionStringFactory _connectionStringFactory;
+        readonly IClientConnectionStringFactory _connectionStringFactory;
 
-        public ConnectionStringInitializationInterceptor(IClientConnectionStringFactory connectionStringFactory)
-        {
+        public ConnectionStringInitializationInterceptor(IClientConnectionStringFactory connectionStringFactory) =>
             _connectionStringFactory = connectionStringFactory;
-        }
 
         public override InterceptionResult ConnectionOpening(
             DbConnection connection,
@@ -101,7 +96,7 @@ public static class LazyConnectionStringSample
         {
             if (string.IsNullOrEmpty(connection.ConnectionString))
             {
-                connection.ConnectionString = (await _connectionStringFactory.GetConnectionStringAsync(cancellationToken));
+                connection.ConnectionString = await _connectionStringFactory.GetConnectionStringAsync(cancellationToken);
             }
 
             return result;

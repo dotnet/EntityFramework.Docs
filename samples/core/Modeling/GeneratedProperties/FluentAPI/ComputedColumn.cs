@@ -2,7 +2,7 @@
 
 namespace EFModeling.GeneratedProperties.FluentAPI.ComputedColumn;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Person> People { get; set; }
 

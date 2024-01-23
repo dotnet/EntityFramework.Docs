@@ -29,7 +29,8 @@ public class NotificationEntitiesSamples
         blog.Posts.Add(
             new Post
             {
-                Title = "What’s next for System.Text.Json?", Content = ".NET 5.0 was released recently and has come with many..."
+                Title = "What’s next for System.Text.Json?",
+                Content = ".NET 5.0 was released recently and has come with many..."
             });
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -100,7 +101,7 @@ public class Blog : INotifyPropertyChanging, INotifyPropertyChanged
     public event PropertyChangingEventHandler PropertyChanging;
     public event PropertyChangedEventHandler PropertyChanged;
 
-    private int _id;
+    int _id;
 
     public int Id
     {
@@ -113,7 +114,7 @@ public class Blog : INotifyPropertyChanging, INotifyPropertyChanged
         }
     }
 
-    private string _name;
+    string _name;
 
     public string Name
     {
@@ -135,7 +136,7 @@ public class Post : INotifyPropertyChanging, INotifyPropertyChanged
     public event PropertyChangingEventHandler PropertyChanging;
     public event PropertyChangedEventHandler PropertyChanged;
 
-    private int _id;
+    int _id;
 
     public int Id
     {
@@ -148,7 +149,7 @@ public class Post : INotifyPropertyChanging, INotifyPropertyChanged
         }
     }
 
-    private string _title;
+    string _title;
 
     public string Title
     {
@@ -161,7 +162,7 @@ public class Post : INotifyPropertyChanging, INotifyPropertyChanged
         }
     }
 
-    private string _content;
+    string _content;
 
     public string Content
     {
@@ -174,7 +175,7 @@ public class Post : INotifyPropertyChanging, INotifyPropertyChanged
         }
     }
 
-    private int? _blogId;
+    int? _blogId;
 
     public int? BlogId
     {
@@ -187,7 +188,7 @@ public class Post : INotifyPropertyChanging, INotifyPropertyChanged
         }
     }
 
-    private Blog _blog;
+    Blog _blog;
 
     public Blog Blog
     {
@@ -203,12 +204,9 @@ public class Post : INotifyPropertyChanging, INotifyPropertyChanged
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
@@ -225,8 +223,6 @@ public class BlogsContext : DbContext
         }
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangingAndChangedNotifications);
-    }
 }

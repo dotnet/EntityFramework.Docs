@@ -1,17 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EFModeling.KeylessEntityTypes.FluentAPI.Keyless;
+namespace EFModeling.KeylessEntityTypes.FluentAPI;
 
-internal class BlogsContext : DbContext
+class BlogsContext : DbContext
 {
     public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
 
     #region Keyless
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<BlogPostsCount>()
             .HasNoKey();
-    }
     #endregion
 }
 

@@ -3,20 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Relationships.FluentAPI.ConstraintName;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
 
     #region ConstraintName
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Post>()
             .HasOne(p => p.Blog)
             .WithMany(b => b.Posts)
             .HasForeignKey(p => p.BlogId)
             .HasConstraintName("ForeignKey_Post_Blog");
-    }
     #endregion
 }
 

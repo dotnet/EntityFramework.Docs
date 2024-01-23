@@ -10,7 +10,7 @@ public class SharingTransaction
 {
     public static void Run()
     {
-        var connectionString =
+        const string connectionString =
             @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True";
 
         using (var context = new BloggingContext(
@@ -42,7 +42,7 @@ public class SharingTransaction
                 var blogs = context2.Blogs
                     .OrderBy(b => b.Url)
                     .ToList();
-                    
+
                 context2.Blogs.Add(new Blog { Url = "http://dot.net" });
                 context2.SaveChanges();
             }

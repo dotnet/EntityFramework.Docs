@@ -51,10 +51,8 @@ public static class RelationshipConventions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlite($"DataSource = ReferenceNavigations{GetType().Name}.db");
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>().Ignore(e => e.ConsoleKeyInfo);
-            }
         }
     }
 
@@ -233,10 +231,8 @@ public static class RelationshipConventions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlite($"DataSource = NavigationPrincipalKeyFKName{GetType().Name}.db");
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>().HasKey(e => e.Key);
-            }
         }
     }
 
@@ -272,10 +268,8 @@ public static class RelationshipConventions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlite($"DataSource = NavigationIdFKName{GetType().Name}.db");
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>().HasKey(e => e.Key);
-            }
         }
     }
 
@@ -311,10 +305,8 @@ public static class RelationshipConventions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlite($"DataSource = PrincipalTypePrincipalKeyFKName{GetType().Name}.db");
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>().HasKey(e => e.Key);
-            }
         }
     }
 
@@ -350,10 +342,8 @@ public static class RelationshipConventions
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                 => optionsBuilder.UseSqlite($"DataSource = PrincipalTypeIdFKName{GetType().Name}.db");
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
+            protected override void OnModelCreating(ModelBuilder modelBuilder) =>
                 modelBuilder.Entity<Blog>().HasKey(e => e.Key);
-            }
         }
     }
 }

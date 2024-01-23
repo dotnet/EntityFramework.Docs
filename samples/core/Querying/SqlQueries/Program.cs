@@ -2,11 +2,11 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFQuerying.RawSQL;
+namespace EFQuerying.SqlQueries;
 
-internal class Program
+class Program
 {
-    private static void Main()
+    static void Main()
     {
         using (var context = new BloggingContext())
         {

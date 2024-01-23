@@ -56,7 +56,7 @@ public static class QueryInterceptionSample
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -64,13 +64,13 @@ public static class QueryInterceptionSample
 
     public class CustomerContext : DbContext
     {
-        private static readonly KeyOrderingExpressionInterceptor _keyOrderingExpressionInterceptor = new();
+        static readonly KeyOrderingExpressionInterceptor _keyOrderingExpressionInterceptor = new();
 
         public DbSet<Customer> Customers
             => Set<Customer>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .AddInterceptors(_keyOrderingExpressionInterceptor)
                 .UseSqlite("Data Source = customers.db")
                 .LogTo(Console.WriteLine, LogLevel.Information);
@@ -82,9 +82,9 @@ public static class QueryInterceptionSample
         public Expression QueryCompilationStarting(Expression queryExpression, QueryExpressionEventData eventData)
             => new KeyOrderingExpressionVisitor().Visit(queryExpression);
 
-        private class KeyOrderingExpressionVisitor : ExpressionVisitor
+        class KeyOrderingExpressionVisitor : ExpressionVisitor
         {
-            private static readonly MethodInfo ThenByMethod
+            static readonly MethodInfo ThenByMethod
                 = typeof(Queryable).GetMethods()
                     .Single(m => m.Name == nameof(Queryable.ThenBy) && m.GetParameters().Length == 2);
 

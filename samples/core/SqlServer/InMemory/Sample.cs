@@ -1,5 +1,3 @@
 ﻿namespace SqlServer.InMemory;
 
-public class Sample
-{
-}
+public class Sample;

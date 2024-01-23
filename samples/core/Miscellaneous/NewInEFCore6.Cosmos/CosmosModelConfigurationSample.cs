@@ -98,12 +98,9 @@ public static class CosmosModelConfigurationSample
     {
         public DbSet<Family> Families { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public FamilyContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public FamilyContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -173,8 +170,8 @@ public static class CosmosModelConfigurationSample
             #endregion
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .EnableSensitiveDataLogging()
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .UseCosmos(

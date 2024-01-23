@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityTypes;
 
-internal class Program
+class Program
 {
-    private static void Main()
+    static void Main()
     {
         using var context = new MyContextWithFunctionMapping();
         context.Database.EnsureDeleted();

@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 public static class ConvertNullsSample
@@ -138,12 +137,9 @@ public static class ConvertNullsSample
 
     public class CarsContext : DbContext
     {
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public CarsContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public CarsContext(bool quiet = false) => _quiet = quiet;
 
         public DbSet<Car> Cars { get; set; }
 
@@ -159,13 +155,11 @@ public static class ConvertNullsSample
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder
                 .Entity<Car>()
                 .Property(e => e.OwnerId)
                 .HasConversion<ZeroToNullConverter>();
-        }
     }
 
     public class Cat
@@ -201,12 +195,9 @@ public static class ConvertNullsSample
 
     public class CatsContext : DbContext
     {
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public CatsContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public CatsContext(bool quiet = false) => _quiet = quiet;
 
         public DbSet<Cat> Cats { get; set; }
 
@@ -222,119 +213,70 @@ public static class ConvertNullsSample
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder
                 .Entity<Cat>()
                 .Property(e => e.Breed)
                 .HasConversion<BreedConverter>();
-        }
     }
 }
 
-namespace CarsMigrations
+class CarsContextModelSnapshot : ModelSnapshot
 {
-    [DbContext(typeof(ConvertNullsSample.CarsContext))]
-    [Migration("20210927174004_Cars")]
-    public class Cars : Migration
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.CreateTable(
-                name: "Person",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table => table.PrimaryKey("PK_Person", x => x.Id));
+        modelBuilder
+            .HasAnnotation("ProductVersion", "6.0.0-rc.1.21452.10")
+            .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            migrationBuilder.CreateTable(
-                name: "Cars",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OwnerId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table => table.PrimaryKey("PK_Cars", x => x.Id));
+        modelBuilder.UseIdentityColumns(1L, 1);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Cars_OwnerId",
-                table: "Cars",
-                column: "OwnerId");
-        }
+        modelBuilder.Entity("ConvertNullsSample+Car", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Cars");
+                b.Property<int>("Id").UseIdentityColumn(1L, 1);
 
-            migrationBuilder.DropTable(
-                name: "Person");
-        }
-    }
+                b.Property<string>("Model")
+                    .HasColumnType("nvarchar(max)");
 
-    [DbContext(typeof(ConvertNullsSample.CarsContext))]
-    internal class CarsContextModelSnapshot : ModelSnapshot
-    {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0-rc.1.21452.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                b.Property<int?>("OwnerId")
+                    .HasColumnType("int");
 
-            modelBuilder.UseIdentityColumns(1L, 1);
+                b.HasKey("Id");
 
-            modelBuilder.Entity("ConvertNullsSample+Car", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                b.HasIndex("OwnerId");
 
-                    b.Property<int>("Id").UseIdentityColumn(1L, 1);
+                b.ToTable("Cars");
+            });
 
-                    b.Property<string>("Model")
-                        .HasColumnType("nvarchar(max)");
+        modelBuilder.Entity("ConvertNullsSample+Person", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    b.Property<int?>("OwnerId")
-                        .HasColumnType("int");
+                b.Property<int>("Id").UseIdentityColumn(1L, 1);
 
-                    b.HasKey("Id");
+                b.Property<string>("Name")
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("OwnerId");
+                b.HasKey("Id");
 
-                    b.ToTable("Cars");
-                });
+                b.ToTable("Person");
+            });
 
-            modelBuilder.Entity("ConvertNullsSample+Person", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("ConvertNullsSample+Car", b =>
+            {
+                b.HasOne("ConvertNullsSample+Person", "Owner")
+                    .WithMany("Cars")
+                    .HasForeignKey("OwnerId");
 
-                    b.Property<int>("Id").UseIdentityColumn(1L, 1);
+                b.Navigation("Owner");
+            });
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Person");
-                });
-
-            modelBuilder.Entity("ConvertNullsSample+Car", b =>
-                {
-                    b.HasOne("ConvertNullsSample+Person", "Owner")
-                        .WithMany("Cars")
-                        .HasForeignKey("OwnerId");
-
-                    b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("ConvertNullsSample+Person", b => b.Navigation("Cars"));
-        }
+        modelBuilder.Entity("ConvertNullsSample+Person", b => b.Navigation("Cars"));
     }
 }

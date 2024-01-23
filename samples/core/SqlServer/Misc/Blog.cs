@@ -1,4 +1,4 @@
-﻿namespace SqlServer.Faq;
+﻿namespace SqlServer.Misc;
 
 public class Blog
 {

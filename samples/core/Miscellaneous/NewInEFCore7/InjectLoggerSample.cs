@@ -40,7 +40,7 @@ public static class InjectLoggerSample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -57,15 +57,15 @@ public static class InjectLoggerSample
             => Set<Customer>();
 
         #region OnConfiguring
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.AddInterceptors(new LoggerInjectionInterceptor());
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder.AddInterceptors(new LoggerInjectionInterceptor());
         #endregion
     }
 
     #region LoggerInjectionInterceptor
     public class LoggerInjectionInterceptor : IMaterializationInterceptor
     {
-        private ILogger? _logger;
+        ILogger? _logger;
 
         public object InitializedInstance(MaterializationInterceptionData materializationData, object instance)
         {
@@ -90,7 +90,7 @@ public static class InjectLoggerSample
     #region CustomerIHasLogger
     public class Customer : IHasLogger
     {
-        private string? _phoneNumber;
+        string? _phoneNumber;
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;

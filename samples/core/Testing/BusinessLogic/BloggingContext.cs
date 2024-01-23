@@ -5,7 +5,7 @@ namespace EF.Testing.BusinessLogic;
 
 public class BloggingContext : DbContext
 {
-    private readonly Action<BloggingContext, ModelBuilder> _modelCustomizer;
+    readonly Action<BloggingContext, ModelBuilder> _modelCustomizer;
 
     #region Constructors
     public BloggingContext()
@@ -13,10 +13,7 @@ public class BloggingContext : DbContext
     }
 
     public BloggingContext(DbContextOptions<BloggingContext> options, Action<BloggingContext, ModelBuilder> modelCustomizer = null)
-        : base(options)
-    {
-        _modelCustomizer = modelCustomizer;
-    }
+        : base(options) => _modelCustomizer = modelCustomizer;
     #endregion
 
     public DbSet<Blog> Blogs => Set<Blog>();

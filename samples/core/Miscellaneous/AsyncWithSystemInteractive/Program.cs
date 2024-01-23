@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFAsync;
+namespace EFAsyncWithSystemInteractive;
 
 public class Program
 {
@@ -27,10 +27,8 @@ public class BloggingContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFAsync;Trusted_Connection=True");
-    }
 }
 
 public class Blog

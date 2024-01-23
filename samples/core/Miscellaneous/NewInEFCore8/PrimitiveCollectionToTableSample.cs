@@ -14,7 +14,7 @@ public static class PrimitiveCollectionToTableSample
         return ContainsTest<PubsAndWalksContextSqlite>();
     }
 
-    private static async Task ContainsTest<TContext>()
+    static async Task ContainsTest<TContext>()
         where TContext : PubsAndWalksContextBase, new()
     {
         await using var context = new TContext();
@@ -46,7 +46,7 @@ public static class PrimitiveCollectionToTableSample
         Console.WriteLine($"\nPubs with lager are {string.Join(", ", pubsWithLager)}");
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -55,10 +55,7 @@ public static class PrimitiveCollectionToTableSample
     #region Pub
     public class Pub
     {
-        public Pub(string name)
-        {
-            Name = name;
-        }
+        public Pub(string name) => Name = name;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -71,10 +68,7 @@ public static class PrimitiveCollectionToTableSample
     [Owned]
     public class Beer
     {
-        public Beer(string name)
-        {
-            Name = name;
-        }
+        public Beer(string name) => Name = name;
 
         public string Name { get; }
     }
@@ -92,10 +86,7 @@ public static class PrimitiveCollectionToTableSample
 
     public abstract class PubsAndWalksContextBase : DbContext
     {
-        protected PubsAndWalksContextBase(bool useSqlite = false)
-        {
-            UseSqlite = useSqlite;
-        }
+        protected PubsAndWalksContextBase(bool useSqlite = false) => UseSqlite = useSqlite;
 
         public bool UseSqlite { get; }
         public bool LoggingEnabled { get; set; }

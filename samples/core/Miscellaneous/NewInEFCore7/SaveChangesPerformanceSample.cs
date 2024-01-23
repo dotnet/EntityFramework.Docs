@@ -16,7 +16,7 @@ public static class SaveChangesPerformanceSample
         return SaveChangesTest<PerfContextSqlite>();
     }
 
-    private static async Task SaveChangesTest<TContext>()
+    static async Task SaveChangesTest<TContext>()
         where TContext : PerfContext, new()
     {
         await using (var context = new TContext())
@@ -97,7 +97,7 @@ END");
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -132,8 +132,8 @@ END");
             }
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(
                     Console.WriteLine,
                     new[]

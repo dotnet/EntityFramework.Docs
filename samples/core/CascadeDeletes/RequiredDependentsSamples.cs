@@ -166,8 +166,8 @@ public static class RequiredDependentsSamples
 
     public class RequiredBlogsContext : DbContext
     {
-        private readonly DeleteBehavior _deleteBehavior;
-        private readonly bool _quiet;
+        readonly DeleteBehavior _deleteBehavior;
+        readonly bool _quiet;
 
         public RequiredBlogsContext(DeleteBehavior deleteBehavior, bool quiet = true)
         {
@@ -178,14 +178,12 @@ public static class RequiredDependentsSamples
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder
                 .Entity<Blog>()
                 .HasMany(e => e.Posts)
                 .WithOne(e => e.Blog)
                 .OnDelete(_deleteBehavior);
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

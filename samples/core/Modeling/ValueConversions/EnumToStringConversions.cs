@@ -134,37 +134,31 @@ public class EnumToStringConversions : Program
     public class SampleDbContextExplicit : SampleDbContextBase
     {
         #region ExplicitConversion
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder
                 .Entity<Rider>()
                 .Property(e => e.Mount)
                 .HasConversion(
                     v => v.ToString(),
                     v => (EquineBeast)Enum.Parse(typeof(EquineBeast), v));
-        }
         #endregion
     }
 
     public class SampleDbContextByClrType : SampleDbContextBase
     {
         #region ConversionByClrType
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder
                 .Entity<Rider>()
                 .Property(e => e.Mount)
                 .HasConversion<string>();
-        }
         #endregion
     }
 
     public class SampleDbContextByDatabaseType : SampleDbContextBase
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder.Entity<Rider2>();
-        }
     }
 
     public class SampleDbContextByConverterInstance : SampleDbContextBase
@@ -187,15 +181,13 @@ public class EnumToStringConversions : Program
     public class SampleDbContextByClrTypeWithFacets : SampleDbContextBase
     {
         #region ConversionByClrTypeWithFacets
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder
                 .Entity<Rider>()
                 .Property(e => e.Mount)
                 .HasConversion<string>()
                 .HasMaxLength(20)
                 .IsUnicode(false);
-        }
         #endregion
     }
 
@@ -254,13 +246,11 @@ public class EnumToStringConversions : Program
     public class SampleDbContextBoolToInt : SampleDbContextBase
     {
         #region ConversionByBuiltInBoolToInt
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder
                 .Entity<User>()
                 .Property(e => e.IsActive)
                 .HasConversion<int>();
-        }
         #endregion
     }
 
@@ -281,20 +271,19 @@ public class EnumToStringConversions : Program
 
     public class SampleDbContextRider2 : SampleDbContextBase
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConversionByDatabaseTypeFluent
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConversionByDatabaseTypeFluent
             modelBuilder
                 .Entity<Rider2>()
                 .Property(e => e.Mount)
                 .HasColumnType("nvarchar(24)");
-            #endregion
-        }
+        #endregion
+
     }
     public class SampleDbContextBase : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EnumConversions;Trusted_Connection=True")
                 .EnableSensitiveDataLogging();

@@ -56,9 +56,8 @@ public class ValueObjectCollection : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureValueObjectCollection
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureValueObjectCollection
             modelBuilder.Entity<Blog>()
                 .Property(e => e.Finances)
                 .HasConversion(
@@ -67,12 +66,11 @@ public class ValueObjectCollection : Program
                     new ValueComparer<IList<AnnualFinance>>(
                         (c1, c2) => c1.SequenceEqual(c2),
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                        c => (IList<AnnualFinance>)c.ToList()));
-            #endregion
-        }
+                        c => c.ToList()));
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();

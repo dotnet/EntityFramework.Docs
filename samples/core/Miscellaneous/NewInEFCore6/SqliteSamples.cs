@@ -51,7 +51,7 @@ public static class SqliteSamples
         #region DateOnlyQuery
         var users = context.Users.Where(u => u.Birthday < new DateOnly(1900, 1, 1)).ToList();
         #endregion
-            
+
         Console.WriteLine();
 
         foreach (User user in users)
@@ -59,13 +59,13 @@ public static class SqliteSamples
             Console.WriteLine($"  Found '{user.Username}'");
             user.Birthday = new(user.Birthday.Year + 100, user.Birthday.Month, user.Birthday.Day);
         }
-            
+
         Console.WriteLine();
 
         context.SaveChanges();
     }
 
-    private static void PerformUpdates()
+    static void PerformUpdates()
     {
         #region PerformUpdates
         using var connection = new SqliteConnection("Command Timeout=60;DataSource=test.db");
@@ -75,7 +75,7 @@ public static class SqliteSamples
 
         using (SqliteCommand command = connection.CreateCommand())
         {
-            command.CommandText = @"UPDATE Users SET Username = 'ajcvickers' WHERE Id = 1";
+            command.CommandText = "UPDATE Users SET Username = 'ajcvickers' WHERE Id = 1";
             command.ExecuteNonQuery();
         }
 
@@ -83,7 +83,7 @@ public static class SqliteSamples
 
         using (SqliteCommand command = connection.CreateCommand())
         {
-            command.CommandText = @"UPDATE Users SET Username = 'wfvickers' WHERE Id = 2";
+            command.CommandText = "UPDATE Users SET Username = 'wfvickers' WHERE Id = 2";
             command.ExecuteNonQuery();
         }
 
@@ -151,21 +151,21 @@ public static class SqliteSamples
             context.AddRange(
                 new User
                 {
-                    Username = "arthur", 
+                    Username = "arthur",
                     Birthday = new(1869, 9, 3),
-                    TokensRenewed = new(16, 30) 
+                    TokensRenewed = new(16, 30)
                 },
                 new User
                 {
                     Username = "wendy",
                     Birthday = new(1873, 8, 3),
-                    TokensRenewed = new(9, 25) 
+                    TokensRenewed = new(9, 25)
                 },
                 new User
                 {
                     Username = "microsoft",
                     Birthday = new(1975, 4, 4),
-                    TokensRenewed = new(0, 0) 
+                    TokensRenewed = new(0, 0)
                 });
 
             context.SaveChanges();
@@ -180,7 +180,7 @@ public static class SqliteSamples
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        
+
         public DateOnly Birthday { get; set; }
         public TimeOnly TokensRenewed { get; set; }
     }
@@ -190,8 +190,8 @@ public static class SqliteSamples
     {
         public DbSet<User> Users { get; set; }
 
-        private readonly bool _quiet;
-        private readonly bool _connectionEvents;
+        readonly bool _quiet;
+        readonly bool _connectionEvents;
 
         public UsersContext(
             bool quiet = false,

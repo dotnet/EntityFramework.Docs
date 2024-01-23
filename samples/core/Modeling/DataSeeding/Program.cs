@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.DataSeeding;
 
-internal static class Program
+static class Program
 {
-    private static void Main()
+    static void Main()
     {
         #region CustomSeeding
         using (var context = new DataSeedingContext())

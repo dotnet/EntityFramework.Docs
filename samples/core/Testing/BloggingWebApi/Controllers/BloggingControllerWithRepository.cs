@@ -9,7 +9,7 @@ namespace EF.Testing.BloggingWebApi.Controllers;
 public class BloggingControllerWithRepository : ControllerBase
 {
     #region BloggingControllerWithRepository
-    private readonly IBloggingRepository _repository;
+    readonly IBloggingRepository _repository;
 
     public BloggingControllerWithRepository(IBloggingRepository repository)
         => _repository = repository;

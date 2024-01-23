@@ -1,4 +1,4 @@
-﻿namespace EFQuerying.RawSQL;
+﻿namespace EFQuerying.SqlQueries;
 
 public class Post
 {

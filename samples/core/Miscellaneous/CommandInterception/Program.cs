@@ -30,18 +30,18 @@ public class Program
 #region RegisterStatelessInterceptor
 public class TaggedQueryCommandInterceptorContext : BlogsContext
 {
-    private static readonly TaggedQueryCommandInterceptor _interceptor
+    static readonly TaggedQueryCommandInterceptor _interceptor
         = new();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.AddInterceptors(_interceptor);
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.AddInterceptors(_interceptor);
 }
 #endregion
 
 #region RegisterInterceptor
 public class ExampleContext : BlogsContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.AddInterceptors(new TaggedQueryCommandInterceptor());
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.AddInterceptors(new TaggedQueryCommandInterceptor());
 }
 #endregion

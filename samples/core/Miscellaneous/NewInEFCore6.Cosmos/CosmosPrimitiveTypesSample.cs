@@ -73,17 +73,12 @@ public static class CosmosPrimitiveTypesSample
     {
         public DbSet<Book> Books { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public BooksContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public BooksContext(bool quiet = false) => _quiet = quiet;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder.Entity<Book>().ToContainer("Shapes");
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

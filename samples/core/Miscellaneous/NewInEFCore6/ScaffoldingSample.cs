@@ -23,10 +23,7 @@ public static class ScaffoldingSample
     #region Blog
     public class Blog
     {
-        public Blog()
-        {
-            Posts = new HashSet<Post>();
-        }
+        public Blog() => Posts = new HashSet<Post>();
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
@@ -38,10 +35,7 @@ public static class ScaffoldingSample
     #region Post
     public class Post
     {
-        public Post()
-        {
-            Tags = new HashSet<Tag>();
-        }
+        public Post() => Tags = new HashSet<Tag>();
 
         public int Id { get; set; }
         public string Title { get; set; } = null!;
@@ -59,10 +53,7 @@ public static class ScaffoldingSample
     #region Tag
     public class Tag
     {
-        public Tag()
-        {
-            Posts = new HashSet<Post>();
-        }
+        public Tag() => Posts = new HashSet<Post>();
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
@@ -98,10 +89,8 @@ public static class ScaffoldingSample
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Post>(
-                entity =>
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+            modelBuilder.Entity<Post>(entity =>
                     {
                         entity.HasIndex(e => e.BlogId, "IX_Posts_BlogId");
 
@@ -125,6 +114,5 @@ public static class ScaffoldingSample
                                     });
                         #endregion
                     });
-        }
     }
 }

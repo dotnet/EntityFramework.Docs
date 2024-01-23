@@ -83,7 +83,8 @@ public static class GeneratedKeysSamples
         blog.Posts.Add(
             new Post
             {
-                Title = "What’s next for System.Text.Json?", Content = ".NET 5.0 was released recently and has come with many..."
+                Title = "What’s next for System.Text.Json?",
+                Content = ".NET 5.0 was released recently and has come with many..."
             });
 
         // Mark an existing Post as Deleted
@@ -360,12 +361,9 @@ public class Post
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }

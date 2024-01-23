@@ -4,9 +4,9 @@ using NetTopologySuite.Geometries;
 
 namespace EFQuerying.Tags;
 
-internal class Program
+class Program
 {
-    private static void Main()
+    static void Main()
     {
         using (var context = new SpatialContext())
         {
@@ -42,12 +42,12 @@ string").ToList();
     }
 
     #region QueryableMethods
-    private static IQueryable<Person> GetNearestPeople(SpatialContext context, Point myLocation)
+    static IQueryable<Person> GetNearestPeople(SpatialContext context, Point myLocation)
         => from f in context.People.TagWith("GetNearestPeople")
            orderby f.Location.Distance(myLocation) descending
            select f;
 
-    private static IQueryable<T> Limit<T>(IQueryable<T> source, int limit) => source.TagWith("Limit").Take(limit);
+    static IQueryable<T> Limit<T>(IQueryable<T> source, int limit) => source.TagWith("Limit").Take(limit);
     #endregion
 }
 

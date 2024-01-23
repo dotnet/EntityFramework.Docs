@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace EFGetStarted.Migrations;
 
 [DbContext(typeof(BloggingContext))]
-internal class BloggingContextModelSnapshot : ModelSnapshot
+class BloggingContextModelSnapshot : ModelSnapshot
 {
     protected override void BuildModel(ModelBuilder modelBuilder)
     {

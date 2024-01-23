@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 [MemoryDiagnoser]
 public class CompiledQueries
 {
-    private static readonly Func<BloggingContext, IAsyncEnumerable<Blog>> _compiledQuery
+    static readonly Func<BloggingContext, IAsyncEnumerable<Blog>> _compiledQuery
         = EF.CompileAsyncQuery((BloggingContext context) => context.Blogs.Where(b => b.Url.StartsWith("http://")));
 
-    private BloggingContext _context;
+    BloggingContext _context;
 
     [Params(1, 10)]
     public int NumBlogs { get; set; }
@@ -60,14 +60,14 @@ public class CompiledQueries
     {
         public DbSet<Blog> Blogs { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True")
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
         public async Task SeedDataAsync(int numBlogs)
         {
-            Blogs.AddRange(Enumerable.Range(0, numBlogs).Select(i => new Blog { Url = $"http://www.someblog{i}.com"}));
+            Blogs.AddRange(Enumerable.Range(0, numBlogs).Select(i => new Blog { Url = $"http://www.someblog{i}.com" }));
             await SaveChangesAsync();
         }
     }

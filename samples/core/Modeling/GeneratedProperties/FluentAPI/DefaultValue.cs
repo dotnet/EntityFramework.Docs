@@ -2,17 +2,15 @@
 
 namespace EFModeling.GeneratedProperties.FluentAPI.DefaultValue;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region DefaultValue
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .Property(b => b.Rating)
             .HasDefaultValue(3);
-    }
     #endregion
 }
 

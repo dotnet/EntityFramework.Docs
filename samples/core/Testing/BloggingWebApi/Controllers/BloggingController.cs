@@ -10,7 +10,7 @@ namespace EF.Testing.BloggingWebApi.Controllers;
 [Route("[controller]")]
 public class BloggingController : ControllerBase
 {
-    private readonly BloggingContext _context;
+    readonly BloggingContext _context;
 
     public BloggingController(BloggingContext context)
         => _context = context;
@@ -20,7 +20,7 @@ public class BloggingController : ControllerBase
     public ActionResult<Blog> GetBlog(string name)
     {
         Blog blog = _context.Blogs.FirstOrDefault(b => b.Name == name);
-        return blog is null ? NotFound() : blog;
+        return (ActionResult<Blog>)blog ?? NotFound();
     }
     #endregion
 

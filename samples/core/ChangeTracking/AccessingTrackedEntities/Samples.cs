@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -111,7 +109,7 @@ public static class Samples
             Blog blog = context.Blogs.Single(e => e.Id == 1);
 
             #region Work_with_a_single_property_1d
-            string currentValue = context.Entry(blog).Property(e => e.Name).CurrentValue;
+            var currentValue = context.Entry(blog).Property(e => e.Name).CurrentValue;
             context.Entry(blog).Property(e => e.Name).CurrentValue = "1unicorn2";
             #endregion
         }
@@ -120,7 +118,7 @@ public static class Samples
             #region Work_with_a_single_property_1e
             object blog = context.Blogs.Single(e => e.Id == 1);
 
-            object currentValue = context.Entry(blog).Property("Name").CurrentValue;
+            var currentValue = context.Entry(blog).Property("Name").CurrentValue;
             context.Entry(blog).Property("Name").CurrentValue = "1unicorn2";
             #endregion
         }
@@ -333,8 +331,8 @@ public static class Samples
         Helpers.PopulateDatabase();
 
         using var context = new BlogsContext();
-        var orderId = 1;
-        var productId = 2;
+        const int orderId = 1;
+        const int productId = 2;
 
         #region Find_and_FindAsync_2
         OrderLine orderline = context.OrderLines.Find(orderId, productId);
@@ -506,8 +504,8 @@ public static class Samples
         context.Posts.Include(e => e.Blog).Load();
 
         #region Using_DbSet_Local_to_query_tracked_entities_4
-        ObservableCollection<Post> observableCollection = context.Posts.Local.ToObservableCollection();
-        BindingList<Post> bindingList = context.Posts.Local.ToBindingList();
+        var observableCollection = context.Posts.Local.ToObservableCollection();
+        var bindingList = context.Posts.Local.ToBindingList();
         #endregion
 
         Console.WriteLine();
@@ -596,12 +594,9 @@ public interface IEntityWithKey
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
@@ -620,11 +615,9 @@ public class BlogsContext : DbContext
     }
 
     #region OnModelCreating
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder
             .Entity<OrderLine>()
             .HasKey(e => new { e.OrderId, e.ProductId });
-    }
     #endregion
 }

@@ -20,7 +20,7 @@ public static class GroupByEntityTypeSample
         return QueryTest<BookContextInMemory>();
     }
 
-    private static async Task QueryTest<TContext>()
+    static async Task QueryTest<TContext>()
         where TContext : BookContext, new()
     {
         await using (var context = new TContext())
@@ -69,7 +69,7 @@ public static class GroupByEntityTypeSample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -80,8 +80,8 @@ public static class GroupByEntityTypeSample
         public DbSet<Book> Books => Set<Book>();
         public DbSet<Author> Authors => Set<Author>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
     }

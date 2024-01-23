@@ -50,22 +50,17 @@ public static class TrailingUnderscoresSample
     {
         public DbSet<User> Users { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public SomeDbContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public SomeDbContext(bool quiet = false) => _quiet = quiet;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder.Entity<User>(
                 b =>
                 {
                     b.Property(e => e.Id);
                     b.Property(e => e.Name);
                 });
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

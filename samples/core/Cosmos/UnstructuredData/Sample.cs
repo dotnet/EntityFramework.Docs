@@ -24,7 +24,9 @@ public static class Sample
 
             var order = new Order
             {
-                Id = 1, ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" }, PartitionKey = "1"
+                Id = 1,
+                ShippingAddress = new StreetAddress { City = "London", Street = "221 B Baker St" },
+                PartitionKey = "1"
             };
 
             context.Add(order);

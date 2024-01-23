@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using NetTopologySuite.Geometries;
 using ProjNet;
 using ProjNet.CoordinateSystems;
 using ProjNet.CoordinateSystems.Transformations;
 
-namespace NetTopologySuite.Geometries;
+namespace Projections;
 
 #region snippet_GeometryExtensions
 public static class GeometryExtensions
 {
-    private static readonly CoordinateSystemServices _coordinateSystemServices
+    static readonly CoordinateSystemServices _coordinateSystemServices
         = new(
             new Dictionary<int, string>
             {
@@ -54,9 +55,9 @@ public static class GeometryExtensions
         return result;
     }
 
-    private class MathTransformFilter : ICoordinateSequenceFilter
+    class MathTransformFilter : ICoordinateSequenceFilter
     {
-        private readonly MathTransform _transform;
+        readonly MathTransform _transform;
 
         public MathTransformFilter(MathTransform transform)
             => _transform = transform;

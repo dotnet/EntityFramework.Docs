@@ -6,7 +6,6 @@ namespace CompiledModelTest;
 
 public class BlogsContext : DbContext
 {
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var currentDirectory = Environment.CurrentDirectory;

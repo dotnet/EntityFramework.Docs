@@ -1,32 +1,29 @@
-﻿namespace Common
+﻿namespace Common;
+
+public delegate void TenantChangedEventHandler(object source, TenantChangedEventArgs args);
+public class TenantService : ITenantService
 {
-    public delegate void TenantChangedEventHandler(object source, TenantChangedEventArgs args);
-    public class TenantService : ITenantService
+    public TenantService() => Tenant = GetTenants()[0];
+
+    public TenantService(string tenant) => Tenant = tenant;
+
+    public event EventHandler<TenantChangedEventArgs> OnTenantChanged = null!;
+
+    public string Tenant { get; private set; }
+
+    public void SetTenant(string tenant)
     {
-        public TenantService() => _tenant = GetTenants()[0];
-
-        public TenantService(string tenant) => _tenant = tenant;
-
-        private string _tenant;
-
-        public event TenantChangedEventHandler OnTenantChanged = null!;
-
-        public string Tenant => _tenant;
-
-        public void SetTenant(string tenant)
+        if (tenant != Tenant)
         {
-            if (tenant != _tenant)
-            {
-                var old = _tenant;
-                _tenant = tenant;
-                OnTenantChanged?.Invoke(this, new TenantChangedEventArgs(old, _tenant));
-            }
+            var old = Tenant;
+            Tenant = tenant;
+            OnTenantChanged?.Invoke(this, new TenantChangedEventArgs(old, Tenant));
         }
-
-        public string[] GetTenants() =>
-        [
-            "TenantA",
-            "TenantB",
-        ];
     }
+
+    public string[] GetTenants() =>
+    [
+        "TenantA",
+        "TenantB",
+    ];
 }

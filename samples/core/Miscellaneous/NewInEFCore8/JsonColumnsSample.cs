@@ -16,7 +16,7 @@ public static class JsonColumnsSample
         return JsonColumnsTest<JsonBlogsContextSqlite>();
     }
 
-    private static async Task JsonColumnsTest<TContext>()
+    static async Task JsonColumnsTest<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -37,7 +37,7 @@ public static class JsonColumnsSample
         #endregion
 
         Console.WriteLine();
-        foreach (var post in updatedPosts)
+        foreach (Post post in updatedPosts)
         {
             Console.WriteLine($"Post '{post.Title[..10]}...' with updates on {post.Metadata!.Updates[0].UpdatedOn} and {post.Metadata.Updates[1].UpdatedOn}.");
         }
@@ -54,7 +54,7 @@ public static class JsonColumnsSample
         #endregion
 
         Console.WriteLine();
-        foreach (var post in postsWithFirstCommit)
+        foreach (Post post in postsWithFirstCommit)
         {
             Console.WriteLine($"Post '{post.Title[..10]}...' with first commit on {post.Metadata!.Updates[0].Commits[0].CommittedOn}.");
         }
@@ -124,7 +124,7 @@ public static class JsonColumnsSample
         #endregion
 
         Console.WriteLine();
-        foreach (var author in authorsInChigley)
+        foreach (Author author in authorsInChigley)
         {
             Console.WriteLine($"{author.Name} lives at '{author.Contact.Address.Street}' in Chigley.");
         }
@@ -172,7 +172,7 @@ public static class JsonColumnsSample
             .ToListAsync();
 
         Console.WriteLine();
-        foreach (var author in authorsInChigleyWithPosts)
+        foreach (Author author in authorsInChigleyWithPosts)
         {
             Console.WriteLine($"{author.Name} has {author.Posts.Count} posts");
         }
@@ -211,7 +211,7 @@ public static class JsonColumnsSample
         #endregion
 
         Console.WriteLine();
-        foreach (var postWithTerm in postsWithSearchTerms)
+        foreach (Post postWithTerm in postsWithSearchTerms)
         {
             Console.WriteLine(
                 $"Post {postWithTerm.Id} with terms '{string.Join("', '", postWithTerm.Metadata!.TopSearches.Select(s => s.Term))}'");
@@ -271,7 +271,7 @@ public static class JsonColumnsSample
         await context.SaveChangesAsync();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

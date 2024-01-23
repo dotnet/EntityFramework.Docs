@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EFQuerying.ClientEvaluation;
 
-internal class Program
+class Program
 {
     #region ClientMethod
     public static string StandardizeUrl(string url)
@@ -19,7 +19,7 @@ internal class Program
     }
     #endregion
 
-    private static void Main()
+    static void Main()
     {
         using (var context = new BloggingContext())
         {

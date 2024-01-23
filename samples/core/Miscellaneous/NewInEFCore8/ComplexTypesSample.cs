@@ -14,7 +14,7 @@ public static class ComplexTypesSample
         return ComplexTypeTest<CustomerContextSqlite>();
     }
 
-    private static async Task ComplexTypeTest<TContext>()
+    static async Task ComplexTypeTest<TContext>()
         where TContext : CustomerContextBase, new()
     {
         await using var context = new TContext();
@@ -51,7 +51,7 @@ public static class ComplexTypesSample
         context.ChangeTracker.Clear();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -133,9 +133,6 @@ public static class ComplexTypesSample
         }
         #endregion
 
-        public async Task Seed()
-        {
-            await SaveChangesAsync();
-        }
+        public async Task Seed() => await SaveChangesAsync();
     }
 }

@@ -157,20 +157,15 @@ public class Post
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>().HasMany(e => e.Posts).WithOne(e => e.Blog); //.OnDelete(DeleteBehavior.ClientSetNull);
-    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

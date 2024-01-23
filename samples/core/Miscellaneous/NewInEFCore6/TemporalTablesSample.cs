@@ -221,7 +221,7 @@ public static class TemporalTablesSample
             #endregion
 
             Console.WriteLine();
-            Console.WriteLine($"Historical data for Rainbow Dash between:");
+            Console.WriteLine("Historical data for Rainbow Dash between:");
 
             var history = context
                 .Employees
@@ -279,12 +279,9 @@ public static class TemporalTablesSample
     {
         public DbSet<Employee> Employees { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public EmployeeContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public EmployeeContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -14,7 +14,7 @@ public static class PrimitiveCollectionsInJsonSample
         return ContainsTest<PubsAndWalksContextSqlite>();
     }
 
-    private static async Task ContainsTest<TContext>()
+    static async Task ContainsTest<TContext>()
         where TContext : PubsAndWalksContextBase, new()
     {
         await using var context = new TContext();
@@ -26,7 +26,7 @@ public static class PrimitiveCollectionsInJsonSample
         context.ChangeTracker.Clear();
 
         #region WalksWithTerrain
-        Terrain[] terrains = new[] { Terrain.River, Terrain.Beach, Terrain.Park };
+        Terrain[] terrains = [Terrain.River, Terrain.Beach, Terrain.Park];
         List<string> walksWithTerrain = await context.Walks
             .Where(e => terrains.Contains(e.Terrain))
             .Select(e => e.Name)
@@ -102,7 +102,7 @@ public static class PrimitiveCollectionsInJsonSample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -111,10 +111,7 @@ public static class PrimitiveCollectionsInJsonSample
     #region DogWalk
     public class DogWalk
     {
-        public DogWalk(string name)
-        {
-            Name = name;
-        }
+        public DogWalk(string name) => Name = name;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -137,10 +134,7 @@ public static class PrimitiveCollectionsInJsonSample
     #region Pub
     public class Pub
     {
-        public Pub(string name)
-        {
-            Name = name;
-        }
+        public Pub(string name) => Name = name;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -172,10 +166,7 @@ public static class PrimitiveCollectionsInJsonSample
 
     public abstract class PubsAndWalksContextBase : DbContext
     {
-        protected PubsAndWalksContextBase(bool useSqlite = false)
-        {
-            UseSqlite = useSqlite;
-        }
+        protected PubsAndWalksContextBase(bool useSqlite = false) => UseSqlite = useSqlite;
 
         public bool UseSqlite { get; }
         public bool LoggingEnabled { get; set; }

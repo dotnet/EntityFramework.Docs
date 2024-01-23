@@ -2,7 +2,7 @@
 
 namespace EFModeling.Sequences.Sequence;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Order> Orders { get; set; }
 

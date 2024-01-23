@@ -87,12 +87,9 @@ public static class IsNullOrWhitespaceSample
     {
         public DbSet<User> Users { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public BooksContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public BooksContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

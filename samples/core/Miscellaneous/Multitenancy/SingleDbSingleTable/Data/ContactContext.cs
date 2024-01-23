@@ -1,35 +1,34 @@
 ﻿using Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace SingleDbSingleTable.Data
+namespace SingleDbSingleTable.Data;
+
+public class ContactContext : DbContext
 {
-    public class ContactContext : DbContext
+    readonly string _tenant = string.Empty;
+
+    public ContactContext(
+        DbContextOptions<ContactContext> opts,
+        ITenantService service)
+        : base(opts) => _tenant = service.Tenant;
+
+    public DbSet<MultitenantContact> Contacts { get; set; } = null!;
+
+    public void CheckAndSeed()
     {
-        private readonly string _tenant = string.Empty;
-
-        public ContactContext(
-            DbContextOptions<ContactContext> opts,
-            ITenantService service)
-            : base(opts) => _tenant = service.Tenant;
-
-        public DbSet<MultitenantContact> Contacts { get; set; } = null!;
-
-        public void CheckAndSeed()
+        if (Database.EnsureCreated())
         {
-            if (Database.EnsureCreated())
+            foreach (Contact contact in Contact.GeneratedContacts)
             {
-                foreach (Contact contact in Contact.GeneratedContacts)
-                {
-                    var tenant = contact.IsUnicorn ? "TenantA" : "TenantB";
-                    Contacts.Add(new MultitenantContact(contact, tenant));
-                }
-
-                SaveChanges();
+                var tenant = contact.IsUnicorn ? "TenantA" : "TenantB";
+                Contacts.Add(new MultitenantContact(contact, tenant));
             }
-        }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-            => modelBuilder.Entity<MultitenantContact>()
-                .HasQueryFilter(mt => mt.Tenant == _tenant);
+            SaveChanges();
+        }
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        modelBuilder.Entity<MultitenantContact>()
+            .HasQueryFilter(mt => mt.Tenant == _tenant);
 }

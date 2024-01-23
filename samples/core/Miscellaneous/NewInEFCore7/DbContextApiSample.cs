@@ -147,7 +147,7 @@ public static class DbContextApiSample
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -194,7 +194,7 @@ public static class DbContextApiSample
             configurationBuilder.Properties<Version>().HaveConversion<VersionConverter>();
         }
 
-        private class VersionConverter : ValueConverter<Version, string>
+        class VersionConverter : ValueConverter<Version, string>
         {
             public VersionConverter()
                 : base(v => v.ToString(), v => new Version(v))

@@ -16,7 +16,7 @@ public static class JsonColumnsSample
         return JsonColumnsTest<JsonBlogsContextSqlite>();
     }
 
-    private static async Task JsonColumnsTest<TContext>()
+    static async Task JsonColumnsTest<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -34,7 +34,7 @@ public static class JsonColumnsSample
         #endregion
 
         Console.WriteLine();
-        foreach (var author in authorsInChigley)
+        foreach (Author author in authorsInChigley)
         {
             Console.WriteLine($"{author.Name} lives at '{author.Contact.Address.Street}' in Chigley.");
         }
@@ -82,7 +82,7 @@ public static class JsonColumnsSample
             .ToListAsync();
 
         Console.WriteLine();
-        foreach (var author in authorsInChigleyWithPosts)
+        foreach (Author author in authorsInChigleyWithPosts)
         {
             Console.WriteLine($"{author.Name} has {author.Posts.Count} posts");
         }
@@ -164,7 +164,7 @@ public static class JsonColumnsSample
         await context.SaveChangesAsync();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -221,19 +221,16 @@ public class JsonBlogsContextSqlite : JsonBlogsContextBase
 public abstract class TableSharingAggregateContext : TphBlogsContext
 {
     #region TableSharingAggregate
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Author>().OwnsOne(
             author => author.Contact, ownedNavigationBuilder => ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address));
-    }
     #endregion
 }
 
 public abstract class TableMappedAggregateContext : TphBlogsContext
 {
     #region TableMappedAggregate
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Author>().OwnsOne(
             author => author.Contact, ownedNavigationBuilder =>
             {
@@ -241,21 +238,18 @@ public abstract class TableMappedAggregateContext : TphBlogsContext
                 ownedNavigationBuilder.OwnsOne(
                     contactDetails => contactDetails.Address, ownedOwnedNavigationBuilder => ownedOwnedNavigationBuilder.ToTable("Addresses"));
             });
-    }
     #endregion
 }
 
 public abstract class JsonColumnAggregateContext : TphBlogsContext
 {
     #region JsonColumnAggregate
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Author>().OwnsOne(
             author => author.Contact, ownedNavigationBuilder =>
             {
                 ownedNavigationBuilder.ToJson();
                 ownedNavigationBuilder.OwnsOne(contactDetails => contactDetails.Address);
             });
-    }
     #endregion
 }

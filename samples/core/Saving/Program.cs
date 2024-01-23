@@ -3,9 +3,9 @@ using EFSaving.Transactions;
 
 namespace EFSaving;
 
-internal class Program
+class Program
 {
-    private static void Main()
+    static void Main()
     {
         Sample.Run();
         RelatedData.Sample.Run();

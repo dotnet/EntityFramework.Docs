@@ -2,9 +2,9 @@
 
 namespace EFQuerying.ComplexQuery;
 
-internal class Program
+class Program
 {
-    private static void Main()
+    static void Main()
     {
         using (var context = new BloggingContext())
         {

@@ -6,7 +6,7 @@ namespace EF.Testing.BusinessLogic;
 #region BloggingRepository
 public class BloggingRepository : IBloggingRepository
 {
-    private readonly BloggingContext _context;
+    readonly BloggingContext _context;
 
     public BloggingRepository(BloggingContext context)
         => _context = context;

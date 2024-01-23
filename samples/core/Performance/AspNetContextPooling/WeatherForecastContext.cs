@@ -11,8 +11,7 @@ public class WeatherForecastContext : DbContext
 
     public DbSet<WeatherForecast> Forecasts { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<WeatherForecast>().HasData(
             new WeatherForecast
             {
@@ -35,5 +34,4 @@ public class WeatherForecastContext : DbContext
                 Summary = "Sweltering",
                 TemperatureC = -7
             });
-    }
 }

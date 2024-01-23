@@ -4,13 +4,13 @@ using Microsoft.Extensions.Logging;
 
 public class BlogsContext : DbContext
 {
-    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=InterceptionTest;Trusted_Connection=True";
+    const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=InterceptionTest;Trusted_Connection=True";
 
-    private static readonly AadAuthenticationInterceptor _interceptor
+    static readonly AadAuthenticationInterceptor _interceptor
         = new();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information)
             .UseSqlServer(ConnectionString)
             .AddInterceptors(_interceptor);
 

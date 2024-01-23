@@ -2,16 +2,14 @@
 
 namespace EFModeling.EntityTypes.FluentAPI.TableName;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region TableName
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .ToTable("blogs");
-    }
     #endregion
 }
 

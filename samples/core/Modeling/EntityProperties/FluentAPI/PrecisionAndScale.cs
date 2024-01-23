@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.EntityProperties.FluentAPI.PrecisionAndScale;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 

@@ -27,7 +27,8 @@ public class SnapshotSamples
         blog.Posts.Add(
             new Post
             {
-                Title = "What’s next for System.Text.Json?", Content = ".NET 5.0 was released recently and has come with many..."
+                Title = "What’s next for System.Text.Json?",
+                Content = ".NET 5.0 was released recently and has come with many..."
             });
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -153,12 +154,9 @@ public class PostTag
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
@@ -175,10 +173,8 @@ public class BlogsContext : DbContext
         }
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<PostTag>().HasKey(e => new { e.PostId, e.TagId });
-    }
 
     #region SaveChanges
     public override int SaveChanges()

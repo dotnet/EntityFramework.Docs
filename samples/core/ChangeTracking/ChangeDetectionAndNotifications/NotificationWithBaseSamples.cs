@@ -30,7 +30,8 @@ public class NotificationWithBaseSamples
         blog.Posts.Add(
             new Post
             {
-                Title = "What’s next for System.Text.Json?", Content = ".NET 5.0 was released recently and has come with many..."
+                Title = "What’s next for System.Text.Json?",
+                Content = ".NET 5.0 was released recently and has come with many..."
             });
 
         Console.WriteLine(context.ChangeTracker.DebugView.LongView);
@@ -97,11 +98,11 @@ public static class Helpers
 
 public class Post : NotifyingEntity
 {
-    private int _id;
-    private string _title;
-    private string _content;
-    private int? _blogId;
-    private Blog _blog;
+    int _id;
+    string _title;
+    string _content;
+    int? _blogId;
+    Blog _blog;
 
     public int Id
     {
@@ -137,7 +138,7 @@ public class Post : NotifyingEntity
 #region Model
 public class Blog : NotifyingEntity
 {
-    private int _id;
+    int _id;
 
     public int Id
     {
@@ -145,7 +146,7 @@ public class Blog : NotifyingEntity
         set => SetWithNotify(value, out _id);
     }
 
-    private string _name;
+    string _name;
 
     public string Name
     {
@@ -168,22 +169,19 @@ public abstract class NotifyingEntity : INotifyPropertyChanging, INotifyProperty
     public event PropertyChangingEventHandler PropertyChanging;
     public event PropertyChangedEventHandler PropertyChanged;
 
-    private void NotifyChanged(string propertyName)
+    void NotifyChanged(string propertyName)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-    private void NotifyChanging(string propertyName)
+    void NotifyChanging(string propertyName)
         => PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
 }
 #endregion
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
@@ -201,9 +199,7 @@ public class BlogsContext : DbContext
     }
 
     #region OnModelCreating
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangingAndChangedNotifications);
-    }
     #endregion
 }

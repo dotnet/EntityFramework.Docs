@@ -7,12 +7,10 @@ public class MyContext : DbContext
     public DbSet<Blog> Blogs { get; set; }
 
     #region DiscriminatorMappingIncomplete
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .HasDiscriminator()
             .IsComplete(false);
-    }
     #endregion
 }
 

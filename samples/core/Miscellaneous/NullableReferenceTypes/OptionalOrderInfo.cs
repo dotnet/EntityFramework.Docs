@@ -6,9 +6,6 @@ namespace NullableReferenceTypes
         public string AdditionalInfo { get; set; }
         public ExtraOptionalOrderInfo? ExtraAdditionalInfo { get; set; }
 
-        public OptionalOrderInfo(string additionalInfo)
-        {
-            AdditionalInfo = additionalInfo;
-        }
+        public OptionalOrderInfo(string additionalInfo) => AdditionalInfo = additionalInfo;
     }
 }

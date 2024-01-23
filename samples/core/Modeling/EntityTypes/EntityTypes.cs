@@ -4,14 +4,12 @@ using Microsoft.EntityFrameworkCore;
 namespace EFModeling.EntityTypes;
 
 #region EntityTypes
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<AuditEntry>();
-    }
 }
 
 public class Blog
@@ -52,16 +50,12 @@ public class MyContextWithFunctionMapping : DbContext
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        #region QueryableFunctionConfigurationToFunction
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+    #region QueryableFunctionConfigurationToFunction
         modelBuilder.Entity<BlogWithMultiplePosts>().HasNoKey().ToFunction("BlogsWithMultiplePosts");
-        #endregion
-    }
+    #endregion
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseSqlServer(
             @"Server=(localdb)\mssqllocaldb;Database=EFModeling.EntityTypeToFunctionMapping;Trusted_Connection=True");
-    }
 }

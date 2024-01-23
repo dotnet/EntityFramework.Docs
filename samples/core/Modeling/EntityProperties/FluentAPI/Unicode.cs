@@ -2,17 +2,15 @@
 
 namespace EFModeling.EntityProperties.FluentAPI.Unicode;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Book> Books { get; set; }
 
     #region Unicode
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Book>()
             .Property(b => b.Isbn)
             .IsUnicode(false);
-    }
     #endregion
 }
 

@@ -7,7 +7,7 @@ namespace NullableReferenceTypes
     {
         public int Id { get; set; }
 
-        private Address? _shippingAddress;
+        Address? _shippingAddress;
 
         public Address ShippingAddress
         {

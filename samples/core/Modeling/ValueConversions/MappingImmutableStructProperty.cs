@@ -43,23 +43,21 @@ public class MappingImmutableStructProperty : Program
 
     public class SampleDbContext : DbContext
     {
-        private static readonly ILoggerFactory
+        static readonly ILoggerFactory
             _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureImmutableStructProperty
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureImmutableStructProperty
             modelBuilder
                 .Entity<EntityType>()
                 .Property(e => e.MyProperty)
                 .HasConversion(
                     v => v.Value,
                     v => new ImmutableStruct(v));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();
@@ -74,10 +72,7 @@ public class MappingImmutableStructProperty : Program
     #region SimpleImmutableStruct
     public readonly struct ImmutableStruct
     {
-        public ImmutableStruct(int value)
-        {
-            Value = value;
-        }
+        public ImmutableStruct(int value) => Value = value;
 
         public int Value { get; }
     }

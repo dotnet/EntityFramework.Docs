@@ -8,12 +8,10 @@ public class AnimalContext : DbContext
     public DbSet<Animal> Animals { get; set; }
     public DbSet<Toy> Toys { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=Querying.QueryFilters.Animals;Trusted_Connection=True");
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

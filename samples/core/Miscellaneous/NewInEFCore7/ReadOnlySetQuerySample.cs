@@ -22,7 +22,7 @@ public static class ReadOnlySetQuerySample
         return QueryTest<ReadOnlySetContextInMemory>();
     }
 
-    private static async Task QueryTest<TContext>()
+    static async Task QueryTest<TContext>()
         where TContext : ReadOnlySetContext, new()
     {
         await using (var context = new TContext())
@@ -51,7 +51,7 @@ public static class ReadOnlySetQuerySample
             IQueryable<Customer1> query = context.Customers.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
             #endregion
 
-            await foreach (var customer in query.AsAsyncEnumerable())
+            await foreach (Customer1? customer in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"Customer: {customer.Name}");
             }
@@ -62,7 +62,7 @@ public static class ReadOnlySetQuerySample
             IReadOnlyCollection<int> searchIds = new ReadOnlyCollection<int>(new Collection<int> { 1, 3, 5 });
             IQueryable<Customer1> query = context.Customers.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
 
-            await foreach (var customer in query.AsAsyncEnumerable())
+            await foreach (Customer1? customer in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"Customer: {customer.Name}");
             }
@@ -73,7 +73,7 @@ public static class ReadOnlySetQuerySample
             var searchIds = new ReadOnlyCollection<int>(new Collection<int> { 1, 3, 5 });
             IQueryable<Customer2> query = context.Customer2s.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
 
-            await foreach (var customer in query.AsAsyncEnumerable())
+            await foreach (Customer2? customer in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"Customer: {customer.Name}");
             }
@@ -84,14 +84,14 @@ public static class ReadOnlySetQuerySample
             IReadOnlyList<int> searchIds = new List<int> { 1, 3, 5 };
             IQueryable<Customer3> query = context.Customer3s.Where(p => p.Orders.Any(l => searchIds.Contains(l.Id)));
 
-            await foreach (var customer in query.AsAsyncEnumerable())
+            await foreach (Customer3? customer in query.AsAsyncEnumerable())
             {
                 Console.WriteLine($"Customer: {customer.Name}");
             }
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -104,8 +104,8 @@ public static class ReadOnlySetQuerySample
         public DbSet<Customer3> Customer3s => Set<Customer3>();
         public DbSet<Order> Orders => Set<Order>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
     }

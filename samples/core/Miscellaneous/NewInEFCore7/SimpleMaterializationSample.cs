@@ -29,7 +29,7 @@ public static class SimpleMaterializationSample
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -38,13 +38,13 @@ public static class SimpleMaterializationSample
     #region CustomerContext
     public class CustomerContext : DbContext
     {
-        private static readonly SetRetrievedInterceptor _setRetrievedInterceptor = new();
+        static readonly SetRetrievedInterceptor _setRetrievedInterceptor = new();
 
         public DbSet<Customer> Customers
             => Set<Customer>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .AddInterceptors(_setRetrievedInterceptor)
                 .UseSqlite("Data Source = customers.db");
     }

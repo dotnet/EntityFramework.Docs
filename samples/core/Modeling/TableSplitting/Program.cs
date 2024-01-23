@@ -5,7 +5,7 @@ namespace EFModeling.TableSplitting;
 
 public static class Program
 {
-    private static void Main()
+    static void Main()
     {
         #region Usage
         using (var context = new TableSplittingContext())

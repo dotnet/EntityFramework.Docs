@@ -3,19 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.Relationships.FluentAPI.CascadeDelete;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
 
     #region CascadeDelete
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Post>()
             .HasOne(p => p.Blog)
             .WithMany(b => b.Posts)
             .OnDelete(DeleteBehavior.Cascade);
-    }
     #endregion
 }
 

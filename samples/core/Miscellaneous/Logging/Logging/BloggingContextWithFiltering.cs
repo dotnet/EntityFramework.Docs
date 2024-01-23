@@ -19,8 +19,8 @@ public class BloggingContextWithFiltering : DbContext
     public DbSet<Blog> Blogs { get; set; }
 
     #region RegisterLoggerFactory
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder
             .UseLoggerFactory(MyLoggerFactory) // Warning: Do not create a new ILoggerFactory instance each time
             .UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=EFLogging;Trusted_Connection=True");

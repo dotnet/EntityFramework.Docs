@@ -36,19 +36,17 @@ public class SimpleValueObject : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureImmutableStructProperty
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureImmutableStructProperty
             modelBuilder.Entity<Order>()
                 .Property(e => e.Price)
                 .HasConversion(
                     v => v.Amount,
                     v => new Dollars(v));
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();

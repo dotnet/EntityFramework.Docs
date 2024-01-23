@@ -536,12 +536,9 @@ public static class GroupBySample
         public DbSet<Shoes> Shoes { get; set; }
         public DbSet<Feet> Feet { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public ShoesContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public ShoesContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -555,9 +552,7 @@ public static class GroupBySample
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder.Entity<Feet>().HasOne(e => e.Person).WithOne(e => e.Feet).HasForeignKey<Feet>();
-        }
     }
 }

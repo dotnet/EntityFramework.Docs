@@ -9,7 +9,7 @@ namespace EF.Testing.UnitTests;
 
 public class InMemoryBloggingControllerTest
 {
-    private readonly DbContextOptions<BloggingContext> _contextOptions;
+    readonly DbContextOptions<BloggingContext> _contextOptions;
 
     #region Constructor
     public InMemoryBloggingControllerTest()
@@ -83,7 +83,7 @@ public class InMemoryBloggingControllerTest
         Assert.Equal("http://blog2_updated.com", blog.Url);
     }
 
-    private BloggingContext CreateContext() =>
+    BloggingContext CreateContext() =>
         new(_contextOptions,
             (context,
              modelBuilder) =>

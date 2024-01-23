@@ -120,7 +120,7 @@ public static class ToInMemoryQuerySample
         public int CustomerCount { get; set; }
     }
     #endregion
-    
+
     #region EntityTypes
     public class Customer
     {
@@ -143,16 +143,13 @@ public static class ToInMemoryQuerySample
     {
         public DbSet<Customer> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder
                 .EnableSensitiveDataLogging()
                 .UseInMemoryDatabase(nameof(CustomerContext));
-        }
 
         #region ToInMemoryQuery
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder
                 .Entity<CustomerDensity>()
                 .HasNoKey()
@@ -166,7 +163,6 @@ public static class ToInMemoryQuerySample
                                     Postcode = g.Key,
                                     CustomerCount = g.Count()
                                 }));
-        }
         #endregion
 
         #region DbSets

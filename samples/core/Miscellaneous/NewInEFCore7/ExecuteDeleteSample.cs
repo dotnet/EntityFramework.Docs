@@ -26,7 +26,7 @@ public static class ExecuteDeleteSample
         return ExecuteDeleteTest<TphSqliteBlogsContext>();
     }
 
-    private static async Task ExecuteDeleteTest<TContext>()
+    static async Task ExecuteDeleteTest<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -64,7 +64,7 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
     }
 
-    private static async Task DeleteAllTags<TContext>()
+    static async Task DeleteAllTags<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -89,7 +89,7 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
     }
 
-    private static async Task DeleteTagsContainingDotNet<TContext>()
+    static async Task DeleteTagsContainingDotNet<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -114,7 +114,7 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
     }
 
-    private static async Task DeleteTagsFromOldPosts<TContext>()
+    static async Task DeleteTagsFromOldPosts<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -139,7 +139,7 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
     }
 
-    private static async Task DeleteAllAuthors<TContext>()
+    static async Task DeleteAllAuthors<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -165,7 +165,7 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
     }
 
-    private static async Task DeleteFeaturedPosts<TContext>()
+    static async Task DeleteFeaturedPosts<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -190,7 +190,7 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
     }
 
-    private static async Task DeletePostsForGivenAuthor<TContext>()
+    static async Task DeletePostsForGivenAuthor<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -215,7 +215,7 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
     }
 
-    private static async Task DeleteAllBlogsAndPosts<TContext>()
+    static async Task DeleteAllBlogsAndPosts<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -244,7 +244,7 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
     }
 
-    private static async Task DeleteAuthorsWithOnePost<TContext>()
+    static async Task DeleteAuthorsWithOnePost<TContext>()
         where TContext : BlogsContext, new()
     {
         await using var context = new TContext();
@@ -267,7 +267,7 @@ public static class ExecuteDeleteSample
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

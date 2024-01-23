@@ -47,7 +47,7 @@ public class MappingListPropertyOld : Program
 
     public class SampleDbContext : DbContext
     {
-        private static readonly ILoggerFactory
+        static readonly ILoggerFactory
             _logger = LoggerFactory.Create(x => x.AddConsole()); //.SetMinimumLevel(LogLevel.Debug));
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -73,8 +73,8 @@ public class MappingListPropertyOld : Program
             #endregion
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseLoggerFactory(_logger)
                 .UseSqlite("DataSource=test.db")
                 .EnableSensitiveDataLogging();

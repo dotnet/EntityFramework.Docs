@@ -2,14 +2,14 @@
 
 namespace EFModeling.Keys.KeyId;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Car> Cars { get; set; }
     public DbSet<Truck> Trucks { get; set; }
 }
 
 #region KeyId
-internal class Car
+class Car
 {
     public string Id { get; set; }
 
@@ -17,7 +17,7 @@ internal class Car
     public string Model { get; set; }
 }
 
-internal class Truck
+class Truck
 {
     public string TruckId { get; set; }
 

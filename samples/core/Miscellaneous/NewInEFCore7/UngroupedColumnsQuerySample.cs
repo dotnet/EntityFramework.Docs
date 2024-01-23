@@ -8,7 +8,7 @@ public static class UngroupedColumnsQuerySample
         return QueryTest<InvoiceContextSqlServer>();
     }
 
-    private static async Task QueryTest<TContext>()
+    static async Task QueryTest<TContext>()
         where TContext : InvoiceContext, new()
     {
         await using (var context = new TContext())
@@ -34,13 +34,15 @@ public static class UngroupedColumnsQuerySample
         await using (var context = new TContext())
         {
             #region UngroupedColumns
-            var query = from s in (from i in context.Invoices
-                                   group i by i.History.Month
+            var query = from s in from i in context.Invoices
+                                  group i by i.History.Month
                                    into g
-                                   select new { Month = g.Key, Total = g.Sum(p => p.Amount), })
+                                  select new { Month = g.Key, Total = g.Sum(p => p.Amount), }
                         select new
                         {
-                            s.Month, s.Total, Payment = context.Payments.Where(p => p.History.Month == s.Month).Sum(p => p.Amount)
+                            s.Month,
+                            s.Total,
+                            Payment = context.Payments.Where(p => p.History.Month == s.Month).Sum(p => p.Amount)
                         };
             #endregion
 
@@ -51,7 +53,7 @@ public static class UngroupedColumnsQuerySample
         }
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -62,8 +64,8 @@ public static class UngroupedColumnsQuerySample
         public DbSet<Invoice> Invoices => Set<Invoice>();
         public DbSet<Payment> Payments => Set<Payment>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
     }

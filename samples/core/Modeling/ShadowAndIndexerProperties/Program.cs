@@ -1,8 +1,8 @@
 namespace EFModeling.ShadowAndIndexerProperties;
 
-internal class Program
+class Program
 {
-    private static void Main()
+    static void Main()
     {
     }
 }

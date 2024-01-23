@@ -17,7 +17,7 @@ public class Blog
 
 public class BloggingContext : DbContext
 {
-    private static long _instanceCount;
+    static long _instanceCount;
     public static long InstanceCount => _instanceCount;
 
     public BloggingContext(DbContextOptions options)
@@ -29,7 +29,7 @@ public class BloggingContext : DbContext
 
 public class BlogController
 {
-    private readonly BloggingContext _context;
+    readonly BloggingContext _context;
 
     public BlogController(BloggingContext context) => _context = context;
 
@@ -38,24 +38,22 @@ public class BlogController
 
 public class Startup
 {
-    private const string ConnectionString
+    const string ConnectionString
         = @"Server=(localdb)\mssqllocaldb;Database=Demo.ContextPooling;Trusted_Connection=True";
 
-    public void ConfigureServices(IServiceCollection services)
-    {
+    public void ConfigureServices(IServiceCollection services) =>
         // Switch the lines below to compare pooling with the traditional instance-per-request approach.
         //services.AddDbContext<BloggingContext>(c => c.UseSqlServer(ConnectionString));
         services.AddDbContextPool<BloggingContext>(c => c.UseSqlServer(ConnectionString));
-    }
 }
 
 public class Program
 {
-    private const int Threads = 32, Seconds = 10;
+    const int Threads = 32, Seconds = 10;
 
-    private static long _requestsProcessed;
+    static long _requestsProcessed;
 
-    private static async Task Main()
+    static async Task Main()
     {
         var serviceCollection = new ServiceCollection();
         new Startup().ConfigureServices(serviceCollection);
@@ -75,7 +73,7 @@ public class Program
         await monitorTask;
     }
 
-    private static void SetupDatabase(IServiceProvider serviceProvider)
+    static void SetupDatabase(IServiceProvider serviceProvider)
     {
         using IServiceScope serviceScope = serviceProvider.CreateScope();
         BloggingContext context = serviceScope.ServiceProvider.GetService<BloggingContext>();
@@ -88,7 +86,7 @@ public class Program
         }
     }
 
-    private static async Task SimulateRequestsAsync(IServiceProvider serviceProvider, Stopwatch stopwatch)
+    static async Task SimulateRequestsAsync(IServiceProvider serviceProvider, Stopwatch stopwatch)
     {
         while (stopwatch.IsRunning)
         {
@@ -101,7 +99,7 @@ public class Program
         }
     }
 
-    private static async Task MonitorResults(TimeSpan duration, Stopwatch stopwatch)
+    static async Task MonitorResults(TimeSpan duration, Stopwatch stopwatch)
     {
         var lastInstanceCount = 0L;
         var lastRequestCount = 0L;

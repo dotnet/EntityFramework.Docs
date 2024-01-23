@@ -3,18 +3,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFModeling.BackingFields.FluentAPI.BackingFieldAccessMode;
 
-internal class MyContext : DbContext
+class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
     #region BackingFieldAccessMode
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.Entity<Blog>()
             .Property(b => b.Url)
             .HasField("_validatedUrl")
             .UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
-    }
     #endregion
 }
 

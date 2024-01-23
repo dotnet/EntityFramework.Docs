@@ -69,7 +69,7 @@ public static class HierarchyIdSample
 
         Console.WriteLine();
         Console.WriteLine("Ancestors of Bilbo are:");
-        foreach (var halfling in ancestors)
+        foreach (Halfling halfling in ancestors)
         {
             Console.WriteLine($"  {halfling.Name}");
         }
@@ -91,7 +91,7 @@ public static class HierarchyIdSample
 
         Console.WriteLine();
         Console.WriteLine("Direct descendents of Mungo:");
-        foreach (var descendent in directDescendents)
+        foreach (Halfling descendent in directDescendents)
         {
             Console.WriteLine($"  {descendent.Name}");
         }
@@ -108,7 +108,7 @@ public static class HierarchyIdSample
 
         Console.WriteLine();
         Console.WriteLine("All descendents of Mungo:");
-        foreach (var descendent in descendents)
+        foreach (Halfling descendent in descendents)
         {
             Console.WriteLine($"  {descendent.Name}");
         }
@@ -130,7 +130,7 @@ public static class HierarchyIdSample
 
         Console.WriteLine();
         Console.WriteLine("All descendents of Ponto:");
-        foreach (var descendent in await FindAllDescendents("Ponto").AsNoTracking().ToListAsync())
+        foreach (Halfling? descendent in await FindAllDescendents("Ponto").AsNoTracking().ToListAsync())
         {
             Console.WriteLine($"  {descendent.Name}");
         }
@@ -152,7 +152,7 @@ public static class HierarchyIdSample
         context.LoggingEnabled = true;
 
         #region GetReparentedValue
-        foreach (var descendent in longoAndDescendents)
+        foreach (Halfling descendent in longoAndDescendents)
         {
             descendent.PathFromPatriarch
                 = descendent.PathFromPatriarch.GetReparentedValue(
@@ -166,14 +166,14 @@ public static class HierarchyIdSample
 
         Console.WriteLine();
         Console.WriteLine("All descendents of Mungo:");
-        foreach (var descendent in await FindAllDescendents("Mungo").AsNoTracking().ToListAsync())
+        foreach (Halfling? descendent in await FindAllDescendents("Mungo").AsNoTracking().ToListAsync())
         {
             Console.WriteLine($"  {descendent.Name}");
         }
 
         Console.WriteLine();
         Console.WriteLine("All descendents of Ponto:");
-        foreach (var descendent in await FindAllDescendents("Ponto").AsNoTracking().ToListAsync())
+        foreach (Halfling? descendent in await FindAllDescendents("Ponto").AsNoTracking().ToListAsync())
         {
             Console.WriteLine($"  {descendent.Name}");
         }
@@ -199,7 +199,7 @@ public static class HierarchyIdSample
         #endregion
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -228,8 +228,8 @@ public static class HierarchyIdSample
 
         public DbSet<Halfling> Halflings => Set<Halfling>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer(
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder.UseSqlServer(
                     @$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}",
                     sqlServerOptionsBuilder => sqlServerOptionsBuilder.UseHierarchyId())
                 .EnableSensitiveDataLogging()

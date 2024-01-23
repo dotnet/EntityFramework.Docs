@@ -78,7 +78,7 @@ public static class RawSqlSample
         #endregion
 
         Console.WriteLine();
-        foreach (var post in summaries)
+        foreach (PostSummary post in summaries)
         {
             Console.WriteLine($"Post '{post.PostTitle[..10]}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
         }
@@ -96,7 +96,7 @@ public static class RawSqlSample
         #endregion
 
         Console.WriteLine();
-        foreach (var post in summariesIn2022)
+        foreach (PostSummary post in summariesIn2022)
         {
             Console.WriteLine($"Post '{post.PostTitle[..10]}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
         }
@@ -117,7 +117,7 @@ public static class RawSqlSample
         #endregion
 
         Console.WriteLine();
-        foreach (var post in summariesByLinq)
+        foreach (PostSummary post in summariesByLinq)
         {
             Console.WriteLine($"Post '{post.PostTitle[..10]}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
         }
@@ -149,7 +149,7 @@ public static class RawSqlSample
         #endregion
 
         Console.WriteLine();
-        foreach (var post in summariesFromFunc)
+        foreach (PostSummary post in summariesFromFunc)
         {
             Console.WriteLine($"Post '{post.PostTitle[..10]}...' in blog '{post.BlogName}' published on {post.PublishedOn}.");
         }
@@ -202,7 +202,7 @@ public static class RawSqlSample
     }
     #endregion
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();

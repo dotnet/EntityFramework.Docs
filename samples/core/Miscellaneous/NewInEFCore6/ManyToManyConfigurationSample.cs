@@ -31,7 +31,7 @@ public static class ManyToManyConfigurationSample
 
             Console.WriteLine(context.Model.ToDebugString());
             Console.WriteLine();
-            
+
             context.Log = true;
             context.Database.EnsureCreated();
             context.Log = false;
@@ -50,7 +50,7 @@ public static class ManyToManyConfigurationSample
 
             context.SaveChanges();
         }
-        
+
         Console.WriteLine();
 
         using (var context = new TContext())
@@ -77,7 +77,7 @@ public static class ManyToManyConfigurationSample
         public string Name { get; set; }
         public ICollection<Cat> Cats { get; } = new List<Cat>();
     }
-    
+
     public class CatHuman
     {
         public int CatsId { get; set; }
@@ -93,59 +93,53 @@ public static class ManyToManyConfigurationSample
 
     public class JustNavigationsContext : BaseContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region JustNavigation
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region JustNavigation
             modelBuilder.Entity<Cat>()
                 .HasMany(e => e.Humans)
                 .WithMany(e => e.Cats);
-            #endregion
-        }
+        #endregion
+
     }
 
     public class SpecifySharedEntityTypeContext : BaseContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder.Entity<Cat>()
                 .HasMany(e => e.Humans)
                 .WithMany(e => e.Cats)
                 .UsingEntity<Dictionary<string, object>>();
-        }
     }
 
     public class SpecifyEntityTypeContext : BaseContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region SpecifyEntityType
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region SpecifyEntityType
             modelBuilder.Entity<Cat>()
                 .HasMany(e => e.Humans)
                 .WithMany(e => e.Cats)
                 .UsingEntity<CatHuman>();
-            #endregion
-        }
+        #endregion
+
     }
 
     public class SpecifyEntityTypeAndKeyContext : BaseContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region SpecifyEntityTypeAndKey
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region SpecifyEntityTypeAndKey
             modelBuilder.Entity<Cat>()
                 .HasMany(e => e.Humans)
                 .WithMany(e => e.Cats)
                 .UsingEntity<CatHuman>(
                     e => e.HasKey(e => new { e.CatsId, e.HumansId }));
-            #endregion
-        }
+        #endregion
+
     }
 
     public class SpecifyEntityTypeAndFksContext : BaseContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region SpecifyEntityTypeAndFks
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region SpecifyEntityTypeAndFks
             modelBuilder.Entity<Cat>()
                 .HasMany(e => e.Humans)
                 .WithMany(e => e.Cats)
@@ -153,8 +147,8 @@ public static class ManyToManyConfigurationSample
                     e => e.HasOne<Human>().WithMany().HasForeignKey(e => e.CatsId),
                     e => e.HasOne<Cat>().WithMany().HasForeignKey(e => e.HumansId),
                     e => e.HasKey(e => new { e.CatsId, e.HumansId }));
-            #endregion
-        }
+        #endregion
+
     }
 
     public abstract class BaseContext : DbContext

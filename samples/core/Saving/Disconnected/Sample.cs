@@ -25,7 +25,7 @@ public static class Sample
         InsertUpdateOrDeleteTrackGraph();
     }
 
-    private static void IsItNew()
+    static void IsItNew()
     {
         Console.WriteLine();
         Console.WriteLine("Show entity-specific check for key set:");
@@ -89,7 +89,7 @@ public static class Sample
         }
     }
 
-    private static void InsertAndUpdateSingleEntity()
+    static void InsertAndUpdateSingleEntity()
     {
         Console.WriteLine();
         Console.WriteLine("Save single entity with explicit insert or update:");
@@ -115,11 +115,11 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            Console.WriteLine($"  Found with URL {(context.Blogs.Single(b => b.BlogId == blog.BlogId)).Url}");
+            Console.WriteLine($"  Found with URL {context.Blogs.Single(b => b.BlogId == blog.BlogId).Url}");
         }
     }
 
-    private static void InsertOrUpdateSingleEntityStoreGenerated()
+    static void InsertOrUpdateSingleEntityStoreGenerated()
     {
         Console.WriteLine();
         Console.WriteLine("Save single entity with auto-generated key:");
@@ -145,11 +145,11 @@ public static class Sample
 
         using (var context = new BloggingContext())
         {
-            Console.WriteLine($"  Found with URL {(context.Blogs.Single(b => b.BlogId == blog.BlogId)).Url}");
+            Console.WriteLine($"  Found with URL {context.Blogs.Single(b => b.BlogId == blog.BlogId).Url}");
         }
     }
 
-    private static void InsertOrUpdateSingleEntityFind()
+    static void InsertOrUpdateSingleEntityFind()
     {
         Console.WriteLine();
         Console.WriteLine("Save single entity with any kind of key:");
@@ -179,7 +179,7 @@ public static class Sample
         }
     }
 
-    private static void InsertAndUpdateGraph()
+    static void InsertAndUpdateGraph()
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with explicit insert or update:");
@@ -214,7 +214,7 @@ public static class Sample
         }
     }
 
-    private static void InsertOrUpdateGraphStoreGenerated()
+    static void InsertOrUpdateGraphStoreGenerated()
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with auto-generated key:");
@@ -250,7 +250,7 @@ public static class Sample
         }
     }
 
-    private static void InsertOrUpdateGraphFind()
+    static void InsertOrUpdateGraphFind()
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with any kind of key:");
@@ -286,7 +286,7 @@ public static class Sample
         }
     }
 
-    private static void InsertUpdateOrDeleteGraphFind()
+    static void InsertUpdateOrDeleteGraphFind()
     {
         Console.WriteLine();
         Console.WriteLine("Save graph with deletes and any kind of key:");
@@ -322,7 +322,7 @@ public static class Sample
         }
     }
 
-    private static void InsertUpdateOrDeleteTrackGraph()
+    static void InsertUpdateOrDeleteTrackGraph()
     {
         Console.WriteLine();
         Console.WriteLine("Save graph using TrackGraph:");
@@ -421,7 +421,7 @@ public static class Sample
     }
     #endregion
 
-    private static Blog CreateBlogAndPosts()
+    static Blog CreateBlogAndPosts()
     {
         #region CreateBlogAndPosts
         var blog = new Blog

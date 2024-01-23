@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 [MemoryDiagnoser]
 public class DynamicallyConstructedQueries
 {
-    private int _blogNumber;
-    private readonly bool _addWhereClause = true;
+    int _blogNumber;
+    readonly bool _addWhereClause = true;
 
     [GlobalSetup]
     public static void GlobalSetup()
@@ -108,8 +108,8 @@ public class DynamicallyConstructedQueries
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True");
     }
 
     public class Blog

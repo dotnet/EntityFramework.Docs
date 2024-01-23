@@ -10,7 +10,7 @@ namespace EFModeling.KeylessEntityTypes;
 
 public class Program
 {
-    private static void Main()
+    static void Main()
     {
         SetupDatabase();
 
@@ -27,7 +27,7 @@ public class Program
         #endregion
     }
 
-    private static void SetupDatabase()
+    static void SetupDatabase()
     {
         using var db = new BloggingContext();
 
@@ -86,7 +86,7 @@ public class Program
 
 public class BloggingContext : DbContext
 {
-    private static readonly ILoggerFactory _loggerFactory
+    static readonly ILoggerFactory _loggerFactory
         = LoggerFactory.Create(
             builder => builder.AddConsole().AddFilter((c, l) => l == LogLevel.Information && !c.EndsWith("Connection")));
 
@@ -97,17 +97,14 @@ public class BloggingContext : DbContext
     public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
     #endregion
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=Sample.KeylessEntityTypes;Trusted_Connection=True")
             .UseLoggerFactory(_loggerFactory);
-    }
 
     #region Configuration
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder
             .Entity<BlogPostsCount>(
                 eb =>
@@ -116,7 +113,6 @@ public class BloggingContext : DbContext
                     eb.ToView("View_BlogPostCounts");
                     eb.Property(v => v.BlogName).HasColumnName("Name");
                 });
-    }
     #endregion
 }
 

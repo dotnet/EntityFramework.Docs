@@ -67,18 +67,16 @@ public class ULongConcurrency : Program
 
     public class SampleDbContext : DbContext
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            #region ConfigureULongConcurrency
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        #region ConfigureULongConcurrency
             modelBuilder.Entity<Blog>()
                 .Property(e => e.Version)
                 .IsRowVersion()
                 .HasConversion<byte[]>();
-            #endregion
-        }
+        #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted })
                 .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ULongConcurrency;Trusted_Connection=True")
                 .EnableSensitiveDataLogging();

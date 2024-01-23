@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 namespace EFModeling.DataSeeding.Migrations;
 
 [DbContext(typeof(DataSeedingContext))]
-internal class DataSeedingContextModelSnapshot : ModelSnapshot
+class DataSeedingContextModelSnapshot : ModelSnapshot
 {
     protected override void BuildModel(ModelBuilder modelBuilder)
     {

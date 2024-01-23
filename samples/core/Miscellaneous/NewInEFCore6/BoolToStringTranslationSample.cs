@@ -84,12 +84,9 @@ public static class BoolToStringTranslationSample
     {
         public DbSet<Customer> Customers { get; set; }
 
-        private readonly bool _quiet;
+        readonly bool _quiet;
 
-        public CustomersContext(bool quiet = false)
-        {
-            _quiet = quiet;
-        }
+        public CustomersContext(bool quiet = false) => _quiet = quiet;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

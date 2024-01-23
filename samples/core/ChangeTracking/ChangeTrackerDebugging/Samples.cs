@@ -104,8 +104,8 @@ public static class Helpers
     {
         using var context = new BlogsContext(LogLevel.Error);
 
-        Blog[] blogs = new[]
-        {
+        Blog[] blogs =
+        [
             new Blog
             {
                 Name = ".NET Blog",
@@ -143,14 +143,14 @@ public static class Helpers
                     },
                 }
             }
-        };
+        ];
 
-        Tag[] tags = new[]
-        {
+        Tag[] tags =
+        [
             new Tag { Text = ".NET", Posts = { blogs[0].Posts[0], blogs[0].Posts[1] } },
             new Tag { Text = "Visual Studio", Posts = { blogs[1].Posts[0], blogs[1].Posts[1] } },
             new Tag { Text = "EF Core", Posts = { blogs[0].Posts[0] } }
-        };
+        ];
 
         context.AddRange(blogs);
         context.AddRange(tags);
@@ -201,26 +201,21 @@ public class Tag
 
 public class BlogsContext : DbContext
 {
-    private readonly LogLevel _logLevel;
+    readonly LogLevel _logLevel;
 
-    public BlogsContext(LogLevel logLevel = LogLevel.Information)
-    {
-        _logLevel = logLevel;
-    }
+    public BlogsContext(LogLevel logLevel = LogLevel.Information) => _logLevel = logLevel;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<BlogAssets> Assets { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .LogTo(Console.WriteLine, _logLevel)
             .ConfigureWarnings(w => w.Ignore(RelationalEventId.MultipleCollectionIncludeWarning))
             .EnableSensitiveDataLogging()
             .UseSqlite("DataSource=test.db");
-    }
 
     #region OnModelCreating
     protected override void OnModelCreating(ModelBuilder modelBuilder)

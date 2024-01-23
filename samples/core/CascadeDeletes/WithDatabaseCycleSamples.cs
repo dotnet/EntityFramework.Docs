@@ -143,26 +143,21 @@ public class Person
 
 public class BlogsContext : DbContext
 {
-    private readonly bool _quiet;
+    readonly bool _quiet;
 
-    public BlogsContext(bool quiet = false)
-    {
-        _quiet = quiet;
-    }
+    public BlogsContext(bool quiet = false) => _quiet = quiet;
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Person> People { get; set; }
 
     #region OnModelCreating
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder
             .Entity<Blog>()
             .HasOne(e => e.Owner)
             .WithOne(e => e.OwnedBlog)
             .OnDelete(DeleteBehavior.ClientCascade);
-    }
     #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

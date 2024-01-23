@@ -5,7 +5,7 @@ namespace EFModeling.OwnedEntities;
 
 public static class Program
 {
-    private static void Main()
+    static void Main()
     {
         using (var context = new OwnedEntityContext())
         {

@@ -8,7 +8,7 @@ public class ExternalDbTransaction
 {
     public static void Run()
     {
-        var connectionString =
+        const string connectionString =
             @"Server=(localdb)\mssqllocaldb;Database=EFSaving.Transactions;Trusted_Connection=True";
 
         using (var context = new BloggingContext(

@@ -39,14 +39,14 @@ public static class CosmosQueriesSample
         #endregion
 
         Console.WriteLine();
-        foreach (var result in containsInnerT)
+        foreach (Triangle result in containsInnerT)
         {
             Console.WriteLine($" {result.Name}");
         }
         Console.WriteLine();
     }
 
-    private static void PrintSampleName([CallerMemberName] string? methodName = null)
+    static void PrintSampleName([CallerMemberName] string? methodName = null)
     {
         Console.WriteLine($">>>> Sample: {methodName}");
         Console.WriteLine();
@@ -65,13 +65,11 @@ public static class CosmosQueriesSample
     {
         public DbSet<Triangle> Triangles => Set<Triangle>();
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder.Entity<Triangle>().ToContainer("Shapes");
-        }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+            optionsBuilder
                 .UseCosmos(
                     "https://localhost:8081",
                     "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
