@@ -8,7 +8,7 @@ internal class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.Entity<Blog>()
     {
         modelBuilder.Entity<Blog>()
             .Property("_validatedUrl");
