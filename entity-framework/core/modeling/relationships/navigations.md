@@ -52,7 +52,7 @@ public ICollection<Post> ThePosts { get; } = new List<Post>();
 
 ### Collection types
 
-The underlying collection instance must be implement <xref:System.Collections.Generic.ICollection%601>, and must have a working `Add` method. It is common to use <xref:System.Collections.Generic.List%601> or <xref:System.Collections.Generic.HashSet%601>. `List<T>` is efficient for small numbers of related entities and maintains a stable ordering. `HashSet<T>` has more efficient lookups for large numbers of entities, but does not have stable ordering. You can also use your own custom collection implementation.
+The underlying collection instance must implement <xref:System.Collections.Generic.ICollection%601>, and must have a working `Add` method. It is common to use <xref:System.Collections.Generic.List%601> or <xref:System.Collections.Generic.HashSet%601>. `List<T>` is efficient for small numbers of related entities and maintains a stable ordering. `HashSet<T>` has more efficient lookups for large numbers of entities, but does not have stable ordering. You can also use your own custom collection implementation.
 
 > [!IMPORTANT]
 > The collection must use reference equality. When creating a `HashSet<T>` for a collection navigation, make sure to use <xref:System.Collections.Generic.ReferenceEqualityComparer>.
