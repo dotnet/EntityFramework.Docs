@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Entity Framework product feedback
+    url: https://github.com/dotnet/efcore/issues
+    about: Log Entity Framework product feedback here
+  - name: learn.microsoft.com site feedback
+    url: https://github.com/MicrosoftDocs/feedback/issues/new/choose
+    about: Log general learn.microsoft.com site issues here
