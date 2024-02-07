@@ -17,9 +17,9 @@ EF9 is available as [daily builds](https://github.com/dotnet/efcore/blob/main/do
 
 EF9 targets .NET 8, and can therefore be used with either [.NET 8 (LTS)](https://dotnet.microsoft.com/download/dotnet/8.0) or a .NET 9 preview.
 
-## What's new in EF Core 8 Preview 1
+## What's new in EF Core 9 Preview 1
 
-The team has been working primarily on EF internals, so there are no new big features in EF Core 8 Preview 1. However, this means we need to get people like you (If you're reading a preview 1 post, then you're a really engaged part of the community; thank you!) to run your code on these new internals. We have over 120,000 tests, but it's not enough! We need you, people running real code on our bits, in order to find issues and ship a solid release!
+The team has been working primarily on EF internals, so there are no new big features in EF Core 9 Preview 1. However, this means we need to get people like you (If you're reading a preview 1 post, then you're a really engaged part of the community; thank you!) to run your code on these new internals. We have over 120,000 tests, but it's not enough! We need you, people running real code on our bits, in order to find issues and ship a solid release!
 
 That being said, if you're not motivated by new internals, then there are several smaller enhancements, one of which might just be something you have been waiting for, so read on!
 
@@ -600,11 +600,10 @@ As an aside, some people think this pattern is an abomination because it couples
 ### Everything else in Preview 1
 
 The [dotnet/efcore](https://github.com/dotnet/efcore/) GitHub repo is the source-of-truth for all work completed in EF Core. Preview 1 contains:
- - 95 bug fixes since the 8.0.0 release. This includes:
+ - 90+ bug fixes since the 8.0.0 release. This includes:
    - [51 bug fixes in EF9 Preview 1 only](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+label%3Atype-bug). These are bug fixes that did not meet the bar for patching.
-   - [8 bug fixes from 8.0.1](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.1+is%3Aclosed)
-   - [25 bug fixes from 8.0.2](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.2+is%3Aclosed+)
-   - [11 bug fixes scheduled for 8.0.3](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.3+label%3Aclosed-fixed+)
+   - [8 bug fixes also shipped in 8.0.1](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.1+is%3Aclosed)
+   - [25 bug fixes also shipped in 8.0.2](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.2+is%3Aclosed+)
  - [30 enhancements](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+label%3Atype-enhancement+), the most interesting of which are described above.
  - [5 cleanup issues](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+-label%3Atype-enhancement+-label%3Atype-bug)
 
