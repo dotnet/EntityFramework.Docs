@@ -19,7 +19,7 @@ EF9 targets .NET 8, and can therefore be used with either [.NET 8 (LTS)](https:/
 
 ## What's new in EF Core 8 Preview 1
 
-The team has been working primarily on EF internals, so there are no new big features in EF Core 8 Preview 1. However, this means we need to get people like you (If you're reading a preview 1 post, then you're a really engaged part of the community; thank you!) to run your code on these new internals. We have over 120,000 tests, but it's not enough! We need you guys running your real code on our bits in order to find issues and ship a solid release!
+The team has been working primarily on EF internals, so there are no new big features in EF Core 8 Preview 1. However, this means we need to get people like you (If you're reading a preview 1 post, then you're a really engaged part of the community; thank you!) to run your code on these new internals. We have over 120,000 tests, but it's not enough! We need you, people running real code on our bits, in order to find issues and ship a solid release!
 
 That being said, if you're not motivated by new internals, then there are several smaller enhancements, one of which might just be something you have been waiting for, so read on!
 
