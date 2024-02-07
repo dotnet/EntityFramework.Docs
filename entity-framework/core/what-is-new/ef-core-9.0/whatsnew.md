@@ -161,7 +161,7 @@ Finally, `RelationalDbFunctionsExtensions.Least` and `RelationalDbFunctionsExten
             .Select(e => EF.Functions.Least(e.Counts.Length, e.DaysVisited.Count, e.Beers.Length))
             .ToListAsync();
 -->
-[!code-csharp[Least](../../../../samples/core/Miscellaneous/NewInEFCore9/PrimitiveCollectionsSample.cs?name=Least)]
+[!code-csharp[Least](../../../../samples/core/Miscellaneous/NewInEFCore9/LeastGreatestSample.cs?name=Least)]
 
 This query is translated to the following SQL when using EF9 executing against SQL Server 2022:
 
@@ -481,7 +481,7 @@ protected override void Up(MigrationBuilder migrationBuilder)
 
 #### Make existing model building conventions more extensible
 
-Public model building conventions for applications were [introduced in EF7](xref:core/modeling/bulk-configuration#Conventions). In EF9, we have made it easier to extend some of the existing conventions. For example, [the code to map properties by attribute in EF7](core/what-is-new/ef-core-7.0/whatsnew#model-building-conventions) is this:
+Public model building conventions for applications were [introduced in EF7](xref:core/modeling/bulk-configuration#Conventions). In EF9, we have made it easier to extend some of the existing conventions. For example, [the code to map properties by attribute in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#model-building-conventions) is this:
 
 ```csharp
 public class AttributeBasedPropertyDiscoveryConvention : PropertyDiscoveryConvention
