@@ -42,7 +42,7 @@ EF9 removes unnecessary columns when calling `OPENJSON WITH`. For example, consi
 -->
 [!code-csharp[PruneJSON](../../../../samples/core/Miscellaneous/NewInEFCore9/JsonColumnsSample.cs?name=PruneJSON)]
 
-In EF8, this would query generates the following SQL when using the Azure SQL database provider:
+In EF8, this query generates the following SQL when using the Azure SQL database provider:
 
 ```sql
 SELECT [p].[Id], [p].[Archived], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Title], [p].[PromoText], [p].[Metadata]
