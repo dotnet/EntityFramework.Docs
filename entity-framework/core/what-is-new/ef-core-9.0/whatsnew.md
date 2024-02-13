@@ -307,7 +307,7 @@ FROM [Stores] AS [s]
 WHERE [s].[Region] = N'Deutschland'
 ```
 
-In EF8, the same update can be performed by passing the complex type instance itself. That is, each member does not need to be explicitly specified. For example:
+In EF9, the same update can be performed by passing the complex type instance itself. That is, each member does not need to be explicitly specified. For example:
 
 <!--
             #region UpdateComplexType
