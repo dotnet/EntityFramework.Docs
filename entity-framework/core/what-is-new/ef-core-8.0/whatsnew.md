@@ -2236,7 +2236,7 @@ Finally, we worked with Eric Sink in the [SQLitePCLRaw project](https://github.c
 
 ## Checking for pending model changes
 
-We've added a new `dotnet ef` command to check whether any model changes have been made since the last migration. This can be useful in CI/CD scenarios to ensure you or a teammate didn't forgot to add a migration.
+We've added a new `dotnet ef` command to check whether any model changes have been made since the last migration. This can be useful in CI/CD scenarios to ensure you or a teammate didn't forget to add a migration.
 
 ```dotnetcli
 dotnet ef migrations has-pending-model-changes
