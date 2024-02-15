@@ -106,7 +106,7 @@ Once this mapping is made, EF changes the foreign key values as needed when the 
 > [!NOTE]
 > Primary keys are used for more than mapping relationships. See [_Keys_](xref:core/modeling/keys) for more information.
 
-For example, the entity types shown above can updated with primary and foreign key properties:
+For example, the entity types shown above can be updated with primary and foreign key properties:
 
 ```csharp
 public class Blog
