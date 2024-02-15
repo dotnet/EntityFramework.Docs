@@ -61,7 +61,7 @@ WHERE (
     WHERE [u].[UpdatedOn] >= @__date_0) = 1
 ```
 
-Notice that the `UpdatedBy`, and `Commits` are not needed in this query. Starting with EF9, these columns are now pruned away: 
+Notice that the `UpdatedBy`, and `Commits` are not needed in this query. Starting with EF9, these columns are now pruned away:
 
 ```sql
 SELECT [p].[Id], [p].[Archived], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Title], [p].[PromoText], [p].[Metadata]
@@ -277,6 +277,7 @@ SET [s].[Region] = N'Deutschland'
 FROM [Stores] AS [s]
 WHERE [s].[Region] = N'Germany'
 ```
+
 In EF8 `ExecuteUpdate` can also be used to update values of complex type properties. However, each member of the complex type must be specified explicitly. For example:
 
 <!--
@@ -331,6 +332,7 @@ SET [s].[StoreAddress_City] = @__complex_type_newAddress_0_City,
 FROM [Stores] AS [s]
 WHERE [s].[Region] = N'Germany'
 ```
+
 Multiple updates to both complex type properties and simple properties can be combined in a single call to `ExecuteUdate`. For example:
 
 <!--
@@ -603,10 +605,10 @@ As an aside, some people think this pattern is an abomination because it couples
 ### Everything else in Preview 1
 
 The [dotnet/efcore](https://github.com/dotnet/efcore/) GitHub repo is the source-of-truth for all work completed in EF Core. Preview 1 contains:
- - 90+ bug fixes since the 8.0.0 release. This includes:
-   - [51 bug fixes in EF9 Preview 1 only](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+label%3Atype-bug). These are bug fixes that did not meet the bar for patching.
-   - [8 bug fixes also shipped in 8.0.1](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.1+is%3Aclosed)
-   - [25 bug fixes also shipped in 8.0.2](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.2+is%3Aclosed+)
- - [30 enhancements](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+label%3Atype-enhancement+), the most interesting of which are described above.
- - [5 cleanup issues](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+-label%3Atype-enhancement+-label%3Atype-bug)
 
+- 90+ bug fixes since the 8.0.0 release. This includes:
+  - [51 bug fixes in EF9 Preview 1 only](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+label%3Atype-bug). These are bug fixes that did not meet the bar for patching.
+  - [8 bug fixes also shipped in 8.0.1](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.1+is%3Aclosed)
+  - [25 bug fixes also shipped in 8.0.2](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.2+is%3Aclosed+)
+- [30 enhancements](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+label%3Atype-enhancement+), the most interesting of which are described above.
+- [5 cleanup issues](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+-label%3Atype-enhancement+-label%3Atype-bug)
