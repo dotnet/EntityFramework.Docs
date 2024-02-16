@@ -82,7 +82,7 @@ If your database is SQL Server 2016 (13.x) or newer, or if you're using Azure SQ
 SELECT name, compatibility_level FROM sys.databases;
 ```
 
-If the compatibility level is below 130 (SQL Server 2016), consider modifying it to a newer value ([documentation](/sql/t-sql/statements/alter-database-transact-sql-compatibility-level#best-practices-for-upgrading-database-compatibility-leve).
+If the compatibility level is below 130 (SQL Server 2016), consider modifying it to a newer value ([documentation](/sql/t-sql/statements/alter-database-transact-sql-compatibility-level#best-practices-for-upgrading-database-compatibility-leve)).
 
 Otherwise, if your database version really is older than SQL Server 2016, or is set to an old compatibility level which you cannot change for some reason, configure EF Core to revert to the older, less efficient SQL as follows:
 
