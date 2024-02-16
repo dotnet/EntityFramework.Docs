@@ -30,11 +30,11 @@
     items:
     - name: Welcome!
       href: core/index.md
-    - name: "What's new in EF Core 8 (EF8)"
+    - name: "What's new in EF Core 8.0"
       href: core/what-is-new/ef-core-8.0/whatsnew.md
-    - name: "Breaking changes in EF Core 8 (EF8)"
+    - name: "Breaking changes in EF Core 8.0"
       href: core/what-is-new/ef-core-8.0/breaking-changes.md
-    - name: "The plan for EF Core 9 (EF9)"
+    - name: "The plan for EF Core 9.0"
       href: core/what-is-new/ef-core-9.0/plan.md
     - name: Getting started
       items:
@@ -64,7 +64,7 @@
         href: core/what-is-new/index.md
       - name: Release planning process
         href: core/what-is-new/release-planning.md
-      - name: EF Core 9 (EF9)
+      - name: EF Core 9.0
         items:
           - name: High-level plan
             href: core/what-is-new/ef-core-9.0/plan.md
@@ -72,7 +72,7 @@
             href: core/what-is-new/ef-core-9.0/whatsnew.md
           - name: Breaking changes
             href: core/what-is-new/ef-core-9.0/breaking-changes.md
-      - name: EF Core 8 (EF8)
+      - name: EF Core 8.0
         items:
           - name: High-level plan
             href: core/what-is-new/ef-core-8.0/plan.md
@@ -80,7 +80,7 @@
             href: core/what-is-new/ef-core-8.0/whatsnew.md
           - name: Breaking changes
             href: core/what-is-new/ef-core-8.0/breaking-changes.md
-      - name: EF Core 7.0 (EF7)
+      - name: EF Core 7.0
         items:
           - name: High-level plan
             href: core/what-is-new/ef-core-7.0/plan.md
