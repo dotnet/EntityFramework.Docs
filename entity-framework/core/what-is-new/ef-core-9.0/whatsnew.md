@@ -17,10 +17,7 @@ EF9 is available as [daily builds](https://github.com/dotnet/efcore/blob/main/do
 
 EF9 targets .NET 8, and can therefore be used with either [.NET 8 (LTS)](https://dotnet.microsoft.com/download/dotnet/8.0) or a .NET 9 preview.
 
-## What's new in EF Core 9 Preview 1
-
-> [!TIP]
-> Preview 1 not out yet? Why wait!? All the samples are set up to use the [EF9 daily builds](https://github.com/dotnet/efcore/blob/main/docs/DailyBuilds.md).
+## EF Core 9 Focus
 
 The team has been working primarily on EF internals, so there are no new big features in EF Core 9 Preview 1. However, this means we need to get people like you (If you're reading a preview 1 post, then you're a really engaged part of the community; thank you!) to run your code on these new internals. We have over 120,000 tests, but it's not enough! We need you, people running real code on our bits, in order to find issues and ship a solid release!
 
