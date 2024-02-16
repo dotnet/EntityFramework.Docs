@@ -100,11 +100,14 @@ internal class Program
         using (var context = new BloggingContext())
         {
             #region FromSqlRawStoredProcedureParameter
-            var columnName = "Url";
-            var columnValue = new SqlParameter("columnValue", "http://SomeURL");
+            var urlColumnName = "Url";
+            var urlColumnValue = new SqlParameter("urlColumnValue", "http://SomeURL");
+
+            var userColumnName = "User";
+            var userColumnValue = new SqlParameter("userColumnValue", "johndoe");
 
             var blogs = context.Blogs
-                .FromSqlRaw($"SELECT * FROM [Blogs] WHERE {columnName} = @columnValue", columnValue)
+                .FromSqlRaw($"SELECT * FROM [Blogs] WHERE {urlColumnName} = @urlColumnValue AND {userColumnName} = @userColumnValue ", urlColumnValue, userColumnValue)
                 .ToList();
             #endregion
         }
