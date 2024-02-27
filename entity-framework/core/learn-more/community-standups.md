@@ -12,7 +12,42 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 
 [Comment on GitHub](https://github.com/dotnet/efcore/issues/22700) with ideas for guests, demos, or anything else you want to see.
 
+## Summary
+
+Each episode is summarized in the table below, with a link to full details.
+
+For EF Core episodes:
+
+- Intro-level episodes usually require only a minimum of experience with EF Core.
+- Intermediate episodes go more deeply into EF Core features.
+- Advanced episodes cover advanced features and/or EF Core internals.
+
+### Intro-level episodes
+
+| Date         | Area               | Title                                                    |
+|--------------|--------------------|----------------------------------------------------------|
+| Nov 29, 2023 | New features         | [A tour of what's new in EF8](#new8)                                             |
+| Oct 18, 2023 | Document databases | [Introducing the MongoDB provider for EF Core](#mongo)   |
+| Oct 4, 2023  | New features       | [Size doesn't matter: Smaller features in EF8](#smaller) |
+
+### Intermediate-level episodes
+
+| Date         | Area                 | Title                                                                            |
+|--------------|----------------------|----------------------------------------------------------------------------------|
+| Feb 21, 2024 | SQL translation      | [Window and binary functions using Zomp EF Core extensions](#window-functions)   |
+| Jan 24, 2024 | Database concurrency | [Database concurrency and EF Core: ASP.NET and Blazor](#concurrency2)            |
+| Jan 10, 2024 | Database concurrency | [Database concurrency and EF Core](#concurrency1)                                |
+| Sep 20, 2023 | Database concurrency | [Complex types as value objects in EF8](#complextypes)                           |
+
+### Advanced-level episodes
+
+| Date         | Area                 | Title                                                                            |
+|--------------|----------------------|----------------------------------------------------------------------------------|
+| Feb 7, 2024  | Database concurrency | [Database concurrency and EF Core: Beyond optimistic concurrency](#concurrency3) |
+
 ## 2024
+
+<a name="window-functions"></a>
 
 ### February 21: [Window and binary functions using Zomp EF Core extensions](https://www.youtube.com/live/Z9SkvUuU9Sc?si=xX3rRG3Xr3R9Zj5o)
 
@@ -32,6 +67,8 @@ Links:
   - [Zomp.EFCore.WindowFunctions.Npgsql](https://www.nuget.org/packages/Zomp.EFCore.WindowFunctions.Npgsql)
   - [Zomp.EFCore.WindowFunctions.Sqlite](https://www.nuget.org/packages/Zomp.EFCore.WindowFunctions.Sqlite)
 
+<a name="concurrency3"></a>
+
 ### February 7: [Database concurrency and EF Core: Beyond optimistic concurrency](https://www.youtube.com/live/0eVTR5up2RY?si=pttR5NJ85_NWozhj)
 
 In the 3rd installment of our series on concurrency, we'll dive deep into SQL isolation levels, how they work (and work differently!) across SQL Server and PostgreSQL. We'll hopefully learn a bit about how database locks, snapshots and isolation levels work together to bring some sanity into the world of concurrency.
@@ -46,6 +83,8 @@ Links:
 - [SQL Server Isolation Levels : A Series](https://sqlperformance.com/2014/07/t-sql-queries/isolation-levels)
 - [Transaction isolation in PostgreSQL](https://www.postgresql.org/docs/current/transaction-iso.html)
 
+<a name="concurrency2"></a>
+
 ### January 24: [Database concurrency and EF Core: ASP.NET and Blazor](https://www.youtube.com/live/xVyYrtetDeA?si=Bx2s44mk_ayUnAzx)
 
 In the last episode, we dug deep into the underpinnings of optimistic concurrency handling in EF Core. In this episode, we continue that journey to cover disconnected scenarios. That is, where the entity travels to a client and then back to the server before being updated in the database. We’ll look at the different patterns for doing updates like this in ASP.NET Core and Blazor apps and see how concurrency tokens work with each of these. We’ll also look at how `ExecuteUpdate` can be used with concurrency tokens, and take a look at ETag concurrency in Azure Cosmos DB.
@@ -58,6 +97,8 @@ Featuring:
 Links:
 
 - [Handling Concurrency Conflicts](xref:core/saving/concurrency)
+
+<a name="concurrency1"></a>
 
 ### January 10: [Database concurrency and EF Core](https://www.youtube.com/live/YfIM-gfJe4c?si=ZQNxpGEULZt3L43I)
 
@@ -73,6 +114,8 @@ Links:
 - [Handling Concurrency Conflicts](xref:core/saving/concurrency)
 
 ## 2023
+
+<a name="new8"></a>
 
 ### November 29: [A tour of what's new in EF8](https://www.youtube.com/live/5HapqzoxJ60?si=DXxh9jo8X16-rETm)
 
@@ -92,7 +135,7 @@ Featuring:
 - [Arthur Vickers](https://github.com/ajcvickers) (Host)
 - [Shay Rojansky](https://github.com/roji) (Host)
 - [Jeremy Likness](https://github.com/JeremyLikness) (Alumnus)
-- [Erik Ejlskov Jensen](https://github.com/JeremyLikness) (Special guest)
+- [Erik Ejlskov Jensen](https://github.com/ErikEJ) (Special guest)
 - [Julie Lerman](https://github.com/julielerman) (Special guest)
 - [Diego Vega](https://github.com/divega) (Alumnus)
 - [Brice Lambson](https://github.com/bricelam) (Team member)
@@ -103,6 +146,8 @@ Links:
 - [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
 - [Entity Framework Core 8: Improved JSON, queryable collections, and more… | .NET Conf 2023](https://aka.ms/ef8-dotnetconf)
 - [EF Core daily builds](https://aka.ms/ef-daily-builds)
+
+<a name="mongo"></a>
 
 ### October 18: [Introducing the MongoDB provider for EF Core](https://www.youtube.com/live/Zat-ferrjro?si=UKIgjsB5RpnEqJUo)
 
@@ -123,6 +168,8 @@ Links:
 - [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
 - [Entity Framework Core 8: Improved JSON, queryable collections, and more… | .NET Conf 2023](https://aka.ms/ef8-dotnetconf)
 - [EF Core daily builds](https://aka.ms/ef-daily-builds)
+
+<a name="smaller"></a>
 
 ### October 4: [Size doesn't matter: Smaller features in EF8](https://www.youtube.com/live/GGDv_p4LAL8?si=WfswHDLiYnMMe4Hm)
 
@@ -145,6 +192,8 @@ Links:
 
 - [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
 - [EF Core daily builds](https://aka.ms/ef-daily-builds)
+
+<a name="complextypes"></a>
 
 ### September 20: [Complex types as value objects in EF8](https://www.youtube.com/live/H-soJYqWSds?si=tJzm-uqLL0ZJnsUh)
 
