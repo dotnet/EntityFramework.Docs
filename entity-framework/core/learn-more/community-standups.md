@@ -14,36 +14,26 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 
 ## Summary
 
-Each episode is summarized in the table below, with a link to full details.
-
-For EF Core episodes:
-
-- Intro-level episodes usually require only a minimum of experience with EF Core.
-- Intermediate episodes go more deeply into EF Core features.
-- Advanced episodes cover advanced features and/or EF Core internals.
-
-### Intro-level episodes
-
-| Date         | Area               | Title                                                    |
-|--------------|--------------------|----------------------------------------------------------|
-| Nov 29, 2023 | New features         | [A tour of what's new in EF8](#new8)                                             |
-| Oct 18, 2023 | Document databases | [Introducing the MongoDB provider for EF Core](#mongo)   |
-| Oct 4, 2023  | New features       | [Size doesn't matter: Smaller features in EF8](#smaller) |
-
-### Intermediate-level episodes
-
-| Date         | Area                 | Title                                                                            |
-|--------------|----------------------|----------------------------------------------------------------------------------|
-| Feb 21, 2024 | SQL translation      | [Window and binary functions using Zomp EF Core extensions](#window-functions)   |
-| Jan 24, 2024 | Database concurrency | [Database concurrency and EF Core: ASP.NET and Blazor](#concurrency2)            |
-| Jan 10, 2024 | Database concurrency | [Database concurrency and EF Core](#concurrency1)                                |
-| Sep 20, 2023 | Database concurrency | [Complex types as value objects in EF8](#complextypes)                           |
-
-### Advanced-level episodes
-
-| Date         | Area                 | Title                                                                            |
-|--------------|----------------------|----------------------------------------------------------------------------------|
-| Feb 7, 2024  | Database concurrency | [Database concurrency and EF Core: Beyond optimistic concurrency](#concurrency3) |
+| Date         | Area                  | Title                                                                                  |
+|--------------|-----------------------|----------------------------------------------------------------------------------------|
+| Feb 21, 2024 | SQL translation       | [Window and binary functions using Zomp EF Core extensions](#window-functions)         |
+| Feb 7, 2024  | Database concurrency  | [Database concurrency and EF Core: Beyond optimistic concurrency](#concurrency3)       |
+| Jan 24, 2024 | Database concurrency  | [Database concurrency and EF Core: ASP.NET and Blazor](#concurrency2)                  |
+| Jan 10, 2024 | Database concurrency  | [Database concurrency and EF Core](#concurrency1)                                      |
+| Nov 29, 2023 | New features          | [A tour of what's new in EF8](#new8)                                                   |
+| Oct 18, 2023 | Document databases    | [Introducing the MongoDB provider for EF Core](#mongo)                                 |
+| Oct 4, 2023  | New features          | [Size doesn't matter: Smaller features in EF8](#smaller)                               |
+| Sep 20, 2023 | Complex types/DDD     | [Complex types as value objects in EF8](#complextypes)                                 |
+| Jun 14, 2023 | SQLite                | [Synchronizing data between the cloud and the client (using SQLite)](#zumero)          |
+| May 31, 2023 | Power Tools           | [New CLI edition of EF Core Power Tools](#power-tools)                                 |
+| May 17, 2023 | Primitive collections | [Collections of primitive values in EF Core](#primitive-collections)                   |
+| Apr 19, 2023 | EF internals          | [EF Core Internals – Model Building](#internals-models)                                |
+| Mar 22, 2023 | HierarchyId           | [Using hierarchical data in SQL Server and PostgreSQL with EF Core](#hierarchyid)      |
+| Mar 8, 2023  | EF internals          | [EF Core internals: IQueryable, LINQ and the EF Core query pipeline](#internals-query) |
+| Feb 22, 2023 | MySQL                 | [MySQL and .NET: MySqlConnector and the Pomelo EF Core Provider](#mysql)               |
+| Feb 8, 2023  | SQLite                | [SQLite with .NET and EF Core](#sqlite)                                                |
+| Jan 11, 2023 | FAQ                   | [Entity Framework Core FAQs](#faq)                                                     |
+| Dec 14, 2022 | EF Core plans         | [The Plan for Entity Framework Core 8](#plan8)                                         |
 
 ## 2024
 
@@ -208,4 +198,208 @@ Links:
 
 - [Unicode and UTF-8 in SQL Server with EF Core](xref:core/providers/sql-server/columns#unicode-and-utf-8)
 - [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
+- [EF Core daily builds](https://aka.ms/ef-daily-builds)
+
+<a name="zumero"></a>
+
+### June 14: [Synchronizing data between the cloud and the client (using SQLite)](https://www.youtube.com/live/QTvFiiST-r4?si=9SOUVhwz75VplWad)
+
+In this session, we'll invite Eric Sink to discuss a solution for keeping a synchronized copy of the DB (using SQLite) on the client, rather than asking data for the cloud every time. This is helpful for mobile scenarios where the connectivity may be poor, but the "rep and sync" approach can reduce the time the user spends waiting on the network.  Local writes are fast, sync happens in the background. We'll explore how this can be done efficiently, how to deal with conflict resolution, and other data sync-related concerns.
+Featuring:
+
+- [Eric Sink](https://github.com/ericsink) (Special guest)
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
+
+Links:
+
+- [Zumero](https://www.zumero.com/)
+
+<a name="power-tools"></a>
+
+### May 31: [New CLI edition of EF Core Power Tools](https://www.youtube.com/live/vGvBAoP3nVY?si=VhwBYYdc0F3OSgOu)
+
+In today's standup, Erik will demonstrate the new CLI edition of EF Core Power Tools and show how he used a number of community NuGet packages to improve the user experience when creating a CLI tool.
+
+Featuring:
+
+- [Erik Ejlskov Jensen](https://github.com/ErikEJ) (Special guest)
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Brice Lambson](https://github.com/bricelam) (Host)
+
+Links:
+
+- Visual Studio Marketplace: [EF Core Power Tools](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EFCorePowerTools&ssr=false#review-details)
+- GitHub: [ErikEJ/EFCorePowerTools](https://github.com/ErikEJ/EFCorePowerTools)
+- [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
+- [EF Core daily builds](https://aka.ms/ef-daily-builds)
+
+<a name="primitive-collections"></a>
+
+### May 17: [Collections of primitive values in EF Core](https://www.youtube.com/live/AUS2OZjsA2I?si=V8hR14VyBtHuvbmp)
+
+In this episode of the .NET Data Community Standup, the .NET Data Access team dive into new support for collections of primitive values, just released in EF Core 8 Preview 4. Collections of a primitive type can now be used as properties of an entity type and will be mapped to a JSON column in the relational database. In addition, parameters of primitive values can be passed to the database. In either case, the native JSON processing capabilities of the database are then used to exact and manipulate the primitive values, just as if they were in a table. This opens up powerful query possibilities, as well as optimizations to common problems such as translating queries that use Contains.
+
+Featuring:
+
+- [Shay Rojansky](https://github.com/roji) (Host)
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+
+Links:
+
+- [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
+- [EF Core daily builds](https://aka.ms/ef-daily-builds)
+
+<a name="internals-models"></a>
+
+### Apr 19: [EF Core Internals – Model Building](https://www.youtube.com/live/FYz0rAxQkC8?si=GsLuBBByuQbMurYP)
+
+In this session, the .NET Data Access team will dig into the EF Core internals for building a model. EF models are built using a combination of three mechanisms: conventions, mapping attributes, and the model builder API. We will explain each of these mechanisms and show how they interact. We’ll also cover how models are cached, and ways in which that caching can be controlled. And, as always, we’ll answer your questions live!
+Featuring:
+
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
+
+Links:
+
+- [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
+- [EF Core daily builds](https://aka.ms/ef-daily-builds)
+
+<a name="hierarchyid"></a>
+
+### Mar 22: [Using hierarchical data in SQL Server and PostgreSQL with EF Core](https://www.youtube.com/live/pmnHGWYpCfg?si=h_v40tZ7NEw_wZ6W)
+
+Join the .NET Data Access Team to learn about mapping hierarchical data structures to relational databases using EF Core. We’ll look at “hierarchyid” on SQL Server/Azure SQL and “ltree” on PostgresSQL, and show how to map tree structures such as a family tree, file system, or organization structure. EF Core can then be used to write LINQ queries against the hierarchy to find ancestors and descendants in various ways, as well as perform manipulation of subtrees for updates. And, as always, we’ll be here to answer your questions!
+
+Featuring:
+
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
+- [Brice Lambson](https://github.com/bricelam) (Host)
+
+Links:
+
+- [Sample code from this standup](https://github.com/ajcvickers/HierarchySample)
+- [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
+- [EF Core daily builds](https://aka.ms/ef-daily-builds)
+
+<a name="internals-query"></a>
+
+### Mar 8: [EF Core internals: IQueryable, LINQ and the EF Core query pipeline](https://www.youtube.com/live/1Ld3dtnTrMw?si=xWhbADioxqquACBi)
+
+In this standup, we'll dive deep under the hood to see how EF Core processes LINQ queries, translates them to SQL and executes them on your database. We'll introduce key concepts such as IQueryable and LINQ providers, and see how EF Core uses caching to make your querying lightning-fast. Join us to understand how the magic works!
+
+Featuring:
+
+- [Shay Rojansky](https://github.com/roji) (Host)
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+
+Links:
+
+- [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
+- [EF Core daily builds](https://aka.ms/ef-daily-builds)
+
+<a name="mysql"></a>
+
+### Feb 22: [MySQL and .NET: MySqlConnector and the Pomelo EF Core Provider](https://www.youtube.com/live/XSEYNocnzlI?si=WdBnhu_kDewO1TbN)
+
+This week, we'll be hosting Bradley Grainger and Laurents Meyer, authors of the open-source MySQL ADO.NET driver and of the Pomelo EF Core provider. Both these components work together to provide a 1st-class MySQL data access experience in .NET. We'll discuss some of the specifities of MySQL as a database, what it's like to work on open source data projects in .NET, and whatever else comes to mind!
+
+Featuring:
+
+- [Bradley Grainger](https://github.com/bgrainger) (Special guest)
+- [Laurents Meyer](https://github.com/lauxjpn) (Special guest)
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
+- [Jiachen Jiang](https://github.com/jcjiang) (Host)
+
+Links:
+
+- GitHub:
+  - [Pomelo.EntityFrameworkCore.MySql](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql)
+  - [MySqlConnector](https://github.com/mysql-net/MySqlConnector)
+- NuGet:
+  - [Pomelo.EntityFrameworkCore.MySql](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql/)
+  - [Pomelo.EntityFrameworkCore.MySql.Json.Microsoft](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql.Json.Microsoft/)
+  - [Pomelo.EntityFrameworkCore.MySql.Json.Newtonsoft](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql.Json.Newtonsoft/)
+  - [Pomelo.EntityFrameworkCore.MySql.Json.NetTopologySuite](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql.NetTopologySuite/)
+  - [MySqlConnector](https://www.nuget.org/packages/MySqlConnector/)
+
+<a name="sqlite"></a>
+
+### Feb 8: [SQLite with .NET and EF Core](https://www.youtube.com/live/n3Tt0F4g4is?si=aKzl5sr13mSo8DkC)
+
+This week, Eric Sink (creator of SQLitePCL.raw) and Brice Lambson (creator of Microsoft.Data.Sqlite) join the .NET Data Access Team to discuss everything SQLite on .NET. We’ll start down low digging into different ways to get the SQLite native binaries using Eric’s packages. Then we’ll move up the stack to look at the basics of SQLite on .NET with Brice’s ADO.NET provider. Going higher still, we’ll look at how to get the most from SQLite with the EF Core provider. And, as always, we’ll be there to answer any questions you have about SQLite on .NET.
+
+Featuring:
+
+- [Eric Sink](https://github.com/ericsink) (Special guest)
+- [Brice Lambson](https://github.com/bricelam) (Host)
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+
+Links:
+
+- GitHub:
+  - [SQLitePCL.raw](https://github.com/ericsink/SQLitePCL.raw)
+  - [Microsoft.Data.Sqlite](https://github.com/dotnet/efcore) (Contained in the EF Core repo.)
+- NuGet:
+  - [SQLitePCLRaw.bundle_e_sqlite3](https://www.nuget.org/packages/SQLitePCLRaw.bundle_e_sqlite3)
+  - [Other SQLitePCLRaw packages](https://www.nuget.org/profiles/SQLitePCLRaw)
+  - [Microsoft.Data.Sqlite](https://www.nuget.org/packages/Microsoft.Data.Sqlite)
+  - [Microsoft.Data.Sqlite.Core](https://www.nuget.org/packages/Microsoft.Data.Sqlite.Core)
+
+<a name="faq"></a>
+
+### Jan 11: [Entity Framework Core FAQs](https://www.youtube.com/live/2MZNbPT8Q2E?si=TvG40n04AanO9vxj)
+
+Join the Microsoft .NET Data team to get answers to many frequently asked questions about EF Core. For example:
+
+- What's the difference between EF Core and EF6?
+- What NuGet packages to I need to install to use EF Core?
+- Should I always use no-tracking queries?
+- Why does EF Core sometimes ignore Includes?
+- What's wrong with using owned types for value objects?
+- Should I create a repository over EF Core?
+- Why does the in-memory database not work in my tests?
+- How do I call stored procedures from EF Core?
+- How do I see the SQL for a LINQ query?
+
+Featuring:
+
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
+- [Jiachen Jiang](https://github.com/jcjiang) (Host)
+
+Links:
+
+- [What's new in EF7, with runnable samples](https://aka.ms/ef7-new)
+- [EF8 plan](https://aka.ms/ef8-plan)
+- [EF Core daily builds](https://aka.ms/ef-daily-builds)
+
+## 2022
+
+<a name="plan8"></a>
+
+### Dec 14: [The Plan for Entity Framework Core 8](https://www.youtube.com/live/-zoXAeDfNBY?si=Pr6ucas7j58gIyql)
+
+The plan has been published for EF Core 8 and other data access work in .NET 8. This includes work in five major themes:
+
+- Highly requested features
+- Cloud native and devices
+- Performance
+- Visual tooling
+- Developer experience
+
+Join the .NET Data Team for a discussion of what’s in and what’s out, and to get your questions answered.
+
+Featuring:
+
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
+- [Jiachen Jiang](https://github.com/jcjiang) (Host)
+
+Links:
+
+- [What's new in EF7, with runnable samples](https://aka.ms/ef7-new)
+- [EF8 plan](https://aka.ms/ef8-plan)
 - [EF Core daily builds](https://aka.ms/ef-daily-builds)
