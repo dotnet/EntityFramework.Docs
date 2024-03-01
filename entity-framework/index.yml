@@ -32,7 +32,7 @@ highlightedContent:
     # Card
     - title: "API reference browser"
       itemType: reference
-      url: /dotnet/api/?view=efcore-6.0&preserve-view=true
+      url: /dotnet/api/?view=efcore-8.0&preserve-view=true
     # Card
     - title: ".NET (C#) data documentation hub"
       itemType: reference
@@ -214,7 +214,7 @@ additionalContent:
           - url: core/cli/services.md
             text: "Design-time services"
       # Card
-      - title: Previous Versions
+      - title: Previous versions
         links:
           - url: ef6/get-started.md
             text: "Entity Framework 6"
