@@ -461,8 +461,12 @@
       - name: Design-time services
         href: core/cli/services.md
 
-    - name: EF Core API reference >>
-      href: /dotnet/api/?view=efcore-7.0&preserve-view=true
+    - name: Learn more
+      items:
+        - name: EF Core API reference >>
+          href: /dotnet/api/?view=efcore-7.0&preserve-view=true
+        - name: .NET Data Community Standups
+          href: core/learn-more/community-standups.md
 
   - name: Entity Framework 6
     items:
