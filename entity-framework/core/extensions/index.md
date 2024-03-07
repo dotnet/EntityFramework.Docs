@@ -328,6 +328,14 @@ The Dynamic LINQ library let you execute query with dynamic string and provide s
 
 [Website](https://dynamic-linq.net/) | [GitHub repository](https://github.com/zzzprojects/System.Linq.Dynamic.Core) | [NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.DynamicLinq)
 
+### EfCoreNexus.Framework
+
+EfCoreNexus helps integrating the entity framework core into blazor apps. Via reflection it adds the entitiy classes automatically and provides you with basic crud functionality for them without writing additional code.
+
+For EF Core: 8.
+
+[GitHub repository](https://github.com/thliborius/EfCoreNexus) | [NuGet](https://www.nuget.org/packages/EfCoreNexus.Framework/)
+
 ## API Integrations
 
 These packages are designed to integrate directly with EF Core to expose various APIs.
