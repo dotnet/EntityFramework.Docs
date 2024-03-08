@@ -1290,6 +1290,8 @@ WHERE "Id" = @p1
 RETURNING 1;
 ```
 
+<a name="hierarchyid"></a>
+
 ## HierarchyId in .NET and EF Core
 
 Azure SQL and SQL Server have a special data type called [`hierarchyid`](/sql/t-sql/data-types/hierarchyid-data-type-method-reference) that is used to store [hierarchical data](/sql/relational-databases/hierarchical-data-sql-server). In this case, "hierarchical data" essentially means data that forms a tree structure, where each item can have a parent and/or children. Examples of such data are:
