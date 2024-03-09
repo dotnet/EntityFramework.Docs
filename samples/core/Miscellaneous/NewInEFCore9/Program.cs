@@ -11,12 +11,17 @@ public class Program
         // await LeastGreatestSample.Queries_using_Least_and_Greatest();
         await LeastGreatestSample.Queries_using_Least_and_Greatest_on_SQLite();
 
-        await ModelBuildingSample.Model_building_enhancements_in_EF9();
+        await CustomConventionsSample.Conventions_enhancements_in_EF9();
 
         await JsonColumnsSample.Columns_from_JSON_are_pruned_when_needed();
         await JsonColumnsSample.Columns_from_JSON_are_pruned_when_needed_on_SQLite();
 
         await ExecuteUpdateSample.ExecuteUpdate_for_complex_type_instances();
         await ExecuteUpdateSample.ExecuteUpdate_for_complex_type_instances_on_SQLite();
+
+        await HierarchyIdSample.SQL_Server_HierarchyId();
+
+        await ModelBuildingSample.Model_building_improvements_in_EF9();
+
     }
 }

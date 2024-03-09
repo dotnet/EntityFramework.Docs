@@ -1,26 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-
-namespace NewInEfCore9;
+﻿namespace NewInEfCore9;
 
 public static class ModelBuildingSample
 {
-    public static async Task Model_building_enhancements_in_EF9()
+    public static async Task Model_building_improvements_in_EF9()
     {
         PrintSampleName();
 
-        await using var context = new TestContext();
+        await using var context = new ModelBuildingContext();
         await context.Database.EnsureDeletedAsync();
-        await context.Database.EnsureCreatedAsync();
-        await context.Seed();
 
         context.LoggingEnabled = true;
-        context.ChangeTracker.Clear();
 
-        Console.WriteLine(context.Model.ToDebugString());
+        await context.Database.EnsureCreatedAsync();
     }
 
     private static void PrintSampleName([CallerMemberName] string? methodName = null)
@@ -29,12 +20,12 @@ public static class ModelBuildingSample
         Console.WriteLine();
     }
 
-    public class TestContext : DbContext
+    public class ModelBuildingContext : DbContext
     {
         public bool LoggingEnabled { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}")
+            => optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name};ConnectRetryCount=0")
                 .EnableSensitiveDataLogging()
                 .LogTo(
                     s =>
@@ -47,74 +38,55 @@ public static class ModelBuildingSample
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-        }
+            #region FillFactor
+            modelBuilder.Entity<User>()
+                .HasKey(e => e.Id)
+                .HasFillFactor(80);
 
-        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-        {
-            configurationBuilder.Conventions.Replace<PropertyDiscoveryConvention>(
-                serviceProvider => new AttributeBasedPropertyDiscoveryConvention(
-                    serviceProvider.GetRequiredService<ProviderConventionSetBuilderDependencies>()));
-        }
+            modelBuilder.Entity<User>()
+                .HasAlternateKey(e => new { e.Region, e.Ssn })
+                .HasFillFactor(80);
 
-        public async Task Seed()
-        {
-            await SaveChangesAsync();
+            modelBuilder.Entity<User>()
+                .HasIndex(e => new { e.Name })
+                .HasFillFactor(80);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(e => new { e.Region, e.Tag })
+                .HasFillFactor(80);
+            #endregion
+
+            #region UseCache
+            modelBuilder.HasSequence<int>("MyCachedSequence")
+                .HasMin(10).HasMax(255000)
+                .IsCyclic()
+                .StartsAt(11).IncrementsBy(2)
+                .UseCache(3);
+            #endregion
+
+            #region UseNoCache
+            modelBuilder.HasSequence<int>("MyUncachedSequence")
+                .HasMin(10).HasMax(255000)
+                .IsCyclic()
+                .StartsAt(11).IncrementsBy(2)
+                .UseNoCache();
+            #endregion
+
+            #region DefaultCache
+            modelBuilder.HasSequence<int>("MySequence")
+                .HasMin(10).HasMax(255000)
+                .IsCyclic()
+                .StartsAt(11).IncrementsBy(2);
+            #endregion
         }
     }
 
-    #region AttributeBasedPropertyDiscoveryConvention
-    public class AttributeBasedPropertyDiscoveryConvention(ProviderConventionSetBuilderDependencies dependencies)
-        : PropertyDiscoveryConvention(dependencies)
+    public class User
     {
-        protected override bool IsCandidatePrimitiveProperty(
-            MemberInfo memberInfo, IConventionTypeBase structuralType, out CoreTypeMapping? mapping)
-        {
-            if (base.IsCandidatePrimitiveProperty(memberInfo, structuralType, out mapping))
-            {
-                if (Attribute.IsDefined(memberInfo, typeof(PersistAttribute), inherit: true))
-                {
-                    return true;
-                }
-
-                structuralType.Builder.Ignore(memberInfo.Name);
-            }
-
-            mapping = null;
-            return false;
-        }
-    }
-    #endregion
-
-    #region Country
-    public class Country
-    {
-        [Persist]
-        public int Code { get; set; }
-
-        [Persist]
+        public int Id { get; set; }
+        public required string Region { get; set; }
         public required string Name { get; set; }
-
-        public bool IsDirty { get; set; } // Will not be mapped by default.
-
-        private class FooConfiguration : IEntityTypeConfiguration<Country>
-        {
-            private FooConfiguration()
-            {
-            }
-
-            public void Configure(EntityTypeBuilder<Country> builder)
-            {
-                builder.HasKey(e => e.Code);
-            }
-        }
+        public string? Ssn { get; set; }
+        public string? Tag { get; set; }
     }
-    #endregion
 }
-
-#region PersistAttribute
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-public sealed class PersistAttribute : Attribute
-{
-}
-#endregion

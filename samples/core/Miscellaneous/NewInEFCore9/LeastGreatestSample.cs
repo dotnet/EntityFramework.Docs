@@ -207,7 +207,7 @@ public static class LeastGreatestSample
             => (UseSqlite
                     ? optionsBuilder.UseSqlite(@$"DataSource={GetType().Name}.db")
                     // Note that SQL Server 2022 is required.
-                    : optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name}"))
+                    : optionsBuilder.UseSqlServer(@$"Server=(localdb)\mssqllocaldb;Database={GetType().Name};ConnectRetryCount=0"))
                 .EnableSensitiveDataLogging()
                 .LogTo(
                     s =>

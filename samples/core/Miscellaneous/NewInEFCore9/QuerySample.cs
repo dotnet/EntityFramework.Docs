@@ -66,6 +66,36 @@ public static class QuerySample
                     e => e.Title == ".NET Blog" && e.Id == EF.Constant(id))
                 .ToListAsync();
         #endregion
+
+        Console.WriteLine();
+        Console.WriteLine("Inline subquery:");
+        Console.WriteLine();
+
+        #region InlinedSubquery
+        var dotnetPosts = context
+            .Posts
+            .Where(p => p.Title.Contains(".NET"));
+
+        var results = dotnetPosts
+            .Where(p => p.Id > 2)
+            .Select(p => new { Post = p, TotalCount = dotnetPosts.Count() })
+            .Skip(2).Take(10)
+            .ToArray();
+        #endregion
+
+        Console.WriteLine();
+        Console.WriteLine("ToHashSetAsync:");
+        Console.WriteLine();
+
+        #region ToHashSetAsync
+        var set1 = await context.Posts
+            .Where(p => p.Tags.Count > 3)
+            .ToHashSetAsync();
+
+        var set2 = await context.Posts
+            .Where(p => p.Tags.Count > 3)
+            .ToHashSetAsync(ReferenceEqualityComparer.Instance);
+        #endregion
     }
 
     private static void PrintSampleName([CallerMemberName] string? methodName = null)

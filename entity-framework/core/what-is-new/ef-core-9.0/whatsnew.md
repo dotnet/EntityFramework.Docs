@@ -2,7 +2,7 @@
 title: What's New in EF Core 9
 description: Overview of new features in EF Core 9
 author: ajcvickers
-ms.date: 02/06/2024
+ms.date: 03/07/2024
 uid: core/what-is-new/ef-core-9.0/whatsnew
 ---
 
@@ -17,17 +17,16 @@ EF9 is available as [daily builds](https://github.com/dotnet/efcore/blob/main/do
 
 EF9 targets .NET 8, and can therefore be used with either [.NET 8 (LTS)](https://dotnet.microsoft.com/download/dotnet/8.0) or a .NET 9 preview.
 
-## EF Core 9 Focus
+> [!TIP]
+> The _What's New_ docs are updated for each preview. All the samples are set up to use the [EF9 daily builds](https://github.com/dotnet/efcore/blob/main/docs/DailyBuilds.md), which usually have several additional weeks of completed work compared to the latest preview. We strongly encourage use of the daily builds when testing new features so that you're not doing your testing against stale bits.
 
-The team has been working primarily on EF internals, so there are no new big features in EF Core 9 Preview 1. However, this means we need to get people like you (If you're reading a preview 1 post, then you're a really engaged part of the community; thank you!) to run your code on these new internals. We have over 120,000 tests, but it's not enough! We need you, people running real code on our bits, in order to find issues and ship a solid release!
+## LINQ and SQL translation
 
-That being said, if you're not motivated by new internals, then there are several smaller enhancements, one of which might just be something you have been waiting for, so read on!
+The team is working on some significant architecture changes to the query pipeline in EF Core 9 as part of our continued improvements to JSON mapping and document databases. This means we need to get **people like you** to run your code on these new internals. (If you're reading a "What's New" doc at this point in the release, then you're a really engaged part of the community; thank you!) We have over 120,000 tests, but it's not enough! We need you, people running real code on our bits, in order to find issues and ship a solid release!
 
-### Improved queries
+<a name="prune"></a>
 
-The team continually strives to generate better SQL from your LINQ queries. This has already begun in EF Core 9 with the following other query enhancements.
-
-#### Prune columns passed to OPENJSON's WITH clause
+### Prune columns passed to OPENJSON's WITH clause
 
 > [!TIP]
 > The code shown here comes from [JsonColumnsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/JsonColumnsSample.cs).
@@ -100,7 +99,9 @@ WHERE (
     FROM OPENJSON([t].[Text]) AS [t0]) = 1
 ```
 
-#### Translations involving GREATEST/LEAST
+<a name="greatest"></a>
+
+### Translations involving GREATEST/LEAST
 
 > [!TIP]
 > The code shown here comes from [LeastGreatestSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/LeastGreatestSample.cs).
@@ -176,7 +177,9 @@ SELECT LEAST((
 FROM [Pubs] AS [p]
 ```
 
-#### Force or prevent query parameterization
+<a name="parameterization"></a>
+
+### Force or prevent query parameterization
 
 > [!TIP]
 > The code shown here comes from [QuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs).
@@ -250,6 +253,83 @@ info: 2/5/2024 15:43:13.803 RelationalEventId.CommandExecuted[20101] (Microsoft.
       FROM [Posts] AS [p]
       WHERE [p].[Title] = @__p_0 AND [p].[Id] = @__id_1
 ```
+
+<a name="inlinedsubs"></a>
+
+### Inlined uncorrelated subqueries
+
+> [!TIP]
+> The code shown here comes from [QuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs).
+
+In EF8, an IQueryable referenced in another query may be executed as a separate database roundtrip. For example, consider the following LINQ query:
+
+<!--
+        #region InlinedSubquery
+        var dotnetPosts = context
+            .Posts
+            .Where(p => p.Title.Contains(".NET"));
+
+        var results = dotnetPosts
+            .Where(p => p.Id > 2)
+            .Select(p => new { Post = p, TotalCount = dotnetPosts.Count() })
+            .Skip(2).Take(10)
+            .ToArray();
+-->
+[!code-csharp[InlinedSubquery](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=InlinedSubquery)]
+
+In EF8, the query for `dotnetPosts` is executed as one round trip, and then the final results are executed as second query. For example, on SQL Server:
+
+```sql
+SELECT COUNT(*)
+FROM [Posts] AS [p]
+WHERE [p].[Title] LIKE N'%.NET%'
+
+SELECT [p].[Id], [p].[Archived], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Title], [p].[PromoText], [p].[Metadata]
+FROM [Posts] AS [p]
+WHERE [p].[Title] LIKE N'%.NET%' AND [p].[Id] > 2
+ORDER BY (SELECT 1)
+OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+```
+
+In EF9, the `IQueryable` in the `dotnetPosts` is inlined, resulting in a single round trip:
+
+```sql
+SELECT [p].[Id], [p].[Archived], [p].[AuthorId], [p].[BlogId], [p].[Content], [p].[Discriminator], [p].[PublishedOn], [p].[Title], [p].[PromoText], [p].[Metadata], (
+    SELECT COUNT(*)
+    FROM [Posts] AS [p0]
+    WHERE [p0].[Title] LIKE N'%.NET%')
+FROM [Posts] AS [p]
+WHERE [p].[Title] LIKE N'%.NET%' AND [p].[Id] > 2
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+```
+
+<a name="hashsetasync"></a>
+
+### New `ToHashSetAsync<T>` methods
+
+> [!TIP]
+> The code shown here comes from [QuerySample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs).
+
+The <xref:System.Linq.Enumerable.ToHashSet%2A?displayProperty=nameWithType> methods have existed since .NET Core 2.0. In EF9, the equivalent async methods have been added. For example:
+
+<!--
+        #region ToHashSetAsync
+        var set1 = await context.Posts
+            .Where(p => p.Tags.Count > 3)
+            .ToHashSetAsync();
+
+        var set2 = await context.Posts
+            .Where(p => p.Tags.Count > 3)
+            .ToHashSetAsync(ReferenceEqualityComparer<Post>.Instance);
+-->
+[!code-csharp[ToHashSetAsync](../../../../samples/core/Miscellaneous/NewInEFCore9/QuerySample.cs?name=ToHashSetAsync)]
+
+This enhancement was contributed by [@wertzui](https://github.com/wertzui). Many thanks!
+
+## ExecuteUpdate and ExecuteDelete
+
+<a name="executecomplex"></a>
 
 ### Allow passing complex type instances to ExecuteUpdate
 
@@ -362,6 +442,10 @@ SET [c].[CustomerInfo_Tag] = N'Tog',
 FROM [Customers] AS [c]
 WHERE [c].[Name] = @__name_0
 ```
+
+## Migrations
+
+<a name="temporal-migrations"></a>
 
 ### Improved temporal table migrations
 
@@ -476,12 +560,109 @@ protected override void Up(MigrationBuilder migrationBuilder)
 }
 ```
 
-### Improved model building
+## Model building
+
+<a name="sequence-caching"></a>
+
+### Specify caching for sequences
 
 > [!TIP]
 > The code shown here comes from [ModelBuildingSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs).
 
-#### Make existing model building conventions more extensible
+EF9 allows setting the [caching options for database sequences](/sql/t-sql/statements/create-sequence-transact-sql) for any relational database provider that supports this. For example, `UseCache` can be used to explicitly turn on caching and set the cache size:
+
+<!--
+            #region UseCache
+            modelBuilder.HasSequence<int>("MyCachedSequence")
+                .HasMin(10).HasMax(255000)
+                .IsCyclic()
+                .StartsAt(11).IncrementsBy(2)
+                .UseCache(20);
+-->
+[!code-csharp[UseCache](../../../../samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs?name=UseCache)]
+
+This results in the following sequence definition when using SQL Server:
+
+```sql
+CREATE SEQUENCE [MyCachedSequence] AS int START WITH 11 INCREMENT BY 2 MINVALUE 10 MAXVALUE 255000 CYCLE CACHE 3;
+```
+
+Similarly, `UseNoCache` explicitly turns off caching:
+
+<!--
+            #region UseNoCache
+            modelBuilder.HasSequence<int>("MyUncachedSequence")
+                .HasMin(10).HasMax(255000)
+                .IsCyclic()
+                .StartsAt(11).IncrementsBy(2)
+                .UseNoCache();
+-->
+[!code-csharp[UseNoCache](../../../../samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs?name=UseNoCache)]
+
+```sql
+CREATE SEQUENCE [MyUncachedSequence] AS int START WITH 11 INCREMENT BY 2 MINVALUE 10 MAXVALUE 255000 CYCLE NO CACHE;
+```
+
+If neither `UseCache` or `UseNoCache` are called, then caching is not specified and the database will use whatever its default is. This may be a different default for different databases.
+
+This enhancement was contributed by [@bikbov](https://github.com/bikbov). Many thanks!
+
+<a name="fill-factor"></a>
+
+### Specify fill-factor for keys and indexes
+
+> [!TIP]
+> The code shown here comes from [ModelBuildingSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs).
+
+EF9 supports specification of the [SQL Server fill-factor](/sql/relational-databases/indexes/specify-fill-factor-for-an-index) when using EF Core Migrations to create keys and indexes. From the SQL Server docs, "When an index is created or rebuilt, the fill-factor value determines the percentage of space on each leaf-level page to be filled with data, reserving the remainder on each page as free space for future growth."
+
+The fill-factor can be set on a single or composite primary and alternate keys and indexes. For example:
+
+<!--
+            #region FillFactor
+            modelBuilder.Entity<User>()
+                .HasKey(e => e.Id)
+                .HasFillFactor(80);
+
+            modelBuilder.Entity<User>()
+                .HasAlternateKey(e => new { e.Region, e.Ssn })
+                .HasFillFactor(80);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(e => new { e.Name })
+                .HasFillFactor(80);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(e => new { e.Region, e.Tag })
+                .HasFillFactor(80);
+-->
+[!code-csharp[FillFactor](../../../../samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs?name=FillFactor)]
+
+When applied to existing tables, this will alter the tables to the fill-factor to the constraint:
+
+```sql
+ALTER TABLE [User] DROP CONSTRAINT [AK_User_Region_Ssn];
+ALTER TABLE [User] DROP CONSTRAINT [PK_User];
+DROP INDEX [IX_User_Name] ON [User];
+DROP INDEX [IX_User_Region_Tag] ON [User];
+
+ALTER TABLE [User] ADD CONSTRAINT [AK_User_Region_Ssn] UNIQUE ([Region], [Ssn]) WITH (FILLFACTOR = 80);
+ALTER TABLE [User] ADD CONSTRAINT [PK_User] PRIMARY KEY ([Id]) WITH (FILLFACTOR = 80);
+CREATE INDEX [IX_User_Name] ON [User] ([Name]) WITH (FILLFACTOR = 80);
+CREATE INDEX [IX_User_Region_Tag] ON [User] ([Region], [Tag]) WITH (FILLFACTOR = 80);
+```
+
+> [!NOTE]
+> There is currently a bug in preview 2 where the fill-factors are not included when the table is created for the first time. This is tracked by [Issue #33269](https://github.com/dotnet/efcore/issues/33269)
+
+This enhancement was contributed by [@deano-hunter](https://github.com/deano-hunter). Many thanks!
+
+<a name="conventions"></a>
+
+### Make existing model building conventions more extensible
+
+> [!TIP]
+> The code shown here comes from [CustomConventionsSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/CustomConventionsSample.cs).
 
 Public model building conventions for applications were [introduced in EF7](xref:core/modeling/bulk-configuration#Conventions). In EF9, we have made it easier to extend some of the existing conventions. For example, [the code to map properties by attribute in EF7](xref:core/what-is-new/ef-core-7.0/whatsnew#model-building-conventions) is this:
 
@@ -571,9 +752,11 @@ In EF9, this can be simplified down to the following:
         }
     }
 -->
-[!code-csharp[AttributeBasedPropertyDiscoveryConvention](../../../../samples/core/Miscellaneous/NewInEFCore9/ModelBuildingSample.cs?name=AttributeBasedPropertyDiscoveryConvention)]
+[!code-csharp[AttributeBasedPropertyDiscoveryConvention](../../../../samples/core/Miscellaneous/NewInEFCore9/CustomConventionsSample.cs?name=AttributeBasedPropertyDiscoveryConvention)]
 
-#### Update ApplyConfigurationsFromAssembly to call non-public constructors
+<a name="non-pub-apply"></a>
+
+### Update ApplyConfigurationsFromAssembly to call non-public constructors
 
 In previous versions of EF Core, the `ApplyConfigurationsFromAssembly` method only instantiated configuration types with a public, parameterless constructors. In EF9, we have both [improved the error messages generated when this fails](https://github.com/dotnet/efcore/pull/32577), and also enabled instantiation by non-public constructor. This is useful when co-locating configuration in a private nested class which should never be instantiated by application code. For example:
 
@@ -599,13 +782,52 @@ public class Country
 
 As an aside, some people think this pattern is an abomination because it couples the entity type to the configuration. Other people think it is very useful because it co-locates configuration with the entity type. Let's not debate this here. :-)
 
-### Everything else in Preview 1
+## SQL Server HierarchyId
 
-The [dotnet/efcore](https://github.com/dotnet/efcore/) GitHub repo is the source-of-truth for all work completed in EF Core. Preview 1 contains:
+> [!TIP]
+> The code shown here comes from [HierarchyIdSample.cs](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/NewInEFCore9/HierarchyIdSample.cs).
 
-- 90+ bug fixes since the 8.0.0 release. This includes:
-  - [51 bug fixes in EF9 Preview 1 only](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+label%3Atype-bug). These are bug fixes that did not meet the bar for patching.
-  - [8 bug fixes also shipped in 8.0.1](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.1+is%3Aclosed)
-  - [25 bug fixes also shipped in 8.0.2](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A8.0.2+is%3Aclosed+)
-- [30 enhancements](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+label%3Atype-enhancement+), the most interesting of which are described above.
-- [5 cleanup issues](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A9.0.0-preview1+is%3Aclosed+-label%3Atype-enhancement+-label%3Atype-bug)
+<a name="hierarchyid-path-generation"></a>
+
+### Sugar for HierarchyId path generation
+
+First class support for the SQL Server `HierarchyId` type was [added in EF8](xref:core/what-is-new/ef-core-8.0/whatsnew#hierarchyid). In EF9, a sugar method has been added to make it easier to create new child nodes in the tree structure. For example, the following code queries for an existing entity with a `HierarchyId` property:
+
+<!--
+        #region HierarchyIdQuery
+        var daisy = await context.Halflings.SingleAsync(e => e.Name == "Daisy");
+-->
+[!code-csharp[HierarchyIdQuery](../../../../samples/core/Miscellaneous/NewInEFCore9/HierarchyIdSample.cs?name=HierarchyIdQuery)]
+
+This `HierarchyId` property can then be used to create child nodes without any explicit string manipulation. For example:
+
+<!--
+        #region HierarchyIdParse1
+        var child1 = new Halfling(HierarchyId.Parse(daisy.PathFromPatriarch, 1), "Toast");
+        var child2 = new Halfling(HierarchyId.Parse(daisy.PathFromPatriarch, 2), "Wills");
+-->
+[!code-csharp[HierarchyIdParse1](../../../../samples/core/Miscellaneous/NewInEFCore9/HierarchyIdSample.cs?name=HierarchyIdParse1)]
+
+If `daisy` has a `HierarchyId` of `/4/1/3/1/`, then, `child1` will get the `HierarchyId` "/4/1/3/1/1/", and `child2` will get the `HierarchyId` "/4/1/3/1/2/".
+
+To create a node between these two children, an additional sub-level can be used. For example:
+
+<!--
+        #region HierarchyIdParse2
+        var child1b = new Halfling(HierarchyId.Parse(daisy.PathFromPatriarch, 1, 5), "Toast");
+-->
+[!code-csharp[HierarchyIdParse2](../../../../samples/core/Miscellaneous/NewInEFCore9/HierarchyIdSample.cs?name=HierarchyIdParse2)]
+
+This creates a node with a `HierarchyId` of `/4/1/3/1/1.5/`, putting it bteween `child1` and `child2`.
+
+This enhancement was contributed by [@Rezakazemi890](https://github.com/Rezakazemi890). Many thanks!
+
+## Tooling
+
+<a name="fewer-rebuilds"></a>
+
+### Fewer rebuilds
+
+The [`dotnet ef` command line tool](xref:core/cli/dotnet) by default builds your project before executing the tool. This is because not rebuilding before running the tool is a common source of confusion when things don't work. Experienced developers can use the `--no-build` option to avoid this build, which may be slow. However, even the `--no-build` option could cause the project to be re-built the next time it is built outside of the EF tooling.
+
+We believe a [community contribution](https://github.com/dotnet/efcore/pull/32860) from [@Suchiman](https://github.com/Suchiman) has fixed this. However, we're also conscious that tweaks around MSBuild behaviors have a tendency to have unintended consequences, so we're asking people like you to try this out and report back on any negative experiences you have.
