@@ -107,7 +107,7 @@ Featuring:
 
 Links:
 
-- GutHub: [Code from the standup](https://github.com/ajcvickers/Keys)
+- GitHub: [Code from the standup](https://github.com/ajcvickers/Keys)
 - Docs: [What's new in EF9, with runnable samples](https://aka.ms/ef9-new)
 - Docs: [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
 - Docs: [EF Core daily builds](https://aka.ms/ef-daily-builds)
