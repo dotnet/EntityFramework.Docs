@@ -946,7 +946,7 @@ public object Create(DbContext context, bool designTime)
         : (object)context.GetType();
 ```
 
-The navigation '{navigation}' was ignored from 'Include' in the query since the fix-up will automatically populate it. If any further navigations are specified in 'Include' afterwards then they will be ignored. Walking back include tree is not allowed.
+The navigation '{navigation}' was ignored from 'Include' in the query since the fix-up will automatically populate it. If any further navigations are specified in 'Include' afterwards then they will be ignored. Walking back in the include tree is not allowed.
 
 <a name="ignored-navigation"></a>
 
