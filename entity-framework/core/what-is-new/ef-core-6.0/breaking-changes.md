@@ -44,6 +44,7 @@ EF Core 6.0 targets .NET 6. Applications targeting older .NET, .NET Core, and .N
 | [Default table mapping is not removed when the entity is mapped to a table-valued function](#tvf-default-mapping)                   | Low        |
 | [dotnet-ef targets .NET 6](#dotnet-ef)                                                                                              | Low        |
 | [`IModelCacheKeyFactory` implementations may need to be updated to handle design-time caching](#model-cache-key)                    | Low        |
+| [`NavigationBaseIncludeIgnored` is now an error by default](#ignored-navigation)                                                    | Low        |
 
 \* These changes are of particular interest to authors of database providers and extensions.
 
@@ -943,4 +944,33 @@ public object Create(DbContext context, bool designTime)
     => context is DynamicContext dynamicContext
         ? (context.GetType(), dynamicContext.UseIntProperty, designTime)
         : (object)context.GetType();
+```
+
+The navigation '{navigation}' was ignored from 'Include' in the query since the fix-up will automatically populate it. If any further navigations are specified in 'Include' afterwards then they will be ignored. Walking back include tree is not allowed.
+
+<a name="ignored-navigation"></a>
+
+### `NavigationBaseIncludeIgnored` is now an error by default
+
+[Tracking Issue #4315](https://github.com/dotnet/EntityFramework.Docs/issues/4315)
+
+#### Old behavior
+
+The event `CoreEventId.NavigationBaseIncludeIgnored` was logged as a warning by default.
+
+#### New behavior
+
+The event `CoreEventId.NavigationBaseIncludeIgnored` was logged as an error by default and causes an exception to be thrown.
+
+#### Why
+
+These query patterns are not allowed, so EF Core now throws to indicate that the queries should be updated.
+
+#### Mitigations
+
+The old behavior can be restored by configuring the event as a warning. For example:
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.ConfigureWarnings(b => b.Warn(CoreEventId.NavigationBaseIncludeIgnored));
 ```

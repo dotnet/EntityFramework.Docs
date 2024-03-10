@@ -131,11 +131,21 @@ The performance improvements linked to the new method are significant enough tha
 
 #### Mitigations
 
-You can let EF Core know that the target table has a trigger; doing so will revert to the previous, less efficient technique. This can be done by configuring the corresponding entity type as follows:
+If the target table has a trigger, then you can let EF Core know this, and EF will revert to the previous, less efficient technique. This can be done by configuring the corresponding entity type as follows:
 
 [!code-csharp[Main](../../../../samples/core/SqlServer/Misc/TriggersContext.cs?name=TriggerConfiguration&highlight=4)]
 
-Note that doing this doesn't actually make EF Core create or manage the trigger in any way - it currently only informs EF Core that triggers are present on the table. As a result, any trigger name can be used, and this can also be used if an unsupported computed column is in use (regardless of triggers).
+Note that doing this doesn't actually make EF Core create or manage the trigger in any way - it currently only informs EF Core that triggers are present on the table. As a result, any trigger name can be used.
+
+Specifying a trigger can be used to revert the old behavior, _even if there isn't actually a trigger in the table_. However, starting with EF Core 8.0, the use or not of the "OUTPUT" clause can configured explicitly, regardless of triggers. For example:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>()
+        .ToTable(tb => tb.UseSqlOutputClause(false));
+}
+```
 
 If most or all of your tables have triggers, you can opt out of using the newer, efficient technique for all your model's tables by using the following model building convention:
 
@@ -167,7 +177,17 @@ The simplifications and performance improvements linked to the new method are si
 
 #### Mitigations
 
-In EF Core 8.0, a mechanism will be introduced that will allow specifying whether to use the new mechanism on a table-by-table basis. With EF Core 7.0, it's possible to revert to the old mechanism for the entire application by inserting the following code in your context configuration:
+In EF Core 8.0, the `UseSqlReturningClause` method has been introduced to explicitly revert back to the older, less efficient SQL. For example:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Blog>()
+        .ToTable(tb => tb.UseSqlReturningClause(false));
+}
+```
+
+If you are still using EF Core 7.0, then it's possible to revert to the old mechanism for the entire application by inserting the following code in your context configuration:
 
 ```c#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -493,11 +513,11 @@ Query or attach entities before marking entities as `Deleted`, or manually set n
 
 #### Old behavior
 
-In EF Core 6.0, using the Azure Cosmos DB <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw%2A> extension method when using a relational provider, or the relational <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> extension method when using the Azure Cosmos DB provider could silently fail.
+In EF Core 6.0, using the Azure Cosmos DB <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw%2A> extension method when using a relational provider, or the relational <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.FromSqlRaw%2A> extension method when using the Azure Cosmos DB provider could silently fail. Likewise, using relational methods on the in-memory provider is a silent no-op.
 
 #### New behavior
 
-Starting with EF Core 7.0, using the wrong extension method will throw an exception.
+Starting with EF Core 7.0, using an extension method designed for one provider on a different provider will throw an exception.
 
 #### Why
 

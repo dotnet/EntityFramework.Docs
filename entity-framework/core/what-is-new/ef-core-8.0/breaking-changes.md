@@ -31,6 +31,9 @@ EF Core 8 targets .NET 8. Applications targeting older .NET, .NET Core, and .NET
 | [ExcludeFromMigrations no longer excludes other tables in a TPC hierarchy](#exclude-from-migrations)          | Low        |
 | [Non-shadow integer keys are persisted to Cosmos documents](#persist-to-cosmos)                               | Low        |
 | [Relational model is generated in the compiled model](#compiled-relational-model)                             | Low        |
+| [Scaffolding may generate different navigation names](#navigation-names)                                      | Low        |
+| [Discriminators now have a max length](#discriminators)                                                       | Low        |
+| [SQL Server key values are compared case-insensitively](#casekeys)                                            | Low        |
 
 ## High-impact changes
 
@@ -437,3 +440,96 @@ This was done to further improve startup time.
 #### Mitigations
 
 Edit the generated `*ModelBuilder.cs` file and remove the line `AddRuntimeAnnotation("Relational:RelationalModel", CreateRelationalModel());` as well as the method `CreateRelationalModel()`.
+
+<a name="navigation-names"></a>
+
+### Scaffolding may generate different navigation names
+
+[Tracking Issue #27832](https://github.com/dotnet/efcore/issues/27832)
+
+#### Old behavior
+
+Previously when scaffolding a `DbContext` and entity types from an existing database, the navigation names for relationships were sometimes derived from a common prefix of multiple foreign key column names.
+
+#### New behavior
+
+Starting with EF Core 8.0, common prefixes of column names from a composite foreign key are no longer used to generate navigation names.
+
+#### Why
+
+This is an obscure naming rule which sometimes generates very poor names like, `S`, `Student_`, or even just `_`. Without this rule, strange names are no longer generated, and the naming conventions for navigations are also made simpler, thereby making it easier to understand and predict which names will be generated.
+
+#### Mitigations
+
+The [EF Core Power Tools](https://github.com/ErikEJ/EFCorePowerTools/issues/2143) have an option to keep generating navigations in the old way. Alternatively, the code generated can be fully customized using [T4 templates](xref:core/managing-schemas/scaffolding/templates). This can be used to example the foreign key properties of scaffolding relationships and use whatever rule is appropriate for your code to generate the navigation names you need.
+
+<a name="discriminators"></a>
+
+### Discriminators now have a max length
+
+[Tracking Issue #10691](https://github.com/dotnet/efcore/issues/10691)
+
+#### Old behavior
+
+Previously, discriminator columns created for [TPH inheritance mapping](xref:core/modeling/inheritance) were configured as `nvarchar(max)` on SQL Server/Azure SQL, or the equivalent unbounded string type on other databases.
+
+#### New behavior
+
+Starting with EF Core 8.0, discriminator columns are created with a max length that covers all the known discriminator values. If the discriminator column is constrained in some way--for example, as part of an index--then the `AlterColumn` created by Migrations may fail.
+
+#### Why
+
+`nvarchar(max)` columns are inefficient and unnecessary when the lengths of all possible values are known.
+
+#### Mitigations
+
+The column size can be made explicitly unbounded:
+
+```csharp
+modelBuilder.Entity<Foo>()
+    .Property<string>("Discriminator")
+    .HasMaxLength(-1);
+```
+
+<a name="casekeys"></a>
+
+### SQL Server key values are compared case-insensitively
+
+[Tracking Issue #27526](https://github.com/dotnet/efcore/issues/27526)
+
+#### Old behavior
+
+Previously, when tracking entities with string keys with the SQL Server/Azure SQL database providers, the key values were compared using the default .NET case-sensitive ordinal comparer.
+
+#### New behavior
+
+Starting with EF Core 8.0, SQL Server/Azure SQL string key values are compared using the default .NET case-insensitive ordinal comparer.
+
+#### Why
+
+By default, SQL Server uses case-insensitive comparisons when comparing foreign key values for matches to principal key values. This means when EF uses case-sensitive comparisons it may not connect a foreign key to a principal key when it should.
+
+#### Mitigations
+
+Case-sensitive comparisons can be used by setting a custom `ValueComparer`. For example:
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    var comparer = new ValueComparer<string>(
+        (l, r) => string.Equals(l, r, StringComparison.Ordinal),
+        v => v.GetHashCode(),
+        v => v);
+
+    modelBuilder.Entity<Blog>()
+        .Property(e => e.Id)
+        .Metadata.SetValueComparer(comparer);
+
+    modelBuilder.Entity<Post>(
+        b =>
+        {
+            b.Property(e => e.Id).Metadata.SetValueComparer(comparer);
+            b.Property(e => e.BlogId).Metadata.SetValueComparer(comparer);
+        });
+}
+```
