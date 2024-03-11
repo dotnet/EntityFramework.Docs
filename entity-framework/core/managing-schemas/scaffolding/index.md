@@ -504,7 +504,7 @@ With this approach, the scaffolded code provides a starting point for code-based
 Keeping the database and the EF model in sync can be done in one of two ways:
 
 - Switch to using [EF Core database migrations](xref:core/managing-schemas/migrations/index), and use the entity types and EF model configuration as the source of truth, using migrations to drive the schema.
-- Manually update the entity types amd EF configuration when the database changes. For example, if a new column is added to a table, then add a property for the column to the mapped entity type, and add any necessary configuration using mapping attributes and/or code in `OnModelCreating`. This is relatively easy, with the only real challenge being a process to make sure that database changes are recorded or detected in some way so that the developer(s) responsible for the code can react.
+- Manually update the entity types and EF configuration when the database changes. For example, if a new column is added to a table, then add a property for the column to the mapped entity type, and add any necessary configuration using mapping attributes and/or code in `OnModelCreating`. This is relatively easy, with the only real challenge being a process to make sure that database changes are recorded or detected in some way so that the developer(s) responsible for the code can react.
 
 #### Repeated scaffolding
 
