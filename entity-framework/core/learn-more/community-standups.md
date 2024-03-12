@@ -16,6 +16,7 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 
 | Date         | Area                  | Title                                                                                  |
 |--------------|-----------------------|----------------------------------------------------------------------------------------|
+| Mar 6, 2024  | Value generation      | [EF Core keys and value generation](#value-generation)                                 |
 | Feb 21, 2024 | SQL translation       | [Window and binary functions using Zomp EF Core extensions](#window-functions)         |
 | Feb 7, 2024  | Database concurrency  | [Database concurrency and EF Core: Beyond optimistic concurrency](#concurrency3)       |
 | Jan 24, 2024 | Database concurrency  | [Database concurrency and EF Core: ASP.NET and Blazor](#concurrency2)                  |
@@ -92,6 +93,24 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                      |
 
 ## 2024
+
+<a name="value-generation"></a>
+
+### Mar 6: [EF Core keys and value generation](https://www.youtube.com/live/_eNPkrTuLvE?si=RuZUFoLqF2QnwbvF)
+
+In this episode, Arthur and members of the EF Team will explore generated property values and how value generation interacts with keys in the model. We will look at fully client-side value generation, as well as how to use identity columns, database sequences, or a hi-lo pattern for server-side generation. In addition, we’ll investigate how generated key values impact EF Core change tracking by determining if an entity will go into the `Added` state or not. And finally, if we have time, we’ll look at special considerations for TPC mapping, and customizations such as setting before and after save behaviors, and sentinel values.
+
+Featuring:
+
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
+
+Links:
+
+- GitHub: [Code from the standup](https://github.com/ajcvickers/Keys)
+- Docs: [What's new in EF9, with runnable samples](https://aka.ms/ef9-new)
+- Docs: [What's new in EF8, with runnable samples](https://aka.ms/ef8-new)
+- Docs: [EF Core daily builds](https://aka.ms/ef-daily-builds)
 
 <a name="window-functions"></a>
 
