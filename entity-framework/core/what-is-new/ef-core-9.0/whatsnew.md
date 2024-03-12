@@ -410,7 +410,7 @@ FROM [Stores] AS [s]
 WHERE [s].[Region] = N'Germany'
 ```
 
-Multiple updates to both complex type properties and simple properties can be combined in a single call to `ExecuteUdate`. For example:
+Multiple updates to both complex type properties and simple properties can be combined in a single call to `ExecuteUpdate`. For example:
 
 <!--
         #region UpdateMultipleComplexType
