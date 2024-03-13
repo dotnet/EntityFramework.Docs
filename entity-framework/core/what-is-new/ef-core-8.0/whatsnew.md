@@ -2287,7 +2287,7 @@ b.Property(e => e.LeaseDate).HasDefaultValueSql("getutcdate()");
 
 In order for EF to make use of this, it must determine when and when not to send a value for the column. By default, EF uses the CLR default as a sentinel for this. That is, when the value of `Status` or `LeaseDate` in the examples above are the CLR defaults for these types, then EF _interprets that to mean that the property has not been set_, and so does not send a value to the database. This works well for reference types--for example, if the `string` property `Status` is `null`, then EF doesn't send `null` to the database, but rather does not include any value so that the database default (`"Hidden"`) is used. Likewise, for the `DateTime` property `LeaseDate`, EF will not insert the CLR default value of `1/1/0001 12:00:00 AM`, but will instead omit this value so that database default is used.
 
-However, in some cases the CLR default value is a valid value to insert. EF8 handles this by allowing the sentinel value for a colum to change. For example, consider an integer column configured with a database default:
+However, in some cases the CLR default value is a valid value to insert. EF8 handles this by allowing the sentinel value for a column to change. For example, consider an integer column configured with a database default:
 
 ```csharp
 b.Property(e => e.Credits).HasDefaultValueSql(10);
