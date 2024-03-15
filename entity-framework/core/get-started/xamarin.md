@@ -2,7 +2,7 @@
 title: Getting Started with EF Core and Xamarin - EF Core
 description: Getting started tutorial for using Xamarin to create mobile apps with Entity Framework Core
 author: codemillmatt
-ms.date: 07/07/2020
+ms.date: 03/10/2024
 ms.author: masoucou
 uid: core/get-started/xamarin
 ---
