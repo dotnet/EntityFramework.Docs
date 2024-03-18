@@ -16,6 +16,7 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 
 | Date         | Area                  | Title                                                                                  |
 |--------------|-----------------------|----------------------------------------------------------------------------------------|
+| Mar 20, 2024 | GraphQL               | [Distributed Applications with Hot Chocolate 14, Aspire, and EF Core](#Mar20_2024)     |
 | Mar 6, 2024  | Value generation      | [EF Core keys and value generation](#value-generation)                                 |
 | Feb 21, 2024 | SQL translation       | [Window and binary functions using Zomp EF Core extensions](#window-functions)         |
 | Feb 7, 2024  | Database concurrency  | [Database concurrency and EF Core: Beyond optimistic concurrency](#concurrency3)       |
@@ -93,6 +94,24 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 | May 6, 2020  | Welcome!              | [Introducing the EF Core Community Standup](#one)                                      |
 
 ## 2024
+
+<a name="Mar20_2024"></a>
+
+### Mar 20: [Building Distributed Applications with Hot Chocolate 14, Aspire, and Entity Framework](https://www.youtube.com/live/TODO)
+
+Building and debugging distributed systems challenges developers to balance complexity with the need for simplicity. Ideally, we aim for the simplicity of a monolith while benefiting from microservices' scalability and isolation. In todays meetup we will have an early look at what we are doing with Hot Chocolate 14 to integrate well with Aspire and bridge this gap, offering an approach that combines microservices' advantages with the ease of a monolith for our consumers. Also we will have a look at a lot of the new feature around Hot Chocolate 14 that will make it so much easier to build layered services with entity framework. Do not worry! We will start slow with just the simplest of services accessing a database and then go all the way in.
+
+Featuring:
+
+- [Michael Staib](https://github.com/michaelstaib) (Special guest)
+- [Arthur Vickers](https://github.com/ajcvickers) (Host)
+- [Shay Rojansky](https://github.com/roji) (Host)
+- [Jiri Cincura](https://github.com/cincuranet) (Host)
+
+Links:
+
+- Product: [Hot Chocolate for GraphQL](https://chillicream.com/docs/hotchocolate/v14)
+- Docs: [Hot Chocolate and Entity Framework Core](https://chillicream.com/docs/hotchocolate/v14/integrations/entity-framework)
 
 <a name="value-generation"></a>
 
