@@ -97,7 +97,7 @@ The .NET Data Community Standups are live-streamed every other Wednesday to Twit
 
 <a name="Mar20_2024"></a>
 
-### Mar 20: [Building Distributed Applications with Hot Chocolate 14, Aspire, and Entity Framework](https://www.youtube.com/live/TODO)
+### Mar 20: [Building Distributed Applications with Hot Chocolate 14, Aspire, and Entity Framework](https://www.youtube.com/live/JjT9pg6oGsE?si=jFykuE06ZFeHGEDJ)
 
 Building and debugging distributed systems challenges developers to balance complexity with the need for simplicity. Ideally, we aim for the simplicity of a monolith while benefiting from microservices' scalability and isolation. In todays meetup we will have an early look at what we are doing with Hot Chocolate 14 to integrate well with Aspire and bridge this gap, offering an approach that combines microservices' advantages with the ease of a monolith for our consumers. Also we will have a look at a lot of the new feature around Hot Chocolate 14 that will make it so much easier to build layered services with entity framework. Do not worry! We will start slow with just the simplest of services accessing a database and then go all the way in.
 
