@@ -2583,7 +2583,7 @@ Since the subquery no longer references `Blogs`, it can be evaluated once, yield
 
 ## Numeric rowversions for SQL Azure/SQL Server
 
-SQL Server automatic [optimistic concurrency](xref:core/saving/concurrency) is handled using [`rowversion` columns](/sql/t-sql/data-types/rowversion-transact-sql). A `rowversion` is an 8-byte opaque value passed between database, client, and server. By default, SqlClient exposes `rowversion` types as `byte[]`, despite mutable reference types being a bad match for `rowversion` semantics. In EF8, it is easy instead map `rowversion` columns to `long` or `ulong` properties. For example:
+SQL Server automatic [optimistic concurrency](xref:core/saving/concurrency) is handled using [`rowversion` columns](/sql/t-sql/data-types/rowversion-transact-sql). A `rowversion` is an 8-byte opaque value passed between database, client, and server. By default, SqlClient exposes `rowversion` types as `byte[]`, despite mutable reference types being a bad match for `rowversion` semantics. In EF8, it is easy to instead map `rowversion` columns to `long` or `ulong` properties. For example:
 
 ```csharp
 modelBuilder.Entity<Blog>()
