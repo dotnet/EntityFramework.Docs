@@ -38,7 +38,7 @@ Previously, calling synchronous methods like `ToList` or `SaveChanges` would cau
 
 #### New behavior
 
-Starting with EF Core 9.0, EF now throws by default when attempting to use synchronous I/O. The exception message is, "Azure Cosmos DB does not support synchronous I/O. Make sure to use and correctly await only async methods when using Entity Framework Core to access Azure Cosmos DB. See [https://aka.ms/ef-cosmos-nosync](https://aka.ms/ef-cosmos-nosync) for more information."
+Starting with EF Core 9.0, EF now throws by default when attempting to use synchronous I/O. The exception message is "Azure Cosmos DB does not support synchronous I/O. Make sure to use and correctly await only async methods when using Entity Framework Core to access Azure Cosmos DB. See [https://aka.ms/ef-cosmos-nosync](https://aka.ms/ef-cosmos-nosync) for more information."
 
 #### Why
 
